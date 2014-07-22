@@ -1,0 +1,23 @@
+{
+  "name": "platform-bourbon",
+  "version": "1.0.0",
+  "homepage": "https://github.com/ushahidi/platform-bourbon",
+  "authors": [
+    "Ushahidi"
+  ],
+  "description": "Ushahidi Platform Bourbon Prototype",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bourbon": "3.1",
+    "neat": "~1.5.0",
+    "refills": "~0.0.2"
+  }
+}
