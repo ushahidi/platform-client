@@ -13,13 +13,13 @@
 \*------------------------------------*/
 
 // Bourbon
-@import "bower_components/bourbon/app/assets/stylesheets/_bourbon.scss";
+@import "bourbon";
 
 //Neat
-@import "bower_components/neat/app/assets/stylesheets/_neat";
+@import "neat";
 
 // Bitters
-@import "sass/lib/bitters/_base.scss";
+@import "sass/bitters/_base.scss";
 
 // Refills
-@import "bower_components/refills/source/stylesheets/all.scss";
+@import "all";
