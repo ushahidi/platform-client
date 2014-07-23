@@ -1,50 +1,45 @@
-var gulp = require('gulp');
+var gulp = require('gulp'),
+    sass = require('gulp-sass'),
+    livereload = require('gulp-livereload'),
+    autoprefixer = require('gulp-autoprefixer'),
+    plumber = require('gulp-plumber'),
+    gutil = require('gulp-util');
 
-var sass = require('gulp-sass');
-var refresh = require('gulp-livereload');
-var autoprefixer = require('gulp-autoprefixer');
-
-var lr = require('tiny-lr')();
+function errorHandler (err) {
+  gutil.beep();
+  gutil.log(err.message || err);
+}
 
 /**
  * Task: `sass`
- * Convert SASS files to CSS
+ * Converts SASS files to CSS
  */
 gulp.task('sass', function() {
     gulp.src(['sass/style.scss'])
-        .pipe(sass())
+        .pipe(plumber({
+            errorHandler: errorHandler
+        }))
+        .pipe(sass({
+            includePaths : [
+                'bower_components/bourbon/app/assets/stylesheets',
+                'bower_components/neat/app/assets/stylesheets',
+                'bower_components/refills/source/stylesheets/'
+            ]
+        }))
 		.pipe(autoprefixer())
-        .pipe(gulp.dest('css'))
-		.pipe(refresh(lr));
-});
-
-/**
- * Task: `html`
- * Live reloads .HTML
- */
-gulp.task('html', function() {
-  gulp.src(['index.html'])
-    .pipe(refresh(lr));
-});
-
-/**
- * Task: `livereload`
- * Start LiveReload server
- */
-gulp.task('livereload', function(next) {
-  lr.listen(35730, function(err) {
-    if (err) return console.error(err);
-    next();
-  });
+        .pipe(plumber.stop())
+        .pipe(gulp.dest('css'));
 });
 
 /**
  * Task: `watch`
- * Watch SASS files for changes
+ * Watches files for changes
  */
-gulp.task('watch', ['livereload'], function() {
-  gulp.watch('sass/**/*.scss', ['sass']);
-  gulp.watch('index.html', ['html']);
+gulp.task('watch', function() {
+    livereload.listen();
+    gulp.watch('sass/**/*.scss', ['sass']);
+    gulp.watch(['*.html', 'css/style.css'])
+		.on('change', livereload.changed);
 });
 
 /**
