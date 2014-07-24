@@ -85,9 +85,10 @@ header.navigation {
 
 	.nav {
 		z-index: 9999999;
-		float: left;
+		float: none;
 
 		.navigation-menu {
+			float: left;
 
 			.views [class*='fa-'] {
 				background-color: $alert-color;
@@ -105,6 +106,7 @@ header.navigation {
 		float: right;
 		padding: 0;
 		background: transparent;
+		cursor: hand;
 
 		.create-post [class*='fa-'] {
 			background-color: $success-color;
