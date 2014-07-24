@@ -23,7 +23,8 @@ gulp.task('sass', function() {
             includePaths : [
                 'bower_components/bourbon/app/assets/stylesheets',
                 'bower_components/neat/app/assets/stylesheets',
-                'bower_components/refills/source/stylesheets/'
+                'bower_components/refills/source/stylesheets/',
+                'bower_components/font-awesome/scss/'
             ]
         }))
 		.pipe(autoprefixer())

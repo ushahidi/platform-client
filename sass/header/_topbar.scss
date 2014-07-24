@@ -1,0 +1,136 @@
+/*------------------------------------*\
+	CONTENTS
+\*------------------------------------*/
+/*
+* GENERAL...............general styles
+* LOGO...............site logo and site name
+* NAV...............top bar navigation styles
+* WORKSPACE OFF CANVAS...............workspace off canvas styles
+*/
+
+
+
+
+/*------------------------------------*\
+	$GENERAL
+\*------------------------------------*/
+
+// this overrides off-canvas nav to display under the topbar nav
+body {
+	z-index: -1;
+	position: relative;
+}
+
+/*------------------------------------*\
+	$LOGO
+\*------------------------------------*/
+
+header.navigation .logo {
+
+	img {
+		max-height: 60px;
+		float: left;
+	}
+
+	.site-title {
+		display: none;
+		float: left;
+		padding: 18px;
+		font-size: 1.25rem;
+		color: $white;
+		font-weight: bold;
+
+		@include media($small) {
+			display: inline-block;
+		}
+	}
+}
+
+
+
+
+/*------------------------------------*\
+	$NAV
+\*------------------------------------*/
+
+header.navigation {
+
+	.nav-link {
+		display: inline;
+		width: auto;
+		padding-right: 0;
+
+		@include media($medium) {
+			padding-right: 0.8em;
+		}
+	}
+
+	span {
+		display: none;
+
+		@include media($medium) {
+			display: inline-block;
+			padding-left: 10px;
+		}
+	}
+
+	[class*='fa-'] {
+		padding: 23px 23px 21px 23px;
+		color: $white;
+
+		@include media($medium) {
+			padding: auto;
+		}
+	}
+
+	.nav {
+		z-index: 9999999;
+		float: left;
+
+		.navigation-menu {
+
+			.views [class*='fa-'] {
+				background-color: $alert-color;
+			}
+
+			.sets [class*='fa-'] {
+				background-color: $warning-color;
+			}
+		}
+	}
+
+	.navigation-tools {
+		display: block;
+		clear: none;
+		float: right;
+		padding: 0;
+		background: transparent;
+
+		.create-post [class*='fa-'] {
+			background-color: $success-color;
+		}
+
+		.workspace-panel-button [class*='fa-'] {
+			background-color: $primary-color;
+		}
+	}
+}
+
+.sliding-menu-content {
+	left: auto;
+	right: 0px;
+	@include transition(all .2s linear);
+	transform: translateX(220px);
+	z-index: -1;
+}
+
+
+
+
+/*------------------------------------*\
+	$WORKSPACE OFF CANVAS
+\*------------------------------------*/
+
+.menu-screen {
+	@include transition(all .2s linear);
+}
