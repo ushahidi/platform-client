@@ -60,6 +60,10 @@ header.navigation {
 		width: auto;
 		padding-right: 0;
 
+		a {
+			font-weight: bold;
+		}
+
 		@include media($medium) {
 			padding-right: 0.8em;
 		}
@@ -75,7 +79,7 @@ header.navigation {
 	}
 
 	[class*='fa-'] {
-		padding: 23px 23px 21px 23px;
+		padding: 23px 20px 21px 20px;
 		color: $white;
 
 		@include media($medium) {
