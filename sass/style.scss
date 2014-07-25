@@ -35,6 +35,7 @@
 
 @import "settings";
 @import "base/base";
+@import "utils/helpers";
 
 
 
@@ -55,3 +56,4 @@
 
 @import "header/topbar";
 @import "header/subnav";
+@import "searchbar/searchbar";

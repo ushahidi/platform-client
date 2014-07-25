@@ -1,0 +1,187 @@
+/*------------------------------------*\
+		$CONTENTS
+\*------------------------------------*/
+/**
+ * SEARCH BAR...............search bar body
+ * SEARCH FORM FIELDS...............search bar input and dropdown fields
+ */
+
+
+
+
+
+/*------------------------------------*\
+		$SEARCH BAR
+\*------------------------------------*/
+.search-bar {
+	@include span-columns(12);
+	box-shadow: 0px 1px 2px rgba(lighten($darkGray, 30), 0.5);
+	background: $darkBlue;
+	padding-top: 2em;
+
+	.search-form-wrapper {
+		@include outer-container;
+		@include pad(0 20)
+	}
+
+	select {
+		width: 100%;
+		border-radius: $global-radius;
+		margin-bottom: .75rem;
+		height: 40px;
+
+		@include media($small) {
+			margin-bottom: 0;
+		}
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+		$SEARCH FORM FIELDS
+\*------------------------------------*/
+
+.location-field {
+	@include span-columns(12);
+
+	@include media($small) {
+		@include span-columns(4);
+
+		@include media($medium) {
+			@include span-columns(3);
+		}
+
+		input[type="text"] {
+			border-radius: $global-radius;
+			height: 40px;
+		}
+	}
+}
+
+.tags-select {
+	@include span-columns(12);
+	margin: 0 0 .75rem 0;
+
+	@include media($small) {
+		@include span-columns(4);
+	}
+
+	@include media($medium) {
+		@include span-columns(3);
+	}
+
+	select {
+		margin-bottom: 0;
+	}
+
+	.select2-container {
+		width: 100%;
+
+		.select2-choices {
+			border-radius: $global-radius;
+			padding: 4px 4px;
+			min-height: 40px;
+
+			[class*='fa-'] {
+				font-size: 15px;
+				padding: 0 0 0 5px;
+			}
+		}
+	}
+}
+
+.time-select {
+	@include span-columns(12);
+
+	@include media($small) {
+		@include span-columns(4);
+		@include omega;
+	}
+
+	@include media($medium) {
+		@include span-columns(3);
+	}
+
+		input[type="text"] {
+			border-radius: $global-radius;
+			height: 40px;
+			width: 50%;
+
+			&.time-from {
+				@include span-columns(12);
+				border-radius: $global-radius;
+
+				@include media($mobile-up) {
+					@include span-columns(6);
+					@include omega;
+					border-radius: $global-radius 0 0 $global-radius;
+				}
+			}
+
+			&.time-to {
+				border-left: 0;
+				@include span-columns(12);
+				border-radius: $global-radius;
+
+				@include media($mobile-up) {
+					@include span-columns(6);
+					border-radius: 0 $global-radius $global-radius 0;
+				}
+			}
+		}
+}
+
+.search-field-wrapper {
+	@include span-columns(12);
+
+	@include media($medium) {
+		@include span-columns(3);
+	}
+}
+
+.search-field {
+	@include span-columns(10);
+	@include omega;
+
+	@include media($small) {
+		@include span-columns(11);
+		@include omega;
+	}
+
+	@include media($medium) {
+		@include span-columns(9);
+		@include omega;
+	}
+}
+
+.search-field input[type="search"] {
+	border-radius: $global-radius;
+	height: 40px;
+}
+
+.search-bar-button {
+	@include span-columns(2);
+
+	@include media($small) {
+		@include span-columns(1)
+	}
+
+	@include media($medium) {
+		@include span-columns(3)
+	}
+
+	button {
+		@include button();
+		height: 40px;
+		font-size: 0.875em;
+		border-width: 0;
+
+		i {
+			font-size: 1.2em;
+			padding: 0;
+		}
+	}
+}

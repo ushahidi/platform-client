@@ -1,6 +1,6 @@
 // Grid
 $gutter: 1.6888em;
-$max-width: 940px;
+$max-width: 1280px;
 $mobile-min-width: (30em) !default; // 480px
 $mobile-up-min-width: (30.063em) !default; // 481px
 $small-min-width: (48em) !default; // 768px
@@ -18,11 +18,9 @@ $large: new-breakpoint(min-width $large-min-width);
 $xlarge: new-breakpoint(min-width $xlarge-min-width);
 $xxlarge: new-breakpoint(min-width $xxlarge-min-width);
 
-// Colors
-$black:          #000;
-$darkGray:       #333333;
-$midGray:        #e3e3e3;
-$darkBlue:       #22699D;
+/*------------------------------------*\
+	$COLORS
+\*------------------------------------*/
 
 // Ushahidi Pallette
 $blue:           #52c0c0;
@@ -31,18 +29,27 @@ $lightGray:      #eff0f3;
 $blueGray:       #2f3e4d;
 $white:          #fcfcfc;
 
+//Global
+$black:          #000;
+$darkGray:       #333333;
+$midGray:        #e3e3e3;
+$darkBlue:       #226a9c;
+
+$body-bg: $lightGray;
+$workspace-body-bg: $midGray;
+
 $primary-color: $blue;
 $secondary-color: $lightGray;
 $alert-color: #f96c5f;
 $warning-color: #fec244;
 $success-color: $green;
 
+// Social Networks
 $facebook-color:  #3b5998;
 $twitter-color:   #00acee;
 $google-color:    #dd4b39;
 
-$body-bg: $lightGray;
-$workspace-body-bg: $midGray;
+
 
 // Fonts
 $body-font-color: $darkGray;
@@ -50,3 +57,7 @@ $sub-body-font-color: #9A9797;
 $body-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $body-font-weight: normal;
 $body-font-style: normal;
+
+//Layout
+
+$global-radius: 3px;
