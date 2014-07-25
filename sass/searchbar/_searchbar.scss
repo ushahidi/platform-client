@@ -105,33 +105,32 @@
 		@include span-columns(3);
 	}
 
-		input[type="text"] {
+	input[type="text"] {
+		border-radius: $global-radius;
+		height: 40px;
+		width: 50%;
+
+		&.time-from {
+			@include span-columns(12);
 			border-radius: $global-radius;
-			height: 40px;
-			width: 50%;
 
-			&.time-from {
-				@include span-columns(12);
-				border-radius: $global-radius;
-
-				@include media($mobile-up) {
-					@include span-columns(6);
-					@include omega;
-					border-radius: $global-radius 0 0 $global-radius;
-				}
-			}
-
-			&.time-to {
-				border-left: 0;
-				@include span-columns(12);
-				border-radius: $global-radius;
-
-				@include media($mobile-up) {
-					@include span-columns(6);
-					border-radius: 0 $global-radius $global-radius 0;
-				}
+			@include media($mobile-up) {
+				@include span-columns(6);
+				border-radius: $global-radius 0 0 $global-radius;
 			}
 		}
+
+		&.time-to {
+			border-left: 0;
+			@include span-columns(12);
+			border-radius: $global-radius;
+
+			@include media($mobile-up) {
+				@include span-columns(6);
+				border-radius: 0 $global-radius $global-radius 0;
+			}
+		}
+	}
 }
 
 .search-field-wrapper {
@@ -144,16 +143,13 @@
 
 .search-field {
 	@include span-columns(10);
-	@include omega;
 
 	@include media($small) {
 		@include span-columns(11);
-		@include omega;
 	}
 
 	@include media($medium) {
 		@include span-columns(9);
-		@include omega;
 	}
 }
 
@@ -166,15 +162,16 @@
 	@include span-columns(2);
 
 	@include media($small) {
-		@include span-columns(1)
+		@include span-columns(1);
 	}
 
 	@include media($medium) {
-		@include span-columns(3)
+		@include span-columns(3);
 	}
 
 	button {
 		@include button();
+		@include fill-parent();
 		height: 40px;
 		font-size: 0.875em;
 		border-width: 0;
