@@ -2,7 +2,10 @@
 	CONTENTS
 \*------------------------------------*/
 /*
-* BOURBON & PLUGINS...............Bourbon, Neat, Bitters and Refills
+* BOURBON & FRIENDS...............Bourbon, Neat, Bitters and Refills
+* CONFIG...........................user configs
+* GLOBAL...........................global styles & overrides
+* UTILS...........................helpers
 * ICONS...........................FontAwesome
 * HEADER..........................topbar & workspace menu
 */
@@ -11,7 +14,7 @@
 
 
 /*------------------------------------*\
-	$BOURBON & PLUGINS
+	$BOURBON & FRIENDS
 \*------------------------------------*/
 
 // Bourbon
@@ -34,7 +37,23 @@
 \*------------------------------------*/
 
 @import "settings";
-@import "base/base";
+
+
+
+
+/*------------------------------------*\
+	$GLOBAL
+\*------------------------------------*/
+
+@import "base/global";
+
+
+
+
+/*------------------------------------*\
+	$UTILS
+\*------------------------------------*/
+
 @import "utils/helpers";
 
 
