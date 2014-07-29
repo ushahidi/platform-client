@@ -62,25 +62,32 @@
 						<label class="visually-hidden" for="tags">Tags</label>
 						<select class="search-tag-field  js-search-tag" multiple placeholder="Tags">
 						</select>
-					</div>
+					</div> <!-- end .tags-select -->
 
 					<div class="time-select">
 						<label class="visually-hidden" for="time-from">From Time</label>
-							<input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From Time" value="">
+							<div class="input-wrapper">
+								<input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From" value="">
+								<i class="fa  fa-calendar"></i>
+							</div>
+
 						<label class="visually-hidden" for="time-to">Until Time</label>
-							<input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="Until Time" value="">
-					</div>
+							<div class="input-wrapper">
+								<input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="To" value="">
+								<i class="fa  fa-calendar"></i>
+							</div>
+					</div> <!-- end .time-select -->
 
 					<div class="search-field-wrapper">
 						<div class="search-field">
 							<label class="visually-hidden" for="search-field">Search</label>
 							<input type="search" id="q" class="search-field  js-search-keyword" placeholder="Keyword" value="">
-						</div>
+						</div> <!-- end .search-field -->
 
 						<div class="search-bar-button">
 							<button type="submit" class=""><i class="fa  fa-search"></i></button>
-						</div>
-					</div>
+						</div><!-- end .search-bar-button -->
+					</div> <!-- end .search-field-wrapper -->
 
 				</div>
 			</form>

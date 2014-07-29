@@ -108,17 +108,40 @@
 		@include span-columns(3);
 	}
 
+	.input-wrapper {
+		@include span-columns(12);
+		position: relative;
+
+		@include media($small) {
+			@include span-columns(6);
+		}
+
+		.time-from + [class*='fa-'] {
+			position: absolute;
+			right: 0;
+			padding: 13px;
+			z-index: 2;
+			color: $sub-body-font-color;
+		}
+
+		.time-to + [class*='fa-'] {
+			position: absolute;
+			right: 0;
+			padding: 13px;
+			z-index: 2;
+			color: $sub-body-font-color;
+		}
+	}
+
 	input[type="text"] {
 		border-radius: $global-radius;
 		height: 40px;
-		width: 50%;
+		padding-right: 40px;
 
 		&.time-from {
-			@include span-columns(12);
 			border-radius: $global-radius;
 
 			@include media($mobile-up) {
-				@include span-columns(6);
 				border-radius: $global-radius 0 0 $global-radius;
 				@include omega;
 			}
@@ -126,13 +149,11 @@
 
 		&.time-to {
 			border-left: 0;
-			@include span-columns(12);
 			border-radius: $global-radius;
 
 			@include media($mobile-up) {
-				@include span-columns(6);
 				border-radius: 0 $global-radius $global-radius 0;
-				width: 50.82117%;
+
 			}
 		}
 	}
