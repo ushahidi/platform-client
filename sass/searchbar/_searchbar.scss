@@ -44,6 +44,24 @@
 	$SEARCH FORM FIELDS
 \*------------------------------------*/
 
+// wrapper and icon
+.wrapper {
+	position: relative;
+
+	input[type="text"] {
+		padding-right: 30px;
+	}
+
+	[class*='fa-'] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 13px 0.5em;
+		z-index: 2;
+		color: $sub-body-font-color;
+	}
+}
+
 // Location
 .location-field {
 	@include span-columns(12);
@@ -108,35 +126,18 @@
 		@include span-columns(3);
 	}
 
-	.input-wrapper {
+	.wrapper {
 		@include span-columns(12);
 		position: relative;
 
 		@include media($small) {
 			@include span-columns(6);
 		}
-
-		.time-from + [class*='fa-'] {
-			position: absolute;
-			right: 0;
-			padding: 13px;
-			z-index: 2;
-			color: $sub-body-font-color;
-		}
-
-		.time-to + [class*='fa-'] {
-			position: absolute;
-			right: 0;
-			padding: 13px;
-			z-index: 2;
-			color: $sub-body-font-color;
-		}
 	}
 
 	input[type="text"] {
 		border-radius: $global-radius;
 		height: 40px;
-		padding-right: 40px;
 
 		&.time-from {
 			border-radius: $global-radius;

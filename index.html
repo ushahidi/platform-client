@@ -54,25 +54,30 @@
 
 					<div class="location-field">
 						<label class="visually-hidden" for="location-field">Location</label>
-						<input type="text" id="location-field" class="location-field  js-search-location" placeholder="Location" value="">
+						<div class="wrapper">
+							<input type="text" id="location-field" class="location-field  js-search-location" placeholder="Location" value="">
+							<i class="fa  fa-map-marker"></i>
+						</div>
 					</div>
 
 					<!-- TODO: need to figure out best solution for tags, time etc... -->
 					<div class="tags-select">
 						<label class="visually-hidden" for="tags">Tags</label>
-						<select class="search-tag-field  js-search-tag" multiple placeholder="Tags">
-						</select>
+						<div class="wrapper">
+							<select class="search-tag-field  js-search-tag" multiple placeholder="Tags"></select>
+							<i class="fa  fa-tags"></i>
+						</div>
 					</div> <!-- end .tags-select -->
 
 					<div class="time-select">
 						<label class="visually-hidden" for="time-from">From Time</label>
-							<div class="input-wrapper">
+							<div class="wrapper">
 								<input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From" value="">
 								<i class="fa  fa-calendar"></i>
 							</div>
 
 						<label class="visually-hidden" for="time-to">Until Time</label>
-							<div class="input-wrapper">
+							<div class="wrapper">
 								<input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="To" value="">
 								<i class="fa  fa-calendar"></i>
 							</div>
