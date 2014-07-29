@@ -44,23 +44,25 @@
 	$SEARCH FORM FIELDS
 \*------------------------------------*/
 
+// Location
 .location-field {
 	@include span-columns(12);
 
 	@include media($small) {
 		@include span-columns(4);
+	}
 
-		@include media($medium) {
-			@include span-columns(3);
-		}
+	@include media($medium) {
+		@include span-columns(3);
+	}
 
-		input[type="text"] {
-			border-radius: $global-radius;
-			height: 40px;
-		}
+	input[type="text"] {
+		border-radius: $global-radius;
+		height: 40px;
 	}
 }
 
+// Tags
 .tags-select {
 	@include span-columns(12);
 	margin: 0 0 .75rem 0;
@@ -93,6 +95,7 @@
 	}
 }
 
+// Time
 .time-select {
 	@include span-columns(12);
 
@@ -117,6 +120,7 @@
 			@include media($mobile-up) {
 				@include span-columns(6);
 				border-radius: $global-radius 0 0 $global-radius;
+				@include omega;
 			}
 		}
 
@@ -128,11 +132,13 @@
 			@include media($mobile-up) {
 				@include span-columns(6);
 				border-radius: 0 $global-radius $global-radius 0;
+				width: 50.82117%;
 			}
 		}
 	}
 }
 
+// Search
 .search-field-wrapper {
 	@include span-columns(12);
 
@@ -143,18 +149,21 @@
 
 .search-field {
 	@include span-columns(10);
+	@include omega;
 
 	@include media($small) {
 		@include span-columns(11);
+		@include omega;
 	}
 
 	@include media($medium) {
 		@include span-columns(9);
+		@include omega;
 	}
 }
 
 .search-field input[type="search"] {
-	border-radius: $global-radius;
+	border-radius: $global-radius 0 0 $global-radius;
 	height: 40px;
 }
 
@@ -171,10 +180,19 @@
 
 	button {
 		@include button();
-		@include fill-parent();
+		width: 114%;
 		height: 40px;
 		font-size: 0.875em;
 		border-width: 0;
+		border-radius: 0 $global-radius $global-radius 0;
+
+		@include media($small) {
+			width: 134%;
+		}
+
+		@include media($medium) {
+			width: 109%;
+		}
 
 		i {
 			font-size: 1.2em;
