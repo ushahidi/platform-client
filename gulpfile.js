@@ -10,6 +10,15 @@ function errorHandler (err) {
   gutil.log(err.message || err);
 }
 
+// Options
+var options = {};
+
+options.autoprefixer = {
+  map: true,
+  from: 'css',
+  to: 'style.min.css'
+};
+
 /**
  * Task: `sass`
  * Converts SASS files to CSS
@@ -25,9 +34,11 @@ gulp.task('sass', function() {
                 'bower_components/neat/app/assets/stylesheets',
                 'bower_components/refills/source/stylesheets/',
                 'bower_components/font-awesome/scss/'
-            ]
+            ],
+            sourceComments: 'map',
+            sourceMap: 'true'
         }))
-		.pipe(autoprefixer())
+		.pipe(autoprefixer(options.autoprefixer))
         .pipe(plumber.stop())
         .pipe(gulp.dest('css'));
 });
