@@ -24,7 +24,7 @@
 @import "neat";
 
 // Bitters
-@import "sass/bitters/_base.scss";
+@import "sass/vendor/bitters/_base.scss";
 
 // Refills
 @import "all";
@@ -73,6 +73,14 @@
 	$HEADER
 \*------------------------------------*/
 
-@import "header/topbar";
-@import "header/subnav";
-@import "searchbar/searchbar";
+@import "partials/header/topbar";
+@import "partials/header/subnav";
+
+
+
+
+/*------------------------------------*\
+	$SEARCH BAR
+\*------------------------------------*/
+
+@import "partials/searchbar/searchbar";
