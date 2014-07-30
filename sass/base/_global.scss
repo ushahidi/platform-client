@@ -8,6 +8,11 @@
 
 
 
+.container {
+	@include outer-container;
+	padding: 0 20px;
+}
+
 [class*='fa-'] {
 	padding-right: 5px;
 }

@@ -23,9 +23,6 @@
 //Neat
 @import "neat";
 
-// Bitters
-@import "sass/vendor/bitters/_base.scss";
-
 // Refills
 @import "all";
 
@@ -36,8 +33,11 @@
 	$CONFIG
 \*------------------------------------*/
 
+
 @import "settings";
 
+// Bitters
+@import "sass/vendor/bitters/_base.scss";
 
 
 
@@ -84,3 +84,12 @@
 \*------------------------------------*/
 
 @import "partials/searchbar/searchbar";
+
+
+
+
+/*------------------------------------*\
+	$LIST FILTER
+\*------------------------------------*/
+
+@import "partials/list-filter/list-filter";
