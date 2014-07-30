@@ -38,7 +38,7 @@ gulp.task('sass', function() {
             sourceComments: 'map',
             sourceMap: 'true'
         }))
-		.pipe(autoprefixer(options.autoprefixer))
+        .pipe(autoprefixer(options.autoprefixer))
         .pipe(plumber.stop())
         .pipe(gulp.dest('css'));
 });
