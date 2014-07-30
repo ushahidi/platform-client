@@ -1,5 +1,5 @@
 %flash-alert {
-  @include flash($alert-color);
+  @include flash($primary-color);
 }
 
 %flash-error {
@@ -7,7 +7,7 @@
 }
 
 %flash-notice {
-  @include flash($notice-color);
+  @include flash($warning-color);
 }
 
 %flash-success {
