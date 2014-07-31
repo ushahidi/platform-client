@@ -3,7 +3,6 @@
 \*------------------------------------*/
 /**
 * VISIBILITY...............custom helper classes
-* TEXT...............custom text classes
 */
 
 
@@ -45,17 +44,4 @@ body:hover .visually-hidden button {
 .visible {
 	opacity: 1;
 	@include transition (opacity .3s ease-in-out);
-}
-
-
-
-
-/*------------------------------------*\
-	$TEXT
-\*------------------------------------*/
-
-%underline,
-.underline {
-	border-bottom: 2px dotted;
-	padding-bottom: 3px;
 }
