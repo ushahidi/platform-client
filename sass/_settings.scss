@@ -32,26 +32,22 @@ $xxlarge: new-breakpoint(min-width $xxlarge-min-width);
 \*------------------------------------*/
 
 // Ushahidi Pallette
-$blue:           #52c0c0;
-$green:          #68bc7a;
-$lightGray:      #eff0f3;
-$blueGray:       #2f3e4d;
-$white:          #fcfcfc;
-
-//Global
-$black:          #000;
-$darkGray:       #333333;
-$midGray:        #e3e3e3;
-$darkBlue:       #226a9c;
-
-$body-bg: $lightGray;
-$workspace-body-bg: $midGray;
-
-$primary-color: $blue;
-$secondary-color: $lightGray;
+$primary-color: #52c0c0;
+$secondary-color: #eff0f3;
 $alert-color: #f96c5f;
 $warning-color: #fec244;
-$success-color: $green;
+$success-color: #68bc7a;
+
+$black:          #000;
+$darkGray:       #333333;
+$lightGray:        #e3e3e3;
+$white:          #fcfcfc;
+
+$blueGray:       #2f3e4d;
+$darkBlue:       #226a9c;
+
+$body-bg: $secondary-color;
+$workspace-body-bg: $lightGray;
 
 // Social Networks
 $facebook-color:  #3b5998;
@@ -63,9 +59,11 @@ $google-color:    #dd4b39;
 // Fonts
 $base-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $body-font-color: $darkGray;
-$sub-body-font-color: #9A9797;
+$sub-body-font-color: #717171;
 $body-font-weight: normal;
 $body-font-style: normal;
+
+$small-font-size: .8em;
 
 //Layout
 
