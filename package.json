@@ -1,16 +1,15 @@
 {
-  "name": "platform-bourbon",
-  "version": "1.0.0",
-  "description": "Ushahidi Platform Bourbon Protoype",
+  "name": "ushahidi-platform-client",
+  "version": "0.9.0",
+  "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ushahidi/platform-bourbon.git"
+    "url": "https://github.com/ushahidi/platform-client.git"
   },
   "author": "Ushahidi",
-  "license": "All Rights Reserved",
-  "private": true,
-  "homepage": "https://github.com/ushahidi/platform-bourbon",
+  "license": "AGPL",
+  "homepage": "https://github.com/ushahidi/platform-client",
   "devDependencies": {
     "gulp": "~3.8.6",
     "gulp-sass": "~0.7.2",
