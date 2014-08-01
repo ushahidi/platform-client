@@ -12,8 +12,9 @@ function errorHandler (err) {
 }
 
 // Options
+// - (bool) vm: enable docker builds, default: false
 var options = {
-    vm: true
+    vm: false
 };
 
 /**
