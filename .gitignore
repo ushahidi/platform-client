@@ -1,5 +1,4 @@
+.sass-cache
 bower_components
 node_modules
-web/css/*.css
-.sass-cache
-assets/css/style.css
+www/css/style.css

@@ -21,3 +21,15 @@ $(document).ready(function(){
 	});
 	// $('.js-views-menu-link').toggleClass('active');
 });
+
+//Dropdown Button
+$(document).ready(function(){
+$('.dropdown-button').on('click touchstart', function(e){
+	console.log('test');
+	$('.menu').toggleClass('show-menu');
+	$('.menu > li').on('click touchstart', function(e){
+	$('.dropdown-button').html($(this).html());
+	$('.menu').removeClass('show-menu');
+	});
+});
+});
