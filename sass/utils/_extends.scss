@@ -14,3 +14,9 @@
 	border-bottom: 2px dotted;
 	padding-bottom: 3px;
 }
+
+%unselectable {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}

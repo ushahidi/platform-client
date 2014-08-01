@@ -1,0 +1,25 @@
+/*------------------------------------*\
+	CONTENTS
+\*------------------------------------*/
+/*
+* MIXINS...............sass mixins
+*/
+
+
+
+
+/*------------------------------------*\
+	$BADGE
+\*------------------------------------*/
+
+@mixin badge($color) {
+
+	$badge-font-size: $base-font-size * .85;
+
+	background-color: $color;
+	color: $white;
+	font-size: $badge-font-size;
+	padding: .15em 1em 0.35em;
+	text-align: center;
+	font-weight: bold;
+}
