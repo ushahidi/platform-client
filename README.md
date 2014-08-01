@@ -2,6 +2,7 @@ Ushahidi Platform Prototype
 ===========================
 
 ### Libraries/Packages/Dependencies
+
 * Nodejs
 * Bower
 * Gulp 3.8.6 (and various gulp plugins)
@@ -19,16 +20,27 @@ Ushahidi Platform Prototype
 ### Install Node Packages
 `npm install`
 
+### Optional: Run Docker
+
+*[Docker](https://www.docker.com/) is a very simple way to run applications in
+completely separate server environments. Our Docker application runs a local
+nginx server that serves the client as simply as possible, using the
+[official Docker nginx server](https://registry.hub.docker.com/_/nginx/).*
+
+To enable the Docker container, edit `gulpfile.js` and set `options.vm = true`.
+
 ### Download and Activate Live Reload Plugin
+
 http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions
 
 ### Navigate to project root and run Gulp
+
 `gulp`
 
 * watches for changes
 * compiles sass
+* rebuilds docker container, if enabled
 * live reloads `index.html`
-
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
