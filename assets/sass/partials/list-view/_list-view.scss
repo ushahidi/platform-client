@@ -1,0 +1,201 @@
+/*------------------------------------*\
+		$CONTENTS
+\*------------------------------------*/
+/**
+ * LIST VIEW WRAPPER..................wrapper around all posts in list view
+ * LIST VIEW...............list view {element} list
+ */
+
+
+
+
+/*------------------------------------*\
+		$LIST VIEW WRAPPER
+\*------------------------------------*/
+
+.list-view-wrapper {
+	@include outer-container;
+	color: $sub-body-font-color;
+	margin-bottom: 40px;
+	padding-top: 30px;
+	background-color: $white;
+
+	.container {
+		box-shadow: 0px 2px 4px -1px rgba(lighten($darkGray, 30), 0.5);
+
+	}
+}
+
+
+
+
+/*-------------------------------------------------------------------*\
+		$LIST VIEW
+\*-------------------------------------------------------------------*/
+
+//All Content
+
+.list-view-content {
+	margin-bottom: 40px;
+}
+
+// Image
+.list-view-image {
+	@include span-columns(4, table);
+	vertical-align: top;
+	padding-right: 1.4em;
+
+	@include media($small) {
+		@include span-columns(2, table);
+		padding-right: 2.4em;
+	}
+
+	@include media($medium) {
+		@include span-columns(2, table);
+		padding-right: 3.4em;
+	}
+}
+
+// Details
+.list-view-details {
+	@include span-columns(8, table);
+	vertical-align: top;
+
+	@include media($small) {
+		@include span-columns(10, table);
+	}
+
+	@include media($medium) {
+		@include span-columns(10, table);
+	}
+}
+
+// Header
+.list-view-header {
+	@include span-columns(12);
+	margin-bottom: 20px;
+
+	@include media($small) {
+		@include span-columns(7);
+		margin-bottom: 0;
+	}
+}
+
+// Time
+.list-view-time {
+	@include span-columns(12);
+	font-size: 15px;
+
+	@include media($small) {
+		@include span-columns(3);
+	}
+
+	p {
+		float: left;
+
+		@include media($small) {
+			float: right;
+		}
+	}
+
+}
+
+// Privacy
+.list-view-privacy-status {
+	@include span-columns(12);
+	@include omega;
+
+	@include media($small) {
+		@include span-columns(2);
+		@include omega;
+	}
+
+	.privacy-badge {
+		@include badge($alert-color);
+		float: left;
+
+		@include media($small) {
+			float: right;
+		}
+	}
+}
+
+// Excerpt
+.list-view-excerpt {
+	@include span-columns(12);
+	margin-top: 20px;
+}
+
+//Tags
+.list-view-tags-wrapper {
+	@include span-columns(12);
+
+	@include media($small) {
+		@include span-columns(8);
+	}
+
+	.list-view-tags-header {
+		margin-bottom: 5px;
+	}
+
+	.list-view-tags {
+		margin: 0;
+
+		a {
+			font-size: $small-font-size;
+
+			li {
+				display: inline;
+				padding-right: 5px;
+
+				.fa-circle {
+					padding-right: 5px;
+				}
+			}
+		}
+	}
+}
+
+// Admin
+.list-view-admin {
+	@include span-columns(12);
+	@extend %unselectable;
+	margin: 30px 0 20px 0;
+
+	@include media($small) {
+		@include span-columns(4);
+		float: right;
+		margin-top: 0;
+	}
+
+	.list-view-admin-list {
+
+		.list-view-admin-list__item {
+			float: left;
+			padding: 0 10px 20px;
+
+			@include media($small) {
+				padding-bottom: 3px;
+			}
+
+			a {
+				margin-bottom: 0;
+
+				&:hover {
+					color: $body-font-color;
+				}
+			}
+		}
+	}
+
+	.dropdown {
+		text-align: left;
+
+		@include media($small) {
+			text-align: right;
+			margin-top: 12px;
+		}
+	}
+
+
+}

@@ -8,6 +8,8 @@
 * UTILS...........................helpers
 * ICONS...........................FontAwesome
 * HEADER..........................topbar & workspace menu
+* SEARCH BAR..........................home page search bar
+* LIST FILTER & LIST VIEW..........................list filter & list view
 */
 
 
@@ -91,7 +93,8 @@
 
 
 /*------------------------------------*\
-	$LIST FILTER
+	$LIST FILTER & LIST VIEW
 \*------------------------------------*/
 
 @import "partials/list-filter/list-filter";
+@import "partials/list-view/list-view";

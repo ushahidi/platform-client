@@ -15,10 +15,10 @@
 
 // FILTER
 .list-filter {
-	@include span-columns(12);
+	@include outer-container;
+	clear: both;
 	background: $blueGray;
 	padding: 20px 0;
-	margin: 20px 0;
 }
 
 // FILTER INFO

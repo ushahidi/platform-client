@@ -120,14 +120,53 @@
 					<div class="filter-sort-select">
 						<label class="visually-hidden" for="filter-sort">Sort posts by</label>
 						<select id="filter-sort" class="filter-sort  js-filter-sort">
-						{{#each sortKeys}}
-							<option value="{{@key}}">{{this}}</option>
-						{{/each}}
+							<option>Filter</option>
+							<option>Created</option>
+							<option>Updated</option>
+							<option>Title A to Z</option>
 						</select>
 					</div>
 				</div> <!-- end .list-filter-sort -->
 			</div> <!-- end .container -->
 		</div> <!-- end .list-filter -->
+
+		<div class="list-view-wrapper">
+			<div class="container">
+				<article class="list-view-content">
+					<div class="list-view-image">
+						<img src="assets/img/list-view-image.jpg" alt="">
+					</div> <!-- end .list-view-image -->
+
+					<div class="list-view-details">
+						<h4 class="list-view-header"><a href="#posts/{{id}}">Cupidatat Lorem qui nostrud sunt cupidatat nostrud sunt.</a></h4>
+						<div class="list-view-time">
+							<p> <i class="fa  fa-clock-o"></i>Today 12:20 pm</p>
+						</div> <!-- end .list-view-time -->
+						<div class="list-view-privacy-status">
+							<span class="privacy-badge">private</span>
+						</div>
+
+						<div class="list-view-excerpt">
+							<p>A zombie outbreak has been confirmed on this college campus. The attack took place sometime between the hours of 5:00 and 10:00 am on March 31st, 2010. While most of the students escaped unscathed, thanks to the valiant efforts of the faculty, the unfortunate faculty members have been infected. They are presently continuing their classes as scheduled, however, they are luring students, one by one, to isolated locations and infecting them. All students should take caution when dealing with their profesors.<a href="#posts/{{id}}"><span class="read-more"> &nbsp;Read&nbsp;More</span></a></p>
+						</div> <!-- end .list-view-excerpt -->
+
+						<div class="list-view-tags-wrapper">
+							<h6 class="list-view-tags-header"><i class="fa  fa-tags"></i>Tags</h6>
+							<ul class="list-view-tags">
+								<a href="#"><li><i class="fa fa-circle" style="color: #C50813"></i>Automobiles</li></a>
+								<a href="#"><li><i class="fa fa-circle" style="color: #23699D;"></i>Transport</li></a>
+								<a href="#"><li><i class="fa fa-circle" style="color: #4fa425;"></i>London</li></a>
+								<a href="#"><li><i class="fa fa-circle" style="color: #baac29;"></i>Retro</li></a>
+							</ul>
+						</div> <!-- end .list-view-tags-wrapper -->
+
+
+					</div> <!-- end .list-view-details -->
+
+
+				</article>
+			</div>
+		</div> <!-- end .list-view-wrapper -->
 
 	</body>
 
