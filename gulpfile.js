@@ -15,7 +15,7 @@ var options = {};
 
 options.autoprefixer = {
   map: true,
-  from: 'assets/css',
+  from: 'www/css',
   to: 'style.min.css'
 };
 
@@ -24,7 +24,7 @@ options.autoprefixer = {
  * Converts SASS files to CSS
  */
 gulp.task('sass', function() {
-    gulp.src(['assets/sass/style.scss'])
+    gulp.src(['sass/style.scss'])
         .pipe(plumber({
             errorHandler: errorHandler
         }))
@@ -32,13 +32,13 @@ gulp.task('sass', function() {
             includePaths : [
                 'bower_components/bourbon/app/assets/stylesheets',
                 'bower_components/neat/app/assets/stylesheets',
-                'bower_components/refills/source/stylesheets/',
-                'bower_components/font-awesome/scss/'
+                'bower_components/refills/source/stylesheets',
+                'bower_components/font-awesome/scss'
             ]
         }))
         .pipe(autoprefixer(options.autoprefixer))
         .pipe(plumber.stop())
-        .pipe(gulp.dest('assets/css'));
+        .pipe(gulp.dest('www/css'));
 });
 
 /**
@@ -47,9 +47,9 @@ gulp.task('sass', function() {
  */
 gulp.task('watch', function() {
     livereload.listen();
-    gulp.watch('assets/sass/**/*.scss', ['sass']);
-    gulp.watch(['assets/*.html', 'assets/css/style.css'])
-		.on('change', livereload.changed);
+    gulp.watch('sass/**/*.scss', ['sass']);
+    gulp.watch(['www/*.html', 'www/css/style.css'])
+        .on('change', livereload.changed);
 });
 
 /**
