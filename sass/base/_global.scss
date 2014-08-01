@@ -7,6 +7,9 @@
 
 
 
+body {
+	background-color: $body-bg;
+}
 
 .container {
 	@include outer-container;
