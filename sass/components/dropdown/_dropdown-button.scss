@@ -81,7 +81,7 @@ $dropdown-arrow-top-distance: 0;
 	z-index: 99999;
 
 	&:before {
-		@include position(absolute, 0 1em 0 0);
+		@include position(absolute, 0 .44em 0 0);
 		color: $dropdown-background;
 		content: "\25b2";
 		font-size: 1.4em;
