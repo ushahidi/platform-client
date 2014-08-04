@@ -16,19 +16,20 @@
 .list-view-wrapper {
 	@include outer-container;
 	color: $sub-body-font-color;
-	padding-top: 30px;
 	margin-bottom: 40px;
 	background-color: $white;
 	box-shadow: 0px 2px 4px -1px rgba(lighten($darkGray, 30), 0.5);
 
 	.container {
-		border-bottom: 1px solid $secondary-color;
-		margin-bottom: 30px;
-		padding: 0 30px;
+		border-top: 1px solid $secondary-color;
+		padding: 30px 30px 0;
 
-		&:last-child {
-			border-bottom: none;
-			margin-bottom: 0;
+		&:first-child {
+			border-top: none;
+		}
+
+		&.selected {
+			background-color: darken($secondary-color, 5);
 		}
 	}
 }
