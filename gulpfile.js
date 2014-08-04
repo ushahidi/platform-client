@@ -37,7 +37,10 @@ gulp.task('sass', function() {
                 'bower_components/neat/app/assets/stylesheets',
                 'bower_components/refills/source/stylesheets',
                 'bower_components/font-awesome/scss'
-            ]
+            ],
+            sourceComments: 'map',
+            sourceMap: 'true'
+
         }))
         .pipe(autoprefixer(options))
         .pipe(plumber.stop())
@@ -116,4 +119,3 @@ gulp.task('vm', function() {
  * Default task optimized for development
  */
 gulp.task('default', options.vm ? ['vm'] : ['sass', 'watch']);
-
