@@ -182,27 +182,34 @@
 
 		.list-view-admin-list__item {
 			float: left;
-			padding: 0 10px 20px;
+			width: 50%;
+			padding: 15px 0;
+			text-align: center;
 
-			@include media($small) {
-				padding-bottom: 3px;
+			&:last-child {
+				border-bottom: 1px solid silver;
+				border-radius: 0;
+			}
+
+			&:hover {
+				@include transition(background-color 0.1s linear);
+
+				a {
+					color: $hover-link-color
+				}
 			}
 
 			a {
 				margin-bottom: 0;
-
-				&:hover {
-					color: $body-font-color;
-				}
+				font-size: 15px;
 			}
 		}
 	}
 
 	.dropdown {
-		text-align: left;
+		text-align: right;
 
 		@include media($small) {
-			text-align: right;
 			margin-top: 12px;
 		}
 	}
