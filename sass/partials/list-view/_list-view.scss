@@ -87,7 +87,7 @@
 	margin-bottom: 20px;
 
 	@include media($small) {
-		@include span-columns(7);
+		@include span-columns(6);
 		margin-bottom: 0;
 	}
 }
@@ -98,7 +98,7 @@
 	font-size: 15px;
 
 	@include media($small) {
-		@include span-columns(3);
+		@include span-columns(2);
 	}
 
 	p {
@@ -112,21 +112,32 @@
 }
 
 // Privacy
-.list-view-privacy-status {
+.list-view-post-status-wrapper {
 	@include span-columns(12);
 	@include omega;
 
 	@include media($small) {
-		@include span-columns(2);
+		@include span-columns(4);
 		@include omega;
 	}
 
-	.privacy-badge {
-		@include badge($alert-color);
+	.list-view-post-status {
 		float: left;
 
 		@include media($small) {
 			float: right;
+		}
+
+		.badge--private {
+			@include badge($blueGray);
+		}
+
+		.badge--published {
+			@include badge($success-color);
+		}
+
+		.badge--unpublished {
+			@include badge($alert-color);
 		}
 	}
 }
