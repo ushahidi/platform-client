@@ -11,6 +11,23 @@ body {
 	background-color: $body-bg;
 }
 
+.main {
+	@include span-columns(12);
+
+	@include media($large) {
+		@include span-columns(8);
+	}
+}
+
+.sidebar {
+	@include span-columns(12);
+	@include omega;
+
+	@include media($large) {
+		@include span-columns(4);
+	}
+}
+
 .container {
 	@include outer-container;
 	padding: 0 20px;
