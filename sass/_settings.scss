@@ -54,7 +54,9 @@ $facebook-color:  #3b5998;
 $twitter-color:   #00acee;
 $google-color:    #dd4b39;
 
-
+/*------------------------------------*\
+	$TYPE
+\*------------------------------------*/
 
 // Fonts
 $base-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
@@ -68,3 +70,9 @@ $small-font-size: .8em;
 //Layout
 
 $global-radius: 3px;
+
+/*------------------------------------*\
+	$TRANSITIONS
+\*------------------------------------*/
+
+$transition-duration: 0.1s;

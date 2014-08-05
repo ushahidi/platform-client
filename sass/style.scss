@@ -22,7 +22,7 @@
 // Bourbon
 @import "bourbon";
 
-//Neat
+// Neat
 @import "neat";
 
 // Refills
@@ -34,7 +34,6 @@
 /*------------------------------------*\
 	$CONFIG
 \*------------------------------------*/
-
 
 @import "settings";
 
@@ -67,37 +66,23 @@
 	$ICONS
 \*------------------------------------*/
 
-// Font Awesome
 @import "font-awesome";
 
 
 
 
 /*------------------------------------*\
-	$HEADER
+	$PARTIALS
 \*------------------------------------*/
 
 @import "partials/header/topbar";
 @import "partials/header/subnav";
-
-
-
-
-/*------------------------------------*\
-	$SEARCH BAR
-\*------------------------------------*/
-
 @import "partials/searchbar/searchbar";
-
-
-
-
-/*------------------------------------*\
-	$LIST FILTER & LIST VIEW
-\*------------------------------------*/
-
 @import "partials/list-filter/list-filter";
 @import "partials/list-view/list-view";
+
+
+
 
 /*------------------------------------*\
 	$COMPONENTS
@@ -105,3 +90,11 @@
 
 @import "components/pagination/pagination";
 @import "components/dropdown/dropdown-button";
+@import "components/accordion-tabs/accordion-tabs";
+
+
+
+
+/*------------------------------------*\
+\*------------------------------------*/
+
