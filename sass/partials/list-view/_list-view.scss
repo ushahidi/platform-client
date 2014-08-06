@@ -57,11 +57,6 @@
 		@include span-columns(2, table);
 		padding-right: 2.4em;
 	}
-
-	@include media($medium) {
-		@include span-columns(2, table);
-		padding-right: 3.4em;
-	}
 }
 
 // Details
@@ -85,11 +80,6 @@
 .list-view-header {
 	@include span-columns(12);
 	margin-bottom: 20px;
-
-	@include media($small) {
-		@include span-columns(6);
-		margin-bottom: 0;
-	}
 }
 
 // Time
@@ -98,17 +88,8 @@
 	font-size: 15px;
 
 	@include media($small) {
-		@include span-columns(2);
+		@include span-columns(4);
 	}
-
-	p {
-		float: left;
-
-		@include media($small) {
-			float: right;
-		}
-	}
-
 }
 
 // Privacy
@@ -117,7 +98,7 @@
 	@include omega;
 
 	@include media($small) {
-		@include span-columns(4);
+		@include span-columns(8);
 		@include omega;
 	}
 
