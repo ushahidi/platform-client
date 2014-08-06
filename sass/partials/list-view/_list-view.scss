@@ -90,6 +90,14 @@
 	@include media($small) {
 		@include span-columns(4);
 	}
+
+	p {
+		margin-bottom: 10px;
+
+		@include media($small) {
+			margin: 0;
+		}
+	}
 }
 
 // Privacy
