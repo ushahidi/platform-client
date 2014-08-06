@@ -1,0 +1,11 @@
+{
+  "linters" : {
+    "jshint" : {
+      "type" : "jshint",
+      "include" : "(\\.js$)",
+      "exclude" : "@/bower_components/.*\\.js$@",
+      "jshint.jshintrc" : ".jshintrc",
+      "jshint.jshintignore" : ".jshintignore"
+    }
+  }
+}
