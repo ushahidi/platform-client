@@ -39,7 +39,7 @@ http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and
 
 * watches for changes
 * compiles sass
-* rebuilds docker container, if enabled
+* rebuilds docker container (when `vm` is enabled)
 * live reloads `index.html`
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
