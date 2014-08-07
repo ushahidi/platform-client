@@ -55,9 +55,9 @@
 	$UTILS
 \*------------------------------------*/
 
+@import "utils/mixins";
 @import "utils/helpers";
 @import "utils/extends";
-@import "utils/mixins";
 
 
 
@@ -72,25 +72,27 @@
 
 
 /*------------------------------------*\
-	$PARTIALS
-\*------------------------------------*/
-
-@import "partials/header/topbar";
-@import "partials/header/subnav";
-@import "partials/searchbar/searchbar";
-@import "partials/list-filter/list-filter";
-@import "partials/list-view/list-view";
-
-
-
-
-/*------------------------------------*\
 	$COMPONENTS
 \*------------------------------------*/
 
 @import "components/pagination/pagination";
 @import "components/dropdown/dropdown-button";
 @import "components/accordion-tabs/accordion-tabs";
+@import "components/search-tools/search-tools";
+
+
+
+
+/*------------------------------------*\
+	$PARTIALS
+\*------------------------------------*/
+
+@import "partials/header/top-bar";
+@import "partials/header/sub-nav";
+@import "partials/searchbar/accordion-tabs--search-bar";
+@import "partials/searchbar/search-bar";
+@import "partials/list-filter/list-filter";
+@import "partials/list-view/list-view";
 
 
 

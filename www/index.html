@@ -52,47 +52,99 @@
 			<form role="search" action="">
 				<div class="container">
 
-					<div class="location-field">
-						<label class="visually-hidden" for="location-field">Location</label>
-						<div class="wrapper">
-							<input type="text" id="location-field" class="location-field  js-search-location" placeholder="Location" value="">
-							<i class="fa  fa-map-marker"></i>
-						</div>
-					</div>
+					<ul class="accordion-tabs--search-bar">
+						<span class="search-title">Search</span>
 
-					<!-- TODO: need to figure out best solution for tags, time etc... -->
-					<div class="tags-select">
-						<label class="visually-hidden" for="tags">Tags</label>
-						<div class="wrapper">
-							<select class="search-tag-field  js-search-tag" multiple placeholder="Tags"></select>
-							<i class="fa  fa-tags"></i>
-						</div>
-					</div> <!-- end .tags-select -->
+						<li class="tab-header-and-content  location-select">
+							<a href="#" class="tab-link">Location <i class="fa  fa-map-marker"></i></a>
+							<div class="tab-content">
+								<div class="search-tools">
+									<div class="filter">
+										<label>Select a location</label>
+									<div>
+									<ol>
+										<li>
+											<input id="location1" type="checkbox">
+											<label for="location1">Location #1</label>
+										</li>
+										<li>
+											<input id="location2" type="checkbox">
+											<label for="location2">Location #2</label>
+										</li>
+										<li>
+											<input id="location3" type="checkbox">
+											<label for="location3">Location #3</label>
+										</li>
+									</ol>
+								</div> <!-- end .search-tools -->
+							</div> <!-- end .tab-content -->
+						</li> <!-- end .location-select -->
 
-					<div class="time-select">
-						<label class="visually-hidden" for="time-from">From Time</label>
-							<div class="wrapper">
-								<input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From" value="">
-								<i class="fa  fa-calendar"></i>
-							</div>
+						<li class="tab-header-and-content  tags-select">
+							<a href="#" class="tab-link">Tags <i class="fa  fa-tags"></i></a>
+							<div class="tab-content">
+								<div class="search-tools">
+									<div class="filter">
+										<label>Select tags</label>
+									<div>
+									<ol>
+										<li>
+											<input id="tag1" type="checkbox">
+											<label for="tag1">Tag #1</label>
+										</li>
+										<li>
+											<input id="tag2" type="checkbox">
+											<label for="tag2">Tag #2</label>
+										</li>
+										<li>
+											<input id="tag3" type="checkbox">
+											<label for="tag3">Tag #3</label>
+										</li>
+									</ol>
+								</div> <!-- end .search-tools -->
+							</div> <!-- end .tab-content -->
+						</li> <!-- end .tags-select -->
 
-						<label class="visually-hidden" for="time-to">Until Time</label>
-							<div class="wrapper">
-								<input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="To" value="">
-								<i class="fa  fa-calendar"></i>
-							</div>
-					</div> <!-- end .time-select -->
+						<li class="tab-header-and-content  date-select">
+							<a href="#" class="tab-link">Date <i class="fa  fa-calendar"></i></a>
+							<div class="tab-content">
+								<div class="search-tools">
+									<label>Select a start and end time</label>
+									<ol>
+										<div class="wrapper">
+											<input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From" value="">
+											<i class="fa  fa-calendar"></i>
+										</div>
 
-					<div class="search-field-wrapper">
-						<div class="search-field">
-							<label class="visually-hidden" for="search-field">Search</label>
-							<input type="search" id="q" class="search-field  js-search-keyword" placeholder="Keyword" value="">
-						</div> <!-- end .search-field -->
+										<label class="visually-hidden" for="time-to">Until Time</label>
+										<div class="wrapper">
+											<input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="To" value="">
+											<i class="fa  fa-calendar"></i>
+										</div>
+									</ol>
+								</div> <!-- end .search-tools -->
+							</div> <!-- end .tab-content -->
+						</li> <!-- end .date-select -->
 
-						<div class="search-bar-button">
-							<button type="submit" class=""><i class="fa  fa-search"></i></button>
-						</div><!-- end .search-bar-button -->
-					</div> <!-- end .search-field-wrapper -->
+						<li class="tab-header-and-content  keyword-field">
+							<a href="#" class="tab-link">Keyword <i class="fa  fa-search"></i></a>
+							<div class="tab-content">
+								<div class="search-tools">
+									<label>Enter a keyword to search</label>
+									<div class="search-field-wrapper">
+										<div class="search-field">
+											<label class="visually-hidden" for="search-field">Search</label>
+											<input type="search" id="q" class="search-field  js-search-keyword" placeholder="Keyword" value="">
+										</div> <!-- end .search-field -->
+
+										<div class="search-bar-button">
+											<button type="submit" class=""><i class="fa  fa-search"></i></button>
+										</div><!-- end .search-bar-button -->
+									</div> <!-- end .search-field-wrapper -->
+								</div> <!-- end .search-tools -->
+							</div> <!-- end .tab-content -->
+						</li> <!-- end .keyword-field -->
+					</ul> <!-- end .accordion-tabs -->
 
 				</div>
 			</form>

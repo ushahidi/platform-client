@@ -1,0 +1,175 @@
+/*------------------------------------*\
+		$CONTENTS
+\*------------------------------------*/
+/**
+ * SEARCH BAR...............search bar body
+ * SEARCH FORM FIELDS...............search bar input and dropdown fields
+ */
+
+
+
+
+
+/*------------------------------------*\
+	$SEARCH BAR
+\*------------------------------------*/
+
+.search-bar {
+	@include span-columns(12);
+	box-shadow: 0px 1px 2px rgba(lighten($darkGray, 30), 0.5);
+	background: $darkBlue;
+	padding: 30px 0;
+	margin-bottom: 40px;
+
+	form {
+		margin: 0;
+	}
+
+	input {
+		margin: 0;
+	}
+
+	.accordion-tabs--search-bar {
+		@include span-columns(12);
+		margin: 0;
+		border: 0;
+
+		li.tab-header-and-content .tab-content {
+			padding: 5px 20px 20px;
+
+			@include media($medium) {
+				padding: 20px;
+			}
+		}
+
+		.tab-link > [class*='fa-'] {
+			font-size: 15px;
+			padding-left: 10px;
+		}
+	}
+}
+
+
+
+
+/*------------------------------------*\
+	$SEARCH FORM FIELDS
+\*------------------------------------*/
+
+.search-title {
+	display: block;
+	background-color: transparent;
+	border: none;
+	padding: 0 10px 20px;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 1;
+	text-align: center;
+
+	@include media($medium) {
+		display: inline;
+		text-align: left;
+		font-size: 17px;
+	}
+}
+
+.location-select {
+
+	[class*='fa-'] {
+		color: $success-color;
+	}
+}
+
+.date-select {
+
+	.wrapper {
+		@include span-columns(12);
+		position: relative;
+
+		@include media($small) {
+			@include span-columns(6);
+		}
+
+		@include media($medium) {
+			@include span-columns(2);
+		}
+
+		input[type="text"] {
+			padding-right: 30px;
+		}
+
+		[class*='fa-'] {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 13px 0.5em;
+			z-index: 2;
+			color: $sub-body-font-color;
+		}
+
+		input {
+			margin-bottom: 20px;
+			padding: 0.7em;
+
+			@include media($medium) {
+				margin-bottom: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	[class*='fa-'] {
+		color: $success-color;
+	}
+}
+
+.keyword-field {
+
+	input {
+		padding: 0.7em;
+	}
+}
+
+.search-field-wrapper {
+	@include span-columns(12);
+
+	@include media($medium) {
+		@include span-columns(4);
+	}
+}
+
+.search-field {
+	@include span-columns(9);
+	@include omega;
+
+	@include media($small) {
+		@include span-columns(10);
+		@include omega;
+	}
+}
+
+.search-bar-button {
+	@include span-columns(3);
+
+	@include media($small) {
+		@include span-columns(2);
+	}
+
+	button {
+		@include button();
+		width: 100%;
+		height: 42px;
+		font-size: 0.875em;
+		border-width: 0;
+		border-radius: 0 $global-radius $global-radius 0;
+
+		i {
+			font-size: 1.2em;
+			padding: 0;
+		}
+	}
+}
