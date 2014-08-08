@@ -38,9 +38,9 @@ gulp.task('sass', function() {
                 'bower_components/refills/source/stylesheets',
                 'bower_components/font-awesome/scss'
             ],
-            sourceComments: 'map',
-            sourceMap: 'true'
-
+            sourceMap: 'sass',
+            // using 'map' causes an error: https://github.com/sass/node-sass/issues/337
+            sourceComments: 'none'
         }))
         .pipe(autoprefixer(options))
         .pipe(plumber.stop())
