@@ -127,7 +127,6 @@ header.navigation {
 	right: 0px;
 	@include transition(all .2s linear);
 	transform: translateX(220px);
-	z-index: -1;
 }
 
 
