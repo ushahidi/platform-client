@@ -106,7 +106,7 @@ gulp.task('build', ['sass', 'font', 'browserify'], function() {
  * Stops any docker containers.
  */
 gulp.task('docker:stop', function(cb) {
-    exec('docker ps -a | grep ushahidi-client | awk \'{print $1}\' | xargs docker stop | xargs docker rm', function(err, stdout, stderr) {
+    exec('docker ps -a | grep ushahidi-client | awk \'{print $1}\' | xargs docker stop | xargs docker rm', function(/*err, stdout, stderr*/) {
         cb(/* ignore err */);
     });
 });
@@ -116,7 +116,7 @@ gulp.task('docker:stop', function(cb) {
  * Rebuilds the docker container.
  */
 gulp.task('docker:build', ['docker:stop'], function (cb) {
-    exec('docker build -t ushahidi-client-server --quiet=true .', function(err, stdout, stderr) {
+    exec('docker build -t ushahidi-client-server --quiet=true .', function(err, stdout/*, stderr*/) {
         if (err) {
             return cb(err);
         }
@@ -130,12 +130,12 @@ gulp.task('docker:build', ['docker:stop'], function (cb) {
  * Runs the docker container.
  */
 gulp.task('docker', ['docker:build'], function(cb) {
-    exec('docker run --name=ushahidi-client -d -p 80:80 ushahidi-client-server', function(err, stdout, stderr) {
+    exec('docker run --name=ushahidi-client -d -p 80:80 ushahidi-client-server', function(err/*, stdout, stderr*/) {
         if (err) {
             return cb(err);
         }
         var ip = 'localhost';
-        exec('boot2docker ip', function(err, stdout, stderr) {
+        exec('boot2docker ip', function(err, stdout/*, stderr*/) {
             if (!err) {
                 ip = stdout;
             }
