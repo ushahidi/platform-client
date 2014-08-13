@@ -1,0 +1,411 @@
+<!--  Search Bar -->
+<div id="search-bar" class="search-bar  js-show-with-full-map">
+    <form role="search" action="">
+        <div class="container">
+
+            <ul class="tabset" collapsible>
+                <span class="search-title">Search</span>
+
+                <li class="tab  location-select">
+                    <a href="#" class="tab-heading">Location <i class="fa  fa-map-marker"></i></a>
+                    <div class="tab-content">
+                        <div class="search-tools">
+                            <div class="filter">
+                                <label>Select a location</label>
+                            </div>
+                            <ol>
+                                <li>
+                                    <input id="location1" type="checkbox">
+                                    <label for="location1">Location #1</label>
+                                </li>
+                                <li>
+                                    <input id="location2" type="checkbox">
+                                    <label for="location2">Location #2</label>
+                                </li>
+                                <li>
+                                    <input id="location3" type="checkbox">
+                                    <label for="location3">Location #3</label>
+                                </li>
+                            </ol>
+                        </div> <!-- end .search-tools -->
+                    </div> <!-- end .tab-content -->
+                </li> <!-- end .location-select -->
+
+                <li class="tab  tags-select">
+                    <a href="#" class="tab-heading">Tags <i class="fa  fa-tags"></i></a>
+                    <div class="tab-content">
+                        <div class="search-tools">
+                            <div class="filter">
+                                <label>Select tags</label>
+                            </div>
+                            <ol>
+                                <li>
+                                    <input id="tag1" type="checkbox">
+                                    <label for="tag1">Tag #1</label>
+                                </li>
+                                <li>
+                                    <input id="tag2" type="checkbox">
+                                    <label for="tag2">Tag #2</label>
+                                </li>
+                                <li>
+                                    <input id="tag3" type="checkbox">
+                                    <label for="tag3">Tag #3</label>
+                                </li>
+                            </ol>
+                        </div> <!-- end .search-tools -->
+                    </div> <!-- end .tab-content -->
+                </li> <!-- end .tags-select -->
+
+                <li class="tab  date-select">
+                    <a href="#" class="tab-heading">Date <i class="fa  fa-calendar"></i></a>
+                    <div class="tab-content">
+                        <div class="search-tools">
+                            <label>Select a start and end time</label>
+                            <ol>
+                                <div class="wrapper">
+                                    <input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From" value="">
+                                    <i class="fa  fa-calendar"></i>
+                                </div>
+
+                                <label class="visually-hidden" for="time-to">Until Time</label>
+                                <div class="wrapper">
+                                    <input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="To" value="">
+                                    <i class="fa  fa-calendar"></i>
+                                </div>
+                            </ol>
+                        </div> <!-- end .search-tools -->
+                    </div> <!-- end .tab-content -->
+                </li> <!-- end .date-select -->
+
+                <li class="tab  keyword-field">
+                    <a href="#" class="tab-heading">Keyword <i class="fa  fa-search"></i></a>
+                    <div class="tab-content">
+                        <div class="search-tools">
+                            <label>Enter a keyword to search</label>
+                            <div class="search-field-wrapper">
+                                <div class="search-field">
+                                    <label class="visually-hidden" for="search-field">Search</label>
+                                    <input type="search" id="q" class="search-field  js-search-keyword" placeholder="Keyword" value="">
+                                </div> <!-- end .search-field -->
+
+                                <div class="search-bar-button">
+                                    <button type="submit" class=""><i class="fa  fa-search"></i></button>
+                                </div><!-- end .search-bar-button -->
+                            </div> <!-- end .search-field-wrapper -->
+                        </div> <!-- end .search-tools -->
+                    </div> <!-- end .tab-content -->
+                </li> <!-- end .keyword-field -->
+            </ul> <!-- end .accordion-tabs -->
+
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div class="list-filter">
+            <div class="container">
+                <div class="list-filter-info">
+                    <h5>Showing 1 to 10 from 100 posts</h5>
+                </div> <!-- end .list-filter-info -->
+
+                <div class="list-filter-count">
+                    <div class="filter-count-select">
+                        <label class="visually-hidden" for="filter-count">Number of posts shown</label>
+                        <select id="filter-count" class="filter-count  js-filter-count">
+                            <option selected>3</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>20</option>
+                        </select>
+                    </div>
+                </div> <!-- end .list-filter-count -->
+
+                <div class="list-filter-sort">
+                    <div class="filter-sort-select">
+                        <label class="visually-hidden" for="filter-sort">Sort posts by</label>
+                        <select id="filter-sort" class="filter-sort  js-filter-sort">
+                            <option>Filter</option>
+                            <option>Created</option>
+                            <option>Updated</option>
+                            <option>Title A to Z</option>
+                        </select>
+                    </div>
+                </div> <!-- end .list-filter-sort -->
+            </div> <!-- end .container -->
+        </div> <!-- end .list-filter -->
+
+        <div class="list-view-wrapper">
+            <div class="container">
+                <article class="list-view-content">
+                    <div class="list-view-image">
+                        <img src="img/list-view-image.jpg" alt="">
+                    </div> <!-- end .list-view-image -->
+
+                    <div class="list-view-details">
+                        <h4 class="list-view-header"><a ng-href="/posts/detail">Zombies Made of Entire University Faculty.</a></h4>
+                        <div class="list-view-time">
+                            <p> <i class="fa  fa-clock-o"></i>Today 12:20 pm</p>
+                        </div> <!-- end .list-view-time -->
+                        <div class="list-view-post-status-wrapper">
+                            <div class="list-view-post-status">
+                                <span class="badge--private">private</span>
+                            </div>
+                        </div>
+
+                        <div class="list-view-excerpt">
+                            <p>A zombie outbreak has been confirmed on this college campus. The attack took place sometime between the hours of 5:00 and 10:00 am on March 31st, 2010. While most of the students escaped unscathed, thanks to the valiant efforts of the faculty, the unfortunate faculty members have been infected. They are presently continuing their classes as scheduled, however, they are luring students, one by one, to isolated locations and infecting them. All students should take caution when dealing with their profesors.<a ng-href="/posts/detail"><span class="read-more"> &nbsp;... Read&nbsp;More</span></a></p>
+                        </div> <!-- end .list-view-excerpt -->
+
+                        <div class="list-view-tags-wrapper">
+                            <h6 class="list-view-tags-header"><i class="fa  fa-tags"></i>Tags</h6>
+                            <ul class="list-view-tags">
+                                <a href="#"><li><i class="fa fa-circle" style="color: #C50813"></i>Automobiles</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #23699D;"></i>Transport</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #4fa425;"></i>London</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #baac29;"></i>Retro</li></a>
+                            </ul>
+                        </div> <!-- end .list-view-tags-wrapper -->
+
+                        <div class="list-view-admin">
+                            <div class="dropdown">
+                                <div class="dropdown-container">
+                                    <p class="dropdown-toggle">Post Admin</p>
+                                    <ul class="dropdown-menu  list-view-admin-list">
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+                                        </li>
+                                    </ul> <!-- end .menu .list-view-edit -->
+                                </div> <!-- end .dropdown-container -->
+                            </div> <!-- end .dropdown -->
+                        </div> <!-- end .list-view-admin -->
+
+                    </div> <!-- end .list-view-details -->
+
+
+                </article>
+            </div> <!-- end .container -->
+
+            <div class="container  selected">
+                <article class="list-view-content">
+                    <div class="list-view-image">
+                        <img src="img/list-view-image.jpg" alt="">
+                    </div> <!-- end .list-view-image -->
+
+                    <div class="list-view-details">
+                        <h4 class="list-view-header"><a ng-href="/posts/detail">Cupidatat Lorem qui nostrud sunt.</a></h4>
+                        <div class="list-view-time">
+                            <p> <i class="fa  fa-clock-o"></i>Today 12:20 pm</p>
+                        </div> <!-- end .list-view-time -->
+                        <div class="list-view-post-status-wrapper">
+                            <div class="list-view-post-status">
+                                <span class="badge--private">private</span>
+                                <span class="badge--unpublished">unpublished</span>
+                            </div>
+                        </div>
+
+                        <div class="list-view-excerpt">
+                            <p>A zombie outbreak has been confirmed on this college campus. The attack took place sometime between the hours of 5:00 and 10:00 am on March 31st, 2010. While most of the students escaped unscathed, thanks to the valiant efforts of the faculty, the unfortunate faculty members have been infected. They are presently.<a ng-href="/posts/detail"><span class="read-more"> &nbsp;... Read&nbsp;More</span></a></p>
+                        </div> <!-- end .list-view-excerpt -->
+
+                        <div class="list-view-tags-wrapper">
+                            <h6 class="list-view-tags-header"><i class="fa  fa-tags"></i>Tags</h6>
+                            <ul class="list-view-tags">
+                                <a href="#"><li><i class="fa fa-circle" style="color: #C50813"></i>Automobiles</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #23699D;"></i>Transport</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #4fa425;"></i>London</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #baac29;"></i>Retro</li></a>
+                            </ul>
+                        </div> <!-- end .list-view-tags-wrapper -->
+
+                        <div class="list-view-admin">
+                            <div class="dropdown">
+                                <div class="dropdown-container">
+                                    <p class="dropdown-toggle">Post Admin</p>
+                                    <ul class="dropdown-menu  list-view-admin-list">
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+                                        </li>
+                                    </ul> <!-- end .menu .list-view-edit -->
+                                </div> <!-- end .dropdown-container -->
+                            </div> <!-- end .dropdown -->
+                        </div> <!-- end .list-view-admin -->
+
+                    </div> <!-- end .list-view-details -->
+
+
+                </article>
+            </div> <!-- end .container -->
+
+            <div class="container">
+                <article class="list-view-content">
+                    <div class="list-view-image">
+                        <img src="img/list-view-image.jpg" alt="">
+                    </div> <!-- end .list-view-image -->
+
+                    <div class="list-view-details">
+                        <h4 class="list-view-header"><a ng-href="/posts/detail">Cupidatat Lorem qui nostrud sunt cupidatat nostrud sunt. Zombies Made of Entire University Faculty.</a></h4>
+                        <div class="list-view-time">
+                            <p> <i class="fa  fa-clock-o"></i>Today 12:20 pm</p>
+                        </div> <!-- end .list-view-time -->
+                        <div class="list-view-post-status-wrapper">
+                            <div class="list-view-post-status">
+                                <span class="badge--published">published</span>
+                            </div>
+                        </div>
+
+                        <div class="list-view-excerpt">
+                            <p>A zombie outbreak has been confirmed on this college campus. The attack took place sometime between the hours of 5:00 and 10:00 am on March 31st, 2010. While most of the students escaped unscathed, thanks to the valiant efforts of the faculty, the unfortunate faculty members have been infected. They are presently continuing their classes as scheduled, however, they are luring students, one by one, to isolated locations and infecting them. All students should take caution when dealing with their profesors. They are presently continuing their classes as scheduled, however, they are luring students, one by one, to isolated locations and infecting them. All students should take caution when dealing with their profesors.<a ng-href="/posts/detail"><span class="read-more"> &nbsp;... Read&nbsp;More</span></a></p>
+                        </div> <!-- end .list-view-excerpt -->
+
+                        <div class="list-view-tags-wrapper">
+                            <h6 class="list-view-tags-header"><i class="fa  fa-tags"></i>Tags</h6>
+                            <ul class="list-view-tags">
+                                <a href="#"><li><i class="fa fa-circle" style="color: #C50813"></i>Automobiles</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #23699D;"></i>Transport</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #4fa425;"></i>London</li></a>
+                                <a href="#"><li><i class="fa fa-circle" style="color: #baac29;"></i>Retro</li></a>
+                            </ul>
+                        </div> <!-- end .list-view-tags-wrapper -->
+
+                        <div class="list-view-admin">
+                            <div class="dropdown">
+                                <div class="dropdown-container">
+                                    <p class="dropdown-toggle">Post Admin</p>
+                                    <ul class="dropdown-menu  list-view-admin-list">
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
+                                        </li>
+                                        <li class="list-view-admin-list__item">
+                                            <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+                                        </li>
+                                    </ul> <!-- end .menu .list-view-edit -->
+                                </div> <!-- end .dropdown-container -->
+                            </div> <!-- end .dropdown -->
+                        </div> <!-- end .list-view-admin -->
+
+                    </div> <!-- end .list-view-details -->
+
+
+                </article>
+            </div> <!-- end .container -->
+        </div> <!-- end .list-view-wrapper -->
+
+        <div class="pagination">
+            <ul>
+                <li class="page-prev"><a href="javascript:void(0)">Prev</a></li>
+                <li>
+                    <ul>
+                        <li><a href="javascript:void(0)">1</a></li>
+                        <li><a href="javascript:void(0)">2</a></li>
+                        <li><a href="javascript:void(0)">3</a></li>
+                        <li><a href="javascript:void(0)">4</a></li>
+                        <li><a href="javascript:void(0)">5</a></li>
+                        <li><a href="javascript:void(0)">6</a></li>
+                        <li><a href="javascript:void(0)">7</a></li>
+                    </ul>
+                </li>
+                <li class="page-next"><a href="javascript:void(0)">Next</a></li>
+            </ul>
+        </div> <!-- end .pagination -->
+
+    </div> <!-- end .main -->
+
+    <div class="sidebar  sidebar--home">
+        <ul class="tabset">
+            <li class="tab" active>
+                <a href="#" class="tab-heading"><i class="fa  fa-thumb-tack"></i> How to Post</a>
+                <div class="tab-content">
+                    <div class="tab-content-sms">
+                        <div class="tab-content__icon">
+                            <i class="fa  fa-mobile-phone  sms"></i>
+                        </div>
+
+                        <div class="tab-content__description">
+                            <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
+                            <span class="post-origin">via SMS</span>
+                        </div>
+                    </div> <!-- end .tab-content-sms -->
+
+                    <div class="tab-content-email">
+                        <div class="tab-content__icon">
+                            <i class="fa  fa-envelope-o  email"></i>
+                        </div>
+
+                        <div class="tab-content__description">
+                            <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
+                            <span class="post-origin">via Email</span>
+                        </div>
+                    </div> <!-- end .tab-content-email -->
+
+                    <div class="tab-content-deployment">
+                        <div class="tab-content__icon">
+                            <i class="fa  fa-plus  deployment"></i>
+                        </div>
+
+                        <div class="tab-content__description">
+                            <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
+                            <span class="post-origin">via This Deployment</span>
+                        </div>
+                    </div> <!-- end .tab-content-deployment -->
+                </div>
+            </li>
+
+            <li class="tab">
+                <a href="#" class="tab-heading"><i class="fa  fa-info-circle"></i> About</a>
+                <div class="tab-content">
+                    About stuff
+                </div>
+            </li>
+
+            <li class="tab">
+                <a href="#" class="tab-heading"><i class="fa  fa-tags"></i> Tags</a>
+                <div class="tab-content">
+                    Tags go here
+                </div>
+            </li>
+        </ul> <!-- end .accordion-tabs -->
+    </div> <!-- end .sidebar -->
+</div> <!-- end .container -->

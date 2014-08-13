@@ -20,7 +20,7 @@ nav[role="sub-navigation"] {
 	max-height: 0;
 	display: none;
 
-	&.subnav {
+	&.active {
 		max-height: 999px;
 		display: block;
 

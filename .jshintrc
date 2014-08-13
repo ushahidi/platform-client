@@ -10,6 +10,7 @@
 	"undef": true,
 	"unused": true,
 	"browser" : true,
+	"node" : true,
 	"newcap": true,
 	"boss" : false,
 	"eqnull" : false,
@@ -18,6 +19,9 @@
 	"globals": {
 		"jQuery": true,
 		"$": true,
+		"angular": true,
+		"require": true,
+		"module": true,
 		"console" : false,
 		"document" : true
 	}

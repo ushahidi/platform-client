@@ -5,20 +5,21 @@ Ushahidi Platform Prototype
 
 * Nodejs
 * Bower
-* Gulp 3.8.6 (and various gulp plugins)
+* Napa
+* Browserify
+* Gulp (and various gulp plugins)
 * Libsass/node-sass (via gulp-sass)
 * Bourbon 3.1
 * Neat 1.5
 * Refills 0.2
 
-### Install Bower Packages
-`bower install`
+### Install Build Requirements
+`npm install -g gulp napa browserify`
 
-### Install Gulp
-`npm install -g gulp`
-
-### Install Node Packages
+### Install Packages
 `npm install`
+
+*This will install both NPM and Bower dependencies! No separate `bower install` command is required.*
 
 ### Optional: Run Docker
 
@@ -39,6 +40,7 @@ http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and
 
 * watches for changes
 * compiles sass
+* compiles js
 * rebuilds docker container (when `vm` is enabled)
 * live reloads `index.html`
 

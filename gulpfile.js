@@ -4,17 +4,24 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     plumber = require('gulp-plumber'),
     gutil = require('gulp-util'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    source = require('vinyl-source-stream'),
+    browserify = require('browserify'),
+    watchify = require('watchify'),
+    connect = require('gulp-connect'),
+    path = require('path'),
+    url = require('url');
 
 function errorHandler (err) {
-  gutil.beep();
-  gutil.log(err.message || err);
+    gutil.beep();
+    gutil.log(err.message || err);
 }
 
 // Options
 // - (bool) vm: enable docker builds, default: false
 var options = {
-    vm: false
+    vm: false,
+    nodeserver: false,
 };
 
 /**
@@ -22,11 +29,6 @@ var options = {
  * Converts SASS files to CSS
  */
 gulp.task('sass', function() {
-    var options = {
-      map: true,
-      from: 'www/css',
-      to: 'style.min.css'
-    };
     gulp.src(['sass/style.scss'])
         .pipe(plumber({
             errorHandler: errorHandler
@@ -38,13 +40,65 @@ gulp.task('sass', function() {
                 'bower_components/refills/source/stylesheets',
                 'bower_components/font-awesome/scss'
             ],
-            sourceMap: 'sass',
             // using 'map' causes an error: https://github.com/sass/node-sass/issues/337
-            sourceComments: 'none'
+            sourceComments: 'normal'
         }))
-        .pipe(autoprefixer(options))
+        .pipe(autoprefixer())
         .pipe(plumber.stop())
         .pipe(gulp.dest('www/css'));
+});
+
+/**
+ * Task: `font`
+ * Copies font files to public directory.
+ */
+gulp.task('font', function() {
+    gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
+	.pipe(gulp.dest('./www/fonts'));
+});
+
+/**
+ * Task: `browserify`
+ * Bundle js with browserify
+ */
+gulp.task('browserify', function() {
+    browserify({
+            entries : './app/app.js',
+            debug : true,
+        })
+        .transform('brfs')
+        .bundle()
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest('./www/js/'));
+});
+
+/**
+ * Task: `watchify`
+ * Watch js and rebundle with browserify
+ */
+gulp.task('watchify', function() {
+    var bundler = watchify(browserify({
+            entries : './app/app.js',
+            debug : true,
+        }, watchify.args))
+    .transform('brfs')
+    .on('update', rebundle);
+
+    function rebundle () {
+        livereload.changed();
+        return bundler.bundle()
+            .on('error', errorHandler)
+            .pipe(source('bundle.js'))
+            .pipe(gulp.dest('./www/js'));
+    }
+});
+
+/**
+ * Task: `build`
+ * Builds sass, fonts and js
+ */
+gulp.task('build', ['sass', 'font', 'browserify'], function() {
+
 });
 
 /**
@@ -96,26 +150,55 @@ gulp.task('docker', ['docker:build'], function(cb) {
  * Task: `watch`
  * Rebuilds styles and runs live reloading.
  */
-gulp.task('watch', function() {
+gulp.task('watch', ['watchify'], function() {
     livereload.listen();
     gulp.watch('sass/**/*.scss', ['sass']);
-    gulp.watch(['www/*.html', 'www/css/style.css']).on('change', function(file) {
-        livereload.changed(file);
-    });
+    gulp.watch('bower_components/font-awesome/fonts/fontawesome*', ['font']);
 });
 
 /**
  * Task: `vm`
  * Rebuilds the vm and runs live reloading.
  */
-gulp.task('vm', function() {
-    livereload.listen();
-    gulp.watch('sass/**/*.scss', ['sass']);
-    gulp.watch(['Dockerfile', 'www/*.html', 'www/css/style.css'], ['docker']);
+gulp.task('vm', ['watch'], function() {
+    gulp.watch(['Dockerfile', 'www/**/*'], ['docker']);
+});
+
+/**
+ * Task: `nodeserver`
+ * Runs a simple node connect server and runs live reloading.
+ */
+gulp.task('nodeserver', ['watch', 'direct'], function() {
+    connect.server({
+        root: 'www',
+        middleware: function (/*connect, opt*/) {
+            return [
+                function (req, res, next) {
+                    var pathname = url.parse(req.url).pathname;
+                    if (!path.extname(pathname)) {
+                        req.url = '/';
+                    }
+                    next();
+                }
+            ];
+        }
+    });
+});
+
+/**
+ * Task: `direct`
+ * Rebuilds styles and runs live reloading.
+ */
+gulp.task('direct', ['watch'], function() {
+    gulp.watch(['www/**/*']).on('change', function(file) {
+        livereload.changed(file);
+    });
 });
 
 /**
  * Task: `default`
  * Default task optimized for development
  */
-gulp.task('default', options.vm ? ['vm'] : ['sass', 'watch']);
+var mode = options.vm ? 'vm' : 'direct';
+var mode = options.nodeserver ? 'nodeserver' : mode;
+gulp.task('default', ['build', mode]);

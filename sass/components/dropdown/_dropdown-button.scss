@@ -16,7 +16,7 @@ $dropdown-background-hover: darken($dropdown-background, 3);
 $dropdown-inner-border: 1px solid silver;
 $dropdown-height: 40px;
 $dropdown-padding: 1em;
-$dropdown-distance-from-menu: 50px;
+$dropdown-distance-from-dropdown-menu: 50px;
 $dropdown-arrow-top-distance: 0;
 
 .dropdown {
@@ -28,7 +28,7 @@ $dropdown-arrow-top-distance: 0;
 	position: relative;
 }
 
-.dropdown-button {
+.dropdown-toggle {
 	background: $dropdown-background;
 	border-bottom-right-radius: $base-border-radius;
 	border-top-right-radius: $base-border-radius;
@@ -49,22 +49,22 @@ $dropdown-arrow-top-distance: 0;
 		font-size: 1em;
 		padding: 0 ($dropdown-padding * 2.5) 0 $dropdown-padding;
 	}
+
+	&:hover{
+		background-color: $dropdown-background-hover;
+	}
+
+	&:after {
+		color: $base-font-color;
+		content: "\25BE";
+		display: block;
+		position: absolute;
+		right: $dropdown-padding;
+		top: $dropdown-arrow-top-distance;
+	}
 }
 
-.dropdown-button:hover{
-	background-color: $dropdown-background-hover;
-}
-
-.dropdown-button:after {
-	color: $base-font-color;
-	content: "\25BE";
-	display: block;
-	position: absolute;
-	right: $dropdown-padding;
-	top: $dropdown-arrow-top-distance;
-}
-
-.menu {
+.dropdown-menu {
 	@include transition (all 0.2s ease-in-out);
 	background: $dropdown-background;
 	border-radius: $base-border-radius;
@@ -76,7 +76,7 @@ $dropdown-arrow-top-distance: 0;
 	overflow: show;
 	position: absolute;
 	right: 0;
-	top: $dropdown-distance-from-menu;
+	top: $dropdown-distance-from-dropdown-menu;
 	width: 228px;
 	z-index: 99999;
 
@@ -89,30 +89,30 @@ $dropdown-arrow-top-distance: 0;
 		text-shadow: 0 -2px 2px transparentize(black, .7);
 		top: -1em;
 	}
+
+	li {
+		border-bottom: $dropdown-inner-border;
+		color: $dropdown-color;
+		padding: $dropdown-padding / 2;
+	}
+
+	li:hover {
+		background: $dropdown-background-hover;
+	}
+
+	li:first-child {
+		border-top-left-radius: $base-border-radius;
+		border-top-right-radius: $base-border-radius;
+	}
+
+	li:last-child {
+		border: none;
+		border-bottom-left-radius: $base-border-radius;
+		border-bottom-right-radius: $base-border-radius;
+	}
 }
 
-.menu li {
-	border-bottom: $dropdown-inner-border;
-	color: $dropdown-color;
-	padding: $dropdown-padding / 2;
-}
-
-.menu li:hover {
-	background: $dropdown-background-hover;
-}
-
-.menu li:first-child {
-	border-top-left-radius: $base-border-radius;
-	border-top-right-radius: $base-border-radius;
-}
-
-.menu li:last-child {
-	border: none;
-	border-bottom-left-radius: $base-border-radius;
-	border-bottom-right-radius: $base-border-radius;
-}
-
-.show-menu {
+.open .dropdown-menu {
 	display: block;
 }
 
