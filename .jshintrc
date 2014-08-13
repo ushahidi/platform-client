@@ -20,8 +20,6 @@
 		"jQuery": true,
 		"$": true,
 		"angular": true,
-		"require": true,
-		"module": true,
 		"console" : false,
 		"document" : true
 	}
