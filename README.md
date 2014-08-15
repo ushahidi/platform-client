@@ -30,6 +30,18 @@ nginx server that serves the client as simply as possible, using the
 
 To enable the Docker container, edit `gulpfile.js` and set `options.vm = true`.
 
+**Note:** If you're on Linux and have `vm` enabled, you will have to add the user under which you are
+running the client to the docker group. This will prevent you from running `gulp` with sudo.
+
+Check if docker group exist by issuing `getent group | grep docker`. If the output of the command
+is empty, issue `sudo groupadd docker`then `sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
+
+### Optional: Run nodeserver
+
+`nodserver` task starts an internal web server to serve the client without having to setup a web server.
+
+To enable nodeserver, edit `gulpfile.js` and set `options.nodeserver = true`.
+
 ### Download and Activate Live Reload Plugin
 
 http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions
@@ -42,7 +54,10 @@ http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and
 * compiles sass
 * compiles js
 * rebuilds docker container (when `vm` is enabled)
+* starts internal web server and access it at http://localhost:8080 ( when `nodeserver` is enabled)
 * live reloads `index.html`
+
+**Note:** If you enable `vm` and run `gulp` for the first time, it take a while for it to build and start docker. Wait till you see `server is live @ http://<ip_address_or_localhost/`
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
