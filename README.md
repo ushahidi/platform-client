@@ -31,10 +31,12 @@ nginx server that serves the client as simply as possible, using the
 To enable the Docker container, edit `gulpfile.js` and set `options.vm = true`.
 
 **Note:** If you're on Linux and have `vm` enabled, you will have to add the user under which you are
-running the client to the docker group. This will prevent you from running `gulp` with sudo.
+running the client to the `docker` group. This will prevent you from running `gulp` with sudo.
 
-Check if docker group exist by issuing `getent group | grep docker`. If the output of the command
-is empty, issue `sudo groupadd docker`then `sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
+To check if `docker` group exist, issue `getent group | grep docker`. If the output of the command
+is empty, issue `sudo groupadd docker`
+
+Issue`sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
 
 ### Optional: Run nodeserver
 
