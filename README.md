@@ -36,7 +36,7 @@ running the client to the `docker` group. This will prevent you from running `gu
 To check if `docker` group exist, issue `getent group | grep docker`. If the output of the command
 is empty, issue `sudo groupadd docker`
 
-Issue`sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
+Issue `sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
 
 ### Optional: Run nodeserver
 
