@@ -25,10 +25,7 @@
 // Neat
 @import "neat";
 
-// Refills
-@import "all";
-
-
+@import "bitters/bitters";
 
 
 /*------------------------------------*\
@@ -38,9 +35,10 @@
 @import "settings";
 
 // Bitters
-@import "base/bitters/_base.scss";
+@import "base/bitters/base";
 
-
+// Refills
+@import "base/refills/all";
 
 /*------------------------------------*\
 	$GLOBAL
