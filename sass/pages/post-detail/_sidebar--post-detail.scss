@@ -1,0 +1,107 @@
+/*------------------------------------*\
+	CONTENTS
+\*------------------------------------*/
+/*
+* POST DETAIL SIDEBAR...............post detail sidebar styles
+*
+
+/*------------------------------------*\
+	$POST DETAIL SIDEBAR
+\*------------------------------------*/
+
+.sidebar--page-detail {
+
+// Header
+	.related-post-count {
+		float: left;
+		margin-right: 15px;
+		padding: 10px;
+		background-color: $success-color;
+		width: 30px;
+		height: 30px;
+		border-radius: 20px;
+		text-align: center;
+		line-height: .5em;
+	}
+
+
+// Body
+	.related-post {
+		@include span-columns(12);
+		padding: 20px;
+		@extend %border-bottom;
+	}
+
+	.related-post-image {
+		@include span-columns(4, table);
+		vertical-align: top;
+		padding-right: 20px;
+
+		@include media($small) {
+			@include span-columns(2, table);
+		}
+
+		@include media($large) {
+			@include span-columns(4, table);
+		}
+
+		@include media($xlarge) {
+			@include span-columns(3, table);
+		}
+
+		img {
+			width: 75px;
+			height: 75px;
+			border-radius: 40px;
+		}
+	}
+
+	.related-post-details {
+		@include span-columns(8, table);
+		vertical-align: top;
+
+		@include media($small) {
+			@include span-columns(10, table);
+		}
+
+		@include media($large) {
+			@include span-columns(8, table);
+		}
+
+		@include media($xlarge) {
+			@include span-columns(9, table);
+		}
+
+		h5 {
+			color: $base-font-color;
+			text-align: left;
+		}
+
+		.related-post-time {
+			color: $sub-base-font-color;
+		}
+
+		.related-post-excerpt {
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+
+	.sidebar-body {
+
+		.more {
+			@include span-columns(12);
+			background-color: $blueGray;
+			padding: 20px;
+			text-align: center;
+
+			span {
+				color: $white;
+				font-weight: bold;
+				font-size: 1.25em;
+			}
+		}
+	}
+}

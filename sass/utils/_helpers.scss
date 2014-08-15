@@ -45,3 +45,27 @@ body:hover .visually-hidden button {
 	opacity: 1;
 	@include transition (opacity .3s ease-in-out);
 }
+
+// Badges
+
+[class*='badge--'] {
+	display: table;
+	margin: 0 0 10px 5px;
+
+	@include media($small) {
+		display: inline;
+		margin-bottom: 0;
+	}
+}
+
+.badge--private {
+	@include badge($blueGray);
+}
+
+.badge--published {
+	@include badge($success-color);
+}
+
+.badge--unpublished {
+	@include badge($alert-color);
+}

@@ -14,11 +14,8 @@
 \*------------------------------------*/
 
 .list-view-wrapper {
-	@include outer-container;
-	color: $sub-body-font-color;
-	margin-bottom: 40px;
-	background-color: $white;
-	box-shadow: 0px 2px 4px -1px rgba(lighten($darkGray, 30), 0.5);
+	@include wrapper;
+	color: $sub-base-font-color;
 
 	.container {
 		border-top: 1px solid $secondary-color;
@@ -116,18 +113,6 @@
 		@include media($small) {
 			float: right;
 		}
-
-		.badge--private {
-			@include badge($blueGray);
-		}
-
-		.badge--published {
-			@include badge($success-color);
-		}
-
-		.badge--unpublished {
-			@include badge($alert-color);
-		}
 	}
 }
 
@@ -168,7 +153,7 @@
 }
 
 // Admin
-.list-view-admin {
+.list-view-actions {
 	@include span-columns(12);
 	@extend %unselectable;
 	margin: 30px 0 20px 0;
@@ -179,13 +164,13 @@
 		margin-top: 0;
 	}
 
-	.list-view-admin-list {
+	.list-view-actions-list {
 
-		.list-view-admin-list__item {
+		.list-view-actions-list__item {
 			float: left;
 			width: 50%;
-			padding: 15px 0;
-			text-align: center;
+			padding: 15px 0 15px 15px;
+			text-align: left;
 
 			&:last-child {
 				border-bottom: 1px solid silver;

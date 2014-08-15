@@ -30,9 +30,13 @@ body {
 
 .container {
 	@include outer-container;
-	padding: 0 20px;
+	padding: 30px;
 }
 
 [class*='fa-'] {
 	padding-right: 5px;
+}
+
+hr {
+	@include span-columns(12);
 }

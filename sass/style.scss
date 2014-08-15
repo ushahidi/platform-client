@@ -7,9 +7,9 @@
 * GLOBAL...........................global styles & overrides
 * UTILS...........................helpers
 * ICONS...........................FontAwesome
-* HEADER..........................topbar & workspace menu
-* SEARCH BAR..........................home page search bar
-* LIST FILTER & LIST VIEW..........................list filter & list view
+* COMPONENTS...........................reusable components
+* PARTIALS...........................reusable partials
+* PAGES...........................page specific styles
 */
 
 
@@ -90,6 +90,7 @@
 @import "partials/searchbar/search-bar";
 @import "partials/list-filter/list-filter";
 @import "partials/list-view/list-view";
+@import "partials/sidebar/sidebar";
 
 
 
@@ -98,4 +99,8 @@
 	$PAGES
 \*------------------------------------*/
 
+// Home
 @import "pages/home/sidebar--home";
+// Post Detail
+@import "pages/post-detail/post-detail";
+@import "pages/post-detail/sidebar--post-detail";

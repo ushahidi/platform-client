@@ -84,7 +84,7 @@ $tab-inactive-hover-color: darken($light-gray, 5);
 	.active > a.tab-heading {
 		background-color: $tab-active-background;
 		border-bottom: 0;
-		color: $body-font-color;
+		color: $base-font-color;
 
 		@include media($medium) {
 			background-color: $tab-active-background;
@@ -95,7 +95,7 @@ $tab-inactive-hover-color: darken($light-gray, 5);
 
 		&:hover {
 			background-color: $tab-active-background;
-			color: $body-font-color;
+			color: $base-font-color;
 		}
 	}
 

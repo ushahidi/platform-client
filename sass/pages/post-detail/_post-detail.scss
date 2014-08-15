@@ -1,0 +1,268 @@
+/*------------------------------------*\
+		$CONTENTS
+\*------------------------------------*/
+/**
+
+Extends _post-details.scss & _post-overlay.scss
+
+* GLOBAL...............global styles
+* POST HEADER...............post header, title, tags and actions
+* POST BODY..................post images, excerpt and meta
+*/
+
+
+
+
+/*------------------------------------*\
+		$POST HEADER
+\*------------------------------------*/
+
+.post-header {
+	@include span-columns(12);
+	background-color: $blueGray;
+	padding: 30px;
+}
+
+.post-title {
+	@include span-columns(12);
+	color: $white;
+	margin-bottom: 30px;
+
+	@include media($small) {
+		@include span-columns(6);
+		margin-bottom: 0;
+	}
+}
+
+.post-nav-wrapper {
+	@include span-columns(6);
+	margin-top: 3px;
+
+	@include media($small) {
+		@include span-columns(3);
+	}
+}
+
+.post-nav-list {
+	float: left;
+
+	@include media($small) {
+		float: right;
+	}
+
+	.post-nav-list__item {
+		display: inline;
+	}
+
+	.post-nav-button {
+		@include button($secondary-color);
+		margin: 0;
+		padding: 11px 16px;
+		font-size: 10px;
+
+		@include media($small) {
+			padding: 11px 18px;
+			font-size: 11px;
+		}
+
+		[class*='fa'] {
+			position: relative;
+			top: -1px;
+		}
+
+		.fa-arrow-right,
+		.fa-arrow-left {
+			padding: 0;
+		}
+
+		@include media($medium) {
+			.fa-arrow-left {
+				padding-right: 5px;
+			}
+
+			.fa-arrow-right {
+				padding-left: 5px;
+			}
+		}
+
+		span {
+			display: none;
+			font-size: 1em;
+
+			@include media($small) {
+				display: inline;
+			}
+		}
+	}
+}
+
+.post-detail .list-view-actions {
+	@include span-columns(6);
+	@include omega;
+	margin: 0;
+
+	@include media($small) {
+		@include span-columns(3);
+		@include omega;
+	}
+
+	.dropdown {
+		margin: 0;
+		text-align: right;
+	}
+
+	.dropdown-button {
+		padding-right: 2.5em;
+		font-size: 0.7em;
+
+		@include media($small) {
+			font-size: 0.8em;
+		}
+	}
+}
+
+
+
+
+/*------------------------------------*\
+		$POST BODY
+\*------------------------------------*/
+
+
+.post-body-wrapper {
+	@include span-columns(12);
+	@include wrapper;
+}
+
+.post-content-right {
+	@include span-columns(12);
+	@include omega;
+
+	@include media($small) {
+		@include span-columns(8);
+		@include omega;
+		float: right;
+	}
+}
+
+.post-excerpt {
+	@include span-columns(12);
+
+	@include media($small) {
+		padding-right: 0;
+	}
+}
+
+//custom-form
+.post-values {
+	@include span-columns(12);
+	margin: 40px 0 50px;
+
+	@include media($small) {
+		margin: 20px 0;
+	}
+
+	.post-values-list {
+		border: 1px solid $secondary-color;
+
+		.post-values-list__item {
+			padding: 20px 10px;
+
+			span {
+				font-weight: bold;
+			}
+
+			&:nth-child(odd) {
+				background-color: $secondary-color;
+			}
+
+			a {
+				display: inherit;
+				margin: 10px 0 0 20px;
+
+				@include media($medium) {
+					display: inline;
+				}
+			}
+
+			[class*='badge--']{
+				margin: 10px 0 0 20px;
+			}
+
+			[class*='badge--'] {
+				display: table;
+
+				@include media($small) {
+					display: inline;
+				}
+			}
+
+			.badge--tag1 {
+				@include badge($success-color);
+			}
+
+			.badge--tag2 {
+				@include badge($darkBlue);
+			}
+		}
+	}
+}
+
+.post-image {
+	@include span-columns(12);
+	margin-bottom: 50px;
+
+	@include media($small) {
+		@include span-columns(4);
+		margin-bottom: 20px;
+		padding-right: 10px;
+	}
+
+	img {
+		@include thumbnail;
+	}
+}
+
+.post-meta {
+	@include span-columns(12);
+	margin-bottom: 30px;
+
+	@include media($small) {
+		@include span-columns(4);
+		clear: left;
+	}
+
+	p {
+		font-size: $small-font-size;
+		color: $sub-base-font-color;
+		margin-bottom: .7em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+[class*='post-meta-'] {
+	@include span-columns(12);
+	margin-top: 10px;
+}
+
+.post-thumbnails-wrapper {
+	@include span-columns(12);
+	border-top: 1px solid $secondary-color;
+	margin-top: 20px;
+	padding-top: 10px;
+}
+
+.post-thumbnails-list{
+
+	.post-thumbnails-list__item {
+		@include span-columns(3);
+		display: inline;
+
+		img {
+			@include thumbnail;
+		}
+	}
+}

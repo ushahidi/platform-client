@@ -11,7 +11,9 @@
 $dropdown-color: $base-font-color;
 $dropdown-description-color: lighten($dropdown-color, 40);
 $dropdown-border: 1px solid silver;
-$dropdown-background: $base-background-color;
+$dropdown-button-color: $warning-color;
+$dropdown-button-color-hover: darken($dropdown-button-color, 3);
+$dropdown-background: $white;
 $dropdown-background-hover: darken($dropdown-background, 3);
 $dropdown-inner-border: 1px solid silver;
 $dropdown-height: 40px;
@@ -32,13 +34,12 @@ $dropdown-arrow-top-distance: 0;
 	background: $dropdown-background;
 	border-bottom-right-radius: $base-border-radius;
 	border-top-right-radius: $base-border-radius;
-	border-top: $dropdown-border;
-	border-left: $dropdown-border;
-	border-right: $dropdown-border;
-	border-bottom: $dropdown-border;
+	border-bottom-left-radius: $base-border-radius;
+	border-top-left-radius: $base-border-radius;
+	color: $base-font-color;
 	cursor: pointer;
 	float: right;
-	font-size: .9em;
+	font-size: .8em;
 	font-weight: 800;
 	line-height: $dropdown-height;
 	margin-bottom: 0;
@@ -46,7 +47,6 @@ $dropdown-arrow-top-distance: 0;
 	position: relative;
 
 	@include media($large) {
-		font-size: 1em;
 		padding: 0 ($dropdown-padding * 2.5) 0 $dropdown-padding;
 	}
 

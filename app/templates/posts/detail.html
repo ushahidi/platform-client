@@ -1,2 +1,200 @@
-<h1>{{title}}</h1>
-<a ng-href="/">Home<a>
+<ng-include src=" 'partials/search-bar.html' "></ng-include>
+
+<div class="container">
+	<div class="main  post-detail">
+
+		<div class="post-header">
+
+			<div class="post-title">
+				<h4>{{title}}</h4>
+			</div> <!-- end .post-title -->
+
+			<div class="post-nav-wrapper">
+				<ul class="post-nav-list">
+					<li class="post-nav-list__item"><a class="post-nav-button  js-post-prev"><i class="fa  fa-lg  fa-arrow-left"></i></a></li>
+					<li class="post-nav-list__item"><a class="post-nav-button  js-post-next"><i class="fa  fa-lg  fa-arrow-right"></i></a></li>
+				</ul><!-- end .post-nav-list -->
+			</div> <!-- end .post-nav-wrapper -->
+
+			<div class="list-view-actions">
+				<div class="dropdown">
+					<div class="dropdown-container">
+						<p class="dropdown-toggle">Post Actions</p>
+						<ul class="dropdown-menu  list-view-actions-list">
+							<li class="list-view-actions-list__item">
+								<a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+							</li>
+							<li class="list-view-actions-list__item">
+								<a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+							</li>
+							<li class="list-view-actions-list__item">
+								<a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
+							</li>
+							<li class="list-view-actions-list__item">
+								<a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
+							</li>
+							<li class="list-view-actions-list__item">
+								<a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+							</li>
+						</ul> <!-- end .dropdown-menu .list-view-edit -->
+					</div> <!-- end .dropdown-container -->
+				</div> <!-- end .dropdown -->
+			</div> <!-- end .list-view-actions -->
+		</div> <!-- end .post-header -->
+
+		<div class="post-body-wrapper">
+
+			<div class="container">
+
+				<div class="post-content-right">
+
+					<div class="post-excerpt">
+						<p>Proident reprehenderit exercitation magna ipsum excepteur proident aliquip ut dolor id exercitation. Elit aute incididunt in exercitation excepteur nisi. Qui magna quis incididunt nostrud culpa. Proident laboris incididunt.</p>
+					</div> <!-- end .post-excerpt -->
+
+					<div class="post-values">
+						<ul class="post-values-list">
+							<li class="post-values-list__item"><i class="fa  fa-map-marker"></i> <span>Location</span>
+								<a href="#">38.410558, -76728516</a>
+								<a href="#">38.410558, -76728516</a>
+							</li>
+							<li class="post-values-list__item"><i class="fa  fa-tags"></i> <span>Tags</span>
+								<!-- TODO: rename class -->
+								<span class="badge--tag1">tag #1</span>
+								<span class="badge--tag2">tag #2</span>
+							</li>
+							<li class="post-values-list__item"><i class="fa  fa-globe"></i> <span>Geometry Test</span>
+								<a href="#">View on Map</a>
+							</li>
+							<li class="post-values-list__item"><i class="fa  fa-spinner"></i> <span>Status</span>
+								<span class="badge--unpublished">unpublished</span>
+								<span class="badge--private">private</span>
+							</li>
+							<li class="post-values-list__item"><i class="fa  fa-link"></i> <span>Links</span>
+								<a href="#">ushahidi.com</a>
+								<a href="#">brck.com</a>
+							</li>
+						</ul>
+					</div> <!-- end .post-values -->
+
+				</div> <!-- end .post-content-right -->
+
+				<div class="post-image">
+					<img src="/img/post-image.jpg" alt="">
+				</div> <!-- end .post-image -->
+
+				<div class="post-meta">
+					<h6><i class="fa  fa-list"></i> Post Details</h6>
+					<div class="post-meta-author">
+						<p><i class="fa  fa-user"></i><span><a href="#users/{{user.id}}"></a> Anonymous</span></p>
+					</div> <!-- end .post-author -->
+
+					<div class="post-meta-time">
+						<p><i class="fa  fa-clock-o"></i><span class="post-time"> 10 months ago</span></p>
+					</div> <!-- end .post-time-meta -->
+
+					<div class="post-meta-published-status">
+							<p><i class="fa  fa-file-o"></i><span class="post-time" > Published</span></p>
+					</div> <!-- end .post-published-status -->
+				</div> <!-- end .post-meta -->
+
+
+
+			<div class="post-thumbnails-wrapper">
+				<p class="click-to-zoom"><small><i class="fa  fa-search-plus"></i> click images to zoom</small></p>
+				<ul class="post-thumbnails-list  js-lightbox-gallery">
+					<li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb.jpg" alt=""></a></li>
+					<li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb2.jpg" alt=""></a></li>
+					<li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb3.jpg" alt=""></a></li>
+					<li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb4.jpg" alt=""></a></li>
+				</ul>
+			</div>
+
+			</div> <!-- end .container -->
+		</div> <!-- end .post-body -->
+
+	</div> <!-- end .main -->
+
+	<div class="sidebar  sidebar--page-detail">
+		<div class="sidebar-header">
+			<h5><div class="related-post-count">7</div> posts with same tags</h5>
+		</div> <!-- end .sidebar-header -->
+
+		<div class="sidebar-body">
+
+			<div class="related-post">
+				<div class="related-post-image">
+					<img src="/img/post-detail-thumb.jpg" alt="" />
+				</div> <!-- end .related-post-image -->
+
+				<div class="related-post-details">
+					<h5>
+						<a href="#">Dolore eu excepteur</a>
+					</h5>
+					<div class="related-post-time">
+						<p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
+					</div> <!-- end .related-post-time -->
+					<div class="related-post-excerpt">
+						<p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
+					</div> <!-- end .related-post-excerpt -->
+				</div> <!-- end .related-post-details -->
+			</div> <!-- end .related-post -->
+
+			<div class="related-post">
+				<div class="related-post-image">
+					<img src="/img/post-detail-thumb2.jpg" alt="" />
+				</div> <!-- end .related-post-image -->
+
+				<div class="related-post-details">
+					<h5>
+						<a href="#">Dolore eu excepteur</a>
+					</h5>
+					<div class="related-post-time">
+						<p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
+					</div> <!-- end .related-post-time -->
+					<div class="related-post-excerpt">
+						<p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
+					</div> <!-- end .related-post-excerpt -->
+				</div> <!-- end .related-post-details -->
+			</div> <!-- end .related-post -->
+
+			<div class="related-post">
+				<div class="related-post-image">
+					<img src="/img/post-detail-thumb3.jpg" alt="" />
+				</div> <!-- end .related-post-image -->
+
+				<div class="related-post-details">
+					<h5>
+						<a href="#">Dolore eu excepteur</a>
+					</h5>
+					<div class="related-post-time">
+						<p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
+					</div> <!-- end .related-post-time -->
+					<div class="related-post-excerpt">
+						<p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
+					</div> <!-- end .related-post-excerpt -->
+				</div> <!-- end .related-post-details -->
+			</div> <!-- end .related-post -->
+
+			<div class="related-post">
+				<div class="related-post-image">
+					<img src="/img/post-detail-thumb4.jpg" alt="" />
+				</div> <!-- end .related-post-image -->
+
+				<div class="related-post-details">
+					<h5>
+						<a href="#">Dolore eu excepteur</a>
+					</h5>
+					<div class="related-post-time">
+						<p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
+					</div> <!-- end .related-post-time -->
+					<div class="related-post-excerpt">
+						<p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
+					</div> <!-- end .related-post-excerpt -->
+				</div> <!-- end .related-post-details -->
+			</div> <!-- end .related-post -->
+
+			<div class="more"><span>more</span></div>
+		</div> <!-- end .sidebar-body -->
+	</div> <!-- end .sidebar -->
+</div> <!-- end .container -->

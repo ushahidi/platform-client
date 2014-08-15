@@ -1,110 +1,8 @@
-<!--  Search Bar -->
-<div id="search-bar" class="search-bar  js-show-with-full-map">
-    <form role="search" action="">
-        <div class="container">
-
-            <ul class="tabset" collapsible>
-                <span class="search-title">Search</span>
-
-                <li class="tab  location-select">
-                    <a href="#" class="tab-heading">Location <i class="fa  fa-map-marker"></i></a>
-                    <div class="tab-content">
-                        <div class="search-tools">
-                            <div class="filter">
-                                <label>Select a location</label>
-                            </div>
-                            <ol>
-                                <li>
-                                    <input id="location1" type="checkbox">
-                                    <label for="location1">Location #1</label>
-                                </li>
-                                <li>
-                                    <input id="location2" type="checkbox">
-                                    <label for="location2">Location #2</label>
-                                </li>
-                                <li>
-                                    <input id="location3" type="checkbox">
-                                    <label for="location3">Location #3</label>
-                                </li>
-                            </ol>
-                        </div> <!-- end .search-tools -->
-                    </div> <!-- end .tab-content -->
-                </li> <!-- end .location-select -->
-
-                <li class="tab  tags-select">
-                    <a href="#" class="tab-heading">Tags <i class="fa  fa-tags"></i></a>
-                    <div class="tab-content">
-                        <div class="search-tools">
-                            <div class="filter">
-                                <label>Select tags</label>
-                            </div>
-                            <ol>
-                                <li>
-                                    <input id="tag1" type="checkbox">
-                                    <label for="tag1">Tag #1</label>
-                                </li>
-                                <li>
-                                    <input id="tag2" type="checkbox">
-                                    <label for="tag2">Tag #2</label>
-                                </li>
-                                <li>
-                                    <input id="tag3" type="checkbox">
-                                    <label for="tag3">Tag #3</label>
-                                </li>
-                            </ol>
-                        </div> <!-- end .search-tools -->
-                    </div> <!-- end .tab-content -->
-                </li> <!-- end .tags-select -->
-
-                <li class="tab  date-select">
-                    <a href="#" class="tab-heading">Date <i class="fa  fa-calendar"></i></a>
-                    <div class="tab-content">
-                        <div class="search-tools">
-                            <label>Select a start and end time</label>
-                            <ol>
-                                <div class="wrapper">
-                                    <input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From" value="">
-                                    <i class="fa  fa-calendar"></i>
-                                </div>
-
-                                <label class="visually-hidden" for="time-to">Until Time</label>
-                                <div class="wrapper">
-                                    <input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="To" value="">
-                                    <i class="fa  fa-calendar"></i>
-                                </div>
-                            </ol>
-                        </div> <!-- end .search-tools -->
-                    </div> <!-- end .tab-content -->
-                </li> <!-- end .date-select -->
-
-                <li class="tab  keyword-field">
-                    <a href="#" class="tab-heading">Keyword <i class="fa  fa-search"></i></a>
-                    <div class="tab-content">
-                        <div class="search-tools">
-                            <label>Enter a keyword to search</label>
-                            <div class="search-field-wrapper">
-                                <div class="search-field">
-                                    <label class="visually-hidden" for="search-field">Search</label>
-                                    <input type="search" id="q" class="search-field  js-search-keyword" placeholder="Keyword" value="">
-                                </div> <!-- end .search-field -->
-
-                                <div class="search-bar-button">
-                                    <button type="submit" class=""><i class="fa  fa-search"></i></button>
-                                </div><!-- end .search-bar-button -->
-                            </div> <!-- end .search-field-wrapper -->
-                        </div> <!-- end .search-tools -->
-                    </div> <!-- end .tab-content -->
-                </li> <!-- end .keyword-field -->
-            </ul> <!-- end .accordion-tabs -->
-
-        </div>
-    </form>
-</div>
+<ng-include src=" 'partials/search-bar.html' "></ng-include>
 
 <div class="container">
     <div class="main">
         <div class="list-filter">
-            <div class="container">
                 <div class="list-filter-info">
                     <h5>Showing 1 to 10 from 100 posts</h5>
                 </div> <!-- end .list-filter-info -->
@@ -132,7 +30,6 @@
                         </select>
                     </div>
                 </div> <!-- end .list-filter-sort -->
-            </div> <!-- end .container -->
         </div> <!-- end .list-filter -->
 
         <div class="list-view-wrapper">
@@ -167,33 +64,33 @@
                             </ul>
                         </div> <!-- end .list-view-tags-wrapper -->
 
-                        <div class="list-view-admin">
+                        <div class="list-view-actions">
                             <div class="dropdown">
                                 <div class="dropdown-container">
-                                    <p class="dropdown-toggle">Post Admin</p>
-                                    <ul class="dropdown-menu  list-view-admin-list">
-                                        <li class="list-view-admin-list__item">
+                                    <p class="dropdown-toggle">Post Actions</p>
+                                    <ul class="dropdown-menu  list-view-actions-list">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
                                         </li>
                                     </ul> <!-- end .menu .list-view-edit -->
                                 </div> <!-- end .dropdown-container -->
                             </div> <!-- end .dropdown -->
-                        </div> <!-- end .list-view-admin -->
+                        </div> <!-- end .list-view-actions -->
 
                     </div> <!-- end .list-view-details -->
 
@@ -233,33 +130,33 @@
                             </ul>
                         </div> <!-- end .list-view-tags-wrapper -->
 
-                        <div class="list-view-admin">
+                        <div class="list-view-actions">
                             <div class="dropdown">
                                 <div class="dropdown-container">
-                                    <p class="dropdown-toggle">Post Admin</p>
-                                    <ul class="dropdown-menu  list-view-admin-list">
-                                        <li class="list-view-admin-list__item">
+                                    <p class="dropdown-toggle">Post Actions</p>
+                                    <ul class="dropdown-menu  list-view-actions-list">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
                                         </li>
                                     </ul> <!-- end .menu .list-view-edit -->
                                 </div> <!-- end .dropdown-container -->
                             </div> <!-- end .dropdown -->
-                        </div> <!-- end .list-view-admin -->
+                        </div> <!-- end .list-view-actions -->
 
                     </div> <!-- end .list-view-details -->
 
@@ -298,33 +195,33 @@
                             </ul>
                         </div> <!-- end .list-view-tags-wrapper -->
 
-                        <div class="list-view-admin">
+                        <div class="list-view-actions">
                             <div class="dropdown">
                                 <div class="dropdown-container">
-                                    <p class="dropdown-toggle">Post Admin</p>
-                                    <ul class="dropdown-menu  list-view-admin-list">
-                                        <li class="list-view-admin-list__item">
+                                    <p class="dropdown-toggle">Post Actions</p>
+                                    <ul class="dropdown-menu  list-view-actions-list">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
                                         </li>
-                                        <li class="list-view-admin-list__item">
+                                        <li class="list-view-actions-list__item">
                                             <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
                                         </li>
                                     </ul> <!-- end .menu .list-view-edit -->
                                 </div> <!-- end .dropdown-container -->
                             </div> <!-- end .dropdown -->
-                        </div> <!-- end .list-view-admin -->
+                        </div> <!-- end .list-view-actions -->
 
                     </div> <!-- end .list-view-details -->
 

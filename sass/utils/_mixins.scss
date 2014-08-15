@@ -12,14 +12,38 @@
 	$BADGE
 \*------------------------------------*/
 
+@function set-text-color($color) {
+	@if (lightness( $color ) > 50) {
+		@return $base-font-color;
+	}
+
+	@else {
+		@return $white;
+	}
+}
+
+
 @mixin badge($color) {
 
 	$badge-font-size: $base-font-size * .85;
 
 	background-color: $color;
-	color: $white;
+	color: set-text-color($color);
 	font-size: $badge-font-size;
 	padding: .15em 1em 0.35em;
 	text-align: center;
 	font-weight: bold;
+}
+
+@mixin wrapper() {
+	background-color: $white;
+	box-shadow: 0px 2px 4px -1px rgba(lighten($darkGray, 30), 0.5);
+	margin-bottom: 40px;
+}
+
+
+@mixin thumbnail() {
+	width: 100%;
+	border: solid 4px #fff;
+	box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
 }

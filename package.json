@@ -24,7 +24,7 @@
     "angular-ui-bootstrap": "git+https://github.com/angular-ui/bootstrap.git#0.11.0",
     "brfs": "^1.2.0",
     "browserify": "^5.9.1",
-    "gulp": "~3.8.6",
+    "gulp": "~3.8.7",
     "gulp-autoprefixer": "0.0.8",
     "gulp-connect": "^2.0.6",
     "gulp-exec": "^2.1.0",

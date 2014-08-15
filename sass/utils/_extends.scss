@@ -28,3 +28,7 @@
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
+
+%border-bottom {
+	border-bottom: 1px solid $secondary-color;
+}

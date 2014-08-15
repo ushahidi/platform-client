@@ -1,0 +1,28 @@
+/*------------------------------------*\
+	CONTENTS
+\*------------------------------------*/
+/*
+* SIDEBAR...............sidebar partial global styles
+*/
+
+/*------------------------------------*\
+	$SIDEBAR
+\*------------------------------------*/
+
+.sidebar {
+
+	.sidebar-header {
+		background-color: $blueGray;
+		padding: 20px;
+
+		h5 {
+			color: $white;
+			text-align: left;
+		}
+	}
+
+	.sidebar-body {
+		@include span-columns(12);
+		background-color: $white;
+	}
+}
