@@ -171,7 +171,7 @@ gulp.task('vm', ['watch'], function() {
  */
 gulp.task('nodeserver', ['watch', 'direct'], function() {
     connect.server({
-        root: 'www',
+        root: options.www,
         middleware: function (/*connect, opt*/) {
             return [
                 function (req, res, next) {
