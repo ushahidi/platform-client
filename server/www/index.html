@@ -1,55 +1,55 @@
 <!doctype html>
 <html lang="en" ng-app="app">
-	<head>
-		<meta charset="utf-8">
-		<title>Ushahidi</title>
-		<link rel="stylesheet" href="/css/style.css">
-	</head>
+    <head>
+        <meta charset="utf-8">
+        <title>Ushahidi</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
 
-	<body>
+    <body>
 
-		<div ng-controller="navigation">
-			<header class="navigation">
-				<div class="navigation-wrapper">
-					<a ng-href="/" class="logo">
-						<img src="/img/logo.png" alt="">
-						<span class="site-title">Awesome V3 Map</span>
-					</a>
-					<div class="nav">
-						<ul class="navigation-menu">
-							<li class="nav-link  views  js-views-subnav--link" ng-click="toggle('viewsMenu')"><a href="javascript:void(0)"><i class="fa  fa-eye"></i><span>Views</span></a></li>
-							<li class="nav-link  sets"><a href="javascript:void(0)"><i class="fa  fa-th-large"></i><span>Sets</span></a></li>
-						</ul><!-- end .navigation-menu -->
+        <div ng-controller="navigation">
+            <header class="navigation">
+                <div class="navigation-wrapper">
+                    <a ng-href="/" class="logo">
+                        <img src="/img/logo.png" alt="">
+                        <span class="site-title">Awesome V3 Map</span>
+                    </a>
+                    <div class="nav">
+                        <ul class="navigation-menu">
+                            <li class="nav-link  views  js-views-subnav--link" ng-click="toggle('viewsMenu')"><a href="javascript:void(0)"><i class="fa  fa-eye"></i><span>Views</span></a></li>
+                            <li class="nav-link  sets"><a href="javascript:void(0)"><i class="fa  fa-th-large"></i><span>Sets</span></a></li>
+                        </ul><!-- end .navigation-menu -->
 
-						<ul class="navigation-tools">
-							<li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span>Create</span></a></li>
-							<li class="nav-link  workspace-panel-button  js-menu-trigger" ng-click="toggle('workspaceMenu')"><a href="javascript:void(0)"><i class="fa  fa-dashboard"></i><span>Workspace</span></a></li>
+                        <ul class="navigation-tools">
+                            <li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span>Create</span></a></li>
+                            <li class="nav-link  workspace-panel-button  js-menu-trigger" ng-click="toggle('workspaceMenu')"><a href="javascript:void(0)"><i class="fa  fa-dashboard"></i><span>Workspace</span></a></li>
 
-							<nav class="js-menu  sliding-menu-content" ng-class="{ 'is-visible': workspaceMenu }">
-								<ul>
-									<li><a href="/posts/detail/1">Post Detail</a></li>
-									<li><a href="/settings">Site Settings</a></li>
-								</ul>
-							</nav> <!-- end .sliding-menu-content -->
+                            <nav class="js-menu  sliding-menu-content" ng-class="{ 'is-visible': workspaceMenu }">
+                                <ul>
+                                    <li><a href="/posts/detail/1">Post Detail</a></li>
+                                    <li><a href="/settings">Site Settings</a></li>
+                                </ul>
+                            </nav> <!-- end .sliding-menu-content -->
 
-							<div class="js-menu-screen  menu-screen" ng-class="{ 'is-visible': workspaceMenu }" ng-click="toggle('workspaceMenu')"></div>
+                            <div class="js-menu-screen  menu-screen" ng-class="{ 'is-visible': workspaceMenu }" ng-click="toggle('workspaceMenu')"></div>
 
-						</ul> <!-- end .navigation-tools -->
-					</div> <!-- end .nav -->
-				</div> <!-- end .navigation-wrapper -->
-			</header> <!-- end .navigation -->
+                        </ul> <!-- end .navigation-tools -->
+                    </div> <!-- end .nav -->
+                </div> <!-- end .navigation-wrapper -->
+            </header> <!-- end .navigation -->
 
-			<nav role="sub-navigation" class="js-views-subnav" ng-class="{ 'active': viewsMenu }">
-				<ul class="subnav-list">
-					<li class="subnav-list__item  views-full  active" data-view="full"><a href="/views/full">Full</a></li>
-					<li class="subnav-list__item  views-map" data-view="map"><a href="/views/map">Map</a></li>
-					<li class="subnav-list__item  views-list" data-view="list"><a href="/views/list">List</a></li>
-					<li class="subnav-list__item  views-media" data-view="media"><a href="/views/media">Media</a></li>
-				</ul>
-			</nav>
-		</div>
-		<div ng-view></div>
+            <nav role="sub-navigation" class="js-views-subnav" ng-class="{ 'active': viewsMenu }">
+                <ul class="subnav-list">
+                    <li class="subnav-list__item  views-full  active" data-view="full"><a href="/views/full">Full</a></li>
+                    <li class="subnav-list__item  views-map" data-view="map"><a href="/views/map">Map</a></li>
+                    <li class="subnav-list__item  views-list" data-view="list"><a href="/views/list">List</a></li>
+                    <li class="subnav-list__item  views-media" data-view="media"><a href="/views/media">Media</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div ng-view></div>
 
-		<script src="/js/bundle.js"></script>
-	</body>
+        <script src="/js/bundle.js"></script>
+    </body>
 </html>
