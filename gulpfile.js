@@ -22,6 +22,7 @@ function errorHandler (err) {
 var options = {
     vm: false,
     nodeserver: false,
+    www: 'server/www'
 };
 
 /**
@@ -45,7 +46,7 @@ gulp.task('sass', function() {
         }))
         .pipe(autoprefixer())
         .pipe(plumber.stop())
-        .pipe(gulp.dest('www/css'));
+        .pipe(gulp.dest(options.www + '/css'));
 });
 
 /**
@@ -54,7 +55,7 @@ gulp.task('sass', function() {
  */
 gulp.task('font', function() {
     gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
-        .pipe(gulp.dest('./www/fonts'));
+        .pipe(gulp.dest(options.www + '/fonts'));
 });
 
 /**
@@ -69,7 +70,7 @@ gulp.task('browserify', function() {
         .transform('brfs')
         .bundle()
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest('./www/js/'));
+        .pipe(gulp.dest(options.www + '/js'));
 });
 
 /**
@@ -89,7 +90,7 @@ gulp.task('watchify', function() {
         return bundler.bundle()
             .on('error', errorHandler)
             .pipe(source('bundle.js'))
-            .pipe(gulp.dest('./www/js'));
+            .pipe(gulp.dest(options.www + '/js'));
     }
 });
 
@@ -116,7 +117,7 @@ gulp.task('docker:stop', function(cb) {
  * Rebuilds the docker container.
  */
 gulp.task('docker:build', ['docker:stop'], function (cb) {
-    exec('docker build -t ushahidi-client-server --quiet=true .', function(err, stdout/*, stderr*/) {
+    exec('docker build -t ushahidi-client-server --quiet=true server', function(err, stdout/*, stderr*/) {
         if (err) {
             return cb(err);
         }
@@ -130,7 +131,7 @@ gulp.task('docker:build', ['docker:stop'], function (cb) {
  * Runs the docker container.
  */
 gulp.task('docker', ['docker:build'], function(cb) {
-    exec('docker run --name=ushahidi-client -d -p 80:80 ushahidi-client-server', function(err/*, stdout, stderr*/) {
+    exec('docker run --name=ushahidi-client -d -p 8080:80 ushahidi-client-server', function(err/*, stdout, stderr*/) {
         if (err) {
             return cb(err);
         }
@@ -139,7 +140,7 @@ gulp.task('docker', ['docker:build'], function(cb) {
             if (!err) {
                 ip = stdout;
             }
-            console.log('server is live @ http://' + ip + '/');
+            console.log('server is live @ http://' + ip + ':8080/');
             livereload.changed();
             cb();
         });
@@ -161,7 +162,7 @@ gulp.task('watch', ['watchify'], function() {
  * Rebuilds the vm and runs live reloading.
  */
 gulp.task('vm', ['watch'], function() {
-    gulp.watch(['Dockerfile', 'www/**/*'], ['docker']);
+    gulp.watch(['Dockerfile', options.www + '/**/*'], ['docker']);
 });
 
 /**
@@ -190,7 +191,7 @@ gulp.task('nodeserver', ['watch', 'direct'], function() {
  * Rebuilds styles and runs live reloading.
  */
 gulp.task('direct', ['watch'], function() {
-    gulp.watch(['www/**/*']).on('change', function(file) {
+    gulp.watch([options.www + '/**/*']).on('change', function(file) {
         livereload.changed(file);
     });
 });
