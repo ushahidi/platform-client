@@ -54,7 +54,7 @@ gulp.task('sass', function() {
  */
 gulp.task('font', function() {
     gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
-	.pipe(gulp.dest('./www/fonts'));
+        .pipe(gulp.dest('./www/fonts'));
 });
 
 /**
