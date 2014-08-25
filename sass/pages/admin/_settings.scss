@@ -1,0 +1,21 @@
+.admin-settings {
+    @include outer-container;
+    article { @include span-columns(6); }
+    .card .ribbon-wrapper {
+        display: none;
+
+        .ribbon {
+            background: #191;
+        }
+    }
+    .card.enabled .ribbon-wrapper {
+        display: block;
+    }
+    .card:not(.enabled):hover .ribbon-wrapper {
+        display: block;
+        opacity: 0.5;
+        .ribbon {
+            background: #333;
+        }
+    }
+}
