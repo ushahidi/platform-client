@@ -5,6 +5,10 @@
 * POST DETAIL SIDEBAR...............post detail sidebar styles
 *
 
+
+
+
+
 /*------------------------------------*\
 	$POST DETAIL SIDEBAR
 \*------------------------------------*/
@@ -13,29 +17,29 @@
 
 // Header
 	.related-post-count {
+		background-color: $success-color;
+		border-radius: 20px;
 		float: left;
+		height: 30px;
+		line-height: em(8);
 		margin-right: 15px;
 		padding: 10px;
-		background-color: $success-color;
-		width: 30px;
-		height: 30px;
-		border-radius: 20px;
 		text-align: center;
-		line-height: .5em;
+		width: 30px;
 	}
 
 
 // Body
 	.related-post {
 		@include span-columns(12);
-		padding: 20px;
 		@extend %border-bottom;
+		padding: 20px;
 	}
 
 	.related-post-image {
 		@include span-columns(4, table);
-		vertical-align: top;
 		padding-right: 20px;
+		vertical-align: top;
 
 		@include media($small) {
 			@include span-columns(2, table);
@@ -50,9 +54,9 @@
 		}
 
 		img {
-			width: 75px;
-			height: 75px;
 			border-radius: 40px;
+			height: 75px;
+			width: 75px;
 		}
 	}
 
@@ -99,8 +103,8 @@
 
 			span {
 				color: $white;
+				font-size: em(20);
 				font-weight: bold;
-				font-size: 1.25em;
 			}
 		}
 	}

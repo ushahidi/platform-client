@@ -9,6 +9,7 @@
 
 
 
+
 /*------------------------------------*\
 		$LIST VIEW WRAPPER
 \*------------------------------------*/
@@ -34,6 +35,7 @@
 
 
 
+
 /*-------------------------------------------------------------------*\
 		$LIST VIEW
 \*-------------------------------------------------------------------*/
@@ -47,20 +49,20 @@
 // Image
 .list-view-image {
 	@include span-columns(4, table);
+	padding-right: 22px;
 	vertical-align: top;
-	padding-right: 1.4em;
 
 	@include media($small) {
 		@include span-columns(2, table);
-		padding-right: 2.4em;
+		padding-right: 38px;
 	}
 }
 
 // Details
 .list-view-details {
 	@include span-columns(8, table);
-	vertical-align: top;
 	padding: 0;
+	vertical-align: top;
 
 	@include media($small) {
 		@include span-columns(10, table);
@@ -82,7 +84,7 @@
 // Time
 .list-view-time {
 	@include span-columns(12);
-	font-size: 15px;
+	font-size: em(15);
 
 	@include media($small) {
 		@include span-columns(4);
@@ -168,9 +170,9 @@
 
 		.list-view-actions-list__item {
 			float: left;
-			width: 50%;
 			padding: 15px 0 15px 15px;
 			text-align: left;
+			width: 50%;
 
 			&:last-child {
 				border-bottom: 1px solid silver;
@@ -186,8 +188,8 @@
 			}
 
 			a {
+				font-size: em(15);
 				margin-bottom: 0;
-				font-size: 15px;
 			}
 		}
 	}
@@ -199,6 +201,4 @@
 			margin-top: 12px;
 		}
 	}
-
-
 }

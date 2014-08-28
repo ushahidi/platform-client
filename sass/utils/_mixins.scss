@@ -8,6 +8,7 @@
 
 
 
+
 /*------------------------------------*\
 	$BADGE
 \*------------------------------------*/
@@ -30,9 +31,9 @@
 	background-color: $color;
 	color: set-text-color($color);
 	font-size: $badge-font-size;
-	padding: .15em 1em 0.35em;
-	text-align: center;
 	font-weight: bold;
+	padding: 2px 16px 5px;
+	text-align: center;
 }
 
 @mixin wrapper() {
@@ -43,7 +44,7 @@
 
 
 @mixin thumbnail() {
-	width: 100%;
 	border: solid 4px #fff;
 	box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+	width: 100%;
 }

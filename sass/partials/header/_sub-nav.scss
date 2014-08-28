@@ -8,21 +8,22 @@
 
 
 
+
 /*------------------------------------*\
 	$SUBNAV
 \*------------------------------------*/
 
 nav[role="sub-navigation"] {
-	width: 100%;
-	float: left;
-	box-shadow: 0px 1px 2px rgba(108, 108, 108, 0.5);
 	background-color: #fcfcfc;
-	max-height: 0;
+	box-shadow: 0px 1px 2px rgba(108, 108, 108, 0.5);
 	display: none;
+	float: left;
+	max-height: 0;
+	width: 100%;
 
 	&.active {
-		max-height: 999px;
 		display: block;
+		max-height: 999px;
 
 		.subnav-list {
 
@@ -35,13 +36,13 @@ nav[role="sub-navigation"] {
 				}
 
 				a {
-					float: left;
-					padding: 20px 30px;
-					border-bottom: 0;
-					width: 100%;
-					color: $base-font-color;
-					font-weight: bold;
 					@include transition(none);
+					border-bottom: 0;
+					color: $base-font-color;
+					float: left;
+					font-weight: bold;
+					padding: 20px 30px;
+					width: 100%;
 				}
 
 				&.active a,

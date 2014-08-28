@@ -6,6 +6,9 @@
 */
 
 
+
+
+
 // Grid
 $grid-columns: 12;
 $gutter: 1.6888em;
@@ -34,7 +37,7 @@ $xxlarge: new-breakpoint(min-width $xxlarge-min-width);
 // Ushahidi Pallette
 $primary-color: #52c0c0;
 $secondary-color: #eff0f3;
-$alert-color: #f96c5f;
+$error-color: #f96c5f;
 $warning-color: #fec244;
 $success-color: #68bc7a;
 

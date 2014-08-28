@@ -3,13 +3,34 @@
 \*------------------------------------*/
 /*
 * GLOBAL...............global styles
+* LAYOUT...............site wide layout
 */
 
 
 
+
+/*------------------------------------*\
+	$GLOBAL
+\*------------------------------------*/
+
 body {
 	background-color: $body-bg;
 }
+
+[class*='fa-'] {
+	padding-right: 5px;
+}
+
+hr {
+	@include span-columns(12);
+}
+
+
+
+
+/*------------------------------------*\
+	$LAYOUT
+\*------------------------------------*/
 
 .main {
 	@include span-columns(12);
@@ -25,18 +46,11 @@ body {
 
 	@include media($large) {
 		@include span-columns(4);
+		@include omega;
 	}
 }
 
 .container {
 	@include outer-container;
 	padding: 30px;
-}
-
-[class*='fa-'] {
-	padding-right: 5px;
-}
-
-hr {
-	@include span-columns(12);
 }

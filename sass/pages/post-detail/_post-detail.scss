@@ -13,6 +13,7 @@ Extends _post-details.scss & _post-overlay.scss
 
 
 
+
 /*------------------------------------*\
 		$POST HEADER
 \*------------------------------------*/
@@ -56,13 +57,13 @@ Extends _post-details.scss & _post-overlay.scss
 
 	.post-nav-button {
 		@include button($secondary-color);
+		font-size: em(10);
 		margin: 0;
 		padding: 11px 16px;
-		font-size: 10px;
 
 		@include media($small) {
+			font-size: em(11);
 			padding: 11px 18px;
-			font-size: 11px;
 		}
 
 		[class*='fa'] {
@@ -87,7 +88,7 @@ Extends _post-details.scss & _post-overlay.scss
 
 		span {
 			display: none;
-			font-size: 1em;
+			font-size: 16px;
 
 			@include media($small) {
 				display: inline;
@@ -112,14 +113,15 @@ Extends _post-details.scss & _post-overlay.scss
 	}
 
 	.dropdown-button {
-		padding-right: 2.5em;
-		font-size: 0.7em;
+		font-size: em(11);
+		padding-right: 40px;
 
 		@include media($small) {
-			font-size: 0.8em;
+			font-size: em(12);
 		}
 	}
 }
+
 
 
 
@@ -233,9 +235,9 @@ Extends _post-details.scss & _post-overlay.scss
 	}
 
 	p {
-		font-size: $small-font-size;
 		color: $sub-base-font-color;
-		margin-bottom: .7em;
+		font-size: $small-font-size;
+		margin-bottom: 11px;
 
 		&:last-child {
 			margin-bottom: 0;
