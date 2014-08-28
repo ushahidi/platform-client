@@ -15,7 +15,6 @@
 
 
 
-
 /*------------------------------------*\
 	$BOURBON & FRIENDS
 \*------------------------------------*/
@@ -26,9 +25,6 @@
 // Neat
 @import "neat";
 
-@import "bitters/bitters";
-
-
 
 
 
@@ -36,6 +32,7 @@
 	$CONFIG
 \*------------------------------------*/
 
+// Settings
 @import "settings";
 
 // Bitters
@@ -44,17 +41,8 @@
 // Refills
 @import "base/refills/all";
 
-
-
-
-
-
-/*------------------------------------*\
-	$GLOBAL
-\*------------------------------------*/
-
+// Global
 @import "base/global";
-
 
 
 
@@ -70,13 +58,11 @@
 
 
 
-
 /*------------------------------------*\
 	$ICONS
 \*------------------------------------*/
 
 @import "font-awesome";
-
 
 
 
@@ -93,7 +79,6 @@
 
 
 
-
 /*------------------------------------*\
 	$PARTIALS
 \*------------------------------------*/
@@ -104,7 +89,7 @@
 @import "partials/list-filter/list-filter";
 @import "partials/list-view/list-view";
 @import "partials/sidebar/sidebar";
-
+@import "partials/footer/footer";
 
 
 

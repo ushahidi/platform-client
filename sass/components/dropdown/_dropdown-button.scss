@@ -31,7 +31,7 @@ $dropdown-arrow-top-distance: 0;
 }
 
 .dropdown-toggle {
-	background: $dropdown-background;
+	background: $dropdown-button-color;
 	border-bottom-right-radius: $base-border-radius;
 	border-top-right-radius: $base-border-radius;
 	border-bottom-left-radius: $base-border-radius;
@@ -51,7 +51,7 @@ $dropdown-arrow-top-distance: 0;
 	}
 
 	&:hover{
-		background-color: $dropdown-background-hover;
+		background-color: $dropdown-button-color-hover;
 	}
 
 	&:after {

@@ -67,5 +67,5 @@ body:hover .visually-hidden button {
 }
 
 .badge--unpublished {
-	@include badge($alert-color);
+	@include badge($error-color);
 }

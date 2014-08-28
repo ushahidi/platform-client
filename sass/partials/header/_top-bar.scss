@@ -101,7 +101,7 @@ header.navigation {
 			float: left;
 
 			.views [class*='fa-'] {
-				background-color: $alert-color;
+				background-color: $error-color;
 			}
 
 			.sets [class*='fa-'] {

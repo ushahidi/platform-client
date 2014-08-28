@@ -31,7 +31,10 @@ h4 {
 }
 
 h5 {
-  font-size: $base-font-size * 1.25; // 16 * 1.25 = 20px
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: $base-font-size * 1.25; // 16 * 1.25 = 20px
+    color: $base-font-color;
+    text-align: center;
 }
 
 h6 {

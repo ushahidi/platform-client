@@ -2,12 +2,11 @@
 		$CONTENTS
 \*------------------------------------*/
 /**
-
-Extends _post-details.scss & _post-overlay.scss
-
-* GLOBAL...............global styles
 * POST HEADER...............post header, title, tags and actions
+* POST NAV...............post navigation
 * POST BODY..................post images, excerpt and meta
+* POST FOOTER..................post actions
+* RESPOND MESSAGE PANEL..................respond message panel text area, image and button
 */
 
 
@@ -27,32 +26,51 @@ Extends _post-details.scss & _post-overlay.scss
 .post-title {
 	@include span-columns(12);
 	color: $white;
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 
 	@include media($small) {
-		@include span-columns(6);
+		@include span-columns(8);
 		margin-bottom: 0;
 	}
 }
 
+
+
+
+
+/*------------------------------------*\
+	$POST NAV
+\*------------------------------------*/
+
 .post-nav-wrapper {
-	@include span-columns(6);
-	margin-top: 3px;
+	@include span-columns(12);
 
 	@include media($small) {
-		@include span-columns(3);
-	}
-}
-
-.post-nav-list {
-	float: left;
-
-	@include media($small) {
-		float: right;
+		@include span-columns(4);
+		@include omega;
+		margin-bottom: 0;
+		text-align: right;
 	}
 
 	.post-nav-list__item {
 		display: inline;
+	}
+
+	.post-nav-prev {
+		float: left;
+
+		@include media($small) {
+			float: none;
+		};
+	}
+
+	.post-nav-next {
+		float: right;
+
+		@include media($small) {
+			float: none;
+			margin-left: 10px;
+		};
 	}
 
 	.post-nav-button {
@@ -85,40 +103,6 @@ Extends _post-details.scss & _post-overlay.scss
 				padding-left: 5px;
 			}
 		}
-
-		span {
-			display: none;
-			font-size: 16px;
-
-			@include media($small) {
-				display: inline;
-			}
-		}
-	}
-}
-
-.post-detail .list-view-actions {
-	@include span-columns(6);
-	@include omega;
-	margin: 0;
-
-	@include media($small) {
-		@include span-columns(3);
-		@include omega;
-	}
-
-	.dropdown {
-		margin: 0;
-		text-align: right;
-	}
-
-	.dropdown-button {
-		font-size: em(11);
-		padding-right: 40px;
-
-		@include media($small) {
-			font-size: em(12);
-		}
 	}
 }
 
@@ -134,6 +118,7 @@ Extends _post-details.scss & _post-overlay.scss
 .post-body-wrapper {
 	@include span-columns(12);
 	@include wrapper;
+	margin-bottom: 0;
 }
 
 .post-content-right {
@@ -266,5 +251,88 @@ Extends _post-details.scss & _post-overlay.scss
 		img {
 			@include thumbnail;
 		}
+	}
+}
+
+/*------------------------------------*\
+	$POST FOOTER
+\*------------------------------------*/
+
+.post-footer {
+	@include span-columns(12);
+	margin-bottom: 40px;
+	padding: 30px;
+	background-color: $blueGray;
+
+	.post-actions-list {
+		@include span-columns(12);
+
+		.post-actions-list__item {
+			display: inline;
+
+			.post-respond {
+				@include span-columns(12);
+				@include button($secondary-color);
+				margin: 0 20px 20px 0;
+				padding: em(11) em(12);
+				text-align: center;
+				font-size: .8em;
+
+				@include media($small) {
+					@include span-columns(3);
+					float: left;
+					margin-bottom: 0;
+				}
+
+				@include media($medium) {
+					@include span-columns(2);
+				}
+			}
+
+			.list-view-actions {
+				margin: 0;
+
+				.dropdown {
+					margin: 0;
+				}
+
+				.dropdown-container {
+					@include span-columns(12);
+
+					@include media($small) {
+						width: inherit;
+						float: right;
+					}
+				}
+
+				.dropdown-toggle {
+					@include span-columns(12);
+					text-align: center;
+				}
+			}
+		}
+	}
+}
+
+/*------------------------------------*\
+	$RESPOND MESSAGE PANEL
+\*------------------------------------*/
+
+.post-actions-message-panel {
+	@include span-columns(12);
+	margin-top: -40px;
+	margin-bottom: 40px;
+	padding: 20px;
+	background-color: $white;
+
+	textarea {
+		@include span-columns(12);
+		margin-bottom: 20px;
+	}
+
+	.post-actions-submit-button {
+		@include button($success-color);
+		float: right;
+		font-size: em(13);
 	}
 }

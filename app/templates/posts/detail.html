@@ -1,5 +1,3 @@
-<ng-include src=" 'partials/search-bar.html' "></ng-include>
-
 <div class="container">
 	<div class="main  post-detail">
 
@@ -9,37 +7,13 @@
 				<h4>{{title}}</h4>
 			</div> <!-- end .post-title -->
 
-			<div class="post-nav-wrapper">
+			<div class="post-nav-wrapper  post-nav-wrapper">
 				<ul class="post-nav-list">
-					<li class="post-nav-list__item"><a class="post-nav-button  js-post-prev"><i class="fa  fa-lg  fa-arrow-left"></i></a></li>
-					<li class="post-nav-list__item"><a class="post-nav-button  js-post-next"><i class="fa  fa-lg  fa-arrow-right"></i></a></li>
+					<li class="post-nav-list__item  post-nav-prev"><a class="post-nav-button  js-post-prev"><i class="fa  fa-lg  fa-arrow-left"></i> Prev</a></li>
+					<li class="post-nav-list__item  post-nav-next"><a class="post-nav-button  js-post-next">Next <i class="fa  fa-lg  fa-arrow-right"></i></a></li>
 				</ul><!-- end .post-nav-list -->
 			</div> <!-- end .post-nav-wrapper -->
 
-			<div class="list-view-actions">
-				<div class="dropdown">
-					<div class="dropdown-container">
-						<p class="dropdown-toggle">Post Actions</p>
-						<ul class="dropdown-menu  list-view-actions-list">
-							<li class="list-view-actions-list__item">
-								<a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
-							</li>
-							<li class="list-view-actions-list__item">
-								<a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
-							</li>
-							<li class="list-view-actions-list__item">
-								<a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
-							</li>
-							<li class="list-view-actions-list__item">
-								<a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
-							</li>
-							<li class="list-view-actions-list__item">
-								<a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
-							</li>
-						</ul> <!-- end .dropdown-menu .list-view-edit -->
-					</div> <!-- end .dropdown-container -->
-				</div> <!-- end .dropdown -->
-			</div> <!-- end .list-view-actions -->
 		</div> <!-- end .post-header -->
 
 		<div class="post-body-wrapper">
@@ -112,6 +86,50 @@
 
 			</div> <!-- end .container -->
 		</div> <!-- end .post-body -->
+
+		<div class="post-footer">
+			<ul class="post-actions-list">
+				<li class="post-actions-list__item">
+					<div class="post-respond  js-post-respond" ng-model="toggle" ng-click="toggle=!toggle">
+						<i class="fa  fa-mail-reply"></i>Respond
+					</div>
+				</li>
+
+				<li class="post-actions-list__item">
+					<div class="list-view-actions">
+						<div class="dropdown">
+							<div class="dropdown-container">
+								<p class="dropdown-toggle">Post Actions</p>
+								<ul class="dropdown-menu  list-view-actions-list">
+									<li class="list-view-actions-list__item">
+										<a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+									</li>
+									<li class="list-view-actions-list__item">
+										<a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+									</li>
+									<li class="list-view-actions-list__item">
+										<a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
+									</li>
+									<li class="list-view-actions-list__item">
+										<a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
+									</li>
+									<li class="list-view-actions-list__item">
+										<a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+									</li>
+								</ul> <!-- end .dropdown-menu .list-view-edit -->
+							</div> <!-- end .dropdown-container -->
+						</div> <!-- end .dropdown -->
+					</div> <!-- end .list-view-actions -->
+				</li>
+
+			</ul> <!-- end .post-actions-list -->
+
+		</div> <!-- end .footer -->
+
+		<div class="post-actions-message-panel" ng-show="toggle">
+			<textarea placeholder="Please type your message here ..." name="Name" rows="8" cols="40"></textarea>
+			<button type="submit" class="post-actions-submit-button  js-post-actions-submit-button">Send</button>
+		</div> <!-- end .respond-message-box -->
 
 	</div> <!-- end .main -->
 
