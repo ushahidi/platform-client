@@ -86,7 +86,6 @@ gulp.task('watchify', function() {
     .on('update', rebundle);
 
     function rebundle () {
-        livereload.changed();
         return bundler.bundle()
             .on('error', errorHandler)
             .pipe(source('bundle.js'))
