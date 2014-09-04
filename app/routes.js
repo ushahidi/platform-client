@@ -5,14 +5,14 @@ module.exports = function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
             controller: require('./controllers/posts.js'),
-            template: fs.readFileSync(__dirname + '/templates/posts.html')
+            templateUrl: 'templates/posts.html'
         })
         .when('/posts/detail', {
             controller: require('./controllers/posts/detail.js'),
-            template: fs.readFileSync(__dirname + '/templates/posts/detail.html')
+            templateUrl: 'templates/posts/detail.html'
         })
         .when('/settings', {
             controller: require('./controllers/admin/settings.js'),
-            template: fs.readFileSync(__dirname + '/templates/admin/settings.html')
+            templateUrl: 'templates/admin/settings.html'
         });
 };
