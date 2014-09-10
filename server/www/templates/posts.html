@@ -76,7 +76,7 @@
                                             <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
                                         </li>
                                         <li class="list-view-actions-list__item">
-                                            <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                                            <a href="/posts/add-to-set" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
                                         </li>
                                         <li class="list-view-actions-list__item">
                                             <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
@@ -142,7 +142,7 @@
                                             <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
                                         </li>
                                         <li class="list-view-actions-list__item">
-                                            <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                                            <a href="/posts/add-to-set" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
                                         </li>
                                         <li class="list-view-actions-list__item">
                                             <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
@@ -207,7 +207,7 @@
                                             <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
                                         </li>
                                         <li class="list-view-actions-list__item">
-                                            <a href="#" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                                            <a href="/posts/add-to-set" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
                                         </li>
                                         <li class="list-view-actions-list__item">
                                             <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
@@ -230,23 +230,8 @@
             </div> <!-- end .container -->
         </div> <!-- end .list-view-wrapper -->
 
-        <div class="pagination">
-            <ul>
-                <li class="page-prev"><a href="javascript:void(0)">Prev</a></li>
-                <li>
-                    <ul>
-                        <li><a href="javascript:void(0)">1</a></li>
-                        <li><a href="javascript:void(0)">2</a></li>
-                        <li><a href="javascript:void(0)">3</a></li>
-                        <li><a href="javascript:void(0)">4</a></li>
-                        <li><a href="javascript:void(0)">5</a></li>
-                        <li><a href="javascript:void(0)">6</a></li>
-                        <li><a href="javascript:void(0)">7</a></li>
-                    </ul>
-                </li>
-                <li class="page-next"><a href="javascript:void(0)">Next</a></li>
-            </ul>
-        </div> <!-- end .pagination -->
+        <!-- Pagination -->
+        <ng-include src=" 'partials/pagination.html' "></ng-include>
 
     </div> <!-- end .main -->
 

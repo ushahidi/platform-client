@@ -18,9 +18,7 @@
 \*------------------------------------*/
 
 .post-header {
-	@include span-columns(12);
-	background-color: $blueGray;
-	padding: 30px;
+	@include header($blueGray);
 }
 
 .post-title {

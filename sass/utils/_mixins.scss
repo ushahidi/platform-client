@@ -23,6 +23,11 @@
 	}
 }
 
+@mixin header ($color) {
+	@include span-columns(12);
+	background-color: $color;
+	padding: 30px;
+}
 
 @mixin badge($color) {
 

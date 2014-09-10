@@ -86,7 +86,7 @@ header.navigation {
 
 	[class*='fa-'] {
 		color: $white;
-		padding: 23px 20px 21px 2px;
+		padding: 23px 20px 21px 20px;
 
 		@include media($medium) {
 			padding: auto;
