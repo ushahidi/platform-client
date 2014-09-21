@@ -2,11 +2,14 @@ var fs = require('fs');
 
 module.exports = function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
+
+    var postRouteConfig = {
+      controller: require('./controllers/posts.js'),
+      templateUrl: 'templates/posts.html'
+    };
     $routeProvider
-        .when('/', {
-            controller: require('./controllers/posts.js'),
-            templateUrl: 'templates/posts.html'
-        })
+        .when('/', postRouteConfig)
+        .when('/posts', postRouteConfig)
         .when('/posts/detail', {
             controller: require('./controllers/posts/detail.js'),
             templateUrl: 'templates/posts/detail.html'

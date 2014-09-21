@@ -1,0 +1,64 @@
+<div class="container">
+    <article class="list-view-content">
+        <div class="list-view-image">
+            <img src="img/list-view-image.jpg" alt="">
+        </div> <!-- end .list-view-image -->
+
+        <div class="list-view-details">
+            <h4 class="list-view-header"><a ng-href="/posts/detail">{{post.title}}</a></h4>
+            <div class="list-view-time">
+                <p> <i class="fa  fa-clock-o"></i>Today 12:20 pm</p>
+            </div> <!-- end .list-view-time -->
+            <div class="list-view-post-status-wrapper">
+                <div class="list-view-post-status">
+                    <span class="badge--private">private</span>
+                    <span class="badge--unpublished">unpublished</span>
+                </div>
+            </div>
+
+            <div class="list-view-excerpt">
+                <p>{{post.description}}<a ng-href="/posts/detail"><span class="read-more"> &nbsp;... Read&nbsp;More</span></a></p>
+            </div> <!-- end .list-view-excerpt -->
+
+            <div class="list-view-tags-wrapper">
+                <h6 class="list-view-tags-header"><i class="fa  fa-tags"></i>Tags</h6>
+                <ul class="list-view-tags">
+                    <a href="#"><li><i class="fa fa-circle" style="color: #C50813"></i>Automobiles</li></a>
+                    <a href="#"><li><i class="fa fa-circle" style="color: #23699D;"></i>Transport</li></a>
+                    <a href="#"><li><i class="fa fa-circle" style="color: #4fa425;"></i>London</li></a>
+                    <a href="#"><li><i class="fa fa-circle" style="color: #baac29;"></i>Retro</li></a>
+                </ul>
+            </div> <!-- end .list-view-tags-wrapper -->
+
+            <div class="list-view-actions">
+                <div class="dropdown">
+                    <div class="dropdown-container">
+                        <p class="dropdown-toggle">Post Actions</p>
+                        <ul class="dropdown-menu  list-view-actions-list">
+                            <li class="list-view-actions-list__item">
+                                <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
+                            </li>
+                            <li class="list-view-actions-list__item">
+                                <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+                            </li>
+                            <li class="list-view-actions-list__item">
+                                <a href="/posts/add-to-set" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                            </li>
+                            <li class="list-view-actions-list__item">
+                                <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
+                            </li>
+                            <li class="list-view-actions-list__item">
+                                <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
+                            </li>
+                            <li class="list-view-actions-list__item">
+                                <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+                            </li>
+                        </ul> <!-- end .menu .list-view-edit -->
+                    </div> <!-- end .dropdown-container -->
+                </div> <!-- end .dropdown -->
+            </div> <!-- end .list-view-actions -->
+
+        </div> <!-- end .list-view-details -->
+
+    </article>
+</div>
