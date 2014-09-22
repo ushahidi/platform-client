@@ -18,6 +18,7 @@
 
 // this overrides off-canvas nav to display under the topbar nav
 body {
+	margin-top: 60px;
 	position: relative;
 	z-index: -1;
 }
@@ -60,6 +61,8 @@ header.navigation .logo {
 \*------------------------------------*/
 
 header.navigation {
+	margin-top: -60px;
+	position: fixed;
 
 	.nav-link {
 		display: inline;
@@ -86,7 +89,7 @@ header.navigation {
 
 	[class*='fa-'] {
 		color: $white;
-		padding: 23px 20px 21px 20px;
+		padding: 23px 20px 20px;
 
 		@include media($medium) {
 			padding: auto;
@@ -124,25 +127,7 @@ header.navigation {
 
 		.workspace-panel-button [class*='fa-'] {
 			background-color: $primary-color;
+			border-bottom: 1px solid $black;
 		}
 	}
-}
-
-.sliding-menu-content {
-	@include transition(all .2s linear);
-	left: auto;
-	right: 0;
-	transform: translateX(220px);
-}
-
-
-
-
-
-/*------------------------------------*\
-	$WORKSPACE OFF CANVAS
-\*------------------------------------*/
-
-.menu-screen {
-	@include transition(all .2s linear);
 }

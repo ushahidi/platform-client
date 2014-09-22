@@ -41,15 +41,14 @@
 	text-align: center;
 }
 
-@mixin wrapper() {
-	background-color: $white;
-	box-shadow: 0px 2px 4px -1px rgba(lighten($darkGray, 30), 0.5);
-	margin-bottom: 40px;
-}
-
-
 @mixin thumbnail() {
 	border: solid 4px #fff;
 	box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
 	width: 100%;
+}
+
+@mixin wrapper() {
+	background-color: $white;
+	box-shadow: 0px 2px 4px -1px rgba(lighten($darkGray, 30), 0.5);
+	margin-bottom: 40px;
 }

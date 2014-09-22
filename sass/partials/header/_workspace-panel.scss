@@ -1,0 +1,230 @@
+/*------------------------------------*\
+		$CONTENTS
+\*------------------------------------*/
+/**
+ * OVERRIDES...............these styles override bower_components/refills/source/stylesheets/refills/navigation
+ * GENERAL...............top level styles
+ * PROFILE...............user avatar and account settings/edits
+ * STATS WRAPPER..................post, user and post views stats
+ * ACCORDION MENU..................posts, tasks and tools
+		*SECTION..................sections styles
+		*CONTENT..................content styles
+ */
+
+
+
+/*------------------------------------*\
+	$OVERRIDES
+\*------------------------------------*/
+
+/* FIXME: this overrides bower_components/refills/source/stylesheets/refills/navigation */
+header.navigation .sliding-menu-content {
+
+	.workspace-stats-wrapper {
+
+		[class*='fa-'] {
+			padding: 0;
+			color: $base-font-color;
+		}
+
+		ul li {
+			float: left;
+			line-height: 1;
+			text-align: center;
+			padding: 0;
+		}
+	}
+
+	[class*='fa-'] {
+		padding: 0 10px 0 0;
+		color: $base-font-color;
+	}
+
+	ul li {
+		background-color: transparent;
+		padding-right: 0;
+		text-align: left;
+
+		a {
+			color: $base-font-color;
+
+			&:hover {
+				color: $base-font-color;
+			}
+		}
+	}
+}
+
+/*------------------------------------*\
+	$GENERAL
+\*------------------------------------*/
+
+.sliding-menu-content {
+	@include transition(all .2s linear);
+	left: auto;
+	top: 60px;
+	right: 0;
+	transform: translateX(300px);
+	width: 300px;
+
+	li a {
+		border-bottom: 0;
+		display: inline;
+
+		&:hover {
+			background-color: transparent;
+			color: $hover-link-color;
+		}
+	}
+}
+
+.menu-screen {
+	@include transition(all .2s linear);
+}
+
+
+
+
+
+/*------------------------------------*\
+		$WORKSPACE PROFILE
+\*------------------------------------*/
+
+.workspace-profile {
+	@include outer-container;
+	background-color: $secondary-color;
+	border-bottom: 1px solid #CCCCCC;
+	padding: 20px;
+}
+
+.workspace-avatar {
+	display: table-cell;
+	height: 58px;
+	width: 58px;
+}
+
+.workspace-admin {
+	display: table-cell;
+	padding-left: 30px;
+	vertical-align: top;
+
+	.username.header {
+		text-align: left;
+	}
+
+	.workspace-role {
+		font-size: 13px;
+	}
+
+	.workspace-admin-list {
+		@include span-columns(12);
+
+		.workspace-admin-list__item {
+			background: transparent;
+			display: inline;
+			line-height: 1;
+			padding: 0;
+
+			a {
+				color: $base-link-color;
+				font-size: 13px;
+				padding: 0 20px 0 0 ;
+			}
+		}
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+		$WORKSPACE STATS
+\*------------------------------------*/
+.workspace-stats-wrapper {
+	@include outer-container;
+	background-color: #fff;
+	padding: 10px 0;
+}
+
+.workspace-stats-list {
+	@include span-columns(12);
+
+	.stat-card {
+		width: 33.3%;
+		margin: 0;
+		border-right: 1px solid lighten($black, 80);
+
+		&:last-child {
+			border-right: 0;
+		}
+
+		.header {
+			color: $base-link-color;
+			font-size: 1.3em;
+		}
+	}
+}
+
+
+
+
+
+/*------------------------------------*\
+	 $WORKSPACE ACCORDION MENU
+\*------------------------------------*/
+
+.panel {
+	margin-bottom: 0;
+	overflow: hidden;
+	border-bottom: 1px solid lighten($dark-gray, 10);
+}
+
+.panel-heading {
+	background-color: $dark-gray;
+	border-color: #ddd;
+
+	.panel-title {
+		font-size: 1.2em;
+		border: 0;
+
+		span:before {
+			float: right;
+			display: inline-block;
+			font-family: FontAwesome;
+			font-size: 10px;
+			font-style: normal;
+			font-weight: normal;
+			content: "\f078";
+			color: $white;
+		}
+
+		span.accordion-span {
+			display: block;
+			padding: 15px;
+		}
+	}
+
+	.active.panel-title span:before {
+		content: "\f077";
+	}
+
+	.panel-title .accordion-toggle {
+		color: $white;
+		cursor: pointer;
+	}
+}
+
+.panel-body {
+	background-color: $white;
+
+	li {
+		text-align: left;
+
+		a {
+			padding: 0 0 0 15px;
+			width: 100%;
+			display: block;
+		}
+	}
+}
