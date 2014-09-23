@@ -1,28 +1,28 @@
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    livereload = require('gulp-livereload'),
-    autoprefixer = require('gulp-autoprefixer'),
-    plumber = require('gulp-plumber'),
-    gutil = require('gulp-util'),
-    exec = require('child_process').exec,
-    source = require('vinyl-source-stream'),
-    browserify = require('browserify'),
-    watchify = require('watchify'),
-    connect = require('gulp-connect'),
-    path = require('path'),
-    url = require('url');
+	sass = require('gulp-sass'),
+	livereload = require('gulp-livereload'),
+	autoprefixer = require('gulp-autoprefixer'),
+	plumber = require('gulp-plumber'),
+	gutil = require('gulp-util'),
+	exec = require('child_process').exec,
+	source = require('vinyl-source-stream'),
+	browserify = require('browserify'),
+	watchify = require('watchify'),
+	connect = require('gulp-connect'),
+	path = require('path'),
+	url = require('url');
 
 function errorHandler (err) {
-    gutil.beep();
-    gutil.log(err.message || err);
+	gutil.beep();
+	gutil.log(err.message || err);
 }
 
 // Options
 // - (bool) vm: enable docker builds, default: false
 var options = {
-    vm: false,
-    nodeserver: false,
-    www: 'server/www'
+	vm: false,
+	nodeserver: false,
+	www: 'server/www'
 };
 
 /**
@@ -30,23 +30,23 @@ var options = {
  * Converts SASS files to CSS
  */
 gulp.task('sass', function() {
-    gulp.src(['sass/style.scss'])
-        .pipe(plumber({
-            errorHandler: errorHandler
-        }))
-        .pipe(sass({
-            includePaths : [
-                'bower_components/bourbon/app/assets/stylesheets',
-                'bower_components/neat/app/assets/stylesheets',
-                'bower_components/refills/source/stylesheets',
-                'bower_components/font-awesome/scss'
-            ],
-            // using 'map' causes an error: https://github.com/sass/node-sass/issues/337
-            sourceComments: 'normal'
-        }))
-        .pipe(autoprefixer())
-        .pipe(plumber.stop())
-        .pipe(gulp.dest(options.www + '/css'));
+	gulp.src(['sass/style.scss'])
+		.pipe(plumber({
+			errorHandler: errorHandler
+		}))
+		.pipe(sass({
+			includePaths : [
+				'bower_components/bourbon/app/assets/stylesheets',
+				'bower_components/neat/app/assets/stylesheets',
+				'bower_components/refills/source/stylesheets',
+				'bower_components/font-awesome/scss'
+			],
+			// using 'map' causes an error: https://github.com/sass/node-sass/issues/337
+			sourceComments: 'normal'
+		}))
+		.pipe(autoprefixer())
+		.pipe(plumber.stop())
+		.pipe(gulp.dest(options.www + '/css'));
 });
 
 /**
@@ -54,8 +54,8 @@ gulp.task('sass', function() {
  * Copies font files to public directory.
  */
 gulp.task('font', function() {
-    gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
-        .pipe(gulp.dest(options.www + '/fonts'));
+	gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
+		.pipe(gulp.dest(options.www + '/fonts'));
 });
 
 /**
@@ -63,14 +63,14 @@ gulp.task('font', function() {
  * Bundle js with browserify
  */
 gulp.task('browserify', function() {
-    browserify({
-            entries : './app/app.js',
-            debug : true,
-        })
-        .transform('brfs')
-        .bundle()
-        .pipe(source('bundle.js'))
-        .pipe(gulp.dest(options.www + '/js'));
+	browserify({
+			entries : './app/app.js',
+			debug : true,
+		})
+		.transform('brfs')
+		.bundle()
+		.pipe(source('bundle.js'))
+		.pipe(gulp.dest(options.www + '/js'));
 });
 
 /**
@@ -78,19 +78,19 @@ gulp.task('browserify', function() {
  * Watch js and rebundle with browserify
  */
 gulp.task('watchify', function() {
-    var bundler = watchify(browserify({
-            entries : './app/app.js',
-            debug : true,
-        }, watchify.args))
-    .transform('brfs')
-    .on('update', rebundle);
+	var bundler = watchify(browserify({
+			entries : './app/app.js',
+			debug : true,
+		}, watchify.args))
+	.transform('brfs')
+	.on('update', rebundle);
 
-    function rebundle () {
-        return bundler.bundle()
-            .on('error', errorHandler)
-            .pipe(source('bundle.js'))
-            .pipe(gulp.dest(options.www + '/js'));
-    }
+	function rebundle () {
+		return bundler.bundle()
+			.on('error', errorHandler)
+			.pipe(source('bundle.js'))
+			.pipe(gulp.dest(options.www + '/js'));
+	}
 });
 
 /**
@@ -106,9 +106,9 @@ gulp.task('build', ['sass', 'font', 'browserify'], function() {
  * Stops any docker containers.
  */
 gulp.task('docker:stop', function(cb) {
-    exec('docker ps -a | grep ushahidi-client | awk \'{print $1}\' | xargs docker stop | xargs docker rm', function(/*err, stdout, stderr*/) {
-        cb(/* ignore err */);
-    });
+	exec('docker ps -a | grep ushahidi-client | awk \'{print $1}\' | xargs docker stop | xargs docker rm', function(/*err, stdout, stderr*/) {
+		cb(/* ignore err */);
+	});
 });
 
 /**
@@ -116,13 +116,13 @@ gulp.task('docker:stop', function(cb) {
  * Rebuilds the docker container.
  */
 gulp.task('docker:build', ['docker:stop'], function (cb) {
-    exec('docker build -t ushahidi-client-server --quiet=true server', function(err, stdout/*, stderr*/) {
-        if (err) {
-            return cb(err);
-        }
-        console.log(stdout);
-        cb();
-    });
+	exec('docker build -t ushahidi-client-server --quiet=true server', function(err, stdout/*, stderr*/) {
+		if (err) {
+			return cb(err);
+		}
+		console.log(stdout);
+		cb();
+	});
 });
 
 /**
@@ -130,20 +130,20 @@ gulp.task('docker:build', ['docker:stop'], function (cb) {
  * Runs the docker container.
  */
 gulp.task('docker', ['docker:build'], function(cb) {
-    exec('docker run --name=ushahidi-client -d -p 8080:80 ushahidi-client-server', function(err/*, stdout, stderr*/) {
-        if (err) {
-            return cb(err);
-        }
-        var ip = 'localhost';
-        exec('boot2docker ip', function(err, stdout/*, stderr*/) {
-            if (!err) {
-                ip = stdout;
-            }
-            console.log('server is live @ http://' + ip + ':8080/');
-            livereload.changed();
-            cb();
-        });
-    });
+	exec('docker run --name=ushahidi-client -d -p 8080:80 ushahidi-client-server', function(err/*, stdout, stderr*/) {
+		if (err) {
+			return cb(err);
+		}
+		var ip = 'localhost';
+		exec('boot2docker ip', function(err, stdout/*, stderr*/) {
+			if (!err) {
+				ip = stdout;
+			}
+			console.log('server is live @ http://' + ip + ':8080/');
+			livereload.changed();
+			cb();
+		});
+	});
 });
 
 /**
@@ -151,9 +151,9 @@ gulp.task('docker', ['docker:build'], function(cb) {
  * Rebuilds styles and runs live reloading.
  */
 gulp.task('watch', ['watchify'], function() {
-    livereload.listen();
-    gulp.watch('sass/**/*.scss', ['sass']);
-    gulp.watch('bower_components/font-awesome/fonts/fontawesome*', ['font']);
+	livereload.listen();
+	gulp.watch('sass/**/*.scss', ['sass']);
+	gulp.watch('bower_components/font-awesome/fonts/fontawesome*', ['font']);
 });
 
 /**
@@ -161,7 +161,7 @@ gulp.task('watch', ['watchify'], function() {
  * Rebuilds the vm and runs live reloading.
  */
 gulp.task('vm', ['watch'], function() {
-    gulp.watch(['Dockerfile', options.www + '/**/*'], ['docker']);
+	gulp.watch(['Dockerfile', options.www + '/**/*'], ['docker']);
 });
 
 /**
@@ -169,20 +169,20 @@ gulp.task('vm', ['watch'], function() {
  * Runs a simple node connect server and runs live reloading.
  */
 gulp.task('nodeserver', ['watch', 'direct'], function() {
-    connect.server({
-        root: options.www,
-        middleware: function (/*connect, opt*/) {
-            return [
-                function (req, res, next) {
-                    var pathname = url.parse(req.url).pathname;
-                    if (!path.extname(pathname)) {
-                        req.url = '/';
-                    }
-                    next();
-                }
-            ];
-        }
-    });
+	connect.server({
+		root: options.www,
+		middleware: function (/*connect, opt*/) {
+			return [
+				function (req, res, next) {
+					var pathname = url.parse(req.url).pathname;
+					if (!path.extname(pathname)) {
+						req.url = '/';
+					}
+					next();
+				}
+			];
+		}
+	});
 });
 
 /**
@@ -190,9 +190,9 @@ gulp.task('nodeserver', ['watch', 'direct'], function() {
  * Rebuilds styles and runs live reloading.
  */
 gulp.task('direct', ['watch'], function() {
-    gulp.watch([options.www + '/**/*']).on('change', function(file) {
-        livereload.changed(file);
-    });
+	gulp.watch([options.www + '/**/*']).on('change', function(file) {
+		livereload.changed(file);
+	});
 });
 
 /**
