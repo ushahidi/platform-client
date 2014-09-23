@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * DROPDOWN BUTTONS...............dropdown button variables and styles
@@ -22,98 +22,98 @@ $dropdown-distance-from-dropdown-menu: 50px;
 $dropdown-arrow-top-distance: 0;
 
 .dropdown {
-	text-align: center;
+    text-align: center;
 }
 
 .dropdown-container {
-	display: inline-block;
-	position: relative;
+    display: inline-block;
+    position: relative;
 }
 
 .dropdown-toggle {
-	background: $dropdown-button-color;
-	border-bottom-right-radius: $base-border-radius;
-	border-top-right-radius: $base-border-radius;
-	border-bottom-left-radius: $base-border-radius;
-	border-top-left-radius: $base-border-radius;
-	color: $base-font-color;
-	cursor: pointer;
-	float: right;
-	font-size: .8em;
-	font-weight: 800;
-	line-height: $dropdown-height;
-	margin-bottom: 0;
-	padding: 0 ($dropdown-padding * 3.5) 0 $dropdown-padding;
-	position: relative;
+    background: $dropdown-button-color;
+    border-bottom-right-radius: $base-border-radius;
+    border-top-right-radius: $base-border-radius;
+    border-bottom-left-radius: $base-border-radius;
+    border-top-left-radius: $base-border-radius;
+    color: $base-font-color;
+    cursor: pointer;
+    float: right;
+    font-size: .8em;
+    font-weight: 800;
+    line-height: $dropdown-height;
+    margin-bottom: 0;
+    padding: 0 ($dropdown-padding * 3.5) 0 $dropdown-padding;
+    position: relative;
 
-	@include media($large) {
-		padding: 0 ($dropdown-padding * 2.5) 0 $dropdown-padding;
-	}
+    @include media($large) {
+        padding: 0 ($dropdown-padding * 2.5) 0 $dropdown-padding;
+    }
 
-	&:hover{
-		background-color: $dropdown-button-color-hover;
-	}
+    &:hover{
+        background-color: $dropdown-button-color-hover;
+    }
 
-	&:after {
-		color: $base-font-color;
-		content: "\25BE";
-		display: block;
-		position: absolute;
-		right: $dropdown-padding;
-		top: $dropdown-arrow-top-distance;
-	}
+    &:after {
+        color: $base-font-color;
+        content: "\25BE";
+        display: block;
+        position: absolute;
+        right: $dropdown-padding;
+        top: $dropdown-arrow-top-distance;
+    }
 }
 
 .dropdown-menu {
-	@include transition (all 0.2s ease-in-out);
-	background: $dropdown-background;
-	border-radius: $base-border-radius;
-	border: $dropdown-border;
-	box-shadow: 0 2px 2px transparentize(black, .8);
-	color: $dropdown-color;
-	cursor: pointer;
-	display: none;
-	overflow: show;
-	position: absolute;
-	right: 0;
-	top: $dropdown-distance-from-dropdown-menu;
-	width: 228px;
-	z-index: 99999;
+    @include transition (all 0.2s ease-in-out);
+    background: $dropdown-background;
+    border-radius: $base-border-radius;
+    border: $dropdown-border;
+    box-shadow: 0 2px 2px transparentize(black, .8);
+    color: $dropdown-color;
+    cursor: pointer;
+    display: none;
+    overflow: show;
+    position: absolute;
+    right: 0;
+    top: $dropdown-distance-from-dropdown-menu;
+    width: 228px;
+    z-index: 99999;
 
-	&:before {
-		@include position(absolute, 0 .44em 0 0);
-		color: $dropdown-background;
-		content: "\25b2";
-		font-size: 1.4em;
-		pointer-events: none;
-		text-shadow: 0 -2px 2px transparentize(black, .7);
-		top: -1em;
-	}
+    &:before {
+        @include position(absolute, 0 .44em 0 0);
+        color: $dropdown-background;
+        content: "\25b2";
+        font-size: 1.4em;
+        pointer-events: none;
+        text-shadow: 0 -2px 2px transparentize(black, .7);
+        top: -1em;
+    }
 
-	li {
-		border-bottom: $dropdown-inner-border;
-		color: $dropdown-color;
-		padding: $dropdown-padding / 2;
-	}
+    li {
+        border-bottom: $dropdown-inner-border;
+        color: $dropdown-color;
+        padding: $dropdown-padding / 2;
+    }
 
-	li:hover {
-		background: $dropdown-background-hover;
-	}
+    li:hover {
+        background: $dropdown-background-hover;
+    }
 
-	li:first-child {
-		border-top-left-radius: $base-border-radius;
-		border-top-right-radius: $base-border-radius;
-	}
+    li:first-child {
+        border-top-left-radius: $base-border-radius;
+        border-top-right-radius: $base-border-radius;
+    }
 
-	li:last-child {
-		border: none;
-		border-bottom-left-radius: $base-border-radius;
-		border-bottom-right-radius: $base-border-radius;
-	}
+    li:last-child {
+        border: none;
+        border-bottom-left-radius: $base-border-radius;
+        border-bottom-right-radius: $base-border-radius;
+    }
 }
 
 .open .dropdown-menu {
-	display: block;
+    display: block;
 }
 
 // Inspired by code by www.HUSAMUI.com

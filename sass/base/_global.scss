@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * GLOBAL...............global styles
@@ -10,47 +10,47 @@
 
 
 /*------------------------------------*\
-	$GLOBAL
+    $GLOBAL
 \*------------------------------------*/
 
 body {
-	background-color: $body-bg;
+    background-color: $body-bg;
 }
 
 [class*='fa-'] {
-	padding-right: 5px;
+    padding-right: 5px;
 }
 
 hr {
-	@include span-columns(12);
+    @include span-columns(12);
 }
 
 
 
 
 /*------------------------------------*\
-	$LAYOUT
+    $LAYOUT
 \*------------------------------------*/
 
 .main {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($large) {
-		@include span-columns(8);
-	}
+    @include media($large) {
+        @include span-columns(8);
+    }
 }
 
 .sidebar {
-	@include span-columns(12);
-	@include omega;
+    @include span-columns(12);
+    @include omega;
 
-	@include media($large) {
-		@include span-columns(4);
-		@include omega;
-	}
+    @include media($large) {
+        @include span-columns(4);
+        @include omega;
+    }
 }
 
 .container {
-	@include outer-container;
-	padding: 30px;
+    @include outer-container;
+    padding: 30px;
 }

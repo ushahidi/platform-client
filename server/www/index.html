@@ -1,109 +1,109 @@
 <!doctype html>
 <html lang="en" ng-app="app">
-	<head>
-		<meta charset="utf-8">
-		<title>Ushahidi</title>
-		<link rel="stylesheet" href="/css/style.css">
-		<base href="/">
-	</head>
+    <head>
+        <meta charset="utf-8">
+        <title>Ushahidi</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <base href="/">
+    </head>
 
-	<body>
+    <body>
 
-		<div ng-controller="navigation">
-			<header class="navigation">
-				<div class="navigation-wrapper">
-					<a ng-href="/" class="logo">
-						<img src="/img/logo.png" alt="">
-						<span class="site-title">Awesome V3 Map</span>
-					</a>
-					<div class="nav">
-						<ul class="navigation-menu">
-							<li class="nav-link  views  js-views-subnav--link" ng-click="toggle('viewsMenu')"><a href="javascript:void(0)"><i class="fa  fa-eye"></i><span>Views</span></a></li>
-							<li class="nav-link  sets"><a href="javascript:void(0)"><i class="fa  fa-th-large"></i><span>Sets</span></a></li>
-						</ul><!-- end .navigation-menu -->
+        <div ng-controller="navigation">
+            <header class="navigation">
+                <div class="navigation-wrapper">
+                    <a ng-href="/" class="logo">
+                        <img src="/img/logo.png" alt="">
+                        <span class="site-title">Awesome V3 Map</span>
+                    </a>
+                    <div class="nav">
+                        <ul class="navigation-menu">
+                            <li class="nav-link  views  js-views-subnav--link" ng-click="toggle('viewsMenu')"><a href="javascript:void(0)"><i class="fa  fa-eye"></i><span>Views</span></a></li>
+                            <li class="nav-link  sets"><a href="javascript:void(0)"><i class="fa  fa-th-large"></i><span>Sets</span></a></li>
+                        </ul><!-- end .navigation-menu -->
 
-						<ul class="navigation-tools">
-							<li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span>Create</span></a></li>
-							<li class="nav-link  workspace-panel-button  js-menu-trigger" ng-click="toggle('workspaceMenu')"><a href="javascript:void(0)"><i class="fa  fa-dashboard"></i><span>Workspace</span></a></li>
+                        <ul class="navigation-tools">
+                            <li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span>Create</span></a></li>
+                            <li class="nav-link  workspace-panel-button  js-menu-trigger" ng-click="toggle('workspaceMenu')"><a href="javascript:void(0)"><i class="fa  fa-dashboard"></i><span>Workspace</span></a></li>
 
-							<nav class="js-menu  sliding-menu-content" ng-class="{ 'is-visible': workspaceMenu }">
+                            <nav class="js-menu  sliding-menu-content" ng-class="{ 'is-visible': workspaceMenu }">
 
-								<h1 class="visually-hidden">Workspace</h1>
+                                <h1 class="visually-hidden">Workspace</h1>
 
-								<div class="workspace-profile">
-									<div id="workspace-avatar" class="workspace-avatar">
-										<img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
-									</div>
-									<div class="workspace-admin">
-										<h5 id="username" class="username  header">
-										<a href="#users/{{user.id}}">Namey Namerson</a>
-										</h5>
-										<p id="workspace-role" class="workspace-role" >Admin</p>
+                                <div class="workspace-profile">
+                                    <div id="workspace-avatar" class="workspace-avatar">
+                                        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
+                                    </div>
+                                    <div class="workspace-admin">
+                                        <h5 id="username" class="username  header">
+                                        <a href="#users/{{user.id}}">Namey Namerson</a>
+                                        </h5>
+                                        <p id="workspace-role" class="workspace-role" >Admin</p>
 
-										<ul class="workspace-admin-list">
-											<li class="workspace-admin-list__item"><a href="#" id="edit-profile" class="edit-profile js-edit-profile">Edit Profile</a></li>
-											<li class="workspace-admin-list__item"><a href="user/logout" id="logout" class="logout  js-logout" >Logout</a></li>
-										</ul>
-									</div> <!-- end .workspace-admin -->
-								</div> <!-- end .workspace-profile -->
+                                        <ul class="workspace-admin-list">
+                                            <li class="workspace-admin-list__item"><a href="#" id="edit-profile" class="edit-profile js-edit-profile">Edit Profile</a></li>
+                                            <li class="workspace-admin-list__item"><a href="user/logout" id="logout" class="logout  js-logout" >Logout</a></li>
+                                        </ul>
+                                    </div> <!-- end .workspace-admin -->
+                                </div> <!-- end .workspace-profile -->
 
-								<div class="workspace-stats-wrapper">
-									<ul class="workspace-stats-list">
-										<li id="posts-stats" class="stat-card">
-											<h6 id="posts-stats-value"  class="header">181</h6>
-											<p>posts</p>
-										</li>
-										<li id="users-stats" class="stat-card">
-											<h6 id="users-stats-value"  class="header">5</h6>
-											<p>users</p>
-										</li>
-										<li id="tags-stats" class="stat-card">
-											<h6 id="tags-stats-value"  class="header">6</h6>
-											<p>tags</p>
-										</li>
-									</ul>
-								</div> <!-- end .workspace-stats-wrapper -->
+                                <div class="workspace-stats-wrapper">
+                                    <ul class="workspace-stats-list">
+                                        <li id="posts-stats" class="stat-card">
+                                            <h6 id="posts-stats-value"  class="header">181</h6>
+                                            <p>posts</p>
+                                        </li>
+                                        <li id="users-stats" class="stat-card">
+                                            <h6 id="users-stats-value"  class="header">5</h6>
+                                            <p>users</p>
+                                        </li>
+                                        <li id="tags-stats" class="stat-card">
+                                            <h6 id="tags-stats-value"  class="header">6</h6>
+                                            <p>tags</p>
+                                        </li>
+                                    </ul>
+                                </div> <!-- end .workspace-stats-wrapper -->
 
-								<div ng-controller="workspaceAccordion">
-									<accordion>
-										<accordion-group heading="Posts" is-open="status.isFirstOpen">
-											<ul>
-												<li>
-													<a href="/posts/detail"><i class="fa  fa-th-list"></i>Post Detail</a>
-												</li>
-											</ul>
-										</accordion-group>
-										<accordion-group heading="Settings">
-											<ul>
-												<li>
-													<a href="/settings" class="js-accordion-trigger"><i class="fa  fa-cogs"></i>Site Settings</a>
-												</li>
-											</ul>
-										</accordion-group>
-									</accordion>
-								</div> <!-- end ng-controller workspaceAccordion -->
-							</nav> <!-- end .sliding-menu-content -->
+                                <div ng-controller="workspaceAccordion">
+                                    <accordion>
+                                        <accordion-group heading="Posts" is-open="status.isFirstOpen">
+                                            <ul>
+                                                <li>
+                                                    <a href="/posts/detail"><i class="fa  fa-th-list"></i>Post Detail</a>
+                                                </li>
+                                            </ul>
+                                        </accordion-group>
+                                        <accordion-group heading="Settings">
+                                            <ul>
+                                                <li>
+                                                    <a href="/settings" class="js-accordion-trigger"><i class="fa  fa-cogs"></i>Site Settings</a>
+                                                </li>
+                                            </ul>
+                                        </accordion-group>
+                                    </accordion>
+                                </div> <!-- end ng-controller workspaceAccordion -->
+                            </nav> <!-- end .sliding-menu-content -->
 
-							<div class="js-menu-screen  menu-screen" ng-class="{ 'is-visible': workspaceMenu }" ng-click="toggle('workspaceMenu')"></div>
+                            <div class="js-menu-screen  menu-screen" ng-class="{ 'is-visible': workspaceMenu }" ng-click="toggle('workspaceMenu')"></div>
 
-						</ul> <!-- end .navigation-tools -->
-					</div> <!-- end .nav -->
-				</div> <!-- end .navigation-wrapper -->
-			</header> <!-- end .navigation -->
+                        </ul> <!-- end .navigation-tools -->
+                    </div> <!-- end .nav -->
+                </div> <!-- end .navigation-wrapper -->
+            </header> <!-- end .navigation -->
 
-			<nav role="sub-navigation" class="js-views-subnav" ng-class="{ 'active': viewsMenu }">
-				<ul class="subnav-list">
-					<li class="subnav-list__item  views-full  active" data-view="full"><a href="/views/full">Full</a></li>
-					<li class="subnav-list__item  views-map" data-view="map"><a href="/views/map">Map</a></li>
-					<li class="subnav-list__item  views-list" data-view="list"><a href="/views/list">List</a></li>
-					<li class="subnav-list__item  views-media" data-view="media"><a href="/views/media">Media</a></li>
-				</ul>
-			</nav>
-		</div>
-		<div ng-view></div>
+            <nav role="sub-navigation" class="js-views-subnav" ng-class="{ 'active': viewsMenu }">
+                <ul class="subnav-list">
+                    <li class="subnav-list__item  views-full  active" data-view="full"><a href="/views/full">Full</a></li>
+                    <li class="subnav-list__item  views-map" data-view="map"><a href="/views/map">Map</a></li>
+                    <li class="subnav-list__item  views-list" data-view="list"><a href="/views/list">List</a></li>
+                    <li class="subnav-list__item  views-media" data-view="media"><a href="/views/media">Media</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div ng-view></div>
 
-		<ng-include src=" 'templates/partials/footer.html' "></ng-include>
+        <ng-include src=" 'templates/partials/footer.html' "></ng-include>
 
-		<script src="/js/bundle.js"></script>
-	</body>
+        <script src="/js/bundle.js"></script>
+    </body>
 </html>

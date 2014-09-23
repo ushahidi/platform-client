@@ -1,5 +1,5 @@
 /*------------------------------------*\
-		$CONTENTS
+        $CONTENTS
 \*------------------------------------*/
 /**
 * VISIBILITY...............custom helper classes
@@ -10,62 +10,62 @@
 
 
 /*------------------------------------*\
-		$VISIBILITY CLASSES
+        $VISIBILITY CLASSES
 \*------------------------------------*/
 
 .none {
-	display: none;
-	visibility: hidden;
+    display: none;
+    visibility: hidden;
 }
 
 /*http://developer.yahoo.com/blogs/ydn/posts/2012/10/clip-your-hidden-content-for-better-accessibility/*/
 .visually-hidden {
-	border:0 !important;
-	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-	clip: rect(1px, 1px, 1px, 1px);
-	height: 1px !important;
-	overflow: hidden;
-	padding:0 !important;
-	position: absolute !important;
-	width: 1px !important;
+    border:0 !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px !important;
+    overflow: hidden;
+    padding:0 !important;
+    position: absolute !important;
+    width: 1px !important;
 }
 
 body:hover .visually-hidden a,
 body:hover .visually-hidden input,
 body:hover .visually-hidden button {
-	display: none !important;
+    display: none !important;
 }
 
 .invisible {
-	@include transition (opacity .3s ease-in-out);
-	opacity: 0;
+    @include transition (opacity .3s ease-in-out);
+    opacity: 0;
 }
 
 .visible {
-	@include transition (opacity .3s ease-in-out);
-	opacity: 1;
+    @include transition (opacity .3s ease-in-out);
+    opacity: 1;
 }
 
 // Badges
 
 [class*='badge--'] {
-	display: table;
-	margin: 0 0 10px 5px;
+    display: table;
+    margin: 0 0 10px 5px;
 
-	@include media($small) {
-		display: inline;
-		margin-bottom: 0;
-	}
+    @include media($small) {
+        display: inline;
+        margin-bottom: 0;
+    }
 }
 
 .badge--private {
-	@include badge($blueGray);
+    @include badge($blueGray);
 }
 
 .badge--published {
-	@include badge($success-color);
+    @include badge($success-color);
 }
 
 .badge--unpublished {
-	@include badge($error-color);
+    @include badge($error-color);
 }

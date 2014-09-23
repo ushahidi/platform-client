@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * HEADER...............title and save button
@@ -11,76 +11,76 @@
 
 
 /*------------------------------------*\
-	$HEADER
+    $HEADER
 \*------------------------------------*/
 
 .add-to-set-header {
-	@include header($warning-color);
+    @include header($warning-color);
 
-	.header {
-		@include span-columns(12);
-		margin-bottom: 20px;
+    .header {
+        @include span-columns(12);
+        margin-bottom: 20px;
 
-		@include media($small) {
-			@include span-columns(6);
-		}
-	}
+        @include media($small) {
+            @include span-columns(6);
+        }
+    }
 
-	.add-to-set-button {
-		@include span-columns(12);
-		@include button($success-color);
+    .add-to-set-button {
+        @include span-columns(12);
+        @include button($success-color);
 
-		@include media($small) {
-			float: right;
-			width: initial;
-		}
+        @include media($small) {
+            float: right;
+            width: initial;
+        }
 
-		&:disabled {
-			opacity: .7;
-		}
-	}
+        &:disabled {
+            opacity: .7;
+        }
+    }
 }
 
 
 /*------------------------------------*\
-	$BODY
+    $BODY
 \*------------------------------------*/
 
 .set-list-wrapper {
-	display: table;
+    display: table;
 }
 
 .set-list {
-	@include span-columns(12);
-	@extend %border-bottom;
-	display: table-row;
-	float: none;
+    @include span-columns(12);
+    @extend %border-bottom;
+    display: table-row;
+    float: none;
 
-	.set-list__item {
-		@include span-columns(12);
-		border-left: 8px solid transparent;
-		display: block;
-		margin: 0;
-		padding: 30px;
+    .set-list__item {
+        @include span-columns(12);
+        border-left: 8px solid transparent;
+        display: block;
+        margin: 0;
+        padding: 30px;
 
 
-		@include media($medium) {
-			@include span-columns(6, table);
-			float: none;
-		}
+        @include media($medium) {
+            @include span-columns(6, table);
+            float: none;
+        }
 
-		&:hover {
-			cursor: pointer;
-		}
+        &:hover {
+            cursor: pointer;
+        }
 
-		&.is-selected {
-			background-color: $secondary-color;
-			border-left: 8px solid $darkBlue;
-		}
-	}
+        &.is-selected {
+            background-color: $secondary-color;
+            border-left: 8px solid $darkBlue;
+        }
+    }
 
-	.header {
-		margin-bottom: 20px;
-		text-align: left;
-	}
+    .header {
+        margin-bottom: 20px;
+        text-align: left;
+    }
 }

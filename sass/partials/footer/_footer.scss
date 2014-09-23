@@ -1,5 +1,5 @@
 /*------------------------------------*\
-		$CONTENTS
+        $CONTENTS
 \*------------------------------------*/
 /**
  * COPYRIGHT............
@@ -10,22 +10,22 @@
 
 
 /*------------------------------------*\
-		$COPYRIGHT
+        $COPYRIGHT
 \*------------------------------------*/
 
 footer {
-	@include span-columns(12);
-	background-color: $blueGray;
-	color: $white;
-	padding: 40px 0;
-	text-align: center;
+    @include span-columns(12);
+    background-color: $blueGray;
+    color: $white;
+    padding: 40px 0;
+    text-align: center;
 }
 
 .footer-copyright-wrapper {
-	@include outer-container;
-	padding: 0 30px;
+    @include outer-container;
+    padding: 0 30px;
 }
 
 .footer-copyright {
-	@include span-columns(12);
+    @include span-columns(12);
 }

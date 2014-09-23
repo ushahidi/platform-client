@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * ADMIN SETTINGS...............admin settings styles
@@ -10,34 +10,34 @@
 
 
 /*------------------------------------*\
-	$ADMIN SETTINGS
+    $ADMIN SETTINGS
 \*------------------------------------*/
 
 .admin-settings {
-	@include outer-container;
+    @include outer-container;
 
-	article {
-		@include span-columns(6);
-	}
+    article {
+        @include span-columns(6);
+    }
 
-	.card .ribbon-wrapper {
-		display: none;
+    .card .ribbon-wrapper {
+        display: none;
 
-		.ribbon {
-			background: #191;
-		}
-	}
+        .ribbon {
+            background: #191;
+        }
+    }
 
-	.card.enabled .ribbon-wrapper {
-		display: block;
-	}
+    .card.enabled .ribbon-wrapper {
+        display: block;
+    }
 
-	.card:not(.enabled):hover .ribbon-wrapper {
-		display: block;
-		opacity: 0.5;
+    .card:not(.enabled):hover .ribbon-wrapper {
+        display: block;
+        opacity: 0.5;
 
-		.ribbon {
-			background: #333;
-		}
-	}
+        .ribbon {
+            background: #333;
+        }
+    }
 }

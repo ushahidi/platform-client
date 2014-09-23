@@ -1,5 +1,5 @@
 /*------------------------------------*\
-		$CONTENTS
+        $CONTENTS
 \*------------------------------------*/
 /**
 * POST HEADER...............post header, title, tags and actions
@@ -14,22 +14,22 @@
 
 
 /*------------------------------------*\
-		$POST HEADER
+        $POST HEADER
 \*------------------------------------*/
 
 .post-header {
-	@include header($blueGray);
+    @include header($blueGray);
 }
 
 .post-title {
-	@include span-columns(12);
-	color: $white;
-	margin-bottom: 40px;
+    @include span-columns(12);
+    color: $white;
+    margin-bottom: 40px;
 
-	@include media($small) {
-		@include span-columns(8);
-		margin-bottom: 0;
-	}
+    @include media($small) {
+        @include span-columns(8);
+        margin-bottom: 0;
+    }
 }
 
 
@@ -37,71 +37,71 @@
 
 
 /*------------------------------------*\
-	$POST NAV
+    $POST NAV
 \*------------------------------------*/
 
 .post-nav-wrapper {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($small) {
-		@include span-columns(4);
-		@include omega;
-		margin-bottom: 0;
-		text-align: right;
-	}
+    @include media($small) {
+        @include span-columns(4);
+        @include omega;
+        margin-bottom: 0;
+        text-align: right;
+    }
 
-	.post-nav-list__item {
-		display: inline;
-	}
+    .post-nav-list__item {
+        display: inline;
+    }
 
-	.post-nav-prev {
-		float: left;
+    .post-nav-prev {
+        float: left;
 
-		@include media($small) {
-			float: none;
-		};
-	}
+        @include media($small) {
+            float: none;
+        };
+    }
 
-	.post-nav-next {
-		float: right;
+    .post-nav-next {
+        float: right;
 
-		@include media($small) {
-			float: none;
-			margin-left: 10px;
-		};
-	}
+        @include media($small) {
+            float: none;
+            margin-left: 10px;
+        };
+    }
 
-	.post-nav-button {
-		@include button($secondary-color);
-		font-size: em(10);
-		margin: 0;
-		padding: 11px 16px;
+    .post-nav-button {
+        @include button($secondary-color);
+        font-size: em(10);
+        margin: 0;
+        padding: 11px 16px;
 
-		@include media($small) {
-			font-size: em(11);
-			padding: 11px 18px;
-		}
+        @include media($small) {
+            font-size: em(11);
+            padding: 11px 18px;
+        }
 
-		[class*='fa'] {
-			position: relative;
-			top: -1px;
-		}
+        [class*='fa'] {
+            position: relative;
+            top: -1px;
+        }
 
-		.fa-arrow-right,
-		.fa-arrow-left {
-			padding: 0;
-		}
+        .fa-arrow-right,
+        .fa-arrow-left {
+            padding: 0;
+        }
 
-		@include media($medium) {
-			.fa-arrow-left {
-				padding-right: 5px;
-			}
+        @include media($medium) {
+            .fa-arrow-left {
+                padding-right: 5px;
+            }
 
-			.fa-arrow-right {
-				padding-left: 5px;
-			}
-		}
-	}
+            .fa-arrow-right {
+                padding-left: 5px;
+            }
+        }
+    }
 }
 
 
@@ -109,228 +109,228 @@
 
 
 /*------------------------------------*\
-		$POST BODY
+        $POST BODY
 \*------------------------------------*/
 
 
 .post-body-wrapper {
-	@include span-columns(12);
-	@include wrapper;
-	margin-bottom: 0;
+    @include span-columns(12);
+    @include wrapper;
+    margin-bottom: 0;
 }
 
 .post-content-right {
-	@include span-columns(12);
-	@include omega;
+    @include span-columns(12);
+    @include omega;
 
-	@include media($small) {
-		@include span-columns(8);
-		@include omega;
-		float: right;
-	}
+    @include media($small) {
+        @include span-columns(8);
+        @include omega;
+        float: right;
+    }
 }
 
 .post-excerpt {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($small) {
-		padding-right: 0;
-	}
+    @include media($small) {
+        padding-right: 0;
+    }
 }
 
 //custom-form
 .post-values {
-	@include span-columns(12);
-	margin: 40px 0 50px;
+    @include span-columns(12);
+    margin: 40px 0 50px;
 
-	@include media($small) {
-		margin: 20px 0;
-	}
+    @include media($small) {
+        margin: 20px 0;
+    }
 
-	.post-values-list {
-		border: 1px solid $secondary-color;
+    .post-values-list {
+        border: 1px solid $secondary-color;
 
-		.post-values-list__item {
-			padding: 20px 10px;
+        .post-values-list__item {
+            padding: 20px 10px;
 
-			span {
-				font-weight: bold;
-			}
+            span {
+                font-weight: bold;
+            }
 
-			&:nth-child(odd) {
-				background-color: $secondary-color;
-			}
+            &:nth-child(odd) {
+                background-color: $secondary-color;
+            }
 
-			a {
-				display: inherit;
-				margin: 10px 0 0 20px;
+            a {
+                display: inherit;
+                margin: 10px 0 0 20px;
 
-				@include media($medium) {
-					display: inline;
-				}
-			}
+                @include media($medium) {
+                    display: inline;
+                }
+            }
 
-			[class*='badge--']{
-				margin: 10px 0 0 20px;
-			}
+            [class*='badge--']{
+                margin: 10px 0 0 20px;
+            }
 
-			[class*='badge--'] {
-				display: table;
+            [class*='badge--'] {
+                display: table;
 
-				@include media($small) {
-					display: inline;
-				}
-			}
+                @include media($small) {
+                    display: inline;
+                }
+            }
 
-			.badge--tag1 {
-				@include badge($success-color);
-			}
+            .badge--tag1 {
+                @include badge($success-color);
+            }
 
-			.badge--tag2 {
-				@include badge($darkBlue);
-			}
-		}
-	}
+            .badge--tag2 {
+                @include badge($darkBlue);
+            }
+        }
+    }
 }
 
 .post-image {
-	@include span-columns(12);
-	margin-bottom: 50px;
+    @include span-columns(12);
+    margin-bottom: 50px;
 
-	@include media($small) {
-		@include span-columns(4);
-		margin-bottom: 20px;
-		padding-right: 10px;
-	}
+    @include media($small) {
+        @include span-columns(4);
+        margin-bottom: 20px;
+        padding-right: 10px;
+    }
 
-	img {
-		@include thumbnail;
-	}
+    img {
+        @include thumbnail;
+    }
 }
 
 .post-meta {
-	@include span-columns(12);
-	margin-bottom: 30px;
+    @include span-columns(12);
+    margin-bottom: 30px;
 
-	@include media($small) {
-		@include span-columns(4);
-		clear: left;
-	}
+    @include media($small) {
+        @include span-columns(4);
+        clear: left;
+    }
 
-	p {
-		color: $sub-base-font-color;
-		font-size: $small-font-size;
-		margin-bottom: 11px;
+    p {
+        color: $sub-base-font-color;
+        font-size: $small-font-size;
+        margin-bottom: 11px;
 
-		&:last-child {
-			margin-bottom: 0;
-		}
-	}
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }
 
 [class*='post-meta-'] {
-	@include span-columns(12);
-	margin-top: 10px;
+    @include span-columns(12);
+    margin-top: 10px;
 }
 
 .post-thumbnails-wrapper {
-	@include span-columns(12);
-	border-top: 1px solid $secondary-color;
-	margin-top: 20px;
-	padding-top: 10px;
+    @include span-columns(12);
+    border-top: 1px solid $secondary-color;
+    margin-top: 20px;
+    padding-top: 10px;
 }
 
 .post-thumbnails-list{
 
-	.post-thumbnails-list__item {
-		@include span-columns(3);
-		display: inline;
+    .post-thumbnails-list__item {
+        @include span-columns(3);
+        display: inline;
 
-		img {
-			@include thumbnail;
-		}
-	}
+        img {
+            @include thumbnail;
+        }
+    }
 }
 
 /*------------------------------------*\
-	$POST FOOTER
+    $POST FOOTER
 \*------------------------------------*/
 
 .post-footer {
-	@include span-columns(12);
-	margin-bottom: 40px;
-	padding: 30px;
-	background-color: $blueGray;
+    @include span-columns(12);
+    margin-bottom: 40px;
+    padding: 30px;
+    background-color: $blueGray;
 
-	.post-actions-list {
-		@include span-columns(12);
+    .post-actions-list {
+        @include span-columns(12);
 
-		.post-actions-list__item {
-			display: inline;
+        .post-actions-list__item {
+            display: inline;
 
-			.post-respond {
-				@include span-columns(12);
-				@include button($secondary-color);
-				margin: 0 20px 20px 0;
-				padding: em(11) em(12);
-				text-align: center;
-				font-size: .8em;
+            .post-respond {
+                @include span-columns(12);
+                @include button($secondary-color);
+                margin: 0 20px 20px 0;
+                padding: em(11) em(12);
+                text-align: center;
+                font-size: .8em;
 
-				@include media($small) {
-					@include span-columns(3);
-					float: left;
-					margin-bottom: 0;
-				}
+                @include media($small) {
+                    @include span-columns(3);
+                    float: left;
+                    margin-bottom: 0;
+                }
 
-				@include media($medium) {
-					@include span-columns(2);
-				}
-			}
+                @include media($medium) {
+                    @include span-columns(2);
+                }
+            }
 
-			.list-view-actions {
-				margin: 0;
+            .list-view-actions {
+                margin: 0;
 
-				.dropdown {
-					margin: 0;
-				}
+                .dropdown {
+                    margin: 0;
+                }
 
-				.dropdown-container {
-					@include span-columns(12);
+                .dropdown-container {
+                    @include span-columns(12);
 
-					@include media($small) {
-						width: inherit;
-						float: right;
-					}
-				}
+                    @include media($small) {
+                        width: inherit;
+                        float: right;
+                    }
+                }
 
-				.dropdown-toggle {
-					@include span-columns(12);
-					text-align: center;
-				}
-			}
-		}
-	}
+                .dropdown-toggle {
+                    @include span-columns(12);
+                    text-align: center;
+                }
+            }
+        }
+    }
 }
 
 /*------------------------------------*\
-	$RESPOND MESSAGE PANEL
+    $RESPOND MESSAGE PANEL
 \*------------------------------------*/
 
 .post-actions-message-panel {
-	@include span-columns(12);
-	margin-top: -40px;
-	margin-bottom: 40px;
-	padding: 20px;
-	background-color: $white;
+    @include span-columns(12);
+    margin-top: -40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: $white;
 
-	textarea {
-		@include span-columns(12);
-		margin-bottom: 20px;
-	}
+    textarea {
+        @include span-columns(12);
+        margin-bottom: 20px;
+    }
 
-	.post-actions-submit-button {
-		@include button($success-color);
-		float: right;
-		font-size: em(13);
-	}
+    .post-actions-submit-button {
+        @include button($success-color);
+        float: right;
+        font-size: em(13);
+    }
 }

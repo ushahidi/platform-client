@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * GENERAL...............general styles
@@ -13,14 +13,14 @@
 
 
 /*------------------------------------*\
-	$GENERAL
+    $GENERAL
 \*------------------------------------*/
 
 // this overrides off-canvas nav to display under the topbar nav
 body {
-	margin-top: 60px;
-	position: relative;
-	z-index: -1;
+    margin-top: 60px;
+    position: relative;
+    z-index: -1;
 }
 
 
@@ -28,28 +28,28 @@ body {
 
 
 /*------------------------------------*\
-	$LOGO
+    $LOGO
 \*------------------------------------*/
 
 header.navigation .logo {
 
-	img {
-		float: left;
-		max-height: 60px;
-	}
+    img {
+        float: left;
+        max-height: 60px;
+    }
 
-	.site-title {
-		display: none;
-		color: $white;
-		float: left;
-		font-size: em(20);
-		font-weight: bold;
-		padding: 18px;
+    .site-title {
+        display: none;
+        color: $white;
+        float: left;
+        font-size: em(20);
+        font-weight: bold;
+        padding: 18px;
 
-		@include media($small) {
-			display: inline-block;
-		}
-	}
+        @include media($small) {
+            display: inline-block;
+        }
+    }
 }
 
 
@@ -57,77 +57,77 @@ header.navigation .logo {
 
 
 /*------------------------------------*\
-	$NAV
+    $NAV
 \*------------------------------------*/
 
 header.navigation {
-	margin-top: -60px;
-	position: fixed;
+    margin-top: -60px;
+    position: fixed;
 
-	.nav-link {
-		display: inline;
-		padding-right: 0;
-		width: auto;
+    .nav-link {
+        display: inline;
+        padding-right: 0;
+        width: auto;
 
-		a {
-			font-weight: bold;
-		}
+        a {
+            font-weight: bold;
+        }
 
-		@include media($medium) {
-			padding-right: 12px;
-		}
-	}
+        @include media($medium) {
+            padding-right: 12px;
+        }
+    }
 
-	span {
-		display: none;
+    span {
+        display: none;
 
-		@include media($medium) {
-			display: inline-block;
-			padding-left: 10px;
-		}
-	}
+        @include media($medium) {
+            display: inline-block;
+            padding-left: 10px;
+        }
+    }
 
-	[class*='fa-'] {
-		color: $white;
-		padding: 23px 20px 20px;
+    [class*='fa-'] {
+        color: $white;
+        padding: 23px 20px 20px;
 
-		@include media($medium) {
-			padding: auto;
-		}
-	}
+        @include media($medium) {
+            padding: auto;
+        }
+    }
 
-	.nav {
-		float: none;
-		z-index: 9999999;
+    .nav {
+        float: none;
+        z-index: 9999999;
 
-		.navigation-menu {
-			float: left;
+        .navigation-menu {
+            float: left;
 
-			.views [class*='fa-'] {
-				background-color: $error-color;
-			}
+            .views [class*='fa-'] {
+                background-color: $error-color;
+            }
 
-			.sets [class*='fa-'] {
-				background-color: $warning-color;
-			}
-		}
-	}
+            .sets [class*='fa-'] {
+                background-color: $warning-color;
+            }
+        }
+    }
 
-	.navigation-tools {
-		background: transparent;
-		clear: none;
-		cursor: hand;
-		display: block;
-		float: right;
-		padding: 0;
+    .navigation-tools {
+        background: transparent;
+        clear: none;
+        cursor: hand;
+        display: block;
+        float: right;
+        padding: 0;
 
-		.create-post [class*='fa-'] {
-			background-color: $success-color;
-		}
+        .create-post [class*='fa-'] {
+            background-color: $success-color;
+        }
 
-		.workspace-panel-button [class*='fa-'] {
-			background-color: $primary-color;
-			border-bottom: 1px solid $black;
-		}
-	}
+        .workspace-panel-button [class*='fa-'] {
+            background-color: $primary-color;
+            border-bottom: 1px solid $black;
+        }
+    }
 }

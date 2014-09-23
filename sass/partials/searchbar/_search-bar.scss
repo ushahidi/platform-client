@@ -1,5 +1,5 @@
 /*------------------------------------*\
-		$CONTENTS
+        $CONTENTS
 \*------------------------------------*/
 /**
  * SEARCH BAR...............search bar body
@@ -11,41 +11,41 @@
 
 
 /*------------------------------------*\
-	$SEARCH BAR
+    $SEARCH BAR
 \*------------------------------------*/
 
 .search-bar {
-	@include span-columns(12);
-	background: $darkBlue;
-	box-shadow: 0px 1px 2px rgba(lighten($darkGray, 30), 0.5);
-	margin-bottom: 40px;
+    @include span-columns(12);
+    background: $darkBlue;
+    box-shadow: 0px 1px 2px rgba(lighten($darkGray, 30), 0.5);
+    margin-bottom: 40px;
 
-	form {
-		margin: 0;
-	}
+    form {
+        margin: 0;
+    }
 
-	input {
-		margin: 0;
-	}
+    input {
+        margin: 0;
+    }
 
-	.tabset {
-		@include span-columns(12);
-		border: 0;
-		margin: 0;
+    .tabset {
+        @include span-columns(12);
+        border: 0;
+        margin: 0;
 
-		li.tab .tab-content {
-			padding: 5px 20px 20px;
+        li.tab .tab-content {
+            padding: 5px 20px 20px;
 
-			@include media($medium) {
-				padding: 20px;
-			}
-		}
+            @include media($medium) {
+                padding: 20px;
+            }
+        }
 
-		.tab-heading > [class*='fa-'] {
-			font-size: em(15);
-			padding-left: 10px;
-		}
-	}
+        .tab-heading > [class*='fa-'] {
+            font-size: em(15);
+            padding-left: 10px;
+        }
+    }
 }
 
 
@@ -53,123 +53,123 @@
 
 
 /*------------------------------------*\
-	$SEARCH FORM FIELDS
+    $SEARCH FORM FIELDS
 \*------------------------------------*/
 
 .search-title {
-	background-color: transparent;
-	border: none;
-	color: white;
-	display: block;
-	font-size: em(20);
-	font-weight: bold;
-	line-height: 1;
-	padding: 0 10px 20px;
-	text-align: center;
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: block;
+    font-size: em(20);
+    font-weight: bold;
+    line-height: 1;
+    padding: 0 10px 20px;
+    text-align: center;
 
-	@include media($medium) {
-		display: inline;
-		font-size: em(17);
-		text-align: left;
-	}
+    @include media($medium) {
+        display: inline;
+        font-size: em(17);
+        text-align: left;
+    }
 }
 
 .location-select {
 
-	[class*='fa-'] {
-		color: $success-color;
-	}
+    [class*='fa-'] {
+        color: $success-color;
+    }
 }
 
 .date-select {
 
-	.wrapper {
-		@include span-columns(12);
-		position: relative;
+    .wrapper {
+        @include span-columns(12);
+        position: relative;
 
-		@include media($small) {
-			@include span-columns(6);
-		}
+        @include media($small) {
+            @include span-columns(6);
+        }
 
-		@include media($medium) {
-			@include span-columns(2);
-		}
+        @include media($medium) {
+            @include span-columns(2);
+        }
 
-		input[type="text"] {
-			padding-right: 30px;
-		}
+        input[type="text"] {
+            padding-right: 30px;
+        }
 
-		[class*='fa-'] {
-			color: $sub-base-font-color;
-			padding: 13px 8px;
-			position: absolute;
-			right: 0;
-			top: 0;
-			z-index: 2;
-		}
+        [class*='fa-'] {
+            color: $sub-base-font-color;
+            padding: 13px 8px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 2;
+        }
 
-		input {
-			margin-bottom: 20px;
-			padding: 11px;
+        input {
+            margin-bottom: 20px;
+            padding: 11px;
 
-			@include media($medium) {
-				margin-bottom: 0;
-			}
+            @include media($medium) {
+                margin-bottom: 0;
+            }
 
-			&:last-child {
-				margin-bottom: 0;
-			}
-		}
-	}
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
 
-	[class*='fa-'] {
-		color: $success-color;
-	}
+    [class*='fa-'] {
+        color: $success-color;
+    }
 }
 
 .keyword-field {
 
-	input {
-		padding: 11px;
-	}
+    input {
+        padding: 11px;
+    }
 }
 
 .search-field-wrapper {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($medium) {
-		@include span-columns(4);
-	}
+    @include media($medium) {
+        @include span-columns(4);
+    }
 }
 
 .search-field {
-	@include span-columns(9);
-	@include omega;
+    @include span-columns(9);
+    @include omega;
 
-	@include media($small) {
-		@include span-columns(10);
-		@include omega;
-	}
+    @include media($small) {
+        @include span-columns(10);
+        @include omega;
+    }
 }
 
 .search-bar-button {
-	@include span-columns(3);
+    @include span-columns(3);
 
-	@include media($small) {
-		@include span-columns(2);
-	}
+    @include media($small) {
+        @include span-columns(2);
+    }
 
-	button {
-		@include button();
-		border-radius: 0 $global-radius $global-radius 0;
-		border-width: 0;
-		font-size: em(14);
-		height: 42px;
-		width: 100%;
+    button {
+        @include button();
+        border-radius: 0 $global-radius $global-radius 0;
+        border-width: 0;
+        font-size: em(14);
+        height: 42px;
+        width: 100%;
 
-		i {
-			font-size: em(19);
-			padding: 0;
-		}
-	}
+        i {
+            font-size: em(19);
+            padding: 0;
+        }
+    }
 }

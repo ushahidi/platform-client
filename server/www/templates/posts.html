@@ -1,99 +1,99 @@
 <ng-include src=" 'templates/partials/search-bar.html' "></ng-include>
 
 <div class="container">
-	<div class="main">
-		<div class="list-filter">
-				<div class="list-filter-info">
-					<h4>Showing 1 to 10 from 100 posts</h4>
-				</div> <!-- end .list-filter-info -->
+    <div class="main">
+        <div class="list-filter">
+                <div class="list-filter-info">
+                    <h4>Showing 1 to 10 from 100 posts</h4>
+                </div> <!-- end .list-filter-info -->
 
-				<div class="list-filter-count">
-					<div class="filter-count-select">
-						<label class="visually-hidden" for="filter-count">Number of posts shown</label>
-						<select id="filter-count" class="filter-count  js-filter-count">
-							<option selected>3</option>
-							<option>5</option>
-							<option>10</option>
-							<option>20</option>
-						</select>
-					</div>
-				</div> <!-- end .list-filter-count -->
+                <div class="list-filter-count">
+                    <div class="filter-count-select">
+                        <label class="visually-hidden" for="filter-count">Number of posts shown</label>
+                        <select id="filter-count" class="filter-count  js-filter-count">
+                            <option selected>3</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>20</option>
+                        </select>
+                    </div>
+                </div> <!-- end .list-filter-count -->
 
-				<div class="list-filter-sort">
-					<div class="filter-sort-select">
-						<label class="visually-hidden" for="filter-sort">Sort posts by</label>
-						<select id="filter-sort" class="filter-sort  js-filter-sort">
-							<option>Filter</option>
-							<option>Created</option>
-							<option>Updated</option>
-							<option>Title A to Z</option>
-						</select>
-					</div>
-				</div> <!-- end .list-filter-sort -->
-		</div> <!-- end .list-filter -->
+                <div class="list-filter-sort">
+                    <div class="filter-sort-select">
+                        <label class="visually-hidden" for="filter-sort">Sort posts by</label>
+                        <select id="filter-sort" class="filter-sort  js-filter-sort">
+                            <option>Filter</option>
+                            <option>Created</option>
+                            <option>Updated</option>
+                            <option>Title A to Z</option>
+                        </select>
+                    </div>
+                </div> <!-- end .list-filter-sort -->
+        </div> <!-- end .list-filter -->
 
-		<div class="list-view-wrapper">
-		  <post-preview ng-repeat="post in posts" post="post"></post-preview>
-		</div> <!-- end .list-view-wrapper -->
+        <div class="list-view-wrapper">
+          <post-preview ng-repeat="post in posts" post="post"></post-preview>
+        </div> <!-- end .list-view-wrapper -->
 
-		<!-- Pagination -->
-		<ng-include src=" 'templates/partials/pagination.html' "></ng-include>
+        <!-- Pagination -->
+        <ng-include src=" 'templates/partials/pagination.html' "></ng-include>
 
-	</div> <!-- end .main -->
+    </div> <!-- end .main -->
 
-	<div class="sidebar  sidebar--home">
-		<ul class="tabset">
-			<li class="tab" active>
-				<a href="#" class="tab-heading"><i class="fa  fa-thumb-tack"></i> How to Post</a>
-				<div class="tab-content">
-					<div class="tab-content-sms">
-						<div class="tab-content__icon">
-							<i class="fa  fa-mobile-phone  sms"></i>
-						</div>
+    <div class="sidebar  sidebar--home">
+        <ul class="tabset">
+            <li class="tab" active>
+                <a href="#" class="tab-heading"><i class="fa  fa-thumb-tack"></i> How to Post</a>
+                <div class="tab-content">
+                    <div class="tab-content-sms">
+                        <div class="tab-content__icon">
+                            <i class="fa  fa-mobile-phone  sms"></i>
+                        </div>
 
-						<div class="tab-content__description">
-							<p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
-							<span class="post-origin">via SMS</span>
-						</div>
-					</div> <!-- end .tab-content-sms -->
+                        <div class="tab-content__description">
+                            <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
+                            <span class="post-origin">via SMS</span>
+                        </div>
+                    </div> <!-- end .tab-content-sms -->
 
-					<div class="tab-content-email">
-						<div class="tab-content__icon">
-							<i class="fa  fa-envelope-o  email"></i>
-						</div>
+                    <div class="tab-content-email">
+                        <div class="tab-content__icon">
+                            <i class="fa  fa-envelope-o  email"></i>
+                        </div>
 
-						<div class="tab-content__description">
-							<p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
-							<span class="post-origin">via Email</span>
-						</div>
-					</div> <!-- end .tab-content-email -->
+                        <div class="tab-content__description">
+                            <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
+                            <span class="post-origin">via Email</span>
+                        </div>
+                    </div> <!-- end .tab-content-email -->
 
-					<div class="tab-content-deployment">
-						<div class="tab-content__icon">
-							<i class="fa  fa-plus  deployment"></i>
-						</div>
+                    <div class="tab-content-deployment">
+                        <div class="tab-content__icon">
+                            <i class="fa  fa-plus  deployment"></i>
+                        </div>
 
-						<div class="tab-content__description">
-							<p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
-							<span class="post-origin">via This Deployment</span>
-						</div>
-					</div> <!-- end .tab-content-deployment -->
-				</div>
-			</li>
+                        <div class="tab-content__description">
+                            <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
+                            <span class="post-origin">via This Deployment</span>
+                        </div>
+                    </div> <!-- end .tab-content-deployment -->
+                </div>
+            </li>
 
-			<li class="tab">
-				<a href="#" class="tab-heading"><i class="fa  fa-info-circle"></i> About</a>
-				<div class="tab-content">
-					About stuff
-				</div>
-			</li>
+            <li class="tab">
+                <a href="#" class="tab-heading"><i class="fa  fa-info-circle"></i> About</a>
+                <div class="tab-content">
+                    About stuff
+                </div>
+            </li>
 
-			<li class="tab">
-				<a href="#" class="tab-heading"><i class="fa  fa-tags"></i> Tags</a>
-				<div class="tab-content">
-					Tags go here
-				</div>
-			</li>
-		</ul> <!-- end .accordion-tabs -->
-	</div> <!-- end .sidebar -->
+            <li class="tab">
+                <a href="#" class="tab-heading"><i class="fa  fa-tags"></i> Tags</a>
+                <div class="tab-content">
+                    Tags go here
+                </div>
+            </li>
+        </ul> <!-- end .accordion-tabs -->
+    </div> <!-- end .sidebar -->
 </div> <!-- end .container -->

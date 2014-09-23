@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * SUBNAV...............topbar subnav
@@ -10,47 +10,47 @@
 
 
 /*------------------------------------*\
-	$SUBNAV
+    $SUBNAV
 \*------------------------------------*/
 
 nav[role="sub-navigation"] {
-	background-color: #fcfcfc;
-	box-shadow: 0px 1px 2px rgba(108, 108, 108, 0.5);
-	display: none;
-	float: left;
-	max-height: 0;
-	width: 100%;
+    background-color: #fcfcfc;
+    box-shadow: 0px 1px 2px rgba(108, 108, 108, 0.5);
+    display: none;
+    float: left;
+    max-height: 0;
+    width: 100%;
 
-	&.active {
-		display: block;
-		max-height: 999px;
+    &.active {
+        display: block;
+        max-height: 999px;
 
-		.subnav-list {
+        .subnav-list {
 
-			.subnav-list__item {
-				display: block;
-				float: none;
+            .subnav-list__item {
+                display: block;
+                float: none;
 
-				@include media($small) {
-					float: left;
-				}
+                @include media($small) {
+                    float: left;
+                }
 
-				a {
-					@include transition(none);
-					border-bottom: 0;
-					color: $base-font-color;
-					float: left;
-					font-weight: bold;
-					padding: 20px 30px;
-					width: 100%;
-				}
+                a {
+                    @include transition(none);
+                    border-bottom: 0;
+                    color: $base-font-color;
+                    float: left;
+                    font-weight: bold;
+                    padding: 20px 30px;
+                    width: 100%;
+                }
 
-				&.active a,
-				&:hover a {
-					background: $darkGray;
-					color: $white;
-				}
-			}
-		}
-	}
+                &.active a,
+                &:hover a {
+                    background: $darkGray;
+                    color: $white;
+                }
+            }
+        }
+    }
 }

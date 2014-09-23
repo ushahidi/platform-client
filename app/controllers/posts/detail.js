@@ -1,3 +1,3 @@
 module.exports = function($scope) {
-	$scope.title = 'Post Detail';
+    $scope.title = 'Post Detail';
 };

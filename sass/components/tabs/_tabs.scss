@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * TABS...............Default tab styles
@@ -9,7 +9,7 @@
 
 
 /*------------------------------------*\
-	$TABS
+    $TABS
 \*------------------------------------*/
 
 $tab-border-color: $base-border-color;
@@ -20,102 +20,102 @@ $tab-inactive-color: $blueGray;
 $tab-inactive-hover-color: darken($light-gray, 5);
 
 .tabset {
-	@include clearfix;
-	border: $tab-border;
-	border-radius: 0;
-	margin-bottom: $base-line-height;
+    @include clearfix;
+    border: $tab-border;
+    border-radius: 0;
+    margin-bottom: $base-line-height;
 
-	@include media($medium) {
-		border: none;
-	}
+    @include media($medium) {
+        border: none;
+    }
 
-	.tab {
+    .tab {
 
-		@include media($medium) {
-			display: inline;
-		}
+        @include media($medium) {
+            display: inline;
+        }
 
-		&:first-child a.tab-heading {
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-			border-top: 0;
-		}
+        &:first-child a.tab-heading {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-top: 0;
+        }
 
-		&:last-child a.tab-heading {
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
+        &:last-child a.tab-heading {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
 
-			@include media($medium) {
-				border-bottom-left-radius: 0;
-				border-bottom-right-radius: 0;
-			}
-		}
-	}
+            @include media($medium) {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
 
-	.tab a.tab-heading {
-		background-color: $tab-inactive-color;
-		border: 1px solid transparent;
-		border-top: 0;
-		border-bottom: 0;
-		color: $white;
-		display: block;
-		font-weight: bold;
-		padding: $base-line-height/2 $gutter/2;
-		text-align: center;
+    .tab a.tab-heading {
+        background-color: $tab-inactive-color;
+        border: 1px solid transparent;
+        border-top: 0;
+        border-bottom: 0;
+        color: $white;
+        display: block;
+        font-weight: bold;
+        padding: $base-line-height/2 $gutter/2;
+        text-align: center;
 
-		@include media($medium) {
-			@include inline-block;
-			border-top-right-radius: 0;
-			border-top-left-radius: 0;
-			border-top: 1px solid transparent;
-		}
+        @include media($medium) {
+            @include inline-block;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            border-top: 1px solid transparent;
+        }
 
-		&:hover {
-			background-color: darken($tab-inactive-color, 5);
-			color: $white;
-			@include transition (all $transition-duration ease-in-out)
-		}
+        &:hover {
+            background-color: darken($tab-inactive-color, 5);
+            color: $white;
+            @include transition (all $transition-duration ease-in-out)
+        }
 
-		&:focus {
-			outline: none;
-		}
-	}
+        &:focus {
+            outline: none;
+        }
+    }
 
-	.active > a.tab-heading {
-		background-color: $tab-active-background;
-		border-bottom: 0;
-		color: $base-font-color;
+    .active > a.tab-heading {
+        background-color: $tab-active-background;
+        border-bottom: 0;
+        color: $base-font-color;
 
-		@include media($medium) {
-			background-color: $tab-active-background;
-			border: $tab-border;
-			border-bottom: 1px solid $tab-active-background;
-			margin-bottom: -1px;
-		}
+        @include media($medium) {
+            background-color: $tab-active-background;
+            border: $tab-border;
+            border-bottom: 1px solid $tab-active-background;
+            margin-bottom: -1px;
+        }
 
-		&:hover {
-			background-color: $tab-active-background;
-			color: $base-font-color;
-		}
-	}
+        &:hover {
+            background-color: $tab-active-background;
+            color: $base-font-color;
+        }
+    }
 
-	.tab .tab-content {
-		padding: $base-line-height $gutter;
-		background: $tab-content-background;
-		display: none;
-		overflow: hidden;
-		width: 100%;
+    .tab .tab-content {
+        padding: $base-line-height $gutter;
+        background: $tab-content-background;
+        display: none;
+        overflow: hidden;
+        width: 100%;
 
-		@include media($medium) {
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
-			border: $tab-border;
-			float: left;
-			left: 0;
-			padding: $base-line-height/2 $gutter/2;
-		}
-	}
-	.active > .tab-content {
-		display: block;
-	}
+        @include media($medium) {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border: $tab-border;
+            float: left;
+            left: 0;
+            padding: $base-line-height/2 $gutter/2;
+        }
+    }
+    .active > .tab-content {
+        display: block;
+    }
 }

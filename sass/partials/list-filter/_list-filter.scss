@@ -1,8 +1,8 @@
 /*------------------------------------*\
-		$CONTENTS
+        $CONTENTS
 \*------------------------------------*/
 /**
-	* LIST VIEW FILTER BAR..................list view filter bar styles
+    * LIST VIEW FILTER BAR..................list view filter bar styles
 */
 
 
@@ -10,107 +10,107 @@
 
 
 /*------------------------------------*\
-		$LIST VIEW FILTER BAR
+        $LIST VIEW FILTER BAR
 \*------------------------------------*/
 
 
 // FILTER
 .list-filter {
-	@include outer-container;
-	background: $blueGray;
-	clear: both;
-	padding: 30px;
+    @include outer-container;
+    background: $blueGray;
+    clear: both;
+    padding: 30px;
 }
 
 // FILTER INFO
 .list-filter-info {
-	@include span-columns(12);
-	margin-bottom: 20px;
+    @include span-columns(12);
+    margin-bottom: 20px;
 
-	@include media($mobile-up) {
-		@include span-columns(6);
-		margin-bottom: 0;
-	}
+    @include media($mobile-up) {
+        @include span-columns(6);
+        margin-bottom: 0;
+    }
 
-	@include media($large) {
-		@include span-columns(8);
-		margin-bottom: 0;
-	}
+    @include media($large) {
+        @include span-columns(8);
+        margin-bottom: 0;
+    }
 
-	h4 {
-		color: $white;
-		line-height: em(16);
-		text-align: left;
-	}
+    h4 {
+        color: $white;
+        line-height: em(16);
+        text-align: left;
+    }
 }
 
 // FILTER COUNT
 .list-filter-count {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($mobile-up) {
-		@include span-columns(3);
-	}
+    @include media($mobile-up) {
+        @include span-columns(3);
+    }
 
-	@include media($medium) {
-		@include span-columns(3);
-	}
+    @include media($medium) {
+        @include span-columns(3);
+    }
 
-	@include media($large) {
-		@include span-columns(2);
-	}
+    @include media($large) {
+        @include span-columns(2);
+    }
 
-	.filter-count {
-		@include media($mobile-up) {
-			margin-bottom: 0;
-		}
-	}
+    .filter-count {
+        @include media($mobile-up) {
+            margin-bottom: 0;
+        }
+    }
 }
 
 // FILTER SOURCE
 .list-filter-source {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($mobile-up) {
-		@include span-columns(3);
-	}
+    @include media($mobile-up) {
+        @include span-columns(3);
+    }
 
-	@include media($medium) {
-		@include span-columns(3);
-	}
+    @include media($medium) {
+        @include span-columns(3);
+    }
 
-	@include media($large) {
-		@include span-columns(2);
-	}
+    @include media($large) {
+        @include span-columns(2);
+    }
 
-	.filter-source {
+    .filter-source {
 
-		@include media($mobile-up) {
-			margin-bottom: 0;
-		}
-	}
+        @include media($mobile-up) {
+            margin-bottom: 0;
+        }
+    }
 }
 
 // FILTER SORT
 .list-filter-sort {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($mobile-up) {
-		@include span-columns(3);
-	}
+    @include media($mobile-up) {
+        @include span-columns(3);
+    }
 
-	@include media($medium) {
-		@include span-columns(3);
-	}
+    @include media($medium) {
+        @include span-columns(3);
+    }
 
-	@include media($large) {
-		@include span-columns(2);
-	}
+    @include media($large) {
+        @include span-columns(2);
+    }
 
-	.filter-sort {
+    .filter-sort {
 
-		@include media($small) {
-			margin-bottom: 0;
-		}
-	}
+        @include media($small) {
+            margin-bottom: 0;
+        }
+    }
 }

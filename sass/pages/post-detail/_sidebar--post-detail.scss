@@ -1,5 +1,5 @@
 /*------------------------------------*\
-	CONTENTS
+    CONTENTS
 \*------------------------------------*/
 /*
 * POST DETAIL SIDEBAR...............post detail sidebar styles
@@ -10,101 +10,101 @@
 
 
 /*------------------------------------*\
-	$POST DETAIL SIDEBAR
+    $POST DETAIL SIDEBAR
 \*------------------------------------*/
 
 .sidebar--page-detail {
 
 // Header
-	.related-post-count {
-		background-color: $success-color;
-		border-radius: 20px;
-		float: left;
-		height: 30px;
-		line-height: em(8);
-		margin-right: 15px;
-		padding: 10px;
-		text-align: center;
-		width: 30px;
-	}
+    .related-post-count {
+        background-color: $success-color;
+        border-radius: 20px;
+        float: left;
+        height: 30px;
+        line-height: em(8);
+        margin-right: 15px;
+        padding: 10px;
+        text-align: center;
+        width: 30px;
+    }
 
 
 // Body
-	.related-post {
-		@include span-columns(12);
-		@extend %border-bottom;
-		padding: 20px;
-	}
+    .related-post {
+        @include span-columns(12);
+        @extend %border-bottom;
+        padding: 20px;
+    }
 
-	.related-post-image {
-		@include span-columns(4, table);
-		padding-right: 20px;
-		vertical-align: top;
+    .related-post-image {
+        @include span-columns(4, table);
+        padding-right: 20px;
+        vertical-align: top;
 
-		@include media($small) {
-			@include span-columns(2, table);
-		}
+        @include media($small) {
+            @include span-columns(2, table);
+        }
 
-		@include media($large) {
-			@include span-columns(4, table);
-		}
+        @include media($large) {
+            @include span-columns(4, table);
+        }
 
-		@include media($xlarge) {
-			@include span-columns(3, table);
-		}
+        @include media($xlarge) {
+            @include span-columns(3, table);
+        }
 
-		img {
-			border-radius: 40px;
-			height: 75px;
-			width: 75px;
-		}
-	}
+        img {
+            border-radius: 40px;
+            height: 75px;
+            width: 75px;
+        }
+    }
 
-	.related-post-details {
-		@include span-columns(8, table);
-		vertical-align: top;
+    .related-post-details {
+        @include span-columns(8, table);
+        vertical-align: top;
 
-		@include media($small) {
-			@include span-columns(10, table);
-		}
+        @include media($small) {
+            @include span-columns(10, table);
+        }
 
-		@include media($large) {
-			@include span-columns(8, table);
-		}
+        @include media($large) {
+            @include span-columns(8, table);
+        }
 
-		@include media($xlarge) {
-			@include span-columns(9, table);
-		}
+        @include media($xlarge) {
+            @include span-columns(9, table);
+        }
 
-		h5 {
-			text-align: left;
-		}
+        h5 {
+            text-align: left;
+        }
 
-		.related-post-time {
-			color: $sub-base-font-color;
-		}
+        .related-post-time {
+            color: $sub-base-font-color;
+        }
 
-		.related-post-excerpt {
+        .related-post-excerpt {
 
-			p {
-				margin: 0;
-			}
-		}
-	}
+            p {
+                margin: 0;
+            }
+        }
+    }
 
-	.sidebar-body {
+    .sidebar-body {
 
-		.more {
-			@include span-columns(12);
-			background-color: $blueGray;
-			padding: 20px;
-			text-align: center;
+        .more {
+            @include span-columns(12);
+            background-color: $blueGray;
+            padding: 20px;
+            text-align: center;
 
-			span {
-				color: $white;
-				font-size: em(20);
-				font-weight: bold;
-			}
-		}
-	}
+            span {
+                color: $white;
+                font-size: em(20);
+                font-weight: bold;
+            }
+        }
+    }
 }

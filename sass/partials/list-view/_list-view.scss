@@ -1,5 +1,5 @@
 /*------------------------------------*\
-		$CONTENTS
+        $CONTENTS
 \*------------------------------------*/
 /**
  * LIST VIEW WRAPPER..................wrapper around all posts in list view
@@ -11,25 +11,25 @@
 
 
 /*------------------------------------*\
-		$LIST VIEW WRAPPER
+        $LIST VIEW WRAPPER
 \*------------------------------------*/
 
 .list-view-wrapper {
-	@include wrapper;
-	color: $sub-base-font-color;
+    @include wrapper;
+    color: $sub-base-font-color;
 
-	.container {
-		border-top: 1px solid $secondary-color;
-		padding: 30px 30px 0;
+    .container {
+        border-top: 1px solid $secondary-color;
+        padding: 30px 30px 0;
 
-		&:first-child {
-			border-top: none;
-		}
+        &:first-child {
+            border-top: none;
+        }
 
-		&.selected {
-			background-color: darken($secondary-color, 5);
-		}
-	}
+        &.selected {
+            background-color: darken($secondary-color, 5);
+        }
+    }
 }
 
 
@@ -37,168 +37,168 @@
 
 
 /*-------------------------------------------------------------------*\
-		$LIST VIEW
+        $LIST VIEW
 \*-------------------------------------------------------------------*/
 
 //All Content
 
 .list-view-content {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 // Image
 .list-view-image {
-	@include span-columns(4, table);
-	padding-right: 22px;
-	vertical-align: top;
+    @include span-columns(4, table);
+    padding-right: 22px;
+    vertical-align: top;
 
-	@include media($small) {
-		@include span-columns(2, table);
-		padding-right: 38px;
-	}
+    @include media($small) {
+        @include span-columns(2, table);
+        padding-right: 38px;
+    }
 }
 
 // Details
 .list-view-details {
-	@include span-columns(8, table);
-	padding: 0;
-	vertical-align: top;
+    @include span-columns(8, table);
+    padding: 0;
+    vertical-align: top;
 
-	@include media($small) {
-		@include span-columns(10, table);
-		padding: 0;
-	}
+    @include media($small) {
+        @include span-columns(10, table);
+        padding: 0;
+    }
 
-	@include media($medium) {
-		@include span-columns(10, table);
-		padding: 0;
-	}
+    @include media($medium) {
+        @include span-columns(10, table);
+        padding: 0;
+    }
 }
 
 // Header
 .list-view-header {
-	@include span-columns(12);
-	margin-bottom: 20px;
+    @include span-columns(12);
+    margin-bottom: 20px;
 }
 
 // Time
 .list-view-time {
-	@include span-columns(12);
-	font-size: em(15);
+    @include span-columns(12);
+    font-size: em(15);
 
-	@include media($small) {
-		@include span-columns(4);
-	}
+    @include media($small) {
+        @include span-columns(4);
+    }
 
-	p {
-		margin-bottom: 10px;
+    p {
+        margin-bottom: 10px;
 
-		@include media($small) {
-			margin: 0;
-		}
-	}
+        @include media($small) {
+            margin: 0;
+        }
+    }
 }
 
 // Privacy
 .list-view-post-status-wrapper {
-	@include span-columns(12);
-	@include omega;
+    @include span-columns(12);
+    @include omega;
 
-	@include media($small) {
-		@include span-columns(8);
-		@include omega;
-	}
+    @include media($small) {
+        @include span-columns(8);
+        @include omega;
+    }
 
-	.list-view-post-status {
-		float: left;
+    .list-view-post-status {
+        float: left;
 
-		@include media($small) {
-			float: right;
-		}
-	}
+        @include media($small) {
+            float: right;
+        }
+    }
 }
 
 // Excerpt
 .list-view-excerpt {
-	@include span-columns(12);
-	margin: 20px 0;
+    @include span-columns(12);
+    margin: 20px 0;
 }
 
 //Tags
 .list-view-tags-wrapper {
-	@include span-columns(12);
+    @include span-columns(12);
 
-	@include media($small) {
-		@include span-columns(8);
-	}
+    @include media($small) {
+        @include span-columns(8);
+    }
 
-	.list-view-tags-header {
-		margin-bottom: 5px;
-	}
+    .list-view-tags-header {
+        margin-bottom: 5px;
+    }
 
-	.list-view-tags {
-		margin: 0;
+    .list-view-tags {
+        margin: 0;
 
-		a {
-			font-size: $small-font-size;
+        a {
+            font-size: $small-font-size;
 
-			li {
-				display: inline;
-				padding-right: 5px;
+            li {
+                display: inline;
+                padding-right: 5px;
 
-				.fa-circle {
-					padding-right: 5px;
-				}
-			}
-		}
-	}
+                .fa-circle {
+                    padding-right: 5px;
+                }
+            }
+        }
+    }
 }
 
 // Admin
 .list-view-actions {
-	@include span-columns(12);
-	@extend %unselectable;
-	margin: 30px 0 20px 0;
+    @include span-columns(12);
+    @extend %unselectable;
+    margin: 30px 0 20px 0;
 
-	@include media($small) {
-		@include span-columns(4);
-		float: right;
-		margin-top: 0;
-	}
+    @include media($small) {
+        @include span-columns(4);
+        float: right;
+        margin-top: 0;
+    }
 
-	.list-view-actions-list {
+    .list-view-actions-list {
 
-		.list-view-actions-list__item {
-			float: left;
-			padding: 15px 0 15px 15px;
-			text-align: left;
-			width: 50%;
+        .list-view-actions-list__item {
+            float: left;
+            padding: 15px 0 15px 15px;
+            text-align: left;
+            width: 50%;
 
-			&:last-child {
-				border-bottom: 1px solid silver;
-				border-radius: 0;
-			}
+            &:last-child {
+                border-bottom: 1px solid silver;
+                border-radius: 0;
+            }
 
-			&:hover {
-				@include transition(background-color 0.1s linear);
+            &:hover {
+                @include transition(background-color 0.1s linear);
 
-				a {
-					color: $hover-link-color
-				}
-			}
+                a {
+                    color: $hover-link-color
+                }
+            }
 
-			a {
-				font-size: em(15);
-				margin-bottom: 0;
-			}
-		}
-	}
+            a {
+                font-size: em(15);
+                margin-bottom: 0;
+            }
+        }
+    }
 
-	.dropdown {
-		text-align: right;
+    .dropdown {
+        text-align: right;
 
-		@include media($small) {
-			margin-top: 12px;
-		}
-	}
+        @include media($small) {
+            margin-top: 12px;
+        }
+    }
 }
