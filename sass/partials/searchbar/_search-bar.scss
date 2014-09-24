@@ -134,7 +134,7 @@
     }
 }
 
-.search-field-wrapper {
+.search-bar {
     @include span-columns(12);
 
     @include media($medium) {

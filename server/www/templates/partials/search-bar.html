@@ -1,5 +1,5 @@
 <!--  Search Bar -->
-<div id="search-bar" class="search-bar  js-show-with-full-map">
+<div id="search-bar-wrapper" class="search-bar-wrapper  js-show-with-full-map">
     <form role="search" action="">
         <div class="container">
 
@@ -82,16 +82,13 @@
                     <div class="tab-content">
                         <div class="search-tools">
                             <label>Enter a keyword to search</label>
-                            <div class="search-field-wrapper">
-                                <div class="search-field">
-                                    <label class="visually-hidden" for="search-field">Search</label>
-                                    <input type="search" id="q" class="search-field  js-search-keyword" placeholder="Keyword" value="">
-                                </div> <!-- end .search-field -->
-
-                                <div class="search-bar-button">
-                                    <button type="submit" class=""><i class="fa  fa-search"></i></button>
-                                </div><!-- end .search-bar-button -->
-                            </div> <!-- end .search-field-wrapper -->
+                            <div class="search-bar">
+                                <div class="search-and-submit">
+                                    <label id="search-label" class="visually-hidden" for="search-field">Search</label>
+                                    <input type="search" placeholder="Keyword Search" />
+                                    <button type="submit">Search</button>
+                                </div>
+                            </div> <!-- end .search-bar -->
                         </div> <!-- end .search-tools -->
                     </div> <!-- end .tab-content -->
                 </li> <!-- end .keyword-field -->
@@ -99,4 +96,4 @@
 
         </div>
     </form>
-</div>
+</div> <!-- end .search-bar-wrapper -->
