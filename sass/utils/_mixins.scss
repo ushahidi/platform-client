@@ -27,6 +27,7 @@
     @include span-columns(12);
     background-color: $color;
     padding: 30px;
+    position: relative;
 }
 
 @mixin badge($color) {
@@ -51,4 +52,5 @@
     background-color: $white;
     box-shadow: 0px 2px 4px -1px rgba(lighten($darkGray, 30), 0.5);
     margin-bottom: 40px;
+    clear: both;
 }

@@ -4,6 +4,7 @@
 /*
 * GLOBAL...............global styles
 * LAYOUT...............site wide layout
+* HEADER TITLE...............list-filter and header title
 */
 
 
@@ -53,4 +54,26 @@ hr {
 .container {
     @include outer-container;
     padding: 30px;
+}
+
+
+
+
+/*------------------------------------*\
+    $HEADER TITLE
+\*------------------------------------*/
+
+.title {
+    @include span-columns(12);
+    position: relative;
+    top: 50%;
+    text-align: center;
+
+    @include media($small) {
+        @include span-columns(6);
+        @include transform(translateY(-50%));
+        position: absolute;
+        margin-bottom: 0;
+        text-align: left;
+    }
 }

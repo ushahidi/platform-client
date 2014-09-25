@@ -17,13 +17,9 @@
 .add-to-set-header {
     @include header($warning-color);
 
-    .header {
-        @include span-columns(12);
+    .title {
+        color: $black;
         margin-bottom: 20px;
-
-        @include media($small) {
-            @include span-columns(6);
-        }
     }
 
     .add-to-set-button {

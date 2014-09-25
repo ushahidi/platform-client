@@ -17,7 +17,7 @@
 // FILTER
 .list-filter {
     @include outer-container;
-    background: $blueGray;
+    @include header($blueGray);
     clear: both;
     padding: 30px;
 }
@@ -25,7 +25,6 @@
 // FILTER INFO
 .list-filter-info {
     @include span-columns(12);
-    margin-bottom: 20px;
 
     @include media($mobile-up) {
         @include span-columns(6);
@@ -37,27 +36,27 @@
         margin-bottom: 0;
     }
 
-    h4 {
+    .title {
         color: $white;
-        line-height: em(16);
-        text-align: left;
+        margin-bottom: 30px;
+    }
+}
+
+.list-filter-wrapper {
+    @include span-columns(12);
+
+    @include media($mobile-up) {
+        @include span-columns(4);
+        float: right;
     }
 }
 
 // FILTER COUNT
 .list-filter-count {
-    @include span-columns(12);
+   @include span-columns(12);
 
     @include media($mobile-up) {
-        @include span-columns(3);
-    }
-
-    @include media($medium) {
-        @include span-columns(3);
-    }
-
-    @include media($large) {
-        @include span-columns(2);
+        @include span-columns(6);
     }
 
     .filter-count {
@@ -93,18 +92,10 @@
 
 // FILTER SORT
 .list-filter-sort {
-    @include span-columns(12);
+   @include span-columns(12);
 
     @include media($mobile-up) {
-        @include span-columns(3);
-    }
-
-    @include media($medium) {
-        @include span-columns(3);
-    }
-
-    @include media($large) {
-        @include span-columns(2);
+        @include span-columns(6);
     }
 
     .filter-sort {

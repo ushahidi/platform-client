@@ -14,21 +14,15 @@
 
 
 /*------------------------------------*\
-        $POST HEADER
+    $POST HEADER
 \*------------------------------------*/
 
 .post-header {
     @include header($blueGray);
-}
 
-.post-title {
-    @include span-columns(12);
-    color: $white;
-    margin-bottom: 40px;
-
-    @include media($small) {
-        @include span-columns(8);
-        margin-bottom: 0;
+    .title {
+        color: $white;
+        margin-bottom: 40px;
     }
 }
 
@@ -46,6 +40,7 @@
     @include media($small) {
         @include span-columns(4);
         @include omega;
+        float: right;
         margin-bottom: 0;
         text-align: right;
     }
@@ -75,11 +70,9 @@
         @include button($secondary-color);
         font-size: em(10);
         margin: 0;
-        padding: 11px 16px;
 
         @include media($small) {
             font-size: em(11);
-            padding: 11px 18px;
         }
 
         [class*='fa'] {
@@ -272,7 +265,7 @@
                 @include span-columns(12);
                 @include button($secondary-color);
                 margin: 0 20px 20px 0;
-                padding: em(11) em(12);
+                padding: 11px 12px;
                 text-align: center;
                 font-size: .8em;
 
@@ -292,6 +285,11 @@
 
                 .dropdown {
                     margin: 0;
+                    float: none;
+
+                    @include media($small) {
+                        float: right;
+                    }
                 }
 
                 .dropdown-container {
@@ -299,7 +297,6 @@
 
                     @include media($small) {
                         width: inherit;
-                        float: right;
                     }
                 }
 
