@@ -36,3 +36,8 @@
 %border-bottom {
     border-bottom: 1px solid $secondary-color;
 }
+
+
+%striped {
+    background-color: darken($secondary-color, 5);
+}

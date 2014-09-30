@@ -22,12 +22,32 @@ $dropdown-distance-from-dropdown-menu: 50px;
 $dropdown-arrow-top-distance: 0;
 
 .dropdown {
+    float: right;
     text-align: center;
+    line-height: 1;
 }
 
 .dropdown-container {
     display: inline-block;
     position: relative;
+}
+
+.dropdown-description {
+    background: $dropdown-button-color;
+    border-bottom-left-radius: $base-border-radius;
+    border-top-left-radius: $base-border-radius;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    color: $base-font-color;
+    float: left;
+    font-size: .8em;
+    font-weight: 800;
+    line-height: $dropdown-height;
+    margin-bottom: 0;
+    padding: 0 ($dropdown-padding / 2) 0 $dropdown-padding;
+
+    @include media($large) {
+        padding: 0 $dropdown-padding;
+    }
 }
 
 .dropdown-toggle {
@@ -43,7 +63,7 @@ $dropdown-arrow-top-distance: 0;
     font-weight: 800;
     line-height: $dropdown-height;
     margin-bottom: 0;
-    padding: 0 ($dropdown-padding * 3.5) 0 $dropdown-padding;
+    padding: 0 ($dropdown-padding * 2.5) 0 $dropdown-padding;
     position: relative;
 
     @include media($large) {

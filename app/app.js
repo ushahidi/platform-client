@@ -23,6 +23,7 @@ angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap.dropdown', 'ui.boo
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('workspaceAccordion', require('./workspace'))
+    .controller('userFilter', require('./controllers/users/filter.js'))
 
     .config(require('./interceptors/authentication.js'))
     .config(require('./routes'))

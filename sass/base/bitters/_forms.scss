@@ -71,10 +71,3 @@ input[type="file"] {
   padding-bottom: ($base-line-height / 3);
   width: 100%;
 }
-
-select {
-  width: 100%;
-  max-width: 100%;
-  border-radius: $global-radius;
-  color: $sub-base-font-color;
-}

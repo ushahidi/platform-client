@@ -15,22 +15,36 @@
 \*------------------------------------*/
 
 .list-view-wrapper {
+    @include span-columns(12);
     @include wrapper;
+    display: table;
     color: $sub-base-font-color;
 
     .container {
-        border-top: 1px solid $secondary-color;
-        padding: 30px 30px 0;
+        padding: 30px;
 
         &:first-child {
             border-top: none;
         }
 
-        &.selected {
-            background-color: darken($secondary-color, 5);
+        &:nth-child(even) {
+            @extend %striped;
         }
     }
 }
+
+.list-view__item {
+    padding: 30px;
+
+    &:first-child {
+        border-top: none;
+    }
+
+    &:nth-child(even) {
+        @extend %striped;
+    }
+}
+
 
 
 
@@ -195,7 +209,6 @@
     }
 
     .dropdown {
-        text-align: right;
 
         @include media($small) {
             margin-top: 12px;

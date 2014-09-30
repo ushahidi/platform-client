@@ -1,0 +1,145 @@
+<div class="container">
+
+    <div class="manage-users-header">
+        <h4 class="title">{{title}}</h4>
+
+        <div class="user-actions">
+            <div class="dropdown">
+                <div class="dropdown-container">
+                    <p class="dropdown-toggle">User Actions</p>
+                    <ul class="dropdown-menu  list-view-actions-list">
+                        <li class="list-view-actions-list__item">
+                            <a href="#" class="js-select-all">
+                                <span>Select All</span>
+                                <span class="visually-hidden">Unselect All</span>
+                            </a>
+                        </li>
+                        <li class="list-view-actions-list__item  js-bulk-action  disabled">
+                            <a href="#"><i class="fa  fa-cogs"></i>Change Role</a>
+                        </li>
+                        <li class="list-view-actions-list__item">
+                            <a href="#" class="js-user-create"><i class="fa  fa-user"></i>Add User</li>
+                        </li>
+                        <li class="list-view-actions-list__item  js-bulk-action  disabled">
+                            <a href="#" class="js-user-bulk-delete"><i class="fa  fa-trash-o"></i>Delete</a>
+                        </li>
+                    </ul> <!-- end .dropdown-menu .list-view-edit -->
+                </div> <!-- end .dropdown-container -->
+            </div> <!-- end .dropdown -->
+        </div> <!-- end .list-view-actions -->
+    </div> <!-- end .manage-users-header -->
+
+    <div class="list-filter--alt">
+            <div class="list-filter-info">
+                <h5 class="title">Showing 1 to 3 from 10 Users</h5>
+            </div> <!-- end .list-filter-info -->
+
+            <div class="list-filter-wrapper">
+                <div class="list-filter-count">
+                    <div class="filter-count-select">
+                        <label class="visually-hidden" for="filter-count">Number of users shown</label>
+                        <select id="filter-count" class="filter-count  js-filter-count">
+                            <option selected>3</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>20</option>
+                        </select>
+                    </div>
+                </div> <!-- end .list-filter-count -->
+
+                <div class="list-filter-sort">
+                    <div class="filter-sort-select">
+                        <label class="visually-hidden" for="filter-sort">Sort users by</label>
+                        <select id="filter-sort" class="filter-sort  js-filter-sort">
+                            <option>Filter</option>
+                            <option>Date/Time Created</option>
+                            <option>Username A-Z</option>
+                            <option>ID</option>
+                        </select>
+                    </div>
+                </div> <!-- end .list-filter-sort -->
+            </div> <!-- end .list-filter-wrapper -->
+    </div> <!-- end .list-filter -->
+
+    <form role="search" class="js-user-search-form" action="">
+
+        <div class="filter-wrapper">
+            <div ng-controller="userFilter" class="filter-tabs">
+
+                <div class="user-roles-desktop">
+                    <ul class="filter-tabs-list  js-filter-tabs-list">
+                        <li ng-repeat="tab in tabs" ng-click="select(tab)" ng-class="{active : isActive(tab)}" class="filter-tabs-list__item  js-user-filter-role">
+                            <a href="">
+                                <span class="role-title">{{tab}}
+                                    <span class="{{name}}-count-number"><span class="count-number">0</span></span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div> <!-- end .user-roles -->
+
+                <!-- Filter by role mobile UI -->
+                <div class="user-roles-mobile">
+                    <div class="user-roles">
+                        <div class="dropdown">
+                            <div class="dropdown-container">
+                                <p class="dropdown-description">Roles</p>
+                                <p class="dropdown-toggle">Click To Select</p>
+                                <ul class="dropdown-menu  list-view-actions-list">
+                                    <li ng-repeat="tab in tabs" ng-click="select(tab)" ng-class="{active: isActive(tab)}" class="list-view-actions-list__item  js-user-filter-role">
+                                        <span class="role-title">{{tab}}</span>
+                                    </li>
+                                </ul> <!-- end .dropdown-menu .list-view-edit -->
+                            </div> <!-- end .dropdown-container -->
+                        </div> <!-- end .dropdown -->
+                    </div> <!-- end .list-view-actions -->
+                </div> <!-- end .filter-tabs-mobile -->
+                <!-- Filter by role mobile UI ends -->
+
+            </div> <!-- end .filter-tabs -->
+
+            <div class="search-field-wrapper--filter--role">
+                <div class="search-bar">
+                    <div class="search-and-submit">
+                        <label id="search-label" class="visually-hidden" for="search-field">Search</label>
+                        <input type="search" placeholder="Keyword Search" />
+                        <button type="submit">Go</button>
+                    </div>
+                </div>
+            </div> <!-- end .search-field-wrapper -->
+
+        </div> <!-- end .filter-wrapper -->
+
+    </form>
+
+    <div class="list-view-wrapper">
+        <ul class="list-view">
+            <li ng-repeat="user in users | orderBy:'name'" class="list-view__item">
+                <div class="list-view-image--user">
+                    <img ng-src="{{ user.image }}" alt="" />
+                </div> <!-- end .list-view-image -->
+
+                <div class="list-view-details--user">
+                    <h4 class="list-view-header">{{ user.name }}</h4>
+
+                    <div class="details-column-a">
+                        <p class="user-list-role"><b>Role: </b>{{ user.role }}</p>
+                        <p class="user-list-full-name"><b>Full Name: </b>
+                            <span>{{ user.name }}</span>
+                        </p>
+                    </div> <!-- end .details-column-a -->
+
+                    <div class="details-column-b">
+                        <p class="user-list-last-login"><b>Last Login: </b>{{ user.lastLogin | date: 'short' }}</p>
+                        <p class="user-list-last-attempt"><b>Last Attempt: </b>{{ user.lastAttempt | date: 'short' }}</p>
+                        <p class="user-list-failed-attempt"><b>Failed Attempts: </b>{{ user.attempts }}</p>
+                    </div> <!-- end .details-column-b -->
+                </div> <!-- end .list-view-details-user -->
+            </li>
+        </ul><!-- end .user-list -->
+    </div> <!-- end .set-list-wrapper -->
+
+    <!-- Pagination -->
+    <!-- <ng-include src=" 'templates/partials/pagination.html' "></ng-include> -->
+
+</div> <!-- end .container -->

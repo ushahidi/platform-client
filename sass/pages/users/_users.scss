@@ -1,0 +1,134 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+* HEADER...............header styles
+* FITLER TABS/SEARCH...............user filter styles
+* USER LIST....................user profile and details styles
+*/
+
+
+
+
+
+/*------------------------------------*\
+    $HEADER
+\*------------------------------------*/
+
+.manage-users-header {
+    @include header($blueGray);
+
+    .title {
+        color: $white;
+        margin-bottom: 30px;
+    }
+}
+
+.user-actions {
+    @include span-columns(12);
+
+    @include media($mobile-up) {
+        @include span-columns(6);
+        float: right;
+    }
+
+    .dropdown,
+    .dropdown-container,
+    .dropdown-toggle {
+        @include fill-parent;
+
+        @include media($mobile-up) {
+            width: initial;
+        }
+    }
+}
+
+/*------------------------------------*\
+    $FITLER TABS
+\*------------------------------------*/
+
+.user-roles-desktop {
+    display: none;
+
+    @include media($small) {
+        display: block;
+    }
+}
+
+.user-roles-mobile {
+
+    @include media($small) {
+        display: none;
+    }
+
+    .dropdown,
+    .dropdown-container {
+        @include fill-parent;
+
+        @include media($mobile-up) {
+            width: 100%;
+        }
+    }
+
+    .dropdown-description {
+        width: 31%;
+
+        @include media($mobile-up) {
+            width: 30%;
+        }
+    }
+
+    .dropdown-toggle {
+        width: 69%;
+
+        @include media($mobile-up) {
+            width: 70%;
+        }
+    }
+}
+
+/*------------------------------------*\
+    $USER LIST
+\*------------------------------------*/
+
+.list-view-image--user {
+    @extend .list-view-image;
+
+    img {
+        border-radius: 200px;
+        border: none;
+        width: 110px;
+    }
+
+    @include media($small) {
+        @include span-columns(2, table);
+        padding-right: 38px;
+    }
+}
+
+.list-view-details--user {
+    @extend .list-view-details;
+    margin-top: 10px;
+    color: $base-font-color;
+
+    .details-column-a {
+        @include span-columns(12);
+
+        @include media($small) {
+            @include span-columns(6);
+        }
+    }
+
+    .details-column-b {
+        @include span-columns(12);
+
+        @include media($small) {
+            @include span-columns(6);
+        }
+    }
+
+    [class*='user-list-'] {
+        margin-bottom: 10px;
+        font-size: emCalc(12);
+    }
+}

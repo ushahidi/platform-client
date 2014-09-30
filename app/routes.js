@@ -3,8 +3,8 @@ module.exports = function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
     var postRouteConfig = {
-        controller: require('./controllers/posts.js'),
-        templateUrl: 'templates/posts.html'
+      controller: require('./controllers/posts.js'),
+      templateUrl: 'templates/posts.html'
     };
     $routeProvider
         .when('/', postRouteConfig)
@@ -24,5 +24,9 @@ module.exports = function($routeProvider, $locationProvider) {
         .when('/settings', {
             controller: require('./controllers/admin/settings.js'),
             templateUrl: 'templates/admin/settings.html'
+        })
+        .when('/users', {
+            controller: require('./controllers/users/users.js'),
+            templateUrl: 'templates/users/users.html'
         });
 };

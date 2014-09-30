@@ -10,7 +10,7 @@
 
 
 /*------------------------------------*\
-    $BADGE
+    $TEXT COLOR ON BUTTONS
 \*------------------------------------*/
 
 @function set-text-color($color) {
@@ -23,12 +23,29 @@
     }
 }
 
+
+
+
+
+/*------------------------------------*\
+    $HEADER AND HEADER TITLE
+\*------------------------------------*/
+
+// Header
 @mixin header ($color) {
     @include span-columns(12);
     background-color: $color;
     padding: 30px;
     position: relative;
 }
+
+
+
+
+
+/*------------------------------------*\
+    $BADGE
+\*------------------------------------*/
 
 @mixin badge($color) {
 
@@ -42,11 +59,26 @@
     text-align: center;
 }
 
+
+
+
+/*------------------------------------*\
+    $THUMBNAIL IMAGES
+\*------------------------------------*/
+
 @mixin thumbnail() {
     border: solid 4px #fff;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
     width: 100%;
 }
+
+
+
+
+
+/*------------------------------------*\
+    $CONTENT WRAPPER
+\*------------------------------------*/
 
 @mixin wrapper() {
     background-color: $white;

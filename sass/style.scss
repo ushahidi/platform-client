@@ -88,6 +88,7 @@
 @import "partials/header/workspace-panel";
 @import "partials/searchbar/search-bar";
 @import "partials/list-filter/list-filter";
+@import "partials/filter/filter";
 @import "partials/list-view/list-view";
 @import "partials/sidebar/sidebar";
 @import "partials/footer/footer";
@@ -104,6 +105,8 @@
 // Post Detail
 @import "pages/post-detail/post-detail";
 @import "pages/post-detail/sidebar--post-detail";
+//Users
+@import "pages/users/users";
 // Sets
 @import "pages/sets/add-to-set";
 // Admin

@@ -9,16 +9,15 @@
 
 
 
-
+/* FIXME: review for unused sass */
 /*------------------------------------*\
     $SEARCH BAR
 \*------------------------------------*/
 
-.search-bar {
+.search-bar-wrapper {
     @include span-columns(12);
     background: $darkBlue;
     box-shadow: 0px 1px 2px rgba(lighten($darkGray, 30), 0.5);
-    margin-bottom: 40px;
 
     form {
         margin: 0;
@@ -47,6 +46,7 @@
         }
     }
 }
+
 
 
 
@@ -138,6 +138,10 @@
     @include span-columns(12);
 
     @include media($medium) {
+        @include span-columns(6);
+    }
+
+    @include media($large) {
         @include span-columns(4);
     }
 }
@@ -152,24 +156,18 @@
     }
 }
 
-.search-bar-button {
-    @include span-columns(3);
+.search-bar {
+    @include span-columns(12);
 
-    @include media($small) {
-        @include span-columns(2);
-    }
+    div.search-and-submit {
 
-    button {
-        @include button();
-        border-radius: 0 $global-radius $global-radius 0;
-        border-width: 0;
-        font-size: em(14);
-        height: 42px;
-        width: 100%;
-
-        i {
-            font-size: em(19);
-            padding: 0;
+        input[type=search] {
+            padding: 10px;
         }
+
+        button[type=submit] {
+            @include button($success-color);
+        }
+
     }
 }

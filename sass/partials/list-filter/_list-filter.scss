@@ -2,7 +2,7 @@
         $CONTENTS
 \*------------------------------------*/
 /**
-    * LIST VIEW FILTER BAR..................list view filter bar styles
+* LIST VIEW FILTER BAR..................list view filter bar styles
 */
 
 
@@ -19,6 +19,15 @@
     @include outer-container;
     @include header($blueGray);
     clear: both;
+    padding: 30px;
+}
+
+// FILTER-ALT
+.list-filter--alt {
+    @include outer-container;
+    @include header(lighten($blueGray, 25));
+    clear: both;
+    margin-bottom: 20px;
     padding: 30px;
 }
 
