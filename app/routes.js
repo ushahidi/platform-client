@@ -9,6 +9,10 @@ module.exports = function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', postRouteConfig)
         .when('/posts', postRouteConfig)
+        .when('/signin', {
+            controller: require('./controllers/signin.js'),
+            templateUrl: 'templates/signin.html'
+        })
         .when('/posts/detail', {
             controller: require('./controllers/posts/detail.js'),
             templateUrl: 'templates/posts/detail.html'

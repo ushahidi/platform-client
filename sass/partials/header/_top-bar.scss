@@ -125,6 +125,10 @@ header.navigation {
             background-color: $success-color;
         }
 
+        .sign-in [class*='fa-'] {
+          background-color: $darkBlue;
+        }
+
         .workspace-panel-button [class*='fa-'] {
             background-color: $primary-color;
             border-bottom: 1px solid $black;

@@ -22,5 +22,17 @@
 		"angular": true,
 		"console" : false,
 		"document" : true
-	}
+	},
+
+  "predef": [
+    "protractor",
+    "browser",
+    "by",
+    "element",
+    "it",
+    "expect",
+    "describe",
+    "beforeEach",
+    "afterEach"
+  ]
 }

@@ -14,11 +14,17 @@
     "install": "napa",
     "postinstall": "bower install",
     "build": "gulp build",
-    "watch": "gulp"
+    "watch": "gulp",
+
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor test/protractor-conf.js"
   },
   "napa": {
     "angular": "angular/bower-angular",
-    "angular-route": "angular/bower-angular-route"
+    "angular-route": "angular/bower-angular-route",
+    "angular-resource": "angular/bower-angular-resource"
   },
   "devDependencies": {
     "angular-ui-bootstrap": "git+https://github.com/angular-ui/bootstrap.git#0.11.0",
@@ -33,6 +39,7 @@
     "gulp-sass": "~0.7.2",
     "gulp-util": "^2.2.20",
     "napa": "^0.4.1",
+    "protractor": "^1.2.0",
     "vinyl-source-stream": "^0.1.1",
     "watchify": "^1.0.1"
   }
