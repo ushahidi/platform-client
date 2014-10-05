@@ -61,6 +61,15 @@ http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and
 
 **Note:** If you enable `vm` and run `gulp` for the first time, it take a while for it to build and start docker. Wait till you see `server is live @ http://<ip_address_or_localhost/`
 
+#### Optional parameters ####
+You cann pass in the '--mock-backend' parameter to the gulp command.
+Two things will happen then:
+* 1. a simple nodeserver will be started
+  * which delivers all json files within the 'mocked_backend' folder to localhost:8081
+  * the json extension will be truncated
+    * so 'mocked_backend/test.json' maps to 'localhost:8081/test'
+* 2. the backendUrl env variable, which is used in app.js for configuring the api backend, will be reset to the url of the just started node mock server
+
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
 We would love your help, but the platform is in heavy development with a rapid rate

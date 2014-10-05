@@ -10,7 +10,12 @@ var gulp = require('gulp'),
     watchify = require('watchify'),
     connect = require('gulp-connect'),
     path = require('path'),
-    url = require('url');
+    cors = require('cors'),
+    url = require('url'),
+    envify = require('envify/custom'),
+
+    mockBackendFlag = gutil.env['mock-backend'],
+    useNodeserverFlag = gutil.env.nodeserver;
 
 function errorHandler (err) {
     gutil.beep();
@@ -22,7 +27,38 @@ function errorHandler (err) {
 var options = {
     vm: false,
     nodeserver: false,
-    www: 'server/www'
+    www: 'server/www',
+    backendUrl: 'http://ushahidi-backend',
+    mockedBackendUrl: 'http://localhost:8081'
+};
+
+var helpers = {
+  browserifyConfig:
+    {
+      entries : './app/app.js',
+      debug : true,
+    },
+  setBackendUrl: function(){
+    return envify({
+      backend_url: mockBackendFlag ?
+        options.mockedBackendUrl : options.backendUrl
+    });
+  },
+  createDefaultTaskDependencies: function (){
+    var mode = options.vm ? 'vm' : 'direct';
+    mode = options.nodeserver ? 'nodeserver' : mode;
+    // when the command line flag '--nodeserver' is passed in,
+    // we want to force using nodeserver
+    // (even if it is set to 'false' in the options hash)
+    mode = useNodeserverFlag ? 'nodeserver' : mode;
+
+    var dependencies = ['build', mode];
+    if(mockBackendFlag)
+    {
+      dependencies.push('mock-backend');
+    }
+    return dependencies;
+  }
 };
 
 /**
@@ -63,11 +99,9 @@ gulp.task('font', function() {
  * Bundle js with browserify
  */
 gulp.task('browserify', function() {
-    browserify({
-            entries : './app/app.js',
-            debug : true,
-        })
+    browserify(helpers.browserifyConfig)
         .transform('brfs')
+        .transform(helpers.setBackendUrl())
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(options.www + '/js'));
@@ -78,11 +112,9 @@ gulp.task('browserify', function() {
  * Watch js and rebundle with browserify
  */
 gulp.task('watchify', function() {
-    var bundler = watchify(browserify({
-            entries : './app/app.js',
-            debug : true,
-        }, watchify.args))
+    var bundler = watchify(browserify(helpers.browserifyConfig, watchify.args))
     .transform('brfs')
+    .transform(helpers.setBackendUrl())
     .on('update', rebundle);
 
     function rebundle () {
@@ -165,6 +197,35 @@ gulp.task('vm', ['watch'], function() {
 });
 
 /**
+ * Task: mock-backend`
+ * Runs a simple node connect server
+ * and delivers the json files under the 'mocked_backend' folder
+ */
+gulp.task('mock-backend', [], function() {
+    connect.server({
+        root: 'mocked_backend',
+        port: '8081',
+        middleware: function (/*connect, opt*/) {
+            return [
+
+                cors(),
+
+                function (req, res, next) {
+                    var pathname = url.parse(req.url).pathname;
+                    pathname = pathname + '.json';
+                    req.url = pathname;
+                    if (!path.extname(pathname)) {
+                        req.url = '/';
+                    }
+                    next();
+                }
+
+            ];
+        }
+    });
+});
+
+/**
  * Task: `nodeserver`
  * Runs a simple node connect server and runs live reloading.
  */
@@ -199,6 +260,4 @@ gulp.task('direct', ['watch'], function() {
  * Task: `default`
  * Default task optimized for development
  */
-var mode = options.vm ? 'vm' : 'direct';
-var mode = options.nodeserver ? 'nodeserver' : mode;
-gulp.task('default', ['build', mode]);
+gulp.task('default', helpers.createDefaultTaskDependencies());

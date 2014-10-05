@@ -7,7 +7,8 @@ require('angular-ui-bootstrap/src/collapse/collapse');
 require('angular-ui-bootstrap/src/transition/transition');
 require('angular-ui-bootstrap/src/accordion/accordion');
 
-var backendUrl = 'http://ushahidi-backend';
+// this 'environment variable' will be set within the gulpfile
+var backendUrl = process.env.backend_url;
 
 angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap.dropdown', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion', 'ui.bootstrap.transition', 'ui.tabs'])
     .constant('BACKEND_URL', backendUrl)
