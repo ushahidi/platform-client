@@ -1,0 +1,10 @@
+@include global {
+	.tag {
+		color: $white-base;
+		background-color: $blue-link;
+		padding: 5px 10px;
+		* {
+			margin-left: 5px;
+		}
+	}
+}

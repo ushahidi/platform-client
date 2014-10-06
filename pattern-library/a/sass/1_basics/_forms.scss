@@ -1,0 +1,50 @@
+@include global {
+	input, textarea {
+		font-size: 15px;
+		font-size: 1rem;
+		outline-color: #4AA6E2;
+		resize: none;
+		border: 1px solid $grey-border;
+		@include equal-radius;
+		@include typeBase;
+		padding: 5px 10px;
+		@include border-box;
+		@include transition;
+		&.error {
+			outline-color: $red-border;
+			@include box-shadow($top: 0, $left: 0, $blur: 2px, $spread: 0, $color: rgba(208,2,27,1), $inset: false);
+			border-color: $red-border;
+		}
+	}
+
+	::-webkit-input-placeholder,
+	:-moz-placeholder,
+	::-moz-placeholder,
+	:-ms-input-placeholder {
+		font-size: 15px;
+		font-size: 1rem;
+	}
+
+	textarea {
+		@include typeBase;
+	}
+
+	label {
+		@include typeBase;
+		color: $black-text;
+		font-size: 15px;
+		font-size: 1rem;
+		+ input,
+		+ textarea {
+			margin-top: 8px;
+		}
+	}
+
+	form {
+		p {
+			font-size: 14px;
+			font-size: .933333333rem;
+			margin-bottom: 1em;
+		}
+	}
+}
