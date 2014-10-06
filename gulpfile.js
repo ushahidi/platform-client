@@ -13,9 +13,12 @@ var gulp = require('gulp'),
     cors = require('cors'),
     url = require('url'),
     envify = require('envify/custom'),
+    fs = require('fs'),
+    merge = require('merge'),
 
     mockBackendFlag = gutil.env['mock-backend'],
-    useNodeserverFlag = gutil.env.nodeserver;
+    useNodeServerFlag = gutil.env['node-server'],
+    useDockerServerFlag = gutil.env['docker-server'];
 
 function errorHandler (err) {
     gutil.beep();
@@ -23,14 +26,19 @@ function errorHandler (err) {
 }
 
 // Options
-// - (bool) vm: enable docker builds, default: false
+// - (bool) dockerserver: enable docker builds, default: false
 var options = {
-    vm: false,
-    nodeserver: false,
+    dockerServer: false,
+    nodeServer: false,
     www: 'server/www',
     backendUrl: 'http://ushahidi-backend',
     mockedBackendUrl: 'http://localhost:8081'
 };
+
+// load user defined options
+if (fs.existsSync('gulp-options.json')) {
+    merge(options, require('./gulp-options.json'));
+}
 
 var helpers = {
   browserifyConfig:
@@ -45,12 +53,15 @@ var helpers = {
     });
   },
   createDefaultTaskDependencies: function (){
-    var mode = options.vm ? 'vm' : 'direct';
-    mode = options.nodeserver ? 'nodeserver' : mode;
-    // when the command line flag '--nodeserver' is passed in,
+    var mode = options.dockerServer ? 'docker-server' : 'direct';
+    mode = options.nodeServer ? 'node-server' : mode;
+    // when the command line flag '--node-server' is passed in,
+    // we want to force using nodeserver
+    // when the command line flag '--docker-server' is passed in,
     // we want to force using nodeserver
     // (even if it is set to 'false' in the options hash)
-    mode = useNodeserverFlag ? 'nodeserver' : mode;
+    mode = useNodeServerFlag ? 'node-server' : mode;
+    mode = useDockerServerFlag ? 'docker-server' : mode;
 
     var dependencies = ['build', mode];
     if(mockBackendFlag)
@@ -189,10 +200,10 @@ gulp.task('watch', ['watchify'], function() {
 });
 
 /**
- * Task: `vm`
- * Rebuilds the vm and runs live reloading.
+ * Task: `docker-server`
+ * Rebuilds the docker-server and runs live reloading.
  */
-gulp.task('vm', ['watch'], function() {
+gulp.task('docker-server', ['watch'], function() {
     gulp.watch(['Dockerfile', options.www + '/**/*'], ['docker']);
 });
 
@@ -226,10 +237,10 @@ gulp.task('mock-backend', [], function() {
 });
 
 /**
- * Task: `nodeserver`
+ * Task: `node-server`
  * Runs a simple node connect server and runs live reloading.
  */
-gulp.task('nodeserver', ['watch', 'direct'], function() {
+gulp.task('node-server', ['watch', 'direct'], function() {
     connect.server({
         root: options.www,
         middleware: function (/*connect, opt*/) {
