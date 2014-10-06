@@ -8,10 +8,6 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     browserify = require('browserify'),
     watchify = require('watchify'),
-    connect = require('gulp-connect'),
-    path = require('path'),
-    cors = require('cors'),
-    url = require('url'),
     envify = require('envify/custom'),
     fs = require('fs'),
     merge = require('merge'),
@@ -212,50 +208,13 @@ gulp.task('docker-server', ['watch'], function() {
  * Runs a simple node connect server
  * and delivers the json files under the 'mocked_backend' folder
  */
-gulp.task('mock-backend', [], function() {
-    connect.server({
-        root: 'mocked_backend',
-        port: '8081',
-        middleware: function (/*connect, opt*/) {
-            return [
-
-                cors(),
-
-                function (req, res, next) {
-                    var pathname = url.parse(req.url).pathname;
-                    pathname = pathname + '.json';
-                    req.url = pathname;
-                    if (!path.extname(pathname)) {
-                        req.url = '/';
-                    }
-                    next();
-                }
-
-            ];
-        }
-    });
-});
+gulp.task('mock-backend', [], require('./mock-backend'));
 
 /**
  * Task: `node-server`
  * Runs a simple node connect server and runs live reloading.
  */
-gulp.task('node-server', ['watch', 'direct'], function() {
-    connect.server({
-        root: options.www,
-        middleware: function (/*connect, opt*/) {
-            return [
-                function (req, res, next) {
-                    var pathname = url.parse(req.url).pathname;
-                    if (!path.extname(pathname)) {
-                        req.url = '/';
-                    }
-                    next();
-                }
-            ];
-        }
-    });
-});
+gulp.task('node-server', ['watch', 'direct'], require('./node-server')(options.www));
 
 /**
  * Task: `direct`
