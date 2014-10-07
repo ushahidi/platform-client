@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     	concat: {
 			frontend: {
 				src: [
-					'a/js/_libs/1_jquery-1.10.2.js',
+					'a/js/_libraries/*.js',
 					'a/js/_plugins/*.js', // All JS in the top-level plugins folder
 					'a/js/_custom/**/*.js'  // All JS in the top-level custom folder
 				],

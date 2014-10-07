@@ -7,4 +7,8 @@
 			margin-left: 5px;
 		}
 	}
+
+	.thumbnail {
+		@include equal-radius;
+	}
 }
