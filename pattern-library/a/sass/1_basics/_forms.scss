@@ -39,10 +39,12 @@
 		color: $black-text;
 		font-size: 15px;
 		font-size: 1rem;
+	/*
 		+ input,
 		+ textarea {
 			margin-top: 8px;
 		}
+	*/
 	}
 
 	form {
@@ -140,7 +142,7 @@
 		position: relative;
 		@include equal-radius;
 		border: 1px solid $grey-border;
-		background-color: $grey-heading;
+		background-color: $white-base;
 		&:hover {
 			cursor: pointer;
 			background-color: $grey-base;

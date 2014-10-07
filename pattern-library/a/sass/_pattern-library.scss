@@ -85,3 +85,27 @@
 		padding-left: 20%;
 	}
 }
+
+@include respond-min($bk4) {
+	.pl-header,
+	.pl-body {
+		padding-right: 10%;
+		padding-left: 10%;
+	}
+
+	.pl-pattern {
+		@include clearfix;
+		.pl-pattern-docs,
+		.pl-pattern-code {
+		}
+		.pl-pattern-docs {
+			float: left;
+			width: 30%;
+			margin-top: 0;
+		}
+		.pl-pattern-code {
+			float: right;
+			width: 65%;
+		}
+	}
+}

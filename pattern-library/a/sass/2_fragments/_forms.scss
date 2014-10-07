@@ -1,0 +1,106 @@
+@include global {
+	input {
+		+ p {
+			margin-top: 0.5em;
+		}
+	}
+
+	.input-with-icon {
+		display: inline-block;
+		position: relative;
+		i {
+			position: absolute;
+			top: 1px;
+			bottom: 1px;
+			left: 1px;
+			color: $black-base;
+			border-right: 1px solid $grey-border;
+			background-color: $grey-heading;
+			padding: 7px 10px;
+		}
+		input[type="text"],
+		input[type="email"],
+		input[type="password"],
+		input[type="search"] {
+			padding-left: 45px;
+		}
+	}
+
+	.input-with-button {
+		display: inline-block;
+		position: relative;
+		button,
+		[class*="button-"] {
+			position: absolute;
+			z-index: 2;
+			top: 1px;
+			right: 1px;
+			bottom: 1px;
+			color: $black-base;
+			border-color: $grey-heading;
+			border-left: 1px solid $grey-border;
+			@include no-shadow;
+			background-color: $grey-heading;
+			padding: 7px 10px;
+		}
+		input[type="text"],
+		input[type="email"],
+		input[type="password"],
+		input[type="search"] {
+			padding-right: 45px;
+		}
+	}
+
+	.select-with-icon {
+		display: inline-block;
+		position: relative;
+		i {
+			position: absolute;
+			top: 1px;
+			bottom: 3px;
+			left: 1px;
+			z-index: 2;
+			color: $black-base;
+			border-right: 1px solid $grey-border;
+			background-color: $grey-heading;
+			padding: 7px 10px;
+		}
+		.ui-select {
+			.ui-select-selected {
+				padding-left: 45px;
+			}
+		}
+	}
+
+	.tag-control {
+		@include equal-radius;
+		border: 1px solid $grey-border;
+		padding: 1.5em 0 1.5em 1em;
+		.tag {
+			margin: 1em 1em 1em 0;
+		}
+		.tag-control-add {
+			color: $black-base;
+			text-decoration: none;
+		}
+	}
+
+	.form-field {
+		@include clearfix;
+		border-bottom: 1px dotted $grey-border;
+		padding: 1em;
+		label {
+			float: left;
+			width: 20%;
+			padding-top: 7px;
+		}
+		input[type="text"],
+		input[type="email"],
+		input[type="password"],
+		input[type="search"],
+		textarea {
+			float: left;
+			width: 80%;
+		}
+	}
+}

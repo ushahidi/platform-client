@@ -8,10 +8,12 @@ $print: false !default;
 /* -- Basics -- */
 @import "1_basics/icons";
 @import "1_basics/forms";
+@import "1_basics/buttons";
 @import "1_basics/misc";
 
 /* -- Fragments -- */
-// @import "2_fragments/buttons";
+@import "2_fragments/buttons";
+@import "2_fragments/forms";
 
 /* -- Modules -- */
 // @import "3_modules/buttons";
