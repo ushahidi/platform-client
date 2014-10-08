@@ -21,6 +21,7 @@ angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap.dropdown', 'ui.boo
 
     .service('Authentication', require('./services/authentication.js'))
     .service('PostData', require('./services/data/post.js'))
+    .service('TagData', require('./services/data/tag.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('workspaceAccordion', require('./workspace'))

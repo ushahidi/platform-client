@@ -1,0 +1,57 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+
+* HEADER...............header title and action styles
+* TAG LIST...............tag description and actions
+*/
+
+
+
+
+/*------------------------------------*\
+    $HEADER
+\*------------------------------------*/
+
+.manage-tags-header {
+    @include header($blueGray);
+
+    .title {
+        color: $white;
+        margin-bottom: 30px;
+    }
+}
+
+.tag-actions {
+    @include span-columns(12);
+
+    @include media($mobile-up) {
+        @include span-columns(6);
+        float: right;
+    }
+
+    .dropdown,
+    .dropdown-container,
+    .dropdown-toggle {
+        @include fill-parent;
+
+        @include media($mobile-up) {
+            width: initial;
+        }
+    }
+}
+
+
+
+
+
+/*------------------------------------*\
+    $TAG LIST
+\*------------------------------------*/
+
+.list-view-details--tag {
+    @include span-columns(12);
+    margin-top: 10px;
+    color: $base-font-color;
+}
