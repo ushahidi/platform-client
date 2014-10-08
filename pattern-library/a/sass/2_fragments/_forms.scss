@@ -73,15 +73,20 @@
 	}
 
 	.tag-control {
+		@include clearfix;
 		@include equal-radius;
 		border: 1px solid $grey-border;
-		padding: 1.5em 0 1.5em 1em;
+		padding: 0.5em 1em;
 		.tag {
-			margin: 1em 1em 1em 0;
+			display: block;
+			float: left;
+			margin: 0.5em 1em 0.5em 0;
 		}
 		.tag-control-add {
+			float: left;
 			color: $black-base;
 			text-decoration: none;
+			background-color: $white-base;
 		}
 	}
 
@@ -101,6 +106,51 @@
 		textarea {
 			float: left;
 			width: 80%;
+		}
+	}
+
+	.form-field-bar {
+		@include clearfix;
+		input[type="text"],
+		input[type="email"],
+		input[type="password"],
+		input[type="search"],
+		select,
+		.ui-select {
+			float: left;
+			margin-right: 1em;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+
+	.system-message {
+		@include equal-radius;
+		color: $blue-text;
+		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+		border: 1px solid $blue-border;
+		background-color: $blue-heading;
+		padding: 1em;
+		.system-message-close {
+			float: right;
+			margin-bottom: 0.5em;
+			margin-left: 1em;
+		}
+		&.attention {
+			color: $yellow-text;
+			border-color: $yellow-border;
+			background-color: $yellow-heading;
+		}
+		&.success {
+			color: $green-text;
+			border-color: $green-light-border;
+			background-color: $green-light-heading;
+		}
+		&.warning {
+			color: $red-text;
+			border-color: $red-light-border;
+			background-color: $red-heading;
 		}
 	}
 }
