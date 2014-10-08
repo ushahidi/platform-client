@@ -33,7 +33,8 @@ hr {
     $LAYOUT
 \*------------------------------------*/
 
-.main {
+// this exists with .sidebar
+.main-content {
     @include span-columns(12);
 
     @include media($large) {
@@ -41,6 +42,7 @@ hr {
     }
 }
 
+// this exists with .main-content
 .sidebar {
     @include span-columns(12);
     @include omega;
@@ -51,11 +53,13 @@ hr {
     }
 }
 
+
 .container {
     @include outer-container;
     clear: both;
     padding: 30px;
 }
+
 
 
 

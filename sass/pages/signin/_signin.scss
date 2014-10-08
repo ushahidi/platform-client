@@ -12,8 +12,12 @@
     $SIGN IN WRAPPER
 \*------------------------------------*/
 
-.sign-in-wrapper {
+.container--signin {
 	width: 100%;
+
+	.form-wrapper {
+		margin-bottom: 0;
+	}
 
 	@include media ($small) {
 		width: 60%;
@@ -21,12 +25,6 @@
 
 	@include media ($large) {
 		width: 30%;
-	}
-
-	.main {
-		@include fill-parent();
-		background: $white;
-		padding: 20px;
 	}
 
 	.header {
