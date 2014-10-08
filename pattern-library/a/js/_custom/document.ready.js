@@ -1,3 +1,5 @@
 $(document).ready(function() {
-	uiForms.init();
+	$('html').removeClass('no-js').addClass('js');
+	$('.ui-forms').uiForms();
+	tabsInit();
 });

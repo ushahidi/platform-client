@@ -70,7 +70,7 @@ $base-line-height: 2em;
 }
 
 @mixin typeBeta {
-	font-weight: 400;
+	font-weight: 600;
 	font-family: 'Open Sans', Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
@@ -172,6 +172,7 @@ $bk4: 1000px;
 
 	a {
 		color: $blue-link;
+		text-decoration: none;
 		@include transition;
 		&:hover,
 		&:focus {

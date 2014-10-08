@@ -55,19 +55,29 @@
 		display: inline-block;
 		position: relative;
 		i {
-			position: absolute;
-			top: 1px;
-			bottom: 3px;
-			left: 1px;
-			z-index: 2;
-			color: $black-base;
-			border-right: 1px solid $grey-border;
-			background-color: $grey-heading;
-			padding: 7px 10px;
+			float: left;
+			position: relative;
+			top: 8px;
+			margin-right: 6px;
 		}
 		.ui-select {
 			.ui-select-selected {
 				padding-left: 45px;
+			}
+		}
+		.js & {
+			i {
+				float: none;
+				position: absolute;
+				top: 1px;
+				bottom: 3px;
+				left: 1px;
+				z-index: 2;
+				color: $black-base;
+				border-right: 1px solid $grey-border;
+				background-color: $grey-heading;
+				padding: 7px 10px;
+				margin-right: 0;
 			}
 		}
 	}
@@ -122,35 +132,6 @@
 			&:last-child {
 				margin-right: 0;
 			}
-		}
-	}
-
-	.system-message {
-		@include equal-radius;
-		color: $blue-text;
-		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-		border: 1px solid $blue-border;
-		background-color: $blue-heading;
-		padding: 1em;
-		.system-message-close {
-			float: right;
-			margin-bottom: 0.5em;
-			margin-left: 1em;
-		}
-		&.attention {
-			color: $yellow-text;
-			border-color: $yellow-border;
-			background-color: $yellow-heading;
-		}
-		&.success {
-			color: $green-text;
-			border-color: $green-light-border;
-			background-color: $green-light-heading;
-		}
-		&.warning {
-			color: $red-text;
-			border-color: $red-light-border;
-			background-color: $red-heading;
 		}
 	}
 }

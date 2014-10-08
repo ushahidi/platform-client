@@ -1,7 +1,5 @@
-var uiForms = {};
-
-uiForms.init = function() {
-	$('.ui-forms').each(function(){
+$.fn.uiForms = function() {
+	$(this).each(function(){
 		var $nativeControl = $(this),
 			uiType;
 
@@ -67,6 +65,7 @@ uiForms.init = function() {
 
 			$nativeControl.siblings().not($optionsTarget).on('click', function(){
 				$optionsTarget.fadeToggle('fast');
+				$('.ui-select-options').not($optionsTarget).fadeOut('fast');
 			});
 
 			$optionsTarget.on('click', 'li', function(){

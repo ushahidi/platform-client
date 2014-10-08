@@ -14,6 +14,10 @@ $print: false !default;
 /* -- Fragments -- */
 @import "2_fragments/buttons";
 @import "2_fragments/forms";
+@import "2_fragments/panel";
+@import "2_fragments/tabs";
+@import "2_fragments/post-item";
+@import "2_fragments/misc";
 
 /* -- Modules -- */
 // @import "3_modules/buttons";

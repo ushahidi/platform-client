@@ -47,6 +47,14 @@
 	*/
 	}
 
+	select {
+		-webkit-appearance: menulist;
+		height: 32px;
+		font-size: 14px;
+		font-size: .933333333rem;
+		border: 1px solid $grey-border;
+	}
+
 	form {
 		p {
 			font-size: 14px;
@@ -163,6 +171,7 @@
 		}
 		.ui-select-options {
 			position: absolute;
+			z-index: 2;
 			top: 115%;
 			right: 0;
 			left: 0;

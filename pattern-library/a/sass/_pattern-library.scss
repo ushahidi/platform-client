@@ -93,6 +93,11 @@
 		padding-left: 10%;
 	}
 
+	.pl-pattern-title {
+		font-size: 20px;
+		font-size: 1.333333333rem;
+	}
+
 	.pl-pattern {
 		@include clearfix;
 		.pl-pattern-docs,

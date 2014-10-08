@@ -111,22 +111,20 @@
 				<h1 class="pl-pattern-title">Form Field Bar</h1>
 			</div>
 			<div class="pl-pattern-code">
-				<form>
-					<div class="form-field-bar">
-						<select class="ui-forms">
-							<option>Option A</option>
-							<option>Option B</option>
-							<option>Option C</option>
-						</select>
+				<form class="form-field-bar">
+					<select class="ui-forms">
+						<option>Option A</option>
+						<option>Option B</option>
+						<option>Option C</option>
+					</select>
 
-						<select class="ui-forms">
-							<option>Option 1</option>
-							<option>Option 2</option>
-							<option>Option 3</option>
-						</select>
+					<select class="ui-forms">
+						<option>Option 1</option>
+						<option>Option 2</option>
+						<option>Option 3</option>
+					</select>
 
-						<input type="text" name="A" placeholder="Placeholder" />
-					</div>
+					<input type="text" name="A" placeholder="Placeholder" />
 				</form>
 			</div>
 		</article>
@@ -193,6 +191,319 @@
 					<span class="system-message-close fa fa-close"></span>
 					<p><strong>Warning!!</strong> Here is a message specially for you.</p>
 				</aside>
+			</div>
+		</article>
+
+		<h2 class="pl-category">Metadata</h2>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Metadata, default</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<ul class="metadata">
+					<li><i class="fa fa-user"></i>Jane Doe</li>
+					<li><a href="#"><i class="fa fa-map-marker"></i>City, Country</a></li>
+					<li><i class="fa fa-clock-o"></i>8 months ago</li>
+					<li><i class="fa fa-file"></i>Published</li>
+				</ul>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Metadata, with labels</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<dl class="metadata">
+					<dt><i class="fa fa-square"></i>Geometry test</dt>
+					<dd><a href="#">view on map</a></dd>
+
+					<dt><i class="fa fa-spinner"></i>Status</dt>
+					<dd>ongoing</dd>
+
+					<dt><i class="fa fa-link"></i>Links</dt>
+					<dd><a href="#">http://website.org</a></dd>
+
+					<dt><i class="fa fa-map-marker"></i>Last location</dt>
+					<dd><a href="#">City, Country</a></dd>
+				</dl>
+			</div>
+		</article>
+
+		<h2 class="pl-category">Navigation</h2>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Stepper</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<nav class="stepper">
+					<ul>
+						<li class="prev fa fa-chevron-left"><span class="label">Previous</span></li>
+						<li class="next fa fa-chevron-right"><span class="label">Next</span></li>
+					</ul>
+				</nav>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Pagination</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<nav class="pagination">
+					<ul>
+						<li class="prev">&laquo;</li>
+						<li class="active">1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+						<li>5</li>
+						<li>6</li>
+						<li class="next">&raquo;</li>
+					</ul>
+				</nav>
+			</div>
+		</article>
+
+		<h2 class="pl-category">Panel</h2>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Panel, default</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="panel">
+					<div class="panel-header">
+						<h2 class="panel-title">Panel title</h2>
+						<span class="panel-total">13</span>
+					</div>
+					<div class="panel-body">
+						&nbsp;
+					</div>
+					<div class="panel-footer">
+
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Panel, overlay</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="overlay">
+					<div class="panel">
+						<div class="panel-header">
+							<h2 class="panel-title"><i class="fa fa-star"></i>Panel title</h2>
+						</div>
+						<div class="panel-body">
+							&nbsp;
+						</div>
+						<div class="panel-footer">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Panel, overlay in 'sets'</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="overlay">
+					<div class="panel mode-sets">
+						<div class="panel-header">
+							<h2 class="panel-title"><i class="fa fa-star"></i>Panel title</h2>
+						</div>
+						<div class="panel-body">
+							&nbsp;
+						</div>
+						<div class="panel-footer">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Panel, modal</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="modal">
+					<div class="panel">
+						<div class="panel-header">
+							<h2 class="panel-title"><i class="fa fa-star"></i>Panel title</h2>
+						</div>
+						<div class="panel-body">
+							&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<h2 class="pl-category">Title Bar</h2>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Title Bar, default</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="title-bar">
+					<h2 class="title-bar-title"><i class="fa fa-star"></i>Page title</h2>
+					<div class="title-bar-form input-with-button">
+						<input type="text" placeholder="Placeholder" />
+						<button class="fa fa-search"></button>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Title Bar, in 'sets'</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="title-bar mode-sets">
+					<h2 class="title-bar-title"><i class="fa fa-th"></i>Page title</h2>
+					<div class="title-bar-form input-with-button">
+						<input type="text" placeholder="Placeholder" />
+						<button class="fa fa-search"></button>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<h2 class="pl-category">Tabs</h2>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Tabs, default</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="tabs">
+					<div class="tabs-tab">
+						<h1 class="tabs-tab-title">Tab 1</h1>
+						<div class="tabs-tab-content">
+							<p>Tab 1 content</p>
+						</div>
+					</div>
+					<div class="tabs-tab">
+						<h1 class="tabs-tab-title">Tab 2</h1>
+						<div class="tabs-tab-content">
+							<p>Tab 2 content</p>
+						</div>
+					</div>
+					<div class="tabs-tab">
+						<h1 class="tabs-tab-title"><i class="fa fa-star"></i>Tab 3</h1>
+						<div class="tabs-tab-content">
+							<p>Tab 3 content</p>
+						</div>
+					</div>
+					<div class="tabs-tab">
+						<h1 class="tabs-tab-title">Tab 4</h1>
+						<div class="tabs-tab-content">
+							<p>Tab 4 content</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Tabs, filter</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<div class="tabs tabs-filter">
+					<nav class="tabs-menu">
+						<ul>
+							<li>Tab 1</li>
+							<li>Tab 2</li>
+							<li>Tab 3</li>
+						</ul>
+					</nav>
+					<form class="form-field-bar">
+						<select class="ui-forms">
+							<option>Option A</option>
+							<option>Option B</option>
+							<option>Option C</option>
+						</select>
+
+						<input type="text" name="A" placeholder="Placeholder" />
+					</form>
+				</div>
+			</div>
+		</article>
+
+		<h2 class="pl-category">Post Item</h2>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Post Item, default</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<article class="post-item">
+					<img src="http://placehold.it/100x100" class="image-circle" />
+					<div class="post-item-header">
+						<span class="post-item-time"><i class="fa fa-clock-o"></i>15:27 updated</span>
+						<h1 class="post-item-title"><a href="#">Post headline goes here</a></h1>
+					</div>
+					<div class="post-item-body">
+						<div class="post-item-description">
+							<p>Suspendisse in auctor turpis, vitae blandit lectus. Aliquam erat volutpat. Vestibulum justo velit, sollicitudin id orci ut, finibus commodo ante.</p>
+						</div>
+					</div>
+				</article>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Post Item, with actions</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<article class="post-item">
+					<img src="http://placehold.it/100x100" class="image-circle" />
+					<div class="post-item-meta">
+						<ul class="metadata">
+							<li><i class="fa fa-clock-o"></i>15:27</li>
+							<li><a href="#"><i class="fa fa-map-marker"></i>City, Country</a></li>
+							<li class="destruct"><a href="#"><i class="fa fa-times-circle"></i>Remove post</a></li>
+						</ul>
+					</div>
+					<div class="post-item-body">
+						<h1 class="post-item-title"><a href="#">Post headline goes here</a></h1>
+						<div class="post-item-description">
+							<p>Suspendisse in auctor turpis, vitae blandit lectus. Aliquam erat volutpat. Vestibulum justo velit, sollicitudin id orci ut, finibus commodo ante.</p>
+						</div>
+					</div>
+				</article>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Post Item, comment</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<article class="post-item">
+					<img src="http://placehold.it/100x100" class="image-circle" />
+					<div class="post-item-body">
+						<textarea></textarea>
+						<div class="form-field-bar">
+							<input type="file" />
+							<button type="submit">Send</button>
+						</div>
+					</div>
+				</article>
 			</div>
 		</article>
 	</div>
