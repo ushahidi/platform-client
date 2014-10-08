@@ -28,5 +28,9 @@ module.exports = function($routeProvider, $locationProvider) {
         .when('/users', {
             controller: require('./controllers/users/users.js'),
             templateUrl: 'templates/users/users.html'
+        })
+        .when('/tags', {
+            controller: require('./controllers/tags/tags.js'),
+            templateUrl: 'templates/tags/tags.html'
         });
 };

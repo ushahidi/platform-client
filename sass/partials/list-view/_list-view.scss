@@ -34,6 +34,7 @@
 }
 
 .list-view__item {
+    @include span-columns(12);
     padding: 30px;
 
     &:first-child {
@@ -189,7 +190,6 @@
             width: 50%;
 
             &:last-child {
-                border-bottom: 1px solid silver;
                 border-radius: 0;
             }
 
