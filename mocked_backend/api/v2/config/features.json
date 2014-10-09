@@ -1,0 +1,93 @@
+{
+    "count": 7,
+    "total_count": 7,
+    "results": [
+        {
+            "name": "API Explorer",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "allowed_methods": {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true
+            }
+        },
+
+        {
+            "name": "Data Provider Config",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "enabled": true,
+            "allowed_methods": {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true
+            }
+        },
+
+        {
+            "name": "Form Wizard",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "allowed_methods": {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true
+            }
+        },
+
+        {
+            "name": "Map Settings",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "enabled": true,
+            "allowed_methods": {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true
+            }
+        },
+
+        {
+            "name": "Media Uploads",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "allowed_methods": {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true
+            }
+        },
+
+        {
+            "name": "Post Export",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "enabled": true,
+            "allowed_methods": {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true
+            }
+        },
+
+        {
+            "name": "Set UI",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "allowed_methods": {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true
+            }
+        }
+
+    ],
+    "limit": 20,
+    "offset": 0,
+    "order": "DESC",
+    "orderby": "updated",
+    "curr": "http://localhost:8081/api/v2/config/features?limit=20&orderby=updated&order=DESC&offset=0",
+    "next": "http://localhost:8081/api/v2/config/features?limit=20&orderby=updated&order=DESC&offset=20",
+    "prev": "http://localhost:8081/api/v2/config/features?limit=20&orderby=updated&order=DESC&offset=0"
+}

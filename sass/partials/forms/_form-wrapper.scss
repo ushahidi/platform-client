@@ -1,0 +1,24 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+* FORM WRAPPER...............form wrapper and layout
+*/
+
+
+
+
+
+/*------------------------------------*\
+    $FORM WRAPPER
+\*------------------------------------*/
+
+// this class is attached to form <article>
+.form-wrapper {
+    @include span-columns(12);
+    margin-bottom: 40px;
+
+    button {
+        float: right;
+    }
+}

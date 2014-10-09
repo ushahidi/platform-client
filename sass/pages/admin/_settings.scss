@@ -13,31 +13,40 @@
     $ADMIN SETTINGS
 \*------------------------------------*/
 
+.container--settings {
+    width: 100%;
+    max-width: 53em;
+}
+
 .admin-settings {
-    @include outer-container;
+    @include span-columns(12);
 
-    article {
-        @include span-columns(6);
+    .cards-wrapper {
+        @include span-columns(12);
     }
 
-    .card .ribbon-wrapper {
-        display: none;
+    .cards {
+        @include span-columns(12);
 
-        .ribbon {
-            background: #191;
+        .card .ribbon-wrapper {
+            display: none;
+
+            .ribbon {
+                background: #191;
+            }
         }
-    }
 
-    .card.enabled .ribbon-wrapper {
-        display: block;
-    }
+        .card.enabled .ribbon-wrapper {
+            display: block;
+        }
 
-    .card:not(.enabled):hover .ribbon-wrapper {
-        display: block;
-        opacity: 0.5;
+        .card:not(.enabled):hover .ribbon-wrapper {
+            display: block;
+            opacity: 0.5;
 
-        .ribbon {
-            background: #333;
+            .ribbon {
+                background: #333;
+            }
         }
     }
 }

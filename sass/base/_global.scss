@@ -58,6 +58,13 @@ hr {
     @include outer-container;
     clear: both;
     padding: 30px;
+
+    .wrapper {
+        @include span-columns(12);
+        @include fill-parent();
+        background: $white;
+        padding: 20px;
+    }
 }
 
 

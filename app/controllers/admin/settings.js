@@ -1,7 +1,7 @@
-module.exports = function($scope) {
+module.exports = ['$scope', 'ConfigSiteData', 'ConfigFeaturesData', function($scope, ConfigSiteData, ConfigFeaturesData) {
     $scope.title = 'Admin: Settings';
-    $scope.site = {
-        name: 'Ushahidi Site',
-        owner: 'Your Name'
-    };
-};
+
+    $scope.sites = ConfigSiteData.query();
+    $scope.features = ConfigFeaturesData.query();
+
+}];
