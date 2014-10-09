@@ -1,23 +1,10 @@
 {
-    "count": 1,
-    "total_count": 1,
-    "results": [
-        {
-            "title": "Ushahidi Site",
-            "owner": "Your Name",
-            "allowed_methods": {
-                "get": true,
-                "post": true,
-                "put": true,
-                "delete": true
-            }
-        }
-    ],
-    "limit": 20,
-    "offset": 0,
-    "order": "DESC",
-    "orderby": "updated",
-    "curr": "http://localhost:8081/api/v2/config/site?limit=20&orderby=updated&order=DESC&offset=0",
-    "next": "http://localhost:8081/api/v2/config/site?limit=20&orderby=updated&order=DESC&offset=20",
-    "prev": "http://localhost:8081/api/v2/config/site?limit=20&orderby=updated&order=DESC&offset=0"
+    "site_title": "Ushahidi Mock",
+    "owner_name": "Joe Mock",
+    "allowed_methods": {
+        "get": true,
+        "post": true,
+        "put": true,
+        "delete": true
+    }
 }

@@ -28,25 +28,28 @@
     .cards {
         @include span-columns(12);
 
-        .card .ribbon-wrapper {
-            display: none;
-
-            .ribbon {
-                background: #191;
+        .card {
+            opacity: 0.7;
+            .ribbon-wrapper {
+                display: none;
+                .ribbon {
+                    background: #191; /* enable */
+                }
             }
         }
 
-        .card.enabled .ribbon-wrapper {
-            display: block;
+        .card.enabled {
+            opacity: 1.0;
+            .ribbon-wrapper {
+                opacity: 0.7;
+                .ribbon {
+                    background: #911; /* disable */
+                }
+            }
         }
 
-        .card:not(.enabled):hover .ribbon-wrapper {
+        .card:hover .ribbon-wrapper {
             display: block;
-            opacity: 0.5;
-
-            .ribbon {
-                background: #333;
-            }
         }
     }
 }
