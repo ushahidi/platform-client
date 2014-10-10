@@ -20,10 +20,11 @@ angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap.dropdown', 'ui.boo
     .directive('signinSignoutButton', require('./directives/signin-signout-button.js'))
 
     .service('Authentication', require('./services/authentication.js'))
-    .service('PostData', require('./services/data/post.js'))
-    .service('TagData', require('./services/data/tag.js'))
-    .service('ConfigSiteData', require('./services/data/config/site.js'))
-    .service('ConfigFeaturesData', require('./services/data/config/features.js'))
+
+    .service('PostEndpoint', require('./services/endpoint/post.js'))
+    .service('TagEndpoint', require('./services/endpoint/tag.js'))
+    .service('ConfigSiteEndpoint', require('./services/endpoint/config/site.js'))
+    .service('ConfigFeaturesEndpoint', require('./services/endpoint/config/features.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('workspaceAccordion', require('./workspace'))

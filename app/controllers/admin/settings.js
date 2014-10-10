@@ -1,7 +1,7 @@
-module.exports = ['$scope', 'ConfigSiteData', 'ConfigFeaturesData', function($scope, ConfigSiteData, ConfigFeaturesData) {
+module.exports = ['$scope', 'ConfigSiteEndpoint', 'ConfigFeaturesEndpoint', function($scope, ConfigSiteEndpoint, ConfigFeaturesEndpoint) {
     $scope.title = 'Admin: Settings';
 
-    $scope.site = ConfigSiteData.get();
-    $scope.features = ConfigFeaturesData.get();
+    $scope.site = ConfigSiteEndpoint.get();
+    $scope.features = ConfigFeaturesEndpoint.get();
 
 }];

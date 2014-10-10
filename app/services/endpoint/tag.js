@@ -1,6 +1,6 @@
 module.exports = ['$resource', 'API_URL', '$rootScope', function($resource, API_URL, $rootScope){
 
-    var TagData = $resource(API_URL + '/tags/:postId', {}, {
+    var TagEndpoint = $resource(API_URL + '/tags/:postId', {}, {
         query: {
             method: 'GET',
             isArray: true,
@@ -12,8 +12,8 @@ module.exports = ['$resource', 'API_URL', '$rootScope', function($resource, API_
     });
 
     $rootScope.$on('event:authentication:signout:succeeded', function(){
-        TagData.query();
+        TagEndpoint.query();
     });
 
-    return TagData;
+    return TagEndpoint;
 }];

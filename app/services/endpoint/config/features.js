@@ -1,6 +1,6 @@
 module.exports = ['$resource', 'API_URL', '$rootScope', function($resource, API_URL, $rootScope){
 
-    var ConfigFeaturesData = $resource(API_URL + '/config/features', {}, {
+    var ConfigFeaturesEndpoint = $resource(API_URL + '/config/features', {}, {
         get: {
             method: 'GET',
             transformResponse: function(data /*, header*/) {
@@ -12,6 +12,6 @@ module.exports = ['$resource', 'API_URL', '$rootScope', function($resource, API_
         }
     });
 
-    return ConfigFeaturesData;
+    return ConfigFeaturesEndpoint;
 
 }];
