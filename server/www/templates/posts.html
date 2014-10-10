@@ -1,7 +1,7 @@
 <ng-include src=" 'templates/partials/search-bar.html' "></ng-include>
 
 <div class="container">
-    <div class="main-content">
+    <div class="main-content  post-list">
         <div class="list-filter">
                 <div class="list-filter-info">
                     <h5 class="title">Showing 1 to 10 from 100 posts</h5>
@@ -35,11 +35,11 @@
 
         </div> <!-- end .list-filter -->
 
-        <div class="list-view-wrapper">
+        <div class="wrapper">
 
             <post-preview ng-repeat="post in posts" post="post"></post-preview>
 
-        </div> <!-- end .list-view-wrapper -->
+        </div> <!-- end .wrapper -->
 
         <!-- Pagination -->
         <ng-include src=" 'templates/partials/pagination.html' "></ng-include>

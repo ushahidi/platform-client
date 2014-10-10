@@ -41,8 +41,6 @@
 // Refills
 @import "base/refills/all";
 
-// Global
-@import "base/global";
 
 
 
@@ -54,6 +52,10 @@
 @import "utils/mixins";
 @import "utils/helpers";
 @import "utils/extends";
+
+// Global
+@import "base/global";
+
 
 
 

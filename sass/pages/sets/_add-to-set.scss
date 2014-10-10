@@ -42,10 +42,6 @@
     $BODY
 \*------------------------------------*/
 
-.set-list-wrapper {
-    display: table;
-}
-
 .set-list {
     @include span-columns(12);
     @extend %border-bottom;
