@@ -2,4 +2,4 @@
 bower_components
 node_modules
 npm-debug.log
-gulp-options.json
+.gulpconfig.json
