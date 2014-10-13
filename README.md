@@ -9,17 +9,61 @@ Ushahidi Platform Prototype
 * Browserify
 * Gulp (and various gulp plugins)
 * Libsass/node-sass (via gulp-sass)
-* Bourbon 3.1
-* Neat 1.5
-* Refills 0.2
+* Bourbon
+* Neat
+* Refills
 
 ### Install Build Requirements
-`npm install -g gulp napa browserify`
+`npm install -g gulp napa`
 
 ### Install Packages
 `npm install`
 
 *This will install both NPM and Bower dependencies! No separate `bower install` command is required.*
+
+### Download and Activate Live Reload Plugin
+
+http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions
+
+### Navigate to project root and run Gulp
+
+`gulp`
+
+* watches for changes
+* compiles sass
+* compiles js
+* rebuilds/reloads any optional servers that are enabled
+* live reloads `index.html`
+
+#### Optional parameters ####
+
+* `--node-server` - start a self-hosted server, instead of using a native web server like Apache or nginx. This simple server will be running at: <http://localhost:8080>.
+* `--mock-backend` - use a mock backend server instead of a real instance of [ushahidi-platform](https://github.com/ushahidi/platform), delivering the JSON files in the `mocked_backend/` when API calls are made. This server will be running at: <http://localhost:8081>. See details below.
+* `--docker-server` - build and run the client inside of a [Docker](https://docker.com/) container. See details below.
+
+#### Set default options with gulp-options.json
+
+Instead of having to type the flags every time, you can also use a `.gulpconfig.json` file to set the default options for running the client.
+
+```
+{
+    "nodeServer": true,
+    "dockerServer": false,
+    "backendUrl": 'http://ushahidi-backend'
+}
+```
+
+* `nodeServer` - always run the `node-server` task
+* `dockerServer` - always run the `docker-server` task
+* `backendUrl` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
+
+### Optional: Mock Backend
+
+`mock-backend` task starts a internal web server that provides a mock API that can be used for testing and client side development. When running the mock backend nothing can be persisted or deleted, but otherwise the client should be fully functional.
+
+To run the mock backend server, run `gulp --mock-backend`.
+
+**This can be combined with the `--node-server` flag for a completely self-hosted Ushahidi Platform demo.**
 
 ### Optional: Run Docker
 
@@ -38,54 +82,7 @@ To run the Docker container, run `gulp --docker-server`
 >
 > Issue `sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
 
-### Optional: Run nodeserver
-
-`node-server` task starts an internal web server to serve the client without having to setup a web server.
-
-To run the nodejs server, run `gulp --node-server`
-
-### Download and Activate Live Reload Plugin
-
-http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions
-
-### Navigate to project root and run Gulp
-
-`gulp`
-
-* watches for changes
-* compiles sass
-* compiles js
-* rebuilds docker container (when `dockerServer` is enabled)
-* starts internal web server and access it at http://localhost:8080 ( when `nodeserver` is enabled)
-* live reloads `index.html`
-
-**Note:** If you enable `dockerServer` and run `gulp` for the first time, it take a while for it to build and start docker. Wait till you see `server is live @ http://<ip_address_or_localhost/`
-
-#### Optional parameters ####
-
-* `--mock-backend` - use a mock backend server instead of a real instance of [ushahidi-platform](https://github.com/ushahidi/platform).
-    1. a simple nodejs server will be started
-        * This delivers all json files within the 'mocked_backend' folder to localhost:8081
-        * the json extension will be truncated so 'mocked_backend/test.json' maps to 'localhost:8081/test'
-    2. the backendUrl env variable, which is used in app.js for configuring the api backend, will be reset to the url of the just started node mock server
-
-#### Set default options with gulp-options.json
-
-You can use a `gulp-options.json` file to set the default options for running the client.
-When you run `gulp` these options will be used. You can enable the docker or node servers.
-Or change the backend url.
-
-```
-{
-    "nodeServer": true,
-    "dockerServer": false,
-    "backendUrl": 'http://ushahidi-backend'
-}
-```
-
-* `nodeServer` - always run the `node-server` task
-* `dockerServer` - always run the `docker-server` task
-* `backendUrl` - the url of your [ushahidi-platform](https://github.com/ushahidi/platform) server
+**Note:** The first build of the Docker server can take several minutes. Wait till you see `server is live @ http://<ip_address_or_localhost/` before attempting to view the site. 
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
