@@ -1,0 +1,71 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+* CARDS...............refills card style override
+*/
+
+
+
+
+/*------------------------------------*\
+    $CARDS
+\*------------------------------------*/
+
+.cards-wrapper {
+    @include span-columns(12);
+}
+
+.cards {
+    @include span-columns(12);
+
+    .card {
+        opacity: 0.7;
+
+        @include media($medium-screen) {
+            @include span-columns(6);
+            @include omega(2n);
+        }
+
+        @include media($large-screen) {
+            @include span-columns(3);
+
+            &:nth-child(2n) {
+                margin-right: 2.35765%;
+            }
+
+            &:nth-child(4n) {
+                margin-right: 0;
+            }
+
+            &:nth-child(2n+1),
+            &:nth-child(3n+1) {
+                clear: none;
+            }
+        }
+
+        .ribbon-wrapper {
+            display: none;
+
+            .ribbon {
+                background: #191;  /* enable */
+            }
+        }
+    }
+
+    .card.enabled {
+        opacity: 1.0;
+
+        .ribbon-wrapper {
+            opacity: 0.7;
+
+            .ribbon {
+                background: #911; /* disable */
+            }
+        }
+    }
+
+    .card:hover .ribbon-wrapper {
+        display: block;
+    }
+}

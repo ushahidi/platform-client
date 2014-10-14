@@ -24,32 +24,4 @@
     .cards-wrapper {
         @include span-columns(12);
     }
-
-    .cards {
-        @include span-columns(12);
-
-        .card {
-            opacity: 0.7;
-            .ribbon-wrapper {
-                display: none;
-                .ribbon {
-                    background: #191; /* enable */
-                }
-            }
-        }
-
-        .card.enabled {
-            opacity: 1.0;
-            .ribbon-wrapper {
-                opacity: 0.7;
-                .ribbon {
-                    background: #911; /* disable */
-                }
-            }
-        }
-
-        .card:hover .ribbon-wrapper {
-            display: block;
-        }
-    }
 }
