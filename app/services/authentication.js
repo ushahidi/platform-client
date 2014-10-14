@@ -21,7 +21,20 @@ module.exports = ['$rootScope', '$http',
 
         signin: function(username, password)
         {
-            var claimedScopes = ['posts', 'media', 'forms', 'api', 'tags', 'sets', 'users', 'stats', 'layers'],
+            var claimedScopes = [
+                'posts',
+                'media',
+                'forms',
+                'api',
+                'tags',
+                'sets',
+                'users',
+                'stats',
+                'layers',
+                'config',
+                'messages',
+                'dataproviders'
+            ],
             payload = {
                 username: username,
                 password: password,

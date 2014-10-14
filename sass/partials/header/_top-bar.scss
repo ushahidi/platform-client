@@ -32,6 +32,11 @@ body {
 \*------------------------------------*/
 
 header.navigation .logo {
+    padding: 0 1em;
+
+    @include media($small) {
+        padding: 0 1em 0 0;
+    }
 
     img {
         float: left;
@@ -89,10 +94,10 @@ header.navigation {
 
     [class*='fa-'] {
         color: $white;
-        padding: 23px 20px 20px;
+        padding: 23px 15.9px 20px;
 
         @include media($medium) {
-            padding: auto;
+            padding: 23px 20px 20px;
         }
     }
 
@@ -133,5 +138,18 @@ header.navigation {
             background-color: $primary-color;
             border-bottom: 1px solid $black;
         }
+    }
+}
+
+.navigation-wrapper {
+    @include outer-container;
+    max-width: $max-width;
+
+    @include media($small) {
+        padding: 0 30px;
+    }
+
+    @include media($medium) {
+        padding: 0 30px;
     }
 }

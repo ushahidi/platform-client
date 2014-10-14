@@ -1,0 +1,15 @@
+{
+    "api_explorer": false,
+    "data_provider": true,
+    "form_wizard": false,
+    "map_settings": true,
+    "media_uploads": false,
+    "post_export": true,
+    "sets_ui": false,
+    "allowed_methods": {
+        "get": true,
+        "post": true,
+        "put": true,
+        "delete": true
+    }
+}

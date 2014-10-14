@@ -1,0 +1,10 @@
+{
+    "site_title": "Ushahidi Mock",
+    "owner_name": "Joe Mock",
+    "allowed_methods": {
+        "get": true,
+        "post": true,
+        "put": true,
+        "delete": true
+    }
+}

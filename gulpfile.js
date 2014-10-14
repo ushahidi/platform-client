@@ -32,8 +32,8 @@ var options = {
 };
 
 // load user defined options
-if (fs.existsSync('gulp-options.json')) {
-    merge(options, require('./gulp-options.json'));
+if (fs.existsSync('.gulpconfig.json')) {
+    merge(options, require('./.gulpconfig.json'));
 }
 
 var helpers = {
@@ -52,9 +52,9 @@ var helpers = {
     var mode = options.dockerServer ? 'docker-server' : 'direct';
     mode = options.nodeServer ? 'node-server' : mode;
     // when the command line flag '--node-server' is passed in,
-    // we want to force using nodeserver
+    // we want to force using node server
     // when the command line flag '--docker-server' is passed in,
-    // we want to force using nodeserver
+    // we want to force using docker server
     // (even if it is set to 'false' in the options hash)
     mode = useNodeServerFlag ? 'node-server' : mode;
     mode = useDockerServerFlag ? 'docker-server' : mode;
@@ -208,13 +208,13 @@ gulp.task('docker-server', ['watch'], function() {
  * Runs a simple node connect server
  * and delivers the json files under the 'mocked_backend' folder
  */
-gulp.task('mock-backend', [], require('./mock-backend'));
+gulp.task('mock-backend', [], require('./gulp/mock-backend')('mocked_backend'));
 
 /**
  * Task: `node-server`
  * Runs a simple node connect server and runs live reloading.
  */
-gulp.task('node-server', ['watch', 'direct'], require('./node-server')(options.www));
+gulp.task('node-server', ['watch', 'direct'], require('./gulp/node-server')(options.www));
 
 /**
  * Task: `direct`

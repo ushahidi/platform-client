@@ -14,14 +14,9 @@
         $LIST VIEW WRAPPER
 \*------------------------------------*/
 
-.list-view-wrapper {
-    @include span-columns(12);
-    @include wrapper;
-    display: table;
-    color: $sub-base-font-color;
+.post-list {
 
     .container {
-        padding: 30px;
 
         &:first-child {
             border-top: none;

@@ -106,9 +106,7 @@
 \*------------------------------------*/
 
 
-.post-body-wrapper {
-    @include span-columns(12);
-    @include wrapper;
+.post-detail .wrapper {
     margin-bottom: 0;
 }
 

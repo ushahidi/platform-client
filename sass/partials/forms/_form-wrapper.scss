@@ -2,7 +2,7 @@
     CONTENTS
 \*------------------------------------*/
 /*
-* ADMIN SETTINGS...............admin settings styles
+* FORM WRAPPER...............form wrapper and layout
 */
 
 
@@ -10,18 +10,15 @@
 
 
 /*------------------------------------*\
-    $ADMIN SETTINGS
+    $FORM WRAPPER
 \*------------------------------------*/
 
-.container--settings {
-    width: 100%;
-    max-width: $max-width;
-}
-
-.admin-settings {
+// this class is attached to form <article>
+.form-wrapper {
     @include span-columns(12);
+    margin-bottom: 40px;
 
-    .cards-wrapper {
-        @include span-columns(12);
+    button {
+        float: right;
     }
 }

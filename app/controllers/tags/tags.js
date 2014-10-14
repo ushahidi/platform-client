@@ -1,4 +1,4 @@
-module.exports = ['$scope', 'TagData', function($scope, TagData) {
+module.exports = ['$scope', 'TagEndpoint', function($scope, TagEndpoint) {
         $scope.title = 'Manage Tags';
-        $scope.tags = TagData.query();
+        $scope.tags = TagEndpoint.query();
 }];
