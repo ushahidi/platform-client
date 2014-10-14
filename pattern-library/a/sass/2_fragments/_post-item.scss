@@ -29,8 +29,7 @@
 			}
 		}
 		.post-item-meta {
-			float: right;
-			width: 150px;
+			padding-left: 50px;
 			margin-left: 1em;
 		}
 		.post-item-title {
@@ -54,6 +53,12 @@
 			.post-item-time {
 				float: right;
 			}
+		}
+		.post-item-meta {
+			float: right;
+			width: 150px;
+			padding-left: 0;
+			margin-left: 1em;
 		}
 	}
 }

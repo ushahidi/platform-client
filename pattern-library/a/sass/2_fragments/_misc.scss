@@ -31,6 +31,10 @@
 			float: right;
 			margin-bottom: 0.5em;
 			margin-left: 1em;
+			&:hover {
+				cursor: pointer;
+				color: $black-text;
+			}
 		}
 		&.attention {
 			color: $yellow-text;
@@ -156,6 +160,7 @@
 		.title-bar-title {
 			float: left;
 			margin-top: 5px;
+			margin-bottom: 5px;
 			 + .title-bar-form {
 				float: right;
 				margin-top: 0;

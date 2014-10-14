@@ -40,14 +40,14 @@
 
 	.button-secondary {
 		color: $white-base;
-		border-color: $teal-base;
-		background-color: $teal-base;
+		border-color: $blue-base;
+		background-color: $blue-base;
 		&:hover {
-			border-color: $teal-base;
-			background-color: $teal-base;
+			border-color: $black-heading;
+			background-color: $black-heading;
 		}
 		&:active {
-			background-color: $teal-base;
+			background-color: $blue-base;
 		}
 	}
 }

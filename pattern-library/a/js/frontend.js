@@ -7,7 +7,15 @@ $(document).ready(function() {
 	$('html').removeClass('no-js').addClass('js');
 	$('.ui-forms').uiForms();
 	tabsInit();
+	removePattern();
 });
+removePattern = function() {
+	$(document).on('click', '.removable-trigger', function(){
+		$(this).closest('.removable').fadeOut('fast', function(){
+			$(this).remove();
+		});
+	});
+}
 tabsInit = function() {
 	updateMenu = function($tabsContext, tabID, updateSelect) {
 		$tabsContext.find('.tabs-menu li').not('[data-id="'+tabID+'"]').removeClass('active');
