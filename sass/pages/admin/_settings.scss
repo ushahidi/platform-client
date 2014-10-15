@@ -2,7 +2,7 @@
     CONTENTS
 \*------------------------------------*/
 /*
-* ADMIN SETTINGS...............admin settings styles
+* SITE SETTINGS...............admin settings styles
 */
 
 
@@ -10,13 +10,23 @@
 
 
 /*------------------------------------*\
-    $ADMIN SETTINGS
+    $SITE SETTINGS
 \*------------------------------------*/
 
 .container--settings {
     width: 100%;
     max-width: $max-width;
 }
+
+.site-settings-header {
+    @include header($blueGray);
+
+    .title {
+        color: $white;
+        margin-bottom: 0;
+    }
+}
+
 
 .admin-settings {
     @include span-columns(12);
