@@ -43,6 +43,11 @@
     "napa": "^0.4.1",
     "protractor": "^1.2.0",
     "vinyl-source-stream": "^0.1.1",
-    "watchify": "^1.0.1"
+    "watchify": "^1.0.1",
+    "gulp-rename": "~1.2.0"
+  },
+  "dependencies": {
+    "leaflet": "~0.7.3",
+    "angular-leaflet-directive": "~0.7.6"
   }
 }

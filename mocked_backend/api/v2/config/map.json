@@ -1,0 +1,17 @@
+{
+    "@group": "map",
+    "clustering": false,
+    "maxClusterRadius": 50,
+    "default_view": {
+        "baseLayer": "MapQuest",
+        "zoom": 2,
+        "lat": -1.3048035,
+        "lon": 36.8473969
+    },
+    "allowed_methods": {
+        "get": true,
+        "post": true,
+        "put": true,
+        "delete": true
+    }
+}

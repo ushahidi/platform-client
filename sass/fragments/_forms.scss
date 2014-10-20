@@ -1,0 +1,38 @@
+.form-helper-text {
+    font-size: 15px;
+    color: lighten($base-font-color, 15);
+}
+
+.input-with-icon {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 20px;
+
+    i {
+        position: absolute;
+        top: 1px;
+        bottom: 1px;
+        left: 1px;
+        color: $black;
+        border-right: 1px solid $lightGray;
+        background-color: $secondary-color;
+        padding: 9px 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"] {
+        padding-left: 45px;
+        margin-bottom: 0;
+    }
+}
+
+.toggle-switch {
+    margin-bottom: 20px;
+}
+
+input[type="radio"] {
+    float: left;
+    margin: 4px 10px 0 5px;
+}

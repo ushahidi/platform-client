@@ -69,6 +69,22 @@
 
 
 
+
+/*------------------------------------*\
+    $PLUGINS
+\*------------------------------------*/
+
+// the 'gulp rename' task is a workaround that duplicates the .css file and renames it to .scss, allowing us to essentially import vendor .css.
+
+// _leaflet.scss is imported via the 'node-modules include path' in gulpfile.js
+@import "leaflet";
+
+// Custom overrides
+@import "plugins/leaflet";
+
+
+
+
 /*------------------------------------*\
     $COMPONENTS
 \*------------------------------------*/
@@ -100,6 +116,18 @@
 
 
 
+
+/*------------------------------------*\
+    $FRAGMENTS
+\*------------------------------------*/
+// this is a test for PL implementation. This is a bit random, but will be implemented correctly in the future.
+@import "fragments/forms";
+
+
+
+
+
+
 /*------------------------------------*\
     $PAGES
 \*------------------------------------*/
@@ -115,6 +143,7 @@
 @import "pages/sets/add-to-set";
 // Admin
 @import "pages/admin/settings";
+@import "pages/admin/map-settings";
 // Signin
 @import "pages/signin/signin";
 // Tags

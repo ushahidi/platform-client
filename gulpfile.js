@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     autoprefixer = require('gulp-autoprefixer'),
     plumber = require('gulp-plumber'),
+    rename = require('gulp-rename'),
     gutil = require('gulp-util'),
     exec = require('child_process').exec,
     source = require('vinyl-source-stream'),
@@ -72,7 +73,7 @@ var helpers = {
  * Task: `sass`
  * Converts SASS files to CSS
  */
-gulp.task('sass', function() {
+gulp.task('sass', ['rename'], function() {
     gulp.src(['sass/style.scss'])
         .pipe(plumber({
             errorHandler: errorHandler
@@ -82,7 +83,8 @@ gulp.task('sass', function() {
                 'bower_components/bourbon/app/assets/stylesheets',
                 'bower_components/neat/app/assets/stylesheets',
                 'bower_components/refills/source/stylesheets',
-                'bower_components/font-awesome/scss'
+                'bower_components/font-awesome/scss',
+                'node_modules/leaflet/dist/'
             ],
             // using 'map' causes an error: https://github.com/sass/node-sass/issues/337
             sourceComments: 'normal'
@@ -90,6 +92,17 @@ gulp.task('sass', function() {
         .pipe(autoprefixer())
         .pipe(plumber.stop())
         .pipe(gulp.dest(options.www + '/css'));
+});
+
+
+/**
+ * Task: `sass`
+ * Converts SASS files to CSS
+ */
+gulp.task('rename', function() {
+  return gulp.src(['node_modules/leaflet/dist/leaflet.css'])
+  .pipe(rename('_leaflet.scss'))
+  .pipe(gulp.dest('node_modules/leaflet/dist/'));
 });
 
 /**

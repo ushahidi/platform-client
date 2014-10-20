@@ -1,0 +1,58 @@
+<div class="container  container--map-settings">
+    <div class="map-settings-header">
+        <h4 class="title">{{title}}</h4>
+    </div> <!-- end .map-settings-header -->
+
+    <div class="wrapper">
+        <div class="container">
+            <form>
+                <section class="map-settings-left-column">
+                    <label for="default-location">
+                        <h6>Default Location</h6>
+                    </label>
+                    <p class="form-helper-text">Drag map to refine location</p>
+
+                    <div class="input-with-icon">
+                        <span class="prefix"><i class="fa fa-map-marker"></i></span>
+                        <input ng-value="map.default_location" id="default-location" type="text" placeholder="Enter a default location" class="has-prefix  js-default-location">
+                    </div>
+
+                    <label for="cluster-reports">
+                        <h6>Cluster reports on map</h6>
+                    </label>
+                    <p class="form-helper-text">Combine nearby reports on the map</p>
+
+                    <div class="toggle-switch">
+                            <input id="cluster-reports-yes" name="clustering" type="radio" class="js-cluster-reports-input" value="1">
+                            <label for="cluster-reports-yes">Yes</label>
+
+                            <input id="cluster-reports-no" name="clustering" type="radio" checked="" class="js-cluster-reports-input" value="0">
+                            <label for="cluster-reports-no">No</label>
+                    </div>
+
+                    <label for="map-provider">
+                        <h6>Map Base Layer</h6>
+                    </label>
+                    <p class="form-helper-text">Select the default map base layer</p>
+
+                    <select name="baseLayer" class="select-map-provider  js-base-layer">
+                        <option value="MapQuest">MapQuest</option>
+                        <option value="MapQuest Aerial">MapQuest Aerial</option>
+                        <option value="Humanitarian OSM">Humanitarian OSM</option>
+                    </select>
+                </section>
+
+                <section ng-controller="adminMapSettings" class="map-settings-right-column">
+                    <leaflet defaults="defaults" markers="markers" height="365px" width="100%"></leaflet>
+
+                    <label id="slider-label">Default Zoom Level</label>
+                    <div class="range-slider">
+                        <input type = "range" min="0" max="100" aria-labelledby="slider-label" onchange="rangevalue.value=value"/>
+                        <output id="rangevalue">50</output>
+                    </div>
+                    <button type="submit">Save Settings</button>
+                </section>
+            </form>
+        </div>
+    </div> <!-- end .wrapper -->
+</div> <!-- end .container -->

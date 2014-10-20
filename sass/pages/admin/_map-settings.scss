@@ -1,0 +1,115 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+* MAP SETTINGS HEADER...............map settings styles
+* $MAP SETTINGS FORM - LEFT COLUMN...............
+* $MAP SETTINGS FORM - RIGHT COLUMN...............
+*/
+
+
+
+
+
+/*------------------------------------*\
+    $MAP SETTINGS HEADER
+\*------------------------------------*/
+
+.map-settings-header {
+    @include header($blueGray);
+
+    .title {
+        color: $white;
+        margin-bottom: 0;
+    }
+}
+
+
+
+
+
+/*------------------------------------*\
+    $MAP SETTINGS FORM - LEFT COLUMN
+\*------------------------------------*/
+
+.map-settings-left-column {
+    @include span-columns(12);
+
+    @include media($small) {
+        @include span-columns(4);
+    }
+}
+
+
+
+
+
+/*------------------------------------*\
+    $MAP SETTINGS FORM - RIGHT COLUMN
+\*------------------------------------*/
+
+.map-settings-right-column {
+    @include span-columns(12);
+
+    @include media($small) {
+        @include span-columns(8);
+        border-left: 1px solid $secondary-color;
+    }
+
+    button,
+    input[type="submit"] {
+        @include button($success-color);
+        float: right;
+        font-size: 100%;
+    }
+}
+
+/*------------------------------------*\
+    $RANGE SLIDER
+\*------------------------------------*/
+
+.range-slider {
+    width: 100%;
+    margin: 20px auto;
+}
+
+input[type="range"] {
+    -webkit-appearance: none !important; /*Needed to reset default slider styles */
+    width: 100%;
+    height: 20px;
+    background-color: darken($secondary-color, 5%);
+    border: 1px solid darken($secondary-color, 4%);
+    border-radius: 10px;
+    outline: 0 none !important;
+    margin: auto;
+    @include transition (all 0.3s ease);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 25px;
+    height: 25px;
+    background-color: $darkBlue;
+    border-radius: 30px;
+    box-shadow: 0px 0px 1px darken($darkBlue, 15%);
+    @include transition (all 0.5s ease);
+
+    &:hover {
+        background-color: darken($darkBlue, 10%);
+    }
+
+    &:active {
+        box-shadow: 0px 0px 1px darken($darkBlue, 15%);
+    }
+}
+
+#rangevalue {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    padding: 10px 0px;
+    width: 100%;
+    color: $base-font-color;
+}
