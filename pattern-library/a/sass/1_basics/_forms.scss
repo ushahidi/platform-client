@@ -168,18 +168,22 @@
 		.ui-select-selected {
 			float: left;
 			padding: 8px 10px;
+			strong {
+				color: $black-title;
+				font-weight: 600;
+			}
 		}
 		.ui-select-options {
 			position: absolute;
 			z-index: 2;
 			top: 115%;
-			right: 0;
 			left: 0;
 			@include equal-radius;
 			border: 1px solid $grey-border;
 			@include box-shadow;
 			background-color: $white-base;
 			li {
+				display: block;
 				padding: 0.5em 1em;
 				&.selected,
 				&:hover {

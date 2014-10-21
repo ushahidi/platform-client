@@ -1,9 +1,19 @@
 @include global {
 	.post-item {
+		@include clearfix;
 		.image-circle {
 			float: left;
 			width: 50px;
 			@include equal-radius(100%);
+		}
+		> input[type="checkbox"],
+		.ui-checkbox {
+			float: left;
+			+ .post-item-header,
+			+ .post-item-body {
+				padding-left: 20px;
+				margin-left: 1em;
+			}
 		}
 		.post-item-header,
 		.post-item-body {
@@ -27,11 +37,14 @@
 				text-align: right;
 				margin-top: 0.5em;
 			}
+			.post-item-meta {
+				margin-top: 0.5em;
+			}
 		}
-		.post-item-meta {
+		/*.post-item-meta {
 			padding-left: 50px;
 			margin-left: 1em;
-		}
+		}*/
 		.post-item-title {
 			margin-bottom: 0.5em;
 		}
@@ -54,11 +67,16 @@
 				float: right;
 			}
 		}
-		.post-item-meta {
-			float: right;
-			width: 150px;
-			padding-left: 0;
-			margin-left: 1em;
+		.post-item-body {
+			.post-item-title {
+				display: inline-block;
+			}
+			.post-item-meta {
+				float: right;
+				width: 150px;
+				margin-top: 0;
+				margin-left: 1em;
+			}
 		}
 	}
 }

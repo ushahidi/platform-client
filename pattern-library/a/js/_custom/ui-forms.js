@@ -49,7 +49,8 @@ $.fn.uiForms = function() {
 		// SELECT CONTROLS
 		} else if ($nativeControl.is('select')) {
 			$nativeControl.wrap('<div class="ui-select" />').before('<span class="fa fa-caret-down" /><div class="ui-select-selected" /><ul class="ui-select-options" />');
-			var $optionsTarget = $nativeControl.siblings('.ui-select-options');
+			var $optionsTarget = $nativeControl.siblings('.ui-select-options'),
+				label = $('label[for="'+$nativeControl.attr('name')+'"]').length ? '<strong>'+$('label[for="'+$nativeControl.attr('name')+'"]').text()+'</strong> ' : '';
 
 			$nativeControl.children('option').each(function(){
 				var optionLabel = $(this).text(),
@@ -59,9 +60,11 @@ $.fn.uiForms = function() {
 				$optionsTarget.append('<li data-id="'+optionIndex+'">'+optionLabel+'</li>');
 
 				if ($(this).is(':selected')) {
-					$nativeControl.siblings('.ui-select-selected').text(optionLabel);
+					$nativeControl.siblings('.ui-select-selected').html(label+optionLabel);
 				}
 			});
+
+			$('label[for="'+$nativeControl.attr('name')+'"]').hide();
 
 			$nativeControl.siblings().not($optionsTarget).on('click', function(){
 				$optionsTarget.fadeToggle('fast');
@@ -74,7 +77,7 @@ $.fn.uiForms = function() {
 				$optionsTarget.children('li').not($(this)).removeClass('selected');
 				$(this).addClass('selected');
 
-				$nativeControl.siblings('.ui-select-selected').text($(this).text());
+				$nativeControl.siblings('.ui-select-selected').html(label+$(this).text());
 				$optionsTarget.fadeOut('fast');
 			});
 		}

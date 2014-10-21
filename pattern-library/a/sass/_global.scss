@@ -177,12 +177,12 @@ $bk4: 1000px;
 		&:hover,
 		&:focus {
 			cursor: pointer;
+			color: $blue-text;
 		}
 	}
 
   img {
   	display: block;
-  	margin-bottom: 1em;
   	max-width: 100%;
   	a & {
   		border: none;

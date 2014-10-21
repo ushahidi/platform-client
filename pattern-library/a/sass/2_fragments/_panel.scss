@@ -19,18 +19,28 @@
 			padding: 5px;
 		}
 		.panel-header {
+			@include clearfix;
+			min-height: 40px;
 			@include radius($top-left: 3px, $top-right: 3px, $bottom-right: 0, $bottom-left: 0);
 			border: 1px solid $grey-border;
 			background-color: $grey-heading;
-			padding: 0.85em 1em;
+			padding: 0.5em 1em 0;
 			.panel-title {
 				display: inline-block;
 				color: $black-title;
+				margin-top: 8px;
 				margin-right: 6px;
 			}
 			.panel-total {
 				position: relative;
 				top: -2px;
+			}
+			.form-field-bar {
+				float: right;
+				.ui-select,
+				input {
+					margin-bottom: 0.5em;
+				}
 			}
 		}
 		.panel-body {
@@ -41,6 +51,7 @@
 		.panel-footer {
 			@include radius($top-left: 0, $top-right: 0, $bottom-right: 3px, $bottom-left: 3px);
 			border: 1px solid $grey-border;
+			text-align: center;
 			background-color: $grey-heading;
 			padding: 0.85em 1em;
 		}

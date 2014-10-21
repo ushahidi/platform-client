@@ -129,8 +129,10 @@
 		.ui-select {
 			float: left;
 			margin-right: 1em;
+			margin-bottom: 1em;
 			&:last-child {
 				margin-right: 0;
+				margin-bottom: 0;
 			}
 		}
 	}

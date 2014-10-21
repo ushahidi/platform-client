@@ -6,7 +6,7 @@
 <!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Pattern Library ~ The Ushahidi Platform</title>
+	<title>Fragments ~ The Ushahidi Platform</title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,17 @@
 <body>
 	<header class="pl-header">
 		<h1>Fragments</h1>
-		<h2>Pattern Library</h2>
+
+		<nav class="pl-navigation">
+			<ul>
+				<li class="home"><a href="/"><i class="fa fa-home"></i> Pattern Library</a></li>
+				<li><a href="/1_basics/">Basics</a></li>
+				<li class="active">Fragments</li>
+				<li><a href="/3_modules/">Modules</a></li>
+				<li><a href="/4_blocks/">Blocks</a></li>
+				<li><a href="/5_layouts/">Layouts</a></li>
+			</ul>
+		</nav>
 	</header>
 
 	<div class="pl-body">
@@ -468,15 +478,15 @@
 			<div class="pl-pattern-code">
 				<article class="post-item">
 					<img src="http://placehold.it/100x100" class="image-circle" />
-					<div class="post-item-meta">
-						<ul class="metadata">
-							<li><i class="fa fa-clock-o"></i>15:27</li>
-							<li><a href="#"><i class="fa fa-map-marker"></i>City, Country</a></li>
-							<li class="destruct"><a href="#"><i class="fa fa-times-circle"></i>Remove post</a></li>
-						</ul>
-					</div>
 					<div class="post-item-body">
 						<h1 class="post-item-title"><a href="#">Post headline goes here</a></h1>
+						<div class="post-item-meta">
+							<ul class="metadata">
+								<li><i class="fa fa-clock-o"></i>15:27</li>
+								<li><a href="#"><i class="fa fa-map-marker"></i>City, Country</a></li>
+								<li class="destruct"><a href="#"><i class="fa fa-times-circle"></i>Remove post</a></li>
+							</ul>
+						</div>
 						<div class="post-item-description">
 							<p>Suspendisse in auctor turpis, vitae blandit lectus. Aliquam erat volutpat. Vestibulum justo velit, sollicitudin id orci ut, finibus commodo ante.</p>
 						</div>
@@ -497,6 +507,31 @@
 						<div class="form-field-bar">
 							<input type="file" />
 							<button type="submit">Send</button>
+						</div>
+					</div>
+				</article>
+			</div>
+		</article>
+
+		<article class="pl-pattern">
+			<div class="pl-pattern-docs">
+				<h1 class="pl-pattern-title">Post Item, with checkbox</h1>
+			</div>
+			<div class="pl-pattern-code">
+				<article class="post-item">
+					<input type="checkbox" class="ui-forms" />
+					<div class="post-item-body">
+						<h1 class="post-item-title"><a href="#">Post headline goes here</a></h1>
+						<div class="post-item-meta">
+							<ul class="metadata">
+								<li>@digitalafrican</li>
+								<li><i class="fa fa-clock-o"></i>15:27</li>
+								<li><a href="#"><i class="fa fa-map-marker"></i>City, Country</a></li>
+								<li><i class="fa fa-file-o"></i>Unpublished</a></li>
+							</ul>
+						</div>
+						<div class="post-item-description">
+							<p>Suspendisse in auctor turpis, vitae blandit lectus. Aliquam erat volutpat. Vestibulum justo velit, sollicitudin id orci ut, finibus commodo ante.</p>
 						</div>
 					</div>
 				</article>

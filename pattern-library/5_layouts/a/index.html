@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>Layout A ~ The Ushahidi Platform</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="shortcut icon" type="image/ico" href="/a/favicon.ico" />
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/a/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<header class="global-header"></header>
+
+	<nav class="public-navigation"></nav>
+
+	<div role="main" class="layout-a">
+		<div class="title-bar">
+			<strong class="title-bar-title"><i class="fa fa-th"></i>My Sets</strong>
+			<div class="title-bar-form input-with-button">
+				<input type="text" placeholder="Find set" />
+				<button class="fa fa-search"></button>
+			</div>
+		</div>
+
+		<div class="layout-body">
+			<div class="panel">
+				<div class="panel-header">
+					<h2 class="panel-title">Posts in this Set</h2>
+					<span class="panel-total">13</span>
+					<form class="form-field-bar">
+						<label for="sort">Sort by</label>
+						<select name="sort" class="ui-forms">
+							<option>Created</option>
+							<option>Updated</option>
+							<option>Title A-Z</option>
+							<option>ID</option>
+						</select>
+
+						<label for="view">View</label>
+						<select name="view" class="ui-forms">
+							<option>8</option>
+							<option>16</option>
+							<option>32</option>
+						</select>
+					</form>
+				</div>
+				<div class="panel-body">
+					<div class="post-listing">
+						<article class="post-item">
+							<img src="http://placehold.it/100x100" class="image-circle" />
+							<div class="post-item-body">
+								<h1 class="post-item-title"><a href="#">Post headline goes here</a></h1>
+								<div class="post-item-meta">
+									<ul class="metadata">
+										<li><i class="fa fa-clock-o"></i>15:27</li>
+										<li><a href="#"><i class="fa fa-map-marker"></i>City, Country</a></li>
+										<li class="destruct"><a href="#"><i class="fa fa-times-circle"></i>Remove post</a></li>
+									</ul>
+								</div>
+								<div class="post-item-description">
+									<p>Suspendisse in auctor turpis, vitae blandit lectus. Aliquam erat volutpat. Vestibulum justo velit, sollicitudin id orci ut, finibus commodo ante.</p>
+								</div>
+							</div>
+						</article>
+
+						<article class="post-item">
+							<img src="http://placehold.it/100x100" class="image-circle" />
+							<div class="post-item-body">
+								<h1 class="post-item-title"><a href="#">Post headline goes here</a></h1>
+								<div class="post-item-meta">
+									<ul class="metadata">
+										<li><i class="fa fa-clock-o"></i>15:27</li>
+										<li><a href="#"><i class="fa fa-map-marker"></i>City, Country</a></li>
+										<li class="destruct"><a href="#"><i class="fa fa-times-circle"></i>Remove post</a></li>
+									</ul>
+								</div>
+								<div class="post-item-description">
+									<p>Suspendisse in auctor turpis, vitae blandit lectus. Aliquam erat volutpat. Vestibulum justo velit, sollicitudin id orci ut, finibus commodo ante.</p>
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<nav class="pagination">
+						<ul>
+							<li class="prev">&laquo;</li>
+							<li class="active">1</li>
+							<li>2</li>
+							<li>3</li>
+							<li>4</li>
+							<li>5</li>
+							<li>6</li>
+							<li class="next">&raquo;</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav class="workspace-navigation"></nav>
+
+	<script src="/a/js/frontend.js"></script>
+</body>
+
+</html>

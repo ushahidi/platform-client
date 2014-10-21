@@ -23,7 +23,6 @@
 	.system-message {
 		@include equal-radius;
 		color: $blue-text;
-		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 		border: 1px solid $blue-border;
 		background-color: $blue-heading;
 		padding: 1em;
@@ -79,7 +78,6 @@
 	.pagination {
 		display: inline-block;
 		font-weight: 500;
-		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 		text-align: center;
 		@include equal-radius;
 		border: 1px solid $grey-border;
