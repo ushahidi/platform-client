@@ -100,6 +100,9 @@
 	}
 
 	.global-header-mast {
+		img {
+			width: 100%;
+		}
 		.global-header-description {
 			@include typeBase;
 			font-size: 15px;
@@ -217,7 +220,6 @@
 		.global-header-menu,
 		.global-header-drawer {
 			width: 23.9583333%;
-			margin-top: -1px;
 		}
 
 		.global-header-menu {
@@ -233,7 +235,7 @@
 	}
 }
 
-@include respond-min(850px) {
+@include respond-min(900px) {
 	.global-header {
 		.global-header-user_actions {
 			li a {padding: 10px;}
@@ -255,7 +257,16 @@
 			display: block;
 			border: none;
 			@include no-shadow;
-			background-color: $white-base;
+			background-color: transparent;
+		}
+	}
+}
+
+@include respond-min(1200px) {
+	.global-header {
+		.global-header-menu,
+		.global-header-drawer {
+			width: 280px;
 		}
 	}
 }
