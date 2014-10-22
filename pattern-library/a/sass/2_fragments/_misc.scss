@@ -1,6 +1,7 @@
 @include global {
 	.title-bar {
 		@include clearfix;
+		@include equal-radius;
 		background-color: $blue-base;
 		padding: 1em;
 		.title-bar-title {
@@ -146,6 +147,18 @@
 				content: '';
 				display: block;
 				margin-bottom: 0.5em;
+			}
+		}
+	}
+
+	.toggle {
+		position: relative;
+		.toggle-trigger {
+			position: absolute;
+			top: 0;
+			right: 0;
+			&:hover {
+				cursor: pointer;
 			}
 		}
 	}

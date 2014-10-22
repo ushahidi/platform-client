@@ -24,7 +24,7 @@ $print: false !default;
 @import "3_modules/listing";
 
 /* -- Blocks -- */
-// @import "4_blocks/menu";
+@import "4_blocks/global-header";
 
 /* -- Layouts -- */
 @import "5_layouts/general";

@@ -125,15 +125,32 @@
 	.pl-navigation {
 		li {
 			display: inline-block;
+			position: relative;
 			margin-top: 0.5em;
-			margin-right: 1em;
+			margin-right: 2em;
 			margin-bottom: 0;
 			margin-left: 0;
-			&.home:after {
-				content: ':';
+			&:after {
+				content: '\00BB';
+				position: absolute;
+				right: -20px;
 				color: $blue-link;
-				font-weight: 600;
-				margin-left: 2px;
+			}
+			&:last-child {
+				margin-right: 0;
+				&:after {
+					content: none;
+				}
+			}
+			&.home {
+				margin-right: 1em;
+				&:after {
+					content: ':';
+					position: static;
+					color: $blue-link;
+					font-weight: 600;
+					margin-left: 2px;
+				}
 			}
 			&.active {
 				border-bottom: 2px solid $white-base;
