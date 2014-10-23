@@ -9,6 +9,9 @@
 
 @include respond-min($bk3) {
 	[role="main"] {
+		padding-right: 1.0416667%;
+		padding-left: 70px;
+		margin-top: 60px;
 		> .title-bar {
 			margin: 1.0416667%;
 		}
@@ -36,7 +39,6 @@
 
 @include respond-min($bk4) {
 	[role="main"] {
-		padding-right: 1.0416667%;
 		padding-left: 25%;
 		margin-top: 70px;
 	}

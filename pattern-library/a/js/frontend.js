@@ -7,8 +7,25 @@ $(document).ready(function() {
 	$('html').removeClass('no-js').addClass('js');
 	$('.ui-forms').uiForms();
 	tabsInit();
+	toggleInit();
 	removePattern();
+	drawerInit();
 });
+drawerInit = function() {
+	$('.drawer-trigger').on('click', function(e){
+		if ($(this).attr('data-target') == 'menu') {
+			$('.global-header-menu').fadeToggle('fast', function(){
+				$(this).toggleClass('visible');
+			});
+		} else if ($(this).attr('data-target') == 'workspace') {
+			$('.global-header-drawer').fadeToggle('fast', function(){
+				$(this).toggleClass('visible');
+			});
+		}
+		$(this).toggleClass('active');
+		e.preventDefault();
+	});
+}
 removePattern = function() {
 	$(document).on('click', '.removable-trigger', function(){
 		$(this).closest('.removable').fadeOut('fast', function(){
@@ -104,6 +121,33 @@ tabsInit = function() {
 			$tabsContext = $(this).closest('.tabs');
 
 		updateMenu($tabsContext, tabID);
+	});
+}
+toggleInit = function(selector) {
+	var elem = selector !== undefined ? selector : '.toggle';
+
+	$(elem).each(function(){
+		var $toggleContext = $(this),
+			$toggleTrigger = $toggleContext.find('.toggle-trigger'),
+			$toggleTarget = $toggleContext.find('.toggle-target');
+
+		if ($toggleContext.attr('data-toggle-type') == 'text') {
+			$toggleTrigger.append('<span class="show">Show</span><span class="hide">Hide</span>');
+		} else if ($toggleContext.attr('data-toggle-type') == 'cross')  {
+			$toggleTrigger.prepend('<i>&#43;</i>');
+		}
+
+		if ($toggleContext.attr('data-toggle') == 'closed') {
+			$toggleContext.addClass('closed');
+			$toggleTarget.hide();
+		}
+
+		$toggleTrigger.on('click', function(e){
+			$toggleContext.toggleClass('closed');
+			$toggleTarget.slideToggle('fast');
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		});
 	});
 }
 $.fn.uiForms = function() {

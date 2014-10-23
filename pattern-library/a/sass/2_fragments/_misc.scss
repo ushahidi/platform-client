@@ -154,11 +154,23 @@
 	.toggle {
 		position: relative;
 		.toggle-trigger {
-			position: absolute;
-			top: 0;
-			right: 0;
-			&:hover {
-				cursor: pointer;
+			.show,
+			.hide {
+				position: absolute;
+				top: 0;
+				right: 0;
+				&:hover {
+					cursor: pointer;
+				}
+				&.show {
+					display: none;
+				}
+			}
+		}
+		&.closed {
+			.toggle-trigger {
+				.show {display: inline-block;}
+				.hide {display: none;}
 			}
 		}
 	}
