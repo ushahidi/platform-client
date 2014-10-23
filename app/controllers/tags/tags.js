@@ -1,4 +1,8 @@
-module.exports = ['$scope', 'TagEndpoint', function($scope, TagEndpoint) {
-        $scope.title = 'Manage Tags';
-        $scope.tags = TagEndpoint.query();
+module.exports = ['$scope', '$translate', 'TagEndpoint', function($scope, $translate, TagEndpoint) {
+
+    $translate('tag.manage_tags').then(function(manageTagsTranslation){
+        $scope.title = manageTagsTranslation;
+    });
+
+    $scope.tags = TagEndpoint.query();
 }];

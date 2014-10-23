@@ -18,18 +18,18 @@
                     </a>
                     <div class="nav">
                         <ul class="navigation-menu">
-                            <li class="nav-link  views  js-views-subnav--link" ng-click="toggle('viewsMenu')"><a href="javascript:void(0)"><i class="fa  fa-eye"></i><span>Views</span></a></li>
-                            <li class="nav-link  sets"><a href="javascript:void(0)"><i class="fa  fa-th-large"></i><span>Sets</span></a></li>
+                            <li class="nav-link  views  js-views-subnav--link" ng-click="toggle('viewsMenu')"><a href="javascript:void(0)"><i class="fa  fa-eye"></i><span translate>nav.views</span></a></li>
+                            <li class="nav-link  sets"><a href="javascript:void(0)"><i class="fa  fa-th-large"></i><span translate>nav.sets</span></a></li>
                         </ul><!-- end .navigation-menu -->
 
                         <ul class="navigation-tools">
                             <signin-signout-button signedin="signedin" signout-click="signoutClick()"></signin-signout-button>
-                            <li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span>Create</span></a></li>
-                            <li class="nav-link  workspace-panel-button  js-menu-trigger" ng-click="toggle('workspaceMenu')"><a href="javascript:void(0)"><i class="fa  fa-dashboard"></i><span>Workspace</span></a></li>
+                            <li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span translate>nav.create</span></a></li>
+                            <li class="nav-link  workspace-panel-button  js-menu-trigger" ng-click="toggle('workspaceMenu')"><a href="javascript:void(0)"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
 
                             <nav class="js-menu  sliding-menu-content" ng-class="{ 'is-visible': workspaceMenu }">
 
-                                <h1 class="visually-hidden">Workspace</h1>
+                                <h1 class="visually-hidden" translate>nav.workspace</h1>
 
                                 <div class="workspace-profile">
                                     <div id="workspace-avatar" class="workspace-avatar">
@@ -42,8 +42,8 @@
                                         <p id="workspace-role" class="workspace-role" >Admin</p>
 
                                         <ul class="workspace-admin-list">
-                                            <li class="workspace-admin-list__item"><a href="#" id="edit-profile" class="edit-profile js-edit-profile">Edit Profile</a></li>
-                                            <li class="workspace-admin-list__item"><a href="user/logout" id="logout" class="logout  js-logout" >Logout</a></li>
+                                            <li class="workspace-admin-list__item"><a href="#" id="edit-profile" class="edit-profile js-edit-profile" translate>user.edit_profile</a></li>
+                                            <li class="workspace-admin-list__item"><a href="user/logout" id="logout" class="logout  js-logout" translate>user.logout</a></li>
                                         </ul>
                                     </div> <!-- end .workspace-admin -->
                                 </div> <!-- end .workspace-profile -->
@@ -52,47 +52,48 @@
                                     <ul class="workspace-stats-list">
                                         <li id="posts-stats" class="stat-card">
                                             <h6 id="posts-stats-value"  class="header">181</h6>
-                                            <p>posts</p>
+                                            <p translate>workspace.posts</p>
                                         </li>
                                         <li id="users-stats" class="stat-card">
                                             <h6 id="users-stats-value"  class="header">5</h6>
-                                            <p>users</p>
+                                            <p translate>workspace.users</p>
                                         </li>
                                         <li id="tags-stats" class="stat-card">
                                             <h6 id="tags-stats-value"  class="header">6</h6>
-                                            <p>tags</p>
+                                            <p translate>workspace.tags</p>
                                         </li>
                                     </ul>
                                 </div> <!-- end .workspace-stats-wrapper -->
 
                                 <div ng-controller="workspaceAccordion">
                                     <accordion>
-                                        <accordion-group heading="Posts" is-open="status.isFirstOpen">
+                                        <accordion-group heading="{{'workspace.accordion.posts' | translate }}" is-open="status.isFirstOpen">
                                             <ul>
                                                 <li>
-                                                    <a href="/posts/detail"><i class="fa  fa-th-list"></i>Post Detail</a>
+                                                    <a href="/posts/detail" translate><i class="fa  fa-th-list"></i>post.post_details</a>
                                                 </li>
                                             </ul>
                                         </accordion-group>
-                                        <accordion-group heading="Settings">
+                                        <accordion-group heading="{{'workspace.accordion.settings' | translate }}">
                                             <ul>
                                                 <li>
-                                                    <a href="/settings" class="js-accordion-trigger"><i class="fa  fa-cogs"></i>Site Settings</a>
+                                                    <a href="/settings" class="js-accordion-trigger" translate><i class="fa  fa-cogs"></i>tool.site_settings</a>
                                                 </li>
                                                 <li>
                                                     <a href="/map-settings" class="js-accordion-trigger"><i class="fa  fa-cogs"></i>Map Settings</a>
                                                 </li>
                                             </ul>
                                         </accordion-group>
-                                        <accordion-group heading="Tools">
+                                        <accordion-group heading="{{'workspace.accordion.tools' | translate }}">
                                             <ul>
                                                 <li>
-                                                    <a href="/users" class="js-accordion-trigger"><i class="fa  fa-group"></i>Manage Users</a>
+                                                    <a href="/users" class="js-accordion-trigger" translate><i class="fa  fa-group"></i>tool.manage_users</a>
                                                 </li>
                                             </ul>
                                             <ul>
                                                 <li>
-                                                    <a href="/tags" class="js-accordion-trigger"><i class="fa  fa-tags"></i>Manage Tags</a>
+                                                    <a href="/tags" class="js-accordion-trigger" translate><i class="fa  fa-tags"></i>tool.manage_tags</a>
+
                                                 </li>
                                             </ul>
                                         </accordion-group>
@@ -109,10 +110,10 @@
 
             <nav role="sub-navigation" class="js-views-subnav" ng-class="{ 'active': viewsMenu }">
                 <ul class="subnav-list">
-                    <li class="subnav-list__item  views-full  active" data-view="full"><a href="/views/full">Full</a></li>
-                    <li class="subnav-list__item  views-map" data-view="map"><a href="/views/map">Map</a></li>
-                    <li class="subnav-list__item  views-list" data-view="list"><a href="/views/list">List</a></li>
-                    <li class="subnav-list__item  views-media" data-view="media"><a href="/views/media">Media</a></li>
+                    <li class="subnav-list__item  views-full  active" data-view="full"><a href="/views/full" translate>views-subnav.full</a></li>
+                    <li class="subnav-list__item  views-map" data-view="map"><a href="/views/map" translate>views-subnav.map</a></li>
+                    <li class="subnav-list__item  views-list" data-view="list"><a href="/views/list" translate>views-subnav.list</a></li>
+                    <li class="subnav-list__item  views-media" data-view="media"><a href="/views/media" translate>views-subnav.media</a></li>
                 </ul>
             </nav>
         </div>

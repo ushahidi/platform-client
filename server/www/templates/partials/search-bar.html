@@ -4,14 +4,14 @@
         <div class="container">
 
             <ul class="tabset" collapsible>
-                <span class="search-title">Search</span>
+                <span class="search-title" translate>nav.search</span>
 
                 <li class="tab  location-select">
-                    <a href="#" class="tab-heading">Location <i class="fa  fa-map-marker"></i></a>
+                    <a href="#" class="tab-heading" translate>search.nav.location<i class="fa  fa-map-marker"></i></a>
                     <div class="tab-content">
                         <div class="search-tools">
                             <div class="filter">
-                                <label>Select a location</label>
+                                <label translate>search.location.select_a_location</label>
                             </div>
                             <ol>
                                 <li>
@@ -32,11 +32,11 @@
                 </li> <!-- end .location-select -->
 
                 <li class="tab  tags-select">
-                    <a href="#" class="tab-heading">Tags <i class="fa  fa-tags"></i></a>
+                    <a href="#" class="tab-heading" translate>search.nav.tags<i class="fa  fa-tags"></i></a>
                     <div class="tab-content">
                         <div class="search-tools">
                             <div class="filter">
-                                <label>Select tags</label>
+                                <label translate>search.tags.select_tags</label>
                             </div>
                             <ol>
                                 <li>
@@ -57,19 +57,19 @@
                 </li> <!-- end .tags-select -->
 
                 <li class="tab  date-select">
-                    <a href="#" class="tab-heading">Date <i class="fa  fa-calendar"></i></a>
+                    <a href="#" class="tab-heading" translate>search.nav.date<i class="fa  fa-calendar"></i></a>
                     <div class="tab-content">
                         <div class="search-tools">
-                            <label>Select a start and end time</label>
+                            <label translate>search.date.select_start_and_end_date</label>
                             <ol>
                                 <div class="wrapper">
-                                    <input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="From" value="">
+                                    <input type="text" id="time-from" class="search-field  time-from  js-search-time-from" placeholder="{{'search.date.from' | translate }}" value="">
                                     <i class="fa  fa-calendar"></i>
                                 </div>
 
-                                <label class="visually-hidden" for="time-to">Until Time</label>
+                                <label class="visually-hidden" for="time-to" translate>search.date.until_time</label>
                                 <div class="wrapper">
-                                    <input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="To" value="">
+                                    <input type="text" id="time-to" class="search-field  time-to  js-search-time-to" placeholder="{{'search.date.to' | translate }}" value="">
                                     <i class="fa  fa-calendar"></i>
                                 </div>
                             </ol>
@@ -78,15 +78,15 @@
                 </li> <!-- end .date-select -->
 
                 <li class="tab  keyword-field">
-                    <a href="#" class="tab-heading">Keyword <i class="fa  fa-search"></i></a>
+                    <a href="#" class="tab-heading" translate>search.nav.keyword <i class="fa  fa-search"></i></a>
                     <div class="tab-content">
                         <div class="search-tools">
-                            <label>Enter a keyword to search</label>
+                            <label translate>search.keyword.enter_keyword</label>
                             <div class="search-bar">
                                 <div class="search-and-submit">
-                                    <label id="search-label" class="visually-hidden" for="search-field">Search</label>
-                                    <input type="search" placeholder="Keyword Search" />
-                                    <button type="submit">Search</button>
+                                    <label id="search-label" class="visually-hidden" for="search-field" translate>search.keyword.search</label>
+                                    <input type="search" placeholder="{{'search.keyword.keyword_search' | translate}}" />
+                                    <button type="submit" translate>search.keyword.search</button>
                                 </div>
                             </div> <!-- end .search-bar -->
                         </div> <!-- end .search-tools -->

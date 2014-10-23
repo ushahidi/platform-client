@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "leaflet": "~0.7.3",
-    "angular-leaflet-directive": "~0.7.6"
+    "angular-leaflet-directive": "~0.7.6",
+    "angular-translate": "^2.4.1"
   }
 }

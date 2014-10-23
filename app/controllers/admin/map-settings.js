@@ -1,5 +1,8 @@
-module.exports = ['$scope', 'ConfigMapEndpoint', 'PostEndpoint', function($scope, ConfigMapEndpoint, PostEndpoint) {
-    $scope.title = 'Admin: Map Settings';
+module.exports = ['$scope', '$translate', 'ConfigMapEndpoint', 'PostEndpoint', function($scope, $translate, ConfigMapEndpoint, PostEndpoint) {
+
+    $translate('map_settings.admin_map_settings').then(function(mapSettingsTranslation){
+        $scope.title = mapSettingsTranslation;
+    });
 
     angular.extend($scope, {
         defaults: {

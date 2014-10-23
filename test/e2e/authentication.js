@@ -21,7 +21,7 @@ describe('authentication:', function() {
 
         it('should exist and have the correct text', function(){
             expect(signinLink.isDisplayed()).toBe(true);
-            expect(signinLink.getText()).toBe('Sign in');
+            expect(signinLink.getText()).toBe('Login');
         });
 
         describe('clicking the signin link', function(){

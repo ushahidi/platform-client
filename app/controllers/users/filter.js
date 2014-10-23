@@ -1,6 +1,6 @@
 module.exports = ['$scope', function($scope) {
 
-        $scope.selected = 'All';
+        $scope.selected = 'all';
 
         $scope.select= function(item) {
             $scope.selected = item;
@@ -10,6 +10,6 @@ module.exports = ['$scope', function($scope) {
             return $scope.selected === item;
         };
 
-        $scope.tabs = ['All', 'Admin', 'Member', 'Guest'];
+        $scope.tabs = ['all', 'admin', 'member', 'guest'];
 
 }];

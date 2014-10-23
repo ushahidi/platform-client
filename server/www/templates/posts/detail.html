@@ -6,8 +6,8 @@
 
             <div class="post-nav-wrapper">
                 <ul class="post-nav-list">
-                    <li class="post-nav-list__item  post-nav-prev"><a class="post-nav-button  js-post-prev"><i class="fa  fa-lg  fa-arrow-left"></i> Prev</a></li>
-                    <li class="post-nav-list__item  post-nav-next"><a class="post-nav-button  js-post-next">Next <i class="fa  fa-lg  fa-arrow-right"></i></a></li>
+                    <li class="post-nav-list__item  post-nav-prev"><a class="post-nav-button  js-post-prev" translate><i class="fa  fa-lg  fa-arrow-left"></i>nav.prev</a></li>
+                    <li class="post-nav-list__item  post-nav-next"><a class="post-nav-button  js-post-next" translate>nav.next<i class="fa  fa-lg  fa-arrow-right"></i></a></li>
                 </ul><!-- end .post-nav-list -->
             </div> <!-- end .post-nav-wrapper -->
 
@@ -25,23 +25,23 @@
 
                     <div class="post-values">
                         <ul class="post-values-list">
-                            <li class="post-values-list__item"><i class="fa  fa-map-marker"></i> <span>Location</span>
+                            <li class="post-values-list__item"><i class="fa  fa-map-marker"></i> <span translate>post.location</span>
                                 <a href="#">38.410558, -76728516</a>
                                 <a href="#">38.410558, -76728516</a>
                             </li>
-                            <li class="post-values-list__item"><i class="fa  fa-tags"></i> <span>Tags</span>
+                            <li class="post-values-list__item"><i class="fa  fa-tags"></i> <span translate>post.tags</span>
                                 <!-- TODO: rename class -->
                                 <span class="badge--tag1">tag #1</span>
                                 <span class="badge--tag2">tag #2</span>
                             </li>
-                            <li class="post-values-list__item"><i class="fa  fa-globe"></i> <span>Geometry Test</span>
-                                <a href="#">View on Map</a>
+                            <li class="post-values-list__item"><i class="fa  fa-globe"></i> <span translate>post.geometry_test</span>
+                                <a href="#" translate>post.view_on_map</a>
                             </li>
-                            <li class="post-values-list__item"><i class="fa  fa-spinner"></i> <span>Status</span>
+                            <li class="post-values-list__item"><i class="fa  fa-spinner"></i> <span translate>post.status</span>
                                 <span class="badge--unpublished">unpublished</span>
                                 <span class="badge--private">private</span>
                             </li>
-                            <li class="post-values-list__item"><i class="fa  fa-link"></i> <span>Links</span>
+                            <li class="post-values-list__item"><i class="fa  fa-link"></i> <span translate>post.links</span>
                                 <a href="#">ushahidi.com</a>
                                 <a href="#">brck.com</a>
                             </li>
@@ -55,24 +55,24 @@
                 </div> <!-- end .post-image -->
 
                 <div class="post-meta">
-                    <h6><i class="fa  fa-list"></i> Post Details</h6>
+                    <h6 translate><i class="fa  fa-list"></i>post.details.post_details</h6>
                     <div class="post-meta-author">
                         <p><i class="fa  fa-user"></i><span><a href="#users/{{user.id}}"></a> Anonymous</span></p>
                     </div> <!-- end .post-author -->
 
                     <div class="post-meta-time">
-                        <p><i class="fa  fa-clock-o"></i><span class="post-time"> 10 months ago</span></p>
+                        <p><i class="fa  fa-clock-o"></i><span class="post-time" translate translate-value-time="10 months">post.details.time_ago</span></p>
                     </div> <!-- end .post-time-meta -->
 
                     <div class="post-meta-published-status">
-                            <p><i class="fa  fa-file-o"></i><span class="post-time" > Published</span></p>
+                            <p><i class="fa  fa-file-o"></i><span class="post-time" translate>post.published</span></p>
                     </div> <!-- end .post-published-status -->
                 </div> <!-- end .post-meta -->
 
 
 
             <div class="post-thumbnails-wrapper">
-                <p class="click-to-zoom"><small><i class="fa  fa-search-plus"></i> click images to zoom</small></p>
+                <p class="click-to-zoom"><small translate><i class="fa  fa-search-plus"></i>nav.click_images_to_zoom</small></p>
                 <ul class="post-thumbnails-list  js-lightbox-gallery">
                     <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb.jpg" alt=""></a></li>
                     <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb2.jpg" alt=""></a></li>
@@ -87,8 +87,8 @@
         <div class="post-footer">
             <ul class="post-actions-list">
                 <li class="post-actions-list__item">
-                    <div class="post-respond  js-post-respond" ng-model="toggle" ng-click="toggle=!toggle">
-                        <i class="fa  fa-mail-reply"></i>Respond
+                    <div class="post-respond  js-post-respond" ng-model="toggle" ng-click="toggle=!toggle" translate>
+                        <i class="fa  fa-mail-reply"></i>post.respond
                     </div>
                 </li>
 
@@ -96,22 +96,22 @@
                     <div class="list-view-actions">
                         <div class="dropdown">
                             <div class="dropdown-container">
-                                <p class="dropdown-toggle">Post Actions</p>
+                                <p class="dropdown-toggle" translate>post.post_actions.post_actions</p>
                                 <ul class="dropdown-menu  list-view-actions-list">
                                     <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+                                        <a href="#" class="post-edit  js-post-edit" translate> <i class="fa  fa-edit"></i>post.post_actions.edit</a>
                                     </li>
                                     <li class="list-view-actions-list__item">
-                                        <a href="/posts/add-to-set" class="post-add-to-set  js-post-set"> <i class="fa  fa-plus-circle"></i> set</a>
+                                        <a href="/posts/add-to-set" class="post-add-to-set  js-post-set" translate> <i class="fa  fa-plus-circle"></i>post.post_actions.set</a>
                                     </li>
                                     <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-unpublish  js-post-unpublish"> <i class="fa  fa-file"></i> unpublish</a>
+                                        <a href="#" class="post-unpublish  js-post-unpublish" translate> <i class="fa  fa-file"></i>post.post_actions.unpublish</a>
                                     </li>
                                     <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-publish  js-post-publish"> <i class="fa  fa-file-o"></i> publish</a>
+                                        <a href="#" class="post-publish  js-post-publish" translate> <i class="fa  fa-file-o"></i>post.post_actions.publish</a>
                                     </li>
                                     <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+                                        <a href="#" class="post-delete  js-post-delete" translate> <i class="fa  fa-trash-o"></i>post.post_actions.delete</a>
                                     </li>
                                 </ul> <!-- end .dropdown-menu .list-view-edit -->
                             </div> <!-- end .dropdown-container -->
@@ -125,14 +125,14 @@
 
         <div class="post-actions-message-panel" ng-show="toggle">
             <textarea placeholder="Please type your message here ..." name="Name" rows="8" cols="40"></textarea>
-            <button type="submit" class="post-actions-submit-button  js-post-actions-submit-button">Send</button>
+            <button type="submit" class="post-actions-submit-button  js-post-actions-submit-button" translate>post.send</button>
         </div> <!-- end .respond-message-box -->
 
     </div> <!-- end .main -->
 
     <div class="sidebar  sidebar--page-detail">
         <div class="sidebar-header">
-            <h5><div class="related-post-count">7</div> posts with same tags</h5>
+            <h5><div class="related-post-count">7</div> {{'post.posts_with_same_tags' | translate }}</h5>
         </div> <!-- end .sidebar-header -->
 
         <div class="sidebar-body">
@@ -209,7 +209,7 @@
                 </div> <!-- end .related-post-details -->
             </div> <!-- end .related-post -->
 
-            <div class="more"><span>more</span></div>
+            <div class="more"><span translate>post.more</span></div>
         </div> <!-- end .sidebar-body -->
     </div> <!-- end .sidebar -->
 </div> <!-- end .container -->

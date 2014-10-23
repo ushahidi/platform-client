@@ -6,19 +6,19 @@
         <div class="tag-actions">
             <div class="dropdown">
                 <div class="dropdown-container">
-                    <p class="dropdown-toggle">Tag Actions</p>
+                    <p class="dropdown-toggle" translate>tag.tag_actions</p>
                     <ul class="dropdown-menu  list-view-actions-list">
                         <li class="list-view-actions-list__item">
                             <a href="#" class="js-select-all">
                                 <span>Select All</span>
-                                <span class="visually-hidden">Unselect All</span>
+                                <span class="visually-hidden" translate>tag.unselect_all</span>
                             </a>
                         </li>
                         <li class="list-view-actions-list__item">
-                            <a href="#" class="js-user-create"><i class="fa  fa-tag"></i>Add Tag</li>
+                            <a href="#" class="js-user-create" translate><i class="fa  fa-tag"></i>tag.add_tag</li>
                         </li>
                         <li class="list-view-actions-list__item  js-bulk-action  disabled">
-                            <a href="#" class="js-user-bulk-delete"><i class="fa  fa-trash-o"></i>Delete</a>
+                            <a href="#" class="js-user-bulk-delete" translate><i class="fa  fa-trash-o"></i>tag.delete</a>
                         </li>
                     </ul> <!-- end .dropdown-menu .list-view-edit -->
                 </div> <!-- end .dropdown-container -->
@@ -28,13 +28,13 @@
 
     <div class="list-filter--alt">
             <div class="list-filter-info">
-                <h5 class="title">Showing 1 to 3 from 10 Tags</h5>
+                <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">tag.showing_x_to_y_from_n_tags</h5>
             </div> <!-- end .list-filter-info -->
 
             <div class="list-filter-wrapper">
                 <div class="list-filter-count">
                     <div class="filter-count-select">
-                        <label class="visually-hidden" for="filter-count">Number of tags shown</label>
+                        <label class="visually-hidden" for="filter-count" translate>tag.number_of_tags_shown</label>
                         <select id="filter-count" class="filter-count  js-filter-count">
                             <option selected>3</option>
                             <option>5</option>
@@ -46,12 +46,12 @@
 
                 <div class="list-filter-sort">
                     <div class="filter-sort-select">
-                        <label class="visually-hidden" for="filter-sort">Sort users by</label>
+                        <label class="visually-hidden" for="filter-sort" translate>tag.sort_user_by</label>
                         <select id="filter-sort" class="filter-sort  js-filter-sort">
-                            <option>Filter</option>
-                            <option>Date/Time Created</option>
-                            <option>Username A-Z</option>
-                            <option>ID</option>
+                            <option translate>tag.filter_sort.properties.filter</option>
+                            <option>tag.filter_sort.properties.date_time_created</option>
+                            <option>tag.filter_sort.properties.username_a_z Username A-Z</option>
+                            <option>tag.filter_sort.properties.id ID</option>
                         </select>
                     </div>
                 </div> <!-- end .list-filter-sort -->
@@ -71,17 +71,17 @@
                     <div class="list-view-actions">
                         <div class="dropdown">
                             <div class="dropdown-container">
-                                <p class="dropdown-toggle">Tag Actions</p>
+                                <p class="dropdown-toggle" translate>tags.tag_actions</p>
                                 <ul class="dropdown-menu  list-view-actions-list">
                                     <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-select  js-post-select"> <i class="fa fa-check-square-o"></i> select</a>
+                                        <a href="#" class="post-select  js-post-select" translate> <i class="fa fa-check-square-o"></i>tags.select</a>
                                     </li>
                                     <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-edit  js-post-edit"> <i class="fa  fa-edit"></i> edit</a>
+                                        <a href="#" class="post-edit  js-post-edit" translate> <i class="fa  fa-edit"></i>tags.edit</a>
                                     </li>
 
                                     <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-delete  js-post-delete"> <i class="fa  fa-trash-o"></i> delete</a>
+                                        <a href="#" class="post-delete  js-post-delete" translate> <i class="fa  fa-trash-o"></i>tags.delete</a>
                                     </li>
                                 </ul> <!-- end .menu .list-view-edit -->
                             </div> <!-- end .dropdown-container -->

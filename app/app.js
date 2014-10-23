@@ -3,6 +3,7 @@ require('angular-route/angular-route');
 require('leaflet/dist/leaflet');
 require('angular-leaflet-directive/dist/angular-leaflet-directive');
 require('angular-resource/angular-resource');
+require('angular-translate');
 require('./modules/ui-tabs');
 require('angular-ui-bootstrap/src/dropdown/dropdown');
 require('angular-ui-bootstrap/src/collapse/collapse');
@@ -16,6 +17,7 @@ angular.module('app',
     [
         'ngRoute',
         'ngResource',
+        'pascalprecht.translate',
         'ui.bootstrap.dropdown',
         'ui.bootstrap.collapse',
         'ui.bootstrap.accordion',
@@ -48,5 +50,6 @@ angular.module('app',
     .config(require('./interceptors/authentication.js'))
     .config(require('./routes'))
     .config(require('./modules/ui-accordion'))
+    .config(require('./locale-config.js'))
 
     .run(require('./global-event-handlers.js'));

@@ -1,5 +1,7 @@
-module.exports = function($scope) {
-    $scope.title = 'Add Post to Set';
+module.exports = ['$scope', '$translate', function($scope, $translate) {
+    $translate('set.add_to_set').then(function(addToSetTranslation){
+        $scope.title = addToSetTranslation;
+    });
 
     $scope.isSelected = function() {
 
@@ -11,4 +13,4 @@ module.exports = function($scope) {
         }
     };
 
-};
+}];

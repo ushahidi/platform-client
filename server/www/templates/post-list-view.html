@@ -4,13 +4,13 @@
     <div class="main-content  post-list">
         <div class="list-filter">
                 <div class="list-filter-info">
-                    <h5 class="title">Showing 1 to 10 from 100 posts</h5>
+                    <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">post.showing_x_to_y_from_n_posts</h5>
                 </div> <!-- end .list-filter-info -->
 
                 <div class="list-filter-wrapper">
                     <div class="list-filter-count">
                         <div class="filter-count-select">
-                            <label class="visually-hidden" for="filter-count">Number of posts shown</label>
+                            <label class="visually-hidden" for="filter-count" translate>post.number_of_posts_shown</label>
                             <select id="filter-count" class="filter-count  js-filter-count">
                                 <option selected>3</option>
                                 <option>5</option>
@@ -22,12 +22,12 @@
 
                     <div class="list-filter-sort">
                         <div class="filter-sort-select">
-                            <label class="visually-hidden" for="filter-sort">Sort posts by</label>
+                            <label class="visually-hidden" for="filter-sort" translate>post.filter_sort.sort_posts_by</label>
                             <select id="filter-sort" class="filter-sort  js-filter-sort">
-                                <option>Filter</option>
-                                <option>Created</option>
-                                <option>Updated</option>
-                                <option>Title A to Z</option>
+                                <option translate>post.filter_sort.properties.filter</option>
+                                <option translate>post.filter_sort.properties.created</option>
+                                <option translate>post.filter_sort.properties.updated</option>
+                                <option translate>post.filter_sort.properties.title_a_to_z</option>
                             </select>
                         </div>
                     </div> <!-- end .list-filter-sort -->
@@ -49,7 +49,7 @@
     <div class="sidebar  sidebar--home">
         <ul class="tabset">
             <li class="tab" active>
-                <a href="#" class="tab-heading"><i class="fa  fa-thumb-tack"></i> How to Post</a>
+                <a href="#" class="tab-heading" translate><i class="fa  fa-thumb-tack"></i>post.side_menu.how_to_post.how_to_post</a>
                 <div class="tab-content">
                     <div class="tab-content-sms">
                         <div class="tab-content__icon">
@@ -58,7 +58,7 @@
 
                         <div class="tab-content__description">
                             <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
-                            <span class="post-origin">via SMS</span>
+                            <span class="post-origin" translate>post.side_menu.how_to_post.channels.via_sms</span>
                         </div>
                     </div> <!-- end .tab-content-sms -->
 
@@ -69,7 +69,7 @@
 
                         <div class="tab-content__description">
                             <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
-                            <span class="post-origin">via Email</span>
+                            <span class="post-origin" translate>post.side_menu.how_to_post.channels.via_email</span>
                         </div>
                     </div> <!-- end .tab-content-email -->
 
@@ -80,21 +80,21 @@
 
                         <div class="tab-content__description">
                             <p>Laborum exercitation in fugiat ullamco sunt amet voluptate.</p>
-                            <span class="post-origin">via This Deployment</span>
+                            <span class="post-origin" translate>post.side_menu.how_to_post.channels.via_this_deployment</span>
                         </div>
                     </div> <!-- end .tab-content-deployment -->
                 </div>
             </li>
 
             <li class="tab">
-                <a href="#" class="tab-heading"><i class="fa  fa-info-circle"></i> About</a>
+                <a href="#" class="tab-heading" translate><i class="fa  fa-info-circle"></i>post.side_menu.about</a>
                 <div class="tab-content">
                     About stuff
                 </div>
             </li>
 
             <li class="tab">
-                <a href="#" class="tab-heading"><i class="fa  fa-tags"></i> Tags</a>
+                <a href="#" class="tab-heading" translate><i class="fa  fa-tags"></i>post.side_menu.tags</a>
                 <div class="tab-content">
                     Tags go here
                 </div>

@@ -6,22 +6,22 @@
         <div class="user-actions">
             <div class="dropdown">
                 <div class="dropdown-container">
-                    <p class="dropdown-toggle">User Actions</p>
+                    <p class="dropdown-toggle" translate>user.user_actions</p>
                     <ul class="dropdown-menu  list-view-actions-list">
                         <li class="list-view-actions-list__item">
                             <a href="#" class="js-select-all">
                                 <span>Select All</span>
-                                <span class="visually-hidden">Unselect All</span>
+                                <span class="visually-hidden" translate>user.unselect_all</span>
                             </a>
                         </li>
                         <li class="list-view-actions-list__item  js-bulk-action  disabled">
-                            <a href="#"><i class="fa  fa-cogs"></i>Change Role</a>
+                            <a href="#" translate><i class="fa  fa-cogs"></i>user.change_role</a>
                         </li>
                         <li class="list-view-actions-list__item">
-                            <a href="#" class="js-user-create"><i class="fa  fa-user"></i>Add User</li>
+                            <a href="#" class="js-user-create" translate><i class="fa  fa-user"></i>user.add_user</li>
                         </li>
                         <li class="list-view-actions-list__item  js-bulk-action  disabled">
-                            <a href="#" class="js-user-bulk-delete"><i class="fa  fa-trash-o"></i>Delete</a>
+                            <a href="#" class="js-user-bulk-delete" translate><i class="fa  fa-trash-o"></i>user.delete</a>
                         </li>
                     </ul> <!-- end .dropdown-menu .list-view-edit -->
                 </div> <!-- end .dropdown-container -->
@@ -31,13 +31,13 @@
 
     <div class="list-filter--alt">
             <div class="list-filter-info">
-                <h5 class="title">Showing 1 to 3 from 10 Users</h5>
+                <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">user.showing_x_to_y_from_n_users</h5>
             </div> <!-- end .list-filter-info -->
 
             <div class="list-filter-wrapper">
                 <div class="list-filter-count">
                     <div class="filter-count-select">
-                        <label class="visually-hidden" for="filter-count">Number of users shown</label>
+                        <label class="visually-hidden" for="filter-count" translate>user.number_of_users_shown</label>
                         <select id="filter-count" class="filter-count  js-filter-count">
                             <option selected>3</option>
                             <option>5</option>
@@ -49,12 +49,12 @@
 
                 <div class="list-filter-sort">
                     <div class="filter-sort-select">
-                        <label class="visually-hidden" for="filter-sort">Sort users by</label>
+                        <label class="visually-hidden" for="filter-sort" translate>user.sort_users_by</label>
                         <select id="filter-sort" class="filter-sort  js-filter-sort">
-                            <option>Filter</option>
-                            <option>Date/Time Created</option>
-                            <option>Username A-Z</option>
-                            <option>ID</option>
+                            <option translate>user.filter_sort.properties.filter</option>
+                            <option translate>user.filter_sort.properties.date_time_created</option>
+                            <option translate>user.filter_sort.properties.username_a_z</option>
+                            <option translate>user.filter_sort.properties.id</option>
                         </select>
                     </div>
                 </div> <!-- end .list-filter-sort -->
@@ -70,7 +70,7 @@
                     <ul class="filter-tabs-list  js-filter-tabs-list">
                         <li ng-repeat="tab in tabs" ng-click="select(tab)" ng-class="{active : isActive(tab)}" class="filter-tabs-list__item  js-user-filter-role">
                             <a href="">
-                                <span class="role-title">{{tab}}
+                                <span class="role-title">{{"user.roles." + tab | translate}}
                                     <span class="{{name}}-count-number"><span class="count-number">0</span></span>
                                 </span>
                             </a>
@@ -83,8 +83,8 @@
                     <div class="user-roles">
                         <div class="dropdown">
                             <div class="dropdown-container">
-                                <p class="dropdown-description">Roles</p>
-                                <p class="dropdown-toggle">Click To Select</p>
+                                <p class="dropdown-description" translate>user.roles</p>
+                                <p class="dropdown-toggle" translate>user.click_to_select</p>
                                 <ul class="dropdown-menu  list-view-actions-list">
                                     <li ng-repeat="tab in tabs" ng-click="select(tab)" ng-class="{active: isActive(tab)}" class="list-view-actions-list__item  js-user-filter-role">
                                         <span class="role-title">{{tab}}</span>
@@ -101,9 +101,9 @@
             <div class="search-field-wrapper--filter--role">
                 <div class="search-bar">
                     <div class="search-and-submit">
-                        <label id="search-label" class="visually-hidden" for="search-field">Search</label>
-                        <input type="search" placeholder="Keyword Search" />
-                        <button type="submit">Go</button>
+                        <label id="search-label" class="visually-hidden" for="search-field" translate>user.search</label>
+                        <input type="search" placeholder="{{ 'user.keyword_search' | translate}}" />
+                        <button type="submit" translate>user.go</button>
                     </div>
                 </div>
             </div> <!-- end .search-field-wrapper -->
@@ -123,16 +123,16 @@
                     <h4 class="list-view-header">{{ user.name }}</h4>
 
                     <div class="details-column-a">
-                        <p class="user-list-role"><b>Role: </b>{{ user.role }}</p>
-                        <p class="user-list-full-name"><b>Full Name: </b>
+                        <p class="user-list-role"><b translate>user.role</b>{{ user.role }}</p>
+                        <p class="user-list-full-name"><b translate>user.full_name</b>
                             <span>{{ user.name }}</span>
                         </p>
                     </div> <!-- end .details-column-a -->
 
                     <div class="details-column-b">
-                        <p class="user-list-last-login"><b>Last Login: </b>{{ user.lastLogin | date: 'short' }}</p>
-                        <p class="user-list-last-attempt"><b>Last Attempt: </b>{{ user.lastAttempt | date: 'short' }}</p>
-                        <p class="user-list-failed-attempt"><b>Failed Attempts: </b>{{ user.attempts }}</p>
+                        <p class="user-list-last-login"><b translate>user.last_login</b>{{ user.lastLogin | date: 'short' }}</p>
+                        <p class="user-list-last-attempt"><b translate>user.last_attempt</b>{{ user.lastAttempt | date: 'short' }}</p>
+                        <p class="user-list-failed-attempt"><b translate>user.failed_attempts</b>{{ user.attempts }}</p>
                     </div> <!-- end .details-column-b -->
                 </div> <!-- end .list-view-details-user -->
             </li>

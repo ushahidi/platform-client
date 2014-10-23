@@ -9,19 +9,17 @@
             <section class="admin-settings">
                 <article class="form-wrapper">
                     <form id="site">
-                        <label>Site Name</label>
+                        <label translate>settings.site_name</label>
                         <input type="text" name="name" ng-value="site.site_name" placeholder="My Ushahidi Instance">
-                        <label>Site Owner</label>
+                        <label translate>settings.site_owner</label>
                         <input type="text" name="owner" ng-value="site.owner_name" placeholder="My Name">
-                        <button>Save</button>
+                        <button translate>settings.save</button>
                     </form>
                 </article>
 
                 <div class="cards-wrapper">
-                    <h4>Features</h4>
-                    <p>
-                        Please select the features you would like to enable.
-                    </p>
+                    <h4 translate>settings.features.features</h4>
+                    <p translate>settings.features.please_select_features</p>
 
                     <article class="cards">
                         <div ng-repeat="(feature,enabled) in features | orderBy:feature" ng-class="{'enabled': enabled}" class="card">
