@@ -1,0 +1,50 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+* TITLE...............description
+* TITLE...............description
+* TITLE...............description
+*/
+
+
+
+
+
+/*------------------------------------*\
+    $MAP FILTERS
+\*------------------------------------*/
+
+.map-filter-wrapper {
+    @include outer-container();
+    position: relative;
+    max-width: 1254px;
+
+    .map-filter {
+        position: absolute;
+        top: 30px;
+        right: 0;
+        width: 300px;
+        z-index: 2;
+
+        .filter-header {
+            background-color: $blueGray;
+            color: $white;
+
+            i {
+                padding: 15px;
+                background-color: $success-color;
+                font-size: 1.3em;
+            }
+
+            .filter-title {
+                display: inline;
+                padding: 8px;
+            }
+        }
+    }
+
+    .tab-heading {
+        width: 32.3%;
+    }
+}

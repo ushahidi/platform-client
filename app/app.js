@@ -43,6 +43,7 @@ angular.module('app',
     .controller('workspaceAccordion', require('./workspace'))
     .controller('userFilter', require('./controllers/users/filter.js'))
     .controller('adminMapSettings', require('./controllers/admin/map-settings.js'))
+    .controller('postMapView', require('./controllers/post-map-view.js'))
 
     .config(require('./interceptors/authentication.js'))
     .config(require('./routes'))

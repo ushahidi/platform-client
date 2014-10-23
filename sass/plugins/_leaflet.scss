@@ -13,6 +13,10 @@
     $LEAFLET OVERRIDES
 \*------------------------------------*/
 
+.map-view .angular-leaflet-map {
+    margin-bottom: auto;
+}
+
 .angular-leaflet-map {
     margin-bottom: 20px;
 }
