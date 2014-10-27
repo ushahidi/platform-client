@@ -35,13 +35,23 @@ http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and
 * rebuilds/reloads any optional servers that are enabled
 * live reloads `index.html`
 
+### Native Server
+
+If you are running the client with a native web server like Apache or nginx, you will need to use URL rewriting to point all non-existant files to `index.html`. There is a sample `.htaccess` file, which can be used with Apache:
+
+```
+% cp server/rewrite.htaccess server/www/.htaccess
+```
+
+Nginx users will have to manually configure rewriting in the site configuration file.
+
 #### Optional parameters ####
 
 * `--node-server` - start a self-hosted server, instead of using a native web server like Apache or nginx. This simple server will be running at: <http://localhost:8080>.
 * `--mock-backend` - use a mock backend server instead of a real instance of [ushahidi-platform](https://github.com/ushahidi/platform), delivering the JSON files in the `mocked_backend/` when API calls are made. This server will be running at: <http://localhost:8081>. See details below.
 * `--docker-server` - build and run the client inside of a [Docker](https://docker.com/) container. See details below.
 
-#### Set default options with gulp-options.json
+#### Set default options with .gulpconfig.json
 
 Instead of having to type the flags every time, you can also use a `.gulpconfig.json` file to set the default options for running the client.
 
