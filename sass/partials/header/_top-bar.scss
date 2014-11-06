@@ -3,9 +3,9 @@
 \*------------------------------------*/
 /*
 * GENERAL...............general styles
-* LOGO...............site logo and site name
+* LOGO/TITLE...............site logo and site name
 * NAV...............top bar navigation styles
-* WORKSPACE OFF CANVAS...............workspace off canvas styles
+* GLOBAL OFF CANVAS MENU...............global off canvas menu styles
 */
 
 
@@ -28,32 +28,24 @@ body {
 
 
 /*------------------------------------*\
-    $LOGO
+    $LOGO/TITLE
 \*------------------------------------*/
 
-header.navigation .logo {
-    padding: 0 1em;
-
-    @include media($small) {
-        padding: 0 1em 0 0;
-    }
-
-    img {
-        float: left;
-        max-height: 60px;
-    }
+header.navigation {
+    user-select: none;
 
     .site-title {
-        display: none;
-        color: $white;
         float: left;
         font-size: em(20);
         font-weight: bold;
-        padding: 18px;
+        line-height: 1em;
+        color: $white;
+        padding: 18px 18px 18px 10px;
+    }
 
-        @include media($small) {
-            display: inline-block;
-        }
+    img,
+    .site-title {
+        display: inline-block;
     }
 }
 
@@ -69,24 +61,66 @@ header.navigation {
     margin-top: -60px;
     position: fixed;
 
-    .nav-link {
-        display: inline;
-        padding-right: 0;
-        width: auto;
+    .navigation-wrapper {
+        @include outer-container;
+        max-width: $max-width;
+
+        @include media($small) {
+            padding: 0 20px 0 0;
+        }
+
+        @include media($large) {
+            padding: 0;
+        }
+
+        .global-header-menu-trigger {
+            display: block;
+            float: left;
+            width: 50px;
+            max-width: 50px;
+
+            @include media($large) {
+                display: none;
+                margin-top: 15px;
+            }
+        }
+    }
+
+    ul li{
+        padding: 0;
+        background: transparent;
 
         a {
             font-weight: bold;
-        }
-
-        @include media($medium) {
+            display: block;
+            transition: none;
             padding-right: 12px;
         }
+    }
+
+    .nav .nav-link {
+        padding-right: 0;
+        width: auto;
+        float: left;
+
+        &.views-nav,
+        &.sets-nav,
+        &.about-nav,
+        &.sign-in,
+        &.workspace-nav {
+            display: none;
+
+            @include media($large) {
+                display: inline;
+            }
+        }
+
     }
 
     span {
         display: none;
 
-        @include media($medium) {
+        @include media($small) {
             display: inline-block;
             padding-left: 10px;
         }
@@ -94,11 +128,9 @@ header.navigation {
 
     [class*='fa-'] {
         color: $white;
-        padding: 23px 15.9px 20px;
-
-        @include media($medium) {
-            padding: 23px 20px 20px;
-        }
+        padding: 23px 20px 19px;
+        font-size: 17px;
+        border-bottom: 1px solid $black;
     }
 
     .nav {
@@ -107,15 +139,26 @@ header.navigation {
 
         .navigation-menu {
             float: left;
-
-            .views [class*='fa-'] {
-                background-color: $error-color;
-            }
-
-            .sets [class*='fa-'] {
-                background-color: $warning-color;
-            }
         }
+    }
+
+    .views-nav [class*='fa-'] {
+        background-color: $error-color;
+    }
+
+    .sets-nav [class*='fa-'] {
+        background-color: $warning-color;
+        padding: 23px 21px 19px;
+        font-size: 1.04em;
+    }
+
+    .about-nav [class*='fa-'] {
+        background-color: $darkBlue;
+        padding: 23px 27px 19px 24px;
+    }
+
+    .workspace-nav [class*='fa-'] {
+        background-color: $primary-color;
     }
 
     .navigation-tools {
@@ -134,22 +177,212 @@ header.navigation {
           background-color: $darkBlue;
         }
 
-        .workspace-panel-button [class*='fa-'] {
-            background-color: $primary-color;
-            border-bottom: 1px solid $black;
+        .user-info {
+            display: none;
+            overflow: visible;
+            padding: 0;
+            background-color: $black;
+
+            @include media($large) {
+                display: block;
+            }
+
+            .dropdown {
+
+                .dropdown-container {
+                    padding: 8px 0 8px 8px;
+                }
+
+                .dropdown-toggle {
+                    background: transparent;
+                    padding-left: 0;
+                    font-size: 1em;
+                    font-weight: bold;
+
+                    &:after {
+                        color: rgba(255, 255, 255, 0.701961);
+                        font-family: FontAwesome;
+                        content: "\f0f3";
+                        top: 2px;
+                        right: 12px;
+                    }
+                }
+
+                ul.dropdown-menu {
+                    top: 60px;
+                    right: -1px;
+
+                    &:before {
+                        top: -19px;
+                        right: 8px;
+                    }
+
+                    li {
+                        display: block;
+                        padding: 15px;
+                        border: 0;
+                        line-height: 1.2em;
+                        text-align: left;
+
+                        span {
+                            padding: 0;
+                        }
+
+                        .count-number {
+                            float: right;
+                            background-color: $error-color;
+                            border-radius: 20px;
+                            text-align: center;
+                            color: $white;
+                            font-weight: bold;
+                            width: 20px;
+                            height: 20px;
+                        }
+
+                        a {
+                            color: $black;
+                            font-weight: normal;
+                        }
+                    }
+
+                    .user-role,
+                    .user-logout {
+                        background-color: $secondary-color;
+                    }
+
+                    .user-role {
+                        border-bottom: 1px solid darken($secondary-color, 10);
+                    }
+
+                    .user-logout {
+                        border-top: 1px solid darken($secondary-color, 10);
+
+                        a {
+                            color: $base-link-color;
+                        }
+                    }
+                }
+            }
+
+            img {
+                width: 40px;
+                height: 40px;
+                vertical-align: middle;
+                border-radius: 20px;
+            }
         }
     }
 }
 
-.navigation-wrapper {
-    @include outer-container;
-    max-width: $max-width;
 
-    @include media($small) {
-        padding: 0 30px;
+
+
+
+/*------------------------------------*\
+    $GLOBAL OFF CANVAS MENU
+\*------------------------------------*/
+
+.global-header-menu {
+    position: fixed;
+    height: 100%;
+    left: -300px;
+    background-color: $darkGray;
+    width: 300px;
+    z-index: 100;
+    @include transition;
+
+    &.active {
+        left: 0;
     }
 
-    @include media($medium) {
-        padding: 0 30px;
+    .global-header-mast {
+        @include span-columns(12);
+        padding: 20px;
+        background-color: $white;
+
+        .user-info {
+            @include span-columns(12);
+
+            img {
+                float: left;
+                width: 40px;
+                height: 40px;
+                margin: 4px 10px 0 0;
+                vertical-align: middle;
+                border-radius: 20px;
+            }
+
+            .name-role-wrapper {
+                float: left;
+
+                span {
+                    display: block;
+                }
+
+                .user-name {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .admin-nav {
+            float: left;
+            margin-top: 20px;
+
+            li {
+                float: left;
+                width: 100%;
+                background: transparent;
+                text-align: left;
+                padding: 10px 10px 10px 0;
+                line-height: 1.2em;
+
+                a {
+                    color: $base-font-color;
+                }
+
+                span {
+                    display: inline-block;
+                    padding: 0;
+                }
+
+                .count-number {
+                    float: right;
+                    background-color: #f96c5f;
+                    border-radius: 20px;
+                    text-align: center;
+                    color: #fcfcfc;
+                    font-weight: bold;
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
     }
+
+    .global-navigation {
+        @include span-columns(12);
+
+        ul {
+            @include span-columns(12);
+        }
+
+        .nav-link {
+            display: block;
+            width: 100%;
+            background-color: $darkGray;
+            text-align: left;
+
+
+            &:hover {
+                background-color: darken($darkGray, 10);
+            }
+
+            span {
+                display: inline-block;
+                padding-left: 20px;
+            }
+        }
+    }
+
 }

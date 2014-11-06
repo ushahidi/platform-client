@@ -14,7 +14,6 @@ module.exports = ['$scope', 'ConfigMapEndpoint', 'PostEndpoint', function($scope
             osloMarker: {
                 lat: 36.079868,
                 lng: -79.819416,
-                message: 'Welcome to Greensboro, NC',
                 focus: true,
                 draggable: false
             }

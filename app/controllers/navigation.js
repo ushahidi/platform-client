@@ -1,6 +1,5 @@
 module.exports = ['$scope', 'Authentication', function($scope, Authentication) {
-    $scope.viewsMenu = false;
-    $scope.workspaceMenu = false;
+    $scope.mainMenu = false;
     $scope.toggle = function(param) {
         $scope[param] = $scope[param] === false ? true : false;
     };

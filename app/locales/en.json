@@ -39,6 +39,41 @@
 		"currently_disabled": "This Form is currently disabled."
 
 	},
+	"globalFilter": {
+		"filter" : "Filter",
+		"categories" : {
+			"categories" : "Categories",
+			"all_categories" : "All Categories",
+			"category_1" : "Category 1",
+			"category_2" : "Category 2",
+			"category_3" : "Category 3",
+			"category_4" : "Category 4"
+		},
+		"sets" : {
+			"sets" : "Sets",
+			"my_sets" : "My Sets",
+			"all_sets" : "All Sets",
+			"set_1" : "Set 1",
+			"set_2" : "Set 2",
+			"set_3" : "Set 3",
+			"set_4" : "Set 4"
+		},
+		"more" : "More",
+		"keyword" : "Keyword",
+		"start_date" : "Start Date",
+		"start_date_placeholder" : "Jan 25, 2014",
+		"end_date" : "End Date",
+		"end_date_placeholder" : "April 25, 2014",
+		"location" : "Location",
+		"option_1" : "within 1 km",
+		"option_2" : "within 5 km",
+		"option_3" : "within 20 km",
+		"option_4" : "within 50 km",
+		"option_5" : "within 100 km",
+		"clear_selection" : "Clear Selection",
+		"apply_filters" : "Apply Filters",
+		"save_to_set" : "Save to Set"
+	},
 	"map": {
 		"collapse_map" : "collapse map",
 		"expand_map" : "expand map",
@@ -53,7 +88,9 @@
 		"sms" : "SMS"
 	},
 	"nav" : {
+		"about" : "About",
 		"actions" : "Actions",
+		"admin" : "Administrator",
 		"all" : "All",
 		"back" : "Back",
 		"click_images_to_zoom" : "Click images to zoom",
@@ -61,22 +98,26 @@
 		"count_tags" : "__count__ <span>tags</span>",
 		"count_users" : "__count__ <span>users</span>",
 		"disable" : "Disable",
+		"edit_profile" : "Edit Profile",
         "enable" : "Enable",
 		"create" : "Create",
 		"delete" : "Delete",
 		"edit" : "Edit",
 		"from_time" : "From Time",
 		"full" : "Full",
+		"help" : "Help",
 		"keyword" : "Keyword",
 		"list" : "List",
 		"location" : "Location",
 		"login_register" : "Login/Register",
+		"logout" : "Logout",
 		"main_navigation" : "Main Navigation",
 		"map" : "Map",
 		"media" : "Media",
 		"next" : "Next",
 		"new" : "New",
 		"no" : "No",
+		"notifications" : "Notifications",
 		"options" : "Options",
 		"please_wait_loading" : "Please wait. Loading...",
 		"posts" : "Posts",
@@ -87,10 +128,12 @@
 		"select_all" : "Select All",
 		"set" : "Set",
 		"sets" : "Sets",
+		"settings" : "Settings",
 		"tags" : "Tags",
 		"unselect_all" : "Unselect All",
 		"until_time" : "Until Time",
 		"users" : "Users",
+		"user_name" : "User Name",
 		"views" : "Views",
 		"workspace" : "Workspace",
 		"yes" : "Yes"
@@ -124,11 +167,10 @@
 			"search" : "Search"
 		}
 	},
-    "views-subnav" : {
-        "full" : "Full",
+    "view_tabs" : {
         "map" : "Map",
         "list" : "List",
-        "media" : "Media"
+        "graph" : "Graph"
     },
     "workspace": {
         "posts" : "posts",
@@ -202,7 +244,7 @@
 		"filter_sort" : {
 			"sort_posts_by" : "Sort posts by",
 			"properties" : {
-				"filter" : "Filter",
+				"sort" : "Sort by",
 				"created" : "Created",
 				"updated" : "Updated",
 				"title_a_to_z" : "Title A to Z"
@@ -266,7 +308,7 @@
 		"sort_users_by" : "Sort users by",
 		"filter_sort" : {
 			"properties" : {
-				"filter" : "Filter",
+				"sort" : "Sort by",
 				"date_time_created" : "Date/Time Created",
 				"username_a_z" : "Username A-Z",
 				"id" : "ID"
@@ -331,7 +373,7 @@
 		"go" : "Go",
 		"filter_sort" : {
 			"properties" : {
-				"filter" : "Filter",
+				"sort" : "Sort by",
 				"date_time_created" : "Date/Time Created",
 				"username_a_z" : "Username A-Z",
 				"id" : "ID"

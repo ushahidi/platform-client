@@ -27,6 +27,10 @@ label {
   }
 }
 
+label.checkbox-label {
+    display: inline;
+}
+
 textarea,
 #{$all-text-inputs},
 select[multiple=multiple] {

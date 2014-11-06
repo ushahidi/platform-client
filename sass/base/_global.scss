@@ -33,6 +33,10 @@ hr {
     $LAYOUT
 \*------------------------------------*/
 
+.full-content {
+    @include span-columns(12);
+}
+
 // this exists with .sidebar
 .main-content {
     @include span-columns(12);
@@ -58,6 +62,17 @@ hr {
     @include outer-container;
     clear: both;
     padding: 30px;
+
+    .wrapper {
+        @include span-columns(12);
+        @include fill-parent();
+        @include wrapper;
+    }
+}
+
+.container--alt {
+    @include outer-container;
+    padding: 0;
 
     .wrapper {
         @include span-columns(12);

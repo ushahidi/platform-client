@@ -12,110 +12,94 @@
         <div ng-controller="navigation">
             <header class="navigation">
                 <div class="navigation-wrapper">
-                    <a ng-href="/" class="logo">
-                        <img src="/img/logo.png" alt="">
+                    <div class="global-header-menu-trigger">
+                        <i class="fa fa-bars drawer-trigger" data-target="menu" ng-click="toggle('mainMenu')"></i>
+                    </div>
+                    <a ng-href="/">
                         <span class="site-title">Awesome V3 Map</span>
                     </a>
                     <div class="nav">
-                        <ul class="navigation-menu">
-                            <li class="nav-link  views  js-views-subnav--link" ng-click="toggle('viewsMenu')"><a href="javascript:void(0)"><i class="fa  fa-eye"></i><span translate>nav.views</span></a></li>
-                            <li class="nav-link  sets"><a href="javascript:void(0)"><i class="fa  fa-th-large"></i><span translate>nav.sets</span></a></li>
-                        </ul><!-- end .navigation-menu -->
+                        <ng-include src=" 'templates/partials/navigation-menu.html' "></ng-include>
 
                         <ul class="navigation-tools">
-                            <signin-signout-button signedin="signedin" signout-click="signoutClick()"></signin-signout-button>
+                            <signin-signout-button class="ng-hide" signedin="signedin" signout-click="signoutClick()"></signin-signout-button>
                             <li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span translate>nav.create</span></a></li>
-                            <li class="nav-link  workspace-panel-button  js-menu-trigger" ng-click="toggle('workspaceMenu')"><a href="javascript:void(0)"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
-
-                            <nav class="js-menu  sliding-menu-content" ng-class="{ 'is-visible': workspaceMenu }">
-
-                                <h1 class="visually-hidden" translate>nav.workspace</h1>
-
-                                <div class="workspace-profile">
-                                    <div id="workspace-avatar" class="workspace-avatar">
-                                        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
-                                    </div>
-                                    <div class="workspace-admin">
-                                        <h5 id="username" class="username  header">
-                                        <a href="#users/{{user.id}}">Namey Namerson</a>
-                                        </h5>
-                                        <p id="workspace-role" class="workspace-role" >Admin</p>
-
-                                        <ul class="workspace-admin-list">
-                                            <li class="workspace-admin-list__item"><a href="#" id="edit-profile" class="edit-profile js-edit-profile" translate>user.edit_profile</a></li>
-                                            <li class="workspace-admin-list__item"><a href="user/logout" id="logout" class="logout  js-logout" translate>user.logout</a></li>
+                            <li class="nav-link  workspace-nav  js-menu-trigger"><a href="/workspace"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
+                            <li class="nav-link user-info">
+                                <div class="dropdown">
+                                    <div class="dropdown-container">
+                                        <p class="dropdown-toggle"><a href="javascript:void(0)">
+                                            <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
+                                            <span translate>nav.user_name</span>
+                                            <span class="count-number">4</span>
+                                        </a></p>
+                                        <ul class="dropdown-menu">
+                                            <li class="user-role">
+                                                <a href="#" translate>nav.admin</a>
+                                            </li>
+                                            <li>
+                                                <a href="/profile" translate>nav.edit_profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="/notifications"><span translate>nav.notifications</span></a>
+                                                <span class="count-number">4</span>
+                                            </li>
+                                            <li>
+                                                <a href="/settings" translate>nav.settings</a>
+                                            </li>
+                                            <li>
+                                                <a href="/help" translate>nav.help</a>
+                                            </li>
+                                            <li class="user-logout">
+                                                <a href="#" translate>nav.logout</a>
+                                            </li>
                                         </ul>
-                                    </div> <!-- end .workspace-admin -->
-                                </div> <!-- end .workspace-profile -->
-
-                                <div class="workspace-stats-wrapper">
-                                    <ul class="workspace-stats-list">
-                                        <li id="posts-stats" class="stat-card">
-                                            <h6 id="posts-stats-value"  class="header">181</h6>
-                                            <p translate>workspace.posts</p>
-                                        </li>
-                                        <li id="users-stats" class="stat-card">
-                                            <h6 id="users-stats-value"  class="header">5</h6>
-                                            <p translate>workspace.users</p>
-                                        </li>
-                                        <li id="tags-stats" class="stat-card">
-                                            <h6 id="tags-stats-value"  class="header">6</h6>
-                                            <p translate>workspace.tags</p>
-                                        </li>
-                                    </ul>
-                                </div> <!-- end .workspace-stats-wrapper -->
-
-                                <div ng-controller="workspaceAccordion">
-                                    <accordion>
-                                        <accordion-group heading="{{'workspace.accordion.posts' | translate }}" is-open="status.isFirstOpen">
-                                            <ul>
-                                                <li>
-                                                    <a href="/posts/detail" translate><i class="fa  fa-th-list"></i>post.post_details</a>
-                                                </li>
-                                            </ul>
-                                        </accordion-group>
-                                        <accordion-group heading="{{'workspace.accordion.settings' | translate }}">
-                                            <ul>
-                                                <li>
-                                                    <a href="/settings" class="js-accordion-trigger" translate><i class="fa  fa-cogs"></i>tool.site_settings</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/map-settings" class="js-accordion-trigger"><i class="fa  fa-cogs"></i>Map Settings</a>
-                                                </li>
-                                            </ul>
-                                        </accordion-group>
-                                        <accordion-group heading="{{'workspace.accordion.tools' | translate }}">
-                                            <ul>
-                                                <li>
-                                                    <a href="/users" class="js-accordion-trigger" translate><i class="fa  fa-group"></i>tool.manage_users</a>
-                                                </li>
-                                            </ul>
-                                            <ul>
-                                                <li>
-                                                    <a href="/tags" class="js-accordion-trigger" translate><i class="fa  fa-tags"></i>tool.manage_tags</a>
-
-                                                </li>
-                                            </ul>
-                                        </accordion-group>
-                                    </accordion>
-                                </div> <!-- end ng-controller workspaceAccordion -->
-                            </nav> <!-- end .sliding-menu-content -->
-
-                            <div class="js-menu-screen  menu-screen" ng-class="{ 'is-visible': workspaceMenu }" ng-click="toggle('workspaceMenu')"></div>
-
+                                    </div> <!-- end .dropdown-container -->
+                                </div> <!-- end .dropdown -->
+                            </li>
                         </ul> <!-- end .navigation-tools -->
                     </div> <!-- end .nav -->
                 </div> <!-- end .navigation-wrapper -->
-            </header> <!-- end .navigation -->
 
-            <nav role="sub-navigation" class="js-views-subnav" ng-class="{ 'active': viewsMenu }">
-                <ul class="subnav-list">
-                    <li class="subnav-list__item  views-full  active" data-view="full"><a href="/views/full" translate>views-subnav.full</a></li>
-                    <li class="subnav-list__item  views-map" data-view="map"><a href="/views/map" translate>views-subnav.map</a></li>
-                    <li class="subnav-list__item  views-list" data-view="list"><a href="/views/list" translate>views-subnav.list</a></li>
-                    <li class="subnav-list__item  views-media" data-view="media"><a href="/views/media" translate>views-subnav.media</a></li>
-                </ul>
-            </nav>
+                <div class="global-header-menu" ng-class="{ 'active': mainMenu }">
+                    <div class="drawer">
+                        <nav class="global-navigation">
+                            <ul>
+                                <ng-include src=" 'templates/partials/navigation-menu.html' "></ng-include>
+                                <li class="nav-link  workspace-nav"><a href="/workspace"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
+                            </ul>
+                        </nav>
+
+                        <div class="global-header-mast">
+                            <div class="user-info">
+                                <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
+                                <div class="name-role-wrapper">
+                                    <span class="user-name" translate>nav.user_name</span>
+                                    <span class="user-role" translate>nav.admin</span>
+                                </div>
+                            </div>
+                            <ul class="admin-nav">
+                                <li>
+                                    <a href="/profile" translate>nav.edit_profile</a>
+                                </li>
+                                <li>
+                                    <a href="/notifications"><span translate>nav.notifications</span></a>
+                                    <span class="count-number">4</span>
+                                </li>
+                                <li>
+                                    <a href="/settings" translate>nav.settings</a>
+                                </li>
+                                <li>
+                                    <a href="/help" translate>nav.help</a>
+                                </li>
+                                <li class="user-logout">
+                                    <a href="#" translate>nav.logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header> <!-- end .navigation -->
         </div>
         <div ng-view></div>
 

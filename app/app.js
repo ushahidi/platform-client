@@ -34,6 +34,9 @@ angular.module('app',
     .directive('postPreview', require('./directives/post-preview.js'))
     .directive('signinSignoutButton', require('./directives/signin-signout-button.js'))
 
+    .directive('globalFilter', require('./directives/global-filter.js'))
+    .directive('postViewTabs', require('./directives/post-view-tabs.js'))
+    .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
     .service('Authentication', require('./services/authentication.js'))
     .service('PostEndpoint', require('./services/endpoint/post.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
@@ -46,6 +49,7 @@ angular.module('app',
     .controller('userFilter', require('./controllers/users/filter.js'))
     .controller('adminMapSettings', require('./controllers/admin/map-settings.js'))
     .controller('postMapView', require('./controllers/post-map-view.js'))
+    .controller('filterGlobal', require('./controllers/global-filter.js'))
 
     .config(require('./interceptors/authentication.js'))
     .config(require('./routes'))
