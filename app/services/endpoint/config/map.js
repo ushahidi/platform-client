@@ -5,7 +5,8 @@ module.exports = ['$resource', 'API_URL', function($resource, API_URL){
             method: 'GET',
             transformResponse: function(data /*, header*/) {
                 var parsedData = angular.fromJson(data);
-                delete parsedData['@group'];
+                delete parsedData.id;
+                delete parsedData.url;
                 delete parsedData.allowed_methods;
                 return parsedData;
             }

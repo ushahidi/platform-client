@@ -1,5 +1,5 @@
 {
-    "@group": "map",
+    "id": "map",
     "clustering": false,
     "maxClusterRadius": 50,
     "default_view": {

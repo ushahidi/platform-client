@@ -1,4 +1,5 @@
 {
+    "id": "site",
     "site_title": "Ushahidi Mock",
     "owner_name": "Joe Mock",
     "allowed_methods": {

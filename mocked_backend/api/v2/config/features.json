@@ -1,4 +1,5 @@
 {
+    "id": "features",
     "api_explorer": false,
     "data_provider": true,
     "form_wizard": false,
