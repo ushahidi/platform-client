@@ -31,6 +31,9 @@
     "element",
     "it",
     "expect",
+    "inject",
+    "jasmine",
+    "spyOn",
     "describe",
     "beforeEach",
     "afterEach"

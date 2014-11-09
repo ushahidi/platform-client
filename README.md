@@ -1,6 +1,13 @@
 Ushahidi Platform Prototype
 ===========================
 
+[![Build Status](https://img.shields.io/travis/ushahidi/platform-client/adding_karma3.svg?style=flat)](https://travis-ci.org/ushahidi/platform-client)
+[![Coverage Status](https://coveralls.io/repos/ushahidi/platform-client/badge.png?branch=master)](https://coveralls.io/r/ushahidi/platform-client?branch=master)
+[![Dependency Status](https://david-dm.org/ushahidi/platform-client/dev-status.svg?style=flat)](https://david-dm.org/ushahidi/platform-client#info=devDependencies)
+[![Codacy Badge](https://www.codacy.com/project/badge/2abbf2283f7d4d98a4c61762e713d161)](https://www.codacy.com/public/ushahidi/platformclient)
+
+___
+
 ### Libraries/Packages/Dependencies
 
 * Nodejs
@@ -92,7 +99,18 @@ To run the Docker container, run `gulp --docker-server`
 >
 > Issue `sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
 
-**Note:** The first build of the Docker server can take several minutes. Wait till you see `server is live @ http://<ip_address_or_localhost/` before attempting to view the site. 
+**Note:** The first build of the Docker server can take several minutes. Wait till you see `server is live @ http://<ip_address_or_localhost/` before attempting to view the site.
+
+### Running unit specs
+
+* for test driven development, there is the gulp task 'gulp tdd'
+  * when you run it:
+    * all unit specs under test/unit will be run once
+    * the following files will be watched and tests will be rerun on file changes
+      * all files under test/unit
+      * most of the files under app will be watched
+        * see the 'files' array in test/karma.conf.js for more details
+
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 

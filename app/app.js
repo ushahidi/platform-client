@@ -9,6 +9,7 @@ require('angular-ui-bootstrap/src/dropdown/dropdown');
 require('angular-ui-bootstrap/src/collapse/collapse');
 require('angular-ui-bootstrap/src/transition/transition');
 require('angular-ui-bootstrap/src/accordion/accordion');
+require('angular-mocks/angular-mocks');
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.backend_url;
