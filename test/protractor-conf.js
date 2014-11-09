@@ -28,7 +28,9 @@ if (process.env.TRAVIS_BUILD_NUMBER) {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'Ushahidi Angular Client: Protractor e2e specs'
+    'name': 'Ushahidi Angular Client: Protractor e2e specs',
+    'platform': 'Windows 8',
+    'screen-resolution': '1280x1024'
   };
 }
 
