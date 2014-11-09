@@ -3,10 +3,9 @@ module.exports = [function(){
         restrict: 'E',
         replace: true,
         scope: {
-            signedin: '=',
             signoutClick: '&'
         },
-        templateUrl: 'templates/partials/signin-signout-button.html',
+        templateUrl: 'templates/partials/user-menu.html',
 
     };
 }];
