@@ -325,12 +325,25 @@
     display: inline;
 }
 
-.share {
+.filter-actions {
     display: inline;
     float: right;
 
     @include media($small) {
         float: none;
         margin-left: 40px;
+    }
+
+    button a {
+        color: $white;
+        font-size: 1.3em;
+    }
+
+    .add-to-set-button {
+        @include button($warning-color);
+    }
+
+    .export-button {
+        @include button($success-color);
     }
 }
