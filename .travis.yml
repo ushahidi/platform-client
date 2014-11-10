@@ -1,3 +1,9 @@
+notifications:
+  hipchat:
+    rooms:
+        secure: "MpvHe3jcw/L9yoQYwC3QU5HhEalxHAC88AXbA1UdWG/F3KSMhlZEoRQrU34C4schqE4Ivj93ffsN0u5LcOwjVRhhvA5s3sNP+1tNLnpN5IDDLhb6mGSP9J3erE8GDbIWMG6HizHnz8nKmPw0ugvMCEvxNTePfLmR9uD31zp4IEo="
+addons:
+  sauce_connect: true
 language: node_js
 node_js:
   - 0.10
@@ -15,5 +21,3 @@ script:
   - gulp test-for-ci
   - gulp send-stats-to-coveralls
   - npm run protractor
-addons:
-  sauce_connect: true
