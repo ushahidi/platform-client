@@ -88,6 +88,7 @@
 /*------------------------------------*\
     $COMPONENTS
 \*------------------------------------*/
+// these are custom components from http://refills.bourbon.io/
 
 @import "components/pagination/pagination";
 @import "components/dropdown/dropdown-button";
@@ -106,6 +107,7 @@
 @import "partials/header/sub-nav";
 @import "partials/header/workspace-panel";
 @import "partials/searchbar/search-bar";
+@import "partials/view-tabs/view-tabs";
 @import "partials/list-filter/list-filter";
 @import "partials/filter/filter";
 @import "partials/list-view/list-view";

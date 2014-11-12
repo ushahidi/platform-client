@@ -1,215 +1,107 @@
-<div class="container">
-    <div class="main-content  post-detail">
+<div class="full-content  post-detail">
 
-        <div class="post-header">
-            <h4 class="title">{{title}}</h4>
+    <div class="map-controls-wrapper">
+        <post-detail-tabs></post-detail-tabs>
+    </div>
 
-            <div class="post-nav-wrapper">
-                <ul class="post-nav-list">
-                    <li class="post-nav-list__item  post-nav-prev"><a class="post-nav-button  js-post-prev" translate><i class="fa  fa-lg  fa-arrow-left"></i>nav.prev</a></li>
-                    <li class="post-nav-list__item  post-nav-next"><a class="post-nav-button  js-post-next" translate>nav.next<i class="fa  fa-lg  fa-arrow-right"></i></a></li>
-                </ul><!-- end .post-nav-list -->
-            </div> <!-- end .post-nav-wrapper -->
+    <section ng-controller="postMapView" class="map-view">
+        <leaflet defaults="defaults" markers="markers" center="center" height="200px" width="100%"></leaflet>
+    </section>
 
-        </div> <!-- end .post-header -->
+    <div class="post-detail-meta">
+        <ul>
+            <li>
+                <i class="fa  fa-clock-o"></i><span class="post-time" translate translate-value-time="10 months">post.details.time_ago</span>
+            </li>
 
-        <div class="wrapper">
+            <li>
+                <i class="fa  fa-user"></i><span><a href="#users/{{user.id}}"></a> <span translate>post.details.username</span></span>
+            </li>
 
-            <div class="container">
+            <li>
+                <i class="fa  fa-map-marker"></i> <span translate>post.details.location</span>
+            </li>
 
-                <div class="post-content-right">
+            <li class="post-detail-meta-export">
+                <a href=""><i class="fa  fa-share-square-o">  <span translate>post.export</span></a></i>
+            </li>
+        </ul>
+    </div>
 
-                    <div class="post-excerpt">
-                        <p>Proident reprehenderit exercitation magna ipsum excepteur proident aliquip ut dolor id exercitation. Elit aute incididunt in exercitation excepteur nisi. Qui magna quis incididunt nostrud culpa. Proident laboris incididunt.</p>
-                    </div> <!-- end .post-excerpt -->
+    <div class="container post-details">
+        <h4 class="post-header">Post Title
+            <span class="fa-stack">
+              <i class="fa fa-circle fa-stack-1x"></i>
+              <i class="fa fa-envelope-o fa-stack-1x"></i>
+            </span>
+            <span class="fa-stack">
+              <i class="fa fa-circle fa-stack-1x success"></i>
+              <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+            </span>
+        </h4>
 
-                    <div class="post-values">
-                        <ul class="post-values-list">
-                            <li class="post-values-list__item"><i class="fa  fa-map-marker"></i> <span translate>post.location</span>
-                                <a href="#">38.410558, -76728516</a>
-                                <a href="#">38.410558, -76728516</a>
-                            </li>
-                            <li class="post-values-list__item"><i class="fa  fa-tags"></i> <span translate>post.tags</span>
-                                <!-- TODO: rename class -->
-                                <span class="badge--tag1">tag #1</span>
-                                <span class="badge--tag2">tag #2</span>
-                            </li>
-                            <li class="post-values-list__item"><i class="fa  fa-globe"></i> <span translate>post.geometry_test</span>
-                                <a href="#" translate>post.view_on_map</a>
-                            </li>
-                            <li class="post-values-list__item"><i class="fa  fa-spinner"></i> <span translate>post.status</span>
-                                <span class="badge--unpublished">unpublished</span>
-                                <span class="badge--private">private</span>
-                            </li>
-                            <li class="post-values-list__item"><i class="fa  fa-link"></i> <span translate>post.links</span>
-                                <a href="#">ushahidi.com</a>
-                                <a href="#">brck.com</a>
-                            </li>
-                        </ul>
-                    </div> <!-- end .post-values -->
+        <div class="post-excerpt">
+            <p>Proident reprehenderit exercitation magna ipsum excepteur proident aliquip ut dolor id exercitation. Elit aute incididunt in exercitation excepteur nisi. Qui magna quis incididunt nostrud culpa. Proident laboris incididunt.</p>
+        </div> <!-- end .post-excerpt -->
 
-                </div> <!-- end .post-content-right -->
-
-                <div class="post-image">
-                    <img src="/img/post-image.jpg" alt="">
-                </div> <!-- end .post-image -->
-
-                <div class="post-meta">
-                    <h6 translate><i class="fa  fa-list"></i>post.details.post_details</h6>
-                    <div class="post-meta-author">
-                        <p><i class="fa  fa-user"></i><span><a href="#users/{{user.id}}"></a> Anonymous</span></p>
-                    </div> <!-- end .post-author -->
-
-                    <div class="post-meta-time">
-                        <p><i class="fa  fa-clock-o"></i><span class="post-time" translate translate-value-time="10 months">post.details.time_ago</span></p>
-                    </div> <!-- end .post-time-meta -->
-
-                    <div class="post-meta-published-status">
-                            <p><i class="fa  fa-file-o"></i><span class="post-time" translate>post.published</span></p>
-                    </div> <!-- end .post-published-status -->
-                </div> <!-- end .post-meta -->
-
-
-
-            <div class="post-thumbnails-wrapper">
-                <p class="click-to-zoom"><small translate><i class="fa  fa-search-plus"></i>nav.click_images_to_zoom</small></p>
-                <ul class="post-thumbnails-list  js-lightbox-gallery">
-                    <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb.jpg" alt=""></a></li>
-                    <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb2.jpg" alt=""></a></li>
-                    <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb3.jpg" alt=""></a></li>
-                    <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb4.jpg" alt=""></a></li>
-                </ul>
-            </div>
-
-            </div> <!-- end .container -->
-        </div> <!-- end .wrapper -->
-
-        <div class="post-footer">
-            <ul class="post-actions-list">
-                <li class="post-actions-list__item">
-                    <div class="post-respond  js-post-respond" ng-model="toggle" ng-click="toggle=!toggle" translate>
-                        <i class="fa  fa-mail-reply"></i>post.respond
+        <div class="post-values">
+            <ul class="post-values-list">
+                <li class="post-values-list__item">
+                    <div class="value-label">
+                        <i class="fa  fa-tags"></i> <span translate>post.categories</span>
+                    </div>
+                    <!-- TODO: rename class -->
+                    <div class="value-items">
+                        <span class="badge--category1">category #1</span>
+                        <span class="badge--category2">category #2</span>
                     </div>
                 </li>
+                <li class="post-values-list__item">
+                    <div class="value-label">
+                        <i class="fa  fa-spinner"></i> <span translate>post.status</span>
+                    </div>
 
-                <li class="post-actions-list__item">
-                    <div class="list-view-actions">
-                        <div class="dropdown">
-                            <div class="dropdown-container">
-                                <p class="dropdown-toggle" translate>post.post_actions.post_actions</p>
-                                <ul class="dropdown-menu  list-view-actions-list">
-                                    <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-edit  js-post-edit" translate> <i class="fa  fa-edit"></i>post.post_actions.edit</a>
-                                    </li>
-                                    <li class="list-view-actions-list__item">
-                                        <a href="/posts/add-to-set" class="post-add-to-set  js-post-set" translate> <i class="fa  fa-plus-circle"></i>post.post_actions.set</a>
-                                    </li>
-                                    <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-unpublish  js-post-unpublish" translate> <i class="fa  fa-file"></i>post.post_actions.unpublish</a>
-                                    </li>
-                                    <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-publish  js-post-publish" translate> <i class="fa  fa-file-o"></i>post.post_actions.publish</a>
-                                    </li>
-                                    <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-delete  js-post-delete" translate> <i class="fa  fa-trash-o"></i>post.post_actions.delete</a>
-                                    </li>
-                                </ul> <!-- end .dropdown-menu .list-view-edit -->
-                            </div> <!-- end .dropdown-container -->
-                        </div> <!-- end .dropdown -->
-                    </div> <!-- end .list-view-actions -->
+                    <div class="value-items">
+                        <span><i class="fa  fa-check-circle"></i><span translate>post.published</span></span>
+                        <span><i class="fa  fa-globe"></i><span translate>post.public</span></span>
+                    </div>
                 </li>
+                <li class="post-values-list__item">
+                    <div class="value-label">
+                        <i class="fa  fa-link"></i> <span translate>post.links</span>
+                    </div>
 
-            </ul> <!-- end .post-actions-list -->
+                    <div class="value-items">
+                        <a href="http://example.com/2014/accidents-report" class="value">Accidents Report 2014</a>
+                        <a href="http://ushahidi.com" class="value">ushahidi.com</a>
+                        <a href="http://brck.com" class="value">brck.com</a>
+                    </div>
+                </li>
+            </ul>
+        </div> <!-- end .post-values -->
 
-        </div> <!-- end .footer -->
+        <div class="post-thumbnails-wrapper">
+            <p class="click-to-zoom"><small translate><i class="fa  fa-search-plus"></i>nav.click_images_to_zoom</small></p>
+            <ul class="post-thumbnails-list  js-lightbox-gallery">
+                <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb.jpg" alt=""></a></li>
+                <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb2.jpg" alt=""></a></li>
+                <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb3.jpg" alt=""></a></li>
+                <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb4.jpg" alt=""></a></li>
+            </ul>
+        </div> <!-- end .post-thumbnails-wrapper -->
 
-        <div class="post-actions-message-panel" ng-show="toggle">
-            <textarea placeholder="Please type your message here ..." name="Name" rows="8" cols="40"></textarea>
-            <button type="submit" class="post-actions-submit-button  js-post-actions-submit-button" translate>post.send</button>
+        <div class="post-actions-message-panel">
+            <h6 class="header" translate>post.details.respond</h6>
+            <div class="user-avatar">
+                <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
+            </div>
+            <div class="text-area">
+                <textarea placeholder="Please type your message here ..." name="Name" rows="8" cols="200"></textarea>
+                <div class="message-actions">
+                    <button type="submit" class="post-actions-submit-button  js-post-actions-submit-button" translate>post.send</button>
+                </div>
+            </div>
         </div> <!-- end .respond-message-box -->
+    </div>
 
-    </div> <!-- end .main -->
-
-    <div class="sidebar  sidebar--page-detail">
-        <div class="sidebar-header">
-            <h5><div class="related-post-count">7</div> {{'post.posts_with_same_tags' | translate }}</h5>
-        </div> <!-- end .sidebar-header -->
-
-        <div class="sidebar-body">
-
-            <div class="related-post">
-                <div class="related-post-image">
-                    <img src="/img/post-detail-thumb.jpg" alt="" />
-                </div> <!-- end .related-post-image -->
-
-                <div class="related-post-details">
-                    <h5>
-                        <a href="#">Dolore eu excepteur</a>
-                    </h5>
-                    <div class="related-post-time">
-                        <p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
-                    </div> <!-- end .related-post-time -->
-                    <div class="related-post-excerpt">
-                        <p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
-                    </div> <!-- end .related-post-excerpt -->
-                </div> <!-- end .related-post-details -->
-            </div> <!-- end .related-post -->
-
-            <div class="related-post">
-                <div class="related-post-image">
-                    <img src="/img/post-detail-thumb2.jpg" alt="" />
-                </div> <!-- end .related-post-image -->
-
-                <div class="related-post-details">
-                    <h5>
-                        <a href="#">Dolore eu excepteur</a>
-                    </h5>
-                    <div class="related-post-time">
-                        <p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
-                    </div> <!-- end .related-post-time -->
-                    <div class="related-post-excerpt">
-                        <p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
-                    </div> <!-- end .related-post-excerpt -->
-                </div> <!-- end .related-post-details -->
-            </div> <!-- end .related-post -->
-
-            <div class="related-post">
-                <div class="related-post-image">
-                    <img src="/img/post-detail-thumb3.jpg" alt="" />
-                </div> <!-- end .related-post-image -->
-
-                <div class="related-post-details">
-                    <h5>
-                        <a href="#">Dolore eu excepteur</a>
-                    </h5>
-                    <div class="related-post-time">
-                        <p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
-                    </div> <!-- end .related-post-time -->
-                    <div class="related-post-excerpt">
-                        <p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
-                    </div> <!-- end .related-post-excerpt -->
-                </div> <!-- end .related-post-details -->
-            </div> <!-- end .related-post -->
-
-            <div class="related-post">
-                <div class="related-post-image">
-                    <img src="/img/post-detail-thumb4.jpg" alt="" />
-                </div> <!-- end .related-post-image -->
-
-                <div class="related-post-details">
-                    <h5>
-                        <a href="#">Dolore eu excepteur</a>
-                    </h5>
-                    <div class="related-post-time">
-                        <p> <i class="fa  fa-clock-o"></i>15:27 updated</p>
-                    </div> <!-- end .related-post-time -->
-                    <div class="related-post-excerpt">
-                        <p>Laborum elit id velit eu culpa excepteur exercitation sunt in. Minim cillum commodo duis elit voluptate qui ...</p>
-                    </div> <!-- end .related-post-excerpt -->
-                </div> <!-- end .related-post-details -->
-            </div> <!-- end .related-post -->
-
-            <div class="more"><span translate>post.more</span></div>
-        </div> <!-- end .sidebar-body -->
-    </div> <!-- end .sidebar -->
-</div> <!-- end .container -->
+</div> <!-- end .post-detail -->

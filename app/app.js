@@ -38,6 +38,7 @@ angular.module('app',
 
     .directive('globalFilter', require('./directives/global-filter.js'))
     .directive('postViewTabs', require('./directives/post-view-tabs.js'))
+    .directive('postDetailTabs', require('./directives/post-detail-tabs.js'))
     .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
     .service('Authentication', require('./services/authentication.js'))
     .service('PostEndpoint', require('./services/endpoint/post.js'))

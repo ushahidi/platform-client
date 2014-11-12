@@ -1,0 +1,72 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+* VIEW TABS...............view tabs
+*/
+
+/*------------------------------------*\
+    $VIEW TABS
+\*------------------------------------*/
+
+.view-tabs-wrapper {
+    @include outer-container();
+    @include user-select(none);
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0;
+    z-index: 2;
+
+    @include media($small) {
+        margin-top: 20px;
+    }
+}
+
+.view-tabs {
+    float: left;
+    width: 100%;
+
+    @include media($small) {
+        width: auto;
+    }
+
+    li {
+        float: left;
+        width: 33.3%;
+        background-color: $darkGray;
+        color: $white;
+        text-align: center;
+
+        @include media($mobile-up) {
+            width: auto;
+        }
+
+        &:hover {
+            background: $black;
+        }
+
+        &.active {
+            background-color: $white;
+
+            a {
+                color: $base-font-color;
+            }
+        }
+
+        a {
+            display: block;
+            padding: 13px 20px;
+            color: $white;
+        }
+
+        span {
+            display: none;
+
+            @include media($mobile) {
+                display: inline;
+                padding-left: 10px;
+            }
+        }
+    }
+}
