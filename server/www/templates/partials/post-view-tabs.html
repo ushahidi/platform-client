@@ -1,16 +1,16 @@
 <div class="view-tabs-wrapper">
     <ul class="view-tabs">
-        <li class="active">
+        <li ng-class="{active:$root.activePath=='/views/map'}">
             <a href="/views/map">
                 <i class="fa  fa-map-marker"></i><span translate>view_tabs.map</span>
             </a>
         </li>
-        <li>
+        <li ng-class="{active:$root.activePath=='/views/list'}">
             <a href="/views/list">
                 <i class="fa  fa-list"></i><span translate>view_tabs.list</span>
             </a>
         </li>
-        <li>
+        <li ng-class="{active:$root.activePath=='/views/graph'}">
             <a href="/views/graph">
                 <i class="fa  fa-bar-chart-o"></i><span translate>view_tabs.graph</span>
             </a>

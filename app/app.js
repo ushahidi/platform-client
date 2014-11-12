@@ -35,11 +35,11 @@ angular.module('app',
     .directive('postPreview', require('./directives/post-preview.js'))
     .directive('userMenu', require('./directives/user-menu.js'))
     .directive('signinButton', require('./directives/signin-button.js'))
-
     .directive('globalFilter', require('./directives/global-filter.js'))
     .directive('postViewTabs', require('./directives/post-view-tabs.js'))
     .directive('postDetailTabs', require('./directives/post-detail-tabs.js'))
     .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
+
     .service('Authentication', require('./services/authentication.js'))
     .service('PostEndpoint', require('./services/endpoint/post.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
@@ -59,4 +59,7 @@ angular.module('app',
     .config(require('./modules/ui-accordion'))
     .config(require('./locale-config.js'))
 
-    .run(require('./global-event-handlers.js'));
+    .run(require('./global-event-handlers.js'))
+    .run(require('./global-scope-variables.js'))
+
+    ;
