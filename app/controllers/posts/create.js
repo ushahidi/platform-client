@@ -23,9 +23,6 @@ function(
         $scope.forms = forms;
     });
 
-    $scope.active_form = {};
-    $scope.post = {};
-
     $scope.chooseForm = function(form) {
         $scope.active_form = form;
         $scope.post = postEntity({form_id: form.id});
