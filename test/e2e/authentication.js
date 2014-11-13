@@ -80,7 +80,7 @@ describe('authentication:', function() {
 
             it('should go to the home page', function(){
                 ptor.getCurrentUrl().then(function(url){
-                    expect(getLastUrlPart(url)).toBe('/views/map');
+                    expect(getLastUrlPart(url)).toBe('/map');
                 });
             });
 
