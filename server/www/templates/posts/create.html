@@ -20,7 +20,7 @@
             <label for="content">Content</label>
             <textarea id="content" placeholder="Enter a short description of the event" ng-model="post.content" required></textarea>
 
-            <div class="attribute" ng-repeat="attribute in attributes">
+            <div class="attribute" ng-repeat="attribute in attributes | filter:filterInForm">
             <label>{{attribute.label}}
                 <!-- type: date -->
                 <!-- todo: use a date picker, or find a way to split the value into input[date] and input[time] -->

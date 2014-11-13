@@ -43,7 +43,7 @@ angular.module('app',
 
     .service('Authentication', require('./services/authentication.js'))
     .service('FormEndpoint', require('./services/endpoint/form.js'))
-    .service('FormAttributeEndpoint', require('./services/endpoint/form-attribute.js'))
+    .service('FormAttributeEndpoint', require('./services/endpoint/form-attributes.js'))
     .service('PostEndpoint', require('./services/endpoint/post.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
     .service('PostEntity', require('./services/entity/post.js'))

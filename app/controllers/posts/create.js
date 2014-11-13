@@ -23,17 +23,27 @@ function(
         $scope.forms = forms;
     });
 
+    $scope.active_form = {};
+    $scope.post = {};
+
     $scope.chooseForm = function(form) {
         $scope.active_form = form;
         $scope.post = postEntity({form_id: form.id});
 
-        FormAttributeEndpoint.query({formId: form.id}).$promise.then(function(attrs) {
+        FormAttributeEndpoint.query().$promise.then(function(attrs) {
             $scope.attributes = attrs;
         });
     };
 
     $scope.filterNotDisabled = function (form) {
         return !form.disabled;
+    };
+
+    $scope.filterInForm = function(attr) {
+        if (!attr.forms[$scope.active_form.id]) {
+            return false;
+        }
+        return true;
     };
 
     $scope.createPost = function(post) {
