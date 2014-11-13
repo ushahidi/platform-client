@@ -150,7 +150,6 @@
         },
         "tags" : {
             "select_tags" : "Select tags",
-            "showing_x_to_y_from_n_tags" : "{{from}} to {{to}} from {{total}} Tags",
             "tag_actions" : "Tag Actions",
             "select" : "select",
             "edit" : "edit"
@@ -159,7 +158,7 @@
             "select_start_and_end_date" : "Select a start and end time",
             "from" : "From",
             "to" : "To",
-            "until_time" : "Untile time",
+            "until_time" : "Until time"
         },
         "keyword" : {
             "enter_keyword" : "Enter a keyword to search",
@@ -187,11 +186,11 @@
         }
     },
     "pagination": {
-        "showing_records" : "Showing __startRecord__ to  __endRecord__ from __totalRecords__ __modelName__"
+        "showing_records" : "Showing __startRecord__ to  __endRecord__ from __totalRecords__ __modelName__",
+        "showing_x_to_y_of_n_results" : "{{from}} to {{to}} of {{total}} results"
     },
     "post": {
         "posts" : "Posts",
-        "showing_x_to_y_from_n_posts" : "{{from}} to {{to}} from {{total}} posts",
         "all_posts" : "All Posts",
         "anonymous" : "Anonymous",
         "awaiting_review" : "Awaiting review",
@@ -311,7 +310,6 @@
         "unselect_all" : "Unselect all",
         "add_tag" : "Add tag",
         "delete" : "Delete",
-        "showing_x_to_y_from_n_tags" : "{{from}} to {{to}} from {{total}} Tags",
         "tag_actions" : "Tag Actions",
         "number_of_tags_shown" : "Number of tags shown",
         "sort_users_by" : "Sort users by",
@@ -353,7 +351,6 @@
         "change_role" : "Change role",
         "change_user_role" : "Change user role",
         "confirm_password" : "Confirm Password",
-        "showing_x_to_y_from_n_users" : "{{from}} to {{to}} from {{total}} Users",
         "create_user" : "Create User",
         "delete_this_user" : "Delete this user",
         "edit_profile" : "Edit Profile",
