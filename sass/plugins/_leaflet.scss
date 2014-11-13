@@ -19,6 +19,8 @@
 
 .map-view .angular-leaflet-map {
     margin-bottom: auto;
+    position: relative;
+    z-index: $map;
 }
 
 .angular-leaflet-map {

@@ -98,7 +98,7 @@ $dropdown-arrow-top-distance: 0;
     right: 0;
     top: $dropdown-distance-from-dropdown-menu;
     width: 228px;
-    z-index: 99999;
+    z-index: $body;
 
     &:before {
         @include position(absolute, 0 .44em 0 0);

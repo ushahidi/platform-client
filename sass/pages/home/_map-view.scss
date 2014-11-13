@@ -72,10 +72,10 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -668px;
+    bottom: -677px;
     height: 0;
     margin-top: 20px;
-    z-index: 2;
+    z-index: $filter;
 
     @include media($small) {
         bottom: 0;
@@ -163,8 +163,10 @@
         }
 
         .tabset {
+            position: relative;
             background-color: $blueGray;
             margin: 0;
+            z-index: $filter;
 
             .tab {
                 display: inline;
