@@ -1,6 +1,6 @@
 module.exports = ['$resource', 'API_URL', '$rootScope', function($resource, API_URL, $rootScope){
 
-    var PostEndpoint = $resource(API_URL + '/posts/:postId', {}, {
+    var PostEndpoint = $resource(API_URL + '/posts/:postId', {postId: '@postId'}, {
         query: {
             method: 'GET',
             isArray: true,

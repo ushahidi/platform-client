@@ -22,7 +22,7 @@
                         <ng-include src=" 'templates/partials/navigation-menu.html' "></ng-include>
 
                         <ul class="navigation-tools">
-                            <li class="nav-link  create-post"><a href="javascript:void(0)"><i class="fa  fa-plus"></i><span translate>nav.create</span></a></li>
+                            <li class="nav-link  create-post"><a ng-href="/posts/create"><i class="fa  fa-plus"></i><span translate>nav.create</span></a></li>
                             <li class="nav-link  workspace-nav  js-menu-trigger"><a href="/workspace"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
                             <signin-button ng-hide="signedin"></signin-button>
                             <user-menu ng-show="signedin" signout-click="signoutClick()"></user-menu>

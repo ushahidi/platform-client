@@ -2,20 +2,25 @@ module.exports = function($routeProvider, $locationProvider) {
 
     $locationProvider.html5Mode(true);
 
-    var postListRouteConfig = {
-      controller: require('./controllers/post-map-view.js'),
-      templateUrl: 'templates/post-map-view.html'
-    };
     $routeProvider
-        .when('/', postListRouteConfig)
+        .when('/', {
+            redirectTo: '/views/map'
+        })
         .when('/signin', {
             controller: require('./controllers/signin.js'),
             templateUrl: 'templates/signin.html'
         })
-        .when('/views/map', postListRouteConfig)
+        .when('/views/map', {
+            controller: require('./controllers/post-map-view.js'),
+            templateUrl: 'templates/post-map-view.html'
+        })
         .when('/views/list', {
             controller: require('./controllers/post-list-view.js'),
             templateUrl: 'templates/post-list-view.html'
+        })
+        .when('/posts/create', {
+            controller: require('./controllers/posts/create.js'),
+            templateUrl: 'templates/posts/create.html'
         })
         .when('/posts/detail', {
             controller: require('./controllers/posts/detail.js'),

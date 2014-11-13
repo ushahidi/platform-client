@@ -29,6 +29,7 @@ angular.module('app',
 
     .constant('BACKEND_URL', backendUrl)
     .constant('API_URL', backendUrl + '/api/v2')
+    .constant('DEFAULT_LOCALE', 'en_US')
     .constant('OAUTH_CLIENT_ID', 'ushahidiui')
     .constant('OAUTH_CLIENT_SECRET', '35e7f0bca957836d05ca0492211b0ac707671261')
 
@@ -41,8 +42,11 @@ angular.module('app',
     .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
 
     .service('Authentication', require('./services/authentication.js'))
+    .service('FormEndpoint', require('./services/endpoint/form.js'))
+    .service('FormAttributeEndpoint', require('./services/endpoint/form-attribute.js'))
     .service('PostEndpoint', require('./services/endpoint/post.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
+    .service('PostEntity', require('./services/entity/post.js'))
     .service('ConfigSiteEndpoint', require('./services/endpoint/config/site.js'))
     .service('ConfigFeaturesEndpoint', require('./services/endpoint/config/features.js'))
     .service('ConfigMapEndpoint', require('./services/endpoint/config/map.js'))
