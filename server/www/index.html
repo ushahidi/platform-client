@@ -24,8 +24,49 @@
                         <ul class="navigation-tools">
                             <li class="nav-link  create-post"><a ng-href="/posts/create"><i class="fa  fa-plus"></i><span translate>nav.create</span></a></li>
                             <li class="nav-link  workspace-nav  js-menu-trigger"><a href="/workspace"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
-                            <signin-button ng-hide="signedin"></signin-button>
-                            <user-menu ng-show="signedin" signout-click="signoutClick()"></user-menu>
+                            <li class="nav-link  sign-in" ng-hide="signedin">
+                                <a href="signin" id="signin-link">
+                                    <i class="fa  fa-sign-in"></i>
+                                    <span translate>user.login</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-link user-info" ng-show="signedin" signout-click="signoutClick()">
+                                <div class="dropdown">
+                                    <div class="dropdown-container">
+                                        <p class="dropdown-toggle">
+                                            <a id="user-menu-link" href="javascript:void(0)">
+                                                <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
+                                                <span translate>nav.user_name</span>
+                                                <span class="count-number">4</span>
+                                            </a>
+                                        </p>
+                                        <ul class="dropdown-menu">
+                                            <li class="user-role">
+                                                <a translate>nav.admin</a>
+                                            </li>
+                                            <li>
+                                                <a href="/profile" translate>nav.edit_profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="/notifications"><span translate>nav.notifications</span></a>
+                                                <span class="count-number">4</span>
+                                            </li>
+                                            <li>
+                                                <a href="/settings" translate>nav.settings</a>
+                                            </li>
+                                            <li>
+                                                <a href="/help" translate>nav.help</a>
+                                            </li>
+                                            <li class="user-logout">
+                                                <a id="signout-link" ng-click="signoutClick()" translate>nav.logout</a>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- end .dropdown-container -->
+                                </div> <!-- end .dropdown -->
+                            </li>
+
+
                         </ul> <!-- end .navigation-tools -->
                     </div> <!-- end .nav -->
                 </div> <!-- end .navigation-wrapper -->
