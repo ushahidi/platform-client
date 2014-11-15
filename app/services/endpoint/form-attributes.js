@@ -1,4 +1,10 @@
-module.exports = ['$resource', 'API_URL', function($resource, API_URL){
+module.exports = [
+    '$resource',
+    'Util',
+function(
+    $resource,
+    Util
+) {
 
     var FormAttributeEndpoint = $resource(API_URL + '/attributes/:id', {
         id: '@id'
@@ -7,8 +13,7 @@ module.exports = ['$resource', 'API_URL', function($resource, API_URL){
             method: 'GET',
             isArray: true,
             transformResponse: function(data /*, header*/) {
-                var parsedData = angular.fromJson(data);
-                return parsedData.results;
+                return Util.transformResponse(data).results;
             }
         }
     });

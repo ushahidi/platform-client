@@ -1,16 +1,14 @@
 module.exports = [
-    'API_URL',
-    'DEFAULT_LOCALE',
+    'CONST',
 function(
-    API_URL,
-    DEFAULT_LOCALE
+    CONST
 ) {
     return function(data) {
         return angular.extend({}, {
             id: 0,
             title: '',
             content: '',
-            locale: DEFAULT_LOCALE,
+            locale: CONST.DEFAULT_LOCALE,
             status: 'draft'
         }, data);
     };

@@ -30,22 +30,25 @@ angular.module('app',
         'posts'
     ])
 
-    .constant('BACKEND_URL', backendUrl)
-    .constant('API_URL', backendUrl + '/api/v2')
-    .constant('DEFAULT_LOCALE', 'en_US')
-    .constant('OAUTH_CLIENT_ID', 'ushahidiui')
-    .constant('OAUTH_CLIENT_SECRET', '35e7f0bca957836d05ca0492211b0ac707671261')
+    .constant('CONST', {
+        BACKEND_URL         : backendUrl,
+        API_URL             : backendUrl + '/api/v2',
+        DEFAULT_LOCALE      : 'en_US',
+        OAUTH_CLIENT_ID     : 'ushahidiui',
+        OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261'
+    })
 
     .directive('globalFilter', require('./directives/global-filter.js'))
     .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
 
     .service('Authentication', require('./services/authentication.js'))
+    .service('ConfigEndpoint', require('./services/endpoint/config.js'))
     .service('FormEndpoint', require('./services/endpoint/form.js'))
     .service('FormAttributeEndpoint', require('./services/endpoint/form-attributes.js'))
+    .service('PostEndpoint', require('./post/services/endpoints/post-endpoint.js'))
+    .service('PostEntity', require('./post/services/entities/post-entity.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
-    .service('ConfigSiteEndpoint', require('./services/endpoint/config/site.js'))
-    .service('ConfigFeaturesEndpoint', require('./services/endpoint/config/features.js'))
-    .service('ConfigMapEndpoint', require('./services/endpoint/config/map.js'))
+    .service('Util', require('./services/util.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('workspaceAccordion', require('./workspace'))
@@ -60,5 +63,9 @@ angular.module('app',
 
     .run(require('./global-event-handlers.js'))
     .run(require('./global-scope-variables.js'))
+
+    .factory('_', function() {
+        return require('underscore/underscore');
+    })
 
     ;

@@ -1,15 +1,21 @@
-module.exports = ['$resource', 'API_URL', function($resource, API_URL){
+module.exports = [
+    '$resource',
+    'Util',
+function(
+    $resource,
+    Util
+) {
 
-    var FormEndpoint = $resource(API_URL + '/forms/:formId', {}, {
+    var FormEndpoint = $resource(Util.apiUrl('/forms/:formId'), {}, {
         query: {
             method: 'GET',
             isArray: true,
             transformResponse: function(data /*, header*/) {
-                var parsedData = angular.fromJson(data);
-                return parsedData.results;
+                return Util.transformResponse(data).results;
             }
         }
     });
 
     return FormEndpoint;
+
 }];

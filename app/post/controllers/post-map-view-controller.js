@@ -1,4 +1,13 @@
-module.exports = ['$scope', 'ConfigMapEndpoint', 'PostEndpoint', function($scope, ConfigMapEndpoint, PostEndpoint) {
+module.exports = [
+    '$scope',
+    'ConfigEndpoint',
+    'PostEndpoint',
+function(
+    $scope,
+    ConfigEndpoint,
+    PostEndpoint
+) {
+
     $scope.title = 'Map View';
 
     angular.extend($scope, {
@@ -20,7 +29,7 @@ module.exports = ['$scope', 'ConfigMapEndpoint', 'PostEndpoint', function($scope
         }
     });
 
-    $scope.map = ConfigMapEndpoint.get();
+    $scope.map = ConfigEndpoint.get({ id: 'map' });
     $scope.posts = PostEndpoint.query();
 
 }];

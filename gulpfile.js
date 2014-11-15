@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     rename = require('gulp-rename'),
     gutil = require('gulp-util'),
+    notify = require('gulp-notify'),
     exec = require('child_process').exec,
     source = require('vinyl-source-stream'),
     browserify = require('browserify'),
@@ -21,6 +22,7 @@ var gulp = require('gulp'),
 function errorHandler (err) {
     gutil.beep();
     gutil.log(err.message || err);
+    notify.onError('Error: <%= error.message %>')(err);
 }
 
 // Options
@@ -92,7 +94,9 @@ gulp.task('sass', ['rename'], function() {
         }))
         .pipe(autoprefixer())
         .pipe(plumber.stop())
-        .pipe(gulp.dest(options.www + '/css'));
+        .pipe(gulp.dest(options.www + '/css'))
+        .pipe(notify('CSS compiled'))
+        ;
 });
 
 
@@ -125,7 +129,9 @@ gulp.task('browserify', function() {
         .transform(helpers.setBackendUrl())
         .bundle()
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest(options.www + '/js'));
+        .pipe(gulp.dest(options.www + '/js'))
+        .pipe(notify('JS compiled'))
+        ;
 });
 
 /**
@@ -142,7 +148,9 @@ gulp.task('watchify', function() {
         return bundler.bundle()
             .on('error', errorHandler)
             .pipe(source('bundle.js'))
-            .pipe(gulp.dest(options.www + '/js'));
+            .pipe(gulp.dest(options.www + '/js'))
+            .pipe(notify('JS compiled'))
+            ;
     }
 });
 

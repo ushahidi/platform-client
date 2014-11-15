@@ -1,4 +1,14 @@
-module.exports = ['$scope', '$translate', 'ConfigMapEndpoint', 'PostEndpoint', function($scope, $translate, ConfigMapEndpoint, PostEndpoint) {
+module.exports = [
+    '$scope',
+    '$translate',
+    'ConfigEndpoint',
+    'PostEndpoint',
+function(
+    $scope,
+    $translate,
+    ConfigEndpoint,
+    PostEndpoint
+) {
 
     $translate('map_settings.admin_map_settings').then(function(mapSettingsTranslation){
         $scope.title = mapSettingsTranslation;
@@ -19,7 +29,7 @@ module.exports = ['$scope', '$translate', 'ConfigMapEndpoint', 'PostEndpoint', f
         }
     });
 
-    $scope.map = ConfigMapEndpoint.get();
+    $scope.map = ConfigEndpoint.get({ id: 'map' });
     $scope.posts = PostEndpoint.query();
 
 }];

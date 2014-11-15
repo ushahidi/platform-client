@@ -1,12 +1,19 @@
-module.exports = ['$resource', 'API_URL', '$rootScope', function($resource, API_URL, $rootScope){
+module.exports = [
+    '$resource',
+    '$rootScope',
+    'Util',
+function(
+    $resource,
+    $rootScope,
+    Util
+) {
 
-    var TagEndpoint = $resource(API_URL + '/tags/:postId', {}, {
+    var TagEndpoint = $resource(Util.apiUrl('/tags/:postId'), {}, {
         query: {
             method: 'GET',
             isArray: true,
             transformResponse: function(data /*, header*/) {
-                var parsedData = angular.fromJson(data);
-                return parsedData.results;
+                return Util.transformResponse(data).results;
             }
         }
     });
@@ -16,4 +23,5 @@ module.exports = ['$resource', 'API_URL', '$rootScope', function($resource, API_
     });
 
     return TagEndpoint;
+
 }];

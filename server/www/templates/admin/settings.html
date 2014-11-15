@@ -10,10 +10,12 @@
                 <article class="form-wrapper">
                     <form id="site">
                         <label translate>settings.site_name</label>
-                        <input type="text" name="name" ng-value="site.site_name" placeholder="My Ushahidi Instance">
+                        <input type="text" name="name" ng-value="site.site_name" ng-model="site.site_name" placeholder="My Ushahidi Instance">
                         <label translate>settings.site_owner</label>
-                        <input type="text" name="owner" ng-value="site.owner_name" placeholder="My Name">
-                        <button translate>settings.save</button>
+                        <input type="text" name="owner" ng-value="site.owner_name" ng-model="site.owner_name" placeholder="My Name">
+                        <button ng-click="updateConfig('site', site)"
+                                ng-disabled="form.$invalid || isUnchanged(site) || saving_config['site']"
+                        ><i class="fa fa-cog fa-spin" ng-show="saving_config['site']"></i><span translate>settings.save</span></button>
                     </form>
                 </article>
 
@@ -22,7 +24,12 @@
                     <p translate>settings.features.please_select_features</p>
 
                     <article class="cards">
-                        <div ng-repeat="(feature,enabled) in features | orderBy:feature" ng-class="{'enabled': enabled}" class="card">
+                        <div class="card"
+                             ng-repeat="(feature,enabled) in features | orderBy:feature"
+                             ng-class="{'enabled': enabled}"
+                             ng-model="feature"
+                             ng-click="toggleFeature(feature, !enabled)"
+                        >
                             <div class="ribbon-wrapper"><div class="ribbon">{{ enabled ? 'disable?' : 'enable?' }}</div></div>
                             <div class="card-header">
                                 {{feature}}
