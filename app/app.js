@@ -11,6 +11,8 @@ require('angular-ui-bootstrap/src/transition/transition');
 require('angular-ui-bootstrap/src/accordion/accordion');
 require('angular-mocks/angular-mocks');
 
+require('./post/post-module.js');
+
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.backend_url;
 
@@ -24,7 +26,8 @@ angular.module('app',
         'ui.bootstrap.accordion',
         'ui.bootstrap.transition',
         'ui.tabs',
-        'leaflet-directive'
+        'leaflet-directive',
+        'posts'
     ])
 
     .constant('BACKEND_URL', backendUrl)
@@ -33,18 +36,13 @@ angular.module('app',
     .constant('OAUTH_CLIENT_ID', 'ushahidiui')
     .constant('OAUTH_CLIENT_SECRET', '35e7f0bca957836d05ca0492211b0ac707671261')
 
-    .directive('postPreview', require('./directives/post-preview.js'))
     .directive('globalFilter', require('./directives/global-filter.js'))
-    .directive('postViewTabs', require('./directives/post-view-tabs.js'))
-    .directive('postDetailTabs', require('./directives/post-detail-tabs.js'))
     .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
 
     .service('Authentication', require('./services/authentication.js'))
     .service('FormEndpoint', require('./services/endpoint/form.js'))
     .service('FormAttributeEndpoint', require('./services/endpoint/form-attributes.js'))
-    .service('PostEndpoint', require('./services/endpoint/post.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
-    .service('PostEntity', require('./services/entity/post.js'))
     .service('ConfigSiteEndpoint', require('./services/endpoint/config/site.js'))
     .service('ConfigFeaturesEndpoint', require('./services/endpoint/config/features.js'))
     .service('ConfigMapEndpoint', require('./services/endpoint/config/map.js'))
@@ -53,7 +51,6 @@ angular.module('app',
     .controller('workspaceAccordion', require('./workspace'))
     .controller('userFilter', require('./controllers/users/filter.js'))
     .controller('adminMapSettings', require('./controllers/admin/map-settings.js'))
-    .controller('postMapView', require('./controllers/post-map-view.js'))
     .controller('filterGlobal', require('./controllers/global-filter.js'))
 
     .config(require('./interceptors/authentication.js'))

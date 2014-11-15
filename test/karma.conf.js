@@ -8,6 +8,7 @@ module.exports = function(config){
         'node_modules/angular-translate/dist/angular-translate.js',
         'node_modules/angular-resource/angular-resource.js',
         'node_modules/angular-mocks/angular-mocks.js',
+        'app/post/**/*.js',
         'app/controllers/**/*.js',
         'app/directives/**/*.js',
         'app/interceptors/**/*.js',

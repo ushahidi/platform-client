@@ -10,22 +10,6 @@ module.exports = function($routeProvider, $locationProvider) {
             controller: require('./controllers/signin.js'),
             templateUrl: 'templates/signin.html'
         })
-        .when('/views/map', {
-            controller: require('./controllers/post-map-view.js'),
-            templateUrl: 'templates/post-map-view.html'
-        })
-        .when('/views/list', {
-            controller: require('./controllers/post-list-view.js'),
-            templateUrl: 'templates/post-list-view.html'
-        })
-        .when('/posts/create', {
-            controller: require('./controllers/posts/create.js'),
-            templateUrl: 'templates/posts/create.html'
-        })
-        .when('/posts/detail', {
-            controller: require('./controllers/posts/detail.js'),
-            templateUrl: 'templates/posts/detail.html'
-        })
         .when('/posts/add-to-set', {
             controller: require('./controllers/sets/add-to-set.js'),
             templateUrl: 'templates/sets/add-to-set.html'

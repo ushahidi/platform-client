@@ -1,15 +1,21 @@
-describe('PostsController', function(){
+var ROOT_PATH = '../../../../';
 
-    var $rootScope, $scope, $controller, mockPostEndpoint, mockPostResponse;
+describe('posts list controller', function(){
+
+    var $rootScope,
+        $scope,
+        $controller,
+        mockPostEndpoint,
+        mockPostResponse;
 
     beforeEach(function(){
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
         ])
-        .config(require('../../../app/locale-config.js'))
-        .controller('postsController', require('../../../app/controllers/post-list-view'));
+        .config(require(ROOT_PATH + 'app/locale-config.js'))
+        .controller('postListViewController', require(ROOT_PATH + 'app/post/controllers/post-list-view-controller.js'));
 
-        require('../simple-test-app-config')(testApp);
+        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
@@ -29,7 +35,7 @@ describe('PostsController', function(){
             }
         };
 
-        $controller('postsController', {
+        $controller('postListViewController', {
             $scope: $scope,
             PostEndpoint: mockPostEndpoint
         });
@@ -61,7 +67,7 @@ describe('PostsController', function(){
             };
             spyOn(mockPostEndpoint, 'query').and.callThrough();
 
-            $controller('postsController', {
+            $controller('postListViewController', {
                 $scope: $scope,
                 PostEndpoint: mockPostEndpoint
             });

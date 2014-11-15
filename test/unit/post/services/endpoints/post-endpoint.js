@@ -1,14 +1,21 @@
+var rootPath = '../../../../../';
+
 describe('PostEndpoint', function(){
 
-    var $rootScope, $httpBackend, BACKEND_URL, PostEndpoint, mockPostResponse;
+    var $rootScope,
+        $httpBackend,
+        BACKEND_URL,
+        PostEndpoint,
+        mockPostResponse;
+
 
     beforeEach(function(){
         var testApp = angular.module('testApp', [
         'ngResource'
         ])
-        .service('PostEndpoint', require('../../../../app/services/endpoint/post'));
+        .service('PostEndpoint', require(rootPath+'app/post/services/endpoints/post-endpoint.js'));
 
-        require('../../simple-test-app-config')(testApp);
+        require(rootPath+'test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });
