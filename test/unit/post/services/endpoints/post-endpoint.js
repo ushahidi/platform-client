@@ -20,10 +20,10 @@ describe('PostEndpoint', function(){
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function(_$httpBackend_, _$rootScope_, _BACKEND_URL_, _PostEndpoint_){
+    beforeEach(inject(function(_$httpBackend_, _$rootScope_, _CONST_, _PostEndpoint_){
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
-        BACKEND_URL = _BACKEND_URL_;
+        BACKEND_URL = _CONST_.BACKEND_URL;
         PostEndpoint = _PostEndpoint_;
     }));
 

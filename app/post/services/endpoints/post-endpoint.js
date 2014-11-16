@@ -1,21 +1,21 @@
 module.exports = [
     '$resource',
     '$rootScope',
-    'Util',
+    'CONST',
 function(
     $resource,
     $rootScope,
-    Util
+    CONST
 ) {
 
-    var PostEndpoint = $resource(Util.apiUrl('/posts/:postId'), {
+    var PostEndpoint = $resource(CONST.API_URL + '/posts/:postId', {
         postId: '@postId'
     }, {
         query: {
             method: 'GET',
             isArray: true,
             transformResponse: function(data /*, header*/) {
-                return Util.transformResponse(data).results;
+                return angular.fromJson(data).results;
             }
         }
     });
