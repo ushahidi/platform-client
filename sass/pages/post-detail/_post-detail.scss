@@ -63,10 +63,14 @@
     .post-detail-meta {
         @include span-columns(12);
         @extend %border-bottom;
-        padding: 20px;
+        background: $secondary-color;
 
-        @include media($small) {
-            padding: 0 10px;
+        .container {
+            padding: 20px;
+
+            @include media($small) {
+                padding: 10px 20px;
+            }
         }
 
         ul {
