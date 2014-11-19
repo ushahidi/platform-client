@@ -3,4 +3,7 @@ button {
         padding: 0;
         margin-right: 5px;
     }
+    &[disabled] {
+        background-color: $lightGray;
+    }
 }

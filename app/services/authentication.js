@@ -51,16 +51,19 @@ function(
                 scope: claimedScopes.join(' ')
             };
 
-            $http.post(Util.url('/oauth/token'), payload)
-            .success(function(data){
-                setToSigninState(data.access_token);
+            var promise = $http.post(Util.url('/oauth/token'), payload);
 
-                $rootScope.$broadcast('event:authentication:signin:succeeded');
-            })
-            .error(function(/*data, status, headers, config*/){
-                setToSignoutState();
-                $rootScope.$broadcast('event:authentication:signin:failed');
-            });
+            promise.then(
+                function(response){
+                    setToSigninState(response.data.access_token);
+                    $rootScope.$broadcast('event:authentication:signin:succeeded');
+                },
+                function(){
+                    setToSignoutState();
+                    $rootScope.$broadcast('event:authentication:signin:failed');
+                }
+            );
+            return promise;
         },
 
         signout: function(){

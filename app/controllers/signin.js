@@ -5,11 +5,18 @@ module.exports = ['$scope', 'Authentication', function($scope, Authentication) {
         $scope.password = '';
     };
 
-    $scope.signinSubmit = function(){
-        Authentication.signin($scope.username, $scope.password);
+    var setSigningInToFalse = function(){
+        $scope.signing_in = false;
         resetSigninForm();
     };
 
-    resetSigninForm();
+    $scope.signinSubmit = function(){
+        $scope.signing_in = true;
+        var promise = Authentication.signin($scope.username, $scope.password);
+
+        promise.then(setSigningInToFalse, setSigningInToFalse);
+    };
+
+    setSigningInToFalse();
 
 }];
