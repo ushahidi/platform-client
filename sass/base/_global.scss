@@ -55,6 +55,7 @@ hr {
 
     @include media($large) {
         @include span-columns(8);
+        margin: 0 auto;
     }
 }
 
@@ -128,4 +129,8 @@ select {
     border-radius: $global-radius;
     color: $sub-base-font-color;
     margin-bottom: 15px;
+}
+
+textarea {
+    margin-bottom: $base-line-height / 2;
 }

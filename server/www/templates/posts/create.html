@@ -1,55 +1,60 @@
-<div class="full-content  post-create">
+<div class="container">
+    <div class="full-content  post-create">
 
-    <div class="post-create-choose-form">
-        Choose a post type to create:
-        <ul>
-            <li ng-repeat="form in forms | filter:filterNotDisabled">
-                <i class="fa  fa-list-ul"></i>
-                <a ng-click="chooseForm(form)">{{form.name}}</a>
-                {{form.description}}
-            </li>
-        </ul>
-    </div>
+        <div class="post-create-choose-form" ng-hide="active_form">
+            <h3 class="header" translate>{{title}}</h3>
+            <p class="intro" translate>post.create.intro</p>
+            <ul class="post-create-form-list">
+                <li ng-repeat="form in forms | filter:filterNotDisabled" ng-click="chooseForm(form)" class="post-create-form-list__item">
+                    <div class="form-wrapper">
+                        <i class="fa  fa-list-ul"></i>
+                        <h4>{{form.name}}</h4>
+                        <p>{{form.description}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-    <div class="post-create-form" ng-show="active_form">
-        <h2>{{active_form.name}}</h2>
-        <form name="form" style="padding:1em 2em 2em">
-            <label for="title">Title</label>
-            <input id="title" type="text" placeholder="Enter a title" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
+        <div class="post-create-form container" ng-show="active_form">
+            <div class="create-form-header">
+                <a href="javascript:void(0)" class="back-button" ng-click="active_form = !active_form" ><i class="fa  fa-arrow-left"></i><span translate>post.create.back</span></a>
+                <h3 class="header">{{active_form.name}}</h3>
+            </div>
+            <form name="form">
+                <input id="title" type="text" placeholder="{{'post.create.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
 
-            <label for="content">Content</label>
-            <textarea id="content" placeholder="Enter a short description of the event" ng-model="post.content" required></textarea>
+                <textarea id="content" rows="10" placeholder="{{'post.create.form.description' | translate}}" ng-model="post.content" required></textarea>
 
-            <div class="attribute" ng-repeat="attribute in attributes | filter:filterInForm">
-            <label>{{attribute.label}}
-                <!-- type: date -->
-                <!-- todo: use a date picker, or find a way to split the value into input[date] and input[time] -->
-                <input ng-if="isDate(attribute)" name="{{attribute.key}}" type="text" ng-model="post.values[attribute.key]" ng-required="attribute.required">
+                <div class="attribute" ng-repeat="attribute in attributes | filter:filterInForm">
+                        <!-- type: date -->
+                        <!-- todo: use a date picker, or find a way to split the value into input[date] and input[time] -->
+                        <input ng-if="isDate(attribute)" name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key]" ng-required="attribute.required">
 
-                <!-- type: location -->
-                <div class="input-location" ng-if="isLocation(attribute)">
-                    <input name="{{attribute.key}}" type="text" ng-model="post.values[attribute.key]" ng-required="attribute.required">
-                    <!-- todo: add map control here -->
+                        <!-- type: location -->
+                        <div class="input-location" ng-if="isLocation(attribute)">
+                            <input name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[alabely]" ng-required="attribute.required">
+                            <!-- todo: add map control here -->
+                            <leaflet defaults="defaults" markers="markers" center="center" height="265px" width="100%"></leaflet>
+                        </div>
+
+                        <!-- type: select -->
+                        <select ng-if="isSelect(attribute)" name="{{attribute.key}}" ng-model="post.values[attribute.key]" ng-required="attribute.required">
+                            <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
+                        </select>
+
+                        <!-- type: text -->
+                        <input ng-if="isText(attribute)" name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key]" ng-required="attribute.required">
+
+                        <!-- type: textarea -->
+                        <textarea rows="10" ng-if="isTextarea(attribute)" name="{{attribute.key}}" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key]" ng-required="attribute.required"></textarea>
                 </div>
 
-                <!-- type: select -->
-                <select ng-if="isSelect(attribute)" name="{{attribute.key}}" ng-model="post.values[attribute.key]" ng-required="attribute.required">
-                    <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
-                </select>
+                <p class="submit-button">
+                    <button ng-click="createPost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post"
+                        ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.create.form_button</span></button>
+                </p>
+            </form>
+        </div>
 
-                <!-- type: text -->
-                <input ng-if="isText(attribute)" name="{{attribute.key}}" type="text" ng-model="post.values[attribute.key]" ng-required="attribute.required">
-
-                <!-- type: textarea -->
-                <textarea ng-if="isTextarea(attribute)" name="{{attribute.key}}" ng-model="post.values[attribute.key]" ng-required="attribute.required"></textarea>
-            </label>
-            </div>
-
-            <p class="submit" style="text-align:right">
-                <button ng-click="createPost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post"
-                    ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> Create Post</button>
-            </p>
-        </form>
     </div>
-
 </div>

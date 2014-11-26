@@ -17,7 +17,7 @@
     @include span-columns(12);
 }
 
-.map-view .angular-leaflet-map {
+.angular-leaflet-map {
     margin-bottom: auto;
     position: relative;
     z-index: $map;

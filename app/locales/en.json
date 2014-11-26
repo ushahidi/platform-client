@@ -255,6 +255,22 @@
                 "title_a_to_z" : "Title A to Z"
             }
         },
+        "create" : {
+            "intro" : "Choose a post type to create:",
+            "form_button" : "Create Post",
+            "back" : "Back",
+            "form" : {
+                "categories" : "Categories",
+                "description" : "Post Description",
+                "location" : "Location",
+                "title" : "Post Title",
+                "link" : {
+                    "name" : "Link Name",
+                    "url" : "Link url",
+                    "add_link" : "Add Link"
+                }
+            }
+        },
         "details" : {
             "location" : "Custom Location",
             "post_details" : "Post Details",

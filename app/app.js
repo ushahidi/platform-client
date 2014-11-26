@@ -40,6 +40,7 @@ angular.module('app',
 
     .directive('globalFilter', require('./directives/global-filter.js'))
     .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
+    .directive('inFocus', require('./directives/focus.js'))
 
     .service('Authentication', require('./services/authentication.js'))
     .service('ConfigEndpoint', require('./services/endpoint/config.js'))

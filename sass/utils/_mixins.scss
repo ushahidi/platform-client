@@ -8,6 +8,33 @@
 
 
 
+/*------------------------------------*\
+    $BLOCK GRID
+\*------------------------------------*/
+
+@mixin block-grid(
+	$span: $columns of $container-columns,
+	$inner-flex-padding: false
+) {
+	// ***unset** the $fg-gutter
+	$fg-gutter: 0em;
+
+	@include span-columns($span, block-collapse);
+
+	@include omega(nth($span, 1) + n);
+
+
+	@if ($inner-flex-padding == true) {
+		@include pad( 0 #{flex-gutter()} );
+	}
+
+	// **reset** the $fg-gutter
+	$fg-gutter: $gutter;
+}
+
+
+
+
 
 /*------------------------------------*\
     $TEXT COLOR ON BUTTONS

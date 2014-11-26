@@ -137,8 +137,9 @@
 // Home
 @import "pages/home/map-view";
 // Post Detail
-@import "pages/post-detail/post-detail";
-@import "pages/post-detail/sidebar--post-detail";
+@import "pages/post/detail/post-detail";
+@import "pages/post/detail/sidebar--post-detail";
+@import "pages/post/create/post-create";
 //Users
 @import "pages/users/users";
 // Sets

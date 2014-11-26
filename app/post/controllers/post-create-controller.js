@@ -72,4 +72,41 @@ function(
     $scope.isTextarea = function(attr) {
         return attr.input === 'textarea';
     };
+
+    // leaflet map or location attribute
+    angular.extend($scope, {
+        defaults: {
+            scrollWheelZoom: false
+        },
+
+        center: {
+            lat: 36.079868,
+            lng: -79.819416,
+            zoom: 4
+        },
+
+        markers: {
+            osloMarker: {
+                lat: 36.079868,
+                lng: -79.819416,
+                message: 'Greensboro, NC',
+                focus: true,
+                draggable: false
+            }
+        }
+    });
+
+    // add/remove links
+    $scope.links = [];
+
+    $scope.addLink = function () {
+        $scope.links.push({});
+    };
+
+    // remove current link row
+    $scope.removeLink = function(link) {
+        var currentIndex = $scope.links.indexOf(link);
+        $scope.links.splice(currentIndex, 1);
+    };
+
 }];
