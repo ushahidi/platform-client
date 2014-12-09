@@ -12,6 +12,7 @@ require('angular-ui-bootstrap/src/accordion/accordion');
 require('angular-mocks/angular-mocks');
 
 require('./post/post-module.js');
+require('./user/user-module.js');
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.backend_url;
@@ -27,7 +28,8 @@ angular.module('app',
         'ui.bootstrap.transition',
         'ui.tabs',
         'leaflet-directive',
-        'posts'
+        'posts',
+        'users'
     ])
 
     .constant('CONST', {
@@ -51,7 +53,6 @@ angular.module('app',
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('workspaceAccordion', require('./workspace'))
-    .controller('userFilter', require('./controllers/users/filter.js'))
     .controller('adminMapSettings', require('./controllers/admin/map-settings.js'))
     .controller('filterGlobal', require('./controllers/global-filter.js'))
 
@@ -65,6 +66,9 @@ angular.module('app',
 
     .factory('_', function() {
         return require('underscore/underscore');
+    })
+    .factory('gravatar', function() {
+        return require('gravatar');
     })
 
     ;

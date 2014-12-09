@@ -64,14 +64,14 @@
     <form role="search" class="js-user-search-form" action="">
 
         <div class="filter-wrapper">
-            <div ng-controller="userFilter" class="filter-tabs">
+            <div class="filter-tabs">
 
                 <div class="user-roles-desktop">
                     <ul class="filter-tabs-list  js-filter-tabs-list">
-                        <li ng-repeat="tab in tabs" ng-click="select(tab)" ng-class="{active : isActive(tab)}" class="filter-tabs-list__item  js-user-filter-role">
+                        <li ng-repeat="role in roles" ng-click="selectRole(role)" ng-class="{active : isActiveRole(role)}" class="filter-tabs-list__item  js-user-filter-role">
                             <a href="">
-                                <span class="role-title">{{"user.roles." + tab | translate}}
-                                    <span class="{{name}}-count-number"><span class="count-number">0</span></span>
+                                <span class="role-title">{{"user.roles." + role | translate}}
+                                    <span class="{{role}}-count-number"><span class="count-number">{{count[role]}}</span></span>
                                 </span>
                             </a>
                         </li>
@@ -86,8 +86,8 @@
                                 <p class="dropdown-description" translate>user.roles</p>
                                 <p class="dropdown-toggle" translate>user.click_to_select</p>
                                 <ul class="dropdown-menu  list-view-actions-list">
-                                    <li ng-repeat="tab in tabs" ng-click="select(tab)" ng-class="{active: isActive(tab)}" class="list-view-actions-list__item  js-user-filter-role">
-                                        <span class="role-title">{{tab}}</span>
+                                    <li ng-repeat="role in roles" ng-click="selectRole(role)" ng-class="{active: isActiveRole(role)}" class="list-view-actions-list__item  js-user-filter-role">
+                                        <span class="role-title">{{"user.roles." + role | translate}}</span>
                                     </li>
                                 </ul> <!-- end .dropdown-menu .list-view-edit -->
                             </div> <!-- end .dropdown-container -->
@@ -101,9 +101,12 @@
             <div class="search-field-wrapper--filter--role">
                 <div class="search-bar">
                     <div class="search-and-submit">
-                        <label id="search-label" class="visually-hidden" for="search-field" translate>user.search</label>
-                        <input type="search" placeholder="{{ 'user.keyword_search' | translate}}" />
-                        <button type="submit" translate>user.go</button>
+                        <form id="user-search">
+                            <label id="search-label" class="visually-hidden" for="search-field" translate>user.search</label>
+                            <input type="search" ng-model="q" placeholder="{{ 'user.keyword_search' | translate}}" />
+                            <button type="submit" ng-click="searchUsers()"><i class="fa fa-cog fa-spin" ng-show="searching"></i
+                                ><span translate>user.go</span></button>
+                        </form>
                     </div>
                 </div>
             </div> <!-- end .search-field-wrapper -->
@@ -113,19 +116,20 @@
     </form>
 
     <div class="wrapper">
-        <ul class="list-view">
+        <div class="list-view-empty" ng-hide="users.length"><em translate>empty.user</em></div>
+        <ul class="list-view" ng-if="users.length">
             <li ng-repeat="user in users | orderBy:'name'" class="list-view__item">
                 <div class="list-view-image--user">
-                    <img ng-src="{{ user.image }}" alt="" />
+                    <img ng-src="{{ getGravatar(user) }}" alt="" />
                 </div> <!-- end .list-view-image -->
 
                 <div class="list-view-details--user">
-                    <h4 class="list-view-header">{{ user.name }}</h4>
+                    <h4 class="list-view-header">{{ user.username }}</h4>
 
                     <div class="details-column-a">
-                        <p class="user-list-role"><b translate>user.role</b>{{ user.role }}</p>
+                        <p class="user-list-role"><b translate>user.role</b>{{ getRoleName(user.role) }}</p>
                         <p class="user-list-full-name"><b translate>user.full_name</b>
-                            <span>{{ user.name }}</span>
+                            <span>{{ user.realname }}</span>
                         </p>
                     </div> <!-- end .details-column-a -->
 
