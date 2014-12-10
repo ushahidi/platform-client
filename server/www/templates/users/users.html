@@ -2,31 +2,6 @@
 
     <div class="manage-users-header">
         <h4 class="title">{{title}}</h4>
-
-        <div class="user-actions">
-            <div class="dropdown">
-                <div class="dropdown-container">
-                    <p class="dropdown-toggle" translate>user.user_actions</p>
-                    <ul class="dropdown-menu  list-view-actions-list">
-                        <li class="list-view-actions-list__item">
-                            <a href="#" class="js-select-all">
-                                <span>Select All</span>
-                                <span class="visually-hidden" translate>user.unselect_all</span>
-                            </a>
-                        </li>
-                        <li class="list-view-actions-list__item  js-bulk-action  disabled">
-                            <a href="#" translate><i class="fa  fa-cogs"></i>user.change_role</a>
-                        </li>
-                        <li class="list-view-actions-list__item">
-                            <a href="#" class="js-user-create" translate><i class="fa  fa-user"></i>user.add_user</li>
-                        </li>
-                        <li class="list-view-actions-list__item  js-bulk-action  disabled">
-                            <a href="#" class="js-user-bulk-delete" translate><i class="fa  fa-trash-o"></i>user.delete</a>
-                        </li>
-                    </ul> <!-- end .dropdown-menu .list-view-edit -->
-                </div> <!-- end .dropdown-container -->
-            </div> <!-- end .dropdown -->
-        </div> <!-- end .list-view-actions -->
     </div> <!-- end .manage-users-header -->
 
     <div class="list-filter--alt">
@@ -61,83 +36,41 @@
             </div> <!-- end .list-filter-wrapper -->
     </div> <!-- end .list-filter -->
 
-    <form role="search" class="js-user-search-form" action="">
-
-        <div class="filter-wrapper">
-            <div class="filter-tabs">
-
-                <div class="user-roles-desktop">
-                    <ul class="filter-tabs-list  js-filter-tabs-list">
-                        <li ng-repeat="role in roles" ng-click="selectRole(role)" ng-class="{active : isActiveRole(role)}" class="filter-tabs-list__item  js-user-filter-role">
-                            <a href="">
-                                <span class="role-title">{{"user.roles." + role | translate}}
-                                    <span class="{{role}}-count-number"><span class="count-number">{{count[role]}}</span></span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div> <!-- end .user-roles -->
-
-                <!-- Filter by role mobile UI -->
-                <div class="user-roles-mobile">
-                    <div class="user-roles">
-                        <div class="dropdown">
-                            <div class="dropdown-container">
-                                <p class="dropdown-description" translate>user.roles</p>
-                                <p class="dropdown-toggle" translate>user.click_to_select</p>
-                                <ul class="dropdown-menu  list-view-actions-list">
-                                    <li ng-repeat="role in roles" ng-click="selectRole(role)" ng-class="{active: isActiveRole(role)}" class="list-view-actions-list__item  js-user-filter-role">
-                                        <span class="role-title">{{"user.roles." + role | translate}}</span>
-                                    </li>
-                                </ul> <!-- end .dropdown-menu .list-view-edit -->
-                            </div> <!-- end .dropdown-container -->
-                        </div> <!-- end .dropdown -->
-                    </div> <!-- end .list-view-actions -->
-                </div> <!-- end .filter-tabs-mobile -->
-                <!-- Filter by role mobile UI ends -->
-
-            </div> <!-- end .filter-tabs -->
-
-            <div class="search-field-wrapper--filter--role">
-                <div class="search-bar">
-                    <div class="search-and-submit">
-                        <form id="user-search">
-                            <label id="search-label" class="visually-hidden" for="search-field" translate>user.search</label>
-                            <input type="search" ng-model="q" placeholder="{{ 'user.keyword_search' | translate}}" />
-                            <button type="submit" ng-click="searchUsers()"><i class="fa fa-cog fa-spin" ng-show="searching"></i
-                                ><span translate>user.go</span></button>
-                        </form>
-                    </div>
-                </div>
-            </div> <!-- end .search-field-wrapper -->
-
-        </div> <!-- end .filter-wrapper -->
-
-    </form>
+    <div class="filter-bar-wrapper">
+        <div class="filter-bar">
+            <ul>
+                <li class="delete-user" ng-class="{'active': isChecked}"><i class="fa  fa-trash-o"></i> Delete</li>
+                <li>
+                    <select ng-disabled="!isChecked">
+                        <option>Change Role...</option>
+                        <option
+                            ng-repeat="role in roles"
+                            value="{{'user.roles.' + role | translate}}">
+                            {{'user.roles.' + role | translate}}
+                        </option>
+                    </select>
+                </li>
+                <li class="add-user">
+                    <i class="fa  fa-plus-circle"></i> Add User
+                </li>
+            </ul>
+        </div> <!-- end .filter-tabs -->
+    </div> <!-- end .filter-wrapper -->
 
     <div class="wrapper">
         <div class="list-view-empty" ng-hide="users.length"><em translate>empty.user</em></div>
-        <ul class="list-view" ng-if="users.length">
+        <ul class="list-view user-list" ng-if="users.length">
             <li ng-repeat="user in users | orderBy:'name'" class="list-view__item">
+                <input type="checkbox" ng-model="isChecked">
                 <div class="list-view-image--user">
                     <img ng-src="{{ getGravatar(user) }}" alt="" />
                 </div> <!-- end .list-view-image -->
 
                 <div class="list-view-details--user">
-                    <h4 class="list-view-header">{{ user.username }}</h4>
-
-                    <div class="details-column-a">
-                        <p class="user-list-role"><b translate>user.role</b>{{ getRoleName(user.role) }}</p>
-                        <p class="user-list-full-name"><b translate>user.full_name</b>
-                            <span>{{ user.realname }}</span>
-                        </p>
-                    </div> <!-- end .details-column-a -->
-
-                    <div class="details-column-b">
-                        <p class="user-list-last-login"><b translate>user.last_login</b>{{ user.lastLogin | date: 'short' }}</p>
-                        <p class="user-list-last-attempt"><b translate>user.last_attempt</b>{{ user.lastAttempt | date: 'short' }}</p>
-                        <p class="user-list-failed-attempt"><b translate>user.failed_attempts</b>{{ user.attempts }}</p>
-                    </div> <!-- end .details-column-b -->
+                    <a href="/user/profile">
+                        <h4 class="list-view-header">{{ user.username }}</h4>
+                    </a>
+                    <p class="user-list-role"><b translate>user.role</b>{{ getRoleName(user.role) }}</p>
                 </div> <!-- end .list-view-details-user -->
             </li>
         </ul><!-- end .user-list -->

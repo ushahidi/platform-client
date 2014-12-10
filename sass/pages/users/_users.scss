@@ -3,7 +3,7 @@
 \*------------------------------------*/
 /*
 * HEADER...............header styles
-* FITLER TABS/SEARCH...............user filter styles
+* FITLER BAR...............filter by role, delete user, add user
 * USER LIST....................user profile and details styles
 */
 
@@ -17,72 +17,72 @@
 
 .manage-users-header {
     @include header($blueGray);
+    padding: 20px;
+
+    @include media($small) {
+        padding: 30px;
+    }
 
     .title {
         color: $white;
-        margin-bottom: 30px;
-    }
-}
-
-.user-actions {
-    @include span-columns(12);
-
-    @include media($mobile-up) {
-        @include span-columns(6);
-        float: right;
-    }
-
-    .dropdown,
-    .dropdown-container,
-    .dropdown-toggle {
-        @include fill-parent;
-
-        @include media($mobile-up) {
-            width: initial;
-        }
+        // margin-bottom: 30px;
     }
 }
 
 /*------------------------------------*\
-    $FITLER TABS
+    $FITLER BAR
 \*------------------------------------*/
+.filter-bar-wrapper {
+    @include span-columns(12);
+    background-color: darken($secondary-color, 5);
+    padding: 20px 20px 0 20px;
 
-.user-roles-desktop {
-    display: none;
+    .filter-bar {
+        @include span-columns(12);
 
-    @include media($small) {
-        display: block;
-    }
-}
+        ul li {
+            margin-bottom: 20px;
 
-.user-roles-mobile {
+            @include media($small) {
+                display: inline;
+                padding-right: 20px;
+            }
 
-    @include media($small) {
-        display: none;
-    }
+            &.delete-user {
+                cursor: disabled;
+                opacity: .5;
 
-    .dropdown,
-    .dropdown-container {
-        @include fill-parent;
+                &.active {
+                    cursor: pointer;
+                    opacity: 1;
+                }
+            }
 
-        @include media($mobile-up) {
-            width: 100%;
-        }
-    }
+            select {
+                margin-bottom: 0;
 
-    .dropdown-description {
-        width: 31%;
+                @include media($small) {
+                    display: inline;
+                    width: 20%;
+                }
 
-        @include media($mobile-up) {
-            width: 30%;
-        }
-    }
+                @include media($medium) {
+                    width: 15%;
+                }
 
-    .dropdown-toggle {
-        width: 69%;
+                @include media($xlarge) {
+                    width: 10%;
+                }
+            }
 
-        @include media($mobile-up) {
-            width: 70%;
+            &.add-user {
+                @include button($black);
+                color: $white;
+
+                @include media($small) {
+                    float: right;
+                }
+            }
         }
     }
 }
@@ -91,18 +91,21 @@
     $USER LIST
 \*------------------------------------*/
 
+.user-list {
+
+    .list-view__item {
+        padding: 30px 30px 30px 55px;
+    }
+}
+
 .list-view-image--user {
-    @extend .list-view-image;
 
     img {
+        float: left;
         border-radius: 200px;
         border: none;
-        width: 110px;
-    }
-
-    @include media($small) {
-        @include span-columns(2, table);
-        padding-right: 38px;
+        width: 60px;
+        margin-right: 40px;
     }
 }
 
@@ -111,24 +114,26 @@
     margin-top: 10px;
     color: $base-font-color;
 
-    .details-column-a {
+    @include media($small) {
+        @include span-columns(10);
+    }
+
+    .list-view-header {
         @include span-columns(12);
+        margin-bottom: 0;
 
         @include media($small) {
             @include span-columns(6);
         }
     }
 
-    .details-column-b {
+    .user-list-role {
         @include span-columns(12);
+        margin-bottom: 0;
 
         @include media($small) {
             @include span-columns(6);
+            padding-top: 4px;
         }
-    }
-
-    [class*='user-list-'] {
-        margin-bottom: 10px;
-        font-size: emCalc(12);
     }
 }

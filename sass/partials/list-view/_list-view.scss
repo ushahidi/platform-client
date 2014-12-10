@@ -31,6 +31,7 @@
 .list-view__item {
     @include span-columns(12);
     padding: 30px;
+    position: relative;
 
     &:first-child {
         border-top: none;
@@ -38,6 +39,12 @@
 
     &:nth-child(even) {
         @extend %striped;
+    }
+
+    input[type="checkbox"] {
+        position: absolute;
+        top: 44%;
+        left: 20px;
     }
 }
 
