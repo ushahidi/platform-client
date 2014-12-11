@@ -3,7 +3,7 @@
 
         <div class="post-create-choose-form" ng-hide="active_form">
             <h3 class="header" translate>{{title}}</h3>
-            <p class="intro" translate>post.create.intro</p>
+            <p class="intro" translate>post.modify.intro</p>
             <ul class="post-create-form-list">
                 <li ng-repeat="form in forms | filter:filterNotDisabled" ng-click="chooseForm(form)" class="post-create-form-list__item">
                     <div class="form-wrapper">
@@ -17,13 +17,13 @@
 
         <div class="post-create-form container" ng-show="active_form">
             <div class="create-form-header">
-                <a href="javascript:void(0)" class="back-button" ng-click="active_form = !active_form" ><i class="fa  fa-arrow-left"></i><span translate>post.create.back</span></a>
+                <a ng-click="goBack()" class="back-button"><i class="fa  fa-arrow-left"></i><span translate>post.modify.back</span></a>
                 <h3 class="header">{{active_form.name}}</h3>
             </div>
             <form name="form">
-                <input id="title" type="text" placeholder="{{'post.create.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
+                <input id="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
 
-                <textarea id="content" rows="10" placeholder="{{'post.create.form.description' | translate}}" ng-model="post.content" required></textarea>
+                <textarea id="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required></textarea>
 
                 <div class="attribute" ng-repeat="attribute in attributes | filter:filterInForm">
                         <!-- type: date -->
@@ -50,8 +50,8 @@
                 </div>
 
                 <p class="submit-button">
-                    <button ng-click="createPost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post"
-                        ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.create.form_button</span></button>
+                    <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post"
+                        ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.form_button</span></button>
                 </p>
             </form>
         </div>

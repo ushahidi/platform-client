@@ -2,7 +2,7 @@ module.exports = [
     '$scope',
     '$translate',
     '$location',
-    'PostEntity',
+    '$routeParams',
     'PostEndpoint',
     'FormEndpoint',
     'FormAttributeEndpoint',
@@ -10,54 +10,44 @@ function(
     $scope,
     $translate,
     $location,
-    postEntity,
+    $routeParams,
     PostEndpoint,
     FormEndpoint,
     FormAttributeEndpoint
 ) {
-    $translate('post.create_post').then(function(title){
+    $translate('post.edit_post').then(function(title){
         $scope.title = title;
     });
 
-    FormEndpoint.query().$promise.then(function(forms) {
-        $scope.forms = forms;
+    // Activate editing mode
+    $scope.is_edit = true;
+
+    PostEndpoint.get({postId: $routeParams.postId}).$promise.then(function(post) {
+        $scope.post = post;
+        $scope.active_form = FormEndpoint.get({formId: post.form.id});
+        $scope.attributes = FormAttributeEndpoint.query();
     });
 
-    $scope.chooseForm = function(form) {
-        $scope.active_form = form;
-        $scope.post = postEntity({form_id: form.id});
-
-        FormAttributeEndpoint.query().$promise.then(function(attrs) {
-            $scope.attributes = attrs;
-        });
-    };
-
-    $scope.filterNotDisabled = function (form) {
-        return !form.disabled;
-    };
-
     $scope.filterInForm = function(attr) {
-        if (!attr.forms[$scope.active_form.id]) {
+        if (!attr.forms[$scope.post.form.id]) {
             return false;
         }
         return true;
     };
 
     $scope.goBack = function() {
-        $scope.active_form = null;
+        $location.path('/posts/detail/' + $scope.post.id);
     };
 
     $scope.savePost = function(post) {
         $scope.saving_post = true;
-        var response = PostEndpoint.save(post, function () {
+        var response = PostEndpoint.update(post, function () {
             if (response.errors){
                 // Handle errors
                 console.log(response);
             }
 
-            if (response.id) {
-                $location.path('/posts/detail/' + response.id);
-            }
+            $scope.goBack();
         });
     };
 

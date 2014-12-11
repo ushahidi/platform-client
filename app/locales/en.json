@@ -255,9 +255,9 @@
                 "title_a_to_z" : "Title A to Z"
             }
         },
-        "create" : {
-            "intro" : "Choose a post type to create:",
-            "form_button" : "Create Post",
+        "modify" : {
+            "intro" : "Choose a post type:",
+            "form_button" : "Save Post",
             "back" : "Back",
             "form" : {
                 "categories" : "Categories",

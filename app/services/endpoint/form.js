@@ -6,7 +6,9 @@ function(
     Util
 ) {
 
-    var FormEndpoint = $resource(Util.apiUrl('/forms/:formId'), {}, {
+    var FormEndpoint = $resource(Util.apiUrl('/forms/:formId'), {
+            formId: '@formId'
+        }, {
         query: {
             method: 'GET',
             isArray: true,

@@ -17,6 +17,9 @@ function(
             transformResponse: function(data /*, header*/) {
                 return angular.fromJson(data).results;
             }
+        },
+        update: {
+            method: 'PUT'
         }
     });
 
