@@ -60,7 +60,7 @@
 
 .post-detail {
 
-    .post-detail-meta {
+    .post-detail-meta-wrapper {
         @include span-columns(12);
         @extend %border-bottom;
         background: $secondary-color;
@@ -73,31 +73,36 @@
             }
         }
 
-        ul {
+        .post-detail-meta {
             @include span-columns(12);
 
-            li {
-                display: block;
-                margin-right: 20px;
-                padding: 10px;
+            @include media($small) {
+                @include span-columns(8);
+            }
+        }
 
-                @include media($small) {
-                    display: inline;
-                    float: left;
-                }
+        .post-detail-actions {
+            @include span-columns(12);
 
-                &:last-child {
-                    margin-right: 0;
-                }
+            @include media($small) {
+                display: inline-block;
+                float: right;
+                width: inherit;
+            }
+        }
 
-                &.post-detail-meta-export {
+        ul li {
+            display: block;
+            margin-right: 20px;
+            padding: 10px;
 
+            @include media($small) {
+                display: inline;
+                float: left;
+            }
 
-                    @include media($small) {
-                        border-left: 1px solid $secondary-color;
-                        float: right;
-                    }
-                }
+            &:last-child {
+                margin-right: 0;
             }
         }
     }

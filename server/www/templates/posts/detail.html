@@ -8,9 +8,9 @@
         <leaflet defaults="defaults" markers="markers" center="center" height="200px" width="100%"></leaflet>
     </section>
 
-    <div class="post-detail-meta">
+    <div class="post-detail-meta-wrapper">
         <div class="container">
-            <ul>
+            <ul class="post-detail-meta">
                 <li>
                     <i class="fa  fa-clock-o"></i><span class="post-time" translate translate-value-time="10 months">post.details.time_ago</span>
                 </li>
@@ -22,9 +22,14 @@
                 <li>
                     <i class="fa  fa-map-marker"></i> <span translate>post.details.location</span>
                 </li>
+            </ul>
 
-                <li class="post-detail-meta-export">
+            <ul class="post-detail-actions">
+                <li class="post-detail-export">
                     <a href=""><i class="fa  fa-share-square-o">  <span translate>post.export</span></a></i>
+                </li>
+                <li class="post-detail-edit">
+                    <a ng-href="/posts/edit/{{post.id}}"><i class="fa  fa-edit">  <span translate>post.edit_post</span></a></i>
                 </li>
             </ul>
         </div>
