@@ -66,6 +66,8 @@
 //All Content
 
 .list-view-content {
+    display: table;
+    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -138,6 +140,14 @@
         @include media($small) {
             float: right;
         }
+    }
+
+    .badge--private {
+        @include badge($black);
+    }
+
+    .badge--unpublished {
+        @include badge($error-color);
     }
 }
 
