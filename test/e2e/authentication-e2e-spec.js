@@ -2,8 +2,6 @@ var getLastUrlPart = function(url){
     return url.substr(url.lastIndexOf('/'));
 };
 
-var ptor = protractor.getInstance();
-
 var signinLinkSelector = 'a#signin-link';
 var signoutLinkSelector = 'a#signout-link';
 var userMenuLinkSelector = 'a#user-menu-link';
@@ -31,7 +29,7 @@ describe('authentication:', function() {
             });
 
             it('should go to the signin page', function(){
-                ptor.getCurrentUrl().then(function(url){
+                browser.getCurrentUrl().then(function(url){
                     expect(getLastUrlPart(url)).toBe('/signin');
                 });
             });
@@ -65,7 +63,7 @@ describe('authentication:', function() {
             });
 
             it('should stay on the sign in page', function(){
-                ptor.getCurrentUrl().then(function(url){
+                browser.getCurrentUrl().then(function(url){
                     expect(getLastUrlPart(url)).toBe('/signin');
                 });
             });
@@ -79,7 +77,7 @@ describe('authentication:', function() {
             });
 
             it('should go to the home page', function(){
-                ptor.getCurrentUrl().then(function(url){
+                browser.getCurrentUrl().then(function(url){
                     expect(getLastUrlPart(url)).toBe('/map');
                 });
             });
