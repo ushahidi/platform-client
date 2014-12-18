@@ -89,8 +89,7 @@ gulp.task('sass', ['rename'], function() {
                 'bower_components/font-awesome/scss',
                 'node_modules/leaflet/dist/'
             ],
-            // using 'map' causes an error: https://github.com/sass/node-sass/issues/337
-            sourceComments: 'normal'
+            sourceComments: 'map'
         }))
         .pipe(autoprefixer())
         .pipe(plumber.stop())
