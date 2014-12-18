@@ -11,7 +11,6 @@
   "license": "AGPL",
   "homepage": "https://github.com/ushahidi/platform-client",
   "scripts": {
-    "install": "napa",
     "postinstall": "bower install",
     "build": "gulp build",
     "watch": "gulp",
@@ -45,7 +44,6 @@
     "karma-firefox-launcher": "*",
     "karma-jasmine": "^0.2.3",
     "merge": "^1.2.0",
-    "napa": "^0.4.1",
     "protractor": "^1.2.0",
     "underscore.string": "^2.3.3",
     "vinyl-source-stream": "^0.1.1",

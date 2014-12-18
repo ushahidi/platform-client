@@ -21,7 +21,7 @@ ___
 * Refills
 
 ### Install Build Requirements
-`npm install -g gulp napa`
+`npm install -g gulp`
 
 ### Install Packages
 `npm install`
