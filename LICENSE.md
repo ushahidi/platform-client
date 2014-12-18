@@ -26,10 +26,14 @@ library is linked to its license below:
 * [Bourbon](https://github.com/thoughtbot/bourbon/blob/master/LICENSE.md), [Neat](https://github.com/thoughtbot/neat/blob/master/LICENSE.md), and [Refills](https://github.com/thoughtbot/refills/blob/master/LICENSE.md)
 * [Angular](https://github.com/angular/angular.js/blob/master/LICENSE)
 * [Angular Leaflet Directive](https://github.com/tombatossals/angular-leaflet-directive/blob/master/LICENSE)
+* [Angular Markdown Directive](https://github.com/ushahidi/angular-markdown-directive)
+* [Angular Moment](https://github.com/urish/angular-moment)
 * [Angular Resource]
 * [Angular Translate](https://github.com/angular-translate/angular-translate/blob/master/LICENSE)
 * [Gravatar](https://github.com/emerleite/node-gravatar/blob/master/Readme.md#license)
 * [Leaflet](https://github.com/Leaflet/Leaflet/blob/master/LICENSE)
+* [Moment.JS](https://github.com/moment/moment/blob/develop/LICENSE)
+* [Showdown](https://github.com/ushahidi/showdown/blob/master/license.txt)
 * [Underscore](https://github.com/jashkenas/underscore/blob/master/LICENSE)
 
 Map Data
