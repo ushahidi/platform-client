@@ -8,50 +8,28 @@
             <div class="list-filter-info">
                 <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">pagination.showing_x_to_y_of_n_results</h5>
             </div> <!-- end .list-filter-info -->
-
-            <div class="list-filter-wrapper">
-                <div class="list-filter-count">
-                    <div class="filter-count-select">
-                        <label class="visually-hidden" for="filter-count" translate>user.number_of_users_shown</label>
-                        <select id="filter-count" class="filter-count  js-filter-count">
-                            <option selected>3</option>
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                        </select>
-                    </div>
-                </div> <!-- end .list-filter-count -->
-
-                <div class="list-filter-sort">
-                    <div class="filter-sort-select">
-                        <label class="visually-hidden" for="filter-sort" translate>user.sort_users_by</label>
-                        <select id="filter-sort" class="filter-sort  js-filter-sort">
-                            <option translate>user.filter_sort.properties.filter</option>
-                            <option translate>user.filter_sort.properties.date_time_created</option>
-                            <option translate>user.filter_sort.properties.username_a_z</option>
-                            <option translate>user.filter_sort.properties.id</option>
-                        </select>
-                    </div>
-                </div> <!-- end .list-filter-sort -->
-            </div> <!-- end .list-filter-wrapper -->
     </div> <!-- end .list-filter -->
 
     <div class="filter-bar-wrapper">
         <div class="filter-bar">
             <ul>
-                <li class="delete-user" ng-class="{'active': isChecked}"><i class="fa  fa-trash-o"></i> Delete</li>
-                <li>
-                    <select ng-disabled="!isChecked">
-                        <option>Change Role...</option>
-                        <option
-                            ng-repeat="role in roles"
-                            value="{{'user.roles.' + role | translate}}">
-                            {{'user.roles.' + role | translate}}
-                        </option>
+                <li class="delete-user left">
+                    <button ng-disabled="!selectedUsers.length" ng-click="deleteUsers()"><i class="fa  fa-trash-o"></i> <span translate>user.delete_user</span></a>
+                </li>
+                <li class="change-role left">
+                    <select ng-disabled="!selectedUsers.length" ng-model="changedRole" ng-change="changeRole()"
+                        ng-options="role.name as role.display_name for role in roles">
+                        <option value translate>user.change_role_to</option>
+                    </select>
+                </li>
+                <li class="filter-role">
+                    <select ng-model="filteredRole" ng-change="filterRole()"
+                        ng-options="role.name as role.display_name for role in roles">
+                        <option value translate>user.show_all_roles</option>
                     </select>
                 </li>
                 <li class="add-user">
-                    <i class="fa  fa-plus-circle"></i> Add User
+                    <i class="fa  fa-plus-circle"></i> <span translate>user.add_user</span>
                 </li>
             </ul>
         </div> <!-- end .filter-tabs -->
@@ -59,18 +37,18 @@
 
     <div class="wrapper">
         <div class="list-view-empty" ng-hide="users.length"><em translate>empty.user</em></div>
-        <ul class="list-view user-list" ng-if="users.length">
-            <li ng-repeat="user in users | orderBy:'name'" class="list-view__item">
-                <input type="checkbox" ng-model="isChecked">
+        <ul class="list-view user-list" ng-show="users.length">
+            <li ng-repeat="user in users | orderBy:'username'" class="list-view__item">
+                <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)" ng-click="toggleUser(user)">
                 <div class="list-view-image--user">
                     <img ng-src="{{ getGravatar(user) }}" alt="" />
                 </div> <!-- end .list-view-image -->
 
                 <div class="list-view-details--user">
-                    <a href="/user/profile">
+                    <a ng-href="/users/profile/{{user.id}}">
                         <h4 class="list-view-header">{{ user.username }}</h4>
                     </a>
-                    <p class="user-list-role"><b translate>user.role</b>{{ getRoleName(user.role) }}</p>
+                    <p class="user-list-role">{{ getRole(user.role) }}</p>
                 </div> <!-- end .list-view-details-user -->
             </li>
         </ul><!-- end .user-list -->

@@ -8,8 +8,8 @@ function(
     CONST
 ) {
 
-    var UserEndpoint = $resource(CONST.API_URL + '/users/:userId', {
-        userId: '@userId'
+    var UserEndpoint = $resource(CONST.API_URL + '/users/:id', {
+            id: '@id'
     }, {
         query: {
             method: 'GET',
@@ -17,6 +17,9 @@ function(
             transformResponse: function(data /*, header*/) {
                 return angular.fromJson(data).results;
             }
+        },
+        update: {
+            method: 'PUT'
         }
     });
 

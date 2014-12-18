@@ -40,48 +40,31 @@
     .filter-bar {
         @include span-columns(12);
 
-        ul li {
+        ul {
+            @include media($small) {
+                text-align: right;
+            }
+        }
+
+        li {
+            display: inline-block;
             margin-bottom: 20px;
 
             @include media($small) {
-                display: inline;
                 padding-right: 20px;
             }
 
-            &.delete-user {
-                cursor: disabled;
-                opacity: .5;
-
-                &.active {
-                    cursor: pointer;
-                    opacity: 1;
-                }
+            &.left {
+                float: left;
             }
 
             select {
                 margin-bottom: 0;
-
-                @include media($small) {
-                    display: inline;
-                    width: 20%;
-                }
-
-                @include media($medium) {
-                    width: 15%;
-                }
-
-                @include media($xlarge) {
-                    width: 10%;
-                }
             }
 
             &.add-user {
                 @include button($black);
                 color: $white;
-
-                @include media($small) {
-                    float: right;
-                }
             }
         }
     }
