@@ -22,7 +22,7 @@ function(
     // Activate editing mode
     $scope.is_edit = true;
 
-    PostEndpoint.get({postId: $routeParams.postId}).$promise.then(function(post) {
+    PostEndpoint.get({id: $routeParams.id}).$promise.then(function(post) {
         $scope.post = post;
         $scope.active_form = FormEndpoint.get({formId: post.form.id});
         $scope.attributes = FormAttributeEndpoint.query();
@@ -36,7 +36,7 @@ function(
     };
 
     $scope.goBack = function() {
-        $location.path('/posts/detail/' + $scope.post.id);
+        $location.path('/posts/' + $scope.post.id);
     };
 
     $scope.savePost = function(post) {

@@ -5,9 +5,9 @@
         </div> <!-- end .list-view-image -->
 
         <div class="list-view-details">
-            <h4 class="list-view-header"><a ng-href="/posts/detail">{{post.title}}</a></h4>
+            <h4 class="list-view-header"><a ng-href="/posts/{{post.id}}">{{post.title}}</a></h4>
             <div class="list-view-time">
-                <p> <i class="fa  fa-clock-o"></i>Today 12:20 pm</p>
+                <p> <i class="fa  fa-clock-o"></i><span class="post-time" am-time-ago="post.updated || post.created"></p>
             </div> <!-- end .list-view-time -->
             <div class="list-view-post-status-wrapper">
                 <div class="list-view-post-status">
@@ -17,7 +17,7 @@
             </div>
 
             <div class="list-view-excerpt">
-                <p>{{post.content}}<a ng-href="/posts/detail"><span class="read-more" translate>post.preview.read_more</span></a></p>
+                <p>{{post.content}}<a ng-href="/posts/{{post.id}}"><span class="read-more" translate>post.preview.read_more</span></a></p>
             </div> <!-- end .list-view-excerpt -->
 
             <div class="list-view-tags-wrapper">
@@ -39,7 +39,7 @@
                                 <a href="#" class="post-select  js-post-select" translate> <i class="fa fa-check-square-o"></i>post.preview.post_actions.select</a>
                             </li>
                             <li class="list-view-actions-list__item">
-                                <a href="#" class="post-edit  js-post-edit" translate> <i class="fa  fa-edit"></i>post.preview.post_actions.edit</a>
+                                <a ng-href="/posts/edit/{{post.id}}" class="post-edit  js-post-edit" translate> <i class="fa  fa-edit"></i>post.preview.post_actions.edit</a>
                             </li>
                             <li class="list-view-actions-list__item">
                                 <a href="/posts/add-to-set" class="post-add-to-set  js-post-set" translate> <i class="fa  fa-plus-circle"></i>post.preview.post_actions.set</a>

@@ -183,6 +183,7 @@
                 .value-label {
                     @include span-columns(12);
                     margin-bottom: 15px;
+                    font-weight: bold;
 
                     @include media($small) {
                         @include span-columns(3);
@@ -211,10 +212,6 @@
                     }
                 }
 
-                span {
-                    font-weight: bold;
-                }
-
                 &:nth-child(odd) {
                     background-color: $secondary-color;
                 }
@@ -223,12 +220,9 @@
                     color: $success-color;
                 }
 
-                .badge--category1 {
-                    @include badge($primary-color);
-                }
-
-                .badge--category2 {
-                    @include badge($warning-color);
+                .badge--category {
+                    @include badge($medium-gray);
+                    color: $white;
                 }
             }
         }

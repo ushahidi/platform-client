@@ -75,15 +75,8 @@
 \*------------------------------------*/
 
 @mixin badge($color) {
-
-    $badge-font-size: $base-font-size * .85;
-
     background-color: $color;
     color: set-text-color($color);
-    font-size: $badge-font-size;
-    font-weight: bold;
-    padding: 2px 16px 5px;
-    text-align: center;
 }
 
 

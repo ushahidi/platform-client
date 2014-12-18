@@ -56,4 +56,11 @@ body:hover .visually-hidden button {
         display: inline;
         margin-bottom: 0;
     }
+
+    $badge-font-size: $base-font-size * .85;
+
+    font-size: $badge-font-size;
+    font-weight: bold;
+    padding: 2px 16px 5px;
+    text-align: center;
 }

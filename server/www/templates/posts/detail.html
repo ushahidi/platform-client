@@ -12,15 +12,11 @@
         <div class="container">
             <ul class="post-detail-meta">
                 <li>
-                    <i class="fa  fa-clock-o"></i><span class="post-time" translate translate-value-time="10 months">post.details.time_ago</span>
+                    <i class="fa  fa-clock-o"></i><span class="post-time" am-time-ago="post.updated || post.created"></span>
                 </li>
 
-                <li>
-                    <i class="fa  fa-user"></i><span><a href="#users/{{user.id}}"></a> <span translate>post.details.username</span></span>
-                </li>
-
-                <li>
-                    <i class="fa  fa-map-marker"></i> <span translate>post.details.location</span>
+                <li ng-show="post.user.id">
+                    <i class="fa  fa-user"></i><span><a ng-href="/users/{{user.id}}"></a> {{user.realname || post.user.id}}</span>
                 </li>
             </ul>
 
@@ -29,7 +25,7 @@
                     <a href=""><i class="fa  fa-share-square-o">  <span translate>post.export</span></a></i>
                 </li>
                 <li class="post-detail-edit">
-                    <a ng-href="/posts/edit/{{post.id}}"><i class="fa  fa-edit">  <span translate>post.edit_post</span></a></i>
+                    <a ng-href="/posts/{{post.id}}/edit"><i class="fa  fa-edit">  <span translate>post.edit_post</span></a></i>
                 </li>
             </ul>
         </div>
@@ -37,7 +33,8 @@
 
     <div class="container">
         <div class="post-details">
-            <h4 class="post-header">Post Title
+            <h4 class="post-header">{{post.title}}
+                <!-- Not implemented yet.. and no idea what these really are anyway?!
                 <span class="fa-stack">
                   <i class="fa fa-circle fa-stack-1x"></i>
                   <i class="fa fa-envelope-o fa-stack-1x"></i>
@@ -45,23 +42,21 @@
                 <span class="fa-stack">
                   <i class="fa fa-circle fa-stack-1x success"></i>
                   <i class="fa fa-check fa-stack-1x fa-inverse"></i>
-                </span>
+                </span> -->
             </h4>
 
-            <div class="post-excerpt">
-                <p>Proident reprehenderit exercitation magna ipsum excepteur proident aliquip ut dolor id exercitation. Elit aute incididunt in exercitation excepteur nisi. Qui magna quis incididunt nostrud culpa. Proident laboris incididunt.</p>
+            <div class="post-excerpt" btf-markdown="post.content">
             </div> <!-- end .post-excerpt -->
 
             <div class="post-values">
                 <ul class="post-values-list">
-                    <li class="post-values-list__item">
+                    <li class="post-values-list__item" ng-show="!!post.tags.length">
                         <div class="value-label">
                             <i class="fa  fa-tags"></i> <span translate>post.categories</span>
                         </div>
                         <!-- TODO: rename class -->
                         <div class="value-items">
-                            <span class="badge--category1">category #1</span>
-                            <span class="badge--category2">category #2</span>
+                            <span class="badge--category" ng-repeat="tag in post.tags" ng-style="{'background-color':tag.color}">{{tag.tag}}</span>
                         </div>
                     </li>
                     <li class="post-values-list__item">
@@ -70,24 +65,18 @@
                         </div>
 
                         <div class="value-items">
-                            <span><i class="fa  fa-check-circle"></i><span translate>post.published</span></span>
-                            <span><i class="fa  fa-globe"></i><span translate>post.public</span></span>
+                            <span ng-show="post.status == 'published'"><i class="fa  fa-check-circle"></i><span translate>post.published</span></span>
+                            <span ng-show="post.status == 'draft'"><i class="fa  fa-circle-o"></i><span translate>post.unpublished</span></span>
+                            <!-- Not implemented yet
+                                <span><i class="fa  fa-globe"></i><span translate>post.public</span></span>
+                            -->
                         </div>
                     </li>
-                    <li class="post-values-list__item">
-                        <div class="value-label">
-                            <i class="fa  fa-link"></i> <span translate>post.links</span>
-                        </div>
-
-                        <div class="value-items">
-                            <a href="http://example.com/2014/accidents-report" class="value">Accidents Report 2014</a>
-                            <a href="http://ushahidi.com" class="value">ushahidi.com</a>
-                            <a href="http://brck.com" class="value">brck.com</a>
-                        </div>
-                    </li>
+                    <post-value key="key" value="value" attribute="form_attributes[key]" ng-repeat="(key, value) in post.values"></post-value>
                 </ul>
             </div> <!-- end .post-values -->
 
+            <!-- Post media not yet implemented
             <div class="post-thumbnails-wrapper">
                 <p class="click-to-zoom"><small translate><i class="fa  fa-search-plus"></i>nav.click_images_to_zoom</small></p>
                 <ul class="post-thumbnails-list  js-lightbox-gallery">
@@ -96,8 +85,9 @@
                     <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb3.jpg" alt=""></a></li>
                     <li class="post-thumbnails-list__item"><a href=""><img src="/img/post-detail-thumb4.jpg" alt=""></a></li>
                 </ul>
-            </div> <!-- end .post-thumbnails-wrapper -->
+            </div> --> <!-- end .post-thumbnails-wrapper -->
 
+            <!-- Comments not yet implemented
             <div class="post-actions-message-panel">
                 <h6 class="header" translate>post.details.respond</h6>
                 <div class="user-avatar">
@@ -109,7 +99,7 @@
                         <button type="submit" class="post-actions-submit-button  js-post-actions-submit-button" translate>post.send</button>
                     </div>
                 </div>
-            </div> <!-- end .respond-message-box -->
+            </div>--> <!-- end .respond-message-box -->
         </div>
 
     </div>

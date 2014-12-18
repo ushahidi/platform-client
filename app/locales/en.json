@@ -197,10 +197,10 @@
         "create_post" : "Create Post",
         "create_post_of_type" : "Create __form_name__",
         "created_by" : "Created by",
+        "draft" : "Draft",
         "edit_post" : "Edit Post",
         "edited_by" : "Edited by",
         "export" : "Export",
-        "hours_ago" : "Hours ago",
         "number_of_posts_shown" : "Number of posts shown",
         "other_posts_tagged" : "Other posts tagged",
         "post_details" : "Post Details",
@@ -272,11 +272,8 @@
             }
         },
         "details" : {
-            "location" : "Custom Location",
             "post_details" : "Post Details",
-            "respond" : "Post a Comment or Response",
-            "time_ago" : "{{time}} ago",
-            "username" : "Username"
+            "respond" : "Post a Comment or Response"
         },
         "preview" : {
             "private" : "private",

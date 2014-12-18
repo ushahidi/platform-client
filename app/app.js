@@ -10,6 +10,9 @@ require('angular-ui-bootstrap/src/collapse/collapse');
 require('angular-ui-bootstrap/src/transition/transition');
 require('angular-ui-bootstrap/src/accordion/accordion');
 require('angular-mocks/angular-mocks');
+require('angular-moment/angular-moment');
+require('angular-sanitize/angular-sanitize');
+require('angular-markdown-directive/markdown.js');
 
 require('./post/post-module.js');
 require('./user/user-module.js');
@@ -28,6 +31,8 @@ angular.module('app',
         'ui.bootstrap.transition',
         'ui.tabs',
         'leaflet-directive',
+        'angularMoment',
+        'btford.markdown',
         'posts',
         'users'
     ])

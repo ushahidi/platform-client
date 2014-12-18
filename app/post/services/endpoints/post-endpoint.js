@@ -8,8 +8,8 @@ function(
     CONST
 ) {
 
-    var PostEndpoint = $resource(CONST.API_URL + '/posts/:postId', {
-        postId: '@postId'
+    var PostEndpoint = $resource(CONST.API_URL + '/posts/:id', {
+        id: '@id'
     }, {
         query: {
             method: 'GET',

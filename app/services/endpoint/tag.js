@@ -8,7 +8,9 @@ function(
     Util
 ) {
 
-    var TagEndpoint = $resource(Util.apiUrl('/tags/:postId'), {}, {
+    var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {
+            id: '@id'
+    }, {
         query: {
             method: 'GET',
             isArray: true,
