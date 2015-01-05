@@ -12,7 +12,6 @@ ___
 
 * Nodejs
 * Bower
-* Napa
 * Browserify
 * Gulp (and various gulp plugins)
 * Libsass/node-sass (via gulp-sass)
