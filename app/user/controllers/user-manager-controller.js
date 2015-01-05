@@ -53,14 +53,6 @@ function(
         });
     };
 
-    $scope.selectRole = function(role) {
-        $scope.role  = role;
-        $scope.users = UserEndpoint.query({
-            // TODO: this line is commented because getRealRole was not defined
-            // role: getRealRole(role)
-        });
-    };
-
     $scope.changeRole = function() {
         $translate('notify.user.bulk_role_change_confirm', {
             count: $scope.selectedUsers.length,
