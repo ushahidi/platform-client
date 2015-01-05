@@ -13,9 +13,11 @@ require('angular-mocks/angular-mocks');
 require('angular-moment/angular-moment');
 require('angular-sanitize/angular-sanitize');
 require('angular-markdown-directive/markdown.js');
+require('angular-local-storage');
 
 require('./post/post-module.js');
 require('./user/user-module.js');
+require('./user-profile/user-profile-module.js');
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.backend_url;
@@ -24,6 +26,7 @@ angular.module('app',
     [
         'ngRoute',
         'ngResource',
+        'LocalStorageModule',
         'pascalprecht.translate',
         'ui.bootstrap.dropdown',
         'ui.bootstrap.collapse',
@@ -34,7 +37,8 @@ angular.module('app',
         'angularMoment',
         'btford.markdown',
         'posts',
-        'users'
+        'users',
+        'user-profile'
     ])
 
     .constant('CONST', {
@@ -50,11 +54,14 @@ angular.module('app',
     .directive('inFocus', require('./directives/focus.js'))
 
     .service('Authentication', require('./services/authentication.js'))
+    .service('Session', require('./common/services/session.js'))
     .service('ConfigEndpoint', require('./services/endpoint/config.js'))
+    .service('UserEndpoint', require('./common/services/endpoints/user-endpoint.js'))
     .service('FormEndpoint', require('./services/endpoint/form.js'))
     .service('FormAttributeEndpoint', require('./services/endpoint/form-attributes.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
     .service('Util', require('./services/util.js'))
+    .service('Notify', require('./services/notify.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('workspaceAccordion', require('./workspace'))
@@ -72,8 +79,4 @@ angular.module('app',
     .factory('_', function() {
         return require('underscore/underscore');
     })
-    .factory('gravatar', function() {
-        return require('gravatar');
-    })
-
     ;

@@ -52,13 +52,33 @@ module.exports = function(root) {
                             return res.end();
                         }
 
+                        // meta data (userid, username, api endpoints etc) at root path
+                        else if(pathname === '/' || pathname === '')
+                        {
+                            // req.url = 'root_metadata.json';
+                            res.writeHead(200);
+                            res.write(JSON.stringify(
+                                {
+                                    'user': {
+                                        'id': 2,
+                                        'username': 'admin'
+                                    }
+                                }
+                            ));
+
+                            return res.end();
+                        }
+
                         // if it's not about sign in:
                         // assume it is a resource request
                         // => deliver the corresponding static json files via 'connect'
-                        pathname = pathname + '.json';
-                        req.url = pathname;
-                        if (!path.extname(pathname)) {
-                            req.url = '/';
+                        else
+                        {
+                            pathname = pathname + '.json';
+                            req.url = pathname;
+                            if (!path.extname(pathname)) {
+                                req.url = '/';
+                            }
                         }
 
                         next();

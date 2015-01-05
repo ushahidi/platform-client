@@ -11,15 +11,17 @@ function(
         '$rootScope',
         '$q',
         'CONST',
+        'Session',
     function(
         $rootScope,
         $q,
-        CONST
+        CONST,
+        Session
     ) {
         return {
             request: function(config) {
                 if (config.url.indexOf(CONST.API_URL) !== -1) {
-                    var accessToken = localStorage.getItem('access_token');
+                    var accessToken = Session.getSessionDataEntry('accessToken');
                     config.headers.Authorization = 'Bearer ' + accessToken;
                 }
                 return config;

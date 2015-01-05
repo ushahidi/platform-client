@@ -1,14 +1,14 @@
 module.exports = [
     '$resource',
     '$rootScope',
-    'CONST',
+    'Util',
 function(
     $resource,
     $rootScope,
-    CONST
+    Util
 ) {
 
-    var PostEndpoint = $resource(CONST.API_URL + '/posts/:id', {
+    var PostEndpoint = $resource(Util.apiUrl('/posts/:id'), {
         id: '@id'
     }, {
         query: {

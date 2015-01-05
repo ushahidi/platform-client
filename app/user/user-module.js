@@ -1,7 +1,7 @@
-angular.module('users', [])
+require('../common/helpers/gravatar-helper-module.js');
 
-.service('UserEndpoint', require('./services/endpoints/user-endpoint.js'))
-.service('UserEntity', require('./services/entities/user-entity.js'))
-
+angular.module('users', [
+    'gravatarHelper'
+])
 .controller('userManager', require('./controllers/user-manager-controller.js'))
 .config(require('./user-routes.js'));

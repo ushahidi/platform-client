@@ -2,12 +2,12 @@ var getLastUrlPart = function(url){
     return url.substr(url.lastIndexOf('/'));
 };
 
-var signinLinkSelector = 'a#signin-link';
-var signoutLinkSelector = 'a#signout-link';
-var userMenuLinkSelector = 'a#user-menu-link';
+var signinLinkSelector = 'a#signin-link',
+signoutLinkSelector = 'a#signout-link',
+userMenuLinkSelector = 'a#user-menu-link';
 
 
-describe('authentication:', function() {
+describe('authentication', function() {
 
     describe('sign in link in main menu:', function(){
 

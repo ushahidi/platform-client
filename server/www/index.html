@@ -36,8 +36,8 @@
                                     <div class="dropdown-container">
                                         <p class="dropdown-toggle">
                                             <a id="user-menu-link" href="javascript:void(0)">
-                                                <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
-                                                <span translate>nav.user_name</span>
+                                                <img ng-src="{{ getGravatar(email) }}" alt="Gravatar" />
+                                                <span ng-bind="userName"></span>
                                                 <span class="count-number">4</span>
                                             </a>
                                         </p>
@@ -46,7 +46,7 @@
                                                 <a translate>nav.admin</a>
                                             </li>
                                             <li>
-                                                <a href="/profile" translate>nav.edit_profile</a>
+                                                <a id="user-profile" ng-href="/users/me" translate>nav.edit_profile</a>
                                             </li>
                                             <li>
                                                 <a href="/notifications"><span translate>nav.notifications</span></a>
@@ -90,7 +90,7 @@
                             </div>
                             <ul class="admin-nav">
                                 <li>
-                                    <a href="/profile" translate>nav.edit_profile</a>
+                                    <a ng-href="/profile" translate>nav.edit_profile</a>
                                 </li>
                                 <li>
                                     <a href="/notifications"><span translate>nav.notifications</span></a>

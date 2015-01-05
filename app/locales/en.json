@@ -368,6 +368,8 @@
         "delete_user" : "Delete",
         "delete_this_user" : "Delete this user",
         "edit_profile" : "Edit Profile",
+        "save_profile" : "Save Profile",
+        "cancel" : "Cancel",
         "edit_this_post" : "Edit this post",
         "edit_user" : "Edit User",
         "email" : "Email",
@@ -398,6 +400,9 @@
                 "id" : "ID"
             }
         }
+    },
+    "user_profile" : {
+        "title" : "Edit profile"
     },
     "footer" : {
         "copyright_info" : "Powered by Ushahidi. | &copy; Copyright {{owner_name}}, 2013"

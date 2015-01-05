@@ -16,6 +16,7 @@ var gulp = require('gulp'),
     karma = require('karma').server,
 
     mockBackendFlag = gutil.env['mock-backend'],
+    mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
     useNodeServerFlag = gutil.env['node-server'],
     useDockerServerFlag = gutil.env['docker-server'];
 
@@ -41,11 +42,22 @@ if (fs.existsSync('.gulpconfig.json')) {
 }
 
 var helpers = {
-    browserifyConfig:
-    {
-        entries : './app/app.js',
-        debug : true,
+    getBrowserifyConfig: function(mainEntryFile){
+        mainEntryFile = (typeof mainEntryFile === 'undefined') ?
+        './app/app.js' : mainEntryFile;
+
+        var entries = [mainEntryFile];
+        if(mockBackendWithAngularHttpMockFlag)
+        {
+            entries.push('./app/mock-backend-config.js');
+        }
+
+        return {
+            entries : entries,
+            debug : true,
+        };
     },
+
     setBackendUrl: function(){
         return envify({
             backend_url: mockBackendFlag ?
@@ -123,7 +135,7 @@ gulp.task('font', function() {
  * Bundle js with browserify
  */
 gulp.task('browserify', function() {
-    browserify(helpers.browserifyConfig)
+    browserify(helpers.getBrowserifyConfig())
         .transform('brfs')
         .transform(helpers.setBackendUrl())
         .bundle()

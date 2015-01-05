@@ -41,7 +41,7 @@
             <li ng-repeat="user in users | orderBy:'username'" class="list-view__item">
                 <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)" ng-click="toggleUser(user)">
                 <div class="list-view-image--user">
-                    <img ng-src="{{ getGravatar(user) }}" alt="" />
+                    <img ng-src="{{ getGravatar(user.email) }}" alt="" />
                 </div> <!-- end .list-view-image -->
 
                 <div class="list-view-details--user">
