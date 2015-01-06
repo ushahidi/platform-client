@@ -1,0 +1,26 @@
+/*------------------------------------*\
+    CONTENTS
+\*------------------------------------*/
+/*
+* EDIT BUTTONS...............Save and Cancel Buttons
+*/
+
+
+
+
+
+/*------------------------------------*\
+    $EDIT BUTTONS
+\*------------------------------------*/
+
+.save-user-button {
+    margin-left: 20px;
+}
+
+.cancel-user-button {
+    background-color: $error-color;
+
+    &:hover {
+        background-color: darken($error-color, 10);
+    }
+}

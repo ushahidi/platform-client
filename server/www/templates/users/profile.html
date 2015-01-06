@@ -18,18 +18,18 @@
 
             <div class="buttons">
                 <!-- button to show form -->
-                <button type="button" id="edit_profile" class="btn btn-default" ng-click="editUserProfileForm.$show()" ng-show="!editUserProfileForm.$visible" translate>
+                <button type="button" id="edit_profile" ng-click="editUserProfileForm.$show()" ng-show="!editUserProfileForm.$visible" translate>
                     user.edit_profile
                 </button>
                 <!-- buttons to submit / cancel form -->
                 <span ng-show="editUserProfileForm.$visible">
-                    <button id="save_profile" type="submit" class="btn btn-primary" ng-disabled="editUserProfileForm.$waiting">
+                    <button id="save_profile" type="submit" class="save-user-button" ng-disabled="editUserProfileForm.$waiting">
                         <i class="fa fa-cog fa-spin" ng-show="editUserProfileForm.$waiting"></i>
                         <span translate>
                             user.save_profile
                         </span>
                     </button>
-                    <button type="button" id="cancel" class="btn btn-default" ng-disabled="editUserProfileForm.$waiting" ng-click="editUserProfileForm.$cancel()" translate>
+                    <button type="button" id="cancel" class="cancel-user-button" ng-disabled="editUserProfileForm.$waiting" ng-click="editUserProfileForm.$cancel()" translate>
                         user.cancel
                     </button>
                 </span>
