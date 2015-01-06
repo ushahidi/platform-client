@@ -20,7 +20,7 @@
     "protractor": "protractor test/protractor-conf.js"
   },
   "devDependencies": {
-    "angular-ui-bootstrap": "git+https://github.com/angular-ui/bootstrap.git#0.11.0",
+    "angular-ui-bootstrap": "git+https://github.com/angular-ui/bootstrap.git#0.12.0",
     "angular-xeditable": "0.0.1",
     "body-parser": "^1.9.2",
     "brfs": "^1.2.0",
