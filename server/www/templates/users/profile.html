@@ -5,20 +5,16 @@
 
     </div>
 
-    <form editable-form name="editUserProfileForm" onaftersave="saveUserProfile()" onshow="onUserProfileEditFormShow()">
-        <ul>
-            <li>
-                <b translate>user.username</b>
-                <span id="username">{{userProfileData.username}}</span>
-            </li>
-            <li>
-                <b translate>user.full_name</b>
-                <span id="full_name" editable-text="userProfileDataForEdit.realname" e-name="realname" e-required>{{userProfileData.realname}}</span>
-            </li>
-            <li>
-                <b translate>user.email</b>
-                <span id="email" editable-email="userProfileDataForEdit.email" e-name="email" e-required>{{userProfileData.email}}</span>
-            </li>
+    <div class="wrapper form-wrapper">
+        <form editable-form name="editUserProfileForm" onaftersave="saveUserProfile()" onshow="onUserProfileEditFormShow()" class="container">
+            <label translate>user.username</label>
+            <span id="username" editable-text="userProfileDataForEdit.username" e-disabled>{{userProfileData.username}}</span>
+
+            <label translate>user.full_name</label>
+            <span id="full_name" editable-text="userProfileDataForEdit.realname" e-name="realname" e-required>{{userProfileData.realname}}</span>
+
+            <label translate>user.email</label>
+            <span id="email" editable-email="userProfileDataForEdit.email" e-name="email" e-required>{{userProfileData.email}}</span>
 
             <div class="buttons">
                 <!-- button to show form -->
@@ -38,6 +34,7 @@
                     </button>
                 </span>
             </div>
-        </ul>
-    </form>
+        </form>
+
+    </div>
 </div>
