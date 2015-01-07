@@ -3,6 +3,7 @@ module.exports = [
     '$translate',
     '$routeParams',
     'UserEndpoint',
+    'RoleHelper',
     'Notify',
     '_',
 function(
@@ -10,6 +11,7 @@ function(
     $translate,
     $routeParams,
     UserEndpoint,
+    RoleHelper,
     Notify,
     _
 ) {
@@ -18,12 +20,7 @@ function(
     });
 
     $scope.getRole = function(role) {
-        for (var i = 0; i < $scope.roles.length; i++) {
-            if ($scope.roles[i].name === role) {
-                return $scope.roles[i].display_name;
-            }
-        }
-        return role;
+        return RoleHelper.getRole($scope.roles, role);
     };
 
     $scope.onUserProfileEditFormShow = function() {
