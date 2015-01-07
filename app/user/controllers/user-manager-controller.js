@@ -4,24 +4,21 @@ module.exports = [
     '$q',
     'gravatar',
     'UserEndpoint',
+    'RoleHelper',
 function(
     $scope,
     $translate,
     $q,
     gravatar,
-    UserEndpoint
+    UserEndpoint,
+    RoleHelper
 ) {
     $translate('api.users').then(function(title){
         $scope.title = title;
     });
 
     $scope.getRole = function(role) {
-        for (var i = 0; i < $scope.roles.length; i++) {
-            if ($scope.roles[i].name === role) {
-                return $scope.roles[i].display_name;
-            }
-        }
-        return role;
+        return RoleHelper.getRole($scope.roles, role);
     };
 
     $scope.selectedUsers = [];

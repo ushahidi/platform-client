@@ -60,6 +60,7 @@ angular.module('app',
     .service('FormEndpoint', require('./services/endpoint/form.js'))
     .service('FormAttributeEndpoint', require('./services/endpoint/form-attributes.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
+    .service('RoleHelper', require('./common/services/role-helper.js'))
     .service('Util', require('./services/util.js'))
     .service('Notify', require('./services/notify.js'))
 

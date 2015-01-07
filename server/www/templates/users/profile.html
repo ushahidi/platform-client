@@ -1,20 +1,24 @@
 <div class="container">
 
     <div class="manage-users-header">
-        <h4 class="title">{{title}}</h4>
-
+        <h4 class="title"><a ng-href="/users" title="Go Back">&laquo;</a> {{title}}</h4>
     </div>
 
     <div class="wrapper form-wrapper">
         <form editable-form name="editUserProfileForm" onaftersave="saveUserProfile()" onshow="onUserProfileEditFormShow()" class="container">
             <label translate>user.username</label>
-            <span id="username" editable-text="userProfileDataForEdit.username" e-disabled>{{userProfileData.username}}</span>
+            <span id="username" editable-text="userProfileDataForEdit.username" e-name="username" e-required>{{userProfileData.username}}</span>
 
             <label translate>user.full_name</label>
             <span id="full_name" editable-text="userProfileDataForEdit.realname" e-name="realname" e-required>{{userProfileData.realname}}</span>
 
             <label translate>user.email</label>
             <span id="email" editable-email="userProfileDataForEdit.email" e-name="email" e-required>{{userProfileData.email}}</span>
+
+            <label translate>user.role</label>
+            <span id="role" editable-select="userProfileDataForEdit.role" e-name="role" e-required
+                e-ng-options="role.name as role.display_name for role in roles">{{ getRole(userProfileData.role) }}
+            </span>
 
             <div class="buttons">
                 <!-- button to show form -->

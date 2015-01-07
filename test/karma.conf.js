@@ -11,6 +11,7 @@ module.exports = function(config){
         'node_modules/underscore/underscore.js',
         'app/common/**/*.js',
         'app/post/**/*.js',
+        'app/user/**/*.js',
         'app/user-profile/**/*.js',
         'app/controllers/**/*.js',
         'app/directives/**/*.js',
