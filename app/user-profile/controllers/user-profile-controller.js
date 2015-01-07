@@ -1,4 +1,16 @@
-module.exports = ['$scope', '$translate', 'UserEndpoint', 'Notify', function($scope, $translate, UserEndpoint, Notify) {
+module.exports = [
+    '$scope',
+    '$translate',
+    'UserEndpoint',
+    'Notify',
+    '_',
+function(
+    $scope,
+    $translate,
+    UserEndpoint,
+    Notify,
+    _
+) {
     $translate('user_profile.title').then(function(title){
         $scope.title = title;
     });
@@ -17,13 +29,10 @@ module.exports = ['$scope', '$translate', 'UserEndpoint', 'Notify', function($sc
             function(errorResponse){
                 if(errorResponse.status === 400)
                 {
-                    var errors = errorResponse.data && errorResponse.data.errors;
+                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
                     if(errors)
                     {
-                        var errorMessages = errors.map(function(error){
-                            return error.message;
-                        });
-                        Notify.showAlerts(errorMessages);
+                        Notify.showAlerts(errors);
                     }
                 }
             }
