@@ -5,6 +5,7 @@ describe('user profile controller', function(){
     var $rootScope,
         $scope,
         $controller,
+        RoleHelper,
         mockUserEndpoint,
         mockNotify,
         mockUserGetResponse;
@@ -13,6 +14,7 @@ describe('user profile controller', function(){
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
         ])
+        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'))
         .config(require(ROOT_PATH + 'app/locale-config.js'))
         .controller('userProfileController', require(ROOT_PATH + 'app/user/controllers/user-profile-controller.js'));
 
@@ -21,9 +23,10 @@ describe('user profile controller', function(){
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function(_$rootScope_, _$controller_){
+    beforeEach(inject(function(_$rootScope_, _$controller_, _RoleHelper_){
         $rootScope = _$rootScope_;
         $controller = _$controller_;
+        RoleHelper = _RoleHelper_;
         $scope = _$rootScope_.$new();
     }));
 
@@ -53,6 +56,7 @@ describe('user profile controller', function(){
         $controller('userProfileController', {
             $scope: $scope,
             Notify: mockNotify,
+            RoleHelper: RoleHelper,
             $routeParams: {id: '2'},
             UserEndpoint: mockUserEndpoint
         });
