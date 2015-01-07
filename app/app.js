@@ -62,7 +62,7 @@ angular.module('app',
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
     .service('RoleHelper', require('./common/services/role-helper.js'))
     .service('Util', require('./services/util.js'))
-    .service('Notify', require('./services/notify.js'))
+    .service('Notify', require('./common/services/notify.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('workspaceAccordion', require('./workspace'))
