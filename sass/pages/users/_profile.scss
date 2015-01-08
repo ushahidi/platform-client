@@ -24,8 +24,18 @@
 
 
 /*------------------------------------*\
-    $EDIT BUTTONS
+    $BUTTONS
 \*------------------------------------*/
+
+.back-button {
+    color: $white;
+    float: left;
+    padding-right: 30px;
+
+    &:hover {
+        color: $white;
+    }
+}
 
 .save-user-button {
     margin-left: 20px;
