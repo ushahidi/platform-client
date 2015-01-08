@@ -61,7 +61,7 @@ angular.module('app',
     .service('FormAttributeEndpoint', require('./services/endpoint/form-attributes.js'))
     .service('TagEndpoint', require('./services/endpoint/tag.js'))
     .service('RoleHelper', require('./common/services/role-helper.js'))
-    .service('Util', require('./services/util.js'))
+    .service('Util', require('./common/services/util.js'))
     .service('Notify', require('./common/services/notify.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))

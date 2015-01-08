@@ -5,8 +5,8 @@ module.exports = function(appModule){
     var backendUrl = 'http://backend';
 
     appModule
-        .factory('_', function() {
-            return window._;
+        .factory('_', function($window) {
+            return $window._;
         })
         .constant('CONST', {
             'BACKEND_URL'         : backendUrl,
@@ -14,5 +14,5 @@ module.exports = function(appModule){
             'OAUTH_CLIENT_ID'     : 'ushahidiui',
             'OAUTH_CLIENT_SECRET' : '35e7f0bca957836d05ca0492211b0ac707671261'
         })
-        .service('Util', require(rootPath + 'app/services/util.js'));
+        .service('Util', require(rootPath + 'app/common/services/util.js'));
 };
