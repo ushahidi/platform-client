@@ -62,7 +62,7 @@
                 margin-bottom: 0;
             }
 
-            &.add-user {
+            & a {
                 @include button($black);
                 color: $white;
             }

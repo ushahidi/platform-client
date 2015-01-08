@@ -1,0 +1,13 @@
+.create-user-header {
+    @include header($blueGray);
+    padding: 20px;
+
+    @include media($small) {
+        padding: 30px;
+    }
+
+    .title {
+        color: $white;
+        // margin-bottom: 30px;
+    }
+}

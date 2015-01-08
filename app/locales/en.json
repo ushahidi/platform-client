@@ -402,6 +402,13 @@
     "user_profile" : {
         "title" : "Edit profile"
     },
+    "user_create" :  {
+        "title" : "Create User",
+        "full_name": "Display Name",
+        "username": "Username",
+        "email": "Email Address",
+        "role": "Role",
+    },
     "footer" : {
         "copyright_info" : "Powered by Ushahidi. | &copy; Copyright {{owner_name}}, 2013"
     },

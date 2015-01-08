@@ -6,6 +6,8 @@ module.exports = [
     'PostEndpoint',
     'FormEndpoint',
     'FormAttributeEndpoint',
+    'Notify',
+    '_',
 function(
     $scope,
     $translate,
@@ -13,7 +15,9 @@ function(
     postEntity,
     PostEndpoint,
     FormEndpoint,
-    FormAttributeEndpoint
+    FormAttributeEndpoint,
+    Notify,
+    _
 ) {
     $translate('post.create_post').then(function(title){
         $scope.title = title;
@@ -50,14 +54,13 @@ function(
     $scope.savePost = function(post) {
         $scope.saving_post = true;
         var response = PostEndpoint.save(post, function () {
-            if (response.errors){
-                // Handle errors
-                console.log(response);
-            }
-
             if (response.id) {
                 $location.path('/posts/detail/' + response.id);
             }
+        }, function(errorResponse) { // errors
+            var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+            errors && Notify.showAlerts(errors);
+            $scope.saving_post = false;
         });
     };
 
