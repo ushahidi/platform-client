@@ -53,7 +53,7 @@ angular.module('app',
     .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
     .directive('inFocus', require('./directives/focus.js'))
 
-    .service('Authentication', require('./services/authentication.js'))
+    .service('Authentication', require('./common/services/authentication.js'))
     .service('Session', require('./common/services/session.js'))
     .service('ConfigEndpoint', require('./services/endpoint/config.js'))
     .service('UserEndpoint', require('./common/services/endpoints/user-endpoint.js'))

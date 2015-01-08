@@ -14,7 +14,7 @@ function(
     Session
 ) {
 
-    // check if initially we have an old access_token and assume that,
+    // check whether we have initially an old access_token and assume that,
     // if yes, we are still signedin
     var signinStatus = !!Session.getSessionDataEntry('accessToken'),
 
@@ -61,31 +61,32 @@ function(
                 client_id: CONST.OAUTH_CLIENT_ID,
                 client_secret: CONST.OAUTH_CLIENT_SECRET,
                 scope: claimedScopes.join(' ')
-            };
+            },
 
+            deferred = $q.defer(),
 
-            var deferred = $q.defer();
-            var handleRequestError = function(){
+            handleRequestError = function(){
                 deferred.reject();
                 setToSignoutState();
                 $rootScope.$broadcast('event:authentication:signin:failed');
+            },
+
+            handleRequestSuccess = function(authResponse){
+                var accessToken = authResponse.data.access_token;
+                Session.setSessionDataEntry('accessToken', accessToken);
+
+                $http.get(Util.apiUrl('/users/me')).then(
+                    function(userDataResponse){
+
+                        setToSigninState(userDataResponse.data);
+
+                        $rootScope.$broadcast('event:authentication:signin:succeeded');
+                        deferred.resolve();
+
+                    }, handleRequestError);
             };
 
-            $http.post(Util.url('/oauth/token'), payload).then(
-                function(authResponse){
-                    var accessToken = authResponse.data.access_token;
-                    Session.setSessionDataEntry('accessToken', accessToken);
-
-                    $http.get(Util.apiUrl('/users/me')).then(
-                        function(userDataResponse){
-
-                            setToSigninState(userDataResponse.data);
-
-                            $rootScope.$broadcast('event:authentication:signin:succeeded');
-                            deferred.resolve();
-
-                        }, handleRequestError);
-                }, handleRequestError);
+            $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, handleRequestError);
 
             return deferred.promise;
         },
