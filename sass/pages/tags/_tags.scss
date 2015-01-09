@@ -4,6 +4,7 @@
 /*
 
 * HEADER...............header title and action styles
+* FITLER BAR...............delete category, add category
 * TAG LIST...............tag description and actions
 */
 
@@ -47,11 +48,39 @@
 
 
 /*------------------------------------*\
+    $FITLER BAR
+\*------------------------------------*/
+
+.filter-bar-wrapper {
+
+    .filter-bar {
+
+        li {
+
+            &.add-tag {
+                @include button($black);
+                color: $white;
+                float: right;
+            }
+        }
+    }
+}
+
+
+
+/*------------------------------------*\
     $TAG LIST
 \*------------------------------------*/
 
+.tag-list .list-view__item {
+    padding: 30px 30px 30px 55px;
+}
+
 .list-view-details--tag {
     @include span-columns(12);
-    margin-top: 10px;
     color: $base-font-color;
+
+    .list-view-header {
+        margin-bottom: 0;
+    }
 }

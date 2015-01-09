@@ -2,93 +2,67 @@
 
     <div class="manage-tags-header">
         <h4 class="title">{{title}}</h4>
-
-        <div class="tag-actions">
-            <div class="dropdown">
-                <div class="dropdown-container">
-                    <p class="dropdown-toggle" translate>tag.tag_actions</p>
-                    <ul class="dropdown-menu  list-view-actions-list">
-                        <li class="list-view-actions-list__item">
-                            <a href="#" class="js-select-all">
-                                <span>Select All</span>
-                                <span class="visually-hidden" translate>tag.unselect_all</span>
-                            </a>
-                        </li>
-                        <li class="list-view-actions-list__item">
-                            <a href="#" class="js-user-create" translate><i class="fa  fa-tag"></i>tag.add_tag</li>
-                        </li>
-                        <li class="list-view-actions-list__item  js-bulk-action  disabled">
-                            <a href="#" class="js-user-bulk-delete" translate><i class="fa  fa-trash-o"></i>tag.delete</a>
-                        </li>
-                    </ul> <!-- end .dropdown-menu .list-view-edit -->
-                </div> <!-- end .dropdown-container -->
-            </div> <!-- end .dropdown -->
-        </div> <!-- end .list-view-actions -->
     </div> <!-- end .manage-tags-header -->
 
     <div class="list-filter--alt">
-            <div class="list-filter-info">
-                <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">pagination.showing_x_to_y_of_n_results</h5>
-            </div> <!-- end .list-filter-info -->
+        <div class="list-filter-info">
+            <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">pagination.showing_x_to_y_of_n_results</h5>
+        </div> <!-- end .list-filter-info -->
 
-            <div class="list-filter-wrapper">
-                <div class="list-filter-count">
-                    <div class="filter-count-select">
-                        <label class="visually-hidden" for="filter-count" translate>tag.number_of_tags_shown</label>
-                        <select id="filter-count" class="filter-count  js-filter-count">
-                            <option selected>3</option>
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                        </select>
-                    </div>
-                </div> <!-- end .list-filter-count -->
+        <div class="list-filter-wrapper">
+            <div class="list-filter-count">
+                <div class="filter-count-select">
+                    <label class="visually-hidden" for="filter-count" translate>tag.number_of_tags_shown</label>
+                    <select id="filter-count" class="filter-count  js-filter-count">
+                        <option selected>3</option>
+                        <option>5</option>
+                        <option>10</option>
+                        <option>20</option>
+                    </select>
+                </div>
+            </div> <!-- end .list-filter-count -->
 
-                <div class="list-filter-sort">
-                    <div class="filter-sort-select">
-                        <label class="visually-hidden" for="filter-sort" translate>tag.sort_user_by</label>
-                        <select id="filter-sort" class="filter-sort  js-filter-sort">
-                            <option translate>tag.filter_sort.properties.filter</option>
-                            <option>tag.filter_sort.properties.date_time_created</option>
-                            <option>tag.filter_sort.properties.username_a_z Username A-Z</option>
-                            <option>tag.filter_sort.properties.id ID</option>
-                        </select>
-                    </div>
-                </div> <!-- end .list-filter-sort -->
-            </div> <!-- end .list-filter-wrapper -->
+            <div class="list-filter-sort">
+                <div class="filter-sort-select">
+                    <label class="visually-hidden" for="filter-sort" translate>tag.sort_user_by</label>
+                    <select id="filter-sort" class="filter-sort  js-filter-sort">
+                        <option translate>tag.filter_sort.properties.date_time_created</option>
+                        <option translate>tag.filter_sort.properties.tag_a_z</option>
+                        <option translate>tag.filter_sort.properties.id</option>
+                    </select>
+                </div>
+            </div> <!-- end .list-filter-sort -->
+        </div> <!-- end .list-filter-wrapper -->
     </div> <!-- end .list-filter -->
 
+    <div class="filter-bar-wrapper">
+        <div class="filter-bar">
+            <ul>
+                <li class="delete-tag left">
+                    <button ng-disabled="!selectedTags.length" ng-click="deleteTags()"><i class="fa fa-trash-o"></i> <span translate>tag.delete</span></button>
+                </li>
+                <li class="add-tag">
+                    <i class="fa fa-plus-circle"></i> <span translate>tag.add_tag</span>
+                </li>
+            </ul>
+        </div> <!-- end .filter-tabs -->
+    </div>
+
     <div class="wrapper">
-        <ul class="list-view">
+        <ul class="list-view tag-list" ng-show="tags.length">
             <li ng-repeat="tag in tags | orderBy:'tag'" class="list-view__item">
+                <input type="checkbox" value="{{tag.id}}" ng-checked="isToggled(tag)" ng-click="toggleTag(tag)">
+
                 <div class="list-view-details--tag">
-                    <h4 class="list-view-header"><i class="fa  fa-tag"></i> {{ tag.tag }}</h4>
-
-                    <div class="list-view-description">
-                        <p>Ad in ut commodo et veniam pariatur labore tempor nisi non exercitation irure adipisicing.</p>
-                    </div> <!-- end .list-view-description -->
-
-                    <div class="list-view-actions">
-                        <div class="dropdown">
-                            <div class="dropdown-container">
-                                <p class="dropdown-toggle" translate>tags.tag_actions</p>
-                                <ul class="dropdown-menu  list-view-actions-list">
-                                    <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-select  js-post-select" translate> <i class="fa fa-check-square-o"></i>tags.select</a>
-                                    </li>
-                                    <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-edit  js-post-edit" translate> <i class="fa  fa-edit"></i>tags.edit</a>
-                                    </li>
-
-                                    <li class="list-view-actions-list__item">
-                                        <a href="#" class="post-delete  js-post-delete" translate> <i class="fa  fa-trash-o"></i>tags.delete</a>
-                                    </li>
-                                </ul> <!-- end .menu .list-view-edit -->
-                            </div> <!-- end .dropdown-container -->
-                        </div> <!-- end .dropdown -->
-                    </div> <!-- end .list-view-actions -->
+                    <a ng-href="/categories/{{tag.id}}">
+                        <h4 class="list-view-header">{{ tag.tag }}</h4>
+                    </a>
                 </div> <!-- end .list-view-details-tag -->
-            </li> <!-- end .list-view__item -->
+
+                <div class="list-view-description">
+                    <p>{{tag.description}}</p>
+                </div> <!-- end .list-view-description -->
+            </li>
         </ul><!-- end .list-view -->
     </div> <!-- end .wrapper -->
 

@@ -22,7 +22,7 @@ module.exports = function($routeProvider, $locationProvider) {
             controller: require('./controllers/admin/map-settings.js'),
             templateUrl: 'templates/admin/map-settings.html'
         })
-        .when('/tags', {
+        .when('/categories', {
             controller: require('./controllers/tags/tags.js'),
             templateUrl: 'templates/tags/tags.html'
         });

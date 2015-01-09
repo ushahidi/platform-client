@@ -12,7 +12,7 @@
         "query" : "Query",
         "request_body" : "Request Body",
         "reset" : "Reset",
-        "tags" : "Tags",
+        "tags" : "Categories",
         "users" : "Users"
     },
     "app": {
@@ -95,7 +95,7 @@
         "back" : "Back",
         "click_images_to_zoom" : "Click images to zoom",
         "count_posts" : "__count__ <span>posts</span>",
-        "count_tags" : "__count__ <span>tags</span>",
+        "count_tags" : "__count__ <span>categories</span>",
         "count_users" : "__count__ <span>users</span>",
         "disable" : "Disable",
         "edit_profile" : "Edit Profile",
@@ -129,7 +129,7 @@
         "set" : "Set",
         "sets" : "Sets",
         "settings" : "Settings",
-        "tags" : "Tags",
+        "tags" : "Categories",
         "unselect_all" : "Unselect All",
         "until_time" : "Until Time",
         "users" : "Users",
@@ -141,7 +141,7 @@
     "search" : {
         "nav" : {
             "location" : "Location",
-            "tags" : "Tags",
+            "tags" : "Categories",
             "date" : "Date",
             "keyword" : "Keyword"
         },
@@ -149,8 +149,8 @@
             "select_a_location" : "Select a location"
         },
         "tags" : {
-            "select_tags" : "Select tags",
-            "tag_actions" : "Tag Actions",
+            "select_tags" : "Select categories",
+            "tag_actions" : "Category Actions",
             "select" : "select",
             "edit" : "edit"
         },
@@ -178,7 +178,7 @@
     "workspace": {
         "posts" : "posts",
         "users" : "users",
-        "tags" : "tags",
+        "tags" : "categories",
         "accordion" : {
             "posts" : "Posts",
             "settings" : "Settings",
@@ -202,7 +202,7 @@
         "edited_by" : "Edited by",
         "export" : "Export",
         "number_of_posts_shown" : "Number of posts shown",
-        "other_posts_tagged" : "Other posts tagged",
+        "other_posts_tagged" : "Other posts categorized",
         "post_details" : "Post Details",
         "post_history" : "Post History",
         "private" : "Private",
@@ -223,7 +223,7 @@
         "respond" : "Respond",
         "send" : "Send",
         "more" : "more",
-        "posts_with_same_tags" : " posts with same tags",
+        "posts_with_same_tags" : " posts with same categories",
         "post_actions" : {
             "post_actions" : "Post Actions",
             "select" : "select",
@@ -243,7 +243,7 @@
                 }
             },
             "about" : "About",
-            "tags" : "Tags"
+            "tags" : "Categories"
 
         },
         "filter_sort" : {
@@ -281,7 +281,7 @@
             "published" : "published",
             "unpublished" : "unpublished",
             "read_more" : "&nbsp;... Read&nbsp;More",
-            "tags" : "Tags",
+            "tags" : "Categories",
             "post_actions" : {
                 "post_actions" : "Post Actions",
                 "select" : "select",
@@ -297,7 +297,7 @@
         "add_a_photo" : "Add a photo",
         "add_to_sets" : "Add to sets",
         "add_to_set" : "Add to set",
-        "choose_a_tag" : "Choose a tag",
+        "choose_a_tag" : "Choose a category",
         "click_or_tap_button_to_change" : "Click or tap button to change",
         "create_set" : "Create Set",
         "description" : "Description",
@@ -307,37 +307,37 @@
         "photo" : "Photo",
         "private" : "Private",
         "public" : "Public",
-        "separate_tags_with_commas" : "Separate tags with commas",
+        "separate_tags_with_commas" : "Separate categories with commas",
         "this_set_is_private_by_default" : "This set is *Private* by default",
         "visibility" : "Visibility"
     },
-    "tag": {
-        "add_tag" : "Add Tag",
-        "create_tag" : "Create Tag",
-        "manage_tags" : "Manage Tags",
-        "edit_tag" : "Edit Tag",
+    "tag": { // named 'tags' in code, and 'categories' for user display
+        "add_tag" : "Add Category",
+        "create_tag" : "Create Category",
+        "manage_tags" : "Manage Categories",
+        "edit_tag" : "Edit Category",
         "no_description_given" : "No description given",
-        "number_of_tags_shown" : "Number of tags shown",
-        "sort_tags_by" : "Sort tags by",
-        "update_tag" : "Update Tag",
+        "number_of_tags_shown" : "Number of categories shown",
+        "sort_tags_by" : "Sort categories by",
+        "update_tag" : "Update Category",
         "unselect_all" : "Unselect all",
-        "add_tag" : "Add tag",
+        "add_tag" : "Add category",
         "delete" : "Delete",
-        "tag_actions" : "Tag Actions",
-        "number_of_tags_shown" : "Number of tags shown",
+        "tag_actions" : "Category Actions",
+        "number_of_tags_shown" : "Number of categories shown",
         "sort_users_by" : "Sort users by",
         "filter_sort" : {
             "properties" : {
                 "sort" : "Sort by",
                 "date_time_created" : "Date/Time Created",
-                "username_a_z" : "Username A-Z",
+                "tag_a_z" : "Tag A-Z",
                 "id" : "ID"
             }
         }
     },
     "tool": {
         "manage_forms" :  "Manage Forms",
-        "manage_tags" : "Manage Tags",
+        "manage_tags" : "Manage Categories",
         "manage_users" : "Manage Users",
         "map_settings" : "Map Settings",
         "site_settings" : "Site Settings",
@@ -420,7 +420,7 @@
             "destroy_success" : "Deleted resource",
             "destroy_error" : "Unable to delete resource, please try again",
             "destroy_cancelled" : "Delete cancelled",
-            "bulk_destroy_confirm" : "Are you sure you want to delete __count__ resources?",
+            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} resources?",
             "bulk_destroy_success" : "Deleted resource",
             "bulk_destroy_error" : "Unable to delete resource, please try again",
             "bulk_destroy_cancelled" : "Delete cancelled"
@@ -435,13 +435,13 @@
             "destroy_confirm" : "Are you sure you want to delete this post?",
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",
-            "bulk_destroy_confirm" : "Are you sure you want to delete __count__ posts?"
+            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?"
         },
         "tag" : {
-            "destroy_confirm" : "Are you sure you want to delete this tag?",
-            "destroy_success" : "Tag deleted",
-            "destroy_error" : "Unable to delete tag, please try again",
-            "bulk_destroy_confirm" : "Are you sure you want to delete __count__ tags?"
+            "destroy_confirm" : "Are you sure you want to delete this category?",
+            "destroy_success" : "Category deleted",
+            "destroy_error" : "Unable to delete category, please try again",
+            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?"
         },
         "user" : {
             "destroy_confirm" : "Are you sure you want to delete this user?",
@@ -455,6 +455,6 @@
         "default" : "No records found.",
         "post" : "No posts found.",
         "user" : "No users found.",
-        "tag" : "No tags found."
+        "tag" : "No categories found."
     }
 }

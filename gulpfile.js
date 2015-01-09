@@ -204,7 +204,7 @@ gulp.task('watch', [], function() {
     livereload.listen();
     gulp.watch('sass/**/*.scss', ['sass']);
     gulp.watch('bower_components/font-awesome/fonts/fontawesome*', ['font']);
-    gulp.watch('app/**/*.js', ['browserify']);
+    gulp.watch(['app/**/*.js', 'app/locales/*.json'], ['browserify']);
 });
 
 /**
