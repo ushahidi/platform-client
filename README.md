@@ -65,7 +65,7 @@ Instead of having to type the flags every time, you can also use a `.gulpconfig.
 {
     "nodeServer": true,
     "dockerServer": false,
-    "backendUrl": 'http://ushahidi-backend'
+    "backendUrl": "http://ushahidi-backend"
 }
 ```
 
