@@ -5,10 +5,9 @@ describe('Authentication', function(){
     var $rootScope,
         $httpBackend,
         BACKEND_URL,
-        mockedSessionData,
         Authentication,
         signinPromiseSuccessCallback,
-        mockedSessionService,
+        mockedSessionData,
         mockedOauthTokenResponse,
         mockedUserDataResponse;
 
@@ -16,23 +15,21 @@ describe('Authentication', function(){
         var testApp = angular.module('testApp', []);
 
         mockedSessionData = {};
-        mockedSessionService =
-        {
-            clearSessionData: function(){
-                mockedSessionData = {};
-            },
-            setSessionDataEntries: function(entries){
-                mockedSessionData = angular.extend({}, mockedSessionData, entries);
-            },
-            getSessionDataEntry: function(key){
-                return mockedSessionData[key];
-            },
-            setSessionDataEntry: function(key, value){
-                mockedSessionData[key] = value;
-            }
-        };
         testApp.service('Session', function(){
-            return mockedSessionService;
+            return {
+                clearSessionData: function(){
+                    mockedSessionData = {};
+                },
+                setSessionDataEntries: function(entries){
+                    mockedSessionData = angular.extend({}, mockedSessionData, entries);
+                },
+                getSessionDataEntry: function(key){
+                    return mockedSessionData[key];
+                },
+                setSessionDataEntry: function(key, value){
+                    mockedSessionData[key] = value;
+                }
+            };
         })
         .service('Authentication', require(rootPath+'app/common/services/authentication.js'));
 

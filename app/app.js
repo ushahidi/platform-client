@@ -69,7 +69,7 @@ angular.module('app',
     .controller('adminMapSettings', require('./controllers/admin/map-settings.js'))
     .controller('filterGlobal', require('./controllers/global-filter.js'))
 
-    .config(require('./interceptors/authentication.js'))
+    .config(require('./common/configs/authentication-interceptor.js'))
     .config(require('./routes'))
     .config(require('./modules/ui-accordion'))
     .config(require('./locale-config.js'))

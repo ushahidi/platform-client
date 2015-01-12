@@ -28,9 +28,7 @@ function(
             },
             responseError: function(rejection) {
                 if (rejection.status === 401) {
-                    var deferred = $q.defer();
                     $rootScope.$broadcast('event:unauthorized');
-                    return deferred.promise;
                 }
                 return $q.reject(rejection);
             }
