@@ -16,29 +16,28 @@ function(
 
     // check whether we have initially an old access_token and assume that,
     // if yes, we are still signedin
-    var signinStatus = !!Session.getSessionDataEntry('accessToken'),
+    var loginStatus = !!Session.getSessionDataEntry('accessToken'),
 
     setToSigninState = function(userData){
-        Session.setSessionDataEntries(
-            {
-                'userId': userData.id,
-                'userName': userData.username,
-                'realName': userData.realname,
-                'email': userData.email
-            }
-        );
+        Session.setSessionDataEntries({
+            userId: userData.id,
+            userName: userData.username,
+            realName: userData.realname,
+            email: userData.email,
+            role: userData.role
+        });
 
-        signinStatus = true;
+        loginStatus = true;
     },
 
-    setToSignoutState = function(){
+    setToLogoutState = function(){
         Session.clearSessionData();
-        signinStatus = false;
+        loginStatus = false;
     };
 
     return {
 
-        signin: function(username, password)
+        login: function(username, password)
         {
             var claimedScopes = [
                 'posts',
@@ -67,8 +66,8 @@ function(
 
             handleRequestError = function(){
                 deferred.reject();
-                setToSignoutState();
-                $rootScope.$broadcast('event:authentication:signin:failed');
+                setToLogoutState();
+                $rootScope.$broadcast('event:authentication:login:failed');
             },
 
             handleRequestSuccess = function(authResponse){
@@ -80,7 +79,7 @@ function(
 
                         setToSigninState(userDataResponse.data);
 
-                        $rootScope.$broadcast('event:authentication:signin:succeeded');
+                        $rootScope.$broadcast('event:authentication:login:succeeded');
                         deferred.resolve();
 
                     }, handleRequestError);
@@ -91,15 +90,15 @@ function(
             return deferred.promise;
         },
 
-        signout: function(){
+        logout: function(){
             //TODO: ASK THE BACKEND TO DESTROY SESSION
 
-            setToSignoutState();
-            $rootScope.$broadcast('event:authentication:signout:succeeded');
+            setToLogoutState();
+            $rootScope.$broadcast('event:authentication:logout:succeeded');
         },
 
         getSigninStatus: function(){
-            return signinStatus;
+            return loginStatus;
         }
     };
 

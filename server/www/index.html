@@ -2,119 +2,75 @@
 <html lang="en" ng-app="app">
     <head>
         <meta charset="utf-8">
-        <title>Ushahidi</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/css/style.css">
+        <title>Ushahidi</title>
         <base href="/">
     </head>
 
-    <body ng-controller="navigation" ng-class="{ 'active': mainMenu }">
-
-        <div>
-            <header class="navigation">
-                <div class="navigation-wrapper">
-                    <div class="global-header-menu-trigger">
-                        <i class="fa fa-bars drawer-trigger" data-target="menu" ng-click="toggle('mainMenu')"></i>
+    <body>
+        <header class="top-bar">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container" ng-controller="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar"
+                            ng-init="isCollapsed = true"
+                            ng-click="isCollapsed = !isCollapsed"
+                            >
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" ng-href="/">Deployment Name</a>
                     </div>
-                    <a ng-href="/">
-                        <span class="site-title">Awesome V3 Map</span>
-                    </a>
-                    <div class="nav">
-                        <ng-include src=" 'templates/partials/navigation-menu.html' "></ng-include>
-
-                        <ul class="navigation-tools">
-                            <li class="nav-link  create-post"><a ng-href="/posts/create"><i class="fa  fa-plus"></i><span translate>nav.create</span></a></li>
-                            <li class="nav-link  workspace-nav  js-menu-trigger"><a href="/workspace"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
-                            <li class="nav-link  sign-in" ng-hide="signedin">
-                                <a href="signin" id="signin-link">
-                                    <i class="fa  fa-sign-in"></i>
-                                    <span translate>user.login</span>
+                    <div id="navbar" class="navbar-collapse" collapse="isCollapsed">
+                        <ul class="nav navbar-nav">
+                            <li role="presentation"><a ng-href="/" translate>nav.home</a></li>
+                            <li role="presentation"><a ng-href="/about" translate>nav.about</a></li>
+                            <li role="presentation" ng-show="isAdmin()"><a ng-href="/workspace" translate>nav.workspace</a></li>
+                            <li role="presentation" ng-show="isAdmin()"><a ng-href="/tools" translate>nav.tools</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a ng-href="/posts/create"><i class="fa  fa-plus"></i> <span translate>nav.create</span></a></li>
+                            <li ng-hide="currentUser"><a ng-href="/login" class="user-login"><i class="fa  fa-sign-in"></i> <span translate>nav.login</span></a></li>
+                            <li class="dropdown user-menu" dropdown ng-show="currentUser">
+                                <a href="javascript:;" class="dropdown-toggle" role="button" aria-expanded="false"
+                                    dropdown-toggle>
+                                    <span>{{currentUser.realName}}</span>
+                                    <i class="fa fa-angle-down"></i>
                                 </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-href="/users/me" class="my-profile"><i class="fa fa-user"></i>
+                                        <span translate>nav.profile</span></a></li>
+                                    <li><a ng-href="/site/settings" class="site-settings"><i class="fa fa-cogs"></i>
+                                        <span translate>nav.settings</span></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="javascript:;" class="user-logout"
+                                        ng-click="logoutClick()"
+                                        ><i class="fa fa-sign-out"></i>
+                                        <span translate>nav.logout</span></a></li>
+                                </ul>
                             </li>
-
-                            <li class="nav-link user-info" ng-show="signedin" signout-click="signoutClick()">
-                                <div class="dropdown">
-                                    <div class="dropdown-container">
-                                        <p class="dropdown-toggle">
-                                            <a id="user-menu-link" href="javascript:void(0)">
-                                                <img ng-src="{{ getGravatar(email) }}" alt="Gravatar" />
-                                                <span ng-bind="userName"></span>
-                                                <span class="count-number">4</span>
-                                            </a>
-                                        </p>
-                                        <ul class="dropdown-menu">
-                                            <li class="user-role">
-                                                <a translate>nav.admin</a>
-                                            </li>
-                                            <li>
-                                                <a id="user-profile" ng-href="/users/me" translate>nav.edit_profile</a>
-                                            </li>
-                                            <li>
-                                                <a href="/notifications"><span translate>nav.notifications</span></a>
-                                                <span class="count-number">4</span>
-                                            </li>
-                                            <li>
-                                                <a href="/settings" translate>nav.settings</a>
-                                            </li>
-                                            <li>
-                                                <a href="/help" translate>nav.help</a>
-                                            </li>
-                                            <li class="user-logout">
-                                                <a id="signout-link" ng-click="signoutClick()" translate>nav.logout</a>
-                                            </li>
-                                        </ul>
-                                    </div> <!-- end .dropdown-container -->
-                                </div> <!-- end .dropdown -->
-                            </li>
-
-
-                        </ul> <!-- end .navigation-tools -->
-                    </div> <!-- end .nav -->
-                </div> <!-- end .navigation-wrapper -->
-
-                <div class="global-header-menu" ng-class="{ 'active': mainMenu }">
-                    <div class="drawer">
-                        <nav class="global-navigation">
-                            <ul>
-                                <ng-include src=" 'templates/partials/navigation-menu.html' "></ng-include>
-                                <li class="nav-link  workspace-nav"><a href="/workspace"><i class="fa  fa-dashboard"></i><span translate>nav.workspace</span></a></li>
-                            </ul>
-                        </nav>
-
-                        <div class="global-header-mast">
-                            <div class="user-info">
-                                <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e" alt="Gravatar" />
-                                <div class="name-role-wrapper">
-                                    <span class="user-name" translate>nav.user_name</span>
-                                    <span class="user-role" translate>nav.admin</span>
-                                </div>
-                            </div>
-                            <ul class="admin-nav">
-                                <li>
-                                    <a ng-href="/profile" translate>nav.edit_profile</a>
-                                </li>
-                                <li>
-                                    <a href="/notifications"><span translate>nav.notifications</span></a>
-                                    <span class="count-number">4</span>
-                                </li>
-                                <li>
-                                    <a href="/settings" translate>nav.settings</a>
-                                </li>
-                                <li>
-                                    <a href="/help" translate>nav.help</a>
-                                </li>
-                                <li class="user-logout">
-                                    <a href="#" translate>nav.logout</a>
-                                </li>
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
                 </div>
-            </header> <!-- end .navigation -->
-        </div>
-        <div ng-view></div>
-
-        <ng-include src=" 'templates/partials/footer.html' "></ng-include>
-
+            </nav>
+        </header>
+        <div class="container" ng-view></div>
+        <!-- there is no footer present in the design spec, but we probably want one. (?) -->
+        <!--
+        <footer role="contentinfo" class="footer">
+            <div class="container footer-copyright-wrapper">
+                <div class="footer-copyright">
+                    <p class="text-muted" translate translate-values="{owner_name: owner_name}">footer.copyright_info</p>
+                </div>
+            </div>
+        </footer>
+        -->
         <script src="/js/bundle.js"></script>
     </body>
 </html>

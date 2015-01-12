@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li><a ng-href="/" translate>nav.home</a></li>
+          <li><a ng-href="/tools" translate>nav.workspace</a></li>
+          <li class="active" translate>nav.dashboard</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 col-md-push-3 col-xs-12 well">
+        <div class="row lead">
+            <div class="col-md-4">777<br><small class="text-lowercase" translate>nav.posts</small></div>
+            <div class="col-md-4">888<br><small class="text-lowercase" translate>nav.comments</small></div>
+            <div class="col-md-4">111<br><small class="text-lowercase" translate>nav.users</small></div>
+        </div>
+        <h2 translate>workspace.recent_activity</h2>
+        <div class="row" ><!-- ng-repeat="action in recentActions" -->
+            <div class="col-md-4 col-xs-6">gravatar, date, time</div>
+            <div class="col-md-8 col-xs-6">description</div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12"><p class="text-muted text-center">pagination goes here</span></div>
+        </div>
+    </div>
+    <workspace-menu></workspace-menu>
+</div>

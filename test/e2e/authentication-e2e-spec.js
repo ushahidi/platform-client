@@ -2,35 +2,34 @@ var getLastUrlPart = function(url){
     return url.substr(url.lastIndexOf('/'));
 };
 
-var signinLinkSelector = 'a#signin-link',
-signoutLinkSelector = 'a#signout-link',
-userMenuLinkSelector = 'a#user-menu-link';
-
+var loginLinkSelector = 'a.user-login',
+    logoutLinkSelector = 'a.user-logout',
+    userMenuLinkSelector = 'li.user-menu a.dropdown-toggle';
 
 describe('authentication', function() {
 
     describe('sign in link in main menu:', function(){
 
-        var signinLink;
+        var loginLink;
 
         beforeEach(function() {
             browser.get('/');
-            signinLink = element(by.css(signinLinkSelector));
+            loginLink = element(by.css(loginLinkSelector));
         });
 
         it('should exist and have the correct text', function(){
-            expect(signinLink.isDisplayed()).toBe(true);
-            expect(signinLink.getText()).toBe('Login');
+            expect(loginLink.isDisplayed()).toBe(true);
+            expect(loginLink.getText()).toBe('Login');
         });
 
-        describe('clicking the signin link', function(){
+        describe('clicking the login link', function(){
             beforeEach(function(){
-                signinLink.click();
+                loginLink.click();
             });
 
-            it('should go to the signin page', function(){
+            it('should go to the login page', function(){
                 browser.getCurrentUrl().then(function(url){
-                    expect(getLastUrlPart(url)).toBe('/signin');
+                    expect(getLastUrlPart(url)).toBe('/login');
                 });
             });
         });
@@ -38,12 +37,12 @@ describe('authentication', function() {
 
     describe('sign in form:', function(){
 
-        var usernameField;
-        var passwordField;
-        var submitButton;
+        var usernameField,
+            passwordField,
+            submitButton;
 
         beforeEach(function(){
-            browser.get('/signin');
+            browser.get('/login');
             usernameField = element(by.model('username'));
             passwordField = element(by.model('password'));
             submitButton = element(by.css('button[type="submit"]'));
@@ -62,9 +61,14 @@ describe('authentication', function() {
                 submitButton.click();
             });
 
+            it('should display the failure message', function(){
+                var failureMessage = element(by.css('div.login-failed'));
+                expect(failureMessage.isDisplayed()).toBeTruthy();
+            });
+
             it('should stay on the sign in page', function(){
                 browser.getCurrentUrl().then(function(url){
-                    expect(getLastUrlPart(url)).toBe('/signin');
+                    expect(getLastUrlPart(url)).toBe('/login');
                 });
             });
         }); // end 'submit form with wrong credentials'
@@ -82,32 +86,32 @@ describe('authentication', function() {
                 });
             });
 
-            describe('signout link in the user menu', function(){
-                var signinLink, signoutLink, userMenuLink;
+            describe('logout link in the user menu', function(){
+                var loginLink, logoutLink, userMenuLink;
 
                 beforeEach(function(){
-                    signinLink = element(by.css(signinLinkSelector));
+                    loginLink = element(by.css(loginLinkSelector));
                     userMenuLink = element(by.css(userMenuLinkSelector));
-                    signoutLink = element(by.css(signoutLinkSelector));
+                    logoutLink = element(by.css(logoutLinkSelector));
                 });
 
-                it('should exist instead of the signin link', function(){
-                    expect(signinLink.isDisplayed()).toBeFalsy();
+                it('should exist instead of the login link', function(){
+                    expect(loginLink.isDisplayed()).toBeFalsy();
                     userMenuLink.click();
-                    expect(signoutLink.isDisplayed()).toBeTruthy();
+                    expect(logoutLink.isDisplayed()).toBeTruthy();
                 });
 
-                describe('clicking the signout link', function(){
+                describe('clicking the logout link', function(){
 
                     beforeEach(function(){
                         userMenuLink.click();
-                        signoutLink.click();
+                        logoutLink.click();
                     });
 
-                    it('should change again to the signin link', function(){
+                    it('should change again to the login link', function(){
                         expect(userMenuLink.isDisplayed()).toBeFalsy();
-                        expect(signoutLink.isDisplayed()).toBeFalsy();
-                        expect(signinLink.isDisplayed()).toBeTruthy();
+                        expect(logoutLink.isDisplayed()).toBeFalsy();
+                        expect(loginLink.isDisplayed()).toBeTruthy();
                     });
                 });
             });

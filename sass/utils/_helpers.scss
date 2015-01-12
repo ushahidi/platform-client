@@ -52,11 +52,6 @@ body:hover .visually-hidden button {
     display: table;
     margin: 0 10px 10px 0;
 
-    @include media($small) {
-        display: inline;
-        margin-bottom: 0;
-    }
-
     $badge-font-size: $base-font-size * .85;
 
     font-size: $badge-font-size;

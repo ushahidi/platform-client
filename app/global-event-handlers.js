@@ -1,49 +1,64 @@
-module.exports = ['$rootScope', '$location', 'Authentication', 'Session', function($rootScope, $location, Authentication, Session){
+module.exports = [
+    '$rootScope',
+    '$location',
+    'Authentication',
+    'Session',
+function(
+    $rootScope,
+    $location,
+    Authentication,
+    Session
+) {
+    function loadSessionData() {
+        $rootScope.currentUser = Session.getSessionData();
+    }
 
-    var setSessionDataToRootScope = function(){
-        var sessionData = Session.getSessionData();
-        $rootScope.userName = sessionData.userName;
-        $rootScope.email = sessionData.email;
-    };
-
-    var switchToSignedin = function(){
-        setSessionDataToRootScope();
+    function doLogin(redirect) {
+        loadSessionData();
         $rootScope.signedin = true;
-        $location.path('/');
-    };
+        if (redirect) {
+            $location.path(redirect);
+        }
+    }
 
-    var setRootScopeDataToSignout = function(){
+    function doLogout(redirect) {
+        $rootScope.currentUser = null;
         $rootScope.signedin = false;
-        $rootScope.userName = null;
-        $rootScope.email = null;
+        if (redirect) {
+            $location.path(redirect);
+        }
+    }
+
+    $rootScope.isAdmin = function() {
+        return (($rootScope.currentUser || {}).role === 'admin');
     };
 
-    var switchToSignedoutAndShowSigninPage = function(){
-        setRootScopeDataToSignout();
-        $location.path('/signin');
+    $rootScope.goBack = function() {
+        var path = $location.path().split('/');
+        if (!path.length) {
+            return;
+        }
+        path.pop();
+        $location.path(path.join('/'));
     };
 
-    $rootScope.$on('event:authentication:signin:succeeded', function(){
-        switchToSignedin();
+    $rootScope.$on('event:authentication:login:succeeded', function(){
+        doLogin('/');
     });
 
-    $rootScope.$on('event:authentication:signin:failed', function(){
-        switchToSignedoutAndShowSigninPage();
+    $rootScope.$on('event:authentication:logout:succeeded', function(){
+        doLogout('/');
     });
 
-    $rootScope.$on('event:authentication:signout:succeeded', function(){
-        setRootScopeDataToSignout();
-        $location.path('/');
+    $rootScope.$on('event:authentication:login:failed', function(){
+        doLogout('/login');
     });
 
     $rootScope.$on('event:unauthorized', function(){
-        switchToSignedoutAndShowSigninPage();
+        doLogout('/login');
     });
 
-    $rootScope.signedin = Authentication.getSigninStatus();
-    if($rootScope.signedin)
-    {
-        setSessionDataToRootScope();
+    if (Authentication.getSigninStatus()) {
+        loadSessionData();
     }
-
 }];

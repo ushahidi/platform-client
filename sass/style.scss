@@ -6,8 +6,6 @@
 * CONFIG...........................user configs
 * GLOBAL...........................global styles & overrides
 * UTILS...........................helpers
-* ICONS...........................FontAwesome
-* COMPONENTS...........................reusable components
 * PARTIALS...........................reusable partials
 * PAGES...........................page specific styles
 */
@@ -16,14 +14,11 @@
 
 
 /*------------------------------------*\
-    $BOURBON & FRIENDS
+    $BOURBON
 \*------------------------------------*/
 
 // Bourbon
 @import "bourbon";
-
-// Neat
-@import "neat";
 
 
 
@@ -35,12 +30,6 @@
 // Settings
 @import "settings";
 
-// Bitters
-@import "base/bitters/base";
-
-// Refills
-@import "base/refills/all";
-
 
 
 
@@ -49,22 +38,11 @@
     $UTILS
 \*------------------------------------*/
 
-@import "utils/mixins";
 @import "utils/helpers";
 @import "utils/extends";
 
 // Global
 @import "base/global";
-
-
-
-
-
-/*------------------------------------*\
-    $ICONS
-\*------------------------------------*/
-
-@import "font-awesome";
 
 
 
@@ -80,24 +58,8 @@
 @import "leaflet";
 
 // Custom overrides
-@import "plugins/leaflet";
-
-@import "plugins/xeditable";
-
-
-
-
-/*------------------------------------*\
-    $COMPONENTS
-\*------------------------------------*/
-// these are custom components from http://refills.bourbon.io/
-
-@import "components/pagination/pagination";
-@import "components/dropdown/dropdown-button";
-@import "components/tabs/tabs";
-@import "components/search-tools/search-tools";
-@import "components/cards/cards";
-@import "components/buttons/buttons";
+// @import "plugins/leaflet";
+// @import "plugins/xeditable";
 
 
 
@@ -106,6 +68,7 @@
     $PARTIALS
 \*------------------------------------*/
 
+/*
 @import "partials/header/top-bar";
 @import "partials/header/sub-nav";
 @import "partials/header/workspace-panel";
@@ -116,7 +79,7 @@
 @import "partials/list-view/list-view";
 @import "partials/sidebar/sidebar";
 @import "partials/forms/form-wrapper";
-@import "partials/footer/footer";
+*/
 
 
 
@@ -125,8 +88,11 @@
 /*------------------------------------*\
     $FRAGMENTS
 \*------------------------------------*/
+
+/*
 // this is a test for PL implementation. This is a bit random, but will be implemented correctly in the future.
 @import "fragments/forms";
+*/
 
 
 
@@ -136,6 +102,9 @@
     $PAGES
 \*------------------------------------*/
 
+@import "pages/auth/login";
+
+/*
 // Home
 @import "pages/home/map-view";
 // Post Detail
@@ -155,3 +124,4 @@
 @import "pages/signin/signin";
 // Tags
 @import "pages/tags/tags";
+*/

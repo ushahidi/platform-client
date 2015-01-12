@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li><a ng-href="/" translate>nav.home</a></li>
+          <li><a ng-href="/tools" translate>nav.tools</a></li>
+          <li class="active" translate>nav.users</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 col-md-push-3 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn"
+                        ng-disabled="!selectedUsers.length"
+                        ng-class="{ 'btn-default': !selectedUsers.length, 'btn-danger': selectedUsers.length }"
+                        ng-click="deleteUsers()">
+                            <i class="fa  fa-trash-o"></i>
+                            <span translate>nav.delete</span>
+                    </button>
+                    <div class="dropdown btn-group user-role-menu" role="group" dropdown
+                    >
+                        <button class="btn dropdown-toggle" type="button" aria-expanded="false"
+                            ng-disabled="!selectedUsers.length"
+                            ng-class="{ 'btn-default': !selectedUsers.length, 'btn-warning': selectedUsers.length }"
+                            dropdown-toggle
+                        >
+                            <span translate>user.change_role</span>
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" ng-repeat="role in roles">
+                                <a href="javascript:;" ng-click="changeRole(role)">{{role.display_name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dropdown btn-group pull-right user-filter-menu" role="group" dropdown>
+                    <button class="btn dropdown-toggle" type="button" aria-expanded="false"
+                        ng-class="{ 'btn-default': !filteredRole, 'btn-info': filteredRole }"
+                        dropdown-toggle
+                    >
+                        <span translate>user.filter_role</span>
+                        <i class="fa fa-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation">
+                            <a href="javascript:;" ng-click="filterRole()">
+                                <i class="fa fa-times"></i>
+                                <span translate>nav.clear</span>
+                            </a>
+                        </li>
+                        <li role="presentation" ng-repeat="role in roles">
+                            <a href="javascript:;" ng-click="filterRole(role)">
+                                <i class="fa" ng-class="{ 'fa-circle-o': (filteredRole !== role.name), 'fa-dot-circle-o': (filteredRole === role.name) }"></i>
+                                {{role.display_name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-body" ng-hide="users.length">
+                <p class="text-muted text-center" ng-hide="users.length"><em translate>empty.user</em></p>
+            </div>
+            <table class="table table-striped" ng-show="users.length">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th colspan="2" translate>nav.user</th>
+                    <th translate>nav.role</th>
+                </tr>
+                <tr ng-repeat="user in users | orderBy:'username'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
+                    <td class="text-center">
+                        <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)" ng-click="toggleUser(user)">
+                    </td>
+                    <td style="width:90px" class="text-center">
+                        <img ng-src="{{ getGravatar(user.email) }}" alt="" />
+                    </td>
+                    <td>
+                        <a ng-href="/tools/users/{{user.id}}">{{user.username}}</a><br/>
+                        {{user.realname}}
+                    </td>
+                    <td>
+                        {{ getRole(user.role) }}
+                    </td>
+                </div>
+            </table>
+            <div class="panel-body text-right">
+                <a ng-href="/tools/users/create" class="btn btn-primary">
+                    <span translate>user.add_user</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <tool-menu active="users"></tool-menu>
+</div>

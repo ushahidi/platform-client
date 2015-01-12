@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li><a ng-href="/" translate>nav.home</a></li>
+          <li><a ng-href="/tools" translate>nav.tools</a></li>
+          <li class="active" translate>nav.settings</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 col-md-push-3 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="btn-group" role="group">
+                    <a href="javascript:;" ng-click="goBack()" class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i>
+                        <span translate>nav.back</span>
+                    </a>
+                </div>
+                <h4 class="pull-right" translate>settings.site</h4>
+            </div>
+            <div class="panel-body">
+                <form id="site">
+                    <div class="form-group">
+                        <label for="name" translate>settings.site_name</label>
+                        <input id="name" type="text" class="form-control"
+                            placeholder="My Ushahidi Instance"
+                            ng-value="site.site_name"
+                            ng-model="site.site_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="owner" translate>settings.site_owner</label>
+                        <input id="owner" type="text" class="form-control"
+                            placeholder="My Name"
+                            ng-value="site.owner_name"
+                            ng-model="site.owner_name">
+                    </div>
+                    <p class="text-right">
+                        <button class="btn btn-primary" ng-click="updateConfig('site', site)"
+                            ng-disabled="form.$invalid || isUnchanged(site) || saving_config['site']">
+                                <i class="fa fa-cog fa-spin" ng-show="saving_config['site']"></i>
+                                <span translate>settings.save</span>
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-right" translate>settings.features</h4>
+            </div>
+            <div class="panel-body">
+                <form id="features">
+                    <div class="list-group">
+                        <a href="javascript:;" class="list-group-item"
+                            ng-repeat="(feature,enabled) in features | orderBy:feature"
+                            ng-click="toggleFeature(feature, !enabled)">
+                            <i class="fa fa-lg" ng-class="{ 'fa-toggle-on': enabled, 'fa-toggle-off': !enabled }"></i>
+                            <span>{{feature}}</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <tool-menu></tool-menu>
+</div>

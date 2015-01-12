@@ -20,7 +20,7 @@ module.exports = function(root) {
                     // use this middleware for providing access to the http body
                     bodyParser.json(),
 
-                    // use custom middleware for signin and static json delivery for resource requests
+                    // use custom middleware for login and static json delivery for resource requests
                     function (req, res, next) {
                         var pathname = url.parse(req.url).pathname;
 

@@ -1,13 +1,13 @@
-module.exports = ['$scope', 'Authentication', function( $scope, Authentication ) {
-    $scope.mainMenu = false;
-
-    $scope.toggle = function(param) {
-        $scope[param] = $scope[param] === false ? true : false;
-    };
-
-    $scope.signoutClick = function(){
+module.exports = [
+    '$scope',
+    'Authentication',
+function(
+    $scope,
+    Authentication
+) {
+    $scope.logoutClick = function() {
         event.preventDefault();
         event.stopPropagation();
-        Authentication.signout();
+        Authentication.logout();
     };
 }];

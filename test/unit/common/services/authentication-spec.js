@@ -202,7 +202,7 @@ describe('Authentication', function(){
 
     });
 
-    describe('signout', function(){
+    describe('logout', function(){
 
         beforeEach(function(){
             mockedSessionData = {
@@ -215,13 +215,13 @@ describe('Authentication', function(){
 
             spyOn($rootScope, '$broadcast').and.callThrough();
 
-            Authentication.signout();
+            Authentication.logout();
         });
 
-        it('should broadcast the "signout:succeeded" event on the rootScope', function(){
+        it('should broadcast the "logout:succeeded" event on the rootScope', function(){
             expect($rootScope.$broadcast).toHaveBeenCalled();
             var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
-            expect(broadcastArguments[0]).toEqual('event:authentication:signout:succeeded');
+            expect(broadcastArguments[0]).toEqual('event:authentication:logout:succeeded');
         });
 
         it('should set signinState to false', function(){

@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li><a ng-href="/" translate>nav.home</a></li>
+          <li><a ng-href="/tools" translate>nav.workspace</a></li>
+          <li class="active" translate>nav.comments</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 col-md-push-3 col-xs-12 well">
+        <div class="row">
+            <div class="col-md-6">select all, delete, mark as</div>
+            <div class="col-md-6 text-right">filters</div>
+        </div>
+        <hr>
+        <div class="row" ><!-- ng-repeat="post in posts" -->
+            <div class="col-md-3">icon, date, time</div>
+            <div class="col-md-9">comment</div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12"><p class="text-muted text-center">pagination goes here</span></div>
+        </div>
+    </div>
+    <workspace-menu></workspace-menu>
+</div>

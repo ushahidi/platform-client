@@ -92,24 +92,35 @@
         "actions" : "Actions",
         "admin" : "Administrator",
         "all" : "All",
+        "appearance" : "Appearance",
         "back" : "Back",
         "click_images_to_zoom" : "Click images to zoom",
+        "category" : "Category",
+        "categories" : "Categories",
+        "clear" : "Clear Selection",
+        "comments" : "Comments",
         "count_posts" : "__count__ <span>posts</span>",
         "count_tags" : "__count__ <span>categories</span>",
         "count_users" : "__count__ <span>users</span>",
+        "data" : "Data",
         "disable" : "Disable",
         "edit_profile" : "Edit Profile",
         "enable" : "Enable",
         "create" : "Create",
+        "dashboard" : "Dashboard",
         "delete" : "Delete",
         "edit" : "Edit",
+        "filters" : "Filters",
+        "forms" : "Forms",
         "from_time" : "From Time",
         "full" : "Full",
         "help" : "Help",
+        "home" : "Home",
         "keyword" : "Keyword",
         "list" : "List",
         "location" : "Location",
         "login_register" : "Login/Register",
+        "login" : "Login",
         "logout" : "Logout",
         "main_navigation" : "Main Navigation",
         "map" : "Map",
@@ -119,9 +130,14 @@
         "no" : "No",
         "notifications" : "Notifications",
         "options" : "Options",
+        "people" : "People",
         "please_wait_loading" : "Please wait. Loading...",
+        "plugins" : "Plugins",
         "posts" : "Posts",
         "prev" : "Prev",
+        "profile": "My Profile",
+        "role" : "Role",
+        "roles" : "Roles",
         "save_changes" : "Save Changes",
         "search" : "Search",
         "select" : "Select",
@@ -130,8 +146,10 @@
         "sets" : "Sets",
         "settings" : "Settings",
         "tags" : "Categories",
+        "tools" : "Tools",
         "unselect_all" : "Unselect All",
         "until_time" : "Until Time",
+        "user" : "User",
         "users" : "Users",
         "user_name" : "User Name",
         "views" : "Views",
@@ -167,6 +185,7 @@
         }
     },
     "view_tabs" : {
+        "view" : "View",
         "map" : "Map",
         "list" : "List",
         "graph" : "Graph",
@@ -347,10 +366,10 @@
         "admin_map_settings" : "Admin: Map Settings"
     },
     "settings" :{
-        "admin_settings" : "Admin: Settings",
+        "site" : "Site Settings",
         "site_name" : "Site Name",
         "site_owner" : "Site Owner",
-        "save" : "save",
+        "save" : "Save",
         "features" : {
             "features" : "Features",
             "please_select_features" : "Please select the features you would like to enable."
@@ -361,11 +380,12 @@
         "select_all" : "Select All",
         "unselect_all" : "Unselect All",
         "add_user" : "Add User",
-        "change_role_to" : "Change Role To...",
+        "change_role" : "Change Role",
+        "create" : "Create User",
+        "edit" : "Edit User",
+        "filter_role" : "Filter Role",
         "show_all_roles" : "Show All Roles",
         "confirm_password" : "Confirm Password",
-        "create_user" : "Create User",
-        "delete_user" : "Delete",
         "delete_this_user" : "Delete this user",
         "edit_profile" : "Edit Profile",
         "save_profile" : "Save Profile",
@@ -375,8 +395,6 @@
         "email" : "Email Address",
         "failed_attempts" : "Failed attempts: ",
         "full_name" : "Full Name",
-        "login" : "Login",
-        "logout" : "Logout",
         "never" : "Never",
         "no_full_name" : "No full name",
         "number_of_users_shown" : "Number of users shown",
@@ -403,11 +421,10 @@
         "title" : "Edit profile"
     },
     "user_create" :  {
-        "title" : "Create User",
         "full_name": "Display Name",
         "username": "Username",
         "email": "Email Address",
-        "role": "Role",
+        "role": "Role"
     },
     "footer" : {
         "copyright_info" : "Powered by Ushahidi. | &copy; Copyright {{owner_name}}, 2013"
@@ -424,6 +441,9 @@
             "bulk_destroy_success" : "Deleted resource",
             "bulk_destroy_error" : "Unable to delete resource, please try again",
             "bulk_destroy_cancelled" : "Delete cancelled"
+        },
+        "login" : {
+            "failed" : "Login failed, check your username and password."
         },
         "post" : {
             "save_success" : "Saved post",
@@ -456,5 +476,8 @@
         "post" : "No posts found.",
         "user" : "No users found.",
         "tag" : "No categories found."
+    },
+    "workspace": {
+        "recent_activity": "Recent Activity"
     }
 }

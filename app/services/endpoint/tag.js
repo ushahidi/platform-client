@@ -20,7 +20,7 @@ function(
         }
     });
 
-    $rootScope.$on('event:authentication:signout:succeeded', function(){
+    $rootScope.$on('event:authentication:logout:succeeded', function(){
         TagEndpoint.query();
     });
 

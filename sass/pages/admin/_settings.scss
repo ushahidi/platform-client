@@ -19,7 +19,7 @@
 }
 
 .site-settings-header {
-    @include header($blueGray);
+    @include header($blue-gray);
 
     .title {
         color: $white;

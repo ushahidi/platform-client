@@ -3,8 +3,6 @@
 \*------------------------------------*/
 /*
 * GLOBAL...............global styles
-* LAYOUT...............site wide layout
-* HEADER TITLE...............list-filter and header title
 */
 
 
@@ -16,6 +14,7 @@
 
 body {
     background-color: $body-bg;
+    padding-top: 70px;
 
     &.active:before {
         content: '';
@@ -28,106 +27,24 @@ body {
         opacity: .8;
         z-index: $offcanvas;
     }
-}
 
-[class*='fa-'] {
-    padding-right: 5px;
-}
-
-hr {
-    @include span-columns(12);
-}
-
-
-
-
-/*------------------------------------*\
-    $LAYOUT
-\*------------------------------------*/
-
-.full-content {
-    @include span-columns(12);
-}
-
-// this exists with .sidebar
-.main-content {
-    @include span-columns(12);
-
-    @include media($large) {
-        @include span-columns(8);
-        margin: 0 auto;
+    footer {
+        width: 100%;
+        height: 60px;
+        background: $light-gray;
     }
 }
 
-// this exists with .main-content
-.sidebar {
-    @include span-columns(12);
-    @include omega;
-
-    @include media($large) {
-        @include span-columns(4);
-        @include omega;
-    }
-}
-
-
-.container {
-    @include outer-container;
-    clear: both;
-    padding: 30px;
-
-    .wrapper {
-        @include span-columns(12);
-        @include fill-parent();
-        @include wrapper;
-    }
-}
-
-.container--alt {
-    @include outer-container;
-    padding: 0;
-
-    .wrapper {
-        @include span-columns(12);
-        @include fill-parent();
-        @include wrapper;
-    }
-}
-
-
-
-
-
-
-/*------------------------------------*\
-    $HEADER TITLE
-\*------------------------------------*/
-
-.title {
-    @include span-columns(12);
-    position: relative;
-    top: 50%;
+nav i.fa {
+    width: 1.2em;
     text-align: center;
-
-    @include media($small) {
-        @include span-columns(6);
-        @include transform(translateY(-50%));
-        position: absolute;
-        margin-bottom: 0;
-        text-align: left;
-    }
 }
-
-/*------------------------------------*\
-    $FORMS
-\*------------------------------------*/
 
 select {
     width: 100%;
     height: 30px;
     max-width: 100%;
     border-radius: $global-radius;
-    color: $sub-base-font-color;
     margin-bottom: 15px;
 }
 

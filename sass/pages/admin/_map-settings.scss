@@ -16,7 +16,7 @@
 \*------------------------------------*/
 
 .map-settings-header {
-    @include header($blueGray);
+    @include header($blue-gray);
 
     .title {
         color: $white;
@@ -89,17 +89,17 @@ input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none !important;
     width: 25px;
     height: 25px;
-    background-color: $darkBlue;
+    background-color: $dark-blue;
     border-radius: 30px;
-    box-shadow: 0px 0px 1px darken($darkBlue, 15%);
+    box-shadow: 0px 0px 1px darken($dark-blue, 15%);
     @include transition (all 0.5s ease);
 
     &:hover {
-        background-color: darken($darkBlue, 10%);
+        background-color: darken($dark-blue, 10%);
     }
 
     &:active {
-        box-shadow: 0px 0px 1px darken($darkBlue, 15%);
+        box-shadow: 0px 0px 1px darken($dark-blue, 15%);
     }
 }
 

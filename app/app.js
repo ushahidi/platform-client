@@ -7,8 +7,8 @@ require('angular-translate');
 require('./modules/ui-tabs');
 require('angular-ui-bootstrap/src/dropdown/dropdown');
 require('angular-ui-bootstrap/src/collapse/collapse');
+require('angular-ui-bootstrap/src/tabs/tabs');
 require('angular-ui-bootstrap/src/transition/transition');
-require('angular-ui-bootstrap/src/accordion/accordion');
 require('angular-mocks/angular-mocks');
 require('angular-moment/angular-moment');
 require('angular-sanitize/angular-sanitize');
@@ -16,8 +16,10 @@ require('angular-markdown-directive/markdown.js');
 require('angular-local-storage');
 
 require('./post/post-module.js');
+require('./tool/tool-module.js');
 require('./user/user-module.js');
 require('./user-profile/user-profile-module.js');
+require('./workspace/workspace-module.js');
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.backend_url;
@@ -30,15 +32,17 @@ angular.module('app',
         'pascalprecht.translate',
         'ui.bootstrap.dropdown',
         'ui.bootstrap.collapse',
-        'ui.bootstrap.accordion',
+        'ui.bootstrap.tabs',
         'ui.bootstrap.transition',
         'ui.tabs',
         'leaflet-directive',
         'angularMoment',
         'btford.markdown',
         'posts',
+        'tools',
         'users',
-        'user-profile'
+        'user-profile',
+        'workspace'
     ])
 
     .constant('CONST', {
@@ -49,8 +53,6 @@ angular.module('app',
         OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261'
     })
 
-    .directive('globalFilter', require('./directives/global-filter.js'))
-    .directive('globalFilterMeta', require('./directives/global-filter-meta.js'))
     .directive('inFocus', require('./directives/focus.js'))
 
     .service('Authentication', require('./common/services/authentication.js'))
@@ -65,13 +67,11 @@ angular.module('app',
     .service('Notify', require('./common/services/notify.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))
-    .controller('workspaceAccordion', require('./workspace'))
     .controller('adminMapSettings', require('./controllers/admin/map-settings.js'))
-    .controller('filterGlobal', require('./controllers/global-filter.js'))
+    .controller('postFilters', require('./controllers/post-filters.js'))
 
     .config(require('./common/configs/authentication-interceptor.js'))
     .config(require('./routes'))
-    .config(require('./modules/ui-accordion'))
     .config(require('./locale-config.js'))
 
     .run(require('./global-event-handlers.js'))

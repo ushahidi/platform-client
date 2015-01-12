@@ -1,12 +1,4 @@
-<div class="map-controls-wrapper map-view">
-    <post-view-tabs></post-view-tabs>
-    <global-filter></global-filter>
-</div>
-
-<div class="global-filter-meta-wrapper">
-    <global-filter-meta></global-filter-meta>
-</div>
-
-<section ng-controller="postMapView" class="map-view">
+<post-view-tabs></post-view-tabs>
+<section class="map-view">
     <leaflet defaults="defaults" markers="markers" center="center" height="665px" width="100%"></leaflet>
 </section>

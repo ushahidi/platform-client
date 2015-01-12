@@ -1,19 +1,79 @@
-<div class="view-tabs-wrapper">
-    <ul class="view-tabs">
-        <li ng-class="{active:$root.activePath=='/views/map'}">
-            <a href="/views/map">
-                <i class="fa  fa-map-marker"></i><span translate>view_tabs.map</span>
-            </a>
-        </li>
-        <li ng-class="{active:$root.activePath=='/views/list'}">
-            <a href="/views/list">
-                <i class="fa  fa-list"></i><span translate>view_tabs.list</span>
-            </a>
-        </li>
-        <li ng-class="{active:$root.activePath=='/views/graph'}">
-            <a href="/views/graph">
-                <i class="fa  fa-bar-chart-o"></i><span translate>view_tabs.graph</span>
-            </a>
-        </li>
-    </ul>
-</div>
+<nav class="navbar navbar-default">
+    <div ng-controller="postFilters">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar"
+                ng-init="isCollapsed = true"
+                ng-click="isCollapsed = !isCollapsed"
+                >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <p class="navbar-text" translate>post.all_posts</p>
+            <!--
+                this structure is currently a bit off from design spec. the expected
+                order for desktop is:
+
+                [TITLE]     [VIEWS] [FILTERS]
+                [          CONTENT          ]
+
+                and then on mobile, it switches to:
+
+                [TITLE          ]
+                [     CONTENT   ]
+                [VIEWS] [FILTERS]
+
+                which means that the HTML outline needs to end up as:
+
+                <title>
+                <content>
+                <row>
+                    <views><filters>
+                </row>
+
+                combined with some media query controls to set a "position:absolute"
+                on the <row> when in desktop size, then drop it when in mobile.
+
+                at least, that was the theory i came up with. this looks okay for now.
+            -->
+        </div>
+        <div id="navbar" class="navbar-collapse" collapse="isCollapsed">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown views-menu" dropdown>
+                    <a href="javascript:;" class="dropdown-toggle" role="button" aria-expanded="false"
+                        dropdown-toggle>
+                        <span translate>view_tabs.view</span>: <strong>{{activeView}}</strong>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a ng-href="/"><i class="fa fa-globe"></i>
+                            <span translate>view_tabs.map</span></a>
+                        </li>
+                        <li role="presentation"><a ng-href="/views/list"><i class="fa fa-list"></i>
+                            <span translate>view_tabs.list</span></a>
+                        </li>
+                        <li role="presentation"><a ng-href="/views/graph"><i class="fa fa-line-chart"></i>
+                            <span translate>view_tabs.graph</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown filters-menu" dropdown>
+                    <a href="javascript:;" class="dropdown-toggle" role="button" aria-expanded="false"
+                        dropdown-toggle>
+                        <span><span translate>nav.filters</span> <span class="badge">0</span></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation">
+                            <span class="text-muted">
+                                <strong class="text-uppercase initialism">todo</strong>
+                                this requires a custom element to handle tabs + content in a dropdown.
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

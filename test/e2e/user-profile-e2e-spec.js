@@ -18,7 +18,7 @@ describe('user profile management', function() {
         var userMenuLink;
 
         beforeEach(function() {
-            browser.get('/signin');
+            browser.get('/login');
 
             element(by.model('username')).sendKeys('admin');
             element(by.model('password')).sendKeys('admin');

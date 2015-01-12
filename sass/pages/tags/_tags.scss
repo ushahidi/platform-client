@@ -16,7 +16,7 @@
 \*------------------------------------*/
 
 .manage-tags-header {
-    @include header($blueGray);
+    @include header($blue-gray);
 
     .title {
         color: $white;

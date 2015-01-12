@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li><a ng-href="/" translate>nav.home</a></li>
+          <li><a ng-href="/tools" translate>nav.tools</a></li>
+          <li class="active" translate>nav.users</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9 col-md-push-3 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="btn-group" role="group">
+                    <a href="javascript:;" ng-click="goBack()" class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i>
+                        <span translate>nav.back</span>
+                    </a>
+                </div>
+                <h4 class="pull-right">{{title}}</h4>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="full_name" translate>user.full_name</label>
+                        <input id="full_name" type="text" class="form-control"
+                            placeholder="{{ 'user_create.full_name'|translate }}"
+                            ng-minlength="3"
+                            ng-maxlength="150"
+                            ng-model="user.realname"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username" translate>user.username</label>
+                        <input id="username" type="text" class="form-control"
+                            placeholder="{{ 'user_create.username'|translate }}"
+                            ng-minlength="3"
+                            ng-maxlength="150"
+                            ng-model="user.username"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" translate>user.email</label>
+                        <input id="email" type="email" class="form-control"
+                            placeholder="{{ 'user_create.email'|translate }}"
+                            ng-minlength="3"
+                            ng-maxlength="150"
+                            ng-model="user.email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" translate>user.password</label>
+                        <input id="password" type="password" class="form-control"
+                            ng-minlength="8"
+                            ng-model="user.password"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" translate>user.role</label>
+                        <select id="role" ng-model="user.role" ng-options="role.name as role.display_name for role in roles"></select>
+                    </div>
+
+                    <p class="text-right">
+                        <button class="btn btn-primary" ng-click="saveUser(user)" ng-disabled="form.$invalid || processing">
+                            <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
+                            <span>{{title}}</span>
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <tool-menu active="users"></tool-menu>
+</div>

@@ -1,0 +1,12 @@
+<nav class="col-md-3 col-md-pull-9 col-xs-12">
+    <ul class="nav nav-pills nav-stacked global-menu">
+        <li role="presentation"><a ng-href="/workspace" translate>nav.dashboard</a></li>
+        <li role="presentation"><a ng-href="/workspace/posts" translate>nav.posts</a></li>
+        <li role="presentation"><a ng-href="/workspace/comments" translate>nav.comments</a></li>
+    </ul>
+    <hr>
+    <ul class="nav nav-pills nav-stacked my-sets" ng-show="userTasks">
+        <li role="presentation"><span class="text-muted text-uppercase initialism">My Tasks</span></li>
+        <li role="presentation" ng-repeat="task in userTasks"><a ng-href="/workspace/task/{{task.id}}">{{task.name}}</a></li>
+    </ul>
+</nav>

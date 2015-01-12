@@ -16,7 +16,7 @@
 \*------------------------------------*/
 
 .manage-users-header {
-    @include header($blueGray);
+    @include header($blue-gray);
     padding: 20px;
 
     @include media($small) {

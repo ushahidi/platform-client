@@ -42,15 +42,15 @@ $warning-color: #fec244;
 $success-color: #68bc7a;
 
 $black:          #000;
-$darkGray:       #333333;
-$lightGray:        #e3e3e3;
+$dark-gray:       #333333;
+$light-gray:        #e3e3e3;
 $white:          #fcfcfc;
 
-$blueGray:       #2f3e4d;
-$darkBlue:       #226a9c;
+$blue-gray:       #2f3e4d;
+$dark-blue:       #226a9c;
 
-$body-bg: $secondary-color;
-$workspace-body-bg: $lightGray;
+$body-bg: $white;
+$workspace-body-bg: $light-gray;
 
 // Social Networks
 $facebook-color:  #3b5998;
@@ -61,19 +61,58 @@ $google-color:    #dd4b39;
     $TYPE
 \*------------------------------------*/
 
-// Fonts
-$base-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-$base-font-color: $darkGray;
-$sub-base-font-color: #717171;
-$body-font-weight: normal;
-$body-font-style: normal;
-
-$small-font-size: .8em;
-
-//Layout
-
+// Layout
 $global-radius: 3px;
-$base-spacing: 20px;
+
+// Typography
+$base-font-family: $helvetica;
+$header-font-family: $base-font-family;
+
+// Font Sizes
+$base-font-size: 1em;
+$small-font-size: .8em;
+$h1-font-size: $base-font-size * 2.25;
+$h2-font-size: $base-font-size * 2;
+$h3-font-size: $base-font-size * 1.75;
+$h4-font-size: $base-font-size * 1.5;
+$h5-font-size: $base-font-size * 1.25;
+$h6-font-size: $base-font-size;
+
+// Line height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+
+// Other Sizes
+$base-border-radius: 3px;
+$base-spacing: $base-line-height * 1em;
+$base-z-index: 0;
+
+// Background Color
+$base-background-color: $white;
+
+// Font Colors
+$base-font-color: $dark-gray;
+$base-accent-color: $blue-gray;
+
+// Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: darken($base-accent-color, 15);
+$base-button-color: $base-link-color;
+$hover-button-color: $hover-link-color;
+
+// Border color
+$base-border-color: $light-gray;
+$base-border: 1px solid $base-border-color;
+
+// Forms
+$form-border-color: $base-border-color;
+$form-border-color-hover: darken($base-border-color, 10);
+$form-border-color-focus: $base-accent-color;
+$form-border-radius: $base-border-radius;
+$form-box-shadow: inset 0 1px 3px rgba(black,0.06);
+$form-box-shadow-focus: $form-box-shadow, 0 0 5px rgba(darken($form-border-color-focus, 5), 0.7);
+$form-font-size: $base-font-size;
+$form-font-family: $base-font-family;
 
 /*------------------------------------*\
     $TRANSITIONS

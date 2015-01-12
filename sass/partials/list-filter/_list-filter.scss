@@ -17,7 +17,7 @@
 // FILTER
 .list-filter {
     @include outer-container;
-    @include header($blueGray);
+    @include header($blue-gray);
     clear: both;
     padding: 30px;
 }
@@ -25,7 +25,7 @@
 // FILTER-ALT
 .list-filter--alt {
     @include outer-container;
-    @include header(lighten($blueGray, 25));
+    @include header(lighten($blue-gray, 25));
     clear: both;
     margin-bottom: 20px;
     padding: 30px;

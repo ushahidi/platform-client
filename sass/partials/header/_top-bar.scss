@@ -152,7 +152,7 @@ header.navigation {
     }
 
     .about-nav [class*='fa-'] {
-        background-color: $darkBlue;
+        background-color: $dark-blue;
         padding: 23px 27px 19px 24px;
     }
 
@@ -173,7 +173,7 @@ header.navigation {
         }
 
         .sign-in [class*='fa-'] {
-          background-color: $darkBlue;
+          background-color: $dark-blue;
         }
 
         .user-info {
@@ -285,7 +285,7 @@ header.navigation {
     position: fixed;
     height: 100%;
     left: -300px;
-    background-color: $darkGray;
+    background-color: $dark-gray;
     width: 300px;
     z-index: $offcanvas;
     @include transition;
@@ -369,12 +369,12 @@ header.navigation {
         .nav-link {
             display: block;
             width: 100%;
-            background-color: $darkGray;
+            background-color: $dark-gray;
             text-align: left;
 
 
             &:hover {
-                background-color: darken($darkGray, 10);
+                background-color: darken($dark-gray, 10);
             }
 
             span {
