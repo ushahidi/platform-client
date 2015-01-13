@@ -1,7 +1,9 @@
+require('angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module');
 require('angular-xeditable');
 require('../common/modules/gravatar-helper.js');
 
 angular.module('tools', [
+    'colorpicker.module',
     'xeditable',
     'gravatarHelper'
 ])

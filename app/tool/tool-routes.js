@@ -31,6 +31,14 @@ function(
         controller: require('./controllers/tool-categories-controller.js'),
         templateUrl: 'templates/tool/categories.html'
     })
+    .when('/tools/categories/create', {
+        controller: require('./controllers/tool-categories-create-controller.js'),
+        templateUrl: 'templates/tool/categories-edit.html'
+    })
+    .when('/tools/categories/:id', {
+        controller: require('./controllers/tool-categories-edit-controller.js'),
+        templateUrl: 'templates/tool/categories-edit.html'
+    })
     .when('/tools/views', {
         controller: require('./controllers/tool-views-controller.js'),
         templateUrl: 'templates/tool/todo.html'

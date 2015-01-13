@@ -14,6 +14,7 @@ require('angular-moment/angular-moment');
 require('angular-sanitize/angular-sanitize');
 require('angular-markdown-directive/markdown.js');
 require('angular-local-storage');
+require('checklist-model/checklist-model');
 
 require('./post/post-module.js');
 require('./tool/tool-module.js');
@@ -26,6 +27,7 @@ var backendUrl = process.env.backend_url;
 
 angular.module('app',
     [
+        'checklist-model',
         'ngRoute',
         'ngResource',
         'LocalStorageModule',
@@ -65,6 +67,7 @@ angular.module('app',
     .service('RoleHelper', require('./common/services/role-helper.js'))
     .service('Util', require('./common/services/util.js'))
     .service('Notify', require('./common/services/notify.js'))
+    .service('multiTranslate', require('./common/services/multi-translate.js'))
 
     .controller('navigation', require('./controllers/navigation.js'))
     .controller('adminMapSettings', require('./controllers/admin/map-settings.js'))

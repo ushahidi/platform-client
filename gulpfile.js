@@ -93,6 +93,7 @@ gulp.task('sass', ['rename'], function() {
                 'bower_components/neat/app/assets/stylesheets',
                 'bower_components/refills/source/stylesheets',
                 'bower_components/font-awesome/scss',
+                'node_modules/angular-bootstrap-colorpicker/scss',
                 'node_modules/leaflet/dist/'
             ],
             sourceComments: 'map'
@@ -110,7 +111,13 @@ gulp.task('sass', ['rename'], function() {
  * Task: `sass`
  * Converts SASS files to CSS
  */
-gulp.task('rename', function() {
+gulp.task('rename-colorpicker', function() {
+    gulp.src(['node_modules/angular-bootstrap-colorpicker/css/colorpicker.css'])
+        .pipe(rename('_colorpicker.scss'))
+        .pipe(gulp.dest('node_modules/angular-bootstrap-colorpicker/scss/'))
+        ;
+});
+gulp.task('rename', ['rename-colorpicker'], function() {
     gulp.src(['node_modules/leaflet/dist/leaflet.css'])
         .pipe(rename('_leaflet.scss'))
         .pipe(gulp.dest('node_modules/leaflet/dist/'))
