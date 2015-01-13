@@ -15,10 +15,8 @@ module.exports = function(config){
         'app/user-profile/**/*.js',
         'app/controllers/**/*.js',
         'app/directives/**/*.js',
-        'app/interceptors/**/*.js',
         'app/locales/**/*.json',
         'app/services/**/*.js',
-        'app/global-event-handlers.js',
         'app/locale-config.js',
         'test/unit/**/*.js'
     ],

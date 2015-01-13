@@ -46,7 +46,7 @@ describe('Authentication', function(){
         Authentication = _Authentication_;
     }));
 
-    describe('beeing still signed out', function(){
+    describe('beeing still logged out', function(){
         describe('getLoginStatus', function(){
             it('should return false', function(){
                 expect(Authentication.getLoginStatus()).toBe(false);

@@ -74,7 +74,7 @@ angular.module('app',
     .config(require('./routes'))
     .config(require('./locale-config.js'))
 
-    .run(require('./global-event-handlers.js'))
+    .run(require('./common/global/event-handlers.js'))
     .run(require('./global-scope-variables.js'))
 
     .factory('_', function() {

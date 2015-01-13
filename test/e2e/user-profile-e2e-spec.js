@@ -13,7 +13,7 @@ userProfileLinkSelector = 'a.my-profile';
 
 describe('user profile management', function() {
 
-    describe('as a signed in user', function(){
+    describe('as a loggedin user', function(){
 
         var userMenuLink;
 
@@ -163,5 +163,5 @@ describe('user profile management', function() {
             });
         }); // end 'link to user profile in user menu'
 
-    }); // end 'as a signed in user'
+    }); // end 'as a loggedin user'
 }); // end 'user profile management'

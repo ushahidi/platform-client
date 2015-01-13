@@ -15,7 +15,7 @@ function(
 
     function doLogin(redirect) {
         loadSessionData();
-        $rootScope.signedin = true;
+        $rootScope.loggedin = true;
         if (redirect) {
             $location.path(redirect);
         }
@@ -23,7 +23,7 @@ function(
 
     function doLogout(redirect) {
         $rootScope.currentUser = null;
-        $rootScope.signedin = false;
+        $rootScope.loggedin = false;
         if (redirect) {
             $location.path(redirect);
         }
@@ -59,6 +59,6 @@ function(
     });
 
     if (Authentication.getLoginStatus()) {
-        loadSessionData();
+        doLogin();
     }
 }];

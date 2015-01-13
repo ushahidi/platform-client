@@ -24,7 +24,7 @@ module.exports = function(root) {
                     function (req, res, next) {
                         var pathname = url.parse(req.url).pathname;
 
-                        // handle sign in
+                        // handle login
                         if(_s.endsWith(pathname, 'oauth/token') && req.method === 'POST')
                         {
                             // check for correct credentials
@@ -69,7 +69,7 @@ module.exports = function(root) {
                             return res.end();
                         }
 
-                        // if it's not about sign in:
+                        // if it's not about login:
                         // assume it is a resource request
                         // => deliver the corresponding static json files via 'connect'
                         else

@@ -15,7 +15,7 @@ function(
 ) {
 
     // check whether we have initially an old access_token and assume that,
-    // if yes, we are still signedin
+    // if yes, we are still loggedin
     var loginStatus = !!Session.getSessionDataEntry('accessToken'),
 
     setToLoginState = function(userData){
