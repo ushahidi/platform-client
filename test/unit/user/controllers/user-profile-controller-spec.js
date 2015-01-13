@@ -65,26 +65,6 @@ describe('user profile controller', function(){
         $rootScope.$digest();
     }));
 
-
-    describe('getRole', function(){
-        beforeEach(function(){
-            $scope.roles = [
-            {
-                name: 'guest',
-                display_name: 'Guest',
-            },
-            {
-                name: 'user',
-                display_name: 'Member',
-            },
-            {
-                name: 'admin',
-                display_name: 'Admin',
-            }
-            ];
-        });
-    });
-
     var returnedRole;
 
     describe('with an existing role name', function(){

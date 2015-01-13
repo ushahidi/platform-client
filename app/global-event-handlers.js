@@ -58,7 +58,7 @@ function(
         doLogout('/login');
     });
 
-    if (Authentication.getSigninStatus()) {
+    if (Authentication.getLoginStatus()) {
         loadSessionData();
     }
 }];

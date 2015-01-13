@@ -6,7 +6,7 @@ describe('Authentication', function(){
         $httpBackend,
         BACKEND_URL,
         Authentication,
-        signinPromiseSuccessCallback,
+        loginPromiseSuccessCallback,
         mockedSessionData,
         mockedOauthTokenResponse,
         mockedUserDataResponse;
@@ -47,14 +47,14 @@ describe('Authentication', function(){
     }));
 
     describe('beeing still signed out', function(){
-        describe('getSigninStatus', function(){
+        describe('getLoginStatus', function(){
             it('should return false', function(){
-                expect(Authentication.getSigninStatus()).toBe(false);
+                expect(Authentication.getLoginStatus()).toBe(false);
             });
         });
     });
 
-    describe('signin', function(){
+    describe('login', function(){
 
         describe('with successfull post call to "/oauth/token"', function(){
 
@@ -86,9 +86,9 @@ describe('Authentication', function(){
                 beforeEach(function(){
                     spyOn($rootScope, '$broadcast').and.callThrough();
 
-                    signinPromiseSuccessCallback = jasmine.createSpy('success');
+                    loginPromiseSuccessCallback = jasmine.createSpy('success');
 
-                    Authentication.signin('fooUser', 'barPassword').then(signinPromiseSuccessCallback);
+                    Authentication.login('fooUser', 'barPassword').then(loginPromiseSuccessCallback);
 
                     $httpBackend.flush();
                 });
@@ -104,24 +104,24 @@ describe('Authentication', function(){
                     expect(mockedSessionData.email).toEqual(mockedUserDataResponse.email);
                 });
 
-                it('should set signinState to true', function(){
-                    expect(Authentication.getSigninStatus()).toBe(true);
+                it('should set loginState to true', function(){
+                    expect(Authentication.getLoginStatus()).toBe(true);
                 });
 
-                it('should broadcast the "signin:succeed" event on the rootScope', function(){
+                it('should broadcast the "login:succeed" event on the rootScope', function(){
                     expect($rootScope.$broadcast).toHaveBeenCalled();
                     var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
-                    expect(broadcastArguments[0]).toEqual('event:authentication:signin:succeeded');
+                    expect(broadcastArguments[0]).toEqual('event:authentication:login:succeeded');
                 });
 
                 it('should resolve the returned promise', function(){
-                    expect(signinPromiseSuccessCallback).toHaveBeenCalled();
+                    expect(loginPromiseSuccessCallback).toHaveBeenCalled();
                 });
 
             });
             describe('with unsuccessfull get call to "/users/me"', function(){
 
-                var signinPromiseFailureCallback;
+                var loginPromiseFailureCallback;
 
                 beforeEach(function(){
                     $httpBackend.whenGET(BACKEND_URL + '/api/v2/users/me').respond(404, '');
@@ -130,10 +130,10 @@ describe('Authentication', function(){
                 beforeEach(function(){
                     spyOn($rootScope, '$broadcast').and.callThrough();
 
-                    signinPromiseSuccessCallback = jasmine.createSpy('success');
-                    signinPromiseFailureCallback = jasmine.createSpy('failure');
+                    loginPromiseSuccessCallback = jasmine.createSpy('success');
+                    loginPromiseFailureCallback = jasmine.createSpy('failure');
 
-                    Authentication.signin('fooUser', 'barPassword').then(signinPromiseSuccessCallback, signinPromiseFailureCallback);
+                    Authentication.login('fooUser', 'barPassword').then(loginPromiseSuccessCallback, loginPromiseFailureCallback);
 
                     $httpBackend.flush();
                 });
@@ -142,19 +142,19 @@ describe('Authentication', function(){
                     expect(mockedSessionData).toEqual({});
                 });
 
-                it('should set signinState to false', function(){
-                    expect(Authentication.getSigninStatus()).toBe(false);
+                it('should set loginState to false', function(){
+                    expect(Authentication.getLoginStatus()).toBe(false);
                 });
 
-                it('should broadcast the "signin:failed" event on the rootScope', function(){
+                it('should broadcast the "login:failed" event on the rootScope', function(){
                     expect($rootScope.$broadcast).toHaveBeenCalled();
                     var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
-                    expect(broadcastArguments[0]).toEqual('event:authentication:signin:failed');
+                    expect(broadcastArguments[0]).toEqual('event:authentication:login:failed');
                 });
 
                 it('should reject the returned promise', function(){
-                    expect(signinPromiseSuccessCallback).not.toHaveBeenCalled();
-                    expect(signinPromiseFailureCallback).toHaveBeenCalled();
+                    expect(loginPromiseSuccessCallback).not.toHaveBeenCalled();
+                    expect(loginPromiseFailureCallback).toHaveBeenCalled();
                 });
 
             });
@@ -162,7 +162,7 @@ describe('Authentication', function(){
 
         describe('with unsuccessfull post call to "/oauth/token"', function(){
 
-            var signinPromiseFailureCallback;
+            var loginPromiseFailureCallback;
 
             beforeEach(function(){
                 $httpBackend.whenPOST(BACKEND_URL+'/oauth/token').respond(401, '');
@@ -171,10 +171,10 @@ describe('Authentication', function(){
             beforeEach(function(){
                 spyOn($rootScope, '$broadcast').and.callThrough();
 
-                signinPromiseSuccessCallback = jasmine.createSpy('success');
-                signinPromiseFailureCallback = jasmine.createSpy('failure');
+                loginPromiseSuccessCallback = jasmine.createSpy('success');
+                loginPromiseFailureCallback = jasmine.createSpy('failure');
 
-                Authentication.signin('fooUser', 'barPassword').then(signinPromiseSuccessCallback, signinPromiseFailureCallback);
+                Authentication.login('fooUser', 'barPassword').then(loginPromiseSuccessCallback, loginPromiseFailureCallback);
 
                 $httpBackend.flush();
             });
@@ -183,19 +183,19 @@ describe('Authentication', function(){
                 expect(mockedSessionData).toEqual({});
             });
 
-            it('should set signinState to false', function(){
-                expect(Authentication.getSigninStatus()).toBe(false);
+            it('should set loginState to false', function(){
+                expect(Authentication.getLoginStatus()).toBe(false);
             });
 
-            it('should broadcast the "signin:failed" event on the rootScope', function(){
+            it('should broadcast the "login:failed" event on the rootScope', function(){
                 expect($rootScope.$broadcast).toHaveBeenCalled();
                 var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
-                expect(broadcastArguments[0]).toEqual('event:authentication:signin:failed');
+                expect(broadcastArguments[0]).toEqual('event:authentication:login:failed');
             });
 
             it('should reject the returned promise', function(){
-                expect(signinPromiseSuccessCallback).not.toHaveBeenCalled();
-                expect(signinPromiseFailureCallback).toHaveBeenCalled();
+                expect(loginPromiseSuccessCallback).not.toHaveBeenCalled();
+                expect(loginPromiseFailureCallback).toHaveBeenCalled();
             });
 
         });
@@ -224,8 +224,8 @@ describe('Authentication', function(){
             expect(broadcastArguments[0]).toEqual('event:authentication:logout:succeeded');
         });
 
-        it('should set signinState to false', function(){
-            expect(Authentication.getSigninStatus()).toBe(false);
+        it('should set loginState to false', function(){
+            expect(Authentication.getLoginStatus()).toBe(false);
         });
 
         it('should clear the Session data', function(){

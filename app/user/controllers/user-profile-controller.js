@@ -19,9 +19,7 @@ function(
         $scope.title = title;
     });
 
-    $scope.getRole = function(role) {
-        return RoleHelper.getRole($scope.roles, role);
-    };
+    $scope.getRole = RoleHelper.getRole;
 
     $scope.onUserProfileEditFormShow = function() {
         $scope.userProfileDataForEdit = angular.copy($scope.userProfileData);
