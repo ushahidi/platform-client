@@ -38,7 +38,7 @@
                             <li><a ng-href="/posts/create"><i class="fa  fa-plus"></i> <span translate>nav.create</span></a></li>
                             <li ng-hide="currentUser"><a ng-href="/login" class="user-login"><i class="fa  fa-sign-in"></i> <span translate>nav.login</span></a></li>
                             <li class="dropdown user-menu" dropdown ng-show="currentUser">
-                                <a href="javascript:;" class="dropdown-toggle" role="button" aria-expanded="false"
+                                <a href="javascript:;" id="user-menu-link" class="dropdown-toggle" role="button" aria-expanded="false"
                                     dropdown-toggle>
                                     <span>{{currentUser.realName}}</span>
                                     <i class="fa fa-angle-down"></i>

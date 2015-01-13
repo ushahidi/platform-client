@@ -8,7 +8,7 @@ var getLastUrlPart = function(url){
 
 var userMenuLinkSelector = 'a#user-menu-link',
 userMenuLinkSelector = 'a#user-menu-link',
-userProfileLinkSelector = 'a#user-profile';
+userProfileLinkSelector = 'a.my-profile';
 
 
 describe('user profile management', function() {
@@ -37,7 +37,7 @@ describe('user profile management', function() {
 
             it('should exist and have the correct text', function(){
                 expect(userProfileLink.isDisplayed()).toBe(true);
-                expect(userProfileLink.getText()).toBe('Edit Profile');
+                expect(userProfileLink.getText()).toBe('My Profile');
             });
 
             describe('clicking the user profile link', function(){
