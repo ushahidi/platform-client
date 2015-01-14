@@ -4,6 +4,7 @@ module.exports = [
     '$location',
     'PostEntity',
     'PostEndpoint',
+    'TagEndpoint',
     'FormEndpoint',
     'FormAttributeEndpoint',
     'Notify',
@@ -14,6 +15,7 @@ function(
     $location,
     postEntity,
     PostEndpoint,
+    TagEndpoint,
     FormEndpoint,
     FormAttributeEndpoint,
     Notify,
@@ -34,6 +36,8 @@ function(
         FormAttributeEndpoint.query().$promise.then(function(attrs) {
             $scope.attributes = attrs;
         });
+
+        $scope.categories = TagEndpoint.query();
     };
 
     $scope.filterNotDisabled = function (form) {
