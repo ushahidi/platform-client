@@ -145,8 +145,10 @@
         "set" : "Set",
         "sets" : "Sets",
         "settings" : "Settings",
+        "status": "Status",
         "tags" : "Categories",
         "tools" : "Tools",
+        "type" : "Type",
         "unselect_all" : "Unselect All",
         "until_time" : "Until Time",
         "user" : "User",
@@ -332,9 +334,24 @@
     },
     "tag": { // named 'tags' in code, and 'categories' for user display
         "add_tag" : "Add Category",
+        "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "manage_tags" : "Manage Categories",
         "edit_tag" : "Edit Category",
+        "editor" : {
+            "name" : "Category Name",
+            "slug" : "Category Link",
+            "slug_help" : "If left blank, will be automatically generated from category name.",
+            "description" : "Description",
+            "type" : "Type",
+            "color" : "Icon Color",
+            "icon" : "Icon Name",
+            "roles_help" : "Only selected roles will be able to view this category."
+        },
+        "types": {
+            "category" : "Category",
+            "status" : "Status"
+        },
         "no_description_given" : "No description given",
         "number_of_tags_shown" : "Number of categories shown",
         "sort_tags_by" : "Sort categories by",

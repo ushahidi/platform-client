@@ -28,6 +28,7 @@
                 <tr>
                     <th>&nbsp;</th>
                     <th colspan="2" translate>nav.category</th>
+                    <th translate>nav.type</th>
                     <th translate>nav.roles</th>
                 </tr>
                 <tr ng-repeat="tag in tags | orderBy:'tag'" ng-class="{ 'warning': isToggled(tag) }" ng-click="toggleTag(tag)">
@@ -35,15 +36,20 @@
                         <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(tag)" ng-click="toggleTag(tag)">
                     </td>
                     <td style="width:1.2em" class="text-center">
-                        <i class="fa fa-{{tag.icon}}" style="color:#{{tag.color}}"></i>
+                        <i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i>
                     </td>
                     <td>
                         <a ng-href="/tools/categories/{{tag.id}}">{{tag.tag}}</a><br/>
-                        {{category.description}}
+                        {{tag.description}}
                     </td>
                     <td>
-                        <span ng-repeat="role in tag.role">{{ getRole(role) }}</span>
-                        <em class="text-muted" ng-show="!tag.role.length" translate>nav.all</em>
+                        {{ 'tag.types.' + tag.type | translate}}
+                    </td>
+                    <td>
+                        <ul class="list-inline" ng-show="tag.role.length">
+                            <li ng-repeat="role in tag.role">{{ getRole(role) }}<li>
+                        </ul>
+                        <em class="text-muted" ng-hide="tag.role.length" translate>nav.all</em>
                     </td>
                 </div>
             </table>

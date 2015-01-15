@@ -8,12 +8,12 @@ var getLastUrlPart = function(url){
 
 var userMenuLinkSelector = 'a#user-menu-link',
 userMenuLinkSelector = 'a#user-menu-link',
-userProfileLinkSelector = 'a#user-profile';
+userProfileLinkSelector = 'a.my-profile';
 
 
 describe('user profile management', function() {
 
-    describe('as a signed in user', function(){
+    describe('as a loggedin user', function(){
 
         var userMenuLink;
 
@@ -37,7 +37,7 @@ describe('user profile management', function() {
 
             it('should exist and have the correct text', function(){
                 expect(userProfileLink.isDisplayed()).toBe(true);
-                expect(userProfileLink.getText()).toBe('Edit Profile');
+                expect(userProfileLink.getText()).toBe('My Profile');
             });
 
             describe('clicking the user profile link', function(){
@@ -163,5 +163,5 @@ describe('user profile management', function() {
             });
         }); // end 'link to user profile in user menu'
 
-    }); // end 'as a signed in user'
+    }); // end 'as a loggedin user'
 }); // end 'user profile management'

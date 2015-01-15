@@ -21,6 +21,18 @@
                 <h3 class="header">{{active_form.name}}</h3>
             </div>
             <form name="form">
+                
+                <!-- type: select category -->
+                <div class="form-group">
+                    <label translate>post.modify.form.categories</label>
+                    <div class="checkbox" ng-repeat="cat in categories">
+                        <label>
+                            <input type="checkbox" value="cat.slug" checklist-model="post.categories" checklist-value="cat.slug">
+                            {{cat.tag}}
+                        </label>
+                    </div>
+                </div>
+
                 <input id="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
 
                 <textarea id="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required></textarea>

@@ -73,7 +73,7 @@ describe('UserEndpoint', function(){
         });
     });
 
-    describe('"users/me" for the user data of signed in user', function(){
+    describe('"users/me" for the user data of logged in user', function(){
 
         var mockUserDataResponse;
 

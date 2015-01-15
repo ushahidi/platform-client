@@ -12,10 +12,6 @@ function(
     RoleHelper
 ) {
 
-    $translate('tag.manage_tags').then(function(manageTagsTranslation){
-        $scope.title = manageTagsTranslation;
-    });
-
     $scope.getRole = RoleHelper.getRole;
 
     $scope.refreshView = function() {

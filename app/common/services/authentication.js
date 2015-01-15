@@ -15,10 +15,10 @@ function(
 ) {
 
     // check whether we have initially an old access_token and assume that,
-    // if yes, we are still signedin
+    // if yes, we are still loggedin
     var loginStatus = !!Session.getSessionDataEntry('accessToken'),
 
-    setToSigninState = function(userData){
+    setToLoginState = function(userData){
         Session.setSessionDataEntries({
             userId: userData.id,
             userName: userData.username,
@@ -77,7 +77,7 @@ function(
                 $http.get(Util.apiUrl('/users/me')).then(
                     function(userDataResponse){
 
-                        setToSigninState(userDataResponse.data);
+                        setToLoginState(userDataResponse.data);
 
                         $rootScope.$broadcast('event:authentication:login:succeeded');
                         deferred.resolve();
@@ -97,7 +97,7 @@ function(
             $rootScope.$broadcast('event:authentication:logout:succeeded');
         },
 
-        getSigninStatus: function(){
+        getLoginStatus: function(){
             return loginStatus;
         }
     };

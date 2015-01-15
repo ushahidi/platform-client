@@ -8,7 +8,7 @@ var loginLinkSelector = 'a.user-login',
 
 describe('authentication', function() {
 
-    describe('sign in link in main menu:', function(){
+    describe('login link in main menu:', function(){
 
         var loginLink;
 
@@ -33,9 +33,9 @@ describe('authentication', function() {
                 });
             });
         });
-    }); // end 'sign in link in main menu'
+    }); // end 'login link in main menu'
 
-    describe('sign in form:', function(){
+    describe('login form:', function(){
 
         var usernameField,
             passwordField,
@@ -48,7 +48,7 @@ describe('authentication', function() {
             submitButton = element(by.css('button[type="submit"]'));
         });
 
-        it('should have a sign in form', function(){
+        it('should have a login form', function(){
             expect(usernameField.isDisplayed()).toBeTruthy();
             expect(passwordField.isDisplayed()).toBeTruthy();
             expect(submitButton.isDisplayed()).toBeTruthy();
@@ -66,7 +66,7 @@ describe('authentication', function() {
                 expect(failureMessage.isDisplayed()).toBeTruthy();
             });
 
-            it('should stay on the sign in page', function(){
+            it('should stay on the login page', function(){
                 browser.getCurrentUrl().then(function(url){
                     expect(getLastUrlPart(url)).toBe('/login');
                 });
@@ -117,5 +117,5 @@ describe('authentication', function() {
             });
         }); // end 'submit form with correct credentials'
 
-    }); // end 'sign in form'
-}); // end 'sign in'
+    }); // end 'login form'
+}); // end 'login'
