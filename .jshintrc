@@ -36,6 +36,7 @@
     "spyOn",
     "describe",
     "beforeEach",
-    "afterEach"
+    "afterEach",
+    "-event"
   ]
 }

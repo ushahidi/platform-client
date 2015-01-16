@@ -5,9 +5,9 @@ function(
     $scope,
     Authentication
 ) {
-    $scope.logoutClick = function() {
-        event.preventDefault();
-        event.stopPropagation();
+    $scope.logoutClick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         Authentication.logout();
     };
 }];
