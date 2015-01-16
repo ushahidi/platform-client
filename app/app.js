@@ -18,7 +18,6 @@ require('checklist-model/checklist-model');
 
 require('./post/post-module.js');
 require('./tool/tool-module.js');
-require('./user/user-module.js');
 require('./user-profile/user-profile-module.js');
 require('./workspace/workspace-module.js');
 
@@ -42,7 +41,6 @@ angular.module('app',
         'btford.markdown',
         'posts',
         'tools',
-        'users',
         'user-profile',
         'workspace'
     ])
