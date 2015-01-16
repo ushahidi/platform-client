@@ -17,6 +17,7 @@ function(
         $scope.title = title;
     });
 
+    $scope.roles = RoleHelper.roles;
     $scope.getRole = RoleHelper.getRole;
 
     $scope.selectedUsers = [];
