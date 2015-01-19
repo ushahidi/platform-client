@@ -4,7 +4,6 @@ require('leaflet/dist/leaflet');
 require('angular-leaflet-directive/dist/angular-leaflet-directive');
 require('angular-resource/angular-resource');
 require('angular-translate');
-require('./modules/ui-tabs');
 require('angular-ui-bootstrap/src/dropdown/dropdown');
 require('angular-ui-bootstrap/src/collapse/collapse');
 require('angular-ui-bootstrap/src/tabs/tabs');
@@ -35,7 +34,6 @@ angular.module('app',
         'ui.bootstrap.collapse',
         'ui.bootstrap.tabs',
         'ui.bootstrap.transition',
-        'ui.tabs',
         'leaflet-directive',
         'angularMoment',
         'btford.markdown',
