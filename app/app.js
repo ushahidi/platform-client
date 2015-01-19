@@ -51,8 +51,6 @@ angular.module('app',
         OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261'
     })
 
-    .directive('inFocus', require('./directives/focus.js'))
-
     .service('Authentication', require('./common/services/authentication.js'))
     .service('Session', require('./common/services/session.js'))
     .service('ConfigEndpoint', require('./services/endpoint/config.js'))
