@@ -68,8 +68,8 @@ angular.module('app',
     .controller('postFilters', require('./controllers/post-filters.js'))
 
     .config(require('./common/configs/authentication-interceptor.js'))
+    .config(require('./common/configs/locale-config.js'))
     .config(require('./routes'))
-    .config(require('./locale-config.js'))
 
     .run(require('./common/global/event-handlers.js'))
     .run(require('./global-scope-variables.js'))

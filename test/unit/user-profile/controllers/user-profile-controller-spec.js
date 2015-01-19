@@ -13,7 +13,7 @@ describe('user profile controller', function(){
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
         ])
-        .config(require(ROOT_PATH + 'app/locale-config.js'))
+        .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
         .controller('userProfileController', require(ROOT_PATH + 'app/user-profile/controllers/user-profile-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);

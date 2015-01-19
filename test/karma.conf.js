@@ -14,9 +14,8 @@ module.exports = function(config){
         'app/user-profile/**/*.js',
         'app/controllers/**/*.js',
         'app/directives/**/*.js',
-        'app/locales/**/*.json',
         'app/services/**/*.js',
-        'app/locale-config.js',
+        'app/common/locales/**/*.json',
         'test/unit/**/*.js'
     ],
 
@@ -48,7 +47,7 @@ module.exports = function(config){
 
     preprocessors: {
         'app/**/*.js': ['commonjs', 'coverage'],
-        'app/locales/**/*.json': ['commonjs'],
+        'app/common/locales/**/*.json': ['commonjs'],
         'test/unit/**/*.js': ['commonjs']
     },
 

@@ -12,7 +12,7 @@ describe('posts list controller', function(){
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
         ])
-        .config(require(ROOT_PATH + 'app/locale-config.js'))
+        .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
         .controller('postListViewController', require(ROOT_PATH + 'app/post/controllers/post-list-view-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);

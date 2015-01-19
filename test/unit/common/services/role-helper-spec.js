@@ -9,7 +9,7 @@ describe('role helper', function(){
         'pascalprecht.translate'
         ])
         .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'))
-        .config(require(ROOT_PATH + 'app/locale-config.js'));
+        .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
