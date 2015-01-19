@@ -43,17 +43,17 @@
                 <li class="dropdown views-menu" dropdown>
                     <a href="javascript:;" class="dropdown-toggle" role="button" aria-expanded="false"
                         dropdown-toggle>
-                        <span translate>view_tabs.view</span>: <strong>{{activeView}}</strong>
+                        <span translate>view_tabs.view</span>: <strong>{{ 'view_tabs.' + active | translate }}</strong>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li role="presentation"><a ng-href="/"><i class="fa fa-globe"></i>
+                        <li role="presentation" ng-class="{ 'active': active === 'map' }"><a ng-href="/"><i class="fa fa-globe"></i>
                             <span translate>view_tabs.map</span></a>
                         </li>
-                        <li role="presentation"><a ng-href="/views/list"><i class="fa fa-list"></i>
+                        <li role="presentation" ng-class="{ 'active': active === 'list' }"><a ng-href="/views/list"><i class="fa fa-list"></i>
                             <span translate>view_tabs.list</span></a>
                         </li>
-                        <li role="presentation"><a ng-href="/views/graph"><i class="fa fa-line-chart"></i>
+                        <li role="presentation" ng-class="{ 'active': active === 'graph' }"><a ng-href="/views/graph"><i class="fa fa-line-chart"></i>
                             <span translate>view_tabs.graph</span></a>
                         </li>
                     </ul>

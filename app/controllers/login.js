@@ -1,9 +1,11 @@
 module.exports = [
     '$scope',
     'Authentication',
+    '$location',
 function(
     $scope,
-    Authentication
+    Authentication,
+    $location
 ) {
     function clearLoginForm() {
         $scope.failed = true;
@@ -24,6 +26,11 @@ function(
             .login($scope.username, $scope.password)
             .then(finishedLogin, clearLoginForm);
     };
+
+    // If we're already logged in
+    if (Authentication.getLoginStatus()) {
+        $location.url('/');
+    }
 
     finishedLogin();
 }];

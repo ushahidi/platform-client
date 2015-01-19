@@ -3,7 +3,9 @@ module.exports = [function(){
         restrict: 'E',
         replace: true,
         scope: {
-            post: '='
+            post: '=',
+            active: '@',
+            translate: '@'
         },
         templateUrl: 'templates/partials/post-view-tabs.html'
     };

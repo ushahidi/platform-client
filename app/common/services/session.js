@@ -10,7 +10,8 @@ function(
         realName: undefined,
         email: undefined,
         accessToken: undefined,
-        role: undefined
+        role: undefined,
+        loginPath: undefined
     };
 
     this.sessionData = angular.copy(this.clearedSessionData);

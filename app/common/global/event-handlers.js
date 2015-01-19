@@ -17,7 +17,7 @@ function(
         loadSessionData();
         $rootScope.loggedin = true;
         if (redirect) {
-            $location.path(redirect);
+            $location.url(redirect);
         }
     }
 
@@ -25,7 +25,7 @@ function(
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
         if (redirect) {
-            $location.path(redirect);
+            $location.url(redirect);
         }
     }
 
@@ -43,7 +43,7 @@ function(
     };
 
     $rootScope.$on('event:authentication:login:succeeded', function(){
-        doLogin('/');
+        doLogin(Session.getSessionDataEntry('loginPath') || '/');
     });
 
     $rootScope.$on('event:authentication:logout:succeeded', function(){
@@ -55,6 +55,9 @@ function(
     });
 
     $rootScope.$on('event:unauthorized', function(){
+        if ($location.url() !== '/login') {
+            Session.setSessionDataEntry('loginPath', $location.url());
+        }
         doLogout('/login');
     });
 
