@@ -1,10 +1,12 @@
 module.exports = [
     '$scope',
     'Authentication',
+    '$rootScope',
     '$location',
 function(
     $scope,
     Authentication,
+    $rootScope,
     $location
 ) {
     function clearLoginForm() {
@@ -28,7 +30,7 @@ function(
     };
 
     // If we're already logged in
-    if (Authentication.getLoginStatus()) {
+    if ($rootScope.loggedin) {
         $location.url('/');
     }
 

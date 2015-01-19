@@ -28,6 +28,12 @@ describe('user profile management', function() {
             userMenuLink.click();
         });
 
+        afterEach(function(){
+            // Clear localStorage to reset session
+            browser.executeScript('window.sessionStorage.clear();');
+            browser.executeScript('window.localStorage.clear();');
+        });
+
         describe('link to user profile in user menu', function(){
             var userProfileLink;
 

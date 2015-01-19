@@ -90,11 +90,13 @@ function(
             return deferred.promise;
         },
 
-        logout: function(){
+        logout: function(silent){
             //TODO: ASK THE BACKEND TO DESTROY SESSION
 
             setToLogoutState();
-            $rootScope.$broadcast('event:authentication:logout:succeeded');
+            if (! silent) {
+                $rootScope.$broadcast('event:authentication:logout:succeeded');
+            }
         },
 
         getLoginStatus: function(){

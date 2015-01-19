@@ -58,6 +58,7 @@ function(
         if ($location.url() !== '/login') {
             Session.setSessionDataEntry('loginPath', $location.url());
         }
+        Authentication.logout(true);
         doLogout('/login');
     });
 

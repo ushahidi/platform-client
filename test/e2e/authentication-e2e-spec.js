@@ -48,6 +48,12 @@ describe('authentication', function() {
             submitButton = element(by.css('button[type="submit"]'));
         });
 
+        afterEach(function(){
+            // Clear localStorage to reset session
+            browser.executeScript('window.sessionStorage.clear();');
+            browser.executeScript('window.localStorage.clear();');
+        });
+
         it('should have a login form', function(){
             expect(usernameField.isDisplayed()).toBeTruthy();
             expect(passwordField.isDisplayed()).toBeTruthy();
