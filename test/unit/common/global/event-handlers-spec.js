@@ -14,12 +14,21 @@ describe('global event handlers', function(){
         {
             getSessionData: function(){
                 return mockedSessionData;
+            },
+            getSessionDataEntry: function(key){
+                return mockedSessionData[key];
+            },
+            setSessionDataEntry: function(key, value){
+                mockedSessionData[key] = value;
             }
         },
         mockedAuthenticationService =
         {
             getLoginStatus: function(){
                 return mockedAuthenticationData.loginStatus;
+            },
+            logout : function(){
+                // Just a stub
             }
         };
 

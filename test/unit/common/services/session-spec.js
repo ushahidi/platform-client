@@ -14,7 +14,8 @@ describe('Session', function(){
             realName: undefined,
             email: undefined,
             role: undefined,
-            accessToken: undefined
+            accessToken: undefined,
+            loginPath: undefined,
         };
 
         var testApp = angular.module('testApp');
@@ -87,7 +88,8 @@ describe('Session', function(){
                     realName: undefined,
                     email: undefined,
                     role: undefined,
-                    accessToken: 'secrettoken'
+                    accessToken: 'secrettoken',
+                    loginPath: undefined
                 };
 
                 expect(returnedSessionData).toEqual(expectedSessionData);
