@@ -72,7 +72,6 @@ angular.module('app',
     .config(require('./routes'))
 
     .run(require('./common/global/event-handlers.js'))
-    .run(require('./global-scope-variables.js'))
 
     .factory('_', function() {
         return require('underscore/underscore');
