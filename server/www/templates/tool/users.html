@@ -69,9 +69,9 @@
                     <th colspan="2" translate>nav.user</th>
                     <th translate>nav.role</th>
                 </tr>
-                <tr ng-repeat="user in users | orderBy:'username'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
+                <tr ng-repeat="user in users | orderBy:'username'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)" class="user-list">
                     <td class="text-center">
-                        <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)" ng-click="toggleUser(user)">
+                        <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
                     </td>
                     <td style="width:90px" class="text-center">
                         <img ng-src="{{ getGravatar(user.email) }}" alt="" />
