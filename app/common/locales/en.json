@@ -402,6 +402,8 @@
         "edit" : "Edit User",
         "filter_role" : "Filter Role",
         "show_all_roles" : "Show All Roles",
+        "cannot_delete_yourself" : "You cannot delete your own user",
+        "cannot_change_your_own_role" : "You cannot change your own role",
         "confirm_password" : "Confirm Password",
         "delete_this_user" : "Delete this user",
         "edit_profile" : "Edit Profile",
