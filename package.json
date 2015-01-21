@@ -42,6 +42,7 @@
     "karma-coverage": "^0.2.6",
     "karma-firefox-launcher": "*",
     "karma-jasmine": "^0.2.3",
+    "karma-phantomjs-launcher": "^0.1.4",
     "merge": "^1.2.0",
     "protractor": "^1.2.0",
     "underscore.string": "^2.3.3",

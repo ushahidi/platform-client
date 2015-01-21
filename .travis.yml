@@ -18,6 +18,6 @@ before_script:
   - gulp --node-server --angular-mock-backend & # start a Web server
   - sleep 3 # give Web server some time to bind to sockets, etc
 script:
-  - gulp test-for-ci
+  - gulp test
   - gulp send-stats-to-coveralls
   - npm run protractor

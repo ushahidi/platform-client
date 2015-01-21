@@ -33,16 +33,17 @@ module.exports = function(config){
 
     frameworks: ['jasmine', 'commonjs'],
 
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['Chrome', 'Firefox', 'PhantomJS'],
 
     reporters: ['progress', 'coverage'],
 
     plugins : [
         'karma-jasmine',
+        'karma-commonjs',
         'karma-coverage',
         'karma-chrome-launcher',
         'karma-firefox-launcher',
-        'karma-commonjs'
+        'karma-phantomjs-launcher',
     ],
 
     preprocessors: {

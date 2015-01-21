@@ -249,23 +249,10 @@ gulp.task('direct', ['watch'], function() {
 gulp.task('test', function (done) {
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
         singleRun: true
     }, done);
 });
-
-
-/**
- * Run test once with Firefox and exit
- */
-gulp.task('test-for-ci', function (done) {
-    karma.start({
-        configFile: __dirname + '/test/karma.conf.js',
-        browsers: ['Firefox'],
-        singleRun: true
-    }, done);
-});
-
 
 /**
  * Send coverage stats to coveralls.io
@@ -284,7 +271,7 @@ gulp.task('send-stats-to-coveralls', function () {
 gulp.task('tdd', function (done) {
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
         autoWatch : true,
         singleRun: false
     }, done);
