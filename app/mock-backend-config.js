@@ -1,4 +1,5 @@
-angular.module('e2e-mocks', ['ngMockE2E']).run(function($httpBackend, CONST) {
+angular.module('e2e-mocks', ['ngMockE2E'])
+    .run(['$httpBackend', 'CONST', function($httpBackend, CONST) {
 
     $httpBackend.whenPOST(CONST.BACKEND_URL + '/oauth/token').respond(function(method, url, data) {
         var reqPayload = JSON.parse(data);
@@ -60,6 +61,6 @@ angular.module('e2e-mocks', ['ngMockE2E']).run(function($httpBackend, CONST) {
     // pass through all template fetches
     // to the server which delivers the angular app
     $httpBackend.whenGET(/templates.*/).passThrough();
-});
+}]);
 
 angular.module('app').requires.push('e2e-mocks');
