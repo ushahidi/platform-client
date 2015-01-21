@@ -33,6 +33,7 @@ function errorHandler (err) {
 var options = {
     dockerServer: false,
     nodeServer: false,
+    uglifyJs: true,
     www: 'server/www',
     backendUrl: 'http://ushahidi-backend',
     mockedBackendUrl: 'http://localhost:8081'
@@ -143,20 +144,26 @@ gulp.task('font', function() {
  * Bundle js with browserify
  */
 gulp.task('browserify', function() {
-    return browserify(helpers.getBrowserifyConfig())
+    var stream = browserify(helpers.getBrowserifyConfig())
         .transform('brfs')
         .transform(helpers.setBackendUrl())
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
-            .pipe(uglify())
+        .pipe(sourcemaps.init({loadMaps: true}));
+
+    if (options.uglifyJs) {
+        stream.pipe(uglify());
+    }
+
+    stream
         // Strip sourcemaps out to another file
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(options.www + '/js'))
         .pipe(notify('JS compiled'))
         .pipe(livereload())
         ;
+    return stream;
 });
 
 /**

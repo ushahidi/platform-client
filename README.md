@@ -65,13 +65,15 @@ Instead of having to type the flags every time, you can also use a `.gulpconfig.
 {
     "nodeServer": true,
     "dockerServer": false,
-    "backendUrl": "http://ushahidi-backend"
+    "backendUrl": "http://ushahidi-backend",
+    "uglifyJs": true
 }
 ```
 
 * `nodeServer` - always run the `node-server` task
 * `dockerServer` - always run the `docker-server` task
 * `backendUrl` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
+* `uglifyJs` - uglify js during builds. Enabled by default
 
 ### Optional: Mock Backend
 
