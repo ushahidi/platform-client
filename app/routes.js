@@ -1,4 +1,4 @@
-module.exports = function($routeProvider, $locationProvider) {
+module.exports = ['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
     $locationProvider.html5Mode(true);
 
@@ -18,4 +18,4 @@ module.exports = function($routeProvider, $locationProvider) {
             controller: require('./controllers/admin/map-settings.js'),
             templateUrl: 'templates/admin/map-settings.html'
         });
-};
+}];

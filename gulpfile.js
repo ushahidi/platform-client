@@ -13,6 +13,9 @@ var gulp = require('gulp'),
     fs = require('fs'),
     merge = require('merge'),
     karma = require('karma').server,
+    buffer = require('vinyl-buffer'),
+    uglify = require('gulp-uglify'),
+    sourcemaps = require('gulp-sourcemaps'),
 
     mockBackendFlag = gutil.env['mock-backend'],
     mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
@@ -140,11 +143,16 @@ gulp.task('font', function() {
  * Bundle js with browserify
  */
 gulp.task('browserify', function() {
-    browserify(helpers.getBrowserifyConfig())
+    return browserify(helpers.getBrowserifyConfig())
         .transform('brfs')
         .transform(helpers.setBackendUrl())
         .bundle()
         .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
+            .pipe(uglify())
+        // Strip sourcemaps out to another file
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(options.www + '/js'))
         .pipe(notify('JS compiled'))
         .pipe(livereload())
@@ -197,7 +205,7 @@ gulp.task('docker', ['docker:build'], function(cb) {
                 ip = stdout;
             }
             console.log('server is live @ http://' + ip + ':8080/');
-            livereload.changed();
+            livereload();
             cb();
         });
     });
