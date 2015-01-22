@@ -4,7 +4,7 @@
         <post-detail-tabs></post-detail-tabs>
     </div>
 
-    <section ng-controller="postMapView" class="map-view">
+    <section class="map-view">
         <leaflet defaults="defaults" markers="markers" center="center" height="200px" width="100%"></leaflet>
     </section>
 
@@ -33,17 +33,7 @@
 
     <div class="container">
         <div class="post-details">
-            <h4 class="post-header">{{post.title}}
-                <!-- Not implemented yet.. and no idea what these really are anyway?!
-                <span class="fa-stack">
-                  <i class="fa fa-circle fa-stack-1x"></i>
-                  <i class="fa fa-envelope-o fa-stack-1x"></i>
-                </span>
-                <span class="fa-stack">
-                  <i class="fa fa-circle fa-stack-1x success"></i>
-                  <i class="fa fa-check fa-stack-1x fa-inverse"></i>
-                </span> -->
-            </h4>
+            <h4 class="post-header">{{post.title}}</h4>
 
             <div class="post-excerpt" btf-markdown="post.content">
             </div> <!-- end .post-excerpt -->

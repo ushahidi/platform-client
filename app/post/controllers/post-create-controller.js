@@ -33,7 +33,7 @@ function(
         $scope.active_form = form;
         $scope.post = postEntity({form_id: form.id});
 
-        FormAttributeEndpoint.query().$promise.then(function(attrs) {
+        FormAttributeEndpoint.query({formId: form.id}).$promise.then(function(attrs) {
             $scope.attributes = attrs;
         });
 

@@ -6,7 +6,8 @@ function(
     Util
 ) {
 
-    var FormAttributeEndpoint = $resource(Util.apiUrl('/attributes/:id'), {
+    var FormAttributeEndpoint = $resource(Util.apiUrl('/forms/:formId/attributes/:id'), {
+        formId: '@formId',
         id: '@id'
     }, {
         query: {

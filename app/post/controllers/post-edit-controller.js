@@ -25,7 +25,7 @@ function(
     PostEndpoint.get({id: $routeParams.id}).$promise.then(function(post) {
         $scope.post = post;
         $scope.active_form = FormEndpoint.get({formId: post.form.id});
-        $scope.attributes = FormAttributeEndpoint.query();
+        $scope.attributes = FormAttributeEndpoint.query({formId: post.form.id});
     });
 
     $scope.filterInForm = function(attr) {

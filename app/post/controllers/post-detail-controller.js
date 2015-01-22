@@ -28,7 +28,7 @@ function(
         // Load the post form
         if ($scope.post.form && $scope.post.form.id) {
             $scope.form_attributes = [];
-            FormAttributeEndpoint.query({form_id: $scope.post.form.id}, function(attributes) {
+            FormAttributeEndpoint.query({formId: $scope.post.form.id}, function(attributes) {
                 angular.forEach(attributes, function(attr) {
                     this[attr.key] = attr;
                 }, $scope.form_attributes);
