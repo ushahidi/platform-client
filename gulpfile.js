@@ -20,7 +20,8 @@ var gulp = require('gulp'),
     mockBackendFlag = gutil.env['mock-backend'],
     mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
     useNodeServerFlag = gutil.env['node-server'],
-    useDockerServerFlag = gutil.env['docker-server'];
+    useDockerServerFlag = gutil.env['docker-server'],
+    useChromeForKarmaFlag = gutil.env['karma-chrome'];
 
 function errorHandler (err) {
     gutil.beep();
@@ -262,9 +263,10 @@ gulp.task('direct', ['watch'], function() {
  * Run test once and exit
  */
 gulp.task('test', function (done) {
+    var browsers = useChromeForKarmaFlag ? ['Chrome'] : ['PhantomJS'];
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
-        browsers: ['PhantomJS'],
+        browsers: browsers,
         singleRun: true
     }, done);
 });
@@ -284,9 +286,10 @@ gulp.task('send-stats-to-coveralls', function () {
  * Watch for file changes and re-run tests on each change
  */
 gulp.task('tdd', function (done) {
+    var browsers = useChromeForKarmaFlag ? ['Chrome'] : ['PhantomJS'];
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
-        browsers: ['PhantomJS'],
+        browsers: browsers,
         autoWatch : true,
         singleRun: false
     }, done);
