@@ -91,7 +91,7 @@ var helpers = {
  * Converts SASS files to CSS
  */
 gulp.task('sass', ['rename'], function() {
-    gulp.src(['sass/style.scss'])
+    return gulp.src(['sass/style.scss'])
         .pipe(plumber({
             errorHandler: errorHandler
         }))
@@ -114,30 +114,38 @@ gulp.task('sass', ['rename'], function() {
         ;
 });
 
+/**
+ * Task: `css`
+ * Move CSS from bower_components into server/www
+ */
+gulp.task('css', [], function() {
+    return gulp.src(['bower_components/font-awesome/css/*', 'bower_components/bootstrap/dist/css/*'])
+        .pipe(gulp.dest(options.www + '/css'));
+});
 
 /**
- * Task: `sass`
- * Converts SASS files to CSS
+ * Rename tasks
  */
 gulp.task('rename-colorpicker', function() {
-    gulp.src(['node_modules/angular-bootstrap-colorpicker/css/colorpicker.css'])
+    return gulp.src(['node_modules/angular-bootstrap-colorpicker/css/colorpicker.css'])
         .pipe(rename('_colorpicker.scss'))
         .pipe(gulp.dest('node_modules/angular-bootstrap-colorpicker/scss/'))
         ;
 });
-gulp.task('rename', ['rename-colorpicker'], function() {
-    gulp.src(['node_modules/leaflet/dist/leaflet.css'])
+gulp.task('rename-leaflet', ['rename-colorpicker'], function() {
+    return gulp.src(['node_modules/leaflet/dist/leaflet.css'])
         .pipe(rename('_leaflet.scss'))
         .pipe(gulp.dest('node_modules/leaflet/dist/'))
         ;
 });
+gulp.task('rename', ['rename-leaflet', 'rename-colorpicker'], function() {});
 
 /**
  * Task: `font`
  * Copies font files to public directory.
  */
 gulp.task('font', function() {
-    gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
+    return gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
         .pipe(gulp.dest(options.www + '/fonts'))
         .pipe(livereload())
         ;
@@ -174,7 +182,7 @@ gulp.task('browserify', function() {
  * Task: `build`
  * Builds sass, fonts and js
  */
-gulp.task('build', ['sass', 'font', 'browserify'], function() {
+gulp.task('build', ['sass', 'css', 'font', 'browserify'], function() {
 });
 
 /**
