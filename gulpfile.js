@@ -16,6 +16,9 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     uglify = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
+    bump = require('gulp-bump'),
+    tar = require('gulp-tar'),
+    gzip = require('gulp-gzip'),
 
     mockBackendFlag = gutil.env['mock-backend'],
     mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
@@ -293,6 +296,49 @@ gulp.task('tdd', function (done) {
         autoWatch : true,
         singleRun: false
     }, done);
+});
+
+/**
+ * Task `bump` - bump version in bower.json and package.json
+ * Options
+ * `--gulp-version=<version>` - Specify version to bump to
+ * `--type` - Semver version type to bump
+ */
+gulp.task('bump', function () {
+    var options = {
+        type : gutil.env.type,
+        version : gutil.env['bump-version']
+    };
+
+    return gulp.src(['./package.json', './bower.json'])
+        .pipe(bump(options))
+        .pipe(gulp.dest('./'));
+});
+
+/**
+ * Task `tar` - Build tarball for release
+ */
+gulp.task('tar', ['build'], function () {
+    var version = require('./package.json').version;
+
+    return gulp.src('server/www/**')
+        .pipe(rename(function (path) {
+            // Prefix path
+            path.dirname = 'platform-client/' + path.dirname;
+        }))
+        .pipe(tar('platform-client-'+version+'.tar'))
+        .pipe(gzip())
+        .pipe(gulp.dest('build'));
+});
+
+/**
+ * Task `release` - Bump version and build release
+ */
+gulp.task('release', ['bump'], function() {
+    // Enable uglifyjs
+    options.uglifyJs = true;
+    // @todo update this once gulp 4 is out
+    return gulp.run('tar');
 });
 
 /**
