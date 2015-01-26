@@ -99,6 +99,303 @@
                 "put",
                 "delete"
             ]
+        },
+        {
+            "id": 6,
+            "url": "http://api.ushahidi.dev/api/v2/users/6",
+            "email": "user6@ushahidi.com",
+            "realname": "User 6",
+            "username": "user6",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "user",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 7,
+            "url": "http://api.ushahidi.dev/api/v2/users/7",
+            "email": null,
+            "realname": null,
+            "username": "user7",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put"
+            ]
+        },
+        {
+            "id": 8,
+            "url": "http://api.ushahidi.dev/api/v2/users/8",
+            "email": "test@v3.ushahidi.com",
+            "realname": "User 8",
+            "username": "user8",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "user",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 9,
+            "url": "http://api.ushahidi.dev/api/v2/users/9",
+            "email": null,
+            "realname": null,
+            "username": "user9",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 10,
+            "url": "http://api.ushahidi.dev/api/v2/users/10",
+            "email": null,
+            "realname": null,
+            "username": "user10",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 11,
+            "url": "http://api.ushahidi.dev/api/v2/users/11",
+            "email": "user11@ushahidi.com",
+            "realname": "User 11",
+            "username": "user11",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "user",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 12,
+            "url": "http://api.ushahidi.dev/api/v2/users/12",
+            "email": null,
+            "realname": null,
+            "username": "user12",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put"
+            ]
+        },
+        {
+            "id": 13,
+            "url": "http://api.ushahidi.dev/api/v2/users/13",
+            "email": "test@v3.ushahidi.com",
+            "realname": "User 13",
+            "username": "user13",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "user",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 14,
+            "url": "http://api.ushahidi.dev/api/v2/users/14",
+            "email": null,
+            "realname": null,
+            "username": "user14",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 15,
+            "url": "http://api.ushahidi.dev/api/v2/users/15",
+            "email": null,
+            "realname": null,
+            "username": "user15",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 16,
+            "url": "http://api.ushahidi.dev/api/v2/users/16",
+            "email": "user16@ushahidi.com",
+            "realname": "User 16",
+            "username": "user16",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "user",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 17,
+            "url": "http://api.ushahidi.dev/api/v2/users/17",
+            "email": null,
+            "realname": null,
+            "username": "user17",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put"
+            ]
+        },
+        {
+            "id": 18,
+            "url": "http://api.ushahidi.dev/api/v2/users/18",
+            "email": "user18@v3.ushahidi.com",
+            "realname": "User 18",
+            "username": "user18",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "user",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 19,
+            "url": "http://api.ushahidi.dev/api/v2/users/19",
+            "email": null,
+            "realname": null,
+            "username": "user19",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 20,
+            "url": "http://api.ushahidi.dev/api/v2/users/20",
+            "email": null,
+            "realname": null,
+            "username": "user20",
+            "logins": 0,
+            "failed_attempts": 0,
+            "last_login": null,
+            "last_attempt": null,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "role": "admin",
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
         }
     ],
     "limit": 100,
@@ -108,5 +405,5 @@
     "curr": "http://api.ushahidi.dev/api/v2/users?access_token=defaulttoken&orderby=created&order=desc&limit=100&offset=0",
     "next": "http://api.ushahidi.dev/api/v2/users?access_token=defaulttoken&orderby=created&order=desc&limit=100&offset=100",
     "prev": "http://api.ushahidi.dev/api/v2/users?access_token=defaulttoken&orderby=created&order=desc&limit=100&offset=0",
-    "total_count": 5
+    "total_count": 20
 }

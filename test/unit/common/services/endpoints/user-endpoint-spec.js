@@ -67,8 +67,8 @@ describe('UserEndpoint', function(){
                 expect(successCallback).toHaveBeenCalled();
 
                 var actualUserData = successCallback.calls.mostRecent().args[0];
-                expect(actualUserData.length).toEqual(mockUserDataResponse.results.length);
-                expect(actualUserData[0].username).toEqual(mockUserDataResponse.results[0].username);
+                expect(actualUserData.results.length).toEqual(mockUserDataResponse.results.length);
+                expect(actualUserData.results[0].username).toEqual(mockUserDataResponse.results[0].username);
             });
         });
     });

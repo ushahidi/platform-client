@@ -13,7 +13,6 @@ module.exports = function(config){
         'app/post/**/*.js',
         'app/user-profile/**/*.js',
         'app/controllers/**/*.js',
-        'app/directives/**/*.js',
         'app/services/**/*.js',
         'app/common/locales/**/*.json',
         'test/unit/**/*.js'

@@ -1,5 +1,5 @@
 angular.module('e2e-mocks', ['ngMockE2E'])
-    .run(['$httpBackend', 'CONST', function($httpBackend, CONST) {
+    .run(['$httpBackend', 'CONST', 'URI', '_', function($httpBackend, CONST, URI, _) {
 
     $httpBackend.whenPOST(CONST.BACKEND_URL + '/oauth/token').respond(function(method, url, data) {
         var reqPayload = JSON.parse(data);
@@ -23,35 +23,34 @@ angular.module('e2e-mocks', ['ngMockE2E'])
         }
     });
 
-    var apiHandlers = {
-        'posts': function(){
-            var resource = require('../mocked_backend/api/v2/posts.json');
-            return [200, resource, {}];
-        },
-        'config/features': function(){
-            var resource = require('../mocked_backend/api/v2/config/features.json');
-            return [200, resource, {}];
-        },
-        'config/map': function(){
-            var resource = require('../mocked_backend/api/v2/config/map.json');
-            return [200, resource, {}];
-        },
-        'users/me': function(){
-            var resource = require('../mocked_backend/api/v2/users/me.json');
-            return [200, resource, {}];
-        },
-        'config/site': function(){
-            var resource = require('../mocked_backend/api/v2/config/site.json');
-            return [200, resource, {}];
+    var resourceToJsonMapping = {
+        'posts': require('../mocked_backend/api/v2/posts.json'),
+        'config/features': require('../mocked_backend/api/v2/config/features.json'),
+        'config/map': require('../mocked_backend/api/v2/config/map.json'),
+        'users': require('../mocked_backend/api/v2/users.json'),
+        'users/me': require('../mocked_backend/api/v2/users/me.json'),
+        'config/site': require('../mocked_backend/api/v2/config/site.json'),
+    };
+
+    var getResultForResource = function(resourceName, offset, limit){
+        var resource = _.clone(resourceToJsonMapping[resourceName]);
+        if(resource.results)
+        {
+            resource.results = resource.results.slice(offset, offset+limit);
         }
+        return [200, resource, {}];
     };
 
     var matcher = new RegExp(CONST.API_URL + '/.*');
 
     $httpBackend.whenGET(matcher).respond(function(method, url/*, data*/) {
-        var resourceName = url.split('api/v2/')[1];
-        return apiHandlers[resourceName]();
+        var uri = URI(url),
+            queryParams = uri.query(true),
+            offset = parseInt(queryParams.offset),
+            limit = parseInt(queryParams.limit),
+            resourceName = uri.path().split('api/v2/')[1];
 
+        return getResultForResource(resourceName, offset, limit);
     });
 
     $httpBackend.whenPUT(matcher).respond(function(method, url, data){

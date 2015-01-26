@@ -30,6 +30,8 @@ function(
     });
 
     $scope.map = ConfigEndpoint.get({ id: 'map' });
-    $scope.posts = PostEndpoint.query();
+    PostEndpoint.query().$promise.then(function(postsResponse){
+        $scope.posts = postsResponse.results;
+    });
 
 }];

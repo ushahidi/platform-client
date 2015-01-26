@@ -12,9 +12,9 @@ function(
     }, {
         query: {
             method: 'GET',
-            isArray: true,
+            isArray: false,
             transformResponse: function(data /*, header*/) {
-                return angular.fromJson(data).results;
+                return angular.fromJson(data);
             }
         },
         update: {

@@ -417,6 +417,7 @@
         "never" : "Never",
         "no_full_name" : "No full name",
         "number_of_users_shown" : "Number of users shown",
+        "per_page" : "{{count}} users",
         "password" : "Password",
         "register" : "Register",
         "role" : "Role: ",

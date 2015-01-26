@@ -63,6 +63,7 @@
             <div class="panel-body" ng-hide="users.length">
                 <p class="text-muted text-center" ng-hide="users.length"><em translate>empty.user</em></p>
             </div>
+
             <table class="table table-striped" ng-show="users.length">
                 <tr>
                     <th>&nbsp;</th>
@@ -89,6 +90,26 @@
                 <a ng-href="/tools/users/create" class="btn btn-primary">
                     <span translate>user.add_user</span>
                 </a>
+            </div>
+            <div class="panel-footer">
+                <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="true" rotate="false"></pagination>
+
+                <div class="dropdown btn-group pull-right filter-count" role="group" dropdown>
+                    <button class="btn dropdown-toggle btn-default" type="button" aria-expanded="false"
+                        dropdown-toggle
+                    >
+                        <span translate translate-values="{ count: itemsPerPage }">user.per_page</span>
+                        <i class="fa fa-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation" ng-repeat="count in itemsPerPageOptions">
+                            <a href="javascript:;" ng-click="itemsPerPageChanged(count)">
+                                <i class="fa" ng-class="{ 'fa-circle-o': (itemsPerPage !== count), 'fa-dot-circle-o': (itemsPerPage === count) }"></i>
+                                {{count}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

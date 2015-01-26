@@ -12,15 +12,14 @@
                     <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">pagination.showing_x_to_y_of_n_results</h5>
                 </div> <!-- end .list-filter-info -->
 
+                <!-- Pagination -->
+                <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
+
                 <div class="list-filter-wrapper">
                     <div class="list-filter-count">
                         <div class="filter-count-select">
                             <label class="visually-hidden" for="filter-count" translate>post.number_of_posts_shown</label>
-                            <select id="filter-count" class="filter-count  js-filter-count">
-                                <option selected>3</option>
-                                <option>5</option>
-                                <option>10</option>
-                                <option>20</option>
+                            <select id="filter-count" class="filter-count  js-filter-count" ng-model="itemsPerPage" ng-change="itemsPerPageChanged()" ng-options="x for x in itemsPerPageOptions">
                             </select>
                         </div>
                     </div> <!-- end .list-filter-count -->
@@ -45,9 +44,6 @@
             <post-preview ng-repeat="post in posts" post="post"></post-preview>
 
         </div> <!-- end .wrapper -->
-
-        <!-- Pagination -->
-        <ng-include src=" 'templates/partials/pagination.html' "></ng-include>
 
     </div> <!-- end .main -->
 </div> <!-- end .container -->

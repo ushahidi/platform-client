@@ -52,11 +52,14 @@ describe('posts list controller', function(){
 
         beforeEach(inject(function($q){
 
-            mockPostResponse = [{
-                'id': '1',
-                'type': 'report',
-                'title': 'Test post'
-            }];
+            mockPostResponse = {
+                results:
+                [{
+                    'id': '1',
+                    'type': 'report',
+                    'title': 'Test post'
+                }]
+            };
 
             var queryDeferred;
             mockPostEndpoint = {
@@ -82,7 +85,7 @@ describe('posts list controller', function(){
         });
 
         it('should set the response from PostEndpoint.query() to $scope.posts', function(){
-            expect($scope.posts).toEqual(mockPostResponse);
+            expect($scope.posts).toEqual(mockPostResponse.results);
         });
 
     });
