@@ -30,4 +30,4 @@ deploy:
     release: ushahidi-platform-release
   on:
     repo: ushahidi/platform-client
-    branch: heroku-deploy
+    all_branches: true
