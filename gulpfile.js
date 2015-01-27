@@ -24,7 +24,8 @@ var gulp = require('gulp'),
     mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
     useNodeServerFlag = gutil.env['node-server'],
     useDockerServerFlag = gutil.env['docker-server'],
-    useChromeForKarmaFlag = gutil.env['karma-chrome'];
+    useChromeForKarmaFlag = gutil.env['karma-chrome'],
+    backendUrl = gutil.env['backend-url'];
 
 function errorHandler (err) {
     gutil.beep();
@@ -63,8 +64,9 @@ var helpers = {
     },
 
     setBackendUrl: function(){
+        backendUrl = backendUrl ? backendUrl : options.backendUrl;
         return envify({
-            backend_url: mockBackendFlag ? options.mockedBackendUrl : options.backendUrl
+            backend_url: mockBackendFlag ? options.mockedBackendUrl : backendUrl
         });
     },
     createDefaultTaskDependencies: function (){

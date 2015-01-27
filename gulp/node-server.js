@@ -16,7 +16,8 @@ module.exports = function(root) {
                         next();
                     }
                 ];
-            }
+            },
+            port: process.env.PORT || 8080
         });
     };
 };
