@@ -1,49 +1,29 @@
 <div class="map-controls-wrapper list-view">
     <post-view-tabs active="list"></post-view-tabs>
-    <global-filter></global-filter>
 </div>
+<div class="panel panel-default">
 
-<global-filter-meta></global-filter-meta>
+    <ul class="list-group">
+        <post-preview ng-repeat="post in posts" post="post"></post-preview>
+    </ul>
+    <div class="panel-footer">
+        <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="true" rotate="false"></pagination>
 
-<div class="container--alt">
-    <div class="full-content  post-list">
-        <div class="list-filter">
-                <div class="list-filter-info">
-                    <h5 class="title" translate translate-value-from="1" translate-value-to="3" translate-value-total="10">pagination.showing_x_to_y_of_n_results</h5>
-                </div> <!-- end .list-filter-info -->
-
-                <!-- Pagination -->
-                <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="10" boundary-links="true" rotate="false"></pagination>
-
-                <div class="list-filter-wrapper">
-                    <div class="list-filter-count">
-                        <div class="filter-count-select">
-                            <label class="visually-hidden" for="filter-count" translate>post.number_of_posts_shown</label>
-                            <select id="filter-count" class="filter-count  js-filter-count" ng-model="itemsPerPage" ng-change="itemsPerPageChanged()" ng-options="x for x in itemsPerPageOptions">
-                            </select>
-                        </div>
-                    </div> <!-- end .list-filter-count -->
-
-                    <div class="list-filter-sort">
-                        <div class="filter-sort-select">
-                            <label class="visually-hidden" for="filter-sort" translate>post.filter_sort.sort_posts_by</label>
-                            <select id="filter-sort" class="filter-sort  js-filter-sort">
-                                <option translate>post.filter_sort.properties.sort</option>
-                                <option translate>post.filter_sort.properties.created</option>
-                                <option translate>post.filter_sort.properties.updated</option>
-                                <option translate>post.filter_sort.properties.title_a_to_z</option>
-                            </select>
-                        </div>
-                    </div> <!-- end .list-filter-sort -->
-                </div>
-
-        </div> <!-- end .list-filter -->
-
-        <div class="wrapper">
-
-            <post-preview ng-repeat="post in posts" post="post"></post-preview>
-
-        </div> <!-- end .wrapper -->
-
-    </div> <!-- end .main -->
-</div> <!-- end .container -->
+        <div class="dropdown btn-group pull-right filter-count" role="group" dropdown>
+            <button class="btn dropdown-toggle btn-default" type="button" aria-expanded="false"
+                dropdown-toggle
+            >
+                <span translate translate-values="{ count: itemsPerPage }">post.per_page</span>
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li role="presentation" ng-repeat="count in itemsPerPageOptions">
+                    <a href="javascript:;" ng-click="itemsPerPageChanged(count)">
+                        <i class="fa" ng-class="{ 'fa-circle-o': (itemsPerPage !== count), 'fa-dot-circle-o': (itemsPerPage === count) }"></i>
+                        {{count}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

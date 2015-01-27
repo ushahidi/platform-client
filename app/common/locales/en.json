@@ -223,6 +223,7 @@
         "edited_by" : "Edited by",
         "export" : "Export",
         "number_of_posts_shown" : "Number of posts shown",
+        "per_page" : "{{count}} posts",
         "other_posts_tagged" : "Other posts categorized",
         "post_details" : "Post Details",
         "post_history" : "Post History",

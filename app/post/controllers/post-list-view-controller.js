@@ -14,14 +14,18 @@ module.exports = ['$scope', '$translate', 'PostEndpoint', function($scope, $tran
 		});
 	};
 
+    $scope.itemsPerPageChanged = function(count) {
+        $scope.itemsPerPage = count;
+        getPostsForPagination();
+    };
+
 	$scope.pageChanged = getPostsForPagination;
-	$scope.itemsPerPageChanged = getPostsForPagination;
 	// --- end: definitions
 
 
 	// --- start: initialization
 	$scope.currentPage = 1;
-	$scope.itemsPerPageOptions = [3, 5, 10, 20];
+	$scope.itemsPerPageOptions = [10, 20, 50];
 	$scope.itemsPerPage = $scope.itemsPerPageOptions[0];
 	// untill we have the correct total_count value from backend request:
 	$scope.totalItems = $scope.itemsPerPage;

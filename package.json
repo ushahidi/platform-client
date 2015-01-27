@@ -60,6 +60,7 @@
     "angular": "^1.3.7",
     "angular-bootstrap-colorpicker": "git+https://github.com/buberdds/angular-bootstrap-colorpicker.git#v3.0.11",
     "angular-checklist": "git+https://github.com/vitalets/checklist-model.git#0.1.3",
+    "angular-gravatar": "^0.2.4",
     "angular-leaflet-directive": "~0.7.6",
     "angular-local-storage": "^0.1.5",
     "angular-markdown-directive": "git+https://github.com/ushahidi/angular-markdown-directive#v0.3.1-browserify.1",
@@ -71,7 +72,6 @@
     "angular-translate": "^2.4.1",
     "angular-ui-bootstrap": "git+https://github.com/angular-ui/bootstrap.git#0.12.0",
     "angular-xeditable": "0.0.1",
-    "gravatar": "^1.1.0",
     "leaflet": "~0.7.3",
     "underscore": "^1.7.0"
   },

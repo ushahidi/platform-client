@@ -75,7 +75,7 @@
                         <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
                     </td>
                     <td style="width:90px" class="text-center">
-                        <img ng-src="{{ getGravatar(user.email) }}" alt="" />
+                        <img gravatar-src="user.email" alt="" />
                     </td>
                     <td>
                         <a ng-href="/tools/users/{{user.id}}">{{user.username}}</a><br/>

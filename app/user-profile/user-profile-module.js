@@ -1,9 +1,7 @@
 require('angular-xeditable');
-require('../common/modules/gravatar-helper.js');
 
 angular.module('user-profile', [
-    'xeditable',
-    'gravatarHelper'
+    'xeditable'
 ])
 
 .controller('userProfile', require('./controllers/user-profile-controller.js'))

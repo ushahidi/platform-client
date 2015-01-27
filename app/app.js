@@ -15,6 +15,8 @@ require('angular-sanitize/angular-sanitize');
 require('angular-markdown-directive/markdown.js');
 require('angular-local-storage');
 require('checklist-model/checklist-model');
+require('angular-gravatar/build/md5');
+require('angular-gravatar/build/angular-gravatar');
 
 require('./post/post-module.js');
 require('./tool/tool-module.js');
@@ -36,6 +38,7 @@ angular.module('app',
         'ui.bootstrap.tabs',
         'ui.bootstrap.transition',
         'ui.bootstrap.pagination',
+        'ui.gravatar',
         'leaflet-directive',
         'angularMoment',
         'btford.markdown',
@@ -73,6 +76,7 @@ angular.module('app',
     .config(require('./common/configs/locale-config.js'))
     .config(require('./common/configs/ui-bootstrap-template-decorators.js'))
     .config(require('./routes'))
+    .config(require('./gravatar-config.js'))
 
     .run(require('./common/global/event-handlers.js'))
 
