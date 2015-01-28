@@ -7,7 +7,7 @@ module.exports = ['$routeProvider', '$locationProvider', function($routeProvider
             redirectTo: '/views/map'
         })
         .when('/login', {
-            controller: require('./controllers/login.js'),
+            controller: require('./controllers/login-controller.js'),
             templateUrl: 'templates/login.html'
         })
         .when('/posts/add-to-set', {

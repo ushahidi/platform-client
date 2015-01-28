@@ -1,12 +1,12 @@
 module.exports = [
+    '$rootScope',
     '$scope',
     'Authentication',
-    '$rootScope',
     '$location',
 function(
+    $rootScope,
     $scope,
     Authentication,
-    $rootScope,
     $location
 ) {
     function clearLoginForm() {
