@@ -216,7 +216,6 @@
         "anonymous" : "Anonymous",
         "awaiting_review" : "Awaiting review",
         "create_post" : "Create Post",
-        "create_post_of_type" : "Create __form_name__",
         "created_by" : "Created by",
         "draft" : "Draft",
         "edit_post" : "Edit Post",
@@ -279,6 +278,9 @@
         },
         "modify" : {
             "intro" : "Choose a post type:",
+            "create_type" : "Create {{type}}",
+            "edit_type" : "Edit {{type}}: {{title}}",
+            "change_type" : "Change type",
             "form_button" : "Save Post",
             "back" : "Back",
             "form" : {

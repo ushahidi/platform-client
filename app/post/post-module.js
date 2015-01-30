@@ -8,4 +8,6 @@ angular.module('posts', [])
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('PostEntity', require('./services/entities/post-entity.js'))
 
+.controller('PostModifyController', require('./controllers/post-modify-controller.js'))
+
 .config(require('./post-routes.js'));

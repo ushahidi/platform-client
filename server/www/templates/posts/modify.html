@@ -1,68 +1,90 @@
 <div class="container">
     <div class="full-content  post-create">
 
-        <div class="post-create-choose-form" ng-hide="active_form">
+        <div class="post-create-choose-form clearfix" ng-hide="active_form">
             <h3 class="header" translate>{{title}}</h3>
             <p class="intro" translate>post.modify.intro</p>
-            <ul class="post-create-form-list">
-                <li ng-repeat="form in forms | filter:filterNotDisabled" ng-click="chooseForm(form)" class="post-create-form-list__item">
-                    <div class="form-wrapper">
-                        <i class="fa  fa-list-ul"></i>
-                        <h4>{{form.name}}</h4>
-                        <p>{{form.description}}</p>
+            <div class="col-md-3" ng-repeat="form in forms | filter:filterNotDisabled" >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a ng-click="chooseForm(form)"><h4 class="panel-title"><i class="fa  fa-list-ul"></i> {{form.name}}</h4></a>
                     </div>
-                </li>
-            </ul>
+                    <div class="panel-body">{{form.description}}</div>
+                </div>
+            </div>
         </div>
 
         <div class="post-create-form container" ng-show="active_form">
             <div class="create-form-header">
-                <a ng-click="goBack()" class="back-button"><i class="fa  fa-arrow-left"></i><span translate>post.modify.back</span></a>
-                <h3 class="header">{{active_form.name}}</h3>
+                <h3 translate translate-values="{ type: active_form.name }" ng-if="! is_edit">post.modify.create_type</h3>
+                <h3 translate translate-values="{ type: active_form.name, title: post.title }" ng-if="is_edit">post.modify.edit_type</h3>
+                <a ng-click="goBack()" class="back-button" ng-if="! is_edit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
             </div>
             <form name="form">
-                
+
+                <div class="form-group">
+                    <label>{{'post.modify.form.title' | translate }}</label>
+                    <input id="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>{{'post.modify.form.description' | translate }}</label>
+                    <textarea id="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required class="form-control"></textarea>
+                </div>
+
                 <!-- type: select category -->
                 <div class="form-group">
                     <label translate>post.modify.form.categories</label>
-                    <div class="checkbox" ng-repeat="cat in categories">
+                    <div class="checkbox" ng-repeat="category in categories">
                         <label>
-                            <input type="checkbox" value="cat.slug" checklist-model="post.categories" checklist-value="cat.slug">
-                            {{cat.tag}}
+                            <input type="checkbox" value="category.slug" checklist-model="post.tags" checklist-value="category.slug">
+                            {{category.tag}}
                         </label>
                     </div>
                 </div>
 
-                <input id="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
+                <div class="attribute form-group" ng-repeat="attribute in attributes track by attribute.id" ng-class="{ 'has-error': form[attribute.key].$invalid && form[attribute.key].$dirty }">
+                    <label for="{{attribute.key}}">
+                        {{attribute.label}}
+                    </label>
 
-                <textarea id="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required></textarea>
+                    <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
+                        <div ng-class="{ 'input-group' : canRemoveValue(attribute, key) }">
+                            <!-- type: date -->
+                            <!-- todo: use a date picker, or find a way to split the value into input[date] and input[time] -->
+                            <input class="form-control" ng-if="isDate(attribute)" name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
 
-                <div class="attribute" ng-repeat="attribute in attributes | filter:filterInForm">
-                        <!-- type: date -->
-                        <!-- todo: use a date picker, or find a way to split the value into input[date] and input[time] -->
-                        <input ng-if="isDate(attribute)" name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key]" ng-required="attribute.required">
+                            <!-- type: location -->
+                            <div class="input-location" ng-if="isLocation(attribute)">
+                                <input class="form-control" name="{{attribute.key}}" type="text" placeholder="Label" ng-model="post.values[attribute.key][key]['label']" ng-required="attribute.required">
+                                <input class="form-control" name="{{attribute.key}}" type="text" placeholder="Lat" ng-model="post.values[attribute.key][key]['lat']" ng-required="attribute.required">
+                                <input class="form-control" name="{{attribute.key}}" type="text" placeholder="Lon" ng-model="post.values[attribute.key][key]['lon']" ng-required="attribute.required">
+                                <!-- todo: add map control here -->
+                                <leaflet defaults="defaults" markers="markers" center="center" height="265px" width="100%"></leaflet>
+                            </div>
 
-                        <!-- type: location -->
-                        <div class="input-location" ng-if="isLocation(attribute)">
-                            <input name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[alabely]" ng-required="attribute.required">
-                            <!-- todo: add map control here -->
-                            <leaflet defaults="defaults" markers="markers" center="center" height="265px" width="100%"></leaflet>
+                            <!-- type: select -->
+                            <select class="form-control" ng-if="isSelect(attribute)" name="{{attribute.key}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
+                                <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
+                            </select>
+
+                            <!-- type: text -->
+                            <input class="form-control" ng-if="isText(attribute)" name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
+
+                            <!-- type: textarea -->
+                            <textarea class="form-control" rows="10" ng-if="isTextarea(attribute)" name="{{attribute.key}}" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required"></textarea>
+
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-warning" ng-if="canRemoveValue(attribute, key)" ng-click="removeValue(attribute, key)"><i class="fa fa-trash"></i> Remove</button>
+                            </span>
                         </div>
+                    </div>
 
-                        <!-- type: select -->
-                        <select ng-if="isSelect(attribute)" name="{{attribute.key}}" ng-model="post.values[attribute.key]" ng-required="attribute.required">
-                            <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
-                        </select>
 
-                        <!-- type: text -->
-                        <input ng-if="isText(attribute)" name="{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key]" ng-required="attribute.required">
-
-                        <!-- type: textarea -->
-                        <textarea rows="10" ng-if="isTextarea(attribute)" name="{{attribute.key}}" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key]" ng-required="attribute.required"></textarea>
+                    <button type="button" class="btn btn-info" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)"><i class="fa fa-plus"></i> Add</button>
                 </div>
 
                 <p class="submit-button">
-                    <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post"
+                    <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="btn btn-primary"
                         ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.form_button</span></button>
                 </p>
             </form>

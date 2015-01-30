@@ -5,11 +5,12 @@ function(
 ) {
     return function(data) {
         return angular.extend({}, {
-            id: 0,
+            // id: 0,
             title: '',
             content: '',
             locale: CONST.DEFAULT_LOCALE,
-            status: 'draft'
+            status: 'draft',
+            values: {}
         }, data);
     };
 }];
