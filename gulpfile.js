@@ -327,9 +327,11 @@ gulp.task('bump', function () {
 
 /**
  * Task `tar` - Build tarball for release
+ * Options
+ * `--version-suffix=<version>` - Specify version for output fil
  */
 gulp.task('tar', ['build'], function () {
-    var version = require('./package.json').version;
+    var version = gutil.env['version-suffix'] || require('./package.json').version;
 
     return gulp.src('server/www/**')
         .pipe(rename(function (path) {
@@ -338,13 +340,14 @@ gulp.task('tar', ['build'], function () {
         }))
         .pipe(tar('platform-client-'+version+'.tar'))
         .pipe(gzip())
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest('build'))
+        .pipe(notify('Created tarball build/<%= file.relative %>'));
 });
 
 /**
- * Task `release` - Bump version and build release
+ * Task `release` - Build release
  */
-gulp.task('release', ['bump'], function() {
+gulp.task('release', function() {
     // Enable uglifyjs
     options.uglifyJs = true;
     // @todo update this once gulp 4 is out
