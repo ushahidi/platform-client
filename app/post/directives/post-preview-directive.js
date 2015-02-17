@@ -12,10 +12,6 @@ module.exports = ['TagEndpoint', 'UserEndpoint', function(TagEndpoint, UserEndpo
                 return TagEndpoint.get({id: tag.id});
             });
 
-            // Load the post author
-            if (scope.post.user && scope.post.user.id) {
-                scope.post.user = UserEndpoint.get({id: scope.post.user.id});
-            }
         }
     };
 }];

@@ -39,27 +39,13 @@ function(
 
         login: function(username, password)
         {
-            var claimedScopes = [
-                'posts',
-                'media',
-                'forms',
-                'api',
-                'tags',
-                'sets',
-                'users',
-                'stats',
-                'layers',
-                'config',
-                'messages',
-                'dataproviders'
-            ],
-            payload = {
+            var payload = {
                 username: username,
                 password: password,
                 grant_type: 'password',
                 client_id: CONST.OAUTH_CLIENT_ID,
                 client_secret: CONST.OAUTH_CLIENT_SECRET,
-                scope: claimedScopes.join(' ')
+                scope: CONST.CLAIMED_USER_SCOPES.join(' ')
             },
 
             deferred = $q.defer(),

@@ -24,7 +24,20 @@ require('./user-profile/user-profile-module.js');
 require('./workspace/workspace-module.js');
 
 // this 'environment variable' will be set within the gulpfile
-var backendUrl = process.env.backend_url;
+var backendUrl = process.env.backend_url,
+    claimedAnonymousScopes = [
+        'posts',
+        'media',
+        'forms',
+        'api',
+        'tags',
+        'sets',
+        'users',
+        'stats',
+        'layers',
+        'config',
+        'messages'
+    ];
 
 angular.module('app',
     [
@@ -53,7 +66,9 @@ angular.module('app',
         API_URL             : backendUrl + '/api/v2',
         DEFAULT_LOCALE      : 'en_US',
         OAUTH_CLIENT_ID     : 'ushahidiui',
-        OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261'
+        OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261',
+        CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
+        CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders')
     })
 
     .service('Authentication', require('./common/services/authentication.js'))
