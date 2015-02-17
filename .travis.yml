@@ -17,8 +17,9 @@ before_script:
 - sleep 3
 script:
 - gulp test
-- gulp send-stats-to-coveralls
 - npm run protractor
+after_script:
+- gulp send-stats-to-coveralls
 before_deploy:
 - gulp release --version-suffix=${TRAVIS_TAG:-$TRAVIS_COMMIT}
 deploy:
