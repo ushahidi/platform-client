@@ -355,6 +355,11 @@ gulp.task('release', function() {
 });
 
 /**
+ * Task `heroku:dev` - builds app for heroku
+ */
+gulp.task('heroku:dev', ['build'], function() {});
+
+/**
  * Task: `default`
  * Default task optimized for development
  */

@@ -1,1 +1,1 @@
-web: gulp build node-server --backend-url=$BACKEND_URL
+web: gulp node-server --backend-url=$BACKEND_URL
