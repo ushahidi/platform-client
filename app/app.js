@@ -4,11 +4,16 @@ require('leaflet/dist/leaflet');
 require('angular-leaflet-directive/dist/angular-leaflet-directive');
 require('angular-resource/angular-resource');
 require('angular-translate');
+require('angular-ui-bootstrap/src/dateparser/dateparser');
+require('angular-ui-bootstrap/src/datepicker/datepicker');
 require('angular-ui-bootstrap/src/dropdown/dropdown');
 require('angular-ui-bootstrap/src/collapse/collapse');
 require('angular-ui-bootstrap/src/tabs/tabs');
 require('angular-ui-bootstrap/src/transition/transition');
+require('angular-ui-bootstrap/src/timepicker/timepicker');
 require('angular-ui-bootstrap/src/pagination/pagination');
+require('angular-ui-bootstrap/src/position/position');
+require('angular-ui-bootstrap-datetimepicker');
 require('angular-mocks/angular-mocks');
 require('angular-moment/angular-moment');
 require('angular-sanitize/angular-sanitize');
@@ -48,11 +53,14 @@ angular.module('app',
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',
+        'ui.bootstrap.datepicker',
         'ui.bootstrap.dropdown',
         'ui.bootstrap.collapse',
         'ui.bootstrap.tabs',
+        'ui.bootstrap.timepicker',
         'ui.bootstrap.transition',
         'ui.bootstrap.pagination',
+        'ui.bootstrap.datetimepicker',
         'ui.gravatar',
         'leaflet-directive',
         'angularMoment',

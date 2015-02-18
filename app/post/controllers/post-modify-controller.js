@@ -71,17 +71,29 @@ function(
     $scope.isDate = function(attr) {
         return attr.input === 'date';
     };
+    $scope.isDateTime = function(attr) {
+        return attr.input === 'datetime';
+    };
     $scope.isLocation = function(attr) {
         return attr.input === 'location';
     };
     $scope.isSelect = function(attr) {
         return attr.input === 'select';
     };
+    $scope.isNumber = function(attr) {
+        return attr.input === 'number';
+    };
     $scope.isText = function(attr) {
         return attr.input === 'text';
     };
     $scope.isTextarea = function(attr) {
         return attr.input === 'textarea';
+    };
+    $scope.isCheckbox = function(attr) {
+        return attr.input === 'checkbox';
+    };
+    $scope.isRadio = function(attr) {
+        return attr.input === 'radio';
     };
 
     // Can more values be added for this attribute?
@@ -128,5 +140,16 @@ function(
             }
         }
     });
+
+    // Datepicker
+    $scope.datepicker = [];
+
+    $scope.openDatePicker = function($event, attribute, key) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.datepicker[attribute.key] = $scope.datepicker[attribute.key] || [];
+        $scope.datepicker[attribute.key][key] = true;
+    };
 
 }];
