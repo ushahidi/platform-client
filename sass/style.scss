@@ -58,11 +58,13 @@
 // these files are imported via the 'node-modules include path' in gulpfile.js
 @import "leaflet";
 @import "colorpicker";
+@import "jasny-bootstrap";
 
 // Custom overrides
 // @import "plugins/leaflet";
 // @import "plugins/xeditable";
 
+@import "plugins/jasny-bootstrap";
 
 
 

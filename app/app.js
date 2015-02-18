@@ -17,6 +17,8 @@ require('angular-local-storage');
 require('checklist-model/checklist-model');
 require('angular-gravatar/build/md5');
 require('angular-gravatar/build/angular-gravatar');
+window.jQuery = require('jquery');
+require('jasny-bootstrap/js/offcanvas');
 
 require('./post/post-module.js');
 require('./tool/tool-module.js');
