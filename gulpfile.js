@@ -158,7 +158,7 @@ gulp.task('rename-leaflet-markercluster-default', [], function() {
         ;
 });
 gulp.task('rename-jasny', function() {
-    return gulp.src(['node_modules/jasny-bootstrap/dist/css/jasny-bootstrap.css'])
+    return gulp.src(['node_modules/jasny-bootstrap/dist/css/jasny-bootstrap.min.css'])
         .pipe(rename('_jasny-bootstrap.scss'))
         .pipe(gulp.dest('node_modules/jasny-bootstrap/dist'))
         ;

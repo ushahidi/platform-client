@@ -12,55 +12,65 @@
     </head>
 
     <body>
+
+        <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
+            <ul class="nav navmenu-nav left-nav">
+                <li role="presentation"><a ng-href="/" translate>nav.home</a></li>
+                <li role="presentation"><a ng-href="/about" translate>nav.about</a></li>
+                <li role="presentation" ng-show="isAdmin()"><a ng-href="/workspace" translate>nav.workspace</a></li>
+                <li role="presentation" ng-show="isAdmin()"><a ng-href="/tools" translate>nav.tools</a></li>
+                <li class="dropdown user-menu visible-xs" dropdown ng-show="currentUser">
+                    <a id="user-menu-link" class="dropdown-toggle" role="button" aria-expanded="false" dropdown-toggle>
+                        <span>{{currentUser.realname || currentUser.username}}</span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu navmenu-nav" role="menu">
+                        <li><a ng-href="/users/me" class="my-profile"><i class="fa fa-user"></i>
+                            <span translate>nav.profile</span></a></li>
+                        <li><a ng-href="/site/settings" class="site-settings"><i class="fa fa-cogs"></i>
+                            <span translate>nav.settings</span></a></li>
+                        <li><a class="user-logout" ng-click="logoutClick($event)"><i class="fa fa-sign-out"></i>
+                            <span translate>nav.logout</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
         <header class="top-bar">
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container" ng-controller="navigation">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar"
-                            ng-init="isCollapsed = true"
-                            ng-click="isCollapsed = !isCollapsed"
-                            >
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" ng-href="/">Deployment Name</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse" collapse="isCollapsed">
-                        <ul class="nav navbar-nav">
-                            <li role="presentation"><a ng-href="/" translate>nav.home</a></li>
-                            <li role="presentation"><a ng-href="/about" translate>nav.about</a></li>
-                            <li role="presentation" ng-show="isAdmin()"><a ng-href="/workspace" translate>nav.workspace</a></li>
-                            <li role="presentation" ng-show="isAdmin()"><a ng-href="/tools" translate>nav.tools</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a ng-href="/posts/create"><i class="fa  fa-plus"></i> <span translate>nav.create</span></a></li>
-                            <li ng-hide="currentUser"><a ng-href="/login" class="user-login"><i class="fa  fa-sign-in"></i> <span translate>nav.login</span></a></li>
-                            <li class="dropdown user-menu" dropdown ng-show="currentUser">
-                                <a href="javascript:;" id="user-menu-link" class="dropdown-toggle" role="button" aria-expanded="false"
-                                    dropdown-toggle>
-                                    <span>{{currentUser.realname || currentUser.username}}</span>
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a ng-href="/users/me" class="my-profile"><i class="fa fa-user"></i>
-                                        <span translate>nav.profile</span></a></li>
-                                    <li><a ng-href="/site/settings" class="site-settings"><i class="fa fa-cogs"></i>
-                                        <span translate>nav.settings</span></a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="javascript:;" class="user-logout"
-                                        ng-click="logoutClick($event)"
-                                        ><i class="fa fa-sign-out"></i>
-                                        <span translate>nav.logout</span></a></li>
-                                </ul>
+            <div class="navbar navbar-default navbar-fixed-top">
+                <button type="button" class="button navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas=".canvas">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ng-href="/">Deployment Name</a>
+
+                <ul class="nav navmenu-nav navbar-right right-nav">
+                    <li class="nav-create"><a ng-href="/posts/create"><i class="fa  fa-plus"></i> <span class="hidden-xs" translate>nav.create</span></a></li>
+                    <li ng-hide="currentUser"><a ng-href="/login" class="user-login"><i class="fa  fa-sign-in"></i> <span translate>nav.login</span></a></li>
+                    <li class="dropdown user-menu hidden-xs" dropdown ng-show="currentUser">
+                        <a id="user-menu-link" class="dropdown-toggle btn-link" role="button" aria-expanded="false" dropdown-toggle>
+                            <span>{{currentUser.realname || currentUser.username}}</span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-href="/users/me" class="my-profile"><i class="fa fa-user"></i>
+                                <span translate>nav.profile</span></a></li>
+                            <li><a ng-href="/site/settings" class="site-settings"><i class="fa fa-cogs"></i>
+                                <span translate>nav.settings</span></a></li>
+                            <li class="divider"></li>
+                            <li><a class="user-logout" ng-click="logoutClick($event)"><i class="fa fa-sign-out"></i>
+                                <span translate>nav.logout</span></a>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </nav>
+                    </li>
+                </ul>
+            </div>
         </header>
-        <div class="container" ng-view></div>
+
+        <div class="container  canvas" ng-view></div>
         <!-- there is no footer present in the design spec, but we probably want one. (?) -->
         <!--
         <footer role="contentinfo" class="footer">
