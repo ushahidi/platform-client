@@ -70,7 +70,7 @@ describe('global event handlers', function(){
                     describe('succeeded', function(){
                         beforeEach(function(){
                             mockedSessionData = {
-                                userName: 'max',
+                                username: 'max',
                                 email: 'max@example.com'
                             };
 
@@ -78,7 +78,7 @@ describe('global event handlers', function(){
                         });
 
                         it('should set $rootScope.currentUser', function(){
-                            expect($rootScope.currentUser.userName).toEqual(mockedSessionData.userName);
+                            expect($rootScope.currentUser.username).toEqual(mockedSessionData.username);
                             expect($rootScope.currentUser.email).toEqual(mockedSessionData.email);
                         });
 
@@ -164,7 +164,7 @@ describe('global event handlers', function(){
 
                 mockedSessionData = {
                     accessToken: 'fooToken',
-                    userName: 'max',
+                    username: 'max',
                     email: 'max@example.com'
                 };
 
@@ -181,7 +181,7 @@ describe('global event handlers', function(){
             });
 
             it('should set $rootScope.currentUser', function(){
-                expect($rootScope.currentUser.userName).toEqual(mockedSessionData.userName);
+                expect($rootScope.currentUser.username).toEqual(mockedSessionData.username);
                 expect($rootScope.currentUser.email).toEqual(mockedSessionData.email);
             });
 
@@ -206,8 +206,8 @@ describe('global event handlers', function(){
                 expect($rootScope.loggedin).toBeFalsy();
             });
 
-            it('should leave userName and email to be undefined on $rootScope', function(){
-                expect($rootScope.userName).toEqual(undefined);
+            it('should leave username and email to be undefined on $rootScope', function(){
+                expect($rootScope.username).toEqual(undefined);
                 expect($rootScope.email).toEqual(undefined);
             });
         });

@@ -10,8 +10,8 @@ describe('Session', function(){
 
         emptySessionData = {
             userId: undefined,
-            userName: undefined,
-            realName: undefined,
+            username: undefined,
+            realname: undefined,
             email: undefined,
             role: undefined,
             accessToken: undefined,
@@ -84,8 +84,8 @@ describe('Session', function(){
             function(){
                 var expectedSessionData = {
                     userId: '1',
-                    userName: undefined,
-                    realName: undefined,
+                    username: undefined,
+                    realname: undefined,
                     email: undefined,
                     role: undefined,
                     accessToken: 'secrettoken',
@@ -134,7 +134,7 @@ describe('Session', function(){
             beforeEach(function(){
                 sessionDataEntriesToSet = {
                     userId: '1',
-                    userName: 'mike'
+                    username: 'mike'
                 };
                 Session.setSessionDataEntries(sessionDataEntriesToSet);
             });
@@ -146,7 +146,7 @@ describe('Session', function(){
 
             it('has the keys and values stored in the local storage', function(){
                 expect(mockedLocalStorageHash.userId).toEqual('1');
-                expect(mockedLocalStorageHash.userName).toEqual('mike');
+                expect(mockedLocalStorageHash.username).toEqual('mike');
             });
         });
     });
@@ -157,7 +157,7 @@ describe('Session', function(){
 
             beforeEach(function(){
                 mockedLocalStorageHash.userId = '1';
-                mockedLocalStorageHash.userName = 'mike';
+                mockedLocalStorageHash.username = 'mike';
             });
 
             beforeEach(inject(function(_Session_){
@@ -167,7 +167,7 @@ describe('Session', function(){
             describe('getSessionDataEntry', function(){
                 it('returns the correct values', function(){
                     expect(Session.getSessionDataEntry('userId')).toEqual('1');
-                    expect(Session.getSessionDataEntry('userName')).toEqual('mike');
+                    expect(Session.getSessionDataEntry('username')).toEqual('mike');
                 });
             });
 
@@ -175,7 +175,7 @@ describe('Session', function(){
                 it('returns the correct values', function(){
                     var expectedSessionDataEntries = angular.extend({}, emptySessionData, {
                         'userId': '1',
-                        'userName': 'mike'
+                        'username': 'mike'
                     });
                     expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
                 });
@@ -189,7 +189,7 @@ describe('Session', function(){
 
             beforeEach(function(){
                 mockedLocalStorageHash.userId = '1';
-                mockedLocalStorageHash.userName = 'mike';
+                mockedLocalStorageHash.username = 'mike';
             });
 
             beforeEach(inject(function(_Session_){
@@ -198,7 +198,7 @@ describe('Session', function(){
 
             it('has the values loaded in session', function(){
                 expect(Session.getSessionDataEntry('userId')).toEqual('1');
-                expect(Session.getSessionDataEntry('userName')).toEqual('mike');
+                expect(Session.getSessionDataEntry('username')).toEqual('mike');
             });
 
             describe('calling clearSessionData', function(){
