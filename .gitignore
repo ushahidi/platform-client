@@ -5,3 +5,4 @@ npm-debug.log
 .gulpconfig.json
 test/coverage/
 build/*
+.DS_Store

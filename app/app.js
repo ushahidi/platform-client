@@ -1,6 +1,7 @@
 require('angular/angular');
 require('angular-route/angular-route');
 require('leaflet/dist/leaflet');
+require('leaflet.markercluster/dist/leaflet.markercluster');
 require('angular-leaflet-directive/dist/angular-leaflet-directive');
 require('angular-resource/angular-resource');
 require('angular-translate');
@@ -110,5 +111,8 @@ angular.module('app',
     })
     .factory('URI', function() {
         return require('URIjs/src/URI.js');
+    })
+    .factory('Leaflet', function() {
+        return window.L;
     })
     ;

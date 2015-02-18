@@ -57,8 +57,18 @@
 //
 // these files are imported via the 'node-modules include path' in gulpfile.js
 @import "leaflet";
+@import "MarkerCluster";
+@import "MarkerCluster.Default";
 @import "colorpicker";
 @import "jasny-bootstrap";
+
+// Override leaflet layer image path
+.leaflet-control-layers-toggle {
+	background-image: url(../img/layers.png);
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(../img/layers-2x.png);
+	}
 
 // Custom overrides
 // @import "plugins/leaflet";

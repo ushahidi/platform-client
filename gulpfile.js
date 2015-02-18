@@ -1,31 +1,31 @@
-var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    livereload = require('gulp-livereload'),
+var gulp         = require('gulp'),
+    sass         = require('gulp-sass'),
+    livereload   = require('gulp-livereload'),
     autoprefixer = require('gulp-autoprefixer'),
-    plumber = require('gulp-plumber'),
-    rename = require('gulp-rename'),
-    gutil = require('gulp-util'),
-    notify = require('gulp-notify'),
-    exec = require('child_process').exec,
-    source = require('vinyl-source-stream'),
-    browserify = require('browserify'),
-    envify = require('envify/custom'),
-    fs = require('fs'),
-    merge = require('merge'),
-    karma = require('karma').server,
-    buffer = require('vinyl-buffer'),
-    uglify = require('gulp-uglify'),
-    sourcemaps = require('gulp-sourcemaps'),
-    bump = require('gulp-bump'),
-    tar = require('gulp-tar'),
-    gzip = require('gulp-gzip'),
+    plumber      = require('gulp-plumber'),
+    rename       = require('gulp-rename'),
+    gutil        = require('gulp-util'),
+    notify       = require('gulp-notify'),
+    exec         = require('child_process').exec,
+    source       = require('vinyl-source-stream'),
+    browserify   = require('browserify'),
+    envify       = require('envify/custom'),
+    fs           = require('fs'),
+    merge        = require('merge'),
+    karma        = require('karma').server,
+    buffer       = require('vinyl-buffer'),
+    uglify       = require('gulp-uglify'),
+    sourcemaps   = require('gulp-sourcemaps'),
+    bump         = require('gulp-bump'),
+    tar          = require('gulp-tar'),
+    gzip         = require('gulp-gzip'),
 
-    mockBackendFlag = gutil.env['mock-backend'],
+    mockBackendFlag                    = gutil.env['mock-backend'],
     mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
-    useNodeServerFlag = gutil.env['node-server'],
-    useDockerServerFlag = gutil.env['docker-server'],
-    useChromeForKarmaFlag = gutil.env['karma-chrome'],
-    backendUrl = gutil.env['backend-url'];
+    useNodeServerFlag                  = gutil.env['node-server'],
+    useDockerServerFlag                = gutil.env['docker-server'],
+    useChromeForKarmaFlag              = gutil.env['karma-chrome'],
+    backendUrl                         = gutil.env['backend-url'];
 
 function errorHandler (err) {
     gutil.beep();
@@ -105,7 +105,8 @@ gulp.task('sass', ['rename'], function() {
                 'bower_components/font-awesome/scss',
                 'node_modules/angular-bootstrap-colorpicker/scss',
                 'node_modules/leaflet/dist/',
-                'node_modules/jasny-bootstrap/dist/'
+                'node_modules/jasny-bootstrap/dist/',
+                'node_modules/leaflet.markercluster/dist/',
             ],
             sourceComments: 'map'
         }))
@@ -122,7 +123,10 @@ gulp.task('sass', ['rename'], function() {
  * Move CSS from bower_components into server/www
  */
 gulp.task('css', [], function() {
-    return gulp.src(['bower_components/font-awesome/css/*', 'bower_components/bootstrap/dist/css/*'])
+    return gulp.src([
+                    'bower_components/font-awesome/css/*',
+                    'bower_components/bootstrap/dist/css/*',
+                    ])
         .pipe(gulp.dest(options.www + '/css'));
 });
 
@@ -135,10 +139,22 @@ gulp.task('rename-colorpicker', function() {
         .pipe(gulp.dest('node_modules/angular-bootstrap-colorpicker/scss/'))
         ;
 });
-gulp.task('rename-leaflet', ['rename-colorpicker'], function() {
+gulp.task('rename-leaflet', [], function() {
     return gulp.src(['node_modules/leaflet/dist/leaflet.css'])
         .pipe(rename('_leaflet.scss'))
         .pipe(gulp.dest('node_modules/leaflet/dist/'))
+        ;
+});
+gulp.task('rename-leaflet-markercluster', [], function() {
+    return gulp.src(['node_modules/leaflet.markercluster/dist/MarkerCluster.css'])
+        .pipe(rename('_MarkerCluster.scss'))
+        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/'))
+        ;
+});
+gulp.task('rename-leaflet-markercluster-default', [], function() {
+    return gulp.src(['node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css'])
+        .pipe(rename('_MarkerCluster.Default.scss'))
+        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/'))
         ;
 });
 gulp.task('rename-jasny', function() {
@@ -147,7 +163,13 @@ gulp.task('rename-jasny', function() {
         .pipe(gulp.dest('node_modules/jasny-bootstrap/dist'))
         ;
 });
-gulp.task('rename', ['rename-leaflet', 'rename-colorpicker', 'rename-jasny'], function() {});
+gulp.task('rename', [
+    'rename-leaflet',
+    'rename-colorpicker',
+    'rename-leaflet-markercluster',
+    'rename-leaflet-markercluster-default',
+    'rename-jasny'
+    ], function() {});
 
 /**
  * Task: `font`
