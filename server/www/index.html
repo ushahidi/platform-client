@@ -40,7 +40,7 @@
                             <li class="dropdown user-menu" dropdown ng-show="currentUser">
                                 <a href="javascript:;" id="user-menu-link" class="dropdown-toggle" role="button" aria-expanded="false"
                                     dropdown-toggle>
-                                    <span>{{currentUser.realName}}</span>
+                                    <span>{{currentUser.realname || currentUser.username}}</span>
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">

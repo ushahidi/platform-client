@@ -21,8 +21,8 @@ function(
     setToLoginState = function(userData){
         Session.setSessionDataEntries({
             userId: userData.id,
-            userName: userData.username,
-            realName: userData.realname,
+            username: userData.username,
+            realname: userData.realname,
             email: userData.email,
             role: userData.role
         });
