@@ -1,140 +1,138 @@
-<div class="container">
-    <div class="full-content  post-create">
+<div class="full-content  post-create">
 
-        <div class="post-create-choose-form clearfix" ng-hide="active_form">
-            <h3 class="header" translate>{{title}}</h3>
-            <p class="intro" translate>post.modify.intro</p>
-            <div class="col-md-3" ng-repeat="form in forms | filter:filterNotDisabled" >
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a ng-click="chooseForm(form)"><h4 class="panel-title"><i class="fa  fa-list-ul"></i> {{form.name}}</h4></a>
-                    </div>
-                    <div class="panel-body">{{form.description}}</div>
+    <div class="post-create-choose-form clearfix" ng-hide="active_form">
+        <h3 class="header" translate>{{title}}</h3>
+        <p class="intro" translate>post.modify.intro</p>
+        <div class="col-md-3" ng-repeat="form in forms | filter:filterNotDisabled" >
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a ng-click="chooseForm(form)"><h4 class="panel-title"><i class="fa  fa-list-ul"></i> {{form.name}}</h4></a>
                 </div>
+                <div class="panel-body">{{form.description}}</div>
             </div>
         </div>
-
-        <div class="post-create-form container" ng-show="active_form">
-            <div class="create-form-header">
-                <h3 translate translate-values="{ type: active_form.name }" ng-if="! is_edit">post.modify.create_type</h3>
-                <h3 translate translate-values="{ type: active_form.name, title: post.title }" ng-if="is_edit">post.modify.edit_type</h3>
-                <a ng-click="goBack()" class="back-button" ng-if="! is_edit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
-            </div>
-            <form name="form">
-
-                <div class="form-group" ng-class="{ 'has-error': form.title.$invalid && form.title.$dirty }">
-                    <label for="title">{{'post.modify.form.title' | translate }}</label>
-                    <input id="title" name="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 class="form-control">
-                </div>
-                <div class="form-group" ng-class="{ 'has-error': form.content.$invalid && form.content.$dirty }">
-                    <label for="content">{{'post.modify.form.description' | translate }}</label>
-                    <textarea id="content" name="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required class="form-control"></textarea>
-                </div>
-
-                <!-- type: select category -->
-                <div class="form-group" ng-class="{ 'has-error': form.tags.$invalid && form.tags.$dirty }">
-                    <label for="tags" translate>post.modify.form.categories</label>
-                    <div class="checkbox" ng-repeat="category in categories">
-                        <label>
-                            <input type="checkbox" value="category.slug" name="tags" checklist-model="post.tags" checklist-value="category.slug">
-                            {{category.tag}}
-                        </label>
-                    </div>
-                </div>
-
-                <div class="attribute form-group" ng-repeat="attribute in attributes track by attribute.id" ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
-
-                    <label for="values[{{attribute.key}}][0]">
-                        {{attribute.label}}
-                    </label>
-
-                    <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
-                        <div ng-class="{ 'input-group' : canRemoveValue(attribute, key) }">
-                            <!-- type: date -->
-                            <p class="input-group" ng-if="isDate(attribute)">
-                                <input
-                                    class="form-control"
-                                    id="values[{{attribute.key}}][{{key}}]"
-                                    name="values_{{attribute.key}}"
-                                    type="text"
-                                    placeholder="{{attribute.label}}"
-                                    ng-model="post.values[attribute.key][key]"
-                                    ng-required="attribute.required"
-                                    ng-focus="openDatePicker($event, attribute, key)"
-
-                                    datepicker-popup
-                                    is-open="datepicker[attribute.key][key]"
-                                    datepicker-options="{ showWeeks: false }"
-
-                                    ng-change="updateDate(attribute, key)"
-                                />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openDatePicker($event, attribute, key)"><i class="fa fa-calendar"></i></button>
-                                </span>
-                            </p>
-
-                            <!-- type: datetime -->
-                            <div ng-if="isDateTime(attribute)" class="">
-                                <datetimepicker
-                                    ng-model="post.values[attribute.key][key]"
-                                    showWeeks="false"
-                                    hour-step="1"
-                                    minute-step="10"
-                                    show-meridian="false"
-                                    mousewheel="false"
-                                    date-format="yyyy-MM-dd"
-
-                                    >
-                            </div>
-
-                            <!-- type: location -->
-                            <div class="input-location" ng-if="isLocation(attribute)">
-                                <input class="form-control" id="values[{{attribute.key}}][{{key}}][lat]" type="text" placeholder="Lat" ng-model="post.values[attribute.key][key]['lat']" ng-required="attribute.required">
-                                <input class="form-control" id="values[{{attribute.key}}][{{key}}][lon]"type="text" placeholder="Lon" ng-model="post.values[attribute.key][key]['lon']" ng-required="attribute.required">
-                                <!-- todo: add map control here -->
-                                <leaflet defaults="defaults" markers="markers" center="center" height="265px" width="100%"></leaflet>
-                            </div>
-
-                            <!-- type: select -->
-                            <select class="form-control" ng-if="isSelect(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
-                                <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
-                            </select>
-
-                            <!-- type: checkbox -->
-                            <div class="input-group" ng-if="isCheckbox(attribute)">
-                                <label>{{attribute.label}} <input class="form-control" name="values_{{attribute.key}}" type="checkbox" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="1"></label>
-                            </div>
-
-                            <!-- type: radio -->
-                            <div class="input-group" ng-if="isRadio(attribute)">
-                                <label ng-repeat="opt in attribute.options">{{opt}} <input class="form-control" name="values_{{attribute.key}}" type="radio" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="{{opt}}"></label>
-                            </div>
-
-                            <!-- type: number -->
-                            <input class="form-control" ng-if="isNumber(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="number" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
-
-                            <!-- type: text -->
-                            <input class="form-control" ng-if="isText(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
-
-                            <!-- type: textarea -->
-                            <textarea class="form-control" rows="10" ng-if="isTextarea(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required"></textarea>
-
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-warning" ng-if="canRemoveValue(attribute, key)" ng-click="removeValue(attribute, key)"><i class="fa fa-trash"></i> Remove</button>
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <button type="button" class="btn btn-info" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)"><i class="fa fa-plus"></i> Add</button>
-                </div>
-
-                <p class="submit-button">
-                    <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="btn btn-primary"
-                        ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.form_button</span></button>
-                </p>
-            </form>
-        </div>
-
     </div>
+
+    <div class="post-create-form" ng-show="active_form">
+        <div class="create-form-header">
+            <h3 translate translate-values="{ type: active_form.name }" ng-if="! is_edit">post.modify.create_type</h3>
+            <h3 translate translate-values="{ type: active_form.name, title: post.title }" ng-if="is_edit">post.modify.edit_type</h3>
+            <a ng-click="goBack()" class="back-button" ng-if="! is_edit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
+        </div>
+        <form name="form">
+
+            <div class="form-group" ng-class="{ 'has-error': form.title.$invalid && form.title.$dirty }">
+                <label for="title">{{'post.modify.form.title' | translate }}</label>
+                <input id="title" name="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 class="form-control">
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': form.content.$invalid && form.content.$dirty }">
+                <label for="content">{{'post.modify.form.description' | translate }}</label>
+                <textarea id="content" name="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required class="form-control"></textarea>
+            </div>
+
+            <!-- type: select category -->
+            <div class="form-group" ng-class="{ 'has-error': form.tags.$invalid && form.tags.$dirty }">
+                <label for="tags" translate>post.modify.form.categories</label>
+                <div class="checkbox" ng-repeat="category in categories">
+                    <label>
+                        <input type="checkbox" value="category.slug" name="tags" checklist-model="post.tags" checklist-value="category.slug">
+                        {{category.tag}}
+                    </label>
+                </div>
+            </div>
+
+            <div class="attribute form-group" ng-repeat="attribute in attributes track by attribute.id" ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
+
+                <label for="values[{{attribute.key}}][0]">
+                    {{attribute.label}}
+                </label>
+
+                <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
+                    <div ng-class="{ 'input-group' : canRemoveValue(attribute, key) }">
+                        <!-- type: date -->
+                        <p class="input-group" ng-if="isDate(attribute)">
+                            <input
+                                class="form-control"
+                                id="values[{{attribute.key}}][{{key}}]"
+                                name="values_{{attribute.key}}"
+                                type="text"
+                                placeholder="{{attribute.label}}"
+                                ng-model="post.values[attribute.key][key]"
+                                ng-required="attribute.required"
+                                ng-focus="openDatePicker($event, attribute, key)"
+
+                                datepicker-popup
+                                is-open="datepicker[attribute.key][key]"
+                                datepicker-options="{ showWeeks: false }"
+
+                                ng-change="updateDate(attribute, key)"
+                            />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openDatePicker($event, attribute, key)"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </p>
+
+                        <!-- type: datetime -->
+                        <div ng-if="isDateTime(attribute)" class="">
+                            <datetimepicker
+                                ng-model="post.values[attribute.key][key]"
+                                showWeeks="false"
+                                hour-step="1"
+                                minute-step="10"
+                                show-meridian="false"
+                                mousewheel="false"
+                                date-format="yyyy-MM-dd"
+
+                                >
+                        </div>
+
+                        <!-- type: location -->
+                        <div class="input-location" ng-if="isLocation(attribute)">
+                            <input class="form-control" id="values[{{attribute.key}}][{{key}}][lat]" type="text" placeholder="Lat" ng-model="post.values[attribute.key][key]['lat']" ng-required="attribute.required">
+                            <input class="form-control" id="values[{{attribute.key}}][{{key}}][lon]"type="text" placeholder="Lon" ng-model="post.values[attribute.key][key]['lon']" ng-required="attribute.required">
+                            <!-- todo: add map control here -->
+                            <leaflet defaults="defaults" markers="markers" center="center" height="265px" width="100%"></leaflet>
+                        </div>
+
+                        <!-- type: select -->
+                        <select class="form-control" ng-if="isSelect(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
+                            <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
+                        </select>
+
+                        <!-- type: checkbox -->
+                        <div class="input-group" ng-if="isCheckbox(attribute)">
+                            <label>{{attribute.label}} <input class="form-control" name="values_{{attribute.key}}" type="checkbox" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="1"></label>
+                        </div>
+
+                        <!-- type: radio -->
+                        <div class="input-group" ng-if="isRadio(attribute)">
+                            <label ng-repeat="opt in attribute.options">{{opt}} <input class="form-control" name="values_{{attribute.key}}" type="radio" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="{{opt}}"></label>
+                        </div>
+
+                        <!-- type: number -->
+                        <input class="form-control" ng-if="isNumber(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="number" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
+
+                        <!-- type: text -->
+                        <input class="form-control" ng-if="isText(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
+
+                        <!-- type: textarea -->
+                        <textarea class="form-control" rows="10" ng-if="isTextarea(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required"></textarea>
+
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-warning" ng-if="canRemoveValue(attribute, key)" ng-click="removeValue(attribute, key)"><i class="fa fa-trash"></i> Remove</button>
+                        </span>
+                    </div>
+                </div>
+
+
+                <button type="button" class="btn btn-info" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)"><i class="fa fa-plus"></i> Add</button>
+            </div>
+
+            <p class="submit-button">
+                <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="btn btn-primary"
+                    ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.form_button</span></button>
+            </p>
+        </form>
+    </div>
+
 </div>
