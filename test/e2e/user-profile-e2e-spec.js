@@ -6,9 +6,9 @@ var getLastUrlPart = function(url){
     return match[1];
 };
 
-var userMenuLinkSelector = 'a#user-menu-link',
-userMenuLinkSelector = 'a#user-menu-link',
-userProfileLinkSelector = 'a.my-profile';
+var userMenuLinkSelector = '.top-bar a#user-menu-link',
+userMenuLinkSelector = '.top-bar a#user-menu-link',
+userProfileLinkSelector = '.top-bar a.my-profile';
 
 
 describe('user profile management', function() {

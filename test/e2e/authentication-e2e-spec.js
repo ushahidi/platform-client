@@ -2,9 +2,9 @@ var getLastUrlPart = function(url){
     return url.substr(url.lastIndexOf('/'));
 };
 
-var loginLinkSelector = 'a.user-login',
-    logoutLinkSelector = 'a.user-logout',
-    userMenuLinkSelector = 'li.user-menu a.dropdown-toggle';
+var loginLinkSelector = '.top-bar a.user-login',
+    logoutLinkSelector = '.top-bar a.user-logout',
+    userMenuLinkSelector = '.top-bar li.user-menu a.dropdown-toggle';
 
 describe('authentication', function() {
 
