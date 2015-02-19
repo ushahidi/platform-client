@@ -71,7 +71,11 @@
             </div>
         </header>
 
-        <div class="container  canvas" ng-view></div>
+        <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
+        <div class="container  canvas">
+            <ng-view></ng-view>
+        </div>
+
         <!-- there is no footer present in the design spec, but we probably want one. (?) -->
         <!--
         <footer role="contentinfo" class="footer">
