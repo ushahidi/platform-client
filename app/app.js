@@ -35,7 +35,7 @@ require('./user-profile/user-profile-module.js');
 require('./workspace/workspace-module.js');
 
 // this 'environment variable' will be set within the gulpfile
-var backendUrl = process.env.backend_url,
+var backendUrl = process.env.BACKEND_URL || 'http://ushahidi-backend',
     claimedAnonymousScopes = [
         'posts',
         'media',

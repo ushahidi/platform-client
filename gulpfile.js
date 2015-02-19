@@ -25,7 +25,7 @@ var gulp         = require('gulp'),
     useNodeServerFlag                  = gutil.env['node-server'],
     useDockerServerFlag                = gutil.env['docker-server'],
     useChromeForKarmaFlag              = gutil.env['karma-chrome'],
-    backendUrl                         = gutil.env['backend-url'];
+    backendUrl                         = gutil.env['backend-url'] || process.env.BACKEND_URL;
 
 function errorHandler (err) {
     gutil.beep();
@@ -40,7 +40,6 @@ var options = {
     nodeServer: false,
     uglifyJs: true,
     www: 'server/www',
-    backendUrl: 'http://ushahidi-backend',
     mockedBackendUrl: 'http://localhost:8081'
 };
 
@@ -66,7 +65,7 @@ var helpers = {
     setBackendUrl: function(){
         backendUrl = backendUrl ? backendUrl : options.backendUrl;
         return envify({
-            backend_url: mockBackendFlag ? options.mockedBackendUrl : backendUrl
+            BACKEND_URL: mockBackendFlag ? options.mockedBackendUrl : backendUrl
         });
     },
     createDefaultTaskDependencies: function (){
