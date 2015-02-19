@@ -18,8 +18,11 @@
             </p>
         </div>
         <div class="col-md-3">
-            <p translate>todo.status_stages</p>
-            <p translate>todo.post_actions</p>
+            <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
+                <a class="btn btn-default btn-large" href="/posts/{{post.id}}/edit">
+                    <i class="fa fa-edit"></i><span translate>post.post_actions.edit</span>
+                </a>
+            </p>
         </div>
     </div>
 </li>
