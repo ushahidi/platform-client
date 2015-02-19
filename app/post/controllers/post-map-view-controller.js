@@ -63,7 +63,7 @@ function(
         fitDataOnMap = false;
 
     // Load posts geojson
-    var geojson = PostEndpoint.get({id:'geojson'});
+    var geojson = PostEndpoint.get({extra:'geojson'});
     // Load map settings
     var config = ConfigEndpoint.get({id:'map'});
 
@@ -143,8 +143,5 @@ function(
     $scope.title = 'Map View';
 
     $scope.map = ConfigEndpoint.get({ id: 'map' });
-    PostEndpoint.query().$promise.then(function(postsResponse) {
-        $scope.posts = postsResponse.results;
-    });
 
 }];

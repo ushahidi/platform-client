@@ -62,6 +62,13 @@
                     attribute="form_attributes[key]"
                 ></post-value>
             </li>
+            <li ng-if="mapDataLoaded">
+                <h5 class="value-label" translate>
+                    Location
+                </h5>
+
+                <leaflet id="post-map" defaults="defaults" geojson="geojson" center="center" layers="layers" height="300px" width="100%"></leaflet>
+            </li>
         </ul> <!-- end .post-values -->
     </div>
 

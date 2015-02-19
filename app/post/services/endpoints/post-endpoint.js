@@ -8,7 +8,7 @@ function(
     Util
 ) {
 
-    var PostEndpoint = $resource(Util.apiUrl('/posts/:id'), {
+    var PostEndpoint = $resource(Util.apiUrl('/posts/:id/:extra'), {
         id: '@id'
     }, {
         query: {
