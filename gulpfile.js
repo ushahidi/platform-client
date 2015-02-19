@@ -191,6 +191,10 @@ gulp.task('browserify', function() {
         .transform('brfs')
         .transform(helpers.setBackendUrl())
         .bundle()
+        .on('error', function(err){
+            errorHandler(err.message);
+            this.emit('end');
+        })
         .pipe(source('bundle.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}));
