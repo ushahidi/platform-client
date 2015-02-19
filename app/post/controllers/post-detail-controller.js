@@ -19,6 +19,17 @@ function(
         $scope.title = postDetailsTranslation;
     });
 
+    $scope.showType = function(type) {
+        if (type === 'point') {
+            return false;
+        }
+        if (type === 'geometry') {
+            return false;
+        }
+
+        return true;
+    };
+
     $scope.post = PostEndpoint.get({id: $routeParams.id}, function() {
         // Load the post author
         if ($scope.post.user && $scope.post.user.id) {

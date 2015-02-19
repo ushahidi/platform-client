@@ -7,15 +7,6 @@ module.exports = [function() {
             value: '=',
             attribute: '='
         },
-        templateUrl: 'templates/partials/post-detail-value.html',
-        link: function (scope /*, element*/) {
-            // Ensure value is an array
-            if (! angular.isArray(scope.value))
-            {
-                scope.value = [{
-                    value: scope.value
-                }];
-            }
-        }
+        templateUrl: 'templates/partials/post-detail-value.html'
     };
 }];

@@ -1,7 +1,6 @@
 angular.module('posts', [])
 
 .directive('postViewTabs', require('./directives/post-view-tabs-directive.js'))
-.directive('postDetailTabs', require('./directives/post-detail-tabs-directive.js'))
 .directive('postPreview', require('./directives/post-preview-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
 .directive('postLocation', require('./directives/post-location-directive.js'))
