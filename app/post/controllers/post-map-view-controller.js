@@ -13,9 +13,6 @@ function(
     L,
     leafletData
 ) {
-    // Set base leaflet image path
-    L.Icon.Default.imagePath = '/img/';
-
     var layers = {
         baselayers : {
             mapquest: {

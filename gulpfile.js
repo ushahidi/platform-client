@@ -30,7 +30,7 @@ var gulp         = require('gulp'),
 function errorHandler (err) {
     gutil.beep();
     gutil.log(err.message || err);
-    notify.onError('Error: <%= error.message %>')(err);
+    notify.onError('Error: <%= error %>')(err.message || err);
 }
 
 // Options
@@ -106,7 +106,7 @@ gulp.task('sass', ['rename'], function() {
                 'node_modules/angular-bootstrap-colorpicker/scss',
                 'node_modules/leaflet/dist/',
                 'node_modules/jasny-bootstrap/dist/',
-                'node_modules/leaflet.markercluster/dist/',
+                'node_modules/leaflet.markercluster/dist/'
             ],
             sourceComments: 'map'
         }))
@@ -163,13 +163,24 @@ gulp.task('rename-jasny', function() {
         .pipe(gulp.dest('node_modules/jasny-bootstrap/dist'))
         ;
 });
+
+/**
+ * Copy icon files for leaflet from node_modules into server/www/css/images
+ */
+gulp.task('copy-leaflet-icons', [], function() {
+    return gulp.src(['node_modules/leaflet/dist/images/*'])
+        .pipe(gulp.dest(options.www + '/img'));
+});
+
 gulp.task('rename', [
+    'copy-leaflet-icons',
     'rename-leaflet',
     'rename-colorpicker',
     'rename-leaflet-markercluster',
     'rename-leaflet-markercluster-default',
     'rename-jasny'
     ], function() {});
+
 
 /**
  * Task: `font`

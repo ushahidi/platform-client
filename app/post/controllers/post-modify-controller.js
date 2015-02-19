@@ -62,6 +62,7 @@ function(
                 $location.path('/');
             }
         }, function(errorResponse) { // errors
+
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
             errors && Notify.showAlerts(errors);
             $scope.saving_post = false;
@@ -117,39 +118,4 @@ function(
     $scope.removeValue = function (attr, key) {
         $scope.post.values[attr.key].splice(key, 1);
     };
-
-    // leaflet map or location attribute
-    angular.extend($scope, {
-        defaults: {
-            scrollWheelZoom: false
-        },
-
-        center: {
-            lat: 36.079868,
-            lng: -79.819416,
-            zoom: 4
-        },
-
-        markers: {
-            osloMarker: {
-                lat: 36.079868,
-                lng: -79.819416,
-                message: 'Greensboro, NC',
-                focus: true,
-                draggable: false
-            }
-        }
-    });
-
-    // Datepicker
-    $scope.datepicker = [];
-
-    $scope.openDatePicker = function($event, attribute, key) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.datepicker[attribute.key] = $scope.datepicker[attribute.key] || [];
-        $scope.datepicker[attribute.key][key] = true;
-    };
-
 }];

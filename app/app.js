@@ -2,6 +2,7 @@ require('angular/angular');
 require('angular-route/angular-route');
 require('leaflet/dist/leaflet');
 require('leaflet.markercluster/dist/leaflet.markercluster');
+require('leaflet.locatecontrol/src/L.Control.Locate');
 require('angular-leaflet-directive/dist/angular-leaflet-directive');
 require('angular-resource/angular-resource');
 require('angular-translate');
@@ -25,6 +26,8 @@ require('angular-gravatar/build/md5');
 require('angular-gravatar/build/angular-gravatar');
 window.jQuery = require('jquery');
 require('jasny-bootstrap/js/offcanvas');
+
+require('ngGeolocation/ngGeolocation');
 
 require('./post/post-module.js');
 require('./tool/tool-module.js');
@@ -69,7 +72,8 @@ angular.module('app',
         'posts',
         'tools',
         'user-profile',
-        'workspace'
+        'workspace',
+        'ngGeolocation'
     ])
 
     .constant('CONST', {
