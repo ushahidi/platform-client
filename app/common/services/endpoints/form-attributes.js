@@ -8,7 +8,9 @@ function(
 
     var FormAttributeEndpoint = $resource(Util.apiUrl('/forms/:formId/attributes/:id'), {
         formId: '@formId',
-        id: '@id'
+        id: '@id',
+        order: 'asc',
+        orderby: 'priority'
     }, {
         query: {
             method: 'GET',
