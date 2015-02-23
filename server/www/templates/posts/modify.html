@@ -35,7 +35,7 @@
                 <label for="tags" translate>post.modify.form.categories</label>
                 <div class="checkbox" ng-repeat="category in categories">
                     <label>
-                        <input type="checkbox" value="category.slug" name="tags" checklist-model="post.tags" checklist-value="category.slug">
+                        <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
                         {{category.tag}}
                     </label>
                 </div>
