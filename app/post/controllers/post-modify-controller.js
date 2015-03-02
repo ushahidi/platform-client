@@ -125,4 +125,18 @@ function(
     $scope.removeValue = function (attr, key) {
         $scope.post.values[attr.key].splice(key, 1);
     };
+
+    // Datepicker
+    $scope.datepicker = [];
+
+    $scope.openDatePicker = function($event, attribute, key) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        if (! $scope.datepicker[attribute.key]) {
+            $scope.datepicker[attribute.key] = [];
+        }
+        $scope.datepicker[attribute.key][key] = true;
+    };
+
 }];

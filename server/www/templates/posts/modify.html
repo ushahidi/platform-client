@@ -59,13 +59,11 @@
                                 placeholder="{{attribute.label}}"
                                 ng-model="post.values[attribute.key][key]"
                                 ng-required="attribute.required"
-                                ng-focus="openDatePicker($event, attribute, key)"
+                                ng-click="openDatePicker($event, attribute, key)"
 
-                                datepicker-popup
+                                datepicker-popup="yyyy-MM-dd"
                                 is-open="datepicker[attribute.key][key]"
                                 datepicker-options="{ showWeeks: false }"
-
-                                ng-change="updateDate(attribute, key)"
                             />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="openDatePicker($event, attribute, key)"><i class="fa fa-calendar"></i></button>
