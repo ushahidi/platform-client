@@ -52,7 +52,14 @@ function(
             }
         });
 
-        var response = PostEndpoint.save(post, function () {
+        var request;
+        if (post.id) {
+            request = PostEndpoint.update(post);
+        } else {
+            request = PostEndpoint.save(post);
+        }
+
+        request.$promise.then(function (response) {
             // @todo check allowed_methods instead
             if (response.id && response.status === 'published') {
                 $location.path('/posts/' + response.id);

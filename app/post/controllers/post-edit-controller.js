@@ -27,6 +27,12 @@ function(
     $scope.is_edit = true;
 
     PostEndpoint.get({id: $routeParams.id}).$promise.then(function(post) {
+        var tags = [];
+        post.tags.map(function (tag) {
+            tags.push(parseInt(tag.id));
+        });
+        post.tags = tags;
+
         $scope.post = post;
         $scope.active_form = FormEndpoint.get({formId: post.form.id});
 
