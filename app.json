@@ -1,0 +1,22 @@
+{
+  "name": "Ushahidi Platform Client",
+  "description": "The JS client for the Ushahidi Platform.",
+  "keywords": [
+    "ushahidi",
+    "crowdmap"
+  ],
+  "website": "http://ushahidi.com",
+  "repository": "https://github.com/ushahidi/platform-client",
+  "logo": "http://www.ushahidi.com/assets/img/favicon.ico",
+  "success_url": "/",
+  "env": {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-multi.git",
+    "NODE_ENV": "dev",
+    "NPM_CONFIG_PRODUCTION": "false",
+    "BACKEND_URL": {
+      "description" : "A deployment of ushahidi/platform to use",
+      "value" : "https://ushahidi-deployment-api.herokuapp.com",
+      "required" : true
+    }
+  }
+}

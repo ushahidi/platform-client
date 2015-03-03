@@ -8,6 +8,14 @@ Ushahidi Platform Prototype
 
 ___
 
+## Try it out on Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+You need to deploy the [Platform API](http://github.com/ushahidi/platform) first
+
+## Getting set up for development
+
 ### Libraries/Packages/Dependencies
 
 * Nodejs
