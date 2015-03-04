@@ -61,7 +61,7 @@ module.exports = ['leafletData', '$http', function(leafletData, $http){
                 searchLocation: function(event){
                     event.preventDefault();
                     var that = this;
-                    $http.get('http://nominatim.openstreetmap.org/search?q=' + $window.escape($scope.searchLocationTerm) + '&format=json').success(
+                    $http.get('//nominatim.openstreetmap.org/search?q=' + $window.escape($scope.searchLocationTerm) + '&format=json').success(
                         function(data, status, headers, config){
                             var lat = data[0].lat,
                             lon = data[0].lon;
