@@ -78,8 +78,10 @@ module.exports = ['leafletData', '$http', function(leafletData, $http){
             leafletData.getMap($scope.attribute.key).then(function(map) {
                 map.on('click', onMapClick);
                 function onMapClick(e) {
-                    var lat = e.latlng.lat,
-                        lon = e.latlng.lng;
+                    var wrappedLatLng = e.latlng.wrap(),
+                        lat = wrappedLatLng.lat,
+                        lon = wrappedLatLng.lng;
+
                     $scope.updateMarkerPosition(lat, lon);
                     $scope.updateLatLon(lat, lon);
                 }
