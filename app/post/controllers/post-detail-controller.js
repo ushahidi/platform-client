@@ -3,6 +3,7 @@ module.exports = [
     '$translate',
     '$routeParams',
     '$q',
+    '$location',
     'PostEndpoint',
     'ConfigEndpoint',
     'UserEndpoint',
@@ -15,6 +16,7 @@ function(
     $translate,
     $routeParams,
     $q,
+    $location,
     PostEndpoint,
     ConfigEndpoint,
     UserEndpoint,
@@ -163,4 +165,14 @@ function(
             data.map.setZoom(15);
         }
     });
+
+    $scope.deletePost = function () {
+        $translate('notify.post.destroy_confirm').then(function(message) {
+            if (window.confirm(message)) {
+                PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
+                    $location.path('/');
+                });
+            }
+        });
+    };
 }];

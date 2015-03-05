@@ -28,8 +28,13 @@
         </p>
 
         <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
-            <a class="btn btn-default btn-large" href="/posts/{{post.id}}/edit">
-                <i class="fa  fa-edit"></i><span translate>post.post_actions.edit</span>
+            <a class="btn btn-default btn-large" ng-href="/posts/{{post.id}}/edit">
+                <i class="fa  fa-edit"></i> <span translate>post.post_actions.edit</span>
+            </a>
+        </p>
+        <p ng-if="post.allowed_privileges.indexOf('delete') !== -1">
+            <a class="btn btn-warning btn-large" ng-click="deletePost()">
+                <i class="fa  fa-trash"></i> <span translate>post.post_actions.delete</span>
             </a>
         </p>
         <!--<p ng-if="post.allowed_privileges.indexOf('delete')">
