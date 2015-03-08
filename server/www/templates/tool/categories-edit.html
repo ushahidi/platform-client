@@ -17,7 +17,7 @@
                         <span translate>nav.back</span>
                     </a>
                 </div>
-                <h4 class="pull-right">{{title}}</h4>
+                <h4 class="pull-right flip">{{title}}</h4>
             </div>
             <div class="panel-body">
                 <form>
@@ -75,8 +75,8 @@
                         </div>
                     </div>
 
-                    <p class="text-right">
-                        <button class="btn btn-primary" ng-click="saveTag(tag)" ng-disabled="form.$invalid || processing">
+                    <p>
+                        <button class="btn btn-primary pull-right flip" ng-click="saveTag(tag)" ng-disabled="form.$invalid || processing">
                             <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
                             <span>{{title}}</span>
                         </button>

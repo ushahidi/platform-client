@@ -1,6 +1,6 @@
 <div class="full-content  post-detail">
 
-    <div class="post-detail-meta col-md-3 pull-right well">
+    <div class="post-detail-meta col-md-3 pull-right flip well">
         <div ng-hide="true">
             <h4 translate>post.view</h4>
             <div class="btn-group" dropdown>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="post-detail-main col-md-9">
-        <div class="pull-left"><i class="fa  fa-clock-o"></i> <span class="post-time" am-time-ago="post.updated || post.created"></span></div>
+        <div class="pull-left flip"><i class="fa  fa-clock-o"></i> <span class="post-time" am-time-ago="post.updated || post.created"></span></div>
 
         <ul class="list-inline" ng-show="!!post.tags.length">
             <li ng-repeat="tag in post.tags">

@@ -17,7 +17,7 @@
                         <span translate>nav.back</span>
                     </a>
                 </div>
-                <h4 class="pull-right" translate>settings.site</h4>
+                <h4 class="pull-right flip" translate>settings.site</h4>
             </div>
             <div class="panel-body">
                 <form id="site">
@@ -35,8 +35,8 @@
                             ng-value="site.owner_name"
                             ng-model="site.owner_name">
                     </div>
-                    <p class="text-right">
-                        <button class="btn btn-primary" ng-click="updateConfig('site', site)"
+                    <p>
+                        <button class="btn btn-primary pull-right flip" ng-click="updateConfig('site', site)"
                             ng-disabled="form.$invalid || isUnchanged(site) || saving_config['site']">
                                 <i class="fa fa-cog fa-spin" ng-show="saving_config['site']"></i>
                                 <span translate>settings.save</span>
@@ -46,8 +46,8 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="text-right" translate>settings.features</h4>
+            <div class="panel-heading clearfix">
+                <h4 class="pull-right flip" translate>settings.features</h4>
             </div>
             <div class="panel-body">
                 <form id="features">

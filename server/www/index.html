@@ -6,13 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-rtl.min.css" ng-disabled="! rtlEnabled">
         <link rel="stylesheet" href="/css/font-awesome.min.css">
         <link rel="stylesheet" href="/css/style.css">
         <title>Ushahidi</title>
         <base href="/">
     </head>
 
-    <body>
+    <body ng-class="{ rtl : rtlEnabled }">
 
         <nav id="off-canvas-nav" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation" ng-controller="navigation">
             <ul class="nav navmenu-nav left-nav">
@@ -20,6 +21,7 @@
                 <li role="presentation"><a ng-href="/about" translate>nav.about</a></li>
                 <li role="presentation" ng-show="isAdmin()"><a ng-href="/workspace" translate>nav.workspace</a></li>
                 <li role="presentation" ng-show="isAdmin()"><a ng-href="/tools" translate>nav.tools</a></li>
+                <li><a ng-click="switchRtl()">Switch RTL/LTR</a></li>
                 <li class="dropdown user-menu visible-xs" dropdown ng-show="currentUser">
                     <a id="user-menu-link" class="dropdown-toggle" role="button" aria-expanded="false" dropdown-toggle>
                         <span>{{currentUser.realname || currentUser.username}}</span>
@@ -46,7 +48,7 @@
                 </button>
                 <a class="navbar-brand" ng-href="/">Deployment Name</a>
 
-                <ul class="nav navmenu-nav navbar-right right-nav">
+                <ul class="nav navmenu-nav navbar-right flip right-nav">
                     <li class="nav-create"><a ng-href="/posts/create"><i class="fa  fa-plus"></i> <span class="hidden-xs" translate>nav.create</span></a></li>
                     <li ng-hide="currentUser"><a ng-href="/login" class="user-login"><i class="fa  fa-sign-in"></i> <span translate>nav.login</span></a></li>
                     <li class="dropdown user-menu hidden-xs" dropdown ng-show="currentUser">
@@ -68,8 +70,8 @@
         </header>
 
         <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
-        <div class="container  canvas">
-            <ng-view></ng-view>
+        <div class="canvas">
+            <div class="container" ng-view ></div>
         </div>
 
         <!-- there is no footer present in the design spec, but we probably want one. (?) -->

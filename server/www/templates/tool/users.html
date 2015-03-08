@@ -36,7 +36,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="dropdown btn-group pull-right user-filter-menu" role="group" dropdown>
+                <div class="dropdown btn-group pull-right flip user-filter-menu" role="group" dropdown>
                     <button class="btn dropdown-toggle" type="button" aria-expanded="false"
                         ng-class="{ 'btn-default': !filteredRole, 'btn-info': filteredRole }"
                         dropdown-toggle
@@ -86,15 +86,15 @@
                     </td>
                 </div>
             </table>
-            <div class="panel-body text-right">
-                <a ng-href="/tools/users/create" class="btn btn-primary">
+            <div class="panel-body">
+                <a ng-href="/tools/users/create" class="btn btn-primary pull-right flip">
                     <span translate>user.add_user</span>
                 </a>
             </div>
             <div class="panel-footer">
                 <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="true" rotate="false"></pagination>
 
-                <div class="dropdown btn-group pull-right filter-count" role="group" dropdown>
+                <div class="dropdown btn-group pull-right flip filter-count" role="group" dropdown>
                     <button class="btn dropdown-toggle btn-default" type="button" aria-expanded="false"
                         dropdown-toggle
                     >

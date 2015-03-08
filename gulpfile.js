@@ -125,6 +125,7 @@ gulp.task('css', [], function() {
     return gulp.src([
                     'bower_components/font-awesome/css/*',
                     'bower_components/bootstrap/dist/css/*',
+                    'bower_components/bootstrap-rtl/dist/css/*',
                     ])
         .pipe(gulp.dest(options.www + '/css'));
 });

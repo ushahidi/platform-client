@@ -17,6 +17,7 @@
   "dependencies": {
     "bourbon": "3.1",
     "bootstrap": "~3.3.2",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "bootstrap-rtl": "~3.3.1"
   }
 }

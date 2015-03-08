@@ -17,7 +17,7 @@
                         <span translate>nav.back</span>
                     </a>
                 </div>
-                <h4 class="pull-right">{{title}}</h4>
+                <h4 class="pull-right flip">{{title}}</h4>
             </div>
             <div class="panel-body">
                 <form name="form">
@@ -58,8 +58,8 @@
                         <select id="role" name="role" ng-model="user.role" ng-options="role.name as role.display_name for role in roles"></select>
                     </div>
 
-                    <p class="text-right">
-                        <button class="btn btn-primary" ng-click="saveUser(user)" ng-disabled="form.$invalid || processing">
+                    <p>
+                        <button class="btn btn-primary pull-right flip" ng-click="saveUser(user)" ng-disabled="form.$invalid || processing">
                             <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
                             <span>{{title}}</span>
                         </button>
