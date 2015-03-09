@@ -19,12 +19,17 @@ function(
         {
             omitKeys = (omitKeys || []).concat(['url', 'allowed_methods']);
             return _.omit(angular.fromJson(response), omitKeys);
+        },
+        bindAllFunctionsToSelf: function(object)
+        { // bind all functions on self to use self as their 'this' context
+            var functions = _.functions(object);
+            if (functions.length) {
+                _.bindAll.apply(_, [object].concat(functions));
+            }
+            return object;
         }
     };
 
-    // All Util functions should always have Util as their 'this' context
-    _.bindAll.apply(_, [Util].concat(_.functions(Util)));
-
-    return Util;
+    return Util.bindAllFunctionsToSelf(Util);
 
 }];

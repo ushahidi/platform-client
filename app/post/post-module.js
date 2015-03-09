@@ -1,14 +1,15 @@
 angular.module('posts', [])
 
-.directive('postViewTabs', require('./directives/post-view-tabs-directive.js'))
-.directive('postPreview', require('./directives/post-preview-directive.js'))
-.directive('postValue', require('./directives/post-value-directive.js'))
-.directive('postLocation', require('./directives/post-location-directive.js'))
+.directive('postViewTabs' , require('./directives/post-view-tabs-directive.js'))
+.directive('postPreview'  , require('./directives/post-preview-directive.js'  ))
+.directive('postValue'    , require('./directives/post-value-directive.js'    ))
+.directive('postLocation' , require('./directives/post-location-directive.js' ))
 
-.service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
-.service('PostEntity', require('./services/entities/post-entity.js'))
+.service('PostEndpoint'             , require('./services/endpoints/post-endpoint.js'     ))
+.service('PostEntity'               , require('./services/entities/post-entity.js'        ))
 
-.controller('PostModifyController', require('./controllers/post-modify-controller.js'))
+.controller('PostFiltersController' , require('./controllers/post-filters-controller.js'  ))
+.controller('PostModifyController'  , require('./controllers/post-modify-controller.js'   ))
 
 .config(require('./post-routes.js'))
 

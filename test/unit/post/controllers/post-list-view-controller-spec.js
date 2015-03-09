@@ -6,7 +6,9 @@ describe('posts list controller', function(){
         $scope,
         $controller,
         mockPostEndpoint,
-        mockPostResponse;
+        mockPostResponse,
+        mockGlobalFilter = { getPostQuery: function() { return {}; } }
+        ;
 
     beforeEach(function(){
         var testApp = angular.module('testApp', [
@@ -37,7 +39,8 @@ describe('posts list controller', function(){
 
         $controller('postListViewController', {
             $scope: $scope,
-            PostEndpoint: mockPostEndpoint
+            PostEndpoint: mockPostEndpoint,
+            GlobalFilter: mockGlobalFilter
         });
 
         $rootScope.$digest();
@@ -72,7 +75,8 @@ describe('posts list controller', function(){
 
             $controller('postListViewController', {
                 $scope: $scope,
-                PostEndpoint: mockPostEndpoint
+                PostEndpoint: mockPostEndpoint,
+                GlobalFilter: mockGlobalFilter
             });
 
             queryDeferred.resolve(mockPostResponse);

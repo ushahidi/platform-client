@@ -6,13 +6,12 @@
     <ul class="list-group">
         <post-preview ng-repeat="post in posts" post="post"></post-preview>
     </ul>
+
     <div class="panel-footer">
         <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="true" rotate="false"></pagination>
 
         <div class="dropdown btn-group pull-right filter-count flip" role="group" dropdown>
-            <button class="btn dropdown-toggle btn-default" type="button" aria-expanded="false"
-                dropdown-toggle
-            >
+            <button class="btn dropdown-toggle btn-default" type="button" aria-expanded="false" dropdown-toggle>
                 <span translate translate-values="{ count: itemsPerPage }">post.per_page</span>
                 <i class="fa fa-angle-down"></i>
             </button>
@@ -26,4 +25,5 @@
             </ul>
         </div>
     </div>
+
 </div>

@@ -14,19 +14,20 @@
 \*------------------------------------*/
 
 .map-view {
-    @include span-columns(12);
-}
-
-.angular-leaflet-map {
-    margin-bottom: auto;
     position: relative;
-    z-index: $map;
+    z-index: 100;
 }
 
-.leaflet-bottom {
-    bottom: 52px;
+// .angular-leaflet-map {
+//     margin-bottom: auto;
+//     position: relative;
+//     z-index: $map;
+// }
 
-    @include media($small) {
-        bottom: 0;
-    }
-}
+// .leaflet-bottom {
+//     bottom: 52px;
+
+//     @include media($small) {
+//         bottom: 0;
+//     }
+// }

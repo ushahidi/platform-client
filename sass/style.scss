@@ -21,6 +21,12 @@
 @import "bourbon";
 
 
+/*------------------------------------*\
+    $BASICS
+\*------------------------------------*/
+
+@import "basics/colors";
+@import "basics/typography";
 
 
 /*------------------------------------*\
@@ -30,16 +36,6 @@
 // Settings
 @import "settings";
 
-
-
-
-
-/*------------------------------------*\
-    $UTILS
-\*------------------------------------*/
-
-@import "utils/helpers";
-@import "utils/extends";
 
 // Global
 @import "base/global";
@@ -71,45 +67,17 @@
 	}
 
 // Custom overrides
-// @import "plugins/leaflet";
+@import "plugins/leaflet";
 // @import "plugins/xeditable";
 @import "plugins/datetimepicker";
 
 @import "plugins/jasny-bootstrap";
 
-
-
 /*------------------------------------*\
-    $PARTIALS
+    $MODULES
 \*------------------------------------*/
 
-/*
-@import "partials/header/top-bar";
-@import "partials/header/sub-nav";
-@import "partials/header/workspace-panel";
-@import "partials/searchbar/search-bar";
-@import "partials/view-tabs/view-tabs";
-@import "partials/list-filter/list-filter";
-@import "partials/filter/filter";
-@import "partials/list-view/list-view";
-@import "partials/sidebar/sidebar";
-@import "partials/forms/form-wrapper";
-*/
-
-
-
-
-
-/*------------------------------------*\
-    $FRAGMENTS
-\*------------------------------------*/
-
-/*
-// this is a test for PL implementation. This is a bit random, but will be implemented correctly in the future.
-@import "fragments/forms";
-*/
-
-
+@import "modules/dropdown";
 
 
 
@@ -118,27 +86,4 @@
 \*------------------------------------*/
 
 @import "pages/auth/login";
-
 @import "pages/tools/users";
-
-/*
-// Home
-@import "pages/home/map-view";
-// Post Detail
-@import "pages/post/detail/post-detail";
-@import "pages/post/detail/sidebar--post-detail";
-@import "pages/post/create/post-create";
-//Users
-@import "pages/users/users";
-@import "pages/users/profile";
-@import "pages/users/create";
-// Sets
-@import "pages/sets/add-to-set";
-// Admin
-@import "pages/admin/settings";
-@import "pages/admin/map-settings";
-// Signin
-@import "pages/signin/signin";
-// Tags
-@import "pages/tags/tags";
-*/

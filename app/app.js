@@ -6,15 +6,7 @@ require('leaflet.locatecontrol/src/L.Control.Locate');
 require('angular-leaflet-directive/dist/angular-leaflet-directive');
 require('angular-resource/angular-resource');
 require('angular-translate');
-require('angular-ui-bootstrap/src/dateparser/dateparser');
-require('angular-ui-bootstrap/src/datepicker/datepicker');
-require('angular-ui-bootstrap/src/dropdown/dropdown');
-require('angular-ui-bootstrap/src/collapse/collapse');
-require('angular-ui-bootstrap/src/tabs/tabs');
-require('angular-ui-bootstrap/src/transition/transition');
-require('angular-ui-bootstrap/src/timepicker/timepicker');
-require('angular-ui-bootstrap/src/pagination/pagination');
-require('angular-ui-bootstrap/src/position/position');
+require('angular-bootstrap');
 require('angular-ui-bootstrap-datetimepicker');
 require('angular-mocks/angular-mocks');
 require('angular-moment/angular-moment');
@@ -57,13 +49,7 @@ angular.module('app',
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',
-        'ui.bootstrap.datepicker',
-        'ui.bootstrap.dropdown',
-        'ui.bootstrap.collapse',
-        'ui.bootstrap.tabs',
-        'ui.bootstrap.timepicker',
-        'ui.bootstrap.transition',
-        'ui.bootstrap.pagination',
+        'ui.bootstrap',
         'ui.bootstrap.datetimepicker',
         'ui.gravatar',
         'leaflet-directive',
@@ -86,30 +72,36 @@ angular.module('app',
         CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders')
     })
 
-    .service('Authentication', require('./common/services/authentication.js'))
-    .service('Session', require('./common/services/session.js'))
-    .service('ConfigEndpoint', require('./common/services/endpoints/config.js'))
-    .service('UserEndpoint', require('./common/services/endpoints/user-endpoint.js'))
-    .service('FormEndpoint', require('./common/services/endpoints/form.js'))
-    .service('FormAttributeEndpoint', require('./common/services/endpoints/form-attributes.js'))
-    .service('TagEndpoint', require('./common/services/endpoints/tag.js'))
-    .service('RoleHelper', require('./common/services/role-helper.js'))
-    .service('Util', require('./common/services/util.js'))
-    .service('Notify', require('./common/services/notify.js'))
-    .service('multiTranslate', require('./common/services/multi-translate.js'))
+    .service('Authentication'        , require('./common/services/authentication.js'           ))
+    .service('Session'               , require('./common/services/session.js'                  ))
+    .service('ConfigEndpoint'        , require('./common/services/endpoints/config.js'         ))
+    .service('UserEndpoint'          , require('./common/services/endpoints/user-endpoint.js'  ))
+    .service('FormEndpoint'          , require('./common/services/endpoints/form.js'           ))
+    .service('FormAttributeEndpoint' , require('./common/services/endpoints/form-attributes.js'))
+    .service('TagEndpoint'           , require('./common/services/endpoints/tag.js'            ))
+    .service('RoleHelper'            , require('./common/services/role-helper.js'              ))
+    .service('Config'                , require('./common/services/config.js'                   ))
+    .service('Util'                  , require('./common/services/util.js'                     ))
+    .service('Notify'                , require('./common/services/notify.js'                   ))
+    .service('multiTranslate'        , require('./common/services/multi-translate.js'          ))
+    .service('GlobalFilter'          , require('./common/services/global-filter.js'            ))
+    .service('Maps'                  , require('./common/services/maps.js'                     ))
+    .service('Geocoding'             , require('./common/services/geocoding.js'                ))
 
-    .controller('navigation', require('./common/controllers/navigation.js'))
-    .controller('adminMapSettings', require('./common/controllers/admin/map-settings.js'))
-    .controller('postFilters', require('./common/controllers/post-filters.js'))
+    .controller('navigation'       , require('./common/controllers/navigation.js'        ))
+    .controller('adminMapSettings' , require('./common/controllers/admin/map-settings.js'))
 
-    .config(require('./common/configs/authentication-interceptor.js'))
-    .config(require('./common/configs/locale-config.js'))
-    .config(require('./common/common-routes.js'))
+    .config(require('./common/configs/authentication-interceptor.js'      ))
+    .config(require('./common/configs/locale-config.js'                   ))
+    .config(require('./common/common-routes.js'                           ))
     .config(require('./common/configs/ui-bootstrap-template-decorators.js'))
-    .config(require('./gravatar-config.js'))
+    .config(require('./gravatar-config.js'                                ))
 
     .run(require('./common/global/event-handlers.js'))
 
+    .factory('jQuery', function() {
+        return window.jQuery;
+    })
     .factory('_', function() {
         return require('underscore/underscore');
     })

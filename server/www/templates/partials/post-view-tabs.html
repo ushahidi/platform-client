@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-    <div ng-controller="postFilters">
+    <div ng-controller="PostFiltersController">
         <a class="navbar-brand" translate>post.all_posts</a>
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar"
@@ -58,18 +58,61 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="dropdown filters-menu" dropdown>
                     <a href="javascript:;" class="dropdown-toggle" role="button" aria-expanded="false"
                         dropdown-toggle>
                         <span><span translate>nav.filters</span> <span class="badge">0</span></span>
                         <i class="fa fa-angle-down"></i>
                     </a>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation()">
                         <li role="presentation">
-                            <span class="text-muted">
-                                <strong class="text-uppercase initialism">todo</strong>
-                                this requires a custom element to handle tabs + content in a dropdown.
-                            </span>
+                            <form>
+                                <tabset>
+                                    <tab heading="{{ 'globalFilter.categories.categories'|translate }}" ng-click="$event.stopPropagation()">
+                                        <ul class="list-unstyled">
+                                            <li class="checkbox"><label><input type="checkbox" ng-model="show_all_tags" ng-checked="!global_filter.hasSelectedTags()" ng-click="showAllTagsHandler()"> {{ 'globalFilter.categories.all_categories'|translate }}</label></li>
+                                            <li class="checkbox" ng-repeat="(idx, tag) in global_filter.tags" tag="tag">
+                                                <label><input type="checkbox" value="{{tag.id}}" ng-model="global_filter.tags[idx].selected">
+                        {{tag.tag}} <i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i></label>
+                                            </li>
+                                        </ul>
+                                    </tab>
+                                    <tab heading="{{ 'globalFilter.sets.sets'|translate }}" ng-click="$event.stopPropagation()">
+                                        TODO: Sets content
+                                    </tab>
+                                    <tab heading="{{ 'globalFilter.more'|translate }}" ng-click="$event.stopPropagation()">
+                                        <div class="form-group">
+                                            <label for="keyword">{{ 'globalFilter.keyword'|translate }}</label>
+                                            <input id="keyword" name="keyword" class="form-control" type="text" ng-model="filter.keyword">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="start_date">{{ 'globalFilter.start_date'|translate }}</label>
+                                            <input id="start_date" name="start_date" class="form-control" type="date" ng-model="filter.start_date" placeholder="{{ 'globalFilter.start_date_placeholder'|translate }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="end_date">{{ 'globalFilter.end_date'|translate }}</label>
+                                            <input id="end_date" name="end_date" class="form-control" type="date" ng-model="filter.end_date" placeholder="{{ 'globalFilter.end_date_placeholder'|translate }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location">{{ 'globalFilter.location'|translate }}</label>
+                                            <input id="location" name="location" class="form-control" type="text" ng-model="filter.location" placeholder="{{ 'globalFilter.location_placeholder'|translate }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">{{ 'globalFilter.within_km'|translate }}</div>
+                                                <input id="within_km" name="within_km" class="form-control" type="number" ng-model="filter.within_km" placeholder="{{ 'globalFilter.within_km_placeholder'|translate }}" aria-describedby="km-addon">
+                                                <span class="input-group-addon" id="km-addon">{{ 'globalFilter.km'|translate }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-controls">
+                                            <button type="reset" class="btn btn-link" ng-click="clearFilter()">Clear Fields</button>
+                                            <button type="submit" class="btn btn-primary" class="button" ng-click="applyFilter()" translate>globalFilter.apply_filters</button>
+                                        </div>
+                                    </tab>
+                                </tabset>
+                            </form>
                         </li>
                     </ul>
                 </li>

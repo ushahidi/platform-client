@@ -1,5 +1,8 @@
-module.exports = ['$routeProvider', function($routeProvider) {
-
+module.exports = [
+    '$routeProvider',
+function(
+    $routeProvider
+) {
 
     $routeProvider
     .when('/views/map', {

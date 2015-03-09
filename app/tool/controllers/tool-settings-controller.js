@@ -8,7 +8,7 @@ function(
     ConfigEndpoint
 ) {
 
-    $translate('settings.site').then(function(settingsTranslation){
+    $translate('settings.site').then(function(settingsTranslation) {
         $scope.title = settingsTranslation;
     });
 

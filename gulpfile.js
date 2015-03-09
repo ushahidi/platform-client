@@ -61,7 +61,6 @@ var helpers = {
             debug : true,
         };
     },
-
     setBackendUrl: function(){
         backendUrl = backendUrl ? backendUrl : options.backendUrl;
         return envify({
@@ -228,8 +227,7 @@ gulp.task('browserify', function() {
  * Task: `build`
  * Builds sass, fonts and js
  */
-gulp.task('build', ['sass', 'css', 'font', 'browserify'], function() {
-});
+gulp.task('build', ['sass', 'css', 'font', 'browserify']);
 
 /**
  * Task: `docker:stop`

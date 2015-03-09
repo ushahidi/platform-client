@@ -1,13 +1,13 @@
 module.exports = [
     '$scope',
     '$translate',
-    'ConfigEndpoint',
     'PostEndpoint',
+    'ConfigEndpoint',
 function(
     $scope,
     $translate,
-    ConfigEndpoint,
-    PostEndpoint
+    PostEndpoint,
+    ConfigEndpoint
 ) {
 
     $translate('map_settings.admin_map_settings').then(function(mapSettingsTranslation){
@@ -30,8 +30,8 @@ function(
     });
 
     $scope.map = ConfigEndpoint.get({ id: 'map' });
-    PostEndpoint.query().$promise.then(function(postsResponse){
-        $scope.posts = postsResponse.results;
+    PostEndpoint.query().$promise.then(function(response) {
+        $scope.posts = response.results;
     });
 
 }];

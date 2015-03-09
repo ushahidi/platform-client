@@ -3,16 +3,21 @@ module.exports = [
     '$scope',
     'ConfigEndpoint',
     'PostEndpoint',
-    'Leaflet',
-    'leafletData',
+    'GlobalFilter',
+    'Maps',
+    '_',
 function(
     $q,
     $scope,
     ConfigEndpoint,
     PostEndpoint,
-    L,
-    leafletData
+    GlobalFilter,
+    Maps,
+    _
 ) {
+
+    // todo: this should be fetched from Maps, but the call is async and
+    // this needs to apply to the scope immediately for the leaflet directive.
     var layers = {
         baselayers : {
             mapquest: {
@@ -45,103 +50,38 @@ function(
     };
 
     angular.extend($scope, {
+        title: 'Map View', // translate?
         defaults: {
             scrollWheelZoom: false
         },
-        center: {
-            // Default to centered on Nairobi
+        center: { // Default to centered on Nairobi
             lat: -1.2833,
             lng: 36.8167,
             zoom: 8
         },
-        layers : layers
+        layers: layers
     });
 
-
-    var geoJsonLayer = false,
-        clusterLayer = false,
-        fitDataOnMap = false;
-
-    // Load posts geojson
-    var geojson = PostEndpoint.get({extra:'geojson'});
-    // Load map settings
-    var config = ConfigEndpoint.get({id:'map'});
-
-    // Create GeoJSON Layer
-    geojson.$promise.then(function(geoJsonData) {
-        geoJsonLayer = L.geoJson(geoJsonData, {
-            onEachFeature: function (feature, layer) {
-                layer.bindPopup(
-                    '<strong><a href="/posts/'+feature.properties.id+'">' +
-                    feature.properties.title +
-                    '</a></strong>' +
-                    '<p>'+feature.properties.description+'</p>'
-                );
-            }
-        });
+    Maps.getAngularScopeParams().then(function(params) {
+        angular.extend($scope, params);
     });
 
-    // Add map config to scope
-    config.$promise.then(function(config) {
-        // Add settings to scope
-        // color, icon and baseLayer have been ignored
-        angular.extend($scope, {
-            center: {
-                lat: config.default_view.lat,
-                lng: config.default_view.lon,
-                zoom: config.default_view.zoom
-            },
-            tiles: layers[config.default_view.baseLayer]
-        });
+    // load geojson posts into the map obeying the global filter settings
+    var map = Maps.getMap('map');
+    var reloadMapPosts = function() {
+        var map_posts = PostEndpoint.get(_.extend(
+            GlobalFilter.getPostQuery(), { extra: 'geojson' }
+        ));
+        map_posts.$promise.then(map.reloadPosts);
+    };
 
-        fitDataOnMap = config.default_view.fitDataOnMap;
+    reloadMapPosts(); // init
 
-        return config;
+    // whenever the global filter query changes, reload the posts on the map
+    $scope.$watchCollection(function() {
+        return JSON.stringify(GlobalFilter.getPostQuery());
+    }, function(newValue, oldValue) {
+        reloadMapPosts();
     });
-
-
-    $q.all({
-        geojson: geojson.$promise,
-        config: config.$promise
-    })
-    // Init cluster group
-    .then(function(data) {
-        if (data.config.clustering === true) {
-            // Create marker cluster layer
-            clusterLayer = L.markerClusterGroup({
-                maxClusterRadius: data.config.maxClusterRadius
-            });
-
-            // Add geojson layers to cluster layer
-            // This has to be done individually. Using clusterLayer.addLayers() breaks the clustering.
-            angular.forEach(geoJsonLayer.getLayers(), function(layer) {
-                clusterLayer.addLayer(layer);
-            });
-        }
-    })
-    // Get map instance
-    .then(function () { return leafletData.getMap('map'); })
-    // Set map options, add layers, and set bounds
-    .then(function (map) {
-        // Disable 'Leaflet prefix on attributions'
-        map.attributionControl.setPrefix(false);
-
-        // Add clusters to map
-        var markers = clusterLayer || geoJsonLayer;
-        map.addLayer(markers);
-
-        if (fitDataOnMap === true) {
-            // Center map on geojson
-            map.fitBounds(markers.getBounds());
-            // Avoid zooming further than 15 (particularly when we just have a single point)
-            if (map.getZoom() > 15) {
-                map.setZoom(15);
-            }
-        }
-    });
-
-    $scope.title = 'Map View';
-
-    $scope.map = ConfigEndpoint.get({ id: 'map' });
 
 }];

@@ -1,0 +1,9 @@
+.dropdown.filters-menu {
+    > ul.dropdown-menu {
+        min-width: 250px;
+
+        .tab-content {
+            padding: 15px;
+        }
+    }
+}

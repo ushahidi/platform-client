@@ -1,4 +1,15 @@
-module.exports = ['leafletData', '$http', function(leafletData, $http){
+module.exports = [
+    '$http',
+    'leafletData',
+    'Geocoding',
+    '_',
+function(
+    $http,
+    leafletData,
+    Geocoding,
+    _
+) {
+
     return {
         restrict: 'E',
         replace: true,
@@ -8,7 +19,15 @@ module.exports = ['leafletData', '$http', function(leafletData, $http){
             key: '='
         },
         templateUrl: 'templates/posts/location.html',
-        controller: ['$window', 'Leaflet', '$scope', '$geolocation', function($window, Leaflet, $scope, $geolocation) {
+        controller: [
+            '$window',
+            '$scope',
+            'Leaflet',
+        function(
+            $window,
+            $scope,
+            Leaflet
+        ) {
 
             var marker = null;
 
@@ -60,18 +79,19 @@ module.exports = ['leafletData', '$http', function(leafletData, $http){
 
                 searchLocation: function(event){
                     event.preventDefault();
-                    var that = this;
-                    $http.get('//nominatim.openstreetmap.org/search?q=' + $window.escape($scope.searchLocationTerm) + '&format=json').success(
-                        function(data, status, headers, config){
-                            var lat = data[0].lat,
-                            lon = data[0].lon;
 
-                            that.updateLatLon(lat, lon);
-                            that.updateMarkerPosition(lat, lon);
-                            that.centerMapTo(lat, lon);
-                            $scope.searchLocationTerm = '';
-                        }
-                    );
+                    var that = this;
+                    Geocoding.search($scope.searchLocationTerm).then(function(coordinates) {
+                        if (!coordinates) { return; } // @todo - handle lookup error
+
+                        _.each([
+                            'updateLatLon', 'updateMarkerPosition', 'centerMapTo'
+                        ], function(fn) {
+                            that[fn](coordinates[0], coordinates[1]);
+                        });
+
+                        $scope.searchLocationTerm = '';
+                    });
                 }
             });
 
@@ -92,4 +112,5 @@ module.exports = ['leafletData', '$http', function(leafletData, $http){
             });
         }]
     };
+
 }];
