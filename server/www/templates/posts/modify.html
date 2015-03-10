@@ -121,9 +121,18 @@
                 <button type="button" class="btn btn-info" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)"><i class="fa fa-plus"></i> Add</button>
             </div>
 
-            <p class="submit-button">
+            <p class="submit-button pull-right">
+                <button ng-click="unpublishPost(post)" ng-disabled="form.$invalid" class="btn btn-success" ng-show="post.status == 'published' && allowedChangeStatus()"
+                    >
+                    <i class="fa fa-check-circle"></i> <span translate>post.modify.published</span>
+                </button>
+                <button ng-click="publishPost(post)" ng-disabled="form.$invalid" class="btn btn-success" ng-show="post.status != 'published' && allowedChangeStatus()"
+                    >
+                    <span translate>post.modify.publish</span>
+                </button>
+
                 <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="btn btn-primary"
-                    ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.form_button</span></button>
+                    ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span></button>
             </p>
         </form>
     </div>

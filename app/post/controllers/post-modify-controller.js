@@ -35,6 +35,18 @@ function(
         });
     };
 
+    $scope.allowedChangeStatus = function() {
+        return $scope.post_options.$resolved && $scope.post_options.allowed_privileges.indexOf('change_status') !== -1;
+    };
+
+    $scope.publishPost = function(post) {
+        $scope.post.status = 'published';
+    };
+
+    $scope.unpublishPost = function(post) {
+        $scope.post.status = 'draft';
+    };
+
     $scope.savePost = function(post) {
         $scope.saving_post = true;
 

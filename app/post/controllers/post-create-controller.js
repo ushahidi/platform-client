@@ -24,6 +24,7 @@ function(
     });
 
     $scope.post = postEntity();
+    $scope.post_options = PostEndpoint.options();
 
     FormEndpoint.query().$promise.then(function(forms) {
         $scope.forms = forms;

@@ -26,7 +26,8 @@ function(
     // Activate editing mode
     $scope.is_edit = true;
 
-    PostEndpoint.get({id: $routeParams.id}).$promise.then(function(post) {
+    $scope.post_options = $scope.post = PostEndpoint.get({id: $routeParams.id});
+    $scope.post.$promise.then(function(post) {
         var tags = [];
         post.tags.map(function (tag) {
             tags.push(parseInt(tag.id));

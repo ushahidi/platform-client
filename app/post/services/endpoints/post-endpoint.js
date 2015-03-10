@@ -20,6 +20,9 @@ function(
         },
         update: {
             method: 'PUT'
+        },
+        options: {
+            method: 'OPTIONS'
         }
     });
 

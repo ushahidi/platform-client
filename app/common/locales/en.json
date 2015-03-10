@@ -287,7 +287,9 @@
             "create_type" : "Create {{type}}",
             "edit_type" : "Edit {{type}}: {{title}}",
             "change_type" : "Change type",
-            "form_button" : "Save Post",
+            "save" : "Save",
+            "publish" : "Publish",
+            "published" : "Published",
             "back" : "Back",
             "form" : {
                 "categories" : "Categories",
