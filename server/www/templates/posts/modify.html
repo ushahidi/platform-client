@@ -85,7 +85,7 @@
                         </div>
 
                         <!-- type: location -->
-                        <post-location attribute="attribute" values="post.values" key="key" ng-if="isLocation(attribute)"></post-location>
+                        <post-location attribute="attribute" key="key" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" model="post.values[attribute.key][key]" required="attribute.required" ng-if="isLocation(attribute)"></post-location>
 
                         <!-- type: select -->
                         <select class="form-control" ng-if="isSelect(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">

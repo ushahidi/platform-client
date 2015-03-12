@@ -14,9 +14,10 @@ function(
         restrict: 'E',
         replace: true,
         scope: {
-            attribute: '=',
-            values: '=',
-            key: '='
+            id: '@',
+            name: '@',
+            model: '=',
+            required: '='
         },
         templateUrl: 'templates/posts/location.html',
         controller: [
@@ -29,7 +30,28 @@ function(
             Leaflet
         ) {
 
-            var marker = null;
+            var markers = {},
+                center = {
+                    lat: 36.079868,
+                    lng: -79.819416,
+                    zoom: 4
+                },
+                mapName = $scope.id + '-map';
+
+            // init markers with current model value
+            if ($scope.model) {
+                markers = {
+                    m1 : {
+                        lat: $scope.model.lat,
+                        lng: $scope.model.lon
+                    }
+                };
+                center = {
+                    lat: $scope.model.lat,
+                    lng: $scope.model.lon,
+                    zoom: 4
+                };
+            }
 
             // leaflet map or location attribute
             angular.extend($scope, {
@@ -37,44 +59,31 @@ function(
                     scrollWheelZoom: false
                 },
 
-                center: {
-                    lat: 36.079868,
-                    lng: -79.819416,
-                    zoom: 4
-                },
+                center: center,
 
-                updateLatLon: function(lat, lon){
-                    if($scope.values[$scope.attribute.key] !== null)
-                    {
-                        $scope.values[$scope.attribute.key] = {};
-                    }
-                    if($scope.values[$scope.attribute.key][$scope.key] !== null)
-                    {
-                        $scope.values[$scope.attribute.key][$scope.key] = {};
-                    }
+                markers: markers,
 
-                    $scope.values[$scope.attribute.key][$scope.key].lat = lat;
-                    $scope.values[$scope.attribute.key][$scope.key].lon = lon;
+                updateLatLon: function(lat, lon) {
+                    $scope.model = {
+                        lat: lat,
+                        lon: lon
+                    };
                 },
 
 
-                updateMarkerPosition: function(lat, lon){
-                    leafletData.getMap($scope.attribute.key).then(function(map){
-                        if(marker !== null)
-                        {
-                            map.removeLayer(marker);
-                        }
-
-                        marker = new Leaflet.Marker(new Leaflet.latLng(lat, lon), {draggable:true});
-                        map.addLayer(marker);
-
-                    });
+                updateMarkerPosition: function(lat, lon) {
+                    $scope.markers.m1 = {
+                        lat: lat,
+                        lng: lon,
+                    };
                 },
 
-                centerMapTo: function(lat, lon){
-                    leafletData.getMap($scope.attribute.key).then(function(map) {
-                        map.panTo(new Leaflet.LatLng(lat, lon));
-                    });
+                centerMapTo: function(lat, lon) {
+                    $scope.center = {
+                        lat : lat,
+                        lng : lon,
+                        zoom: 4
+                    };
                 },
 
                 searchLocation: function(event){
@@ -95,7 +104,7 @@ function(
                 }
             });
 
-            leafletData.getMap($scope.attribute.key).then(function(map) {
+            leafletData.getMap(mapName).then(function(map) {
                 map.on('click', onMapClick);
                 function onMapClick(e) {
                     var wrappedLatLng = e.latlng.wrap(),
@@ -109,6 +118,9 @@ function(
                 Leaflet.control.locate({
                     follow: true
                 }).addTo(map);
+
+                // treate locationfound same as map click
+                map.on('locationfound', onMapClick);
             });
         }]
     };
