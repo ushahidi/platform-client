@@ -43,20 +43,16 @@
         "filter" : "Filter",
         "categories" : {
             "categories" : "Categories",
-            "all_categories" : "All Categories",
-            "category_1" : "Category 1",
-            "category_2" : "Category 2",
-            "category_3" : "Category 3",
-            "category_4" : "Category 4"
+            "all_categories" : "All Categories"
+        },
+        "post_types" : {
+            "post_types" : "Post Types",
+            "all_types" : "All Types"
         },
         "sets" : {
             "sets" : "Sets",
             "my_sets" : "My Sets",
-            "all_sets" : "All Sets",
-            "set_1" : "Set 1",
-            "set_2" : "Set 2",
-            "set_3" : "Set 3",
-            "set_4" : "Set 4"
+            "all_sets" : "All Sets"
         },
         "more" : "More",
         "keyword" : "Keyword",

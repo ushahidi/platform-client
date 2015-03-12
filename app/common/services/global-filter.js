@@ -1,10 +1,12 @@
 module.exports = [
     'TagEndpoint',
+    'FormEndpoint',
     // 'SetEndpoint',
     'Util',
     '_',
 function(
     TagEndpoint,
+    FormEndpoint,
     // SetEndpoint
     Util,
     _
@@ -12,6 +14,7 @@ function(
 
     var GlobalFilter = {
         tags: [],
+        post_types: [],
         keyword: '',
         start_date: '',
         end_date: '',
@@ -28,11 +31,25 @@ function(
                 tag.selected = false;
             });
         },
+        getSelectedPostTypes: function() {
+            return _.pluck(_.where(this.post_types, { selected: true }), 'id');
+        },
+        hasSelectedPostTypes: function() {
+            return !_.isEmpty(this.getSelectedPostTypes());
+        },
+        clearSelectedPostTypes: function() {
+            _.each(this.post_types, function(postType) {
+                postType.selected = false;
+            });
+        },
         getPostQuery: function() {
             var query = {};
 
             var selected_tags = this.getSelectedTags();
-            if (!_.isEmpty(selected_tags)) { query.tags = selected_tags; }
+            if (!_.isEmpty(selected_tags)) { query.tags = selected_tags.join(','); }
+
+            var selected_types = this.getSelectedPostTypes();
+            if (!_.isEmpty(selected_types)) { query.form = selected_types.join(','); }
 
             if (this.keyword)    { query.q = this.keyword;                }
             if (this.start_date) { query.updated_after = this.start_date; }
@@ -49,6 +66,10 @@ function(
 
     TagEndpoint.get().$promise.then(function(response) {
         GlobalFilter.tags = response.results;
+    });
+
+    FormEndpoint.get().$promise.then(function(response) {
+        GlobalFilter.post_types = response.results;
     });
 
     // @todo - uncomment when sets are ready

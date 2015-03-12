@@ -81,6 +81,15 @@
                                     <tab heading="{{ 'globalFilter.sets.sets'|translate }}" ng-click="$event.stopPropagation()">
                                         TODO: Sets content
                                     </tab>
+                                    <tab heading="{{ 'globalFilter.post_types.post_types'|translate }}" ng-click="$event.stopPropagation()">
+                                        <ul class="list-unstyled">
+                                            <li class="checkbox"><label><input type="checkbox" ng-model="show_all_post_types" ng-checked="!global_filter.hasSelectedPostTypes()" ng-click="showAllPostTypesHandler()"> {{ 'globalFilter.post_types.all_types'|translate }}</label></li>
+                                            <li class="checkbox" ng-repeat="(idx, postType) in global_filter.post_types" postType="postType">
+                                                <label><input type="checkbox" value="{{postType.id}}" ng-model="global_filter.post_types[idx].selected">
+                                                {{postType.name}}</label>
+                                            </li>
+                                        </ul>
+                                    </tab>
                                     <tab heading="{{ 'globalFilter.more'|translate }}" ng-click="$event.stopPropagation()">
                                         <div class="form-group">
                                             <label for="keyword">{{ 'globalFilter.keyword'|translate }}</label>

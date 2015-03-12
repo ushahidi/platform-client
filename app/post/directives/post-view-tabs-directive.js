@@ -72,6 +72,12 @@ function(
                     GlobalFilter.clearSelectedTags();
                 }
             };
+
+            $scope.showAllPostTypesHandler = function() {
+                if (this.show_all_post_types) {
+                    GlobalFilter.clearSelectedPostTypes();
+                }
+            };
         },
     };
 }];
