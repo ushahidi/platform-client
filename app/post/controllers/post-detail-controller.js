@@ -9,6 +9,7 @@ module.exports = [
     'UserEndpoint',
     'TagEndpoint',
     'FormAttributeEndpoint',
+    'FormEndpoint',
     'Leaflet',
     'leafletData',
 function(
@@ -22,6 +23,7 @@ function(
     UserEndpoint,
     TagEndpoint,
     FormAttributeEndpoint,
+    FormEndpoint,
     L,
     leafletData
 ) {
@@ -49,6 +51,11 @@ function(
         // Load the post form
         if ($scope.post.form && $scope.post.form.id) {
             $scope.form_attributes = [];
+
+            FormEndpoint.get({formId: $scope.post.form.id}, function(form) {
+                $scope.form_name = form.name;
+            });
+
             FormAttributeEndpoint.query({formId: $scope.post.form.id}, function(attributes) {
                 angular.forEach(attributes, function(attr) {
                     this[attr.key] = attr;

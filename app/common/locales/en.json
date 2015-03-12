@@ -241,6 +241,7 @@
         "geometry_test" : "Geometry Test",
         "view_on_map" : "View on map",
         "status" : "Status",
+        "type": "Type",
         "links" : "Links",
         "respond" : "Respond",
         "send" : "Send",

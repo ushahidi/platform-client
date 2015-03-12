@@ -12,12 +12,15 @@
                 </span>
             </small>
             <h4><a ng-href="/posts/{{post.id}}">{{post.title}}</a></h4>
-            <div>Thumnail image</div>
+            <!--<div>Thumnail image</div>-->
             <p>
                 {{post.content}}
             </p>
         </div>
         <div class="col-md-3">
+            <p ng-show="form_name">
+                <b translate>post.type</b> {{form_name}}
+            </p>
             <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
                 <a class="btn btn-default btn-large" href="/posts/{{post.id}}/edit">
                     <i class="fa fa-edit"></i> <span translate>post.post_actions.edit</span>
