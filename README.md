@@ -18,14 +18,11 @@ You need to deploy the [Platform API](http://github.com/ushahidi/platform) first
 
 ### Libraries/Packages/Dependencies
 
-* Nodejs
-* Bower
-* Browserify
-* Gulp (and various gulp plugins)
-* Libsass/node-sass (via gulp-sass)
-* Bourbon
-* Neat
-* Refills
+First you'll need nodejs/io.js installed,
+npm takes care of the rest of our dependencies.
+
+* nodejs v0.10 or v0.12
+* io.js v1.2
 
 ### Install Build Requirements
 `npm install -g gulp`
