@@ -23,7 +23,8 @@ module.exports = function(config){
     // (especially when it comes to external libraries which we often want to
     // replace with mocks, like for angular-xeditable)
     exclude: [
-        'app/**/*-module.js'
+        'app/**/*-module.js',
+        'app/common/wrapper/nvd3-wrapper.js'
     ],
 
     autoWatch : true,

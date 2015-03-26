@@ -15,7 +15,7 @@ describe('posts list controller', function(){
         'pascalprecht.translate'
         ])
         .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
-        .controller('postListViewController', require(ROOT_PATH + 'app/post/controllers/post-list-view-controller.js'));
+        .controller('postListViewController', require(ROOT_PATH + 'app/post/controllers/views/post-list-view-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
