@@ -81,7 +81,7 @@
     "leaflet.locatecontrol": "^0.40.0",
     "leaflet.markercluster": "0.4.0",
     "ngGeolocation": "git://github.com/rjmackay/ngGeolocation",
-    "nvd3": "git://github.com/novus/nvd3",
+    "nvd3": "git://github.com/novus/nvd3#v1.7.1",
     "underscore": "^1.7.0"
   },
   "engines": {
