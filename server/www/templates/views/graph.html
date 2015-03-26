@@ -1,0 +1,12 @@
+<post-view-tabs active="graph"></post-view-tabs>
+<section class="graph-view">
+    <form class="clearfix">
+        <div class="form-group pull-right">
+            <label translate>graph.group_by</label>
+            <select class="form-control" ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
+            </select>
+        </div>
+    </form>
+
+    <nvd3 options='options' data='data'></nvd3>
+</section>

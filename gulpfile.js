@@ -104,7 +104,8 @@ gulp.task('sass', ['rename'], function() {
                 'node_modules/angular-bootstrap-colorpicker/scss',
                 'node_modules/leaflet/dist/',
                 'node_modules/jasny-bootstrap/dist/',
-                'node_modules/leaflet.markercluster/dist/'
+                'node_modules/leaflet.markercluster/dist/',
+                'node_modules/nvd3/build/'
             ],
             sourceComments: 'map'
         }))
@@ -162,6 +163,12 @@ gulp.task('rename-jasny', function() {
         .pipe(gulp.dest('node_modules/jasny-bootstrap/dist'))
         ;
 });
+gulp.task('rename-nvd3', function() {
+    return gulp.src(['node_modules/nvd3/build/nv.d3.css'])
+        .pipe(rename('_nv.d3.scss'))
+        .pipe(gulp.dest('node_modules/nvd3/build'))
+        ;
+});
 
 /**
  * Copy icon files for leaflet from node_modules into server/www/css/images
@@ -177,7 +184,8 @@ gulp.task('rename', [
     'rename-colorpicker',
     'rename-leaflet-markercluster',
     'rename-leaflet-markercluster-default',
-    'rename-jasny'
+    'rename-jasny',
+    'rename-nvd3'
     ], function() {});
 
 

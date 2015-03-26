@@ -74,6 +74,12 @@
         "apply_filters" : "Apply Filters",
         "save_to_set" : "Save to Set"
     },
+    "graph" : {
+        "group_by" : "Group by",
+        "none" : "None",
+        "post_count" : "Post count",
+        "post_date": "Post date"
+    },
     "map": {
         "collapse_map" : "collapse map",
         "expand_map" : "expand map",
@@ -191,6 +197,7 @@
         "map" : "Map",
         "list" : "List",
         "graph" : "Graph",
+        "timeline" : "Timeline",
         "public" : "Public",
         "private" : "Private",
         "history" : "History",

@@ -6,12 +6,20 @@ function(
 
     $routeProvider
     .when('/views/map', {
-        controller: require('./controllers/post-map-view-controller.js'),
-        templateUrl: 'templates/post-map-view.html'
+        controller: require('./controllers/views/post-map-view-controller.js'),
+        templateUrl: 'templates/views/map.html'
     })
     .when('/views/list', {
-        controller: require('./controllers/post-list-view-controller.js'),
-        templateUrl: 'templates/post-list-view.html'
+        controller: require('./controllers/views/post-list-view-controller.js'),
+        templateUrl: 'templates/views/list.html'
+    })
+    .when('/views/graph', {
+        controller: require('./controllers/views/post-graph-view-controller.js'),
+        templateUrl: 'templates/views/graph.html'
+    })
+    .when('/views/timeline', {
+        controller: require('./controllers/views/post-timeline-view-controller.js'),
+        templateUrl: 'templates/views/timeline.html'
     })
     .when('/posts/create', {
         controller: require('./controllers/post-create-controller.js'),

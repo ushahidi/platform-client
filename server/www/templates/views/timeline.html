@@ -1,0 +1,14 @@
+<post-view-tabs active="timeline"></post-view-tabs>
+<section class="timeline-view">
+    <form class="clearfix">
+        <div class="form-group pull-right">
+            <label translate>graph.group_by</label>
+            <select class="form-control" ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
+            </select>
+        </div>
+    </form>
+
+    <div class="nvd3-wrapper">
+    	<nvd3 options='options' data='data'></nvd3>
+    </div>
+</section>

@@ -15,10 +15,12 @@ require('angular-local-storage');
 require('checklist-model/checklist-model');
 require('angular-gravatar/build/md5');
 require('angular-gravatar/build/angular-gravatar');
-window.jQuery = require('jquery');
+window.jQuery = require('jquery'); // Required for jasny-bootstrap
 require('jasny-bootstrap/js/offcanvas');
-
 require('ngGeolocation/ngGeolocation');
+window.d3 = require('d3'); // Required for nvd3
+require('./common/wrapper/nvd3-wrapper');
+require('angular-nvd3/src/angular-nvd3');
 
 require('./post/post-module.js');
 require('./tool/tool-module.js');
@@ -58,7 +60,8 @@ angular.module('app',
         'tools',
         'user-profile',
         'workspace',
-        'ngGeolocation'
+        'ngGeolocation',
+        'nvd3'
     ])
 
     .constant('CONST', {
@@ -103,6 +106,9 @@ angular.module('app',
     })
     .factory('_', function() {
         return require('underscore/underscore');
+    })
+    .factory('d3', function() {
+        return window.d3;
     })
     .factory('URI', function() {
         return require('URIjs/src/URI.js');
