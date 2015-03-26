@@ -34,6 +34,7 @@ deploy:
       release: ushahidi-platform-release
     on:
       repo: ushahidi/platform-client
+      node: 0.12
       branch:
         - master
         - release
@@ -45,6 +46,7 @@ deploy:
     skip_cleanup: true
     on:
       repo: ushahidi/platform-client
+      node: 0.12
       tags: true
       all_branches: true
 
