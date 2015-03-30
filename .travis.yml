@@ -1,7 +1,7 @@
 notifications:
   hipchat:
     rooms:
-      secure: MpvHe3jcw/L9yoQYwC3QU5HhEalxHAC88AXbA1UdWG/F3KSMhlZEoRQrU34C4schqE4Ivj93ffsN0u5LcOwjVRhhvA5s3sNP+1tNLnpN5IDDLhb6mGSP9J3erE8GDbIWMG6HizHnz8nKmPw0ugvMCEvxNTePfLmR9uD31zp4IEo=
+      secure: LW5XPoH6eOe/VPAVg1vOUk0jvWm662w8R30Wna0ZtcE2ZV40EHmyJfY7PLDA3/o/wme0vHhZh+cKWjbHbhF7RFrYAkNl6RLgmRkvMhaI/UKpztWRfIuopiJg2snHT0bH3nODm/2l9iSyhBc39lpxARFAhsUoN6j5zLyLyqfA7Xg=
 addons:
   sauce_connect: true
 language: node_js
