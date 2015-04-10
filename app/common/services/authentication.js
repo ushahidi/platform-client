@@ -14,9 +14,10 @@ function(
     Session
 ) {
 
-    // check whether we have initially an old access_token and assume that,
-    // if yes, we are still loggedin
-    var loginStatus = !!Session.getSessionDataEntry('accessToken'),
+    // check whether we have initially an old access_token and userId
+    // and assume that, if yes, we are still loggedin
+    var loginStatus = !!Session.getSessionDataEntry('accessToken') && !!Session.getSessionDataEntry('userId'),
+
 
     setToLoginState = function(userData){
         Session.setSessionDataEntries({
