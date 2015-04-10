@@ -68,7 +68,16 @@ function(
     });
 
     $rootScope.$on('event:forbidden', function() {
-        $location.url('/forbidden');
+        if (Authentication.getLoginStatus()) {
+            // We're logged in hit forbidden page
+            $location.url('/forbidden');
+        } else {
+            // We're logged out, redirect to login
+            if ($location.url() !== '/login') {
+                Session.setSessionDataEntry('loginPath', $location.url());
+            }
+            $location.url('/login');
+        }
     });
 
     if (Authentication.getLoginStatus()) {
