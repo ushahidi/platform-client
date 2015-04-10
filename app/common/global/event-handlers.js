@@ -47,24 +47,28 @@ function(
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
     };
 
-    $rootScope.$on('event:authentication:login:succeeded', function(){
+    $rootScope.$on('event:authentication:login:succeeded', function() {
         doLogin(Session.getSessionDataEntry('loginPath') || '/');
     });
 
-    $rootScope.$on('event:authentication:logout:succeeded', function(){
+    $rootScope.$on('event:authentication:logout:succeeded', function() {
         doLogout('/');
     });
 
-    $rootScope.$on('event:authentication:login:failed', function(){
+    $rootScope.$on('event:authentication:login:failed', function() {
         doLogout('/login');
     });
 
-    $rootScope.$on('event:unauthorized', function(){
+    $rootScope.$on('event:unauthorized', function() {
         if ($location.url() !== '/login') {
             Session.setSessionDataEntry('loginPath', $location.url());
         }
         Authentication.logout(true);
         doLogout('/login');
+    });
+
+    $rootScope.$on('event:forbidden', function() {
+        $location.url('/forbidden');
     });
 
     if (Authentication.getLoginStatus()) {

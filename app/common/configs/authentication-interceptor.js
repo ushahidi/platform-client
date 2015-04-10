@@ -77,8 +77,11 @@ function(
                 return deferred.promise;
             },
             responseError: function(rejection) {
-                if (_.contains([401, 403], rejection.status)) {
+                if (rejection.status === 401) {
                     $rootScope.$broadcast('event:unauthorized');
+                }
+                if (rejection.status === 403) {
+                    $rootScope.$broadcast('event:forbidden');
                 }
                 return $q.reject(rejection);
             }

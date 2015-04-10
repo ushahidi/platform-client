@@ -22,7 +22,8 @@
         "main_section" : "Main Section",
         "powered_by_ushahidi" : "Powered by Ushahidi.",
         "support" : "Support",
-        "documentation": "Documentation"
+        "documentation": "Documentation",
+        "forbidden": "Sorry, you're not allowed to do that."
     },
     "form": {
         "add_field" : "Add Field",
@@ -112,6 +113,7 @@
         "disable" : "Disable",
         "edit_profile" : "Edit Profile",
         "enable" : "Enable",
+        "forbidden" : "Access Denied",
         "create" : "Create",
         "dashboard" : "Dashboard",
         "delete" : "Delete",
