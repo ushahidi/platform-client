@@ -13,6 +13,13 @@ angular.module('e2e-mocks', ['ngMockE2E'])
 
     var getResultForResource = function(resourceName, offset, limit){
         var resource = _.clone(resourceToJsonMapping[resourceName]);
+        // If we have no mapping for resourceName, return 500
+        if (! resource)
+        {
+            return [500, {}, {}];
+        }
+
+        // if we have a collection
         if(resource.results)
         {
             resource.results = resource.results.slice(offset, offset+limit);
@@ -49,8 +56,8 @@ angular.module('e2e-mocks', ['ngMockE2E'])
     $httpBackend.whenGET(matcher).respond(function(method, url/*, data*/) {
         var uri = URI(url),
             queryParams = uri.query(true),
-            offset = parseInt(queryParams.offset),
-            limit = parseInt(queryParams.limit),
+            offset = parseInt(queryParams.offset) || 0,
+            limit = parseInt(queryParams.limit) || Infinity,
             resourceName = uri.path().split('api/v2/')[1];
 
         return getResultForResource(resourceName, offset, limit);
