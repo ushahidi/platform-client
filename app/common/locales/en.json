@@ -236,15 +236,12 @@
         "history" : "History",
         "private" : "Private",
         "public" : "Public",
-        "publish" : "Publish",
+        "publish" : "Publish to...",
         "published" : "Published",
+        "unpublished" : "Unpublished",
         "published_by" : "Published by",
-        "published_to_everyone" : "Published to everyone",
-        "published_to_role" : "Published to {{role}}",
         "read_more" : "Read More",
         "sort_posts_by" : "Sort posts by",
-        "unpublish" : "Unpublish",
-        "unpublished" : "Unpublished",
         "location" : "Location",
         "categories" : "Categories",
         "geometry_test" : "Geometry Test",
@@ -294,8 +291,10 @@
             "edit_type" : "Edit {{type}}: {{title}}",
             "change_type" : "Change type",
             "save" : "Save",
-            "publish" : "Publish",
-            "published" : "Published",
+            "publish" : "Publish to...",
+			   "publish_to" : "Publish to {{role}}",
+			   "published_to" : "Published to {{role}}",
+		      "unpublish" : "Revert to Draft",
             "back" : "Back",
             "form" : {
                 "categories" : "Categories",
@@ -306,7 +305,7 @@
                     "name" : "Link Name",
                     "url" : "Link url",
                     "add_link" : "Add Link"
-                }
+				}
             }
         },
         "details" : {
@@ -316,8 +315,6 @@
         "preview" : {
             "private" : "private",
             "public" : "public",
-            "published" : "published",
-            "unpublished" : "unpublished",
             "read_more" : "&nbsp;... Read&nbsp;More",
             "tags" : "Categories",
             "post_actions" : {

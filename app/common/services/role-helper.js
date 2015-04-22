@@ -3,12 +3,12 @@ module.exports = [
 function(
     _
 ) {
-    var helper = {
+    var RoleHelper = {
         roles: [
             // TODO: make this an endpoint
             {
-                name: 'guest',
-                display_name: 'Guest',
+                name: '',
+                display_name: 'Everyone',
             },
             {
                 name: 'user',
@@ -21,11 +21,21 @@ function(
         ],
         getRole: function(role, roles) {
             if (!roles) {
-                roles = helper.roles;
+                roles = RoleHelper.roles;
             }
             var match = _.findWhere(roles, {name: role});
             return match ? match.display_name : role;
+        },
+        getDefault: function(roles) {
+            if(!roles) {
+                roles = RoleHelper.roles;
+            }
+            
+            // assuming the default role has a blank name - could change this to a db
+            // field but seemed a bit heavy-handed
+            var match = _.findWhere(roles, {name: ''});
+            return match ? match.display_name : null;
         }
     };
-    return helper;
+    return RoleHelper;
 }];

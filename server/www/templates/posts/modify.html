@@ -121,19 +121,36 @@
                 <button type="button" class="btn btn-info" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)"><i class="fa fa-plus"></i> Add</button>
             </div>
 
-            <p class="submit-button pull-right">
-                <button ng-click="unpublishPost(post)" ng-disabled="form.$invalid" class="btn btn-success" ng-show="post.status == 'published' && allowedChangeStatus()"
-                    >
-                    <i class="fa fa-check-circle"></i> <span translate>post.modify.published</span>
-                </button>
-                <button ng-click="publishPost(post)" ng-disabled="form.$invalid" class="btn btn-success" ng-show="post.status != 'published' && allowedChangeStatus()"
-                    >
-                    <span translate>post.modify.publish</span>
+            <div class="pull-right">
+
+                <span dropdown class="dropdown" ng-show="allowedChangeStatus()">
+                    <a
+                        translate="{{(postIsPublishedTo() === 'draft') ? 'post.modify.publish' : 'post.modify.published_to'}}"
+                        translate-values="{ role: '{{ postIsPublishedTo() }}' }"
+                        class="btn btn-success dropdown-toggle"
+                        dropdown-toggle>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li
+                            class="{{(postIsPublishedTo() === 'draft') ? 'active' : 'inactive'}}"
+                            ng-click="setDraft()"
+                            >
+                            <a translate>post.draft</a>
+                        </li>
+                        <li
+                            ng-repeat="role in availableRoles track by role.name"
+                            class="{{(postIsPublishedTo() === role.name) ? 'active' : 'inactive'}}"
+                            ng-click="publishPostTo(role.name)"
+                            >
+                            <a translate translate-values="{role: role.display_name}">post.modify.publish_to</a>
+                        </li>
+                    </ul>
+                </span>
+
+                <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="btn btn-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span>
                 </button>
 
-                <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="btn btn-primary"
-                    ><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span></button>
-            </p>
+            </div>
         </form>
     </div>
 

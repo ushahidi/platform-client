@@ -4,6 +4,7 @@ module.exports = [
     '$location',
     'PostEntity',
     'PostEndpoint',
+    'RoleHelper',
     'TagEndpoint',
     'FormEndpoint',
     'FormAttributeEndpoint',
@@ -15,6 +16,7 @@ function(
     $location,
     postEntity,
     PostEndpoint,
+    RoleHelper,
     TagEndpoint,
     FormEndpoint,
     FormAttributeEndpoint,
@@ -22,6 +24,7 @@ function(
     _
 ) {
     $scope.categories = TagEndpoint.query();
+    $scope.availableRoles = RoleHelper.roles;
 
     this.fetchAttributes = function(form_id) {
         FormAttributeEndpoint.query({formId: form_id}).$promise.then(function(attrs) {
@@ -39,12 +42,32 @@ function(
         return $scope.post_options.$resolved && $scope.post_options.allowed_privileges.indexOf('change_status') !== -1;
     };
 
-    $scope.publishPost = function(post) {
-        $scope.post.status = 'published';
+    $scope.setDraft = function() {
+        $scope.post.status = 'draft';
     };
 
-    $scope.unpublishPost = function(post) {
-        $scope.post.status = 'draft';
+    $scope.postIsPublishedTo = function() {
+
+        if ($scope.post.status === 'draft') {
+            return 'draft';
+        }
+
+        if (! _.isEmpty($scope.post.published_to)) {
+            return RoleHelper.getRole($scope.post.published_to[0]);
+        }
+
+        return RoleHelper.getDefault();
+    };
+
+    $scope.publishPostTo = function(role) {
+
+        $scope.post.status = 'published';
+        if (role) {
+            $scope.post.published_to = [role];
+        } else {
+            $scope.post.published_to = [];
+        }
+
     };
 
     $scope.savePost = function(post) {
@@ -72,8 +95,7 @@ function(
         }
 
         request.$promise.then(function (response) {
-            // @todo check allowed_methods instead
-            if (response.id && response.status === 'published') {
+            if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                 $location.path('/posts/' + response.id);
             }
             else {
