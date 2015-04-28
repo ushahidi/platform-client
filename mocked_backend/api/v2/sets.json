@@ -1,0 +1,48 @@
+{
+    "count": 6,
+    "results": [
+        {
+            "id": "1",
+            "user_id": null,
+            "name": "Niki Minaj sightings",
+            "allowed_methods": ["get", "post", "put", "delete"]
+        },
+        {
+            "id": "2",
+            "user_id": 1,
+            "name": "Silly animal fails",
+            "allowed_methods": ["get", "post", "put", "delete"]
+        },
+        {
+            "id": "3",
+            "user_id": 1,
+            "name": "Kittehs",
+            "allowed_methods": ["get", "post", "put", "delete"]
+        },
+        {
+            "id": "4",
+            "user_id": 3,
+            "name": "Benevolent Zombies",
+            "allowed_methods": ["get", "post", "put", "delete"]
+        },
+        {
+            "id": "5",
+            "user_id": null,
+            "name": "Bottled Water Still Available",
+            "allowed_methods": ["get", "post", "put", "delete"]
+        },
+        {
+            "id": "6",
+            "user_id": 2,
+            "name": "Alcohol still available",
+            "allowed_methods": ["get", "post", "put", "delete"]
+        }
+    ],
+    "limit": 100,
+    "offset": 0,
+    "order": "desc",
+    "orderby": "created",
+    "curr": "http://localhost:8081/api/v2/sets?orderby=created&order=desc&offset=0&limit=100",
+    "next": "http://localhost:8081/api/v2/sets?orderby=created&order=desc&offset=100&limit=100",
+    "prev": "http://localhost:8081/api/v2/sets?orderby=created&order=desc&offset=0&limit=100"
+}

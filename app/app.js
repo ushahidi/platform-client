@@ -22,8 +22,9 @@ window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 
-require('./post/post-module.js');
-require('./tool/tool-module.js');
+require('./post/post-module.js' );
+require('./tool/tool-module.js' );
+require('./set/set-module.js'   );
 require('./user-profile/user-profile-module.js');
 require('./workspace/workspace-module.js');
 
@@ -58,6 +59,7 @@ angular.module('app',
         'btford.markdown',
         'posts',
         'tools',
+        'sets',
         'user-profile',
         'workspace',
         'ngGeolocation',

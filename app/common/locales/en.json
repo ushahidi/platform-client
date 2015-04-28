@@ -99,12 +99,14 @@
         "actions" : "Actions",
         "admin" : "Administrator",
         "all" : "All",
+        "author_tagline" : "By ",
         "appearance" : "Appearance",
         "back" : "Back",
         "click_images_to_zoom" : "Click images to zoom",
         "category" : "Category",
         "categories" : "Categories",
         "clear" : "Clear Selection",
+        "collections" : "Collections",
         "comments" : "Comments",
         "count_posts" : "__count__ <span>posts</span>",
         "count_tags" : "__count__ <span>categories</span>",
@@ -146,6 +148,7 @@
         "profile": "My Profile",
         "role" : "Role",
         "roles" : "Roles",
+        "saved_searches" : "Saved Searches",
         "save_changes" : "Save Changes",
         "search" : "Search",
         "select" : "Select",
@@ -344,7 +347,9 @@
         "public" : "Public",
         "separate_tags_with_commas" : "Separate categories with commas",
         "this_set_is_private_by_default" : "This set is *Private* by default",
-        "visibility" : "Visibility"
+        "visibility" : "Visibility",
+        "empty_list_0" : "No collections",
+        "empty_list_1" : "No saved searches"
     },
     "tag": { // named 'tags' in code, and 'categories' for user display
         "add_tag" : "Add Category",
