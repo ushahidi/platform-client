@@ -1,14 +1,21 @@
 module.exports = [
-    '$rootScope',
     '$scope',
+    '$rootScope',
+    '$translate',
     'Authentication',
     '$location',
 function(
-    $rootScope,
     $scope,
+    $rootScope,
+    $translate,
     Authentication,
     $location
 ) {
+    $translate('nav.login').then(function(title) {
+        $scope.title = title;
+        $scope.$emit('setPageTitle', title);
+    });
+
     function clearLoginForm() {
         $scope.failed = true;
         $scope.processing = false;

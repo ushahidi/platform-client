@@ -12,8 +12,9 @@ function(
     _
 ) {
 
-    $translate('post.posts').then(function(postsTranslation) {
-        $scope.title = postsTranslation;
+    $translate('post.posts').then(function(title) {
+        $scope.title = title;
+        $scope.$emit('setPageTitle', title);
     });
 
     var getPostsForPagination = function(query) {

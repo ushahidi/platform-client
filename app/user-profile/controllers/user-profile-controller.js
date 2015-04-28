@@ -1,11 +1,13 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     'UserEndpoint',
     'Notify',
     '_',
 function(
     $scope,
+    $rootScope,
     $translate,
     UserEndpoint,
     Notify,
@@ -13,6 +15,7 @@ function(
 ) {
     $translate('user_profile.title').then(function(title){
         $scope.title = title;
+        $rootScope.$emit('setPageTitle', title);
     });
 
     $scope.onUserProfileEditFormShow = function(){

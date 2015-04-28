@@ -11,6 +11,10 @@ function(
     TagEndpoint,
     RoleHelper
 ) {
+    $translate('tool.manage_tags').then(function(title){
+        $scope.title = title;
+        $scope.$emit('setPageTitle', title);
+    });
 
     $scope.getRole = RoleHelper.getRole;
 

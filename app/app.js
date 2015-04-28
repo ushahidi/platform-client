@@ -93,6 +93,7 @@ angular.module('app',
     .service('Geocoding'             , require('./common/services/geocoding.js'                ))
 
     .controller('navigation'       , require('./common/controllers/navigation.js'        ))
+    .controller('PageMetadata'     , require('./common/controllers/page-metadata.js'     ))
     .controller('adminMapSettings' , require('./common/controllers/admin/map-settings.js'))
 
     .config(require('./common/configs/authentication-interceptor.js'      ))

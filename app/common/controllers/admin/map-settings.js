@@ -12,6 +12,7 @@ function(
 
     $translate('map_settings.admin_map_settings').then(function(mapSettingsTranslation){
         $scope.title = mapSettingsTranslation;
+        $scope.$emit('setPageTitle', mapSettingsTranslation);
     });
 
     angular.extend($scope, {

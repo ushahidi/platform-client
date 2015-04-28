@@ -236,6 +236,8 @@
         "per_page" : "{{count}} posts",
         "other_posts_tagged" : "Other posts categorized",
         "post_details" : "Post Details",
+        "type_details" : "{{type}} Details",
+        "edit_post" : "Edit Post",
         "history" : "History",
         "private" : "Private",
         "public" : "Public",
@@ -376,7 +378,7 @@
         "sort_tags_by" : "Sort categories by",
         "update_tag" : "Update Category",
         "unselect_all" : "Unselect all",
-        "add_tag" : "Add category",
+        "add_tag" : "Add Category",
         "delete" : "Delete",
         "tag_actions" : "Category Actions",
         "number_of_tags_shown" : "Number of categories shown",
@@ -394,6 +396,10 @@
         "manage_forms" :  "Manage Forms",
         "manage_tags" : "Manage Categories",
         "manage_users" : "Manage Users",
+        "manage_roles" : "Manage Roles",
+        "manage_views" : "Manage Views",
+        "manage_appearance" : "Manage Appearance",
+        "manage_plugins" : "Manage Plugins",
         "map_settings" : "Map Settings",
         "site_settings" : "Site Settings",
         "tools" : "Tools"
@@ -517,7 +523,9 @@
         "tag" : "No categories found."
     },
     "workspace": {
-        "recent_activity": "Recent Activity"
+        "recent_activity": "Recent Activity",
+        "recent_posts": "Recent Posts",
+        "recent_comments": "Recent Comments"
     },
     "location": {
         "search": "Search",

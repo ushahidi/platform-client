@@ -21,8 +21,9 @@ function(
 ) {
     var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser;
 
-    $translate('api.users').then(function(title){
+    $translate('tool.manage_users').then(function(title){
         $scope.title = title;
+        $scope.$emit('setPageTitle', title);
     });
 
     $scope.roles = RoleHelper.roles;

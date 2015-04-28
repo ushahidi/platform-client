@@ -19,8 +19,9 @@ function(
     Notify,
     _
 ) {
-    $translate('tag.edit_tag').then(function(manageTagsTranslation){
-        $scope.title = manageTagsTranslation;
+    $translate('tool.manage_tags').then(function(title){
+        $scope.title = title;
+        $rootScope.$emit('setPageTitle', title);
     });
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);

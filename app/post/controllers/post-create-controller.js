@@ -21,6 +21,7 @@ function(
 
     $translate('post.create_post').then(function(title){
         $scope.title = title;
+        $scope.$emit('setPageTitle', title);
     });
 
     $scope.post = postEntity();

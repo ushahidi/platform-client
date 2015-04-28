@@ -27,8 +27,9 @@ function(
     L,
     leafletData
 ) {
-    $translate('post.post_details').then(function(postDetailsTranslation){
-        $scope.title = postDetailsTranslation;
+    $translate('post.post_details').then(function(title){
+        $scope.title = title;
+        $scope.$emit('setPageTitle', title);
     });
 
     $scope.showType = function(type) {
@@ -42,7 +43,12 @@ function(
         return true;
     };
 
-    $scope.post = PostEndpoint.get({id: $routeParams.id}, function() {
+    $scope.post = PostEndpoint.get({ id: $routeParams.id }, function (post) {
+        // Set page title to post title, if there is one available.
+        if (post.title && post.title.length) {
+            $scope.$emit('setPageTitle', post.title);
+        }
+
         // Load the post author
         if ($scope.post.user && $scope.post.user.id) {
             $scope.user = UserEndpoint.get({id: $scope.post.user.id});
@@ -54,6 +60,13 @@ function(
 
             FormEndpoint.get({formId: $scope.post.form.id}, function(form) {
                 $scope.form_name = form.name;
+
+                // Set page title to '{form.name} Details' if a post title isn't provided.
+                if (!$scope.post.title) {
+                    $translate('post.type_details', { type: form.name }).then(function (title) {
+                        $scope.$emit('setPageTitle', title);
+                    });
+                }
             });
 
             FormAttributeEndpoint.query({formId: $scope.post.form.id}, function(attributes) {

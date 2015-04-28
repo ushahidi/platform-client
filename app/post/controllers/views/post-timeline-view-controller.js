@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$filter',
     'PostEndpoint',
@@ -8,6 +9,7 @@ module.exports = [
     '_',
 function(
     $scope,
+    $rootScope,
     $translate,
     $filter,
     PostEndpoint,
@@ -16,8 +18,9 @@ function(
     _
 ) {
 
-    $translate('post.posts').then(function(postsTranslation) {
-        $scope.title = postsTranslation;
+    $translate('post.posts').then(function(title) {
+        $scope.title = title;
+        $rootScope.$emit('setPageTitle', title);
     });
 
     var timeScale = d3.time.scale().nice(d3.time.month); // Using nice() but doesn't appear to do anything

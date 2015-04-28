@@ -1,6 +1,7 @@
 module.exports = [
     '$q',
     '$scope',
+    '$translate',
     'ConfigEndpoint',
     'PostEndpoint',
     'GlobalFilter',
@@ -9,12 +10,18 @@ module.exports = [
 function(
     $q,
     $scope,
+    $translate,
     ConfigEndpoint,
     PostEndpoint,
     GlobalFilter,
     Maps,
     _
 ) {
+
+    $translate('post.posts').then(function(title) {
+        $scope.title = title;
+        $scope.$emit('setPageTitle', title);
+    });
 
     // todo: this should be fetched from Maps, but the call is async and
     // this needs to apply to the scope immediately for the leaflet directive.

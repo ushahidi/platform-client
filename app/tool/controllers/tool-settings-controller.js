@@ -1,15 +1,18 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     'ConfigEndpoint',
 function(
     $scope,
+    $rootScope,
     $translate,
     ConfigEndpoint
 ) {
 
-    $translate('settings.site').then(function(settingsTranslation) {
-        $scope.title = settingsTranslation;
+    $translate('tool.site_settings').then(function(title) {
+        $scope.title = title;
+        $rootScope.$emit('setPageTitle', title);
     });
 
     $scope.saving_config = {};

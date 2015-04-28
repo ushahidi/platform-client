@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$location',
     'UserEndpoint',
@@ -7,6 +8,7 @@ module.exports = [
     '_',
 function(
     $scope,
+    $rootScope,
     $translate,
     $location,
     UserEndpoint,
@@ -15,6 +17,7 @@ function(
 ) {
     $translate('user.create').then(function(title) {
         $scope.title = title;
+        $rootScope.$emit('setPageTitle', title);
     });
 
     $scope.user = {};

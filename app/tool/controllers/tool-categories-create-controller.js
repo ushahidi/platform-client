@@ -1,6 +1,5 @@
 module.exports = [
     '$scope',
-    '$rootScope',
     '$location',
     '$translate',
     'multiTranslate',
@@ -10,7 +9,6 @@ module.exports = [
     '_',
 function(
     $scope,
-    $rootScope,
     $location,
     $translate,
     multiTranslate,
@@ -19,8 +17,9 @@ function(
     Notify,
     _
 ) {
-    $translate('tag.add_tag').then(function(manageTagsTranslation){
-        $scope.title = manageTagsTranslation;
+    $translate('tag.add_tag').then(function(title){
+        $scope.title = title;
+        $scope.$emit('setPageTitle', title);
     });
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);

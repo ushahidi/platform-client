@@ -19,9 +19,12 @@ function(
 ) {
     $translate('user.edit').then(function(title) {
         $scope.title = title;
+        $scope.$emit('setPageTitle', title);
     });
 
-    $scope.user = UserEndpoint.get({id: $routeParams.id});
+    $scope.user = UserEndpoint.get({id: $routeParams.id}, function(user) {
+        $scope.$emit('setPageTitle', $scope.title + ' - ' + user.username);
+    });
 
     $scope.processing = false;
 

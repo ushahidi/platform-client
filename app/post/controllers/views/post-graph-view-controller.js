@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$filter',
     'PostEndpoint',
@@ -7,6 +8,7 @@ module.exports = [
     'd3',
 function(
     $scope,
+    $rootScope,
     $translate,
     $filter,
     PostEndpoint,
@@ -14,8 +16,9 @@ function(
     d3
 ) {
 
-    $translate('post.posts').then(function(postsTranslation) {
-        $scope.title = postsTranslation;
+    $translate('post.posts').then(function(title) {
+        $scope.title = title;
+        $rootScope.$emit('setPageTitle', title);
     });
 
     $scope.options = {
