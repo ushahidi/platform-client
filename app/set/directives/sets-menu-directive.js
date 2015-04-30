@@ -15,7 +15,7 @@ function(
         scope: {
             search:  '=',
         },
-        controller: ['$scope', function($scope) {console.log($scope);
+        controller: ['$scope', function($scope) {
             // Load sets + users
             var reloadSets = function () {
                 $scope.listSets = SetsEndpoint.query({search: $scope.search});
