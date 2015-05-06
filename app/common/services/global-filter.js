@@ -62,6 +62,9 @@ function(
 
             return query;
         },
+        getFilterCount: function() {
+            return _.keys(this.getPostQuery()).length;
+        }
     };
 
     TagEndpoint.get().$promise.then(function(response) {

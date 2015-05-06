@@ -79,7 +79,15 @@
         "group_by" : "Group by",
         "none" : "None",
         "post_count" : "Post count",
-        "post_date": "Post date"
+        "post_date": "Post date",
+        "cumulative": "Cumulative totals",
+        "category_level": "Parent category",
+        "attribute" : "Form attribute",
+        "created": "Created time",
+        "updated": "Updated time",
+        "time_attribute": "Timeline by",
+        "select_one": "Select one",
+        "created": "Created time"
     },
     "map": {
         "collapse_map" : "collapse map",
