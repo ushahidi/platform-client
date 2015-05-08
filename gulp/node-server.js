@@ -2,7 +2,7 @@ var connect = require('gulp-connect'),
     url = require('url'),
     path = require('path');
 
-module.exports = function(root) {
+module.exports = function (root) {
     return function () {
         connect.server({
             root: root,

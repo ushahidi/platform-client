@@ -1,6 +1,6 @@
 module.exports = [
     '$routeProvider',
-function(
+function (
     $routeProvider
 ) {
 

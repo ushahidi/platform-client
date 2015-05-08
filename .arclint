@@ -6,6 +6,10 @@
       "exclude" : "@/bower_components/.*\\.js$@",
       "jshint.jshintrc" : ".jshintrc",
       "jshint.jshintignore" : ".jshintignore"
+    },
+    "jscs" : {
+      "type" : "jscs",
+      "include" : "(\\.js$)"
     }
   }
 }

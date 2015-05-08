@@ -6,8 +6,8 @@ var connect = require('gulp-connect'),
     bodyParser = require('body-parser');
 
 
-module.exports = function(root) {
-    return function(){
+module.exports = function (root) {
+    return function () {
         connect.server({
             root: root,
             port: '8081',
@@ -25,36 +25,30 @@ module.exports = function(root) {
                         var pathname = url.parse(req.url).pathname;
 
                         // handle login
-                        if(_s.endsWith(pathname, 'oauth/token') && req.method === 'POST')
-                        {
+                        if (_s.endsWith(pathname, 'oauth/token') && req.method === 'POST') {
                             // check for correct credentials
-                            if(req.body.username === 'admin' && req.body.password === 'admin')
-                            {
+                            if (req.body.username === 'admin' && req.body.password === 'admin') {
                                 res.writeHead(200);
                                 res.write(JSON.stringify({
-                                    'access_token':'mock-backend-token',
-                                    'token_type':'Bearer',
-                                    'expires':1414349228,
-                                    'expires_in':3600,
-                                    'refresh_token':'mock-backend-refresh-token',
-                                    'refresh_token_expires_in':604800
+                                    'access_token': 'mock-backend-token',
+                                    'token_type': 'Bearer',
+                                    'expires': 1414349228,
+                                    'expires_in': 3600,
+                                    'refresh_token': 'mock-backend-refresh-token',
+                                    'refresh_token_expires_in': 604800
                                 }));
-                            }
-                            else
-                            {
+                            } else {
                                 res.writeHead(400);
                                 res.write(JSON.stringify({
-                                    'error':'invalid_request',
-                                    'error_description':'The user credentials were incorrect.'
+                                    'error': 'invalid_request',
+                                    'error_description': 'The user credentials were incorrect.'
                                 }));
                             }
 
                             return res.end();
-                        }
 
                         // meta data (userid, username, api endpoints etc) at root path
-                        else if(pathname === '/' || pathname === '')
-                        {
+                        } else if (pathname === '/' || pathname === '') {
                             // req.url = 'root_metadata.json';
                             res.writeHead(200);
                             res.write(JSON.stringify(
@@ -67,13 +61,11 @@ module.exports = function(root) {
                             ));
 
                             return res.end();
-                        }
 
                         // if it's not about login:
                         // assume it is a resource request
                         // => deliver the corresponding static json files via 'connect'
-                        else
-                        {
+                        } else {
                             pathname = pathname + '.json';
                             req.url = pathname;
                             if (!path.extname(pathname)) {

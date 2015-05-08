@@ -1,6 +1,6 @@
 module.exports = [
     '$routeProvider',
-function(
+function (
     $routeProvider
 ) {
     /* todo: these routes should only exist when the user is admin! */

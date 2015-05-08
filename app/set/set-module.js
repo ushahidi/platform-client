@@ -1,5 +1,5 @@
 angular.module('sets', [])
 
-.directive('setsMenu'		, require('./directives/sets-menu-directive.js'		))
+.directive('setsMenu', require('./directives/sets-menu-directive.js'))
 
-.service('SetsEndpoint'		, require('./services/endpoints/set.js'				));
+.service('SetsEndpoint', require('./services/endpoints/set.js'));

@@ -1,4 +1,4 @@
-module.exports = ['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+module.exports = ['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
     $locationProvider.html5Mode(true);
 
