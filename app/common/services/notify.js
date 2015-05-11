@@ -1,6 +1,6 @@
-module.exports = ['$window', function($window) {
+module.exports = ['$window', function ($window) {
 
-    var showSingleAlert = function(alertMessage){
+    var showSingleAlert = function (alertMessage) {
         // TODO: find a better solution for that
         // e.g. use some notification plugins
         // like https://github.com/cgross/angular-notify
@@ -8,7 +8,7 @@ module.exports = ['$window', function($window) {
         $window.alert(alertMessage);
     };
 
-    var showAlerts = function(alertMessages){
+    var showAlerts = function (alertMessages) {
         alertMessages.forEach(showSingleAlert);
     };
 

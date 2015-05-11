@@ -1,12 +1,12 @@
 module.exports = [
     '$scope',
     '$translate',
-function(
+function (
     $scope,
     $translate
 ) {
 
-  $translate('tool.manage_roles').then(function(title){
+    $translate('tool.manage_roles').then(function (title) {
       $scope.title = title;
       $scope.$emit('setPageTitle', title);
   });

@@ -7,7 +7,7 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     '_',
-function(
+function (
     $scope,
     $rootScope,
     $translate,
@@ -17,22 +17,22 @@ function(
     Notify,
     _
 ) {
-    $translate('user.edit').then(function(title) {
+    $translate('user.edit').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.user = UserEndpoint.get({id: $routeParams.id}, function(user) {
+    $scope.user = UserEndpoint.get({id: $routeParams.id}, function (user) {
         $scope.$emit('setPageTitle', $scope.title + ' - ' + user.username);
     });
 
     $scope.processing = false;
 
-    $scope.saveUser = function(user) {
+    $scope.saveUser = function (user) {
         $scope.processing = true;
-        UserEndpoint.update({id: $routeParams.id}, user, function() {
+        UserEndpoint.update({id: $routeParams.id}, user, function () {
             $rootScope.goBack();
-        }, function(errorResponse) { // error
+        }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
             errors && Notify.showAlerts(errors);
             $scope.processing = false;
@@ -43,15 +43,15 @@ function(
         // TODO: make this an endpoint
         {
             name: 'guest',
-            display_name: 'Guest',
+            display_name: 'Guest'
         },
         {
             name: 'user',
-            display_name: 'Member',
+            display_name: 'Member'
         },
         {
             name: 'admin',
-            display_name: 'Admin',
+            display_name: 'Admin'
         }
     ];
 }];

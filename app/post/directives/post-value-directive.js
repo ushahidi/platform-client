@@ -1,4 +1,4 @@
-module.exports = [function() {
+module.exports = [function () {
     return {
         restrict: 'E',
         replace: true,

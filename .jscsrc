@@ -7,5 +7,6 @@
         "beforeOpeningRoundBrace": true,
         "beforeOpeningCurlyBrace": true
     },
+    "requireMultipleVarDecl" : null,
     "excludeFiles" : ["node_modules/**", "bower_components/**", "test/coverage/**"]
 }

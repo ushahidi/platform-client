@@ -2,7 +2,7 @@ module.exports = [
     'TagEndpoint',
     'UserEndpoint',
     'FormEndpoint',
-function(
+function (
     TagEndpoint,
     UserEndpoint,
     FormEndpoint
@@ -15,13 +15,13 @@ function(
             post:  '='
         },
         templateUrl: 'templates/posts/preview.html',
-        link: function(scope) {
+        link: function (scope) {
             // Replace tags with full tag object
             scope.post.tags = scope.post.tags.map(function (tag) {
                 return TagEndpoint.get({id: tag.id});
             });
 
-            FormEndpoint.get({formId: scope.post.form.id}, function(form) {
+            FormEndpoint.get({formId: scope.post.form.id}, function (form) {
                 scope.form_name = form.name;
             });
         }

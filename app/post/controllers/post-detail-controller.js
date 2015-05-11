@@ -12,7 +12,7 @@ module.exports = [
     'FormEndpoint',
     'Leaflet',
     'leafletData',
-function(
+function (
     $scope,
     $translate,
     $routeParams,
@@ -27,12 +27,12 @@ function(
     L,
     leafletData
 ) {
-    $translate('post.post_details').then(function(title){
+    $translate('post.post_details').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.showType = function(type) {
+    $scope.showType = function (type) {
         if (type === 'point') {
             return false;
         }
@@ -58,7 +58,7 @@ function(
         if ($scope.post.form && $scope.post.form.id) {
             $scope.form_attributes = [];
 
-            FormEndpoint.get({formId: $scope.post.form.id}, function(form) {
+            FormEndpoint.get({formId: $scope.post.form.id}, function (form) {
                 $scope.form_name = form.name;
 
                 // Set page title to '{form.name} Details' if a post title isn't provided.
@@ -69,8 +69,8 @@ function(
                 }
             });
 
-            FormAttributeEndpoint.query({formId: $scope.post.form.id}, function(attributes) {
-                angular.forEach(attributes, function(attr) {
+            FormAttributeEndpoint.query({formId: $scope.post.form.id}, function (attributes) {
+                angular.forEach(attributes, function (attr) {
                     this[attr.key] = attr;
                 }, $scope.form_attributes);
             });
@@ -91,7 +91,7 @@ function(
                 type: 'xyz',
                 layerOptions: {
                     subdomains: '1234',
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>',
+                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
             },
             mapquestAerial: {
@@ -100,7 +100,7 @@ function(
                 type: 'xyz',
                 layerOptions: {
                     subdomains: '1234',
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>',
+                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
             },
             hOSM: {
@@ -110,7 +110,7 @@ function(
                 layerOptions: {
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
                 }
-            },
+            }
         }
     };
 
@@ -144,9 +144,9 @@ function(
     });
 
     // Load config
-    var config = ConfigEndpoint.get({id:'map'});
+    var config = ConfigEndpoint.get({id: 'map'});
     // Add map config to scope
-    config.$promise.then(function(config) {
+    config.$promise.then(function (config) {
         // Add settings to scope
         // color, icon and baseLayer have been ignored
         angular.extend($scope, {
@@ -165,7 +165,7 @@ function(
     $q.all(
         config.$promise,
         geojson.$promise
-    ).then(function() {
+    ).then(function () {
         $scope.mapDataLoaded = true;
     });
 
@@ -187,7 +187,7 @@ function(
     });
 
     $scope.deletePost = function () {
-        $translate('notify.post.destroy_confirm').then(function(message) {
+        $translate('notify.post.destroy_confirm').then(function (message) {
             if (window.confirm(message)) {
                 PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
                     $location.path('/');

@@ -6,7 +6,7 @@ module.exports = [
     'PostEntity',
     'PostEndpoint',
     'FormEndpoint',
-function(
+function (
     $scope,
     $translate,
     $location,
@@ -19,7 +19,7 @@ function(
     // Initialize the base modify controller and extend it.
     angular.extend(this, $controller('PostModifyController', { $scope: $scope }));
 
-    $translate('post.create_post').then(function(title){
+    $translate('post.create_post').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
@@ -27,11 +27,11 @@ function(
     $scope.post = postEntity();
     $scope.post_options = PostEndpoint.options();
 
-    FormEndpoint.query().$promise.then(function(forms) {
+    FormEndpoint.query().$promise.then(function (forms) {
         $scope.forms = forms;
     });
 
-    $scope.chooseForm = function(form) {
+    $scope.chooseForm = function (form) {
         $scope.active_form = form;
         $scope.post.form = { id: form.id };
 
@@ -42,7 +42,7 @@ function(
         return !form.disabled;
     };
 
-    $scope.goBack = function() {
+    $scope.goBack = function () {
         $scope.active_form = null;
     };
 

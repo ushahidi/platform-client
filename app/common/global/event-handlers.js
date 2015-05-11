@@ -3,7 +3,7 @@ module.exports = [
     '$location',
     'Authentication',
     'Session',
-function(
+function (
     $rootScope,
     $location,
     Authentication,
@@ -29,11 +29,11 @@ function(
         }
     }
 
-    $rootScope.isAdmin = function() {
+    $rootScope.isAdmin = function () {
         return (($rootScope.currentUser || {}).role === 'admin');
     };
 
-    $rootScope.goBack = function() {
+    $rootScope.goBack = function () {
         var path = $location.path().split('/');
         if (!path.length) {
             return;
@@ -43,23 +43,23 @@ function(
     };
 
     $rootScope.rtlEnabled = false;
-    $rootScope.switchRtl = function() {
+    $rootScope.switchRtl = function () {
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
     };
 
-    $rootScope.$on('event:authentication:login:succeeded', function() {
+    $rootScope.$on('event:authentication:login:succeeded', function () {
         doLogin(Session.getSessionDataEntry('loginPath') || '/');
     });
 
-    $rootScope.$on('event:authentication:logout:succeeded', function() {
+    $rootScope.$on('event:authentication:logout:succeeded', function () {
         doLogout('/');
     });
 
-    $rootScope.$on('event:authentication:login:failed', function() {
+    $rootScope.$on('event:authentication:login:failed', function () {
         doLogout('/login');
     });
 
-    $rootScope.$on('event:unauthorized', function() {
+    $rootScope.$on('event:unauthorized', function () {
         if ($location.url() !== '/login') {
             Session.setSessionDataEntry('loginPath', $location.url());
         }
@@ -67,7 +67,7 @@ function(
         doLogout('/login');
     });
 
-    $rootScope.$on('event:forbidden', function() {
+    $rootScope.$on('event:forbidden', function () {
         if (Authentication.getLoginStatus()) {
             // We're logged in hit forbidden page
             $location.url('/forbidden');

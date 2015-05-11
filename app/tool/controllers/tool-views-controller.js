@@ -2,13 +2,13 @@ module.exports = [
     '$scope',
     '$rootScope',
     '$translate',
-function(
+function (
     $scope,
     $rootScope,
     $translate
 ) {
 
-  $translate('tool.manage_views').then(function(title){
+    $translate('tool.manage_views').then(function (title) {
       $scope.title = title;
       $rootScope.$emit('setPageTitle', title);
   });

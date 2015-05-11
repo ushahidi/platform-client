@@ -1,11 +1,11 @@
 module.exports = [
     '$scope',
     '$translate',
-function(
+function (
     $scope,
     $translate
 ) {
-  $translate('workspace.recent_comments').then(function(title) {
+    $translate('workspace.recent_comments').then(function (title) {
       $scope.title = title;
       $scope.$emit('setPageTitle', title);
   });

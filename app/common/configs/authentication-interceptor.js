@@ -1,7 +1,7 @@
 module.exports = [
     '$provide',
     '$httpProvider',
-function(
+function (
     $provide,
     $httpProvider
 ) {
@@ -14,7 +14,7 @@ function(
         'CONST',
         'Session',
         '_',
-    function(
+    function (
         $rootScope,
         $injector,
         $q,
@@ -23,7 +23,7 @@ function(
         _
     ) {
         return {
-            request: function(config) {
+            request: function (config) {
 
                 var deferred = $q.defer();
 
@@ -37,11 +37,10 @@ function(
                 // if we already have an accessToken,
                 // we will set it straight ahead
                 // and resolve the promise for the config hash
-                if(accessToken !== undefined && accessToken !== null)
-                {
+                if (accessToken !== undefined && accessToken !== null) {
                     config.headers.Authorization = 'Bearer ' + accessToken;
                     deferred.resolve(config);
-                }
+
                 // otherwise, we will ask the backend
                 // via the client credentials oauth flow
                 // for an anonymous accessToken
@@ -49,8 +48,7 @@ function(
                 // this authorization level is not enough
                 // and a 403 or 401 will be thrown
                 // which results in showing the login page)
-                else
-                {
+                } else {
                     var payload = {
                         grant_type: 'client_credentials',
                         client_id: CONST.OAUTH_CLIENT_ID,
@@ -58,14 +56,14 @@ function(
                         scope: CONST.CLAIMED_ANONYMOUS_SCOPES.join(' ')
                     },
 
-                    handleRequestSuccess = function(authResponse){
+                    handleRequestSuccess = function (authResponse) {
                         var accessToken = authResponse.data.access_token;
                         Session.setSessionDataEntry('accessToken', accessToken);
                         config.headers.Authorization = 'Bearer ' + accessToken;
                         deferred.resolve(config);
                     };
 
-                    $injector.invoke(['$http', 'Util', function($http, Util) {
+                    $injector.invoke(['$http', 'Util', function ($http, Util) {
                         // $http is already constructed at the time and you may
                         // use it, just as any other service registered in your
                         // app module and modules on which app depends on.
@@ -76,7 +74,7 @@ function(
                 }
                 return deferred.promise;
             },
-            responseError: function(rejection) {
+            responseError: function (rejection) {
                 if (rejection.status === 401) {
                     $rootScope.$broadcast('event:unauthorized');
                 }

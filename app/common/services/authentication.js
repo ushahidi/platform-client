@@ -5,7 +5,7 @@ module.exports = [
     'Util',
     'CONST',
     'Session',
-function(
+function (
     $rootScope,
     $http,
     $q,
@@ -19,7 +19,7 @@ function(
     var loginStatus = !!Session.getSessionDataEntry('accessToken') && !!Session.getSessionDataEntry('userId'),
 
 
-    setToLoginState = function(userData){
+    setToLoginState = function (userData) {
         Session.setSessionDataEntries({
             userId: userData.id,
             username: userData.username,
@@ -31,15 +31,14 @@ function(
         loginStatus = true;
     },
 
-    setToLogoutState = function(){
+    setToLogoutState = function () {
         Session.clearSessionData();
         loginStatus = false;
     };
 
     return {
 
-        login: function(username, password)
-        {
+        login: function (username, password) {
             var payload = {
                 username: username,
                 password: password,
@@ -51,18 +50,18 @@ function(
 
             deferred = $q.defer(),
 
-            handleRequestError = function(){
+            handleRequestError = function () {
                 deferred.reject();
                 setToLogoutState();
                 $rootScope.$broadcast('event:authentication:login:failed');
             },
 
-            handleRequestSuccess = function(authResponse){
+            handleRequestSuccess = function (authResponse) {
                 var accessToken = authResponse.data.access_token;
                 Session.setSessionDataEntry('accessToken', accessToken);
 
                 $http.get(Util.apiUrl('/users/me')).then(
-                    function(userDataResponse){
+                    function (userDataResponse) {
 
                         setToLoginState(userDataResponse.data);
 
@@ -77,16 +76,16 @@ function(
             return deferred.promise;
         },
 
-        logout: function(silent){
+        logout: function (silent) {
             //TODO: ASK THE BACKEND TO DESTROY SESSION
 
             setToLogoutState();
-            if (! silent) {
+            if (!silent) {
                 $rootScope.$broadcast('event:authentication:logout:succeeded');
             }
         },
 
-        getLoginStatus: function(){
+        getLoginStatus: function () {
             return loginStatus;
         }
     };

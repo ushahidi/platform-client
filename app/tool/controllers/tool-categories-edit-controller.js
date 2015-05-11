@@ -8,7 +8,7 @@ module.exports = [
     'TagEndpoint',
     'Notify',
     '_',
-function(
+function (
     $scope,
     $rootScope,
     $routeParams,
@@ -19,7 +19,7 @@ function(
     Notify,
     _
 ) {
-    $translate('tool.manage_tags').then(function(title){
+    $translate('tool.manage_tags').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });
@@ -30,11 +30,11 @@ function(
     $scope.tag = TagEndpoint.get({id: $routeParams.id});
     $scope.processing = false;
 
-    $scope.saveTag = function(tag) {
+    $scope.saveTag = function (tag) {
         $scope.processing = true;
-        TagEndpoint.update({id: $routeParams.id}, tag, function() {
+        TagEndpoint.update({id: $routeParams.id}, tag, function () {
             $rootScope.goBack();
-        }, function(errorResponse) { // error
+        }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
             errors && Notify.showAlerts(errors);
             $scope.processing = false;

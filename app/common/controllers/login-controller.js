@@ -4,14 +4,14 @@ module.exports = [
     '$translate',
     'Authentication',
     '$location',
-function(
+function (
     $scope,
     $rootScope,
     $translate,
     Authentication,
     $location
 ) {
-    $translate('nav.login').then(function(title) {
+    $translate('nav.login').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
@@ -28,7 +28,7 @@ function(
         $scope.processing = false;
     }
 
-    $scope.loginSubmit = function(){
+    $scope.loginSubmit = function () {
         $scope.processing = true;
 
         Authentication

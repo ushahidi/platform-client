@@ -7,7 +7,7 @@ module.exports = [
     'TagEndpoint',
     'Notify',
     '_',
-function(
+function (
     $scope,
     $location,
     $translate,
@@ -17,7 +17,7 @@ function(
     Notify,
     _
 ) {
-    $translate('tag.add_tag').then(function(title){
+    $translate('tag.add_tag').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
@@ -28,13 +28,13 @@ function(
     $scope.tag = {type: 'category'};
     $scope.processing = false;
 
-    $scope.saveTag = function(tag) {
+    $scope.saveTag = function (tag) {
         $scope.processing = true;
-        var response = TagEndpoint.save(tag, function() {
+        var response = TagEndpoint.save(tag, function () {
             if (response.id) {
                 $location.path('/tools/categories/' + response.id);
             }
-        }, function(errorResponse) { // error
+        }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
             errors && Notify.showAlerts(errors);
             $scope.processing = false;

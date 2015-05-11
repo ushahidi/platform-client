@@ -3,7 +3,7 @@ module.exports = [
     'leafletData',
     'Geocoding',
     '_',
-function(
+function (
     $http,
     leafletData,
     Geocoding,
@@ -24,7 +24,7 @@ function(
             '$window',
             '$scope',
             'Leaflet',
-        function(
+        function (
             $window,
             $scope,
             Leaflet
@@ -63,7 +63,7 @@ function(
 
                 markers: markers,
 
-                updateLatLon: function(lat, lon) {
+                updateLatLon: function (lat, lon) {
                     $scope.model = {
                         lat: lat,
                         lon: lon
@@ -71,14 +71,14 @@ function(
                 },
 
 
-                updateMarkerPosition: function(lat, lon) {
+                updateMarkerPosition: function (lat, lon) {
                     $scope.markers.m1 = {
                         lat: lat,
-                        lng: lon,
+                        lng: lon
                     };
                 },
 
-                centerMapTo: function(lat, lon) {
+                centerMapTo: function (lat, lon) {
                     $scope.center = {
                         lat : lat,
                         lng : lon,
@@ -86,16 +86,18 @@ function(
                     };
                 },
 
-                searchLocation: function(event){
+                searchLocation: function (event) {
                     event.preventDefault();
 
                     var that = this;
-                    Geocoding.search($scope.searchLocationTerm).then(function(coordinates) {
-                        if (!coordinates) { return; } // @todo - handle lookup error
+                    Geocoding.search($scope.searchLocationTerm).then(function (coordinates) {
+                        if (!coordinates) {
+                            return;
+                        } // @todo - handle lookup error
 
                         _.each([
                             'updateLatLon', 'updateMarkerPosition', 'centerMapTo'
-                        ], function(fn) {
+                        ], function (fn) {
                             that[fn](coordinates[0], coordinates[1]);
                         });
 
@@ -104,7 +106,7 @@ function(
                 }
             });
 
-            leafletData.getMap(mapName).then(function(map) {
+            leafletData.getMap(mapName).then(function (map) {
                 map.on('click', onMapClick);
                 function onMapClick(e) {
                     var wrappedLatLng = e.latlng.wrap(),

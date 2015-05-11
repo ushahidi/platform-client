@@ -6,7 +6,7 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     '_',
-function(
+function (
     $scope,
     $rootScope,
     $translate,
@@ -15,7 +15,7 @@ function(
     Notify,
     _
 ) {
-    $translate('user.create').then(function(title) {
+    $translate('user.create').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });
@@ -23,13 +23,13 @@ function(
     $scope.user = {};
     $scope.processing = false;
 
-    $scope.saveUser = function(user) {
+    $scope.saveUser = function (user) {
         $scope.processing = true;
-        var response = UserEndpoint.save(user, function() {
+        var response = UserEndpoint.save(user, function () {
             if (response.id) {
                 $location.path('/tools/users/' + response.id);
             }
-        }, function(errorResponse) { // error
+        }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
             errors && Notify.showAlerts(errors);
             $scope.processing = false;
@@ -40,15 +40,15 @@ function(
         // TODO: make this an endpoint
         {
             name: 'guest',
-            display_name: 'Guest',
+            display_name: 'Guest'
         },
         {
             name: 'user',
-            display_name: 'Member',
+            display_name: 'Member'
         },
         {
             name: 'admin',
-            display_name: 'Admin',
+            display_name: 'Admin'
         }
     ];
 }];

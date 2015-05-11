@@ -10,7 +10,7 @@ module.exports = [
     'FormAttributeEndpoint',
     'Notify',
     '_',
-function(
+function (
     $scope,
     $translate,
     $location,
@@ -26,11 +26,11 @@ function(
     $scope.categories = TagEndpoint.query();
     $scope.availableRoles = RoleHelper.roles;
 
-    this.fetchAttributes = function(form_id) {
-        FormAttributeEndpoint.query({formId: form_id}).$promise.then(function(attrs) {
+    this.fetchAttributes = function (form_id) {
+        FormAttributeEndpoint.query({formId: form_id}).$promise.then(function (attrs) {
             // Initialize values on post (helps avoid madness in the template)
             attrs.map(function (attr) {
-                if (! $scope.post.values[attr.key]) {
+                if (!$scope.post.values[attr.key]) {
                     $scope.post.values[attr.key] = [null];
                 }
             });
@@ -38,28 +38,28 @@ function(
         });
     };
 
-    $scope.allowedChangeStatus = function() {
+    $scope.allowedChangeStatus = function () {
         return $scope.post_options.$resolved && $scope.post_options.allowed_privileges.indexOf('change_status') !== -1;
     };
 
-    $scope.setDraft = function() {
+    $scope.setDraft = function () {
         $scope.post.status = 'draft';
     };
 
-    $scope.postIsPublishedTo = function() {
+    $scope.postIsPublishedTo = function () {
 
         if ($scope.post.status === 'draft') {
             return 'draft';
         }
 
-        if (! _.isEmpty($scope.post.published_to)) {
+        if (!_.isEmpty($scope.post.published_to)) {
             return RoleHelper.getRole($scope.post.published_to[0]);
         }
 
         return RoleHelper.getDefault();
     };
 
-    $scope.publishPostTo = function(role) {
+    $scope.publishPostTo = function (role) {
 
         $scope.post.status = 'published';
         if (role) {
@@ -70,7 +70,7 @@ function(
 
     };
 
-    $scope.savePost = function(post) {
+    $scope.savePost = function (post) {
         $scope.saving_post = true;
 
         // Avoid messing with original object
@@ -82,7 +82,7 @@ function(
             // Strip out empty values
             post.values[key] = _.filter(value);
             // Remove entirely if no values are left
-            if (! post.values[key].length) {
+            if (!post.values[key].length) {
                 delete post.values[key];
             }
         });
@@ -97,12 +97,11 @@ function(
         request.$promise.then(function (response) {
             if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                 $location.path('/posts/' + response.id);
-            }
-            else {
+            } else {
                 Notify.showSingleAlert('Saved!');
                 $location.path('/');
             }
-        }, function(errorResponse) { // errors
+        }, function (errorResponse) { // errors
 
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
             errors && Notify.showAlerts(errors);
@@ -110,36 +109,36 @@ function(
         });
     };
 
-    $scope.isDate = function(attr) {
+    $scope.isDate = function (attr) {
         return attr.input === 'date';
     };
-    $scope.isDateTime = function(attr) {
+    $scope.isDateTime = function (attr) {
         return attr.input === 'datetime';
     };
-    $scope.isLocation = function(attr) {
+    $scope.isLocation = function (attr) {
         return attr.input === 'location';
     };
-    $scope.isSelect = function(attr) {
+    $scope.isSelect = function (attr) {
         return attr.input === 'select';
     };
-    $scope.isNumber = function(attr) {
+    $scope.isNumber = function (attr) {
         return attr.input === 'number';
     };
-    $scope.isText = function(attr) {
+    $scope.isText = function (attr) {
         return attr.input === 'text';
     };
-    $scope.isTextarea = function(attr) {
+    $scope.isTextarea = function (attr) {
         return attr.input === 'textarea';
     };
-    $scope.isCheckbox = function(attr) {
+    $scope.isCheckbox = function (attr) {
         return attr.input === 'checkbox';
     };
-    $scope.isRadio = function(attr) {
+    $scope.isRadio = function (attr) {
         return attr.input === 'radio';
     };
 
     // Can more values be added for this attribute?
-    $scope.canAddValue = function(attr) {
+    $scope.canAddValue = function (attr) {
         return (
             // Attribute allows unlimited values
             attr.cardinality === 0 ||
@@ -148,7 +147,7 @@ function(
         );
     };
     // Can this values be removed?
-    $scope.canRemoveValue = function(attr, key) {
+    $scope.canRemoveValue = function (attr, key) {
         return $scope.post.values[attr.key].length > 1;
     };
     // Add a new value
@@ -163,11 +162,11 @@ function(
     // Datepicker
     $scope.datepicker = [];
 
-    $scope.openDatePicker = function($event, attribute, key) {
+    $scope.openDatePicker = function ($event, attribute, key) {
         $event.preventDefault();
         $event.stopPropagation();
 
-        if (! $scope.datepicker[attribute.key]) {
+        if (!$scope.datepicker[attribute.key]) {
             $scope.datepicker[attribute.key] = [];
         }
         $scope.datepicker[attribute.key][key] = true;

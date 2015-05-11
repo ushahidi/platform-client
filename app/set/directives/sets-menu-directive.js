@@ -3,7 +3,7 @@ module.exports = [
     'SetsEndpoint',
     'UserEndpoint',
     '_',
-function(
+function (
     $rootScope,
     SetsEndpoint,
     UserEndpoint,
@@ -13,15 +13,15 @@ function(
         restrict: 'E',
         replace: true,
         scope: {
-            search:  '=',
+            search:  '='
         },
-        controller: ['$scope', function($scope) {
+        controller: ['$scope', function ($scope) {
             // Load sets + users
             var reloadSets = function () {
                 $scope.listSets = SetsEndpoint.query({search: $scope.search});
-                $scope.listSets.$promise.then(function(sets) {
-                    angular.forEach(sets, function(set) {
-                        if(_.isObject(set.user) && set.user.id !== _.result($rootScope.currentUser, 'userId')) {
+                $scope.listSets.$promise.then(function (sets) {
+                    angular.forEach(sets, function (set) {
+                        if (_.isObject(set.user) && set.user.id !== _.result($rootScope.currentUser, 'userId')) {
                             $scope.uidMap[set.user.id] = UserEndpoint.get({id: set.user.id});
                         }
                     });
@@ -32,10 +32,10 @@ function(
             $scope.uidMap = {};
 
             // Reload sets on login / logout events
-            $scope.$on('event:authentication:logout:succeeded', function() {
+            $scope.$on('event:authentication:logout:succeeded', function () {
                 reloadSets();
             });
-            $scope.$on('event:authentication:login:succeeded', function() {
+            $scope.$on('event:authentication:login:succeeded', function () {
                 reloadSets();
             });
 

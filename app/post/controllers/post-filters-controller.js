@@ -2,7 +2,7 @@ module.exports = [
     '$rootScope',
     '$scope',
     '$translate',
-function(
+function (
     $rootScope,
     $scope,
     $translate

@@ -1,12 +1,12 @@
 module.exports = [
     '$translate',
-function(
+function (
     $translate
 ) {
 
-    return function(keys) {
+    return function (keys) {
         var translated = [];
-        $translate(keys).then(function(result) {
+        $translate(keys).then(function (result) {
             for (var key in result) {
                 translated.push({
                     name: key.split('.').pop(),

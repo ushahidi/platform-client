@@ -4,7 +4,7 @@ module.exports = [
     'Util',
     'jQuery',
     '_',
-function(
+function (
     $q,
     $http,
     Util,
@@ -17,22 +17,22 @@ function(
         default_params: {
             format: 'json'
         },
-        query: function(params) {
+        query: function (params) {
             var deferred = $q.defer();
 
             $http.get(this.getApiUrl(params))
-                .success(function(data, status, headers, config) {
+                .success(function (data, status, headers, config) {
                     deferred.resolve(data);
                 })
-                .error(function(data, status, headers, config) {
+                .error(function (data, status, headers, config) {
                     deferred.reject(null);
                 })
                 ;
 
             return deferred.promise;
         },
-        search: function(location_name) {
-            return this.query({ q: location_name }).then(function(result) {
+        search: function (location_name) {
+            return this.query({ q: location_name }).then(function (result) {
                 if (result && result[0] && result[0].lat && result[0].lon) {
                     return [parseFloat(result[0].lat), parseFloat(result[0].lon)];
                 } else {
@@ -40,7 +40,7 @@ function(
                 }
             });
         },
-        getApiUrl: function(params) {
+        getApiUrl: function (params) {
             var query_string = $.param(_.extend(this.default_params, params));
             return this.api_url + '?' + query_string;
         }

@@ -5,7 +5,7 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
-function(
+function (
     $q,
     ConfigEndpoint,
     Util,
@@ -22,7 +22,7 @@ function(
                 type: 'xyz',
                 layerOptions: {
                     subdomains: '1234',
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>',
+                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
             },
             mapquestAerial: {
@@ -31,7 +31,7 @@ function(
                 type: 'xyz',
                 layerOptions: {
                     subdomains: '1234',
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>',
+                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
             },
             hOSM: {
@@ -41,23 +41,23 @@ function(
                 layerOptions: {
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
                 }
-            },
+            }
         }
     };
 
     var Maps = {
         maps: {},
         config: undefined,
-        getMap: function(name) {
+        getMap: function (name) {
             if (!this.maps[name]) {
                 this.maps[name] = Object.create(Map).init(name);
             }
             return this.maps[name];
         },
-        getAngularScopeParams: function() {
+        getAngularScopeParams: function () {
             var deferred = $q.defer();
 
-            this.getConfig().then(function(config) {
+            this.getConfig().then(function (config) {
                 deferred.resolve({
                     layers: layers,
                     tiles: layers[config.default_view.baseLayer],
@@ -71,21 +71,21 @@ function(
 
             return deferred.promise;
         },
-        getConfig: function() {
+        getConfig: function () {
             var deferred = $q.defer();
 
             if (this.config) {
                 deferred.resolve(this.config);
             } else {
-                this.reloadMapConfig().then(function(config) {
+                this.reloadMapConfig().then(function (config) {
                     deferred.resolve(config);
                 });
             }
 
             return deferred.promise;
         },
-        reloadMapConfig: function() {
-            return ConfigEndpoint.get({ id: 'map' }).$promise.then(_.bind(function(config) {
+        reloadMapConfig: function () {
+            return ConfigEndpoint.get({ id: 'map' }).$promise.then(_.bind(function (config) {
                 this.config = config;
                 return this.config;
             }, this));
@@ -100,11 +100,11 @@ function(
             geojson: undefined,
             cluster: undefined
         },
-        init: function(name) {
+        init: function (name) {
             this.map_name = name;
 
             // Disable 'Leaflet prefix on attributions'
-            this.map().then(function(map) {
+            this.map().then(function (map) {
                 map.attributionControl.setPrefix(false);
             });
 
@@ -113,13 +113,13 @@ function(
 
             return this;
         },
-        map: function() {
+        map: function () {
             var deferred = $q.defer();
 
             if (this.leaflet_map) {
                 deferred.resolve(this.leaflet_map);
             } else {
-                LData.getMap(this.map_name).then(function(map) {
+                LData.getMap(this.map_name).then(function (map) {
                     this.leaflet_map = map;
                     deferred.resolve(this.leaflet_map);
                 });
@@ -127,29 +127,29 @@ function(
 
             return deferred.promise;
         },
-        reloadPosts: function(posts) {
+        reloadPosts: function (posts) {
             this.clearOldMarkers()
                 .then(_.partial(this.setGeojsonLayer, posts))
                 .then(this.addNewMarkers)
                 ;
         },
-        setGeojsonLayer: function(posts) {
+        setGeojsonLayer: function (posts) {
             this.layers.geojson = L.geoJson(posts, {
-                onEachFeature: function(feature, layer) {
+                onEachFeature: function (feature, layer) {
                     layer.bindPopup(
-                        '<strong><a href="/posts/'+feature.properties.id+'">' +
+                        '<strong><a href="/posts/' + feature.properties.id + '">' +
                         feature.properties.title +
                         '</a></strong>' +
-                        '<p>'+feature.properties.description+'</p>'
+                        '<p>' + feature.properties.description + '</p>'
                     );
                 }
             });
         },
-        clearOldMarkers: function() {
+        clearOldMarkers: function () {
             var deferred = $q.defer();
 
-            this.map().then(_.bind(function(map) {
-                _.each(this.layers, function(layer, name) {
+            this.map().then(_.bind(function (map) {
+                _.each(this.layers, function (layer, name) {
                     if (layer) {
                         map.removeLayer(layer);
                     }
@@ -160,10 +160,12 @@ function(
 
             return deferred.promise;
         },
-        addNewMarkers: function() {
-            if (!this.marker_layer) { return; }
+        addNewMarkers: function () {
+            if (!this.marker_layer) {
+                return;
+            }
 
-            Maps.getConfig().then(_.bind(function(config) {
+            Maps.getConfig().then(_.bind(function (config) {
                 if (config.clustering === true) {
                     this.layers.cluster = L.markerClusterGroup({
                         maxClusterRadius: config.maxClusterRadius
@@ -171,15 +173,17 @@ function(
 
                     // This has to be done individually.
                     // Using clusterLayer.addLayers() breaks the clustering.
-                    angular.forEach(this.layers.geojson.getLayers(), function(layer) {
+                    angular.forEach(this.layers.geojson.getLayers(), function (layer) {
                         this.layers.cluster.addLayer(layer);
                     });
                 }
 
                 var markers = this.layers[this.marker_layer] || null;
-                if (!markers) { return; }
+                if (!markers) {
+                    return;
+                }
 
-                this.map().then(function(map) {
+                this.map().then(function (map) {
                     map.addLayer(markers);
 
                     if (config.default_view.fitDataOnMap === true) {
@@ -196,7 +200,7 @@ function(
                     }
                 });
             }, this));
-        },
+        }
     };
 
     Util.bindAllFunctionsToSelf(Map);
