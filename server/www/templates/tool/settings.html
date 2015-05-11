@@ -11,29 +11,39 @@
     <div class="col-md-9 col-md-push-3 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="btn-group" role="group">
-                    <a href="javascript:;" ng-click="goBack()" class="btn btn-default">
-                        <i class="fa fa-arrow-left"></i>
-                        <span translate>nav.back</span>
-                    </a>
-                </div>
-                <h4 class="pull-right flip" translate>settings.site</h4>
+                <h4 translate>settings.site</h4>
             </div>
             <div class="panel-body">
                 <form id="site">
                     <div class="form-group">
-                        <label for="name" translate>settings.site_name</label>
-                        <input id="name" type="text" class="form-control"
-                            placeholder="My Ushahidi Instance"
-                            ng-value="site.site_name"
-                            ng-model="site.site_name">
+                        <label for="site-settings-name" translate>settings.site_name</label>
+                        <input id="site-settings-name" type="text" class="form-control"
+                            ng-model="site.name">
                     </div>
                     <div class="form-group">
-                        <label for="owner" translate>settings.site_owner</label>
-                        <input id="owner" type="text" class="form-control"
-                            placeholder="My Name"
-                            ng-value="site.owner_name"
-                            ng-model="site.owner_name">
+                        <label for="site-settings-description" translate>settings.site_description</label>
+                        <input id="site-settings-description" type="text" class="form-control"
+                            ng-model="site.description">
+                    </div>
+                    <div class="form-group">
+                        <label for="site-settings-email" translate>settings.site_email</label>
+                        <input id="site-settings-email" type="email" class="form-control"
+                            ng-model="site.email">
+                        <p class="help-block" translate>settings.site_email_note</p>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="site-settings-timezone" translate>settings.site_timezone</label>
+                            <select id="site-settings-timezone" ng-model="site.timezone" ng-options="timezone for timezone in timezones | orderBy | unique"></select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="site-settings-language" translate>settings.site_language</label>
+                            <select id="site-settings-language" ng-model="site.language" ng-options="'languages.' + lang  | translate for lang in languages"></select>
+                        </div>
+                      </div>
                     </div>
                     <p>
                         <button class="btn btn-primary pull-right flip" ng-click="updateConfig('site', site)"
@@ -42,23 +52,6 @@
                                 <span translate>settings.save</span>
                         </button>
                     </p>
-                </form>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <h4 class="pull-right flip" translate>settings.features</h4>
-            </div>
-            <div class="panel-body">
-                <form id="features">
-                    <div class="list-group">
-                        <a href="javascript:;" class="list-group-item"
-                            ng-repeat="(feature,enabled) in features | orderBy:feature"
-                            ng-click="toggleFeature(feature, !enabled)">
-                            <i class="fa fa-lg" ng-class="{ 'fa-toggle-on': enabled, 'fa-toggle-off': !enabled }"></i>
-                            <span>{{feature}}</span>
-                        </a>
-                    </div>
                 </form>
             </div>
         </div>

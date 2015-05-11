@@ -4,7 +4,6 @@ angular.module('e2e-mocks', ['ngMockE2E'])
 
         var resourceToJsonMapping = {
             'posts': require('../mocked_backend/api/v2/posts.json'),
-            'config/features': require('../mocked_backend/api/v2/config/features.json'),
             'config/map': require('../mocked_backend/api/v2/config/map.json'),
             'sets': require('../mocked_backend/api/v2/sets.json'),
             'users': require('../mocked_backend/api/v2/users.json'),

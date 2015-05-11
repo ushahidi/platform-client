@@ -1,8 +1,6 @@
 {
     "preset": "crockford",
-    "disallowDanglingUnderscores": {
-        "allExcept": ["_", "_s"]
-    },
+    "disallowDanglingUnderscores": null,
     "requireSpacesInAnonymousFunctionExpression" : {
         "beforeOpeningRoundBrace": true,
         "beforeOpeningCurlyBrace": true

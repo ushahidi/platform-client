@@ -9,7 +9,9 @@ require('angular-translate');
 require('angular-bootstrap/dist/ui-bootstrap-tpls');
 require('angular-ui-bootstrap-datetimepicker');
 require('angular-moment');
+require('moment-timezone');
 require('angular-sanitize');
+require('angular-filter');
 require('angular-markdown-directive');
 require('angular-local-storage');
 require('checklist-model/checklist-model');
@@ -56,6 +58,7 @@ angular.module('app',
         'ui.gravatar',
         'leaflet-directive',
         'angularMoment',
+        'angular.filter',
         'btford.markdown',
         'posts',
         'tools',
@@ -91,6 +94,7 @@ angular.module('app',
     .service('GlobalFilter', require('./common/services/global-filter.js'))
     .service('Maps', require('./common/services/maps.js'))
     .service('Geocoding', require('./common/services/geocoding.js'))
+    .service('Languages', require('./common/services/languages.js'))
 
     .controller('navigation', require('./common/controllers/navigation.js'))
     .controller('PageMetadata', require('./common/controllers/page-metadata.js'))

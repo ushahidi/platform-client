@@ -9,7 +9,6 @@ function (
 ) {
 
     $scope.site = ConfigEndpoint.get({ id: 'site' });
-    $scope.features = ConfigEndpoint.get({ id: 'features' });
 
     $scope.logoutClick = function (e) {
         e.preventDefault();

@@ -17,9 +17,8 @@ function (
     $scope.pageRobots = null;
 
     $scope.site = ConfigEndpoint.get({ id: 'site' }, function (site) {
-        $scope.siteTitle = site.site_name;
+        $scope.siteTitle = site.name;
     });
-    $scope.features = ConfigEndpoint.get({ id: 'features' });
 
     $rootScope.$on('setPageTitle', function (event, title) {
         $scope.pageTitle = null;

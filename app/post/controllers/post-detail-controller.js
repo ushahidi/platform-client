@@ -85,7 +85,7 @@ function (
     // Map
     var layers = {
         baselayers : {
-            mapquest: {
+            MapQuest: {
                 name: 'MapQuest',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png',
                 type: 'xyz',
@@ -94,7 +94,7 @@ function (
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
             },
-            mapquestAerial: {
+            MapQuestAerial: {
                 name: 'MapQuest Aerial',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png',
                 type: 'xyz',
@@ -149,13 +149,15 @@ function (
     config.$promise.then(function (config) {
         // Add settings to scope
         // color, icon and baseLayer have been ignored
+        var localLayers = angular.copy(layers);
+        localLayers.baselayers[config.default_view.baselayer].top = true;
         angular.extend($scope, {
             center: {
                 lat: config.default_view.lat,
                 lng: config.default_view.lon,
                 zoom: config.default_view.zoom
             },
-            tiles: layers[config.default_view.baseLayer]
+            layers: localLayers
         });
 
         return config;

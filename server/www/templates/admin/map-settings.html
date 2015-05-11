@@ -1,58 +1,55 @@
-<div class="container  container--map-settings">
-    <div class="map-settings-header">
+<div class="panel panel-default">
+    <div class="panel-heading">
         <h4 class="title">{{title}}</h4>
-    </div> <!-- end .map-settings-header -->
-
-    <div class="wrapper">
-        <div class="container">
-            <form>
-                <section class="map-settings-left-column">
-                    <label for="default-location">
-                        <h6>Default Location</h6>
-                    </label>
-                    <p class="form-helper-text">Drag map to refine location</p>
-
-                    <div class="input-with-icon">
-                        <span class="prefix"><i class="fa fa-map-marker"></i></span>
-                        <input ng-value="map.default_location" id="default-location" type="text" placeholder="Enter a default location" class="has-prefix  js-default-location">
+    </div>
+    <div class="panel-body">
+        <form id="map">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" ng-if="mapSettingsReady">
+                        <label translate>settings.map_default_location</label>
+                        <leaflet defaults="defaults" tiles="baselayer" markers="markers" center="center" height="300px" width="100%"></leaflet>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-if="mapSettingsReady">
+                    <div class="form-group">
+                        <label for="map-settings-base-layer" translate>settings.map_default_baselayer</label>
+                        <select id="map-settings-base-layer" class="form-control" ng-model="map.default_view.baselayer" ng-options="index as layer.name for (index, layer) in baseLayers | orderBy" ng-change="updateMapPreview()"></select>
                     </div>
 
-                    <label for="cluster-reports">
-                        <h6>Cluster reports on map</h6>
-                    </label>
-                    <p class="form-helper-text">Combine nearby reports on the map</p>
-
-                    <div class="toggle-switch">
-                            <input id="cluster-reports-yes" name="clustering" type="radio" class="js-cluster-reports-input" value="1">
-                            <label for="cluster-reports-yes">Yes</label>
-
-                            <input id="cluster-reports-no" name="clustering" type="radio" checked="" class="js-cluster-reports-input" value="0">
-                            <label for="cluster-reports-no">No</label>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{'has-error': map.latitude.$valid}">
+                                <label for="map-settings-latitude" translate>settings.map_default_latitude</label>
+                                <input name="latitude" id="map-settings-latitude" type="number" step="0.1" ng-min="-90" ng-max="90" required class="form-control" ng-model="map.default_view.lat" ng-pattern="patternFloat" ng-change="updateMapPreview()" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{'has-error': map.longitude.$valid}">
+                                <label for="map-settings-longitude" translate>settings.map_default_longitude</label>
+                                <input name="longitude" id="map-settings-longitude" type="number" step="0.1" ng-min="-180" ng-max="180" required class="form-control" ng-model="map.default_view.lon" ng-pattern="patternFloat" ng-change="updateMapPreview()" />
+                            </div>
+                        </div>
                     </div>
 
-                    <label for="map-provider">
-                        <h6>Map Base Layer</h6>
-                    </label>
-                    <p class="form-helper-text">Select the default map base layer</p>
-
-                    <select name="baseLayer" class="select-map-provider  js-base-layer">
-                        <option value="MapQuest">MapQuest</option>
-                        <option value="MapQuest Aerial">MapQuest Aerial</option>
-                        <option value="Humanitarian OSM">Humanitarian OSM</option>
-                    </select>
-                </section>
-
-                <section ng-controller="adminMapSettings" class="map-settings-right-column">
-                    <leaflet defaults="defaults" markers="markers" height="365px" width="100%"></leaflet>
-
-                    <label id="slider-label">Default Zoom Level</label>
-                    <div class="range-slider">
-                        <input type = "range" min="0" max="100" aria-labelledby="slider-label" onchange="rangevalue.value=value"/>
-                        <output id="rangevalue">50</output>
+                    <div class="form-group">
+                        <label for="map-settings-zoom" translate>settings.map_default_zoom_level</label>
+                        <input id="map-settings-zoom" type="number" ng-min="minZoom" ng-max="maxZoom" required class="form-control" ng-model="map.default_view.zoom" ng-pattern="onlyNumbers" ng-change="updateMapPreview()" />
                     </div>
-                    <button type="submit">Save Settings</button>
-                </section>
-            </form>
-        </div>
-    </div> <!-- end .wrapper -->
-</div> <!-- end .container -->
+
+                    <div class="form-group">
+                        <label><input type="checkbox" ng-model="map.clustering" id="map-settings-clustering" /> <span translate>settings.map_clustering</span></label>
+                    </div>
+
+                    <p>
+                        <button class="btn btn-primary pull-right flip" ng-click="updateConfig('map', map)"
+                            ng-disabled="form.$invalid || isUnchanged(map) || saving_config['map']">
+                                <i class="fa fa-cog fa-spin" ng-show="saving_config['map']"></i>
+                                <span translate>settings.save</span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

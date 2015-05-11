@@ -16,20 +16,20 @@ function (
 
     var layers = {
         baselayers : {
-            mapquest: {
+            MapQuest: {
                 name: 'MapQuest',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png',
                 type: 'xyz',
-                layerOptions: {
+                options: {
                     subdomains: '1234',
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
             },
-            mapquestAerial: {
+            MapQuestAerial: {
                 name: 'MapQuest Aerial',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png',
                 type: 'xyz',
-                layerOptions: {
+                options: {
                     subdomains: '1234',
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
@@ -38,7 +38,7 @@ function (
                 name: 'Humanitarian OSM',
                 url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
                 type: 'xyz',
-                layerOptions: {
+                options: {
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
                 }
             }
@@ -58,9 +58,11 @@ function (
             var deferred = $q.defer();
 
             this.getConfig().then(function (config) {
+                // Set active baselayer
+                var localLayers = angular.copy(layers);
+                localLayers.baselayers[config.default_view.baselayer].top = true;
                 deferred.resolve({
-                    layers: layers,
-                    tiles: layers[config.default_view.baseLayer],
+                    layers: localLayers,
                     center: {
                         lat: config.default_view.lat,
                         lng: config.default_view.lon,
@@ -168,7 +170,7 @@ function (
             Maps.getConfig().then(_.bind(function (config) {
                 if (config.clustering === true) {
                     this.layers.cluster = L.markerClusterGroup({
-                        maxClusterRadius: config.maxClusterRadius
+                        maxClusterRadius: config.cluster_radius
                     });
 
                     // This has to be done individually.
