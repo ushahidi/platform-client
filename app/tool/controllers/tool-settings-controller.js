@@ -31,7 +31,7 @@ function (
     }
     $scope.timezones.push('UTC');
 
-    $scope.languages = Languages.RFC3066;
+    $scope.languages = Languages.languages;
 
     $scope.updateConfig = function (id, model) {
         $scope.saving_config[id] = true;

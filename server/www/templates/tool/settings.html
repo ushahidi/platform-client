@@ -41,7 +41,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                             <label for="site-settings-language" translate>settings.site_language</label>
-                            <select id="site-settings-language" ng-model="site.language" ng-options="'languages.' + lang  | translate for lang in languages"></select>
+                            <select id="site-settings-language" ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages"></select>
                         </div>
                       </div>
                     </div>
