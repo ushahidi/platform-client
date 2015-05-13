@@ -15,7 +15,7 @@ function (
     Notify,
     _
 ) {
-    $translate('user.create').then(function (title) {
+    $translate('user.add_user').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });

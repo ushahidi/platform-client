@@ -1,25 +1,5 @@
 {
-    "api": {
-        "add_sample_data" : "Add sample data",
-        "api_explorer" : "API Explorer",
-        "authenticated" : "Authenticated",
-        "data_providers" : "Data Providers",
-        "execute" : "Execute",
-        "forms" : "Forms",
-        "make_a_request" : "Make a Request",
-        "messages" : "Messages",
-        "posts" : "Posts",
-        "query" : "Query",
-        "request_body" : "Request Body",
-        "reset" : "Reset",
-        "tags" : "Categories",
-        "users" : "Users"
-    },
     "app": {
-        "community_liaison" : "Community Liaison",
-        "contact_us" : "Contact Us",
-        "copyright" : "&copy; Copyright __owner_name__, 2014.",
-        "main_section" : "Main Section",
         "powered_by_ushahidi" : "Powered by Ushahidi.",
         "support" : "Support",
         "documentation": "Documentation",
@@ -27,18 +7,9 @@
     },
     "form": {
         "add_field" : "Add Field",
-        "add_group" : "Add Group",
-        "edit_group" : "Edit Group",
-        "delete_group" : "Delete Group",
         "edit_field" : "Edit Field",
-        "form_wizard" : "Form Wizard",
         "forms" : "Forms",
-        "type" : "type",
-        "create_or_edit" : "Do you want to __createPrefixHTML__create a new form__createSuffixHTML__ or edit a form?",
-        "drag_group_title": "Drag to move group",
-        "edit_details": "Edit Form Details",
-        "currently_disabled": "This Form is currently disabled."
-
+        "type" : "type"
     },
     "globalFilter": {
         "filter" : "Filter",
@@ -89,40 +60,18 @@
         "select_one": "Select one",
         "created": "Created time"
     },
-    "map": {
-        "collapse_map" : "collapse map",
-        "expand_map" : "expand map",
-        "view_on_map" : "View on map"
-    },
-    "message": {
-        "all_messages" : "All Messages",
-        "archived" : "Archived",
-        "email" : "Email",
-        "incoming_messages" : "Incoming Messages",
-        "messages_configurations" : "Messages Configurations",
-        "sms" : "SMS"
-    },
     "nav" : {
         "about" : "About",
-        "actions" : "Actions",
-        "admin" : "Administrator",
         "all" : "All",
         "author_tagline" : "By ",
         "appearance" : "Appearance",
         "back" : "Back",
-        "click_images_to_zoom" : "Click images to zoom",
         "category" : "Category",
         "categories" : "Categories",
-        "clear" : "Clear Selection",
         "collections" : "Collections",
         "comments" : "Comments",
-        "count_posts" : "__count__ <span>posts</span>",
-        "count_tags" : "__count__ <span>categories</span>",
-        "count_users" : "__count__ <span>users</span>",
         "data" : "Data",
-        "disable" : "Disable",
         "edit_profile" : "Edit Profile",
-        "enable" : "Enable",
         "forbidden" : "Access Denied",
         "create" : "Create",
         "dashboard" : "Dashboard",
@@ -130,173 +79,61 @@
         "edit" : "Edit",
         "filters" : "Filters",
         "forms" : "Forms",
-        "from_time" : "From Time",
-        "full" : "Full",
         "help" : "Help",
         "home" : "Home",
-        "keyword" : "Keyword",
-        "list" : "List",
-        "location" : "Location",
-        "login_register" : "Login/Register",
         "login" : "Login",
         "logout" : "Logout",
-        "main_navigation" : "Main Navigation",
-        "map" : "Map",
-        "media" : "Media",
-        "next" : "Next",
-        "new" : "New",
-        "no" : "No",
         "notifications" : "Notifications",
-        "options" : "Options",
         "people" : "People",
         "please_wait_loading" : "Please wait. Loading...",
         "plugins" : "Plugins",
         "posts" : "Posts",
-        "prev" : "Prev",
-        "profile": "My Profile",
         "role" : "Role",
         "roles" : "Roles",
         "saved_searches" : "Saved Searches",
-        "save_changes" : "Save Changes",
-        "search" : "Search",
-        "select" : "Select",
         "select_all" : "Select All",
-        "set" : "Set",
-        "sets" : "Sets",
         "settings" : "Settings",
-        "status": "Status",
         "tags" : "Categories",
         "tools" : "Tools",
         "type" : "Type",
         "unselect_all" : "Unselect All",
-        "until_time" : "Until Time",
         "user" : "User",
         "users" : "Users",
-        "user_name" : "User Name",
         "views" : "Views",
-        "workspace" : "Workspace",
-        "yes" : "Yes"
-    },
-    "search" : {
-        "nav" : {
-            "location" : "Location",
-            "tags" : "Categories",
-            "date" : "Date",
-            "keyword" : "Keyword"
-        },
-        "location" : {
-            "select_a_location" : "Select a location"
-        },
-        "tags" : {
-            "select_tags" : "Select categories",
-            "tag_actions" : "Category Actions",
-            "select" : "select",
-            "edit" : "edit"
-        },
-        "date" : {
-            "select_start_and_end_date" : "Select a start and end time",
-            "from" : "From",
-            "to" : "To",
-            "until_time" : "Until time"
-        },
-        "keyword" : {
-            "enter_keyword" : "Enter a keyword to search",
-            "keyword_search" : "Keyword search",
-            "search" : "Search"
-        }
+        "workspace" : "Workspace"
     },
     "view_tabs" : {
         "view" : "View",
         "map" : "Map",
         "list" : "List",
         "graph" : "Graph",
-        "timeline" : "Timeline",
-        "public" : "Public",
-        "private" : "Private",
-        "history" : "History",
-        "edit" : "Edit"
-    },
-    "workspace": {
-        "posts" : "posts",
-        "users" : "users",
-        "tags" : "categories",
-        "accordion" : {
-            "posts" : "Posts",
-            "settings" : "Settings",
-            "tools" : "Tools"
-        }
-    },
-    "pagination": {
-        "showing_records" : "Showing __startRecord__ to  __endRecord__ from __totalRecords__ __modelName__",
-        "showing_x_to_y_of_n_results" : "{{from}} to {{to}} of {{total}} results"
+        "timeline" : "Timeline"
     },
     "post": {
         "posts" : "Posts",
         "all_posts" : "All Posts",
-        "anonymous" : "Anonymous",
-        "awaiting_review" : "Awaiting review",
         "create_post" : "Create Post",
         "posted_by" : "Posted by",
         "draft" : "Draft",
         "edited_by" : "Edited by",
         "export" : "Export",
-        "number_of_posts_shown" : "Number of posts shown",
         "per_page" : "{{count}} posts",
-        "other_posts_tagged" : "Other posts categorized",
         "post_details" : "Post Details",
         "type_details" : "{{type}} Details",
         "edit_post" : "Edit Post",
         "history" : "History",
-        "private" : "Private",
-        "public" : "Public",
         "publish" : "Publish to...",
         "published" : "Published",
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
-        "read_more" : "Read More",
-        "sort_posts_by" : "Sort posts by",
         "location" : "Location",
         "categories" : "Categories",
-        "geometry_test" : "Geometry Test",
-        "view_on_map" : "View on map",
         "status" : "Status",
         "type": "Type",
-        "links" : "Links",
-        "respond" : "Respond",
-        "send" : "Send",
-        "more" : "more",
-        "posts_with_same_tags" : " posts with same categories",
         "view" : "View",
         "post_actions" : {
-            "post_actions" : "Post Actions",
-            "select" : "select",
             "edit" : "edit",
-            "set" : "set",
-            "publish" : "publish",
-            "unpublish" : "unpublish",
             "delete" : "delete"
-        },
-        "side_menu" : {
-            "how_to_post" : {
-                "how_to_post" : "How to Post",
-                "channels": {
-                    "via_sms" : "via SMS",
-                    "via_email" : "via Email",
-                    "via_this_deployment" : "via This Deployment"
-                }
-            },
-            "about" : "About",
-            "tags" : "Categories"
-
-        },
-        "filter_sort" : {
-            "sort_posts_by" : "Sort posts by",
-            "properties" : {
-                "sort" : "Sort by",
-                "created" : "Created",
-                "updated" : "Updated",
-                "title_a_to_z" : "Title A to Z"
-            }
         },
         "modify" : {
             "intro" : "Choose a post type:",
@@ -342,27 +179,12 @@
         }
     },
     "set": {
-        "add_a_photo" : "Add a photo",
-        "add_to_sets" : "Add to sets",
-        "add_to_set" : "Add to set",
-        "choose_a_tag" : "Choose a category",
-        "click_or_tap_button_to_change" : "Click or tap button to change",
-        "create_set" : "Create Set",
-        "description" : "Description",
-        "enter_a_short_description" : "Enter a short description",
-        "keywords" : "Keywords",
-        "name" : "Name",
-        "photo" : "Photo",
-        "private" : "Private",
-        "public" : "Public",
-        "separate_tags_with_commas" : "Separate categories with commas",
-        "this_set_is_private_by_default" : "This set is *Private* by default",
-        "visibility" : "Visibility",
         "empty_list_0" : "No collections",
         "empty_list_1" : "No saved searches"
     },
     "tag": { // named 'tags' in code, and 'categories' for user display
         "add_tag" : "Add Category",
+        "save" : "Save Category",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "manage_tags" : "Manage Categories",
@@ -381,24 +203,7 @@
             "category" : "Category",
             "status" : "Status"
         },
-        "no_description_given" : "No description given",
-        "number_of_tags_shown" : "Number of categories shown",
-        "sort_tags_by" : "Sort categories by",
-        "update_tag" : "Update Category",
-        "unselect_all" : "Unselect all",
-        "add_tag" : "Add Category",
-        "delete" : "Delete",
-        "tag_actions" : "Category Actions",
-        "number_of_tags_shown" : "Number of categories shown",
-        "sort_users_by" : "Sort users by",
-        "filter_sort" : {
-            "properties" : {
-                "sort" : "Sort by",
-                "date_time_created" : "Date/Time Created",
-                "tag_a_z" : "Tag A-Z",
-                "id" : "ID"
-            }
-        }
+        "delete" : "Delete"
     },
     "tool": {
         "manage_forms" :  "Manage Forms",
@@ -436,13 +241,10 @@
         "map_default_location": "Default location"
     },
     "user": {
-        "user_actions" : "User Actions",
-        "select_all" : "Select All",
-        "unselect_all" : "Unselect All",
         "add_user" : "Add User",
+        "edit_user" : "Edit User",
         "change_role" : "Change Role",
-        "create" : "Create User",
-        "edit" : "Edit User",
+        "save" : "Save User",
         "filter_role" : "Filter Role",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
@@ -452,8 +254,6 @@
         "edit_profile" : "Edit Profile",
         "save_profile" : "Save Profile",
         "cancel" : "Cancel",
-        "edit_this_post" : "Edit this post",
-        "edit_user" : "Edit User",
         "email" : "Email Address",
         "failed_attempts" : "Failed attempts: ",
         "full_name" : "Full Name",
@@ -465,20 +265,7 @@
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
-        "sort_users_by" : "Sort users by",
-        "update_user" : "Update User",
         "username" : "Username",
-        "click_to_select" : "Click To Select",
-        "keyword_search" : "Keyword Search",
-        "go" : "Go",
-        "filter_sort" : {
-            "properties" : {
-                "sort" : "Sort by",
-                "date_time_created" : "Date/Time Created",
-                "username_a_z" : "Username A-Z",
-                "id" : "ID"
-            }
-        }
     },
     "user_profile" : {
         "title" : "Edit profile"
@@ -488,9 +275,6 @@
         "username": "Username",
         "email": "Email Address",
         "role": "Role"
-    },
-    "footer" : {
-        "copyright_info" : "Powered by Ushahidi. | &copy; Copyright {{owner_name}}, 2013"
     },
     "notify": {
         "default" : {
@@ -538,7 +322,7 @@
         "default" : "No records found.",
         "post" : "No posts found.",
         "user" : "No users found.",
-        "tag" : "No categories found."
+        "category" : "No categories found."
     },
     "workspace": {
         "recent_activity": "Recent Activity",

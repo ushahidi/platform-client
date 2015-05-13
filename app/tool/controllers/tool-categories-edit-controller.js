@@ -19,7 +19,7 @@ function (
     Notify,
     _
 ) {
-    $translate('tool.manage_tags').then(function (title) {
+    $translate('tag.edit_tag').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });

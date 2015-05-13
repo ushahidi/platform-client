@@ -17,7 +17,7 @@ function (
     Notify,
     _
 ) {
-    $translate('user.edit').then(function (title) {
+    $translate('user.edit_user').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
