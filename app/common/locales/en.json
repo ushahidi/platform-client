@@ -182,7 +182,7 @@
         "empty_list_0" : "No collections",
         "empty_list_1" : "No saved searches"
     },
-    "tag": { // named 'tags' in code, and 'categories' for user display
+    "tag": {
         "add_tag" : "Add Category",
         "save" : "Save Category",
         "choose_roles" : "Choose Roles",
@@ -265,7 +265,7 @@
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
-        "username" : "Username",
+        "username" : "Username"
     },
     "user_profile" : {
         "title" : "Edit profile"
