@@ -12,6 +12,10 @@ function (
         controller: require('./controllers/tool-settings-controller.js'),
         templateUrl: 'templates/tool/settings.html'
     })
+    .when('/tools/map-settings', {
+        controller: require('./controllers/tool-map-settings.js'),
+        templateUrl: 'templates/tool/map-settings.html'
+    })
     .when('/tools/appearance', {
         controller: require('./controllers/tool-appearance-controller.js'),
         templateUrl: 'templates/tool/todo.html'

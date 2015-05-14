@@ -150,7 +150,9 @@ function (
         // Add settings to scope
         // color, icon and baseLayer have been ignored
         var localLayers = angular.copy(layers);
-        localLayers.baselayers[config.default_view.baselayer].top = true;
+        if (localLayers.baselayers[config.default_view.baselayer]) {
+            localLayers.baselayers[config.default_view.baselayer].top = true;
+        }
         angular.extend($scope, {
             center: {
                 lat: config.default_view.lat,

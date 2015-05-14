@@ -60,7 +60,9 @@ function (
             this.getConfig().then(function (config) {
                 // Set active baselayer
                 var localLayers = angular.copy(layers);
-                localLayers.baselayers[config.default_view.baselayer].top = true;
+                if (localLayers.baselayers[config.default_view.baselayer]) {
+                    localLayers.baselayers[config.default_view.baselayer].top = true;
+                }
                 deferred.resolve({
                     layers: localLayers,
                     center: {

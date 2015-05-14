@@ -223,7 +223,7 @@
         "tools" : "Tools"
     },
     "map_settings" : {
-        "admin_map_settings" : "Admin: Map Settings"
+        "admin_map_settings" : "Map Settings"
     },
     "settings" :{
         "site" : "Site Settings",

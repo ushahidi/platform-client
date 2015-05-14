@@ -99,7 +99,6 @@ angular.module('app',
 
     .controller('navigation', require('./common/controllers/navigation.js'))
     .controller('PageMetadata', require('./common/controllers/page-metadata.js'))
-    .controller('adminMapSettings', require('./common/controllers/admin/map-settings.js'))
 
     .config(require('./common/configs/authentication-interceptor.js'))
     .config(require('./common/configs/locale-config.js'))
