@@ -3,8 +3,40 @@
 </div>
 <div class="panel panel-default">
 
+    <div class="bulk-actions" ng-if="userHasBulkActionPermissions()">
+        <button type="button" class="btn btn-default" id="select-all-posts"
+            ng-if="!allSelectedOnCurrentPage()"
+            ng-click="selectAllPosts()">
+                <i class="fa  fa-trash-o"></i>
+                <span translate>post.select_all</span>
+        </button>
+        <button type="button" class="btn btn-default" id="unselect-all-posts"
+            ng-if="allSelectedOnCurrentPage()"
+            ng-click="unselectAllPosts()">
+                <i class="fa  fa-trash-o"></i>
+                <span translate>post.unselect_all</span>
+        </button>
+        <button type="button" class="btn" id="delete-selected-posts"
+            ng-disabled="selectedItems.length <= 0"
+            ng-class="{ 'btn-default': !selectedPostIds.length, 'btn-danger': selectedPostIds.length }"
+            ng-click="deleteSelectedPosts()">
+                <i class="fa  fa-trash-o"></i>
+                <span translate>post.post_actions.delete</span>
+        </button>
+    </div>
+
     <ul class="list-group">
-        <post-preview ng-repeat="post in posts" post="post"></post-preview>
+        <post-preview
+            ng-repeat="post in posts"
+            can-select="userHasBulkActionPermissions()"
+            selection-model
+            selection-model-type="checkbox"
+            selection-model-mode="multiple-additive"
+            selection-model-selected-items="selectedItems"
+            selection-model-cleanup-strategy="deselect"
+            post="post"
+        >
+        </post-preview>
     </ul>
 
     <div class="panel-footer">

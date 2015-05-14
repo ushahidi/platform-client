@@ -12,7 +12,8 @@ function (
         restrict: 'E',
         replace: true,
         scope: {
-            post:  '='
+            post:  '=',
+            canSelect: '='
         },
         templateUrl: 'templates/posts/preview.html',
         link: function (scope) {

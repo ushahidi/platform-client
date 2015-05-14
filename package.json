@@ -86,6 +86,7 @@
     "moment-timezone": "^0.3.1",
     "ngGeolocation": "git://github.com/rjmackay/ngGeolocation",
     "nvd3": "git://github.com/novus/nvd3#v1.7.1",
+    "selection-model": "git://github.com/jtrussell/angular-selection-model.git",
     "underscore": "^1.7.0"
   },
   "engines": {

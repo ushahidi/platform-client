@@ -1,8 +1,11 @@
 <li class="list-group-item" ><!-- ng-repeat="post in posts" -->
-    <div class="row">
+    <div class="row" ng-class="{ 'warning': post.selected }">
         <div class="col-md-9">
             <div>
                 <!-- todo post thumbnail -->
+            </div>
+            <div ng-if="canSelect">
+                <input type="checkbox" value="{post.id}">
             </div>
             <small>
                 <span class="post-time" am-time-ago="post.updated || post.created"></span>
@@ -29,4 +32,3 @@
         </div>
     </div>
 </li>
-

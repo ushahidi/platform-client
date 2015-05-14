@@ -118,6 +118,8 @@
         "draft" : "Draft",
         "edited_by" : "Edited by",
         "export" : "Export",
+        "select_all" : "Select All",
+        "unselect_all" : "Unselect All",
         "per_page" : "{{count}} posts",
         "post_details" : "Post Details",
         "type_details" : "{{type}} Details",
@@ -133,8 +135,8 @@
         "type": "Type",
         "view" : "View",
         "post_actions" : {
-            "edit" : "edit",
-            "delete" : "delete"
+            "edit" : "Edit",
+            "delete" : "Delete"
         },
         "modify" : {
             "intro" : "Choose a post type:",

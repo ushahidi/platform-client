@@ -17,6 +17,7 @@ require('angular-local-storage');
 require('checklist-model/checklist-model');
 require('angular-gravatar/build/md5');
 require('angular-gravatar/build/angular-gravatar');
+require('selection-model/dist/selection-model');
 window.jQuery = require('jquery'); // Required for jasny-bootstrap
 require('jasny-bootstrap/js/offcanvas');
 require('ngGeolocation/ngGeolocation');
@@ -64,7 +65,8 @@ angular.module('app',
         'sets',
         'user-profile',
         'ngGeolocation',
-        'nvd3'
+        'nvd3',
+        'selectionModel'
     ])
 
     .constant('CONST', {
