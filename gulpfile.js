@@ -19,6 +19,7 @@ var gulp         = require('gulp'),
     bump         = require('gulp-bump'),
     tar          = require('gulp-tar'),
     gzip         = require('gulp-gzip'),
+    jscs         = require('gulp-jscs'),
 
     mockBackendFlag                    = gutil.env['mock-backend'],
     mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
@@ -360,6 +361,14 @@ gulp.task('tdd', function (done) {
         autoWatch: true,
         singleRun: false
     }, done);
+});
+
+/**
+ * Run JSCS tests
+ */
+gulp.task('jscs', function () {
+    return gulp.src(['app/**/*.js', 'test/**/*.js'])
+        .pipe(jscs());
 });
 
 /**
