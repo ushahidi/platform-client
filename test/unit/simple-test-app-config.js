@@ -1,8 +1,8 @@
 var rootPath = '../../';
 
-module.exports = function(appModule){
+module.exports = function (appModule) {
     // for the test app, we will mock the backend, so this url is actually never really used
-    var backendUrl = 'http://backend', 
+    var backendUrl = 'http://backend',
     claimedAnonymousScopes = [
         'posts',
         'media',
@@ -18,7 +18,7 @@ module.exports = function(appModule){
     ];
 
     appModule
-        .factory('_', function($window) {
+        .factory('_', function ($window) {
             return $window._;
         })
         .constant('CONST', {

@@ -55,7 +55,7 @@ function (
                 focus: true,
                 draggable: true
             }
-        }
+        };
 
         // Get this map's available zoom levels.
         $scope.getMapZoomLevels = function () {

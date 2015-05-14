@@ -1,6 +1,6 @@
 var rootPath = '../../../../';
 
-describe('Authentication', function(){
+describe('Authentication', function () {
 
     var $rootScope,
         $httpBackend,
@@ -11,79 +11,79 @@ describe('Authentication', function(){
         mockedOauthTokenResponse,
         mockedUserDataResponse;
 
-    beforeEach(function(){
+    beforeEach(function () {
         var testApp = angular.module('testApp', []);
 
         mockedSessionData = {};
-        testApp.service('Session', function(){
+        testApp.service('Session', function () {
             return {
-                clearSessionData: function(){
+                clearSessionData: function () {
                     mockedSessionData = {};
                 },
-                setSessionDataEntries: function(entries){
+                setSessionDataEntries: function (entries) {
                     mockedSessionData = angular.extend({}, mockedSessionData, entries);
                 },
-                getSessionDataEntry: function(key){
+                getSessionDataEntry: function (key) {
                     return mockedSessionData[key];
                 },
-                setSessionDataEntry: function(key, value){
+                setSessionDataEntry: function (key, value) {
                     mockedSessionData[key] = value;
                 }
             };
         })
-        .service('Authentication', require(rootPath+'app/common/services/authentication.js'));
+        .service('Authentication', require(rootPath + 'app/common/services/authentication.js'));
 
-        require(rootPath+'test/unit/simple-test-app-config.js')(testApp);
+        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
 
     });
 
-    beforeEach(inject(function(_$httpBackend_, _$rootScope_, _CONST_, _Authentication_){
+    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _Authentication_) {
         $httpBackend = _$httpBackend_;
         $rootScope = _$rootScope_;
         BACKEND_URL = _CONST_.BACKEND_URL;
         Authentication = _Authentication_;
     }));
 
-    describe('beeing still logged out', function(){
-        describe('getLoginStatus', function(){
-            it('should return false', function(){
+    describe('beeing still logged out', function () {
+        describe('getLoginStatus', function () {
+            it('should return false', function () {
                 expect(Authentication.getLoginStatus()).toBe(false);
             });
         });
     });
 
-    describe('login', function(){
+    describe('login', function () {
 
-        describe('with successfull post call to "/oauth/token"', function(){
+        describe('with successfull post call to "/oauth/token"', function () {
 
-            beforeEach(function(){
+            beforeEach(function () {
                 mockedOauthTokenResponse = {
-                    'access_token':'foobarfoobarfoobarfoobarfoobarfoobar',
-                    'token_type':'Bearer',
-                    'expires':9999999999,
-                    'expires_in':3600,
-                    'refresh_token':'foobarfoobarfoobarfoobarfoobarfoobar',
-                    'refresh_token_expires_in':604800
+                    'access_token': 'foobarfoobarfoobarfoobarfoobarfoobar',
+                    'token_type': 'Bearer',
+                    'expires': 9999999999,
+                    'expires_in': 3600,
+                    'refresh_token': 'foobarfoobarfoobarfoobarfoobarfoobar',
+                    'refresh_token_expires_in': 604800
                 };
-                $httpBackend.whenPOST(BACKEND_URL+'/oauth/token').respond(mockedOauthTokenResponse);
+                $httpBackend.whenPOST(BACKEND_URL + '/oauth/token').respond(mockedOauthTokenResponse);
             });
 
-            describe('with successfull get call to "/users/me"', function(){
+            describe('with successfull get call to "/users/me"', function () {
 
-                beforeEach(function(){
+                beforeEach(function () {
                     mockedUserDataResponse = {
                         'id': 2,
                         'url': 'http://ushahidi-backend/api/v2/users/2',
                         'email': 'admin@example.com',
                         'realname': 'Admin Joe',
-                        'username': 'admin',
+                        'username': 'admin'
                     };
                     $httpBackend.whenGET(BACKEND_URL + '/api/v2/users/me').respond(mockedUserDataResponse);
                 });
 
-                beforeEach(function(){
+                beforeEach(function () {
                     spyOn($rootScope, '$broadcast').and.callThrough();
 
                     loginPromiseSuccessCallback = jasmine.createSpy('success');
@@ -93,41 +93,41 @@ describe('Authentication', function(){
                     $httpBackend.flush();
                 });
 
-                it('should add the accessToken to the Session', function(){
+                it('should add the accessToken to the Session', function () {
                     expect(mockedSessionData.accessToken).toEqual(mockedOauthTokenResponse.access_token);
                 });
 
-                it('should add the userData to the Session', function(){
+                it('should add the userData to the Session', function () {
                     expect(mockedSessionData.userId).toEqual(mockedUserDataResponse.id);
                     expect(mockedSessionData.username).toEqual(mockedUserDataResponse.username);
                     expect(mockedSessionData.realname).toEqual(mockedUserDataResponse.realname);
                     expect(mockedSessionData.email).toEqual(mockedUserDataResponse.email);
                 });
 
-                it('should set loginState to true', function(){
+                it('should set loginState to true', function () {
                     expect(Authentication.getLoginStatus()).toBe(true);
                 });
 
-                it('should broadcast the "login:succeed" event on the rootScope', function(){
+                it('should broadcast the "login:succeed" event on the rootScope', function () {
                     expect($rootScope.$broadcast).toHaveBeenCalled();
                     var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
                     expect(broadcastArguments[0]).toEqual('event:authentication:login:succeeded');
                 });
 
-                it('should resolve the returned promise', function(){
+                it('should resolve the returned promise', function () {
                     expect(loginPromiseSuccessCallback).toHaveBeenCalled();
                 });
 
             });
-            describe('with unsuccessfull get call to "/users/me"', function(){
+            describe('with unsuccessfull get call to "/users/me"', function () {
 
                 var loginPromiseFailureCallback;
 
-                beforeEach(function(){
+                beforeEach(function () {
                     $httpBackend.whenGET(BACKEND_URL + '/api/v2/users/me').respond(404, '');
                 });
 
-                beforeEach(function(){
+                beforeEach(function () {
                     spyOn($rootScope, '$broadcast').and.callThrough();
 
                     loginPromiseSuccessCallback = jasmine.createSpy('success');
@@ -138,21 +138,21 @@ describe('Authentication', function(){
                     $httpBackend.flush();
                 });
 
-                it('should clear the Session data', function(){
+                it('should clear the Session data', function () {
                     expect(mockedSessionData).toEqual({});
                 });
 
-                it('should set loginState to false', function(){
+                it('should set loginState to false', function () {
                     expect(Authentication.getLoginStatus()).toBe(false);
                 });
 
-                it('should broadcast the "login:failed" event on the rootScope', function(){
+                it('should broadcast the "login:failed" event on the rootScope', function () {
                     expect($rootScope.$broadcast).toHaveBeenCalled();
                     var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
                     expect(broadcastArguments[0]).toEqual('event:authentication:login:failed');
                 });
 
-                it('should reject the returned promise', function(){
+                it('should reject the returned promise', function () {
                     expect(loginPromiseSuccessCallback).not.toHaveBeenCalled();
                     expect(loginPromiseFailureCallback).toHaveBeenCalled();
                 });
@@ -160,15 +160,15 @@ describe('Authentication', function(){
             });
         });
 
-        describe('with unsuccessfull post call to "/oauth/token"', function(){
+        describe('with unsuccessfull post call to "/oauth/token"', function () {
 
             var loginPromiseFailureCallback;
 
-            beforeEach(function(){
-                $httpBackend.whenPOST(BACKEND_URL+'/oauth/token').respond(401, '');
+            beforeEach(function () {
+                $httpBackend.whenPOST(BACKEND_URL + '/oauth/token').respond(401, '');
             });
 
-            beforeEach(function(){
+            beforeEach(function () {
                 spyOn($rootScope, '$broadcast').and.callThrough();
 
                 loginPromiseSuccessCallback = jasmine.createSpy('success');
@@ -179,21 +179,21 @@ describe('Authentication', function(){
                 $httpBackend.flush();
             });
 
-            it('should clear the Session data', function(){
+            it('should clear the Session data', function () {
                 expect(mockedSessionData).toEqual({});
             });
 
-            it('should set loginState to false', function(){
+            it('should set loginState to false', function () {
                 expect(Authentication.getLoginStatus()).toBe(false);
             });
 
-            it('should broadcast the "login:failed" event on the rootScope', function(){
+            it('should broadcast the "login:failed" event on the rootScope', function () {
                 expect($rootScope.$broadcast).toHaveBeenCalled();
                 var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
                 expect(broadcastArguments[0]).toEqual('event:authentication:login:failed');
             });
 
-            it('should reject the returned promise', function(){
+            it('should reject the returned promise', function () {
                 expect(loginPromiseSuccessCallback).not.toHaveBeenCalled();
                 expect(loginPromiseFailureCallback).toHaveBeenCalled();
             });
@@ -202,9 +202,9 @@ describe('Authentication', function(){
 
     });
 
-    describe('logout', function(){
+    describe('logout', function () {
 
-        beforeEach(function(){
+        beforeEach(function () {
             mockedSessionData = {
                 userId: 2,
                 username: 'max',
@@ -218,17 +218,17 @@ describe('Authentication', function(){
             Authentication.logout();
         });
 
-        it('should broadcast the "logout:succeeded" event on the rootScope', function(){
+        it('should broadcast the "logout:succeeded" event on the rootScope', function () {
             expect($rootScope.$broadcast).toHaveBeenCalled();
             var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
             expect(broadcastArguments[0]).toEqual('event:authentication:logout:succeeded');
         });
 
-        it('should set loginState to false', function(){
+        it('should set loginState to false', function () {
             expect(Authentication.getLoginStatus()).toBe(false);
         });
 
-        it('should clear the Session data', function(){
+        it('should clear the Session data', function () {
             expect(mockedSessionData).toEqual({});
         });
 

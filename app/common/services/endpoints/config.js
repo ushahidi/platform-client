@@ -2,7 +2,7 @@ module.exports = [
     '$resource',
     'Util',
     '_',
-function(
+function (
     $resource,
     Util,
     _

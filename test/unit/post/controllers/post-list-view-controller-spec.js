@@ -1,16 +1,18 @@
 var ROOT_PATH = '../../../../';
 
-describe('posts list controller', function(){
+describe('posts list controller', function () {
 
     var $rootScope,
         $scope,
         $controller,
         mockPostEndpoint,
         mockPostResponse,
-        mockGlobalFilter = { getPostQuery: function() { return {}; } }
-        ;
+        mockGlobalFilter = { getPostQuery: function () {
+            return {};
+        } }
+               ;
 
-    beforeEach(function(){
+    beforeEach(function () {
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
         ])
@@ -22,17 +24,17 @@ describe('posts list controller', function(){
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function(_$rootScope_, _$controller_){
+    beforeEach(inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
     }));
 
-    beforeEach(function(){
+    beforeEach(function () {
         mockPostEndpoint = {
-            query: function() {
+            query: function () {
                 return {$promise: {
-                    then: function(){}
+                    then: function () {}
                 }};
             }
         };
@@ -47,13 +49,13 @@ describe('posts list controller', function(){
         $rootScope.$apply();
     });
 
-    it('should have the right title', function(){
-		expect($scope.title).toBe('Posts');
+    it('should have the right title', function () {
+        expect($scope.title).toBe('Posts');
     });
 
-    describe('PostEndpoint usage', function(){
+    describe('PostEndpoint usage', function () {
 
-        beforeEach(inject(function($q){
+        beforeEach(inject(function ($q) {
 
             mockPostResponse = {
                 results:
@@ -66,7 +68,7 @@ describe('posts list controller', function(){
 
             var queryDeferred;
             mockPostEndpoint = {
-                query: function() {
+                query: function () {
                     queryDeferred = $q.defer();
                     return {$promise: queryDeferred.promise};
                 }
@@ -84,11 +86,11 @@ describe('posts list controller', function(){
             $rootScope.$apply();
         }));
 
-        it('should query the PostEndpoint', function(){
+        it('should query the PostEndpoint', function () {
             expect(mockPostEndpoint.query).toHaveBeenCalled();
         });
 
-        it('should set the response from PostEndpoint.query() to $scope.posts', function(){
+        it('should set the response from PostEndpoint.query() to $scope.posts', function () {
             expect($scope.posts).toEqual(mockPostResponse.results);
         });
 

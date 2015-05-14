@@ -1,7 +1,7 @@
 module.exports = [
     '$resource',
     'Util',
-function(
+function (
     $resource,
     Util
 ) {
@@ -14,7 +14,7 @@ function(
         query: {
             method: 'GET',
             isArray: true,
-            transformResponse: function(data /*, header*/) {
+            transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }
         }

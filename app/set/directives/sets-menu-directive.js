@@ -26,7 +26,7 @@ function (
                         }
                     });
                 });
-            }
+            };
 
             // Init map of users to ids
             $scope.uidMap = {};

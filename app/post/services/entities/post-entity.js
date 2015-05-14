@@ -1,9 +1,9 @@
 module.exports = [
     'CONST',
-function(
+function (
     CONST
 ) {
-    return function(data) {
+    return function (data) {
         return angular.extend({}, {
             // id: 0,
             title: '',

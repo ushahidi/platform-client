@@ -10,7 +10,7 @@ module.exports = [
     'GlobalFilter',
     'd3',
     '_',
-function(
+function (
     $scope,
     $rootScope,
     $translate,
@@ -24,7 +24,7 @@ function(
     _
 ) {
 
-    $translate('post.posts').then(function(title) {
+    $translate('post.posts').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });
@@ -39,8 +39,12 @@ function(
                 bottom: 40,
                 left: 100
             },
-            x: function(d){ return d.label; },
-            y: function(d){ return d.total; },
+            x: function (d) {
+                return d.label;
+            },
+            y: function (d) {
+                return d.total;
+            },
             showValues: true,
             showControls: false,
             valueFormat: d3.format('d'),
@@ -70,7 +74,9 @@ function(
 
     $scope.parentTags = [];
     TagEndpoint.query({parent_id : 0}).$promise.then(function (results) {
-        $scope.parentTags = _.filter(results, function (tag) { return ! tag.parent; });
+        $scope.parentTags = _.filter(results, function (tag) {
+            return !tag.parent;
+        });
     });
 
     $scope.attributes = [];
@@ -82,7 +88,7 @@ function(
         });
     });
 
-    var getPostStats = function(query) {
+    var getPostStats = function (query) {
         query = query || GlobalFilter.getPostQuery();
         var postQuery = _.extend(query, {
             'extra' : 'stats',
@@ -102,9 +108,9 @@ function(
 
     // whenever the GlobalFilter post query changes,
     // update the current list of posts
-    $scope.$watch(function() {
+    $scope.$watch(function () {
         return JSON.stringify(GlobalFilter.getPostQuery());
-    }, function(newValue, oldValue) {
+    }, function (newValue, oldValue) {
         getPostStats();
     });
 

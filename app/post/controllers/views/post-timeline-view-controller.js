@@ -10,7 +10,7 @@ module.exports = [
     'GlobalFilter',
     'd3',
     '_',
-function(
+function (
     $scope,
     $rootScope,
     $translate,
@@ -24,7 +24,7 @@ function(
     _
 ) {
 
-    $translate('post.posts').then(function(title) {
+    $translate('post.posts').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });
@@ -41,13 +41,17 @@ function(
                 bottom: 40,
                 left: 65
             },
-            x: function(d){ return new Date(parseInt(d.label)*1000); },
-            y: function(d){ return d[$scope.showCumulative ? 'cumulative_total' : 'total']; },
+            x: function (d) {
+                return new Date(parseInt(d.label) * 1000);
+            },
+            y: function (d) {
+                return d[$scope.showCumulative ? 'cumulative_total' : 'total'];
+            },
             xScale: timeScale,
             transitionDuration: 500,
             xAxis: {
                 axisLabel: $filter('translate')('graph.post_date'),
-                tickFormat: timeScale.tickFormat(10),
+                tickFormat: timeScale.tickFormat(10)
             },
             yAxis: {
                 axisLabel: $filter('translate')('graph.post_count'),
@@ -55,7 +59,7 @@ function(
             },
             // Remove x from tooltip because we can't get a different foramt from
             // tickFormat ..
-            tooltipContent: function(key, x, y, e, graph) {
+            tooltipContent: function (key, x, y, e, graph) {
                 return '<h3>' + key + '</h3>' +
                     '<p>' +  y + '</p>';
             }
@@ -76,7 +80,9 @@ function(
 
     $scope.parentTags = [];
     TagEndpoint.query({parent_id : 0}).$promise.then(function (results) {
-        $scope.parentTags = _.filter(results, function (tag) { return ! tag.parent; });
+        $scope.parentTags = _.filter(results, function (tag) {
+            return !tag.parent;
+        });
     });
 
     $scope.attributes = [];
@@ -89,8 +95,10 @@ function(
             FormAttributeEndpoint.query({formId: form.id}).$promise.then(function (attributes) {
                 $scope.attributes = $scope.attributes.concat(attributes);
                 $scope.time_attributes = $scope.time_attributes.concat(
-                    _.filter(attributes, function (attr) { return attr.type === 'datetime'; })
-                );
+                    _.filter(attributes, function (attr) {
+                        return attr.type === 'datetime';
+                    })
+                                   );
             });
         });
     });
@@ -133,7 +141,7 @@ function(
         });
     };
 
-    var getPostStats = function(query) {
+    var getPostStats = function (query) {
         query = query || GlobalFilter.getPostQuery();
         var postQuery = _.extend(query, {
             'extra' : 'stats',
@@ -151,9 +159,9 @@ function(
 
     // whenever the GlobalFilter post query changes,
     // update the current list of posts
-    $scope.$watch(function() {
+    $scope.$watch(function () {
         return JSON.stringify(GlobalFilter.getPostQuery());
-    }, function(newValue, oldValue) {
+    }, function (newValue, oldValue) {
         getPostStats();
     });
 

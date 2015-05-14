@@ -2,19 +2,19 @@ module.exports = [
     '$resource',
     '$rootScope',
     'Util',
-function(
+function (
     $resource,
     $rootScope,
     Util
 ) {
 
     var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {
-            id: '@id'
+        id: '@id'
     }, {
         query: {
             method: 'GET',
             isArray: true,
-            transformResponse: function(data /*, header*/) {
+            transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }
         },
@@ -23,7 +23,7 @@ function(
         }
     });
 
-    $rootScope.$on('event:authentication:logout:succeeded', function(){
+    $rootScope.$on('event:authentication:logout:succeeded', function () {
         TagEndpoint.query();
     });
 

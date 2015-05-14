@@ -1,12 +1,12 @@
 var rootPath = '../../../../';
 
-describe('Session', function(){
+describe('Session', function () {
 
     var mockedLocalStorageHash,
     Session,
     emptySessionData;
 
-    beforeEach(function(){
+    beforeEach(function () {
 
         emptySessionData = {
             userId: undefined,
@@ -15,73 +15,73 @@ describe('Session', function(){
             email: undefined,
             role: undefined,
             accessToken: undefined,
-            loginPath: undefined,
+            loginPath: undefined
         };
 
         var testApp = angular.module('testApp');
 
         mockedLocalStorageHash = {};
-        testApp.service('localStorageService', function(){
+        testApp.service('localStorageService', function () {
             return {
-                get: function(key){
+                get: function (key) {
                     return mockedLocalStorageHash[key];
                 },
-                set: function(key, val){
+                set: function (key, val) {
                     mockedLocalStorageHash[key] = val;
                 },
-                remove: function(key){
+                remove: function (key) {
                     delete mockedLocalStorageHash[key];
                 },
-                clear: function(){
+                clear: function () {
                     mockedLocalStorageHash = {};
                 }
             };
         })
-        .service('Session', require(rootPath+'app/common/services/session.js'));
+        .service('Session', require(rootPath + 'app/common/services/session.js'));
 
-        require(rootPath+'test/unit/simple-test-app-config.js')(testApp);
+        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 
     });
 
     beforeEach(angular.mock.module('testApp'));
 
-    describe('getSessionData', function(){
+    describe('getSessionData', function () {
         var returnedSessionData;
 
-        describe('without values stored in localStorage', function(){
+        describe('without values stored in localStorage', function () {
 
-            beforeEach(inject(function(_Session_){
+            beforeEach(inject(function (_Session_) {
                 Session = _Session_;
             }));
 
-            beforeEach(function(){
+            beforeEach(function () {
                 returnedSessionData = Session.getSessionData();
             });
 
-            it('returns the empty session data', function(){
+            it('returns the empty session data', function () {
                 expect(returnedSessionData).toEqual(emptySessionData);
             });
         });
 
-        describe('with values stored in localStorage', function(){
+        describe('with values stored in localStorage', function () {
 
-            beforeEach(function(){
+            beforeEach(function () {
                 mockedLocalStorageHash = {
                     userId: '1',
                     accessToken: 'secrettoken'
                 };
             });
 
-            beforeEach(inject(function(_Session_){
+            beforeEach(inject(function (_Session_) {
                 Session = _Session_;
             }));
 
-            beforeEach(function(){
+            beforeEach(function () {
                 returnedSessionData = Session.getSessionData();
             });
 
             it('returns the session data with the stored values from localStorage',
-            function(){
+            function () {
                 var expectedSessionData = {
                     userId: '1',
                     username: undefined,
@@ -98,40 +98,40 @@ describe('Session', function(){
     });
 
 
-    describe('setSessionDataEntry', function(){
+    describe('setSessionDataEntry', function () {
 
-        describe('without values stored in localStorage', function(){
+        describe('without values stored in localStorage', function () {
 
-            beforeEach(inject(function(_Session_){
+            beforeEach(inject(function (_Session_) {
                 Session = _Session_;
             }));
 
-            beforeEach(function(){
+            beforeEach(function () {
                 Session.setSessionDataEntry('userId', '1');
             });
 
-            it('has the keys and values stored in the session', function(){
+            it('has the keys and values stored in the session', function () {
                 var expectedSessionDataEntries = angular.extend({}, emptySessionData, {userId: '1'});
                 expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
             });
 
-            it('has the key and value stored in the local storage', function(){
+            it('has the key and value stored in the local storage', function () {
                 expect(mockedLocalStorageHash.userId).toEqual('1');
             });
         });
     });
 
 
-    describe('setSessionDataEntries', function(){
+    describe('setSessionDataEntries', function () {
         var sessionDataEntriesToSet;
 
-        describe('without values stored in localStorage', function(){
+        describe('without values stored in localStorage', function () {
 
-            beforeEach(inject(function(_Session_){
+            beforeEach(inject(function (_Session_) {
                 Session = _Session_;
             }));
 
-            beforeEach(function(){
+            beforeEach(function () {
                 sessionDataEntriesToSet = {
                     userId: '1',
                     username: 'mike'
@@ -139,40 +139,40 @@ describe('Session', function(){
                 Session.setSessionDataEntries(sessionDataEntriesToSet);
             });
 
-            it('has the keys and values stored in the session', function(){
+            it('has the keys and values stored in the session', function () {
                 var expectedSessionDataEntries = angular.extend({}, emptySessionData, sessionDataEntriesToSet);
                 expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
             });
 
-            it('has the keys and values stored in the local storage', function(){
+            it('has the keys and values stored in the local storage', function () {
                 expect(mockedLocalStorageHash.userId).toEqual('1');
                 expect(mockedLocalStorageHash.username).toEqual('mike');
             });
         });
     });
 
-    describe('getSessionDataEntry and getSessionDataEntries', function(){
+    describe('getSessionDataEntry and getSessionDataEntries', function () {
 
-        describe('with some values stored in localStorage before instantiating (injecting) the Session service', function(){
+        describe('with some values stored in localStorage before instantiating (injecting) the Session service', function () {
 
-            beforeEach(function(){
+            beforeEach(function () {
                 mockedLocalStorageHash.userId = '1';
                 mockedLocalStorageHash.username = 'mike';
             });
 
-            beforeEach(inject(function(_Session_){
+            beforeEach(inject(function (_Session_) {
                 Session = _Session_;
             }));
 
-            describe('getSessionDataEntry', function(){
-                it('returns the correct values', function(){
+            describe('getSessionDataEntry', function () {
+                it('returns the correct values', function () {
                     expect(Session.getSessionDataEntry('userId')).toEqual('1');
                     expect(Session.getSessionDataEntry('username')).toEqual('mike');
                 });
             });
 
-            describe('getSessionDataEntries', function(){
-                it('returns the correct values', function(){
+            describe('getSessionDataEntries', function () {
+                it('returns the correct values', function () {
                     var expectedSessionDataEntries = angular.extend({}, emptySessionData, {
                         'userId': '1',
                         'username': 'mike'
@@ -183,35 +183,35 @@ describe('Session', function(){
         });
     });
 
-    describe('clearSessionData', function(){
+    describe('clearSessionData', function () {
 
-        describe('with some values stored in localStorage before instantiating (injecting) the Session service', function(){
+        describe('with some values stored in localStorage before instantiating (injecting) the Session service', function () {
 
-            beforeEach(function(){
+            beforeEach(function () {
                 mockedLocalStorageHash.userId = '1';
                 mockedLocalStorageHash.username = 'mike';
             });
 
-            beforeEach(inject(function(_Session_){
+            beforeEach(inject(function (_Session_) {
                 Session = _Session_;
             }));
 
-            it('has the values loaded in session', function(){
+            it('has the values loaded in session', function () {
                 expect(Session.getSessionDataEntry('userId')).toEqual('1');
                 expect(Session.getSessionDataEntry('username')).toEqual('mike');
             });
 
-            describe('calling clearSessionData', function(){
+            describe('calling clearSessionData', function () {
 
-                beforeEach(function(){
+                beforeEach(function () {
                     Session.clearSessionData();
                 });
 
-                it('has the only the initial keys with undefined values stored in the session', function(){
+                it('has the only the initial keys with undefined values stored in the session', function () {
                     expect(Session.getSessionData()).toEqual(emptySessionData);
                 });
 
-                it('doesn\'t have any keys and values stored in the local storage', function(){
+                it('doesn\'t have any keys and values stored in the local storage', function () {
                     expect(mockedLocalStorageHash).toEqual({});
                 });
             });

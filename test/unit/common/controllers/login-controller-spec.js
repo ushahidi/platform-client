@@ -1,6 +1,6 @@
 var ROOT_PATH = '../../../../';
 
-describe('login controller', function(){
+describe('login controller', function () {
 
     var $rootScope,
         $scope,
@@ -8,7 +8,7 @@ describe('login controller', function(){
         $location,
         mockAuthenticationService;
 
-    beforeEach(function(){
+    beforeEach(function () {
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
         ])
@@ -20,18 +20,18 @@ describe('login controller', function(){
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function(_$rootScope_, _$controller_, _$location_){
+    beforeEach(inject(function (_$rootScope_, _$controller_, _$location_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $location = _$location_;
         $scope = _$rootScope_.$new();
     }));
 
-    beforeEach(function(){
+    beforeEach(function () {
         mockAuthenticationService = {
-            login: function(username, password) {
+            login: function (username, password) {
                 return {$promise: {
-                    then: function(successCallback, failureCallback){
+                    then: function (successCallback, failureCallback) {
                         password === 'correct' ? successCallback() : failureCallback();
                     }
                 }};
@@ -49,14 +49,14 @@ describe('login controller', function(){
         $rootScope.$apply();
     });
 
-    describe('login', function(){
-        describe('with correct username/password', function(){
-            beforeEach(function(){
+    describe('login', function () {
+        describe('with correct username/password', function () {
+            beforeEach(function () {
                 $scope.username = 'testuser';
                 $scope.password = 'correct';
             });
 
-            it('', function(){});
+            it('', function () {});
 
         });
     });

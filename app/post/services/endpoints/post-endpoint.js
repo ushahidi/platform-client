@@ -2,7 +2,7 @@ module.exports = [
     '$resource',
     '$rootScope',
     'Util',
-function(
+function (
     $resource,
     $rootScope,
     Util
@@ -14,7 +14,7 @@ function(
         query: {
             method: 'GET',
             isArray: false,
-            transformResponse: function(data /*, header*/) {
+            transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data);
             }
         },
@@ -26,7 +26,7 @@ function(
         }
     });
 
-    $rootScope.$on('event:authentication:logout:succeeded', function() {
+    $rootScope.$on('event:authentication:logout:succeeded', function () {
         PostEndpoint.query();
     });
 

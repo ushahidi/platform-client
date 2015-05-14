@@ -1,4 +1,4 @@
-var getLastUrlPart = function(url){
+var getLastUrlPart = function (url) {
     // as an alternative to this custom regex approach,
     // we could checkout http://medialize.github.io/URI.js
     var urlRegex = /^https?:\/\/[A-Za-z0-9\-.]+(?::[0-9]+)?(.*)$/g;
@@ -11,13 +11,13 @@ userMenuLinkSelector = '.top-bar a#user-menu-link',
 userProfileLinkSelector = '.top-bar a.my-profile';
 
 
-describe('user profile management', function() {
+describe('user profile management', function () {
 
-    describe('as a loggedin user', function(){
+    describe('as a loggedin user', function () {
 
         var userMenuLink;
 
-        beforeEach(function() {
+        beforeEach(function () {
             browser.get('/login');
 
             element(by.model('username')).sendKeys('admin');
@@ -28,25 +28,25 @@ describe('user profile management', function() {
             userMenuLink.click();
         });
 
-        afterEach(function(){
+        afterEach(function () {
             // Clear localStorage to reset session
             browser.executeScript('window.sessionStorage.clear();');
             browser.executeScript('window.localStorage.clear();');
         });
 
-        describe('link to user profile in user menu', function(){
+        describe('link to user profile in user menu', function () {
             var userProfileLink;
 
-            beforeEach(function(){
+            beforeEach(function () {
                 userProfileLink = element(by.css(userProfileLinkSelector));
             });
 
-            it('should exist and have the correct text', function(){
+            it('should exist and have the correct text', function () {
                 expect(userProfileLink.isDisplayed()).toBe(true);
                 expect(userProfileLink.getText()).toBe('My Profile');
             });
 
-            describe('clicking the user profile link', function(){
+            describe('clicking the user profile link', function () {
 
                 var usernameSpanSelector = 'span#username',
                 usernameSpan,
@@ -69,7 +69,7 @@ describe('user profile management', function() {
                 cancelButtonSelector = 'button[type="button"]#cancel',
                 cancelButton;
 
-                beforeEach(function(){
+                beforeEach(function () {
                     userProfileLink.click();
 
                     usernameSpan = element(by.css(usernameSpanSelector));
@@ -78,13 +78,13 @@ describe('user profile management', function() {
                     editProfileButton = element(by.css(editProfileButtonSelector));
                 });
 
-                it('should go to users/me (edit profile page)', function(){
-                    browser.getCurrentUrl().then(function(url){
+                it('should go to users/me (edit profile page)', function () {
+                    browser.getCurrentUrl().then(function (url) {
                         expect(getLastUrlPart(url)).toBe('/users/me');
                     });
                 });
 
-                it('should show the username, full name and email of the current user', function(){
+                it('should show the username, full name and email of the current user', function () {
                     expect(usernameSpan.isDisplayed()).toBe(true);
                     expect(usernameSpan.getText()).toBe('admin');
 
@@ -95,12 +95,12 @@ describe('user profile management', function() {
                     expect(emailSpan.getText()).toBe('admin@example.com');
                 });
 
-                it('should show "Edit Profile" button', function(){
+                it('should show "Edit Profile" button', function () {
                     expect(editProfileButton.isDisplayed()).toBe(true);
                 });
 
-                describe('clicking the "Edit Profile" button', function(){
-                    beforeEach(function(){
+                describe('clicking the "Edit Profile" button', function () {
+                    beforeEach(function () {
                         editProfileButton.click();
 
                         fullnameField = element(by.css(fullnameFieldSelector));
@@ -110,7 +110,7 @@ describe('user profile management', function() {
                         cancelButton = element(by.css(cancelButtonSelector));
                     });
 
-                    it('should show the editable fields for full name and email with the correct values prefilled', function(){
+                    it('should show the editable fields for full name and email with the correct values prefilled', function () {
                         expect(fullnameField.isDisplayed()).toBe(true);
                         expect(fullnameField.getAttribute('value')).toBe('Admin Joe');
 
@@ -118,13 +118,13 @@ describe('user profile management', function() {
                         expect(emailField.getAttribute('value')).toBe('admin@example.com');
                     });
 
-                    it('should show "Save Profile" and "Cancel" buttons', function(){
+                    it('should show "Save Profile" and "Cancel" buttons', function () {
                         expect(saveProfileButton.isDisplayed()).toBe(true);
                         expect(cancelButton.isDisplayed()).toBe(true);
                     });
 
-                    describe('changing fullname and email values', function(){
-                        beforeEach(function(){
+                    describe('changing fullname and email values', function () {
+                        beforeEach(function () {
                             fullnameField.clear();
                             fullnameField.sendKeys('Foo Bar');
 
@@ -132,11 +132,11 @@ describe('user profile management', function() {
                             emailField.sendKeys('foo@bar.com');
                         });
 
-                        describe('clicking the "Cancel" button', function(){
-                            beforeEach(function(){
+                        describe('clicking the "Cancel" button', function () {
+                            beforeEach(function () {
                                 cancelButton.click();
                             });
-                            it('should switch again to the non-edit view with the original values', function(){
+                            it('should switch again to the non-edit view with the original values', function () {
                                 expect(usernameSpan.isDisplayed()).toBe(true);
                                 expect(usernameSpan.getText()).toBe('admin');
 
@@ -148,12 +148,12 @@ describe('user profile management', function() {
                             });
                         });
 
-                        describe('clicking the "Save profile" button', function(){
-                            beforeEach(function(){
+                        describe('clicking the "Save profile" button', function () {
+                            beforeEach(function () {
                                 saveProfileButton.click();
                             });
 
-                            it('should switch again to the non-edit view with the just changed values', function(){
+                            it('should switch again to the non-edit view with the just changed values', function () {
                                 expect(usernameSpan.isDisplayed()).toBe(true);
                                 expect(usernameSpan.getText()).toBe('admin');
 

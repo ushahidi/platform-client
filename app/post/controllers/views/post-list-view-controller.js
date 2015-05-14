@@ -4,7 +4,7 @@ module.exports = [
     'PostEndpoint',
     'GlobalFilter',
     '_',
-function(
+function (
     $scope,
     $translate,
     PostEndpoint,
@@ -12,19 +12,19 @@ function(
     _
 ) {
 
-    $translate('post.posts').then(function(title) {
+    $translate('post.posts').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
 
-    var getPostsForPagination = function(query) {
+    var getPostsForPagination = function (query) {
         query = query || GlobalFilter.getPostQuery();
         var postQuery = _.extend(query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
 
-        PostEndpoint.query(postQuery).$promise.then(function(postsResponse){
+        PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             $scope.posts = postsResponse.results;
             $scope.totalItems = postsResponse.total_count;
         });
@@ -32,13 +32,13 @@ function(
 
     // whenever the GlobalFilter post query changes,
     // update the current list of posts
-    $scope.$watch(function() {
+    $scope.$watch(function () {
         return JSON.stringify(GlobalFilter.getPostQuery());
-    }, function(newValue, oldValue) {
+    }, function (newValue, oldValue) {
         getPostsForPagination();
     });
 
-    $scope.itemsPerPageChanged = function(count) {
+    $scope.itemsPerPageChanged = function (count) {
         $scope.itemsPerPage = count;
         getPostsForPagination();
     };

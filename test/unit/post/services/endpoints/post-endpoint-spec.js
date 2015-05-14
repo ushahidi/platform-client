@@ -1,6 +1,6 @@
 var rootPath = '../../../../../';
 
-describe('PostEndpoint', function(){
+describe('PostEndpoint', function () {
 
     var $rootScope,
         $httpBackend,
@@ -9,25 +9,25 @@ describe('PostEndpoint', function(){
         mockPostResponse;
 
 
-    beforeEach(function(){
+    beforeEach(function () {
         var testApp = angular.module('testApp', [
         'ngResource'
         ])
-        .service('PostEndpoint', require(rootPath+'app/post/services/endpoints/post-endpoint.js'));
+        .service('PostEndpoint', require(rootPath + 'app/post/services/endpoints/post-endpoint.js'));
 
-        require(rootPath+'test/unit/simple-test-app-config.js')(testApp);
+        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function(_$httpBackend_, _$rootScope_, _CONST_, _PostEndpoint_){
+    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _PostEndpoint_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         BACKEND_URL = _CONST_.BACKEND_URL;
         PostEndpoint = _PostEndpoint_;
     }));
 
-    beforeEach(function(){
+    beforeEach(function () {
         mockPostResponse = {
             results: [{
             'id': '1',
@@ -36,7 +36,7 @@ describe('PostEndpoint', function(){
         }]};
     });
 
-    it('should call the correct url and return the correct data', function(){
+    it('should call the correct url and return the correct data', function () {
         var successCallback = jasmine.createSpy('success');
         $httpBackend.expectGET(BACKEND_URL + '/api/v2/posts').respond(mockPostResponse);
 
