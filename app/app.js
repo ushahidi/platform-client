@@ -28,7 +28,6 @@ require('./post/post-module.js');
 require('./tool/tool-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
-require('./workspace/workspace-module.js');
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.BACKEND_URL || 'http://ushahidi-backend',
@@ -64,7 +63,6 @@ angular.module('app',
         'tools',
         'sets',
         'user-profile',
-        'workspace',
         'ngGeolocation',
         'nvd3'
     ])

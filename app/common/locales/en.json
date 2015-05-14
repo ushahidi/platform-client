@@ -325,11 +325,6 @@
         "user" : "No users found.",
         "category" : "No categories found."
     },
-    "workspace": {
-        "recent_activity": "Recent Activity",
-        "recent_posts": "Recent Posts",
-        "recent_comments": "Recent Comments"
-    },
     "location": {
         "search": "Search",
         "get_current_position": "Get current position",
