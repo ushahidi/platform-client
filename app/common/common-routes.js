@@ -14,6 +14,10 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
             controller: require('./controllers/forbidden-controller.js'),
             templateUrl: 'templates/forbidden.html'
         })
+        .when('/register', {
+            controller: require('./controllers/register-controller.js'),
+            templateUrl: 'templates/register.html'
+        })
         .when('/map-settings', {
             controller: require('./controllers/admin/map-settings.js'),
             templateUrl: 'templates/admin/map-settings.html'

@@ -95,6 +95,7 @@ angular.module('app',
     .service('Maps', require('./common/services/maps.js'))
     .service('Geocoding', require('./common/services/geocoding.js'))
     .service('Languages', require('./common/services/languages.js'))
+	.service('Registration', require('./common/services/registration.js'))
 
     .controller('navigation', require('./common/controllers/navigation.js'))
     .controller('PageMetadata', require('./common/controllers/page-metadata.js'))

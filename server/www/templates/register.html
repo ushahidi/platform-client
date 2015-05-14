@@ -1,0 +1,51 @@
+<div class="panel panel-default user-register">
+    <div class="panel-heading">
+        <h3 class="panel-title" translate>nav.registration</h3>
+    </div>
+    <form class="panel-body" name="form">
+        <div class="alert alert-warning register-failed" role="alert" ng-show="failed" translate>notify.register.failed</div>
+        <div class="form-group" ng-class="{ 'has-error': form.username.$invalid && form.username.$dirty }">
+            <label for="username" translate>user.username</label>
+            <input type="text" class="form-control" id="username" name="username"
+                ng-model="username"
+                ng-disabled="processing"
+                ng-maxlength="50"
+                ng-pattern="/^[a-z][a-z0-9._-]+[a-z0-9]$/i"
+                required>
+            <p ng-repeat="(error, value) in form.username.$error"
+                class="help-block"
+                translate="{{'user.valid.username.' + error}}"></p>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.email.$invalid && form.email.$dirty }">
+            <label for="email" translate>user.email</label>
+            <input type="email" class="form-control" id="email" name="email"
+                ng-model="email"
+                ng-disabled="processing"
+                ng-maxlength="150"
+                required>
+            <p ng-repeat="(error, value) in form.email.$error"
+                class="help-block"
+                translate="{{'user.valid.email.' + error}}"></p>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$invalid && form.password.$dirty }">
+            <label for="password" translate>user.password</label>
+            <input id="password" type="password" class="form-control" name="password"
+                ng-minlength="7"
+                ng-maxlength="72"
+                ng-model="password"
+                ng-disabled="processing"
+                required>
+            <p ng-repeat="(error, value) in form.password.$error"
+                class="help-block"
+                translate="{{'user.valid.password.' + error}}"></p>
+        </div>
+        <p>
+            <button type="submit" class="btn btn-primary pull-right flip"
+                ng-click="registerSubmit()"
+                ng-disabled="form.$invalid || processing">
+                    <i class="fa fa-cog fa-spin" ng-show="processing"></i>
+                    <span translate>nav.register</span>
+            </button>
+        </p>
+    </form>
+</div>

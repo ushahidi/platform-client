@@ -82,6 +82,8 @@
         "help" : "Help",
         "home" : "Home",
         "login" : "Login",
+        "registration" : "Registration",
+        "register" : "Register",
         "logout" : "Logout",
         "notifications" : "Notifications",
         "people" : "People",
@@ -268,7 +270,24 @@
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
-        "username" : "Username"
+        "username" : "Username",
+        "valid" : {
+            "username" : {
+                "required" : "Username is required",
+                "maxlength" : "Username is too long",
+                "pattern" : "Your username must: be at least 3 characters long, only contain letters, numbers, periods(.), underscores(_) or hyphens(-), start with a letter, fix with a letter or number"
+            },
+            "email" : {
+                "required" : "Email address is required",
+                "email" : "This email address is invalid",
+                "maxlength" : "This email address is too long"
+            },
+            "password" : {
+                "required" : "Password is required",
+                "minlength" : "This password is too short",
+                "maxlength" : "This password is too long"
+            }
+        }
     },
     "user_profile" : {
         "title" : "Edit profile"
@@ -294,6 +313,10 @@
         },
         "login" : {
             "failed" : "Login failed, check your username and password."
+        },
+        "register" : {
+            "failed" : "There were errors during registration. Check your input and try again.",
+            "success" : "Registration complete! You can now log in.."
         },
         "post" : {
             "save_success" : "Saved post",
