@@ -99,7 +99,6 @@ function (
     var Map = {
         map_name: undefined,
         leaflet_map: undefined,
-        marker_layer: undefined,
         layers: {
             geojson: undefined,
             cluster: undefined
@@ -111,9 +110,6 @@ function (
             this.map().then(function (map) {
                 map.attributionControl.setPrefix(false);
             });
-
-            // default layer
-            this.marker_layer = this.marker_layer || 'geojson';
 
             return this;
         },
@@ -165,10 +161,6 @@ function (
             return deferred.promise;
         },
         addNewMarkers: function () {
-            if (!this.marker_layer) {
-                return;
-            }
-
             Maps.getConfig().then(_.bind(function (config) {
                 if (config.clustering === true) {
                     this.layers.cluster = L.markerClusterGroup({
@@ -177,12 +169,13 @@ function (
 
                     // This has to be done individually.
                     // Using clusterLayer.addLayers() breaks the clustering.
-                    angular.forEach(this.layers.geojson.getLayers(), function (layer) {
+                    angular.forEach(this.layers.geojson.getLayers(), _.bind(function (layer) {
                         this.layers.cluster.addLayer(layer);
-                    });
+                    }, this));
                 }
 
-                var markers = this.layers[this.marker_layer] || null;
+                var markers = this.layers.cluster || this.layers.geojson;
+                console.log(markers, this.layers);
                 if (!markers) {
                     return;
                 }
