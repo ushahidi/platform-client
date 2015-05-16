@@ -175,7 +175,7 @@ function (
                 }
 
                 var markers = this.layers.cluster || this.layers.geojson;
-                console.log(markers, this.layers);
+
                 if (!markers) {
                     return;
                 }
