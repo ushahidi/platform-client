@@ -116,7 +116,7 @@
         "view" : "View",
         "map" : "Map",
         "list" : "List",
-        "graph" : "Graph",
+        "chart" : "Bar Chart",
         "timeline" : "Timeline"
     },
     "post": {
