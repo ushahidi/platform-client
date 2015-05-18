@@ -2,13 +2,11 @@ module.exports = [
     '$q',
     '$http',
     'Util',
-    'jQuery',
     '_',
 function (
     $q,
     $http,
     Util,
-    $,
     _
 ) {
 
@@ -20,7 +18,10 @@ function (
         query: function (params) {
             var deferred = $q.defer();
 
-            $http.get(this.getApiUrl(params))
+            $http.get({
+                    url: this.api_url,
+                    params: _.extend({}, this.default_params, params)
+                })
                 .success(function (data, status, headers, config) {
                     deferred.resolve(data);
                 })
@@ -39,10 +40,6 @@ function (
                     return null;
                 }
             });
-        },
-        getApiUrl: function (params) {
-            var query_string = $.param(_.extend(this.default_params, params));
-            return this.api_url + '?' + query_string;
         }
     };
 

@@ -94,21 +94,13 @@ if (fs.existsSync('.gulpconfig.json')) {
  * Converts SASS files to CSS
  */
 gulp.task('sass', ['rename'], function () {
-    return gulp.src(['sass/style.scss'])
+    return gulp.src(['sass/*.scss'])
         .pipe(plumber({
             errorHandler: errorHandler
         }))
         .pipe(sass({
             includePaths: [
-                'bower_components/bourbon/app/assets/stylesheets',
-                'bower_components/neat/app/assets/stylesheets',
-                'bower_components/refills/source/stylesheets',
-                'bower_components/font-awesome/scss',
-                'node_modules/angular-bootstrap-colorpicker/scss',
-                'node_modules/leaflet/dist/',
-                'node_modules/jasny-bootstrap/dist/',
-                'node_modules/leaflet.markercluster/dist/',
-                'node_modules/nvd3/build/'
+                'node_modules/'
             ],
             sourceComments: 'map'
         }))
@@ -122,13 +114,11 @@ gulp.task('sass', ['rename'], function () {
 
 /**
  * Task: `css`
- * Move CSS from bower_components into server/www
+ * Move CSS from pattern library into server/www
  */
 gulp.task('css', [], function () {
     return gulp.src([
-                    'bower_components/font-awesome/css/*',
-                    'bower_components/bootstrap/dist/css/*',
-                    'bower_components/bootstrap-rtl/dist/css/*'
+                    'node_modules/platform-pattern-library/assets/css/*'
                     ])
         .pipe(gulp.dest(options.www + '/css'));
 });
@@ -160,12 +150,6 @@ gulp.task('rename-leaflet-markercluster-default', [], function () {
         .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/'))
         ;
 });
-gulp.task('rename-jasny', function () {
-    return gulp.src(['node_modules/jasny-bootstrap/dist/css/jasny-bootstrap.min.css'])
-        .pipe(rename('_jasny-bootstrap.scss'))
-        .pipe(gulp.dest('node_modules/jasny-bootstrap/dist'))
-        ;
-});
 gulp.task('rename-nvd3', function () {
     return gulp.src(['node_modules/nvd3/build/nv.d3.css'])
         .pipe(rename('_nv.d3.scss'))
@@ -187,7 +171,6 @@ gulp.task('rename', [
     'rename-colorpicker',
     'rename-leaflet-markercluster',
     'rename-leaflet-markercluster-default',
-    'rename-jasny',
     'rename-nvd3'
     ], function () {});
 
@@ -196,7 +179,7 @@ gulp.task('rename', [
  * Copies font files to public directory.
  */
 gulp.task('font', function () {
-    return gulp.src(['bower_components/font-awesome/fonts/fontawesome*'])
+    return gulp.src(['node_modules/platform-pattern-library/assets/fonts/**'])
         .pipe(gulp.dest(options.www + '/fonts'))
         .pipe(livereload())
         ;
@@ -295,7 +278,6 @@ gulp.task('docker', ['docker:build'], function (cb) {
 gulp.task('watch', [], function () {
     livereload.listen();
     gulp.watch('sass/**/*.scss', ['sass']);
-    gulp.watch('bower_components/font-awesome/fonts/fontawesome*', ['font']);
     gulp.watch(['app/**/*.js', 'app/**/*.json'], ['browserify']);
 });
 
@@ -372,7 +354,7 @@ gulp.task('jscs', function () {
 });
 
 /**
- * Task `bump` - bump version in bower.json and package.json
+ * Task `bump` - bump version in package.json
  * Options
  * `--gulp-version=<version>` - Specify version to bump to
  * `--type` - Semver version type to bump
@@ -383,7 +365,7 @@ gulp.task('bump', function () {
         version: gutil.env['bump-version']
     };
 
-    return gulp.src(['./package.json', './bower.json'])
+    return gulp.src(['./package.json'])
         .pipe(bump(options))
         .pipe(gulp.dest('./'));
 });

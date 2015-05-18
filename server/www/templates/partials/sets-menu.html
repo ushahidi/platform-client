@@ -1,8 +1,10 @@
 <ul class="sets-menu">
     <li ng-repeat="set in listSets">
-        <a ng-href="/sets/{{set.id}}" class="sets-menu">{{set.name}}</a>
-        <span ng-if="uidMap[set.user.id]" translate>nav.author_tagline</span>
-        <a ng-if="uidMap[set.user.id]" ng-href="/users/{{set.user.id}}"> {{uidMap[set.user.id].realname || uidMap[set.user.id].username}} </a>
+        <a ng-href="/sets/{{set.id}}" class="sets-menu">{{set.name}}</a><span class="star"></span>
+        <p class="credit">
+	        <span ng-if="uidMap[set.user.id]" translate>nav.author_tagline</span>
+	        <a ng-if="uidMap[set.user.id]" ng-href="/users/{{set.user.id}}"> {{uidMap[set.user.id].realname || uidMap[set.user.id].username}} </a>
+        </p>
     </li>
     <li ng-show="! listSets.length" translate="set.empty_list_{{search}}"></li>
 </ul><!-- end .sets-navigation -->

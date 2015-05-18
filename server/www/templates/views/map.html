@@ -1,4 +1,19 @@
-<post-view-tabs active="map"></post-view-tabs>
-<section class="map-view">
-    <leaflet id="map" defaults="defaults" center="center" layers="layers" height="665px" width="100%"></leaflet>
-</section>
+<div class="page-content has-aside">
+
+    <h1 translate>post.all_posts</h1>
+
+    <post-view-tabs active="map"></post-view-tabs>
+
+    <aside class="is-right" role="complementary">
+        <post-view-filters half-width="true"></post-view-filters>
+    </aside>
+
+    <div class="main-col">
+
+        <section class="map-view">
+            <leaflet id="map" class="map" defaults="defaults" center="center" layers="layers" width="100%"></leaflet>
+        </section>
+
+    </div>
+
+</div>
