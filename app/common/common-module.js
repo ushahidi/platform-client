@@ -1,7 +1,7 @@
 angular.module('ushahidi.common', [
 	'ushahidi.common.dropdown',
 	'ushahidi.common.accordion',
-	'ushahidi.common.off-canvas'
+	'ushahidi.common.offcanvas'
 ])
 
 .service('Authentication', require('./services/authentication.js'))
@@ -38,4 +38,4 @@ angular.module('ushahidi.common', [
 // Load submodules
 require('./directives/dropdown.js');
 require('./directives/accordion.js');
-require('./directives/off-canvas.js');
+require('./directives/offcanvas.js');
