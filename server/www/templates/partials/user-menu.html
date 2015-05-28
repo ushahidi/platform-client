@@ -1,0 +1,19 @@
+<div class="user-admin">
+    <div ng-hide="currentUser">
+        <span><a ng-href="/login" class="user-login" translate>nav.login</a></span>
+    </div>
+    <div class="toggle-wrapper" ng-show="currentUser">
+        <!-- TODO: add correct user gravatar here
+        <div class="user-avatar">
+            <img class="todo" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" alt="Avatar">
+        </div>
+        -->
+        <span>{{currentUser.realname || currentUser.username}}</span>
+        <button type="button" class="button-toggle"></button>
+    </div>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="/users/me">Account Settings</a></li>
+        <li><a href="/users/me/notifications">Notifications</a></li>
+        <li><a ng-click="logoutClick($event)">Logout</a></li>
+    </ul>
+</div>

@@ -1,0 +1,46 @@
+<nav class="navigation" role="navigation">
+    <div class="nav-icon nav-icon-js open">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <a class="button button-create">
+        <span ng-href="/posts/create" translate>nav.create_post</span>
+    </a>
+    <ul class="main-nav">
+        <li><a ng-href="/" translate>nav.home</a></li>
+        <li><a ng-href="/about" translate>nav.about</a></li>
+        <li><a ng-href="/activity" translate>nav.activity</a></li>
+        <li>
+            <div class="trigger-container">
+                <a class="hidden-content-trigger" translate>nav.settings</a>
+            </div>
+            <ul class="hidden-content">
+                <li><a ng-href="/tools/settings" translate>nav.general</a></li>
+                <li><a ng-href="/tools/appearance" translate>nav.appearance</a></li>
+                <li><a ng-href="/tools/data-sources" translate>nav.data_sources</a></li>
+                <li><a ng-href="/tools/plugins" translate>nav.plugins</a></li>
+                <li><a ng-href="/tools/posts" translate>nav.posts_and_entities</a></li>
+                <li><a ng-href="/tools/categories" translate>nav.categories</a></li>
+                <li><a ng-href="/tools/users" translate>nav.users</a></li>
+                <li><a ng-href="/tools/permission" translate>nav.permissions</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <ng-include src="'templates/partials/user-menu.html'"></ng-include>
+
+
+    <div class="sub-nav">
+        <h6 class="zeta saved-searches" translate>nav.saved_searches</h6>
+        <sets-menu search='1' title=""></sets-menu>
+    </div>
+
+    <div class="sub-nav">
+        <h6 class="zeta collections" translate>nav.collections</h6>
+        <sets-menu search='0'></sets-menu>
+        <button type="button" class="button-secondary plus">
+            <span translate>nav.new_collection</span>
+        </button>
+    </div>
+</nav>

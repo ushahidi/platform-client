@@ -18,8 +18,6 @@ require('checklist-model/checklist-model');
 require('angular-gravatar/build/md5');
 require('angular-gravatar/build/angular-gravatar');
 require('selection-model/dist/selection-model');
-window.jQuery = require('jquery'); // Required for jasny-bootstrap
-require('jasny-bootstrap/js/offcanvas');
 require('ngGeolocation/ngGeolocation');
 window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
@@ -108,9 +106,6 @@ angular.module('app',
 
     .run(require('./common/global/event-handlers.js'))
 
-    .factory('jQuery', function () {
-        return window.jQuery;
-    })
     .factory('_', function () {
         return require('underscore/underscore');
     })
