@@ -1,4 +1,4 @@
-angular.module('posts', [])
+angular.module('ushahidi.posts', [])
 
 .directive('postViewTabs', require('./directives/post-view-tabs-directive.js'))
 .directive('postPreview', require('./directives/post-preview-directive.js'))
