@@ -35,8 +35,8 @@
                         </div>
                         <h1 class="beta">{{site.name}}</h1>
                         <p class="header-description">{{site.description}}</p>
-                        <a class="button button-create icon-only">
-                            <span ng-href="/posts/create" translate>nav.add_post</span>
+                        <a class="button button-create icon-only" ng-href="/posts/create">
+                            <span translate>nav.add_post</span>
                         </a>
 
                         <ng-include src="'templates/partials/user-menu.html'"></ng-include>
@@ -67,7 +67,7 @@
                         </ul>
                     </div>
                     <div class="footer-secondary-col">
-                        <a class="button button-create">
+                        <a class="button button-create" ng-href="/posts/create">
                             <span translate>nav.add_post</span>
                         </a>
                     </div>
