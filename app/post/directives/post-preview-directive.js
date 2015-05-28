@@ -22,9 +22,13 @@ function (
                 return TagEndpoint.get({id: tag.id});
             });
 
-            FormEndpoint.get({formId: scope.post.form.id}, function (form) {
-                scope.form_name = form.name;
-            });
+            if (scope.post.form) {
+                FormEndpoint.get({formId: scope.post.form.id}, function (form) {
+                    scope.form_name = form.name;
+                });
+            } else {
+                scope.form_name = null;
+            }
         }
     };
 

@@ -74,19 +74,21 @@ module.exports = [
             });
         };
 
-        $scope.unselectAllPosts = function () {
+        $scope.unselectAllPosts = function ($event) {
+            $event && $event.preventDefault();
             _.forEach($scope.posts, function (post) {
                 post.selected = false;
             });
         };
 
-        $scope.selectAllPosts = function () {
+        $scope.selectAllPosts = function ($event) {
+            $event && $event.preventDefault();
             _.forEach($scope.posts, function (post) {
                 post.selected = true;
             });
         };
 
-        $scope.allSelectedOnCurrentPage = function () {
+        $scope.allSelectedOnCurrentPage = function ($event) {
             return $scope.selectedItems.length === $scope.posts.length;
         };
 

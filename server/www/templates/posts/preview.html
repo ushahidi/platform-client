@@ -1,34 +1,67 @@
-<li class="list-group-item" ><!-- ng-repeat="post in posts" -->
-    <div class="row" ng-class="{ 'warning': post.selected }">
-        <div class="col-md-9">
-            <div>
-                <!-- todo post thumbnail -->
-            </div>
-            <div ng-if="canSelect">
-                <input type="checkbox" value="{post.id}">
-            </div>
-            <small>
-                <span class="post-time" am-time-ago="post.updated || post.created"></span>
-                <span ng-repeat="tag in post.tags">
-                    <i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i>
-                    {{tag.tag}}
-                </span>
-            </small>
-            <h4><a ng-href="/posts/{{post.id}}">{{post.title}}</a></h4>
-            <!--<div>Thumnail image</div>-->
-            <p>
-                {{post.content}}
-            </p>
-        </div>
-        <div class="col-md-3">
-            <p ng-show="form_name">
-                <b translate>post.type</b> {{form_name}}
-            </p>
-            <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
-                <a class="btn btn-default btn-large" href="/posts/{{post.id}}/edit">
-                    <i class="fa fa-edit"></i> <span translate>post.post_actions.edit</span>
-                </a>
-            </p>
-        </div>
+<div class="single-post-listing">
+    <div class="select-post" ng-if="canSelect">
+        <input type="checkbox" value="{post.id}">
     </div>
-</li>
+
+    <div class="post-summary !has-img">
+        <span class="meta-data"><span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}} <!-- via SMS --></span>
+
+        <ul class="categories-list-inline">
+            <li class="category" ng-repeat="tag in post.tags"><i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i>{{tag.tag}}</li>
+            <li class="category">&nbsp;</li>
+        </ul>
+
+        <a ng-href="/posts/{{post.id}}">
+            <!-- <div class="post-img">
+                <img src="http://placehold.it/600x600" alt="">
+            </div> -->
+
+            <h3>{{post.title}}</h3>
+        </a>
+
+        <p>
+            {{post.content}}
+        </p>
+
+        <!-- <p>
+            <a href="">X comments</a>
+        </p> -->
+    </div>
+
+    <div class="stage-and-actions">
+        <div class="stage todo">
+            <h4 class="delta-alt">
+                Stage
+            </h4>
+
+            <p>Unknown <a href class="cta">Update</a></p>
+        </div>
+
+        <span ng-if="post.allowed_privileges.indexOf('update') !== -1" class="dropdown" dropdown>
+            <div class="actions-stacked hide-when-large">
+                <button type="button" class="button-secondary plus toggle-js dropdown-toggle" dropdown-toggle>
+                    <span>Options</span>
+                </button>
+            </div>
+
+            <div class="actions-content toggle-content" dropdown-menu>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
+                            <span translate>post.post_actions.edit</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <div class="custom-select">
+                            <select>
+                                <option>Add to Collection</option>
+                                <option>Collection #1</option>
+                                <option>Collection #2</option>
+                            </select>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+        </span>
+    </div>
+</div>

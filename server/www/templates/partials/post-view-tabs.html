@@ -1,9 +1,7 @@
-<div class="tabs-with-filter" dropdown>
-    <nav class="tabs-menu">
-        <label class="delta-alt" translate>view_tabs.view </label>
-        <button type="button" class="button-toggle tabs-menu-button-js" dropdown-toggle></button>
-        <ul class="tabs-menu-list" dropdown-menu>
-            <li ng-repeat="view in views" ng-class="{ active: active == view }" class="view-{{view}}"><a ng-href="/views/{{ view }}" translate="view_tabs.{{view}}"></a></li>
-        </ul>
-    </nav>
-</div><!--end view with filter-->
+<nav class="tabs-menu" dropdown>
+    <label class="delta-alt" translate>view_tabs.view </label>
+    <button type="button" class="button-toggle" dropdown-toggle></button>
+    <ul class="tabs-menu-list" dropdown-menu>
+        <li ng-repeat="view in views" ng-class="{ active: active == view }" class="view-{{view}}"><a ng-href="/views/{{ view }}" translate="view_tabs.{{view}}"></a></li>
+    </ul>
+</nav>
