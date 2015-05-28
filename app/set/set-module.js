@@ -1,4 +1,4 @@
-angular.module('sets', [])
+angular.module('ushahidi.sets', [])
 
 .directive('setsMenu', require('./directives/sets-menu-directive.js'))
 

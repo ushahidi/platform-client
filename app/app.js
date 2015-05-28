@@ -23,6 +23,8 @@ window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 
+// Load ushahidi modules
+require('./common/common-module.js');
 require('./post/post-module.js');
 require('./tool/tool-module.js');
 require('./set/set-module.js');
@@ -58,13 +60,14 @@ angular.module('app',
         'angularMoment',
         'angular.filter',
         'btford.markdown',
-        'posts',
-        'tools',
-        'sets',
-        'user-profile',
         'ngGeolocation',
         'nvd3',
-        'selectionModel'
+        'selectionModel',
+        'ushahidi.common',
+        'ushahidi.posts',
+        'ushahidi.tools',
+        'ushahidi.sets',
+        'ushahidi.user-profile'
     ])
 
     .constant('CONST', {
@@ -76,35 +79,6 @@ angular.module('app',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
         CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders')
     })
-
-    .service('Authentication', require('./common/services/authentication.js'))
-    .service('Session', require('./common/services/session.js'))
-    .service('ConfigEndpoint', require('./common/services/endpoints/config.js'))
-    .service('UserEndpoint', require('./common/services/endpoints/user-endpoint.js'))
-    .service('FormEndpoint', require('./common/services/endpoints/form.js'))
-    .service('FormAttributeEndpoint', require('./common/services/endpoints/form-attributes.js'))
-    .service('TagEndpoint', require('./common/services/endpoints/tag.js'))
-    .service('RoleHelper', require('./common/services/role-helper.js'))
-    .service('Config', require('./common/services/config.js'))
-    .service('Util', require('./common/services/util.js'))
-    .service('Notify', require('./common/services/notify.js'))
-    .service('multiTranslate', require('./common/services/multi-translate.js'))
-    .service('GlobalFilter', require('./common/services/global-filter.js'))
-    .service('Maps', require('./common/services/maps.js'))
-    .service('Geocoding', require('./common/services/geocoding.js'))
-    .service('Languages', require('./common/services/languages.js'))
-	.service('Registration', require('./common/services/registration.js'))
-
-    .controller('navigation', require('./common/controllers/navigation.js'))
-    .controller('PageMetadata', require('./common/controllers/page-metadata.js'))
-
-    .config(require('./common/configs/authentication-interceptor.js'))
-    .config(require('./common/configs/locale-config.js'))
-    .config(require('./common/common-routes.js'))
-    .config(require('./common/configs/ui-bootstrap-template-decorators.js'))
-    .config(require('./gravatar-config.js'))
-
-    .run(require('./common/global/event-handlers.js'))
 
     .factory('_', function () {
         return require('underscore/underscore');

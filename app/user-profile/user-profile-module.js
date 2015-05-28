@@ -1,6 +1,6 @@
 require('angular-xeditable');
 
-angular.module('user-profile', [
+angular.module('ushahidi.user-profile', [
     'xeditable'
 ])
 
