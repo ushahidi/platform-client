@@ -12,7 +12,6 @@ require('angular-moment');
 require('moment-timezone');
 require('angular-sanitize');
 require('angular-filter');
-require('angular-markdown-directive');
 require('angular-local-storage');
 require('checklist-model/checklist-model');
 require('angular-gravatar/build/md5');
@@ -21,6 +20,7 @@ require('selection-model/dist/selection-model');
 window.jQuery = require('jquery'); // Required for jasny-bootstrap
 require('jasny-bootstrap/js/offcanvas');
 require('ngGeolocation/ngGeolocation');
+require('ng-showdown/src/ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
@@ -61,7 +61,7 @@ angular.module('app',
         'leaflet-directive',
         'angularMoment',
         'angular.filter',
-        'btford.markdown',
+        'showdown',
         'ngGeolocation',
         'nvd3',
         'selectionModel',
