@@ -1,4 +1,8 @@
-angular.module('ushahidi.common', [])
+angular.module('ushahidi.common', [
+	'ushahidi.common.dropdown',
+	'ushahidi.common.accordion',
+	'ushahidi.common.off-canvas'
+])
 
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
@@ -29,5 +33,9 @@ angular.module('ushahidi.common', [])
 .config(require('./common-routes.js'))
 
 .run(require('./global/event-handlers.js'))
-
 ;
+
+// Load submodules
+require('./directives/dropdown.js');
+require('./directives/accordion.js');
+require('./directives/off-canvas.js');

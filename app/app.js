@@ -29,6 +29,9 @@ require('./post/post-module.js');
 require('./tool/tool-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
+require('./common/directives/dropdown.js');
+require('./common/directives/accordion.js');
+require('./common/directives/off-canvas.js');
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.BACKEND_URL || 'http://ushahidi-backend',
@@ -53,7 +56,8 @@ angular.module('app',
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',
-        'ui.bootstrap',
+        'ui.bootstrap.pagination',
+        'ui.bootstrap.datepicker',
         'ui.bootstrap.datetimepicker',
         'ui.gravatar',
         'leaflet-directive',
@@ -67,7 +71,10 @@ angular.module('app',
         'ushahidi.posts',
         'ushahidi.tools',
         'ushahidi.sets',
-        'ushahidi.user-profile'
+        'ushahidi.user-profile',
+		'ushahidi.dropdown',
+		'ushahidi.accordion',
+		'ushahidi.offcanvas'
     ])
 
     .constant('CONST', {

@@ -1,21 +1,21 @@
 <nav class="navigation" role="navigation">
-    <div class="nav-icon nav-icon-js open">
+    <div class="nav-icon open" off-canvas-toggle>
         <span></span>
         <span></span>
         <span></span>
     </div>
     <a class="button button-create">
-        <span ng-href="/posts/create" translate>nav.create_post</span>
+        <span ng-href="/posts/create" translate>nav.add_post</span>
     </a>
     <ul class="main-nav">
         <li><a ng-href="/" translate>nav.home</a></li>
         <li><a ng-href="/about" translate>nav.about</a></li>
         <li><a ng-href="/activity" translate>nav.activity</a></li>
-        <li>
-            <div class="trigger-container">
-                <a class="hidden-content-trigger" translate>nav.settings</a>
+        <li class="settings-nav" dropdown auto-close="disabled">
+            <div class="settings-nav-header">
+                <a class="toggle-content-trigger" dropdown-toggle translate>nav.settings</a>
             </div>
-            <ul class="hidden-content">
+            <ul class="toggle-content" dropdown-menu>
                 <li><a ng-href="/tools/settings" translate>nav.general</a></li>
                 <li><a ng-href="/tools/appearance" translate>nav.appearance</a></li>
                 <li><a ng-href="/tools/data-sources" translate>nav.data_sources</a></li>
