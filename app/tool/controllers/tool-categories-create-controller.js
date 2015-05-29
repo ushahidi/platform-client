@@ -23,7 +23,7 @@ function (
     });
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
-    $scope.roles = RoleHelper.roles;
+    $scope.roles = RoleHelper.roles();
 
     $scope.tag = {type: 'category'};
     $scope.processing = false;

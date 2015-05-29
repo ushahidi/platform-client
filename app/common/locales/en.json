@@ -71,6 +71,7 @@
         "back" : "Back",
         "category" : "Category",
         "categories" : "Categories",
+        "clear" : "Clear",
         "collections" : "Collections",
         "comments" : "Comments",
         "data_sources" : "Data Sources",
@@ -154,9 +155,10 @@
             "change_type" : "Change type",
             "save" : "Save",
             "publish" : "Publish to...",
-			   "publish_to" : "Publish to {{role}}",
-			   "published_to" : "Published to {{role}}",
-		      "unpublish" : "Revert to Draft",
+            "publish_to" : "Publish to {{role}}",
+            "published_to" : "Published to {{role}}",
+            "unpublish" : "Revert to Draft",
+            "everyone" : "Everyone",
             "back" : "Back",
             "form" : {
                 "categories" : "Categories",
@@ -167,7 +169,7 @@
                     "name" : "Link Name",
                     "url" : "Link url",
                     "add_link" : "Add Link"
-				}
+                }
             }
         },
         "details" : {
