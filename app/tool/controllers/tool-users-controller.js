@@ -26,7 +26,7 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.roles = RoleHelper.roles;
+    $scope.roles = RoleHelper.roles(true);
     $scope.getRole = RoleHelper.getRole;
 
     $scope.selectedUsers = [];

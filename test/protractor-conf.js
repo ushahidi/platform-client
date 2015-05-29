@@ -2,7 +2,7 @@ var config = {
     allScriptsTimeout: 11000,
 
     specs: [
-    'e2e/*.js'
+    'e2e/**/*.js'
     ],
 
     baseUrl: 'http://localhost:8080/',

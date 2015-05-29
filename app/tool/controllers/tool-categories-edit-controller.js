@@ -25,7 +25,7 @@ function (
     });
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
-    $scope.roles = RoleHelper.roles;
+    $scope.roles = RoleHelper.roles();
 
     $scope.tag = TagEndpoint.get({id: $routeParams.id});
     $scope.processing = false;

@@ -7,6 +7,7 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     '_',
+    'RoleHelper',
 function (
     $scope,
     $rootScope,
@@ -15,7 +16,8 @@ function (
     $routeParams,
     UserEndpoint,
     Notify,
-    _
+    _,
+    RoleHelper
 ) {
     $translate('user.edit_user').then(function (title) {
         $scope.title = title;
@@ -39,19 +41,5 @@ function (
         });
     };
 
-    $scope.roles = [
-        // TODO: make this an endpoint
-        {
-            name: 'guest',
-            display_name: 'Guest'
-        },
-        {
-            name: 'user',
-            display_name: 'Member'
-        },
-        {
-            name: 'admin',
-            display_name: 'Admin'
-        }
-    ];
+    $scope.roles = RoleHelper.roles(true);
 }];

@@ -1,6 +1,6 @@
 module.exports = [
     '$scope',
-    '$translate',
+    '$filter',
     '$location',
     'PostEntity',
     'PostEndpoint',
@@ -12,7 +12,7 @@ module.exports = [
     '_',
 function (
     $scope,
-    $translate,
+    $filter,
     $location,
     postEntity,
     PostEndpoint,
@@ -24,7 +24,10 @@ function (
     _
 ) {
     $scope.categories = TagEndpoint.query();
-    $scope.availableRoles = RoleHelper.roles;
+    $scope.availableRoles = RoleHelper.roles();
+    $scope.getRoleDisplayName = RoleHelper.getRole;
+    $scope.everyone = $filter('translate')('post.modify.everyone');
+    $scope.active_form
 
     this.fetchAttributes = function (form_id) {
         FormAttributeEndpoint.query({formId: form_id}).$promise.then(function (attrs) {
@@ -53,10 +56,10 @@ function (
         }
 
         if (!_.isEmpty($scope.post.published_to)) {
-            return RoleHelper.getRole($scope.post.published_to[0]);
+            return $scope.post.published_to[0];
         }
 
-        return RoleHelper.getDefault();
+        return '';
     };
 
     $scope.publishPostTo = function (role) {

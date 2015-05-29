@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="post-create-form" ng-show="active_form">
+    <div class="post-create-form" ng-if="active_form">
         <div class="create-form-header">
             <h3 translate translate-values="{ type: active_form.name }" ng-if="! is_edit">post.modify.create_type</h3>
             <h3 translate translate-values="{ type: active_form.name, title: post.title }" ng-if="is_edit">post.modify.edit_type</h3>
@@ -126,7 +126,7 @@
                 <span dropdown class="dropdown" ng-show="allowedChangeStatus()">
                     <a
                         translate="{{(postIsPublishedTo() === 'draft') ? 'post.modify.publish' : 'post.modify.published_to'}}"
-                        translate-values="{ role: '{{ postIsPublishedTo() }}' }"
+                        translate-values="{ role: getRoleDisplayName(postIsPublishedTo()) || everyone }"
                         class="btn btn-success dropdown-toggle"
                         dropdown-toggle>
                     </a>
@@ -136,6 +136,12 @@
                             ng-click="setDraft()"
                             >
                             <a translate>post.draft</a>
+                        </li>
+                        <li
+                            class="{{(postIsPublishedTo() === '') ? 'active' : 'inactive'}}"
+                            ng-click="publishPostTo()"
+                            >
+                            <a translate translate-values="{role: everyone}">post.modify.publish_to</a>
                         </li>
                         <li
                             ng-repeat="role in availableRoles track by role.name"
