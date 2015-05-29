@@ -7,7 +7,7 @@
         <span class="meta-data"><span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}} <!-- via SMS --></span>
 
         <ul class="categories-list-inline">
-            <li class="category" ng-repeat="tag in post.tags"><i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i>{{tag.tag}}</li>
+            <li class="category" ng-repeat="tag in post.tags"><i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i> {{tag.tag}}</li>
             <li class="category">&nbsp;</li>
         </ul>
 
