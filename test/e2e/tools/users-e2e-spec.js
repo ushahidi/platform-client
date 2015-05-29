@@ -19,15 +19,15 @@ describe('users management', function () {
         });
 
 
-        describe('clicking the "tools" menu link in top menu', function () {
-            var toolsMenuLinkSelector = 'a[href="/tools"]';
+        describe('clicking the "settings" menu link in the menu', function () {
+            var settingsLinkSelector = '.settings-nav-header a';
 
             beforeEach(function () {
-                var toolsMenuLink = element(by.css(toolsMenuLinkSelector));
-                toolsMenuLink.click();
+                var settingsMenuLink = element(by.css(settingsLinkSelector));
+                settingsMenuLink.click();
             });
 
-            describe('clicking the "users" link in the "tools/settings" menu', function () {
+            describe('clicking the "users" link in the "settings" menu', function () {
                 var usersLinkSelector = 'a[href="/tools/users"]';
 
                 beforeEach(function () {
@@ -45,9 +45,6 @@ describe('users management', function () {
                         var adminLink;
                         beforeEach(function () {
                             adminLink = element(by.css('a[href="/tools/users/2"'));
-                        });
-
-                        describe('gravatar', function () {
                         });
 
                         describe('role field', function () {
@@ -156,6 +153,7 @@ describe('users management', function () {
                                     changeRoleButton.click();
                                 });
 
+                                // Legit broken
                                 describe('selecting "Guest" as new role', function () {
                                     beforeEach(function () {
                                         element(by.linkText('Guest')).click();

@@ -6,9 +6,9 @@ var getLastUrlPart = function (url) {
     return match[1];
 };
 
-var userMenuLinkSelector = '.top-bar a#user-menu-link',
-userMenuLinkSelector = '.top-bar a#user-menu-link',
-userProfileLinkSelector = '.top-bar a.my-profile';
+var userMenuLinkSelector = '.header .user-admin .toggle-wrapper',
+userMenuSelector = '.header .user-admin .toggle-content',
+userProfileLinkSelector = '.header a.my-profile';
 
 
 describe('user profile management', function () {
@@ -23,9 +23,6 @@ describe('user profile management', function () {
             element(by.model('username')).sendKeys('admin');
             element(by.model('password')).sendKeys('admin');
             element(by.css('button[type="submit"]')).click();
-
-            userMenuLink = element(by.css(userMenuLinkSelector));
-            userMenuLink.click();
         });
 
         afterEach(function () {
@@ -38,44 +35,23 @@ describe('user profile management', function () {
             var userProfileLink;
 
             beforeEach(function () {
+                userMenuLink = element(by.css(userMenuLinkSelector));
+                userMenu = element(by.css(userMenuSelector));
+                userMenuLink.click();
+                browser.wait(userMenu.isDisplayed);
+
                 userProfileLink = element(by.css(userProfileLinkSelector));
             });
 
             it('should exist and have the correct text', function () {
                 expect(userProfileLink.isDisplayed()).toBe(true);
-                expect(userProfileLink.getText()).toBe('My Profile');
+                expect(userProfileLink.getText()).toBe('Account Settings');
             });
 
             describe('clicking the user profile link', function () {
 
-                var usernameSpanSelector = 'span#username',
-                usernameSpan,
-                fullnameSpanSelector = 'span#full_name',
-                fullnameSpan,
-                emailSpanSelector = 'span#email',
-                emailSpan,
-
-                fullnameFieldSelector = 'input[type="text"][name="realname"]',
-                fullnameField,
-                emailFieldSelector = 'input[type="email"][name="email"]',
-                emailField,
-
-                editProfileButtonSelector = 'button#edit_profile',
-                editProfileButton,
-
-                saveProfileButtonSelector = 'button[type="submit"]#save_profile',
-                saveProfileButton,
-
-                cancelButtonSelector = 'button[type="button"]#cancel',
-                cancelButton;
-
                 beforeEach(function () {
                     userProfileLink.click();
-
-                    usernameSpan = element(by.css(usernameSpanSelector));
-                    fullnameSpan = element(by.css(fullnameSpanSelector));
-                    emailSpan = element(by.css(emailSpanSelector));
-                    editProfileButton = element(by.css(editProfileButtonSelector));
                 });
 
                 it('should go to users/me (edit profile page)', function () {
@@ -83,86 +59,120 @@ describe('user profile management', function () {
                         expect(getLastUrlPart(url)).toBe('/users/me');
                     });
                 });
+            });
+        });
 
-                it('should show the username, full name and email of the current user', function () {
-                    expect(usernameSpan.isDisplayed()).toBe(true);
-                    expect(usernameSpan.getText()).toBe('admin');
+        describe('loading /users/me', function () {
 
-                    expect(fullnameSpan.isDisplayed()).toBe(true);
-                    expect(fullnameSpan.getText()).toBe('Admin Joe');
+            var usernameSpanSelector = 'span#username',
+            usernameSpan,
+            fullnameSpanSelector = 'span#full_name',
+            fullnameSpan,
+            emailSpanSelector = 'span#email',
+            emailSpan,
 
-                    expect(emailSpan.isDisplayed()).toBe(true);
-                    expect(emailSpan.getText()).toBe('admin@example.com');
+            fullnameFieldSelector = 'input[type="text"][name="realname"]',
+            fullnameField,
+            emailFieldSelector = 'input[type="email"][name="email"]',
+            emailField,
+
+            editProfileButtonSelector = 'button#edit_profile',
+            editProfileButton,
+
+            saveProfileButtonSelector = 'button[type="submit"]#save_profile',
+            saveProfileButton,
+
+            cancelButtonSelector = 'button[type="button"]#cancel',
+            cancelButton;
+
+            beforeEach(function () {
+                browser.get('/users/me');
+                browser.wait(element(by.css('.form-wrapper')).isDisplayed);
+
+                usernameSpan = element(by.css(usernameSpanSelector));
+                fullnameSpan = element(by.css(fullnameSpanSelector));
+                emailSpan = element(by.css(emailSpanSelector));
+                editProfileButton = element(by.css(editProfileButtonSelector));
+            });
+
+            it('should show the username, full name and email of the current user', function () {
+                expect(usernameSpan.isDisplayed()).toBe(true);
+                expect(usernameSpan.getText()).toBe('admin');
+
+                expect(fullnameSpan.isDisplayed()).toBe(true);
+                expect(fullnameSpan.getText()).toBe('Admin Joe');
+
+                expect(emailSpan.isDisplayed()).toBe(true);
+                expect(emailSpan.getText()).toBe('admin@example.com');
+            });
+
+            it('should show "Edit Profile" button', function () {
+                expect(editProfileButton.isDisplayed()).toBe(true);
+            });
+
+            describe('clicking the "Edit Profile" button', function () {
+                beforeEach(function () {
+                    editProfileButton.click();
+
+                    fullnameField = element(by.css(fullnameFieldSelector));
+                    emailField = element(by.css(emailFieldSelector));
+
+                    saveProfileButton = element(by.css(saveProfileButtonSelector));
+                    cancelButton = element(by.css(cancelButtonSelector));
                 });
 
-                it('should show "Edit Profile" button', function () {
-                    expect(editProfileButton.isDisplayed()).toBe(true);
+                it('should show the editable fields for full name and email with the correct values prefilled', function () {
+                    expect(fullnameField.isDisplayed()).toBe(true);
+                    expect(fullnameField.getAttribute('value')).toBe('Admin Joe');
+
+                    expect(emailField.isDisplayed()).toBe(true);
+                    expect(emailField.getAttribute('value')).toBe('admin@example.com');
                 });
 
-                describe('clicking the "Edit Profile" button', function () {
+                it('should show "Save Profile" and "Cancel" buttons', function () {
+                    expect(saveProfileButton.isDisplayed()).toBe(true);
+                    expect(cancelButton.isDisplayed()).toBe(true);
+                });
+
+                describe('changing fullname and email values', function () {
                     beforeEach(function () {
-                        editProfileButton.click();
+                        fullnameField.clear();
+                        fullnameField.sendKeys('Foo Bar');
 
-                        fullnameField = element(by.css(fullnameFieldSelector));
-                        emailField = element(by.css(emailFieldSelector));
-
-                        saveProfileButton = element(by.css(saveProfileButtonSelector));
-                        cancelButton = element(by.css(cancelButtonSelector));
+                        emailField.clear();
+                        emailField.sendKeys('foo@bar.com');
                     });
 
-                    it('should show the editable fields for full name and email with the correct values prefilled', function () {
-                        expect(fullnameField.isDisplayed()).toBe(true);
-                        expect(fullnameField.getAttribute('value')).toBe('Admin Joe');
-
-                        expect(emailField.isDisplayed()).toBe(true);
-                        expect(emailField.getAttribute('value')).toBe('admin@example.com');
-                    });
-
-                    it('should show "Save Profile" and "Cancel" buttons', function () {
-                        expect(saveProfileButton.isDisplayed()).toBe(true);
-                        expect(cancelButton.isDisplayed()).toBe(true);
-                    });
-
-                    describe('changing fullname and email values', function () {
+                    describe('clicking the "Cancel" button', function () {
                         beforeEach(function () {
-                            fullnameField.clear();
-                            fullnameField.sendKeys('Foo Bar');
+                            cancelButton.click();
+                        });
+                        it('should switch again to the non-edit view with the original values', function () {
+                            expect(usernameSpan.isDisplayed()).toBe(true);
+                            expect(usernameSpan.getText()).toBe('admin');
 
-                            emailField.clear();
-                            emailField.sendKeys('foo@bar.com');
+                            expect(fullnameSpan.isDisplayed()).toBe(true);
+                            expect(fullnameSpan.getText()).toBe('Admin Joe');
+
+                            expect(emailSpan.isDisplayed()).toBe(true);
+                            expect(emailSpan.getText()).toBe('admin@example.com');
+                        });
+                    });
+
+                    describe('clicking the "Save profile" button', function () {
+                        beforeEach(function () {
+                            saveProfileButton.click();
                         });
 
-                        describe('clicking the "Cancel" button', function () {
-                            beforeEach(function () {
-                                cancelButton.click();
-                            });
-                            it('should switch again to the non-edit view with the original values', function () {
-                                expect(usernameSpan.isDisplayed()).toBe(true);
-                                expect(usernameSpan.getText()).toBe('admin');
+                        it('should switch again to the non-edit view with the just changed values', function () {
+                            expect(usernameSpan.isDisplayed()).toBe(true);
+                            expect(usernameSpan.getText()).toBe('admin');
 
-                                expect(fullnameSpan.isDisplayed()).toBe(true);
-                                expect(fullnameSpan.getText()).toBe('Admin Joe');
+                            expect(fullnameSpan.isDisplayed()).toBe(true);
+                            expect(fullnameSpan.getText()).toBe('Foo Bar');
 
-                                expect(emailSpan.isDisplayed()).toBe(true);
-                                expect(emailSpan.getText()).toBe('admin@example.com');
-                            });
-                        });
-
-                        describe('clicking the "Save profile" button', function () {
-                            beforeEach(function () {
-                                saveProfileButton.click();
-                            });
-
-                            it('should switch again to the non-edit view with the just changed values', function () {
-                                expect(usernameSpan.isDisplayed()).toBe(true);
-                                expect(usernameSpan.getText()).toBe('admin');
-
-                                expect(fullnameSpan.isDisplayed()).toBe(true);
-                                expect(fullnameSpan.getText()).toBe('Foo Bar');
-
-                                expect(emailSpan.isDisplayed()).toBe(true);
-                                expect(emailSpan.getText()).toBe('foo@bar.com');
-                            });
+                            expect(emailSpan.isDisplayed()).toBe(true);
+                            expect(emailSpan.getText()).toBe('foo@bar.com');
                         });
                     });
                 });
