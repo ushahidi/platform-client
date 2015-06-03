@@ -184,7 +184,7 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
 
 .directive('dropdownMenu', function () {
     return {
-        restrict: 'AC',
+        restrict: 'A',
         require: '?^dropdown',
         link: function (scope, element, attrs, dropdownCtrl) {
             if (!dropdownCtrl) {
