@@ -1,0 +1,14 @@
+.filter-controls {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: right;
+
+  a.clear-filters {
+    display: inline-block;
+    padding: 10px 15px;
+
+    text-transform: none;
+    font-weight: normal;
+    letter-spacing: normal;
+  }
+}

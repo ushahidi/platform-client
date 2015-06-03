@@ -1,44 +1,35 @@
 module.exports = [
     '$q',
-    '$http',
+    '$resource',
     'Util',
     '_',
 function (
     $q,
-    $http,
+    $resource,
     Util,
     _
 ) {
 
     var Geocoding = {
-        api_url: '//nominatim.openstreetmap.org/search',
-        default_params: {
-            format: 'json'
-        },
-        query: function (params) {
-            var deferred = $q.defer();
-
-            $http.get({
-                    url: this.api_url,
-                    params: _.extend({}, this.default_params, params)
-                })
-                .success(function (data, status, headers, config) {
-                    deferred.resolve(data);
-                })
-                .error(function (data, status, headers, config) {
-                    deferred.reject(null);
-                })
-                ;
-
-            return deferred.promise;
-        },
         search: function (location_name) {
-            return this.query({ q: location_name }).then(function (result) {
-                if (result && result[0] && result[0].lat && result[0].lon) {
-                    return [parseFloat(result[0].lat), parseFloat(result[0].lon)];
-                } else {
-                    return null;
+            var osm_geosearch = $resource('//nominatim.openstreetmap.org/search',
+                { format: 'json' },
+                {
+                    query: {
+                        method: 'GET',
+                        isArray: true
+                    }
                 }
+            );
+
+            return osm_geosearch.query({ q: location_name }).$promise.then(function (results) {
+                if (results && results[0]) {
+                    if (results[0].lat && results[0].lon) {
+                        return [parseFloat(results[0].lat), parseFloat(results[0].lon)];
+                    }
+                }
+
+                return null;
             });
         }
     };

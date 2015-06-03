@@ -19,7 +19,7 @@ function (
         start_date: '',
         end_date: '',
         location: '',
-        within_km: '',
+        within_km: '1',
         getSelectedTags: function () {
             return _.pluck(_.where(this.tags, { selected: true }), 'id');
         },
@@ -59,10 +59,10 @@ function (
                 query.q = this.keyword;
             }
             if (this.start_date) {
-                query.updated_after = this.start_date;
+                query.created_after = this.start_date;
             }
             if (this.end_date) {
-                query.updated_before = this.end_date;
+                query.created_before = this.end_date;
             }
 
             if (this.location) {

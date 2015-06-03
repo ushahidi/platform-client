@@ -17,6 +17,7 @@ function (
     Maps,
     _
 ) {
+    $scope.posts_query = null;
 
     $translate('post.posts').then(function (title) {
         $scope.title = title;
@@ -76,10 +77,12 @@ function (
     // load geojson posts into the map obeying the global filter settings
     var map = Maps.getMap('map');
     var reloadMapPosts = function () {
-        var map_posts = PostEndpoint.get(_.extend(
-            GlobalFilter.getPostQuery(), { extra: 'geojson' }
-        ));
-        map_posts.$promise.then(map.reloadPosts);
+        var conditions = _.extend(GlobalFilter.getPostQuery(), { extra: 'geojson' });
+
+        $scope.posts_query = PostEndpoint.get(conditions).$promise.then(function (posts) {
+            map.reloadPosts(posts);
+            $scope.posts_query = null;
+        });
     };
 
     reloadMapPosts(); // init

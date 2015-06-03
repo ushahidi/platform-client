@@ -23,6 +23,7 @@ function (
     d3,
     _
 ) {
+    $scope.posts_query = null;
 
     $translate('post.posts').then(function (title) {
         $scope.title = title;
@@ -97,12 +98,13 @@ function (
             'group_by_attribute_key' : $scope.attributeKey
         });
 
-        PostEndpoint.get(postQuery).$promise.then(function (results) {
+        $scope.posts_query = PostEndpoint.get(postQuery).$promise.then(function (results) {
             $scope.options.chart.xAxis.axisLabel = $filter('translate')($scope.groupByOptions[$scope.groupBy]);
             if (results.totals[0]) {
                 results.totals[0].key = $scope.options.chart.yAxis.axisLabel;
             }
             $scope.data = results.totals;
+            $scope.posts_query = null;
         });
     };
 
