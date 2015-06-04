@@ -1,49 +1,111 @@
-<div class="full-content  post-create">
+<main class="page-content has-aside post-create">
 
     <div class="post-create-choose-form clearfix" ng-hide="active_form">
-        <h3 class="header" translate>{{title}}</h3>
-        <p class="intro" translate>post.modify.intro</p>
-        <div class="col-md-3" ng-repeat="form in forms | filter:filterNotDisabled" >
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a ng-click="chooseForm(form)"><h4 class="panel-title"><i class="fa  fa-list-ul"></i> {{form.name}}</h4></a>
-                </div>
-                <div class="panel-body">{{form.description}}</div>
+        <h1 translate>{{title}}</h1>
+        <h6 translate>post.modify.intro</h6>
+        <div class="cards-select">
+            <div class="selection-card" ng-repeat="form in forms | filter:filterNotDisabled" >
+                <a ng-click="chooseForm(form)">
+                    <h3>{{form.name}}</h3>
+                    <p>{{form.description}}</p>
+                </a>
             </div>
         </div>
     </div>
 
-    <div class="post-create-form" ng-if="active_form">
-        <div class="create-form-header">
-            <h3 translate translate-values="{ type: active_form.name }" ng-if="! is_edit">post.modify.create_type</h3>
-            <h3 translate translate-values="{ type: active_form.name, title: post.title }" ng-if="is_edit">post.modify.edit_type</h3>
-            <a ng-click="goBack()" class="back-button" ng-if="! is_edit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
-        </div>
-        <form name="form">
+    <form name="form" ng-submit="savePost" ng-show="active_form">
+        <aside class="is-right has-border" role="complimentary">
+            <div class="save-buttons fixed-bottom">
+                <div dropdown class="dropdown-group published-to" ng-show="allowedChangeStatus()">
+                    <button
+                        type="button"
+                        dropdown-toggle
+                        translate="{{(postIsPublishedTo() === 'draft') ? 'post.modify.publish' : 'post.modify.published_to'}}"
+                        translate-values="{ role: getRoleDisplayName(postIsPublishedTo()) || everyone }"
+                        class="button-secondary dropdown toggle-content-trigger"
+                    >
+                    </button>
+                    <ul dropdown-menu class="toggle-content dropdown-menu" role="menu">
+                        <li
+                            class="{{(postIsPublishedTo() === 'draft') ? 'active' : 'inactive'}}"
+                            ng-click="setDraft()"
+                            >
+                            <a translate>post.draft</a>
+                        </li>
+                        <li
+                            class="{{(postIsPublishedTo() === '') ? 'active' : 'inactive'}}"
+                            ng-click="publishPostTo()"
+                            >
+                            <a translate translate-values="{role: everyone}">post.modify.publish_to</a>
+                        </li>
+                        <li
+                            ng-repeat="role in availableRoles track by role.name"
+                            class="{{(postIsPublishedTo() === role.name) ? 'active' : 'inactive'}}"
+                            ng-click="publishPostTo(role.name)"
+                            >
+                            <a translate translate-values="{role: role.display_name}">post.modify.publish_to</a>
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="form-group" ng-class="{ 'has-error': form.title.$invalid && form.title.$dirty }">
-                <label for="title">{{'post.modify.form.title' | translate }}</label>
-                <input id="title" name="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 class="form-control">
+                <button type="submit" ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="button-primary" ng-class="{ disabled : form.$invalid || isUnchanged(post) || saving_post }"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span>
+                </button>
+
             </div>
-            <div class="form-group" ng-class="{ 'has-error': form.content.$invalid && form.content.$dirty }">
-                <label for="content">{{'post.modify.form.description' | translate }}</label>
+        </aside>
+
+        <div class="main-col">
+            <div class="create-form-header">
+                <h1 translate translate-values="{ type: active_form.name }" ng-if="! is_edit">post.modify.create_type</h1>
+                <h1 translate translate-values="{ type: active_form.name, title: post.title }" ng-if="is_edit">post.modify.edit_type</h1>
+                <a ng-click="goBack()" class="back-button" ng-if="! is_edit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
+            </div>
+            <div class="divider padded"></div>
+
+            <label class="input-label" for="title">{{'post.modify.form.title' | translate }}</label>
+            <div
+                class="input-icon"
+                ng-class="{ 'error': form.title.$invalid && form.title.$dirty }"
+            >
+                <input id="title" ng-class="{ 'error': form.title.$invalid && form.title.$dirty }"
+                    name="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 class="form-control">
+            </div>
+            <p ng-repeat="(error, value) in form.title.$error"
+                ng-show="form.title.$dirty"
+                class="alert error"
+                translate="{{'post.valid.title.' + error}}"></p>
+
+            <label
+                class="input-label" for="content"
+                ng-class="{ 'error': form.content.$invalid && form.content.$dirty }"
+            >{{'post.modify.form.description' | translate }}</label>
+            <div
+                class="input-icon"
+                ng-class="{ 'error': form.content.$invalid && form.content.$dirty }"
+            >
                 <textarea id="content" name="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required class="form-control"></textarea>
             </div>
+            <p ng-repeat="(error, value) in form.content.$error"
+                ng-show="form.content.$dirty"
+                class="alert error"
+                translate="{{'post.valid.content.' + error}}"></p>
 
             <!-- type: select category -->
-            <div class="form-group" ng-class="{ 'has-error': form.tags.$invalid && form.tags.$dirty }">
-                <label for="tags" translate>post.modify.form.categories</label>
-                <div class="checkbox" ng-repeat="category in categories">
-                    <label>
-                        <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
-                        {{category.tag}}
-                    </label>
-                </div>
+            <label class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</label>
+            <div ng-repeat="category in categories">
+                <label>
+                    <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
+                    {{category.tag}}
+                </label>
             </div>
+            <p ng-repeat="(error, value) in form.tags.$error"
+                ng-show="form.tags.$dirty"
+                class="alert error"
+                translate="{{'post.valid.tags.' + error}}"></p>
 
-            <div class="attribute form-group" ng-repeat="attribute in attributes track by attribute.id" ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
+            <div class="attribute" ng-repeat="attribute in attributes track by attribute.id" ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
 
-                <label for="values[{{attribute.key}}][0]">
+                <label class="input-label" for="values[{{attribute.key}}][0]" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
                     {{attribute.label}}
                 </label>
 
@@ -64,9 +126,11 @@
                                 datepicker-popup="yyyy-MM-dd"
                                 is-open="datepicker[attribute.key][key]"
                                 datepicker-options="{ showWeeks: false }"
+
+                                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
                             />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="openDatePicker($event, attribute, key)"><i class="fa fa-calendar"></i></button>
+                                <button type="button" class="button-secondary" ng-click="openDatePicker($event, attribute, key)"><i class="fa fa-calendar"></i></button>
                             </span>
                         </p>
 
@@ -94,70 +158,39 @@
 
                         <!-- type: checkbox -->
                         <div class="input-group" ng-if="isCheckbox(attribute)">
-                            <label>{{attribute.label}} <input class="form-control" name="values_{{attribute.key}}" type="checkbox" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="1"></label>
+                            <label>{{attribute.label}} <input class="form-control" name="values_{{attribute.key}}" type="checkbox" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="1" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></label>
                         </div>
 
                         <!-- type: radio -->
                         <div class="input-group" ng-if="isRadio(attribute)">
-                            <label ng-repeat="opt in attribute.options">{{opt}} <input class="form-control" name="values_{{attribute.key}}" type="radio" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="{{opt}}"></label>
+                            <label ng-repeat="opt in attribute.options">{{opt}} <input class="form-control" name="values_{{attribute.key}}" type="radio" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="{{opt}}" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></label>
                         </div>
 
                         <!-- type: number -->
-                        <input class="form-control" ng-if="isNumber(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="number" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
+                        <input class="form-control" ng-if="isNumber(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="number" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
 
                         <!-- type: text -->
-                        <input class="form-control" ng-if="isText(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required">
+                        <input class="form-control" ng-if="isText(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" type="text" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
 
                         <!-- type: textarea -->
-                        <textarea class="form-control" rows="10" ng-if="isTextarea(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required"></textarea>
+                        <textarea class="form-control" rows="10" ng-if="isTextarea(attribute)" id="values[{{attribute.key}}][{{key}}]" name="values_{{attribute.key}}" placeholder="{{attribute.label}}" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
 
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-warning" ng-if="canRemoveValue(attribute, key)" ng-click="removeValue(attribute, key)"><i class="fa fa-trash"></i> Remove</button>
+                            <button type="button" class="button-secondary alt trash" ng-if="canRemoveValue(attribute, key)" ng-click="removeValue(attribute, key)">Remove</button>
                         </span>
                     </div>
                 </div>
 
+                <p ng-repeat="(error, value) in form['values_' + attribute.key].$error"
+                    ng-show="form['values_' + attribute.key].$dirty"
+                    class="alert error"
+                    translate="{{'post.valid.values.' + error}}"
+                    translate-values="{ label : attribute.label }"></p>
+
 
                 <button type="button" class="btn btn-info" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)"><i class="fa fa-plus"></i> Add</button>
             </div>
+        </div>
+    </form>
 
-            <div class="pull-right">
-
-                <span dropdown class="dropdown" ng-show="allowedChangeStatus()">
-                    <a
-                        translate="{{(postIsPublishedTo() === 'draft') ? 'post.modify.publish' : 'post.modify.published_to'}}"
-                        translate-values="{ role: getRoleDisplayName(postIsPublishedTo()) || everyone }"
-                        class="btn btn-success dropdown-toggle"
-                        dropdown-toggle>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li
-                            class="{{(postIsPublishedTo() === 'draft') ? 'active' : 'inactive'}}"
-                            ng-click="setDraft()"
-                            >
-                            <a translate>post.draft</a>
-                        </li>
-                        <li
-                            class="{{(postIsPublishedTo() === '') ? 'active' : 'inactive'}}"
-                            ng-click="publishPostTo()"
-                            >
-                            <a translate translate-values="{role: everyone}">post.modify.publish_to</a>
-                        </li>
-                        <li
-                            ng-repeat="role in availableRoles track by role.name"
-                            class="{{(postIsPublishedTo() === role.name) ? 'active' : 'inactive'}}"
-                            ng-click="publishPostTo(role.name)"
-                            >
-                            <a translate translate-values="{role: role.display_name}">post.modify.publish_to</a>
-                        </li>
-                    </ul>
-                </span>
-
-                <button ng-click="savePost(post)" ng-disabled="form.$invalid || isUnchanged(post) || saving_post" class="btn btn-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span>
-                </button>
-
-            </div>
-        </form>
-    </div>
-
-</div>
+</main>

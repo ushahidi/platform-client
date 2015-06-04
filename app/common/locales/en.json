@@ -192,6 +192,25 @@
                 "unpublish" : "unpublish",
                 "delete" : "delete"
             }
+        },
+        "valid" : {
+            "title" : {
+                "required" : "A title is required",
+                "minlength" : "Title is too short",
+                "maxlength" : "Title is too long"
+            },
+            "content" : {
+                "required" : "Description cannot be empty"
+            },
+            "tags" : {
+                "required" : "Categories are required"
+            },
+            "values" : {
+                "required" : "\"{{label}}\" is required",
+                "parse" : "\"{{label}}\" could not be parsed",
+                "date" : "\"{{label}}\" must be a date",
+                "number" : "\"{{label}}\" must be a number"
+            }
         }
     },
     "set": {
