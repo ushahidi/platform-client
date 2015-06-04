@@ -84,7 +84,7 @@
     "nvd3": "git://github.com/novus/nvd3#v1.7.1",
     "selection-model": "git://github.com/jtrussell/angular-selection-model.git",
     "underscore": "^1.7.0",
-    "platform-pattern-library" : "git+https://github.com/ushahidi/platform-pattern-library#gh-pages"
+    "platform-pattern-library" : "git+https://github.com/ushahidi/platform-pattern-library#v3.0.0-beta.18"
   },
   "engines": {
     "node": ">=0.10"
