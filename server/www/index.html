@@ -4,11 +4,12 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-rtl.min.css" ng-disabled="! rtlEnabled">
-        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link href="/fonts/Lato/css/fonts.css" rel="stylesheet" type="text/css">
+        <!-- @todo minify CSS -->
         <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/rtl-style.css" ng-disabled="! rtlEnabled">
+        <link rel="stylesheet" href="/css/vendor.css">
+
         <title>{{pageTitle}}{{siteTitle}}</title>
         <meta name="description" content="{{pageDescription}}">
         <meta name="keywords" content="{{pageKeywords}}">
@@ -16,86 +17,64 @@
         <base href="/">
     </head>
 
-    <body ng-class="{ rtl : rtlEnabled }">
+    <body ng-class="{ rtl : rtlEnabled }" class="has-dynamic-header" canvas>
 
-        <nav id="off-canvas-nav" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation" ng-controller="navigation">
-            <ul class="nav navmenu-nav left-nav">
-                <li role="presentation"><a ng-href="/" translate>nav.home</a></li>
-                <li role="presentation"><a ng-href="/about" translate>nav.about</a></li>
-                <li role="presentation" ng-show="isAdmin()"><a ng-href="/tools" translate>nav.tools</a></li>
-                <li><a ng-click="switchRtl()">Switch RTL/LTR</a></li>
-                <li class="dropdown user-menu visible-xs" dropdown ng-show="currentUser">
-                    <a id="user-menu-link" class="dropdown-toggle" role="button" aria-expanded="false" dropdown-toggle>
-                        <span>{{currentUser.realname || currentUser.username}}</span>
-                        <i class="fa fa-angle-down"></i>
-                    </a>
-                    <ul class="dropdown-menu navmenu-nav" role="menu">
-                        <li><a ng-href="/users/me" class="my-profile"><i class="fa fa-user"></i>
-                            <span translate>nav.profile</span></a></li>
-                        <li><a class="user-logout" ng-click="logoutClick($event)"><i class="fa fa-sign-out"></i>
-                            <span translate>nav.logout</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <h5 class="sets-menu-heading" translate>nav.saved_searches</h5>
-                    <sets-menu search='1'></sets-menu>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <h5 class="sets-menu-heading" translate>nav.collections</h5>
-                    <sets-menu search='0'></sets-menu>
-                </li>
-            </ul>
-        </nav>
+        <header class="header header-full overlay" role="banner" ng-controller="navigation">
+            <div class="container">
+                <!-- @todo dynamic header image -->
+                <!--<div class="hero-image">
+                     <img src="http://github.ushahidi.org/platform-pattern-library/assets/img/header-bk.jpg" alt="" />
+                </div>-->
 
-        <header class="top-bar" ng-controller="navigation">
-            <div class="navbar navbar-default navbar-fixed-top">
-                <button type="button" class="button navbar-toggle" data-toggle="offcanvas" data-target="#off-canvas-nav" data-canvas=".canvas">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" ng-href="/">{{site.name}}</a>
-
-                <ul class="nav navmenu-nav navbar-right flip right-nav">
-                    <li class="nav-create"><a ng-href="/posts/create"><i class="fa  fa-plus"></i> <span class="hidden-xs" translate>nav.create</span></a></li>
-                    <li><a ng-href="/register" class="user-register"><i class="fa fa-key"></i> <span translate>nav.register</span></a></li>
-                    <li ng-hide="currentUser"><a ng-href="/login" class="user-login"><i class="fa  fa-sign-in"></i> <span translate>nav.login</span></a></li>
-                    <li class="dropdown user-menu hidden-xs" dropdown ng-show="currentUser">
-                        <a id="user-menu-link" class="dropdown-toggle btn-link" role="button" aria-expanded="false" dropdown-toggle>
-                            <span>{{currentUser.realname || currentUser.username}}</span>
-                            <i class="fa fa-angle-down"></i>
+                <div class="color-overlay">
+                    <div class="parallax">
+                        <div class="nav-icon" off-canvas-toggle>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <h1 class="beta">{{site.name}}</h1>
+                        <p class="header-description">{{site.description}}</p>
+                        <a class="button button-create icon-only" ng-href="/posts/create">
+                            <span translate>nav.add_post</span>
                         </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ng-href="/users/me" class="my-profile"><i class="fa fa-user"></i>
-                                <span translate>nav.profile</span></a></li>
-                            <li class="divider"></li>
-                            <li><a class="user-logout" ng-click="logoutClick($event)"><i class="fa fa-sign-out"></i>
-                                <span translate>nav.logout</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+
+                        <ng-include src="'templates/partials/user-menu.html'"></ng-include>
+                    </div>
+                </div>
+
             </div>
         </header>
 
         <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
-        <div class="canvas">
-            <div class="container" ng-view ></div>
+        <div class="wrapper">
+            <ng-include src="'templates/partials/main-menu.html'"></ng-include>
+
+            <ng-view></ng-view>
         </div>
 
-        <!-- there is no footer present in the design spec, but we probably want one. (?) -->
-        <!--
-        <footer role="contentinfo" class="footer">
-            <div class="container footer-copyright-wrapper">
-                <div class="footer-copyright">
-                    <p class="text-muted" translate translate-values="{owner_name: owner_name}">footer.copyright_info</p>
+        <footer role="contentinfo" ng-controller="navigation">
+            <div class="wrapper">
+                <div class="footer-container">
+                    <div class="footer-main-col">
+                        <h2>{{site.name}}</h2>
+                        <p>{{site.description}}</p>
+                        <ul class="footer-nav">
+                            <li><a ng-href="/" translate>nav.home</a></li>
+                            <li><a ng-href="/about" translate>nav.about</a></li>
+                            <li><a ng-href="/activity" translate>nav.activity</a></li>
+                            <li><a ng-href="/tools/settings" translate>nav.settings</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-secondary-col">
+                        <a class="button button-create" ng-href="/posts/create">
+                            <span translate>nav.add_post</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>
-        -->
+
         <script src="/js/bundle.js"></script>
     </body>
 </html>

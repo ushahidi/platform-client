@@ -2,13 +2,13 @@ var getLastUrlPart = function (url) {
     return url.substr(url.lastIndexOf('/'));
 };
 
-var loginLinkSelector = '.top-bar a.user-login',
-    logoutLinkSelector = '.top-bar a.user-logout',
-    userMenuLinkSelector = '.top-bar li.user-menu a.dropdown-toggle';
+var loginLinkSelector = '.header a.user-login',
+    logoutLinkSelector = '.header a.user-logout',
+    userMenuLinkSelector = '.header .user-admin .toggle-wrapper';
 
 describe('authentication', function () {
 
-    describe('login link in main menu:', function () {
+    describe('Login link in main menu:', function () {
 
         var loginLink;
 
@@ -19,7 +19,7 @@ describe('authentication', function () {
 
         it('should exist and have the correct text', function () {
             expect(loginLink.isDisplayed()).toBe(true);
-            expect(loginLink.getText()).toBe('Login');
+            expect(loginLink.getText()).toBe('LOG IN');
         });
 
         describe('clicking the login link', function () {
@@ -35,7 +35,7 @@ describe('authentication', function () {
         });
     }); // end 'login link in main menu'
 
-    describe('login form:', function () {
+    describe('Login page:', function () {
 
         var usernameField,
             passwordField,
@@ -60,7 +60,7 @@ describe('authentication', function () {
             expect(submitButton.isDisplayed()).toBeTruthy();
         });
 
-        describe('submit form with wrong credentials', function () {
+        describe('submitting login form with wrong credentials', function () {
             beforeEach(function () {
                 usernameField.sendKeys('foo');
                 passwordField.sendKeys('bar');
@@ -79,7 +79,7 @@ describe('authentication', function () {
             });
         }); // end 'submit form with wrong credentials'
 
-        describe('submit form with correct credentials', function () {
+        describe('submitting the form with correct credentials', function () {
             beforeEach(function () {
                 usernameField.sendKeys('admin');
                 passwordField.sendKeys('admin');
@@ -92,33 +92,30 @@ describe('authentication', function () {
                 });
             });
 
-            describe('logout link in the user menu', function () {
-                var loginLink, logoutLink, userMenuLink;
+            it('should hide the login link', function () {
+                loginLink = element(by.css(loginLinkSelector));
+                expect(loginLink.isDisplayed()).toBeFalsy();
+            });
 
+            it('should show the user menu be visible', function () {
+                userMenuLink = element(by.css(userMenuLinkSelector));
+                expect(userMenuLink.isDisplayed()).toBeTruthy();
+            });
+
+            describe('and clicking the logout link', function () {
                 beforeEach(function () {
-                    loginLink = element(by.css(loginLinkSelector));
                     userMenuLink = element(by.css(userMenuLinkSelector));
                     logoutLink = element(by.css(logoutLinkSelector));
-                });
+                    loginLink = element(by.css(loginLinkSelector));
 
-                it('should exist instead of the login link', function () {
-                    expect(loginLink.isDisplayed()).toBeFalsy();
                     userMenuLink.click();
-                    expect(logoutLink.isDisplayed()).toBeTruthy();
+                    browser.wait(logoutLink.isDisplayed);
+                    logoutLink.click();
                 });
 
-                describe('clicking the logout link', function () {
-
-                    beforeEach(function () {
-                        userMenuLink.click();
-                        logoutLink.click();
-                    });
-
-                    it('should change again to the login link', function () {
-                        expect(userMenuLink.isDisplayed()).toBeFalsy();
-                        expect(logoutLink.isDisplayed()).toBeFalsy();
-                        expect(loginLink.isDisplayed()).toBeTruthy();
-                    });
+                it('should show the login link and hide user menu', function () {
+                    expect(userMenuLink.isDisplayed()).toBeFalsy();
+                    expect(loginLink.isDisplayed()).toBeTruthy();
                 });
             });
         }); // end 'submit form with correct credentials'

@@ -13,9 +13,9 @@ function (
         controller: require('./controllers/views/post-list-view-controller.js'),
         templateUrl: 'templates/views/list.html'
     })
-    .when('/views/graph', {
-        controller: require('./controllers/views/post-graph-view-controller.js'),
-        templateUrl: 'templates/views/graph.html'
+    .when('/views/chart', {
+        controller: require('./controllers/views/post-chart-view-controller.js'),
+        templateUrl: 'templates/views/chart.html'
     })
     .when('/views/timeline', {
         controller: require('./controllers/views/post-timeline-view-controller.js'),

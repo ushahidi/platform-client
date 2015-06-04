@@ -17,6 +17,8 @@ module.exports = [
         $q,
         _
     ) {
+        $scope.posts_query = null;
+
         $translate('post.posts').then(function (title) {
             $scope.title = title;
             $scope.$emit('setPageTitle', title);
@@ -29,9 +31,10 @@ module.exports = [
                 limit: $scope.itemsPerPage
             });
 
-            PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+            $scope.posts_query = PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 $scope.posts = postsResponse.results;
                 $scope.totalItems = postsResponse.total_count;
+                $scope.posts_query = null;
             });
         },
         handleResponseErrors = function (errorResponse) {
@@ -74,19 +77,21 @@ module.exports = [
             });
         };
 
-        $scope.unselectAllPosts = function () {
+        $scope.unselectAllPosts = function ($event) {
+            $event && $event.preventDefault();
             _.forEach($scope.posts, function (post) {
                 post.selected = false;
             });
         };
 
-        $scope.selectAllPosts = function () {
+        $scope.selectAllPosts = function ($event) {
+            $event && $event.preventDefault();
             _.forEach($scope.posts, function (post) {
                 post.selected = true;
             });
         };
 
-        $scope.allSelectedOnCurrentPage = function () {
+        $scope.allSelectedOnCurrentPage = function ($event) {
             return $scope.selectedItems.length === $scope.posts.length;
         };
 

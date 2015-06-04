@@ -73,11 +73,11 @@ function (
 
     };
 
-    $scope.savePost = function (post) {
+    $scope.savePost = function () {
         $scope.saving_post = true;
 
         // Avoid messing with original object
-        post = _.clone(post);
+        post = _.clone($scope.post);
         post.values = _.clone(post.values);
 
         // Clean up post values object

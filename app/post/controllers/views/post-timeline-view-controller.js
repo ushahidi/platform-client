@@ -23,6 +23,7 @@ function (
     d3,
     _
 ) {
+    $scope.posts_query = null;
 
     $translate('post.posts').then(function (title) {
         $scope.title = title;
@@ -152,8 +153,9 @@ function (
             'group_by_attribute_key' : $scope.attributeKey
         });
 
-        PostEndpoint.get(postQuery).$promise.then(function (results) {
+        $scope.posts_query = PostEndpoint.get(postQuery).$promise.then(function (results) {
             updateData(results.totals, results.time_interval);
+            $scope.posts_query = null;
         });
     };
 

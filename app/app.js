@@ -17,8 +17,6 @@ require('checklist-model/checklist-model');
 require('angular-gravatar/build/md5');
 require('angular-gravatar/build/angular-gravatar');
 require('selection-model/dist/selection-model');
-window.jQuery = require('jquery'); // Required for jasny-bootstrap
-require('jasny-bootstrap/js/offcanvas');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown/src/ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
@@ -28,7 +26,7 @@ require('angular-nvd3/src/angular-nvd3');
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./post/post-module.js');
-require('./tool/tool-module.js');
+require('./setting/setting-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
 
@@ -55,7 +53,8 @@ angular.module('app',
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',
-        'ui.bootstrap',
+        'ui.bootstrap.pagination',
+        'ui.bootstrap.datepicker',
         'ui.bootstrap.datetimepicker',
         'ui.gravatar',
         'leaflet-directive',
@@ -82,9 +81,6 @@ angular.module('app',
         CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders')
     })
 
-    .factory('jQuery', function () {
-        return window.jQuery;
-    })
     .factory('_', function () {
         return require('underscore/underscore');
     })

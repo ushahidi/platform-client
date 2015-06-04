@@ -33,18 +33,20 @@
         "end_date" : "End Date",
         "end_date_placeholder" : "April 25, 2014",
         "location" : "Location",
-        "location_placeholder": "Nairobi, Kenya",
+        "location_placeholder": "Enter city or address",
         "within_km": "Within",
         "km": "Km",
-        "within_km_placeholder": "10",
+        "within_km_placeholder": "Distance",
         "option_1" : "within 1 km",
-        "option_2" : "within 5 km",
-        "option_3" : "within 20 km",
-        "option_4" : "within 50 km",
-        "option_5" : "within 100 km",
-        "clear_selection" : "Clear Selection",
-        "apply_filters" : "Apply Filters",
-        "save_to_set" : "Save to Set"
+        "option_2" : "within 10 km",
+        "option_3" : "within 50 km",
+        "option_4" : "within 100 km",
+        "option_5" : "within 500 km",
+        "clear_filters" : "Clear Filters",
+        "apply_filters" : "Apply",
+        "save_to_set" : "Save to Set",
+        "search" : "Search",
+        "date_range" : "Date Range"
     },
     "graph" : {
         "group_by" : "Group by",
@@ -62,6 +64,9 @@
     },
     "nav" : {
         "about" : "About",
+        "activity" : "Activity",
+        "add_post" : "Add Post",
+        "account_settings" : "Account Settings",
         "all" : "All",
         "author_tagline" : "By ",
         "appearance" : "Appearance",
@@ -71,10 +76,10 @@
         "clear" : "Clear",
         "collections" : "Collections",
         "comments" : "Comments",
-        "data" : "Data",
+        "data_sources" : "Data Sources",
         "edit_profile" : "Edit Profile",
         "forbidden" : "Access Denied",
-        "create" : "Create",
+        "general" : "General",
         "dashboard" : "Dashboard",
         "delete" : "Delete",
         "edit" : "Edit",
@@ -82,15 +87,19 @@
         "forms" : "Forms",
         "help" : "Help",
         "home" : "Home",
-        "login" : "Login",
-        "registration" : "Registration",
-        "register" : "Register",
+        "login" : "Log in",
+        "registration" : "Sign up",
+        "register" : "Sign up",
         "logout" : "Logout",
         "notifications" : "Notifications",
+        "new_collection" : "New Collection",
+        "notifications" : "Notifications",
         "people" : "People",
+        "permissions" : "Permissions",
         "please_wait_loading" : "Please wait. Loading...",
         "plugins" : "Plugins",
         "posts" : "Posts",
+        "posts_and_entities" : "Posts & Entites",
         "profile": "My Profile",
         "role" : "Role",
         "roles" : "Roles",
@@ -98,7 +107,7 @@
         "select_all" : "Select All",
         "settings" : "Settings",
         "tags" : "Categories",
-        "tools" : "Tools",
+        "general" : "General Settings",
         "type" : "Type",
         "unselect_all" : "Unselect All",
         "user" : "User",
@@ -110,7 +119,7 @@
         "view" : "View",
         "map" : "Map",
         "list" : "List",
-        "graph" : "Graph",
+        "chart" : "Bar Chart",
         "timeline" : "Timeline"
     },
     "post": {
@@ -183,6 +192,25 @@
                 "unpublish" : "unpublish",
                 "delete" : "delete"
             }
+        },
+        "valid" : {
+            "title" : {
+                "required" : "A title is required",
+                "minlength" : "Title is too short",
+                "maxlength" : "Title is too long"
+            },
+            "content" : {
+                "required" : "Description cannot be empty"
+            },
+            "tags" : {
+                "required" : "Categories are required"
+            },
+            "values" : {
+                "required" : "\"{{label}}\" is required",
+                "parse" : "\"{{label}}\" could not be parsed",
+                "date" : "\"{{label}}\" must be a date",
+                "number" : "\"{{label}}\" must be a number"
+            }
         }
     },
     "set": {
@@ -252,7 +280,6 @@
         "edit_user" : "Edit User",
         "change_role" : "Change Role",
         "save" : "Save User",
-        "filter_role" : "Filter Role",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",
@@ -272,6 +299,7 @@
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
+        "search_and_filter" : "Search & Filter Users",
         "username" : "Username",
         "valid" : {
             "username" : {

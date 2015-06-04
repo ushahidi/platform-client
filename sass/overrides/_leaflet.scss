@@ -1,0 +1,17 @@
+/**
+ * Leaflet Overrides
+ */
+
+.map-view {
+    position: relative;
+    z-index: 100;
+}
+
+// Override leaflet layer image path
+.leaflet-control-layers-toggle {
+	background-image: url(../img/layers.png);
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(../img/layers-2x.png);
+	}
+

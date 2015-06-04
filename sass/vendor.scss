@@ -1,0 +1,18 @@
+/**
+ * Combined vendor stylesheets
+ */
+
+// the 'gulp rename' task is a workaround that duplicates the .css file and
+// renames it to .scss, allowing us to essentially import vendor .css.
+//
+// these files are imported via the 'node-modules include path' in gulpfile.js
+//
+@import "leaflet/dist/leaflet";
+@import "leaflet.markercluster/dist/MarkerCluster";
+@import "leaflet.markercluster/dist/MarkerCluster.Default";
+@import "angular-bootstrap-colorpicker/scss/colorpicker";
+@import "nvd3/build/nv.d3";
+
+// Custom overrides
+@import "overrides/leaflet";
+@import "overrides/filters";

@@ -1,6 +1,6 @@
-<div class="full-content  post-detail">
+<main class="page-content has-aside post-detail">
 
-    <div class="post-detail-meta col-md-3 pull-right flip well">
+    <aside class="is-right has-border" role="complementary">
         <div ng-hide="true">
             <h4 translate>post.view</h4>
             <div class="btn-group" dropdown>
@@ -17,71 +17,71 @@
         </div>
 
         <div ng-show="user.id">
-            <h4 translate>post.posted_by</h4>
+            <p class="delta-alt" translate>post.posted_by</p>
             <p><i class="fa  fa-user"></i><a ng-href="/users/{{user.id}}"></a> {{user.realname || post.user.id}}</p>
         </div>
 
         <div ng-show="form_name">
-            <h4 translate>post.type</h4>
+            <p class="delta-alt" translate>post.type</p>
             <p>
                 {{form_name}}
             </p>
         </div>
 
-        <h4 translate>post.status</h4>
+        <p class="delta-alt" translate>post.status</p>
         <p>
             <span ng-show="post.status == 'published'"><i class="fa  fa-check-circle"></i> <span translate>post.published</span></span>
             <span ng-show="post.status == 'draft'"><i class="fa  fa-circle-o"></i> <span translate>post.unpublished</span></span>
         </p>
 
         <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
-            <a class="btn btn-default btn-large" ng-href="/posts/{{post.id}}/edit">
-                <i class="fa  fa-edit"></i> <span translate>post.post_actions.edit</span>
+            <a type="button" class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
+                <span translate>post.post_actions.edit</span>
             </a>
         </p>
         <p ng-if="post.allowed_privileges.indexOf('delete') !== -1">
-            <a class="btn btn-warning btn-large" ng-click="deletePost()">
+            <button type="button" class="button-secondary delete" ng-click="deletePost()">
                 <i class="fa  fa-trash"></i> <span translate>post.post_actions.delete</span>
-            </a>
+            </button>
         </p>
         <!--<p ng-if="post.allowed_privileges.indexOf('delete')">
             <a class="btn btn-default btn-large" href="/posts/{{post.id}}/delete">
                 <i class="fa  fa-edit"></i><span translate>post.post_actions.delete</span>
             </a>
         </p>-->
+    </aside>
+
+    <div class="main-col">
+        <article role="article">
+            <span class="meta-data has-categories"><span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}} <!-- via SMS --></span>
+
+            <ul class="categories-list-inline" ng-show="!!post.tags.length">
+                <li class="category" ng-repeat="tag in post.tags">
+                    <i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i> {{tag.tag}}
+                </li>
+            </ul>
+
+            <h1 class="post-header">{{post.title}}</h1>
+
+        	<div class="post-content" sd-model-to-html="post.content">
+        	</div> <!-- end .post-content -->
+
+            <ul class="post-values list-unstyled">
+                <li
+                    ng-repeat="(key, value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)">
+                    <post-value
+                        key="key"
+                        value="value"
+                        attribute="form_attributes[key]"
+                    ></post-value>
+                </li>
+            </ul><!-- end .post-values -->
+
+            <h3 translate>post.location</h3>
+            <div ng-if="mapDataLoaded">
+                <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
+            </div>
+        </article>
     </div>
 
-    <div class="post-detail-main col-md-9">
-        <div class="pull-left flip"><i class="fa  fa-clock-o"></i> <span class="post-time" am-time-ago="post.updated || post.created"></span></div>
-
-        <ul class="list-inline" ng-show="!!post.tags.length">
-            <li ng-repeat="tag in post.tags">
-                <span class="badge" ng-style="{'background-color':tag.color}">{{tag.tag}}</span>
-            </li>
-        </ul>
-
-        <h3 class="post-header">{{post.title}}</h3>
-
-        <div class="post-excerpt" sd-model-to-html="post.content">
-        </div> <!-- end .post-excerpt -->
-
-        <ul class="post-values list-unstyled">
-            <li
-                ng-repeat="(key, value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)">
-                <post-value
-                    key="key"
-                    value="value"
-                    attribute="form_attributes[key]"
-                ></post-value>
-            </li>
-            <li ng-if="mapDataLoaded">
-                <h5 class="value-label" translate>
-                    post.location
-                </h5>
-
-                <leaflet id="post-map" defaults="defaults" geojson="geojson" center="center" layers="layers" height="300px" width="100%"></leaflet>
-            </li>
-        </ul> <!-- end .post-values -->
-    </div>
-
-</div> <!-- end .post-detail -->
+</main> <!-- end .post-detail -->
