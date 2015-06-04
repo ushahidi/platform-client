@@ -35,9 +35,9 @@
         </p>
 
         <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
-            <button type="button" class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
+            <a type="button" class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
                 <span translate>post.post_actions.edit</span>
-            </button>
+            </a>
         </p>
         <p ng-if="post.allowed_privileges.indexOf('delete') !== -1">
             <button type="button" class="button-secondary delete" ng-click="deletePost()">
