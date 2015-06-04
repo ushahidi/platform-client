@@ -28,7 +28,7 @@ describe('users management', function () {
             });
 
             describe('clicking the "users" link in the "settings" menu', function () {
-                var usersLinkSelector = 'a[href="/tools/users"]';
+                var usersLinkSelector = 'a[href="/settings/users"]';
 
                 beforeEach(function () {
                     var usersLink = element(by.css(usersLinkSelector));
@@ -44,17 +44,19 @@ describe('users management', function () {
                     describe('one user in the list (admin)', function () {
                         var adminLink;
                         beforeEach(function () {
-                            adminLink = element(by.css('a[href="/tools/users/2"'));
+                            adminLink = element(by.css('a[href="/settings/users/2"'));
                         });
 
                         describe('role field', function () {
                             var roleField;
                             beforeEach(function () {
-                                roleField = element(by.css('tr#user-2 td.role'));
+                                roleField = element(by.css('#user-2 .user-type'));
                             });
 
                             it('should exist and have the correct role name as text', function () {
-                                expect(roleField.getText()).toEqual('Admin');
+                                roleField.getText().then(function(text) { // Wait for promise to return
+                                    expect(text.toLowerCase()).toEqual('admin');
+                                })
                             });
 
                         });
@@ -69,9 +71,9 @@ describe('users management', function () {
                     describe('selecting some users, including the admin (which is currently signed in)', function () {
                         beforeEach(function () {
                             _.range(1, 4).forEach(function (i) {
-                                element(by.css('tr#user-' + i + ' input[type="checkbox"]')).click();
+                                element(by.css('#user-' + i + ' input[type="checkbox"]')).click();
                             });
-                            element(by.css('tr#user-1 input[type="checkbox"]')).click();
+                            element(by.css('#user-1 input[type="checkbox"]')).click();
                         });
 
                         describe('change role button', function () {
@@ -134,12 +136,12 @@ describe('users management', function () {
                     describe('selecting some users, without the admin (which is currently signed in)', function () {
                         beforeEach(function () {
                             _.range(3, 6).forEach(function (i) {
-                                element(by.css('tr#user-' + i + ' input[type="checkbox"]')).click();
+                                element(by.css('#user-' + i + ' input[type="checkbox"]')).click();
                             });
                             // element.all(by.css('tr.user input[type="checkbox"]')).then(function(userCheckBoxes){
                             //
                             // });
-                            element(by.css('tr#user-1 input[type="checkbox"]')).click();
+                            element(by.css('#user-1 input[type="checkbox"]')).click();
                         });
 
                         describe('change role button', function () {
