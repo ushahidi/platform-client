@@ -29,6 +29,11 @@ function (
     $scope.roles = RoleHelper.roles(true);
     $scope.getRole = RoleHelper.getRole;
 
+    $scope.filter = {
+        role: "",
+        q: null
+    };
+
     $scope.selectedUsers = [];
 
     $scope.isToggled = function (user) {
@@ -102,12 +107,6 @@ function (
         });
     };
 
-    $scope.filterRole = function (role) {
-        $scope.filteredRole = (role ? role.name : '');
-        getUsersForPagination();
-        $scope.selectedUsers = [];
-    };
-
     $scope.itemsPerPageChanged = function (count) {
         $scope.itemsPerPage = count;
         getUsersForPagination();
@@ -122,7 +121,8 @@ function (
         UserEndpoint.query({
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
-            role: $scope.filteredRole
+            role: $scope.filter.role,
+            q: $scope.filter.q
         }).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
             $scope.totalItems = usersResponse.total_count;
@@ -130,6 +130,9 @@ function (
     };
 
     $scope.pageChanged = getUsersForPagination;
+    $scope.applyFilters = function () {
+        getUsersForPagination();
+    }
     // --- end: definitions
 
 

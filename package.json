@@ -72,7 +72,7 @@
     "angular-translate": "^2.4.1",
     "angular-ui-bootstrap-datetimepicker": "git://github.com/zhaber/datetimepicker#fb579ab930",
     "angular-xeditable": "0.0.1",
-    "checklist-model": "git+https://github.com/vitalets/checklist-model.git#0.1.3",
+    "checklist-model": "~0.2",
     "d3": "^3.5.5",
     "leaflet": "~0.7.3",
     "leaflet-draw": "~0.2.1",

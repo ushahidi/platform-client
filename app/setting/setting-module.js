@@ -5,5 +5,4 @@ angular.module('ushahidi.tools', [
     'colorpicker.module',
     'xeditable'
 ])
-.directive('toolMenu', require('./directives/tool-menu-directive.js'))
-.config(require('./tool-routes.js'));
+.config(require('./setting-routes.js'));

@@ -107,7 +107,7 @@
         "select_all" : "Select All",
         "settings" : "Settings",
         "tags" : "Categories",
-        "tools" : "Tools",
+        "general" : "General Settings",
         "type" : "Type",
         "unselect_all" : "Unselect All",
         "user" : "User",
@@ -261,7 +261,6 @@
         "edit_user" : "Edit User",
         "change_role" : "Change Role",
         "save" : "Save User",
-        "filter_role" : "Filter Role",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",
@@ -281,6 +280,7 @@
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
+        "search_and_filter" : "Search & Filter Users",
         "username" : "Username",
         "valid" : {
             "username" : {

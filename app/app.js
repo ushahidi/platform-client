@@ -26,7 +26,7 @@ require('angular-nvd3/src/angular-nvd3');
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./post/post-module.js');
-require('./tool/tool-module.js');
+require('./setting/setting-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
 

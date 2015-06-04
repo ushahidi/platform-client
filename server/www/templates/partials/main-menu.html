@@ -11,19 +11,19 @@
         <li><a ng-href="/" translate>nav.home</a></li>
         <li><a ng-href="/about" translate>nav.about</a></li>
         <li><a ng-href="/activity" translate>nav.activity</a></li>
-        <li class="settings-nav" dropdown auto-close="disabled">
+        <li class="settings-nav" dropdown auto-close="disabled" ng-show="isAdmin()">
             <div class="settings-nav-header">
                 <a class="toggle-content-trigger" dropdown-toggle translate>nav.settings</a>
             </div>
             <ul class="toggle-content" dropdown-menu>
-                <li><a ng-href="/tools/settings" translate>nav.general</a></li>
-                <li><a ng-href="/tools/appearance" translate>nav.appearance</a></li>
-                <li><a ng-href="/tools/data-sources" translate>nav.data_sources</a></li>
-                <li><a ng-href="/tools/plugins" translate>nav.plugins</a></li>
-                <li><a ng-href="/tools/posts" translate>nav.posts_and_entities</a></li>
-                <li><a ng-href="/tools/categories" translate>nav.categories</a></li>
-                <li><a ng-href="/tools/users" translate>nav.users</a></li>
-                <li><a ng-href="/tools/permission" translate>nav.permissions</a></li>
+                <li><a ng-href="/settings/general" translate>nav.general</a></li>
+                <li><a ng-href="/settings/appearance" translate>nav.appearance</a></li>
+                <!-- <li><a ng-href="/settings/data-sources" translate>nav.data_sources</a></li>
+                <li><a ng-href="/settings/plugins" translate>nav.plugins</a></li>
+                <li><a ng-href="/settings/posts" translate>nav.posts_and_entities</a></li> -->
+                <li><a ng-href="/settings/categories" translate>nav.categories</a></li>
+                <li><a ng-href="/settings/users" translate>nav.users</a></li>
+                <!-- <li><a ng-href="/settings/permission" translate>nav.permissions</a></li> -->
             </ul>
         </li>
     </ul>

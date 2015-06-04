@@ -1,0 +1,81 @@
+<main class="page-content has-aside" role="main">
+
+    <ul class="breadcrumb">
+      <li><a ng-href="/settings" translate>nav.settings</a></li>
+      <li class="active" translate>nav.users</li>
+    </ul>
+
+    <div class="main-col">
+
+        <h1 class="inline">{{title}}</h1>
+        <a href="javascript:;" ng-click="goBack()">
+            <i class="fa fa-arrow-left"></i><span translate>nav.back</span>
+        </a>
+
+        <div class="divider white"></div>
+        <form name="form">
+
+            <label class="input-label"
+                ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }"
+                for="full_name" translate>user.full_name</label>
+            <span class="input-icon" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
+                <input id="full_name" name="full_name" type="text"
+                    ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }"
+                    placeholder="{{ 'user_create.full_name'|translate }}"
+                    ng-maxlength="150"
+                    ng-model="user.realname"
+                    required>
+            </span>
+
+            <label class="input-label"
+                ng-class="{ 'error': form.username.$invalid && form.username.$dirty }"
+                for="username" translate>user.username</label>
+            <span class="input-icon" ng-class="{ 'error': form.username.$invalid && form.username.$dirty }">
+                <input id="username" name="username" type="text"
+                    ng-class="{ 'error': form.username.$invalid && form.username.$dirty }"
+                    placeholder="{{ 'user_create.username'|translate }}"
+                    ng-maxlength="150"
+                    ng-model="user.username"
+                    required>
+            </span>
+
+            <label class="input-label"
+                ng-class="{ 'error': form.email.$invalid && form.email.$dirty }"
+                for="email" translate>user.email</label>
+            <span class="input-icon" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
+                <input id="email" name="email" type="email"
+                    ng-class="{ 'error': form.email.$invalid && form.email.$dirty }"
+                    placeholder="{{ 'user_create.email'|translate }}"
+                    ng-maxlength="150"
+                    ng-model="user.email"
+                    required>
+            </span>
+
+            <label class="input-label"
+                ng-class="{ 'error': form.password.$invalid && form.password.$dirty }"
+                for="password" translate>user.password</label>
+            <span class="input-icon" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
+                <input id="password" name="password" type="password"
+                    ng-class="{ 'error': form.password.$invalid && form.password.$dirty }"
+                    ng-minlength="7"
+                    ng-maxlength="72"
+                    ng-model="user.password"
+                    required>
+            </span>
+
+            <label class="input-label" for="role" translate>user.role</label>
+            <div class="custom-select" ng-class="{ 'error': form.role.$invalid && form.role.$dirty }">
+                <select id="role" name="role" ng-model="user.role" ng-options="role.name as role.display_name for role in roles"></select>
+            </div>
+
+            <div class="save-button">
+                <button class="save" ng-click="saveUser(user)" ng-disabled="form.$invalid || processing">
+                    <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
+                    <span translate>user.save</span>
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</main>
