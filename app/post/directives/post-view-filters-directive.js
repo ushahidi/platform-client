@@ -1,11 +1,9 @@
 module.exports = [
     'Geocoding',
     'GlobalFilter',
-    '_',
 function (
     Geocoding,
-    GlobalFilter,
-    _
+    GlobalFilter
 ) {
     return {
         restrict: 'E',
@@ -24,21 +22,13 @@ function (
             $scope.endpoint_busy = false;
             $scope.geocoding_busy = false;
 
+            // Filter bound through $scope.filter
+            // Other filters are bound directly to GlobalFilter (tags, post type, etc)
             var available_filters = [
                 'keyword', 'start_date', 'end_date', 'location', 'within_km'
-            ];
+            ],
 
-            var filter_defaults = {
-                tags: [],
-                post_types: [],
-                keyword: '',
-                start_date: '',
-                end_date: '',
-                location: '',
-                within_km: '1'
-            };
-
-            filter_translations = {
+            filter_transform = {
                 location: function () {
                     var location = $scope.filter.location,
                         valid_coords = /\-?[0-9]+(\.[0-9]+)?\s*,\s*\-?[0-9]+(\.[0-9]+)?/;
@@ -58,20 +48,24 @@ function (
                         });
                     }
                 }
-            };
+            },
 
+            resetFilters = function () {
+                $scope.filter = {};
+                angular.forEach(available_filters, function (key) {
+                    if (GlobalFilter[key]) {
+                        $scope.filter[key] = GlobalFilter[key];
+                    }
+                });
+            };
             // initialize local filters
-            _.each(available_filters, function (key) {
-                if (GlobalFilter[key]) {
-                    $scope.filter[key] = GlobalFilter[key];
-                }
-            });
+            resetFilters();
 
             $scope.applyFilter = function () {
-                _.each(available_filters, function (key) {
+                angular.forEach(available_filters, function (key) {
                     if ($scope.filter[key]) { // apply each filter with a value
-                        if (filter_translations[key]) { // special cases
-                            filter_translations[key]();
+                        if (filter_transform[key]) { // special cases
+                            filter_transform[key]();
                         } else { // otherwise update the global filter
                             GlobalFilter[key] = $scope.filter[key];
                         }
@@ -81,9 +75,9 @@ function (
                 });
             };
 
-            $scope.clearFilter = function () {
-                $scope.filter = _.omit($scope.filter, available_filters);
-                $scope.applyFilter();
+            $scope.clearFilters = function () {
+                GlobalFilter.clearSelected();
+                resetFilters();
             };
 
             $scope.showAllTagsHandler = function () {
@@ -118,23 +112,12 @@ function (
                 return false;
             };
 
-            $scope.clearFilters = function () {
-                angular.forEach(filter_defaults, function (value, key) {
-                    if ($scope.filter[key]) {
-                        if ($scope.filter[key] !== filter_defaults[key]) {
-                            $scope.filter[key] = filter_defaults[key];
-                        }
-                    }
-                });
-
-                $scope.applyFilter();
-            };
-
             $scope.$watchCollection('filter', function (filters, previous) {
-                var show_controls = false;
+                var show_controls = false,
+                    defaults = GlobalFilter.getDefaults();
 
-                angular.forEach(filter_defaults, function (value, key) {
-                    if ($scope.filter[key] && $scope.filter[key] !== value) {
+                angular.forEach(defaults, function (value, key) {
+                    if ($scope.filter[key] && defaults[key] != $scope.filter[key]) {
                         show_controls = true;
                     }
                 });
@@ -142,6 +125,7 @@ function (
                 $scope.show_filter_controls = show_controls;
             });
 
+            // @todo avoid watching on $parent, pass param instead
             $scope.$parent.$watch('posts_query', function (endpoint, previous) {
                 $scope.endpoint_busy = (endpoint ? true : false);
             });

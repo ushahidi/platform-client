@@ -12,14 +12,16 @@ function (
     _
 ) {
 
-    var GlobalFilter = {
-        tags: [],
-        post_types: [],
+    var filterDefaults = {
         keyword: '',
         start_date: '',
         end_date: '',
         location: '',
-        within_km: '1',
+        within_km: '1'
+    };
+
+    var GlobalFilter = {
+        tags: [],
         getSelectedTags: function () {
             return _.pluck(_.where(this.tags, { selected: true }), 'id');
         },
@@ -31,6 +33,7 @@ function (
                 tag.selected = false;
             });
         },
+        post_types: [],
         getSelectedPostTypes: function () {
             return _.pluck(_.where(this.post_types, { selected: true }), 'id');
         },
@@ -74,8 +77,25 @@ function (
         },
         getFilterCount: function () {
             return _.keys(this.getPostQuery()).length;
+        },
+        clearSelected: function () {
+            _.each(filterDefaults, _.bind(function (value, key) {
+                this[key] = value;
+            }, this));
+            // Special handling for tags and post types
+            this.clearSelectedTags();
+            this.clearSelectedPostTypes();
+        },
+        getDefaults: function () {
+            return _.extend({}, filterDefaults, {
+                tags: [],
+                post_types: []
+            });
         }
     };
+
+    // Add default filter values
+    angular.extend(GlobalFilter, filterDefaults);
 
     TagEndpoint.get().$promise.then(function (response) {
         GlobalFilter.tags = response.results;
