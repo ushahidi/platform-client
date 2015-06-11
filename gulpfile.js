@@ -279,6 +279,16 @@ gulp.task('watch', [], function () {
     livereload.listen();
     gulp.watch('sass/**/*.scss', ['sass']);
     gulp.watch(['app/**/*.js', 'app/**/*.json'], ['browserify']);
+    gulp.watch('server/www/**/*.html', ['html']);
+});
+
+/**
+ * Html task just trigger livereload when html changes
+ */
+gulp.task('html', [], function() {
+    return gulp.src(['server/www/**/*.html'])
+        .pipe(livereload())
+        ;
 });
 
 /**
