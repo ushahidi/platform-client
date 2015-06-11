@@ -1,45 +1,46 @@
 <main class="page-content has-aside" role="main">
-<ul class="breadcrumb">
-  <li><a ng-href="/settings" translate>nav.settings</a></li>
-  <li class="active" translate>nav.categories</li>
-</ul>
-<div class="main-col">
+    <ul class="breadcrumb">
+      <li><a ng-href="/settings" translate>nav.settings</a></li>
+      <li class="active" translate>nav.categories</li>
+    </ul>
+    <div class="main-col">
 
-    <h1 class="inline" translate>tool.manage_tags</h1>
-    <a ng-href="/settings/categories/create" class="cta plus">
-        <span translate>tag.add_tag</span>
-    </a>
-    <div class="divider white"></div>
+        <h1 class="inline" translate>tool.manage_tags</h1>
+        <a ng-href="/settings/categories/create" class="cta plus">
+            <span translate>tag.add_tag</span>
+        </a>
+        <div class="divider white"></div>
 
-    <div class="panel-body" ng-hide="tags.length">
-        <p class="text-muted text-center" ng-hide="tags.length"><em translate>empty.category</em></p>
-    </div>
-
-    <div ng-show="tags.length">
-
-        <div class="category-list-actions post-list-actions">
-            <button type="button"
-                class="button-secondary icon-only-when-small alt trash"
-                ng-disabled="!selectedTags.length"
-                ng-class="{ 'btn-default': !selectedTags.length, 'btn-danger': selectedTags.length }"
-                ng-click="deleteTags()">
-                    <span translate>nav.delete</span>
-            </button>
+        <div class="panel-body" ng-hide="tags.length">
+            <p class="text-muted text-center" ng-hide="tags.length"><em translate>empty.category</em></p>
         </div>
 
-        <div class="settings-listing" ng-repeat="tag in tags | orderBy:'tag'" ng-class="{ 'warning': isToggled(tag) }" ng-click="toggleTag(tag)">
-            <div class="select-listing">
-                <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(tag)">
-            </div>
-            <div class="category">
-                <a ng-href="/settings/categories/{{tag.id}}">
-                    <h3><i class="fa fa-{{tag.icon}} circle" style="color:{{tag.color}}"></i>
-                    {{tag.tag}}</h3>
-                </a>
-                <p class="small">{{tag.description}}</p>
-            </div>
-            <div class="clearfix"></div>
-        </div>
+        <div ng-show="tags.length">
 
+            <div class="category-list-actions post-list-actions">
+                <button type="button"
+                    class="button-secondary icon-only-when-small alt trash"
+                    ng-disabled="!selectedTags.length"
+                    ng-class="{ 'btn-default': !selectedTags.length, 'btn-danger': selectedTags.length }"
+                    ng-click="deleteTags()">
+                        <span translate>nav.delete</span>
+                </button>
+            </div>
+
+            <div class="settings-listing" ng-repeat="tag in tags | orderBy:'tag'" ng-class="{ 'warning': isToggled(tag) }" ng-click="toggleTag(tag)">
+                <div class="select-listing">
+                    <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(tag)">
+                </div>
+                <div class="category">
+                    <a ng-href="/settings/categories/{{tag.id}}">
+                        <h3><i class="fa fa-{{tag.icon}} circle" style="color:{{tag.color}}"></i>
+                        {{tag.tag}}</h3>
+                    </a>
+                    <p class="small">{{tag.description}}</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
     </div>
 </main>
