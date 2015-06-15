@@ -24,37 +24,49 @@ npm takes care of the rest of our dependencies.
 * nodejs v0.10 or v0.12
 * io.js v1.2
 
-### Install Build Requirements
-`npm install -g gulp`
+1. Clone the repo
+    ```git clone https://github.com/ushahidi/platform-client.git```
+2. Navigate to project root
+    ```cd platform-client```
+3. Install Build Requirements
+    ```
+    npm install -g gulp
+    ```
+4. Install Packages
+    ```
+    npm install
+    ```
 
-### Install Packages
-`npm install`
+    *This will install both NPM and Bower dependencies! No separate `bower install` command is required.*
+6. Set up build options. Create a `.gulpconfig.json` file, you'll need to point `backendUrl` at an instance of the [platform api](https://github.com/ushahidi/platform)
+    ```
+    {
+        "nodeServer": true,
+        "backendUrl": "http://ushahidi-backend"
+    }
+    ```
 
-*This will install both NPM and Bower dependencies! No separate `bower install` command is required.*
+7. Run gulp
+   
+    ```
+    gulp
+    ```
+8. You should now have a local development server running on http://localhost:8080
+
+## Optional Extras
 
 ### Download and Activate Live Reload Plugin
 
 http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions
 
-### Navigate to project root and run Gulp
+### Gulp
 
-`gulp`
-
+Our gulp build
 * watches for changes
 * compiles sass
 * compiles js
 * rebuilds/reloads any optional servers that are enabled
 * live reloads `index.html`
-
-### Native Server
-
-If you are running the client with a native web server like Apache or nginx, you will need to use URL rewriting to point all non-existant files to `index.html`. There is a sample `.htaccess` file, which can be used with Apache:
-
-```
-% cp server/rewrite.htaccess server/www/.htaccess
-```
-
-Nginx users will have to manually configure rewriting in the site configuration file.
 
 #### Optional parameters ####
 
@@ -80,13 +92,40 @@ Instead of having to type the flags every time, you can also use a `.gulpconfig.
 * `backendUrl` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
 * `uglifyJs` - uglify js during builds. Enabled by default
 
-### Optional: Mock Backend
+#### Optional: Mock Backend
 
 `mock-backend` task starts a internal web server that provides a mock API that can be used for testing and client side development. When running the mock backend nothing can be persisted or deleted, but otherwise the client should be fully functional.
 
 To run the mock backend server, run `gulp --mock-backend`.
 
 **This can be combined with the `--node-server` flag for a completely self-hosted Ushahidi Platform demo.**
+
+#### Running unit specs
+
+To run unit tests run:
+```
+gulp test
+```
+
+To run end-to-end integration tests run:
+
+```
+gulp build --angular-mock-backend
+gulp node-server # <- might need to run this in another window
+npm run protractor
+```
+
+For test driven development we have a gulp task `gulp tdd`. This watches for JS changes and re-runs the unit tests.
+
+### Native Server (Apache or Nginx)
+
+If you are running the client with a native web server like Apache or nginx, you will need to use URL rewriting to point all non-existant files to `index.html`. There is a sample `.htaccess` file, which can be used with Apache:
+
+```
+% cp server/rewrite.htaccess server/www/.htaccess
+```
+
+Nginx users will have to manually configure rewriting in the site configuration file.
 
 ### Optional: Run Docker
 
@@ -106,17 +145,6 @@ To run the Docker container, run `gulp --docker-server`
 > Issue `sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
 
 **Note:** The first build of the Docker server can take several minutes. Wait till you see `server is live @ http://<ip_address_or_localhost/` before attempting to view the site.
-
-### Running unit specs
-
-* for test driven development, there is the gulp task 'gulp tdd'
-  * when you run it:
-    * all unit specs under test/unit will be run once
-    * the following files will be watched and tests will be rerun on file changes
-      * all files under test/unit
-      * most of the files under app will be watched
-        * see the 'files' array in test/karma.conf.js for more details
-
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
