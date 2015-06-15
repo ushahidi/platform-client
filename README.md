@@ -24,6 +24,8 @@ npm takes care of the rest of our dependencies.
 * nodejs v0.10 or v0.12
 * io.js v1.2
 
+### Install, build and run a local dev server
+
 1. Clone the repo
     ```git clone https://github.com/ushahidi/platform-client.git```
 2. Navigate to project root
@@ -53,7 +55,7 @@ npm takes care of the rest of our dependencies.
     ```
 8. You should now have a local development server running on http://localhost:8080
 
-## Optional Extras
+## Extra config and options
 
 ### Download and Activate Live Reload Plugin
 
