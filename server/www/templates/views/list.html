@@ -9,7 +9,7 @@
 
     <div class="main-col">
 
-        <div class="post-list-actions" ng-if="userHasBulkActionPermissions()">
+        <div class="list-actions" ng-if="userHasBulkActionPermissions()">
             <a ng-if="!allSelectedOnCurrentPage()" ng-click="selectAllPosts($event)" class="cta" translate>post.select_all</a>
             <a ng-if="allSelectedOnCurrentPage()" ng-click="unselectAllPosts($event)" class="cta" translate>post.unselect_all</a>
 

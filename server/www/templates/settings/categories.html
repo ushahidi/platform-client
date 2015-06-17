@@ -17,21 +17,20 @@
 
         <div ng-show="tags.length">
 
-            <div class="category-list-actions post-list-actions">
+            <div class="list-actions">
                 <button type="button"
                     class="button-secondary icon-only-when-small alt trash"
                     ng-disabled="!selectedTags.length"
-                    ng-class="{ 'btn-default': !selectedTags.length, 'btn-danger': selectedTags.length }"
                     ng-click="deleteTags()">
                         <span translate>nav.delete</span>
                 </button>
             </div>
 
             <div class="settings-listing" ng-repeat="tag in tags | orderBy:'tag'" ng-class="{ 'warning': isToggled(tag) }" ng-click="toggleTag(tag)">
-                <div class="select-listing">
+                <div class="select">
                     <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(tag)">
                 </div>
-                <div class="category">
+                <div class="bd">
                     <a ng-href="/settings/categories/{{tag.id}}">
                         <h3><i class="fa fa-{{tag.icon}} circle" style="color:{{tag.color}}"></i>
                         {{tag.tag}}</h3>

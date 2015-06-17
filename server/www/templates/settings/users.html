@@ -46,14 +46,13 @@
 
     <div class="main-col">
 
-        <div class="user-list-actions post-list-actions">
+        <div class="list-actions">
             <div class="bulk-actions">
                 <div class="dropdown-group user-role-menu" role="group" dropdown
                 >
                     <button class="button-secondary dropdown toggle-content-trigger"
                         type="button" id="change-role" aria-expanded="false"
                         ng-disabled="!selectedUsers.length"
-                        ng-class="{ 'disabled': !selectedUsers.length }"
                         dropdown-toggle
                     >
                         <span translate>user.change_role</span>
@@ -68,7 +67,6 @@
                     class="button-secondary icon-only-when-small alt trash"
                     id="delete-users"
                     ng-disabled="!selectedUsers.length"
-                    ng-class="{ 'disabled': !selectedUsers.length }"
                     ng-click="deleteUsers()">
                         <span translate>nav.delete</span>
                 </button>
@@ -79,25 +77,22 @@
         </div>
 
         <div ng-show="users.length">
-            <div class="settings-listing" ng-repeat="user in users | orderBy:'username'" id="user-{{user.id}}" ng-class="{ 'warning': isToggled(user) }" class="user" ng-click="toggleUser(user)">
-                <div class="select-listing">
+            <div class="settings-listing user-listing media" ng-repeat="user in users | orderBy:'username'" id="user-{{user.id}}" ng-class="{ 'warning': isToggled(user) }" class="user" ng-click="toggleUser(user)">
+                <div class="select">
                     <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
                 </div>
-                <div class="user">
+                <div class="img">
                     <img class="circular" gravatar-src="user.email" alt="" />
+                </div>
+                <div class="user bd">
                     <h3><a ng-href="/settings/users/{{user.id}}">{{user.realname || user.username}}</a></h3>
+                    <h4 class="user-type">{{ getRole(user.role) }}</h4>
                 </div>
-                <div class="user-type">
-                    <h4>{{ getRole(user.role) }}</h4>
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
 
-        <nav class="pagination">
-            <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="true" rotate="false"></pagination>
-
-            <div class="dropdown-group" role="group" dropdown>
+        <div>
+            <div class="dropdown-group pull-right" role="group" dropdown>
                 <button class="button-secondary dropdown toggle-content-trigger"
                     type="button" aria-expanded="false" dropdown-toggle>
                     <span translate translate-values="{ count: itemsPerPage }">user.per_page</span>
@@ -111,7 +106,8 @@
                     </li>
                 </ul>
             </div>
-        </nav>
+            <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+        </div>
 
     </div>
 </main>

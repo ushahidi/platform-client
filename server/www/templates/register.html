@@ -5,31 +5,32 @@
         <form class="panel-body" name="form">
             <p class="alert error register-failed" ng-show="failed" translate>notify.register.failed</p>
             <div>
-                <label class="input-label" for="username" translate>user.username</label>
-                <div class="input-icon" ng-class="{ 'success': !form.username.$invalid && form.username.$dirty, 'error' : form.username.$invalid && form.username.$dirty}">
-                    <input type="text" id="username" name="username"
-                        ng-class="{'error': form.username.$invalid && form.username.$dirty}"
-                        ng-model="username"
-                        ng-disabled="processing"
-                        ng-maxlength="50"
-                        ng-pattern="/^[a-z][a-z0-9._-]+[a-z0-9]$/i"
-                        required>
-                </div>
+                <label for="username"
+                    class="input-label"
+                    ng-class="{ 'success': !form.username.$invalid && form.username.$dirty, 'error' : form.username.$invalid && form.username.$dirty }"
+                    translate>
+                    user.username
+                </label>
+                <input type="text" id="username" name="username"
+                    ng-class="{'error': form.username.$invalid && form.username.$dirty}"
+                    ng-model="username"
+                    ng-disabled="processing"
+                    ng-maxlength="50"
+                    ng-pattern="/^[a-z][a-z0-9._-]+[a-z0-9]$/i"
+                    required>
                 <p ng-repeat="(error, value) in form.username.$error"
                     ng-show="form.username.$dirty"
                     class="alert error"
                     translate="{{'user.valid.username.' + error}}"></p>
             </div>
             <div>
-                <label class="input-label" for="email" translate>user.email</label>
-                <div class="input-icon" ng-class="{ 'success': !form.email.$invalid && form.email.$dirty, 'error' : form.email.$invalid && form.email.$dirty}">
-                    <input type="email" id="email" name="email"
-                        ng-class="{'error': form.email.$invalid && form.email.$dirty}"
-                        ng-model="email"
-                        ng-disabled="processing"
-                        ng-maxlength="150"
-                        required>
-                </div>
+                <label for="email" class="input-label" ng-class="{ 'success': !form.email.$invalid && form.email.$dirty, 'error' : form.email.$invalid && form.email.$dirty}" translate>user.email</label>
+                <input type="email" id="email" name="email"
+                    ng-class="{'error': form.email.$invalid && form.email.$dirty}"
+                    ng-model="email"
+                    ng-disabled="processing"
+                    ng-maxlength="150"
+                    required>
                 <p ng-repeat="(error, value) in form.email.$error"
                     ng-show="form.email.$dirty"
                     class="alert error"
@@ -37,16 +38,14 @@
 
             </div>
             <div>
-                <label class="input-label" for="password" translate>user.password</label>
-                <div class="input-icon" ng-class="{ 'success': !form.password.$invalid && form.password.$dirty, 'error' : form.password.$invalid && form.password.$dirty}">
-                    <input id="password" type="password" name="password"
-                        ng-class="{'error': form.password.$invalid && form.password.$dirty}"
-                        ng-minlength="7"
-                        ng-maxlength="72"
-                        ng-model="password"
-                        ng-disabled="processing"
-                        required>
-                </div>
+                <label class="input-label" for="password" ng-class="{ 'success': !form.password.$invalid && form.password.$dirty, 'error' : form.password.$invalid && form.password.$dirty}" translate>user.password</label>
+                <input id="password" type="password" name="password"
+                    ng-class="{'error': form.password.$invalid && form.password.$dirty}"
+                    ng-minlength="7"
+                    ng-maxlength="72"
+                    ng-model="password"
+                    ng-disabled="processing"
+                    required>
                 <p ng-repeat="(error, value) in form.password.$error"
                     ng-show="form.password.$dirty"
                     class="alert error"
