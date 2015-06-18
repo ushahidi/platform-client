@@ -58,7 +58,7 @@ function (
         if ($scope.post.form && $scope.post.form.id) {
             $scope.form_attributes = [];
 
-            FormEndpoint.get({formId: $scope.post.form.id}, function (form) {
+            FormEndpoint.get({id: $scope.post.form.id}, function (form) {
                 $scope.form_name = form.name;
 
                 // Set page title to '{form.name} Details' if a post title isn't provided.

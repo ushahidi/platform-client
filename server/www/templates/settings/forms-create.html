@@ -1,0 +1,30 @@
+<main class="page-content has-aside main-col" role="main">
+    <ul class="breadcrumb">
+        <li><a ng-href="/settings" translate>nav.settings</a></li>
+        <li><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
+        <li class="active" translate>nav.create_post_type</li>
+    </ul>
+
+    <h1 class="title">{{title}}</h1>
+
+    <div class="divider padded"></div>
+
+    <div class="cards-select">
+        <div class="selection-card" ng-repeat="form in forms">
+            <a href="/settings/forms/create/{{ form.id }}">
+                <h3>{{ form.name }}</h3>
+                <ul class="bullets no-offset">
+                    <li ng-repeat="attribute in form.attributes">
+                        {{ attribute.label }}
+                    </li>
+                </ul>
+            </a>
+        </div>
+        <div class="selection-card custom">
+            <a href="/settings/forms/create/custom">
+                <h3 translate>form.custom_structure</h3>
+            </a>
+        </div>
+    </div>
+
+</main>

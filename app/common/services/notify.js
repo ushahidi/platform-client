@@ -12,9 +12,16 @@ module.exports = ['$window', function ($window) {
         alertMessages.forEach(showSingleAlert);
     };
 
+    var showConfirm = function (confirmMessage) {
+        // TODO: find a better solution for that
+        var confirm = $window.confirm(confirmMessage);
+        return confirm;
+    };
+
     return {
         showSingleAlert: showSingleAlert,
-        showAlerts: showAlerts
+        showAlerts: showAlerts,
+        showConfirm: showConfirm
     };
 
 }];

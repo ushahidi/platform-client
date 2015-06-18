@@ -1,0 +1,13 @@
+<main class="page-content has-aside main-col" role="main">
+    <ul class="breadcrumb">
+        <li><a ng-href="/settings" translate>nav.settings</a></li>
+        <li><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
+        <li class="active" translate>nav.create_post_type</li>
+    </ul>
+
+    <h1 class="title">{{title}}</h1>
+
+    <div class="divider padded"></div>
+
+    <form-editor form-template="{{ form_template }}"></form-editor>
+</main>

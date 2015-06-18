@@ -23,7 +23,7 @@ function (
             });
 
             if (scope.post.form) {
-                FormEndpoint.get({formId: scope.post.form.id}, function (form) {
+                FormEndpoint.get({id: scope.post.form.id}, function (form) {
                     scope.form_name = form.name;
                 });
             } else {

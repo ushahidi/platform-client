@@ -18,6 +18,12 @@ function (
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }
+        },
+        update: {
+            method: 'PUT'
+        },
+        delete: {
+            method: 'DELETE'
         }
     });
 

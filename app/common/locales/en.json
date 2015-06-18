@@ -6,10 +6,46 @@
         "forbidden": "Sorry, you're not allowed to do that."
     },
     "form": {
-        "add_field" : "Add Field",
-        "edit_field" : "Edit Field",
+        "add_field" : "Add New Field",
+        "add_field_instructions": "Add instructions to this field",
+        "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
+        "add_field_instructions_placeholder": "Instructions for field",
+        "add_new_step": "Add New Step",
+        "currently_disabled": "This post type is currently disabled.",
+        "custom_structure": "Custom Structure",
+        "default_date_placeholder": "Default date",
+        "default_default_placeholder": "Default value",
+        "default_location_placeholder": "Nairobi, Kenya",
+        "delete_post_type": "Delete this post type",
+        "editable_by": "Editable By",
+        "edit_post_step": "Edit Step: {{step}}",
+        "edit_post_type": "Edit Post Type: {{form}}",
+        "field_add_option": "Add",
+        "field_default": "Field Default",
+        "field_key": "Field Key",
+        "field_input": "Field Input",
+        "field_type": "Field Storage",
+        "field_name": "Field Name",
+        "field_options": "Field Options",
+        "field_key_placeholder": "field-key",
+        "field_name_placeholder": "Title",
+        "field_option_placeholder": "Option 1",
+        "field_required": "This field is required",
+        "form_name": "Post Type Name",
+        "form_description": "Post Type Description",
         "forms" : "Forms",
-        "type" : "type"
+        "permission_public": "Public",
+        "permission_admin": "Admin",
+        "permission_self": "Only Me",
+        "post_type_settings": "Post Type Settings",
+        "post_step_settings": "Post Step Settings",
+        "save_and_close": "Save & Close",
+        "save_post_type": "Save Post Type",
+        "save_post_step": "Save Post Step",
+        "step_name": "Step Name",
+        "step_required": "This step is required",
+        "type" : "type",
+        "visible_to": "Visible To"
     },
     "globalFilter": {
         "filter" : "Filter",
@@ -99,7 +135,7 @@
         "please_wait_loading" : "Please wait. Loading...",
         "plugins" : "Plugins",
         "posts" : "Posts",
-        "posts_and_entities" : "Posts & Entites",
+        "posts_and_entities" : "Post Types",
         "profile": "My Profile",
         "role" : "Role",
         "roles" : "Roles",
@@ -372,13 +408,19 @@
             "destroy_error" : "Unable to delete user, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} users?",
             "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?"
+        },
+        "form" : {
+            "delete_form_confirm" : "Are you sure you want to delete this form?",
+            "delete_stage_confirm" : "Are you sure you want to delete this step?",
+            "delete_attribute_confirm" : "Are you sure you want to delete this field?"
         }
     },
     "empty": {
         "default" : "No records found.",
         "post" : "No posts found.",
         "user" : "No users found.",
-        "category" : "No categories found."
+        "category" : "No categories found.",
+        "form": "No forms found."
     },
     "location": {
         "search": "Search",

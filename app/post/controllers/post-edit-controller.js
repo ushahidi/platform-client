@@ -35,7 +35,7 @@ function (
         post.tags = tags;
 
         $scope.post = post;
-        $scope.active_form = FormEndpoint.get({ formId: post.form.id }, function (form) {
+        $scope.active_form = FormEndpoint.get({ id: post.form.id }, function (form) {
             // Set page title to post title, if there is one available.
             if (post.title && post.title.length) {
                 $translate('post.modify.edit_type', { type: form.name, title: post.title }).then(function (title) {

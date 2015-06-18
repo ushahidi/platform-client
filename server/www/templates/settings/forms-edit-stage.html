@@ -1,0 +1,11 @@
+<main class="page-content has-aside main-col" role="main">
+    <ul class="breadcrumb">
+        <li><a ng-href="/settings" translate>nav.settings</a></li>
+        <li><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
+        <li><a ng-href="/settings/forms/{{form.id}}">{{form.name}}</a></li>
+        <li class="active" translate>{{stage.label}}</li>
+    </ul>
+
+    <form-stage-editor form-id="{{ formId }}" stage-id="{{ stageId }}"></form-stage-editor>
+
+</main>

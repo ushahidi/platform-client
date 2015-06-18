@@ -6,9 +6,12 @@ function (
     Util
 ) {
 
-    var FormEndpoint = $resource(Util.apiUrl('/forms/:id'), {
-            id: '@id'
-        }, {
+    var FormStageEndpoint = $resource(Util.apiUrl('/forms/:formId/stages/:id'), {
+        formId: '@formId',
+        id: '@id',
+        order: 'asc',
+        orderby: 'priority'
+    }, {
         query: {
             method: 'GET',
             isArray: true,
@@ -18,9 +21,11 @@ function (
         },
         update: {
             method: 'PUT'
+        },
+        delete: {
+            method: 'DELETE'
         }
     });
 
-    return FormEndpoint;
-
+    return FormStageEndpoint;
 }];
