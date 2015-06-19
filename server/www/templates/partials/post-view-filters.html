@@ -51,6 +51,26 @@
                         </ul>
                     </li>
 
+                    <li class="accordion-menu-list__item" accordion-group>
+                        <div class="accordion-menu-header">
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.post_statuses.post_statuses</a>
+                        </div>
+                        <ul class="accordion-menu-content" accordion-content>
+                            <li>
+                                <label>
+                                    <input type="checkbox" ng-model="show_all_post_statuses" ng-checked="!global_filter.hasSelectedPostStatuses()" ng-click="showAllPostStatusesHandler()"> {{'globalFilter.post_statuses.all_types' | translate}}
+                                </label>
+                            </li>
+                            <li class="checkbox" ng-repeat="(idx, postStatus) in global_filter.post_statuses" postStatus="postStatuses">
+                                <label>
+                                    <input type="checkbox" value="{{postStatus.id}}" ng-model="global_filter.post_statuses[idx].selected" />
+                                    {{postStatus.name}}
+                                </label>
+                            </li>
+                        </ul>
+                    </li>
+
+
                     <!-- <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
                             <a class="accordion-menu-trigger delta" accordion-trigger>Stages</a>

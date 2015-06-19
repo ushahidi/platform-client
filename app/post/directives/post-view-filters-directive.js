@@ -92,6 +92,12 @@ function (
                 }
             };
 
+            $scope.showAllPostStatusesHandler = function () {
+                if (this.show_all_post_statuses) {
+                    GlobalFilter.clearSelectedPostStatuses();
+                }
+            };
+
             $scope.uiOpenDate = function (datepicker) {
                 if (datepicker === 'start_date') {
                     $scope.start_date_open = true;

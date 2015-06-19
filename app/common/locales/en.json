@@ -57,6 +57,12 @@
             "post_types" : "Post Types",
             "all_types" : "All Types"
         },
+        "post_statuses" : {
+            "post_statuses" : "Post Statuses",
+            "all_types" : "All Types",
+            "draft" : "Draft",
+            "published" : "Published"
+        },
         "sets" : {
             "sets" : "Sets",
             "my_sets" : "My Sets",
