@@ -27,18 +27,6 @@ after_script:
 before_deploy:
 - gulp release --version-suffix=${TRAVIS_TAG:-$TRAVIS_COMMIT}
 deploy:
-  - provider: heroku
-    api_key:
-      secure: XeBcMSubQ+kDtk7B93iJy5HCvXTxp708hUtn9RfjKtNjOyTOha25xZ3lRnYqrhgAOlTY7kieu8QtI4KOZmiRy3U1NwIardvUU44I4f9Q4DDJRGGrPyd61WZwyuAiPWUrePGadZJW2kSuxRXyD3QNm8mBr2njcQp9ln9TpS/57S4=
-    app:
-      master: ushahidi-platform-master
-      release: ushahidi-platform-release
-    on:
-      repo: ushahidi/platform-client
-      node: 0.12
-      branch:
-        - master
-        - release
   - provider: releases
     api_key:
       secure: Txqa+XwZOOdAaxRckHGXSCkT7GEUh4R6R0MtTu8otA1Vv2/W5qTICuFnaEzV/FVWrSzYbMwM+mAFHQ1L8SXOnAvbSFwnjaOjIvaEUESItkSITDXncTJItJatzMUXT0SjRTm4Jy6LQ0Pq0qXxfWD6DzsWxPVPsthprb+aEzS0/m8=
