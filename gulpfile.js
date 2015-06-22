@@ -6,7 +6,6 @@ var gulp         = require('gulp'),
     rename       = require('gulp-rename'),
     gutil        = require('gulp-util'),
     notify       = require('gulp-notify'),
-    exec         = require('child_process').exec,
     source       = require('vinyl-source-stream'),
     browserify   = require('browserify'),
     envify       = require('envify/custom'),
@@ -20,73 +19,84 @@ var gulp         = require('gulp'),
     tar          = require('gulp-tar'),
     gzip         = require('gulp-gzip'),
     jscs         = require('gulp-jscs'),
+    dotenv       = require('dotenv');
 
-    mockBackendFlag                    = gutil.env['mock-backend'],
-    mockBackendWithAngularHttpMockFlag = gutil.env['angular-mock-backend'],
-    useNodeServerFlag                  = gutil.env['node-server'],
-    useDockerServerFlag                = gutil.env['docker-server'],
-    useChromeForKarmaFlag              = gutil.env['karma-chrome'],
-    backendUrl                         = gutil.env['backend-url'] || process.env.BACKEND_URL,
+// var defaultOptions,
+//     options,
+//     helpers;
 
-    // Options
-    options = {
-        // - (bool) dockerserver: enable docker builds, default: false
-        dockerServer: false,
-        nodeServer: false,
-        uglifyJs: true,
-        www: 'server/www',
-        mockedBackendUrl: 'http://localhost:8081'
-    },
 
-    // Helpers
-    helpers = {
-        getBrowserifyConfig: function (mainEntryFile) {
-            var entries = [mainEntryFile || './app/app.js'];
+// Grab env vars from .env file
+dotenv.load();
+// load user defined options
+if (fs.existsSync('.gulpconfig.json')) {
+    gutil.log('.gulpconfig.json is deprecated. Please use .env');
+}
 
-            if (mockBackendWithAngularHttpMockFlag) {
-                entries.push('./app/mock-backend-config.js');
-            }
+var defaultOptions = {
+    nodeServer: false,
+    mockBackend: false,
+    useChromeForKarma : false,
+    backendUrl: false,
+    uglifyJs: true
+};
 
-            return {
-                entries: entries,
-                debug: true
-            };
-        },
-        setBackendUrl: function () {
-            backendUrl = backendUrl ? backendUrl : options.backendUrl;
-            return envify({
-                BACKEND_URL: mockBackendFlag ? options.mockedBackendUrl : backendUrl
-            });
-        },
-        createDefaultTaskDependencies: function () {
-            var dependencies = ['build'];
-
-            if (mockBackendFlag) {
-                dependencies.push('mock-backend');
-            }
-
-            if (options.dockerServer || useDockerServerFlag) {
-                dependencies.push('docker-server');
-            } else if (options.nodeServer || useNodeServerFlag) {
-                dependencies.push('node-server');
-            } else {
-                dependencies.push('direct');
-            }
-
-            return dependencies;
-        }
+function getBooleanOption(value, defaultValue) {
+    if (value === 'true') {
+        return true;
     }
-    ;
+    if (value === 'false') {
+        return false;
+    }
+    return defaultValue;
+}
+
+var options = {
+    nodeServer          : getBooleanOption(gutil.env['node-server'] || process.env.NODE_SERVER, defaultOptions.nodeServer),
+    mockBackend         : getBooleanOption(gutil.env['mock-backend'] || process.env.MOCK_BACKEND, defaultOptions.mockBackend),
+    useChromeForKarma   : getBooleanOption(gutil.env['karma-chrome'] || process.env.KARMA_CHROME, defaultOptions.useChromeForKarma),
+    backendUrl          : gutil.env['backend-url'] || process.env.BACKEND_URL,
+    uglifyJs            : getBooleanOption(gutil.env['uglify-js'] || process.env.UGLIFY_JS, defaultOptions.uglifyJs),
+    www                 : 'server/www'
+};
+
+// Helpers
+var helpers = {
+    getBrowserifyConfig: function (mainEntryFile) {
+        var entries = [mainEntryFile || './app/app.js'];
+
+        if (options.mockBackend) {
+            gutil.log('Building with mock backend');
+            entries.push('./app/mock-backend-config.js');
+        }
+
+        return {
+            entries: entries,
+            debug: true
+        };
+    },
+    setBackendUrl: function () {
+        return envify({
+            BACKEND_URL: options.backendUrl
+        });
+    },
+    createDefaultTaskDependencies: function () {
+        var dependencies = ['build'];
+
+        if (options.nodeServer) {
+            dependencies.push('node-server');
+        } else {
+            dependencies.push('direct');
+        }
+
+        return dependencies;
+    }
+};
 
 function errorHandler(err) {
     gutil.beep();
     gutil.log(err.message || err);
     notify.onError('Error: <%= error %>')(err.message || err);
-}
-
-// load user defined options
-if (fs.existsSync('.gulpconfig.json')) {
-    merge(options, require('./.gulpconfig.json'));
 }
 
 /**
@@ -224,54 +234,6 @@ gulp.task('browserify', function () {
 gulp.task('build', ['sass', 'css', 'font', 'browserify']);
 
 /**
- * Task: `docker:stop`
- * Stops any docker containers.
- */
-gulp.task('docker:stop', function (cb) {
-    exec('docker ps -a | grep ushahidi-client | awk \'{print $1}\' | xargs docker stop | xargs docker rm', function (/*err, stdout, stderr*/) {
-        cb(/* ignore err */);
-    });
-});
-
-/**
- * Task: `docker:build`
- * Rebuilds the docker container.
- */
-gulp.task('docker:build', ['docker:stop'], function (cb) {
-    exec('docker build -t ushahidi-client-server --quiet=true server', function (err, stdout/*, stderr*/) {
-        if (err) {
-            return cb(err);
-        }
-
-        console.log(stdout);
-        cb();
-    });
-});
-
-/**
- * Task: `docker`
- * Runs the docker container.
- */
-gulp.task('docker', ['docker:build'], function (cb) {
-    exec('docker run --name=ushahidi-client -d -p 8080:80 ushahidi-client-server', function (err/*, stdout, stderr*/) {
-        if (err) {
-            return cb(err);
-        }
-
-        var ip = 'localhost';
-        exec('boot2docker ip', function (err, stdout/*, stderr*/) {
-            if (!err) {
-                ip = stdout;
-            }
-
-            console.log('server is live @ http://' + ip + ':8080/');
-            livereload();
-            cb();
-        });
-    });
-});
-
-/**
  * Task: `watch`
  * Rebuilds styles and runs live reloading.
  */
@@ -285,32 +247,17 @@ gulp.task('watch', [], function () {
 /**
  * Html task just trigger livereload when html changes
  */
-gulp.task('html', [], function() {
+gulp.task('html', [], function () {
     return gulp.src(['server/www/**/*.html'])
         .pipe(livereload())
         ;
 });
 
 /**
- * Task: `docker-server`
- * Rebuilds the docker-server and runs live reloading.
- */
-gulp.task('docker-server', ['watch'], function () {
-    gulp.watch(['Dockerfile', options.www + '/**/*'], ['docker']);
-});
-
-/**
- * Task: mock-backend`
- * Runs a simple node connect server
- * and delivers the json files under the 'mocked_backend' folder
- */
-gulp.task('mock-backend', [], require('./gulp/mock-backend')('mocked_backend'));
-
-/**
  * Task: `node-server`
  * Runs a simple node connect server and runs live reloading.
  */
-gulp.task('node-server', ['direct'], require('./gulp/node-server')(options.www));
+gulp.task('node-server', ['direct'], require('./server/server'));
 
 /**
  * Task: `direct`
@@ -324,7 +271,7 @@ gulp.task('direct', ['watch'], function () {
  * Run test once and exit
  */
 gulp.task('test', function (done) {
-    var browsers = useChromeForKarmaFlag ? ['Chrome'] : ['PhantomJS'];
+    var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
@@ -346,7 +293,7 @@ gulp.task('send-stats-to-coveralls', function () {
  * Watch for file changes and re-run tests on each change
  */
 gulp.task('tdd', function (done) {
-    var browsers = useChromeForKarmaFlag ? ['Chrome'] : ['PhantomJS'];
+    var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
     karma.start({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,

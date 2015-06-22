@@ -39,16 +39,14 @@ npm takes care of the rest of our dependencies.
     ```
 
     *This will install both NPM and Bower dependencies! No separate `bower install` command is required.*
-6. Set up build options. Create a `.gulpconfig.json` file, you'll need to point `backendUrl` at an instance of the [platform api](https://github.com/ushahidi/platform)
+6. Set up build options. Create a `.env` file, you'll need to point `BACKEND_URL` at an instance of the [platform api](https://github.com/ushahidi/platform)
     ```
-    {
-        "nodeServer": true,
-        "backendUrl": "http://ushahidi-backend"
-    }
+    NODE_SERVER=true
+    BACKEND_URL=http://ushahidi-backend
     ```
 
 7. Run gulp
-   
+
     ```
     gulp
     ```
@@ -72,32 +70,33 @@ Our gulp build
 #### Optional parameters ####
 
 * `--node-server` - start a self-hosted server, instead of using a native web server like Apache or nginx. This simple server will be running at: <http://localhost:8080>.
-* `--mock-backend` - use a mock backend server instead of a real instance of [ushahidi-platform](https://github.com/ushahidi/platform), delivering the JSON files in the `mocked_backend/` when API calls are made. This server will be running at: <http://localhost:8081>. See details below.
-* `--docker-server` - build and run the client inside of a [Docker](https://docker.com/) container. See details below.
+* `--mock-backend` - build the app with an mock backend service, delivering the JSON files in the `mocked_backend/` when API calls are made. See details below.
 
-#### Set default options with .gulpconfig.json
+#### Set default options with .env
 
 Instead of having to type the flags every time, you can also use a `.gulpconfig.json` file to set the default options for running the client.
 
 ```
-{
-    "nodeServer": true,
-    "dockerServer": false,
-    "backendUrl": "http://ushahidi-backend",
-    "uglifyJs": true
-}
+NODE_SERVER=true
+BACKEND_URL=http://ushahidi-backend
+UGLIFY_JS=true
+MOCK_BACKEND=false
+KARMA_CHROME=false
+PORT=8080
 ```
 
-* `nodeServer` - always run the `node-server` task
-* `dockerServer` - always run the `docker-server` task
-* `backendUrl` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
-* `uglifyJs` - uglify js during builds. Enabled by default
+* `NODE_SERVER` - always run the `node-server` task
+* `BACKEND_URL` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
+* `UGLIFY_JS` - uglify js during builds. Enabled by default
+* `MOCK_BACKEND` - build the app with an mock backend.
+* `KARMA_CHROME` - Use chrome to run karma tests
+* `PORT` - set the port to run `node-server`
 
 #### Optional: Mock Backend
 
-`mock-backend` task starts a internal web server that provides a mock API that can be used for testing and client side development. When running the mock backend nothing can be persisted or deleted, but otherwise the client should be fully functional.
+You can run `gulp build` with a `--mock-backend` option. This builds the app with an [http mock](https://docs.angularjs.org/api/ngMock/service/$httpBackend) service that provides a mock API that can be used for testing and client side development. When running the mock backend nothing can be persisted or deleted, but otherwise the client should be fully functional.
 
-To run the mock backend server, run `gulp --mock-backend`.
+To build with the mock backend service, run `gulp build --mock-backend`.
 
 **This can be combined with the `--node-server` flag for a completely self-hosted Ushahidi Platform demo.**
 
@@ -111,7 +110,7 @@ gulp test
 To run end-to-end integration tests run:
 
 ```
-gulp build --angular-mock-backend
+gulp build --mock-backend
 gulp node-server # <- might need to run this in another window
 npm run protractor
 ```
@@ -135,10 +134,19 @@ completely separate server environments. Our Docker application runs a local
 nginx server that serves the client as simply as possible, using the
 [official Docker nginx server](https://registry.hub.docker.com/_/nginx/).*
 
-To run the Docker container, run `gulp --docker-server`
+To run the Docker container:
 
-> **Note:** If you're on Linux and have `dockerServer` enabled, you will have to add the user under which you are
-> running the client to the `docker` group. This will prevent you from running `gulp` with sudo.
+1. docker build -t ushahidi-client-server server
+2. docker run --name=ushahidi-client -d -p 8080:80 ushahidi-client-server
+
+Or using fig
+
+1. `fig up`
+
+This should bring
+
+> **Note:** If you're on Linux you may have to add your user account (the user running docker commands)
+> to the `docker` group. This prevents any need to run commands with `sudo`
 >
 > To check if `docker` group exist, issue `getent group | grep docker`. If the output of the command
 > is empty, issue `sudo groupadd docker`

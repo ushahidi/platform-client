@@ -3,6 +3,7 @@ bower_components
 node_modules
 npm-debug.log
 .gulpconfig.json
+.env
 test/coverage/
 build/*
 .DS_Store
