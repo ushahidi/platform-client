@@ -23,6 +23,22 @@ function (
         },
         options: {
             method: 'OPTIONS'
+        },
+        geojson: {
+            method: 'GET',
+            url: Util.apiUrl('/posts/:id/geojson'),
+            isArray: false,
+            transformResponse: function (data /*, header*/) {
+                return angular.fromJson(data);
+            }
+        },
+        stats: {
+            method: 'GET',
+            url: Util.apiUrl('/posts/:id/stats'),
+            isArray: false,
+            transformResponse: function (data /*, header*/) {
+                return angular.fromJson(data);
+            }
         }
     });
 

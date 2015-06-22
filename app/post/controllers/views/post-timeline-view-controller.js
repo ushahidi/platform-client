@@ -145,7 +145,6 @@ function (
     var getPostStats = function (query) {
         query = query || GlobalFilter.getPostQuery();
         var postQuery = _.extend(query, {
-            'extra' : 'stats',
             'timeline' : 1,
             'timeline_attribute' : $scope.timelineAttribute,
             'group_by' : $scope.groupBy,
@@ -153,7 +152,7 @@ function (
             'group_by_attribute_key' : $scope.attributeKey
         });
 
-        $scope.posts_query = PostEndpoint.get(postQuery).$promise.then(function (results) {
+        $scope.posts_query = PostEndpoint.stats(postQuery).$promise.then(function (results) {
             updateData(results.totals, results.time_interval);
             $scope.posts_query = null;
         });

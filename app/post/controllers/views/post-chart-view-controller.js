@@ -92,13 +92,12 @@ function (
     var getPostStats = function (query) {
         query = query || GlobalFilter.getPostQuery();
         var postQuery = _.extend(query, {
-            'extra' : 'stats',
             'group_by' : $scope.groupBy,
             'group_by_tags' : $scope.groupByTags,
             'group_by_attribute_key' : $scope.attributeKey
         });
 
-        $scope.posts_query = PostEndpoint.get(postQuery).$promise.then(function (results) {
+        $scope.posts_query = PostEndpoint.stats(postQuery).$promise.then(function (results) {
             $scope.options.chart.xAxis.axisLabel = $filter('translate')($scope.groupByOptions[$scope.groupBy]);
             if (results.totals[0]) {
                 results.totals[0].key = $scope.options.chart.yAxis.axisLabel;

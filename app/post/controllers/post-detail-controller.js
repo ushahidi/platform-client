@@ -128,7 +128,7 @@ function (
     });
 
     // Load geojson
-    var geojson = PostEndpoint.get({id: $routeParams.id, extra: 'geojson'});
+    var geojson = PostEndpoint.geojson({id: $routeParams.id});
     // Load geojson and pass to map
     geojson.$promise.then(function (data) {
         $scope.geojson = {

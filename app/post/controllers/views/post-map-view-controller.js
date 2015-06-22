@@ -77,9 +77,9 @@ function (
     // load geojson posts into the map obeying the global filter settings
     var map = Maps.getMap('map');
     var reloadMapPosts = function () {
-        var conditions = _.extend(GlobalFilter.getPostQuery(), { extra: 'geojson' });
+        var conditions = _.extend(GlobalFilter.getPostQuery());
 
-        $scope.posts_query = PostEndpoint.get(conditions).$promise.then(function (posts) {
+        $scope.posts_query = PostEndpoint.geojson(conditions).$promise.then(function (posts) {
             map.reloadPosts(posts);
             $scope.posts_query = null;
         });
