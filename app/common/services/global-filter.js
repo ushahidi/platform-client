@@ -1,14 +1,12 @@
 module.exports = [
     'TagEndpoint',
     'FormEndpoint',
-    'FormStatusEndpoint',
     // 'SetEndpoint',
     'Util',
     '_',
 function (
     TagEndpoint,
     FormEndpoint,
-    FormStatusEndpoint,
     // SetEndpoint
     Util,
     _
@@ -49,17 +47,17 @@ function (
         },
         post_statuses: [],
         getSelectedPostStatuses: function () {
-            return _.pluck(_.where(this.post_statuses, { selected: true }), 'id');
+            return _.pluck(_.where(this.post_statuses, { selected: true }), 'name');
         },
         hasSelectedPostStatuses: function () {
             return !_.isEmpty(this.getSelectedPostStatuses());
         },
         clearSelectedPostStatuses: function () {
-            _.each(this.post_types, function (postStatus) {
+            _.each(this.post_statuses, function (postStatus) {
                 postStatus.selected = false;
             });
         },
-      getPostQuery: function () {
+        getPostQuery: function () {
             var query = {};
 
             var selected_tags = this.getSelectedTags();
@@ -73,8 +71,9 @@ function (
             }
 
             var selected_statuses = this.getSelectedPostStatuses();
+            console.log(selected_statuses);
             if (!_.isEmpty(selected_statuses)) {
-                query.form = selected_statuses.join(',');
+                query.status = selected_statuses.join(',');
             }
 
             if (this.keyword) {
@@ -125,15 +124,22 @@ function (
     FormEndpoint.get().$promise.then(function (response) {
         GlobalFilter.post_types = response.results;
     });
-
-    FormStatusEndpoint.get().$promise.then(function (response) {
-        GlobalFilter.post_statuses = response.results;
-    });
-
     // @todo - uncomment when sets are ready
     // SetEndpoint.get().$promise.then(function(response) {
     //     GlobalFilter.sets = response.results;
     // });
+    
+    GlobalFilter.post_statuses = {
+                  'draft': {
+                    'name': 'draft',
+                    'selected': false
+                  },
+                  'published': {
+                    'name': 'published',
+                    'selected': false
+                  }
+                }
+
 
     return Util.bindAllFunctionsToSelf(GlobalFilter);
 
