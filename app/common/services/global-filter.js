@@ -57,6 +57,20 @@ function (
                 postStatus.selected = false;
             });
         },
+        /*
+        post_stages: [],
+        getSelectedPostStages: function () {
+            return _.pluck(_.where(this.post_stages, { selected: true }), 'id');
+        },
+        hasSelectedPostStages: function () {
+            return !_.isEmpty(this.getSelectedPostStages());
+        },
+        clearSelectedPostStages: function () {
+            _.each(this.post_stages, function (postStage) {
+                postStage.selected = false;
+            });
+        },
+        */
         getPostQuery: function () {
             var query = {};
 
@@ -73,8 +87,15 @@ function (
             var selected_statuses = this.getSelectedPostStatuses();
             if (!_.isEmpty(selected_statuses)) {
                 query.status = selected_statuses.join(',');
+            } else {
+                query.status = 'all';
             }
-
+            /*
+            var selected_stages = this.getSelectedPostStages();
+            if (!_.isEmpty(selected_types)) {
+                query.form = selected_types.join(',');
+            }
+            */
             if (this.keyword) {
                 query.q = this.keyword;
             }
@@ -127,7 +148,7 @@ function (
     // SetEndpoint.get().$promise.then(function(response) {
     //     GlobalFilter.sets = response.results;
     // });
-    
+
     GlobalFilter.post_statuses = {
                   'draft': {
                     'name': 'draft',
@@ -137,9 +158,7 @@ function (
                     'name': 'published',
                     'selected': false
                   }
-                }
-
-
+                };
     return Util.bindAllFunctionsToSelf(GlobalFilter);
 
 }];

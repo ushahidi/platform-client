@@ -98,6 +98,12 @@ function (
                 }
             };
 
+            $scope.showAllPostStagesHandler = function () {
+                if (this.show_all_post_stages) {
+                    GlobalFilter.clearSelectedPostStages();
+                }
+            };
+
             $scope.uiOpenDate = function (datepicker) {
                 if (datepicker === 'start_date') {
                     $scope.start_date_open = true;

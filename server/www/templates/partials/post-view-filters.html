@@ -70,30 +70,26 @@
                         </ul>
                     </li>
 
-
-                    <!-- <li class="accordion-menu-list__item" accordion-group>
+<!--
+                    <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger>Stages</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger>globalFilter.post_stages.post_stages</a>
                         </div>
-                        <ul class="accordion-menu-content" accordion-content>
+                          <ul class="accordion-menu-content" accordion-content>
                             <li>
-                                <input type="checkbox" name="show-all-stages" value="Show All Stages">Show All Stages
+                                <label>
+                                    <input type="checkbox" ng-model="show_all_post_stages" ng-checked="!global_filter.hasSelectedPostStages()" ng-click="showAllPostStagesHandler()"> {{'globalFilter.post_stages.all_types' | translate}}
+                                </label>
                             </li>
-                            <li>
-                                <input type="checkbox" name="structure" value="Structure">Structure
-                            </li>
-                            <li>
-                                <input type="checkbox" name="verification" value="Verification" checked="checked">Verification
-                            </li>
-                            <li>
-                                <input type="checkbox" name="translation" value="Translation">Translation
-                            </li>
-                            <li>
-                                <input type="checkbox" name="disabled stage" value="Disabled Stage">Disabled Stage
+                            <li class="checkbox" ng-repeat="(id, postStage) in global_filter.post_stages" postStage="postStage">
+                                <label>
+                                    <input type="checkbox" value="{{postStage.id}}" ng-model="global_filter.post_stages[id].selected" />
+                                    {{postStage.label | translate}}
+                                </label>
                             </li>
                         </ul>
-                    </li> -->
-
+                    </li>
+-->
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
                             <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.date_range</a>
