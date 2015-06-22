@@ -21,13 +21,8 @@ var gulp         = require('gulp'),
     jscs         = require('gulp-jscs'),
     dotenv       = require('dotenv');
 
-// var defaultOptions,
-//     options,
-//     helpers;
-
-
 // Grab env vars from .env file
-dotenv.load();
+dotenv.load({silent: true});
 // load user defined options
 if (fs.existsSync('.gulpconfig.json')) {
     gutil.log('.gulpconfig.json is deprecated. Please use .env');
@@ -52,11 +47,11 @@ function getBooleanOption(value, defaultValue) {
 }
 
 var options = {
-    nodeServer          : getBooleanOption(gutil.env['node-server'] || process.env.NODE_SERVER, defaultOptions.nodeServer),
-    mockBackend         : getBooleanOption(gutil.env['mock-backend'] || process.env.MOCK_BACKEND, defaultOptions.mockBackend),
-    useChromeForKarma   : getBooleanOption(gutil.env['karma-chrome'] || process.env.KARMA_CHROME, defaultOptions.useChromeForKarma),
+    nodeServer          : gutil.env['node-server'] || getBooleanOption(process.env.NODE_SERVER, defaultOptions.nodeServer),
+    mockBackend         : gutil.env['mock-backend'] || getBooleanOption(process.env.MOCK_BACKEND, defaultOptions.mockBackend),
+    useChromeForKarma   : gutil.env['karma-chrome'] || getBooleanOption(process.env.KARMA_CHROME, defaultOptions.useChromeForKarma),
     backendUrl          : gutil.env['backend-url'] || process.env.BACKEND_URL,
-    uglifyJs            : getBooleanOption(gutil.env['uglify-js'] || process.env.UGLIFY_JS, defaultOptions.uglifyJs),
+    uglifyJs            : gutil.env['uglify-js'] || getBooleanOption(process.env.UGLIFY_JS, defaultOptions.uglifyJs),
     www                 : 'server/www'
 };
 
