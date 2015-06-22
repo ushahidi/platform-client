@@ -71,7 +71,6 @@ function (
             }
 
             var selected_statuses = this.getSelectedPostStatuses();
-            console.log(selected_statuses);
             if (!_.isEmpty(selected_statuses)) {
                 query.status = selected_statuses.join(',');
             }
