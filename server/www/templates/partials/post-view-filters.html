@@ -82,11 +82,11 @@
                             </li>
                             <div ng-repeat="(id, postStages) in global_filter.post_stages">
                               <label>
-                                {{global_filter.post_types[id].name}}
+                                {{postStages.form_name}}
                               </label>
-                              <li class="checkbox" ng-repeat="postStage in postStages" postStage="postStage">
+                              <li class="checkbox" ng-repeat="(id_stage, postStage) in postStages.stages" postStage="postStage">
                                 <label>
-                                    <input type="checkbox" value="{{postStage.id}}" ng-model="global_filter.post_stages[id].selected" />
+                                    <input type="checkbox" value="{{postStage.id}}" ng-model="global_filter.post_stages[id].stages[id_stage].selected" />
                                     {{postStage.label}}
                                 </label>
                               </li>

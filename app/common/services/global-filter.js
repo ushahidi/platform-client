@@ -35,7 +35,7 @@ function (
                 tag.selected = false;
             });
         },
-        post_types: [],
+        post_types: {},
         getSelectedPostTypes: function () {
             return _.pluck(_.where(this.post_types, { selected: true }), 'id');
         },
@@ -47,7 +47,7 @@ function (
                 postType.selected = false;
             });
         },
-        post_statuses: [],
+        post_statuses: {},
         getSelectedPostStatuses: function () {
             return _.pluck(_.where(this.post_statuses, { selected: true }), 'name');
         },
@@ -59,16 +59,29 @@ function (
                 postStatus.selected = false;
             });
         },
-        post_stages: [],
+        post_stages: {},
         getSelectedPostStages: function () {
-            return _.pluck(_.where(this.post_stages, { selected: true }), 'id');
+            var stages = [];
+
+            _.each(this.post_stages, function(item) {
+                _.each(
+                  _.pluck(
+                     _.where(item.stages, {selected: true}),
+                     'id'), 
+                  function(id) {
+                    stages.push(id);
+                  });
+            });
+            return stages;
         },
         hasSelectedPostStages: function () {
             return !_.isEmpty(this.getSelectedPostStages());
         },
         clearSelectedPostStages: function () {
-            _.each(this.post_stages, function (postStage) {
+            _.each(this.post_stages, function (postStages) {
+              _.each(postStages, function(postStage){
                 postStage.selected = false;
+              });
             });
         },
         getPostQuery: function () {
@@ -143,12 +156,15 @@ function (
     });
 
     FormEndpoint.get().$promise.then(function (response) {
-        GlobalFilter.post_types = response.results;
-        angular.forEach(GlobalFilter.post_types, function(value, key) {
+        angular.forEach(response.results, function(value, key) {
+          GlobalFilter.post_types[value.id] = value;
           FormStageEndpoint.get({formId: value.id}).$promise.then(function (response) {
             if (response.results.length) {
-              //var form_id = response.results[0].form_id;
-              GlobalFilter.post_stages.push(response.results);
+              var form_id = response.results[0].form_id;
+              GlobalFilter.post_stages[form_id] = {
+                  'stages': response.results,
+                  'form_name': GlobalFilter.post_types[form_id].name
+               };
             }
         });
       });
