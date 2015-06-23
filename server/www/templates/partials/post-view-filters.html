@@ -70,10 +70,9 @@
                         </ul>
                     </li>
 
-<!--
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger>globalFilter.post_stages.post_stages</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.post_stages.post_stages</a>
                         </div>
                           <ul class="accordion-menu-content" accordion-content>
                             <li>
@@ -81,15 +80,20 @@
                                     <input type="checkbox" ng-model="show_all_post_stages" ng-checked="!global_filter.hasSelectedPostStages()" ng-click="showAllPostStagesHandler()"> {{'globalFilter.post_stages.all_types' | translate}}
                                 </label>
                             </li>
-                            <li class="checkbox" ng-repeat="(id, postStage) in global_filter.post_stages" postStage="postStage">
+                            <div ng-repeat="(id, postStages) in global_filter.post_stages">
+                              <label>
+                                {{global_filter.post_types[id].name}}
+                              </label>
+                              <li class="checkbox" ng-repeat="postStage in postStages" postStage="postStage">
                                 <label>
                                     <input type="checkbox" value="{{postStage.id}}" ng-model="global_filter.post_stages[id].selected" />
-                                    {{postStage.label | translate}}
+                                    {{postStage.label}}
                                 </label>
-                            </li>
+                              </li>
+                            </div>
                         </ul>
                     </li>
--->
+
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
                             <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.date_range</a>

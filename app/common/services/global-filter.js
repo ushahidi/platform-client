@@ -1,12 +1,14 @@
 module.exports = [
     'TagEndpoint',
     'FormEndpoint',
+    'FormStageEndpoint',
     // 'SetEndpoint',
     'Util',
     '_',
 function (
     TagEndpoint,
     FormEndpoint,
+    FormStageEndpoint,
     // SetEndpoint
     Util,
     _
@@ -57,7 +59,6 @@ function (
                 postStatus.selected = false;
             });
         },
-        /*
         post_stages: [],
         getSelectedPostStages: function () {
             return _.pluck(_.where(this.post_stages, { selected: true }), 'id');
@@ -70,7 +71,6 @@ function (
                 postStage.selected = false;
             });
         },
-        */
         getPostQuery: function () {
             var query = {};
 
@@ -90,12 +90,12 @@ function (
             } else {
                 query.status = 'all';
             }
-            /*
+
             var selected_stages = this.getSelectedPostStages();
-            if (!_.isEmpty(selected_types)) {
-                query.form = selected_types.join(',');
+            if (!_.isEmpty(selected_stages)) {
+                query.stage = selected_stages.join(',');
             }
-            */
+
             if (this.keyword) {
                 query.q = this.keyword;
             }
@@ -129,7 +129,8 @@ function (
             return _.extend({}, filterDefaults, {
                 tags: [],
                 post_types: [],
-                post_statuses: []
+                post_statuses: [],
+                post_stages: []
             });
         }
     };
@@ -143,7 +144,16 @@ function (
 
     FormEndpoint.get().$promise.then(function (response) {
         GlobalFilter.post_types = response.results;
+        angular.forEach(GlobalFilter.post_types, function(value, key) {
+          FormStageEndpoint.get({formId: value.id}).$promise.then(function (response) {
+            if (response.results.length) {
+              //var form_id = response.results[0].form_id;
+              GlobalFilter.post_stages.push(response.results);
+            }
+        });
+      });
     });
+
     // @todo - uncomment when sets are ready
     // SetEndpoint.get().$promise.then(function(response) {
     //     GlobalFilter.sets = response.results;

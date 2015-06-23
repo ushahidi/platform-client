@@ -63,6 +63,10 @@
             "draft" : "Draft",
             "published" : "Published"
         },
+        "post_stages" : {
+            "post_stages" : "Post Stages",
+            "all_types" : "All Types"
+        },
         "sets" : {
             "sets" : "Sets",
             "my_sets" : "My Sets",
