@@ -63,13 +63,13 @@ function (
         getSelectedPostStages: function () {
             var stages = [];
 
-            _.each(this.post_stages, function(item) {
+            _.each(this.post_stages, function (item) {
                 _.each(
                   _.pluck(
                      _.where(item.stages, {selected: true}),
-                     'id'), 
-                  function(id) {
-                    stages.push(id);
+                     'id'),
+                     function (id) {
+                      stages.push(id);
                   });
             });
             return stages;
@@ -79,9 +79,9 @@ function (
         },
         clearSelectedPostStages: function () {
             _.each(this.post_stages, function (postStages) {
-              _.each(postStages, function(postStage){
-                postStage.selected = false;
-              });
+                _.each(postStages, function (postStage) {
+                    postStage.selected = false;
+                });
             });
         },
         getPostQuery: function () {
@@ -156,15 +156,15 @@ function (
     });
 
     FormEndpoint.get().$promise.then(function (response) {
-        angular.forEach(response.results, function(value, key) {
+        angular.forEach(response.results, function (value, key) {
           GlobalFilter.post_types[value.id] = value;
           FormStageEndpoint.get({formId: value.id}).$promise.then(function (response) {
             if (response.results.length) {
-              var form_id = response.results[0].form_id;
-              GlobalFilter.post_stages[form_id] = {
+                var form_id = response.results[0].form_id;
+                GlobalFilter.post_stages[form_id] = {
                   'stages': response.results,
                   'form_name': GlobalFilter.post_types[form_id].name
-               };
+              };
             }
         });
       });
@@ -176,15 +176,15 @@ function (
     // });
 
     GlobalFilter.post_statuses = {
-                  'draft': {
-                    'name': 'draft',
-                    'selected': false
-                  },
-                  'published': {
-                    'name': 'published',
-                    'selected': false
-                  }
-                };
+        'draft': {
+            'name': 'draft',
+            'selected': false
+        },
+        'published': {
+            'name': 'published',
+            'selected': false
+        }
+    };
     return Util.bindAllFunctionsToSelf(GlobalFilter);
 
 }];
