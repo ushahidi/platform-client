@@ -13,6 +13,7 @@ angular.module('ushahidi.common', [
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
+.service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
 .service('RoleHelper', require('./services/role-helper.js'))
 .service('Config', require('./services/config.js'))
 .service('Util', require('./services/util.js'))

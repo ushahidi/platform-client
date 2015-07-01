@@ -71,6 +71,10 @@ function (
     .when('/settings/roles', {
         controller: require('./controllers/setting-roles-controller.js'),
         templateUrl: 'templates/settings/todo.html'
+    })
+    .when('/settings/datasources', {
+        controller: require('./controllers/setting-datasources-controller.js'),
+        templateUrl: 'templates/settings/datasources.html'
     });
 
 }];

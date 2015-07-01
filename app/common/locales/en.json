@@ -291,7 +291,7 @@
     "map_settings" : {
         "admin_map_settings" : "Map Settings"
     },
-    "settings" :{
+    "settings": {
         "site" : "Site Settings",
         "site_name" : "Site name",
         "site_email" : "Contact email address",
@@ -309,7 +309,16 @@
         "map_default_latitude": "Default latitude",
         "map_default_longitude": "Default longitude",
         "map_default_zoom_level": "Default zoom level",
-        "map_default_location": "Default location"
+        "map_default_location": "Default location",
+        "data_sources": {
+            "data_sources": "Data Sources",
+            "hint_turn_on_off": "You can automatically import data from these sources.",
+            "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
+            "provider_options": "Options",
+            "save_changes": "Save Changes",
+            "saving_changes": "Saving"
+        },
+        "generic_field_error": "Invalid entry, please try again."
     },
     "user": {
         "add_user" : "Add User",
