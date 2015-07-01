@@ -1,5 +1,5 @@
-<main class="page-content has-aside" role="main">
-    <div class="main-col accordion-menu" accordion>
+<main class="page-content" role="main">
+    <div class="main-col">
         <ul class="breadcrumb">
             <li><a ng-href="/settings" translate>nav.settings</a></li>
         </ul>
@@ -7,7 +7,7 @@
         <h1 class="inline">{{title}}</h1>
         <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
 
-        <div class="accordion-menu-list__item settings-listing" ng-repeat="provider in providers.results | orderBy:'name'" accordion-group is-open="panelVisible[provider.id]">
+        <div class="settings-listing" ng-repeat="provider in providers.results | orderBy:'name'" dropdown auto-close="disabled" is-open="panelVisible[provider.id]">
             <div ng-if="forms[provider.id].$valid" class="toggle-switch">
                 <input class="tgl" id="{{provider.id}}_enable" ng-model="settings.providers[provider.id]" type="checkbox" ng-change="saveProviderSettings(provider.id)" ng-disabled="saving">
                 <label class="tgl-btn" for="{{provider.id}}_enable"></label>
@@ -18,15 +18,15 @@
                 <label class="tgl-btn" for="{{provider.id}}_enable" ng-click="panelVisible[provider.id] = true"></label>
             </div>
 
-            <h3><a accordion-toggle>{{provider.name}}</a></h3>
+            <h3><a dropdown-toggle>{{provider.name}}</a></h3>
 
             <div class="actions">
-                <button type="button" class="button-secondary icon-only-when-small edit toggle-content-trigger" accordion-trigger>
+                <button type="button" class="button-secondary icon-only-when-small edit toggle-content-trigger" dropdown-toggle>
                     <span translate>settings.data_sources.provider_options</span>
                 </button>
             </div>
 
-            <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="accordion-menu-content" accordion-content>
+            <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="toggle-content" dropdown-menu>
                 <p class="alert error" ng-if="forms[provider.id].$invalid" translate>settings.data_sources.hint_plugin_needs_configuring</p>
 
                 <div ng-repeat="(option_key, option) in provider.options track by option_key">
