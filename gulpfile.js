@@ -8,6 +8,7 @@ var gulp         = require('gulp'),
     notify       = require('gulp-notify'),
     source       = require('vinyl-source-stream'),
     browserify   = require('browserify'),
+    watchify    = require('watchify'),
     envify       = require('envify/custom'),
     fs           = require('fs'),
     merge        = require('merge'),
@@ -200,7 +201,7 @@ gulp.task('browserify', function () {
         .transform(helpers.setBackendUrl())
         .bundle()
         .on('error', function (err) {
-            errorHandler(err.message);
+            errorHandler(err);
             this.emit('end');
         })
         .pipe(source('bundle.js'))
@@ -213,14 +214,46 @@ gulp.task('browserify', function () {
 
     stream
 
-        // Strip sourcemaps out to another file
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(options.www + '/js'))
-        .pipe(notify('JS compiled'))
-        .pipe(livereload())
-        ;
+    // Strip sourcemaps out to another file
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(options.www + '/js'))
+    .pipe(notify('JS compiled'))
+    .pipe(livereload())
+    ;
     return stream;
 });
+
+/**
+ * Task: `watchify`
+ * Monitor js changes with watchify
+ */
+gulp.task('watchify', function () {
+    var stream = watchify(browserify({
+        cache: {},
+        packageCache: {},
+        fullPaths: true,
+        debug: true,
+        entries: ['./app/app.js']
+    }))
+    .on('update', function () {
+        bundleBrowserify(stream);
+    })
+    .transform('brfs')
+    .transform(helpers.setBackendUrl());
+
+    return bundleBrowserify(stream);
+});
+
+function bundleBrowserify(stream) {
+    return stream.bundle()
+        .on('error', function (err) {
+            errorHandler(err);
+        })
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest(options.www + '/js'))
+        .pipe(notify('JS compiled'))
+        .pipe(livereload());
+}
 
 /**
  * Task: `build`
@@ -232,10 +265,9 @@ gulp.task('build', ['sass', 'css', 'font', 'browserify']);
  * Task: `watch`
  * Rebuilds styles and runs live reloading.
  */
-gulp.task('watch', [], function () {
+gulp.task('watch', ['watchify'], function () {
     livereload.listen();
     gulp.watch('sass/**/*.scss', ['sass']);
-    gulp.watch(['app/**/*.js', 'app/**/*.json'], ['browserify']);
     gulp.watch('server/www/**/*.html', ['html']);
 });
 
