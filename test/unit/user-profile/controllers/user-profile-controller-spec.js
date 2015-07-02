@@ -42,22 +42,15 @@ describe('user profile controller', function () {
             'role': 'admin'
         };
 
-        var getDeferred = $q.defer();
-        mockUserEndpoint = {
-            get: function () {
-                return {$promise: getDeferred.promise};
-            }
-        };
-
-        spyOn(mockUserEndpoint, 'get').and.callThrough();
+        mockUserEndpoint = {};
 
         $controller('userProfileController', {
             $scope: $scope,
             Notify: mockNotify,
-            UserEndpoint: mockUserEndpoint
+            UserEndpoint: mockUserEndpoint,
+            user: mockUserGetResponse
         });
 
-        getDeferred.resolve(mockUserGetResponse);
         $rootScope.$digest();
     }));
 
@@ -67,11 +60,7 @@ describe('user profile controller', function () {
 
     describe('UserEndpoint usage', function () {
 
-        it('should call "get" on the UserEndpoint', function () {
-            expect(mockUserEndpoint.get).toHaveBeenCalled();
-        });
-
-        it('should set the response from UserEndpoint.query() to userData and userProfileDataForEdit', function () {
+        it('should set the user response to userData and userProfileDataForEdit', function () {
             expect($scope.userProfileData).toEqual(mockUserGetResponse);
             expect($scope.userProfileDataForEdit).toEqual(mockUserGetResponse);
         });
