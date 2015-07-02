@@ -10,7 +10,8 @@ function (
             content: '',
             locale: CONST.DEFAULT_LOCALE,
             status: 'draft',
-            values: {}
+            values: {},
+            completed_stages: []
         }, data);
     };
 }];

@@ -7,6 +7,7 @@ module.exports = [
     'RoleHelper',
     'TagEndpoint',
     'FormEndpoint',
+    'FormStageEndpoint',
     'FormAttributeEndpoint',
     'Notify',
     '_',
@@ -19,6 +20,7 @@ function (
     RoleHelper,
     TagEndpoint,
     FormEndpoint,
+    FormStageEndpoint,
     FormAttributeEndpoint,
     Notify,
     _
@@ -27,10 +29,9 @@ function (
     $scope.availableRoles = RoleHelper.roles();
     $scope.getRoleDisplayName = RoleHelper.getRole;
     $scope.everyone = $filter('translate')('post.modify.everyone');
-    $scope.active_form
 
-    this.fetchAttributes = function (form_id) {
-        FormAttributeEndpoint.query({formId: form_id}).$promise.then(function (attrs) {
+    this.fetchAttributes = function (formId) {
+        FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
             // Initialize values on post (helps avoid madness in the template)
             attrs.map(function (attr) {
                 if (!$scope.post.values[attr.key]) {
@@ -41,12 +42,72 @@ function (
         });
     };
 
+    this.fetchStages = function (formId) {
+        $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
+            $scope.setVisibleStage($scope.stages[0].id);
+        });
+    };
+
     $scope.allowedChangeStatus = function () {
         return $scope.post_options.$resolved && $scope.post_options.allowed_privileges.indexOf('change_status') !== -1;
     };
 
     $scope.setDraft = function () {
         $scope.post.status = 'draft';
+    };
+
+    $scope.setVisibleStage = function (stageId) {
+        $scope.visibleStage = stageId;
+    };
+
+    $scope.isFirstStage = function (stageId) {
+
+        if (!_.isEmpty($scope.stages)) {
+            return stageId === $scope.stages[0].id;
+        }
+        return 0;
+
+    };
+
+    $scope.isStageValid = function (stageId) {
+
+        if ($scope.isFirstStage(stageId)) {
+
+            // The first stage is assumed to contain the title, content, and the tags
+            //  - these are not stored in attributes and do not have a 'required' field
+            //   thus, if any of these are invalid, the first stage is not ready to complete
+
+            if ($scope.form.title.$invalid || $scope.form.content.$invalid || $scope.form.tags.$invalid) {
+                return false;
+            }
+        }
+
+        // now checking all other post attributes that are required
+        return _.chain($scope.attributes)
+        .where({form_stage_id : stageId, required: true})
+        .reduce(function (isValid, attr) {
+            if (_.isUndefined($scope.form['values_' + attr.key]) || $scope.form['values_' + attr.key].$invalid) {
+                return false;
+            }
+            return isValid;
+        }, true)
+        .value();
+    };
+
+    $scope.stageIsComplete = function (stageId) {
+        return _.includes($scope.post.completed_stages, stageId);
+    };
+
+    $scope.toggleStageCompletion = function (stageId) {
+
+        stageId = parseInt(stageId);
+
+        if (_.includes($scope.post.completed_stages, stageId)) {
+            $scope.post.completed_stages = _.without($scope.post.completed_stages, stageId);
+
+        } else if ($scope.isStageValid(stageId)) {
+            $scope.post.completed_stages.push(stageId);
+        }
     };
 
     $scope.postIsPublishedTo = function () {
@@ -64,21 +125,62 @@ function (
 
     $scope.publishPostTo = function (role) {
 
+        // first check if stages required have been marked complete
+        var requiredStages = _.where($scope.stages, {required: true}),
+            errors = [];
+
+        _.each(requiredStages, function (stage) {
+            // if this stage isn't complete, add to errors
+            if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
+                errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
+            }
+        });
+
+        if (errors.length) {
+            Notify.showAlerts(errors);
+            return;
+        }
+
         $scope.post.status = 'published';
         if (role) {
             $scope.post.published_to = [role];
         } else {
             $scope.post.published_to = [];
         }
+    };
 
+    $scope.canSavePost = function () {
+        var valid = true;
+        if ($scope.post.status === 'published') {
+            // first check if stages required have been marked complete
+            var requiredStages = _.where($scope.stages, {required: true}) ;
+
+            valid = _.reduce(requiredStages, function (isValid, stage) {
+                // if this stage isn't complete, add to errors
+                if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
+                    return false;
+                }
+
+                return isValid;
+            }, valid);
+
+            valid = _.reduce($scope.post.completed_stages, function (isValid, stageId) {
+                return $scope.isStageValid(stageId) && isValid;
+            }, valid);
+        }
+
+        return valid;
     };
 
     $scope.savePost = function () {
+        if (!$scope.canSavePost()) {
+            return;
+        }
+
         $scope.saving_post = true;
 
         // Avoid messing with original object
-        post = _.clone($scope.post);
-        post.values = _.clone(post.values);
+        var post = angular.copy($scope.post);
 
         // Clean up post values object
         _.each(post.values, function (value, key) {

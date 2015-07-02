@@ -32,9 +32,10 @@ function (
     });
 
     $scope.chooseForm = function (form) {
-        $scope.active_form = form;
+        $scope.activeForm = form;
         $scope.post.form = { id: form.id };
 
+        that.fetchStages($scope.post.form.id);
         that.fetchAttributes($scope.post.form.id);
     };
 
@@ -43,7 +44,7 @@ function (
     };
 
     $scope.goBack = function () {
-        $scope.active_form = null;
+        $scope.activeForm = null;
     };
 
 }];

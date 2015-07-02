@@ -28,14 +28,17 @@ function (
     $scope.is_edit = true;
 
     $scope.post_options = $scope.post = PostEndpoint.get({ id: $routeParams.id }, function (post) {
+
         var tags = [];
         post.tags.map(function (tag) {
             tags.push(parseInt(tag.id));
         });
         post.tags = tags;
 
+        post.completed_stages = post.completed_stages.map(parseInt);
+
         $scope.post = post;
-        $scope.active_form = FormEndpoint.get({ id: post.form.id }, function (form) {
+        $scope.activeForm = FormEndpoint.get({ id: post.form.id }, function (form) {
             // Set page title to post title, if there is one available.
             if (post.title && post.title.length) {
                 $translate('post.modify.edit_type', { type: form.name, title: post.title }).then(function (title) {
@@ -44,6 +47,7 @@ function (
             }
         });
 
+        that.fetchStages($scope.post.form.id);
         that.fetchAttributes($scope.post.form.id);
     });
 
