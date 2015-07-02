@@ -67,8 +67,11 @@ var helpers = {
         }
 
         return {
-            entries: entries,
-            debug: true
+            cache: {},
+            packageCache: {},
+            fullPaths: true,
+            debug: true,
+            entries: entries
         };
     },
     setBackendUrl: function () {
@@ -226,13 +229,7 @@ gulp.task('browserify', function () {
  * Monitor js changes with watchify
  */
 gulp.task('watchify', function () {
-    var stream = watchify(browserify({
-        cache: {},
-        packageCache: {},
-        fullPaths: true,
-        debug: true,
-        entries: ['./app/app.js']
-    }))
+    var stream = watchify(browserify(helpers.getBrowserifyConfig()))
     .on('update', function () {
         bundleBrowserify(stream);
     })
