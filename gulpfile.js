@@ -77,12 +77,10 @@ var helpers = {
         });
     },
     createDefaultTaskDependencies: function () {
-        var dependencies = ['build'];
+        var dependencies = ['build', 'watch'];
 
         if (options.nodeServer) {
             dependencies.push('node-server');
-        } else {
-            dependencies.push('direct');
         }
 
         return dependencies;
@@ -284,15 +282,7 @@ gulp.task('html', [], function () {
  * Task: `node-server`
  * Runs a simple node connect server and runs live reloading.
  */
-gulp.task('node-server', ['direct'], require('./server/server'));
-
-/**
- * Task: `direct`
- * Rebuilds styles and runs live reloading.
- */
-gulp.task('direct', ['watch'], function () {
-
-});
+gulp.task('node-server', [], require('./server/server'));
 
 /**
  * Run test once and exit
