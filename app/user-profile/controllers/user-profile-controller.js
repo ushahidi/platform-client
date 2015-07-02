@@ -5,13 +5,15 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     '_',
+    'user',
 function (
     $scope,
     $rootScope,
     $translate,
     UserEndpoint,
     Notify,
-    _
+    _,
+    user
 ) {
     $translate('user_profile.title').then(function (title) {
         $scope.title = title;
@@ -42,8 +44,5 @@ function (
         return promise;
     };
 
-    UserEndpoint.get({id: 'me'}).$promise.then(function (userData) {
-        $scope.userProfileData = $scope.userProfileDataForEdit = userData;
-    });
-
+    $scope.userProfileData = $scope.userProfileDataForEdit = user;
 }];
