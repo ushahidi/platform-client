@@ -53,13 +53,14 @@ function (
             var stages = [];
 
             _.each(this.post_stages, function (item) {
-                _.each(
-                  _.pluck(
-                     _.where(item.stages, {selected: true}),
-                     'id'),
-                     function (id) {
-                      stages.push(id);
-                  });
+                stages = stages.concat(
+                _.chain(item.stages)
+                .filter(function (i) {
+                    return i.selected;
+                })
+                .pluck('id')
+                .value()
+              );
             });
             return stages;
         },
