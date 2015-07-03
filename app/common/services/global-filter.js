@@ -23,6 +23,7 @@ function (
     };
 
     var GlobalFilter = {
+        post_status: '',
         tags: [],
         getSelectedTags: function () {
             return _.pluck(_.where(this.tags, { selected: true }), 'id');
@@ -47,7 +48,6 @@ function (
                 postType.selected = false;
             });
         },
-        post_status: '',
         post_stages: {},
         getSelectedPostStages: function () {
             var stages = [];
@@ -127,7 +127,7 @@ function (
             return _.extend({}, filterDefaults, {
                 tags: [],
                 post_types: [],
-                post_status:'',
+                post_status: '',
                 post_stages: []
             });
         }
