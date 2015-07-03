@@ -58,12 +58,12 @@
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
                                 <label>
-                                    <input type="checkbox" ng-model="show_all_post_statuses" ng-checked="!global_filter.hasSelectedPostStatuses()" ng-click="showAllPostStatusesHandler()"> {{'globalFilter.post_statuses.all_types' | translate}}
+                                    <input type="radio" name="post_status" ng-model="global_filter.post_status" value=""> {{'globalFilter.post_statuses.all_statuses' | translate}}
                                 </label>
                             </li>
                             <li class="checkbox" ng-repeat="(name, postStatus) in global_filter.post_statuses" postStatus="postStatus">
                                 <label>
-                                    <input type="checkbox" value="{{postStatus.name}}" ng-model="global_filter.post_statuses[name].selected" />
+                                    <input type="radio" name="post_status" value="{{postStatus.name}}" ng-model="global_filter.post_status" />
                                     {{postStatus.name | translate}}
                                 </label>
                             </li>

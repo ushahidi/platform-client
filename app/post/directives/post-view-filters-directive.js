@@ -92,12 +92,6 @@ function (
                 }
             };
 
-            $scope.showAllPostStatusesHandler = function () {
-                if (this.show_all_post_statuses) {
-                    GlobalFilter.clearSelectedPostStatuses();
-                }
-            };
-
             $scope.showAllPostStagesHandler = function () {
                 if (this.show_all_post_stages) {
                     GlobalFilter.clearSelectedPostStages();

@@ -47,18 +47,7 @@ function (
                 postType.selected = false;
             });
         },
-        post_statuses: {},
-        getSelectedPostStatuses: function () {
-            return _.pluck(_.where(this.post_statuses, { selected: true }), 'name');
-        },
-        hasSelectedPostStatuses: function () {
-            return !_.isEmpty(this.getSelectedPostStatuses());
-        },
-        clearSelectedPostStatuses: function () {
-            _.each(this.post_statuses, function (postStatus) {
-                postStatus.selected = false;
-            });
-        },
+        post_status: '',
         post_stages: {},
         getSelectedPostStages: function () {
             var stages = [];
@@ -96,11 +85,8 @@ function (
             if (!_.isEmpty(selected_types)) {
                 query.form = selected_types.join(',');
             }
-
-            var selected_statuses = this.getSelectedPostStatuses();
-            if (!_.isEmpty(selected_statuses)) {
-                query.status = selected_statuses.join(',');
-            } else {
+            query.status = this.post_status;
+            if (_.isEmpty(query.status)) {
                 query.status = 'all';
             }
 
@@ -136,13 +122,12 @@ function (
             // Special handling for tags, post types and post statuses
             this.clearSelectedTags();
             this.clearSelectedPostTypes();
-            this.clearSelectedPostStatuses();
         },
         getDefaults: function () {
             return _.extend({}, filterDefaults, {
                 tags: [],
                 post_types: [],
-                post_statuses: [],
+                post_status:'',
                 post_stages: []
             });
         }

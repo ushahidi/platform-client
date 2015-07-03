@@ -59,7 +59,7 @@
         },
         "post_statuses" : {
             "post_statuses" : "Post Statuses",
-            "all_types" : "All Types",
+            "all_statuses" : "All Statuses",
             "draft" : "Draft",
             "published" : "Published"
         },
