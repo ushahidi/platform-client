@@ -10,7 +10,7 @@ function (
         formId: '@formId',
         id: '@id',
         order: 'asc',
-        orderby: 'priority'
+        orderby: '@priority'
     }, {
         query: {
             method: 'GET',
@@ -21,9 +21,6 @@ function (
         },
         update: {
             method: 'PUT'
-        },
-        delete: {
-            method: 'DELETE'
         }
     });
 

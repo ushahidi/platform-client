@@ -93,7 +93,7 @@ function (
 
             var selected_stages = this.getSelectedPostStages();
             if (!_.isEmpty(selected_stages)) {
-                query.stage = selected_stages.join(',');
+                query.current_stage = selected_stages.join(',');
             }
 
             if (this.keyword) {
@@ -137,24 +137,23 @@ function (
     // Add default filter values
     angular.extend(GlobalFilter, filterDefaults);
 
-    TagEndpoint.get().$promise.then(function (response) {
-        GlobalFilter.tags = response.results;
-    });
+    GlobalFilter.tags = TagEndpoint.query();
 
-    FormEndpoint.get().$promise.then(function (response) {
-        angular.forEach(response.results, function (value, key) {
-          GlobalFilter.post_types[value.id] = value;
-          FormStageEndpoint.get({formId: value.id}).$promise.then(function (response) {
-            if (response.results.length) {
-                var form_id = response.results[0].form_id;
-                GlobalFilter.post_stages[form_id] = {
-                  'stages': response.results,
-                  'form_name': GlobalFilter.post_types[form_id].name
-              };
-            }
-        });
-      });
-    });
+    FormEndpoint.query().$promise.then(function (response) {
+       GlobalFilter.post_types = _.indexBy(response, 'id');
+
+       _.each(GlobalFilter.post_types, function (item) {
+           FormStageEndpoint.get({formId: item.id}).$promise.then(function (response) {
+               if (response.results.length) {
+                   var form_id = response.results[0].form_id;
+                   GlobalFilter.post_stages[form_id] = {
+                       'stages': response.results
+                   };
+               }
+           });
+       });
+       GlobalFilter.post_stages = _.groupBy(response, 'form_id');
+   });
 
     // @todo - uncomment when sets are ready
     // SetEndpoint.get().$promise.then(function(response) {
