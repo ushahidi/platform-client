@@ -63,7 +63,7 @@
 
             <h1 class="post-header">{{post.title}}</h1>
 
-        	<div class="post-content" sd-model-to-html="post.content">
+        	<div ng-if="post.content" class="post-content" sd-model-to-html="post.content">
         	</div> <!-- end .post-content -->
 
             <ul class="post-values list-unstyled">
