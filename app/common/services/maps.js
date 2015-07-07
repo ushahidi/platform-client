@@ -207,6 +207,8 @@ function (
             }, this));
         },
         centerMap: function () {
+            var markers = this.layers.cluster || this.layers.geojson;
+
             this.map().then(function (map) {
                 // Center map on geojson
                 var bounds = markers.getBounds();
