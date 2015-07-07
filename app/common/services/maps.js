@@ -45,6 +45,17 @@ function (
         }
     };
 
+    var geojsonLayerOptions = {
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(
+                '<strong><a href="/posts/' + feature.properties.id + '">' +
+                feature.properties.title +
+                '</a></strong>' +
+                '<p>' + feature.properties.description + '</p>'
+            );
+        }
+    };
+
     var Maps = {
         maps: {},
         config: undefined,
@@ -133,17 +144,25 @@ function (
                 .then(this.addNewMarkers)
                 ;
         },
-        setGeojsonLayer: function (posts) {
-            this.layers.geojson = L.geoJson(posts, {
-                onEachFeature: function (feature, layer) {
-                    layer.bindPopup(
-                        '<strong><a href="/posts/' + feature.properties.id + '">' +
-                        feature.properties.title +
-                        '</a></strong>' +
-                        '<p>' + feature.properties.description + '</p>'
-                    );
+        addMorePosts: function (posts) {
+            Maps.getConfig().then(_.bind(function (config) {
+                if (config.clustering === true) {
+                    var geojson = L.geoJson(posts, geojsonLayerOptions);
+
+                    // This has to be done individually.
+                    // Using clusterLayer.addLayers() breaks the clustering.
+                    angular.forEach(geojson.getLayers(), _.bind(function (layer) {
+                        this.layers.cluster.addLayer(layer);
+                    }, this));
+                } else {
+                    // Just add to the existing geojson layer
+                    this.layers.geojson.addData(posts);
                 }
-            });
+                this.centerMap();
+            }, this));
+        },
+        setGeojsonLayer: function (posts) {
+            this.layers.geojson = L.geoJson(posts, geojsonLayerOptions);
         },
         clearOldMarkers: function () {
             var deferred = $q.defer();
@@ -180,23 +199,26 @@ function (
                     return;
                 }
 
-                this.map().then(function (map) {
+                this.map().then(_.bind(function (map) {
                     map.addLayer(markers);
 
-                    if (config.default_view.fitDataOnMap === true) {
-                        // Center map on geojson
-                        var bounds = markers.getBounds();
-                        if (bounds.isValid()) {
-                            map.fitBounds(bounds);
-                        }
-
-                        // Avoid zooming further than 15 (particularly when we just have a single point)
-                        if (map.getZoom() > 15) {
-                            map.setZoom(15);
-                        }
-                    }
-                });
+                    this.centerMap();
+                }, this));
             }, this));
+        },
+        centerMap: function () {
+            this.map().then(function (map) {
+                // Center map on geojson
+                var bounds = markers.getBounds();
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds);
+                }
+
+                // Avoid zooming further than 15 (particularly when we just have a single point)
+                if (map.getZoom() > 15) {
+                    map.setZoom(15);
+                }
+            });
         }
     };
 

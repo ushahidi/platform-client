@@ -76,12 +76,27 @@ function (
 
     // load geojson posts into the map obeying the global filter settings
     var map = Maps.getMap('map');
-    var reloadMapPosts = function () {
-        var conditions = _.extend(GlobalFilter.getPostQuery());
+    var reloadMapPosts = function (offset) {
+        var offset = offset || 0,
+        limit = 200,
+        conditions = _.extend(GlobalFilter.getPostQuery(), {
+            limit: limit,
+            offset: offset
+        });
 
         $scope.posts_query = PostEndpoint.geojson(conditions).$promise.then(function (posts) {
-            map.reloadPosts(posts);
+            // Add posts to map
+            if (offset == 0) {
+                map.reloadPosts(posts);
+            } else {
+                map.addMorePosts(posts);
+            }
             $scope.posts_query = null;
+
+            // Load next chunk
+            if (posts.features.length > 0) {
+                reloadMapPosts(offset + limit)
+            }
         });
     };
 
