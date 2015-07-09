@@ -143,7 +143,7 @@ function (
        GlobalFilter.post_types = _.indexBy(response, 'id');
 
        _.each(GlobalFilter.post_types, function (item) {
-           FormStageEndpoint.get({formId: item.id}).$promise.then(function (response) {
+           FormStageEndpoint.query({formId: item.id}).$promise.then(function (response) {
                if (response.results.length) {
                    var form_id = response.results[0].form_id;
                    GlobalFilter.post_stages[form_id] = {
@@ -152,7 +152,6 @@ function (
                }
            });
        });
-       GlobalFilter.post_stages = _.groupBy(response, 'form_id');
    });
 
     // @todo - uncomment when sets are ready
