@@ -254,8 +254,8 @@
         }
     },
     "set": {
-        "empty_list_0" : "No collections",
-        "empty_list_1" : "No saved searches"
+        "empty_list_collections" : "No collections",
+        "empty_list_savedsearches" : "No saved searches"
     },
     "tag": {
         "add_tag" : "Add Category",

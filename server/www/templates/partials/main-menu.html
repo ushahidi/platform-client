@@ -32,12 +32,12 @@
 
     <div class="sub-nav">
         <h6 class="zeta saved-searches" translate>nav.saved_searches</h6>
-        <sets-menu search='1' title=""></sets-menu>
+        <sets-menu endpoint='SavedSearchEndpoint' type="savedsearches"></sets-menu>
     </div>
 
     <div class="sub-nav">
         <h6 class="zeta collections" translate>nav.collections</h6>
-        <sets-menu search='0'></sets-menu>
+        <sets-menu endpoint='CollectionEndpoint' type="collections"></sets-menu>
         <button type="button" class="button-secondary plus">
             <span translate>nav.new_collection</span>
         </button>
