@@ -1,12 +1,14 @@
 module.exports = [
     'TagEndpoint',
     'FormEndpoint',
+    'FormStageEndpoint',
     // 'SetEndpoint',
     'Util',
     '_',
 function (
     TagEndpoint,
     FormEndpoint,
+    FormStageEndpoint,
     // SetEndpoint
     Util,
     _
@@ -17,6 +19,7 @@ function (
         start_date: '',
         end_date: '',
         location: '',
+        status: '',
         within_km: '1'
     };
 
@@ -45,6 +48,32 @@ function (
                 postType.selected = false;
             });
         },
+        post_stages: [],
+        getSelectedPostStages: function () {
+            var stages = [];
+
+            _.each(this.post_stages, function (item) {
+                stages = stages.concat(
+                _.chain(item.stages)
+                .filter(function (i) {
+                    return i.selected;
+                })
+                .pluck('id')
+                .value()
+              );
+            });
+            return stages;
+        },
+        hasSelectedPostStages: function () {
+            return !_.isEmpty(this.getSelectedPostStages());
+        },
+        clearSelectedPostStages: function () {
+            _.each(this.post_stages, function (postStages) {
+                _.each(postStages, function (postStage) {
+                    postStage.selected = false;
+                });
+            });
+        },
         getPostQuery: function () {
             var query = {};
 
@@ -56,6 +85,15 @@ function (
             var selected_types = this.getSelectedPostTypes();
             if (!_.isEmpty(selected_types)) {
                 query.form = selected_types.join(',');
+            }
+            query.status = this.status;
+            if (_.isEmpty(query.status)) {
+                query.status = 'all';
+            }
+
+            var selected_stages = this.getSelectedPostStages();
+            if (!_.isEmpty(selected_stages)) {
+                query.current_stage = selected_stages.join(',');
             }
 
             if (this.keyword) {
@@ -82,14 +120,15 @@ function (
             _.each(filterDefaults, _.bind(function (value, key) {
                 this[key] = value;
             }, this));
-            // Special handling for tags and post types
+            // Special handling for tags, post types and post statuses
             this.clearSelectedTags();
             this.clearSelectedPostTypes();
         },
         getDefaults: function () {
             return _.extend({}, filterDefaults, {
                 tags: [],
-                post_types: []
+                post_types: [],
+                post_stages: []
             });
         }
     };
@@ -97,18 +136,28 @@ function (
     // Add default filter values
     angular.extend(GlobalFilter, filterDefaults);
 
-    TagEndpoint.get().$promise.then(function (response) {
-        GlobalFilter.tags = response.results;
-    });
+    GlobalFilter.tags = TagEndpoint.query();
 
-    FormEndpoint.get().$promise.then(function (response) {
-        GlobalFilter.post_types = response.results;
-    });
+    FormEndpoint.query().$promise.then(function (response) {
+       GlobalFilter.post_types = _.indexBy(response, 'id');
+
+       _.each(GlobalFilter.post_types, function (form, formid) {
+           FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
+               if (response.length) {
+                   GlobalFilter.post_stages[formid] = {
+                       'stages': response
+                   };
+               }
+           });
+       });
+   });
 
     // @todo - uncomment when sets are ready
     // SetEndpoint.get().$promise.then(function(response) {
     //     GlobalFilter.sets = response.results;
     // });
+
+    GlobalFilter.post_statuses = ['draft', 'published'];
 
     return Util.bindAllFunctionsToSelf(GlobalFilter);
 
