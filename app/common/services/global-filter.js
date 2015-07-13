@@ -19,7 +19,7 @@ function (
         start_date: '',
         end_date: '',
         location: '',
-        post_status: '',
+        status: '',
         within_km: '1'
     };
 
@@ -86,7 +86,7 @@ function (
             if (!_.isEmpty(selected_types)) {
                 query.form = selected_types.join(',');
             }
-            query.status = this.post_status;
+            query.status = this.status;
             if (_.isEmpty(query.status)) {
                 query.status = 'all';
             }
@@ -128,7 +128,6 @@ function (
             return _.extend({}, filterDefaults, {
                 tags: [],
                 post_types: [],
-                post_status: '',
                 post_stages: []
             });
         }
@@ -158,16 +157,8 @@ function (
     //     GlobalFilter.sets = response.results;
     // });
 
-    GlobalFilter.post_statuses = {
-        'draft': {
-            'name': 'draft',
-            'selected': false
-        },
-        'published': {
-            'name': 'published',
-            'selected': false
-        }
-    };
+    GlobalFilter.post_statuses = ['draft', 'published'];
+
     return Util.bindAllFunctionsToSelf(GlobalFilter);
 
 }];

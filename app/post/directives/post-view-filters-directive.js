@@ -25,7 +25,7 @@ function (
             // Filter bound through $scope.filter
             // Other filters are bound directly to GlobalFilter (tags, post type, etc)
             var available_filters = [
-                'keyword', 'start_date', 'end_date', 'location', 'within_km'
+                'keyword', 'start_date', 'end_date', 'location', 'within_km', 'status'
             ],
 
             filter_transform = {

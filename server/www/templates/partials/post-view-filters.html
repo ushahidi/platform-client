@@ -58,13 +58,13 @@
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
                                 <label>
-                                    <input type="radio" name="post_status" ng-model="global_filter.post_status" value=""> {{'globalFilter.post_statuses.all_statuses' | translate}}
+                                    <input type="radio" name="status" ng-model="global_filter.status" value="all"> {{'globalFilter.post_statuses.all_statuses' | translate}}
                                 </label>
                             </li>
-                            <li class="checkbox" ng-repeat="(name, postStatus) in global_filter.post_statuses" postStatus="postStatus">
+                            <li class="checkbox" ng-repeat="(id, postStatus) in global_filter.post_statuses" postStatus="postStatus">
                                 <label>
-                                    <input type="radio" name="post_status" value="{{postStatus.name}}" ng-model="global_filter.post_status" />
-                                    {{postStatus.name | translate}}
+                                    <input type="radio" name="status" value="{{postStatus}}" ng-model="global_filter.status" />
+                                    {{'globalFilter.post_statuses.' + postStatus | translate}}
                                 </label>
                             </li>
                         </ul>
