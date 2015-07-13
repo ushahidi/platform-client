@@ -19,11 +19,11 @@ function (
         start_date: '',
         end_date: '',
         location: '',
+        post_status: '',
         within_km: '1'
     };
 
     var GlobalFilter = {
-        post_status: '',
         tags: [],
         getSelectedTags: function () {
             return _.pluck(_.where(this.tags, { selected: true }), 'id');
@@ -36,7 +36,7 @@ function (
                 tag.selected = false;
             });
         },
-        post_types: {},
+        post_types: [],
         getSelectedPostTypes: function () {
             return _.pluck(_.where(this.post_types, { selected: true }), 'id');
         },
@@ -48,7 +48,7 @@ function (
                 postType.selected = false;
             });
         },
-        post_stages: {},
+        post_stages: [],
         getSelectedPostStages: function () {
             var stages = [];
 
@@ -142,12 +142,11 @@ function (
     FormEndpoint.query().$promise.then(function (response) {
        GlobalFilter.post_types = _.indexBy(response, 'id');
 
-       _.each(GlobalFilter.post_types, function (item) {
-           FormStageEndpoint.query({formId: item.id}).$promise.then(function (response) {
-               if (response.results.length) {
-                   var form_id = response.results[0].form_id;
-                   GlobalFilter.post_stages[form_id] = {
-                       'stages': response.results
+       _.each(GlobalFilter.post_types, function (form, formid) {
+           FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
+               if (response.length) {
+                   GlobalFilter.post_stages[formid] = {
+                       'stages': response
                    };
                }
            });

@@ -65,7 +65,7 @@
         },
         "post_stages" : {
             "post_stages" : "Post Stages",
-            "all_Stages" : "All Stages"
+            "all_stages" : "All Stages"
         },
         "sets" : {
             "sets" : "Sets",
