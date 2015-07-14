@@ -20,7 +20,7 @@ function (
                 name: 'MapQuest',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png',
                 type: 'xyz',
-                options: {
+                layerOptions: {
                     subdomains: '1234',
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
@@ -29,7 +29,7 @@ function (
                 name: 'MapQuest Aerial',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png',
                 type: 'xyz',
-                options: {
+                layerOptions: {
                     subdomains: '1234',
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
                 }
@@ -38,12 +38,17 @@ function (
                 name: 'Humanitarian OSM',
                 url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
                 type: 'xyz',
-                options: {
+                layerOptions: {
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
                 }
             }
         }
     };
+    // Copy layersOptions to options to allow for differing formats
+    // use by leaflet directive tiles vs layers
+    angular.forEach(layers.baselayers, function (layer) {
+        layer.options = layer.layerOptions;
+    });
 
     var Maps = {
         maps: {},
@@ -53,6 +58,19 @@ function (
                 this.maps[name] = Object.create(Map).init(name);
             }
             return this.maps[name];
+        },
+        getInitialScope: function () {
+            return {
+                defaults: {
+                    scrollWheelZoom: false
+                },
+                center: { // Default to centered on Nairobi
+                    lat: -1.2833,
+                    lng: 36.8167,
+                    zoom: 8
+                },
+                layers: layers
+            };
         },
         getAngularScopeParams: function () {
             var deferred = $q.defer();

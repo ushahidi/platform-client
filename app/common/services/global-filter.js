@@ -2,93 +2,73 @@ module.exports = [
     'TagEndpoint',
     'FormEndpoint',
     'FormStageEndpoint',
-    // 'SetEndpoint',
+    'CollectionEndpoint',
     'Util',
     '_',
 function (
     TagEndpoint,
     FormEndpoint,
     FormStageEndpoint,
-    // SetEndpoint
+    CollectionEndpoint,
     Util,
     _
 ) {
 
     var filterDefaults = {
-        keyword: '',
+        q: '',
         start_date: '',
         end_date: '',
-        location: '',
         status: 'all',
-        within_km: '1'
+        center_point: '',
+        within_km: '1',
+        current_stage: [],
+        tags: [],
+        form: [],
+        set: []
     };
 
     var GlobalFilter = {
-        tags: [],
-        getSelectedTags: function () {
-            return _.pluck(_.where(this.tags, { selected: true }), 'id');
+        options: {
+            tags : [],
+            forms : {},
+            collections : [],
+            postStages : {}
         },
         hasSelectedTags: function () {
-            return !_.isEmpty(this.getSelectedTags());
+            return !_.isEmpty(this.tags);
         },
-        clearSelectedTags: function () {
-            _.each(this.tags, function (tag) {
-                tag.selected = false;
-            });
-        },
-        post_types: {},
-        getSelectedPostTypes: function () {
-            return _.pluck(_.where(this.post_types, { selected: true }), 'id');
-        },
-        hasSelectedPostTypes: function () {
-            return !_.isEmpty(this.getSelectedPostTypes());
-        },
-        clearSelectedPostTypes: function () {
-            _.each(this.post_types, function (postType) {
-                postType.selected = false;
-            });
-        },
-        post_stages: {},
-        getSelectedPostStages: function () {
-            return _.flatten(_.map(this.post_stages, function (item) {
-                return _.chain(item)
-                    .where({ selected : true })
-                    .pluck('id')
-                    .value();
-            }));
+        hasSelectedForms: function () {
+            return !_.isEmpty(this.form);
         },
         hasSelectedPostStages: function () {
-            return !_.isEmpty(this.getSelectedPostStages());
+            return !_.isEmpty(this.current_stage);
         },
-        clearSelectedPostStages: function () {
-            _.each(this.post_stages, function (postStages) {
-                _.each(postStages, function (postStage) {
-                    postStage.selected = false;
-                });
-            });
+        hasSelectedCollections: function () {
+            return !_.isEmpty(this.set);
         },
         getPostQuery: function () {
             var query = {};
 
-            var selected_tags = this.getSelectedTags();
-            if (!_.isEmpty(selected_tags)) {
-                query.tags = selected_tags.join(',');
+            if (!_.isEmpty(this.tags)) {
+                query.tags = this.tags.join(',');
             }
 
-            var selected_types = this.getSelectedPostTypes();
-            if (!_.isEmpty(selected_types)) {
-                query.form = selected_types.join(',');
+            if (!_.isEmpty(this.form)) {
+                query.form = this.form.join(',');
             }
 
-            var selected_stages = this.getSelectedPostStages();
-            if (!_.isEmpty(selected_stages)) {
-                query.current_stage = selected_stages.join(',');
+            if (!_.isEmpty(this.current_stage)) {
+                query.current_stage = this.current_stage.join(',');
+            }
+
+            if (!_.isEmpty(this.set)) {
+                query.set = this.set.join(',');
             }
 
             query.status = this.status;
 
-            if (this.keyword) {
-                query.q = this.keyword;
+            if (this.q) {
+                query.q = this.q;
             }
             if (this.start_date) {
                 query.created_after = this.start_date;
@@ -97,8 +77,8 @@ function (
                 query.created_before = this.end_date;
             }
 
-            if (this.location) {
-                query.center_point = this.location;
+            if (this.center_point) {
+                query.center_point = this.center_point;
                 query.within_km = this.within_km || 10;
             }
 
@@ -108,45 +88,47 @@ function (
             return _.keys(this.getPostQuery()).length;
         },
         clearSelected: function () {
-            _.each(filterDefaults, _.bind(function (value, key) {
+            var localDefaults = angular.copy(filterDefaults);
+            _.each(localDefaults, _.bind(function (value, key) {
                 this[key] = value;
             }, this));
-            // Special handling for tags, post types and post statuses
-            this.clearSelectedTags();
-            this.clearSelectedPostTypes();
+        },
+        setSelected: function (newFilters) {
+            var localDefaults = angular.copy(filterDefaults);
+            newFilters = angular.copy(newFilters);
+
+            _.each(localDefaults, _.bind(function (defaultValue, key) {
+                if (_.has(newFilters, key)) {
+                    this[key] = newFilters[key];
+                } else {
+                    this[key] = defaultValue;
+                }
+            }, this));
         },
         getDefaults: function () {
-            return _.extend({}, filterDefaults, {
-                tags: [],
-                post_types: {},
-                post_stages: {}
-            });
+            return _.extend({}, filterDefaults);
         }
     };
 
     // Add default filter values
-    angular.extend(GlobalFilter, filterDefaults);
+    GlobalFilter.clearSelected();
 
-    GlobalFilter.tags = TagEndpoint.query();
+    GlobalFilter.options.tags = TagEndpoint.query();
+    GlobalFilter.options.collections = CollectionEndpoint.query();
 
     FormEndpoint.query().$promise.then(function (response) {
-       GlobalFilter.post_types = _.indexBy(response, 'id');
+       GlobalFilter.options.forms = _.indexBy(response, 'id');
 
-       _.each(GlobalFilter.post_types, function (form, formid) {
+       _.each(GlobalFilter.options.forms, function (form, formid) {
            FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
                if (response.length) {
-                   GlobalFilter.post_stages[formid] = response;
+                   GlobalFilter.options.postStages[formid] = response;
                }
            });
        });
    });
 
-    // @todo - uncomment when sets are ready
-    // SetEndpoint.get().$promise.then(function(response) {
-    //     GlobalFilter.sets = response.results;
-    // });
-
-    GlobalFilter.post_statuses = ['draft', 'published'];
+    GlobalFilter.options.postStatuses = ['draft', 'published'];
 
     return Util.bindAllFunctionsToSelf(GlobalFilter);
 

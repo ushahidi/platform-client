@@ -1,48 +1,36 @@
-<main class="page-content has-aside">
-    <div class="tabs-with-filter">
-        <post-view-tabs active="timeline"></post-view-tabs>
+<div class="timeline-view">
+    <form class="clearfix">
+        <div class="custom-select">
+            <label translate>graph.group_by</label>
+            <select ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
+            </select>
+        </div>
+        <div class="custom-select">
+            <label translate>graph.time_attribute</label>
+            <select ng-options="attr.key as attr.label group by attr.form_group_id for attr in time_attributes" ng-change="reload()" ng-model="timelineAttribute">
+            </select>
+        </div>
+        <div class="inline ">
+            <label>
+                <input type="checkbox" value="true" ng-model="showCumulative" ng-change="reload()" />
+                <span translate>graph.cumulative</span>
+            </label>
+        </div>
+        <div class="custom-select pull-right" ng-show="groupBy == 'tags'">
+            <label translate>graph.category_level</label>
+            <select ng-options="tag.id as tag.tag for tag in parentTags" ng-change="reload()" ng-model="groupByTags">
+                <option value="" translate>graph.parent_categories</option>
+            </select>
+        </div>
+        <div class="custom-select pull-right" ng-show="groupBy == 'attribute'">
+            <label translate>graph.attribute</label>
+            <select ng-options="attr.key as attr.label group by attr.form_group_id for attr in attributes" ng-change="reload()" ng-model="attributeKey">
+                <option value="" translate>graph.select_one</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="nvd3-wrapper">
+    	<nvd3 options='options' data='data'></nvd3>
     </div>
-
-    <aside class="is-right" role="complementary">
-        <post-view-filters half-width="true"></post-view-filters>
-    </aside>
-
-    <div class="main-col">
-        <section class="timeline-view">
-            <form class="clearfix">
-                <div class="custom-select">
-                    <label translate>graph.group_by</label>
-                    <select ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
-                    </select>
-                </div>
-                <div class="custom-select">
-                    <label translate>graph.time_attribute</label>
-                    <select ng-options="attr.key as attr.label group by attr.form_group_id for attr in time_attributes" ng-change="reload()" ng-model="timelineAttribute">
-                    </select>
-                </div>
-                <div class="inline ">
-                    <label>
-                        <input type="checkbox" value="true" ng-model="showCumulative" ng-change="reload()" />
-                        <span translate>graph.cumulative</span>
-                    </label>
-                </div>
-                <div class="custom-select pull-right" ng-show="groupBy == 'tags'">
-                    <label translate>graph.category_level</label>
-                    <select ng-options="tag.id as tag.tag for tag in parentTags" ng-change="reload()" ng-model="groupByTags">
-                        <option value="" translate>graph.parent_categories</option>
-                    </select>
-                </div>
-                <div class="custom-select pull-right" ng-show="groupBy == 'attribute'">
-                    <label translate>graph.attribute</label>
-                    <select ng-options="attr.key as attr.label group by attr.form_group_id for attr in attributes" ng-change="reload()" ng-model="attributeKey">
-                        <option value="" translate>graph.select_one</option>
-                    </select>
-                </div>
-            </form>
-
-            <div class="nvd3-wrapper">
-            	<nvd3 options='options' data='data'></nvd3>
-            </div>
-        </section>
-    </div>
-</main>
+</div>

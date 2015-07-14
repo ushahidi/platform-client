@@ -1,36 +1,24 @@
-<main class="page-content has-aside">
 
-    <div class="tabs-with-filter">
-        <post-view-tabs active="chart"></post-view-tabs>
-    </div>
+<div class="graph-view">
+    <form class="clearfix">
+        <div class="custom-select">
+            <label translate>graph.group_by</label>
+            <select class="form-control" ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
+            </select>
+        </div>
+        <div class="custom-select pull-right" ng-show="groupBy == 'tags'">
+            <label translate>graph.category_level</label>
+            <select class="form-control" ng-options="tag.id as tag.tag for tag in parentTags" ng-change="reload()" ng-model="groupByTags">
+                <option value="">Parent categories</option>
+            </select>
+        </div>
+        <div class="custom-select pull-right" ng-show="groupBy == 'attribute'">
+            <label translate>graph.attribute</label>
+            <select class="form-control" ng-options="attr.key as attr.label group by attr.form_group_id for attr in attributes" ng-change="reload()" ng-model="attributeKey">
+                <option value="">-- Select one --</option>
+            </select>
+        </div>
+    </form>
 
-    <aside class="is-right" role="complementary">
-        <post-view-filters half-width="true"></post-view-filters>
-    </aside>
-
-    <div class="main-col">
-        <section class="graph-view">
-            <form class="clearfix">
-                <div class="custom-select">
-                    <label translate>graph.group_by</label>
-                    <select class="form-control" ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
-                    </select>
-                </div>
-                <div class="custom-select pull-right" ng-show="groupBy == 'tags'">
-                    <label translate>graph.category_level</label>
-                    <select class="form-control" ng-options="tag.id as tag.tag for tag in parentTags" ng-change="reload()" ng-model="groupByTags">
-                        <option value="">Parent categories</option>
-                    </select>
-                </div>
-                <div class="custom-select pull-right" ng-show="groupBy == 'attribute'">
-                    <label translate>graph.attribute</label>
-                    <select class="form-control" ng-options="attr.key as attr.label group by attr.form_group_id for attr in attributes" ng-change="reload()" ng-model="attributeKey">
-                        <option value="">-- Select one --</option>
-                    </select>
-                </div>
-            </form>
-
-            <nvd3 options='options' data='data'></nvd3>
-        </section>
-    </div>
-</main>
+    <nvd3 options='options' data='data'></nvd3>
+</div>

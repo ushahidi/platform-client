@@ -11,9 +11,9 @@ function (
     }, {
         query: {
             method: 'GET',
-            isArray: false,
+            isArray: true,
             transformResponse: function (data /*, header*/) {
-                return angular.fromJson(data);
+                return angular.fromJson(data).results;
             }
         }
     });

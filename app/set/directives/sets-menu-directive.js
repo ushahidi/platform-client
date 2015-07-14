@@ -21,13 +21,13 @@ function (
             // Load sets + users
             var reloadSets = function () {
                 endpoint.query().$promise.then(function (sets) {
-                    $scope.sets = sets.results;
+                    $scope.sets = sets;
 
                     angular.forEach($scope.sets, function (set) {
                         // if this set has a user, and its not the currentUser
                         if (_.isObject(set.user) && set.user.id !== _.result($rootScope.currentUser, 'userId')) {
                             // Load the user (if we haven't already)
-                            if (! users[set.user.id]) {
+                            if (!users[set.user.id]) {
                                 users[set.user.id] = UserEndpoint.get({id: set.user.id});
                             }
                             // Save user info onto the set itself

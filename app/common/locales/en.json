@@ -47,7 +47,7 @@
         "type" : "type",
         "visible_to": "Visible To"
     },
-    "globalFilter": {
+    "global_filter": {
         "filter" : "Filter",
         "categories" : {
             "categories" : "Categories",
@@ -67,10 +67,9 @@
             "post_stages" : "Current Step",
             "all_stages" : "All Steps"
         },
-        "sets" : {
-            "sets" : "Sets",
-            "my_sets" : "My Sets",
-            "all_sets" : "All Sets"
+        "collections" : {
+            "collections" : "Collections",
+            "all_collections" : "All Collections"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -264,6 +263,7 @@
         }
     },
     "set": {
+        "edit_settings" : "Edit Settings",
         "empty_list_collections" : "No collections",
         "empty_list_savedsearches" : "No saved searches"
     },

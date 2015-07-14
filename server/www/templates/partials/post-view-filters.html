@@ -1,5 +1,5 @@
 <div class="filters" dropdown auto-close="disabled">
-    <div class="filters-show-hide" ng-class="{ half : halfWidth}">
+    <div class="filters-show-hide" ng-class="{ half : halfWidth }">
         <label class="delta-alt">Search <span>&amp; Filter</span></label>
         <button type="button" class="button-toggle filter-button-js" dropdown-toggle></button>
     </div>
@@ -7,24 +7,24 @@
     <div class="filters-container" dropdown-menu>
         <form ng-submit="applyFilter()" role="search">
             <div class="keyword-search">
-                <input type="text" name="keyword" class="keyword-input" placeholder="{{'globalFilter.search' | translate}}" ng-model="filter.keyword">
+                <input type="text" name="q" class="keyword-input" placeholder="{{'global_filter.search' | translate}}" ng-model="filter.q">
                 <button type="submit" class="button-secondary icon-only alt search"></button>
             </div>
             <nav class="accordion-menu" accordion>
                 <ul class="accordion-menu-list">
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.categories.categories</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.categories.categories</a>
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
                                 <label>
-                                    <input type="checkbox" ng-model="show_all_tags" ng-checked="!global_filter.hasSelectedTags()" ng-click="showAllTagsHandler()"> {{'globalFilter.categories.all_categories' | translate}}
+                                    <input type="checkbox" ng-model="showAllTags" ng-checked="!globalFilter.hasSelectedTags()" ng-click="showAllTagsHandler()"> {{'global_filter.categories.all_categories' | translate}}
                                 </label>
                             </li>
-                            <li class="checkbox" ng-repeat="(idx, tag) in global_filter.tags" tag="tag">
+                            <li class="checkbox" ng-repeat="(idx, tag) in globalFilter.options.tags" tag="tag">
                                 <label>
-                                    <input type="checkbox" value="{{tag.id}}" ng-model="global_filter.tags[idx].selected" />
+                                    <input type="checkbox" checklist-value="tag.id" checklist-model="globalFilter.tags" />
                                     <i class="fa fa-{{tag.icon}}" style="color: {{tag.color}}"></i>
                                     {{tag.tag}}
                                 </label>
@@ -34,37 +34,18 @@
 
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.post_types.post_types</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.collections.collections</a>
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
                                 <label>
-                                    <input type="checkbox" ng-model="show_all_post_types" ng-checked="!global_filter.hasSelectedPostTypes()" ng-click="showAllPostTypesHandler()"> {{'globalFilter.post_types.all_types' | translate}}
+                                    <input type="checkbox" ng-model="showAllCollections" ng-checked="!globalFilter.hasSelectedCollections()" ng-click="showAllCollectionsHandler()"> {{'global_filter.collections.all_collections' | translate}}
                                 </label>
                             </li>
-                            <li class="checkbox" ng-repeat="(idx, postType) in global_filter.post_types" postType="postType">
+                            <li class="checkbox" ng-repeat="(idx, collection) in globalFilter.options.collections">
                                 <label>
-                                    <input type="checkbox" value="{{postType.id}}" ng-model="global_filter.post_types[idx].selected" />
-                                    {{postType.name}}
-                                </label>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="accordion-menu-list__item" accordion-group ng-if="isAdmin()">
-                        <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.post_statuses.post_statuses</a>
-                        </div>
-                        <ul class="accordion-menu-content" accordion-content>
-                            <li>
-                                <label>
-                                    <input type="radio" name="status" ng-model="global_filter.status" value="all"> <span translate>globalFilter.post_statuses.all_statuses</span>
-                                </label>
-                            </li>
-                            <li class="checkbox" ng-repeat="(id, postStatus) in global_filter.post_statuses" postStatus="postStatus">
-                                <label>
-                                    <input type="radio" name="status" value="{{postStatus}}" ng-model="global_filter.status" />
-                                    <span translate="globalFilter.post_statuses.{{postStatus}}"></span>
+                                    <input type="checkbox" checklist-value="collection.id" checklist-model="globalFilter.set" />
+                                    {{collection.name}}
                                 </label>
                             </li>
                         </ul>
@@ -72,20 +53,39 @@
 
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.post_stages.post_stages</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.post_types.post_types</a>
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
                                 <label>
-                                    <input type="checkbox" ng-model="show_all_post_stages" ng-checked="!global_filter.hasSelectedPostStages()" ng-click="showAllPostStagesHandler()"> {{'globalFilter.post_stages.all_stages' | translate}}
+                                    <input type="checkbox" ng-model="showAllForms" ng-checked="!globalFilter.hasSelectedForms()" ng-click="showAllFormsHandler()"> {{'global_filter.post_types.all_types' | translate}}
                                 </label>
                             </li>
-                            <li ng-repeat="(formId, postStages) in global_filter.post_stages">
-                                <label>{{global_filter.post_types[formId].name}}</label>
+                            <li class="checkbox" ng-repeat="(idx, form) in globalFilter.options.forms">
+                                <label>
+                                    <input type="checkbox" checklist-value="form.id" checklist-model="globalFilter.form" />
+                                    {{form.name}}
+                                </label>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="accordion-menu-list__item" accordion-group>
+                        <div class="accordion-menu-header">
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.post_stages.post_stages</a>
+                        </div>
+                        <ul class="accordion-menu-content" accordion-content>
+                            <li>
+                                <label>
+                                    <input type="checkbox" ng-model="showAllPostStages" ng-checked="!globalFilter.hasSelectedPostStages()" ng-click="showAllPostStagesHandler()"> {{'global_filter.post_stages.all_stages' | translate}}
+                                </label>
+                            </li>
+                            <li ng-repeat="(formId, postStages) in globalFilter.options.postStages">
+                                <label>{{globalFilter.options.forms[formId].name}}</label>
                                 <ul>
                                     <li class="checkbox" ng-repeat="(stageId, postStage) in postStages">
                                         <label>
-                                            <input type="checkbox" value="{{postStage.id}}" ng-model="global_filter.post_stages[formId][stageId].selected" />
+                                            <input type="checkbox" checklist-model="globalFilter.current_stage" checklist-value="postStage.id" />
                                             {{postStage.label}}
                                         </label>
                                     </li>
@@ -94,49 +94,68 @@
                         </ul>
                     </li>
 
+                    <li class="accordion-menu-list__item" accordion-group ng-if="isAdmin()">
+                        <div class="accordion-menu-header">
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.post_statuses.post_statuses</a>
+                        </div>
+                        <ul class="accordion-menu-content" accordion-content>
+                            <li>
+                                <label>
+                                    <input type="radio" name="status" ng-model="globalFilter.status" value="all"> <span translate>global_filter.post_statuses.all_statuses</span>
+                                </label>
+                            </li>
+                            <li class="checkbox" ng-repeat="(id, postStatus) in globalFilter.options.postStatuses" postStatus="postStatus">
+                                <label>
+                                    <input type="radio" name="status" value="{{postStatus}}" ng-model="globalFilter.status" />
+                                    <span translate="global_filter.post_statuses.{{postStatus}}"></span>
+                                </label>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.date_range</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.date_range</a>
                         </div>
                         <div class="accordion-menu-content date-range" accordion-content>
                             <div class="filter-start-date">
-                                <label for="start" class="delta-alt" translate>globalFilter.start_date</label>
-                                <input type="text" name="start" id="start" ng-model="filter.start_date" is-open="start_date_open" ng-focus="uiOpenDate('start_date')" datepicker-popup="yyyy-MM-dd" max-date="filter.end_date" datepicker-options="{ showWeeks: false }">
+                                <label for="start" class="delta-alt" translate>global_filter.start_date</label>
+                                <input type="text" name="start" id="start" ng-model="filter.start_date" is-open="startDateOpen" ng-focus="uiOpenDate('start_date')" datepicker-popup="yyyy-MM-dd" max-date="filter.end_date" datepicker-options="{ showWeeks: false }">
                             </div>
                             <div class="filter-end-date">
-                                <label for="end" class="delta-alt" translate>globalFilter.end_date</label>
-                                <input type="text" name="end" id="end" ng-model="filter.end_date" is-open="end_date_open" ng-focus="uiOpenDate('end_date')" datepicker-popup="yyyy-MM-dd" min-date="filter.start_date" datepicker-options="{ showWeeks: false }">
+                                <label for="end" class="delta-alt" translate>global_filter.end_date</label>
+                                <input type="text" name="end" id="end" ng-model="filter.end_date" is-open="endDateOpen" ng-focus="uiOpenDate('end_date')" datepicker-popup="yyyy-MM-dd" min-date="filter.start_date" datepicker-options="{ showWeeks: false }">
                             </div>
                         </div>
                     </li>
 
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.location</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.location</a>
                         </div>
                         <div class="accordion-menu-content location" accordion-content>
-                            <label for="location" class="delta-alt hidden" translate>globalFilter.location</label>
+                            <label for="location" class="delta-alt hidden" translate>global_filter.location</label>
 
-                            <input type="text" name="location" id="location" ng-model="filter.location" placeholder="{{'globalFilter.location_placeholder' | translate}}">
+                            <input type="text" name="location" id="location" ng-model="filter.center_point" placeholder="{{'global_filter.location_placeholder' | translate}}">
 
                             <div class="custom-select">
                                 <select ng-model="filter.within_km" convert-to-number>
-                                    <option value="1" translate>globalFilter.option_1</option>
-                                    <option value="10" translate>globalFilter.option_2</option>
-                                    <option value="50" translate>globalFilter.option_3</option>
-                                    <option value="100" translate>globalFilter.option_4</option>
-                                    <option value="500" translate>globalFilter.option_5</option>
+                                    <option value="1" translate>global_filter.option_1</option>
+                                    <option value="10" translate>global_filter.option_2</option>
+                                    <option value="50" translate>global_filter.option_3</option>
+                                    <option value="100" translate>global_filter.option_4</option>
+                                    <option value="500" translate>global_filter.option_5</option>
                                 </select>
                             </div>
                         </div>
                     </li>
 
-                    <li ng-if="show_filter_controls" class="filter-controls">
-                        <a class="clear-filters" ng-click="clearFilters()" translate>globalFilter.clear_filters</a>
+                    <li ng-if="showFilterControls" class="filter-controls">
+                        <a class="clear-filters" ng-click="clearFilters()" translate>global_filter.clear_filters</a>
 
-                        <button type="submit" class="button-primary" ng-class="{'disabled': endpoint_busy || geocoding_busy}" ng-disabled="endpoint_busy">
-                          <i ng-if="endpoint_busy || geocoding_busy" class="fa fa-cog fa-spin"></i>
-                          {{'globalFilter.apply_filters' | translate}}
+                        <button type="submit" class="button-primary" ng-class="{'disabled': isLoading || geocodingBusy}" ng-disabled="isLoading">
+                          <i ng-if="isLoading || geocodingBusy" class="fa fa-cog fa-spin"></i>
+                          {{'global_filter.apply_filters' | translate}}
                         </button>
                     </li>
                 </ul>
