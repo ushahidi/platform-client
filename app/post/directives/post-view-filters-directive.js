@@ -1,9 +1,11 @@
 module.exports = [
     'Geocoding',
     'GlobalFilter',
+    '$rootScope',
 function (
     Geocoding,
-    GlobalFilter
+    GlobalFilter,
+    $rootScope
 ) {
     return {
         restrict: 'E',
@@ -22,10 +24,12 @@ function (
             $scope.endpoint_busy = false;
             $scope.geocoding_busy = false;
 
+            $scope.isAdmin = $rootScope.isAdmin;
+
             // Filter bound through $scope.filter
             // Other filters are bound directly to GlobalFilter (tags, post type, etc)
             var available_filters = [
-                'keyword', 'start_date', 'end_date', 'location', 'within_km'
+                'keyword', 'start_date', 'end_date', 'location', 'within_km', 'status'
             ],
 
             filter_transform = {
@@ -89,6 +93,12 @@ function (
             $scope.showAllPostTypesHandler = function () {
                 if (this.show_all_post_types) {
                     GlobalFilter.clearSelectedPostTypes();
+                }
+            };
+
+            $scope.showAllPostStagesHandler = function () {
+                if (this.show_all_post_stages) {
+                    GlobalFilter.clearSelectedPostStages();
                 }
             };
 

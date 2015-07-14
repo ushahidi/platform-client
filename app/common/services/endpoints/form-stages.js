@@ -21,9 +21,6 @@ function (
         },
         update: {
             method: 'PUT'
-        },
-        delete: {
-            method: 'DELETE'
         }
     });
 

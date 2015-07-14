@@ -51,28 +51,48 @@
                         </ul>
                     </li>
 
-                    <!-- <li class="accordion-menu-list__item" accordion-group>
+                    <li class="accordion-menu-list__item" accordion-group ng-if="isAdmin()">
                         <div class="accordion-menu-header">
-                            <a class="accordion-menu-trigger delta" accordion-trigger>Stages</a>
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.post_statuses.post_statuses</a>
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
-                                <input type="checkbox" name="show-all-stages" value="Show All Stages">Show All Stages
+                                <label>
+                                    <input type="radio" name="status" ng-model="global_filter.status" value="all"> <span translate>globalFilter.post_statuses.all_statuses</span>
+                                </label>
                             </li>
-                            <li>
-                                <input type="checkbox" name="structure" value="Structure">Structure
-                            </li>
-                            <li>
-                                <input type="checkbox" name="verification" value="Verification" checked="checked">Verification
-                            </li>
-                            <li>
-                                <input type="checkbox" name="translation" value="Translation">Translation
-                            </li>
-                            <li>
-                                <input type="checkbox" name="disabled stage" value="Disabled Stage">Disabled Stage
+                            <li class="checkbox" ng-repeat="(id, postStatus) in global_filter.post_statuses" postStatus="postStatus">
+                                <label>
+                                    <input type="radio" name="status" value="{{postStatus}}" ng-model="global_filter.status" />
+                                    <span translate="globalFilter.post_statuses.{{postStatus}}"></span>
+                                </label>
                             </li>
                         </ul>
-                    </li> -->
+                    </li>
+
+                    <li class="accordion-menu-list__item" accordion-group>
+                        <div class="accordion-menu-header">
+                            <a class="accordion-menu-trigger delta" accordion-trigger translate>globalFilter.post_stages.post_stages</a>
+                        </div>
+                        <ul class="accordion-menu-content" accordion-content>
+                            <li>
+                                <label>
+                                    <input type="checkbox" ng-model="show_all_post_stages" ng-checked="!global_filter.hasSelectedPostStages()" ng-click="showAllPostStagesHandler()"> {{'globalFilter.post_stages.all_stages' | translate}}
+                                </label>
+                            </li>
+                            <li ng-repeat="(formId, postStages) in global_filter.post_stages">
+                                <label>{{global_filter.post_types[formId].name}}</label>
+                                <ul>
+                                    <li class="checkbox" ng-repeat="(stageId, postStage) in postStages">
+                                        <label>
+                                            <input type="checkbox" value="{{postStage.id}}" ng-model="global_filter.post_stages[formId][stageId].selected" />
+                                            {{postStage.label}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="accordion-menu-list__item" accordion-group>
                         <div class="accordion-menu-header">
