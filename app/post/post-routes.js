@@ -19,7 +19,12 @@ function (
     })
     .when('/posts/:id/edit', {
         controller: require('./controllers/post-edit-controller.js'),
-        templateUrl: 'templates/posts/modify.html'
+        templateUrl: 'templates/posts/modify.html',
+        resolve: {
+            post: ['$route', 'PostEndpoint', function ($route, PostEndpoint) {
+                return PostEndpoint.get({id: $route.current.params.id}).$promise;
+            }]
+        }
     });
 
 }];

@@ -194,14 +194,21 @@
         "status" : "Status",
         "type": "Type",
         "view" : "View",
+        "step" : "Step",
+        "update" : "Update",
+        "options" : "Options",
+        "complete_draft" : "Complete (Draft)",
+        "complete_published" : "Complete (Published)",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete"
         },
         "modify" : {
-            "intro" : "Choose a post type:",
+            "intro" : "Select post type:",
             "create_type" : "Create {{type}}",
             "edit_type" : "Edit {{type}}: {{title}}",
+            "add_a_post" : "Add a post",
+            "edit_post" : "Edit {{title}}",
             "change_type" : "Change type",
             "incomplete_step" : "The required step {{stage}} is not marked complete",
             "save" : "Save",

@@ -5,6 +5,9 @@ angular.module('ushahidi.posts', [])
 .directive('postPreview', require('./directives/post-preview-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
 .directive('postLocation', require('./directives/post-location-directive.js'))
+// Post editing workflows
+.directive('postEditor', require('./directives/post-editor-directive.js'))
+.directive('postChooseForm', require('./directives/post-choose-form-directive.js'))
 // Views
 .directive('postView', require('./directives/views/post-view-directive.js'))
 .directive('postViewMap', require('./directives/views/post-view-map-directive.js'))
@@ -14,8 +17,6 @@ angular.module('ushahidi.posts', [])
 
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('PostEntity', require('./services/entities/post-entity.js'))
-
-.controller('PostModifyController', require('./controllers/post-modify-controller.js'))
 
 .config(require('./post-routes.js'))
 

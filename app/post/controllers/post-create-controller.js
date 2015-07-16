@@ -15,9 +15,7 @@ function (
     PostEndpoint,
     FormEndpoint
 ) {
-    var that = this;
-    // Initialize the base modify controller and extend it.
-    angular.extend(this, $controller('PostModifyController', { $scope: $scope }));
+    $scope.activeForm = {};
 
     $translate('post.create_post').then(function (title) {
         $scope.title = title;
@@ -25,26 +23,8 @@ function (
     });
 
     $scope.post = postEntity();
-    $scope.post_options = PostEndpoint.options();
-
-    FormEndpoint.query().$promise.then(function (forms) {
-        $scope.forms = forms;
+    PostEndpoint.options().$promise.then(function (options) {
+        $scope.post.allowed_privileges = options.allowed_privileges;
     });
-
-    $scope.chooseForm = function (form) {
-        $scope.activeForm = form;
-        $scope.post.form = { id: form.id };
-
-        that.fetchStages($scope.post.form.id);
-        that.fetchAttributes($scope.post.form.id);
-    };
-
-    $scope.filterNotDisabled = function (form) {
-        return !form.disabled;
-    };
-
-    $scope.goBack = function () {
-        $scope.activeForm = null;
-    };
 
 }];
