@@ -114,11 +114,13 @@ function (
     });
 
     // Show map once data loaded
-    $q.all(
-        config,
-        geojson.$promise
-    ).then(function () {
-        $scope.mapDataLoaded = true;
+    $q.all({
+        config: config,
+        geojson: geojson.$promise
+    }).then(function (data) {
+        if (data.geojson.features.length) {
+            $scope.mapDataLoaded = true;
+        }
     });
 
     $q.all({

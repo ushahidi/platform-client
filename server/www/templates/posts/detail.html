@@ -81,7 +81,7 @@
                 </li>
             </ul><!-- end .post-values -->
 
-            <h3 translate>post.location</h3>
+            <h3 ng-if="mapDataLoaded" translate>post.location</h3>
             <div ng-if="mapDataLoaded">
                 <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
             </div>
