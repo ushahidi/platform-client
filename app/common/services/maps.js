@@ -50,6 +50,19 @@ function (
         layer.options = layer.layerOptions;
     });
 
+    var geojsonLayerOptions = {
+        onEachFeature: function (feature, layer) {
+            var description = feature.properties.description || '',
+                title = feature.properties.title || feature.properties.id;
+            layer.bindPopup(
+                '<strong><a href="/posts/' + feature.properties.id + '">' +
+                title +
+                '</a></strong>' +
+                '<p>' + description + '</p>'
+            );
+        }
+    };
+
     var Maps = {
         maps: {},
         config: undefined,
@@ -152,16 +165,7 @@ function (
                 ;
         },
         setGeojsonLayer: function (posts) {
-            this.layers.geojson = L.geoJson(posts, {
-                onEachFeature: function (feature, layer) {
-                    layer.bindPopup(
-                        '<strong><a href="/posts/' + feature.properties.id + '">' +
-                        feature.properties.title +
-                        '</a></strong>' +
-                        '<p>' + feature.properties.description + '</p>'
-                    );
-                }
-            });
+            this.layers.geojson = L.geoJson(posts, geojsonLayerOptions);
         },
         clearOldMarkers: function () {
             var deferred = $q.defer();
