@@ -219,6 +219,9 @@
             "unpublish" : "Revert to Draft",
             "everyone" : "Everyone",
             "back" : "Back",
+            "contact_info": "Enter your contact info (optional)",
+            "author_realname" : "Name",
+            "author_email" : "Email",
             "form" : {
                 "categories" : "Categories",
                 "description" : "Post Description",
@@ -267,6 +270,12 @@
                 "parse" : "\"{{label}}\" could not be parsed",
                 "date" : "\"{{label}}\" must be a date",
                 "number" : "\"{{label}}\" must be a number"
+            },
+            "author_name" : {
+                "maxlength": "Name is too long"
+            },
+            "author_email" : {
+                "email": "Invalid email"
             }
         }
     },

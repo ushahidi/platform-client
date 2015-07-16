@@ -269,5 +269,30 @@
 
             <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
         </div>
+        <!-- optional name and email for users who are not logged in -->
+        <div ng-show="!loggedin">
+            <h4>{{'post.modify.contact_info' | translate}}</h4>
+            <label class="input-label" translate>post.modify.author_realname</label>
+            <input name="name" placeholder="{{'post.modify.author_realname' | translate}}"
+                 ng-model="post.author_realname"
+                 ng-maxlength="150"
+                 type="text"
+                 ng-class="{ 'error': form.name.$invalid && form.name.$dirty }">
+            <p ng-repeat="(error, value) in form.name.$error"
+                 ng-show="form.name.$dirty"
+                 class="alert error"
+                 translate="{{'post.valid.author_name.' + error}}">
+            </p>
+            <label class="input-label" translate>post.modify.author_email</label>
+            <input name="email" placeholder="{{'post.modify.author_email' | translate}}"
+                 ng-model="post.author_email"
+                 type="email"
+                 ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
+            <p ng-repeat="(error, value) in form.email.$error"
+                 ng-show="form.email.$dirty"
+                 class="alert error"
+                 translate="{{'post.valid.author_email.' + error}}">
+            </p>
+        </div>
     </div>
 </form>
