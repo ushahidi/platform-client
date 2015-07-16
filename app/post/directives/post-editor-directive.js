@@ -99,7 +99,11 @@ function (
                         return false;
                     }
 
-                    if ($scope.form.title.$invalid || $scope.form.content.$invalid || $scope.form.tags.$invalid) {
+                    if ($scope.form.title.$invalid || $scope.form.content.$invalid) {
+                        return false;
+                    }
+
+                    if ($scope.form.tags && $scope.form.tags.$invalid) {
                         return false;
                     }
                 }

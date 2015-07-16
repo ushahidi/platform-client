@@ -116,17 +116,19 @@
                 translate="{{'post.valid.content.' + error}}"></p>
 
             <!-- type: select category -->
-            <label class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</label>
-            <div ng-repeat="category in categories">
-                <label>
-                    <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
-                    {{category.tag}}
-                </label>
+            <div ng-if="categories.length">
+                <label class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</label>
+                <div ng-repeat="category in categories">
+                    <label>
+                        <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
+                        {{category.tag}}
+                    </label>
+                </div>
+                <p ng-repeat="(error, value) in form.tags.$error"
+                    ng-show="form.tags.$dirty"
+                    class="alert error"
+                    translate="{{'post.valid.tags.' + error}}"></p>
             </div>
-            <p ng-repeat="(error, value) in form.tags.$error"
-                ng-show="form.tags.$dirty"
-                class="alert error"
-                translate="{{'post.valid.tags.' + error}}"></p>
         </div>
 
         <div class="attribute"
