@@ -6,20 +6,18 @@ function (
     Util
 ) {
 
-    var SetsEndpoint = $resource(Util.apiUrl('/sets/:id'), {
-        id: '@id',
-        order: 'asc',
-        orderby: 'name'
+    var SavedSearchEndpoint = $resource(Util.apiUrl('/savedsearches/:id'), {
+        id: '@id'
     }, {
         query: {
             method: 'GET',
             isArray: true,
             transformResponse: function (data /*, header*/) {
-                return Util.transformResponse(data).results;
+                return angular.fromJson(data).results;
             }
         }
     });
 
-    return SetsEndpoint;
+    return SavedSearchEndpoint;
 
 }];

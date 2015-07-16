@@ -1,0 +1,34 @@
+<main class="page-content" ng-class="{ 'has-aside' : hasAside }">
+
+    <ng-transclude></ng-transclude>
+
+    <div class="tabs-with-filter">
+        <post-view-tabs active="currentView" base-url="/views/"></post-view-tabs>
+        <post-view-filters half-width="false" ng-if="! hasAside" is-loading="isLoading"></post-view-filters>
+    </div>
+
+    <aside class="is-right" role="complementary" ng-if="hasAside">
+        <post-view-filters half-width="true" is-loading="isLoading"></post-view-filters>
+    </aside>
+
+    <div class="main-col" ng-switch="currentView">
+
+        <!-- Each of the views in sequence, which are shown or hidden by tabs -->
+
+        <!-- map view -->
+        <post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>
+
+        <!-- list view -->
+        <post-view-list ng-switch-when="list" is-loading="isLoading" filters="filters"></post-view-list>
+
+        <!-- chart view -->
+        <post-view-chart ng-switch-when="chart" is-loading="isLoading" filters="filters"></post-view-chart>
+
+        <!-- timeline view -->
+        <post-view-timeline ng-switch-when="timeline" is-loading="isLoading" filters="filters"></post-view-timeline>
+
+        <!-- default view -->
+        <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>
+    </div>
+
+</main>

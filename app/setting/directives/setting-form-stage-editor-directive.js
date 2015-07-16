@@ -123,7 +123,7 @@ function (
                 // },
                 {
                     label: 'Date',
-                    type: 'date',
+                    type: 'datetime',
                     input: 'date'
                 },
                 {

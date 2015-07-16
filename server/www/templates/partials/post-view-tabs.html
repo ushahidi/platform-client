@@ -2,6 +2,6 @@
     <label class="delta-alt" translate>view_tabs.view </label>
     <button type="button" class="button-toggle" dropdown-toggle></button>
     <ul class="tabs-menu-list" dropdown-menu>
-        <li ng-repeat="view in views" ng-class="{ active: active == view }" class="view-{{view}}"><a ng-href="/views/{{ view }}" translate="view_tabs.{{view}}"></a></li>
+        <li ng-repeat="view in views" ng-class="{ active: active == view }" class="view-{{view}}"><a ng-href="{{baseUrl + view }}" translate="view_tabs.{{view}}"></a></li>
     </ul>
 </nav>

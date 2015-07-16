@@ -21,15 +21,8 @@ function (
     $scope.patternDigitsOnly = /^[0-9]+$/;
     $scope.patternFloat = /[-+]?(\d*[.])?\d+/;
 
-    $scope.defaults = {
-        scrollWheelZoom: false
-    };
-
-    $scope.center = {
-        lat: -1.2833,
-        lng: 36.8167,
-        zoom: 8
-    };
+    // Set initial map params
+    angular.extend($scope, Maps.getInitialScope());
 
     $scope.minZoom = 0;
     $scope.maxZoom = 18;

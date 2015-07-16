@@ -1,0 +1,35 @@
+{
+    "id": "9999",
+    "url": "http://localhost:8081/api/v2/posts/9999",
+    "parent": null,
+    "user": null,
+    "title": "Post without a type and form id (could be a message)",
+    "slug": null,
+    "content": "Some description",
+    "author_email": null,
+    "author_realname": null,
+    "status": "published",
+    "created": "1970-01-01T00:00:00+00:00",
+    "updated": null,
+    "locale": "en_us",
+    "values": {
+        "last_location_point": [
+            {
+                "id": "3",
+                "value": {
+                    "lon": 10.123,
+                    "lat": 26.213
+                }
+            }
+        ]
+    },
+    "tags": [
+
+    ],
+    "allowed_methods": {
+        "get": true,
+        "post": true,
+        "put": true,
+        "delete": true
+    }
+}

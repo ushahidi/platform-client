@@ -5,21 +5,9 @@ function (
 ) {
 
     $routeProvider
-    .when('/views/map', {
-        controller: require('./controllers/views/post-map-view-controller.js'),
-        templateUrl: 'templates/views/map.html'
-    })
-    .when('/views/list', {
-        controller: require('./controllers/views/post-list-view-controller.js'),
-        templateUrl: 'templates/views/list.html'
-    })
-    .when('/views/chart', {
-        controller: require('./controllers/views/post-chart-view-controller.js'),
-        templateUrl: 'templates/views/chart.html'
-    })
-    .when('/views/timeline', {
-        controller: require('./controllers/views/post-timeline-view-controller.js'),
-        templateUrl: 'templates/views/timeline.html'
+    .when('/views/:view?', {
+        controller: require('./controllers/post-views-controller.js'),
+        templateUrl: 'templates/posts/views.html'
     })
     .when('/posts/create', {
         controller: require('./controllers/post-create-controller.js'),
@@ -31,7 +19,12 @@ function (
     })
     .when('/posts/:id/edit', {
         controller: require('./controllers/post-edit-controller.js'),
-        templateUrl: 'templates/posts/modify.html'
+        templateUrl: 'templates/posts/modify.html',
+        resolve: {
+            post: ['$route', 'PostEndpoint', function ($route, PostEndpoint) {
+                return PostEndpoint.get({id: $route.current.params.id}).$promise;
+            }]
+        }
     });
 
 }];

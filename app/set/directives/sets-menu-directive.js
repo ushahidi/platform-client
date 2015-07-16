@@ -1,11 +1,9 @@
 module.exports = [
     '$rootScope',
-    'SetsEndpoint',
     'UserEndpoint',
     '_',
 function (
     $rootScope,
-    SetsEndpoint,
     UserEndpoint,
     _
 ) {
@@ -13,23 +11,34 @@ function (
         restrict: 'E',
         replace: true,
         scope: {
-            search:  '='
+            endpoint: '@',
+            type: '@'
         },
-        controller: ['$scope', function ($scope) {
+        controller: ['$scope', '$element', '$attrs', '$injector', function ($scope, $element, $attrs, $injector) {
+            var endpoint = $injector.get($attrs.endpoint),
+                users = [];
+
             // Load sets + users
             var reloadSets = function () {
-                $scope.listSets = SetsEndpoint.query({search: $scope.search});
-                $scope.listSets.$promise.then(function (sets) {
-                    angular.forEach(sets, function (set) {
+                endpoint.query().$promise.then(function (sets) {
+                    $scope.sets = sets;
+
+                    angular.forEach($scope.sets, function (set) {
+                        // if this set has a user, and its not the currentUser
                         if (_.isObject(set.user) && set.user.id !== _.result($rootScope.currentUser, 'userId')) {
-                            $scope.uidMap[set.user.id] = UserEndpoint.get({id: set.user.id});
+                            // Load the user (if we haven't already)
+                            if (!users[set.user.id]) {
+                                users[set.user.id] = UserEndpoint.get({id: set.user.id});
+                            }
+                            // Save user info onto the set itself
+                            set.user = users[set.user.id];
                         }
                     });
                 });
             };
 
             // Init map of users to ids
-            $scope.uidMap = {};
+            $scope.type = $attrs.type;
 
             // Reload sets on login / logout events
             $scope.$on('event:authentication:logout:succeeded', function () {

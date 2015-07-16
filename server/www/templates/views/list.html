@@ -1,56 +1,45 @@
-<main class="page-content">
+<div>
 
-    <h1 translate>post.all_posts</h1>
+    <div class="list-actions" ng-if="userHasBulkActionPermissions()">
+        <a ng-if="!allSelectedOnCurrentPage()" ng-click="selectAllPosts($event)" class="cta" translate>post.select_all</a>
+        <a ng-if="allSelectedOnCurrentPage()" ng-click="unselectAllPosts($event)" class="cta" translate>post.unselect_all</a>
 
-    <div class="tabs-with-filter">
-        <post-view-tabs active="list"></post-view-tabs>
-        <post-view-filters half-width="false"></post-view-filters>
-    </div>
+        <div class="bulk-actions">
+            <div class="dropdown-group dropdown" dropdown>
+                <button type="button" class="button-secondary dropdown toggle-js dropdown-toggle" dropdown-toggle>
+                    <span>Mark As</span>
+                </button>
 
-    <div class="main-col">
-
-        <div class="list-actions" ng-if="userHasBulkActionPermissions()">
-            <a ng-if="!allSelectedOnCurrentPage()" ng-click="selectAllPosts($event)" class="cta" translate>post.select_all</a>
-            <a ng-if="allSelectedOnCurrentPage()" ng-click="unselectAllPosts($event)" class="cta" translate>post.unselect_all</a>
-
-            <div class="bulk-actions">
-                <div class="dropdown-group dropdown" dropdown>
-                    <button type="button" class="button-secondary dropdown toggle-js dropdown-toggle" dropdown-toggle>
-                        <span>Mark As</span>
-                    </button>
-
-                    <div class="toggle-content">
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href>Spam</a></li>
-                            <li><a href>Duplicates</a></li>
-                        </ul>
-                    </div>
+                <div class="toggle-content">
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href>Spam</a></li>
+                        <li><a href>Duplicates</a></li>
+                    </ul>
                 </div>
-
-                <button type="button" class="button-secondary alt icon-only-when-small export">
-                    <span>Export</span>
-                </button>
-
-                <button type="button" class="button-secondary icon-only-when-small alt trash" ng-disabled="selectedItems.length <= 0" ng-click="deleteSelectedPosts()">
-                    <span translate>post.post_actions.delete</span>
-                </button>
             </div>
+
+            <button type="button" class="button-secondary alt icon-only-when-small export">
+                <span>Export</span>
+            </button>
+
+            <button type="button" class="button-secondary icon-only-when-small alt trash" ng-disabled="selectedItems.length <= 0" ng-click="deleteSelectedPosts()">
+                <span translate>post.post_actions.delete</span>
+            </button>
         </div>
-
-        <post-preview
-            ng-repeat="post in posts"
-            can-select="userHasBulkActionPermissions()"
-            selection-model
-            selection-model-type="checkbox"
-            selection-model-mode="multiple-additive"
-            selection-model-selected-items="selectedItems"
-            selection-model-cleanup-strategy="deselect"
-            post="post"
-        >
-        </post-preview>
-
-        <pagination ng-model="currentPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
-
     </div>
 
-</main>
+    <post-preview
+        ng-repeat="post in posts"
+        can-select="userHasBulkActionPermissions()"
+        selection-model
+        selection-model-type="checkbox"
+        selection-model-mode="multiple-additive"
+        selection-model-selected-items="selectedItems"
+        selection-model-cleanup-strategy="deselect"
+        post="post"
+    >
+    </post-preview>
+
+    <pagination ng-model="currentPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
+
+</div>

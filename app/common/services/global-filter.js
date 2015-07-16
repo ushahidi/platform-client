@@ -1,65 +1,74 @@
 module.exports = [
     'TagEndpoint',
     'FormEndpoint',
-    // 'SetEndpoint',
+    'FormStageEndpoint',
+    'CollectionEndpoint',
     'Util',
     '_',
 function (
     TagEndpoint,
     FormEndpoint,
-    // SetEndpoint
+    FormStageEndpoint,
+    CollectionEndpoint,
     Util,
     _
 ) {
 
     var filterDefaults = {
-        keyword: '',
+        q: '',
         start_date: '',
         end_date: '',
-        location: '',
-        within_km: '1'
+        status: 'all',
+        center_point: '',
+        within_km: '1',
+        current_stage: [],
+        tags: [],
+        form: [],
+        set: []
     };
 
     var GlobalFilter = {
-        tags: [],
-        getSelectedTags: function () {
-            return _.pluck(_.where(this.tags, { selected: true }), 'id');
+        options: {
+            tags : [],
+            forms : {},
+            collections : [],
+            postStages : {}
         },
         hasSelectedTags: function () {
-            return !_.isEmpty(this.getSelectedTags());
+            return !_.isEmpty(this.tags);
         },
-        clearSelectedTags: function () {
-            _.each(this.tags, function (tag) {
-                tag.selected = false;
-            });
+        hasSelectedForms: function () {
+            return !_.isEmpty(this.form);
         },
-        post_types: [],
-        getSelectedPostTypes: function () {
-            return _.pluck(_.where(this.post_types, { selected: true }), 'id');
+        hasSelectedPostStages: function () {
+            return !_.isEmpty(this.current_stage);
         },
-        hasSelectedPostTypes: function () {
-            return !_.isEmpty(this.getSelectedPostTypes());
-        },
-        clearSelectedPostTypes: function () {
-            _.each(this.post_types, function (postType) {
-                postType.selected = false;
-            });
+        hasSelectedCollections: function () {
+            return !_.isEmpty(this.set);
         },
         getPostQuery: function () {
             var query = {};
 
-            var selected_tags = this.getSelectedTags();
-            if (!_.isEmpty(selected_tags)) {
-                query.tags = selected_tags.join(',');
+            if (!_.isEmpty(this.tags)) {
+                query.tags = this.tags.join(',');
             }
 
-            var selected_types = this.getSelectedPostTypes();
-            if (!_.isEmpty(selected_types)) {
-                query.form = selected_types.join(',');
+            if (!_.isEmpty(this.form)) {
+                query.form = this.form.join(',');
             }
 
-            if (this.keyword) {
-                query.q = this.keyword;
+            if (!_.isEmpty(this.current_stage)) {
+                query.current_stage = this.current_stage.join(',');
+            }
+
+            if (!_.isEmpty(this.set)) {
+                query.set = this.set.join(',');
+            }
+
+            query.status = this.status;
+
+            if (this.q) {
+                query.q = this.q;
             }
             if (this.start_date) {
                 query.created_after = this.start_date;
@@ -68,8 +77,8 @@ function (
                 query.created_before = this.end_date;
             }
 
-            if (this.location) {
-                query.center_point = this.location;
+            if (this.center_point) {
+                query.center_point = this.center_point;
                 query.within_km = this.within_km || 10;
             }
 
@@ -79,36 +88,47 @@ function (
             return _.keys(this.getPostQuery()).length;
         },
         clearSelected: function () {
-            _.each(filterDefaults, _.bind(function (value, key) {
+            var localDefaults = angular.copy(filterDefaults);
+            _.each(localDefaults, _.bind(function (value, key) {
                 this[key] = value;
             }, this));
-            // Special handling for tags and post types
-            this.clearSelectedTags();
-            this.clearSelectedPostTypes();
+        },
+        setSelected: function (newFilters) {
+            var localDefaults = angular.copy(filterDefaults);
+            newFilters = angular.copy(newFilters);
+
+            _.each(localDefaults, _.bind(function (defaultValue, key) {
+                if (_.has(newFilters, key)) {
+                    this[key] = newFilters[key];
+                } else {
+                    this[key] = defaultValue;
+                }
+            }, this));
         },
         getDefaults: function () {
-            return _.extend({}, filterDefaults, {
-                tags: [],
-                post_types: []
-            });
+            return _.extend({}, filterDefaults);
         }
     };
 
     // Add default filter values
-    angular.extend(GlobalFilter, filterDefaults);
+    GlobalFilter.clearSelected();
 
-    TagEndpoint.get().$promise.then(function (response) {
-        GlobalFilter.tags = response.results;
-    });
+    GlobalFilter.options.tags = TagEndpoint.query();
+    GlobalFilter.options.collections = CollectionEndpoint.query();
 
-    FormEndpoint.get().$promise.then(function (response) {
-        GlobalFilter.post_types = response.results;
-    });
+    FormEndpoint.query().$promise.then(function (response) {
+       GlobalFilter.options.forms = _.indexBy(response, 'id');
 
-    // @todo - uncomment when sets are ready
-    // SetEndpoint.get().$promise.then(function(response) {
-    //     GlobalFilter.sets = response.results;
-    // });
+       _.each(GlobalFilter.options.forms, function (form, formid) {
+           FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
+               if (response.length) {
+                   GlobalFilter.options.postStages[formid] = response;
+               }
+           });
+       });
+   });
+
+    GlobalFilter.options.postStatuses = ['draft', 'published'];
 
     return Util.bindAllFunctionsToSelf(GlobalFilter);
 

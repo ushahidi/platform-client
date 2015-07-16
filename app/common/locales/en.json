@@ -47,7 +47,7 @@
         "type" : "type",
         "visible_to": "Visible To"
     },
-    "globalFilter": {
+    "global_filter": {
         "filter" : "Filter",
         "categories" : {
             "categories" : "Categories",
@@ -55,12 +55,22 @@
         },
         "post_types" : {
             "post_types" : "Post Types",
-            "all_types" : "All Types"
+            "all_types" : "All Types",
+            "unstructured" : "Unstructured"
         },
-        "sets" : {
-            "sets" : "Sets",
-            "my_sets" : "My Sets",
-            "all_sets" : "All Sets"
+        "post_statuses" : {
+            "post_statuses" : "Status",
+            "all_statuses" : "Any Status",
+            "draft" : "Draft",
+            "published" : "Published"
+        },
+        "post_stages" : {
+            "post_stages" : "Current Step",
+            "all_stages" : "All Steps"
+        },
+        "collections" : {
+            "collections" : "Collections",
+            "all_collections" : "All Collections"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -185,14 +195,21 @@
         "status" : "Status",
         "type": "Type",
         "view" : "View",
+        "step" : "Step",
+        "update" : "Update",
+        "options" : "Options",
+        "complete_draft" : "Complete (Draft)",
+        "complete_published" : "Complete (Published)",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete"
         },
         "modify" : {
-            "intro" : "Choose a post type:",
+            "intro" : "Select post type:",
             "create_type" : "Create {{type}}",
             "edit_type" : "Edit {{type}}: {{title}}",
+            "add_a_post" : "Add a post",
+            "edit_post" : "Edit {{title}}",
             "change_type" : "Change type",
             "incomplete_step" : "The required step {{stage}} is not marked complete",
             "save" : "Save",
@@ -254,8 +271,9 @@
         }
     },
     "set": {
-        "empty_list_0" : "No collections",
-        "empty_list_1" : "No saved searches"
+        "edit_settings" : "Edit Settings",
+        "empty_list_collections" : "No collections",
+        "empty_list_savedsearches" : "No saved searches"
     },
     "tag": {
         "add_tag" : "Add Category",

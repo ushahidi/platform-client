@@ -4,7 +4,7 @@ module.exports = [
     '$location',
     '$routeParams',
     '$controller',
-    'PostEndpoint',
+    'post',
     'FormEndpoint',
 function (
     $scope,
@@ -12,32 +12,28 @@ function (
     $location,
     $routeParams,
     $controller,
-    PostEndpoint,
+    post,
     FormEndpoint
 ) {
-    var that = this;
-    // Initialize the base modify controller and extend it.
-    angular.extend(this, $controller('PostModifyController', { $scope: $scope }));
+    $scope.activeForm = {};
 
     $translate('post.edit_post').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
 
-    // Activate editing mode
-    $scope.is_edit = true;
+    $scope.post = post;
 
-    $scope.post_options = $scope.post = PostEndpoint.get({ id: $routeParams.id }, function (post) {
+    // Make post tags numeric
+    post.tags = post.tags.map(function (tag) {
+        return parseInt(tag.id);
+    });
+    // Ensure completes stages array is numeric
+    post.completed_stages = post.completed_stages.map(function (stageId) {
+        return parseInt(stageId);
+    });
 
-        var tags = [];
-        post.tags.map(function (tag) {
-            tags.push(parseInt(tag.id));
-        });
-        post.tags = tags;
-
-        post.completed_stages = post.completed_stages.map(parseInt);
-
-        $scope.post = post;
+    if (post.form) {
         $scope.activeForm = FormEndpoint.get({ id: post.form.id }, function (form) {
             // Set page title to post title, if there is one available.
             if (post.title && post.title.length) {
@@ -46,13 +42,6 @@ function (
               });
             }
         });
-
-        that.fetchStages($scope.post.form.id);
-        that.fetchAttributes($scope.post.form.id);
-    });
-
-    $scope.goBack = function () {
-        $location.path('/posts/' + $scope.post.id);
-    };
+    }
 
 }];

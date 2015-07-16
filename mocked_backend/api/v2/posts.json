@@ -77,12 +77,7 @@
             "url": "http://localhost:8081/api/v2/posts/9999",
             "parent": null,
             "user": null,
-            "form": {
-                "id": "1",
-                "url": "http://localhost:8081/api/v2/forms/1"
-            },
-            "type": "report",
-            "title": "another report",
+            "title": "Post without a type and form id (could be a message)",
             "slug": null,
             "content": "Some description",
             "author_email": null,

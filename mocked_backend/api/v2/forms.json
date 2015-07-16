@@ -13,7 +13,284 @@
 			"get",
 			"post",
 			"put",
-			"delete"]
+			"delete"],
+		"attributes":
+		{
+			"count": 12,
+			"results": [
+				{
+					"id": "1",
+					"url": "api/v2/attributes/1",
+					"key": "test_varchar",
+					"label": "Test varchar",
+					"input": "text",
+					"type": "varchar",
+					"required": false,
+					"default": null,
+					"priority": "1",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "2",
+					"url": "api/v2/attributes/2",
+					"key": "test_point",
+					"label": "Test point",
+					"input": "location",
+					"type": "point",
+					"required": false,
+					"default": null,
+					"priority": "1",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "3",
+					"url": "api/v2/attributes/3",
+					"key": "full_name",
+					"label": "Full Name",
+					"input": "text",
+					"type": "varchar",
+					"required": false,
+					"default": null,
+					"priority": "1",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "4",
+					"url": "api/v2/attributes/4",
+					"key": "description",
+					"label": "Description",
+					"input": "textarea",
+					"type": "text",
+					"required": false,
+					"default": null,
+					"priority": "2",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "5",
+					"url": "api/v2/attributes/5",
+					"key": "date_of_birth",
+					"label": "Date of birth",
+					"input": "date",
+					"type": "datetime",
+					"required": false,
+					"default": null,
+					"priority": "3",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "6",
+					"url": "api/v2/attributes/6",
+					"key": "missing_date",
+					"label": "Missing date",
+					"input": "date",
+					"type": "datetime",
+					"required": false,
+					"default": null,
+					"priority": "4",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "7",
+					"url": "api/v2/attributes/7",
+					"key": "last_location",
+					"label": "Last Location",
+					"input": "text",
+					"type": "varchar",
+					"required": true,
+					"default": null,
+					"priority": "5",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "8",
+					"url": "api/v2/attributes/8",
+					"key": "last_location_point",
+					"label": "Last Location (point)",
+					"input": "location",
+					"type": "point",
+					"required": false,
+					"default": null,
+					"priority": "5",
+					"options": null,
+					"cardinality": "0",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "9",
+					"url": "api/v2/attributes/9",
+					"key": "geometry_test",
+					"label": "Geometry test",
+					"input": "location",
+					"type": "geometry",
+					"required": false,
+					"default": null,
+					"priority": "5",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "10",
+					"url": "api/v2/attributes/10",
+					"key": "missing_status",
+					"label": "Status",
+					"input": "select",
+					"type": "varchar",
+					"required": false,
+					"default": null,
+					"priority": "5",
+					"options": [
+						"information_sought",
+						"is_note_author",
+						"believed_alive",
+						"believed_missing",
+						"believed_dead"
+					],
+					"cardinality": "0",
+					"forms": {
+						"1": 1,
+						"2": 2
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "11",
+					"url": "api/v2/attributes/11",
+					"key": "links",
+					"label": "Links",
+					"input": "text",
+					"type": "varchar",
+					"required": false,
+					"default": null,
+					"priority": "7",
+					"options": null,
+					"cardinality": "0",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				},
+				{
+					"id": "12",
+					"url": "api/v2/attributes/12",
+					"key": "second_point",
+					"label": "Second Point",
+					"input": "location",
+					"type": "point",
+					"required": false,
+					"default": null,
+					"priority": "5",
+					"options": null,
+					"cardinality": "1",
+					"forms": {
+						"1": 1
+					},
+					"allowed_methods": {
+						"get": true,
+						"post": true,
+						"put": true,
+						"delete": true
+					}
+				}
+			]
+		}
 	}, {
 		"id": "2",
 		"url": "http://ushv3.dev/api/v2/forms/2",
