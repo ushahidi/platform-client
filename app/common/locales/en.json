@@ -200,6 +200,7 @@
         "options" : "Options",
         "complete_draft" : "Complete (Draft)",
         "complete_published" : "Complete (Published)",
+        "structure" : "Structure",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete"

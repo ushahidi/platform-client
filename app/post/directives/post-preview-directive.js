@@ -20,19 +20,19 @@ function (
     var getCurrentStage = function (post) {
         var dfd = $q.defer();
 
-        if (!post.form) {
+        if (!post.form || !post.form.id) {
             // if there is no pre-defined structure in place (eg from SMS, stage is "Structure"), and the
             // update link enables you to select a type of structure
-            $translate('post.structure', dfd.resolve);
+            $translate('post.structure').then(dfd.resolve);
         } else {
             // Assume form is already loading/loaded
             FormStageEndpoint.query({formId: post.form.id}).$promise.then(function (stages) {
                 // If number of completed stages matches number of stages, assume they're all complete
                 if (post.completed_stages.length === stages.length) {
                     if (post.status === 'published') {
-                        $translate('post.complete_published', dfd.resolve);
+                        $translate('post.complete_published').then(dfd.resolve);
                     } else {
-                        $translate('post.complete_draft', dfd.resolve);
+                        $translate('post.complete_draft').then(dfd.resolve);
                     }
                 }
 
@@ -60,6 +60,11 @@ function (
         link: function (scope) {
 
             scope.getRoleDisplayName = RoleHelper.getRole;
+
+            // Ensure completes stages array is numeric
+            scope.post.completed_stages = scope.post.completed_stages.map(function (stageId) {
+                return parseInt(stageId);
+            });
 
             // Replace tags with full tag object
             scope.post.tags = scope.post.tags.map(function (tag) {
