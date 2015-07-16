@@ -55,7 +55,8 @@
         },
         "post_types" : {
             "post_types" : "Post Types",
-            "all_types" : "All Types"
+            "all_types" : "All Types",
+            "unstructured" : "Unstructured"
         },
         "post_statuses" : {
             "post_statuses" : "Status",

@@ -58,7 +58,7 @@
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
                                 <label>
-                                    <input type="checkbox" ng-model="showAllForms" ng-checked="!globalFilter.hasSelectedForms()" ng-click="showAllFormsHandler()"> {{'global_filter.post_types.all_types' | translate}}
+                                    <input type="checkbox" ng-model="showAllForms" ng-checked="!globalFilter.hasSelectedForms()" ng-click="showAllFormsHandler()"> <translate>global_filter.post_types.all_types</translate>
                                 </label>
                             </li>
                             <li class="checkbox" ng-repeat="(idx, form) in globalFilter.options.forms">
@@ -67,7 +67,14 @@
                                     {{form.name}}
                                 </label>
                             </li>
+                            <li class="checkbox">
+                                <label>
+                                    <input type="checkbox" checklist-value="'none'" checklist-model="globalFilter.form" />
+                                    <translate>global_filter.post_types.unstructured</translate>
+                                </label>
+                            </li>
                         </ul>
+                        {{globalFilter.form}}
                     </li>
 
                     <li class="accordion-menu-list__item" accordion-group>
