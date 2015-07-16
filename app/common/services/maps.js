@@ -47,11 +47,12 @@ function (
 
     var geojsonLayerOptions = {
         onEachFeature: function (feature, layer) {
+            var description = feature.properties.description || '';
             layer.bindPopup(
                 '<strong><a href="/posts/' + feature.properties.id + '">' +
                 feature.properties.title +
                 '</a></strong>' +
-                '<p>' + feature.properties.description + '</p>'
+                '<p>' + description + '</p>'
             );
         }
     };
