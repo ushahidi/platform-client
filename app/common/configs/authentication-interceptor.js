@@ -22,6 +22,34 @@ function (
         Session,
         _
     ) {
+        var getClientCredsToken = function (config) {
+            var
+            deferred = $q.defer(),
+            payload = {
+                grant_type: 'client_credentials',
+                client_id: CONST.OAUTH_CLIENT_ID,
+                client_secret: CONST.OAUTH_CLIENT_SECRET,
+                scope: CONST.CLAIMED_ANONYMOUS_SCOPES.join(' ')
+            },
+
+            handleRequestSuccess = function (authResponse) {
+                var accessToken = authResponse.data.access_token;
+                Session.setSessionDataEntry('accessToken', accessToken);
+                config.headers.Authorization = 'Bearer ' + accessToken;
+                deferred.resolve(config);
+            };
+
+            $injector.invoke(['$http', 'Util', function ($http, Util) {
+                // $http is already constructed at the time and you may
+                // use it, just as any other service registered in your
+                // app module and modules on which app depends on.
+                // http://stackoverflow.com/a/19954545/567126
+                $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, deferred.reject);
+            }]);
+
+            return deferred.promise;
+        };
+
         return {
             request: function (config) {
 
@@ -49,39 +77,45 @@ function (
                 // and a 403 or 401 will be thrown
                 // which results in showing the login page)
                 } else {
-                    var payload = {
-                        grant_type: 'client_credentials',
-                        client_id: CONST.OAUTH_CLIENT_ID,
-                        client_secret: CONST.OAUTH_CLIENT_SECRET,
-                        scope: CONST.CLAIMED_ANONYMOUS_SCOPES.join(' ')
-                    },
-
-                    handleRequestSuccess = function (authResponse) {
-                        var accessToken = authResponse.data.access_token;
-                        Session.setSessionDataEntry('accessToken', accessToken);
-                        config.headers.Authorization = 'Bearer ' + accessToken;
-                        deferred.resolve(config);
-                    };
-
-                    $injector.invoke(['$http', 'Util', function ($http, Util) {
-                        // $http is already constructed at the time and you may
-                        // use it, just as any other service registered in your
-                        // app module and modules on which app depends on.
-                        // http://stackoverflow.com/a/19954545/567126
-                        $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, deferred.reject);
-                    }]);
-
+                    getClientCredsToken(config).then(deferred.resolve, deferred.reject);
                 }
                 return deferred.promise;
             },
             responseError: function (rejection) {
+                var deferred = $q.defer();
+
+                // When a request is rejected there are
+                // a few possible reasons. If its a 401
+                // either our token expired, or we didn't have one.
                 if (rejection.status === 401) {
-                    $rootScope.$broadcast('event:unauthorized');
-                }
-                if (rejection.status === 403) {
+                    $injector.invoke(['Authentication', '$http', function (Authentication, $http) {
+                        // Check if were were logged in
+                        if (Authentication.getLoginStatus()) {
+                            // If we were, trigger an unauthorized
+                            // event and show the login page
+                            $rootScope.$broadcast('event:unauthorized');
+                            deferred.reject(rejection);
+                        } else {
+                            // If we weren't logged in to start with
+                            // we probably just need to get a new token
+                            getClientCredsToken(rejection.config).then(
+                                function (config) {
+                                    deferred.resolve($http(config));
+                                },
+                                deferred.reject
+                            );
+                        }
+                    }]);
+                // If its a 403 we've got a token, but it can't get us what we needed
+                } else if (rejection.status === 403) {
+                    // Trigger a forbidden event and show an error page
                     $rootScope.$broadcast('event:forbidden');
+                    deferred.reject(rejection);
+                // For anything else, just forward the rejection
+                } else {
+                    deferred.reject(rejection);
                 }
-                return $q.reject(rejection);
+                return deferred.promise;
             }
         };
     }]);
