@@ -7,7 +7,8 @@ describe('authentication interceptor', function () {
         $httpProviderIt,
         $http,
         CONST,
-        mockedSessionData;
+        mockedSessionData,
+        mockAuthentication;
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [], function ($httpProvider) {
@@ -16,6 +17,12 @@ describe('authentication interceptor', function () {
 
         mockedSessionData = {
             accessToken: null
+        };
+        mockAuthentication = {
+            loginStatus : false,
+            getLoginStatus : function () {
+                return this.loginStatus;
+            }
         };
         testApp.service('Session', function () {
             return {
@@ -32,6 +39,9 @@ describe('authentication interceptor', function () {
                     mockedSessionData[key] = value;
                 }
             };
+        })
+        .service('Authentication', function () {
+            return mockAuthentication;
         })
         .config(require(rootPath + 'app/common/configs/authentication-interceptor.js'));
 
@@ -143,17 +153,69 @@ describe('authentication interceptor', function () {
 
         describe('for a 401 error', function () {
 
-            var broadcastArguments;
-            beforeEach(function () {
-                $httpBackend.whenGET(CONST.BACKEND_URL + '/some-url').respond(401);
-                $http.get(CONST.BACKEND_URL + '/some-url');
-                $httpBackend.flush();
-                broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
+            describe('when logged in', function () {
+                var broadcastArguments;
+
+                beforeEach(function () {
+                    mockAuthentication.loginStatus = true;
+                    $httpBackend.whenGET(CONST.BACKEND_URL + '/some-url').respond(401);
+                    $http.get(CONST.BACKEND_URL + '/some-url');
+                    $httpBackend.flush();
+                    broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
+                });
+
+                it('should broadcast an "unauthorized" event over the rootScope', function () {
+                    expect($rootScope.$broadcast).toHaveBeenCalled();
+                    expect(broadcastArguments[0]).toEqual('event:unauthorized');
+                });
             });
 
-            it('should broadcast an "unauthorized" event over the rootScope', function () {
-                expect($rootScope.$broadcast).toHaveBeenCalled();
-                expect(broadcastArguments[0]).toEqual('event:unauthorized');
+            describe('when logged out', function () {
+                var claimedScopes, payload;
+                beforeEach(function () {
+                    claimedScopes = [
+                    'posts',
+                    'media',
+                    'forms',
+                    'api',
+                    'tags',
+                    'sets',
+                    'users',
+                    'stats',
+                    'layers',
+                    'config',
+                    'messages'
+                    ];
+                    payload = {
+                        grant_type: 'client_credentials',
+                        client_id: CONST.OAUTH_CLIENT_ID,
+                        client_secret: CONST.OAUTH_CLIENT_SECRET,
+                        scope: claimedScopes.join(' ')
+                    };
+                });
+
+                beforeEach(function () {
+                    mockAuthentication.loginStatus = false;
+                    $httpBackend.whenGET(CONST.API_URL + '/some-url').respond(401);
+                    $http.get(CONST.API_URL + '/some-url');
+                });
+
+                it('should get a new token and retry the request', function () {
+                    // Interceptor should try to get a new token
+                    $httpBackend.expectPOST(CONST.BACKEND_URL + '/oauth/token',
+                        payload
+                    ).respond(200, {
+                        'access_token': 'anotherNewToken'
+                    });
+
+                    // Then use that to load the original user
+                    $httpBackend.expectGET(CONST.API_URL + '/some-url',
+                        {'Accept': 'application/json, text/plain, */*',
+                         'Authorization': 'Bearer anotherNewToken'}
+                    ).respond(200);
+
+                    $httpBackend.flush();
+                });
             });
         });
 
