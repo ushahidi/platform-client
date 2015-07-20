@@ -272,7 +272,7 @@
             <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
         </div>
         <!-- optional name and email for users who are not logged in -->
-        <div ng-show="!loggedin">
+        <div ng-show="!$root.loggedin">
             <h4>{{'post.modify.contact_info' | translate}}</h4>
             <label class="input-label" translate>post.modify.author_realname</label>
             <input name="name" placeholder="{{'post.modify.author_realname' | translate}}"
