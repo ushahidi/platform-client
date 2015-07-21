@@ -49,7 +49,21 @@ function (
                 },
                 fetchStages = function (formId) {
                     $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
-                        $scope.setVisibleStage($scope.stages[0].id);
+                        var post = $scope.post;
+
+                        // If number of completed stages matches number of stages,
+                        // assume they're all complete, and just show the first stage
+                        if (post.completed_stages.length === stages.length) {
+                            $scope.setVisibleStage(stages[0].id);
+                        } else {
+                            // Get incomplete stages
+                            var incompleteStages = _.filter(stages, function (stage) {
+                                return !_.contains(post.completed_stages, stage.id);
+                            });
+
+                            // Return lowest priority incomplete stage
+                            $scope.setVisibleStage(incompleteStages[0].id);
+                        }
                     });
                 };
 
