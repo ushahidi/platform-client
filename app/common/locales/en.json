@@ -235,10 +235,6 @@
                 }
             }
         },
-        "details" : {
-            "post_details" : "Post Details",
-            "respond" : "Post a Comment or Response"
-        },
         "preview" : {
             "private" : "private",
             "public" : "public",

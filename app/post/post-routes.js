@@ -15,7 +15,12 @@ function (
     })
     .when('/posts/:id', {
         controller: require('./controllers/post-detail-controller.js'),
-        templateUrl: 'templates/posts/detail.html'
+        templateUrl: 'templates/posts/detail.html',
+        resolve: {
+            post: ['$route', 'PostEndpoint', function ($route, PostEndpoint) {
+                return PostEndpoint.get({ id: $route.current.params.id }).$promise;
+            }]
+        }
     })
     .when('/posts/:id/edit', {
         controller: require('./controllers/post-edit-controller.js'),
