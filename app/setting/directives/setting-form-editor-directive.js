@@ -73,7 +73,7 @@ function (
                             id: stage.id
                         }).$promise.then(function () {
                             // Remove stage from scope, binding should take care of the rest
-                            delete $scope.form.stages[$index];
+                            $scope.form.stages.splice($index, 1);
                         });
                     }
                 });

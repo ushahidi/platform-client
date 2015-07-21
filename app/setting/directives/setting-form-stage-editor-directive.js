@@ -196,11 +196,11 @@ function (
                                 id: attribute.id
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
-                                delete $scope.form.attributes[$index];
+                                $scope.form.attributes.splice($index, 1);
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest
-                            delete $scope.form.attributes[$index];
+                            $scope.form.attributes.splice($index, 1);
                         }
                     }
                 });
