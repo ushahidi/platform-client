@@ -1,4 +1,4 @@
-<main class="page-content" role="main">
+<main class="page-content user-profile" role="main">
 
     <div class="main-col">
         <h1 class="inline">{{title}}</h1>
@@ -53,7 +53,7 @@
                 class="alert error"
                 translate="{{'user.valid.email.' + error}}"></p>
 
-            <p ng-hide="state.changingPassword"><a href class="cta" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
+            <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
 
             <div ng-if="state.changingPassword">
                 <label class="input-label"
