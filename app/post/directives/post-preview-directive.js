@@ -1,6 +1,7 @@
 module.exports = [
     '$translate',
     '$q',
+    'CollectionEndpoint',
     'TagEndpoint',
     'UserEndpoint',
     'FormEndpoint',
@@ -10,6 +11,7 @@ module.exports = [
 function (
     $translate,
     $q,
+    CollectionEndpoint,
     TagEndpoint,
     UserEndpoint,
     FormEndpoint,
@@ -77,6 +79,23 @@ function (
                     scope.post.form = form;
                 });
             }
+
+            scope.editableCollections = CollectionEndpoint.editableByMe();
+
+            scope.addToCollectionModel = "";
+            var addToCollection = scope.addToCollection = function (collectionId) {
+                CollectionEndpoint.addPost({'collectionId': collectionId, 'id': scope.post.id});
+            };
+
+            scope.$watch(function () {
+                return scope.addToCollectionModel;
+            }, function (collectionId) {console.log(collectionId);
+                if (collectionId) {
+                    addToCollection(collectionId);
+                }
+                scope.addToCollectionModel = "";
+            });
+
 
             // determine which stage the post is at
             getCurrentStage(scope.post).then(function (currentStage) {

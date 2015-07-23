@@ -6,6 +6,7 @@ module.exports = [
     '$location',
     'PostEndpoint',
     'ConfigEndpoint',
+    'CollectionEndpoint',
     'UserEndpoint',
     'TagEndpoint',
     'FormAttributeEndpoint',
@@ -13,6 +14,7 @@ module.exports = [
     'Maps',
     'Leaflet',
     'leafletData',
+    '_',
 function (
     $scope,
     post,
@@ -21,13 +23,15 @@ function (
     $location,
     PostEndpoint,
     ConfigEndpoint,
+    CollectionEndpoint,
     UserEndpoint,
     TagEndpoint,
     FormAttributeEndpoint,
     FormEndpoint,
     Maps,
     L,
-    leafletData
+    leafletData,
+    _
 ) {
     $scope.post = post;
     $scope.mapDataLoaded = false;
@@ -143,4 +147,20 @@ function (
             }
         });
     };
+
+    $scope.editableCollections = CollectionEndpoint.editableByMe();
+
+    var addToCollection = function (collectionId) {
+        CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id});
+    };
+    $scope.$watch(function () {
+        return $scope.addToCollectionModel;
+    }, function (collectionId) {
+        if (collectionId) {
+            addToCollection(collectionId);
+        }
+        $scope.addToCollectionModel = "";
+    });
+
 }];
+

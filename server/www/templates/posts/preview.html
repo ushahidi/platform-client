@@ -45,21 +45,20 @@
             </div>
 
             <div class="actions-content toggle-content" dropdown-menu>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu">
                     <li>
                         <a class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
                             <span translate>post.post_actions.edit</span>
                         </a>
                     </li>
-                    <!-- <li>
+                    <li>
                         <div class="custom-select">
-                            <select>
-                                <option>Add to Collection</option>
-                                <option>Collection #1</option>
-                                <option>Collection #2</option>
+                            <select ng-model="$parent.addToCollectionModel">
+                                <option value="" translate>set.add_to_collection</option>
+                                <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
                             </select>
                         </div>
-                    </li> -->
+                    </li>
                 </ul>
             </div>
         </span>

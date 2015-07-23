@@ -10,7 +10,7 @@ function (
         resolve: {
             collection: ['$route', 'CollectionEndpoint', function ($route, CollectionEndpoint) {
 
-                return CollectionEndpoint.get({id: $route.current.params.id}).$promise;
+                return CollectionEndpoint.get({collectionId: $route.current.params.id}).$promise;
             }]
         }
     })

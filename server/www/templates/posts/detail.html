@@ -39,6 +39,14 @@
                 <span translate>post.post_actions.edit</span>
             </a>
         </p>
+        <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
+            <div class="custom-select">
+                <select ng-model="addToCollectionModel">
+                    <option value="" translate>set.add_to_collection</option>
+                    <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
+                </select>
+            </div>
+        </p>
         <p ng-if="post.allowed_privileges.indexOf('delete') !== -1">
             <button type="button" class="button-secondary delete" ng-click="deletePost()">
                 <i class="fa  fa-trash"></i> <span translate>post.post_actions.delete</span>
