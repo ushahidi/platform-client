@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/css/rtl-style.css" ng-disabled="! rtlEnabled">
         <link rel="stylesheet" href="/css/vendor.css">
 
-        <title>{{pageTitle}}{{siteTitle}}</title>
+        <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
         <meta name="description" content="{{pageDescription}}">
         <meta name="keywords" content="{{pageKeywords}}">
         <meta name="robots" content="{{pageRobots}}">
@@ -33,8 +33,8 @@
                             <span></span>
                             <span></span>
                         </div>
-                        <h1 class="beta">{{site.name}}</h1>
-                        <p class="header-description">{{site.description}}</p>
+                        <h1 class="beta" ng-bind="site.name"></h1>
+                        <p class="header-description" ng-bind="site.description"></p>
                         <a class="button button-create icon-only" ng-href="/posts/create">
                             <span translate>nav.add_post</span>
                         </a>
@@ -57,8 +57,8 @@
             <div class="wrapper">
                 <div class="footer-container">
                     <div class="footer-main-col">
-                        <h2>{{site.name}}</h2>
-                        <p>{{site.description}}</p>
+                        <h2 ng-bind="site.name"></h2>
+                        <p ng-bind="site.description"></p>
                         <ul class="footer-nav">
                             <li><a ng-href="/" translate>nav.home</a></li>
                             <li><a ng-href="/about" translate>nav.about</a></li>
