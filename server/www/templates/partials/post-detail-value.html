@@ -4,7 +4,10 @@
     </h3>
 
     <ul class="list-unstyled">
-        <li ng-repeat="entry in value">
+        <li ng-repeat="entry in value" ng-if="attribute.type === 'relation'">
+            <a ng-href="/posts/{{entry.id}}">{{entry.title}}</a>
+        </li>
+        <li ng-repeat="entry in value" ng-if="attribute.type !== 'relation'">
             {{entry}}
         </li>
     </ul>

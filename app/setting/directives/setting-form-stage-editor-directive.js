@@ -52,6 +52,12 @@ function (
                 $scope.currentStageId = currentStageId;
             });
 
+            // Load available forms for relation fields
+            $scope.availableForms = FormEndpoint.query();
+            $scope.filterNotCurrentForm = function (form) {
+                return form.id !== $attrs.formId;
+            };
+
             // Manage stage settings
             $scope.isSettingsOpen = false;
             $scope.openSettings = function () {
@@ -150,6 +156,11 @@ function (
                     label: 'Checkbox',
                     type: 'varchar',
                     input: 'checkbox'
+                },
+                {
+                    label: 'Related Post',
+                    type: 'relation',
+                    input: 'relation'
                 }
             ];
             $scope.isNewAttributeOpen = false;
@@ -166,6 +177,7 @@ function (
                     label: 'New field',
                     required: false,
                     options: [],
+                    config: {},
                     form_stage_id: $scope.currentStageId
                 };
 

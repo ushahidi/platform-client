@@ -66,6 +66,17 @@
                     </div>
                     <button type="button" class="button-secondary alt" ng-click="addOption(attribute)"><i class="fa fa-plus"></i> <span translate>form.field_add_option</span></button>
                 </div>
+                <div ng-if="attribute.input === 'relation'">
+                    <label class="input-label" translate>form.field_allowed_relation_post_type</label>
+                    <ul name="visible-to">
+                        <li ng-repeat="relationForm in availableForms | filter : filterNotCurrentForm">
+                            <label>
+                                <input type="checkbox" checklist-model="attribute.config.input.form" checklist-value="relationForm.id" />
+                                {{relationForm.name}}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
                 <!--
                 <div class="select-inline">
                     <label class="input-label">{{ 'form.visible_to'|translate }}:</label>

@@ -244,6 +244,16 @@
                         ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
                         >
 
+                    <!-- type: relation -->
+                    <post-relation
+                        attribute="attribute"
+                        key="key"
+                        id="values[{{attribute.key}}][{{key}}]"
+                        name="values_{{attribute.key}}"
+                        model="post.values[attribute.key][key]"
+                        required="attribute.required"
+                        ng-if="isRelation(attribute)"></post-relation>
+
                     <!-- type: textarea -->
                     <textarea
                         rows="10"

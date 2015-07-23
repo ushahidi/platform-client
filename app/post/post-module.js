@@ -5,6 +5,7 @@ angular.module('ushahidi.posts', [])
 .directive('postPreview', require('./directives/post-preview-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
 .directive('postLocation', require('./directives/post-location-directive.js'))
+.directive('postRelation', require('./directives/post-relation-directive.js'))
 // Post editing workflows
 .directive('postEditor', require('./directives/post-editor-directive.js'))
 .directive('postChooseForm', require('./directives/post-choose-form-directive.js'))

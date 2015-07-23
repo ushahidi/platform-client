@@ -281,6 +281,9 @@ function (
             $scope.isRadio = function (attr) {
                 return attr.input === 'radio';
             };
+            $scope.isRelation = function (attr) {
+                return attr.input === 'relation';
+            };
 
             // Can more values be added for this attribute?
             $scope.canAddValue = function (attr) {
