@@ -5,30 +5,24 @@ function (
         '$scope',
         '$filter',
         'PostEndpoint',
-        'TagEndpoint',
-        'FormEndpoint',
-        'FormAttributeEndpoint',
         'd3',
         '_',
     function (
         $scope,
         $filter,
         PostEndpoint,
-        TagEndpoint,
-        FormEndpoint,
-        FormAttributeEndpoint,
         d3,
         _
     ) {
         $scope.options = {
             chart: {
                 type: 'multiBarHorizontalChart',
-                height: 400,
+                height: 450,
                 margin: {
                     top: 20,
                     right: 40,
                     bottom: 40,
-                    left: 100
+                    left: 65
                 },
                 x: function (d) {
                     return d.label;
@@ -47,7 +41,8 @@ function (
                     axisLabel: $filter('translate')('graph.post_count'),
                     tickFormat: d3.format('d')
                 },
-                tooltips: false,
+                tooltips: true,
+                forceY: 0,
                 barColor: d3.scale.category20().range()
             }
         };
@@ -59,32 +54,13 @@ function (
         $scope.groupByOptions = {
             'tags' : 'post.categories',
             'form' : 'post.type',
-            'status' : 'post.status',
-            'attribute' : 'graph.attribute'
+            'status' : 'post.status'
         };
-
-        $scope.parentTags = [];
-        TagEndpoint.query({parent_id : 0}).$promise.then(function (results) {
-            $scope.parentTags = _.filter(results, function (tag) {
-                return !tag.parent;
-            });
-        });
-
-        $scope.attributes = [];
-        FormEndpoint.query().$promise.then(function (forms) {
-            angular.forEach(forms, function (form) {
-                FormAttributeEndpoint.query({formId: form.id}).$promise.then(function (attributes) {
-                    $scope.attributes = $scope.attributes.concat(attributes);
-                });
-            });
-        });
 
         var getPostStats = function (query) {
             query = query || $scope.filters;
             var postQuery = _.extend(query, {
-                'group_by' : $scope.groupBy,
-                'group_by_tags' : $scope.groupByTags,
-                'group_by_attribute_key' : $scope.attributeKey
+                'group_by' : $scope.groupBy
             });
 
             $scope.isLoading = true;
@@ -107,8 +83,6 @@ function (
 
         // Initial values
         $scope.reload = getPostStats;
-        $scope.attributeKey = null;
-        $scope.groupByTags = null;
         $scope.groupBy = 'tags';
 
         // Initial load

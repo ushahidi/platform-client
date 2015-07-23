@@ -95,18 +95,16 @@
         "date_range" : "Date Range"
     },
     "graph" : {
-        "group_by" : "Group by",
+        "group_by_placeholder" : "Graph",
         "none" : "None",
         "post_count" : "Post count",
-        "post_date": "Post date",
-        "cumulative": "Cumulative totals",
-        "category_level": "Parent category",
-        "attribute" : "Form attribute",
+        "cumulative_post_count" : "Total post count",
+        "new_post_count" : "New posts",
+        "post_date": "Post created date",
+        "cumulative": "Show cumulative totals",
         "created": "Created time",
         "updated": "Updated time",
-        "time_attribute": "Timeline by",
         "select_one": "Select one",
-        "created": "Created time"
     },
     "nav" : {
         "about" : "About",
