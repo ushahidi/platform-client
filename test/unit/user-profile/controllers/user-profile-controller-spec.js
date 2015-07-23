@@ -60,62 +60,13 @@ describe('user profile controller', function () {
 
     describe('UserEndpoint usage', function () {
 
-        it('should set the user response to userData and userProfileDataForEdit', function () {
-            expect($scope.userProfileData).toEqual(mockUserGetResponse);
-            expect($scope.userProfileDataForEdit).toEqual(mockUserGetResponse);
+        it('should set the user response', function () {
+            expect($scope.user).toEqual(mockUserGetResponse);
         });
 
     });
 
-    describe('onUserProfileEditFormShow', function () {
-
-        describe('before calling the method', function () {
-
-            describe('userProfileDataForEdit', function () {
-
-                it('should be defined', function () {
-                    expect($scope.userProfileDataForEdit).toBeDefined();
-                });
-
-                it('should be identical to userProfileData', function () {
-                    expect($scope.userProfileDataForEdit).toBe($scope.userProfileData);
-                });
-
-            });
-
-        });
-
-        describe('after calling the method', function () {
-
-            beforeEach(function () {
-                $scope.onUserProfileEditFormShow();
-            });
-
-            describe('userProfileDataForEdit (copy of userProfileData)', function () {
-
-                it('should be defined', function () {
-                    expect($scope.userProfileDataForEdit).toBeDefined();
-                });
-
-                it('should not be identical to userProfileData', function () {
-                    expect($scope.userProfileDataForEdit).not.toBe($scope.userProfileData);
-                });
-
-                it('should be equal to userProfileData', function () {
-                    expect($scope.userProfileDataForEdit).toEqual($scope.userProfileData);
-                });
-
-            });
-
-        });
-
-    });
-
-    describe('saveUserProfile', function () {
-        beforeEach(function () {
-            $scope.userProfileDataForEdit = angular.copy($scope.userProfileData);
-        });
-
+    describe('saveUser', function () {
         describe('with a successfull backend call', function () {
             beforeEach(inject(function ($q) {
                 var updateDeferred = $q.defer();
@@ -130,37 +81,30 @@ describe('user profile controller', function () {
 
             }));
 
-            describe('after changed values of userProfileDataForEdit', function () {
+            describe('after changed values of user', function () {
                 beforeEach(function () {
-                    $scope.userProfileDataForEdit.realname = 'Changed name';
+                    $scope.user.realname = 'Changed name';
                 });
 
-                describe('after calling saveUserProfile', function () {
+                describe('after calling saveUser', function () {
                     beforeEach(function () {
-                        $scope.saveUserProfile();
+                        $scope.saveUser($scope.user);
                     });
 
                     it('should call "update" on the UserEndpoint with id=me and the changed user profile values', function () {
                         expect(mockUserEndpoint.update).toHaveBeenCalled();
-
-                        var updateArgs = mockUserEndpoint.update.calls.mostRecent().args,
-                        userIdParam = updateArgs[0].id,
-                        requestData = updateArgs[1];
-
-                        expect(userIdParam).toBe('me');
-                        expect(requestData).toBe($scope.userProfileDataForEdit);
+                        expect($scope.user.realname).toBe('Changed name');
                     });
 
                     describe('after updating (digest) the scope', function () {
                         beforeEach(function () {
                             $rootScope.$digest();
                         });
-                        it('should set userProfileData and userProfileDataForEdit to the new userData', function () {
-                            expect($scope.userProfileDataForEdit.someField).toBe('addedByServer');
-                            expect($scope.userProfileData.someField).toBe('addedByServer');
+
+                        it('should set user to the new data', function () {
+                            expect($scope.user.someField).toBe('addedByServer');
                         });
                     });
-
                 });
             });
         });
@@ -181,34 +125,33 @@ describe('user profile controller', function () {
 
                 mockUserEndpoint.update = function (/*params, data*/) {
                     updateDeferred.reject(errorResponse);
+
                     return {
                         $promise: updateDeferred.promise
                     };
                 };
                 spyOn(mockUserEndpoint, 'update').and.callThrough();
                 spyOn(mockNotify, 'showAlerts').and.callThrough();
-
             }));
 
-            describe('change values of userProfileDataForEdit', function () {
+            describe('change values of user', function () {
                 beforeEach(function () {
-                    $scope.userProfileDataForEdit.realname = 'Changed name';
+                    $scope.user.email = 'Changed email';
                 });
 
                 describe('after calling the method', function () {
                     beforeEach(function () {
-                        $scope.saveUserProfile();
+                        $scope.saveUser($scope.user);
                     });
 
-                    describe('after updating (digest) the scope', function () {
+                    describe('after updating the scope', function () {
                         beforeEach(function () {
                             $rootScope.$digest();
                         });
+
                         it('should call Notify.showAlerts with the server errors', function () {
                             expect(mockNotify.showAlerts).toHaveBeenCalled();
-
                             var alertMessages = mockNotify.showAlerts.calls.mostRecent().args[0];
-
                             expect(alertMessages).toEqual(['invalid email address']);
                         });
                     });

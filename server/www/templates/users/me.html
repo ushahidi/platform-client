@@ -64,7 +64,7 @@
                     ng-disabled="state.processing"
                     ng-minlength="7"
                     ng-maxlength="72"
-                    ng-model="user.password"
+                    ng-model="state.password"
                     required>
                 <p ng-repeat="(error, value) in form.password.$error"
                     ng-show="form.password.$dirty"

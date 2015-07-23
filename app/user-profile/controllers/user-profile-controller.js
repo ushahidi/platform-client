@@ -23,7 +23,8 @@ function (
     $scope.state = {
         success: false,
         processing: false,
-        changingPassword: false
+        changingPassword: false,
+        password: ''
     };
 
     $scope.saveUser = function (user) {
@@ -32,20 +33,20 @@ function (
 
         var userPayload = angular.copy(user);
 
-        // Clear password from rendered space.
-        user.password = null;
-
         // If we're not changing the password, drop that property from payload (just in case.)
-        if (!$scope.state.changingPassword) {
-            delete userPayload.password;
+        if ($scope.state.changingPassword) {
+            userPayload.password = $scope.state.password;
         }
 
-        // Hide password change form field.
-        $scope.state.changingPassword = false;
+        var update = UserEndpoint.update({ id: 'me' }, userPayload);
 
-        UserEndpoint.update({ id: 'me' }, userPayload, function (user) {
+        update.$promise.then(function (user) {
             $scope.state.success = true;
             $scope.state.processing = false;
+
+            // Collapse password change form field.
+            $scope.state.changingPassword = false;
+            $scope.state.password = '';
 
             $scope.user = user;
         }, function (errorResponse) { // error
