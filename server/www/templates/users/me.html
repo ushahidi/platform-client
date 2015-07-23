@@ -1,39 +1,85 @@
-<div class="wrapper form-wrapper">
-    <h4 class="title">{{title}}</h4>
+<main class="page-content" role="main">
 
-    <form editable-form name="editUserProfileForm" onaftersave="saveUserProfile()" onshow="onUserProfileEditFormShow()" class="">
-        <ul>
-            <li>
-                <b translate>user.username</b>
-                <span id="username" class="username">{{userProfileData.username}}</span>
-            </li>
-            <li>
-                <b translate>user.full_name</b>
-                <span id="full_name" editable-text="userProfileDataForEdit.realname" e-name="realname" e-required>{{userProfileData.realname}}</span>
-            </li>
-            <li>
-                <b translate>user.email</b>
-                <span id="email" editable-email="userProfileDataForEdit.email" e-name="email" e-required>{{userProfileData.email}}</span>
-            </li>
+    <div class="main-col">
+        <h1 class="inline">{{title}}</h1>
 
-            <div class="buttons">
-                <!-- button to show form -->
-                <button type="button" id="edit_profile" class="btn btn-info" ng-click="editUserProfileForm.$show()" ng-show="!editUserProfileForm.$visible" translate>
-                    user.edit_profile
-                </button>
-                <!-- buttons to submit / cancel form -->
-                <span ng-show="editUserProfileForm.$visible">
-                    <button id="save_profile" type="submit" class="save-user-button btn btn-primary"  ng-disabled="editUserProfileForm.$waiting">
-                        <i class="fa fa-cog fa-spin" ng-show="editUserProfileForm.$waiting"></i>
-                        <span translate>
-                            user.save_profile
-                        </span>
-                    </button>
-                    <button type="button" id="cancel" class="cancel-user-button btn"  ng-disabled="editUserProfileForm.$waiting" ng-click="editUserProfileForm.$cancel()" translate>
-                        user.cancel
-                    </button>
-                </span>
+        <div class="divider white"></div>
+
+        <p class="alert confirmation" ng-show="state.success" translate>user_profile.update_success</p>
+
+        <form name="form">
+            <label class="input-label"
+                ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty, 'success': form.full_name.$valid }"
+                for="full_name" translate>user.full_name</label>
+            <input id="full_name" name="full_name" type="text"
+                ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }"
+                ng-disabled="state.processing"
+                placeholder="{{ 'user_create.full_name'|translate }}"
+                ng-maxlength="150"
+                ng-model="user.realname"
+                required>
+            <p ng-repeat="(error, value) in form.full_name.$error"
+                ng-show="form.full_name.$dirty"
+                class="alert error"
+                translate="{{'user.valid.full_name.' + error}}"></p>
+
+            <label class="input-label"
+                ng-class="{ 'error': form.username.$invalid && form.username.$dirty, 'success': form.username.$valid }"
+                for="username" translate>user.username</label>
+            <input id="username" name="username" type="text"
+                ng-class="{ 'error': form.username.$invalid && form.username.$dirty }"
+                ng-disabled="state.processing"
+                placeholder="{{ 'user_create.username'|translate }}"
+                ng-maxlength="50"
+                ng-model="user.username"
+                required>
+            <p ng-repeat="(error, value) in form.username.$error"
+                ng-show="form.username.$dirty"
+                class="alert error"
+                translate="{{'user.valid.username.' + error}}"></p>
+
+            <label class="input-label"
+                ng-class="{ 'error': form.email.$invalid && form.email.$dirty, 'success': form.email.$valid }"
+                for="email" translate>user.email</label>
+            <input id="email" name="email" type="email"
+                ng-class="{ 'error': form.email.$invalid && form.email.$dirty }"
+                ng-disabled="state.processing"
+                placeholder="{{ 'user_create.email'|translate }}"
+                ng-maxlength="150"
+                ng-model="user.email"
+                required>
+            <p ng-repeat="(error, value) in form.email.$error"
+                ng-show="form.email.$dirty"
+                class="alert error"
+                translate="{{'user.valid.email.' + error}}"></p>
+
+            <p ng-hide="state.changingPassword"><a href class="cta" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
+
+            <div ng-if="state.changingPassword">
+                <label class="input-label"
+                    ng-class="{ 'error': form.password.$invalid && form.password.$dirty, 'success': form.password.$valid }"
+                    for="password" translate>user.password</label>
+                <input id="password" name="password" type="password"
+                    ng-class="{ 'error': form.password.$invalid && form.password.$dirty }"
+                    ng-disabled="state.processing"
+                    ng-minlength="7"
+                    ng-maxlength="72"
+                    ng-model="user.password"
+                    required>
+                <p ng-repeat="(error, value) in form.password.$error"
+                    ng-show="form.password.$dirty"
+                    class="alert error"
+                    translate="{{'user.valid.password.' + error}}"></p>
             </div>
-        </ul>
-    </form>
-</div>
+
+            <div class="save-button">
+                <button type="submit" class="save btn" ng-click="saveUser(user)" ng-disabled="form.$invalid || state.processing">
+                    <i class="fa fa-cog fa-spin ng-hide" ng-show="state.processing"></i>
+                    <span translate>user_profile.save</span>
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</main>

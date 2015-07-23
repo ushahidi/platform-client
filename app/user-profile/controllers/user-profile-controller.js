@@ -20,29 +20,40 @@ function (
         $rootScope.$emit('setPageTitle', title);
     });
 
-    $scope.onUserProfileEditFormShow = function () {
-        $scope.userProfileDataForEdit = angular.copy($scope.userProfileData);
+    $scope.state = {
+        success: false,
+        processing: false,
+        changingPassword: false
     };
 
-    $scope.saveUserProfile = function () {
-        var promise = UserEndpoint.update({id: 'me'}, $scope.userProfileDataForEdit).$promise;
+    $scope.saveUser = function (user) {
+        $scope.state.success = false;
+        $scope.state.processing = true;
 
-        promise.then(
-            function (userData) {
-                $scope.userProfileData = $scope.userProfileDataForEdit = userData;
-            },
-            function (errorResponse) {
-                if (errorResponse.status === 400) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    if (errors) {
-                        Notify.showAlerts(errors);
-                    }
-                }
-            }
-        );
+        var userPayload = angular.copy(user);
 
-        return promise;
+        // Clear password from rendered space.
+        user.password = null;
+
+        // If we're not changing the password, drop that property from payload (just in case.)
+        if (!$scope.state.changingPassword) {
+            delete userPayload.password;
+        }
+
+        // Hide password change form field.
+        $scope.state.changingPassword = false;
+
+        UserEndpoint.update({ id: 'me' }, userPayload, function (user) {
+            $scope.state.success = true;
+            $scope.state.processing = false;
+
+            $scope.user = user;
+        }, function (errorResponse) { // error
+            var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+            errors && Notify.showAlerts(errors);
+            $scope.state.processing = false;
+        });
     };
 
-    $scope.userProfileData = $scope.userProfileDataForEdit = user;
+    $scope.user = user;
 }];

@@ -375,6 +375,10 @@
         "search_and_filter" : "Search & Filter Users",
         "username" : "Username",
         "valid" : {
+            "full_name" : {
+                "required" : "Full name is required",
+                "maxlength" : "Full name is too long"
+            },
             "username" : {
                 "required" : "Username is required",
                 "maxlength" : "Username is too long",
@@ -393,7 +397,10 @@
         }
     },
     "user_profile" : {
-        "title" : "Edit profile"
+        "title" : "Edit profile",
+        "save" : "Save changes",
+        "update_password" : "Update password",
+        "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected."
     },
     "user_create" :  {
         "full_name": "Display Name",
