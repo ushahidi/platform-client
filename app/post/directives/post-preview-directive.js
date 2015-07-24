@@ -89,7 +89,7 @@ function (
 
             scope.$watch(function () {
                 return scope.addToCollectionModel;
-            }, function (collectionId) {console.log(collectionId);
+            }, function (collectionId) {
                 if (collectionId) {
                     addToCollection(collectionId);
                 }
