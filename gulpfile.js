@@ -203,7 +203,7 @@ gulp.task('browserify', function () {
         .bundle()
         .on('error', function (err) {
             errorHandler(err);
-            this.emit('end');
+            throw err;
         })
         .pipe(source('bundle.js'))
         .pipe(buffer())
