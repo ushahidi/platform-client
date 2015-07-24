@@ -6,7 +6,7 @@ require('leaflet.locatecontrol/src/L.Control.Locate');
 require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
-require('angular-bootstrap/ui-bootstrap-tpls');
+require('angular-ui-bootstrap/ui-bootstrap-tpls');
 require('angular-ui-bootstrap-datetimepicker');
 require('angular-moment');
 require('moment-timezone');
