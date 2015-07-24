@@ -109,19 +109,19 @@ function (
             };
 
             $scope.uiOpenDate = function (datepicker) {
-                if (datepicker === 'start_date') {
-                    $scope.start_date_open = true;
-                } else if (datepicker === 'end_date') {
-                    $scope.end_date_open = true;
+                if (datepicker === 'startDate') {
+                    $scope.startDateOpen = true;
+                } else if (datepicker === 'endDate') {
+                    $scope.endDateOpen = true;
                 }
 
                 return false;
             };
 
             $scope.uiCloseDate = function (datepicker) {
-                if (datepicker === 'start_date') {
+                if (datepicker === 'startDate') {
                     $scope.startDateOpen = false;
-                } else if (datepicker === 'end_date') {
+                } else if (datepicker === 'endDate') {
                     $scope.endDateOpen = false;
                 }
 
