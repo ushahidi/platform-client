@@ -85,7 +85,7 @@
     "ng-showdown": "git://github.com/rjmackay/ng-showdown#patch-1",
     "ngGeolocation": "git://github.com/rjmackay/ngGeolocation",
     "nvd3": "git://github.com/novus/nvd3#v1.7.1",
-    "platform-pattern-library": "git+https://github.com/ushahidi/platform-pattern-library#v3.0.0-beta.19",
+    "platform-pattern-library": "git+https://github.com/ushahidi/platform-pattern-library#gh-pages",
     "selection-model": "git://github.com/jtrussell/angular-selection-model.git",
     "underscore": "^1.7.0"
   },

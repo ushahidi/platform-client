@@ -1,70 +1,71 @@
 <form name="form" ng-submit="savePost()" novalidate>
-    <aside class="is-right has-border" role="complimentary">
-        <h4 class="delta-alt" translate>post.steps</h4>
-        <div class="stage-list">
-            <div class="stage-list-content toggle-content">
-                <ul>
-                    <li ng-repeat="stage in stages"
-                        ng-class="{ 'active' : stage.id == visibleStage }">
-                        <a ng-click="setVisibleStage(stage.id)"
-                        ng-show="stage.id != visibleStage">
-                            <h6 ng-class="{ 'complete': stageIsComplete(stage.id) }">{{stage.label}}</h6>
-                        </a>
-                        <h6 ng-show="stage.id == visibleStage"
-                            ng-class="{ 'complete': stageIsComplete(stage.id) }"
-                        >{{stage.label}}</h6>
-                        <button type="button"
-                            class="button-secondary check"
-                            ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
-                            ng-show="stage.id == visibleStage"
-                            ng-click="toggleStageCompletion(stage.id)"
-                            translate="{{ stageIsComplete(stage.id) ? 'post.complete' : 'post.mark_complete' }}"
+    <div class="fixed-sidebar">
+        <aside class="is-right has-border fix-sidebar-content" role="complimentary">
+            <h4 class="delta-alt" translate>post.steps</h4>
+            <div class="step-list">
+                <div class="step-list-content toggle-content">
+                    <ul>
+                        <li ng-repeat="stage in stages"
+                            ng-class="{ 'active' : stage.id == visibleStage }">
+                            <a ng-click="setVisibleStage(stage.id)"
+                            ng-show="stage.id != visibleStage">
+                                <h6 ng-class="{ 'complete': stageIsComplete(stage.id) }">{{stage.label}}</h6>
+                            </a>
+                            <h6 ng-show="stage.id == visibleStage"
+                                ng-class="{ 'complete': stageIsComplete(stage.id) }"
+                            >{{stage.label}}</h6>
+                            <button type="button"
+                                class="button-secondary check"
+                                ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
+                                ng-show="stage.id == visibleStage"
+                                ng-click="toggleStageCompletion(stage.id)"
+                                translate="{{ stageIsComplete(stage.id) ? 'post.complete' : 'post.mark_complete' }}"
+                                >
+                            </button>
+                        </li>
+                    </ul>
+                </div> <!-- end toggle content -->
+            </div> <!-- end step list-->
+
+            <div class="save-buttons fixed-bottom">
+                <div dropdown class="dropdown-group published-to" ng-show="allowedChangeStatus()">
+                    <button
+                        type="button"
+                        dropdown-toggle
+                        translate="{{(postIsPublishedTo() === 'draft') ? 'post.modify.publish' : 'post.modify.published_to'}}"
+                        translate-values="{ role: getRoleDisplayName(postIsPublishedTo()) || everyone }"
+                        class="button-secondary dropdown toggle-content-trigger"
+                    >
+                    </button>
+                    <ul dropdown-menu class="toggle-content dropdown-menu" role="menu">
+                        <li
+                            class="{{(postIsPublishedTo() === 'draft') ? 'active' : 'inactive'}}"
+                            ng-click="setDraft()"
                             >
-                        </button>
-                    </li>
-                </ul>
-            </div>
-            <!-- end toggle content -->
-        </div>
-        <!-- end stage list-->
-        <div class="save-buttons fixed-bottom">
-            <div dropdown class="dropdown-group published-to" ng-show="allowedChangeStatus()">
-                <button
-                    type="button"
-                    dropdown-toggle
-                    translate="{{(postIsPublishedTo() === 'draft') ? 'post.modify.publish' : 'post.modify.published_to'}}"
-                    translate-values="{ role: getRoleDisplayName(postIsPublishedTo()) || everyone }"
-                    class="button-secondary dropdown toggle-content-trigger"
-                >
+                            <a translate>post.draft</a>
+                        </li>
+                        <li
+                            class="{{(postIsPublishedTo() === '') ? 'active' : 'inactive'}}"
+                            ng-click="publishPostTo()"
+                            >
+                            <a translate translate-values="{role: everyone}">post.modify.publish_to</a>
+                        </li>
+                        <li
+                            ng-repeat="role in availableRoles track by role.name"
+                            class="{{(postIsPublishedTo() === role.name) ? 'active' : 'inactive'}}"
+                            ng-click="publishPostTo(role.name)"
+                            >
+                            <a translate translate-values="{role: role.display_name}">post.modify.publish_to</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span>
                 </button>
-                <ul dropdown-menu class="toggle-content dropdown-menu" role="menu">
-                    <li
-                        class="{{(postIsPublishedTo() === 'draft') ? 'active' : 'inactive'}}"
-                        ng-click="setDraft()"
-                        >
-                        <a translate>post.draft</a>
-                    </li>
-                    <li
-                        class="{{(postIsPublishedTo() === '') ? 'active' : 'inactive'}}"
-                        ng-click="publishPostTo()"
-                        >
-                        <a translate translate-values="{role: everyone}">post.modify.publish_to</a>
-                    </li>
-                    <li
-                        ng-repeat="role in availableRoles track by role.name"
-                        class="{{(postIsPublishedTo() === role.name) ? 'active' : 'inactive'}}"
-                        ng-click="publishPostTo(role.name)"
-                        >
-                        <a translate translate-values="{role: role.display_name}">post.modify.publish_to</a>
-                    </li>
-                </ul>
+
             </div>
-
-            <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span>
-            </button>
-
-        </div>
-    </aside>
+        </aside>
+    </div>
 
     <div class="main-col">
         <ul class="breadcrumb" ng-if="! isEdit">
