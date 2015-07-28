@@ -45,6 +45,7 @@
         "save_post_step": "Save Post Step",
         "step_name": "Step Name",
         "step_required": "This step is required",
+        "structure_step" : "Structure",
         "type" : "type",
         "visible_to": "Visible To"
     },
