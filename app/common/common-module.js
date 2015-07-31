@@ -15,6 +15,7 @@ angular.module('ushahidi.common', [
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
 .service('RoleHelper', require('./services/role-helper.js'))
+.service('PostViewHelper', require('./services/view-helper.js'))
 .service('Config', require('./services/config.js'))
 .service('Util', require('./services/util.js'))
 .service('Notify', require('./services/notify.js'))

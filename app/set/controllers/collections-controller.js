@@ -30,6 +30,16 @@ module.exports = [
             return _.contains(collection.allowed_privileges, 'update');
         };
 
+        // @todo: Integrate the modal state controller into a globally accessible
+        // directive which binds the same logic but does not effect markup
+        // This is related to the same functionality in the common controller
+        // navigation.js
+        $scope.isOpen = {};
+        $scope.isOpen.data = false;
+        $scope.setIsOpen = function () {
+            $scope.isOpen.data = !$scope.isOpen.data;
+        };
+
         // Extend filters, always adding the current collection id
         var extendFilters = function (filters) {
             filters = _.extend({ set : [] }, filters);

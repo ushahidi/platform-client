@@ -18,6 +18,9 @@ function (
                 return angular.fromJson(data).results;
             }
         },
+        update: {
+            method: 'PUT'
+        },
         editableByMe: {
             method: 'GET',
             isArray: true,

@@ -1,0 +1,38 @@
+<div class="collection-editor">
+
+<modal title="set.create_collection" visible="isOpen.data">
+    <div class="collection-info">
+        <label class="input-label" translate>set.name</label>
+        <input type="text" ng-model="collection.name" />
+
+        <label class="input-label" translate>set.description</label>
+        <textarea ng-model="collection.description" />
+
+        <label class="input-label" translate>set.visible_to</label>
+        <div class="custom-select">
+            <select ng-options="role.name as role.display_name for role in roles" ng-model="collection.visible_to[0]">
+                <option value="" translate>post.modify.everyone</option>
+            </select>
+        </div>
+
+        <label class="input-label" translate>set.default_view</label>
+        <div class="custom-select">
+            <select ng-options="view.name as view.display_name for view in views" ng-model="collection.view">
+            </select>
+        </div>
+        <div ng-if="isAdmin" class="">
+            <label class="checkbox-label">
+                <input type="checkbox" ng-model="collection.featured">
+                <translate>set.featured</translate>
+            </label>
+
+        </div>
+    </div>
+
+    <div class="modal-submit clearfix">
+        <button type="button" class="button-primary" ng-click="saveCollection(collection)" translate>set.save_set</button>
+
+        <button type="button" ng-show="collection.id" class="cta trash button button-secondary pull-right" ng-click="deleteCollection()" translate>set.delete_collection</button>
+    </div>
+</modal>
+</div>

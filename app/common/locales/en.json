@@ -278,10 +278,19 @@
         }
     },
     "set": {
+        "create_collection": "Create Collection",
+        "name" : "Collection name",
+        "description" : "Description",
+        "delete_collection" : "Delete this collection",
+        "visible_to" : "Who can see this Collection",
+        "default_view" : "Default view",
+        "save_set" : "Save Collection",
         "edit_settings" : "Edit Settings",
+        "featured" : "This collection is featured",
         "add_to_collection" : "Add to Collection",
         "empty_list_collections" : "No collections",
-        "empty_list_savedsearches" : "No saved searches"
+        "empty_list_savedsearches" : "No saved searches",
+        "set_settings" : "Collection Settings"
     },
     "tag": {
         "add_tag" : "Add Category",
@@ -459,6 +468,9 @@
             "delete_form_confirm" : "Are you sure you want to delete this form?",
             "delete_stage_confirm" : "Are you sure you want to delete this step?",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?"
+        },
+        "collection" : {
+            "delete_collection_confirm" : "Are you sure you want to delete this collection?"
         }
     },
     "empty": {
