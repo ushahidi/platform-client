@@ -13,6 +13,7 @@ function (
         'FormStageEndpoint',
         'FormAttributeEndpoint',
         'Notify',
+        'Geocoding',
         '_',
         function (
             $scope,
@@ -26,6 +27,7 @@ function (
             FormStageEndpoint,
             FormAttributeEndpoint,
             Notify,
+            Geocoding,
             _
         ) {
 
@@ -41,7 +43,11 @@ function (
                         // Initialize values on post (helps avoid madness in the template)
                         attrs.map(function (attr) {
                             if (!$scope.post.values[attr.key]) {
-                                $scope.post.values[attr.key] = [null];
+                                if (attr.input === 'location') {
+                                    $scope.post.values[attr.key] = [null];
+                                } else {
+                                    $scope.post.values[attr.key] = [attr.default];
+                                }
                             }
                         });
                         $scope.attributes = attrs;
@@ -284,7 +290,6 @@ function (
             $scope.isRelation = function (attr) {
                 return attr.input === 'relation';
             };
-
             // Can more values be added for this attribute?
             $scope.canAddValue = function (attr) {
                 return (
