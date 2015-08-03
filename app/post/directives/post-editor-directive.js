@@ -13,7 +13,6 @@ function (
         'FormStageEndpoint',
         'FormAttributeEndpoint',
         'Notify',
-        'Geocoding',
         '_',
         function (
             $scope,
@@ -27,7 +26,6 @@ function (
             FormStageEndpoint,
             FormAttributeEndpoint,
             Notify,
-            Geocoding,
             _
         ) {
 
