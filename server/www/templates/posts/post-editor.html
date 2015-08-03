@@ -119,7 +119,7 @@
             <!-- type: select category -->
             <div ng-if="categories.length">
                 <label class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</label>
-                <div ng-repeat="category in categories">
+                <div ng-repeat="category in categories" class="clearfix">
                     <label>
                         <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
                         {{category.tag}}
