@@ -1,8 +1,9 @@
-<ul class="sets-menu">{{baseUrl}}
+<ul class="sets-menu">
     <li ng-repeat="set in sets">
         <a
         	ng-href="/{{type}}/{{set.id}}"
-        	class="sets-menu">{{set.name}}</a><span class="star"></span>
+        	class="sets-menu">{{set.name}}</a>
+        <!-- <span class="star"></span> -->
         <p class="credit" ng-if="set.user.id">
 	        <span translate>nav.author_tagline</span>
 	        <a ng-href="/users/{{set.user.id}}"> {{set.user.realname || set.user.username}} </a>

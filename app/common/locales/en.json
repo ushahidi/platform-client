@@ -277,18 +277,25 @@
         }
     },
     "set": {
-        "create_collection": "Create Collection",
-        "name" : "Collection name",
+        "create_collection" : "Create Collection",
+        "create_savedsearch": "Create Saved Search",
         "description" : "Description",
         "delete_collection" : "Delete this collection",
-        "visible_to" : "Who can see this Collection",
+        "delete_savedsearch" : "Delete this Saved Search",
         "default_view" : "Default view",
-        "save_set" : "Save Collection",
         "edit_settings" : "Edit Settings",
         "featured" : "This collection is featured",
         "add_to_collection" : "Add to Collection",
         "empty_list_collections" : "No collections",
         "empty_list_savedsearches" : "No saved searches",
+        "name_collection" : "Collection name",
+        "name_savedsearch" : "Saved Search name",
+        "visible_to_collection" : "Who can see this Collection",
+        "visible_to_savedsearch" : "Who can see this Saved Search",
+        "default_view" : "Default view",
+        "save_set" : "Save Collection",
+        "save_savedsearch" : "Save Search",
+        "update_savedsearch" : "Update Search",
         "set_settings" : "Collection Settings"
     },
     "tag": {
@@ -470,6 +477,9 @@
         },
         "collection" : {
             "delete_collection_confirm" : "Are you sure you want to delete this collection?"
+        },
+        "savedsearch" : {
+            "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?"
         }
     },
     "empty": {

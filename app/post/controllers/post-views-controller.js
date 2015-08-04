@@ -18,6 +18,7 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
+
     // whenever the GlobalFilter post query changes,
     // update the current list of posts
     $scope.$watch(function () {
@@ -25,6 +26,7 @@ function (
     }, function (newValue, oldValue) {
         $scope.filters = GlobalFilter.getPostQuery();
     });
+
 
     // Reset filters
     GlobalFilter.clearSelected();

@@ -22,7 +22,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/partials/collection-editor.html',
+        templateUrl: 'templates/sets/collection-editor.html',
         scope: {
             collection: '=',
             isOpen: '='
@@ -71,6 +71,9 @@ function (
                         }).$promise.then(function () {
                             $location.url('/');
                             $rootScope.$broadcast('event:collection:update');
+                        }, function (errorResponse) {
+                            var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+                            errors && Notify.showAlerts(errors);
                         });
                     }
                 });

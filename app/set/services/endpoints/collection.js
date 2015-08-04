@@ -40,6 +40,9 @@ function (
         removePost: {
             method: 'DELETE',
             url: Util.apiUrl('/collections/:collectionId/posts')
+        },
+        delete: {
+            method: 'DELETE'
         }
     });
 

@@ -1,9 +1,8 @@
 <main class="page-content" ng-class="{ 'has-aside' : hasAside }">
-
     <ng-transclude></ng-transclude>
 
     <div class="tabs-with-filter">
-        <post-view-tabs active="currentView" base-url="/views/"></post-view-tabs>
+        <post-view-tabs active="currentView" base-url="{{ baseUrl }}"></post-view-tabs>
         <post-view-filters half-width="false" ng-if="! hasAside" is-loading="isLoading"></post-view-filters>
     </div>
 

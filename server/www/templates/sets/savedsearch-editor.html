@@ -1,0 +1,35 @@
+<div class="savedsearch-editor">
+
+<modal title="set.edit_settings" visible="isOpen.data">
+    <div class="savedsearch-info">
+        <label class="input-label" translate>set.name_savedsearch</label>
+        <input type="text" ng-model="savedSearch.name" />
+
+        <label class="input-label" translate>set.description</label>
+        <textarea ng-model="savedSearch.description" />
+
+        <label class="input-label" translate>set.visible_to_savedsearch</label>
+        <div class="custom-select">
+            <select ng-options="role.name as role.display_name for role in roles" ng-model="savedSearch.visible_to[0]">
+                <option value="" translate>post.modify.everyone</option>
+            </select>
+        </div>
+
+        <label class="input-label" translate>set.default_view</label>
+        <div class="custom-select">
+            <select ng-options="view.name as view.display_name for view in views" ng-model="savedSearch.view">
+            </select>
+        </div>
+        <div ng-show="savedSearch.id">
+        <label class="input-label" translate>set.delete_savedsearch</label>
+            <button ng-click="deleteSavedSearch()" type="button" class="button-secondary icon-only-when-small alt trash">
+            <span translate>nav.delete</span>
+        </button>
+        </div>
+    </div>
+
+    <div class="modal-submit">
+        <button type="button" class="button-primary" ng-click="saveSavedsearch(savedSearch)" translate>set.save_savedsearch</button>
+    </div>
+</modal>
+</div>

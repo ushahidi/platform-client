@@ -50,6 +50,10 @@ function (
             $scope.$on('event:collection:update', function () {
                 reloadSets();
             });
+            $scope.$on('event:savedSearch:update', function () {
+                reloadSets();
+            });
+
 
             // Trigger initial load of sets
             reloadSets();

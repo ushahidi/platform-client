@@ -20,7 +20,7 @@ function (
         ) {
             var getPostsForPagination = function (query) {
                 query = query || $scope.filters;
-                var postQuery = _.extend(query, {
+                var postQuery = _.extend({}, query, {
                     offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
                     limit: $scope.itemsPerPage
                 });

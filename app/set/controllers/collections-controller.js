@@ -14,7 +14,9 @@ module.exports = [
         collection
     ) {
         // Set view based on route or set view
-        $scope.currentView = $routeParams.view || collection.view;
+        $scope.currentView = function () {
+            return $routeParams.view || collection.view;
+        };
 
         // Add set to the scope
         $scope.collection = collection;
