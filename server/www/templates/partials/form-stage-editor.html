@@ -31,7 +31,7 @@
     <div class="divider white"></div>
 
     <div class="post-type-fields">
-        <div class="post-type-field settings-listing" ng-repeat="attribute in form.attributes track by attribute.id" dropdown auto-close="disabled" is-open="editIsOpen[$index]">
+        <div class="post-type-field settings-listing" ng-repeat="attribute in form.attributes track by $index" dropdown auto-close="disabled" is-open="editIsOpen[$index]">
             <div class="upvote-downvote">
                 <button type="button" class="button-secondary icon-only alt upvote" ng-click="changePriority(attribute, -1)"></button>
                 <button type="button" class="button-secondary icon-only alt downvote" ng-click="changePriority(attribute, +1)"></button>
@@ -101,14 +101,10 @@
                         <span translate>form.field_required</span>
                     </label>
                 </p>
-                <p class="clearfix">
-                    <label translate>form.field_type</label>
-                    <input type="text" disabled readonly ng-model="attribute.type">
-                </p>
-                <p class="clearfix">
-                    <label translate>form.field_input</label>
-                    <input type="text" disabled readonly ng-model="attribute.input">
-                </p>
+
+                <label class="input-label" translate>form.field_type</label>
+                <p>{{attribute.input}} ({{attribute.type}})</p>
+
                 <!--<div dropdown>
                     <p>
                         <a class="cta hidden-content-trigger" dropdown-toggle translate>form.add_field_instructions</a>

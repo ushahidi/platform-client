@@ -168,16 +168,19 @@ function (
             $scope.openNewAttribute = function () {
                 $scope.isNewAttributeOpen = true;
             };
-            $scope.addNewAttribute = function (type, input) {
+            $scope.addNewAttribute = function (type, input, label) {
+                var lastPriority = $scope.form.attributes.length ? _.last($scope.form.attributes).priority : 0;
+
                 newAttrCount++;
                 $scope.isNewAttributeOpen = false;
                 var attribute = {
                     type: type,
                     input: input,
-                    label: 'New field',
+                    label: 'New ' + label.toLowerCase() + ' field',
                     required: false,
                     options: [],
                     config: {},
+                    priority: lastPriority + 1,
                     form_stage_id: $scope.currentStageId
                 };
 

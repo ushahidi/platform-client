@@ -116,9 +116,12 @@ function (
                 $scope.isNewStageOpen = !$scope.isNewStageOpen;
             };
             $scope.saveNewStage = function (stage) {
+                var lastPriority = $scope.form.stages.length ? _.last($scope.form.stages).priority : 0;
+
                 FormStageEndpoint
                 .save(_.extend(stage, {
-                    formId: $scope.form.id
+                    formId: $scope.form.id,
+                    priority: lastPriority + 1
                 }))
                 .$promise
                 .then(function (stage) {
