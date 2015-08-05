@@ -2,13 +2,20 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
+    'BootstrapConfig',
 function (
     $scope,
     Authentication,
-    ConfigEndpoint
+    ConfigEndpoint,
+    BootstrapConfig
 ) {
 
-    $scope.site = ConfigEndpoint.get({ id: 'site' });
+    // Start with preloaded config
+    $scope.site = BootstrapConfig;
+    // Then update from server
+    ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
+        $scope.site = site;
+    });
 
     // @todo: Integrate the modal state controller into a globally accessible
     // directive which binds the same logic but does not effect markup.

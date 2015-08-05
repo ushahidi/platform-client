@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="app" ng-strict-di>
+<html lang="en" ng-strict-di>
     <head ng-controller="PageMetadata">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,7 @@
         <link href="/fonts/Lato/css/fonts.css" rel="stylesheet" type="text/css">
         <!-- @todo minify CSS -->
         <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="/css/rtl-style.css" ng-disabled="! rtlEnabled">
+        <link rel="stylesheet" href="/css/rtl-style.css" ng-disabled="! rtlEnabled" disabled="disabled">
         <link rel="stylesheet" href="/css/vendor.css">
 
         <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
@@ -18,62 +18,94 @@
     </head>
 
     <body ng-class="{ rtl : rtlEnabled }" class="has-dynamic-header" canvas>
-
-        <header class="header header-full overlay" role="banner" ng-controller="navigation">
-            <div class="container">
-                <!-- @todo dynamic header image -->
-                <!--<div class="hero-image">
-                     <img src="http://github.ushahidi.org/platform-pattern-library/assets/img/header-bk.jpg" alt="" />
-                </div>-->
-
-                <div class="color-overlay">
-                    <div class="parallax">
-                        <div class="nav-icon" off-canvas-toggle>
-                            <span></span>
-                            <span></span>
-                            <span></span>
+        <div id="bootstrap-loading">
+            <header class="header header-full overlay" role="banner">
+                <div class="container">
+                    <div class="color-overlay">
+                        <div class="parallax">
+                            <h1 class="beta"><i class="fa fa-refresh fa-4 fa-spin"></i></h1>
                         </div>
-                        <h1 class="beta" ng-bind="site.name"></h1>
-                        <p class="header-description" ng-bind="site.description"></p>
-                        <a class="button button-create icon-only" ng-href="/posts/create">
-                            <span translate>nav.add_post</span>
-                        </a>
-
-                        <ng-include src="'templates/partials/user-menu.html'"></ng-include>
                     </div>
                 </div>
-
-            </div>
-        </header>
-
-        <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
-        <div class="wrapper">
-            <ng-include src="'templates/partials/main-menu.html'"></ng-include>
-
-            <ng-view></ng-view>
+            </header>
         </div>
 
-        <footer role="contentinfo" ng-controller="navigation">
-            <div class="wrapper">
-                <div class="footer-container">
-                    <div class="footer-main-col">
-                        <h2 ng-bind="site.name"></h2>
-                        <p ng-bind="site.description"></p>
-                        <ul class="footer-nav">
-                            <li><a ng-href="/" translate>nav.home</a></li>
-                            <li><a ng-href="/about" translate>nav.about</a></li>
-                            <li><a ng-href="/activity" translate>nav.activity</a></li>
-                            <li><a ng-href="/tools/settings" ng-show="isAdmin()" translate>nav.settings</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-secondary-col">
-                        <a class="button button-create" ng-href="/posts/create">
-                            <span translate>nav.add_post</span>
-                        </a>
+        <div id="bootstrap-error" class="hidden">
+            <header class="header header-full overlay" role="banner">
+                <div class="container">
+                    <div class="color-overlay">
+                        <div class="parallax">
+                            <h1 class="beta"><img style="max-width: 50px; margin: auto;" src="img/ushahidi-logo.svg" alt="Ushahidi Logo"></h1>
+                        </div>
                     </div>
                 </div>
+            </header>
+            <div class="wrapper">
+                <main class="page-content">
+                    <div class="alert error">
+                        <p>Sorry, something went wrong. Try reloading the page.</p>
+                    </div>
+                </main>
             </div>
-        </footer>
+        </div>
+
+        <div id="bootstrap-app" class="hidden">
+            <header class="header header-full overlay" role="banner" ng-controller="navigation">
+                <div class="container">
+                    <!-- @todo dynamic header image -->
+                    <!--<div class="hero-image">
+                         <img src="http://github.ushahidi.org/platform-pattern-library/assets/img/header-bk.jpg" alt="" />
+                    </div>-->
+
+                    <div class="color-overlay">
+                        <div class="parallax">
+                            <div class="nav-icon" off-canvas-toggle>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <h1 class="beta" ng-bind="site.name"></h1>
+                            <p class="header-description" ng-bind="site.description"></p>
+                            <a class="button button-create icon-only" ng-href="/posts/create">
+                                <span translate>nav.add_post</span>
+                            </a>
+
+                            <ng-include src="'templates/partials/user-menu.html'"></ng-include>
+                        </div>
+                    </div>
+
+                </div>
+            </header>
+
+            <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
+            <div class="wrapper">
+                <ng-include src="'templates/partials/main-menu.html'"></ng-include>
+
+                <ng-view></ng-view>
+            </div>
+
+            <footer role="contentinfo" ng-controller="navigation">
+                <div class="wrapper">
+                    <div class="footer-container">
+                        <div class="footer-main-col">
+                            <h2 ng-bind="site.name"></h2>
+                            <p ng-bind="site.description"></p>
+                            <ul class="footer-nav">
+                                <li><a ng-href="/" translate>nav.home</a></li>
+                                <li><a ng-href="/about" translate>nav.about</a></li>
+                                <li><a ng-href="/activity" translate>nav.activity</a></li>
+                                <li><a ng-href="/tools/settings" ng-show="isAdmin()" translate>nav.settings</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-secondary-col">
+                            <a class="button button-create" ng-href="/posts/create">
+                                <span translate>nav.add_post</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
 
         <script src="/js/bundle.js"></script>
     </body>
