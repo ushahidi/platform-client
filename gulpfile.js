@@ -64,6 +64,9 @@ var helpers = {
         if (options.mockBackend) {
             gutil.log('Building with mock backend');
             entries.push('./app/mock-backend-config.js');
+            entries.push('./app/test-bootstrap.js');
+        } else {
+            entries.push('./app/bootstrap.js');
         }
 
         return {

@@ -1,23 +1,26 @@
 var config = {
     allScriptsTimeout: 11000,
+    getPageTimeout: 30000,
 
     specs: [
-    'e2e/**/*.js'
+        'e2e/**/*.js'
     ],
 
     baseUrl: 'http://localhost:8080/',
 
-    framework: 'jasmine',
+    framework: 'jasmine2',
 
     jasmineNodeOpts: {
-        defaultTimeoutInterval: 30000
+        defaultTimeoutInterval: 40000
     },
 
     capabilities: {
         'browserName': 'chrome'
     },
 
-    directConnect: true
+    directConnect: true,
+
+    rootElement: 'html'
 };
 
 

@@ -22,7 +22,6 @@ require('ng-showdown/src/ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
-require('angular-lazy-bootstarp/src/bootstrap.js');
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -97,31 +96,11 @@ angular.module('app',
         return window.L;
     })
     .factory('BootstrapConfig', function () {
-        return window.bootstrapConfig;
+        return window.bootstrapConfig || {};
     })
     .run(function() {
         // Once bootstrapped, show the app
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
-    });
-    ;
-
-angular.lazy('app')
-    .resolve(['$q', '$http', function ($q, $http) {
-        return $http.get(apiUrl + '/config/site')
-        .then(function (response) {
-            window.bootstrapConfig = response.data;
-        });
-    }])
-    .loading(function () {
-        // Show loading
-        angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
-    })
-    .error(function () {
-        // Show error
-        angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
-    })
-    .done(function () {
-        // Hide loading
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     })
-    .bootstrap();
+    ;
