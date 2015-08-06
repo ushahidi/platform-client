@@ -40,6 +40,7 @@ function (
                     if (valid_coords.test(location)) {
                         // if the location is already a lat/lon, pass it through
                         GlobalFilter.center_point = location;
+                        GlobalFilter.location_text = null;
                     } else { // perform a geocoding lookup on the location
                         $scope.geocodingBusy = true;
 
@@ -48,6 +49,7 @@ function (
                                 return;
                             } // @todo - handle bad lookup
                             GlobalFilter.center_point = coordinates[0] + ',' + coordinates[1];
+                            GlobalFilter.location_text = location;
                             $scope.geocodingBusy = false;
                         });
                     }

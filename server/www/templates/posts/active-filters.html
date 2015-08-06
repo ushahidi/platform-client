@@ -1,0 +1,14 @@
+
+    <div class="pills">
+        <div ng-repeat="(key, values) in activeFilters">
+            <button
+            ng-repeat="value in values"
+            type="button"
+            class="button-secondary alt close"
+            ng-click="removeFilter(key, value)"
+            >
+                <em><span translate="global_filter.filter_tabs.{{key}}"></span>: </em>
+                {{ transformFilterValue(value, key) }}
+            </button>
+        </div>
+    </div>

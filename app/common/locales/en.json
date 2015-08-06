@@ -73,6 +73,18 @@
             "collections" : "Collections",
             "all_collections" : "All Collections"
         },
+        "filter_tabs" : {
+            "q": "Keyword",
+            "created_after": "Start date",
+            "created_before": "End date",
+            "center_point": "Location",
+            "tags": "Category",
+            "form": "Post Type",
+            "current_stage": "Current Step",
+            "set": "Collection",
+            "status": "Status",
+            "location_value": "Within {{km}} km of {{value}}"
+        },
         "more" : "More",
         "keyword" : "Keyword",
         "start_date" : "Start Date",

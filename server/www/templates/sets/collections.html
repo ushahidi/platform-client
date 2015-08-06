@@ -1,8 +1,11 @@
 <post-view current-view="currentView()" filters="filters" base-url="/collections/{{collection.id}}/">
 
     <h1 class="inline">{{collection.name}}</h1>
-    <a ng-if="canEdit" ng-click="setIsOpen()" class="cta settings" translate>set.edit_settings</a>
+    <a ng-if="canEdit()" ng-click="setIsOpen()" class="cta settings" translate>set.edit_settings</a>
     <collection-editor collection="collection" is-open="isOpen"></collection-editor>
     <p class="collection-description">{{collection.description}}</p>
 
+    <div class="applied-filters">
+        <post-active-filters filters="filters"></post-active-filters>
+    </div>
 </post-view>

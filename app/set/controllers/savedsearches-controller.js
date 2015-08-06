@@ -47,7 +47,10 @@ module.exports = [
         });
 
         // Set initial filter state
-        $scope.filters = savedSearch.filter;
         GlobalFilter.setSelected(savedSearch.filter);
+        // Slight hack: to avoid incorrectly detecting a changed search
+        // we push the real query we're using back into the saved search.
+        // This will now include any default params we excluded before
+        savedSearch.filter = GlobalFilter.getPostQuery();
     }
 ];

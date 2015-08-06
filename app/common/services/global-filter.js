@@ -29,9 +29,9 @@ function (
 
     var GlobalFilter = {
         options: {
-            tags : [],
+            tags : {},
             forms : {},
-            collections : [],
+            collections : {},
             postStages : {}
         },
         hasSelectedTags: function () {
@@ -85,27 +85,32 @@ function (
             }, this));
         },
         getDefaults: function () {
-            return _.extend({}, filterDefaults);
+            return angular.copy(filterDefaults);
         }
     };
 
     // Add default filter values
     GlobalFilter.clearSelected();
 
-    GlobalFilter.options.tags = TagEndpoint.query();
-    GlobalFilter.options.collections = CollectionEndpoint.query();
+    TagEndpoint.query().$promise.then(function (tags) {
+        GlobalFilter.options.tags = _.indexBy(tags, 'id');
+    });
+
+    CollectionEndpoint.query().$promise.then(function (collections) {
+        GlobalFilter.options.collections = _.indexBy(collections, 'id');
+    });
 
     FormEndpoint.query().$promise.then(function (response) {
-       GlobalFilter.options.forms = _.indexBy(response, 'id');
+        GlobalFilter.options.forms = _.indexBy(response, 'id');
 
-       _.each(GlobalFilter.options.forms, function (form, formid) {
-           FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
-               if (response.length) {
-                   GlobalFilter.options.postStages[formid] = response;
-               }
-           });
-       });
-   });
+        _.each(GlobalFilter.options.forms, function (form, formid) {
+            FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
+                if (response.length) {
+                    GlobalFilter.options.postStages[formid] = response;
+                }
+            });
+        });
+    });
 
     GlobalFilter.options.postStatuses = ['draft', 'published'];
 
