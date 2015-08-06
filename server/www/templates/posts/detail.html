@@ -40,7 +40,7 @@
             </a>
         </p>
 
-        <div ng-if="editableCollections.length > 0" class="custom-select">\
+        <div ng-if="editableCollections.length > 0" class="custom-select">
             <select ng-model="addToCollectionModel">
                 <option value="" translate>set.add_to_collection</option>
                 <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
