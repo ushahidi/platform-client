@@ -38,13 +38,6 @@ module.exports = [
             return _.contains(savedSearch.allowed_privileges, 'update');
         };
 
-        // Extend filters, always adding the current collection id
-        var extendFilters = function (filters) {
-            filters = _.extend({ set : [] }, filters);
-            filters.set.push(savedSearch.id);
-            return filters;
-        };
-
         // whenever the GlobalFilter post query changes,
         // update the current list of posts
         $scope.$watch(function () {
@@ -53,11 +46,8 @@ module.exports = [
             $scope.filters = GlobalFilter.getPostQuery();
         });
 
-        // Reset GlobalFilter + add set filter
-        GlobalFilter.clearSelected();
-        $scope.filters = extendFilters({});
-
         // Set initial filter state
         $scope.filters = savedSearch.filter;
+        GlobalFilter.setSelected(savedSearch.filter);
     }
 ];

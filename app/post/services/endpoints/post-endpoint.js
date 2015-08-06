@@ -15,7 +15,8 @@ function (
     }, {
         query: {
             method: 'GET',
-            isArray: false
+            isArray: false,
+            paramSerializer: '$httpParamSerializerJQLike'
         },
         get: {
             method: 'GET',
