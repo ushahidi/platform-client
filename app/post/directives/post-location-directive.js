@@ -103,6 +103,12 @@ function (
 
                         $scope.searchLocationTerm = '';
                     });
+                },
+
+                clear: function () {
+                    $scope.model = null;
+                    $scope.center = center;
+                    $scope.markers = {};
                 }
             });
 

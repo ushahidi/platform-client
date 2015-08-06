@@ -191,7 +191,8 @@
                         id="values[{{attribute.key}}][{{key}}]"
                         name="values_{{attribute.key}}"
                         model="post.values[attribute.key][key]"
-                        required="attribute.required"
+                        ng-model="post.values[attribute.key][key]"
+                        ng-required="attribute.required"
                         ng-if="isLocation(attribute)"></post-location>
 
                     <!-- type: select -->
