@@ -36,15 +36,15 @@ function (
                     } else {
                         $translate('post.complete_draft').then(dfd.resolve);
                     }
+                } else {
+                    // Get incomplete stages
+                    var incompleteStages = _.filter(stages, function (stage) {
+                        return !_.contains(post.completed_stages, stage.id);
+                    });
+
+                    // Return lowest priority incomplete stage
+                    dfd.resolve(incompleteStages[0].label);
                 }
-
-                // Get incomplete stages
-                var incompleteStages = _.filter(stages, function (stage) {
-                    return !_.contains(post.completed_stages, stage.id);
-                });
-
-                // Return lowest priority incomplete stage
-                dfd.resolve(incompleteStages[0].label);
             });
         }
 
