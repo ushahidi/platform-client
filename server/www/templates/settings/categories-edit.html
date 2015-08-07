@@ -54,7 +54,7 @@
             <label class="input-label" translate>tag.choose_roles</label>
             <p class="small" translate>tag.editor.roles_help</p>
             <div class="checkbox" ng-repeat="role in roles">
-                <label>
+                <label class="checkbox-label" >
                     <input type="checkbox" value="role.name" checklist-model="tag.role" checklist-value="role.name">
                     {{role.display_name}}
                 </label>
