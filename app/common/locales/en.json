@@ -117,7 +117,7 @@
         "cumulative": "Show cumulative totals",
         "created": "Created time",
         "updated": "Updated time",
-        "select_one": "Select one",
+        "select_one": "Select one"
     },
     "nav" : {
         "about" : "About",
