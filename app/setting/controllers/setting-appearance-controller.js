@@ -1,14 +1,14 @@
 module.exports = [
     '$scope',
     '$translate',
+    'ConfigEndpoint',
 function (
     $scope,
-    $translate
+    $translate,
+    ConfigEndpoint
 ) {
-
     $translate('tool.manage_appearance').then(function (title) {
-      $scope.title = title;
-      $scope.$emit('setPageTitle', title);
-  });
-
+        $scope.title = title;
+        $scope.$emit('setPageTitle', title);
+    });
 }];

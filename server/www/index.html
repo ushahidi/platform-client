@@ -52,10 +52,10 @@
         <div id="bootstrap-app" class="hidden">
             <header class="header header-full overlay" role="banner" ng-controller="navigation">
                 <div class="container">
-                    <!-- @todo dynamic header image -->
-                    <!--<div class="hero-image">
-                         <img src="http://github.ushahidi.org/platform-pattern-library/assets/img/header-bk.jpg" alt="" />
-                    </div>-->
+                    <div class="hero-image">
+                         <img ng-show"site.image_header" ng-src="{{site.image_header}}" alt="" />
+                         <img ng-show="!site.image_header" src="img/default-header-bg.png" alt="" />
+                    </div>
 
                     <div class="color-overlay">
                         <div class="parallax">

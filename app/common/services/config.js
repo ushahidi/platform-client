@@ -1,9 +1,13 @@
 module.exports = [
     'ConfigEndpoint',
     'Util',
+    'Notify',
+    '_',
 function (
     ConfigEndpoint,
-    Util
+    Util,
+    Notify,
+    _
 ) {
 
     var saving = {};

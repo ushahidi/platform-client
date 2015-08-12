@@ -148,6 +148,7 @@
         "registration" : "Sign up",
         "register" : "Sign up",
         "logout" : "Logout",
+        "map_settings" : "Map Settings",
         "notifications" : "Notifications",
         "new_collection" : "New Collection",
         "notifications" : "Notifications",
@@ -339,8 +340,10 @@
         "manage_users" : "Manage Users",
         "manage_roles" : "Manage Roles",
         "manage_views" : "Manage Views",
-        "manage_appearance" : "Manage Appearance",
+        "manage_map_settings" : "Manage Map Settings",
+        "manage_appearance_settings" : "Manage Appearance Settings",
         "manage_plugins" : "Manage Plugins",
+        "appearance_settings" : "Appearance Settings",
         "map_settings" : "Map Settings",
         "site_settings" : "Site Settings",
         "tools" : "Tools"
@@ -349,6 +352,8 @@
         "admin_map_settings" : "Map Settings"
     },
     "settings": {
+        "appearance" : "Appearance Settings",
+        "appearance_header_image" : "Header Image",
         "site" : "Site Settings",
         "site_name" : "Site name",
         "site_email" : "Contact email address",

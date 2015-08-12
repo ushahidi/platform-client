@@ -16,10 +16,6 @@ function (
     $scope.pageKeywords = null;
     $scope.pageRobots = null;
 
-    $scope.site = ConfigEndpoint.get({ id: 'site' }, function (site) {
-        $scope.siteTitle = site.name;
-    });
-
     $rootScope.$on('setPageTitle', function (event, title) {
         $scope.pageTitle = null;
 
@@ -57,5 +53,6 @@ function (
             }
         }
     });
+
 
 }];
