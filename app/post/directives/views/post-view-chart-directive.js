@@ -59,7 +59,7 @@ function (
 
         var getPostStats = function (query) {
             query = query || $scope.filters;
-            var postQuery = _.extend(query, {
+            var postQuery = _.extend({}, query, {
                 'group_by' : $scope.groupBy
             });
 
