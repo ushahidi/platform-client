@@ -11,7 +11,9 @@ function (
 ) {
 
     var PostEndpoint = $resource(Util.apiUrl('/posts/:id/:extra'), {
-        id: '@id'
+        id: '@id',
+        order: 'desc',
+        orderby: 'created'
     }, {
         query: {
             method: 'GET',
