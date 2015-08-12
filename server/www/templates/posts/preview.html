@@ -37,7 +37,7 @@
             <p>{{currentStage}} <a ng-href="/posts/{{post.id}}/edit" ng-if="post.allowed_privileges.indexOf('update') !== -1" class="cta" translate>post.update</a></p>
         </div>
 
-        <span class="dropdown" dropdown ng-if="editableCollections.length > 0 || post.allowed_privileges.indexOf('update') !== -1">
+        <span class="dropdown" dropdown ng-show="editableCollections.length > 0 || post.allowed_privileges.indexOf('update') !== -1">
             <div class="actions-stacked hide-when-large">
                 <button type="button" class="button-secondary plus toggle-js dropdown-toggle" dropdown-toggle>
                     <span translate>post.options</span>
@@ -46,14 +46,14 @@
 
             <div class="actions-content toggle-content" dropdown-menu>
                 <ul class="dropdown-menu">
-                    <li ng-if="post.allowed_privileges.indexOf('update') !== -1" >
+                    <li ng-show="post.allowed_privileges.indexOf('update') !== -1" >
                         <a class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
                             <span translate>post.post_actions.edit</span>
                         </a>
                     </li>
-                    <li ng-if="editableCollections.length > 0" >
+                    <li ng-show="editableCollections.length > 0" >
                         <div class="custom-select">
-                            <select ng-model="$parent.addToCollectionModel">
+                            <select ng-model="addToCollectionModel">
                                 <option value="" translate>set.add_to_collection</option>
                                 <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
                             </select>

@@ -34,20 +34,20 @@
             <span ng-show="post.status == 'draft'"><i class="fa  fa-circle-o"></i> <span translate>post.unpublished</span></span>
         </p>
 
-        <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
+        <p ng-show="post.allowed_privileges.indexOf('update') !== -1">
             <a type="button" class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
                 <span translate>post.post_actions.edit</span>
             </a>
         </p>
 
-        <div ng-if="editableCollections.length > 0" class="custom-select">
+        <div ng-show="editableCollections.length > 0" class="custom-select">
             <select ng-model="addToCollectionModel">
                 <option value="" translate>set.add_to_collection</option>
                 <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
             </select>
         </div>
 
-        <p ng-if="post.allowed_privileges.indexOf('delete') !== -1">
+        <p ng-show="post.allowed_privileges.indexOf('delete') !== -1">
             <button type="button" class="button-secondary delete" ng-click="deletePost()">
                 <i class="fa  fa-trash"></i> <span translate>post.post_actions.delete</span>
             </button>
