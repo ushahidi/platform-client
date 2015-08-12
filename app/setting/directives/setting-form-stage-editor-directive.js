@@ -71,6 +71,9 @@ function (
                 .$promise
                 .then(function () {
                     $scope.isSettingsOpen = false;
+                }, function (errorResponse) {
+                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+                    errors && Notify.showAlerts(errors);
                 });
             };
             // End manage stage
@@ -91,6 +94,9 @@ function (
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
                     $location.url('/settings/forms/' + $scope.form.id + '/stages/' + stage.id);
+                }, function (errorResponse) {
+                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+                    errors && Notify.showAlerts(errors);
                 });
             };
             // End manage stage
@@ -197,6 +203,9 @@ function (
                 })).$promise.then(function (attributeUpdate) {
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
+                }, function (errorResponse) {
+                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+                    errors && Notify.showAlerts(errors);
                 });
             };
 
