@@ -25,6 +25,7 @@ angular.module('ushahidi.common', [
 .service('Geocoding', require('./services/geocoding.js'))
 .service('Languages', require('./services/languages.js'))
 .service('Registration', require('./services/registration.js'))
+.service('PasswordReset', require('./services/password-reset.js'))
 
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))

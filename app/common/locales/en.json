@@ -141,6 +141,9 @@
         "delete" : "Delete",
         "edit" : "Edit",
         "filters" : "Filters",
+        "forgottenyourpassword" : "Forgotten your password?",
+        "resetpassword" : "Reset password",
+        "resetmypassword" : "Reset my password",
         "forms" : "Forms",
         "help" : "Help",
         "home" : "Home",
@@ -403,11 +406,16 @@
         "number_of_users_shown" : "Number of users shown",
         "per_page" : "{{count}} users",
         "password" : "Password",
+        "new_password" : "New Password",
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
         "search_and_filter" : "Search & Filter Users",
         "username" : "Username",
+        "usernameOrEmail" : "Username or Email",
+        "passwordreset_instructions" : "Enter your username or email to request a password reset",
+        "passwordreset_confirm_instructions" : "If your email/username exists in our database, you will receive a password recovery email soon.",
+        "token" : "Password reset token",
         "valid" : {
             "full_name" : {
                 "required" : "Full name is required",
@@ -497,6 +505,10 @@
         },
         "savedsearch" : {
             "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?"
+        },
+        "passwordreset" : {
+            "failed" : "Password reset failed",
+            "success": "Your password has been reset"
         }
     },
     "empty": {
