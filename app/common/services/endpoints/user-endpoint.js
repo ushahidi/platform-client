@@ -2,11 +2,15 @@ module.exports = [
     '$resource',
     '$rootScope',
     'Util',
+    'CacheFactory',
 function (
     $resource,
     $rootScope,
-    Util
+    Util,
+    CacheFactory
 ) {
+    var cache = CacheFactory('userCache');
+
     var UserEndpoint = $resource(Util.apiUrl('/users/:id'), {
         id: '@id'
     }, {
@@ -16,6 +20,10 @@ function (
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data);
             }
+        },
+        get: {
+            method: 'GET',
+            cache: cache
         },
         update: {
             method: 'PUT'

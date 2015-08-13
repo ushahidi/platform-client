@@ -2,11 +2,14 @@ module.exports = [
     '$resource',
     'Util',
     '_',
+    'CacheFactory',
 function (
     $resource,
     Util,
-    _
+    _,
+    CacheFactory
 ) {
+    var cache = CacheFactory('configCache');
 
     var transformAndRemoveId = _.partial(Util.transformResponse, _, ['id']);
 
@@ -15,7 +18,8 @@ function (
     }, {
         get: {
             method: 'GET',
-            transformResponse: transformAndRemoveId
+            transformResponse: transformAndRemoveId,
+            cache: cache
         },
         update: {
             method: 'PUT',

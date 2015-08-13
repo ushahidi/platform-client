@@ -2,11 +2,14 @@ module.exports = [
     '$resource',
     '$rootScope',
     'Util',
+    'CacheFactory',
 function (
     $resource,
     $rootScope,
-    Util
+    Util,
+    CacheFactory
 ) {
+    var cache = CacheFactory('tagCache');
 
     var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {
         id: '@id'
@@ -17,6 +20,10 @@ function (
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }
+        },
+        get: {
+            method: 'GET',
+            cache: cache
         },
         update: {
             method: 'PUT'

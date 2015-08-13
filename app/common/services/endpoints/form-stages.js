@@ -1,10 +1,13 @@
 module.exports = [
     '$resource',
     'Util',
+    'CacheFactory',
 function (
     $resource,
-    Util
+    Util,
+    CacheFactory
 ) {
+    var cache = CacheFactory('stageCache');
 
     var FormStageEndpoint = $resource(Util.apiUrl('/forms/:formId/stages/:id'), {
         formId: '@formId',
@@ -17,7 +20,12 @@ function (
             isArray: true,
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
-            }
+            },
+            cache: cache
+        },
+        get: {
+            method: 'GET',
+            cache: cache
         },
         update: {
             method: 'PUT'
