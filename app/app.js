@@ -8,8 +8,6 @@ require('angular-resource');
 require('angular-translate');
 require('angular-ui-bootstrap/ui-bootstrap-tpls');
 require('angular-ui-bootstrap-datetimepicker');
-require('angular-moment');
-require('moment-timezone');
 require('angular-sanitize');
 require('angular-filter');
 require('angular-local-storage');
@@ -60,7 +58,6 @@ angular.module('app',
         'ui.bootstrap.datetimepicker',
         'ui.gravatar',
         'leaflet-directive',
-        'angularMoment',
         'angular.filter',
         'showdown',
         'ngGeolocation',
