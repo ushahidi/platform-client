@@ -30,7 +30,7 @@ require('./user-profile/user-profile-module.js');
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = process.env.BACKEND_URL || 'http://ushahidi-backend',
-    apiUrl = window.apiUrl = backendUrl + '/api/v2',
+    apiUrl = window.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
         'posts',
         'media',
@@ -95,7 +95,7 @@ angular.module('app',
     .factory('BootstrapConfig', function () {
         return window.bootstrapConfig || {};
     })
-    .run(function() {
+    .run(function () {
         // Once bootstrapped, show the app
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');

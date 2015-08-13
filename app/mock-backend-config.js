@@ -3,12 +3,12 @@ angular.module('e2e-mocks', ['ngMockE2E'])
     .run(['$httpBackend', 'CONST', 'URI', '_', function ($httpBackend, CONST, URI, _) {
 
         var resourceToJsonMapping = {
-            'posts': require('../mocked_backend/api/v2/posts.json'),
-            'config/map': require('../mocked_backend/api/v2/config/map.json'),
-            'sets': require('../mocked_backend/api/v2/sets.json'),
-            'users': require('../mocked_backend/api/v2/users.json'),
-            'users/me': require('../mocked_backend/api/v2/users/me.json'),
-            'config/site': require('../mocked_backend/api/v2/config/site.json')
+            'posts': require('../mocked_backend/api/v3/posts.json'),
+            'config/map': require('../mocked_backend/api/v3/config/map.json'),
+            'sets': require('../mocked_backend/api/v3/sets.json'),
+            'users': require('../mocked_backend/api/v3/users.json'),
+            'users/me': require('../mocked_backend/api/v3/users/me.json'),
+            'config/site': require('../mocked_backend/api/v3/config/site.json')
         },
 
         getResultForResource = function (resourceName, offset, limit) {
@@ -60,7 +60,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
                 queryParams = uri.query(true),
                 offset = parseInt(queryParams.offset) || 0,
                 limit = parseInt(queryParams.limit) || Infinity,
-                resourceName = uri.path().split('api/v2/')[1];
+                resourceName = uri.path().split('api/v3/')[1];
 
             return getResultForResource(resourceName, offset, limit);
         });
