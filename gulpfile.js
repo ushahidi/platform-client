@@ -108,14 +108,17 @@ gulp.task('sass', ['rename'], function () {
         .pipe(plumber({
             errorHandler: errorHandler
         }))
+        .pipe(sourcemaps.init())
         .pipe(sass({
             includePaths: [
                 'node_modules/'
             ],
-            sourceComments: 'map'
+            sourceComments: true,
+            outputStyle: 'compressed'
         }))
         .pipe(autoprefixer())
         .pipe(plumber.stop())
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(options.www + '/css'))
         .pipe(notify('CSS compiled'))
         .pipe(livereload())
