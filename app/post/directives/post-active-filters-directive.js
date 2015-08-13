@@ -1,9 +1,11 @@
 module.exports = [
     '$translate',
+    '$filter',
     'GlobalFilter',
     '_',
 function (
     $translate,
+    $filter,
     GlobalFilter,
     _
 ) {
@@ -64,6 +66,12 @@ function (
                         value: GlobalFilter.location_text ? GlobalFilter.location_text : value,
                         km: $scope.filters.within_km
                     });
+                },
+                created_before : function (value) {
+                    return $filter('date', 'longdate')(value);
+                },
+                created_after : function (value) {
+                    return $filter('date', 'longdate')(value);
                 }
             };
 
