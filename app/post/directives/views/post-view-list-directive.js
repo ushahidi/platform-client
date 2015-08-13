@@ -41,7 +41,9 @@ function (
             $scope.$watch(function () {
                 return $scope.filters;
             }, function (newValue, oldValue) {
-                getPostsForPagination();
+                if (newValue !== oldValue) {
+                    getPostsForPagination();
+                }
             });
 
             $scope.deleteSelectedPosts = function () {

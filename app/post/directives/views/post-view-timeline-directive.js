@@ -91,7 +91,9 @@ function (
         $scope.$watch(function () {
             return $scope.filters;
         }, function (newValue, oldValue) {
-            getPostStats();
+            if (newValue !== oldValue) {
+                getPostStats();
+            }
         });
 
         $scope.$watch(function () {
