@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/fonts/Lato/css/fonts.css" rel="stylesheet" type="text/css">
         <!-- @todo minify CSS -->
-        <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="/css/rtl-style.css" ng-disabled="! rtlEnabled" disabled="disabled">
+        <link rel="stylesheet" href="/css/style.css" ng-href="{{rtlEnabled ? '/css/rtl-style.css' : '/css/style.css'}}">
         <link rel="stylesheet" href="/css/vendor.css">
 
         <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
