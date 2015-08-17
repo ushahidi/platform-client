@@ -42,9 +42,3 @@ deploy:
       node: 0.12
       tags: true
       all_branches: true
-
-env:
-  TX_USERNAME:
-    secure: CLYb6szr2patN3sK45BQEaPRFG88w+8p/8ebMZEiq37JCe/X+O1JRISyPFuyMNYltbcGmy3MRL+eCY2V+WHUCa0+EMN270v+XDKLjA/OnW5cTWeY+38j6EdXgFcKcISySSbFXppDfZ3pgS0aDoTJ+oT7Prv3YyKzYFBgqCfxkJg=
-  TX_PASSWORD:
-    secure: bNhAOSNl828bYWOQEX8/bvU2bsH/KAxjPCr7MKt6n39Oxn1Myh3msMQ3qFiGe/XGQOvbcEUSREKnxxcnRhfFSfnsHGYzYkZschppP2X1OgKYFvyquYUFFdSuhZXYdWGKr8upTzFaHh7EvvhM8FVtKYqZawnFQSR0TBvDSCLYKiQ=
