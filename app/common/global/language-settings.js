@@ -9,9 +9,11 @@ function (
     BootstrapConfig,
     Languages
 ) {
+    var lang = BootstrapConfig.language || 'en-US';
+
     $rootScope.rtlEnabled = false;
 
-    $translate.use(BootstrapConfig.language).then(function (langKey) {
+    $translate.use(lang).then(function (langKey) {
         if (langKey) {
             $translate.preferredLanguage(BootstrapConfig.language);
 

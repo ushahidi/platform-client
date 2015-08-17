@@ -38,6 +38,8 @@ angular.module('ushahidi.common', [
 .config(require('./common-routes.js'))
 
 .run(require('./global/event-handlers.js'))
+// Use language settings from config
+.run(require('./global/language-settings.js'))
 ;
 
 // Load submodules

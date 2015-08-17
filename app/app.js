@@ -96,7 +96,6 @@ angular.module('app',
     .factory('BootstrapConfig', function () {
         return window.bootstrapConfig || {};
     })
-    .run(require('./common/language-settings.js')) // Use language settings from config
     .run(function () {
         // Once bootstrapped, show the app
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
