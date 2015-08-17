@@ -5,7 +5,7 @@
         <a ng-if="allSelectedOnCurrentPage()" ng-click="unselectAllPosts($event)" class="cta" translate>post.unselect_all</a>
 
         <div class="bulk-actions">
-            <div class="dropdown-group dropdown" dropdown>
+            <!-- <div class="dropdown-group dropdown" dropdown>
                 <button type="button" class="button-secondary dropdown toggle-js dropdown-toggle" dropdown-toggle>
                     <span>Mark As</span>
                 </button>
@@ -16,11 +16,11 @@
                         <li><a href>Duplicates</a></li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
 
-            <button type="button" class="button-secondary alt icon-only-when-small export">
+            <!-- <button type="button" class="button-secondary alt icon-only-when-small export">
                 <span>Export</span>
-            </button>
+            </button> -->
 
             <button type="button" class="button-secondary icon-only-when-small alt trash" ng-disabled="selectedItems.length <= 0" ng-click="deleteSelectedPosts()">
                 <span translate>post.post_actions.delete</span>
