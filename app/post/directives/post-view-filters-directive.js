@@ -24,7 +24,7 @@ function (
 
             $scope.geocodingBusy = false;
 
-            $scope.isAdmin = $rootScope.isAdmin();
+            $scope.isAdmin = $rootScope.isAdmin;
 
             // Filter bound through $scope.filter
             // Other filters are bound directly to GlobalFilter (tags, post type, etc)

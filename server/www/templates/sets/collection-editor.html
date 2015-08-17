@@ -20,7 +20,7 @@
             <select ng-options="view.name as view.display_name for view in views" ng-model="collection.view">
             </select>
         </div>
-        <div ng-if="isAdmin" class="">
+        <div ng-if="isAdmin()" class="">
             <label class="checkbox-label">
                 <input type="checkbox" ng-model="collection.featured">
                 <translate>set.featured</translate>
