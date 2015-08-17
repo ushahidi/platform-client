@@ -8,17 +8,29 @@ angular.module('ushahidi.common.offcanvas', [])
     openClass : 'navigation-open'
 })
 
+.service('OffCanvasServiceOffCanvasService', [function () {
+    // Shared scope for all instances of off-canvas-toggle
+    this.openScope = {
+        isOpen : false
+    };
+}])
+
 .directive('offCanvasToggle', function () {
     return {
-        controller: ['$scope', '$element', '$attrs', 'offCanvasConfig', '$document', function ($scope, $element, $attrs, offCanvasConfig, $document) {
+        controller: ['$scope', 'offCanvasConfig', 'OffCanvasService', '$document', function ($scope, offCanvasConfig, OffCanvasService, $document) {
             var self = this,
-              openClass = offCanvasConfig.openClass,
-              body = $document.find('body').eq(0);
+                openScope = OffCanvasService.openScope,
+                openClass = offCanvasConfig.openClass,
+                body = $document.find('body').eq(0);
+
+            // Init isOpen state
+            this.isOpen = false;
 
             this.toggle = function (open) {
-                $scope.isOpen = arguments.length ? !!open : !$scope.isOpen;
-                body.toggleClass(openClass);
-                return $scope.isOpen;
+                openScope.isOpen = arguments.length ? !!open : !openScope.isOpen;
+                body.toggleClass(openClass, openScope.isOpen);
+
+                return openScope.isOpen;
             };
 
             $scope.$on('$locationChangeSuccess', function () {
