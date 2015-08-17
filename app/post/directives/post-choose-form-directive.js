@@ -15,7 +15,7 @@ function (
         },
         templateUrl: 'templates/posts/choose-form.html',
         link: function ($scope) {
-            $scope.isAdmin = $rootScope.isAdmin;
+            $scope.isAdmin = $rootScope.isAdmin();
 
             FormEndpoint.query().$promise.then(function (forms) {
                 $scope.availableForms = forms;

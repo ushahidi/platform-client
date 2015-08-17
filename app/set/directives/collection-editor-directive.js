@@ -28,7 +28,7 @@ function (
             isOpen: '='
         },
         link: function ($scope, $element, $attrs) {
-            $scope.isAdmin = $rootScope.isAdmin;
+            $scope.isAdmin = $rootScope.isAdmin();
 
             $scope.roles = RoleHelper.roles();
             $scope.views = PostViewHelper.views();
