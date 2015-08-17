@@ -6,6 +6,7 @@ require('leaflet.locatecontrol/src/L.Control.Locate');
 require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
+require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap/ui-bootstrap-tpls');
 require('angular-datepicker');
 require('moment-timezone');
@@ -95,6 +96,7 @@ angular.module('app',
     .factory('BootstrapConfig', function () {
         return window.bootstrapConfig || {};
     })
+    .run(require('./common/language-settings.js')) // Use language settings from config
     .run(function () {
         // Once bootstrapped, show the app
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
