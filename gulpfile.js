@@ -35,7 +35,8 @@ var defaultOptions = {
     mockBackend: false,
     useChromeForKarma : false,
     backendUrl: false,
-    uglifyJs: true
+    uglifyJs: true,
+    compressedCSS: true
 };
 
 function getBooleanOption(value, defaultValue) {
@@ -54,6 +55,7 @@ var options = {
     useChromeForKarma   : gutil.env['karma-chrome'] || getBooleanOption(process.env.KARMA_CHROME, defaultOptions.useChromeForKarma),
     backendUrl          : gutil.env['backend-url'] || process.env.BACKEND_URL,
     uglifyJs            : gutil.env['uglify-js'] || getBooleanOption(process.env.UGLIFY_JS, defaultOptions.uglifyJs),
+    compressedCSS       : gutil.env['compressed-css'] || getBooleanOption(process.env.COMPRESSED_CSS, defaultOptions.compressedCSS),
     www                 : 'server/www'
 };
 
@@ -132,8 +134,15 @@ gulp.task('sass', ['rename'], function () {
  */
 gulp.task('css', [], function () {
     return gulp.src([
-                    'node_modules/platform-pattern-library/assets/css/*'
-                    ])
+            options.compressedCSS ? 'node_modules/platform-pattern-library/assets/css/*.min.css' : 'node_modules/platform-pattern-library/assets/css/*.css',
+            'node_modules/platform-pattern-library/assets/css/*.css.map'
+            ])
+        .pipe(rename(function (path) {
+            // If using compressedCSS, string the .min from filenames
+            if (options.compressedCSS) {
+                path.basename = path.basename.replace('.min', '');
+            }
+        }))
         .pipe(gulp.dest(options.www + '/css'));
 });
 
