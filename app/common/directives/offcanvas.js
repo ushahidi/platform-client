@@ -8,7 +8,7 @@ angular.module('ushahidi.common.offcanvas', [])
     openClass : 'navigation-open'
 })
 
-.service('OffCanvasServiceOffCanvasService', [function () {
+.service('OffCanvasService', [function () {
     // Shared scope for all instances of off-canvas-toggle
     this.openScope = {
         isOpen : false
