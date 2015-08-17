@@ -169,6 +169,12 @@ gulp.task('rename-nvd3', function () {
         .pipe(gulp.dest('node_modules/nvd3/build'))
         ;
 });
+gulp.task('rename-angular-datepicker', function () {
+    return gulp.src(['node_modules/angular-datepicker/dist/index.css'])
+        .pipe(rename('_index.scss'))
+        .pipe(gulp.dest('node_modules/angular-datepicker/dist'))
+        ;
+});
 
 /**
  * Copy icon files for leaflet from node_modules into server/www/css/images
@@ -184,7 +190,8 @@ gulp.task('rename', [
     'rename-colorpicker',
     'rename-leaflet-markercluster',
     'rename-leaflet-markercluster-default',
-    'rename-nvd3'
+    'rename-nvd3',
+    'rename-angular-datepicker'
     ], function () {});
 
 /**

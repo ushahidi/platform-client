@@ -151,37 +151,25 @@
                 <div ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
                     <!-- type: date -->
                     <div class="input-inline" ng-if="isDate(attribute)">
-                        <input
-                            class="form-control"
-                            id="values[{{attribute.key}}][{{key}}]"
-                            name="values_{{attribute.key}}"
-                            type="text"
-                            placeholder="{{attribute.label}}"
+                        <input 
+                            type="text" 
+                            view="date" 
+                            min-view="date" 
+                            date-time="post.values[attribute.key][key]" 
+                            format="yyyy-MM-dd" 
                             ng-model="post.values[attribute.key][key]"
-                            ng-required="attribute.required"
-                            ng-click="openDatePicker($event, attribute, key)"
-
-                            datepicker-popup="yyyy-MM-dd"
-                            is-open="datepicker[attribute.key][key]"
-                            datepicker-options="{ showWeeks: false }"
-
-                            ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
-                        />
-                        <button type="button" class="button-secondary" ng-click="openDatePicker($event, attribute, key)"><i class="fa fa-calendar"></i></button>
+                            auto-close="true"
+                         />
                     </div>
 
                     <!-- type: datetime -->
                     <div ng-if="isDateTime(attribute)" class="">
-                        <datetimepicker
+                        <input 
+                            type="text" 
+                            date-time="post.values[attribute.key][key]" 
                             ng-model="post.values[attribute.key][key]"
-                            showWeeks="false"
-                            hour-step="1"
-                            minute-step="10"
-                            show-meridian="false"
-                            mousewheel="false"
-                            date-format="yyyy-MM-dd"
-
-                            >
+                            auto-close="true"
+                        />
                     </div>
 
                     <!-- type: location -->

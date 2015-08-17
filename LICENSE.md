@@ -27,7 +27,6 @@ library is linked to its license below:
 * [Angular](https://github.com/angular/angular.js/blob/master/LICENSE)
 * [Angular Leaflet Directive](https://github.com/tombatossals/angular-leaflet-directive/blob/master/LICENSE)
 * [Angular Markdown Directive](https://github.com/ushahidi/angular-markdown-directive)
-* [Angular Moment](https://github.com/urish/angular-moment)
 * [Angular Resource]
 * [Angular Translate](https://github.com/angular-translate/angular-translate/blob/master/LICENSE)
 * [Gravatar](https://github.com/emerleite/node-gravatar/blob/master/Readme.md#license)

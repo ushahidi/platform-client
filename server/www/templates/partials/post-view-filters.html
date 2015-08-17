@@ -126,11 +126,11 @@
                         <div class="accordion-menu-content date-range" accordion-content>
                             <div class="filter-start-date">
                                 <label for="start" class="delta-alt" translate>global_filter.start_date</label>
-                                <input type="text" name="start" id="start" ng-model="filter.created_after" is-open="startDateOpen" ng-focus="uiOpenDate('startDate')" datepicker-popup="yyyy-MM-dd" max-date="filter.created_before" datepicker-options="{ showWeeks: false }">
+                                <input type="text" name="start" id="start" view="date" min-view="date" max-date={{filter.created_before.toISOString()}} date-time="filter.created_after" format="yyyy-MM-dd" ng-model="filter.created_after" auto-close="true" />
                             </div>
                             <div class="filter-end-date">
                                 <label for="end" class="delta-alt" translate>global_filter.end_date</label>
-                                <input type="text" name="end" id="end" ng-model="filter.created_before" is-open="endDateOpen" ng-focus="uiOpenDate('endDate')" datepicker-popup="yyyy-MM-dd" min-date="filter.created_after" datepicker-options="{ showWeeks: false }">
+                                <input type="text" name="end" id="end" view="date" min-view="date" min-date={{filter.created_after.toISOString()}} date-time="filter.created_before" format="yyyy-MM-dd" ng-model="filter.created_before" auto-close="true" />
                             </div>
                         </div>
                     </li>

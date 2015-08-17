@@ -7,7 +7,8 @@ require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
 require('angular-ui-bootstrap/ui-bootstrap-tpls');
-require('angular-ui-bootstrap-datetimepicker');
+require('angular-datepicker');
+require('moment-timezone');
 require('angular-sanitize');
 require('angular-filter');
 require('angular-local-storage');
@@ -54,8 +55,7 @@ angular.module('app',
         'LocalStorageModule',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
-        'ui.bootstrap.datepicker',
-        'ui.bootstrap.datetimepicker',
+        'datePicker',
         'ui.gravatar',
         'leaflet-directive',
         'angular.filter',
