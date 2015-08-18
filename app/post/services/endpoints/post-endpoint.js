@@ -46,7 +46,8 @@ function (
         stats: {
             method: 'GET',
             url: Util.apiUrl('/posts/:id/stats'),
-            isArray: false
+            isArray: false,
+            paramSerializer: '$httpParamSerializerJQLike'
         }
     });
 
