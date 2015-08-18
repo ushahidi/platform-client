@@ -20,7 +20,13 @@
             <select ng-options="view.name as view.display_name for view in views" ng-model="savedSearch.view">
             </select>
         </div>
-        <div ng-show="savedSearch.id">
+        <div ng-if="isAdmin()" class="">
+            <label class="checkbox-label">
+                <input type="checkbox" ng-model="savedSearch.featured">
+                <translate>set.featured_savedsearch</translate>
+            </label>
+        </div>
+        <div ng-show="savedSearch.id" class="clearfix">
         <label class="input-label" translate>set.delete_savedsearch</label>
             <button ng-click="deleteSavedSearch()" type="button" class="button-secondary icon-only-when-small alt trash">
             <span translate>nav.delete</span>

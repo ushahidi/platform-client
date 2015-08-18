@@ -14,9 +14,7 @@ function (
 
         restrict: 'E',
         replace: true,
-        scope: {
-            filters: '='
-        },
+        scope: true,
         templateUrl: 'templates/posts/active-filters.html',
         link: function ($scope) {
 
@@ -33,9 +31,9 @@ function (
             };
 
             $scope.$watch(function () {
-                return $scope.filters;
+                return JSON.stringify(GlobalFilter.getPostQuery());
             }, function (filters) {
-                var activeFilters = angular.copy(filters);
+                var activeFilters = angular.copy(GlobalFilter.getPostQuery());
 
                 if (activeFilters.status === 'all') {
                     delete activeFilters.status;
@@ -64,7 +62,7 @@ function (
                 center_point : function (value) {
                     return $translate.instant('global_filter.filter_tabs.location_value', {
                         value: GlobalFilter.location_text ? GlobalFilter.location_text : value,
-                        km: $scope.filters.within_km
+                        km: GlobalFilter.within_km
                     });
                 },
                 created_before : function (value) {

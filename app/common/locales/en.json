@@ -3,6 +3,7 @@
         "powered_by_ushahidi" : "Powered by Ushahidi.",
         "support" : "Support",
         "documentation": "Documentation",
+        "report_a_bug": "Report a bug",
         "forbidden": "Sorry, you're not allowed to do that."
     },
     "form": {
@@ -300,7 +301,8 @@
         "delete_savedsearch" : "Delete this Saved Search",
         "default_view" : "Default view",
         "edit_settings" : "Edit Settings",
-        "featured" : "This collection is featured",
+        "featured_collection" : "This collection is featured",
+        "featured_savedsearch" : "This saved search is featured",
         "add_to_collection" : "Add to Collection",
         "empty_list_collections" : "No collections",
         "empty_list_savedsearches" : "No saved searches",

@@ -8,7 +8,7 @@
         <label class="input-label" translate>set.description</label>
         <textarea ng-model="cpyCollection.description" />
 
-        <label class="input-label" translate>set.visible_to</label>
+        <label class="input-label" translate>set.visible_to_collection</label>
         <div class="custom-select">
             <select ng-options="role.name as role.display_name for role in roles" ng-model="cpyCollection.visible_to[0]">
                 <option value="" translate>post.modify.everyone</option>
@@ -23,11 +23,11 @@
         <div ng-if="isAdmin()" class="">
             <label class="checkbox-label">
                 <input type="checkbox" ng-model="cpyCollection.featured">
-                <translate>set.featured</translate>
+                <translate>set.featured_collection</translate>
             </label>
         </div>
-        <div ng-show="cpyCollection.id">
-          <label class="input-label" translate>set.delete_colletion</label>
+        <div ng-show="collection.id" class="clearfix">
+          <label class="input-label" translate>set.delete_collection</label>
               <button ng-click="deleteCollection()" type="button" class="button-secondary icon-only-when-small alt trash">
                 <span translate>nav.delete</span>
               </button>
