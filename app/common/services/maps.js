@@ -17,7 +17,7 @@ function (
     var layers = {
         baselayers : {
             MapQuest: {
-                name: 'MapQuest',
+                name: 'Map',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png',
                 type: 'xyz',
                 layerOptions: {
@@ -26,7 +26,7 @@ function (
                 }
             },
             MapQuestAerial: {
-                name: 'MapQuest Aerial',
+                name: 'Satellite',
                 url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png',
                 type: 'xyz',
                 layerOptions: {
@@ -35,7 +35,7 @@ function (
                 }
             },
             hOSM: {
-                name: 'Humanitarian OSM',
+                name: 'Humanitarian',
                 url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
                 type: 'xyz',
                 layerOptions: {
