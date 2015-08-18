@@ -3,6 +3,10 @@ notifications:
   hipchat:
     rooms:
       secure: LW5XPoH6eOe/VPAVg1vOUk0jvWm662w8R30Wna0ZtcE2ZV40EHmyJfY7PLDA3/o/wme0vHhZh+cKWjbHbhF7RFrYAkNl6RLgmRkvMhaI/UKpztWRfIuopiJg2snHT0bH3nODm/2l9iSyhBc39lpxARFAhsUoN6j5zLyLyqfA7Xg=
+    template:
+      - '<a href="%{build_url}">%{repository}#%{build_number}</a> (%{branch} - <a href="%{compare_url}">%{commit}</a> : %{author}): %{message}'
+    format: html
+    notify: true
 addons:
   sauce_connect: true
 language: node_js
@@ -42,9 +46,3 @@ deploy:
       node: 0.12
       tags: true
       all_branches: true
-
-env:
-  TX_USERNAME:
-    secure: CLYb6szr2patN3sK45BQEaPRFG88w+8p/8ebMZEiq37JCe/X+O1JRISyPFuyMNYltbcGmy3MRL+eCY2V+WHUCa0+EMN270v+XDKLjA/OnW5cTWeY+38j6EdXgFcKcISySSbFXppDfZ3pgS0aDoTJ+oT7Prv3YyKzYFBgqCfxkJg=
-  TX_PASSWORD:
-    secure: bNhAOSNl828bYWOQEX8/bvU2bsH/KAxjPCr7MKt6n39Oxn1Myh3msMQ3qFiGe/XGQOvbcEUSREKnxxcnRhfFSfnsHGYzYkZschppP2X1OgKYFvyquYUFFdSuhZXYdWGKr8upTzFaHh7EvvhM8FVtKYqZawnFQSR0TBvDSCLYKiQ=
