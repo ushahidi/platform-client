@@ -32,7 +32,7 @@ function (
         $scope.processing = true;
         var response = TagEndpoint.save(tag, function () {
             if (response.id) {
-                $location.path('/tools/categories/' + response.id);
+                $location.path('/settings/categories/' + response.id);
             }
         }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
