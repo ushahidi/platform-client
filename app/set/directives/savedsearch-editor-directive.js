@@ -34,6 +34,8 @@ function (
                 };
             }
 
+            $scope.isAdmin = $rootScope.isAdmin;
+
             $scope.roles = RoleHelper.roles();
             $scope.views = PostViewHelper.views();
 
