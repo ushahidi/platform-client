@@ -3,30 +3,30 @@
 <modal title="set.create_collection" visible="isOpen.data">
     <div class="collection-info">
         <label class="input-label" translate>set.name_collection</label>
-        <input type="text" ng-model="collection.name" />
+        <input type="text" ng-model="cpyCollection.name" />
 
         <label class="input-label" translate>set.description</label>
-        <textarea ng-model="collection.description" />
+        <textarea ng-model="cpyCollection.description" />
 
         <label class="input-label" translate>set.visible_to</label>
         <div class="custom-select">
-            <select ng-options="role.name as role.display_name for role in roles" ng-model="collection.visible_to[0]">
+            <select ng-options="role.name as role.display_name for role in roles" ng-model="cpyCollection.visible_to[0]">
                 <option value="" translate>post.modify.everyone</option>
             </select>
         </div>
 
         <label class="input-label" translate>set.default_view</label>
         <div class="custom-select">
-            <select ng-options="view.name as view.display_name for view in views" ng-model="collection.view">
+            <select ng-options="view.name as view.display_name for view in views" ng-model="cpyCollection.view">
             </select>
         </div>
         <div ng-if="isAdmin()" class="">
             <label class="checkbox-label">
-                <input type="checkbox" ng-model="collection.featured">
+                <input type="checkbox" ng-model="cpyCollection.featured">
                 <translate>set.featured</translate>
             </label>
         </div>
-        <div ng-show="collection.id">
+        <div ng-show="cpyCollection.id">
           <label class="input-label" translate>set.delete_colletion</label>
               <button ng-click="deleteCollection()" type="button" class="button-secondary icon-only-when-small alt trash">
                 <span translate>nav.delete</span>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="modal-submit clearfix">
-        <button type="button" class="button-primary" ng-click="saveCollection(collection)" translate>set.save_set</button>
+        <button type="button" class="button-primary" ng-click="saveCollection(cpyCollection)" translate>set.save_set</button>
     </div>
 </modal>
 </div>

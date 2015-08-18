@@ -32,13 +32,22 @@ function (
 
             $scope.roles = RoleHelper.roles();
             $scope.views = PostViewHelper.views();
-
+            
             // Set default view for Collection to be Map
             if (!$scope.collection) {
                 $scope.collection = {};
                 $scope.collection.view = 'map';
                 $scope.collection.visible_to = [];
             }
+            $scope.cpyCollection = _.clone($scope.collection);
+
+            $scope.$watch( function () {
+                return $scope.isOpen.data;
+            }, function (newValue, oldValue) {
+                if (!newValue) {
+                    $scope.cpyCollection = _.clone($scope.collection);
+                }
+            });
             $scope.saveCollection = function (collection) {
                 // Are we creating or updating?
                 var persist = collection.id ? CollectionEndpoint.update : CollectionEndpoint.save;
@@ -54,6 +63,7 @@ function (
                 .$promise
                 .then(function (collection) {
                     // and close the modal
+                    $scope.collection = _.clone(collection);
                     $scope.isOpen.data = false;
                     $rootScope.$broadcast('event:collection:update');
                 }, function (errorResponse) {
