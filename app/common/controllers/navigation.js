@@ -27,7 +27,6 @@ function (
     });
 
     $rootScope.$on('$routeChangeSuccess', function (ev, current) {
-        console.log(current);
         if (current.$$route &&
                 (current.$$route.originalPath == '/views/:view?' || current.$$route.originalPath == '/')
             ) {
