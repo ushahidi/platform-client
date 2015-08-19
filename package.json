@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-client",
-  "version": "3.0.0-beta.18",
+  "version": "3.0.0",
   "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/ushahidi/platform-client.git"
   },
   "author": "Ushahidi",
-  "license": "AGPL",
+  "license": "AGPL-3.0",
   "homepage": "https://github.com/ushahidi/platform-client",
   "scripts": {
     "build": "gulp build",
