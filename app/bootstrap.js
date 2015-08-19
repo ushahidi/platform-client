@@ -3,9 +3,9 @@ require('angular-lazy-bootstarp/src/bootstrap.js');
 // Load site config THEN bootstrap the app
 angular.lazy('app')
     .resolve(['$q', '$http', function ($q, $http) {
-        return $http.get(window.apiUrl + '/config/site')
+        return $http.get(window.ushahidi.apiUrl + '/config/site')
         .then(function (response) {
-            window.bootstrapConfig = response.data;
+            window.ushahidi.bootstrapConfig = response.data;
         });
     }])
     .loading(function () {
