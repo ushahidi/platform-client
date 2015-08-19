@@ -1,15 +1,14 @@
 <main class="page-content has-aside" role="main">
     <ul class="breadcrumb">
       <li><a ng-href="/settings" translate>nav.settings</a></li>
-      <li class="active" translate>nav.tags</li>
+      <li><a ng-href="/settings/categories" translate>nav.tags</a></li>
+      <li class="active">{{title}}</li>
     </ul>
 
     <div class="main-col">
 
         <h1 class="inline">{{title}}</h1>
-        <a href="javascript:;" ng-click="goBack()">
-            <i class="fa fa-arrow-left"></i><span translate>nav.back</span>
-        </a>
+
         <form>
 
             <label class="input-label" for="name" translate>tag.editor.name</label>
@@ -19,27 +18,18 @@
                 ng-model="tag.tag"
                 required>
 
-            <label class="input-label" for="slug" translate>tag.editor.slug</label>
+            <!-- <label class="input-label" for="slug" translate>tag.editor.slug</label>
             <p class="small" translate>tag.editor.slug_help</p>
             <input id="slug" type="text" class="form-control"
                 ng-minlength="3"
                 ng-maxlength="150"
                 ng-model="tag.slug"
-                required>
+                required> -->
 
             <label class="input-label" for="description" translate>tag.editor.description</label>
             <input id="description" type="text" class="form-control"
                 ng-maxlength="150"
                 ng-model="tag.description">
-
-            <label class="input-label" for="type" translate>tag.editor.type</label>
-            <div class="custom-select">
-                <select id="type"
-                    ng-model="tag.type"
-                    ng-options="type.name as type.title for type in types"
-                    required>
-                </select>
-            </div>
 
             <label class="input-label" for="color" translate>tag.editor.color</label>
             <input id="color" type="text" class="form-control"
@@ -53,14 +43,14 @@
 
             <label class="input-label" translate>tag.choose_roles</label>
             <p class="small" translate>tag.editor.roles_help</p>
-            <div class="checkbox" ng-repeat="role in roles">
+            <div class="clearfix" ng-repeat="role in roles">
                 <label class="checkbox-label" >
                     <input type="checkbox" value="role.name" checklist-model="tag.role" checklist-value="role.name">
                     {{role.display_name}}
                 </label>
             </div>
 
-            <div class="save-button">
+            <div class="save-button clearfix">
                 <button class="save" ng-click="saveTag(tag)" ng-disabled="form.$invalid || processing">
                     <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
                     <span translate>tag.save</span>

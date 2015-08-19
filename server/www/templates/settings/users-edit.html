@@ -2,15 +2,13 @@
 
     <ul class="breadcrumb">
       <li><a ng-href="/settings" translate>nav.settings</a></li>
-      <li class="active" translate>nav.users</li>
+      <li><a ng-href="/settings/users" translate>nav.users</a></li>
+      <li class="active">{{title}}</li>
     </ul>
 
     <div class="main-col">
 
         <h1 class="inline">{{title}}</h1>
-        <a href="javascript:;" ng-click="goBack()">
-            <i class="fa fa-arrow-left"></i><span translate>nav.back</span>
-        </a>
 
         <div class="divider white"></div>
         <form name="form">

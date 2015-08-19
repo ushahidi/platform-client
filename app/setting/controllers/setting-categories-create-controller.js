@@ -25,7 +25,7 @@ function (
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     $scope.roles = RoleHelper.roles();
 
-    $scope.tag = {type: 'category'};
+    $scope.tag = { type: 'category', icon: 'tag' };
     $scope.processing = false;
 
     $scope.saveTag = function (tag) {
