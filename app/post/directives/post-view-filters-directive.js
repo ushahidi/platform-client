@@ -29,7 +29,7 @@ function (
             // Filter bound through $scope.filter
             // Other filters are bound directly to GlobalFilter (tags, post type, etc)
             var available_filters = [
-                'q', 'created_after', 'created_before', 'center_point', 'within_km', 'status'
+                'q', 'created_after', 'created_before', 'center_point', 'within_km'
             ],
 
             filter_transform = {
