@@ -28,8 +28,8 @@
     <div class="post-type-fields">
         <div class="post-type-field settings-listing" ng-repeat="stage in form.stages track by stage.id">
             <div class="upvote-downvote">
-                <button type="button" class="button-secondary icon-only alt upvote" ng-click="changePriority(attribute, -1)"></button>
-                <button type="button" class="button-secondary icon-only alt downvote" ng-click="changePriority(attribute, +1)"></button>
+                <button type="button" class="button-secondary icon-only alt upvote" ng-click="changePriority(stage, -1)"></button>
+                <button type="button" class="button-secondary icon-only alt downvote" ng-click="changePriority(stage, +1)"></button>
             </div>
             <h3><a ng-href="/settings/forms/{{formId}}/stages/{{stage.id}}" ng-model="stage.label">{{ stage.label }}</a></h3>
             <div class="actions">
