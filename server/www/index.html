@@ -20,6 +20,9 @@
         <div id="bootstrap-loading">
             <header class="header header-full overlay" role="banner">
                 <div class="container">
+                    <div class="hero-image">
+                         <img src="img/default-header-bg.png" alt="" />
+                    </div>
                     <div class="color-overlay">
                         <div class="parallax">
                             <h1 class="beta"><i class="fa fa-refresh fa-4 fa-spin"></i></h1>
@@ -32,6 +35,9 @@
         <div id="bootstrap-error" class="hidden">
             <header class="header header-full overlay" role="banner">
                 <div class="container">
+                    <div class="hero-image">
+                         <img src="img/default-header-bg.png" alt="" />
+                    </div>
                     <div class="color-overlay">
                         <div class="parallax">
                             <h1 class="beta"><img style="max-width: 50px; margin: auto;" src="img/ushahidi-logo.svg" alt="Ushahidi Logo"></h1>
@@ -49,7 +55,7 @@
         </div>
 
         <div id="bootstrap-app" class="hidden">
-            <header class="header header-full overlay" role="banner" ng-controller="navigation">
+            <header class="header header-full overlay" ng-class="{ 'header-full' : isHome, 'header-compact': !isHome }" role="banner" ng-controller="navigation">
                 <div class="container">
                     <div class="hero-image">
                          <img ng-show"site.image_header" ng-src="{{site.image_header}}" alt="" />

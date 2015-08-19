@@ -11,6 +11,7 @@ function (
     BootstrapConfig,
     $rootScope
 ) {
+    $scope.isHome = true;
 
     // Start with preloaded config
     $scope.site = BootstrapConfig;
@@ -23,6 +24,17 @@ function (
 
     $rootScope.$on('event:update:header', function () {
         reloadSiteConfig();
+    });
+
+    $rootScope.$on('$routeChangeSuccess', function (ev, current) {
+        console.log(current);
+        if (current.$$route &&
+                (current.$$route.originalPath == '/views/:view?' || current.$$route.originalPath == '/')
+            ) {
+            $scope.isHome = true;
+        } else {
+            $scope.isHome = false;
+        }
     });
 
     reloadSiteConfig();
