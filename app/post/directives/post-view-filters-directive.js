@@ -14,7 +14,7 @@ function (
             halfWidth: '=',
             isLoading: '='
         },
-        templateUrl: 'templates/partials/post-view-filters.html',
+        templateUrl: 'templates/posts/post-view-filters.html',
         link: function ($scope, $element, $attrs) {
             $scope.filter = {};
             $scope.globalFilter = GlobalFilter;

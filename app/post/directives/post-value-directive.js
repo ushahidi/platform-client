@@ -7,7 +7,7 @@ module.exports = ['PostEndpoint', function (PostEndpoint) {
             value: '=',
             attribute: '='
         },
-        templateUrl: 'templates/partials/post-detail-value.html',
+        templateUrl: 'templates/posts/post-detail-value.html',
         link: function ($scope) {
             if ($scope.attribute.type === 'relation') {
                 $scope.value = $scope.value.map(function (entry) {

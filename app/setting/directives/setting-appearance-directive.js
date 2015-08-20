@@ -26,7 +26,7 @@ function (
             formId: '@',
             formTemplate: '@'
         },
-        templateUrl: 'templates/partials/appearance-editor.html',
+        templateUrl: 'templates/settings/appearance-editor.html',
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = {};
             $scope.appearance = ConfigEndpoint.get({ id: 'site' });

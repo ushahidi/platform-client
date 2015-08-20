@@ -25,7 +25,7 @@ function (
             formTemplate: '@',
             stageId: '@'
         },
-        templateUrl: 'templates/partials/form-stage-editor.html',
+        templateUrl: 'templates/settings/forms/form-stage-editor.html',
         link: function ($scope, $element, $attrs) {
             var stageId = $attrs.stageId;
 

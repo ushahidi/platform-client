@@ -24,7 +24,7 @@ function (
             formId: '@',
             formTemplate: '@'
         },
-        templateUrl: 'templates/partials/form-editor.html',
+        templateUrl: 'templates/settings/forms/form-editor.html',
         link: function ($scope, $element, $attrs) {
             // If we're editing an existing form,
             // load the form info and all the fields.
