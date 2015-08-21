@@ -87,8 +87,7 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
         setIsOpen = angular.noop,
         toggleInvoker = $attrs.onToggle ? $parse($attrs.onToggle) : angular.noop,
         appendToBody = false,
-        keynavEnabled = false,
-        selectedOption = null;
+        keynavEnabled = false;
 
     this.init = function (element) {
         self.$element = element;
@@ -114,7 +113,7 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
     };
 
     this.toggle = function (open) {
-        return scope.isOpen = arguments.length ? !!open : !scope.isOpen;
+        return (scope.isOpen = arguments.length ? !!open : !scope.isOpen);
     };
 
     // Allow other directives to watch status

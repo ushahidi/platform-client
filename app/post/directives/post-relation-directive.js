@@ -46,7 +46,7 @@ function (
             };
 
             $scope.clearPost = function () {
-                $scope.model = null
+                $scope.model = null;
                 $scope.selectedPost = null;
             };
         }

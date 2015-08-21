@@ -11,7 +11,6 @@ var gulp         = require('gulp'),
     watchify    = require('watchify'),
     envify       = require('envify/custom'),
     fs           = require('fs'),
-    merge        = require('merge'),
     karma        = require('karma').server,
     buffer       = require('vinyl-buffer'),
     uglify       = require('gulp-uglify'),
@@ -423,7 +422,7 @@ gulp.task('transifex-download', function () {
     config.password = config.password || process.env.TX_PASSWORD;
 
     if (!config.username || !config.password) {
-        throw "Missing transifex username and password";
+        throw 'Missing transifex username and password';
     }
 
     var transifex = new Transifex({

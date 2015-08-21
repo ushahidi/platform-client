@@ -23,7 +23,7 @@ function (
         var dfd = $q.defer();
 
         if (!post.form || !post.form.id) {
-            // if there is no pre-defined structure in place (eg from SMS, stage is "Structure"), and the
+            // if there is no pre-defined structure in place (eg from SMS, stage is 'Structure'), and the
             // update link enables you to select a type of structure
             $translate('post.structure').then(dfd.resolve);
         } else {
@@ -82,7 +82,7 @@ function (
 
             scope.editableCollections = CollectionEndpoint.editableByMe();
 
-            scope.addToCollectionModel = "";
+            scope.addToCollectionModel = '';
             var addToCollection = scope.addToCollection = function (collectionId) {
                 CollectionEndpoint.addPost({'collectionId': collectionId, 'id': scope.post.id});
             };
@@ -93,7 +93,7 @@ function (
                 if (collectionId) {
                     addToCollection(collectionId);
                 }
-                scope.addToCollectionModel = "";
+                scope.addToCollectionModel = '';
             });
 
 

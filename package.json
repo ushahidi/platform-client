@@ -16,7 +16,8 @@
     "start": "gulp node-server",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor test/protractor-conf.js"
+    "protractor": "protractor test/protractor-conf.js",
+    "jshint": "jshint ."
   },
   "devDependencies": {
     "body-parser": "^1.9.2",
@@ -42,6 +43,7 @@
     "gulp-uglify": "^1.0.2",
     "gulp-util": "^3.0.6",
     "jscs": "^2.1.0",
+    "jshint": "^2.8.0",
     "karma": "^0.13.9",
     "karma-chrome-launcher": "*",
     "karma-commonjs": "*",
@@ -49,7 +51,6 @@
     "karma-firefox-launcher": "*",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
-    "merge": "^1.2.0",
     "protractor": "^2.1.0",
     "serve-static": "^1.10.0",
     "underscore.string": "^2.3.3",

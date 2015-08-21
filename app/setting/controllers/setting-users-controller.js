@@ -30,7 +30,7 @@ function (
     $scope.getRole = RoleHelper.getRole;
 
     $scope.filter = {
-        role: "",
+        role: '',
         q: null
     };
 
@@ -132,7 +132,7 @@ function (
     $scope.pageChanged = getUsersForPagination;
     $scope.applyFilters = function () {
         getUsersForPagination();
-    }
+    };
     // --- end: definitions
 
 
