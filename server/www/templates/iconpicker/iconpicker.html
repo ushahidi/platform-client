@@ -1,0 +1,10 @@
+<span>
+    <button type="button" class="button-toggle" dropdown-toggle></button>
+    <ul class="tabs-menu-list" dropdown-menu>
+        <li ng-repeat="icon in iconSet">
+              <button type="button" ng-click="$parent.iconSelected = icon">
+                  <span class="{{ icon }}"></span>
+              </button>
+        </li>
+    </ul>
+</span>
