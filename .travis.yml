@@ -30,6 +30,8 @@ before_script:
 script:
 - gulp test
 - npm run protractor
+- gulp jscs
+- npm run jshint
 after_script:
 - gulp send-stats-to-coveralls
 before_deploy:

@@ -54,9 +54,9 @@ describe('users management', function () {
                             });
 
                             it('should exist and have the correct role name as text', function () {
-                                roleField.getText().then(function(text) { // Wait for promise to return
+                                roleField.getText().then(function (text) { // Wait for promise to return
                                     expect(text.toLowerCase()).toEqual('admin');
-                                })
+                                });
                             });
 
                         });

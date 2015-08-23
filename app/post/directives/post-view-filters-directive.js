@@ -135,7 +135,7 @@ function (
                     defaults = GlobalFilter.getDefaults();
 
                 angular.forEach(defaults, function (value, key) {
-                    if ($scope.filter[key] && defaults[key] != $scope.filter[key]) {
+                    if ($scope.filter[key] && defaults[key] !== $scope.filter[key]) {
                         showControls = true;
                     }
                 });

@@ -161,7 +161,7 @@ function (
         if (collectionId) {
             addToCollection(collectionId);
         }
-        $scope.addToCollectionModel = "";
+        $scope.addToCollectionModel = '';
     });
 
 }];

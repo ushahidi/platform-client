@@ -15,7 +15,7 @@ describe('user profile management', function () {
 
     describe('as a loggedin user', function () {
 
-        var userMenuLink;
+        var userMenuLink, userMenu;
 
         beforeEach(function () {
             browser.get('/login');

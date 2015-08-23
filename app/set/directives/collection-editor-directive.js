@@ -32,7 +32,7 @@ function (
 
             $scope.roles = RoleHelper.roles();
             $scope.views = PostViewHelper.views();
-            
+
             // Set default view for Collection to be Map
             if (!$scope.collection) {
                 $scope.collection = {};
@@ -41,7 +41,7 @@ function (
             }
             $scope.cpyCollection = _.clone($scope.collection);
 
-            $scope.$watch( function () {
+            $scope.$watch(function () {
                 return $scope.isOpen.data;
             }, function (newValue, oldValue) {
                 if (!newValue) {

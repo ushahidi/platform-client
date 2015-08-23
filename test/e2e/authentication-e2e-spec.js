@@ -8,9 +8,9 @@ var loginLinkSelector = '.header a.user-login',
 
 describe('authentication', function () {
 
-    describe('Login link in main menu:', function () {
+    var loginLink, logoutLink;
 
-        var loginLink;
+    describe('Login link in main menu:', function () {
 
         beforeEach(function () {
             browser.get('/');
@@ -80,6 +80,8 @@ describe('authentication', function () {
         }); // end 'submit form with wrong credentials'
 
         describe('submitting the form with correct credentials', function () {
+            var userMenuLink;
+
             beforeEach(function () {
                 usernameField.sendKeys('admin');
                 passwordField.sendKeys('admin');

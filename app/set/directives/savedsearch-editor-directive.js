@@ -41,7 +41,7 @@ function (
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 
-            $scope.$watch( function () {
+            $scope.$watch(function () {
                 return $scope.isOpen.data;
             }, function (newValue, oldValue) {
                 if (!newValue) {

@@ -36,16 +36,16 @@ angular.module('ushahidi.common.sticky-sidebar', [])
             var stickySideBar = function () {
                 if ($window.innerWidth > 767) { // IF: Screen width is greater than 767px
                     var windowTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop,
-                        windowFoot = windowTop + (sideBar.prop("offsetHeight") + 68);
+                        windowFoot = windowTop + (sideBar.prop('offsetHeight') + 68);
 
-                    if ((sideBarTopOffset < (windowTop - 35)) && (sideBar.prop("offsetHeight") < ($window.innerHeight - 68))) { // IF: Sidebar is vertically positioned behind the toolbar
+                    if ((sideBarTopOffset < (windowTop - 35)) && (sideBar.prop('offsetHeight') < ($window.innerHeight - 68))) { // IF: Sidebar is vertically positioned behind the toolbar
                         sideBar.css({
                             position: 'fixed',
                             left: sideBar.offset().left + 'px',
                             width: sideBar.prop('offsetWidth') + 'px'
                         });
 
-                        if (windowFoot >= angular.element(document.querySelector('[role="contentinfo"]')).offset().top) { // IF: Footer is vertically positioned behind the sidebar
+                        if (windowFoot >= angular.element(document.querySelector('[role=\'contentinfo\']')).offset().top) { // IF: Footer is vertically positioned behind the sidebar
                             return sideBar.css({
                                 top: 'auto',
                                 bottom: '175px'
