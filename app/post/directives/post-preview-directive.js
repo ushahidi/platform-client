@@ -86,7 +86,7 @@ function (
                 var collectionId = selectedCollection.id, collection = selectedCollection.name;
 
                 CollectionEndpoint.addPost({'collectionId': collectionId, 'id': scope.post.id})
-                    .$promise.then(function() {
+                    .$promise.then(function () {
                         $translate('notify.collection.add_to_collection', {collection: collection})
                         .then(function (message) {
                             Notify.showSingleAlert(message);
@@ -94,7 +94,7 @@ function (
                         //Deselect post
                         scope.post.selected = false;
                     });
-                };
+            };
 
             // determine which stage the post is at
             getCurrentStage(scope.post).then(function (currentStage) {
