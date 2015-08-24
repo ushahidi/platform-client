@@ -6,6 +6,7 @@ function (
         '$q',
         '$translate',
         'PostEndpoint',
+        'CollectionEndpoint',
         'Session',
         'Notify',
         '_',
@@ -14,6 +15,7 @@ function (
             $q,
             $translate,
             PostEndpoint,
+            CollectionEndpoint,
             Session,
             Notify,
             _
@@ -60,6 +62,32 @@ function (
                         .finally(getPostsForPagination);
                     }
                 });
+            };
+
+            $scope.addSelectedPostsToCollection = function (selectedCollection) {
+                if ($scope.selectedItems.length === 0) {
+                    return;
+                }
+                var collectionId = selectedCollection.id,
+                    collection = selectedCollection.name,
+                    // Add each post to the collection and return a promise
+                    promises = _.map($scope.selectedItems, function (post) {
+                        return CollectionEndpoint.addPost({'collectionId': collectionId, 'id': post.id}).$promise;
+                    });
+
+                // Show a single notification when all selected posts have been added to the collection
+                $q.all(promises).then(function () {
+                    $translate('notify.collection.bulk_add_to_collection', {
+                        count: $scope.selectedItems.length,
+                        collection: collection
+                    }).then(function (message) {
+                        Notify.showSingleAlert(message);
+                    });
+                    // Deselect posts
+                    _.forEach($scope.selectedItems, function (post) {
+                        post.selected = false;
+                    });
+                }, handleResponseErrors);
             };
 
             $scope.itemsPerPageChanged = function (count) {

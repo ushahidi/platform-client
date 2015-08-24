@@ -51,13 +51,8 @@
                             <span translate>post.post_actions.edit</span>
                         </a>
                     </li>
-                    <li ng-show="editableCollections.length > 0" >
-                        <div class="custom-select">
-                            <select ng-model="addToCollectionModel">
-                                <option value="" translate>set.add_to_collection</option>
-                                <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
-                            </select>
-                        </div>
+                    <li>
+                      <select-collection ng-model="selectedCollection" ng-change="addToCollection(selectedCollection)"></select-collection>
                     </li>
                 </ul>
             </div>

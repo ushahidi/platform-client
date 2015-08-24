@@ -21,11 +21,17 @@
             <!-- <button type="button" class="button-secondary alt icon-only-when-small export">
                 <span>Export</span>
             </button> -->
-
+            
+            <select-collection class="dropdown-group" ng-model="selectedCollection" ng-change="addSelectedPostsToCollection(selectedCollection)"></select-collection>
+            
+            
             <button type="button" class="button-secondary icon-only-when-small alt trash" ng-disabled="selectedItems.length <= 0" ng-click="deleteSelectedPosts()">
                 <span translate>post.post_actions.delete</span>
             </button>
+
+            
         </div>
+        
     </div>
 
     <post-preview

@@ -7,6 +7,7 @@ module.exports = [
     'FormEndpoint',
     'FormStageEndpoint',
     'RoleHelper',
+    'Notify',
     '_',
 function (
     $translate,
@@ -17,6 +18,7 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     RoleHelper,
+    Notify,
     _
 ) {
     var getCurrentStage = function (post) {
@@ -80,22 +82,19 @@ function (
                 });
             }
 
-            scope.editableCollections = CollectionEndpoint.editableByMe();
+            scope.addToCollection = function (selectedCollection) {
+                var collectionId = selectedCollection.id, collection = selectedCollection.name;
 
-            scope.addToCollectionModel = '';
-            var addToCollection = scope.addToCollection = function (collectionId) {
-                CollectionEndpoint.addPost({'collectionId': collectionId, 'id': scope.post.id});
-            };
-
-            scope.$watch(function () {
-                return scope.addToCollectionModel;
-            }, function (collectionId) {
-                if (collectionId) {
-                    addToCollection(collectionId);
-                }
-                scope.addToCollectionModel = '';
-            });
-
+                CollectionEndpoint.addPost({'collectionId': collectionId, 'id': scope.post.id})
+                    .$promise.then(function() {
+                        $translate('notify.collection.add_to_collection', {collection: collection})
+                        .then(function (message) {
+                            Notify.showSingleAlert(message);
+                        });
+                        //Deselect post
+                        scope.post.selected = false;
+                    });
+                };
 
             // determine which stage the post is at
             getCurrentStage(scope.post).then(function (currentStage) {
