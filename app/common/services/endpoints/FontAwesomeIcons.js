@@ -8,7 +8,7 @@ function (
 
     var FontAwesomeIcons = {
         getIconSet: function () {
-              return {
+            return {
                   // @todo: Move icon classes definition into
                   // separate dir/js
                   iconClass: 'fa',
@@ -554,7 +554,7 @@ function (
                     'hospital-o',
                     'medkit',
                     'stethoscope',
-                    'user-md',
+                    'user-md'
                 ]};
         }
     };
