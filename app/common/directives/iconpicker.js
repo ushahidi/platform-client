@@ -11,15 +11,19 @@ function (
     return {
         restrict: 'E',
         templateUrl: 'templates/iconpicker/iconpicker.html',
-
+        replace: true,
         scope: {
             model: '=?ngModel',
             iconLibName: '='
         },
 
-        link: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
-            $scope.iconSet = IconManager.getIconSetArray($scope.iconLibName);
-        }]
+        link: function ($scope, $element, $attrs) {
+            $scope.iconSet = IconManager.getIconSetArray($attrs.iconLibName);
+
+            $scope.setIcon = function (icon) {
+                $scope.model = icon;
+            };
+        }
     };
 }];
 
