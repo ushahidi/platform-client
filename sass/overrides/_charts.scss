@@ -12,3 +12,17 @@
 .nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point.hover {
     stroke-width:8px;
 }
+
+/*
+* Activity Page dc.css overrides
+*/
+#posts-by-time, #posts-by-category {
+    height: 250px;
+}
+div.dc-chart {
+    float: none;
+}
+.dc-chart .axis text, .dc-chart .box text {
+    font-family: inherit;
+    font-size: 11px;
+}

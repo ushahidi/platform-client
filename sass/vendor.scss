@@ -12,10 +12,11 @@
 @import "leaflet.markercluster/dist/MarkerCluster.Default";
 @import "angular-bootstrap-colorpicker/scss/colorpicker";
 @import "nvd3/build/nv.d3";
+@import "dc/dc";
 @import "angular-datepicker/dist/index";
 
 // Custom overrides
 @import "overrides/leaflet";
 @import "overrides/filters";
 @import "overrides/modal";
-@import "overrides/nvd3";
+@import "overrides/charts";
