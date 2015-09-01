@@ -37,9 +37,7 @@
                 ng-model="tag.color">
 
             <label class="input-label" for="icon" translate>tag.editor.icon</label>
-            <input id="icon" type="text" class="form-control"
-                ng-maxlength="30"
-                ng-model="tag.icon">
+            <icon-picker class="icon" ng-model="tag.icon" icon-lib-name="fontAwesome" ></icon-picker>
 
             <label class="input-label" translate>tag.choose_roles</label>
             <p class="small" translate>tag.editor.roles_help</p>

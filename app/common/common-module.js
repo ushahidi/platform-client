@@ -15,6 +15,7 @@ angular.module('ushahidi.common', [
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
+.service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
 .service('RoleHelper', require('./services/role-helper.js'))
 .service('PostViewHelper', require('./services/view-helper.js'))
 .service('Config', require('./services/config.js'))
@@ -27,9 +28,12 @@ angular.module('ushahidi.common', [
 .service('Languages', require('./services/languages.js'))
 .service('Registration', require('./services/registration.js'))
 .service('PasswordReset', require('./services/password-reset.js'))
+.service('IconManager', require('./services/icon-manager.js'))
 
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
+
+.directive('iconPicker', require('./directives/iconpicker.js'))
 
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))
