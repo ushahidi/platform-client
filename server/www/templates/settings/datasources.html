@@ -3,16 +3,22 @@
         <ul class="breadcrumb">
             <li><a ng-href="/settings" translate>nav.settings</a></li>
         </ul>
-
         <h1 class="inline">{{title}}</h1>
     </div>
     <div class="main-col">
         <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
-
         <div class="settings-listing" ng-repeat="provider in providers.results | orderBy:'name'" dropdown auto-close="disabled" is-open="panelVisible[provider.id]">
             <div ng-if="forms[provider.id].$valid" class="toggle-switch">
-                <input class="tgl" id="{{provider.id}}_enable" ng-model="settings.providers[provider.id]" type="checkbox" ng-change="saveProviderSettings(provider.id)" ng-disabled="saving">
-                <label class="tgl-btn" for="{{provider.id}}_enable"></label>
+                <div ng-switch="available_providers[provider.id]">
+                    <div ng-switch-when="true">
+                        <input class="tgl" id="{{provider.id}}_enable" ng-model="settings.providers[provider.id]" type="checkbox" ng-change="saveProviderSettings(provider.id)" ng-disabled="saving">
+                        <label class="tgl-btn" for="{{provider.id}}_enable"></label>
+                    </div>
+                    <div ng-switch-when="false">
+                        <input class="tgl" id="{{provider.id}}_enable" ng-disabled="true">
+                        <label class="tgl-btn" for="{{provider.id}}_enable"></label>
+                    </div>
+                </div>
             </div>
 
             <h3>{{provider.name}}</h3>
@@ -70,6 +76,12 @@
                     <span ng-if="saving" translate>settings.data_sources.saving_changes</span>
                     <span ng-if="!saving" translate>settings.data_sources.save_changes</span>
                 </button>
+
+                <div ng-if="!available_providers[provider.id]">
+                    <span translate translate-values="{value: '{{provider.name}}'}">
+                        settings.data_sources.unavailable
+                    </span>
+                </div>
             </form>
         </div>
     </div>

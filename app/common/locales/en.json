@@ -6,6 +6,9 @@
         "report_a_bug": "Report a bug",
         "forbidden": "Sorry, you're not allowed to do that."
     },
+    "feature_limits": {
+        "view_unavailable" : "The {{value}} view isn't available on your current plan. Upgrade your plan"
+    },
     "form": {
         "add_field" : "Add New Field",
         "add_field_instructions": "Add instructions to this field",
@@ -416,7 +419,8 @@
             "configure": "Configure data settings",
             "options": "Options",
             "save_changes": "Save Changes",
-            "saving_changes": "Saving"
+            "saving_changes": "Saving",
+            "unavailable": "{{value}} is unavailable for your Ushahidi plan. To get access to this feature upgrade your Ushahidi plan."
         },
         "generic_field_error": "Invalid entry, please try again.",
         "skip" : "Skip this step",

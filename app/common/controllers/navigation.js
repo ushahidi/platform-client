@@ -12,6 +12,7 @@ function (
     $rootScope
 ) {
     $scope.isHome = true;
+    $scope.activityIsAvailable = (typeof Config.features.views !== 'undefined') ? Config.features.views.activity : true;
 
     // Start with preloaded config
     $scope.site = BootstrapConfig;
