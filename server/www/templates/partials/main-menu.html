@@ -7,7 +7,7 @@
     <ul class="main-nav">
         <li><a ng-href="/" translate>nav.home</a></li>
         <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
-        <li><a ng-href="/activity" translate>nav.activity</a></li>
+        <li><a ng-href="/activity"  ng-show="isAdmin() || activityIsAvailable" translate>nav.activity</a></li>
         <li class="settings-nav" dropdown auto-close="disabled" ng-show="isAdmin()">
             <span class="settings-nav-button" data-toggle="toggle-content" dropdown-toggle translate>nav.settings</span>
             <ul class="toggle-content" dropdown-menu>

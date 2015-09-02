@@ -24,6 +24,9 @@
         <!-- timeline view -->
         <post-view-timeline ng-switch-when="timeline" is-loading="isLoading" filters="filters"></post-view-timeline>
 
+        <!-- unavailable view -->
+        <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>
+
         <!-- default view -->
         <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>
     </div>
