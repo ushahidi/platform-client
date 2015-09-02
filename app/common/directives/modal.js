@@ -2,7 +2,6 @@
  * Ushahidi Angular Modal directive
  * Based on the Angular Bootstrap Modal directive
  */
-
 angular.module('ushahidi.common.modal', [])
 
 .directive('modal', function () {
@@ -22,6 +21,7 @@ angular.module('ushahidi.common.modal', [])
 
             $scope.classDetached = true;
             $scope.classVisible = false;
+            $scope.modalOffset = 0;
 
             $scope.$watch('visible', function (state, previousState) {
                 if (state === previousState) {
@@ -33,6 +33,11 @@ angular.module('ushahidi.common.modal', [])
                         // Animate in.
                         $scope.classDetached = false;
                         $scope.classVisible = true;
+
+                        // Set offset based on window position
+                        // @todo move offset to a config param
+                        var windowYpos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+                        $scope.modalOffset = (windowYpos + 40) + 'px';
 
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);
