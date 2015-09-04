@@ -1,9 +1,11 @@
 module.exports = [
     '$scope',
     '$translate',
+    '$rootScope',
 function (
     $scope,
-    $translate
+    $translate,
+    $rootScope
 ) {
 
     $translate('tool.site_settings').then(function (title) {
