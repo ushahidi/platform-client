@@ -1,6 +1,10 @@
- <form id="site">
-    <label class="input-label" for="site-settings-name" translate>settings.site_name</label>
-    <input id="site-settings-name" type="text" ng-model="site.name" required>
+ <form id="site" name="form" ng-submit="updateConfig()">
+    <label class="input-label" for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.site_name</label>
+    <input id="name" name="name" type="text" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
+    <p ng-repeat="(error, value) in form.name.$error"
+        ng-show="form.name.$dirty"
+        class="alert error"
+        translate="{{'settings.valid.name.' + error}}"></p>
 
     <label class="input-label" for="site-settings-description" translate>settings.site_description</label>
     <textarea id="site-settings-description" type="text"
@@ -28,7 +32,7 @@
     <div class="divider white"></div>
 
     <div class="save-button">
-        <button class="save" ng-click="updateConfig()"
+        <button class="save" type="submit"
             ng-disabled="form.$invalid || isUnchanged(site) || saving_config">
                 <i class="fa fa-cog fa-spin" ng-show="saving_config"></i>
                 <span translate>settings.save</span>

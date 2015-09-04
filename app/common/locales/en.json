@@ -399,7 +399,12 @@
         "add_first_post": "Add Your First Post",
         "add_first_post_subtitle": "A deployment is nothing until it has some content in it.",
         "invite_people": "Or invite people to help you create posts.",
-        "add_new_users": "Add New Users"
+        "add_new_users": "Add New Users",
+        "valid" : {
+            "name" : {
+                "required": "Site name is required"
+            }
+        }
     },
     "user": {
         "add_user" : "Add User",
