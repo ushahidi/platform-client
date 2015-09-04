@@ -34,6 +34,7 @@ angular.module('ushahidi.common', [
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 
 .directive('iconPicker', require('./directives/iconpicker.js'))
+.directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))

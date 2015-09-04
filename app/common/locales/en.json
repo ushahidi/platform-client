@@ -360,6 +360,8 @@
         "appearance" : "Appearance Settings",
         "appearance_header_image" : "Custom Background Image",
         "appearance_header_image_instructions" : "Image needs to be >1000px wide.",
+        "customize_your_new_deployment" : "Customize your new deployment",
+        "continue" : "Continue",
         "current_header" : "Current background image",
         "site" : "Site Settings",
         "site_name" : "Site name",
@@ -369,6 +371,7 @@
         "site_description_placeholder" : "An optional one sentence description",
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
+        "select_image" : "Select image",
         "save" : "Save",
         "features" : {
             "features" : "Features",
@@ -388,7 +391,12 @@
             "save_changes": "Save Changes",
             "saving_changes": "Saving"
         },
-        "generic_field_error": "Invalid entry, please try again."
+        "generic_field_error": "Invalid entry, please try again.",
+        "skip" : "Skip this step",
+        "add_first_post": "Add Your First Post",
+        "add_first_post_subtitle": "A deployment is nothing until it has some content in it.",
+        "invite_people": "Or invite people to help you create posts.",
+        "add_new_users": "Add New Users"
     },
     "user": {
         "add_user" : "Add User",
