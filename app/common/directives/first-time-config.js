@@ -35,6 +35,7 @@ function (
             var checkConfig = function () {
                 ConfigEndpoint.get({ id: 'site' }, function (site) {
                     $scope.site = site;
+                    $scope.hasName = !!site.name;
                     // Are we and admin, and is this the first login?
                     if (_.contains(site.allowed_privileges, 'update') && site.first_login) {
                         // .. then open the modal
