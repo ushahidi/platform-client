@@ -6,9 +6,11 @@ describe('view helper', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
+        'ngResource',
         'pascalprecht.translate'
         ])
         .service('PostViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
+        .service('ConfigEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/config.js'))
         .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
