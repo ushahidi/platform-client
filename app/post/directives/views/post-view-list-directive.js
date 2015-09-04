@@ -123,7 +123,7 @@ function (
                 if ($scope.filters.status != 'all') {
                     return true;
                 }
-                return ! _.isEmpty(_.omit(_.omit($scope.filters, 'within_km'), 'status'));
+                return !_.isEmpty(_.omit(_.omit($scope.filters, 'within_km'), 'status'));
             };
 
             // --- start: initialization
