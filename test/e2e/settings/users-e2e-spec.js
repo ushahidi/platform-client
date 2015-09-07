@@ -28,7 +28,7 @@ describe('users management', function () {
             });
 
             describe('clicking the "users" link in the "settings" menu', function () {
-                var usersLinkSelector = 'a[href="/settings/users"]';
+                var usersLinkSelector = '.main-nav a[href="/settings/users"]';
 
                 beforeEach(function () {
                     var usersLink = element(by.css(usersLinkSelector));

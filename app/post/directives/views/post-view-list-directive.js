@@ -120,7 +120,7 @@ function (
             };
 
             $scope.hasFilters = function () {
-                if ($scope.filters.status != 'all') {
+                if ($scope.filters.status !== 'all') {
                     return true;
                 }
                 return !_.isEmpty(_.omit(_.omit($scope.filters, 'within_km'), 'status'));
