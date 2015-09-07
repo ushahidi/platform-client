@@ -16,7 +16,7 @@
 /*
 * Activity Page dc.css overrides
 */
-#posts-by-time, #posts-by-category {
+#posts-by-time, #posts-by-categories {
     height: 250px;
 }
 div.dc-chart {
@@ -25,4 +25,7 @@ div.dc-chart {
 .dc-chart .axis text, .dc-chart .box text {
     font-family: inherit;
     font-size: 11px;
+}
+.dc-chart path.area {
+    fill: none;
 }
