@@ -392,7 +392,8 @@
             "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
             "provider_options": "Options",
             "save_changes": "Save Changes",
-            "saving_changes": "Saving"
+            "saving_changes": "Saving",
+            "unavailable": "This feature is unavailable at your Ushahidi tier. To get access to this feature upgrade to a higher tier."
         },
         "generic_field_error": "Invalid entry, please try again.",
         "skip" : "Skip this step",
