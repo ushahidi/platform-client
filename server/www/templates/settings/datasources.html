@@ -3,10 +3,8 @@
         <ul class="breadcrumb">
             <li><a ng-href="/settings" translate>nav.settings</a></li>
         </ul>
-
         <h1 class="inline">{{title}}</h1>
         <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
-
         <div class="settings-listing" ng-repeat="provider in providers.results | orderBy:'name'" dropdown auto-close="disabled" is-open="panelVisible[provider.id]">
             <div ng-if="forms[provider.id].$valid" class="toggle-switch">
                 <input class="tgl" id="{{provider.id}}_enable" ng-model="settings.providers[provider.id]" type="checkbox" ng-change="saveProviderSettings(provider.id)" ng-disabled="saving">
@@ -25,10 +23,10 @@
                     <span translate>settings.data_sources.provider_options</span>
                 </button>
             </div>
-
             <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="toggle-content" dropdown-menu>
                 <p class="alert error" ng-if="forms[provider.id].$invalid" translate>settings.data_sources.hint_plugin_needs_configuring</p>
 
+                <div ng-if="settings['data-providers'][provider.name]">
                 <div ng-repeat="(option_key, option) in provider.options track by option_key">
                     <label ng-if="option.label" for="{{provider.id}}_{{option_key}}" class="input-label" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">{{option.label}}</label>
 
@@ -62,6 +60,12 @@
                     <span ng-if="saving" translate>settings.data_sources.saving_changes</span>
                     <span ng-if="!saving" translate>settings.data_sources.save_changes</span>
                 </button>
+            </div>
+            <div ng-if="!settings['data-providers'][provider.name]">
+                <span translate>
+                    settings.data_sources.unavailable
+                </span>
+            </div>
             </form>
         </div>
     </div>

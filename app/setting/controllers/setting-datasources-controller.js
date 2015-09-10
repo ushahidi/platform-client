@@ -15,6 +15,7 @@ function (
     // Displays a loading indicator when busy querying endpoints.
     $scope.saving = false;
     $scope.settings = {};
+    $scope.available_providers = {};
     $scope.forms = {};
     $scope.formsSubmitted = {};
     $scope.panelVisible = {};
@@ -48,7 +49,7 @@ function (
         }
     };
 
-    // Get data providers from bacend.
+    // Get data providers from backend.
     $q.all([DataProviderEndpoint.query(), ConfigEndpoint.get({ id: 'data-provider' })]).then(function (response) {
         $scope.providers = response[0];
         $scope.settings = response[1];
