@@ -12,10 +12,6 @@ function (
         controller: require('./controllers/setting-general-controller.js'),
         templateUrl: 'templates/settings/settings.html'
     })
-    .when('/settings/appearance', {
-        controller: require('./controllers/setting-appearance-controller.js'),
-        templateUrl: 'templates/settings/appearance.html'
-    })
     .when('/settings/map-settings', {
         controller: require('./controllers/setting-map-settings.js'),
         templateUrl: 'templates/settings/map-settings.html'

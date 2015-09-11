@@ -119,6 +119,13 @@ function (
                 return $scope.selectedItems.length === $scope.posts.length;
             };
 
+            $scope.hasFilters = function () {
+                if ($scope.filters.status !== 'all') {
+                    return true;
+                }
+                return !_.isEmpty(_.omit(_.omit($scope.filters, 'within_km'), 'status'));
+            };
+
             // --- start: initialization
             $scope.pageChanged = getPostsForPagination;
             $scope.currentPage = 1;

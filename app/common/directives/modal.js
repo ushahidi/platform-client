@@ -13,7 +13,8 @@ angular.module('ushahidi.common.modal', [])
         scope: {
             title: '@?',
             visible: '=?',
-            closeOnOverlayClick: '=?'
+            closeOnOverlayClick: '=?',
+            showCloseButton: '=?'
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
@@ -23,12 +24,18 @@ angular.module('ushahidi.common.modal', [])
             $scope.classVisible = false;
             $scope.modalOffset = 0;
 
-            $scope.$watch('visible', function (state, previousState) {
-                if (state === previousState) {
-                    return;
-                }
+            // If closeOnOverlayClick isn't passed, default to true
+            if (typeof $scope.closeOnOverlayClick === 'undefined') {
+                $scope.closeOnOverlayClick = true;
+            }
 
-                if (previousState === false && state === true) {
+            // If showCloseButton isn't passed, default to true
+            if (typeof $scope.showCloseButton === 'undefined') {
+                $scope.showCloseButton = true;
+            }
+
+            $scope.$watch('visible', function (state, previousState) {
+                if (state === true) {
                     if (!$scope.classVisible) {
                         // Animate in.
                         $scope.classDetached = false;
@@ -43,7 +50,7 @@ angular.module('ushahidi.common.modal', [])
                             $timeout.cancel(classChangePromise);
                         }
                     }
-                } else if (previousState === true && state === false) {
+                } else if (state === false) {
                     if ($scope.classVisible) {
                         // Animate out.
                         $scope.classVisible = false;

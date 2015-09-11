@@ -188,6 +188,9 @@
     "post": {
         "posts" : "Posts",
         "all_posts" : "All Posts",
+        "no_search_results" : "Your search didn't match any posts",
+        "no_posts_yet" : "This are no posts yet!",
+        "add_first_post": "Add the first post",
         "create_post" : "Create Post",
         "posted_by" : "Posted by",
         "draft" : "Draft",
@@ -358,14 +361,20 @@
     },
     "settings": {
         "appearance" : "Appearance Settings",
-        "appearance_header_image" : "Header Image",
+        "appearance_header_image" : "Custom Background Image",
+        "appearance_header_image_instructions" : "Image needs to be >1000px wide.",
+        "customize_your_new_deployment" : "Customize your new deployment",
+        "continue" : "Continue",
+        "current_header" : "Current background image",
         "site" : "Site Settings",
         "site_name" : "Site name",
         "site_email" : "Contact email address",
         "site_email_note" : "Use caution, as this will be visible to anyone on your site.",
         "site_description" : "Describe your site",
+        "site_description_placeholder" : "An optional one sentence description",
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
+        "select_image" : "Select image",
         "save" : "Save",
         "features" : {
             "features" : "Features",
@@ -385,7 +394,17 @@
             "save_changes": "Save Changes",
             "saving_changes": "Saving"
         },
-        "generic_field_error": "Invalid entry, please try again."
+        "generic_field_error": "Invalid entry, please try again.",
+        "skip" : "Skip this step",
+        "add_first_post": "Add Your First Post",
+        "add_first_post_subtitle": "A deployment is nothing until it has some content in it.",
+        "invite_people": "Or invite people to help you create posts.",
+        "add_new_users": "Add New Users",
+        "valid" : {
+            "name" : {
+                "required": "Site name is required"
+            }
+        }
     },
     "user": {
         "add_user" : "Add User",
