@@ -26,16 +26,6 @@ function (
             }
         ],
         availableViews = [],
-        featureConfig = ConfigEndpoint.get({ id: 'features' }, function (features) {
-            // Push available views into array
-            // Rely on JS magic to
-            _.each(allViews, function (view) {
-                if (features.views[view.name]) {
-                    availableViews.push(view);
-                }
-            });
-            console.log(availableViews);
-        }),
 
     PostViewHelper = {
         views: function (allViews) {
@@ -58,5 +48,16 @@ function (
             return match ? match.display_name : 'Map';
         }
     };
+
+    ConfigEndpoint.get({ id: 'features' }, function (features) {
+            // Push available views into array
+            // Rely on JS magic to
+            _.each(allViews, function (view) {
+                if (features.views[view.name]) {
+                    availableViews.push(view);
+                }
+            });
+        });
+
     return PostViewHelper;
 }];
