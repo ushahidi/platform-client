@@ -5,13 +5,15 @@ module.exports = [
     '_',
     'GlobalFilter',
     'collection',
+    'NotificationEndpoint',
     function (
         $scope,
         $translate,
         $routeParams,
         _,
         GlobalFilter,
-        collection
+        collection,
+        NotificationEndpoint
     ) {
         // Set view based on route or set view
         $scope.currentView = function () {
@@ -60,5 +62,13 @@ module.exports = [
         // Reset GlobalFilter + add set filter
         GlobalFilter.clearSelected();
         $scope.filters = extendFilters({});
+
+        // Show Add Notification link
+        $scope.showNotificationLink = false;
+
+        NotificationEndpoint.get({set: collection.id}, function (notifications) {
+            // show link if subscription does not exist
+            $scope.showNotificationLink = notifications.length === 0;
+        });
     }
 ];

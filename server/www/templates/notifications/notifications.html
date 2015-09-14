@@ -1,0 +1,181 @@
+<main class="page-content" role="main">
+  <div class="main-col">
+    <h1 class="inline">{{title}}</h1>
+
+    <div ng-if="contacts.length !== 0">
+          <h3 translate>notification.list_contacts_heading</h3>
+
+    <div ng-repeat="contact in contacts">
+      <form ng-if="!contact.edit">
+        <div class="input-inline">
+          <label 
+            class="checkbox-label" for="checkbox">
+
+            <input id="checkbox"
+                   type="checkbox"
+                   ng-model="contact.checked">
+            {{contact.contact}} 
+          </label>
+          <span>
+            &nbsp;<a href ng-click="contact.edit = true" translate>contact.edit</a>
+          </span>
+        </div>
+        <label class="input-label" for="contact"></label>
+      </form>
+      
+      <!-- Edit existing contact -->  
+      <form name="form"
+            ng-if="contact.edit"
+            ng-submit="updateContact(contact)">
+
+        <label ng-if="contact.type === 'email'"
+               class="input-label"
+               ng-class="{ 'error': form.contact.$invalid && form.contact.$dirty, 'success': form.contact.$valid }"
+               for="contact" translate>contact.edit_email_address</label>
+        <label ng-if="contact.type === 'phone'"
+               class="input-label"
+               for="contact" translate>contact.edit_phone_number</label>
+        <p ng-repeat="(error, value) in form.contact.$error"
+           ng-if="contact.type === 'email'"
+           ng-show="form.contact.$dirty"
+           class="alert error"
+           translate="{{'contact.valid.email.' + error}}"></p>
+        <p ng-repeat="(error, value) in form.contact.$error"
+           ng-if="contact.type === 'phone'"
+           ng-show="form.contact.$dirty"
+           class="alert error"
+           translate="{{'contact.valid.phone.' + error}}"></p>
+        <div class="input-inline">
+          <input name="contact"
+                 id="contact"
+                 ng-if="contact.type === 'email'"
+                 type="email"
+                 ng-class="{ 'error': form.contact.$invalid && form.contact.$dirty }"
+                 ng-maxlength="150"
+                 ng-model="contact.contact"
+                 required>
+          <input name="contact"
+                 id="contact"
+                 ng-if="contact.type === 'phone'"
+                 type="text"
+                 ng-class="{ 'error': form.contact.$invalid && form.contact.$dirty }"
+                 ng-maxlength="15"
+                 ng-model="contact.contact"
+                 ng-pattern="/^\d{9,15}$/">
+          <button type="submit" class="button-secondary" ng-disabled="!contactHasChanged(contact)">
+            <i class="fa fa-cog fa-spin" ng-show="contact.saving"></i>
+            
+            <span ng-if="contact.saving" translate>contact.saving_changes</span>
+            <span ng-if="!contact.saving" translate>contact.save_changes</span>
+          </button>
+          <button class="button-link" ng-click="cancelContactEdit(contact)" translate>
+            contact.cancel_edit</button>
+        </div>
+      </form>
+      <!-- end repeat -->
+    </div>
+
+        <button ng-if="contacts.length > 0"
+            class="button-primary"
+            ng-disabled="saving"
+            ng-click="updateContacts()">
+      <i class="fa fa-cog fa-spin" ng-show="saving"></i>
+
+      <span ng-if="saving" translate>notification.saving_changes</span>
+      <span ng-if="!saving" translate>notification.save_changes</span>
+    </button>
+
+    </div>
+    
+    <div ng-repeat="contact in newContacts">
+      <!--Add new contact-->
+      <form name="form"
+            ng-submit="addContact(contact)">
+        <label ng-if="contact.type === 'email'"
+               class="input-label"
+               ng-class="{ 'error': form.contact.$invalid && form.contact.$dirty, 'success': form.contact.$valid }"
+               for="contact" translate>contact.add_email_address</label>
+        <label ng-if="contact.type === 'phone'"
+               class="input-label"
+               for="contact" translate>contact.add_phone_number</label>
+        <p ng-repeat="(error, value) in form.contact.$error"
+           ng-if="contact.type === 'email'"
+           ng-show="form.contact.$dirty"
+           class="alert error"
+           translate="{{'contact.valid.email.' + error}}"></p>
+        <p ng-repeat="(error, value) in form.contact.$error"
+           ng-if="contact.type === 'phone'"
+           ng-show="form.contact.$dirty"
+           class="alert error"
+           translate="{{'contact.valid.phone.' + error}}"></p>
+        <div class="input-inline">
+          <input name="contact"
+                 id="contact"
+                 ng-if="contact.type === 'email'"
+                 type="email"
+                 ng-class="{ 'error': form.contact.$invalid && form.contact.$dirty }"
+                 ng-maxlength="150"
+                 ng-model="contact.contact"
+                 required>
+          <input name="contact"
+                 id="contact"
+                 ng-if="contact.type === 'phone'"
+                 type="text"
+                 placeholder="{{'contact.add_phone_number' | translate}}"
+                 ng-class="{ 'error': form.contact.$invalid && form.contact.$dirty }"
+                 ng-maxlength="15"
+                 ng-model="contact.contact"
+                 ng-pattern="/^\d{9,15}$/">
+          <button type="submit" class="button-secondary" ng-disabled="contact.saving">
+            <i class="fa fa-cog fa-spin" ng-show="contact.saving"></i>
+            
+            <span ng-if="contact.saving" translate>contact.saving</span>
+            <span ng-if="!contact.saving" translate>contact.save</span>
+          </button>
+
+        </div>
+      </form>
+    </div>
+
+
+    <div class="divider white"></div> 
+
+    <div ng-if="newNotification">
+      <h3 translate>notification.add_notification</h3>
+      <div class="settings-listing">
+        <a ng-click="addNotification(newNotification)">
+          <div class="button-secondary icon-only alt plus"></div>
+          <h3 translate>{{newNotification.name}}</h3>
+        </a>
+      </div>
+    </div>
+
+    <div ng-if="notifications.length !== 0">
+      <h3 translate>notification.list_notifications_heading</h3>
+      <div class="alert confirmation" ng-if="notificationSaved">
+        <p translate>notification.save_success</p>
+      </div>
+      <div class="alert error" ng-if="notificationError">
+        <p translate>notification.save_error </p>
+      </div>
+          <div class="divider white"></div>
+
+      <div ng-repeat="notification in notifications" class="settings-listing">
+
+        <div class="toggle-switch">
+          <input name="notification"
+                 class="tgl"
+                 id="{{notification.id}}"
+                 type="checkbox"
+                 ng-model="notification.checked"
+                 ng-change="updateNotification(notification)">
+
+          <label class="tgl-btn" for="{{notification.id}}"></label>
+        </div>
+        <h3>{{notification.collection}}</h3>
+
+      </div>
+    </div>
+
+  </div>
+</main>

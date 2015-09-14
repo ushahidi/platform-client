@@ -28,6 +28,8 @@ require('./common/common-module.js');
 require('./post/post-module.js');
 require('./setting/setting-module.js');
 require('./set/set-module.js');
+require('./notification/notification-module.js');
+require('./contact/contact-module.js');
 require('./user-profile/user-profile-module.js');
 
 // Make sure we have a window.ushahidi object
@@ -48,7 +50,9 @@ var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || proc
         'stats',
         'layers',
         'config',
-        'messages'
+        'messages',
+        'notifications',
+        'contacts'
     ];
 
 angular.module('app',
@@ -71,6 +75,8 @@ angular.module('app',
         'ushahidi.posts',
         'ushahidi.tools',
         'ushahidi.sets',
+        'ushahidi.notifications',
+        'ushahidi.contacts',
         'ushahidi.user-profile'
     ])
 

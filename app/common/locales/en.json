@@ -314,7 +314,8 @@
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
-        "set_settings" : "Collection Settings"
+        "set_settings" : "Collection Settings",
+        "add_notification" : "Add notification"
     },
     "tag": {
         "add_tag" : "Add Category",
@@ -528,6 +529,44 @@
         "update_location": "Update location",
         "click_map": "Click the map to place a marker",
         "clear":"Clear"
+    },
+    "notification": {
+        "title": "Notifications",
+        "save": "Save notification",
+        "saving": "Saving",
+        "save_changes": "Save changes",
+        "saving_changes": "Saving changes",
+        "new_notification_heading": "Add new notification",
+        "list_contacts_heading": "How you get notifications",
+        "list_notifications_heading": "What you get notified about",
+        "add_notification": "Add notification",
+        "hint_turn_on_off": "You can choose which notifications you want to receive",
+        "save_success": "The notification was updated successfully",
+        "save_error": "An error occured while the notification was being update"
+    },
+    "contact": {
+        "edit": "Edit",
+        "save": "Save contact",
+        "saving": "Saving",
+        "save_changes": "Save changes",
+        "saving_changes": "Saving changes",
+        "cancel_edit": "Cancel",
+        "add_phone_number": "Add a phone number",
+        "add_email_address": "Add your email address",
+        "edit_phone_number": "Edit your phone number",
+        "edit_email_address": "Edit your email address",
+        "valid": {
+            "email" : {
+                "required": "Your email address is required to subscribe to a notification",
+                "email": "This email address is invalid",
+                "maxlength": "This email address is too long"
+            },
+            "phone": {
+                "pattern": "A valid phone number is required",
+                "minlength": "This number is too short",
+                "maxlength": "This number is too long"
+            }
+        }
     },
     "languages": {
         "ach": "Acoli",
