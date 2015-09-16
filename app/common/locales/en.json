@@ -432,20 +432,13 @@
         "role" : "Role: ",
         "roles" : "Roles",
         "search_and_filter" : "Search & Filter Users",
-        "username" : "Username",
-        "usernameOrEmail" : "Username or Email",
-        "passwordreset_instructions" : "Enter your username or email to request a password reset",
-        "passwordreset_confirm_instructions" : "If your email/username exists in our database, you will receive a password recovery email soon.",
+        "passwordreset_instructions" : "Enter your email to request a password reset",
+        "passwordreset_confirm_instructions" : "If your email exists in our database, you will receive a password recovery email soon.",
         "token" : "Password reset token",
         "valid" : {
             "full_name" : {
                 "required" : "Display name is required",
                 "maxlength" : "Display name is too long"
-            },
-            "username" : {
-                "required" : "Username is required",
-                "maxlength" : "Username is too long",
-                "pattern" : "Your username must: be at least 3 characters long, only contain letters, numbers, periods(.), underscores(_) or hyphens(-), start with a letter, fix with a letter or number"
             },
             "email" : {
                 "required" : "Email address is required",
@@ -467,7 +460,6 @@
     },
     "user_create" :  {
         "full_name": "Display Name",
-        "username": "Username",
         "email": "Email Address",
         "role": "Role"
     },
@@ -485,7 +477,7 @@
             "bulk_destroy_cancelled" : "Delete cancelled"
         },
         "login" : {
-            "failed" : "Login failed, check your username and password."
+            "failed" : "Login failed, check your email and password."
         },
         "register" : {
             "failed" : "There were errors during registration. Check your input and try again.",

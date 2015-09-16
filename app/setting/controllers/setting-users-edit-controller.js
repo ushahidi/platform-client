@@ -25,7 +25,7 @@ function (
     });
 
     $scope.user = UserEndpoint.get({id: $routeParams.id}, function (user) {
-        $scope.$emit('setPageTitle', $scope.title + ' - ' + user.username);
+        $scope.$emit('setPageTitle', $scope.title + ' - ' + user.realname);
     });
 
     $scope.processing = false;

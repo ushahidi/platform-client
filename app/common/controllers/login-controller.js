@@ -19,7 +19,7 @@ function (
     function clearLoginForm() {
         $scope.failed = true;
         $scope.processing = false;
-        $scope.username = '';
+        $scope.email = '';
         $scope.password = '';
     }
 
@@ -32,7 +32,7 @@ function (
         $scope.processing = true;
 
         Authentication
-            .login($scope.username, $scope.password)
+            .login($scope.email, $scope.password)
             .then(finishedLogin, clearLoginForm);
     };
 
