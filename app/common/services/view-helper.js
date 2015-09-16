@@ -38,6 +38,9 @@ function (
             var match = _.findWhere(views, {name: view});
             return match ? match.display_name : view;
         },
+        isViewAvailable: function (view) {
+            return _.findWhere(availableViews, {name: view});
+        },
         getDefault: function (views) {
             if (!views) {
                 views = allViews;
