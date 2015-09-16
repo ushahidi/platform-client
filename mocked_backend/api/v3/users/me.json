@@ -1,9 +1,8 @@
 {
     "id": 2,
     "url": "http://ushahidi-backend/api/v2/users/2",
-    "email": "admin@example.com",
+    "email": "admin@ush.com",
     "realname": "Admin Joe",
-    "username": "admin",
     "logins": 0,
     "failed_attempts": 0,
     "last_login": null,

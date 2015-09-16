@@ -38,7 +38,6 @@ describe('user profile controller', function () {
             'url': 'http://ushahidi-backend/api/v2/users/2',
             'email': 'admin@22dsad.com',
             'realname': 'dasda',
-            'username': 'admin',
             'role': 'admin'
         };
 

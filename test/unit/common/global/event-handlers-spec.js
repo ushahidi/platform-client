@@ -70,7 +70,6 @@ describe('global event handlers', function () {
                     describe('succeeded', function () {
                         beforeEach(function () {
                             mockedSessionData = {
-                                username: 'max',
                                 email: 'max@example.com'
                             };
 
@@ -78,7 +77,6 @@ describe('global event handlers', function () {
                         });
 
                         it('should set $rootScope.currentUser', function () {
-                            expect($rootScope.currentUser.username).toEqual(mockedSessionData.username);
                             expect($rootScope.currentUser.email).toEqual(mockedSessionData.email);
                         });
 
@@ -164,7 +162,6 @@ describe('global event handlers', function () {
 
                 mockedSessionData = {
                     accessToken: 'fooToken',
-                    username: 'max',
                     email: 'max@example.com'
                 };
 
@@ -181,7 +178,6 @@ describe('global event handlers', function () {
             });
 
             it('should set $rootScope.currentUser', function () {
-                expect($rootScope.currentUser.username).toEqual(mockedSessionData.username);
                 expect($rootScope.currentUser.email).toEqual(mockedSessionData.email);
             });
 
@@ -206,8 +202,7 @@ describe('global event handlers', function () {
                 expect($rootScope.loggedin).toBeFalsy();
             });
 
-            it('should leave username and email to be undefined on $rootScope', function () {
-                expect($rootScope.username).toEqual(undefined);
+            it('should leave email to be undefined on $rootScope', function () {
                 expect($rootScope.email).toEqual(undefined);
             });
         });

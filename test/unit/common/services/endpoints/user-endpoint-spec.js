@@ -41,15 +41,13 @@ describe('UserEndpoint', function () {
                             'id': 1,
                             'url': 'http://ushahidi-backend/api/v2/users/1',
                             'email': 'robbie@ushahidi.com',
-                            'realname': 'Robbie Mackay',
-                            'username': 'robbie'
+                            'realname': 'Robbie Mackay'
                         },
                         {
                             'id': 2,
                             'url': 'http://ushahidi-backend/api/v2/users/2',
                             'email': 'admin@22dsad.com',
-                            'realname': 'Admin',
-                            'username': 'admin'
+                            'realname': 'Admin'
                         }
                     ]
                 };
@@ -68,7 +66,7 @@ describe('UserEndpoint', function () {
 
                 var actualUserData = successCallback.calls.mostRecent().args[0];
                 expect(actualUserData.results.length).toEqual(mockUserDataResponse.results.length);
-                expect(actualUserData.results[0].username).toEqual(mockUserDataResponse.results[0].username);
+                expect(actualUserData.results[0].email).toEqual(mockUserDataResponse.results[0].email);
             });
         });
     });
@@ -82,8 +80,7 @@ describe('UserEndpoint', function () {
                 'id': 2,
                 'url': 'http://ushahidi-backend/api/v2/users/2',
                 'email': 'admin@example.com',
-                'realname': 'Admin Joe',
-                'username': 'admin'
+                'realname': 'Admin Joe'
             };
         });
 
@@ -103,7 +100,6 @@ describe('UserEndpoint', function () {
                 expect(actualUserData.id).toEqual(mockUserDataResponse.id);
                 expect(actualUserData.realname).toEqual(mockUserDataResponse.realname);
                 expect(actualUserData.email).toEqual(mockUserDataResponse.email);
-                expect(actualUserData.username).toEqual(mockUserDataResponse.username);
             });
         });
 
@@ -114,8 +110,7 @@ describe('UserEndpoint', function () {
                     'id': 2,
                     'url': 'http://ushahidi-backend/api/v2/users/2',
                     'email': 'new@email.com',
-                    'realname': 'Obi Wan',
-                    'username': 'obi'
+                    'realname': 'Obi Wan'
                 };
             });
 
@@ -140,7 +135,6 @@ describe('UserEndpoint', function () {
                 expect(actualUserData.id).toEqual(mockUserDataResponse.id);
                 expect(actualUserData.realname).toEqual(userDataToUpdate.realname);
                 expect(actualUserData.email).toEqual(userDataToUpdate.email);
-                expect(actualUserData.username).toEqual(mockUserDataResponse.username);
             });
         });
 
