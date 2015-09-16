@@ -421,9 +421,9 @@
         "cancel" : "Cancel",
         "email" : "Email Address",
         "failed_attempts" : "Failed attempts: ",
-        "full_name" : "Full Name",
+        "full_name" : "Display Name",
         "never" : "Never",
-        "no_full_name" : "No full name",
+        "no_full_name" : "No display name",
         "number_of_users_shown" : "Number of users shown",
         "per_page" : "{{count}} users",
         "password" : "Password",
@@ -439,8 +439,8 @@
         "token" : "Password reset token",
         "valid" : {
             "full_name" : {
-                "required" : "Full name is required",
-                "maxlength" : "Full name is too long"
+                "required" : "Display name is required",
+                "maxlength" : "Display name is too long"
             },
             "username" : {
                 "required" : "Username is required",
