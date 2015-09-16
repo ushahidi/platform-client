@@ -1,3 +1,10 @@
-<div class="map-view">
-    <leaflet id="map" class="map" defaults="defaults" center="center" layers="layers" width="100%"></leaflet>
+<div>
+    <div ng-if="!available">
+        <span>
+        This feature is not currently available. To gain access to this feature it is necessary to upgrade to a higher tier of Ushahidi
+        </span>
+    </div>
+    <div ng-if="available" class="map-view">
+        <leaflet id="map" class="map" defaults="defaults" center="center" layers="layers" width="100%"></leaflet>
+    </div>
 </div>

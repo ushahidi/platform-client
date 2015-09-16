@@ -5,12 +5,14 @@ function (
         '$scope',
         'ConfigEndpoint',
         'PostEndpoint',
+        'PostViewHelper',
         'Maps',
         '_',
     function (
         $scope,
         ConfigEndpoint,
         PostEndpoint,
+        PostViewHelper,
         Maps,
         _
     ) {
@@ -42,8 +44,13 @@ function (
             }
         });
 
-        // initial load
-        reloadMapPosts();
+        $scope.available = false;
+
+        // Initial load
+        if (PostViewHelper.isViewAvailable('map')) {
+            $scope.available = true;
+            reloadMapPosts();
+        }
     }];
 
     return {
