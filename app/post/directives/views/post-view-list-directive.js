@@ -6,6 +6,7 @@ function (
         '$q',
         '$translate',
         'PostEndpoint',
+        'PostViewHelper',
         'CollectionEndpoint',
         'Session',
         'Notify',
@@ -15,6 +16,7 @@ function (
             $q,
             $translate,
             PostEndpoint,
+            PostViewHelper,
             CollectionEndpoint,
             Session,
             Notify,
@@ -137,7 +139,11 @@ function (
             $scope.totalItems = $scope.itemsPerPage;
 
             // Initial load
-            getPostsForPagination();
+            if (PostViewHelper.isViewAvailable('list')) {
+                $scope.available = true;
+                getPostsForPagination();
+            }
+
         }
     ];
 
