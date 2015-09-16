@@ -6,6 +6,9 @@
         "report_a_bug": "Report a bug",
         "forbidden": "Sorry, you're not allowed to do that."
     },
+    "feature_limits": {
+        "view_unavailable" : "This feature is not currently available. To gain access to this feature it is necessary to upgrade to a higher tier of Ushahidi"
+    },
     "form": {
         "add_field" : "Add New Field",
         "add_field_instructions": "Add instructions to this field",
