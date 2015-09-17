@@ -5,25 +5,6 @@
         <form class="panel-body" name="form">
             <p class="alert error register-failed" ng-show="failed" translate>notify.register.failed</p>
             <div>
-                <label for="username"
-                    class="input-label"
-                    ng-class="{ 'success': !form.username.$invalid && form.username.$dirty, 'error' : form.username.$invalid && form.username.$dirty }"
-                    translate>
-                    user.username
-                </label>
-                <input type="text" id="username" name="username"
-                    ng-class="{'error': form.username.$invalid && form.username.$dirty}"
-                    ng-model="username"
-                    ng-disabled="processing"
-                    ng-maxlength="50"
-                    ng-pattern="/^[a-z][a-z0-9._-]+[a-z0-9]$/i"
-                    required>
-                <p ng-repeat="(error, value) in form.username.$error"
-                    ng-show="form.username.$dirty"
-                    class="alert error"
-                    translate="{{'user.valid.username.' + error}}"></p>
-            </div>
-            <div>
                 <label for="email" class="input-label" ng-class="{ 'success': !form.email.$invalid && form.email.$dirty, 'error' : form.email.$invalid && form.email.$dirty}" translate>user.email</label>
                 <input type="email" id="email" name="email"
                     ng-class="{'error': form.email.$invalid && form.email.$dirty}"

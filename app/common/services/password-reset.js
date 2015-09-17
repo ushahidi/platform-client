@@ -8,9 +8,9 @@ function (
 
     return {
 
-        reset: function (usernameOrEmail) {
+        reset: function (email) {
             var payload = {
-                user: usernameOrEmail
+                email: email
             };
 
             return $http.post(Util.apiUrl('/passwordreset'), payload);
