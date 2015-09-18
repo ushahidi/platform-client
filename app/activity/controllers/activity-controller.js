@@ -68,36 +68,51 @@ function (
     };
 
     $scope.updateCharts = function () {
+        var startDate = $scope.dateRange.start.toISOString();
+        var endDate = $scope.dateRange.end.toISOString();
+        /*
+        when we want data for entire duration of
+        deployment we query endpoints without startDate
+        */
+        if($scope.currentInterval === 'all'){
+            startDate = null;
+        }
         //queries
         var postsByTimeQuery = {
             'timeline' : 1,
             'timeline_attribute' : 'created',
             'group_by' : '',
             'status':'all',
-            'created_after': $scope.dateRange.start.toISOString(),
-            'created_before': $scope.dateRange.end.toISOString()
+            'created_after': startDate,
+            'created_before': endDate
         };
         var postsByCategoriesQuery = {
             'group_by':'tags',
             'order':'desc',
             'orderby':'created',
             'status':'all',
-            'created_after': $scope.dateRange.start.toISOString(),
-            'created_before': $scope.dateRange.end.toISOString()
+            'created_after': startDate,
+            'created_before': endDate
         };
         $scope.mapQuery = {
             'status':'all',
-            'created_after': $scope.dateRange.start.toISOString(),
-            'created_before': $scope.dateRange.end.toISOString()
+            'created_after': startDate,
+            'created_before': endDate
         };
-
-        timeScale.domain([$scope.dateRange.start, $scope.dateRange.end]);
-
         //get data for trend chart and render
         PostEndpoint.stats(postsByTimeQuery).$promise.then( function (results) {
             var data = [];
             if (results.totals.length > 0) {
                 data = results.totals[0].values;
+                if($scope.currentInterval === 'all') {
+                    /*
+                    we have to get start date from the first post date
+                    when we query for entire duration of deployment
+                    */
+                    var startDate = new Date(data[0].label*1000);
+                    $scope.dateRange.start = startDate;
+                }
+                timeScale.domain([$scope.dateRange.start, $scope.dateRange.end]);
             }
             $scope.postsByTime.group().all = function() {
                 return data;
