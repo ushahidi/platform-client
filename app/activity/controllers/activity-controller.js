@@ -147,7 +147,7 @@ function (
     //configure postsbytime chart
     $scope.postsByTime
             .height(250)
-            .margins({top: 5, right: 5, bottom: 20, left: 50})
+            .margins({top: 5, right: 20, bottom: 20, left: 50})
             .x(timeScale)
             // .xUnits(d3.time.year)
             .renderArea(true)
@@ -175,7 +175,7 @@ function (
     var chartOptions = {
         height: 250,
         margins: {
-            top: 5, right: 5, bottom: 20, left: 50
+            top: 5, right: 20, bottom: 20, left: 50
         },
         x: d3.scale.ordinal(),
         xUnits: dc.units.ordinal,
