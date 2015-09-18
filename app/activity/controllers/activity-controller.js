@@ -47,18 +47,18 @@ function (
         var end = new Date();
         switch(interval) {
             case 'week':
-                start.setDate(start.getDate() - 7);
+                start = d3.time.week(start); //sunday is the first day of week
                 break;
             case 'month':
-                start = new Date(start.getFullYear(), start.getMonth());
-                end = new Date(start.getFullYear(), start.getMonth()+1, 0);
+                start = d3.time.month( new Date() ); //get first day of current month
+                end = new Date(); //today
                 break;
             case 'all':
-                start = new Date(1979,0,1); //how do we get the very first post date for this deployment?
+                start = new Date(2015,0,1); //how do we get the very first post date for this deployment?
                 break;
             default:
                 //set range to last week as a default
-                start.setDate(start.getDate() - 7);
+                start = d3.time.week(start);
                 break;
         }
         return {
