@@ -18,12 +18,12 @@
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" ng-model="showAllTags" ng-checked="!globalFilter.hasSelectedTags()" ng-click="showAllTagsHandler()"> {{'global_filter.categories.all_categories' | translate}}
                                 </label>
                             </li>
                             <li class="checkbox" ng-repeat="(idx, tag) in globalFilter.options.tags" tag="tag">
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" checklist-value="tag.id" checklist-model="globalFilter.tags" />
                                     <i class="fa fa-{{tag.icon}}" style="color: {{tag.color}}"></i>
                                     {{tag.tag}}
@@ -38,12 +38,12 @@
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" ng-model="showAllCollections" ng-checked="!globalFilter.hasSelectedCollections()" ng-click="showAllCollectionsHandler()"> {{'global_filter.collections.all_collections' | translate}}
                                 </label>
                             </li>
                             <li class="checkbox" ng-repeat="(idx, collection) in globalFilter.options.collections">
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" checklist-value="collection.id" checklist-model="globalFilter.set" />
                                     {{collection.name}}
                                 </label>
@@ -57,18 +57,18 @@
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" ng-model="showAllForms" ng-checked="!globalFilter.hasSelectedForms()" ng-click="showAllFormsHandler()"> <translate>global_filter.post_types.all_types</translate>
                                 </label>
                             </li>
                             <li class="checkbox" ng-repeat="(idx, form) in globalFilter.options.forms">
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" checklist-value="form.id" checklist-model="globalFilter.form" />
                                     {{form.name}}
                                 </label>
                             </li>
                             <li class="checkbox">
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" checklist-value="'none'" checklist-model="globalFilter.form" />
                                     <translate>global_filter.post_types.unstructured</translate>
                                 </label>
@@ -82,15 +82,15 @@
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
-                                <label>
+                                <label class="checkbox-label">
                                     <input type="checkbox" ng-model="showAllPostStages" ng-checked="!globalFilter.hasSelectedPostStages()" ng-click="showAllPostStagesHandler()"> {{'global_filter.post_stages.all_stages' | translate}}
                                 </label>
                             </li>
                             <li ng-repeat="(formId, postStages) in globalFilter.options.postStages">
-                                <label>{{globalFilter.options.forms[formId].name}}</label>
+                                <label class="checkbox-label">{{globalFilter.options.forms[formId].name}}</label>
                                 <ul>
                                     <li class="checkbox" ng-repeat="(stageId, postStage) in postStages">
-                                        <label>
+                                        <label class="checkbox-label">
                                             <input type="checkbox" checklist-model="globalFilter.current_stage" checklist-value="postStage.id" />
                                             {{postStage.label}}
                                         </label>
@@ -106,12 +106,12 @@
                         </div>
                         <ul class="accordion-menu-content" accordion-content>
                             <li>
-                                <label>
+                                <label class="radio-label">
                                     <input type="radio" name="status" ng-model="globalFilter.status" value="all"> <span translate>global_filter.post_statuses.all_statuses</span>
                                 </label>
                             </li>
                             <li class="checkbox" ng-repeat="(id, postStatus) in globalFilter.options.postStatuses" postStatus="postStatus">
-                                <label>
+                                <label class="radio-label">
                                     <input type="radio" name="status" value="{{postStatus}}" ng-model="globalFilter.status" />
                                     <span translate="global_filter.post_statuses.{{postStatus}}"></span>
                                 </label>
