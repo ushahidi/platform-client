@@ -24,21 +24,6 @@
                 translate="{{'user.valid.full_name.' + error}}"></p>
 
             <label class="input-label"
-                ng-class="{ 'error': form.username.$invalid && form.username.$dirty, 'success': form.username.$valid }"
-                for="username" translate>user.username</label>
-            <input id="username" name="username" type="text"
-                ng-class="{ 'error': form.username.$invalid && form.username.$dirty }"
-                ng-disabled="state.processing"
-                placeholder="{{ 'user_create.username'|translate }}"
-                ng-maxlength="50"
-                ng-model="user.username"
-                required>
-            <p ng-repeat="(error, value) in form.username.$error"
-                ng-show="form.username.$dirty"
-                class="alert error"
-                translate="{{'user.valid.username.' + error}}"></p>
-
-            <label class="input-label"
                 ng-class="{ 'error': form.email.$invalid && form.email.$dirty, 'success': form.email.$valid }"
                 for="email" translate>user.email</label>
             <input id="email" name="email" type="email"

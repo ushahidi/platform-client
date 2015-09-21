@@ -21,17 +21,16 @@
             <!-- <button type="button" class="button-secondary alt icon-only-when-small export">
                 <span>Export</span>
             </button> -->
-            
+
             <select-collection class="dropdown-group" ng-model="selectedCollection" ng-change="addSelectedPostsToCollection(selectedCollection)"></select-collection>
-            
-            
+
             <button type="button" class="button-secondary icon-only-when-small alt trash" ng-disabled="selectedItems.length <= 0" ng-click="deleteSelectedPosts()">
                 <span translate>post.post_actions.delete</span>
             </button>
 
-            
+
         </div>
-        
+
     </div>
 
     <post-preview
@@ -46,6 +45,15 @@
     >
     </post-preview>
 
-    <pagination ng-model="currentPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
+    <h5 ng-show="posts.length == 0 && hasFilters()" translate>post.no_search_results</h5>
+    <div ng-show="posts.length == 0 && ! hasFilters()">
+        <h5 translate>post.no_posts_yet</h5>
+        <br />
+        <a class="button button-create" ng-href="/posts/create">
+            <span translate>post.add_first_post</span>
+        </a>
+    </div>
+
+    <pagination ng-show="posts.length > 0" ng-model="currentPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
 
 </div>

@@ -10,7 +10,6 @@ describe('Session', function () {
 
         emptySessionData = {
             userId: undefined,
-            username: undefined,
             realname: undefined,
             email: undefined,
             role: undefined,
@@ -84,7 +83,6 @@ describe('Session', function () {
             function () {
                 var expectedSessionData = {
                     userId: '1',
-                    username: undefined,
                     realname: undefined,
                     email: undefined,
                     role: undefined,
@@ -134,7 +132,7 @@ describe('Session', function () {
             beforeEach(function () {
                 sessionDataEntriesToSet = {
                     userId: '1',
-                    username: 'mike'
+                    email: 'mike@ush.com'
                 };
                 Session.setSessionDataEntries(sessionDataEntriesToSet);
             });
@@ -146,7 +144,7 @@ describe('Session', function () {
 
             it('has the keys and values stored in the local storage', function () {
                 expect(mockedLocalStorageHash.userId).toEqual('1');
-                expect(mockedLocalStorageHash.username).toEqual('mike');
+                expect(mockedLocalStorageHash.email).toEqual('mike@ush.com');
             });
         });
     });
@@ -157,7 +155,7 @@ describe('Session', function () {
 
             beforeEach(function () {
                 mockedLocalStorageHash.userId = '1';
-                mockedLocalStorageHash.username = 'mike';
+                mockedLocalStorageHash.email = 'mike@ush.com';
             });
 
             beforeEach(inject(function (_Session_) {
@@ -167,7 +165,7 @@ describe('Session', function () {
             describe('getSessionDataEntry', function () {
                 it('returns the correct values', function () {
                     expect(Session.getSessionDataEntry('userId')).toEqual('1');
-                    expect(Session.getSessionDataEntry('username')).toEqual('mike');
+                    expect(Session.getSessionDataEntry('email')).toEqual('mike@ush.com');
                 });
             });
 
@@ -175,7 +173,7 @@ describe('Session', function () {
                 it('returns the correct values', function () {
                     var expectedSessionDataEntries = angular.extend({}, emptySessionData, {
                         'userId': '1',
-                        'username': 'mike'
+                        'email': 'mike@ush.com'
                     });
                     expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
                 });
@@ -189,7 +187,7 @@ describe('Session', function () {
 
             beforeEach(function () {
                 mockedLocalStorageHash.userId = '1';
-                mockedLocalStorageHash.username = 'mike';
+                mockedLocalStorageHash.email = 'mike@ush.com';
             });
 
             beforeEach(inject(function (_Session_) {
@@ -198,7 +196,7 @@ describe('Session', function () {
 
             it('has the values loaded in session', function () {
                 expect(Session.getSessionDataEntry('userId')).toEqual('1');
-                expect(Session.getSessionDataEntry('username')).toEqual('mike');
+                expect(Session.getSessionDataEntry('email')).toEqual('mike@ush.com');
             });
 
             describe('calling clearSessionData', function () {

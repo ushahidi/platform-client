@@ -7,7 +7,7 @@ describe('users management', function () {
         beforeEach(function () {
             browser.get('/login');
 
-            element(by.model('username')).sendKeys('admin');
+            element(by.model('email')).sendKeys('admin@ush.com');
             element(by.model('password')).sendKeys('admin');
             element(by.css('button[type="submit"]')).click();
         });
@@ -28,7 +28,7 @@ describe('users management', function () {
             });
 
             describe('clicking the "users" link in the "settings" menu', function () {
-                var usersLinkSelector = 'a[href="/settings/users"]';
+                var usersLinkSelector = '.main-nav a[href="/settings/users"]';
 
                 beforeEach(function () {
                     var usersLink = element(by.css(usersLinkSelector));
@@ -63,7 +63,7 @@ describe('users management', function () {
 
                         describe('link to users detail view', function () {
                             it('should exist and have the user name as link text', function () {
-                                expect(adminLink.getText()).toEqual('admin');
+                                expect(adminLink.getText()).toEqual('Admin');
                             });
                         });
                     });
@@ -90,6 +90,7 @@ describe('users management', function () {
                                 describe('selecting "Guest" as new role', function () {
                                     beforeEach(function () {
                                         element(by.linkText('Guest')).click();
+                                        browser.wait(protractor.ExpectedConditions.alertIsPresent(), 500);
                                     });
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
                                         var alertDialog = browser.switchTo().alert();
@@ -116,6 +117,7 @@ describe('users management', function () {
                             describe('clicking the button', function () {
                                 beforeEach(function () {
                                     deleteButton.click();
+                                    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 500);
                                 });
 
                                 it('shows an error alert that you cannot delete your own user (the user as which your are signed in)', function () {
@@ -185,6 +187,7 @@ describe('users management', function () {
                             describe('clicking the button', function () {
                                 beforeEach(function () {
                                     deleteButton.click();
+                                    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 500);
                                 });
 
                                 it('shows an alert which asks if you really want to delete the users', function () {
