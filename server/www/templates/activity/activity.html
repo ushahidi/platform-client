@@ -13,11 +13,17 @@
     <div class="main-col">
         <div class="one-col activity-data-single">
             <h4 class="header-border">Number of Posts</h4>
-            <div id="posts-by-time"></div>
+            <div id="posts-by-time">
+                <div class="chart-overlay" ng-show="isLoading"><i class="fa fa-refresh fa-4 fa-spin"></i></div>
+                <div class="chart-overlay" ng-show="noData && !isLoading">No activity during selected period.</div>
+            </div>
         </div>
         <div class="one-col activity-data-single">
             <h4 class="header-border">Active Categories</h4>
-            <div id="posts-by-categories"></div>
+            <div id="posts-by-categories">
+                <div class="chart-overlay" ng-show="isLoading"><i class="fa fa-refresh fa-4 fa-spin"></i></div>
+                <div class="chart-overlay" ng-show="noData && !isLoading">No activity during selected period.</div>
+            </div>
         </div>
         <div class="one-col activity-data-single">
             <h4 class="header-border">Active Regions</h4>

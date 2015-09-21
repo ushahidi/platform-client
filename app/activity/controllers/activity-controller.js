@@ -35,6 +35,8 @@ function (
 
     $scope.currentInterval = null;
     $scope.dateRange = null;
+    $scope.noData = false;
+    $scope.isLoading = true;
     var timeScale = d3.time.scale();
 
     //Init charts - these need to be turned into directives
@@ -102,17 +104,21 @@ function (
         //get data for trend chart and render
         PostEndpoint.stats(postsByTimeQuery).$promise.then( function (results) {
             var data = [];
+            $scope.isLoading = false;
             if (results.totals.length > 0) {
+                $scope.noData = false;
                 data = results.totals[0].values;
                 if($scope.currentInterval === 'all') {
                     /*
-                    we have to get start date from the first post date
-                    when we query for entire duration of deployment
+                    For ALL TIME period we have to get start date from the
+                    first post date when we query for entire duration of deployment
                     */
                     var startDate = new Date(data[0].label*1000);
                     $scope.dateRange.start = startDate;
                 }
                 timeScale.domain([$scope.dateRange.start, $scope.dateRange.end]);
+            } else {
+                $scope.noData = true;
             }
             $scope.postsByTime.group().all = function() {
                 return data;
@@ -136,6 +142,8 @@ function (
     };
 
     $scope.update = function (interval) {
+        $scope.isLoading = true;
+        $scope.noData = false;
         $scope.currentInterval = interval;
         $scope.dateRange = getDateRange(interval);
         $scope.updateCharts();
