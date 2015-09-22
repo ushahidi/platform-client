@@ -16,6 +16,7 @@ angular.module('ushahidi.posts', [])
 .directive('postViewList', require('./directives/views/post-view-list-directive.js'))
 .directive('postViewTimeline', require('./directives/views/post-view-timeline-directive.js'))
 .directive('postViewChart', require('./directives/views/post-view-chart-directive.js'))
+.directive('postViewUnavailable', require('./directives/views/post-view-unavailable-directive.js'))
 
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('PostEntity', require('./services/entities/post-entity.js'))

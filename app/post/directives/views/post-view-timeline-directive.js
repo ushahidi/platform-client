@@ -5,14 +5,12 @@ function (
         '$scope',
         '$filter',
         'PostEndpoint',
-        'PostViewHelper',
         'd3',
         '_',
     function (
         $scope,
         $filter,
         PostEndpoint,
-        PostViewHelper,
         d3,
         _
     ) {
@@ -109,11 +107,8 @@ function (
         });
 
         // Initial load
-        if (PostViewHelper.isViewAvailable('timeline')) {
-            $scope.available = true;
-            $scope.reload = getPostStats;
-            getPostStats();
-        }
+        $scope.reload = getPostStats;
+        getPostStats();
     }];
 
     return {
