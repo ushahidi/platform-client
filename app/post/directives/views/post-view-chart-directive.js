@@ -5,14 +5,12 @@ function (
         '$scope',
         '$filter',
         'PostEndpoint',
-        'PostViewHelper',
         'd3',
         '_',
     function (
         $scope,
         $filter,
         PostEndpoint,
-        PostViewHelper,
         d3,
         _
     ) {
@@ -89,13 +87,8 @@ function (
         $scope.reload = getPostStats;
         $scope.groupBy = 'tags';
 
-        $scope.available = false;
-
         // Initial load
-        if (PostViewHelper.isViewAvailable('chart')) {
-            $scope.available = true;
-            getPostStats();
-        }
+        getPostStats();
     }];
 
     return {

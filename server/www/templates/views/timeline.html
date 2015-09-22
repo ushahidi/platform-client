@@ -1,26 +1,19 @@
-<div>
-    <div ng-if="!available">
-        <span translate>
-            feature_limits.view_unavailable
-        </span>
-    </div>
-    <div ng-if="available" class="timeline-view">
-        <form class="clearfix">
-            <div class="custom-select">
-                <label translate>graph.group_by_placeholder</label>
-                <select ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
-                </select>
-            </div>
-            <div class="inline ">
-                <label class="checkbox-label">
-                    <input type="checkbox" value="true" ng-model="showCumulative" ng-change="reload()" />
-                    <span translate>graph.cumulative</span>
-                </label>
-            </div>
-        </form>
-
-        <div class="nvd3-wrapper">
-          <nvd3 options='options' data='data'></nvd3>
+<div class="timeline-view">
+    <form class="clearfix">
+        <div class="custom-select">
+            <label translate>graph.group_by_placeholder</label>
+            <select ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
+            </select>
         </div>
+        <div class="inline ">
+            <label class="checkbox-label">
+                <input type="checkbox" value="true" ng-model="showCumulative" ng-change="reload()" />
+                <span translate>graph.cumulative</span>
+            </label>
+        </div>
+    </form>
+
+    <div class="nvd3-wrapper">
+      <nvd3 options='options' data='data'></nvd3>
     </div>
-</div>    
+</div>

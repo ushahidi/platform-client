@@ -4,14 +4,18 @@ function (
     var controller = [
         '$scope',
         'GlobalFilter',
+        'PostViewHelper',
         '_',
         function (
             $scope,
             GlobalFilter,
+            PostViewHelper,
             _
         ) {
             // Initial scope
             $scope.isLoading = false;
+
+            $scope.views = PostViewHelper.views();
 
             // Set default view
             if (!$scope.currentView) {
