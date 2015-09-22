@@ -15,11 +15,14 @@ function (
             // Initial scope
             $scope.isLoading = false;
 
-            $scope.views = PostViewHelper.views();
-
             // Set default view
             if (!$scope.currentView) {
                 $scope.currentView = 'map';
+            }
+
+            if (!PostViewHelper.isViewAvailable($scope.currentView)) {
+                $scope.unavailableView = $scope.currentView;
+                $scope.currentView = 'unavailable';
             }
 
             // Enable / Disable aside depending on currentView

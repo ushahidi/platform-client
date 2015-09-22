@@ -16,52 +16,32 @@
 
         <!-- map view -->
         <div ng-switch-when="map">
-            <div ng-if="views['map']">
-                <post-view-map is-loading="isLoading" filters="filters"></post-view-map>
-            </div>
-            <div ng-if="!views['map']">
-                <post-view-unavailable view="map"></post-view-unavailable>
-            </div>
+            <post-view-map is-loading="isLoading" filters="filters"></post-view-map>
         </div>
 
         <!-- list view -->
         <div ng-switch-when="list">
-            <div ng-if="views['list']">
-                <post-view-list is-loading="isLoading" filters="filters"></post-view-list>
-            </div>
-            <div ng-if="!views['list']">
-                <post-view-unavailable view="list"></post-view-unavailable>
-            </div>
+            <post-view-list is-loading="isLoading" filters="filters"></post-view-list>
         </div>
 
         <!-- chart view -->
         <div ng-switch-when="chart">
-            <div ng-if="views['chart']">
-                <post-view-chart is-loading="isLoading" filters="filters"></post-view-chart>
-            </div>
-            <div ng-if="!views['chart']">
-                <post-view-unavailable view="chart"></post-view-unavailable>
-            </div>
+            <post-view-chart is-loading="isLoading" filters="filters"></post-view-chart>
         </div>
 
         <!-- timeline view -->
         <div ng-switch-when="timeline">
-            <div ng-if="views['timeline']">
-                <post-view-timeline is-loading="isLoading" filters="filters"></post-view-timeline>
-            </div>
-            <div ng-if="!views['timeline']">
-                <post-view-unavailable view="timeline"></post-view-unavailable>
-            </div>
+            <post-view-timeline is-loading="isLoading" filters="filters"></post-view-timeline>
+        </div>
+
+        <!-- timeline view -->
+        <div ng-switch-when="unavailable">
+            <post-view-unavailable view="unavailableView"></post-view-unavailable>
         </div>
 
         <!-- default view -->
         <div ng-switch-default>
-            <div ng-if="views['map']">
-                <post-view-map is-loading="isLoading" filters="filters"></post-view-map>
-            </div>
-            <div ng-if="!views['map']">
-                <post-view-unavailable view="Map"></post-view-unavailable>
-            </div>
+            <post-view-map is-loading="isLoading" filters="filters"></post-view-map>
         </div>
     </div>
 

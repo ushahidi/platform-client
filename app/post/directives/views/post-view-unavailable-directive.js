@@ -8,9 +8,6 @@ function (
         scope: {
             view: '='
         },
-        templateUrl: 'templates/views/unavailable.html',
-        link: function ($scope, $element, $attrs) {
-            $scope.view = $attrs.view;
-        }
+        templateUrl: 'templates/views/unavailable.html'
     };
 }];
