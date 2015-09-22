@@ -7,7 +7,7 @@
         "forbidden": "Sorry, you're not allowed to do that."
     },
     "feature_limits": {
-        "view_unavailable" : "This feature is not currently available. To gain access to this feature it is necessary to upgrade to a higher tier of Ushahidi"
+        "view_unavailable" : "This view isn't available on your current plan. Upgrade your plan"
     },
     "form": {
         "add_field" : "Add New Field",
@@ -396,7 +396,7 @@
             "provider_options": "Options",
             "save_changes": "Save Changes",
             "saving_changes": "Saving",
-            "unavailable": "This feature is unavailable at your Ushahidi tier. To get access to this feature upgrade to a higher tier."
+            "unavailable": " is unavailable for your Ushahidi plan. To get access to this feature upgrade your Ushahidi plan."
         },
         "generic_field_error": "Invalid entry, please try again.",
         "skip" : "Skip this step",
