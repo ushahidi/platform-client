@@ -115,7 +115,7 @@ gulp.task('sass', ['rename'], function () {
             includePaths: [
                 'node_modules/'
             ],
-            sourceComments: true,
+            sourceComments: false,
             outputStyle: 'compressed'
         }))
         .pipe(autoprefixer())
