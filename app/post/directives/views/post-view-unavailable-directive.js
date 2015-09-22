@@ -1,12 +1,6 @@
 module.exports = [
 function (
 ) {
-    var controller = [
-        '$scope',
-    function (
-        $scope
-    ) {
-    }];
 
     return {
         restrict: 'E',
@@ -14,7 +8,11 @@ function (
         scope: {
             view: '='
         },
-        controller: controller,
-        templateUrl: 'templates/views/unavailable.html'
+        templateUrl: 'templates/views/unavailable.html',
+        link: function ($scope, $element, $attrs) {
+            $scope.view = $attrs.view;
+            console.log($scope.view);
+            console.log('test');
+        }
     };
 }];
