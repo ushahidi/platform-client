@@ -11,8 +11,6 @@ function (
         templateUrl: 'templates/views/unavailable.html',
         link: function ($scope, $element, $attrs) {
             $scope.view = $attrs.view;
-            console.log($scope.view);
-            console.log('test');
         }
     };
 }];
