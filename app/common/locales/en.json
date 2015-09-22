@@ -7,7 +7,7 @@
         "forbidden": "Sorry, you're not allowed to do that."
     },
     "feature_limits": {
-        "view_unavailable" : "This view isn't available on your current plan. Upgrade your plan"
+        "view_unavailable" : "The {{value}} view isn't available on your current plan. Upgrade your plan"
     },
     "form": {
         "add_field" : "Add New Field",
