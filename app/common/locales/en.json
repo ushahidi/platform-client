@@ -396,7 +396,7 @@
             "provider_options": "Options",
             "save_changes": "Save Changes",
             "saving_changes": "Saving",
-            "unavailable": " is unavailable for your Ushahidi plan. To get access to this feature upgrade your Ushahidi plan."
+            "unavailable": "{{value}} is unavailable for your Ushahidi plan. To get access to this feature upgrade your Ushahidi plan."
         },
         "generic_field_error": "Invalid entry, please try again.",
         "skip" : "Skip this step",
