@@ -15,34 +15,22 @@
         <!-- Each of the views in sequence, which are shown or hidden by tabs -->
 
         <!-- map view -->
-        <div ng-switch-when="map">
-            <post-view-map is-loading="isLoading" filters="filters"></post-view-map>
-        </div>
+        <post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>
 
         <!-- list view -->
-        <div ng-switch-when="list">
-            <post-view-list is-loading="isLoading" filters="filters"></post-view-list>
-        </div>
+        <post-view-list ng-switch-when="list" is-loading="isLoading" filters="filters"></post-view-list>
 
         <!-- chart view -->
-        <div ng-switch-when="chart">
-            <post-view-chart is-loading="isLoading" filters="filters"></post-view-chart>
-        </div>
+        <post-view-chart ng-switch-when="chart" is-loading="isLoading" filters="filters"></post-view-chart>
 
         <!-- timeline view -->
-        <div ng-switch-when="timeline">
-            <post-view-timeline is-loading="isLoading" filters="filters"></post-view-timeline>
-        </div>
+        <post-view-timeline ng-switch-when="timeline" is-loading="isLoading" filters="filters"></post-view-timeline>
 
-        <!-- timeline view -->
-        <div ng-switch-when="unavailable">
-            <post-view-unavailable view="unavailableView"></post-view-unavailable>
-        </div>
+        <!-- unavailable view -->
+        <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>
 
         <!-- default view -->
-        <div ng-switch-default>
-            <post-view-map is-loading="isLoading" filters="filters"></post-view-map>
-        </div>
+        <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>
     </div>
 
 </main>
