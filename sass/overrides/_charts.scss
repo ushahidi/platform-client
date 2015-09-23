@@ -16,9 +16,18 @@
 /*
 * Activity Page dc.css overrides
 */
-#posts-by-time, #posts-by-categories {
-    height: 250px;
+.activity-chart {
+    width: 100%;
+    min-height: 100px;
     position: relative;
+}
+.chart-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    text-align: center;
+    padding-top: 30px;
 }
 div.dc-chart {
     float: none;
@@ -30,11 +39,6 @@ div.dc-chart {
 .dc-chart path.area {
     fill: none;
 }
-.chart-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    text-align: center;
-    padding-top: 30px;
+.dc-chart g.row rect, .dc-chart rect.bar {
+    cursor: default;
 }

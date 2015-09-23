@@ -3,7 +3,8 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
 	'ushahidi.common.modal',
-	'ushahidi.common.sticky-sidebar'
+	'ushahidi.common.sticky-sidebar',
+    'ushahidi.common.chart'
 ])
 
 .service('Authentication', require('./services/authentication.js'))
@@ -54,3 +55,4 @@ require('./directives/accordion.js');
 require('./directives/offcanvas.js');
 require('./directives/modal.js');
 require('./directives/sticky-sidebar.js');
+require('./directives/chart.js');

@@ -13,26 +13,20 @@
     <div class="main-col">
         <div class="one-col activity-data-single">
             <h4 class="header-border">Number of Posts</h4>
-            <div id="posts-by-time">
-                <div class="chart-overlay" ng-show="isLoading"><i class="fa fa-refresh fa-4 fa-spin"></i></div>
-                <div class="chart-overlay" ng-show="noData && !isLoading">No activity during selected period.</div>
+            <div class="activity-chart">
+                <dc-chart chart-type="lineChart" chart-options="postTrendOptions" chart-data='postTrendData'></dc-chart>
             </div>
         </div>
         <div class="one-col activity-data-single">
             <h4 class="header-border">Active Categories</h4>
-            <div id="posts-by-categories">
-                <div class="chart-overlay" ng-show="isLoading"><i class="fa fa-refresh fa-4 fa-spin"></i></div>
-                <div class="chart-overlay" ng-show="noData && !isLoading">No activity during selected period.</div>
+            <div class="activity-chart">
+                <dc-chart chart-type="barChart" chart-options="postCategoryOptions" chart-data='postCategoryData'></dc-chart>
             </div>
         </div>
         <div class="one-col activity-data-single">
             <h4 class="header-border">Active Regions</h4>
             <post-view-map is-loading="isLoading" filters="mapQuery"></post-view-map>
         </div>
-        <!-- <div class="one-col activity-data-single">
-            <h4 class="header-border">Active Users</h4>
-            <p>Bar graph showing active users by post count for the selected duration</p>
-        </div> -->
     </div> <!--end main column-->
 
     <aside class="secondary-col" role="complementary">

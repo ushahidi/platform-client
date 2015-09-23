@@ -15,17 +15,6 @@ function (
     d3,
     _
 ) {
-    // TODO: generic chart component directive that takes a config and a data obj
-
-    // TODO: create a generic tabs component directive with a config like this
-    // tabs : {
-    //     language: en_json,
-    //     onClick: callback
-    //     entries: [{
-    //         title: 'first tab'
-    //         url: ''
-    //     },...]
-    // }
 
     // Set the page title
     $translate('nav.activity').then(function (title) {
@@ -33,17 +22,62 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
+    var timeScale = d3.time.scale();
+    var getDateRange;
+
     $scope.currentInterval = null;
     $scope.dateRange = null;
-    $scope.noData = false;
-    $scope.isLoading = true;
-    var timeScale = d3.time.scale();
+    $scope.postTrendData = null;
+    $scope.postCategoryData = null;
 
-    //Init charts - these need to be turned into directives
-    $scope.postsByTime = dc.lineChart('#posts-by-time');
-    $scope.postsByCategories = dc.barChart('#posts-by-categories');
+    $scope.postTrendOptions = {
+        isLoading: true,
+        height: 250,
+        margins: {
+            top: 5, right: 20, bottom: 20, left: 50
+        },
+        x: timeScale,
+        yAxis: d3.svg.axis().ticks(3).tickFormat(d3.format('d')).orient('left'),
+        xAxis: d3.svg.axis().ticks(5).orient('bottom'),
+        renderDataPoints: {
+            radius: 3
+        },
+        brushOn: false,
+        keyAccessor: function (d) {
+            var date = new Date(parseInt(d.label) * 1000);
+            return date;
+        },
 
-    var getDateRange = function (interval) { //interval = week,month,all
+        elasticY: true,
+        valueAccessor: function (d) {
+            return d.total;
+        }
+    };
+
+    $scope.postCategoryOptions = {
+        height: 250,
+        margins: {
+            top: 5, right: 20, bottom: 20, left: 50
+        },
+        x: d3.scale.ordinal(),
+        yAxis: d3.svg.axis().ticks(3).tickFormat(d3.format('d')).orient('left'),
+        xUnits: dc.units.ordinal,
+        keyAccessor: function (d) {
+            return d.label;
+        },
+        valueAccessor: function (d) {
+            return d.total;
+        },
+        elasticX: true,
+        elasticY: true,
+        brushOn: false
+    };
+
+    /*
+    Util func to get date range when given an interval like
+    'week', 'month', 'all'
+    */
+    getDateRange = function (interval) { //interval = week,month,all
         //calculate date range based on the provided interval
         var start = new Date();
         var end = new Date();
@@ -70,8 +104,10 @@ function (
     };
 
     $scope.updateCharts = function () {
+
         var startDate = $scope.dateRange.start.toISOString();
         var endDate = $scope.dateRange.end.toISOString();
+
         /*
         when we want data for entire duration of
         deployment we query endpoints without startDate
@@ -79,6 +115,7 @@ function (
         if($scope.currentInterval === 'all'){
             startDate = null;
         }
+
         //queries
         var postsByTimeQuery = {
             'timeline' : 1,
@@ -101,12 +138,11 @@ function (
             'created_after': startDate,
             'created_before': endDate
         };
-        //get data for trend chart and render
+
+        //get data for trend chart
         PostEndpoint.stats(postsByTimeQuery).$promise.then( function (results) {
             var data = [];
-            $scope.isLoading = false;
             if (results.totals.length > 0) {
-                $scope.noData = false;
                 data = results.totals[0].values;
                 if($scope.currentInterval === 'all') {
                     /*
@@ -117,108 +153,36 @@ function (
                     $scope.dateRange.start = startDate;
                 }
                 timeScale.domain([$scope.dateRange.start, $scope.dateRange.end]);
-            } else {
-                $scope.noData = true;
             }
-            $scope.postsByTime.group().all = function() {
-                return data;
-                // return [{label:630720000,total:0},{label:946080000,total:100},{label:1419120000,total:0}];
-            };
-            $scope.postsByTime.render();
+            $scope.postTrendOptions.isLoading = false;
+            $scope.postTrendData = data;
         });
 
-        //get data for category chart and render
+        //get data for category chart
         PostEndpoint.stats(postsByCategoriesQuery).$promise.then( function (results) {
             var data = [];
             if (results.totals.length > 0) {
                 data = results.totals[0].values;
+                //show only top 5 categories
+                if(data.length > 5){
+                    data = data.slice(0,5);
+                }
             }
-            $scope.postsByCategories.group().all = function () {
-                return data;
-            };
-            $scope.postsByCategories.render();
+            $scope.postCategoryOptions.isLoading = false;
+            $scope.postCategoryData = data;
         });
 
     };
 
     $scope.update = function (interval) {
-        $scope.isLoading = true;
-        $scope.noData = false;
+        $scope.postCategoryOptions.isLoading = true;
+        $scope.postTrendOptions.isLoading = true;
         $scope.currentInterval = interval;
         $scope.dateRange = getDateRange(interval);
         $scope.updateCharts();
     };
 
+    //init
     $scope.update('week');
 
-    //configure charts
-    //configure postsbytime chart
-    $scope.postsByTime
-            .height(250)
-            .margins({top: 5, right: 20, bottom: 20, left: 50})
-            .x(timeScale)
-            // .xUnits(d3.time.year)
-            .renderArea(true)
-            .brushOn(false)
-            .renderDataPoints({radius:3})
-            // .elasticX(true)
-            .elasticY(true)
-            .keyAccessor(function(d) {
-                var date = new Date(parseInt(d.label) * 1000);
-                return date;
-            })
-            .valueAccessor(function(d) {
-                return d.total;
-            })
-            .dimension({ filterFunction: function() {} })
-            .group({ all: function() {
-                return []; //
-            }})
-        ;
-    $scope.postsByTime.xAxis().ticks(5).tickFormat(d3.time.format('%b %e, %Y'));
-    $scope.postsByTime.yAxis().ticks(3).tickFormat(d3.format('d'));
-
-    //configure the category chart
-    //this is alternate way of initializing charts with options in dc.js
-    var chartOptions = {
-        height: 250,
-        margins: {
-            top: 5, right: 20, bottom: 20, left: 50
-        },
-        x: d3.scale.ordinal(),
-        xUnits: dc.units.ordinal,
-        keyAccessor: function (d) {
-            return d.label;
-        },
-        elasticX: true,
-        elasticY: true,
-        valueAccessor: function (d) {
-            return d.total;
-        },
-        dimension: {
-            filterFunction: function () {} /*NOOP*/
-        },
-        group: {
-            all: function () { return []; }
-        }
-    };
-    $scope.postsByCategories.options(chartOptions);
-    $scope.postsByCategories.yAxis().ticks(3).tickFormat(d3.format('d'));
-
-    //should be in chart directive but here for now to debug
-    //chart responds to browser resize
-    window.onresize = function() {
-        $scope.postsByTime
-            .width(document.querySelector('#posts-by-time').clientWidth)
-            // .height(window.innerHeight-20)
-            .rescale()
-            .redraw()
-        ;
-        $scope.postsByCategories
-            .width(document.querySelector('#posts-by-categories').clientWidth)
-            // .height(window.innerHeight-20)
-            .rescale()
-            .redraw()
-        ;
-      };
 }];
