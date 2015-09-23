@@ -6,6 +6,7 @@ module.exports = [
     'GlobalFilter',
     'collection',
     'NotificationEndpoint',
+    'Notify',
     function (
         $scope,
         $translate,
@@ -13,7 +14,8 @@ module.exports = [
         _,
         GlobalFilter,
         collection,
-        NotificationEndpoint
+        NotificationEndpoint,
+        Notify
     ) {
         // Set view based on route or set view
         $scope.currentView = function () {
@@ -70,5 +72,18 @@ module.exports = [
             // show link if subscription does not exist
             $scope.showNotificationLink = notifications.length === 0;
         });
+
+        $scope.saveNotification = function (collection) {
+            var notification = {set: collection.id};
+
+            NotificationEndpoint.save(notification, function (notification) {
+                // No need to show the link after subscription
+                $scope.showNotificationLink = false;
+                $translate('notify.notification.add', {collection: collection.name})
+                    .then(function (message) {
+                        Notify.showSingleAlert(message);
+                    });
+            });
+        };
     }
 ];
