@@ -14,5 +14,10 @@ function (
                 return UserEndpoint.get({id: 'me'}).$promise;
             }]
         }
-    });
+    })
+    .when('/users/me/notifications/', {
+        controller: require('./controllers/notification-controller.js'),
+        templateUrl: 'templates/notifications/notifications.html'
+    })
+    ;
 }];

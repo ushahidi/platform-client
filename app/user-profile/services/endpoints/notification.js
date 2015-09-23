@@ -12,16 +12,12 @@ function (
         get: {
             method: 'GET',
             isArray: true,
-            transformResponse: function (data /*, header*/) {
+            transformResponse: function (data) {
                 return angular.fromJson(data).results;
             }
         },
         update: {
             method: 'PUT'
-        },
-        addNotification: {
-            method: 'POST',
-            url: Util.apiUrl('/notifications')
         }
     });
 
