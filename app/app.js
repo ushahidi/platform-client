@@ -19,10 +19,6 @@ require('angular-gravatar/build/angular-gravatar');
 require('selection-model/dist/selection-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown/src/ng-showdown');
-window.d3 = require('d3'); // Required for nvd3
-window.dc = require('dc'); // Required for charting used in activity page
-require('./common/wrapper/nvd3-wrapper');
-require('angular-nvd3/src/angular-nvd3');
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -67,7 +63,6 @@ angular.module('app',
         'angular.filter',
         'showdown',
         'ngGeolocation',
-        'nvd3',
         'selectionModel',
         'ushahidi.common',
         'ushahidi.posts',
@@ -89,12 +84,6 @@ angular.module('app',
 
     .factory('_', function () {
         return require('underscore/underscore');
-    })
-    .factory('d3', function () {
-        return window.d3;
-    })
-    .factory('dc', function () {
-        return window.dc;
     })
     .factory('URI', function () {
         return require('URIjs/src/URI.js');

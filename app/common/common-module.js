@@ -56,3 +56,8 @@ require('./directives/offcanvas.js');
 require('./directives/modal.js');
 require('./directives/sticky-sidebar.js');
 require('./directives/chart.js');
+
+// External libs modules for lazy loading
+require('./wrapper/d3.js');
+require('./wrapper/crossfilter.js');
+require('./wrapper/dc.js');

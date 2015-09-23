@@ -3,25 +3,25 @@ module.exports = [
     '$translate',
     '$routeParams',
     'PostEndpoint',
-    'dc',
-    'd3',
+    'dcService',
     '_',
 function (
     $scope,
     $translate,
     $routeParams,
     PostEndpoint,
-    dc,
-    d3,
+    dcService,
     _
 ) {
 
+//init after dc.js loads
+dcService.dc().then( function(dc) {
     // Set the page title
     $translate('nav.activity').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
-
+    var d3 = window.d3;
     var timeScale = d3.time.scale();
     var getDateRange;
 
@@ -184,5 +184,6 @@ function (
 
     //init
     $scope.update('week');
+});
 
 }];

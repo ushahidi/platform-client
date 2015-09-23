@@ -1,4 +1,4 @@
-angular.module('ushahidi.activity', [])
+angular.module('ushahidi.activity', ['dc'])
 
 .config(require('./activity-routes.js'))
 
