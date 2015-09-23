@@ -86,7 +86,7 @@
         <div class="divider padded"></div>
 
         <div ng-show="isFirstStage(visibleStage)">
-            <label class="input-label"
+            <label class="input-label required"
                 ng-class="{ 'error': form.title.$invalid && form.title.$dirty, 'success': !form.title.$invalid && form.title.$dirty }"
                 for="title">{{'post.modify.form.title' | translate }}</label>
             <div
@@ -102,7 +102,7 @@
                 translate="{{'post.valid.title.' + error}}"></p>
 
             <label
-                class="input-label" for="content"
+                class="input-label required" for="content"
                 ng-class="{ 'error': form.content.$invalid && form.content.$dirty }"
             >{{'post.modify.form.description' | translate }}</label>
             <div
@@ -141,7 +141,8 @@
                 class="input-label" for="values[{{attribute.key}}][0]"
                 ng-class="{
                     'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-                    'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
+                    'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+                    'required': attribute.required}"
                 >
                 {{attribute.label}}
             </label>
