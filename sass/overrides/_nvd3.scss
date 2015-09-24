@@ -12,3 +12,19 @@
 .nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point.hover {
     stroke-width:8px;
 }
+.nv-x .tick text {
+    text-anchor: start !important;
+}
+.nvd3 .nv-multibar .nv-groups rect:hover, .nvd3 .nv-multibarHorizontal .nv-groups rect:hover, .nvd3 .nv-discretebar .nv-groups rect:hover {
+    opacity: 0.8;
+}
+.nvd3 text, .nvd3 .title, .nvtooltip {
+    font-family: inherit;
+    font-size: 14px;
+}
+.nvtooltip {
+    font-size: 12px;
+}
+.nv-multibarHorizontal .nv-group {
+    opacity: 0.6;
+}

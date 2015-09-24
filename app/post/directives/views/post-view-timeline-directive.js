@@ -39,8 +39,8 @@ function (
                 type: 'lineChart',
                 height: 450,
                 margin: {
-                    top: 20,
-                    right: 40,
+                    top: 0,
+                    right: 65,
                     bottom: 40,
                     left: 65
                 },
