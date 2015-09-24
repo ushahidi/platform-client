@@ -32,22 +32,20 @@ angular.module('ushahidi.common.offcanvas', [])
             this.toggle = function (open) {
                 openScope.isOpen = arguments.length ? !!open : !openScope.isOpen;
                 body.toggleClass(openClass, openScope.isOpen);
-            
-                if (openScope.isOpen) {
-                  
-                  wrapper.append(navClose);
-                  close_nav = angular.element(
-                    document.getElementsByClassName('close-nav')
-                  );
-                  close_nav.bind('click', function() {
-                      self.toggle(false); 
-                  });
 
+                if (openScope.isOpen) {
+                    wrapper.append(navClose);
+                    close_nav = angular.element(
+                     document.getElementsByClassName('close-nav')
+                    );
+                    close_nav.bind('click', function () {
+                        self.toggle(false);
+                    });
                 } else {
-                  close_nav = angular.element(
-                    document.getElementsByClassName('close-nav')
-                  );
-                  close_nav.remove();
+                    close_nav = angular.element(
+                     document.getElementsByClassName('close-nav')
+                    );
+                    close_nav.remove();
                 }
 
                 return openScope.isOpen;
