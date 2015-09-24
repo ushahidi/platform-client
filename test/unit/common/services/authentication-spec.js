@@ -77,8 +77,7 @@ describe('Authentication', function () {
                         'id': 2,
                         'url': 'http://ushahidi-backend/api/v2/users/2',
                         'email': 'admin@example.com',
-                        'realname': 'Admin Joe',
-                        'username': 'admin'
+                        'realname': 'Admin Joe'
                     };
                     $httpBackend.whenGET(BACKEND_URL + '/api/v2/users/me').respond(mockedUserDataResponse);
                 });
@@ -99,7 +98,6 @@ describe('Authentication', function () {
 
                 it('should add the userData to the Session', function () {
                     expect(mockedSessionData.userId).toEqual(mockedUserDataResponse.id);
-                    expect(mockedSessionData.username).toEqual(mockedUserDataResponse.username);
                     expect(mockedSessionData.realname).toEqual(mockedUserDataResponse.realname);
                     expect(mockedSessionData.email).toEqual(mockedUserDataResponse.email);
                 });
@@ -207,7 +205,6 @@ describe('Authentication', function () {
         beforeEach(function () {
             mockedSessionData = {
                 userId: 2,
-                username: 'max',
                 realname: 'Max Doe',
                 email: 'max@doe.org',
                 accessToken: 'fooBarAccessToken'

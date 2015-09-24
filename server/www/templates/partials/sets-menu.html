@@ -6,7 +6,7 @@
         <!-- <span class="star"></span> -->
         <p class="credit" ng-if="set.user.id">
 	        <span translate>nav.author_tagline</span>
-	        <a ng-href="/users/{{set.user.id}}"> {{set.user.realname || set.user.username}} </a>
+	        <a ng-href="/users/{{set.user.id}}"> {{set.user.realname}} </a>
         </p>
     </li>
     <li ng-show="! sets.length" translate="set.empty_list_{{type}}"></li>

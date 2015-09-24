@@ -29,7 +29,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
 
         $httpBackend.whenPOST(CONST.BACKEND_URL + '/oauth/token').respond(function (method, url, data) {
             var reqPayload = JSON.parse(data);
-            if (reqPayload.grant_type === 'password' && reqPayload.username === 'admin' && reqPayload.password === 'admin') {
+            if (reqPayload.grant_type === 'password' && reqPayload.username === 'admin@ush.com' && reqPayload.password === 'admin') {
                 return [200, {
                     'access_token': 'UmexrkSXVsHeEzGH1TMjYjvX344iB94XZK34nIVw',
                     'token_type': 'Bearer',

@@ -188,6 +188,9 @@
     "post": {
         "posts" : "Posts",
         "all_posts" : "All Posts",
+        "no_search_results" : "Your search didn't match any posts",
+        "no_posts_yet" : "This are no posts yet!",
+        "add_first_post": "Add the first post",
         "create_post" : "Create Post",
         "posted_by" : "Posted by",
         "draft" : "Draft",
@@ -358,14 +361,20 @@
     },
     "settings": {
         "appearance" : "Appearance Settings",
-        "appearance_header_image" : "Header Image",
+        "appearance_header_image" : "Custom Background Image",
+        "appearance_header_image_instructions" : "Image needs to be >1000px wide.",
+        "customize_your_new_deployment" : "Customize your new deployment",
+        "continue" : "Continue",
+        "current_header" : "Current background image",
         "site" : "Site Settings",
         "site_name" : "Site name",
         "site_email" : "Contact email address",
         "site_email_note" : "Use caution, as this will be visible to anyone on your site.",
         "site_description" : "Describe your site",
+        "site_description_placeholder" : "An optional one sentence description",
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
+        "select_image" : "Select image",
         "save" : "Save",
         "features" : {
             "features" : "Features",
@@ -385,7 +394,17 @@
             "save_changes": "Save Changes",
             "saving_changes": "Saving"
         },
-        "generic_field_error": "Invalid entry, please try again."
+        "generic_field_error": "Invalid entry, please try again.",
+        "skip" : "Skip this step",
+        "add_first_post": "Add Your First Post",
+        "add_first_post_subtitle": "A deployment is nothing until it has some content in it.",
+        "invite_people": "Or invite people to help you create posts.",
+        "add_new_users": "Add New Users",
+        "valid" : {
+            "name" : {
+                "required": "Site name is required"
+            }
+        }
     },
     "user": {
         "add_user" : "Add User",
@@ -402,9 +421,9 @@
         "cancel" : "Cancel",
         "email" : "Email Address",
         "failed_attempts" : "Failed attempts: ",
-        "full_name" : "Full Name",
+        "full_name" : "Display Name",
         "never" : "Never",
-        "no_full_name" : "No full name",
+        "no_full_name" : "No display name",
         "number_of_users_shown" : "Number of users shown",
         "per_page" : "{{count}} users",
         "password" : "Password",
@@ -413,20 +432,13 @@
         "role" : "Role: ",
         "roles" : "Roles",
         "search_and_filter" : "Search & Filter Users",
-        "username" : "Username",
-        "usernameOrEmail" : "Username or Email",
-        "passwordreset_instructions" : "Enter your username or email to request a password reset",
-        "passwordreset_confirm_instructions" : "If your email/username exists in our database, you will receive a password recovery email soon.",
+        "passwordreset_instructions" : "Enter your email to request a password reset",
+        "passwordreset_confirm_instructions" : "If your email exists in our database, you will receive a password recovery email soon.",
         "token" : "Password reset token",
         "valid" : {
             "full_name" : {
-                "required" : "Full name is required",
-                "maxlength" : "Full name is too long"
-            },
-            "username" : {
-                "required" : "Username is required",
-                "maxlength" : "Username is too long",
-                "pattern" : "Your username must: be at least 3 characters long, only contain letters, numbers, periods(.), underscores(_) or hyphens(-), start with a letter, fix with a letter or number"
+                "required" : "Display name is required",
+                "maxlength" : "Display name is too long"
             },
             "email" : {
                 "required" : "Email address is required",
@@ -448,7 +460,6 @@
     },
     "user_create" :  {
         "full_name": "Display Name",
-        "username": "Username",
         "email": "Email Address",
         "role": "Role"
     },
@@ -466,7 +477,7 @@
             "bulk_destroy_cancelled" : "Delete cancelled"
         },
         "login" : {
-            "failed" : "Login failed, check your username and password."
+            "failed" : "Login failed, check your email and password."
         },
         "register" : {
             "failed" : "There were errors during registration. Check your input and try again.",

@@ -37,13 +37,13 @@ describe('authentication', function () {
 
     describe('Login page:', function () {
 
-        var usernameField,
+        var emailField,
             passwordField,
             submitButton;
 
         beforeEach(function () {
             browser.get('/login');
-            usernameField = element(by.model('username'));
+            emailField = element(by.model('email'));
             passwordField = element(by.model('password'));
             submitButton = element(by.css('button[type="submit"]'));
         });
@@ -55,14 +55,14 @@ describe('authentication', function () {
         });
 
         it('should have a login form', function () {
-            expect(usernameField.isDisplayed()).toBeTruthy();
+            expect(emailField.isDisplayed()).toBeTruthy();
             expect(passwordField.isDisplayed()).toBeTruthy();
             expect(submitButton.isDisplayed()).toBeTruthy();
         });
 
         describe('submitting login form with wrong credentials', function () {
             beforeEach(function () {
-                usernameField.sendKeys('foo');
+                emailField.sendKeys('foo');
                 passwordField.sendKeys('bar');
                 submitButton.click();
             });
@@ -83,7 +83,7 @@ describe('authentication', function () {
             var userMenuLink;
 
             beforeEach(function () {
-                usernameField.sendKeys('admin');
+                emailField.sendKeys('admin@ush.com');
                 passwordField.sendKeys('admin');
                 submitButton.click();
             });

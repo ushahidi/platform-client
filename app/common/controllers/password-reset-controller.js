@@ -28,7 +28,7 @@ function (
         $scope.processing = true;
 
         PasswordReset
-            .reset($scope.usernameOrEmail)
+            .reset($scope.email)
             .finally(resetDone);
     };
 

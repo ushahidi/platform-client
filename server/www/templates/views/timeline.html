@@ -1,7 +1,7 @@
 <div class="timeline-view">
     <form class="clearfix">
         <div class="custom-select">
-            <label translate>graph.group_by_placeholder</label>
+            <label class="delta-alt" translate>graph.group_by_placeholder</label>
             <select ng-options="key as value | translate for (key, value) in groupByOptions" ng-change="reload()" ng-model="groupBy">
             </select>
         </div>

@@ -21,9 +21,6 @@
         <div id="bootstrap-loading">
             <header class="header header-full overlay" role="banner">
                 <div class="container">
-                    <div class="hero-image">
-                         <img src="img/default-header-bg.png" alt="" />
-                    </div>
                     <div class="color-overlay">
                         <div class="parallax">
                             <h1 class="beta"><i class="fa fa-refresh fa-4 fa-spin"></i></h1>
@@ -36,9 +33,6 @@
         <div id="bootstrap-error" class="hidden">
             <header class="header header-full overlay" role="banner">
                 <div class="container">
-                    <div class="hero-image">
-                         <img src="img/default-header-bg.png" alt="" />
-                    </div>
                     <div class="color-overlay">
                         <div class="parallax">
                             <h1 class="beta"><img style="max-width: 50px; margin: auto;" src="img/ushahidi-logo.svg" alt="Ushahidi Logo"></h1>
@@ -58,9 +52,8 @@
         <div id="bootstrap-app" class="hidden">
             <header class="header header-full overlay" ng-class="{ 'header-full' : isHome, 'header-compact': !isHome }" role="banner" ng-controller="navigation">
                 <div class="container">
-                    <div class="hero-image">
-                         <img ng-show="site.image_header" ng-src="{{site.image_header}}" alt="" />
-                         <img ng-show="!site.image_header" src="img/default-header-bg.png" alt="" />
+                    <div class="hero-image" ng-if="site.image_header">
+                         <img ng-src="{{site.image_header}}" alt="" />
                     </div>
 
                     <div class="color-overlay">
@@ -70,13 +63,18 @@
                                 <span></span>
                                 <span></span>
                             </div>
-                            <h1 class="beta" ng-bind="site.name"></h1>
-                            <p class="header-description" ng-bind="site.description"></p>
-                            <a class="button button-create icon-only" ng-href="/posts/create">
-                                <span translate>nav.add_post</span>
+                            <a ng-href="/">
+                                <h1 class="beta" ng-bind="site.name"></h1>
                             </a>
+                            <p class="header-description" ng-bind="site.description"></p>
 
-                            <ng-include src="'templates/partials/user-menu.html'"></ng-include>
+                            <div class="create-admin">
+                                <a class="button button-create icon-only" ng-href="/posts/create">
+                                    <span translate>nav.add_post</span>
+                                </a>
+
+                                <ng-include src="'templates/partials/user-menu.html'"></ng-include>
+                            </div>
                         </div>
                     </div>
 
@@ -113,6 +111,8 @@
                     </div>
                 </div>
             </footer>
+
+            <first-time-config></first-time-config>
         </div>
 
         <script src="/js/bundle.js"></script>

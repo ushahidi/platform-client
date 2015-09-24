@@ -4,10 +4,10 @@
             <button
             ng-repeat="value in values"
             type="button"
-            class="button-secondary alt close"
+            class="button-secondary alt close filter-applied"
             ng-click="removeFilter(key, value)"
             >
-                <em><span translate="global_filter.filter_tabs.{{key}}"></span>: </em>
+                <span><translate translate="global_filter.filter_tabs.{{key}}"></translate>: </span>
                 {{ transformFilterValue(value, key) }}
             </button>
         </div>

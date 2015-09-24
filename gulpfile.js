@@ -115,7 +115,7 @@ gulp.task('sass', ['rename'], function () {
             includePaths: [
                 'node_modules/'
             ],
-            sourceComments: true,
+            sourceComments: false,
             outputStyle: 'compressed'
         }))
         .pipe(autoprefixer())
@@ -267,6 +267,9 @@ function bundleBrowserify(stream) {
             errorHandler(err);
         })
         .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(options.www + '/js'))
         .pipe(notify('JS compiled'))
         .pipe(livereload());
