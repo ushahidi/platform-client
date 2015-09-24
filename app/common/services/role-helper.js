@@ -5,10 +5,6 @@ function (
 ) {
     var allRoles = [
             {
-                name: 'guest',
-                display_name: 'Guest'
-            },
-            {
                 name: 'user',
                 display_name: 'Member'
             },
