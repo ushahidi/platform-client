@@ -30,6 +30,7 @@ function (
     $scope.postTrendData = null;
     $scope.postCategoryData = null;
 
+    //chart options
     $scope.postTrendOptions = {
         isLoading: true,
         height: 250,
@@ -81,21 +82,20 @@ function (
         //calculate date range based on the provided interval
         var start = new Date();
         var end = new Date();
-        switch(interval) {
-            case 'week':
-                start = d3.time.week(start); //sunday is the first day of week
-                break;
-            case 'month':
-                start = d3.time.month( new Date() ); //get first day of current month
-                end = new Date(); //today
-                break;
-            case 'all':
-                start = new Date(2015,0,1); //how do we get the very first post date for this deployment?
-                break;
-            default:
-                //set range to last week as a default
-                start = d3.time.week(start);
-                break;
+        switch (interval) {
+        case 'week':
+            start = d3.time.week(start); //sunday is the first day of week
+            break;
+        case 'month':
+            start = d3.time.month(new Date()); //get first day of current month
+            end = new Date(); //today
+            break;
+        case 'all':
+            start = new Date(2015,0,1); //how do we get the very first post date for this deployment?
+            break;
+        default:
+            //set range to last week as a default
+            start = d3.time.week(start);
         }
         return {
             'start': start,
@@ -112,7 +112,7 @@ function (
         when we want data for entire duration of
         deployment we query endpoints without startDate
         */
-        if($scope.currentInterval === 'all'){
+        if ($scope.currentInterval === 'all') {
             startDate = null;
         }
 
@@ -121,35 +121,35 @@ function (
             'timeline' : 1,
             'timeline_attribute' : 'created',
             'group_by' : '',
-            'status':'all',
+            'status': 'all',
             'created_after': startDate,
             'created_before': endDate
         };
         var postsByCategoriesQuery = {
-            'group_by':'tags',
-            'order':'desc',
-            'orderby':'created',
-            'status':'all',
+            'group_by': 'tags',
+            'order': 'desc',
+            'orderby': 'created',
+            'status': 'all',
             'created_after': startDate,
             'created_before': endDate
         };
         $scope.mapQuery = {
-            'status':'all',
+            'status': 'all',
             'created_after': startDate,
             'created_before': endDate
         };
 
         //get data for trend chart
-        PostEndpoint.stats(postsByTimeQuery).$promise.then( function (results) {
+        PostEndpoint.stats(postsByTimeQuery).$promise.then(function (results) {
             var data = [];
             if (results.totals.length > 0) {
                 data = results.totals[0].values;
-                if($scope.currentInterval === 'all') {
+                if ($scope.currentInterval === 'all') {
                     /*
                     For ALL TIME period we have to get start date from the
                     first post date when we query for entire duration of deployment
                     */
-                    var startDate = new Date(data[0].label*1000);
+                    var startDate = new Date(data[0].label * 1000);
                     $scope.dateRange.start = startDate;
                 }
                 timeScale.domain([$scope.dateRange.start, $scope.dateRange.end]);
@@ -159,13 +159,13 @@ function (
         });
 
         //get data for category chart
-        PostEndpoint.stats(postsByCategoriesQuery).$promise.then( function (results) {
+        PostEndpoint.stats(postsByCategoriesQuery).$promise.then(function (results) {
             var data = [];
             if (results.totals.length > 0) {
                 data = results.totals[0].values;
                 //show only top 5 categories
-                if(data.length > 5){
-                    data = data.slice(0,5);
+                if (data.length > 5) {
+                    data = data.slice(0, 5);
                 }
             }
             $scope.postCategoryOptions.isLoading = false;

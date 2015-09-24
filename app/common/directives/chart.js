@@ -17,7 +17,7 @@ function (
             data: '=chartData'
         },
         template: '<div class="chart-overlay" ng-show="options.isLoading"><i class="fa fa-refresh fa-4 fa-spin"></i></div><div class="chart-overlay" ng-show="noData && !options.isLoading">No activity during selected period.</div>',
-        link:function (scope, iElement, iAttrs) {
+        link: function (scope, iElement, iAttrs) {
             /*
             get constructor based on chart type
             ex: lineChart, barChart etc..
@@ -31,13 +31,15 @@ function (
                     filterFunction: function () {} /*NOOP*/
                 },
                 group: {
-                    all: function () { return []; } /*NOOP*/
+                    all: function () {
+                        return [];
+                    } /*NOOP*/
                 }
             };
 
             chart.options(defaultOptions);
 
-            scope.$watch('options',function (newoptions) {
+            scope.$watch('options', function (newoptions) {
                 chart.options(newoptions);
             });
 
@@ -58,7 +60,7 @@ function (
             });
 
             var resizeChart = function () {
-                if(scope.chartType === 'rowChart') {
+                if (scope.chartType === 'rowChart') {
                     chart
                         .width(iElement[0].clientWidth)
                         .redraw();
@@ -72,7 +74,7 @@ function (
             };
 
             chart.on('renderlet', function (_chart) {
-                _chart.onClick = function(d){
+                _chart.onClick = function (d) {
                     _chart.filter(null);
                 };
             });

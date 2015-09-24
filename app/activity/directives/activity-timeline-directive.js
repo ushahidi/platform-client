@@ -49,7 +49,7 @@ function (
             };
 
             var getPostsForPagination = function (query) {
-                query = query || {status:'all'};
+                query = query || { status: 'all' };
                 var postQuery = _.extend({}, query, {
                     offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
                     limit: $scope.itemsPerPage
@@ -71,7 +71,7 @@ function (
                     quick hack to get user names but not efficient
                     since we end up making duplicate queries
                     */
-                    $scope.posts.forEach(function(post){
+                    $scope.posts.forEach(function (post) {
                         post.user = UserEndpoint.get({id: post.user.id});
                     });
 
