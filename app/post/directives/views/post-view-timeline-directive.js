@@ -5,110 +5,144 @@ function (
         '$scope',
         '$filter',
         'PostEndpoint',
-        'd3',
+        'dcService',
         '_',
     function (
         $scope,
         $filter,
         PostEndpoint,
-        d3,
+        dcService,
         _
     ) {
-        var yAxisLabelCumulative = $filter('translate')('graph.cumulative_post_count'),
-            yAxisLabel = $filter('translate')('graph.new_post_count'),
-            xAxisLabel = $filter('translate')('graph.post_date');
+        dcService.dc().then( function(dc) {
+            var d3 = window.d3;
 
-        $scope.posts_query = null;
-        $scope.showCumulative = false;
-        $scope.timelineAttribute = 'created';
-        $scope.groupBy = '';
-        $scope.reload = null;
-        $scope.data = [{
-            values: []
-        }];
+            var yAxisLabelCumulative = $filter('translate')('graph.cumulative_post_count'),
+                yAxisLabel = $filter('translate')('graph.new_post_count'),
+                xAxisLabel = $filter('translate')('graph.post_date');
 
-        $scope.groupByOptions = {
-            '' : 'post.posts',
-            'tags' : 'post.categories',
-            'form' : 'post.type',
-            'status' : 'post.status'
-        };
+            $scope.posts_query = null;
+            $scope.showCumulative = false;
+            $scope.timelineAttribute = 'created';
+            $scope.groupBy = '';
+            $scope.reload = null;
+            $scope.data = [{
+                values: []
+            }];
 
-        $scope.options = {
-            chart: {
-                type: 'lineChart',
-                height: 450,
-                margin: {
-                    top: 20,
-                    right: 40,
-                    bottom: 40,
-                    left: 65
-                },
-                showControls: false,
-                x: function (d) {
-                    return new Date(parseInt(d.label) * 1000);
-                },
-                y: function (d) {
-                    return d[$scope.showCumulative ? 'cumulative_total' : 'total'];
-                },
-                transitionDuration: 500,
-                xAxis: {
-                    axisLabel: xAxisLabel,
-                    tickFormat: function (d) {
-                        //uses unambiguous time format ex: 8 Sep 2014
-                        return d3.time.format('%e %b %Y')(new Date(d));
+            $scope.groupByOptions = {
+                '' : 'post.posts',
+                'tags' : 'post.categories',
+                'form' : 'post.type',
+                'status' : 'post.status'
+            };
+
+            $scope.options = {
+                dc: {
+                    isLoading: true,
+                    height: 250,
+                    margins: {
+                        top: 5, right: 20, bottom: 20, left: 50
+                    },
+                    x: d3.time.scale(),
+                    yAxis: d3.svg.axis().ticks(3).tickFormat(d3.format('d')).orient('left'),
+                    xAxis: d3.svg.axis().ticks(5).orient('bottom'),
+                    renderDataPoints: {
+                        radius: 3
+                    },
+                    brushOn: false,
+                    seriesAccessor: function (d) {
+                        return d.key;
+                    },
+                    keyAccessor: function (d) {
+                        console.log(d);
+                        var date = new Date(parseInt(d.label) * 1000);
+                        return date;
+                    },
+
+                    elasticY: true,
+                    valueAccessor: function (d) {
+                        // console.log(d);
+                        return d.values;
                     }
                 },
-                yAxis: {
-                    axisLabel: yAxisLabel,
-                    tickFormat: d3.format('d')
-                },
-                forceY: 0,
-                tooltipContent: function (key, x, y, e, graph) {
-                    return '<h3>' + key + '</h3>' +
-                        '<p>' +  x + '</p>' +
-                        '<p>' +  $scope.options.chart.yAxis.axisLabel + ' ' + y + '</p>';
+                chart: {
+                    type: 'lineChart',
+                    height: 450,
+                    margin: {
+                        top: 20,
+                        right: 40,
+                        bottom: 40,
+                        left: 65
+                    },
+                    showControls: false,
+                    x: function (d) {
+                        return new Date(parseInt(d.label) * 1000);
+                    },
+                    y: function (d) {
+                        return d[$scope.showCumulative ? 'cumulative_total' : 'total'];
+                    },
+                    transitionDuration: 500,
+                    xAxis: {
+                        axisLabel: xAxisLabel,
+                        tickFormat: function (d) {
+                            //uses unambiguous time format ex: 8 Sep 2014
+                            return d3.time.format('%e %b %Y')(new Date(d));
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: yAxisLabel,
+                        tickFormat: d3.format('d')
+                    },
+                    forceY: 0,
+                    tooltipContent: function (key, x, y, e, graph) {
+                        return '<h3>' + key + '</h3>' +
+                            '<p>' +  x + '</p>' +
+                            '<p>' +  $scope.options.chart.yAxis.axisLabel + ' ' + y + '</p>';
+                    }
                 }
-            }
-        };
+            };
 
-        var getPostStats = function (query) {
-            query = query || $scope.filters;
-            var postQuery = _.extend({}, query, {
-                'timeline' : 1,
-                'timeline_attribute' : $scope.timelineAttribute,
-                'group_by' : $scope.groupBy
+            var getPostStats = function (query) {
+                query = query || $scope.filters;
+                var postQuery = _.extend({}, query, {
+                    'timeline' : 1,
+                    'timeline_attribute' : $scope.timelineAttribute,
+                    'group_by' : $scope.groupBy
+                });
+
+                $scope.isLoading = true;
+                PostEndpoint.stats(postQuery).$promise.then(function (results) {
+                    $scope.data = results.totals;
+                    $scope.isLoading = false;
+                    $scope.options.dc.isLoading = false;
+                });
+            };
+
+            // whenever filters change, reload
+            $scope.$watch(function () {
+                return $scope.filters;
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    getPostStats();
+                }
             });
 
-            $scope.isLoading = true;
-            PostEndpoint.stats(postQuery).$promise.then(function (results) {
-                $scope.data = results.totals;
-                $scope.isLoading = false;
+            $scope.$watch(function () {
+                return $scope.showCumulative;
+            }, function (cumulative, oldValue) {
+                if (cumulative) {
+                    $scope.options.chart.yAxis.axisLabel = yAxisLabelCumulative;
+                } else {
+                    $scope.options.chart.yAxis.axisLabel = yAxisLabel;
+                }
             });
-        };
 
-        // whenever filters change, reload
-        $scope.$watch(function () {
-            return $scope.filters;
-        }, function (newValue, oldValue) {
-            if (newValue !== oldValue) {
-                getPostStats();
-            }
+            // Initial load
+            $scope.reload = getPostStats;
+            getPostStats();
+
         });
-
-        $scope.$watch(function () {
-            return $scope.showCumulative;
-        }, function (cumulative, oldValue) {
-            if (cumulative) {
-                $scope.options.chart.yAxis.axisLabel = yAxisLabelCumulative;
-            } else {
-                $scope.options.chart.yAxis.axisLabel = yAxisLabel;
-            }
-        });
-
-        // Initial load
-        $scope.reload = getPostStats;
-        getPostStats();
     }];
 
     return {
