@@ -21,7 +21,10 @@ angular.module('ushahidi.common.offcanvas', [])
             var self = this,
                 openScope = OffCanvasService.openScope,
                 openClass = offCanvasConfig.openClass,
-                body = $document.find('body').eq(0);
+                body = $document.find('body').eq(0),
+                navClose = '<div class="close-nav"></div>',
+                close_nav = '',
+                wrapper = angular.element(document.getElementsByClassName('wrapper'));
 
             // Init isOpen state
             this.isOpen = false;
@@ -29,6 +32,23 @@ angular.module('ushahidi.common.offcanvas', [])
             this.toggle = function (open) {
                 openScope.isOpen = arguments.length ? !!open : !openScope.isOpen;
                 body.toggleClass(openClass, openScope.isOpen);
+            
+                if (openScope.isOpen) {
+                  
+                  wrapper.append(navClose);
+                  close_nav = angular.element(
+                    document.getElementsByClassName('close-nav')
+                  );
+                  close_nav.bind('click', function() {
+                      self.toggle(false); 
+                  });
+
+                } else {
+                  close_nav = angular.element(
+                    document.getElementsByClassName('close-nav')
+                  );
+                  close_nav.remove();
+                }
 
                 return openScope.isOpen;
             };
