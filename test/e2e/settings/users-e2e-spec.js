@@ -86,25 +86,6 @@ describe('users management', function () {
                                 beforeEach(function () {
                                     changeRoleButton.click();
                                 });
-
-                                describe('selecting "Guest" as new role', function () {
-                                    beforeEach(function () {
-                                        element(by.linkText('Guest')).click();
-                                        browser.wait(protractor.ExpectedConditions.alertIsPresent(), 500);
-                                    });
-                                    it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
-                                        var alertDialog = browser.switchTo().alert();
-                                        expect(alertDialog.getText()).toEqual('You cannot change your own role');
-                                        browser.driver.switchTo().alert().then(// <- this fixes the problem
-                                            function (alert) {
-                                                alert.accept();
-                                            },
-                                            function (error) {
-                                            }
-                                        );
-                                    });
-                                });
-
                             });
                         });
 
