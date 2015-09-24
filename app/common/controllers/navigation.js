@@ -2,21 +2,22 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
-    'BootstrapConfig',
+    'Config',
     '$rootScope',
 function (
     $scope,
     Authentication,
     ConfigEndpoint,
-    BootstrapConfig,
+    Config,
     $rootScope
 ) {
     $scope.isHome = true;
 
     // Start with preloaded config
-    $scope.site = BootstrapConfig;
+    $scope.site = Config.site;
     // Then update from server
     var reloadSiteConfig = function () {
+        // @todo use config service
         ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
             $scope.site = site;
         });

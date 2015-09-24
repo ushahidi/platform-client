@@ -1,9 +1,11 @@
 module.exports = [
     '_',
+    'Config',
     'ConfigEndpoint',
     '$translate',
 function (
     _,
+    Config,
     ConfigEndpoint,
     $translate
 ) {
@@ -52,15 +54,21 @@ function (
         }
     };
 
-    ConfigEndpoint.get({ id: 'features' }, function (features) {
-            // Push available views into array
-            // Rely on JS magic to
-            _.each(allViews, function (view) {
-                if (features.views[view.name]) {
-                    availableViews.push(view);
-                }
-            });
+    // Push available views into array
+    // Rely on JS magic to
+    var populateAvailableView = function (featureConfig) {
+        _.each(allViews, function (view) {
+            if (featureConfig.views[view.name]) {
+                availableViews.push(view);
+            }
         });
+    };
+
+    if (_.isEmpty(Config.features)) {
+        ConfigEndpoint.get({ id: 'features' }, populateAvailableView);
+    } else {
+        populateAvailableView(Config.features);
+    }
 
     return PostViewHelper;
 }];

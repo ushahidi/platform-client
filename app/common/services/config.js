@@ -1,21 +1,19 @@
 module.exports = [
     'ConfigEndpoint',
+    'BootstrapConfig',
     'Util',
-    'Notify',
-    '_',
 function (
     ConfigEndpoint,
-    Util,
-    Notify,
-    _
+    BootstrapConfig,
+    Util
 ) {
 
     var saving = {};
 
     var Config = {
-        map  : ConfigEndpoint.get({ id: 'map' }),
-        site : ConfigEndpoint.get({ id: 'site' }),
-        features: ConfigEndpoint.get({ id: 'features' }),
+        map  : BootstrapConfig.map,
+        site : BootstrapConfig.site,
+        features: BootstrapConfig.features,
 
         saving: function (id) {
             return !!saving[id];
