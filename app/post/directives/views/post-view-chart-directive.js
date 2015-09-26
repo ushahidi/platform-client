@@ -19,10 +19,10 @@ function (
                 type: 'multiBarHorizontalChart',
                 height: 450,
                 margin: {
-                    top: 20,
+                    top: 0,
                     right: 40,
                     bottom: 40,
-                    left: 65
+                    left: 5
                 },
                 x: function (d) {
                     return d.label;
@@ -30,12 +30,14 @@ function (
                 y: function (d) {
                     return d.total;
                 },
-                showValues: true,
+                showValues: false,
                 showControls: false,
                 valueFormat: d3.format('d'),
                 transitionDuration: 500,
                 xAxis: {
-                    axisLabel: $filter('translate')('post.categories')
+                    axisLabel: $filter('translate')('post.categories'),
+                    tickPadding: -10,
+                    axisLabelDistance: 0
                 },
                 yAxis: {
                     axisLabel: $filter('translate')('graph.post_count'),
