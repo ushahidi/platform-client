@@ -28,6 +28,7 @@ require('./common/common-module.js');
 require('./post/post-module.js');
 require('./activity/activity-module.js');
 require('./setting/setting-module.js');
+require('./plans/plans-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
 
@@ -73,6 +74,7 @@ angular.module('app',
         'ushahidi.common',
         'ushahidi.posts',
         'ushahidi.tools',
+        'ushahidi.plans',
         'ushahidi.sets',
         'ushahidi.activity',
         'ushahidi.user-profile'

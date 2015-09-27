@@ -75,6 +75,7 @@ function (
     .when('/settings/datasources', {
         controller: require('./controllers/setting-datasources-controller.js'),
         templateUrl: 'templates/settings/datasources.html'
-    });
+    })
+    ;
 
 }];
