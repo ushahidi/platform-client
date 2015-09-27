@@ -7,6 +7,7 @@ module.exports = [
     'Notify',
     'Util',
     'Languages',
+    'CacheFactory',
 function (
     $q,
     $http,
@@ -15,7 +16,8 @@ function (
     _,
     Notify,
     Util,
-    Languages
+    Languages,
+    CacheFactory
 ) {
     return {
         restrict: 'E',
@@ -84,6 +86,8 @@ function (
 
                 uploadHeaderImage().then(function () {
                     $scope.site.$update({ id: 'site' }, function () {
+                        var configCache = CacheFactory.get('configCache');
+                        configCache.put(Util.apiUrl('/config/site'), $scope.site);
                         $scope.saving_config = false;
                         updateSiteHeader();
                     });
