@@ -2,6 +2,7 @@
 
     <h1 class="inline">{{collection.name}}</h1>
     <a ng-if="canEdit()" ng-click="setIsOpen()" class="cta settings" translate>set.edit_settings</a>
+    <a ng-if="showNotificationLink" ng-click="saveNotification(collection)" class="cta settings" translate>set.add_notification</a>
     <collection-editor collection="collection" is-open="isOpen"></collection-editor>
     <p class="collection-description">{{collection.description}}</p>
 
