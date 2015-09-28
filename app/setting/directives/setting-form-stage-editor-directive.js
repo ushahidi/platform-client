@@ -72,8 +72,7 @@ function (
                 .then(function () {
                     $scope.isSettingsOpen = false;
                 }, function (errorResponse) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    errors && Notify.showAlerts(errors);
+                    Notify.showApiErrors(errorResponse);
                 });
             };
             // End manage stage
@@ -95,8 +94,7 @@ function (
                     $scope.newStage = {};
                     $location.url('/settings/forms/' + $scope.form.id + '/stages/' + stage.id);
                 }, function (errorResponse) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    errors && Notify.showAlerts(errors);
+                    Notify.showApiErrors(errorResponse);
                 });
             };
             // End manage stage
@@ -204,8 +202,7 @@ function (
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
                 }, function (errorResponse) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    errors && Notify.showAlerts(errors);
+                    Notify.showApiErrors(errorResponse);
                 });
             };
 

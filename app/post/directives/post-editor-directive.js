@@ -252,8 +252,7 @@ function (
                     }
                 }, function (errorResponse) { // errors
 
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    errors && Notify.showAlerts(errors);
+                    Notify.showApiErrors(errorResponse);
                     $scope.saving_post = false;
                 });
             };
