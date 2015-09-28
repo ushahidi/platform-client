@@ -1,4 +1,4 @@
-module.exports = ['$window', function ($window) {
+module.exports = ['$window', '_', function ($window, _) {
 
     var showSingleAlert = function (alertMessage) {
         // TODO: find a better solution for that
@@ -9,7 +9,13 @@ module.exports = ['$window', function ($window) {
     };
 
     var showAlerts = function (alertMessages) {
-        alertMessages.forEach(showSingleAlert);
+        showSingleAlert(alertMessages.join('\n'));
+    };
+
+    var showApiErrors = function (errorResponse) {
+        var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+
+        errors && showAlerts(errors);
     };
 
     var showConfirm = function (confirmMessage) {
@@ -21,6 +27,7 @@ module.exports = ['$window', function ($window) {
     return {
         showSingleAlert: showSingleAlert,
         showAlerts: showAlerts,
+        showApiErrors: showApiErrors,
         showConfirm: showConfirm
     };
 

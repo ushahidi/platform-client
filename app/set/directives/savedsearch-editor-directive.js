@@ -63,8 +63,7 @@ function (
                     $scope.isOpen.data = false;
                     $rootScope.$broadcast('event:savedSearch:update');
                 }, function (errorResponse) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    errors && Notify.showAlerts(errors);
+                    Notify.showApiErrors(errorResponse);
                 });
             };
 
@@ -76,8 +75,7 @@ function (
                             $location.url('/');
                             $rootScope.$broadcast('event:savedSearch:update');
                         }, function (errorResponse) {
-                            var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                            errors && Notify.showAlerts(errors);
+                            Notify.showApiErrors(errorResponse);
                         });
                     }
                 });

@@ -35,8 +35,7 @@ function (
                 });
             },
             handleResponseErrors = function (errorResponse) {
-                var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                errors && Notify.showAlerts(errors);
+                Notify.showApiErrors(errorResponse);
             };
 
             // whenever the filters changes, update the current list of posts
