@@ -17,7 +17,7 @@ function (
         $rootScope.$emit('setPageTitle', title);
     });
 
-    $scope.tier = Config.features.tier;
+    $scope.tier = Config.site.tier;
     $scope.username = ($rootScope.currentUser || {}).email;
     /* globals apiDomain, deploymentsDomain */
     $scope.cloudDomain = typeof deploymentsDomain !== 'undefined' ? deploymentsDomain : 'ushahidi.io' ;
