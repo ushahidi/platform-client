@@ -15,7 +15,7 @@
     "NPM_CONFIG_PRODUCTION": "false",
     "BACKEND_URL": {
       "description" : "A deployment of ushahidi/platform to use",
-      "value" : "https://ushahidi-deployment-api.herokuapp.com",
+      "value" : "https://ushahidi-platform-api-release.herokuapp.com",
       "required" : true
     }
   }
