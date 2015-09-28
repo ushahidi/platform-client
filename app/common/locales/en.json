@@ -317,7 +317,8 @@
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
-        "set_settings" : "Collection Settings"
+        "set_settings" : "Collection Settings",
+        "add_notification" : "Add notification"
     },
     "tag": {
         "add_tag" : "Add Category",
@@ -524,6 +525,10 @@
         "passwordreset" : {
             "failed" : "Password reset failed",
             "success": "Your password has been reset"
+        },
+        "notification" : {
+            "add" : "You will now be notified when new posts are added to {{collection}}",
+            "delete_confirm" : "Are you sure you want to remove this notification?"
         }
     },
     "empty": {
@@ -539,6 +544,43 @@
         "update_location": "Update location",
         "click_map": "Click the map to place a marker",
         "clear":"Clear"
+    },
+    "notification": {
+        "title": "Notifications",
+        "contacts_heading": "How you get notifications",
+        "notifications_heading": "What you get notified about",
+        "error_message": "The notification could not be deleted at this time"
+    },
+    "contact": {
+        "edit": "Edit",
+        "add_new_contact": "Add New Contact",
+        "save": "Save contact",
+        "saving": "Saving",
+        "save_changes": "Save changes",
+        "saving_changes": "Saving changes",
+        "cancel_edit": "Cancel",
+        "add_phone_number": "Add a phone number",
+        "add_email_address": "Add an email address",
+        "edit_phone_number": "Edit your phone number",
+        "edit_email_address": "Edit your email address",
+        "error_message": "The contact could not be saved at this time",
+        "type" : {
+            "phone": "Phone",
+            "email": "Email"
+        },
+        "valid": {
+            "email" : {
+                "required": "An email address is required to receive notifications",
+                "email": "This email address is invalid",
+                "maxlength": "This email address is too long"
+            },
+            "phone": {
+                "required": "A phone number is required to receive notifications",
+                "pattern": "A valid phone number is required",
+                "minlength": "This number is too short",
+                "maxlength": "This number is too long"
+            }
+        }
     },
     "languages": {
         "ach": "Acoli",
