@@ -30,8 +30,7 @@ function (
         $scope.failed = true;
         $scope.processing = false;
 
-        var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-        errors && Notify.showAlerts(errors);
+        Notify.showApiErrors(errorResponse);
     }
 
     $scope.registerSubmit = function () {
