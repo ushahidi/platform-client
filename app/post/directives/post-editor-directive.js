@@ -196,7 +196,7 @@ function (
                 }
 
                 $scope.post.status = 'published';
-                $scope.userSavedPost = true;
+                //$scope.userSavedPost = true;
                 if (role) {
                     $scope.post.published_to = [role];
                 } else {
@@ -277,7 +277,7 @@ function (
                         }
 
                     });
-                
+
                     $scope.saving_post = false;
                 });
             };
