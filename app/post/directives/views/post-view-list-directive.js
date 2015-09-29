@@ -137,6 +137,7 @@ function (
 
             // Initial load
             getPostsForPagination();
+
         }
     ];
 

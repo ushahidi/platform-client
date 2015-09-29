@@ -13,6 +13,9 @@
 
         "upgrade" : "Upgrade"
     },
+    "feature_limits": {
+        "view_unavailable" : "The {{value}} view isn't available on your current plan. Upgrade your plan"
+    },
     "form": {
         "add_field" : "Add New Field",
         "add_field_instructions": "Add instructions to this field",
@@ -165,6 +168,7 @@
         "notifications" : "Notifications",
         "people" : "People",
         "permissions" : "Permissions",
+        "plan_settings" : "Plan",
         "please_wait_loading" : "Please wait. Loading...",
         "plugins" : "Plugins",
         "posts" : "Posts",
@@ -403,7 +407,8 @@
             "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
             "provider_options": "Options",
             "save_changes": "Save Changes",
-            "saving_changes": "Saving"
+            "saving_changes": "Saving",
+            "unavailable": "{{value}} is unavailable for your Ushahidi plan. To get access to this feature upgrade your Ushahidi plan."
         },
         "generic_field_error": "Invalid entry, please try again.",
         "skip" : "Skip this step",
