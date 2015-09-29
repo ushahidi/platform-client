@@ -11,8 +11,7 @@ function (
         },
         templateUrl: 'templates/posts/post-view-tabs.html',
         link: function ($scope, $element, $attrs) {
-
-            // Defiine available views
+            // Define available views
             $scope.views = [
                 'list',
                 'map',
