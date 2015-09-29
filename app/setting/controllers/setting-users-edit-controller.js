@@ -34,21 +34,21 @@ function (
     $scope.saveUser = function (user) {
         $scope.processing = true;
         var response = UserEndpoint.update({id: $routeParams.id}, user, function () {
-          if (response.id) {
+            if (response.id) {
                 $scope.processing = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
             }
 
         }, function (errorResponse) { // error
-         _.each(errorResponse.data.errors, function (value, key) {
-              // Ultimately this should cehck individual status codes
-              // for the moment just check for the message we expect
-              if (value.title === 'limit::admin') {
-                  $scope.adminLimitReached = true;
-              } else {
-                  $scope.validationErrors.push(value);
-              }
+            _.each(errorResponse.data.errors, function (value, key) {
+                // Ultimately this should cehck individual status codes
+                // for the moment just check for the message we expect
+                if (value.title === 'limit::admin') {
+                    $scope.adminLimitReached = true;
+                } else {
+                    $scope.validationErrors.push(value);
+                }
 
             });
 
