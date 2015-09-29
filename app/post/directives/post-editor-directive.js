@@ -35,6 +35,7 @@ function (
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.userSavedPost = false;
+            $scope.validationErrors = [];
 
             var
                 fetchAttributes = function (formId) {
@@ -86,6 +87,10 @@ function (
 
             $scope.navigateToPost = function () {
                 $location.path('/posts/' + $scope.post.id);
+            };
+
+            $scope.navigateToUpgrade = function () {
+                $location.path('/settings/plan');
             };
 
             $scope.allowedChangeStatus = function () {
@@ -223,6 +228,7 @@ function (
             };
 
             $scope.savePost = function () {
+
                 if (!$scope.canSavePost()) {
                     return;
                 }
@@ -249,6 +255,8 @@ function (
                     request = PostEndpoint.save(post);
                 }
 
+                $scope.validationErrors = [];
+
                 request.$promise.then(function (response) {
                     if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                         $scope.saving_post = false;
@@ -263,13 +271,12 @@ function (
                         // for the moment just check for the message we expect
                         if (value.title === 'limit::posts') {
                             $scope.postLimitReached = true;
+                        } else {
+                            $scope.validationErrors.push(value);
                         }
 
                     });
-                    /*
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    errors && Notify.showAlerts(errors);
-                    */
+                
                     $scope.saving_post = false;
                 });
             };

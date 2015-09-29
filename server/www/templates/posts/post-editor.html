@@ -298,13 +298,13 @@
         </div>
     </div>
 
-    <modal visible="postLimitReached">
-        <h1 translate>limit.plan_limit</h1>
-        <div translate>limit.post_limit_reached</div>
-        <div class="modal-submit">
-            <button type="button" class="button-primary" ng-click="navigateToPost()" translate>limit.upgrade</button>
+    <confirmation-message visible="postLimitReached" >
+        <h1 translate>limit.plan_limit</h1>                                     
+        <div translate>limit.post_limit_reached</div>                           
+        <div class="modal-submit">                                              
+            <button type="button" class="button-primary" ng-click="navigateToUpgrade()" translate>limit.upgrade</button>
         </div>
-    </modal>
+    </confirmation-message>
 
 
     <modal visible="userSavedPost">

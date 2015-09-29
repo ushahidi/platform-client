@@ -9,7 +9,7 @@
     "limit": {
         "plan_limit" : "Ushahidi Plan Limit",
         "post_limit_reached" : "You have reached the limit of published Posts for your plan. To get more simply click below to upgrade your plan.",
-        "upgrade" : "upgrade"
+        "upgrade" : "Upgrade"
     },
     "form": {
         "add_field" : "Add New Field",
