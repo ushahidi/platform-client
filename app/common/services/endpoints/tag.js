@@ -9,7 +9,11 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = CacheFactory('tagCache');
+    var cache = new CacheFactory('tagCache');
+
+    cache.setOnExpire(function (key, value) {
+         TagEndpoint.get(value.id);
+    });
 
     var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {
         id: '@id'
@@ -17,6 +21,7 @@ function (
         query: {
             method: 'GET',
             isArray: true,
+            cache: cache,
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }

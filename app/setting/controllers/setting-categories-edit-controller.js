@@ -8,6 +8,8 @@ module.exports = [
     'TagEndpoint',
     'Notify',
     '_',
+    'CacheFactory',
+    'Util',
 function (
     $scope,
     $rootScope,
@@ -17,7 +19,9 @@ function (
     RoleHelper,
     TagEndpoint,
     Notify,
-    _
+    _,
+    CacheFactory,
+    Util
 ) {
     $translate('tag.edit_tag').then(function (title) {
         $scope.title = title;
@@ -33,6 +37,12 @@ function (
     $scope.saveTag = function (tag) {
         $scope.processing = true;
         TagEndpoint.update({id: $routeParams.id}, tag, function () {
+            var tagCache = CacheFactory.get('tagCache');
+            tagCache.put(Util.apiUrl('/tags/' + tag.id), tag);
+
+            // It is currently necessary to expire the query cache as well
+            tagCache.remove(Util.apiUrl('/tags'));
+
             $rootScope.goBack();
         }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
