@@ -6,6 +6,11 @@
         "report_a_bug": "Report a bug",
         "forbidden": "Sorry, you're not allowed to do that."
     },
+    "limit": {
+        "plan_limit" : "Ushahidi Plan Limit",
+        "post_limit_reached" : "You have reached the limit of published Posts for your plan. To get more simply click below to upgrade your plan.",
+        "upgrade" : "upgrade"
+    },
     "form": {
         "add_field" : "Add New Field",
         "add_field_instructions": "Add instructions to this field",

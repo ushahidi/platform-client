@@ -186,6 +186,7 @@ function (
                 }
 
                 $scope.post.status = 'published';
+                //$scope.userSavedPost = true;
                 if (role) {
                     $scope.post.published_to = [role];
                 } else {
@@ -252,7 +253,18 @@ function (
                     }
                 }, function (errorResponse) { // errors
 
-                    Notify.showApiErrors(errorResponse);
+                    _.each(errorResponse.data.errors, function (value, key) {
+                        // Ultimately this should cehck individual status codes
+                        // for the moment just check for the message we expect
+                        if (value.title === 'limit::posts') {
+                            $scope.postLimitReached = true;
+                        }
+
+                    });
+                    /*
+                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+                    errors && Notify.showAlerts(errors);
+                    */
                     $scope.saving_post = false;
                 });
             };
