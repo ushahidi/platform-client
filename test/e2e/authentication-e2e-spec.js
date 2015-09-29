@@ -111,7 +111,7 @@ describe('authentication', function () {
                     loginLink = element(by.css(loginLinkSelector));
 
                     userMenuLink.click();
-                    browser.wait(logoutLink.isDisplayed);
+                    browser.wait(logoutLink.isDisplayed, 1000);
                     logoutLink.click();
                 });
 
