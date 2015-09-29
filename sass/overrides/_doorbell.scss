@@ -1,0 +1,16 @@
+#doorbell-button {
+	z-index: 1000;
+}
+
+#doorbell {
+	fieldset legend {
+		position: unset;
+	}
+	button.close:before {
+		display: none;
+		content: "";
+	}
+	button.close {
+		z-index: 10;
+	}
+}

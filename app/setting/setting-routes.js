@@ -75,6 +75,11 @@ function (
     .when('/settings/datasources', {
         controller: require('./controllers/setting-datasources-controller.js'),
         templateUrl: 'templates/settings/datasources.html'
-    });
+    })
+    .when('/settings/plan', {
+        controller: require('./controllers/setting-plan-controller.js'),
+        templateUrl: 'templates/settings/plan.html'
+    })
+    ;
 
 }];

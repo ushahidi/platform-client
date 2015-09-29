@@ -1,0 +1,109 @@
+<main class="page-content" role="main">
+
+    <div class="main-col">
+        <ul class="breadcrumb">
+           <li translate>
+               nav.settings
+           </li>
+        </ul>
+
+        <h1 translate>nav.plan_settings</h1>
+
+        <div class="tiers" style="margin-top:40px">
+            <div class="tier">
+                <div class="tier-header">
+                    <h2 class="tier-name">Mapper</h2>
+                    <p>For people who need to gather one type of data on a map</p>
+
+                    <strong class="tier-price">Free</strong>
+                    <h3 class="tier-feature">150 posts <em>+$15/mo per 100 extra</em></h3>
+                </div>
+
+                <div class="tier-action">
+                    <a ng-show="tier == 'free'" class="button disabled">&check; Subscribed</a>
+                    <a ng-hide="tier == 'free'" class="button" href="http://{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=free">Choose Mapper</a>
+                </div>
+
+                <div class="tier-feature-list">
+                    <ul>
+                        <li>1 post type from the web, email, &amp; Twitter</li>
+                        <li>Manage data with Filters, Saved Searches, Collections</li>
+                        <li>View data in a map, list, or chart</li>
+                        <li>Web support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tier">
+                <div class="tier-header">
+                    <h2 class="tier-name">Surveyor</h2>
+                    <p>For teams collecting multiple data types from many sources</p>
+
+                    <strong class="tier-price">$199 <em>/mo</em></strong>
+                    <h3 class="tier-feature">1000 posts <em>+$10/mo per 1,000 extra</em></h3>
+                </div>
+
+                <div class="tier-action">
+                    <a ng-show="tier == 'surveyor'" class="button disabled" href="http://{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=surveyor">&check; Subscribed</a>
+                    <a ng-hide="tier == 'surveyor'" class="button" href="http://{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=surveyor">Choose Surveyor</a>
+                </div>
+
+                <div class="tier-feature-list">
+                    <ul>
+                        <li>5 post types, from all sources and SMS</li>
+                        <li>Data management, plus notifications</li>
+                        <li>View data in a map, list or chart plus analytics</li>
+                        <li>Web and email support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tier disabled">
+                <div class="tier-header">
+                    <h2 class="tier-name">Responder</h2>
+                    <p>For organizations that need to manage their data workflow</p>
+
+                    <strong class="tier-price"><span>Coming soon!</span></strong>
+                    <h3 class="tier-feature">5000 posts <em>+$7.50/mo per 1,000 extra</em></h3>
+                </div>
+
+                <div class="tier-action">
+                    <a href="http://ushahidi.com/contact" target="_blank" class="button tour-link">Contact us</a>
+                </div>
+
+                <div class="tier-feature-list">
+                    <ul>
+                        <li>Unlimited post types, RSS, CSV &amp; XML imports</li>
+                        <li>Data management, plus notifications and team collaboration with custom workflows</li>
+                        <li>View data in a map, list or chart plus analytics</li>
+                        <li>Web and email support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tier disabled">
+                <div class="tier-header">
+                    <h2 class="tier-name">Orbiter</h2>
+                    <p>For enterprises managing large, sensitive data sets</p>
+
+                    <strong class="tier-price"><span>Coming soon!</span></strong>
+                    <h3 class="tier-feature">Unlimited posts <em>&nbsp;</em></h3>
+                </div>
+
+                <div class="tier-action">
+                    <a href="http://ushahidi.com/contact" target="_blank" class="button tour-link">Contact us</a>
+                </div>
+
+                <div class="tier-feature-list">
+                    <ul>
+                        <li>Unlimited posts, all data sources</li>
+                        <li>Data management, notifications, collaboration and workflows with private data on a dedicated server</li>
+                        <li>View data in a map, list or chart plus analytics</li>
+                        <li>Web, email and phone support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!--end main col-->
+
+</main> <!--end layout a-->
