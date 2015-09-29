@@ -299,20 +299,14 @@
     </div>
 
     <confirmation-message visible="postLimitReached" >
-        <h1 translate>limit.plan_limit</h1>                                     
-        <div translate>limit.post_limit_reached</div>                           
-        <div class="modal-submit">                                              
-            <button type="button" class="button-primary" ng-click="navigateToUpgrade()" translate>limit.upgrade</button>
-        </div>
+        <h1 translate>limit.plan_limit</h1> 
+        <div translate>limit.post_limit_reached</div>
+        <button type="button" class="button-primary" ng-click="navigateToUpgrade()" translate>limit.upgrade</button>
     </confirmation-message>
 
-
-    <modal visible="userSavedPost">
+    <confirmation-message visible="userSavedPost">
         <h1 translate>post.save_dlg_title</h1>
-        <div translate translate-values="{ 'post': post.title }">post.you_have_published</div>
-        <div class="modal-submit">
-            <button type="button" class="button-primary" ng-click="navigateToPost()" translate>post.see_post</button>
-        </div>
-    </modal>
+        <div translate translate-values="{ 'id': post.id, 'post': post.title }">post.you_have_published</div>
+    </confirmation-message>
 
 </form>

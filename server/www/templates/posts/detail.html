@@ -89,11 +89,15 @@
     </div>
 
     <modal visible="userRequestedPostDelete">
-        <h1 translate>notify.post.destroy_title</h1>
-        <div translate>notify.post.destroy_confirm</div>
+        <h3 class="confirm" translate>notify.post.confirm_delete</h3>
+        <div class="divider padded"></div>
+        <p translate translate-values="{ 'id': post.id, 'post': post.title }">
+          notify.post.delete_question
+        </p>
+        <div class="divider white"></div>
         <div class="modal-submit">
-            <button type="button" class="button-primary" ng-click="deletePost()" translate>notify.generic.okay</button>
-            <button type="button" class="button-primary" ng-click="cancelDelete()" translate>notify.generic.cancel</button>
+            <button type="button" class="button-primary" ng-click="deletePost()" translate>notify.post.yes_confirm_delete</button>
+            <button type="button" class="cta modal-trigger" ng-click="cancelDelete()" translate>notify.generic.cancel</a>
         </div>
     </modal>
 

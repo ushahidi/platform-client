@@ -1,4 +1,4 @@
-<div class="confirmation-message">
+<div class="confirmation-message" ng-show="classVisible">
     <div class="confirmation-message-wrapper" ng-class="{'visible': classVisible}">
         <ng-transclude></ng-transclude>
         <div ng-click="closeConfirm()"  class="close hide-confirmation-message"></div>

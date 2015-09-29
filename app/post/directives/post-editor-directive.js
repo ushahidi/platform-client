@@ -85,10 +85,6 @@ function (
                 $scope.post.form = null;
             };
 
-            $scope.navigateToPost = function () {
-                $location.path('/posts/' + $scope.post.id);
-            };
-
             $scope.navigateToUpgrade = function () {
                 $location.path('/settings/plan');
             };

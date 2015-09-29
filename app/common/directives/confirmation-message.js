@@ -17,6 +17,7 @@ angular.module('ushahidi.common.confirmation-message', [])
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
+            var classChangePromise = null;
 
             $scope.classVisible = false;
 
@@ -31,11 +32,23 @@ angular.module('ushahidi.common.confirmation-message', [])
                         // Animate in.
                         $scope.classDetached = false;
                         $scope.classVisible = true;
+
+                        if (classChangePromise) {
+                            $timeout.cancel(classChangePromise);
+                        }
                     }
                 } else if (state === false) {
                     if ($scope.classVisible) {
                         // Animate out.
                         $scope.classVisible = false;
+
+                        if (classChangePromise) {
+                            $timeout.cancel(classChangePromise);
+                        }
+
+                        classChangePromise = $timeout(function () {
+                            $scope.classDetached = true;
+                        }, 400);
                     }
                 }
             });
@@ -44,12 +57,12 @@ angular.module('ushahidi.common.confirmation-message', [])
                 $scope.visible = false;
             };
 
-/*            $scope.$on('$destroy', function (event) {
+            $scope.$on('$destroy', function (event) {
                 if (classChangePromise) {
                     $timeout.cancel(classChangePromise);
                 }
             });
-*/
+
         }]
     };
 })
