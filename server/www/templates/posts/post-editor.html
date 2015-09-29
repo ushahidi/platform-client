@@ -297,4 +297,13 @@
             </p>
         </div>
     </div>
+
+    <modal visible="userSavedPost">
+        <h1 translate>post.save_dlg_title</h1>
+        <div translate translate-values="{ 'post': post.title }">post.you_have_published</div>
+        <div class="modal-submit">
+            <button type="button" class="button-primary" ng-click="navigateToPost()" translate>post.see_post</button>
+        </div>
+    </modal>
+
 </form>
