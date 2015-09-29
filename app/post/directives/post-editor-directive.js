@@ -85,10 +85,6 @@ function (
                 $scope.post.form = null;
             };
 
-            $scope.navigateToUpgrade = function () {
-                $location.path('/settings/plan');
-            };
-
             $scope.allowedChangeStatus = function () {
                 return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
             };

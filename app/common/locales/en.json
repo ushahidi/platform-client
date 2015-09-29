@@ -9,6 +9,8 @@
     "limit": {
         "plan_limit" : "Ushahidi Plan Limit",
         "post_limit_reached" : "You have reached the limit of published Posts for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
+        "admin_limit_reached" : "You have reached the limit of admin users for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
+
         "upgrade" : "Upgrade"
     },
     "form": {
@@ -420,6 +422,7 @@
         "edit_user" : "Edit User",
         "change_role" : "Change Role",
         "save" : "Save User",
+        "you_have_saved" : "The user <a href=\"/settings/users/{{id}}\">{{user}}</a> was successfully saved.",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",
@@ -427,6 +430,7 @@
         "delete_this_user" : "Delete this user",
         "edit_profile" : "Edit Profile",
         "save_profile" : "Save Profile",
+        "save_dlg_title" : "Congratulations!",
         "cancel" : "Cancel",
         "email" : "Email Address",
         "failed_attempts" : "Failed attempts: ",

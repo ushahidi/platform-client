@@ -301,12 +301,13 @@
     <confirmation-message visible="postLimitReached" >
         <h1 translate>limit.plan_limit</h1> 
         <div translate>limit.post_limit_reached</div>
-        <button type="button" class="button-primary" ng-click="navigateToUpgrade()" translate>limit.upgrade</button>
+        <div class="divider padded"></div>
+        <a class="button" href="/settings/plan" translate>limit.upgrade</a>
+        <div class="divider white"></div>
     </confirmation-message>
 
     <confirmation-message visible="userSavedPost">
-        <h1 translate>post.save_dlg_title</h1>
-        <div translate translate-values="{ 'id': post.id, 'post': post.title }">post.you_have_published</div>
+        <p translate translate-values="{ 'id': post.id, 'post': post.title }">post.you_have_published</p>
     </confirmation-message>
 
 </form>

@@ -30,12 +30,28 @@ function (
 
     $scope.processing = false;
 
+    $scope.validationErrors = [];
     $scope.saveUser = function (user) {
         $scope.processing = true;
-        UserEndpoint.update({id: $routeParams.id}, user, function () {
-            $rootScope.goBack();
+        var response = UserEndpoint.update({id: $routeParams.id}, user, function () {
+          if (response.id) {
+                $scope.processing = false;
+                $scope.userSavedUser = true;
+                $scope.user.id = response.id;
+            }
+
         }, function (errorResponse) { // error
-            Notify.showApiErrors(errorResponse);
+         _.each(errorResponse.data.errors, function (value, key) {
+              // Ultimately this should cehck individual status codes
+              // for the moment just check for the message we expect
+              if (value.title === 'limit::admin') {
+                  $scope.adminLimitReached = true;
+              } else {
+                  $scope.validationErrors.push(value);
+              }
+
+            });
+
             $scope.processing = false;
         });
     };
