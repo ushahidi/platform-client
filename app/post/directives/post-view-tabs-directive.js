@@ -5,6 +5,7 @@ function (
 ) {
     return {
         restrict: 'E',
+        replace: true,
         scope: {
             active: '=',
             baseUrl: '@'
