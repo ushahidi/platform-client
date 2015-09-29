@@ -41,7 +41,6 @@ angular.module('ushahidi.common.confirmation-message', [])
             });
 
             $scope.closeConfirm = function (context) {
-
                 $scope.visible = false;
             };
 
