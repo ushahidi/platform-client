@@ -261,6 +261,7 @@ function (
                     if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                         $scope.saving_post = false;
                         $scope.userSavedPost = true;
+                        $scope.post.id = response.id;
                     } else {
                         $location.path('/');
                     }
