@@ -9,6 +9,13 @@
     "feature_limits": {
         "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
     },
+    "limit": {
+        "plan_limit" : "Ushahidi Plan Limit",
+        "post_limit_reached" : "You have reached the limit of published Posts for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
+        "admin_limit_reached" : "You have reached the limit of admin users for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
+        "post_type_limit_reached" : "You have reached the limit of post types for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
+        "upgrade" : "Upgrade"
+    },
     "form": {
         "add_field" : "Add New Field",
         "add_field_instructions": "Add instructions to this field",

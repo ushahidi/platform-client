@@ -6,6 +6,8 @@ module.exports = [
     'FormEndpoint',
     'FormStageEndpoint',
     'Notify',
+    'Config',
+    '_',
 function (
     $scope,
     $translate,
@@ -13,8 +15,11 @@ function (
     $q,
     FormEndpoint,
     FormStageEndpoint,
-    Notify
+    Notify,
+    Config,
+    _
 ) {
+    $scope.formQuota = Config.features.limits.forms;
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
@@ -55,6 +60,23 @@ function (
                     });
                     $location.url('/settings/forms/' + form.id + '/stages/' + stage.id);
                 });
+        }, function (errorResponse) {
+            var validationErrors = [];
+            // @todo refactor limit handling
+            _.each(errorResponse.data.errors, function (value, key) {
+                // Ultimately this should check individual status codes
+                // for the moment just check for the message we expect
+                if (value.title === 'limit::admin') {
+                    $translate('limit.post_type_limit_reached').then(function (message) {
+                        Notify.showLimitSlider(message);
+                    });
+                } else {
+                    validationErrors.push(value);
+                }
+            });
+
+            Notify.showApiErrors(validationErrors);
+            $scope.processing = false;
         });
     };
     // End new form

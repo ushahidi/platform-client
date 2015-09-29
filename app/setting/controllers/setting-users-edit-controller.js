@@ -44,7 +44,22 @@ function (
             }
             $rootScope.goBack();
         }, function (errorResponse) { // error
-            Notify.showApiErrors(errorResponse);
+            var validationErrors = [];
+            // @todo refactor limit handling
+            _.each(errorResponse.data.errors, function (value, key) {
+                // Ultimately this should check individual status codes
+                // for the moment just check for the message we expect
+                if (value.title === 'limit::admin') {
+                    $translate('limit.admin_limit_reached').then(function (message) {
+                        Notify.showLimitSlider(message);
+                    });
+                } else {
+                    validationErrors.push(value);
+                }
+            });
+
+            Notify.showApiErrors(validationErrors);
+
             $scope.processing = false;
         });
     };

@@ -13,11 +13,14 @@
 
     <h4>Start from scratch:</h4>
     <div class="cards-select">
-        <div class="selection-card custom">
+        <div class="selection-card custom" ng-show="forms.length < formQuota || formQuota === true">
             <a ng-click="openNewForm()" >
                 <h3>Add a new post type</h3>
             </a>
         </div>
+        <p ng-show="forms.length >= formQuota && formQuota !== true">
+            <span translate>limit.post_type_limit_reached</span>
+        </p>
     </div>
 
     <div ng-show="forms.length">

@@ -3,6 +3,14 @@
         <p>{{notificationSliderMessage}}</p>
     </notification-slider>
 
+    <notification-slider visible="showLimitSlider" >
+        <h1 translate>limit.plan_limit</h1>
+        <div translate>{{limitSliderMessage}}</div>
+        <div class="divider padded"></div>
+        <a class="button" href="/settings/plan" translate>limit.upgrade</a>
+        <div class="divider white"></div>
+    </notification-slider>
+
     <modal visible="showModalAlerts" title="notify.generic.alerts">
 
         <div id="alert-modal-text" ng-repeat="alert in modalAlertMessages">
