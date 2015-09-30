@@ -34,6 +34,7 @@ function (
             $scope.getRoleDisplayName = RoleHelper.getRole;
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
+            $scope.userSavedPost = false;
 
             var
                 fetchAttributes = function (formId) {
@@ -186,6 +187,7 @@ function (
                 }
 
                 $scope.post.status = 'published';
+                $scope.userSavedPost = true;
                 if (role) {
                     $scope.post.published_to = [role];
                 } else {
@@ -245,9 +247,9 @@ function (
 
                 request.$promise.then(function (response) {
                     if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
-                        $location.path('/posts/' + response.id);
+                        $scope.saving_post = false;
+                        $scope.userSavedPost = true;
                     } else {
-                        Notify.showSingleAlert('Saved!');
                         $location.path('/');
                     }
                 }, function (errorResponse) { // errors

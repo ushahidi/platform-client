@@ -203,6 +203,9 @@
         "steps" : "This post's steps",
         "mark_complete" : "Mark as Complete",
         "complete" : "Complete",
+        "save_dlg_title" : "Congratulations!",
+        "you_have_published" : "You have successfully published your post {{post}}",
+        "see_post" : "See Post",
         "type_details" : "{{type}} Details",
         "edit_post" : "Edit Post",
         "history" : "History",
@@ -477,6 +480,10 @@
             "bulk_destroy_error" : "Unable to delete resource, please try again",
             "bulk_destroy_cancelled" : "Delete cancelled"
         },
+        "generic" : {
+            "okay" : "Ok",
+            "cancel": "Cancel"
+        },
         "login" : {
             "failed" : "Login failed, check your email and password."
         },
@@ -491,6 +498,7 @@
             "publish_error" : "Unable to publish post, please try again",
             "unpublish_success" : "Post has been unpublished",
             "unpublish_error" : "Unable to unpublish post, please try again",
+            "destroy_title" : "Delete Post",
             "destroy_confirm" : "Are you sure you want to delete this post?",
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",
