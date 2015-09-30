@@ -14,7 +14,7 @@
         "upgrade" : "Upgrade"
     },
     "feature_limits": {
-        "view_unavailable" : "The {{value}} view isn't available on your current plan. Upgrade your plan"
+        "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
     },
     "form": {
         "add_field" : "Add New Field",
