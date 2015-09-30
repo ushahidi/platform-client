@@ -1,8 +1,13 @@
 <main class="page-content" role="main">
   <div class="main-col">
     <h1 class="inline" translate>nav.notifications</h1>
+    <div class="clearfix"></div> 
 
-    <h3 translate>notification.contacts_heading</h3>
+
+    <h3 translate ng-if="contacts.length !== 0">notification.contacts_heading</h3>
+
+
+    <div class="clearfix"></div> 
 
     <div>
       <div class="settings-listing"
@@ -164,6 +169,8 @@
       <!-- End contacts -->
     </div>
 
+    <div class="clearfix"></div>
+    
     <div ng-if="notifications.length !== 0">
       <h3 translate>notification.notifications_heading</h3>
     </div>
