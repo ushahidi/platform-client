@@ -1,36 +1,42 @@
 <main class="page-content layout-c activity" role="main">
     <h1 translate>nav.activity</h1>
 
-    <div class="tabs-menu" dropdown>
-        <button type="button" class="button-toggle tabs-menu-button-js" dropdown-toggle></button>
-        <ul class="tabs-menu-list" dropdown-menu>
-            <li ng-class="{ active: currentInterval == 'week' }"><a ng-click="update('week')">This Week</a></li>
-            <li ng-class="{ active: currentInterval == 'month' }"><a ng-click="update('month')">This Month</a></li>
-            <li ng-class="{ active: currentInterval == 'all' }"><a ng-click="update('all')">All Time</a></li>
-        </ul>
+    <!-- unavailable view -->
+    <post-view-unavailable ng-show="unavailableView" view="'nav.activity' | translate"></post-view-unavailable>
+    <img ng-if="unavailableView" src="/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" />
+
+    <div ng-show="!unavailableView">
+        <div class="tabs-menu" dropdown>
+            <button type="button" class="button-toggle tabs-menu-button-js" dropdown-toggle></button>
+            <ul class="tabs-menu-list" dropdown-menu>
+                <li ng-class="{ active: currentInterval == 'week' }"><a ng-click="update('week')">This Week</a></li>
+                <li ng-class="{ active: currentInterval == 'month' }"><a ng-click="update('month')">This Month</a></li>
+                <li ng-class="{ active: currentInterval == 'all' }"><a ng-click="update('all')">All Time</a></li>
+            </ul>
+        </div>
+
+        <div class="main-col">
+            <div class="one-col activity-data-single">
+                <h4 class="header-border">Number of Posts</h4>
+                <div class="activity-chart">
+                    <dc-chart chart-type="lineChart" chart-options="postTrendOptions" chart-data='postTrendData'></dc-chart>
+                </div>
+            </div>
+            <div class="one-col activity-data-single">
+                <h4 class="header-border">Active Categories</h4>
+                <div class="activity-chart">
+                    <dc-chart chart-type="barChart" chart-options="postCategoryOptions" chart-data='postCategoryData'></dc-chart>
+                </div>
+            </div>
+            <div class="one-col activity-data-single">
+                <h4 class="header-border">Active Regions</h4>
+                <post-view-map is-loading="isLoading" filters="mapQuery"></post-view-map>
+            </div>
+        </div> <!--end main column-->
+
+        <aside class="secondary-col" role="complementary">
+            <activity-timeline></activity-timeline>
+        </aside>
     </div>
-
-    <div class="main-col">
-        <div class="one-col activity-data-single">
-            <h4 class="header-border">Number of Posts</h4>
-            <div class="activity-chart">
-                <dc-chart chart-type="lineChart" chart-options="postTrendOptions" chart-data='postTrendData'></dc-chart>
-            </div>
-        </div>
-        <div class="one-col activity-data-single">
-            <h4 class="header-border">Active Categories</h4>
-            <div class="activity-chart">
-                <dc-chart chart-type="barChart" chart-options="postCategoryOptions" chart-data='postCategoryData'></dc-chart>
-            </div>
-        </div>
-        <div class="one-col activity-data-single">
-            <h4 class="header-border">Active Regions</h4>
-            <post-view-map is-loading="isLoading" filters="mapQuery"></post-view-map>
-        </div>
-    </div> <!--end main column-->
-
-    <aside class="secondary-col" role="complementary">
-        <activity-timeline></activity-timeline>
-    </aside>
 
 </main>
