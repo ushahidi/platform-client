@@ -59,7 +59,7 @@ function (
         }, function (errorResponse) {
 
             // error
-            _.each(errorResponse.data.errors, function (value, key) {console.log(value.title);
+            _.each(errorResponse.data.errors, function (value, key) {
                 // Ultimately this should cehck individual status codes
                 // for the moment just check for the message we expect
                 if (value.title === 'limit::posttypes') {
