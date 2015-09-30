@@ -37,10 +37,9 @@ describe('Notify', function () {
             Notify.showAlerts(['Test message 1', 'Test message 2']);
         });
 
-        it('calls $window.alert multiple times with the passed in alert messages', function () {
-            expect($window.alert.calls.count()).toEqual(2);
-            expect($window.alert.calls.argsFor(0)[0]).toEqual('Test message 1');
-            expect($window.alert.calls.argsFor(1)[0]).toEqual('Test message 2');
+        it('calls $window.alert with the combined alert messages', function () {
+            expect($window.alert.calls.count()).toEqual(1);
+            expect($window.alert.calls.argsFor(0)[0]).toEqual('Test message 1\nTest message 2');
         });
     });
 });

@@ -4,9 +4,11 @@ function (
     var controller = [
         '$scope',
         'GlobalFilter',
+        '_',
         function (
             $scope,
-            GlobalFilter
+            GlobalFilter,
+            _
         ) {
             // Initial scope
             $scope.isLoading = false;
@@ -31,7 +33,8 @@ function (
         transclude: true,
         scope: {
             filters: '=',
-            currentView: '='
+            currentView: '=',
+            baseUrl: '@'
         },
         controller: controller,
         templateUrl: 'templates/views/views.html'

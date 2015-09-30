@@ -14,4 +14,8 @@
 .leaflet-retina .leaflet-control-layers-toggle {
 	background-image: url(../img/layers-2x.png);
 	}
+input.leaflet-control-layers-selector {
+	display: inline;
+	float: none;
+}
 

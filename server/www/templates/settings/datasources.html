@@ -48,8 +48,10 @@
 
                     <div ng-if="option.input == 'radio'">
                         <div ng-repeat="radio_option in option.options track by $index">
+                            <label class="radio-label" for="{{provider.id}}_{{option_key}}_{{$index}}">
                             <input name="{{option_key}}" id="{{provider.id}}_{{option_key}}_{{$index}}" type="{{option.input}}" ng-value="radio_option" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving">
-                            <label for="{{provider.id}}_{{option_key}}_{{$index}}">{{radio_option}}</label>
+                            {{radio_option}}
+                            </label>
                         </div>
 
                         <p ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid" class="alert error" translate>settings.generic_field_error</p>

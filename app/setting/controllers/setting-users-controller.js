@@ -30,7 +30,7 @@ function (
     $scope.getRole = RoleHelper.getRole;
 
     $scope.filter = {
-        role: "",
+        role: '',
         q: null
     };
 
@@ -51,8 +51,7 @@ function (
 
 
     handleResponseErrors = function (errorResponse) {
-        var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-        errors && Notify.showAlerts(errors);
+        Notify.showApiErrors(errorResponse);
     };
 
     checkAndNotifyAboutManipulateOwnUser = function (translationKey) {
@@ -132,7 +131,7 @@ function (
     $scope.pageChanged = getUsersForPagination;
     $scope.applyFilters = function () {
         getUsersForPagination();
-    }
+    };
     // --- end: definitions
 
 

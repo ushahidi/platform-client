@@ -5,10 +5,6 @@ function (
 ) {
     var allRoles = [
             {
-                name: 'guest',
-                display_name: 'Guest'
-            },
-            {
                 name: 'user',
                 display_name: 'Member'
             },
@@ -18,11 +14,13 @@ function (
             }
         ],
 
-    rolesWithoutGuest = _.filter(allRoles, function (role) { return role.name != 'guest'}),
+    rolesWithoutGuest = _.filter(allRoles, function (role) {
+        return role.name !== 'guest';
+    }),
 
     RoleHelper = {
         roles: function (includeGuest) {
-            return includeGuest ? allRoles : rolesWithoutGuest
+            return includeGuest ? allRoles : rolesWithoutGuest;
         },
         getRole: function (role, roles) {
             if (!roles) {

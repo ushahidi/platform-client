@@ -25,18 +25,17 @@ function (
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     $scope.roles = RoleHelper.roles();
 
-    $scope.tag = {type: 'category'};
+    $scope.tag = { type: 'category', icon: 'tag' };
     $scope.processing = false;
 
     $scope.saveTag = function (tag) {
         $scope.processing = true;
         var response = TagEndpoint.save(tag, function () {
             if (response.id) {
-                $location.path('/tools/categories/' + response.id);
+                $location.path('/settings/categories/' + response.id);
             }
         }, function (errorResponse) { // error
-            var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-            errors && Notify.showAlerts(errors);
+            Notify.showApiErrors(errorResponse);
             $scope.processing = false;
         });
     };

@@ -2,7 +2,6 @@
  * Ushahidi Angular Modal directive
  * Based on the Angular Bootstrap Modal directive
  */
-
 angular.module('ushahidi.common.modal', [])
 
 .directive('modal', function () {
@@ -14,7 +13,8 @@ angular.module('ushahidi.common.modal', [])
         scope: {
             title: '@?',
             visible: '=?',
-            closeOnOverlayClick: '=?'
+            closeOnOverlayClick: '=?',
+            showCloseButton: '=?'
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
@@ -22,23 +22,35 @@ angular.module('ushahidi.common.modal', [])
 
             $scope.classDetached = true;
             $scope.classVisible = false;
+            $scope.modalOffset = 0;
+
+            // If closeOnOverlayClick isn't passed, default to true
+            if (typeof $scope.closeOnOverlayClick === 'undefined') {
+                $scope.closeOnOverlayClick = true;
+            }
+
+            // If showCloseButton isn't passed, default to true
+            if (typeof $scope.showCloseButton === 'undefined') {
+                $scope.showCloseButton = true;
+            }
 
             $scope.$watch('visible', function (state, previousState) {
-                if (state === previousState) {
-                    return;
-                }
-
-                if (previousState === false && state === true) {
+                if (state === true) {
                     if (!$scope.classVisible) {
                         // Animate in.
                         $scope.classDetached = false;
                         $scope.classVisible = true;
 
+                        // Set offset based on window position
+                        // @todo move offset to a config param
+                        var windowYpos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+                        $scope.modalOffset = (windowYpos + 40) + 'px';
+
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);
                         }
                     }
-                } else if (previousState === true && state === false) {
+                } else if (state === false) {
                     if ($scope.classVisible) {
                         // Animate out.
                         $scope.classVisible = false;

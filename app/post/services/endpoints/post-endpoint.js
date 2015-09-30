@@ -2,20 +2,33 @@ module.exports = [
     '$resource',
     '$rootScope',
     'Util',
+    '_',
 function (
     $resource,
     $rootScope,
-    Util
+    Util,
+    _
 ) {
 
     var PostEndpoint = $resource(Util.apiUrl('/posts/:id/:extra'), {
-        id: '@id'
+        id: '@id',
+        order: 'desc',
+        orderby: 'created'
     }, {
         query: {
             method: 'GET',
             isArray: false,
+            paramSerializer: '$httpParamSerializerJQLike'
+        },
+        get: {
+            method: 'GET',
             transformResponse: function (data /*, header*/) {
-                return angular.fromJson(data);
+                data = angular.fromJson(data);
+                // Ensure values is always an object
+                if (_.isArray(data.values)) {
+                    data.values = _.object(data.values);
+                }
+                return data;
             }
         },
         update: {
@@ -28,17 +41,13 @@ function (
             method: 'GET',
             url: Util.apiUrl('/posts/:id/geojson'),
             isArray: false,
-            transformResponse: function (data /*, header*/) {
-                return angular.fromJson(data);
-            }
+            paramSerializer: '$httpParamSerializerJQLike'
         },
         stats: {
             method: 'GET',
             url: Util.apiUrl('/posts/:id/stats'),
             isArray: false,
-            transformResponse: function (data /*, header*/) {
-                return angular.fromJson(data);
-            }
+            paramSerializer: '$httpParamSerializerJQLike'
         }
     });
 

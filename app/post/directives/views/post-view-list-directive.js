@@ -6,6 +6,7 @@ function (
         '$q',
         '$translate',
         'PostEndpoint',
+        'CollectionEndpoint',
         'Session',
         'Notify',
         '_',
@@ -14,13 +15,14 @@ function (
             $q,
             $translate,
             PostEndpoint,
+            CollectionEndpoint,
             Session,
             Notify,
             _
         ) {
             var getPostsForPagination = function (query) {
                 query = query || $scope.filters;
-                var postQuery = _.extend(query, {
+                var postQuery = _.extend({}, query, {
                     offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
                     limit: $scope.itemsPerPage
                 });
@@ -33,15 +35,16 @@ function (
                 });
             },
             handleResponseErrors = function (errorResponse) {
-                var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                errors && Notify.showAlerts(errors);
+                Notify.showApiErrors(errorResponse);
             };
 
             // whenever the filters changes, update the current list of posts
             $scope.$watch(function () {
                 return $scope.filters;
             }, function (newValue, oldValue) {
-                getPostsForPagination();
+                if (newValue !== oldValue) {
+                    getPostsForPagination();
+                }
             });
 
             $scope.deleteSelectedPosts = function () {
@@ -58,6 +61,32 @@ function (
                         .finally(getPostsForPagination);
                     }
                 });
+            };
+
+            $scope.addSelectedPostsToCollection = function (selectedCollection) {
+                if ($scope.selectedItems.length === 0) {
+                    return;
+                }
+                var collectionId = selectedCollection.id,
+                    collection = selectedCollection.name,
+                    // Add each post to the collection and return a promise
+                    promises = _.map($scope.selectedItems, function (post) {
+                        return CollectionEndpoint.addPost({'collectionId': collectionId, 'id': post.id}).$promise;
+                    });
+
+                // Show a single notification when all selected posts have been added to the collection
+                $q.all(promises).then(function () {
+                    $translate('notify.collection.bulk_add_to_collection', {
+                        count: $scope.selectedItems.length,
+                        collection: collection
+                    }).then(function (message) {
+                        Notify.showSingleAlert(message);
+                    });
+                    // Deselect posts
+                    _.forEach($scope.selectedItems, function (post) {
+                        post.selected = false;
+                    });
+                }, handleResponseErrors);
             };
 
             $scope.itemsPerPageChanged = function (count) {
@@ -87,6 +116,13 @@ function (
 
             $scope.allSelectedOnCurrentPage = function ($event) {
                 return $scope.selectedItems.length === $scope.posts.length;
+            };
+
+            $scope.hasFilters = function () {
+                if ($scope.filters.status !== 'all') {
+                    return true;
+                }
+                return !_.isEmpty(_.omit(_.omit($scope.filters, 'within_km'), 'status'));
             };
 
             // --- start: initialization

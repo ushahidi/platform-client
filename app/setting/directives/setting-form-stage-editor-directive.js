@@ -25,7 +25,7 @@ function (
             formTemplate: '@',
             stageId: '@'
         },
-        templateUrl: 'templates/partials/form-stage-editor.html',
+        templateUrl: 'templates/settings/forms/form-stage-editor.html',
         link: function ($scope, $element, $attrs) {
             var stageId = $attrs.stageId;
 
@@ -52,6 +52,12 @@ function (
                 $scope.currentStageId = currentStageId;
             });
 
+            // Load available forms for relation fields
+            $scope.availableForms = FormEndpoint.query();
+            $scope.filterNotCurrentForm = function (form) {
+                return form.id !== $attrs.formId;
+            };
+
             // Manage stage settings
             $scope.isSettingsOpen = false;
             $scope.openSettings = function () {
@@ -65,6 +71,8 @@ function (
                 .$promise
                 .then(function () {
                     $scope.isSettingsOpen = false;
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             };
             // End manage stage
@@ -85,6 +93,8 @@ function (
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
                     $location.url('/settings/forms/' + $scope.form.id + '/stages/' + stage.id);
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             };
             // End manage stage
@@ -150,6 +160,11 @@ function (
                     label: 'Checkbox',
                     type: 'varchar',
                     input: 'checkbox'
+                },
+                {
+                    label: 'Related Post',
+                    type: 'relation',
+                    input: 'relation'
                 }
             ];
             $scope.isNewAttributeOpen = false;
@@ -157,15 +172,19 @@ function (
             $scope.openNewAttribute = function () {
                 $scope.isNewAttributeOpen = true;
             };
-            $scope.addNewAttribute = function (type, input) {
+            $scope.addNewAttribute = function (type, input, label) {
+                var lastPriority = $scope.form.attributes.length ? _.last($scope.form.attributes).priority : 0;
+
                 newAttrCount++;
                 $scope.isNewAttributeOpen = false;
                 var attribute = {
                     type: type,
                     input: input,
-                    label: 'New field',
+                    label: 'New ' + label.toLowerCase() + ' field',
                     required: false,
                     options: [],
+                    config: {},
+                    priority: lastPriority + 1,
                     form_stage_id: $scope.currentStageId
                 };
 
@@ -182,6 +201,8 @@ function (
                 })).$promise.then(function (attributeUpdate) {
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             };
 
@@ -196,11 +217,11 @@ function (
                                 id: attribute.id
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
-                                delete $scope.form.attributes[$index];
+                                $scope.form.attributes.splice($index, 1);
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest
-                            delete $scope.form.attributes[$index];
+                            $scope.form.attributes.splice($index, 1);
                         }
                     }
                 });

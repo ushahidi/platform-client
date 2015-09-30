@@ -52,7 +52,9 @@ function (
         $scope.$watch(function () {
             return $scope.filters;
         }, function (newValue, oldValue) {
-            reloadMapPosts();
+            if (newValue !== oldValue) {
+                reloadMapPosts();
+            }
         });
 
         // initial load

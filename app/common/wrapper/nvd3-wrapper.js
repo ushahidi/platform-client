@@ -17,7 +17,7 @@ require('nvd3/src/models/legend');
 require('nvd3/src/models/line');
 require('nvd3/src/models/lineChart');
 // require('nvd3/src/models/linePlusBarChart');
-require('nvd3/src/models/lineWithFocusChart');
+// require('nvd3/src/models/lineWithFocusChart');
 // require('nvd3/src/models/multiBar');
 // require('nvd3/src/models/multiBarChart');
 require('nvd3/src/models/multiBarHorizontal');

@@ -42,7 +42,6 @@ function (
         $location.path(path.join('/'));
     };
 
-    $rootScope.rtlEnabled = false;
     $rootScope.switchRtl = function () {
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
     };

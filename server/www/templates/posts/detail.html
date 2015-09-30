@@ -34,21 +34,25 @@
             <span ng-show="post.status == 'draft'"><i class="fa  fa-circle-o"></i> <span translate>post.unpublished</span></span>
         </p>
 
-        <p ng-if="post.allowed_privileges.indexOf('update') !== -1">
+        <p ng-show="post.allowed_privileges.indexOf('update') !== -1">
             <a type="button" class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
                 <span translate>post.post_actions.edit</span>
             </a>
         </p>
-        <p ng-if="post.allowed_privileges.indexOf('delete') !== -1">
+
+        <div ng-show="editableCollections.length > 0" class="custom-select">
+            <select ng-model="addToCollectionModel">
+                <option value="" translate>set.add_to_collection</option>
+                <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
+            </select>
+        </div>
+
+        <p ng-show="post.allowed_privileges.indexOf('delete') !== -1">
             <button type="button" class="button-secondary delete" ng-click="deletePost()">
                 <i class="fa  fa-trash"></i> <span translate>post.post_actions.delete</span>
             </button>
         </p>
-        <!--<p ng-if="post.allowed_privileges.indexOf('delete')">
-            <a class="btn btn-default btn-large" href="/posts/{{post.id}}/delete">
-                <i class="fa  fa-edit"></i><span translate>post.post_actions.delete</span>
-            </a>
-        </p>-->
+
     </aside>
 
     <div class="main-col">
@@ -77,7 +81,7 @@
                 </li>
             </ul><!-- end .post-values -->
 
-            <h3 translate>post.location</h3>
+            <h3 ng-if="mapDataLoaded" translate>post.location</h3>
             <div ng-if="mapDataLoaded">
                 <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
             </div>

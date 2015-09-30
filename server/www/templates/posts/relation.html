@@ -1,0 +1,12 @@
+<form name="relation-search-form" class="input-relation">
+	<p ng-if="model">{{ selectedPost.title }} ({{ model }}) <button class="button-secondary icon-only alt trash" type="button" ng-click="clearPost()" translate></button></p>
+    <div class="input-inline">
+        <input class="form-control" type="text" placeholder="Search.." ng-model="searchTerm">
+        <button class="btn btn-info" type="button" ng-click="search($event)" translate>nav.search</button>
+    </div>
+    <ul>
+    	<li ng-repeat="post in results">
+    		<button type="button" class="button-secondary icon-only check" ng-click="selectPost(post)" translate></button> {{ post.id }} : {{ post.title }}
+    	</li>
+    </ul>
+</form>

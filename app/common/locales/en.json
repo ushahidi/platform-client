@@ -3,6 +3,7 @@
         "powered_by_ushahidi" : "Powered by Ushahidi.",
         "support" : "Support",
         "documentation": "Documentation",
+        "report_a_bug": "Report a bug",
         "forbidden": "Sorry, you're not allowed to do that."
     },
     "form": {
@@ -11,6 +12,7 @@
         "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
         "add_field_instructions_placeholder": "Instructions for field",
         "add_new_step": "Add New Step",
+        "field_allowed_relation_post_type": "Allowed post types",
         "currently_disabled": "This post type is currently disabled.",
         "custom_structure": "Custom Structure",
         "default_date_placeholder": "Default date",
@@ -23,8 +25,7 @@
         "field_add_option": "Add",
         "field_default": "Field Default",
         "field_key": "Field Key",
-        "field_input": "Field Input",
-        "field_type": "Field Storage",
+        "field_type": "Field Type",
         "field_name": "Field Name",
         "field_options": "Field Options",
         "field_key_placeholder": "field-key",
@@ -44,6 +45,7 @@
         "save_post_step": "Save Post Step",
         "step_name": "Step Name",
         "step_required": "This step is required",
+        "structure_step" : "Structure",
         "type" : "type",
         "visible_to": "Visible To"
     },
@@ -72,6 +74,18 @@
             "collections" : "Collections",
             "all_collections" : "All Collections"
         },
+        "filter_tabs" : {
+            "q": "Keyword",
+            "created_after": "Start date",
+            "created_before": "End date",
+            "center_point": "Location",
+            "tags": "Category",
+            "form": "Post Type",
+            "current_stage": "Current Step",
+            "set": "Collection",
+            "status": "Status",
+            "location_value": "Within {{km}} km of {{value}}"
+        },
         "more" : "More",
         "keyword" : "Keyword",
         "start_date" : "Start Date",
@@ -95,18 +109,16 @@
         "date_range" : "Date Range"
     },
     "graph" : {
-        "group_by" : "Group by",
+        "group_by_placeholder" : "Graph",
         "none" : "None",
         "post_count" : "Post count",
-        "post_date": "Post date",
-        "cumulative": "Cumulative totals",
-        "category_level": "Parent category",
-        "attribute" : "Form attribute",
+        "cumulative_post_count" : "Total post count",
+        "new_post_count" : "New posts",
+        "post_date": "Post created date",
+        "cumulative": "Show cumulative totals",
         "created": "Created time",
         "updated": "Updated time",
-        "time_attribute": "Timeline by",
-        "select_one": "Select one",
-        "created": "Created time"
+        "select_one": "Select one"
     },
     "nav" : {
         "about" : "About",
@@ -130,6 +142,9 @@
         "delete" : "Delete",
         "edit" : "Edit",
         "filters" : "Filters",
+        "forgottenyourpassword" : "Forgotten your password?",
+        "resetpassword" : "Reset password",
+        "resetmypassword" : "Reset my password",
         "forms" : "Forms",
         "help" : "Help",
         "home" : "Home",
@@ -137,6 +152,7 @@
         "registration" : "Sign up",
         "register" : "Sign up",
         "logout" : "Logout",
+        "map_settings" : "Map Settings",
         "notifications" : "Notifications",
         "new_collection" : "New Collection",
         "notifications" : "Notifications",
@@ -150,6 +166,7 @@
         "role" : "Role",
         "roles" : "Roles",
         "saved_searches" : "Saved Searches",
+        "search" : "Search",
         "select_all" : "Select All",
         "settings" : "Settings",
         "tags" : "Categories",
@@ -171,6 +188,9 @@
     "post": {
         "posts" : "Posts",
         "all_posts" : "All Posts",
+        "no_search_results" : "Your search didn't match any posts",
+        "no_posts_yet" : "This are no posts yet!",
+        "add_first_post": "Add the first post",
         "create_post" : "Create Post",
         "posted_by" : "Posted by",
         "draft" : "Draft",
@@ -200,6 +220,7 @@
         "options" : "Options",
         "complete_draft" : "Complete (Draft)",
         "complete_published" : "Complete (Published)",
+        "structure" : "Structure",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete"
@@ -219,6 +240,9 @@
             "unpublish" : "Revert to Draft",
             "everyone" : "Everyone",
             "back" : "Back",
+            "contact_info": "Enter your contact info (optional)",
+            "author_realname" : "Name",
+            "author_email" : "Email",
             "form" : {
                 "categories" : "Categories",
                 "description" : "Post Description",
@@ -230,10 +254,6 @@
                     "add_link" : "Add Link"
                 }
             }
-        },
-        "details" : {
-            "post_details" : "Post Details",
-            "respond" : "Post a Comment or Response"
         },
         "preview" : {
             "private" : "private",
@@ -267,13 +287,38 @@
                 "parse" : "\"{{label}}\" could not be parsed",
                 "date" : "\"{{label}}\" must be a date",
                 "number" : "\"{{label}}\" must be a number"
+            },
+            "author_name" : {
+                "maxlength": "Name is too long"
+            },
+            "author_email" : {
+                "email": "Invalid email"
             }
         }
     },
     "set": {
+        "create_collection" : "Create Collection",
+        "create_savedsearch": "Create Saved Search",
+        "description" : "Description",
+        "delete_collection" : "Delete this collection",
+        "delete_savedsearch" : "Delete this Saved Search",
+        "default_view" : "Default view",
         "edit_settings" : "Edit Settings",
+        "featured_collection" : "This collection is featured",
+        "featured_savedsearch" : "This saved search is featured",
+        "add_to_collection" : "Add to Collection",
         "empty_list_collections" : "No collections",
-        "empty_list_savedsearches" : "No saved searches"
+        "empty_list_savedsearches" : "No saved searches",
+        "name_collection" : "Collection name",
+        "name_savedsearch" : "Saved Search name",
+        "visible_to_collection" : "Who can see this Collection",
+        "visible_to_savedsearch" : "Who can see this Saved Search",
+        "default_view" : "Default view",
+        "save_set" : "Save Collection",
+        "save_savedsearch" : "Save Search",
+        "update_savedsearch" : "Update Search",
+        "set_settings" : "Collection Settings",
+        "add_notification" : "Add notification"
     },
     "tag": {
         "add_tag" : "Add Category",
@@ -304,8 +349,10 @@
         "manage_users" : "Manage Users",
         "manage_roles" : "Manage Roles",
         "manage_views" : "Manage Views",
-        "manage_appearance" : "Manage Appearance",
+        "manage_map_settings" : "Manage Map Settings",
+        "manage_appearance_settings" : "Manage Appearance Settings",
         "manage_plugins" : "Manage Plugins",
+        "appearance_settings" : "Appearance Settings",
         "map_settings" : "Map Settings",
         "site_settings" : "Site Settings",
         "tools" : "Tools"
@@ -314,13 +361,21 @@
         "admin_map_settings" : "Map Settings"
     },
     "settings": {
+        "appearance" : "Appearance Settings",
+        "appearance_header_image" : "Custom Background Image",
+        "appearance_header_image_instructions" : "Image needs to be >1000px wide.",
+        "customize_your_new_deployment" : "Customize your new deployment",
+        "continue" : "Continue",
+        "current_header" : "Current background image",
         "site" : "Site Settings",
         "site_name" : "Site name",
         "site_email" : "Contact email address",
         "site_email_note" : "Use caution, as this will be visible to anyone on your site.",
         "site_description" : "Describe your site",
+        "site_description_placeholder" : "An optional one sentence description",
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
+        "select_image" : "Select image",
         "save" : "Save",
         "features" : {
             "features" : "Features",
@@ -340,7 +395,17 @@
             "save_changes": "Save Changes",
             "saving_changes": "Saving"
         },
-        "generic_field_error": "Invalid entry, please try again."
+        "generic_field_error": "Invalid entry, please try again.",
+        "skip" : "Skip this step",
+        "add_first_post": "Add Your First Post",
+        "add_first_post_subtitle": "A deployment is nothing until it has some content in it.",
+        "invite_people": "Or invite people to help you create posts.",
+        "add_new_users": "Add New Users",
+        "valid" : {
+            "name" : {
+                "required": "Site name is required"
+            }
+        }
     },
     "user": {
         "add_user" : "Add User",
@@ -357,22 +422,24 @@
         "cancel" : "Cancel",
         "email" : "Email Address",
         "failed_attempts" : "Failed attempts: ",
-        "full_name" : "Full Name",
+        "full_name" : "Display Name",
         "never" : "Never",
-        "no_full_name" : "No full name",
+        "no_full_name" : "No display name",
         "number_of_users_shown" : "Number of users shown",
         "per_page" : "{{count}} users",
         "password" : "Password",
+        "new_password" : "New Password",
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
         "search_and_filter" : "Search & Filter Users",
-        "username" : "Username",
+        "passwordreset_instructions" : "Enter your email to request a password reset",
+        "passwordreset_confirm_instructions" : "If your email exists in our database, you will receive a password recovery email soon.",
+        "token" : "Password reset token",
         "valid" : {
-            "username" : {
-                "required" : "Username is required",
-                "maxlength" : "Username is too long",
-                "pattern" : "Your username must: be at least 3 characters long, only contain letters, numbers, periods(.), underscores(_) or hyphens(-), start with a letter, fix with a letter or number"
+            "full_name" : {
+                "required" : "Display name is required",
+                "maxlength" : "Display name is too long"
             },
             "email" : {
                 "required" : "Email address is required",
@@ -387,11 +454,13 @@
         }
     },
     "user_profile" : {
-        "title" : "Edit profile"
+        "title" : "Edit profile",
+        "save" : "Save changes",
+        "update_password" : "Update password",
+        "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected."
     },
     "user_create" :  {
         "full_name": "Display Name",
-        "username": "Username",
         "email": "Email Address",
         "role": "Role"
     },
@@ -409,7 +478,7 @@
             "bulk_destroy_cancelled" : "Delete cancelled"
         },
         "login" : {
-            "failed" : "Login failed, check your username and password."
+            "failed" : "Login failed, check your email and password."
         },
         "register" : {
             "failed" : "There were errors during registration. Check your input and try again.",
@@ -444,6 +513,22 @@
             "delete_form_confirm" : "Are you sure you want to delete this form?",
             "delete_stage_confirm" : "Are you sure you want to delete this step?",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?"
+        },
+        "collection" : {
+            "delete_collection_confirm" : "Are you sure you want to delete this collection?",
+            "add_to_collection" : "Post has been added to {{collection}}",
+            "bulk_add_to_collection" : "{{count}} posts have been added to {{collection}}"
+        },
+        "savedsearch" : {
+            "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?"
+        },
+        "passwordreset" : {
+            "failed" : "Password reset failed",
+            "success": "Your password has been reset"
+        },
+        "notification" : {
+            "add" : "You will now be notified when new posts are added to {{collection}}",
+            "delete_confirm" : "Are you sure you want to remove this notification?"
         }
     },
     "empty": {
@@ -457,7 +542,45 @@
         "search": "Search",
         "get_current_position": "Get current position",
         "update_location": "Update location",
-        "click_map": "Click the map to place a marker"
+        "click_map": "Click the map to place a marker",
+        "clear":"Clear"
+    },
+    "notification": {
+        "title": "Notifications",
+        "contacts_heading": "How you get notifications",
+        "notifications_heading": "What you get notified about",
+        "error_message": "The notification could not be deleted at this time"
+    },
+    "contact": {
+        "edit": "Edit",
+        "add_new_contact": "Add New Contact",
+        "save": "Save contact",
+        "saving": "Saving",
+        "save_changes": "Save changes",
+        "saving_changes": "Saving changes",
+        "cancel_edit": "Cancel",
+        "add_phone_number": "Add a phone number",
+        "add_email_address": "Add an email address",
+        "edit_phone_number": "Edit your phone number",
+        "edit_email_address": "Edit your email address",
+        "error_message": "The contact could not be saved at this time",
+        "type" : {
+            "phone": "Phone",
+            "email": "Email"
+        },
+        "valid": {
+            "email" : {
+                "required": "An email address is required to receive notifications",
+                "email": "This email address is invalid",
+                "maxlength": "This email address is too long"
+            },
+            "phone": {
+                "required": "A phone number is required to receive notifications",
+                "pattern": "A valid phone number is required",
+                "minlength": "This number is too short",
+                "maxlength": "This number is too long"
+            }
+        }
     },
     "languages": {
         "ach": "Acoli",

@@ -3,22 +3,32 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
+    'BootstrapConfig',
 function (
     $rootScope,
     $scope,
     Authentication,
-    ConfigEndpoint
+    ConfigEndpoint,
+    BootstrapConfig
 ) {
-
-    $scope.siteTitle = 'Ushahidi';
+    var USHAHIDI = 'Ushahidi';
+    $scope.siteTitle = BootstrapConfig.name ? BootstrapConfig.name : USHAHIDI;
     $scope.pageTitle = null;
     $scope.pageDescription = null;
     $scope.pageKeywords = null;
     $scope.pageRobots = null;
 
-    $scope.site = ConfigEndpoint.get({ id: 'site' }, function (site) {
-        $scope.siteTitle = site.name;
+    // Then update from server
+    var reloadSiteConfig = function () {
+        ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
+            $scope.siteTitle = site.name ? site.name : USHAHIDI;
+        });
+    };
+
+    $rootScope.$on('event:update:header', function () {
+        reloadSiteConfig();
     });
+    reloadSiteConfig();
 
     $rootScope.$on('setPageTitle', function (event, title) {
         $scope.pageTitle = null;
@@ -57,5 +67,6 @@ function (
             }
         }
     });
+
 
 }];

@@ -41,7 +41,11 @@ function (
                         // Initialize values on post (helps avoid madness in the template)
                         attrs.map(function (attr) {
                             if (!$scope.post.values[attr.key]) {
-                                $scope.post.values[attr.key] = [null];
+                                if (attr.input === 'location') {
+                                    $scope.post.values[attr.key] = [null];
+                                } else {
+                                    $scope.post.values[attr.key] = [attr.default];
+                                }
                             }
                         });
                         $scope.attributes = attrs;
@@ -49,7 +53,21 @@ function (
                 },
                 fetchStages = function (formId) {
                     $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
-                        $scope.setVisibleStage($scope.stages[0].id);
+                        var post = $scope.post;
+
+                        // If number of completed stages matches number of stages,
+                        // assume they're all complete, and just show the first stage
+                        if (post.completed_stages.length === stages.length) {
+                            $scope.setVisibleStage(stages[0].id);
+                        } else {
+                            // Get incomplete stages
+                            var incompleteStages = _.filter(stages, function (stage) {
+                                return !_.contains(post.completed_stages, stage.id);
+                            });
+
+                            // Return lowest priority incomplete stage
+                            $scope.setVisibleStage(incompleteStages[0].id);
+                        }
                     });
                 };
 
@@ -99,7 +117,11 @@ function (
                         return false;
                     }
 
-                    if ($scope.form.title.$invalid || $scope.form.content.$invalid || $scope.form.tags.$invalid) {
+                    if ($scope.form.title.$invalid || $scope.form.content.$invalid) {
+                        return false;
+                    }
+
+                    if ($scope.form.tags && $scope.form.tags.$invalid) {
                         return false;
                     }
                 }
@@ -230,8 +252,7 @@ function (
                     }
                 }, function (errorResponse) { // errors
 
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    errors && Notify.showAlerts(errors);
+                    Notify.showApiErrors(errorResponse);
                     $scope.saving_post = false;
                 });
             };
@@ -263,7 +284,9 @@ function (
             $scope.isRadio = function (attr) {
                 return attr.input === 'radio';
             };
-
+            $scope.isRelation = function (attr) {
+                return attr.input === 'relation';
+            };
             // Can more values be added for this attribute?
             $scope.canAddValue = function (attr) {
                 return (
@@ -286,18 +309,6 @@ function (
                 $scope.post.values[attr.key].splice(key, 1);
             };
 
-            // Datepicker
-            $scope.datepicker = [];
-
-            $scope.openDatePicker = function ($event, attribute, key) {
-                $event.preventDefault();
-                $event.stopPropagation();
-
-                if (!$scope.datepicker[attribute.key]) {
-                    $scope.datepicker[attribute.key] = [];
-                }
-                $scope.datepicker[attribute.key][key] = true;
-            };
         }];
 
     return {

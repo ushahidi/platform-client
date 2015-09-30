@@ -29,11 +29,10 @@ function (
         $scope.processing = true;
         var response = UserEndpoint.save(user, function () {
             if (response.id) {
-                $location.path('/tools/users/' + response.id);
+                $location.path('/settings/users/' + response.id);
             }
         }, function (errorResponse) { // error
-            var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-            errors && Notify.showAlerts(errors);
+            Notify.showApiErrors(errorResponse);
             $scope.processing = false;
         });
     };

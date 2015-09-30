@@ -8,9 +8,9 @@ var loginLinkSelector = '.header a.user-login',
 
 describe('authentication', function () {
 
-    describe('Login link in main menu:', function () {
+    var loginLink, logoutLink;
 
-        var loginLink;
+    describe('Login link in main menu:', function () {
 
         beforeEach(function () {
             browser.get('/');
@@ -37,13 +37,13 @@ describe('authentication', function () {
 
     describe('Login page:', function () {
 
-        var usernameField,
+        var emailField,
             passwordField,
             submitButton;
 
         beforeEach(function () {
             browser.get('/login');
-            usernameField = element(by.model('username'));
+            emailField = element(by.model('email'));
             passwordField = element(by.model('password'));
             submitButton = element(by.css('button[type="submit"]'));
         });
@@ -55,14 +55,14 @@ describe('authentication', function () {
         });
 
         it('should have a login form', function () {
-            expect(usernameField.isDisplayed()).toBeTruthy();
+            expect(emailField.isDisplayed()).toBeTruthy();
             expect(passwordField.isDisplayed()).toBeTruthy();
             expect(submitButton.isDisplayed()).toBeTruthy();
         });
 
         describe('submitting login form with wrong credentials', function () {
             beforeEach(function () {
-                usernameField.sendKeys('foo');
+                emailField.sendKeys('foo');
                 passwordField.sendKeys('bar');
                 submitButton.click();
             });
@@ -80,8 +80,10 @@ describe('authentication', function () {
         }); // end 'submit form with wrong credentials'
 
         describe('submitting the form with correct credentials', function () {
+            var userMenuLink;
+
             beforeEach(function () {
-                usernameField.sendKeys('admin');
+                emailField.sendKeys('admin@ush.com');
                 passwordField.sendKeys('admin');
                 submitButton.click();
             });
@@ -109,7 +111,7 @@ describe('authentication', function () {
                     loginLink = element(by.css(loginLinkSelector));
 
                     userMenuLink.click();
-                    browser.wait(logoutLink.isDisplayed);
+                    browser.wait(logoutLink.isDisplayed, 1000);
                     logoutLink.click();
                 });
 

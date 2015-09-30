@@ -5,16 +5,22 @@ module.exports = [
     '_',
     'GlobalFilter',
     'collection',
+    'NotificationEndpoint',
+    'Notify',
     function (
         $scope,
         $translate,
         $routeParams,
         _,
         GlobalFilter,
-        collection
+        collection,
+        NotificationEndpoint,
+        Notify
     ) {
         // Set view based on route or set view
-        $scope.currentView = $routeParams.view || collection.view;
+        $scope.currentView = function () {
+            return $routeParams.view || collection.view;
+        };
 
         // Add set to the scope
         $scope.collection = collection;
@@ -28,6 +34,16 @@ module.exports = [
         // Check if we can edit
         $scope.canEdit = function () {
             return _.contains(collection.allowed_privileges, 'update');
+        };
+
+        // @todo: Integrate the modal state controller into a globally accessible
+        // directive which binds the same logic but does not effect markup
+        // This is related to the same functionality in the common controller
+        // navigation.js
+        $scope.isOpen = {};
+        $scope.isOpen.data = false;
+        $scope.setIsOpen = function () {
+            $scope.isOpen.data = !$scope.isOpen.data;
         };
 
         // Extend filters, always adding the current collection id
@@ -48,5 +64,26 @@ module.exports = [
         // Reset GlobalFilter + add set filter
         GlobalFilter.clearSelected();
         $scope.filters = extendFilters({});
+
+        // Show Add Notification link
+        $scope.showNotificationLink = false;
+
+        NotificationEndpoint.get({set: collection.id}, function (notifications) {
+            // show link if subscription does not exist
+            $scope.showNotificationLink = notifications.length === 0;
+        });
+
+        $scope.saveNotification = function (collection) {
+            var notification = {set: collection.id};
+
+            NotificationEndpoint.save(notification, function (notification) {
+                // No need to show the link after subscription
+                $scope.showNotificationLink = false;
+                $translate('notify.notification.add', {collection: collection.name})
+                    .then(function (message) {
+                        Notify.showSingleAlert(message);
+                    });
+            });
+        };
     }
 ];

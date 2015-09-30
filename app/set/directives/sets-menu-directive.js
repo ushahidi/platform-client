@@ -47,6 +47,13 @@ function (
             $scope.$on('event:authentication:login:succeeded', function () {
                 reloadSets();
             });
+            $scope.$on('event:collection:update', function () {
+                reloadSets();
+            });
+            $scope.$on('event:savedSearch:update', function () {
+                reloadSets();
+            });
+
 
             // Trigger initial load of sets
             reloadSets();

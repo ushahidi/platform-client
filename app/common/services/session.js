@@ -6,7 +6,6 @@ function (
 
     this.clearedSessionData = {
         userId: undefined,
-        username: undefined,
         realname: undefined,
         email: undefined,
         accessToken: undefined,

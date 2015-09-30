@@ -5,17 +5,14 @@ describe('posts views controller', function () {
     var $rootScope,
         $scope,
         $controller,
-        mockPostEndpoint,
-        mockPostResponse,
         mockGlobalFilter = {
             getPostQuery: function () {
                 return {
-                    q : "dummy"
+                    q : 'dummy'
                 };
             },
-            clearSelected: function() {}
+            clearSelected: function () {}
         },
-        mockNotify,
         mockedSessionData;
 
     beforeEach(function () {
@@ -53,7 +50,7 @@ describe('posts views controller', function () {
 
 
     beforeEach(function () {
-        mockRouteParams = {
+        var mockRouteParams = {
             view : 'list'
         };
 
@@ -87,7 +84,7 @@ describe('posts views controller', function () {
     });
 
     it('should set the filters from GlobalFilter.getPostQuery() to $scope.filters', function () {
-        expect($scope.filters).toEqual({ q : "dummy" });
+        expect($scope.filters).toEqual({ q : 'dummy' });
     });
 
 });

@@ -1,3 +1,8 @@
-<post-view current-view="currentView" filters="filters">
+<post-view current-view="currentView" filters="filters" base-url="/views/">
     <h1 translate>post.all_posts</h1>
+
+    <div class="applied-filters">
+        <post-active-filters filters="filters"></post-active-filters>
+        <savedsearch-create filters="filters"></savedsearch-create>
+    </div>
 </post-view>

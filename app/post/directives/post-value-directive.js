@@ -1,4 +1,4 @@
-module.exports = [function () {
+module.exports = ['PostEndpoint', function (PostEndpoint) {
     return {
         restrict: 'E',
         replace: true,
@@ -7,6 +7,13 @@ module.exports = [function () {
             value: '=',
             attribute: '='
         },
-        templateUrl: 'templates/partials/post-detail-value.html'
+        templateUrl: 'templates/posts/post-detail-value.html',
+        link: function ($scope) {
+            if ($scope.attribute.type === 'relation') {
+                $scope.value = $scope.value.map(function (entry) {
+                    return PostEndpoint.get({ id : entry });
+                });
+            }
+        }
     };
 }];

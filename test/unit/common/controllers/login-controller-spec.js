@@ -52,7 +52,7 @@ describe('login controller', function () {
     describe('login', function () {
         describe('with correct username/password', function () {
             beforeEach(function () {
-                $scope.username = 'testuser';
+                $scope.email = 'testuser';
                 $scope.password = 'correct';
             });
 

@@ -11,7 +11,6 @@ var gulp         = require('gulp'),
     watchify    = require('watchify'),
     envify       = require('envify/custom'),
     fs           = require('fs'),
-    merge        = require('merge'),
     karma        = require('karma').server,
     buffer       = require('vinyl-buffer'),
     uglify       = require('gulp-uglify'),
@@ -20,7 +19,8 @@ var gulp         = require('gulp'),
     tar          = require('gulp-tar'),
     gzip         = require('gulp-gzip'),
     jscs         = require('gulp-jscs'),
-    dotenv       = require('dotenv');
+    dotenv       = require('dotenv'),
+    Transifex    = require('transifex');
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
@@ -34,7 +34,8 @@ var defaultOptions = {
     mockBackend: false,
     useChromeForKarma : false,
     backendUrl: false,
-    uglifyJs: true
+    uglifyJs: true,
+    compressedCSS: true
 };
 
 function getBooleanOption(value, defaultValue) {
@@ -53,6 +54,7 @@ var options = {
     useChromeForKarma   : gutil.env['karma-chrome'] || getBooleanOption(process.env.KARMA_CHROME, defaultOptions.useChromeForKarma),
     backendUrl          : gutil.env['backend-url'] || process.env.BACKEND_URL,
     uglifyJs            : gutil.env['uglify-js'] || getBooleanOption(process.env.UGLIFY_JS, defaultOptions.uglifyJs),
+    compressedCSS       : gutil.env['compressed-css'] || getBooleanOption(process.env.COMPRESSED_CSS, defaultOptions.compressedCSS),
     www                 : 'server/www'
 };
 
@@ -64,6 +66,9 @@ var helpers = {
         if (options.mockBackend) {
             gutil.log('Building with mock backend');
             entries.push('./app/mock-backend-config.js');
+            entries.push('./app/test-bootstrap.js');
+        } else {
+            entries.push('./app/bootstrap.js');
         }
 
         return {
@@ -105,14 +110,17 @@ gulp.task('sass', ['rename'], function () {
         .pipe(plumber({
             errorHandler: errorHandler
         }))
+        .pipe(sourcemaps.init())
         .pipe(sass({
             includePaths: [
                 'node_modules/'
             ],
-            sourceComments: 'map'
+            sourceComments: false,
+            outputStyle: 'compressed'
         }))
         .pipe(autoprefixer())
         .pipe(plumber.stop())
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(options.www + '/css'))
         .pipe(notify('CSS compiled'))
         .pipe(livereload())
@@ -125,8 +133,15 @@ gulp.task('sass', ['rename'], function () {
  */
 gulp.task('css', [], function () {
     return gulp.src([
-                    'node_modules/platform-pattern-library/assets/css/*'
-                    ])
+            options.compressedCSS ? 'node_modules/platform-pattern-library/assets/css/*.min.css' : 'node_modules/platform-pattern-library/assets/css/*.css',
+            'node_modules/platform-pattern-library/assets/css/*.css.map'
+            ])
+        .pipe(rename(function (path) {
+            // If using compressedCSS, string the .min from filenames
+            if (options.compressedCSS) {
+                path.basename = path.basename.replace('.min', '');
+            }
+        }))
         .pipe(gulp.dest(options.www + '/css'));
 });
 
@@ -163,6 +178,12 @@ gulp.task('rename-nvd3', function () {
         .pipe(gulp.dest('node_modules/nvd3/build'))
         ;
 });
+gulp.task('rename-angular-datepicker', function () {
+    return gulp.src(['node_modules/angular-datepicker/dist/index.css'])
+        .pipe(rename('_index.scss'))
+        .pipe(gulp.dest('node_modules/angular-datepicker/dist'))
+        ;
+});
 
 /**
  * Copy icon files for leaflet from node_modules into server/www/css/images
@@ -178,7 +199,8 @@ gulp.task('rename', [
     'rename-colorpicker',
     'rename-leaflet-markercluster',
     'rename-leaflet-markercluster-default',
-    'rename-nvd3'
+    'rename-nvd3',
+    'rename-angular-datepicker'
     ], function () {});
 
 /**
@@ -203,7 +225,7 @@ gulp.task('browserify', function () {
         .bundle()
         .on('error', function (err) {
             errorHandler(err);
-            this.emit('end');
+            throw err;
         })
         .pipe(source('bundle.js'))
         .pipe(buffer())
@@ -245,6 +267,9 @@ function bundleBrowserify(stream) {
             errorHandler(err);
         })
         .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(options.www + '/js'))
         .pipe(notify('JS compiled'))
         .pipe(livereload());
@@ -363,7 +388,7 @@ gulp.task('tar', ['build'], function () {
 /**
  * Task `release` - Build release
  */
-gulp.task('release', function () {
+gulp.task('release', ['transifex-download'], function () {
     // Enable uglifyjs
     options.uglifyJs = true;
 
@@ -375,6 +400,70 @@ gulp.task('release', function () {
  * Task `heroku:dev` - builds app for heroku
  */
 gulp.task('heroku:dev', ['build'], function () {});
+
+/**
+ * Task: `transifex-download`
+ * Download translations from www.transifex.com
+ */
+gulp.task('transifex-download', function () {
+    var project_slug = 'ushahidi-v3',
+        locales_dir = options.www + '/locales/',
+        mode = 'default',
+        resource = 'client-en',
+        config = {};
+
+    // Try to load user's ~/.transifexrc config
+    // see http://docs.transifex.com/client/config/
+    try {
+        config = dotenv.parse(fs.readFileSync(process.env.HOME + '/.transifexrc'));
+    } catch (e) {
+        // silently skip
+    }
+
+    // Try to load username/password from env
+    config.username = config.username || process.env.TX_USERNAME;
+    config.password = config.password || process.env.TX_PASSWORD;
+
+    if (!config.username || !config.password) {
+        throw 'Missing transifex username and password';
+    }
+
+    var transifex = new Transifex({
+        project_slug: project_slug,
+        credential: config.username + ':' + config.password
+    });
+
+    // Download languages
+    transifex.languageSetMethod(project_slug, function (err, data) {
+        if (err) {
+            throw err;
+        }
+
+        try {
+            fs.mkdirSync(locales_dir);
+        }
+        catch (err) {
+            if (err.code !== 'EEXIST') {
+                throw err;
+            }
+        }
+
+        // Download translations for each language code
+        data.forEach(function (language) {
+            transifex.translationInstanceMethod(project_slug, resource, language.language_code, { mode: mode }, function (err, data) {
+                if (err) {
+                    throw err;
+                }
+
+                fs.writeFileSync(locales_dir +
+                                 // Replace underscore with hyphen
+                                 language.language_code.replace('_', '-') +
+                                 '.json', data);
+            });
+        });
+    });
+});
+
 
 /**
  * Task: `default`

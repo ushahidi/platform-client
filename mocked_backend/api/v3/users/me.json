@@ -1,0 +1,18 @@
+{
+    "id": 2,
+    "url": "http://ushahidi-backend/api/v2/users/2",
+    "email": "admin@ush.com",
+    "realname": "Admin Joe",
+    "logins": 0,
+    "failed_attempts": 0,
+    "last_login": null,
+    "last_attempt": null,
+    "created": "1970-01-01T00:00:00+00:00",
+    "updated": "2014-12-13T19:17:57+00:00",
+    "role": "admin",
+    "allowed_methods": [
+        "get",
+        "post",
+        "put"
+    ]
+}

@@ -28,8 +28,8 @@
         </p> -->
     </div>
 
-    <div class="stage-and-actions">
-        <div class="stage todo">
+    <div class="step-and-actions">
+        <div class="step todo">
             <h4 class="delta-alt" translate>
                 post.step
             </h4>
@@ -37,7 +37,7 @@
             <p>{{currentStage}} <a ng-href="/posts/{{post.id}}/edit" ng-if="post.allowed_privileges.indexOf('update') !== -1" class="cta" translate>post.update</a></p>
         </div>
 
-        <span ng-if="post.allowed_privileges.indexOf('update') !== -1" class="dropdown" dropdown>
+        <span class="dropdown" dropdown ng-show="editableCollections.length > 0 || post.allowed_privileges.indexOf('update') !== -1">
             <div class="actions-stacked hide-when-large">
                 <button type="button" class="button-secondary plus toggle-js dropdown-toggle" dropdown-toggle>
                     <span translate>post.options</span>
@@ -45,21 +45,15 @@
             </div>
 
             <div class="actions-content toggle-content" dropdown-menu>
-                <ul class="dropdown-menu" role="menu">
-                    <li>
+                <ul class="dropdown-menu">
+                    <li ng-show="post.allowed_privileges.indexOf('update') !== -1" >
                         <a class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
                             <span translate>post.post_actions.edit</span>
                         </a>
                     </li>
-                    <!-- <li>
-                        <div class="custom-select">
-                            <select>
-                                <option>Add to Collection</option>
-                                <option>Collection #1</option>
-                                <option>Collection #2</option>
-                            </select>
-                        </div>
-                    </li> -->
+                    <li>
+                      <select-collection ng-model="selectedCollection" ng-change="addToCollection(selectedCollection)"></select-collection>
+                    </li>
                 </ul>
             </div>
         </span>

@@ -20,29 +20,40 @@ function (
         $rootScope.$emit('setPageTitle', title);
     });
 
-    $scope.onUserProfileEditFormShow = function () {
-        $scope.userProfileDataForEdit = angular.copy($scope.userProfileData);
+    $scope.state = {
+        success: false,
+        processing: false,
+        changingPassword: false,
+        password: ''
     };
 
-    $scope.saveUserProfile = function () {
-        var promise = UserEndpoint.update({id: 'me'}, $scope.userProfileDataForEdit).$promise;
+    $scope.saveUser = function (user) {
+        $scope.state.success = false;
+        $scope.state.processing = true;
 
-        promise.then(
-            function (userData) {
-                $scope.userProfileData = $scope.userProfileDataForEdit = userData;
-            },
-            function (errorResponse) {
-                if (errorResponse.status === 400) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    if (errors) {
-                        Notify.showAlerts(errors);
-                    }
-                }
-            }
-        );
+        var userPayload = angular.copy(user);
 
-        return promise;
+        // If we're not changing the password, drop that property from payload (just in case.)
+        if ($scope.state.changingPassword) {
+            userPayload.password = $scope.state.password;
+        }
+
+        var update = UserEndpoint.update({ id: 'me' }, userPayload);
+
+        update.$promise.then(function (user) {
+            $scope.state.success = true;
+            $scope.state.processing = false;
+
+            // Collapse password change form field.
+            $scope.state.changingPassword = false;
+            $scope.state.password = '';
+
+            $scope.user = user;
+        }, function (errorResponse) { // error
+            Notify.showApiErrors(errorResponse);
+            $scope.state.processing = false;
+        });
     };
 
-    $scope.userProfileData = $scope.userProfileDataForEdit = user;
+    $scope.user = user;
 }];

@@ -24,7 +24,7 @@ function (
             formId: '@',
             formTemplate: '@'
         },
-        templateUrl: 'templates/partials/form-editor.html',
+        templateUrl: 'templates/settings/forms/form-editor.html',
         link: function ($scope, $element, $attrs) {
             // If we're editing an existing form,
             // load the form info and all the fields.
@@ -48,6 +48,8 @@ function (
                 .$promise
                 .then(function () {
                     $scope.isSettingsOpen = false;
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             };
 
@@ -73,7 +75,7 @@ function (
                             id: stage.id
                         }).$promise.then(function () {
                             // Remove stage from scope, binding should take care of the rest
-                            delete $scope.form.stages[$index];
+                            $scope.form.stages.splice($index, 1);
                         });
                     }
                 });
@@ -116,15 +118,20 @@ function (
                 $scope.isNewStageOpen = !$scope.isNewStageOpen;
             };
             $scope.saveNewStage = function (stage) {
+                var lastPriority = $scope.form.stages.length ? _.last($scope.form.stages).priority : 0;
+
                 FormStageEndpoint
                 .save(_.extend(stage, {
-                    formId: $scope.form.id
+                    formId: $scope.form.id,
+                    priority: lastPriority + 1
                 }))
                 .$promise
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
                     $location.url('/settings/forms/' + $scope.form.id + '/stages/' + stage.id);
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             };
             // End manage stage

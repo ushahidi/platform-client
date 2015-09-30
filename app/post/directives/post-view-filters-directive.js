@@ -14,7 +14,7 @@ function (
             halfWidth: '=',
             isLoading: '='
         },
-        templateUrl: 'templates/partials/post-view-filters.html',
+        templateUrl: 'templates/posts/post-view-filters.html',
         link: function ($scope, $element, $attrs) {
             $scope.filter = {};
             $scope.globalFilter = GlobalFilter;
@@ -29,7 +29,7 @@ function (
             // Filter bound through $scope.filter
             // Other filters are bound directly to GlobalFilter (tags, post type, etc)
             var available_filters = [
-                'q', 'start_date', 'end_date', 'center_point', 'within_km', 'status'
+                'q', 'created_after', 'created_before', 'center_point', 'within_km'
             ],
 
             filter_transform = {
@@ -40,6 +40,7 @@ function (
                     if (valid_coords.test(location)) {
                         // if the location is already a lat/lon, pass it through
                         GlobalFilter.center_point = location;
+                        GlobalFilter.location_text = null;
                     } else { // perform a geocoding lookup on the location
                         $scope.geocodingBusy = true;
 
@@ -48,6 +49,7 @@ function (
                                 return;
                             } // @todo - handle bad lookup
                             GlobalFilter.center_point = coordinates[0] + ',' + coordinates[1];
+                            GlobalFilter.location_text = location;
                             $scope.geocodingBusy = false;
                         });
                     }
@@ -109,19 +111,19 @@ function (
             };
 
             $scope.uiOpenDate = function (datepicker) {
-                if (datepicker === 'start_date') {
-                    $scope.start_date_open = true;
-                } else if (datepicker === 'end_date') {
-                    $scope.end_date_open = true;
+                if (datepicker === 'startDate') {
+                    $scope.startDateOpen = true;
+                } else if (datepicker === 'endDate') {
+                    $scope.endDateOpen = true;
                 }
 
                 return false;
             };
 
             $scope.uiCloseDate = function (datepicker) {
-                if (datepicker === 'start_date') {
+                if (datepicker === 'startDate') {
                     $scope.startDateOpen = false;
-                } else if (datepicker === 'end_date') {
+                } else if (datepicker === 'endDate') {
                     $scope.endDateOpen = false;
                 }
 
@@ -133,7 +135,7 @@ function (
                     defaults = GlobalFilter.getDefaults();
 
                 angular.forEach(defaults, function (value, key) {
-                    if ($scope.filter[key] && defaults[key] != $scope.filter[key]) {
+                    if ($scope.filter[key] && defaults[key] !== $scope.filter[key]) {
                         showControls = true;
                     }
                 });

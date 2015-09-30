@@ -1,0 +1,15 @@
+{
+    "id": "site",
+    "name": "Ushahidi Mock",
+    "description": "Ushahidi testing deployment",
+    "email": "someone@somewhere.somehow",
+	"timezone": "UTC",
+	"language": "en-US",
+	"date_format": "n/j/Y",
+    "allowed_methods": {
+        "get": true,
+        "post": true,
+        "put": true,
+        "delete": true
+    }
+}

@@ -1,0 +1,59 @@
+<modal visible="modalOpen" show-close-button="step == 'first-post'" close-on-overlay-click="false">
+    <form ng-show="step == 'customize'" name="form">
+        <h1 translate>settings.customize_your_new_deployment</h1>
+
+        <div ng-hide="hasName">
+            <label class="input-label" for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.site_name</label>
+            <input id="name" name="name" type="text" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
+            <p ng-repeat="(error, value) in form.name.$error"
+                ng-show="form.name.$dirty"
+                class="alert error"
+                translate="{{'settings.valid.name.' + error}}"></p>
+        </div>
+
+        <div class="divider white"></div>
+
+        <label class="input-label" for="site-settings-description" translate>settings.site_description</label>
+        <textarea id="site-settings-description" type="text"
+            ng-model="site.description" placeholder="{{'settings.site_description_placeholder' | translate}}"></textarea>
+
+        <div class="divider white"></div>
+
+        <!-- <label class="input-label">Default View</label>
+        <p class="small">This is how your posts will be displayed by default. Don't worry, you can always change it later.</p>
+        <div class="custom-select">
+            <select name="default-view">
+                <option value="1">Map</option>
+                <option value="2">List</option>
+                <option value="3">Graph</option>
+            </select>
+        </div>
+
+        <div class="divider white"></div> -->
+
+        <label class="input-label" for="appearance-header-image" translate>settings.appearance_header_image</label>
+        <p class="small" translate>settings.appearance_header_image_instructions</p>
+        <input id="appearance-header-image" name="file" type="file" onchange="angular.element(this).scope().fileNameChanged(this)" />
+
+        <div class="divider white"></div>
+
+        <button class="save" ng-click="updateConfig()" ng-disabled="form.$invalid || isUnchanged(site) || saving_config">
+            <i class="fa fa-cog fa-spin" ng-show="saving_config"></i>
+            <span translate>settings.continue</span>
+        </button>
+        <a class="cta" ng-click="skip()" ng-show="hasName" translate>settings.skip</a>
+    </form>
+    <div ng-show="step == 'first-post'">
+        <h3 class="edit" translate>settings.add_first_post</h3>
+        <div class="divider padded"></div>
+        <p translate>settings.add_first_post_subtitle</p>
+        <a class="button button-create" ng-href="/posts/create" ng-click="closeModal()">
+            <span translate>settings.add_first_post</span>
+        </a>
+        <div class="divider padded"></div>
+        <p translate>settings.invite_people</p>
+        <a class="button button-primary" ng-href="/settings/users" ng-click="closeModal()">
+            <span translate>settings.add_new_users</span>
+        </a>
+    </div>
+</modal>

@@ -86,9 +86,7 @@ function (
                     };
                 },
 
-                searchLocation: function (event) {
-                    event.preventDefault();
-
+                searchLocation: function () {
                     var that = this;
                     Geocoding.search($scope.searchLocationTerm).then(function (coordinates) {
                         if (!coordinates) {
@@ -103,6 +101,12 @@ function (
 
                         $scope.searchLocationTerm = '';
                     });
+                },
+
+                clear: function () {
+                    $scope.model = null;
+                    $scope.center = center;
+                    $scope.markers = {};
                 }
             });
 
