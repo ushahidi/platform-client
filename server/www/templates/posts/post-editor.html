@@ -270,9 +270,10 @@
                 translate-values="{ label : attribute.label }"></p>
 
             <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
+            <div class="clearfix"></div>
         </div>
         <!-- optional name and email for users who are not logged in -->
-        <div ng-show="!$root.loggedin">
+        <div ng-show="!$root.loggedin" class="clearfix">
             <h4>{{'post.modify.contact_info' | translate}}</h4>
             <label class="input-label" translate>post.modify.author_realname</label>
             <input name="name" placeholder="{{'post.modify.author_realname' | translate}}"
@@ -299,7 +300,7 @@
     </div>
 
     <confirmation-message visible="postLimitReached" >
-        <h1 translate>limit.plan_limit</h1> 
+        <h1 translate>limit.plan_limit</h1>
         <div translate>limit.post_limit_reached</div>
         <div class="divider padded"></div>
         <a class="button" href="/settings/plan" translate>limit.upgrade</a>
