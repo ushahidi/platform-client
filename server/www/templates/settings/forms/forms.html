@@ -13,11 +13,14 @@
 
     <h4>Start from scratch:</h4>
     <div class="cards-select">
-        <div class="selection-card custom">
+        <div class="selection-card custom" ng-show="forms.length < formQuota || formQuota === true">
             <a ng-click="openNewForm()" >
                 <h3>Add a new post type</h3>
             </a>
         </div>
+        <p ng-show="forms.length >= formQuota && formQuota !== true">
+            <span translate>limit.post_type_limit_reached</span>
+        </p>
     </div>
 
     <div ng-show="forms.length">
@@ -48,5 +51,13 @@
             <button type="button" class="button-primary" ng-click="saveNewForm(form)" translate>form.save_post_type</button>
         </div>
     </modal>
+
+    <confirmation-message visible="postTypeLimitReached" >
+        <h1 translate>limit.plan_limit</h1>
+        <div translate>limit.post_type_limit_reached</div>
+        <div class="divider padded"></div>
+        <a class="button" href="/settings/plan" translate>limit.upgrade</a>
+        <div class="divider white"></div>
+    </confirmation-message>
 
 </main>

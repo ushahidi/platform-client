@@ -5,14 +5,19 @@ module.exports = [
     '$q',
     'FormEndpoint',
     'FormStageEndpoint',
+    'Config',
+    '_',
 function (
     $scope,
     $translate,
     $location,
     $q,
     FormEndpoint,
-    FormStageEndpoint
+    FormStageEndpoint,
+    Config,
+    _
 ) {
+    $scope.formQuota = Config.features.limits.forms;
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
@@ -31,6 +36,7 @@ function (
         $scope.isNewFormOpen = !$scope.isNewFormOpen;
     };
     $scope.saveNewForm = function (form) {
+        $scope.validationErrors = [];
         // Save the form and translate the Structure stage label
         $q.all({
             form: FormEndpoint.save(form).$promise,
@@ -50,6 +56,20 @@ function (
                     $scope.newStage = {};
                     $location.url('/settings/forms/' + form.id + '/stages/' + stage.id);
                 });
+        }, function (errorResponse) {
+
+            // error
+            _.each(errorResponse.data.errors, function (value, key) {console.log(value.title);
+                // Ultimately this should cehck individual status codes
+                // for the moment just check for the message we expect
+                if (value.title === 'limit::posttypes') {
+                    $scope.postTypeLimitReached = true;
+                } else {
+                    $scope.validationErrors.push(value);
+                }
+            });
+
+            $scope.processing = false;
         });
     };
     // End new form
