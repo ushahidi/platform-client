@@ -84,10 +84,6 @@ function (
                 $scope.post.form = null;
             };
 
-            $scope.navigateToPost = function () {
-                $location.path('/posts/' + $scope.post.id);
-            };
-
             $scope.allowedChangeStatus = function () {
                 return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
             };
