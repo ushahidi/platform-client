@@ -9,21 +9,23 @@ function (
     _,
     CacheFactory
 ) {
-    var cache = CacheFactory('configCache');
-
-    var transformAndRemoveId = _.partial(Util.transformResponse, _, ['id']);
+    var cache = new CacheFactory('configCache');
 
     var ConfigEndpoint = $resource(Util.apiUrl('/config/:id'), {
         'id': '@id'
     }, {
         get: {
             method: 'GET',
-            transformResponse: transformAndRemoveId,
+            transformResponse: function (data /*, header*/) {
+                return Util.transformResponse(data);
+            },
             cache: cache
         },
         update: {
             method: 'PUT',
-            transformResponse: transformAndRemoveId
+            transformResponse: function (data /*, header*/) {
+                return Util.transformResponse(data);
+            }
         }
     });
 
