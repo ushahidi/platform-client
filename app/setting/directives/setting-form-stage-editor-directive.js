@@ -7,6 +7,8 @@ module.exports = [
     'FormAttributeEndpoint',
     '_',
     'Notify',
+    'CacheManager',
+    'Util',
 function (
     $q,
     $location,
@@ -15,7 +17,9 @@ function (
     FormStageEndpoint,
     FormAttributeEndpoint,
     _,
-    Notify
+    Notify,
+    CacheManager,
+    Util
 ) {
     return {
         restrict: 'E',
@@ -29,6 +33,7 @@ function (
         link: function ($scope, $element, $attrs) {
             var stageId = $attrs.stageId;
 
+            var stageCacheKeyTpl = _.template('/forms/<%= formId %>/stages/<%= stageId %>/?order=asc&orderby=priority');
             $scope.editIsOpen = {};
 
             // If we're editing an existing form,
@@ -70,6 +75,15 @@ function (
                 }))
                 .$promise
                 .then(function () {
+                    // Url for stages is not consistent with pattern
+                    stage.url = Util.apiUrl(
+                        stageCacheKeyTpl(
+                        { 
+                              formId: $scope.form.id, 
+                              stageId: stage.id
+                        })
+                    );
+                    CacheManager.updateCacheItem('stageCache', stage);
                     $scope.isSettingsOpen = false;
                 }, function (errorResponse) {
                     var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
