@@ -7,7 +7,7 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = CacheFactory('attrCache');
+    var cache = new CacheFactory('attrCache');
 
     var FormAttributeEndpoint = $resource(Util.apiUrl('/forms/:formId/attributes/:id'), {
         formId: '@formId',
@@ -20,7 +20,8 @@ function (
             isArray: true,
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
-            }
+            },
+            cache: cache
         },
         get: {
             method: 'GET',

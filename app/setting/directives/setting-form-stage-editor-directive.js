@@ -34,6 +34,7 @@ function (
             var stageId = $attrs.stageId;
 
             var stageCacheKeyTpl = _.template('/forms/<%= formId %>/stages/<%= stageId %>/?order=asc&orderby=priority');
+            var attrCacheKeyTpl = _.template('/forms/<%= formId %>/attributes/<%= attributeId %>/?order=asc&orderby=priority');
             $scope.editIsOpen = {};
 
             // If we're editing an existing form,
@@ -84,6 +85,10 @@ function (
                         })
                     );
                     CacheManager.updateCacheItem('stageCache', stage);
+                    CacheManager.removeCacheGroup(
+                        'stageCache', 
+                        stageCacheKeyTpl({formId: $scope.form.id})
+                    );
                     $scope.isSettingsOpen = false;
                 }, function (errorResponse) {
                     var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
@@ -217,6 +222,14 @@ function (
                 })).$promise.then(function (attributeUpdate) {
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
+
+                    CacheManager.removeCacheGroup(
+                        'attrCache', 
+                        attrCacheKeyTpl({
+                            formId: $scope.form.id,
+                            attrId: attributeUpdate.id                        
+                        })
+                   );
                 }, function (errorResponse) {
                     var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
                     errors && Notify.showAlerts(errors);
@@ -235,6 +248,22 @@ function (
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
                                 $scope.form.attributes.splice($index, 1);
+
+                                attribute.url = Util.apiUrl(
+                                    attrCacheKeyTpl(
+                                    { 
+                                          formId: $scope.form.id, 
+                                          attrId: stage.id
+                                    })
+                                );
+                                CacheManager.removeCacheItem('attrCache', attribute);
+                                CacheManager.removeCacheGroup(
+                                    'attrCache', 
+                                    attrCacheKeyTpl({
+                                          formId: $scope.form.id,
+                                          attrId: attributeUpdate.id 
+                                    })
+                                 );
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest
