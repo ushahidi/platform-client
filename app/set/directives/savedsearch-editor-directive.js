@@ -44,7 +44,7 @@ function (
             $scope.$watch(function () {
                 return $scope.isOpen.data;
             }, function (newValue, oldValue) {
-                if (!newValue) {
+                if (newValue !== oldValue) {
                     $scope.cpySavedSearch = _.clone($scope.savedSearch);
                 }
             });
