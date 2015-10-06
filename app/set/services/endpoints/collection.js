@@ -40,7 +40,7 @@ function (
                 return _.filter(angular.fromJson(data).results, function (result) {
                     return _.includes(result.allowed_privileges, 'update');
                 });
-            },
+            }
             //cache: cache
         },
         addPost: {
