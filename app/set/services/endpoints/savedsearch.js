@@ -7,7 +7,7 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = CacheFactory('searchCache');
+    //var cache = new CacheFactory('searchCache');
 
     var SavedSearchEndpoint = $resource(Util.apiUrl('/savedsearches/:id'), {
         id: '@id'
@@ -18,11 +18,11 @@ function (
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data).results;
             },
-            cache: cache
+            //cache: cache
         },
         get: {
             method: 'GET',
-            cache: cache
+            //cache: cache
         },
         update: {
             method: 'PUT'
