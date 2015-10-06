@@ -10,9 +10,11 @@ describe('UserEndpoint', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
-        'ngResource'
+        'ngResource',
+        'angular-cache'
         ])
-        .service('UserEndpoint', require(rootPath + 'app/common/services/endpoints/user-endpoint.js'));
+        .service('UserEndpoint', require(rootPath + 'app/common/services/endpoints/user-endpoint.js'))
+        .config(require(rootPath + 'app/common/configs/cache-config.js'));
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 

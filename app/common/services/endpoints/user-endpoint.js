@@ -9,7 +9,11 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = new CacheFactory('userCache');
+    var cache;
+
+    if (!(cache=CacheFactory.get('userCache'))) {
+      cache = new CacheFactory('userCache');
+    }
 
     cache.setOnExpire(function (key, value) {
         UserEndpoint.get(value.id);
