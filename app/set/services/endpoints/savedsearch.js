@@ -17,11 +17,11 @@ function (
             isArray: true,
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data).results;
-            },
+            }
             //cache: cache
         },
         get: {
-            method: 'GET',
+            method: 'GET'
             //cache: cache
         },
         update: {
