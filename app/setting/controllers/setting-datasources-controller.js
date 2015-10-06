@@ -4,12 +4,14 @@ module.exports = [
     '$translate',
     'ConfigEndpoint',
     'DataProviderEndpoint',
+    'CacheManager',
 function (
     $q,
     $scope,
     $translate,
     ConfigEndpoint,
-    DataProviderEndpoint
+    DataProviderEndpoint,
+    CacheManager
 ) {
 
     // Displays a loading indicator when busy querying endpoints.
@@ -37,6 +39,10 @@ function (
 
             $scope.settings.$update({ id: 'data-provider' }, function () {
                 $scope.saving = false;
+                CacheManager.updateCacheItem(
+                    'configCache', 
+                    $scope.settings
+                );
 
                 // No errors found; disable this.
                 $scope.formsSubmitted[provider] = false;
@@ -47,6 +53,10 @@ function (
             $scope.panelVisible[provider] = true;
         }
     };
+
+    // Clear provider cache so that it's loaded fresh each time
+    CacheManager.removeCacheGroup('configCache', '/config/data-provider');
+    CacheManager.removeCacheGroup('providerCache', '/dataproviders');
 
     // Get data providers from bacend.
     $q.all([DataProviderEndpoint.query(), ConfigEndpoint.get({ id: 'data-provider' })]).then(function (response) {

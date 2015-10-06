@@ -8,6 +8,7 @@ module.exports = [
     'Notify',
     '_',
     'RoleHelper',
+    'CacheManager',
 function (
     $scope,
     $rootScope,
@@ -17,7 +18,8 @@ function (
     UserEndpoint,
     Notify,
     _,
-    RoleHelper
+    RoleHelper,
+    CacheManager
 ) {
     $translate('user.edit_user').then(function (title) {
         $scope.title = title;
@@ -33,6 +35,8 @@ function (
     $scope.saveUser = function (user) {
         $scope.processing = true;
         UserEndpoint.update({id: $routeParams.id}, user, function () {
+            CacheManager.updateCacheItem('userCache', user);
+            CacheManager.removeRegexKey('userCache', '\/users\\?');
             $rootScope.goBack();
         }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');

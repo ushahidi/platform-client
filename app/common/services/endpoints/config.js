@@ -11,6 +11,11 @@ function (
 ) {
     var cache = new CacheFactory('configCache');
 
+    cache.setOnExpire(function (key, value) {
+         ConfigEndpoint.get(value.id);
+    });
+
+
     var ConfigEndpoint = $resource(Util.apiUrl('/config/:id'), {
         'id': '@id'
     }, {

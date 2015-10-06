@@ -7,6 +7,7 @@ module.exports = [
     'leafletEvents',
     'leafletData',
     'Maps',
+    'CacheManager',
 function (
     $q,
     $scope,
@@ -15,7 +16,8 @@ function (
     ConfigEndpoint,
     leafletEvents,
     leafletData,
-    Maps
+    Maps,
+    CacheManager
 ) {
     $scope.saving_config = {};
     $scope.patternDigitsOnly = /^[0-9]+$/;
@@ -98,11 +100,17 @@ function (
         });
     });
 
+    CacheManager.removeCacheGroup('configCache', '/config/map');
+
     $scope.updateConfig = function (id, model) {
         $scope.saving_config[id] = true;
 
         model.$update({ id: id }, function () {
             // @todo show alertify (or similar) message here
+            CacheManager.updateCacheItem(
+                              'configCache', 
+                              model
+                        );
             $scope.saving_config[id] = false;
         });
     };

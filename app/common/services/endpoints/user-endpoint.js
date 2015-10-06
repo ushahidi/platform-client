@@ -9,7 +9,11 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = CacheFactory('userCache');
+    var cache = new CacheFactory('userCache');
+
+    cache.setOnExpire(function (key, value) {
+         UserEndpoint.get(value.id);
+    });
 
     var UserEndpoint = $resource(Util.apiUrl('/users/:id'), {
         id: '@id'
@@ -19,7 +23,8 @@ function (
             isArray: false,
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data);
-            }
+            },
+            cache: cache
         },
         get: {
             method: 'GET',

@@ -10,8 +10,14 @@ function (
 
     var CacheManager = {
 
-        invalidateCache: function (cacheId) {
-            CacheFactory.destroy(cacheId);    
+        removeRegexKey: function (cacheId, cacheKeyRegex) {
+            var cache = CacheFactory.get(cacheId);    
+            var keys = _.filter(cache.keys(), function (key) {
+                return key.match(cacheKeyRegex);
+            });
+            _.each(keys, function (value, key) {
+                cache.remove(value);
+            }); 
         },
 
         updateCacheItem: function (cacheId, item) {

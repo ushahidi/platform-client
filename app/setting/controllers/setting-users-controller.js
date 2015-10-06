@@ -8,6 +8,7 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     'RoleHelper',
+    'CacheManager',
 function (
     $scope,
     $translate,
@@ -17,7 +18,8 @@ function (
     Session,
     UserEndpoint,
     Notify,
-    RoleHelper
+    RoleHelper,
+    CacheManager
 ) {
     var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser, getUsersForPagination;
 
@@ -81,7 +83,9 @@ function (
                     calls.push(UserEndpoint.delete({ id: userId }).$promise);
                 });
 
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(function () {
+                    CacheManager.removeRegexKey('userCache', '\/users\\?');
+                }, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });
@@ -101,7 +105,9 @@ function (
                 angular.forEach($scope.selectedUsers, function (userId) {
                     calls.push(UserEndpoint.update({ id: userId }, { id: userId, role: role.name }).$promise);
                 });
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(function (){
+                    CacheManager.removeRegexKey('userCache', '\/users\\?');
+                }, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });

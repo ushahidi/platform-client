@@ -2,11 +2,15 @@ module.exports = [
     '$resource',
     '$rootScope',
     'Util',
+    'CacheFactory',
 function (
     $resource,
     $rootScope,
-    Util
+    Util,
+    CacheFactory
 ) {
+
+    var cache = new CacheFactory('providerCache');
 
     var DataProviderEndpoint = $resource(Util.apiUrl('/dataproviders/:id'), {
         id: '@id'
@@ -16,7 +20,8 @@ function (
             isArray: false,
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data);
-            }
+            },
+            cache: cache
         },
         options: {
             method: 'OPTIONS'

@@ -29,6 +29,8 @@ function (
         templateUrl: 'templates/settings/settings-editor.html',
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
+
+            CacheManager.removeCacheGroup('configCache', '/config/site');
             $scope.site = ConfigEndpoint.get({ id: 'site' });
 
             $scope.timezones = [];
