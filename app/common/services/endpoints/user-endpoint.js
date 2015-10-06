@@ -12,7 +12,7 @@ function (
     var cache = new CacheFactory('userCache');
 
     cache.setOnExpire(function (key, value) {
-         UserEndpoint.get(value.id);
+        UserEndpoint.get(value.id);
     });
 
     var UserEndpoint = $resource(Util.apiUrl('/users/:id'), {

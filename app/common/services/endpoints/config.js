@@ -12,7 +12,7 @@ function (
     var cache = new CacheFactory('configCache');
 
     cache.setOnExpire(function (key, value) {
-         ConfigEndpoint.get(value.id);
+        ConfigEndpoint.get(value.id);
     });
 
 

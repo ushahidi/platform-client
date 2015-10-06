@@ -38,7 +38,7 @@ function (
                         offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
                         role: $scope.filter.role
                     })
-                ); 
+                );
 
                 $location.path('/settings/users/' + response.id);
             }

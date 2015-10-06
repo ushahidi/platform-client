@@ -40,7 +40,7 @@ function (
             $scope.settings.$update({ id: 'data-provider' }, function () {
                 $scope.saving = false;
                 CacheManager.updateCacheItem(
-                    'configCache', 
+                    'configCache',
                     $scope.settings
                 );
 

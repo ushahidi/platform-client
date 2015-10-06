@@ -105,7 +105,7 @@ function (
                 angular.forEach($scope.selectedUsers, function (userId) {
                     calls.push(UserEndpoint.update({ id: userId }, { id: userId, role: role.name }).$promise);
                 });
-                $q.all(calls).then(function (){
+                $q.all(calls).then(function () {
                     CacheManager.removeRegexKey('userCache', '\/users\\?');
                 }, handleResponseErrors)
                 .finally($scope.filterRole);

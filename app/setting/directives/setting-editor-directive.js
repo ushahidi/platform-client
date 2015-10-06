@@ -89,7 +89,7 @@ function (
                 uploadHeaderImage().then(function () {
                     $scope.site.$update({ id: 'site' }, function () {
                         CacheManager.updateCacheItem(
-                              'configCache', 
+                              'configCache',
                               $scope.site
                         );
                         $scope.saving_config = false;

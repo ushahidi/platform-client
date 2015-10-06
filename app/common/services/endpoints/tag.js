@@ -12,7 +12,7 @@ function (
     var cache = new CacheFactory('tagCache');
 
     cache.setOnExpire(function (key, value) {
-         TagEndpoint.get(value.id);
+        TagEndpoint.get(value.id);
     });
 
     var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {

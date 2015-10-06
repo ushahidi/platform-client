@@ -108,7 +108,7 @@ function (
         model.$update({ id: id }, function () {
             // @todo show alertify (or similar) message here
             CacheManager.updateCacheItem(
-                              'configCache', 
+                              'configCache',
                               model
                         );
             $scope.saving_config[id] = false;

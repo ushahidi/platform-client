@@ -79,14 +79,14 @@ function (
                     // Url for stages is not consistent with pattern
                     stage.url = Util.apiUrl(
                         stageCacheKeyTpl(
-                        { 
-                              formId: $scope.form.id, 
-                              stageId: stage.id
+                        {
+                            formId: $scope.form.id,
+                            stageId: stage.id
                         })
                     );
                     CacheManager.updateCacheItem('stageCache', stage);
                     CacheManager.removeCacheGroup(
-                        'stageCache', 
+                        'stageCache',
                         stageCacheKeyTpl({formId: $scope.form.id})
                     );
                     $scope.isSettingsOpen = false;
@@ -224,10 +224,10 @@ function (
                     $scope.form.attributes[$index] = attributeUpdate;
 
                     CacheManager.removeCacheGroup(
-                        'attrCache', 
+                        'attrCache',
                         attrCacheKeyTpl({
                             formId: $scope.form.id,
-                            attrId: attributeUpdate.id                        
+                            attrId: attributeUpdate.id
                         })
                    );
                 }, function (errorResponse) {
@@ -251,17 +251,17 @@ function (
 
                                 attribute.url = Util.apiUrl(
                                     attrCacheKeyTpl(
-                                    { 
-                                          formId: $scope.form.id, 
-                                          attrId: stage.id
+                                    {
+                                        formId: $scope.form.id,
+                                        attrId: attribute.id
                                     })
                                 );
                                 CacheManager.removeCacheItem('attrCache', attribute);
                                 CacheManager.removeCacheGroup(
-                                    'attrCache', 
+                                    'attrCache',
                                     attrCacheKeyTpl({
-                                          formId: $scope.form.id,
-                                          attrId: attributeUpdate.id 
+                                        formId: $scope.form.id,
+                                        attrId: attribute.id
                                     })
                                  );
                             });

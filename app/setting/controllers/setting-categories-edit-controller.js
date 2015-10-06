@@ -41,7 +41,6 @@ function (
                 'tagCache',
                 tag
             );
-            
             CacheManager.removeCacheGroup('tagCache', '/tags');
 
             $rootScope.goBack();

@@ -36,7 +36,7 @@ function (
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
-                    CacheManager.removeCacheGroup('tagCache', '/tags'); 
+                    CacheManager.removeCacheGroup('tagCache', '/tags');
                     $scope.refreshView();
                 });
             }
