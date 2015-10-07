@@ -391,6 +391,7 @@
         "site_language" : "Site language",
         "select_image" : "Select image",
         "save" : "Save",
+        "saved_settings" : "Deployment settings saved!",
         "features" : {
             "features" : "Features",
             "please_select_features" : "Please select the features you would like to enable."

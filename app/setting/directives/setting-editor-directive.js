@@ -28,6 +28,7 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
             $scope.site = ConfigEndpoint.get({ id: 'site' });
+            $scope.userSavedSettings = false;
 
             $scope.timezones = [];
             var timezones = require('moment-timezone/data/packed/latest.json');
@@ -88,6 +89,7 @@ function (
                     $scope.site.$update({ id: 'site' }, function () {
                         $scope.saving_config = false;
                         updateSiteHeader();
+                        $scope.userSavedSettings = true;
                     }, function (errorResponse) {
                         Notify.showApiErrors(errorResponse);
                         $scope.saving_config = false;

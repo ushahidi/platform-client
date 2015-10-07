@@ -34,7 +34,6 @@ function (
             $scope.getRoleDisplayName = RoleHelper.getRole;
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
-            $scope.userSavedPost = false;
             $scope.validationErrors = [];
 
             var
@@ -188,7 +187,7 @@ function (
                 }
 
                 $scope.post.status = 'published';
-                //$scope.userSavedPost = true;
+                $scope.userSavedPost = true;
                 if (role) {
                     $scope.post.published_to = [role];
                 } else {
