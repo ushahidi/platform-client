@@ -1,6 +1,7 @@
 module.exports = [
     '$q',
     'ConfigEndpoint',
+    'Config',
     'Util',
     'Leaflet',
     'leafletData',
@@ -8,6 +9,7 @@ module.exports = [
 function (
     $q,
     ConfigEndpoint,
+    Config,
     Util,
     L,
     LData,
@@ -65,7 +67,7 @@ function (
 
     var Maps = {
         maps: {},
-        config: undefined,
+        config: Config.map,
         getMap: function (name) {
             if (!this.maps[name]) {
                 this.maps[name] = Object.create(Map).init(name);
