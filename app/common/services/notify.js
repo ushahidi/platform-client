@@ -1,4 +1,8 @@
-module.exports = ['$window', '_', function ($window, _) {
+module.exports = [
+    '$window', 
+    '_', 
+    '$rootScope',
+function ($window, _, $rootScope) {
 
     var showSingleAlert = function (alertMessage) {
         // TODO: find a better solution for that
@@ -6,6 +10,10 @@ module.exports = ['$window', '_', function ($window, _) {
         // like https://github.com/cgross/angular-notify
         // or https://github.com/jirikavi/AngularJS-Toaster
         $window.alert(alertMessage);
+    };
+
+    var showNotificationSlider = function (message) {
+        $rootScope.$emit('event:show:notification-slider', message);
     };
 
     var showAlerts = function (alertMessages) {
@@ -26,6 +34,7 @@ module.exports = ['$window', '_', function ($window, _) {
 
     return {
         showSingleAlert: showSingleAlert,
+        showNotificationSlider: showNotificationSlider,
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
         showConfirm: showConfirm

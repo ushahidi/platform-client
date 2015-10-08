@@ -3,7 +3,7 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
 	'ushahidi.common.modal',
-  'ushahidi.common.confirmation-message',
+  'ushahidi.common.notification-slider',
 	'ushahidi.common.sticky-sidebar',
     'ushahidi.common.chart'
 ])
@@ -34,6 +34,7 @@ angular.module('ushahidi.common', [
 
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
+.controller('notifier', require('./controllers/notifier.js'))
 
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
@@ -55,6 +56,6 @@ require('./directives/dropdown.js');
 require('./directives/accordion.js');
 require('./directives/offcanvas.js');
 require('./directives/modal.js');
-require('./directives/confirmation-message.js');
+require('./directives/notification-slider.js');
 require('./directives/sticky-sidebar.js');
 require('./directives/chart.js');

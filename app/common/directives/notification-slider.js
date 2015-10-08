@@ -2,13 +2,13 @@
  * Ushahidi Angular Confirmation Message directive
  * Based on the Angular Bootstrap Modal directive
  */
-angular.module('ushahidi.common.confirmation-message', [])
+angular.module('ushahidi.common.notification-slider', [])
 
-.directive('confirmationMessage', function () {
+.directive('notificationSlider', function () {
     return {
         restrict: 'E',
         transclude: true,
-        templateUrl: 'templates/confirmation-message/confirmation-message.html',
+        templateUrl: 'templates/notification-slider/notification-slider.html',
 
         scope: {
             title: '@?',

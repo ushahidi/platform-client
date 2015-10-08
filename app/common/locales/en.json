@@ -339,6 +339,7 @@
         "save" : "Save Category",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
+        "saved_tag": "Category saved.",
         "manage_tags" : "Manage Categories",
         "edit_tag" : "Edit Category",
         "editor" : {
@@ -392,6 +393,7 @@
         "select_image" : "Select image",
         "save" : "Save",
         "saved_settings" : "Deployment settings saved!",
+        "saved_map_settings" : "Map settings saved!",
         "features" : {
             "features" : "Features",
             "please_select_features" : "Please select the features you would like to enable."

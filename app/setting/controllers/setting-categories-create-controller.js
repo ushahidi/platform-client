@@ -22,6 +22,8 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
+    
+
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     $scope.roles = RoleHelper.roles();
 
@@ -32,6 +34,9 @@ function (
         $scope.processing = true;
         var response = TagEndpoint.save(tag, function () {
             if (response.id) {
+                $translate('tag.saved_tag').then(function (message) {
+                    Notify.showNotificationSlider(message);
+                });
                 $location.path('/settings/categories/' + response.id);
             }
         }, function (errorResponse) { // error
