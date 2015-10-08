@@ -83,7 +83,7 @@ function (
                 $q.all(calls).then(function () {
                     $translate('user.deleted_user').then(function (message) {
                         Notify.showNotificationSlider(message);
-                    });  
+                    });
                 }, handleResponseErrors)
                 .finally($scope.filterRole);
             }
@@ -107,7 +107,7 @@ function (
                 $q.all(calls).then(function () {
                     $translate('user.saved_user').then(function (message) {
                         Notify.showNotificationSlider(message);
-                    });  
+                    });
                 }, handleResponseErrors)
                 .finally($scope.filterRole);
             }

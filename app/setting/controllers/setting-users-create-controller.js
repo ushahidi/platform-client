@@ -32,7 +32,7 @@ function (
             if (response.id) {
                 $translate('user.saved_user').then(function (message) {
                     Notify.showNotificationSlider(message);
-                });  
+                });
                 $scope.processing = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
