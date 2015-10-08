@@ -1,6 +1,6 @@
 module.exports = [
-    '$window', 
-    '_', 
+    '$window',
+    '_',
     '$rootScope',
 function ($window, _, $rootScope) {
 

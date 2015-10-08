@@ -22,8 +22,6 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    
-
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     $scope.roles = RoleHelper.roles();
 
