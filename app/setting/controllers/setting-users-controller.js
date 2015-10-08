@@ -80,7 +80,11 @@ function (
                     calls.push(UserEndpoint.delete({ id: userId }).$promise);
                 });
 
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(function () {
+                    $translate('user.deleted_user').then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });  
+                }, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });
@@ -100,7 +104,11 @@ function (
                 angular.forEach($scope.selectedUsers, function (userId) {
                     calls.push(UserEndpoint.update({ id: userId }, { id: userId, role: role.name }).$promise);
                 });
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(function () {
+                    $translate('user.saved_user').then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });  
+                }, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });

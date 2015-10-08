@@ -1,6 +1,7 @@
 module.exports = [
     '$q',
     '$http',
+    '$translate',
     '$rootScope',
     'ConfigEndpoint',
     '_',
@@ -10,6 +11,7 @@ module.exports = [
 function (
     $q,
     $http,
+    $translate,
     $rootScope,
     ConfigEndpoint,
     _,
@@ -89,7 +91,9 @@ function (
                     $scope.site.$update({ id: 'site' }, function () {
                         $scope.saving_config = false;
                         updateSiteHeader();
-                        $scope.userSavedSettings = true;
+                        $translate('settings.saved_settings').then(function (message) {
+                            Notify.showNotificationSlider(message);
+                        });
                     }, function (errorResponse) {
                         Notify.showApiErrors(errorResponse);
                         $scope.saving_config = false;

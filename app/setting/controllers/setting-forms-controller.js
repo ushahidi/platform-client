@@ -5,13 +5,15 @@ module.exports = [
     '$q',
     'FormEndpoint',
     'FormStageEndpoint',
+    'Notify',
 function (
     $scope,
     $translate,
     $location,
     $q,
     FormEndpoint,
-    FormStageEndpoint
+    FormStageEndpoint,
+    Notify
 ) {
 
     $translate('nav.posts_and_entities').then(function (title) {
@@ -48,6 +50,9 @@ function (
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
+                    $translate('form.saved_form').then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
                     $location.url('/settings/forms/' + form.id + '/stages/' + stage.id);
                 });
         });

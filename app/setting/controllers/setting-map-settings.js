@@ -7,6 +7,7 @@ module.exports = [
     'leafletEvents',
     'leafletData',
     'Maps',
+    'Notify',
 function (
     $q,
     $scope,
@@ -15,7 +16,8 @@ function (
     ConfigEndpoint,
     leafletEvents,
     leafletData,
-    Maps
+    Maps,
+    Notify
 ) {
     $scope.saving_config = {};
     $scope.patternDigitsOnly = /^[0-9]+$/;
@@ -102,7 +104,9 @@ function (
         $scope.saving_config[id] = true;
         model.id = 'map';
         ConfigEndpoint.update(model, function () {
-            // @todo show alertify (or similar) message here
+            $translate('map_settings.saved_map_settings').then(function (message) {
+                Notify.showNotificationSlider(message);
+            });
             $scope.saving_config[id] = false;
         });
     };

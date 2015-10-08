@@ -53,6 +53,7 @@
         "save_and_close": "Save & Close",
         "save_post_type": "Save Post Type",
         "save_post_step": "Save Post Step",
+        "saved_form": "Post Type saved.",
         "step_name": "Step Name",
         "step_required": "This step is required",
         "structure_step" : "Structure",
@@ -374,7 +375,8 @@
         "tools" : "Tools"
     },
     "map_settings" : {
-        "admin_map_settings" : "Map Settings"
+        "admin_map_settings" : "Map Settings",
+        "saved_map_settings": "Map Settings saved."
     },
     "settings": {
         "appearance" : "Appearance Settings",
@@ -453,6 +455,8 @@
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
+        "saved_user": "User saved",
+        "deleted_user": "User deleted",
         "search_and_filter" : "Search & Filter Users",
         "passwordreset_instructions" : "Enter your email to request a password reset",
         "passwordreset_confirm_instructions" : "If your email exists in our database, you will receive a password recovery email soon.",
