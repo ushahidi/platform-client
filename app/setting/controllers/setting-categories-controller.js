@@ -4,12 +4,14 @@ module.exports = [
     '$q',
     'TagEndpoint',
     'RoleHelper',
+    'Notify',
 function (
     $scope,
     $translate,
     $q,
     TagEndpoint,
-    RoleHelper
+    RoleHelper,
+    Notify
 ) {
     $translate('tool.manage_tags').then(function (title) {
         $scope.title = title;
@@ -33,7 +35,12 @@ function (
                 angular.forEach($scope.selectedTags, function (tagId) {
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
-                $q.all(calls).then($scope.refreshView);
+                $q.all(calls).then(function () {
+                    $translate('tag.deleted_tags').then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                    $scope.refreshView();
+                });
             }
         });
     };

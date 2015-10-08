@@ -340,6 +340,7 @@
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "saved_tag": "Category saved.",
+        "deleted_tags": "Categories deleted.",
         "manage_tags" : "Manage Categories",
         "edit_tag" : "Edit Category",
         "editor" : {
