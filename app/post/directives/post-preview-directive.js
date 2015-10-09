@@ -89,7 +89,7 @@ function (
                     .$promise.then(function () {
                         $translate('notify.collection.add_to_collection', {collection: collection})
                         .then(function (message) {
-                            Notify.showSingleAlert(message);
+                            Notify.showNotificationSlider(message);
                         });
                         //Deselect post
                         scope.post.selected = false;

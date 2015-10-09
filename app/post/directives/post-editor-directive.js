@@ -5,6 +5,7 @@ function (
         '$scope',
         '$filter',
         '$location',
+        '$translate',
         'PostEntity',
         'PostEndpoint',
         'RoleHelper',
@@ -18,6 +19,7 @@ function (
             $scope,
             $filter,
             $location,
+            $translate,
             postEntity,
             PostEndpoint,
             RoleHelper,
@@ -251,8 +253,15 @@ function (
                 request.$promise.then(function (response) {
                     if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                         $scope.saving_post = false;
-                        $scope.userSavedPost = true;
                         $scope.post.id = response.id;
+                        $translate(
+                            'notify.post.save_success',
+                            {
+                                id: $scope.post.id,
+                                name: $scope.post.title
+                            }).then(function (message) {
+                            Notify.showNotificationSlider(message);
+                        });
                     } else {
                         $location.path('/');
                     }

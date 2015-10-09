@@ -14,6 +14,7 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
+    'Notify',
 function (
     $scope,
     post,
@@ -29,7 +30,8 @@ function (
     Maps,
     L,
     leafletData,
-    _
+    _,
+    Notify
 ) {
     $scope.post = post;
     $scope.mapDataLoaded = false;
@@ -152,6 +154,14 @@ function (
 
     $scope.deletePost = function () {
         PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
+            $translate(
+                'notify.post.destroy_success',
+                {
+                    name: $scope.post.title
+                }).then(function (message) {
+                Notify.showNotificationSlider(message);
+            });
+
             $location.path('/');
         });
     };

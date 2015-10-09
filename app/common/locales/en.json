@@ -527,7 +527,7 @@
             "success" : "Registration complete! You can now log in.."
         },
         "post" : {
-            "save_success" : "Saved post",
+            "save_success" : "Saved <a href\"/post/{{id}}\">name</a> post",
             "save_error" : "Unable to save post, please try again",
             "publish_success" : "Post has been published",
             "publish_error" : "Unable to publish post, please try again",
@@ -537,7 +537,7 @@
             "confirm_delete" : "Confirm Delete",
             "destroy_title" : "Delete Post",
             "delete_question" : "Are you sure you want to delete your post <a href=\"/posts/{{id}}\">{{post}}</a>?",
-            "destroy_success" : "Post deleted",
+            "destroy_success" : "Post {{name}} deleted",
             "destroy_error" : "Unable to delete post, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?"
         },
