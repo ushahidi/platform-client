@@ -36,7 +36,11 @@ function (
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
-                    $translate('tag.deleted_tags').then(function (message) {
+                    $translate(
+                        'notify.tag.bulk_destroy_success',
+                        {
+                            count: $scope.selectedTags.length
+                        }).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
                     $scope.refreshView();

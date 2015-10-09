@@ -34,7 +34,7 @@ function (
         $scope.processing = true;
         TagEndpoint.update({id: $routeParams.id}, tag, function () {
             $rootScope.goBack();
-            $translate('tag.saved_tag').then(function (message) {
+            $translate('notify.tag.save_success', {name: tag.tag}).then(function (message) {
                 Notify.showNotificationSlider(message);
             });
         }, function (errorResponse) { // error

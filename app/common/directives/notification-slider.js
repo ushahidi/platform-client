@@ -30,12 +30,10 @@ angular.module('ushahidi.common.notification-slider', [])
                 if (state === true) {
                     if (!$scope.classVisible) {
                         // Animate in.
-                        $scope.classDetached = false;
                         $scope.classVisible = true;
-
-                        if (classChangePromise) {
-                            $timeout.cancel(classChangePromise);
-                        }
+                        classChangePromise = $timeout(function () {
+                            $scope.classVisible = false;
+                        }, 5000);
                     }
                 } else if (state === false) {
                     if ($scope.classVisible) {
@@ -45,10 +43,6 @@ angular.module('ushahidi.common.notification-slider', [])
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);
                         }
-
-                        classChangePromise = $timeout(function () {
-                            $scope.classDetached = true;
-                        }, 400);
                     }
                 }
             });

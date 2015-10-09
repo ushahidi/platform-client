@@ -81,7 +81,7 @@ function (
                 });
 
                 $q.all(calls).then(function () {
-                    $translate('user.deleted_user').then(function (message) {
+                    $translate('notify.user.bulk_destroy_success').then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
                 }, handleResponseErrors)
@@ -105,7 +105,7 @@ function (
                     calls.push(UserEndpoint.update({ id: userId }, { id: userId, role: role.name }).$promise);
                 });
                 $q.all(calls).then(function () {
-                    $translate('user.saved_user').then(function (message) {
+                    $translate('notify.user.bulk_role_change_success', {role_name: role.name}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
                 }, handleResponseErrors)

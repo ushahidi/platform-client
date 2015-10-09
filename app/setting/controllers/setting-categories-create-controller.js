@@ -32,7 +32,11 @@ function (
         $scope.processing = true;
         var response = TagEndpoint.save(tag, function () {
             if (response.id) {
-                $translate('tag.saved_tag').then(function (message) {
+                $translate(
+                    'notify.tag.save_success',
+                    {
+                        name: tag.tag
+                    }).then(function (message) {
                     Notify.showNotificationSlider(message);
                 });
                 $location.path('/settings/categories/' + response.id);

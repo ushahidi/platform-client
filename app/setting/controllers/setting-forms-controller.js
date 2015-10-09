@@ -50,7 +50,7 @@ function (
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
-                    $translate('form.saved_form').then(function (message) {
+                    $translate('notify.form.save_success', {name: form.name}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
                     $location.url('/settings/forms/' + form.id + '/stages/' + stage.id);

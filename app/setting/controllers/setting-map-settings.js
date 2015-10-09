@@ -104,7 +104,7 @@ function (
         $scope.saving_config[id] = true;
         model.id = 'map';
         ConfigEndpoint.update(model, function () {
-            $translate('map_settings.saved_map_settings').then(function (message) {
+            $translate('notify.map_settings.save_success').then(function (message) {
                 Notify.showNotificationSlider(message);
             });
             $scope.saving_config[id] = false;

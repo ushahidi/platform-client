@@ -91,7 +91,7 @@ function (
                     $scope.site.$update({ id: 'site' }, function () {
                         $scope.saving_config = false;
                         updateSiteHeader();
-                        $translate('settings.saved_settings').then(function (message) {
+                        $translate('notify.general_settings.save_success').then(function (message) {
                             Notify.showNotificationSlider(message);
                         });
                     }, function (errorResponse) {
