@@ -37,7 +37,7 @@ function (
         return FormStageEndpoint.get(id);
     };
 
-    FormStageEndpoint.queryFresh = function() {
+    FormStageEndpoint.queryFresh = function () {
         cache.removeAll();
         return FormStageEndpoint.query();
     };

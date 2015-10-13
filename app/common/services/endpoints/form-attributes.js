@@ -40,7 +40,7 @@ function (
         return FormAttributeEndpoint.get(id);
     };
 
-    FormAttributeEndpoint.queryFresh = function(params) {
+    FormAttributeEndpoint.queryFresh = function (params) {
         cache.removeAll();
         return FormAttributeEndpoint.query(params);
     };

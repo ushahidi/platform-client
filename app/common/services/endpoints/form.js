@@ -33,7 +33,7 @@ function (
         return FormEndpoint.get(id);
     };
 
-    FormEndpoint.queryFresh = function() {
+    FormEndpoint.queryFresh = function () {
         cache.removeAll();
         return FormEndpoint.query();
     };

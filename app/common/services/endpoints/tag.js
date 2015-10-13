@@ -40,7 +40,7 @@ function (
         return TagEndpoint.get(id);
     };
 
-    TagEndpoint.queryFresh = function() {
+    TagEndpoint.queryFresh = function () {
         cache.removeAll();
         return TagEndpoint.query();
     };

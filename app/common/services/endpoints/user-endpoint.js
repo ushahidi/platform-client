@@ -44,7 +44,7 @@ function (
         return UserEndpoint.get(id);
     };
 
-    UserEndpoint.queryFresh = function(params) {
+    UserEndpoint.queryFresh = function (params) {
         cache.removeAll();
         return UserEndpoint.query(params);
     };
