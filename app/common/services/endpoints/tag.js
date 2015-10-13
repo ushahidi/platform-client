@@ -35,6 +35,23 @@ function (
         }
     });
 
+    TagEndpoint.getFresh = function (id) {
+        cache.remove(Util.apiUrl(id));
+        return TagEndpoint.get(id);
+    };
+
+    TagEndpoint.queryFresh = function() {
+        cache.removeAll();
+        return TagEndpoint.query();
+    };
+
+    TagEndpoint.saveCache = function (item) {
+        var persist = item.id ? TagEndpoint.update : TagEndpoint.save;
+        cache.removeAll();
+        var result = persist(item);
+        return result;
+    };
+
     $rootScope.$on('event:authentication:logout:succeeded', function () {
         TagEndpoint.query();
     });

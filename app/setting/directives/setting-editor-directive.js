@@ -7,7 +7,6 @@ module.exports = [
     'Notify',
     'Util',
     'Languages',
-    'CacheManager',
 function (
     $q,
     $http,
@@ -16,8 +15,7 @@ function (
     _,
     Notify,
     Util,
-    Languages,
-    CacheManager
+    Languages
 ) {
     return {
         restrict: 'E',
@@ -30,8 +28,7 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
 
-            CacheManager.removeCacheGroup('configCache', '/config/site');
-            $scope.site = ConfigEndpoint.get({ id: 'site' });
+            $scope.site = ConfigEndpoint.getFresh({ id: 'site' });
 
             $scope.timezones = [];
             var timezones = require('moment-timezone/data/packed/latest.json');
@@ -87,11 +84,7 @@ function (
                 $scope.saving_config = true;
 
                 uploadHeaderImage().then(function () {
-                    $scope.site.$update({ id: 'site' }, function () {
-                        CacheManager.updateCacheItem(
-                              'configCache',
-                              $scope.site
-                        );
+                    ConfigEndpoint.saveCache($scope.site).$promise.then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
                     });

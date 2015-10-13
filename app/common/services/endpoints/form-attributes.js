@@ -35,5 +35,22 @@ function (
         }
     });
 
+    FormAttributeEndpoint.getFresh = function (id) {
+        cache.remove(Util.apiUrl(id));
+        return FormAttributeEndpoint.get(id);
+    };
+
+    FormAttributeEndpoint.queryFresh = function(params) {
+        cache.removeAll();
+        return FormAttributeEndpoint.query(params);
+    };
+
+    FormAttributeEndpoint.saveCache = function (item) {
+        var persist = item.id ? FormAttributeEndpoint.update : FormAttributeEndpoint.save;
+
+        cache.removeAll();
+        return persist(item);
+    };
+
     return FormAttributeEndpoint;
 }];

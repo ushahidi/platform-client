@@ -39,5 +39,21 @@ function (
         }
     });
 
+    UserEndpoint.getFresh = function (id) {
+        cache.remove(Util.apiUrl(id));
+        return UserEndpoint.get(id);
+    };
+
+    UserEndpoint.queryFresh = function(params) {
+        cache.removeAll();
+        return UserEndpoint.query(params);
+    };
+
+    UserEndpoint.saveCache = function (item) {
+        var persist = item.id ? UserEndpoint.update : UserEndpoint.save;
+        cache.removeAll();
+        return persist(item);
+    };
+
     return UserEndpoint;
 }];

@@ -34,6 +34,20 @@ function (
         }
     });
 
-    return ConfigEndpoint;
+    ConfigEndpoint.getFresh = function (id) {
+        cache.remove(Util.apiUrl(id));
+        return ConfigEndpoint.get(id);
+    };
 
+    ConfigEndpoint.saveCache = function (item) {
+        var persist = item.id ? ConfigEndpoint.update : ConfigEndpoint.save;
+
+        cache.removeAll();
+        var result = persist(item).$promise.then(function (){
+            cache.put(Util.apiUrl(result.id), item);
+        });
+        return result;
+    };
+
+    return ConfigEndpoint;
 }];

@@ -7,7 +7,6 @@ module.exports = [
     'FormAttributeEndpoint',
     '_',
     'Notify',
-    'CacheManager',
 function (
     $q,
     $location,
@@ -16,8 +15,7 @@ function (
     FormStageEndpoint,
     FormAttributeEndpoint,
     _,
-    Notify,
-    CacheManager
+    Notify
 ) {
     return {
         restrict: 'E',
@@ -39,8 +37,6 @@ function (
                 $scope.form = form;
             });
 
-            var stageCacheKeyTpl = _.template('/forms/<%= formId %>/stages?order=asc&orderby=priority');
-
             $scope.isSettingsOpen = false;
             $scope.openSettings = function () {
                 $scope.isSettingsOpen = !$scope.isSettingsOpen;
@@ -48,15 +44,9 @@ function (
 
             $scope.saveFormSettings = function (form) {
                 FormEndpoint
-                .update(form)
+                .saveCache(form)
                 .$promise
                 .then(function () {
-                    CacheManager.updateCacheItem(
-                        'formCache',
-                        form
-                    );
-                    CacheManager.removeCacheGroup('formCache', '/forms');
-
                     $scope.isSettingsOpen = false;
                 }, function (errorResponse) {
                     var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
@@ -71,7 +61,6 @@ function (
                         FormEndpoint.delete({
                             id: $scope.form.id
                         }).$promise.then(function () {
-                            CacheManager.removeCacheGroup('formCache', '/forms');
                             $location.url('/settings/forms');
                         });
                     }
@@ -87,7 +76,6 @@ function (
                             id: stage.id
                         }).$promise.then(function () {
                             // Remove stage from scope, binding should take care of the rest
-                            CacheManager.removeCacheGroup('stageCache', stageCacheKeyTpl({formId: $scope.form.id}));
                             $scope.form.stages.splice($index, 1);
                         });
                     }
@@ -111,12 +99,12 @@ function (
                 stage.priority = stage.priority + increment;
 
                 // Save stage
-                FormStageEndpoint.update(_.extend(stage, {
+                FormStageEndpoint.saveCache(_.extend(stage, {
                     formId: $scope.form.id
                 }));
 
                 // Save adjacent stage
-                FormStageEndpoint.update(_.extend(next, {
+                FormStageEndpoint.saveCache(_.extend(next, {
                     formId: $scope.form.id
                 }));
 
@@ -134,13 +122,12 @@ function (
                 var lastPriority = $scope.form.stages.length ? _.last($scope.form.stages).priority : 0;
 
                 FormStageEndpoint
-                .save(_.extend(stage, {
+                .saveCache(_.extend(stage, {
                     formId: $scope.form.id,
                     priority: lastPriority + 1
                 }))
                 .$promise
                 .then(function (stage) {
-                    CacheManager.removeCacheGroup('stageCache', stageCacheKeyTpl({formId: $scope.form.id}));
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
                     $location.url('/settings/forms/' + $scope.form.id + '/stages/' + stage.id);

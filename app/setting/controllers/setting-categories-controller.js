@@ -4,14 +4,12 @@ module.exports = [
     '$q',
     'TagEndpoint',
     'RoleHelper',
-    'CacheManager',
 function (
     $scope,
     $translate,
     $q,
     TagEndpoint,
-    RoleHelper,
-    CacheManager
+    RoleHelper
 ) {
     $translate('tool.manage_tags').then(function (title) {
         $scope.title = title;
@@ -21,7 +19,7 @@ function (
     $scope.getRole = RoleHelper.getRole;
 
     $scope.refreshView = function () {
-        $scope.tags = TagEndpoint.query();
+        $scope.tags = TagEndpoint.queryFresh();
         $scope.selectedTags = [];
     };
     $scope.refreshView();
@@ -36,7 +34,6 @@ function (
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
-                    CacheManager.removeCacheGroup('tagCache', '/tags');
                     $scope.refreshView();
                 });
             }

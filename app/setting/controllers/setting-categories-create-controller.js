@@ -5,7 +5,6 @@ module.exports = [
     'multiTranslate',
     'RoleHelper',
     'TagEndpoint',
-    'CacheManager',
     'Notify',
     '_',
 function (
@@ -15,7 +14,6 @@ function (
     multiTranslate,
     RoleHelper,
     TagEndpoint,
-    CacheManager,
     Notify,
     _
 ) {
@@ -32,10 +30,9 @@ function (
 
     $scope.saveTag = function (tag) {
         $scope.processing = true;
-        var response = TagEndpoint.save(tag, function () {
-            if (response.id) {
-                CacheManager.removeCacheGroup('tagCache', '/tags');
-                $location.path('/settings/categories/' + response.id);
+        TagEndpoint.saveCache(tag).$promise.then(function (result) {
+            if (result.id) {
+                $location.path('/settings/categories/' + result.id);
             }
         }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');

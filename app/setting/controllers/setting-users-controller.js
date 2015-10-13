@@ -8,7 +8,6 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     'RoleHelper',
-    'CacheManager',
 function (
     $scope,
     $translate,
@@ -18,8 +17,7 @@ function (
     Session,
     UserEndpoint,
     Notify,
-    RoleHelper,
-    CacheManager
+    RoleHelper
 ) {
     var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser, getUsersForPagination;
 
@@ -50,7 +48,6 @@ function (
             $scope.selectedUsers.push(user.id);
         }
     };
-
 
     handleResponseErrors = function (errorResponse) {
         var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
@@ -83,9 +80,7 @@ function (
                     calls.push(UserEndpoint.delete({ id: userId }).$promise);
                 });
 
-                $q.all(calls).then(function () {
-                    CacheManager.removeRegexKey('userCache', '\/users\\?');
-                }, handleResponseErrors)
+                $q.all(calls).then($scope.filterRole, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });
@@ -103,11 +98,9 @@ function (
             if ($window.confirm(message)) {
                 var calls = [];
                 angular.forEach($scope.selectedUsers, function (userId) {
-                    calls.push(UserEndpoint.update({ id: userId }, { id: userId, role: role.name }).$promise);
+                    calls.push(UserEndpoint.saveCache({ id: userId, role: role.name }).$promise);
                 });
-                $q.all(calls).then(function () {
-                    CacheManager.removeRegexKey('userCache', '\/users\\?');
-                }, handleResponseErrors)
+                $q.all(calls).then($scope.filterRole, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });
@@ -124,7 +117,7 @@ function (
 
     // --- start: definitions
     getUsersForPagination = function () {
-        UserEndpoint.query({
+        UserEndpoint.queryFresh({
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
             role: $scope.filter.role,

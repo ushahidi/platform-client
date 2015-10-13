@@ -7,7 +7,6 @@ module.exports = [
     'FormAttributeEndpoint',
     '_',
     'Notify',
-    'CacheManager',
     'Util',
 function (
     $q,
@@ -18,7 +17,6 @@ function (
     FormAttributeEndpoint,
     _,
     Notify,
-    CacheManager,
     Util
 ) {
     return {
@@ -33,8 +31,6 @@ function (
         link: function ($scope, $element, $attrs) {
             var stageId = $attrs.stageId;
 
-            var stageCacheKeyTpl = _.template('/forms/<%= formId %>/stages/<%= stageId %>/?order=asc&orderby=priority');
-            var attrCacheKeyTpl = _.template('/forms/<%= formId %>/attributes/<%= attributeId %>/?order=asc&orderby=priority');
             $scope.editIsOpen = {};
 
             // If we're editing an existing form,
@@ -71,24 +67,11 @@ function (
             };
             $scope.saveStageSettings = function (stage) {
                 FormStageEndpoint
-                .update(_.extend(stage, {
+                .saveCache(_.extend(stage, {
                     formId: $scope.form.id
                 }))
                 .$promise
                 .then(function () {
-                    // Url for stages is not consistent with pattern
-                    stage.url = Util.apiUrl(
-                        stageCacheKeyTpl(
-                        {
-                            formId: $scope.form.id,
-                            stageId: stage.id
-                        })
-                    );
-                    CacheManager.updateCacheItem('stageCache', stage);
-                    CacheManager.removeCacheGroup(
-                        'stageCache',
-                        stageCacheKeyTpl({formId: $scope.form.id})
-                    );
                     $scope.isSettingsOpen = false;
                 }, function (errorResponse) {
                     var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
@@ -222,14 +205,6 @@ function (
                 })).$promise.then(function (attributeUpdate) {
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
-
-                    CacheManager.removeCacheGroup(
-                        'attrCache',
-                        attrCacheKeyTpl({
-                            formId: $scope.form.id,
-                            attrId: attributeUpdate.id
-                        })
-                   );
                 }, function (errorResponse) {
                     var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
                     errors && Notify.showAlerts(errors);
@@ -248,22 +223,6 @@ function (
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
                                 $scope.form.attributes.splice($index, 1);
-
-                                attribute.url = Util.apiUrl(
-                                    attrCacheKeyTpl(
-                                    {
-                                        formId: $scope.form.id,
-                                        attrId: attribute.id
-                                    })
-                                );
-                                CacheManager.removeCacheItem('attrCache', attribute);
-                                CacheManager.removeCacheGroup(
-                                    'attrCache',
-                                    attrCacheKeyTpl({
-                                        formId: $scope.form.id,
-                                        attrId: attribute.id
-                                    })
-                                 );
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest
@@ -290,12 +249,12 @@ function (
                 attribute.priority = attribute.priority + increment;
 
                 // Save attribute
-                FormAttributeEndpoint.update(_.extend(attribute, {
+                FormAttributeEndpoint.saveCache(_.extend(attribute, {
                     formId: $scope.form.id
                 }));
 
                 // Save adjacent attribute
-                FormAttributeEndpoint.update(_.extend(next, {
+                FormAttributeEndpoint.saveCache(_.extend(next, {
                     formId: $scope.form.id
                 }));
 

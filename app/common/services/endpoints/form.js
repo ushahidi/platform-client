@@ -28,6 +28,24 @@ function (
         }
     });
 
+    FormEndpoint.getFresh = function (id) {
+        cache.remove(Util.apiUrl(id));
+        return FormEndpoint.get(id);
+    };
+
+    FormEndpoint.queryFresh = function() {
+        cache.removeAll();
+        return FormEndpoint.query();
+    };
+
+    FormEndpoint.saveCache = function (item) {
+        var persist = item.id ? FormEndpoint.update : FormEndpoint.save;
+        cache.removeAll();
+        var result = persist(item);
+        return result;
+    };
+
+
     return FormEndpoint;
 
 }];

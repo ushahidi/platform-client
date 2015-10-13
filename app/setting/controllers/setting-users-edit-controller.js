@@ -8,7 +8,6 @@ module.exports = [
     'Notify',
     '_',
     'RoleHelper',
-    'CacheManager',
 function (
     $scope,
     $rootScope,
@@ -18,25 +17,23 @@ function (
     UserEndpoint,
     Notify,
     _,
-    RoleHelper,
-    CacheManager
+    RoleHelper
 ) {
     $translate('user.edit_user').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.user = UserEndpoint.get({id: $routeParams.id}, function (user) {
+    UserEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (user) {
         $scope.$emit('setPageTitle', $scope.title + ' - ' + user.realname);
+        $scope.user = user;
     });
 
     $scope.processing = false;
 
     $scope.saveUser = function (user) {
         $scope.processing = true;
-        UserEndpoint.update({id: $routeParams.id}, user, function () {
-            CacheManager.updateCacheItem('userCache', user);
-            CacheManager.removeRegexKey('userCache', '\/users\\?');
+        UserEndpoint.saveCache(user).$promise.then(function () {
             $rootScope.goBack();
         }, function (errorResponse) { // error
             var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
