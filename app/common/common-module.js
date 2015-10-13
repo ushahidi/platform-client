@@ -29,7 +29,6 @@ angular.module('ushahidi.common', [
 .service('Registration', require('./services/registration.js'))
 .service('PasswordReset', require('./services/password-reset.js'))
 .service('IconManager', require('./services/icon-manager.js'))
-.service('CacheManager', require('./services/cache-manager.js'))
 
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
