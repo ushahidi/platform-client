@@ -1,9 +1,7 @@
 module.exports = [
     '$location',
-    'PostViewHelper',
 function (
-    $location,
-    PostViewHelper
+    $location
 ) {
     return {
         restrict: 'E',
@@ -14,9 +12,13 @@ function (
         },
         templateUrl: 'templates/posts/post-view-tabs.html',
         link: function ($scope, $element, $attrs) {
-
-            $scope.views = PostViewHelper.views();
-
+            // Define available views
+            $scope.views = [
+                'list',
+                'map',
+                'chart',
+                'timeline'
+            ];
         }
     };
 }];

@@ -3,7 +3,6 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
 	'ushahidi.common.modal',
-  'ushahidi.common.confirmation-message',
 	'ushahidi.common.sticky-sidebar',
     'ushahidi.common.chart'
 ])
@@ -55,6 +54,5 @@ require('./directives/dropdown.js');
 require('./directives/accordion.js');
 require('./directives/offcanvas.js');
 require('./directives/modal.js');
-require('./directives/confirmation-message.js');
 require('./directives/sticky-sidebar.js');
 require('./directives/chart.js');

@@ -104,11 +104,9 @@ angular.module('app',
     .factory('Leaflet', function () {
         return window.L;
     })
-    .factory('BootstrapConfig', ['_', function (_) {
-        return window.ushahidi.bootstrapConfig ?
-            _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
-            { map: {}, site: {}, features: {} };
-    }])
+    .factory('BootstrapConfig', function () {
+        return window.ushahidi.bootstrapConfig || {};
+    })
     .run(function () {
         // Once bootstrapped, show the app
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');

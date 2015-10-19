@@ -48,7 +48,7 @@
         </div>
 
         <p ng-show="post.allowed_privileges.indexOf('delete') !== -1">
-            <button type="button" class="button-secondary delete" ng-click="deletePostRequested()">
+            <button type="button" class="button-secondary delete" ng-click="deletePost()">
                 <i class="fa  fa-trash"></i> <span translate>post.post_actions.delete</span>
             </button>
         </p>
@@ -87,18 +87,5 @@
             </div>
         </article>
     </div>
-
-    <modal visible="userRequestedPostDelete">
-        <h3 class="confirm" translate>notify.post.confirm_delete</h3>
-        <div class="divider padded"></div>
-        <p translate translate-values="{ 'id': post.id, 'post': post.title }">
-          notify.post.delete_question
-        </p>
-        <div class="divider white"></div>
-        <div class="modal-submit">
-            <button type="button" class="button-primary" ng-click="deletePost()" translate>notify.post.yes_confirm_delete</button>
-            <a class="cta modal-trigger" ng-click="cancelDelete()" translate>notify.generic.cancel</a>
-        </div>
-    </modal>
 
 </main> <!-- end .post-detail -->

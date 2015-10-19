@@ -6,15 +6,9 @@ describe('view helper', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
-        'ngResource',
         'pascalprecht.translate'
         ])
         .service('PostViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
-        .service('ConfigEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/config.js'))
-        .service('Config', require(ROOT_PATH + 'app/common/services/config.js'))
-        .factory('BootstrapConfig', function () {
-            return { map: {}, site: {}, features: {} };
-        })
         .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);

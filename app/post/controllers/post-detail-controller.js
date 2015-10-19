@@ -5,6 +5,7 @@ module.exports = [
     '$q',
     '$location',
     'PostEndpoint',
+    'ConfigEndpoint',
     'CollectionEndpoint',
     'UserEndpoint',
     'TagEndpoint',
@@ -21,6 +22,7 @@ function (
     $q,
     $location,
     PostEndpoint,
+    ConfigEndpoint,
     CollectionEndpoint,
     UserEndpoint,
     TagEndpoint,
@@ -33,8 +35,6 @@ function (
 ) {
     $scope.post = post;
     $scope.mapDataLoaded = false;
-    $scope.userRequestedPostDelete = false;
-
 
     // Set page title to post title, if there is one available.
     if (post.title && post.title.length) {
@@ -140,19 +140,13 @@ function (
         }
     });
 
-    $scope.deletePostRequested = function () {
-        // I feel there must be a prettier way to do this in angular/JS
-        $scope.userRequestedPostDelete = true;
-    };
-
-    $scope.cancelDelete = function () {
-        // again - feel there must be a more angular-ish way to do this
-        $scope.userRequestedPostDelete = false;
-    };
-
     $scope.deletePost = function () {
-        PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
-            $location.path('/');
+        $translate('notify.post.destroy_confirm').then(function (message) {
+            if (window.confirm(message)) {
+                PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
+                    $location.path('/');
+                });
+            }
         });
     };
 

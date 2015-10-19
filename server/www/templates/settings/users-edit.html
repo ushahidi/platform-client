@@ -54,18 +54,6 @@
                     <span translate>user.save</span>
                 </button>
             </div>
-            <confirmation-message visible="adminLimitReached" >
-                <h1 translate>limit.plan_limit</h1> 
-                <div translate>limit.admin_limit_reached</div>
-                <div class="divider padded"></div>
-                <a class="button" href="/settings/plan" translate>limit.upgrade</a>
-                <div class="divider white"></div>
-            </confirmation-message>
-
-            <confirmation-message visible="userSavedUser">
-                <p translate translate-values="{ 'id': user.id, 'user': user.realname }">user.you_have_saved</p>
-            </confirmation-message>
-
 
         </form>
 
