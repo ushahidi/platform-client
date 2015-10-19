@@ -21,6 +21,10 @@ var gulp         = require('gulp'),
     jscs         = require('gulp-jscs'),
     dotenv       = require('dotenv'),
     Transifex    = require('transifex');
+    
+gulp.task("heroku:production", function(){
+    // console.log('hello'); // the task does not need to do anything.
+});
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
