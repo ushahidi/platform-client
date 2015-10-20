@@ -382,7 +382,7 @@
             "please_select_features" : "Please select the features you would like to enable."
         },
         "map_default_baselayer": "Default base layer",
-        "map_clustering": "Combine nearby reports",
+        "map_clustering": "Combine nearby posts",
         "map_default_latitude": "Default latitude",
         "map_default_longitude": "Default longitude",
         "map_default_zoom_level": "Default zoom level",
