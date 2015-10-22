@@ -108,8 +108,22 @@ function (
                     }]);
                 // If its a 403 we've got a token, but it can't get us what we needed
                 } else if (rejection.status === 403) {
-                    // Trigger a forbidden event and show an error page
-                    $rootScope.$broadcast('event:forbidden');
+                    // In the short term, we will handle failures for 
+                    // associated entities - for example posts that contain unviewable tags -
+                    // we will ignore the error. In future this will be rectified under issue:
+                    // https://github.com/ushahidi/platform/issues/793
+                    var allowed_entities = ['tag', 'notifications'];
+                    var ignore_reject = false;
+                    _.find(allowed_entities, function(entity) {
+                        if (rejection.config.url.contains(entity)) {
+                            ignore_reject = true;
+                        }
+                    });
+
+                    if (!ignore_reject) {
+                        // Trigger a forbidden event and show an error page
+                        $rootScope.$broadcast('event:forbidden');
+                    }
                     deferred.reject(rejection);
                 // For anything else, just forward the rejection
                 } else {
