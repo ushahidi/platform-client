@@ -79,7 +79,7 @@ function (
                     calls.push(UserEndpoint.deleteCache({ id: userId }).$promise);
                 });
 
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(getUsersForPagination, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });
@@ -99,7 +99,7 @@ function (
                 angular.forEach($scope.selectedUsers, function (userId) {
                     calls.push(UserEndpoint.saveCache({ id: userId, role: role.name }).$promise);
                 });
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(getUsersForPagination, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });
