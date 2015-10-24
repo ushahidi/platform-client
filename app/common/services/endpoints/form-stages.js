@@ -41,6 +41,10 @@ function (
         return FormStageEndpoint.get(id);
     };
 
+    FormStageEndpoint.invalidateCache = function () {
+        return cache.removeAll();
+    };
+
     FormStageEndpoint.queryFresh = function () {
         cache.removeAll();
         return FormStageEndpoint.query();
@@ -53,6 +57,10 @@ function (
         return result;
     };
 
+    FormStageEndpoint.deleteCache = function (item) {
+        cache.removeAll();
+        return FormStageEndpoint.delete(item);
+    };
 
     return FormStageEndpoint;
 }];

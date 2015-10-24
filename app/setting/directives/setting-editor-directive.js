@@ -28,7 +28,7 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
 
-            $scope.site = ConfigEndpoint.getFresh({ id: 'site' });
+            $scope.site = ConfigEndpoint.get({ id: 'site' });
 
             $scope.timezones = [];
             var timezones = require('moment-timezone/data/packed/latest.json');

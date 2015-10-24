@@ -56,5 +56,11 @@ function (
         return persist(item);
     };
 
+    FormAttributeEndpoint.deleteCache = function (item) {
+
+        cache.removeAll();
+        return FormAttributeEndpoint.delete(item);
+    };
+
     return FormAttributeEndpoint;
 }];

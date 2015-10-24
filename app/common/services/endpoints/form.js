@@ -49,6 +49,10 @@ function (
         return result;
     };
 
+    FormEndpoint.deleteCache = function (item) {
+        cache.removeAll();
+        return FormEndpoint.delete(item);
+    };
 
     return FormEndpoint;
 

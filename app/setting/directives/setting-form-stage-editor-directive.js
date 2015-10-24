@@ -87,7 +87,7 @@ function (
             };
             $scope.saveNewStage = function (stage) {
                 FormStageEndpoint
-                .save(_.extend(stage, {
+                .saveCache(_.extend(stage, {
                     formId: $scope.form.id
                 }))
                 .$promise
@@ -197,12 +197,13 @@ function (
 
             // Attribute Functions
             $scope.saveAttribute = function (attribute, $index) {
-                var persist = attribute.id ? FormAttributeEndpoint.update : FormAttributeEndpoint.save;
+                var persist = FormAttributeEndpoint.saveCache;
                 persist(_.extend(attribute, {
                     formId: $scope.form.id
                 })).$promise.then(function (attributeUpdate) {
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
+                    FormStageEndpoint.invalidateCache();
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
@@ -214,12 +215,13 @@ function (
                 .then(function (message) {
                     if (Notify.showConfirm(message)) {
                         if (attribute.id) {
-                            FormAttributeEndpoint.delete({
+                            FormAttributeEndpoint.deleteCache({
                                 formId: $scope.form.id,
                                 id: attribute.id
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
                                 $scope.form.attributes.splice($index, 1);
+                                FormStageEndpoint.invalidateCache();
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest

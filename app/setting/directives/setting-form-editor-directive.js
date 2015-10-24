@@ -57,7 +57,7 @@ function (
                 $translate('notify.form.delete_form_confirm')
                 .then(function (message) {
                     if (Notify.showConfirm(message)) {
-                        FormEndpoint.delete({
+                        FormEndpoint.deleteCache({
                             id: $scope.form.id
                         }).$promise.then(function () {
                             $location.url('/settings/forms');
@@ -70,7 +70,7 @@ function (
                 $translate('notify.form.delete_stage_confirm')
                 .then(function (message) {
                     if (Notify.showConfirm(message)) {
-                        FormStageEndpoint.delete({
+                        FormStageEndpoint.deleteCache({
                             formId: $scope.form.id,
                             id: stage.id
                         }).$promise.then(function () {
