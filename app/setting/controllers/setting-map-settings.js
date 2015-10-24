@@ -102,7 +102,7 @@ function (
         $scope.saving_config[id] = true;
 
         model.id = 'map';
-        ConfigEndpoint.saveCache(model, function () {
+        ConfigEndpoint.saveCache(model).$promise.then(function () {
             // @todo show alertify (or similar) message here
             $scope.saving_config[id] = false;
         });

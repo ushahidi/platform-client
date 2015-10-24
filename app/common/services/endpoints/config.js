@@ -47,10 +47,7 @@ function (
         var persist = item.id ? ConfigEndpoint.update : ConfigEndpoint.save;
 
         cache.removeAll();
-        var result = persist(item).$promise.then(function () {
-            cache.put(Util.apiUrl(result.id), item);
-        });
-        return result;
+        return persist(item);
     };
 
     return ConfigEndpoint;
