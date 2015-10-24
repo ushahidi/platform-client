@@ -30,15 +30,14 @@ function (
         $scope.failed = true;
         $scope.processing = false;
 
-        var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-        errors && Notify.showAlerts(errors);
+        Notify.showApiErrors(errorResponse);
     }
 
     $scope.registerSubmit = function () {
         $scope.processing = true;
 
         Registration
-            .register($scope.email, $scope.password)
+            .register($scope.realname, $scope.email, $scope.password)
             .then(registerSuccess, registerFailed);
     };
 

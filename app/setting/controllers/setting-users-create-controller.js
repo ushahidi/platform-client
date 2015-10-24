@@ -32,8 +32,7 @@ function (
                 $location.path('/settings/users/' + result.id);
             }
         }, function (errorResponse) { // error
-            var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-            errors && Notify.showAlerts(errors);
+            Notify.showApiErrors(errorResponse);
             $scope.processing = false;
         });
     };

@@ -20,6 +20,7 @@ require('selection-model/dist/selection-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown/src/ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
+window.dc = require('dc'); // Required for charting used in activity page
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
@@ -27,6 +28,7 @@ require('angular-cache');
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./post/post-module.js');
+require('./activity/activity-module.js');
 require('./setting/setting-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
@@ -49,7 +51,9 @@ var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || proc
         'stats',
         'layers',
         'config',
-        'messages'
+        'messages',
+        'notifications',
+        'contacts'
     ];
 
 angular.module('app',
@@ -73,6 +77,7 @@ angular.module('app',
         'ushahidi.posts',
         'ushahidi.tools',
         'ushahidi.sets',
+        'ushahidi.activity',
         'ushahidi.user-profile'
     ])
 
@@ -91,6 +96,9 @@ angular.module('app',
     })
     .factory('d3', function () {
         return window.d3;
+    })
+    .factory('dc', function () {
+        return window.dc;
     })
     .factory('URI', function () {
         return require('URIjs/src/URI.js');

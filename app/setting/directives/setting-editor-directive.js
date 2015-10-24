@@ -72,6 +72,8 @@ function (
                     ).then(function (response) {
                         $scope.site.image_header = response.data.original_file_url;
                         dfd.resolve();
+                    }, function (errorResponse) {
+                        dfd.reject(errorResponse);
                     });
                 } else {
                     dfd.resolve();
@@ -87,10 +89,13 @@ function (
                     ConfigEndpoint.saveCache($scope.site).$promise.then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
+                    }, function (errorResponse) {
+                        Notify.showApiErrors(errorResponse);
+                        $scope.saving_config = false;
                     });
                 }, function (errorResponse) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    Notify.showAlerts(errors);
+                    Notify.showApiErrors(errorResponse);
+                    $scope.saving_config = false;
                 });
             };
         }

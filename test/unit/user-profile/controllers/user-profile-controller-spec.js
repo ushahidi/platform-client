@@ -30,7 +30,8 @@ describe('user profile controller', function () {
     beforeEach(inject(function ($q) {
 
         mockNotify = {
-            showAlerts: function (/*alerts*/) {}
+            showAlerts: function (/*alerts*/) {},
+            showApiErrors: function (/*response*/) {}
         };
 
         mockUserGetResponse = {
@@ -109,9 +110,8 @@ describe('user profile controller', function () {
         });
 
         describe('with an error on the backend call', function () {
-            beforeEach(inject(function ($q) {
-                var updateDeferred = $q.defer(),
-                errorResponse = {
+
+            var errorResponse = {
                     status: 400,
                     data: {
                         'errors': [
@@ -122,6 +122,9 @@ describe('user profile controller', function () {
                     }
                 };
 
+            beforeEach(inject(function ($q) {
+                var updateDeferred = $q.defer();
+
                 mockUserEndpoint.update = function (/*params, data*/) {
                     updateDeferred.reject(errorResponse);
 
@@ -130,7 +133,7 @@ describe('user profile controller', function () {
                     };
                 };
                 spyOn(mockUserEndpoint, 'update').and.callThrough();
-                spyOn(mockNotify, 'showAlerts').and.callThrough();
+                spyOn(mockNotify, 'showApiErrors').and.callThrough();
             }));
 
             describe('change values of user', function () {
@@ -148,10 +151,10 @@ describe('user profile controller', function () {
                             $rootScope.$digest();
                         });
 
-                        it('should call Notify.showAlerts with the server errors', function () {
-                            expect(mockNotify.showAlerts).toHaveBeenCalled();
-                            var alertMessages = mockNotify.showAlerts.calls.mostRecent().args[0];
-                            expect(alertMessages).toEqual(['invalid email address']);
+                        it('should call Notify.showApiErrors with the server response', function () {
+                            expect(mockNotify.showApiErrors).toHaveBeenCalled();
+                            var alertMessages = mockNotify.showApiErrors.calls.mostRecent().args[0];
+                            expect(alertMessages).toEqual(errorResponse);
                         });
                     });
                 });
