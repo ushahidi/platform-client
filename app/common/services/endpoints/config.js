@@ -9,7 +9,11 @@ function (
     _,
     CacheFactory
 ) {
-    var cache = new CacheFactory('configCache');
+    var cache;
+
+    if (!(cache = CacheFactory.get('configCache'))) {
+        cache = new CacheFactory('configCache');
+    }
 
     cache.setOnExpire(function (key, value) {
         ConfigEndpoint.get(value.id);

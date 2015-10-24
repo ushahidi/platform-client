@@ -7,7 +7,11 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = new CacheFactory('attrCache');
+    var cache;
+
+    if (!(cache = CacheFactory.get('attrCache'))) {
+        cache = new CacheFactory('attrCache');
+    }
 
     var FormAttributeEndpoint = $resource(Util.apiUrl('/forms/:formId/attributes/:id'), {
         formId: '@formId',

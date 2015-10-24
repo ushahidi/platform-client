@@ -55,5 +55,11 @@ function (
         return persist(item);
     };
 
+    UserEndpoint.deleteCache = function (item) {
+        cache.removeAll();
+        var result = UserEndpoint.delete(item);
+        return result;
+    };
+
     return UserEndpoint;
 }];

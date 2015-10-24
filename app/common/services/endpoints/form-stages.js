@@ -7,7 +7,11 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = new CacheFactory('stageCache');
+    var cache;
+
+    if (!(cache = CacheFactory.get('stageCache'))) {
+        cache = new CacheFactory('stageCache');
+    }
 
     var FormStageEndpoint = $resource(Util.apiUrl('/forms/:formId/stages/:id'), {
         formId: '@formId',

@@ -77,7 +77,7 @@ function (
             if ($window.confirm(message)) {
                 var calls = [];
                 angular.forEach($scope.selectedUsers, function (userId) {
-                    calls.push(UserEndpoint.delete({ id: userId }).$promise);
+                    calls.push(UserEndpoint.deleteCache({ id: userId }).$promise);
                 });
 
                 $q.all(calls).then($scope.filterRole, handleResponseErrors)
@@ -117,7 +117,7 @@ function (
 
     // --- start: definitions
     getUsersForPagination = function () {
-        UserEndpoint.queryFresh({
+        UserEndpoint.query({
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
             role: $scope.filter.role,

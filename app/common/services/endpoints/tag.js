@@ -9,7 +9,11 @@ function (
     Util,
     CacheFactory
 ) {
-    var cache = new CacheFactory('tagCache');
+    var cache;
+
+    if (!(cache = CacheFactory.get('tagCache'))) {
+        cache = new CacheFactory('tagCache');
+    }
 
     cache.setOnExpire(function (key, value) {
         TagEndpoint.get(value.id);
@@ -49,6 +53,12 @@ function (
         var persist = item.id ? TagEndpoint.update : TagEndpoint.save;
         cache.removeAll();
         var result = persist(item);
+        return result;
+    };
+
+    TagEndpoint.deleteCache = function (item) {
+        cache.removeAll();
+        var result = TagEndpoint.delete(item);
         return result;
     };
 

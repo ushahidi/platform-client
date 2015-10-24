@@ -19,7 +19,7 @@ function (
     $scope.getRole = RoleHelper.getRole;
 
     $scope.refreshView = function () {
-        $scope.tags = TagEndpoint.queryFresh();
+        $scope.tags = TagEndpoint.query();
         $scope.selectedTags = [];
     };
     $scope.refreshView();
@@ -31,9 +31,13 @@ function (
             if (window.confirm(message)) {
                 var calls = [];
                 angular.forEach($scope.selectedTags, function (tagId) {
-                    calls.push(TagEndpoint.delete({ id: tagId }).$promise);
+                    calls.push(TagEndpoint.deleteCache({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
+                    // Note(Will): reloading the entire list seems very heavy
+                    // it might be better to prune the list instead or load
+                    // the entities differently - as individual objects
+                    // rather than a grouped query
                     $scope.refreshView();
                 });
             }
