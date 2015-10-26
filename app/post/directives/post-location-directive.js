@@ -34,19 +34,34 @@ function (
             var markers = {},
                 mapName = $scope.id + '-map';
 
+            // use a default value in case there are none in the config
             $scope.center = {
                 lat: 36.079868,
                 lng: -79.819416,
                 zoom: 4
             };
 
-            var config = Maps.getAngularScopeParams();
+            var getCenter = function () {
+                if ($scope.model) {
+                    $scope.center = {
+                        lat: $scope.model.lat,
+                        lng: $scope.model.lon,
+                        zoom: 4
+                    };
 
-            config.then(function (params) {
-                if (!$scope.model && params.center) {
-                    $scope.center = params.center;
+                    return;
                 }
-            });
+
+                var config = Maps.getAngularScopeParams();
+
+                config.then(function (params) {
+                    if (params.center) {
+                        $scope.center = params.center;
+                    }
+                });
+            };
+
+            getCenter();
 
             // init markers with current model value
             if ($scope.model) {
@@ -55,11 +70,6 @@ function (
                         lat: $scope.model.lat,
                         lng: $scope.model.lon
                     }
-                };
-                $scope.center = {
-                    lat: $scope.model.lat,
-                    lng: $scope.model.lon,
-                    zoom: 4
                 };
             }
 
@@ -112,7 +122,7 @@ function (
 
                 clear: function () {
                     $scope.model = null;
-                    $scope.center = center;
+                    $scope.center = getCenter();
                     $scope.markers = {};
                 }
             });
