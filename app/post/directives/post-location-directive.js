@@ -41,7 +41,7 @@ function (
             };
 
             var config = Maps.getAngularScopeParams();
-            
+
             config.then(function (params) {
                 if (!$scope.model && params.center) {
                     $scope.center = params.center;
