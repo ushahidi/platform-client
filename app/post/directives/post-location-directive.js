@@ -120,7 +120,6 @@ function (
                 },
 
                 clear: function () {
-                    console.log($scope.initialCenter);
                     $scope.model = null;
                     $scope.center = $scope.initialCenter;
                     $scope.markers = {};
