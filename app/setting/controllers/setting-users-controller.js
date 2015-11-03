@@ -80,7 +80,7 @@ function (
                     calls.push(UserEndpoint.delete({ id: userId }).$promise);
                 });
 
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(getUsersForPagination, handleResponseErrors)
                 .finally($scope.filterRole);
             }
         });
