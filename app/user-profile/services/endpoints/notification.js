@@ -12,6 +12,9 @@ function (
         get: {
             method: 'GET',
             isArray: true,
+            // Short term fix to handle boucing to login when unviewable
+            // notification is returned
+            header: {'ignorable': true},
             transformResponse: function (data) {
                 return angular.fromJson(data).results;
             }
