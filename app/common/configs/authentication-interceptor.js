@@ -55,6 +55,11 @@ function (
 
                 var deferred = $q.defer();
 
+                if (_.has(config, 'params') && config.params.ignore403) {
+                    delete config.params.ignore403;
+                    config.ignorable = true;
+                }
+
                 if (config.url.indexOf(CONST.API_URL) === -1) {
                     deferred.resolve(config);
                     return deferred.promise;
@@ -108,8 +113,14 @@ function (
                     }]);
                 // If its a 403 we've got a token, but it can't get us what we needed
                 } else if (rejection.status === 403) {
-                    // Trigger a forbidden event and show an error page
-                    $rootScope.$broadcast('event:forbidden');
+                    // In the short term, we will handle failures for
+                    // associated entities - for example posts that contain unviewable tags -
+                    // we will ignore the error. In future this will be rectified under issue:
+                    // https://github.com/ushahidi/platform/issues/793
+                    if (!rejection.config.ignorable) {
+                        // Trigger a forbidden event and show an error page
+                        $rootScope.$broadcast('event:forbidden');
+                    }
                     deferred.reject(rejection);
                 // For anything else, just forward the rejection
                 } else {
