@@ -55,8 +55,8 @@ function (
 
                 var deferred = $q.defer();
 
-                if (config.headers.ignorable) {
-                    delete config.headers.ignorable;
+                if (_.has(config, 'params') && config.params.ignore403) {
+                    delete config.params.ignore403;
                     config.ignorable = true;
                 }
 

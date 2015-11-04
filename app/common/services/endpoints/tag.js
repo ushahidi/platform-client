@@ -21,11 +21,9 @@ function (
         update: {
             method: 'PUT'
         },
-        // Short term fix to avoid bouncing to login page
-        // when unviewable tags are returned
         get: {
             method: 'GET',
-            headers: {'ignorable': true}
+            params: {'ignore403': '@ignore403'}
         }
     });
 

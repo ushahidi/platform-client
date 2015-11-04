@@ -75,7 +75,7 @@ function (
 
     // Replace tags with full tag object
     $scope.post.tags = $scope.post.tags.map(function (tag) {
-        return TagEndpoint.get({id: tag.id});
+        return TagEndpoint.get({id: tag.id, ignore403: true});
     });
 
     $scope.showType = function (type) {

@@ -14,7 +14,7 @@ function (
             isArray: true,
             // Short term fix to handle boucing to login when unviewable
             // notification is returned
-            header: {'ignorable': true},
+            params: {'ignore403': '@ignore403'},
             transformResponse: function (data) {
                 return angular.fromJson(data).results;
             }
