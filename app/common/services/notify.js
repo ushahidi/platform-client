@@ -9,7 +9,7 @@ function ($window, _, $rootScope) {
         // e.g. use some notification plugins
         // like https://github.com/cgross/angular-notify
         // or https://github.com/jirikavi/AngularJS-Toaster
-        $window.alert(alertMessage);
+        $rootScope.$emit('event:show:modal-alerts', alertMessage);
     };
 
     var showNotificationSlider = function (message) {
