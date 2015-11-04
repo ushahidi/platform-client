@@ -3,11 +3,13 @@ function (
 ) {
     var controller = [
         '$scope',
+        'ConfigEndpoint',
         'PostEndpoint',
         'Maps',
         '_',
     function (
         $scope,
+        ConfigEndpoint,
         PostEndpoint,
         Maps,
         _
@@ -40,7 +42,7 @@ function (
             }
         });
 
-        // Initial load
+        // initial load
         reloadMapPosts();
     }];
 

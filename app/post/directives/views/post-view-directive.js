@@ -4,12 +4,10 @@ function (
     var controller = [
         '$scope',
         'GlobalFilter',
-        'PostViewHelper',
         '_',
         function (
             $scope,
             GlobalFilter,
-            PostViewHelper,
             _
         ) {
             // Initial scope
@@ -18,11 +16,6 @@ function (
             // Set default view
             if (!$scope.currentView) {
                 $scope.currentView = 'map';
-            }
-
-            if (!PostViewHelper.isViewAvailable($scope.currentView)) {
-                $scope.unavailableView = $scope.currentView;
-                $scope.currentView = 'unavailable';
             }
 
             // Enable / Disable aside depending on currentView

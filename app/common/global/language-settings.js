@@ -1,24 +1,24 @@
 module.exports = [
     '$rootScope',
     '$translate',
-    'Config',
+    'BootstrapConfig',
     'Languages',
 function (
     $rootScope,
     $translate,
-    Config,
+    BootstrapConfig,
     Languages
 ) {
-    var lang = Config.site.language || 'en-US';
+    var lang = BootstrapConfig.language || 'en-US';
 
     $rootScope.rtlEnabled = false;
 
     $translate.use(lang).then(function (langKey) {
         if (langKey) {
-            $translate.preferredLanguage(Config.site.language);
+            $translate.preferredLanguage(BootstrapConfig.language);
 
             angular.forEach(Languages.languages, function (language) {
-                if (language.code === Config.site.language) {
+                if (language.code === BootstrapConfig.language) {
                     $rootScope.rtlEnabled = language.rtl;
                 }
             });

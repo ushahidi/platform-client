@@ -221,7 +221,6 @@ function (
             };
 
             $scope.savePost = function () {
-
                 if (!$scope.canSavePost()) {
                     return;
                 }
@@ -248,8 +247,6 @@ function (
                     request = PostEndpoint.save(post);
                 }
 
-                $scope.validationErrors = [];
-
                 request.$promise.then(function (response) {
                     if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                         $scope.saving_post = false;
@@ -263,21 +260,12 @@ function (
                             Notify.showNotificationSlider(message);
                         });
                     } else {
+                        Notify.showSingleAlert('Saved!');
                         $location.path('/');
                     }
                 }, function (errorResponse) { // errors
 
-                    _.each(errorResponse.data.errors, function (value, key) {
-                        // Ultimately this should cehck individual status codes
-                        // for the moment just check for the message we expect
-                        if (value.title === 'limit::posts') {
-                            $scope.postLimitReached = true;
-                        } else {
-                            $scope.validationErrors.push(value);
-                        }
-
-                    });
-
+                    Notify.showApiErrors(errorResponse);
                     $scope.saving_post = false;
                 });
             };
