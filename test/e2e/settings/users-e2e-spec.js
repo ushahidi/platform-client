@@ -90,7 +90,7 @@ describe('users management', function () {
                                 describe('selecting "Member" as new role', function () {
                                     beforeEach(function () {
                                         element(by.linkText('Member')).click();
-                                        browser.wait(protractor.ExpectedConditions.alertIsPresent(), 500);
+                                        browser.sleep(500);
                                     });
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
                                         var modalText = element(by.css('#alert-modal-text')).getText();
@@ -110,7 +110,7 @@ describe('users management', function () {
                             describe('clicking the button', function () {
                                 beforeEach(function () {
                                     deleteButton.click();
-                                    browser.wait(protractor.ExpectedConditions.alertIsPresent(), 500);
+                                    browser.sleep(500);
                                 });
 
                                 it('shows an error alert that you cannot delete your own user (the user as which your are signed in)', function () {
@@ -148,7 +148,7 @@ describe('users management', function () {
                                 describe('selecting "Member" as new role', function () {
                                     beforeEach(function () {
                                         element(by.linkText('Member')).click();
-                                        browser.wait(protractor.ExpectedConditions.alertIsPresent(), 500);
+                                        browser.sleep(500);
                                     });
                                     it('shows an alert which asks if you really want to change the roles', function () {
                                         var modalText = element(by.css('#confirm-modal-text')).getText();
