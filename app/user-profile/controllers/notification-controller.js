@@ -55,17 +55,17 @@ module.exports = [
 
         $scope.deleteNotification = function (notification) {
             $translate('notify.notification.delete_confirm').then(function (message) {
-                if (window.confirm(message)) {
+                Notify.showConfirm(message).then(function () {
                     notification.$delete({id: notification.id}, function () {
                         // releod notificatons;
                         loadNotifications();
                     }, function () {
                         showErrorMessage('notification.error_message');
                     });
-                } else {
+                }, function () {
                     // Toggle this back on after the user cancels
                     notification.checked = true;
-                }
+                });
             });
         };
 

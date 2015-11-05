@@ -144,7 +144,7 @@ function (
 
     $scope.deletePost = function () {
         $translate('notify.post.destroy_confirm').then(function (message) {
-            if (window.confirm(message)) {
+            Notify.showConfirm(message).then(function () {
                 PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
                     $translate(
                         'notify.post.destroy_success',
@@ -155,7 +155,7 @@ function (
                         $location.path('/');
                       });
                  });
-            }
+            });
         });
     };
 

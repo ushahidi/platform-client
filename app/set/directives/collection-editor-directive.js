@@ -74,7 +74,7 @@ function (
             $scope.deleteCollection = function () {
                 $translate('notify.collection.delete_collection_confirm')
                 .then(function (message) {
-                    if (Notify.showConfirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         CollectionEndpoint.delete({
                             collectionId: $scope.collection.id
                         }).$promise.then(function () {
@@ -83,7 +83,7 @@ function (
                         }, function (errorResponse) {
                             Notify.showApiErrors(errorResponse);
                         });
-                    }
+                    });
                 });
             };
         }

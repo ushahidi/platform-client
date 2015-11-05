@@ -30,7 +30,7 @@ function (
         $translate('notify.tag.bulk_destroy_confirm', {
             count: $scope.selectedTags.length
         }).then(function (message) {
-            if (window.confirm(message)) {
+            Notify.showConfirm(message).then(function () {
                 var calls = [];
                 angular.forEach($scope.selectedTags, function (tagId) {
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
@@ -45,7 +45,7 @@ function (
                     });
                     $scope.refreshView();
                 });
-            }
+            });
         });
     };
 

@@ -60,7 +60,7 @@ function (
             $scope.deleteForm = function (stage) {
                 $translate('notify.form.delete_form_confirm')
                 .then(function (message) {
-                    if (Notify.showConfirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         FormEndpoint.delete({
                             id: $scope.form.id
                         }).$promise.then(function () {
@@ -69,7 +69,7 @@ function (
                             });
                             $location.url('/settings/forms');
                         });
-                    }
+                    });
                 });
             };
 

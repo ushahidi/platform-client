@@ -223,7 +223,7 @@ function (
 
                 $translate('notify.form.delete_attribute_confirm')
                 .then(function (message) {
-                    if (Notify.showConfirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         if (attribute.id) {
                             FormAttributeEndpoint.delete({
                                 formId: $scope.form.id,
@@ -241,7 +241,7 @@ function (
                             // Remove attribute from scope, binding should take care of the rest
                             $scope.form.attributes.splice($index, 1);
                         }
-                    }
+                    });
                 });
             };
 
