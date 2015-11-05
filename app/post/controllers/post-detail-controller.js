@@ -151,10 +151,10 @@ function (
                         {
                             name: $scope.post.title
                         }).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.path('/');
-                      });
-                 });
+                            Notify.showNotificationSlider(message);
+                            $location.path('/');
+                        });
+                });
             });
         });
     };

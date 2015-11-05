@@ -28,7 +28,7 @@ function ($window, _, $q, $rootScope) {
     $rootScope.$on('event:confirm:return-confirm', function (event, result) {
         result ? deffered.resolve(result) : deffered.reject(result);
     });
-    
+
     var showConfirm = function (confirmMessage) {
         $rootScope.$emit('event:show:modal-confirm', confirmMessage);
         deffered = $q.defer();
