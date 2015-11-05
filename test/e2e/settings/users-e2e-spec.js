@@ -94,7 +94,7 @@ describe('users management', function () {
                                     });
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
                                         element(by.css('#alert-modal-text')).get(0).getText().then(function (text) {
-                                            expect(text.toEqual('You cannot change your own role'));
+                                            text.toEqual('You cannot change your own role');
                                             element(by.css("button#alert-modal-ok")).click();
                                         });
                                     });
@@ -116,7 +116,7 @@ describe('users management', function () {
 
                                 it('shows an error alert that you cannot delete your own user (the user as which your are signed in)', function () {
                                     element(by.css('#alert-modal-text')).getText().then(function (text) {
-                                        expect(text.toEqual('You cannot delete your own user'));
+                                        text.toEqual('You cannot delete your own user');
                                         element(by.css("button#alert-modal-ok")).click();
                                     });
                                 });
@@ -154,7 +154,7 @@ describe('users management', function () {
                                     });
                                     it('shows an alert which asks if you really want to change the roles', function () {
                                         element(by.css('#confirm-modal-text')).getText().then(function (text) {
-                                            expect(text.toEqual('Are you sure you want to change the role of 4 users to Member?'));
+                                            text.toEqual('Are you sure you want to change the role of 4 users to Member?');
                                             element(by.css("button#confirm-modal-ok")).click();
                                         });
                                     });
