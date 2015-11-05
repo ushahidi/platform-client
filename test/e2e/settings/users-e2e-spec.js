@@ -93,7 +93,7 @@ describe('users management', function () {
                                         browser.sleep(500);
                                     });
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
-                                        element(by.css('#alert-modal-text')).getText().then(function (text) {
+                                        element(by.css('#alert-modal-text')).get(0).getText().then(function (text) {
                                             expect(text.toEqual('You cannot change your own role'));
                                             element(by.css("button#alert-modal-ok")).click();
                                         });
