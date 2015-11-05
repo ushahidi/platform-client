@@ -2,7 +2,7 @@ var rootPath = '../../../../';
 
 describe('Notify', function () {
 
-    var Notify, $rootscope;
+    var Notify, $rootScope;
 
     beforeEach(function () {
         var testApp = angular.module('testApp');
