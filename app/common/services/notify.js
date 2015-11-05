@@ -1,8 +1,11 @@
 module.exports = [
     '$window',
     '_',
+    '$q',
     '$rootScope',
-function ($window, _, $rootScope) {
+function ($window, _, $q, $rootScope) {
+
+    var deffered;
 
     var showSingleAlert = function (alertMessage) {
         $rootScope.$emit('event:show:modal-alerts', [alertMessage]);
@@ -22,10 +25,14 @@ function ($window, _, $rootScope) {
         errors && showAlerts(errors);
     };
 
+    $rootScope.$on('event:confirm:return-confirm', function (event, result) {
+        result ? deffered.resolve(result) : deffered.reject(result);
+    });
+    
     var showConfirm = function (confirmMessage) {
-        // TODO: find a better solution for that
-        var confirm = $window.confirm(confirmMessage);
-        return confirm;
+        $rootScope.$emit('event:show:modal-confirm', confirmMessage);
+        deffered = $q.defer();
+        return deffered.promise;
     };
 
     return {
