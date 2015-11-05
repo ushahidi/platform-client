@@ -5,11 +5,7 @@ module.exports = [
 function ($window, _, $rootScope) {
 
     var showSingleAlert = function (alertMessage) {
-        // TODO: find a better solution for that
-        // e.g. use some notification plugins
-        // like https://github.com/cgross/angular-notify
-        // or https://github.com/jirikavi/AngularJS-Toaster
-        $rootScope.$emit('event:show:modal-alerts', alertMessage);
+        $rootScope.$emit('event:show:modal-alerts', [alertMessage]);
     };
 
     var showNotificationSlider = function (message) {
@@ -17,7 +13,7 @@ function ($window, _, $rootScope) {
     };
 
     var showAlerts = function (alertMessages) {
-        showSingleAlert(alertMessages.join('\n'));
+        $rootScope.$emit('event:show:modal-alerts', alertMessages);
     };
 
     var showApiErrors = function (errorResponse) {

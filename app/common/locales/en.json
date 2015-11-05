@@ -500,7 +500,9 @@
         },
         "generic" : {
             "okay" : "Ok",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "alerts": "Alerts",
+            "confirm": "Confirmation"
         },
         "login" : {
             "failed" : "Login failed, check your email and password."
