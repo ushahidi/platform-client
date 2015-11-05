@@ -34,26 +34,16 @@ function (
             var markers = {},
                 mapName = $scope.id + '-map';
 
-            // use default values in case there are none in the config
-            var center = {
-                lat: 36.079868,
-                lng: -79.819416,
-                zoom: 4
-            };
-
-            $scope.center = center;
-
-            // Save original center for reset
-            $scope.initialCenter = center;
+            angular.extend($scope, Maps.getInitialScope());
 
             // Try to use value from settings
             var config = Maps.getAngularScopeParams();
 
             config.then(function (params) {
-                if (!$scope.model && params.center) {
-                    $scope.center = params.center;
-                    $scope.initialCenter = params.center;
-                }
+                angular.extend($scope, params);
+
+                // save initial center for reset
+                $scope.initialCenter = params.center;
             });
 
             // init markers with current model value
@@ -74,10 +64,6 @@ function (
 
             // leaflet map or location attribute
             angular.extend($scope, {
-                defaults: {
-                    scrollWheelZoom: false
-                },
-
                 markers: markers,
 
                 updateLatLon: function (lat, lon) {
