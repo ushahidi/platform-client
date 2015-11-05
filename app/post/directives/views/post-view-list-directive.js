@@ -48,6 +48,7 @@ function (
             });
 
             $scope.deleteSelectedPosts = function () {
+
                 $translate('notify.post.destroy_confirm').then(function (message) {
                     if (window.confirm(message)) {
                         // ask server to delete selected posts

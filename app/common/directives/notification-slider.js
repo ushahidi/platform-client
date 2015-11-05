@@ -32,7 +32,7 @@ angular.module('ushahidi.common.notification-slider', [])
                         // Animate in.
                         $scope.classVisible = true;
                         classChangePromise = $timeout(function () {
-                            $scope.classVisible = false;
+                            $scope.visible = false;
                         }, 5000);
                     }
                 } else if (state === false) {

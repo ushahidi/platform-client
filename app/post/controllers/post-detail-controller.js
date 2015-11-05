@@ -153,6 +153,7 @@ function (
                         }).then(function (message) {
                         Notify.showNotificationSlider(message);
                         $location.path('/');
+                      });
                  });
             }
         });
