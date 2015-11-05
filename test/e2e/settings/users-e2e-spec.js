@@ -113,7 +113,7 @@ describe('users management', function () {
                                 });
 
                                 it('shows an error alert that you cannot delete your own user (the user as which your are signed in)', function () {
-                                    expect(element(by.css('#alert-modal-text')).getText())toEqual('You cannot delete your own user');
+                                    expect(element(by.css('#alert-modal-text')).getText()).toEqual('You cannot delete your own user');
                                     element(by.css("button#alert-modal-ok")).click();
                                 });
                             });
