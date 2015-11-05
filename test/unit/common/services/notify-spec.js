@@ -2,7 +2,7 @@ var rootPath = '../../../../';
 
 describe('Notify', function () {
 
-    var Notify, $window;
+    var Notify, $rootscope;
 
     beforeEach(function () {
         var testApp = angular.module('testApp');
@@ -13,33 +13,34 @@ describe('Notify', function () {
 
     beforeEach(angular.mock.module('testApp'));
 
-    beforeEach(inject(function (_Notify_, _$window_) {
+    beforeEach(inject(function (_$rootScope_, _Notify_, _$window_) {
+        $rootScope = _$rootScope_;
         Notify = _Notify_;
-        $window = _$window_;
     }));
 
     describe('showSingleAlert', function () {
         beforeEach(function () {
-            spyOn($window, 'alert');
+            spyOn($rootScope, '$emit').and.callThrough();
             Notify.showSingleAlert('Test message');
         });
 
-        it('calls $window.alert with the passed in alertMessage', function () {
-            expect($window.alert).toHaveBeenCalled();
-            var alertMessage = $window.alert.calls.mostRecent().args[0];
-            expect(alertMessage).toEqual('Test message');
+        it('calls $rootScope.$on with the passed in alertMessage', function () {
+            expect($rootScope.$emit).toHaveBeenCalled();
+            var alertMessage = $rootScope.$emit.calls.mostRecent().args;
+            expect(alertMessage[1]).toEqual(['Test message']);
         });
     });
 
     describe('showAlerts', function () {
         beforeEach(function () {
-            spyOn($window, 'alert');
+            spyOn($rootScope, '$emit').and.callThrough();
             Notify.showAlerts(['Test message 1', 'Test message 2']);
         });
 
-        it('calls $window.alert with the combined alert messages', function () {
-            expect($window.alert.calls.count()).toEqual(1);
-            expect($window.alert.calls.argsFor(0)[0]).toEqual('Test message 1\nTest message 2');
+        it('calls $rootScope.$on with the combined alert messages', function () {
+            expect($rootScope.$emit).toHaveBeenCalled();
+            var alertMessage = $rootScope.$emit.calls.mostRecent().args;
+            expect(alertMessage[1]).toEqual(['Test message 1', 'Test message 2']);
         });
     });
 });
