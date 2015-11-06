@@ -573,7 +573,7 @@
             "success": "Your password has been reset"
         },
         "notification" : {
-            "add" : "You will now be notified when new posts are added to {{collection}}",
+            "add" : "You will now be notified when new posts are added to {{set}}",
             "delete_confirm" : "Are you sure you want to remove this notification?"
         }
     },

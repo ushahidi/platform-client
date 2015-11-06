@@ -79,7 +79,7 @@ module.exports = [
             NotificationEndpoint.save(notification, function (notification) {
                 // No need to show the link after subscription
                 $scope.showNotificationLink = false;
-                $translate('notify.notification.add', {collection: collection.name})
+                $translate('notify.notification.add', {set: collection.name})
                     .then(function (message) {
                         Notify.showSingleAlert(message);
                     });
