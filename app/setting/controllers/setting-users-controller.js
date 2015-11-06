@@ -49,7 +49,6 @@ function (
         }
     };
 
-
     handleResponseErrors = function (errorResponse) {
         Notify.showApiErrors(errorResponse);
     };
@@ -103,7 +102,7 @@ function (
             Notify.showConfirm(message).then(function () {
                 var calls = [];
                 angular.forEach($scope.selectedUsers, function (userId) {
-                    calls.push(UserEndpoint.update({ id: userId }, { id: userId, role: role.name }).$promise);
+                    calls.push(UserEndpoint.saveCache({ id: userId, role: role.name }).$promise);
                 });
                 $q.all(calls).then(function () {
                     $translate('notify.user.bulk_role_change_success', {role_name: role.name}).then(function (message) {

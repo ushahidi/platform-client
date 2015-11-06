@@ -35,7 +35,7 @@ function (
     $scope.saveNewForm = function (form) {
         // Save the form and translate the Structure stage label
         $q.all({
-            form: FormEndpoint.save(form).$promise,
+            form: FormEndpoint.saveCache(form).$promise,
             label: $translate('form.structure_step')
         }).then(function (data) {
             form = data.form;
@@ -45,7 +45,7 @@ function (
 
             // Save the Structure stage and go to the editor
             FormStageEndpoint
-                .save(stage)
+                .saveCache(stage)
                 .$promise
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;

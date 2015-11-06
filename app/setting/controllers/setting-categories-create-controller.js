@@ -30,7 +30,7 @@ function (
 
     $scope.saveTag = function (tag) {
         $scope.processing = true;
-        var response = TagEndpoint.save(tag, function () {
+        TagEndpoint.saveCache(tag).$promise.then(function (response) {
             if (response.id) {
                 $translate(
                     'notify.tag.save_success',

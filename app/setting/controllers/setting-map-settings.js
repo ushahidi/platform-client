@@ -102,8 +102,9 @@ function (
 
     $scope.updateConfig = function (id, model) {
         $scope.saving_config[id] = true;
+
         model.id = 'map';
-        ConfigEndpoint.update(model, function () {
+        ConfigEndpoint.saveCache(model).$promise.then(function () {
             $translate('notify.map_settings.save_success').then(function (message) {
                 Notify.showNotificationSlider(message);
             });

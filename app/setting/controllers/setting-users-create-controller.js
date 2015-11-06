@@ -27,7 +27,7 @@ function (
 
     $scope.saveUser = function (user) {
         $scope.processing = true;
-        var response = UserEndpoint.save(user, function () {
+        UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
                 $translate('notify.user.save_success', {name: user.realname}).then(function (message) {
                     Notify.showNotificationSlider(message);

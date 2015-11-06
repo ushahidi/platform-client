@@ -16,6 +16,9 @@ function (
                 return angular.fromJson(data).results;
             }
         },
+        get: {
+            method: 'GET'
+        },
         update: {
             method: 'PUT'
         },

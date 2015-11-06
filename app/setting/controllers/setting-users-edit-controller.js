@@ -24,15 +24,16 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.user = UserEndpoint.get({id: $routeParams.id}, function (user) {
+    UserEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (user) {
         $scope.$emit('setPageTitle', $scope.title + ' - ' + user.realname);
+        $scope.user = user;
     });
 
     $scope.processing = false;
 
     $scope.saveUser = function (user) {
         $scope.processing = true;
-        var response = UserEndpoint.update({id: $routeParams.id}, user, function () {
+        UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
                 $translate('notify.user.edit_success', {name: user.realname}).then(function (message) {
                     Notify.showNotificationSlider(message);

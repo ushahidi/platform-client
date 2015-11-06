@@ -7,6 +7,7 @@ module.exports = [
     'FormAttributeEndpoint',
     '_',
     'Notify',
+    'Util',
 function (
     $q,
     $location,
@@ -15,7 +16,8 @@ function (
     FormStageEndpoint,
     FormAttributeEndpoint,
     _,
-    Notify
+    Notify,
+    Util
 ) {
     return {
         restrict: 'E',
@@ -65,7 +67,7 @@ function (
             };
             $scope.saveStageSettings = function (stage) {
                 FormStageEndpoint
-                .update(_.extend(stage, {
+                .saveCache(_.extend(stage, {
                     formId: $scope.form.id
                 }))
                 .$promise
@@ -90,7 +92,7 @@ function (
             };
             $scope.saveNewStage = function (stage) {
                 FormStageEndpoint
-                .save(_.extend(stage, {
+                .saveCache(_.extend(stage, {
                     formId: $scope.form.id
                 }))
                 .$promise
@@ -203,16 +205,16 @@ function (
 
             // Attribute Functions
             $scope.saveAttribute = function (attribute, $index) {
-                var persist = attribute.id ? FormAttributeEndpoint.update : FormAttributeEndpoint.save;
+                var persist = FormAttributeEndpoint.saveCache;
                 persist(_.extend(attribute, {
                     formId: $scope.form.id
                 })).$promise.then(function (attributeUpdate) {
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
+                    FormStageEndpoint.invalidateCache();
                     $translate('notify.form.save_attribute_success', {name: attribute.label}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
-
 
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
@@ -231,11 +233,12 @@ function (
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
                                 $scope.form.attributes.splice($index, 1);
+
+                                FormStageEndpoint.invalidateCache();
+
                                 $translate('notify.form.destroy_attribute_success', {name: attribute.label}).then(function (message) {
                                     Notify.showNotificationSlider(message);
                                 });
-
-
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest
@@ -262,12 +265,12 @@ function (
                 attribute.priority = attribute.priority + increment;
 
                 // Save attribute
-                FormAttributeEndpoint.update(_.extend(attribute, {
+                FormAttributeEndpoint.saveCache(_.extend(attribute, {
                     formId: $scope.form.id
                 }));
 
                 // Save adjacent attribute
-                FormAttributeEndpoint.update(_.extend(next, {
+                FormAttributeEndpoint.saveCache(_.extend(next, {
                     formId: $scope.form.id
                 }));
 

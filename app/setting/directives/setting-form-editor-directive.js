@@ -44,7 +44,7 @@ function (
 
             $scope.saveFormSettings = function (form) {
                 FormEndpoint
-                .update(form)
+                .saveCache(form)
                 .$promise
                 .then(function () {
                     $translate('notify.form.edit_form_success', { name: form.name }).then(function (message) {
@@ -108,12 +108,12 @@ function (
                 stage.priority = stage.priority + increment;
 
                 // Save stage
-                FormStageEndpoint.update(_.extend(stage, {
+                FormStageEndpoint.saveCache(_.extend(stage, {
                     formId: $scope.form.id
                 }));
 
                 // Save adjacent stage
-                FormStageEndpoint.update(_.extend(next, {
+                FormStageEndpoint.saveCache(_.extend(next, {
                     formId: $scope.form.id
                 }));
 
@@ -131,7 +131,7 @@ function (
                 var lastPriority = $scope.form.stages.length ? _.last($scope.form.stages).priority : 0;
 
                 FormStageEndpoint
-                .save(_.extend(stage, {
+                .saveCache(_.extend(stage, {
                     formId: $scope.form.id,
                     priority: lastPriority + 1
                 }))

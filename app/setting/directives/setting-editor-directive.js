@@ -29,6 +29,7 @@ function (
         templateUrl: 'templates/settings/settings-editor.html',
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
+
             $scope.site = ConfigEndpoint.get({ id: 'site' });
             $scope.userSavedSettings = false;
 
@@ -88,7 +89,7 @@ function (
                 $scope.saving_config = true;
 
                 uploadHeaderImage().then(function () {
-                    $scope.site.$update({ id: 'site' }, function () {
+                    ConfigEndpoint.saveCache($scope.site).$promise.then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
                         $translate('notify.general_settings.save_success').then(function (message) {
