@@ -36,13 +36,6 @@ function (
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
-                    // Note(Will): reloading the entire list seems very heavy
-                    // it might be better to prune the list instead or load
-                    // the entities differently - as individual objects
-                    // rather than a grouped query
-                    $scope.refreshView();
-                });
-                $q.all(calls).then(function () {
                     $translate(
                         'notify.tag.bulk_destroy_success',
                         {

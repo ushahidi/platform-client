@@ -12,7 +12,7 @@ function (
 
     var cache;
 
-    if (!(cache = new CacheFactory.get('providerCache'))) {
+    if (!(cache = CacheFactory.get('providerCache'))) {
         cache = new CacheFactory('providerCache');
     }
 
@@ -33,8 +33,39 @@ function (
         },
         options: {
             method: 'OPTIONS'
+        },
+        deleteEntity: {
+            method: 'DELETE'
         }
     });
+
+    DataProviderEndpoint.getFresh = function (id) {
+        cache.remove(Util.apiUrl(id));
+        return DataProviderEndpoint.get(id);
+    };
+
+    DataProviderEndpoint.queryFresh = function () {
+        cache.removeAll();
+        return DataProviderEndpoint.query();
+    };
+    
+    DataProviderEndpoint.invalidateCache = function () {
+        return cache.removeAll();
+    };
+
+    DataProviderEndpoint.saveCache = function (item) {
+        var persist = item.id ? DataProviderEndpoint.update : DataProviderEndpoint.save;
+        cache.removeAll();
+        var result = persist(item);
+        return result;
+    };
+
+    DataProviderEndpoint.delete = function (item) {
+        cache.removeAll();
+        var result = DataProviderEndpoint.deleteEntity(item);
+        return result;
+    };
+
 
     return DataProviderEndpoint;
 

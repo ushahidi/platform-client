@@ -4,14 +4,14 @@ module.exports = [
     '$translate',
     'ConfigEndpoint',
     'DataProviderEndpoint',
-    'CacheManager',
+    'Notify',
 function (
     $q,
     $scope,
     $translate,
     ConfigEndpoint,
     DataProviderEndpoint,
-    CacheManager
+    Notify
 ) {
 
     // Displays a loading indicator when busy querying endpoints.
@@ -39,10 +39,13 @@ function (
 
             $scope.settings.$update({ id: 'data-provider' }, function () {
                 $scope.saving = false;
-                CacheManager.updateCacheItem(
-                    'configCache',
-                    $scope.settings
-                );
+                CacheManager.saveCache($scope.settings).$promise.then(function (result) {
+                    $translate('notify.tag.save_success').then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                }, function (errorResponse) { // error
+                    Notify.showApiErrors(errorResponse);
+                });
 
                 // No errors found; disable this.
                 $scope.formsSubmitted[provider] = false;
@@ -54,14 +57,13 @@ function (
         }
     };
 
-    // Clear provider cache so that it's loaded fresh each time
-    CacheManager.removeCacheGroup('configCache', '/config/data-provider');
-    CacheManager.removeCacheGroup('providerCache', '/dataproviders');
+    // Get data providers from backend.
+    ConfigEndpoint.get({ id: 'data-provider'}).$promise.then(function (response) {
+        $scope.settings = response;
+    });
 
-    // Get data providers from bacend.
-    $q.all([DataProviderEndpoint.query(), ConfigEndpoint.get({ id: 'data-provider' })]).then(function (response) {
-        $scope.providers = response[0];
-        $scope.settings = response[1];
+    DataProviderEndpoint.queryFresh().$promise.then(function (response) {
+        $scope.providers = response;  
     });
 
 }];

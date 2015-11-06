@@ -2,14 +2,11 @@ module.exports = [
     '$resource',
     'Util',
     '_',
-    'CacheFactory',
 function (
     $resource,
     Util,
-    _,
-    CacheFactory
+    _
 ) {
-    //var cache = new CacheFactory('collectionCache');
 
     var CollectionEndpoint = $resource(Util.apiUrl('/collections/:collectionId'), {
         collectionId: '@collectionId'
@@ -20,11 +17,9 @@ function (
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data).results;
             }
-            //cache: cache
         },
         get: {
             method: 'GET'
-            //cache: cache
         },
         update: {
             method: 'PUT'
@@ -41,7 +36,6 @@ function (
                     return _.includes(result.allowed_privileges, 'update');
                 });
             }
-            //cache: cache
         },
         addPost: {
             method: 'POST',
