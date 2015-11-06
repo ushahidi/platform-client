@@ -47,6 +47,10 @@ function (
                 .saveCache(form)
                 .$promise
                 .then(function () {
+                    $translate('notify.form.edit_form_success', { name: form.name }).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+
                     $scope.isSettingsOpen = false;
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
@@ -56,13 +60,16 @@ function (
             $scope.deleteForm = function (stage) {
                 $translate('notify.form.delete_form_confirm')
                 .then(function (message) {
-                    if (Notify.showConfirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         FormEndpoint.deleteCache({
                             id: $scope.form.id
                         }).$promise.then(function () {
+                            $translate('notify.form.destroy_form_success', { name: $scope.form.name }).then(function (message) {
+                                Notify.showNotificationSlider(message);
+                            });
                             $location.url('/settings/forms');
                         });
-                    }
+                    });
                 });
             };
 
@@ -75,6 +82,9 @@ function (
                             id: stage.id
                         }).$promise.then(function () {
                             // Remove stage from scope, binding should take care of the rest
+                            $translate('notify.form.destroy_stage_success', {name: stage.label}).then(function (message) {
+                                Notify.showNotificationSlider(message);
+                            });
                             $scope.form.stages.splice($index, 1);
                         });
                     }
@@ -129,6 +139,9 @@ function (
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
+                    $translate('notify.form.save_stage_success', {name: stage.label}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
                     $location.url('/settings/forms/' + $scope.form.id + '/stages/' + stage.id);
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);

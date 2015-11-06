@@ -36,6 +36,10 @@ function (
         },
         update: {
             method: 'PUT'
+        },
+        get: {
+            method: 'GET',
+            params: {'ignore403': '@ignore403'}
         }
     });
 

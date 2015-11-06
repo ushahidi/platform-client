@@ -15,6 +15,7 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
+    'Notify',
 function (
     $scope,
     post,
@@ -31,7 +32,8 @@ function (
     Maps,
     L,
     leafletData,
-    _
+    _,
+    Notify
 ) {
     $scope.post = post;
     $scope.mapDataLoaded = false;
@@ -75,7 +77,7 @@ function (
 
     // Replace tags with full tag object
     $scope.post.tags = $scope.post.tags.map(function (tag) {
-        return TagEndpoint.get({id: tag.id});
+        return TagEndpoint.get({id: tag.id, ignore403: true});
     });
 
     $scope.showType = function (type) {
@@ -142,11 +144,18 @@ function (
 
     $scope.deletePost = function () {
         $translate('notify.post.destroy_confirm').then(function (message) {
-            if (window.confirm(message)) {
+            Notify.showConfirm(message).then(function () {
                 PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
-                    $location.path('/');
+                    $translate(
+                        'notify.post.destroy_success',
+                        {
+                            name: $scope.post.title
+                        }).then(function (message) {
+                            Notify.showNotificationSlider(message);
+                            $location.path('/');
+                        });
                 });
-            }
+            });
         });
     };
 

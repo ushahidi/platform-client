@@ -72,7 +72,7 @@ function (
 
             // Replace tags with full tag object
             scope.post.tags = scope.post.tags.map(function (tag) {
-                return TagEndpoint.get({id: tag.id});
+                return TagEndpoint.get({id: tag.id, ignore403: true});
             });
 
             // Replace form with full object
@@ -89,7 +89,7 @@ function (
                     .$promise.then(function () {
                         $translate('notify.collection.add_to_collection', {collection: collection})
                         .then(function (message) {
-                            Notify.showSingleAlert(message);
+                            Notify.showNotificationSlider(message);
                         });
                         //Deselect post
                         scope.post.selected = false;

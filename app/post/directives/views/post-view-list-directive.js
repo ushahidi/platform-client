@@ -48,8 +48,9 @@ function (
             });
 
             $scope.deleteSelectedPosts = function () {
+
                 $translate('notify.post.destroy_confirm').then(function (message) {
-                    if (window.confirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         // ask server to delete selected posts
                         // and refetch posts from server
                         var deletePostsPromises = _.map(
@@ -59,7 +60,7 @@ function (
                             });
                         $q.all(deletePostsPromises).then(getPostsForPagination, handleResponseErrors)
                         .finally(getPostsForPagination);
-                    }
+                    });
                 });
             };
 

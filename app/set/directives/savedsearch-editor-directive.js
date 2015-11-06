@@ -70,14 +70,14 @@ function (
             $scope.deleteSavedSearch = function () {
                 $translate('notify.savedsearch.delete_savedsearch_confirm')
                 .then(function (message) {
-                    if (Notify.showConfirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         SavedSearchEndpoint.delete({ id: $scope.savedSearch.id }).$promise.then(function () {
                             $location.url('/');
                             $rootScope.$broadcast('event:savedSearch:update');
                         }, function (errorResponse) {
                             Notify.showApiErrors(errorResponse);
                         });
-                    }
+                    });
                 });
             };
         }

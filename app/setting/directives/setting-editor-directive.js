@@ -1,6 +1,7 @@
 module.exports = [
     '$q',
     '$http',
+    '$translate',
     '$rootScope',
     'ConfigEndpoint',
     '_',
@@ -10,6 +11,7 @@ module.exports = [
 function (
     $q,
     $http,
+    $translate,
     $rootScope,
     ConfigEndpoint,
     _,
@@ -29,6 +31,7 @@ function (
             $scope.saving_config = false;
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
+            $scope.userSavedSettings = false;
 
             $scope.timezones = [];
             var timezones = require('moment-timezone/data/packed/latest.json');
@@ -89,6 +92,9 @@ function (
                     ConfigEndpoint.saveCache($scope.site).$promise.then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
+                        $translate('notify.general_settings.save_success').then(function (message) {
+                            Notify.showNotificationSlider(message);
+                        });
                     }, function (errorResponse) {
                         Notify.showApiErrors(errorResponse);
                         $scope.saving_config = false;

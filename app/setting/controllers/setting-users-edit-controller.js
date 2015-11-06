@@ -34,6 +34,14 @@ function (
     $scope.saveUser = function (user) {
         $scope.processing = true;
         UserEndpoint.saveCache(user).$promise.then(function () {
+            if (response.id) {
+                $translate('notify.user.edit_success', {name: user.realname}).then(function (message) {
+                    Notify.showNotificationSlider(message);
+                });
+                $scope.processing = false;
+                $scope.userSavedUser = true;
+                $scope.user.id = response.id;
+            }
             $rootScope.goBack();
         }, function (errorResponse) { // error
             Notify.showApiErrors(errorResponse);
