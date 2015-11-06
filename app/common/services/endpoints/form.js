@@ -29,6 +29,9 @@ function (
         },
         update: {
             method: 'PUT'
+        },
+        deleteEntity: {
+            method: 'DELETE'
         }
     });
 
@@ -49,9 +52,9 @@ function (
         return result;
     };
 
-    FormEndpoint.deleteCache = function (item) {
+    FormEndpoint.delete = function (item) {
         cache.removeAll();
-        return FormEndpoint.delete(item);
+        return FormEndpoint.deleteEntity(item);
     };
 
     return FormEndpoint;

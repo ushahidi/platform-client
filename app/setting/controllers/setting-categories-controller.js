@@ -33,7 +33,7 @@ function (
             Notify.showConfirm(message).then(function () {
                 var calls = [];
                 angular.forEach($scope.selectedTags, function (tagId) {
-                    calls.push(TagEndpoint.deleteCache({ id: tagId }).$promise);
+                    calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
                     // Note(Will): reloading the entire list seems very heavy

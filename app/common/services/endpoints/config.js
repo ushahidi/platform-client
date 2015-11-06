@@ -43,6 +43,16 @@ function (
         return ConfigEndpoint.get(id);
     };
 
+    /**
+     * saveCache is responsible for both creation and update of an entity
+     * the switch between update and save is determined based on the presence of
+     * the entity's id.
+     * When we get a full entity for edit we use getFresh to ensure it's the most
+     * up to date. Once the save takes place we need to invalidate the associated:w
+     *
+     * cache to ensure that the query - where appropriate - is cleared.
+     *
+     */
     ConfigEndpoint.saveCache = function (item) {
         var persist = item.id ? ConfigEndpoint.update : ConfigEndpoint.save;
 

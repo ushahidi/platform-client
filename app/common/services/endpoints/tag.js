@@ -30,16 +30,16 @@ function (
                 return Util.transformResponse(data).results;
             }
         },
-        get: {
-            method: 'GET',
-            cache: cache
-        },
         update: {
             method: 'PUT'
         },
         get: {
             method: 'GET',
+            cache: cache,
             params: {'ignore403': '@ignore403'}
+        },
+        deleteEntity: {
+            method: 'DELETE'
         }
     });
 
@@ -60,9 +60,9 @@ function (
         return result;
     };
 
-    TagEndpoint.deleteCache = function (item) {
+    TagEndpoint.delete = function (item) {
         cache.removeAll();
-        var result = TagEndpoint.delete(item);
+        var result = TagEndpoint.deleteEntity(item);
         return result;
     };
 

@@ -76,7 +76,7 @@ function (
             Notify.showConfirm(message).then(function () {
                 var calls = [];
                 angular.forEach($scope.selectedUsers, function (userId) {
-                    calls.push(UserEndpoint.deleteCache({ id: userId }).$promise);
+                    calls.push(UserEndpoint.delete({ id: userId }).$promise);
                 });
 
                 $q.all(calls).then(function () {

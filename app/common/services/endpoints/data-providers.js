@@ -10,7 +10,11 @@ function (
     CacheFactory
 ) {
 
-    var cache = new CacheFactory('providerCache');
+    var cache;
+
+    if (!(cache = new CacheFactory.get('providerCache'))) {
+        cache = new CacheFactory('providerCache');
+    }
 
     var DataProviderEndpoint = $resource(Util.apiUrl('/dataproviders/:id'), {
         id: '@id'
@@ -21,6 +25,10 @@ function (
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data);
             },
+            cache: cache
+        },
+        get: {
+            method: 'GET',
             cache: cache
         },
         options: {

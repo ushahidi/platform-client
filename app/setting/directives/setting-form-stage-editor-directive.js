@@ -227,7 +227,7 @@ function (
                 .then(function (message) {
                     Notify.showConfirm(message).then(function () {
                         if (attribute.id) {
-                            FormAttributeEndpoint.deleteCache({
+                            FormAttributeEndpoint.delete({
                                 formId: $scope.form.id,
                                 id: attribute.id
                             }).$promise.then(function () {

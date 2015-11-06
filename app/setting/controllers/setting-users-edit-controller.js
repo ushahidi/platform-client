@@ -33,7 +33,7 @@ function (
 
     $scope.saveUser = function (user) {
         $scope.processing = true;
-        UserEndpoint.saveCache(user).$promise.then(function () {
+        UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
                 $translate('notify.user.edit_success', {name: user.realname}).then(function (message) {
                     Notify.showNotificationSlider(message);

@@ -36,6 +36,9 @@ function (
         },
         update: {
             method: 'PUT'
+        },
+        deleteEntity: {
+            method: 'DELETE'
         }
     });
 
@@ -55,9 +58,9 @@ function (
         return persist(item);
     };
 
-    UserEndpoint.deleteCache = function (item) {
+    UserEndpoint.delete = function (item) {
         cache.removeAll();
-        var result = UserEndpoint.delete(item);
+        var result = UserEndpoint.deleteEntity(item);
         return result;
     };
 
