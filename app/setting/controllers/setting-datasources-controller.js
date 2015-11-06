@@ -62,7 +62,7 @@ function (
     });
 
     DataProviderEndpoint.queryFresh().$promise.then(function (response) {
-        $scope.providers = response;  
+        $scope.providers = response;
     });
 
 }];

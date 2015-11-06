@@ -52,7 +52,7 @@ function (
         cache.removeAll();
         return TagEndpoint.query();
     };
-    
+
     TagEndpoint.invalidateCache = function () {
         return cache.removeAll();
     };

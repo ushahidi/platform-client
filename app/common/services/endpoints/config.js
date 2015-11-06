@@ -37,7 +37,7 @@ function (
             }
         }
     });
-    
+
     ConfigEndpoint.invalidateCache = function () {
         return cache.removeAll();
     };

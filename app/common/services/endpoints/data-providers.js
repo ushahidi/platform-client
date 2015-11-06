@@ -51,7 +51,7 @@ function (
         cache.removeAll();
         return DataProviderEndpoint.query();
     };
-    
+
     DataProviderEndpoint.invalidateCache = function () {
         return cache.removeAll();
     };

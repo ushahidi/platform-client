@@ -55,7 +55,7 @@ function (
         cache.removeAll();
         return persist(item);
     };
-    
+
     FormAttributeEndpoint.invalidateCache = function () {
         return cache.removeAll();
     };
