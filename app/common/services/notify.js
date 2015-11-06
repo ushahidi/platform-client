@@ -1,15 +1,22 @@
-module.exports = ['$window', '_', function ($window, _) {
+module.exports = [
+    '$window',
+    '_',
+    '$q',
+    '$rootScope',
+function ($window, _, $q, $rootScope) {
+
+    var deffered;
 
     var showSingleAlert = function (alertMessage) {
-        // TODO: find a better solution for that
-        // e.g. use some notification plugins
-        // like https://github.com/cgross/angular-notify
-        // or https://github.com/jirikavi/AngularJS-Toaster
-        $window.alert(alertMessage);
+        $rootScope.$emit('event:show:modal-alerts', [alertMessage]);
+    };
+
+    var showNotificationSlider = function (message) {
+        $rootScope.$emit('event:show:notification-slider', message);
     };
 
     var showAlerts = function (alertMessages) {
-        showSingleAlert(alertMessages.join('\n'));
+        $rootScope.$emit('event:show:modal-alerts', alertMessages);
     };
 
     var showApiErrors = function (errorResponse) {
@@ -18,14 +25,19 @@ module.exports = ['$window', '_', function ($window, _) {
         errors && showAlerts(errors);
     };
 
+    $rootScope.$on('event:confirm:return-confirm', function (event, result) {
+        result ? deffered.resolve(result) : deffered.reject(result);
+    });
+
     var showConfirm = function (confirmMessage) {
-        // TODO: find a better solution for that
-        var confirm = $window.confirm(confirmMessage);
-        return confirm;
+        $rootScope.$emit('event:show:modal-confirm', confirmMessage);
+        deffered = $q.defer();
+        return deffered.promise;
     };
 
     return {
         showSingleAlert: showSingleAlert,
+        showNotificationSlider: showNotificationSlider,
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
         showConfirm: showConfirm

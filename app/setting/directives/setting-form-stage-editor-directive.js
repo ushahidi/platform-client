@@ -71,6 +71,11 @@ function (
                 .$promise
                 .then(function () {
                     $scope.isSettingsOpen = false;
+                    $translate('notify.form.edit_stage_success', {name: stage.label}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+
+
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
@@ -92,6 +97,9 @@ function (
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
+                    $translate('notify.form.save_stage_success', {name: stage.label}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
                     $location.url('/settings/forms/' + $scope.form.id + '/stages/' + stage.id);
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
@@ -201,6 +209,11 @@ function (
                 })).$promise.then(function (attributeUpdate) {
                     $scope.editIsOpen[$index] = false;
                     $scope.form.attributes[$index] = attributeUpdate;
+                    $translate('notify.form.save_attribute_success', {name: attribute.label}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+
+
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
@@ -210,7 +223,7 @@ function (
 
                 $translate('notify.form.delete_attribute_confirm')
                 .then(function (message) {
-                    if (Notify.showConfirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         if (attribute.id) {
                             FormAttributeEndpoint.delete({
                                 formId: $scope.form.id,
@@ -218,12 +231,17 @@ function (
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
                                 $scope.form.attributes.splice($index, 1);
+                                $translate('notify.form.destroy_attribute_success', {name: attribute.label}).then(function (message) {
+                                    Notify.showNotificationSlider(message);
+                                });
+
+
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest
                             $scope.form.attributes.splice($index, 1);
                         }
-                    }
+                    });
                 });
             };
 

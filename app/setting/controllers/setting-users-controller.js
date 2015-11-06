@@ -74,15 +74,20 @@ function (
         $translate('notify.user.bulk_destroy_confirm', {
             count: $scope.selectedUsers.length
         }).then(function (message) {
-            if ($window.confirm(message)) {
+            Notify.showConfirm(message).then(function () {
                 var calls = [];
                 angular.forEach($scope.selectedUsers, function (userId) {
                     calls.push(UserEndpoint.delete({ id: userId }).$promise);
                 });
 
-                $q.all(calls).then(getUsersForPagination, handleResponseErrors)
+                $q.all(calls).then(function () {
+                    $translate('notify.user.bulk_destroy_success').then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                    getUsersForPagination();
+                }, handleResponseErrors)
                 .finally($scope.filterRole);
-            }
+            }, function () {});
         });
     };
 
@@ -95,14 +100,19 @@ function (
             count: $scope.selectedUsers.length,
             role:  role.display_name
         }).then(function (message) {
-            if ($window.confirm(message)) {
+            Notify.showConfirm(message).then(function () {
                 var calls = [];
                 angular.forEach($scope.selectedUsers, function (userId) {
                     calls.push(UserEndpoint.update({ id: userId }, { id: userId, role: role.name }).$promise);
                 });
-                $q.all(calls).then($scope.filterRole, handleResponseErrors)
+                $q.all(calls).then(function () {
+                    $translate('notify.user.bulk_role_change_success', {role_name: role.name}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                    getUsersForPagination();
+                }, handleResponseErrors)
                 .finally($scope.filterRole);
-            }
+            });
         });
     };
 
