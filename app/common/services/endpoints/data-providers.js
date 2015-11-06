@@ -31,6 +31,9 @@ function (
             method: 'GET',
             cache: cache
         },
+        update: {
+            method: 'PUT'
+        },
         options: {
             method: 'OPTIONS'
         },

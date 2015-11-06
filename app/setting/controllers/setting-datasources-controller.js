@@ -37,19 +37,18 @@ function (
         if (form.$valid) {
             $scope.saving = true;
 
-            $scope.settings.$update({ id: 'data-provider' }, function () {
+            $scope.settings.id = 'data-provider';
+            ConfigEndpoint.saveCache($scope.settings).$promise.then(function (result) {
                 $scope.saving = false;
-                CacheManager.saveCache($scope.settings).$promise.then(function (result) {
-                    $translate('notify.tag.save_success').then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-                }, function (errorResponse) { // error
-                    Notify.showApiErrors(errorResponse);
+                $translate('notify.datasource.save_success').then(function (message) {
+                    Notify.showNotificationSlider(message);
                 });
-
-                // No errors found; disable this.
-                $scope.formsSubmitted[provider] = false;
+            }, function (errorResponse) { // error
+                Notify.showApiErrors(errorResponse);
             });
+
+            // No errors found; disable this.
+            $scope.formsSubmitted[provider] = false;
         } else {
             // Force the accordian group for the form is pop open, to display field errors.
             $scope.formsSubmitted[provider] = true;
