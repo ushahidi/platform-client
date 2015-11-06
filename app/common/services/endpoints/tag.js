@@ -52,6 +52,10 @@ function (
         cache.removeAll();
         return TagEndpoint.query();
     };
+    
+    TagEndpoint.invalidateCache = function () {
+        return cache.removeAll();
+    };
 
     TagEndpoint.saveCache = function (item) {
         var persist = item.id ? TagEndpoint.update : TagEndpoint.save;

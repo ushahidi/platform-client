@@ -40,6 +40,10 @@ function (
         return FormEndpoint.get(id);
     };
 
+    FormEndpoint.invalidateCache = function () {
+        return cache.removeAll();
+    };
+
     FormEndpoint.queryFresh = function () {
         cache.removeAll();
         return FormEndpoint.query();

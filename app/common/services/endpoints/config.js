@@ -37,6 +37,10 @@ function (
             }
         }
     });
+    
+    ConfigEndpoint.invalidateCache = function () {
+        return cache.removeAll();
+    };
 
     ConfigEndpoint.getFresh = function (id) {
         cache.remove(Util.apiUrl(id));
