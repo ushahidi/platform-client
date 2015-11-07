@@ -326,7 +326,7 @@
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
         "set_settings" : "Collection Settings",
-        "add_notification" : "Add notification"
+        "add_notification" : "Add Notification"
     },
     "tag": {
         "add_tag" : "Add Category",
