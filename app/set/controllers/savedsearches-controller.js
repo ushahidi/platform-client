@@ -5,13 +5,17 @@ module.exports = [
     '_',
     'GlobalFilter',
     'savedSearch',
+    'NotificationEndpoint',
+    'Notify',
     function (
         $scope,
         $translate,
         $routeParams,
         _,
         GlobalFilter,
-        savedSearch
+        savedSearch,
+        NotificationEndpoint,
+        Notify
     ) {
         // Set view based on route or set view
         $scope.currentView = function () {
@@ -21,7 +25,6 @@ module.exports = [
         // Add set to the scope
         $scope.savedSearch = savedSearch;
 
-        // Set the page title
         $translate('post.posts').then(function (title) {
             $scope.title = title;
             $scope.$emit('setPageTitle', title);
@@ -52,5 +55,26 @@ module.exports = [
         // we push the real query we're using back into the saved search.
         // This will now include any default params we excluded before
         savedSearch.filter = GlobalFilter.getPostQuery();
+
+        // Show Add Notification link
+        $scope.showNotificationLink = false;
+
+        NotificationEndpoint.get({set: savedSearch.id, ignore403: true}, function (notifications) {
+            // show link if subscription does not exist
+            $scope.showNotificationLink = notifications.length === 0;
+        });
+
+        $scope.saveNotification = function (savedSearch) {
+            var notification = {set: savedSearch.id};
+
+            NotificationEndpoint.save(notification, function (notification) {
+                // No need to show the link after subscription
+                $scope.showNotificationLink = false;
+                $translate('notify.notification.add', {set: savedSearch.name})
+                    .then(function (message) {
+                        Notify.showSingleAlert(message);
+                    });
+            });
+        };
     }
 ];
