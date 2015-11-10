@@ -1,5 +1,5 @@
 <nav class="tabs-menu" dropdown>
-    <label class="delta-alt" translate>view_tabs.view </label>
+    <label class="tabs-menu-trigger delta-alt" translate>view_tabs.view </label>
     <button type="button" class="button-toggle" dropdown-toggle></button>
     <ul class="tabs-menu-list" dropdown-menu>
         <li ng-repeat="view in views" ng-class="{ active: active == view }" ><a ng-href="{{baseUrl + view }}" class="view-{{view}}" translate="view_tabs.{{view}}"></a></li>
