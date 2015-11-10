@@ -3,12 +3,8 @@
 
     <div class="tabs-with-filter">
         <post-view-tabs active="currentView" base-url="{{ baseUrl }}"></post-view-tabs>
-        <post-view-filters half-width="false" ng-if="! hasAside" is-loading="isLoading"></post-view-filters>
+        <post-view-filters half-width="false" has-aside="hasAside" is-loading="isLoading"></post-view-filters>
     </div>
-
-    <aside class="is-right" role="complementary" ng-if="hasAside">
-        <post-view-filters half-width="true" is-loading="isLoading"></post-view-filters>
-    </aside>
 
     <div class="main-col" ng-switch="currentView">
 
