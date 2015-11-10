@@ -18,15 +18,15 @@
                 <label class="tgl-btn" for="{{provider.id}}_enable" ng-click="panelVisible[provider.id] = true"></label>
             </div>
 
-            <h3><a dropdown-toggle>{{provider.name}}</a></h3>
+            <h3><a class="dropdown toggle-content-trigger" dropdown-toggle>{{provider.name}}</a></h3>
 
             <div class="actions">
-                <button type="button" class="button-secondary icon-only-when-small edit toggle-content-trigger" dropdown-toggle>
+                <button type="button" class="button-secondary icon-only-when-small edit init toggle-content-trigger" dropdown-toggle>
                     <span translate>settings.data_sources.provider_options</span>
                 </button>
             </div>
 
-            <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="toggle-content" dropdown-menu>
+            <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="init toggle-content" dropdown-menu>
                 <p class="alert error" ng-if="forms[provider.id].$invalid" translate>settings.data_sources.hint_plugin_needs_configuring</p>
 
                 <div ng-repeat="(option_key, option) in provider.options track by option_key">
