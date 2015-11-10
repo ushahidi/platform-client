@@ -57,7 +57,7 @@
                     >
                         <span translate>user.change_role</span>
                     </button>
-                    <ul class="dropdown-menu toggle-content" dropdown-menu role="menu">
+                    <ul class="dropdown-menu init toggle-content" dropdown-menu role="menu">
                         <li role="presentation" ng-repeat="role in roles">
                             <a ng-click="changeRole(role)">{{role.display_name}}</a>
                         </li>
@@ -97,7 +97,7 @@
                     type="button" aria-expanded="false" dropdown-toggle>
                     <span translate translate-values="{ count: itemsPerPage }">user.per_page</span>
                 </button>
-                <ul class="dropdown-menu toggle-content" role="menu" dropdown-menu>
+                <ul class="dropdown-menu init toggle-content" role="menu" dropdown-menu>
                     <li role="presentation" ng-repeat="count in itemsPerPageOptions">
                         <a ng-click="itemsPerPageChanged(count)">
                             <i class="fa" ng-class="{ 'fa-circle-o': (itemsPerPage !== count), 'fa-dot-circle-o': (itemsPerPage === count) }"></i>
