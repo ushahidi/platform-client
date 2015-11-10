@@ -1,48 +1,49 @@
 <main class="page-content has-aside" role="main">
-    <ul class="breadcrumb">
-      <li><a ng-href="/settings" translate>nav.settings</a></li>
-      <li class="active" translate>nav.users</li>
-    </ul>
-    <h1 class="inline" translate>tool.manage_users</h1>
-    <a ng-href="/settings/users/create" class="cta plus">
-        <span translate>user.add_user</span>
-    </a>
-    <div class="divider white"></div>
-
-    <aside class="is-right" role="complementary">
-        <form ng-submit="applyFilters()" role="search">
-            <div class="filters" dropdown>
-                <div class="filters-show-hide" dropdown-toggle>
-                    <label class="delta-alt" translate>user.search_and_filter</label>
-                    <button type="button" class="button-toggle filter-button-js"></button>
-                </div>
-
-                <div class="filters-container" dropdown-menu>
-                    <div class="keyword-search">
-                        <input name="keyword" class="keyword-input" placeholder="Search Users..." type="text" ng-model="filter.q">
-                        <button type="submit" class="button-secondary icon-only alt search"></button>
+    <div class="page-header">
+        <ul class="breadcrumb">
+          <li><a ng-href="/settings" translate>nav.settings</a></li>
+          <li class="active" translate>nav.users</li>
+        </ul>
+        <h1 class="inline" translate>tool.manage_users</h1>
+        <a ng-href="/settings/users/create" class="cta plus">
+            <span translate>user.add_user</span>
+        </a>
+        <div class="tabs-with-filter" data-view="users">
+            <form ng-submit="applyFilters()" role="search">
+                <div class="filters" dropdown>
+                    <div class="filters-toggle" data-toggle="filters-container" dropdown-toggle>
+                        <h3 class="delta-alt" translate>user.search_and_filter</h3>
                     </div>
-                    <nav class="accordion-menu" accordion>
-                        <ul class="accordion-menu-list">
-                            <li class="accordion-menu-list__item" accordion-group>
-                                <div class="accordion-menu-header">
-                                    <a class="accordion-menu-trigger delta" accordion-trigger translate>user.roles</a>
-                                </div>
-                                <ul class="accordion-menu-content" accordion-content>
-                                    <li>
-                                        <label><input type="radio" name="role-filter" ng-model="filter.role" value="" ng-change="applyFilters()" translate>{{'user.show_all_roles' | translate}}</label>
-                                    </li>
-                                    <li ng-repeat="role in roles">
-                                        <label><input type="radio" name="role-filter" ng-model="filter.role" ng-value="role.name" ng-change="applyFilters()">{{role.display_name}}</label>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
+    
+                    <div class="filters-container" data-message="search" dropdown-menu>
+                        <div class="keyword-search">
+                            <input name="keyword" class="keyword-input" placeholder="Search Users..." type="text" ng-model="filter.q">
+                            <button type="submit" class="button-secondary icon-only alt search"></button>
+                        </div>
+                        <nav class="accordion-menu" accordion>
+                            <ul class="accordion-menu-list">
+                                <li class="accordion-menu-list__item" accordion-group>
+                                    <div class="accordion-menu-header">
+                                        <a class="accordion-menu-trigger delta" accordion-trigger translate>user.roles</a>
+                                    </div>
+                                    <ul class="accordion-menu-content" accordion-content>
+                                        <li>
+                                            <label><input type="radio" name="role-filter" ng-model="filter.role" value="" ng-change="applyFilters()" translate>{{'user.show_all_roles' | translate}}</label>
+                                        </li>
+                                        <li ng-repeat="role in roles">
+                                            <label><input type="radio" name="role-filter" ng-model="filter.role" ng-value="role.name" ng-change="applyFilters()">{{role.display_name}}</label>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </aside>
+            </form>
+        </div>
+    </div>
+
+    <div class="divider white"></div>
 
     <div class="main-col">
 
