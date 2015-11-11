@@ -97,8 +97,8 @@ describe('users management', function () {
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
                                         element(by.css('#alert-modal-text')).getText().then(
                                             function (text) {
-                                              expect(text).toEqual('You cannot change your own role');
-                                        });
+                                                expect(text).toEqual('You cannot change your own role');
+                                            });
                                         element(by.css('button#alert-modal-ok')).click();
                                     });
                                 });
