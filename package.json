@@ -80,7 +80,7 @@
     "angular-xeditable": "0.0.1",
     "checklist-model": "~0.2",
     "d3": "^3.5.5",
-    "dc.js": "git://github.com/dc-js/dc.js#2.0.0-beta.17",
+    "dc": "git://github.com/dc-js/dc.js#2.0.0-beta.17",
     "leaflet": "~0.7.3",
     "leaflet-draw": "~0.2.1",
     "leaflet.locatecontrol": "^0.40.0",
