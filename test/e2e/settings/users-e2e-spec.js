@@ -84,7 +84,9 @@ describe('users management', function () {
 
                             describe('clicking the button', function () {
                                 beforeEach(function () {
-                                    changeRoleButton.click();
+                                    browser.executeScript('window.scrollTo(0,0);').then(function () {
+                                        changeRoleButton.click();
+                                    });
                                 });
 
                                 describe('selecting "Member" as new role', function () {
@@ -93,7 +95,10 @@ describe('users management', function () {
                                         browser.sleep(500);
                                     });
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
-                                        expect(element(by.css('#alert-modal-text')).getText()).toEqual('You cannot change your own role');
+                                        element(by.css('#alert-modal-text')).getText().then(
+                                            function (text) {
+                                              expect(text).toEqual('You cannot change your own role');
+                                        });
                                         element(by.css('button#alert-modal-ok')).click();
                                     });
                                 });
@@ -108,7 +113,10 @@ describe('users management', function () {
 
                             describe('clicking the button', function () {
                                 beforeEach(function () {
-                                    deleteButton.click();
+                                    browser.executeScript('window.scrollTo(0,0);').then(function () {
+                                        deleteButton.click();
+                                    });
+
                                     browser.sleep(500);
                                 });
 
@@ -139,7 +147,9 @@ describe('users management', function () {
 
                             describe('clicking the button', function () {
                                 beforeEach(function () {
-                                    changeRoleButton.click();
+                                    browser.executeScript('window.scrollTo(0,0);').then(function () {
+                                        changeRoleButton.click();
+                                    });
                                 });
 
                                 // Legit broken
