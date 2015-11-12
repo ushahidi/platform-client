@@ -13,19 +13,20 @@
                 <label class="tgl-btn" for="{{provider.id}}_enable"></label>
             </div>
 
-            <div ng-if="forms[provider.id].$invalid" class="toggle-switch">
-                <input class="tgl" id="{{provider.id}}_enable" type="checkbox" disabled="true">
-                <label class="tgl-btn" for="{{provider.id}}_enable" ng-click="panelVisible[provider.id] = true"></label>
-            </div>
-
             <h3><a dropdown-toggle>{{provider.name}}</a></h3>
 
-            <div class="actions">
-                <button type="button" class="button-secondary icon-only-when-small edit toggle-content-trigger" dropdown-toggle>
-                    <span translate>settings.data_sources.provider_options</span>
+            <div class="actions" ng-if="forms[provider.id].$invalid">
+                <button type="button" class="button-secondary icon-only-when-small plus toggle-content-trigger" dropdown-toggle>
+                    <span translate>settings.data_sources.configure</span>
                 </button>
             </div>
 
+            <div class="actions" ng-if="forms[provider.id].$valid">
+                <button type="button" class="button-secondary icon-only-when-small edit toggle-content-trigger" dropdown-toggle>
+                    <span translate>settings.data_sources.edit</span>
+                </button>
+            </div>
+ 
             <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="toggle-content" dropdown-menu>
                 <p class="alert error" ng-if="forms[provider.id].$invalid" translate>settings.data_sources.hint_plugin_needs_configuring</p>
 

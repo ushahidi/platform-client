@@ -5,13 +5,15 @@ module.exports = [
     'ConfigEndpoint',
     'DataProviderEndpoint',
     'Notify',
+    '_',
 function (
     $q,
     $scope,
     $translate,
     ConfigEndpoint,
     DataProviderEndpoint,
-    Notify
+    Notify,
+    _
 ) {
 
     // Displays a loading indicator when busy querying endpoints.
@@ -37,12 +39,21 @@ function (
         if (form.$valid) {
             $scope.saving = true;
 
+            // Enable data provider when saved for the first time
+            if (!$scope.savedProviders[provider]) {
+                $scope.settings.providers[provider] = true;
+            }
+
             $scope.settings.id = 'data-provider';
             ConfigEndpoint.saveCache($scope.settings).$promise.then(function (result) {
                 $scope.saving = false;
                 $translate('notify.datasource.save_success').then(function (message) {
                     Notify.showNotificationSlider(message);
                 });
+
+                // Track saved provider
+                addSavedProvider(provider);
+
             }, function (errorResponse) { // error
                 Notify.showApiErrors(errorResponse);
             });
@@ -56,13 +67,23 @@ function (
         }
     };
 
-    // Get data providers from backend.
-    ConfigEndpoint.get({ id: 'data-provider'}).$promise.then(function (response) {
-        $scope.settings = response;
-    });
+    var addSavedProvider = function (provider) {
+        if (!$scope.savedProviders[provider]) {
+            $scope.savedProviders[provider] = true;
+        }
+    };
 
-    DataProviderEndpoint.queryFresh().$promise.then(function (response) {
-        $scope.providers = response;
-    });
+    $q.all([DataProviderEndpoint.queryFresh().$promise, ConfigEndpoint.get({ id: 'data-provider' }).$promise]).then(function (response) {
+        $scope.providers = response[0];
+        $scope.settings = response[1];
 
+        // Keep track of providers with saved settings
+        $scope.savedProviders = {};
+
+        _.forEach($scope.providers.results, function (provider) {
+            if ($scope.settings[provider.id]) {
+                addSavedProvider(provider.id);
+            }
+        });
+    });
 }];

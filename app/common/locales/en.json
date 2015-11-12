@@ -402,9 +402,11 @@
         "map_default_location": "Default location",
         "data_sources": {
             "data_sources": "Data Sources",
-            "hint_turn_on_off": "You can automatically import data from these sources.",
+            "hint_turn_on_off": "You can configure options for data sources, and then turn sources on and off.",
             "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
             "provider_options": "Options",
+            "configure": "Configure data sattings",
+            "edit": "Edit",
             "save_changes": "Save Changes",
             "saving_changes": "Saving"
         },
