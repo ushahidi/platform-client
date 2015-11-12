@@ -157,31 +157,31 @@ gulp.task('rename-colorpicker', function () {
 gulp.task('rename-leaflet', [], function () {
     return gulp.src(['node_modules/leaflet/dist/leaflet.css'])
         .pipe(rename('_leaflet.scss'))
-        .pipe(gulp.dest('node_modules/leaflet/dist/'))
+        .pipe(gulp.dest('node_modules/leaflet/dist/scss'))
         ;
 });
 gulp.task('rename-leaflet-markercluster', [], function () {
     return gulp.src(['node_modules/leaflet.markercluster/dist/MarkerCluster.css'])
         .pipe(rename('_MarkerCluster.scss'))
-        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/'))
+        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/scss'))
         ;
 });
 gulp.task('rename-leaflet-markercluster-default', [], function () {
     return gulp.src(['node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css'])
         .pipe(rename('_MarkerCluster.Default.scss'))
-        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/'))
+        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/scss'))
         ;
 });
 gulp.task('rename-nvd3', function () {
     return gulp.src(['node_modules/nvd3/build/nv.d3.css'])
         .pipe(rename('_nv.d3.scss'))
-        .pipe(gulp.dest('node_modules/nvd3/build'))
+        .pipe(gulp.dest('node_modules/nvd3/build/scss'))
         ;
 });
 gulp.task('rename-angular-datepicker', function () {
     return gulp.src(['node_modules/angular-datepicker/dist/index.css'])
         .pipe(rename('_index.scss'))
-        .pipe(gulp.dest('node_modules/angular-datepicker/dist'))
+        .pipe(gulp.dest('node_modules/angular-datepicker/dist/scss'))
         ;
 });
 

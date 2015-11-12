@@ -35,6 +35,7 @@
     <post-preview
         ng-repeat="post in posts"
         can-select="userHasBulkActionPermissions()"
+        editable-collections="editableCollections"
         selection-model
         selection-model-type="checkbox"
         selection-model-mode="multiple-additive"

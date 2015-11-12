@@ -43,7 +43,7 @@ function (
         },
         removePost: {
             method: 'DELETE',
-            url: Util.apiUrl('/collections/:collectionId/posts')
+            url: Util.apiUrl('/collections/:collectionId/posts/:id')
         },
         delete: {
             method: 'DELETE'

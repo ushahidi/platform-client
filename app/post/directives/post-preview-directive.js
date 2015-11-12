@@ -60,7 +60,8 @@ function (
         replace: true,
         scope: {
             post:  '=',
-            canSelect: '='
+            canSelect: '=',
+            editableCollections: '='
         },
         templateUrl: 'templates/posts/preview.html',
         link: function (scope) {
@@ -97,13 +98,6 @@ function (
                return 'Everyone';
             };
 
-            var refreshCollections = function () {
-                scope.editableCollections = CollectionEndpoint.editableByMe();
-
-            };
-
-            refreshCollections();
-
             scope.postInCollection = function (collection) {
                 return _.contains(scope.post.sets, String(collection.id));
             };
@@ -123,9 +117,11 @@ function (
                     .$promise.then(function () {
                         $translate('notify.collection.add_to_collection', {collection: collection})
                         .then(function (message) {
-                            scope.post.sets.push(collection.id);
+                            scope.post.sets.push(String(collectionId));
                             Notify.showNotificationSlider(message);
                         });
+                    }, function (errorResponse) {
+                        Notify.showApiErrors(errorResponse); 
                     });
             };
 
@@ -134,11 +130,13 @@ function (
 
                 CollectionEndpoint.removePost({'collectionId': collectionId, 'id': scope.post.id})
                     .$promise.then(function () {
-                        $translate('notify.collection.remove_from_collection', {collection: collection})
+                        $translate('notify.collection.removed_from_collection', {collection: collection})
                         .then(function (message) {
-                            scope.post.sets = _.without(scope.post.sets, collection.id);
+                            scope.post.sets = _.without(scope.post.sets, String(collectionId));
                             Notify.showNotificationSlider(message);
                         });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse); 
                 });
             };
 

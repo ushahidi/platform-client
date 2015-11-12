@@ -47,6 +47,16 @@ function (
                 }
             });
 
+            var refreshCollections = function () {
+                $scope.editableCollections = CollectionEndpoint.editableByMe();
+            };
+
+            $scope.$on('event:collection:update', function () { 
+                refreshCollections();
+            });
+
+            refreshCollections();
+
             $scope.deleteSelectedPosts = function () {
 
                 $translate('notify.post.destroy_confirm').then(function (message) {
