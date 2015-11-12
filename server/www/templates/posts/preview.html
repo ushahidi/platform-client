@@ -4,58 +4,95 @@
     </div>
 
     <div class="post-summary !has-img">
-        <span class="meta-data"><span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}} <!-- via SMS --></span>
-
-        <ul class="categories-list-inline">
-            <li class="category" ng-repeat="tag in post.tags"><i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i> {{tag.tag}}</li>
-            <li class="category">&nbsp;</li>
-        </ul>
-
-        <a ng-href="/posts/{{post.id}}">
-            <!-- <div class="post-img">
-                <img src="http://placehold.it/600x600" alt="">
-            </div> -->
-
-            <h3>{{post.title}}</h3>
-        </a>
-
-        <p>
-            {{post.content}}
-        </p>
-
-        <!-- <p>
-            <a href="">X comments</a>
-        </p> -->
+        <div class="clearfix"></div>
+        <!--
+        <div ng-if="has-img" class="post-img">
+            <img src="http://placehold.it/700x600" alt="">
+        </div>
+        -->
+        <div class="meta-data">
+            <span class="post-type-marker" style="border-top-color: #4fab2f;">
+                {{post.type}}
+            </span>
+            <span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}}<!--, via SMS -->
+        </div>
+        <div class="post-text">
+            <a href="/posts/{{post.id}}">
+                <h3>{{post.title}}</h3>
+            </a>
+            <p>
+                {{post.content}}
+            </p>
+            <!-- <p>
+                <a href="">10 comments</a>
+            </p> -->
+        </div>
     </div>
-
     <div class="step-and-actions">
         <div class="step todo">
             <h4 class="delta-alt" translate>
-                post.step
+                post.who_can_see_this
             </h4>
-
-            <p>{{currentStage}} <a ng-href="/posts/{{post.id}}/edit" ng-if="post.allowed_privileges.indexOf('update') !== -1" class="cta" translate>post.update</a></p>
+            <p>
+                <span class="icon-left fa-globe" translate>
+                    {{publishedFor()}}
+                </span> 
+                <!--
+                <a ng-href="/posts/{{post.id}}/edit" class="cta" translate>post.change</a></p>
+                -->
         </div>
-
-        <span class="dropdown" dropdown ng-show="editableCollections.length > 0 || post.allowed_privileges.indexOf('update') !== -1">
-            <div class="actions-stacked hide-when-large">
-                <button type="button" class="button-secondary plus toggle-js dropdown-toggle" dropdown-toggle>
-                    <span translate>post.options</span>
-                </button>
+        <div class="actions-toggle">
+            <div class="actions-toggle-trigger">
+                <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
             </div>
+            <div id="options" class="actions-content init active">
+                <a class="button-secondary" ng-href="/posts/{{post.id}}/edit">
+                    <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
+                </a>
+<!--
+                <button type="button" class="button-secondary">
+                    <span class="icon-left fa-share">Share</span>
+                </button>
+-->
+                <fieldset dropdown auto-close="outsideClick" ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1" class="custom-fieldset init">
+                    <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
+                        <span class="icon-left fa-th" translate>global_filter.collections.collections</span>
+                    </legend>
 
-            <div class="actions-content toggle-content" dropdown-menu>
-                <ul class="dropdown-menu">
-                    <li ng-show="post.allowed_privileges.indexOf('update') !== -1" >
-                        <a class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
-                            <span translate>post.post_actions.edit</span>
-                        </a>
-                    </li>
-                    <li>
+                    <div class="dropdown-menu init" dropdown-menu>
+                        <div class="form-field search bar">
+                            <label for="search-collections" class="nodisplay" translate>global_filter.collections.search_collections</label>
+                            <input id="search-collections" placeholder="Search Collections" type="search">
+                        </div>
+                        <div class="fieldset-results" ng-repeat="collection in editableCollections">
+                            <div class="form-field checkbox">
+                                <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
+                                <label for="collection">{{collection.name}}</label>
+                            </div>
+                        </div> 
+                        <div class="form-field bar">
+                            <a class="button button-link init" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
+                                <i class="fa fa-plus"></i>
+                                set.create_collection
+                            </a>
+                            <div ng-show="showNewCollectionInput">
+                                <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
+                                <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
+                            </div>   
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+<!--
                       <select-collection ng-model="selectedCollection" ng-change="addToCollection(selectedCollection)"></select-collection>
                     </li>
                 </ul>
             </div>
         </span>
-    </div>
+-->
 </div>
+
+    

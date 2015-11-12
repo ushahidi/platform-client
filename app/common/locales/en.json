@@ -80,7 +80,8 @@
         },
         "collections" : {
             "collections" : "Collections",
-            "all_collections" : "All Collections"
+            "all_collections" : "All Collections",
+            "search_collections" : "Search Collections"
         },
         "filter_tabs" : {
             "q": "Keyword",
@@ -200,6 +201,8 @@
         "no_posts_yet" : "This are no posts yet!",
         "add_first_post": "Add the first post",
         "create_post" : "Create Post",
+        "create" : "Create",
+        "change" : "Change",
         "posted_by" : "Posted by",
         "draft" : "Draft",
         "edited_by" : "Edited by",
@@ -218,6 +221,7 @@
         "published" : "Published",
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
+        "who_can_see_this" : "Who can see this",
         "location" : "Location",
         "categories" : "Categories",
         "status" : "Status",

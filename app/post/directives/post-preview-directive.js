@@ -1,6 +1,7 @@
 module.exports = [
     '$translate',
     '$q',
+    '$rootScope',
     'CollectionEndpoint',
     'TagEndpoint',
     'UserEndpoint',
@@ -12,6 +13,7 @@ module.exports = [
 function (
     $translate,
     $q,
+    $rootScope,
     CollectionEndpoint,
     TagEndpoint,
     UserEndpoint,
@@ -62,13 +64,18 @@ function (
         },
         templateUrl: 'templates/posts/preview.html',
         link: function (scope) {
-
+            scope.showNewCollectionInput = false;
+            scope.newCollection = '';
             scope.getRoleDisplayName = RoleHelper.getRole;
 
             // Ensure completes stages array is numeric
             scope.post.completed_stages = scope.post.completed_stages.map(function (stageId) {
                 return parseInt(stageId);
             });
+
+            scope.toggleCreateCollection = function () {
+                scope.showNewCollectionInput = !scope.showNewCollectionInput
+            };
 
             // Replace tags with full tag object
             scope.post.tags = scope.post.tags.map(function (tag) {
@@ -81,6 +88,33 @@ function (
                     scope.post.form = form;
                 });
             }
+            
+            scope.publishedFor = function () {
+               if (!_.isEmpty(scope.post.published_to)) {
+                   return RoleHelper.getRole(scope.post.published_to[0]);
+               }
+
+               return 'Everyone';
+            };
+
+            var refreshCollections = function () {
+                scope.editableCollections = CollectionEndpoint.editableByMe();
+
+            };
+
+            refreshCollections();
+
+            scope.postInCollection = function (collection) {
+                return _.contains(scope.post.sets, String(collection.id));
+            };
+
+            scope.toggleCollection = function (selectedCollection) {
+                if (_.contains(scope.post.sets, String(selectedCollection.id))) {
+                    scope.removeFromCollection(selectedCollection);
+                } else {
+                    scope.addToCollection(selectedCollection);
+                }
+            };
 
             scope.addToCollection = function (selectedCollection) {
                 var collectionId = selectedCollection.id, collection = selectedCollection.name;
@@ -89,11 +123,41 @@ function (
                     .$promise.then(function () {
                         $translate('notify.collection.add_to_collection', {collection: collection})
                         .then(function (message) {
+                            scope.post.sets.push(collection.id);
                             Notify.showNotificationSlider(message);
                         });
-                        //Deselect post
-                        scope.post.selected = false;
                     });
+            };
+
+            scope.removeFromCollection = function (selectedCollection) {
+                var collectionId = selectedCollection.id, collection = selectedCollection.name;
+
+                CollectionEndpoint.removePost({'collectionId': collectionId, 'id': scope.post.id})
+                    .$promise.then(function () {
+                        $translate('notify.collection.remove_from_collection', {collection: collection})
+                        .then(function (message) {
+                            scope.post.sets = _.without(scope.post.sets, collection.id);
+                            Notify.showNotificationSlider(message);
+                        });
+                });
+            };
+
+            scope.createNewCollection = function (collectionName) {
+                var collection = {
+                  'name': collectionName,
+                  'user_id': $rootScope.currentUser.userId
+                };
+                CollectionEndpoint.save(collection)
+                .$promise
+                .then(function (collection) {
+                    scope.addToCollection(collection);
+                    $rootScope.$broadcast('event:collection:update');
+                    scope.newCollection = '';
+                    scope.toggleCreateCollection();
+                    refreshCollections();
+                }, function (errorReponse) {
+                    Notify.showApiErrors(errorResponse);
+                });
             };
 
             // determine which stage the post is at
