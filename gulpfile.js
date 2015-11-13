@@ -95,10 +95,10 @@ var helpers = {
     }
 };
 
-function errorHandler(err) {
+function errorHandler(error) {
     gutil.beep();
-    gutil.log(err.message || err);
-    notify.onError('Error: <%= error %>')(err.message || err);
+    gutil.log(error);
+    notify.onError('Error: <%= error.message %>')(error);
 }
 
 /**
