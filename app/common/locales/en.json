@@ -522,6 +522,7 @@
             "save_success" : "Saved <a href\"/post/{{id}}\">name</a> post",
             "save_error" : "Unable to save post, please try again",
             "publish_success" : "Post has been published",
+            "set_draft" : "Post has been set as draft",
             "publish_error" : "Unable to publish post, please try again",
             "unpublish_success" : "Post has been unpublished",
             "unpublish_error" : "Unable to unpublish post, please try again",

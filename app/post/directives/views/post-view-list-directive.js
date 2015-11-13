@@ -61,6 +61,7 @@ function (
             });
 
             refreshCollections();
+
             $scope.deleteSelectedPosts = function () {
 
                 $translate('notify.post.destroy_confirm').then(function (message) {

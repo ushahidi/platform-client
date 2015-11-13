@@ -198,21 +198,6 @@ function (
                 Notify.showApiErrors(errorResponse);
             });
     };
-    /*
-    $scope.setPublishedFor = function () {
-        PostEndpoint.update(post)
-        .$promise
-        .then(function () {
-            $translate('notify.post.visible_to', {visible_to: visible_to})
-            .then(function (message) {
-                $scope.post.sets.push(String(collectionId));
-                Notify.showNotificationSlider(message);
-            });
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
-    */
 
     $scope.removeFromCollection = function (selectedCollection) {
         var collectionId = selectedCollection.id, collection = selectedCollection.name;
@@ -260,19 +245,40 @@ function (
         });
     };
 
-    $scope.publishRole;
     $scope.publishPostTo = function () {
+        // first check if stages required have been marked complete
+        var requiredStages = _.where($scope.stages, {required: true}),
+            errors = [];
+
+        _.each(requiredStages, function (stage) {
+            // if this stage isn't complete, add to errors
+            if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
+                errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
+            }
+        });
+
+        if (errors.length) {
+            Notify.showAlerts(errors);
+            return;
+        }
 
         if ($scope.publishRole) {
-            $scope.post.published_to = [$scope.publishRole];
+            if($scope.publishRole === 'draft') {
+                $scope.post.status = 'draft';
+            } else {
+                $scope.post.status = 'published';
+                $scope.post.published_to = [$scope.publishRole];
+            }
         } else {
+            $scope.post.status = 'published';
             $scope.post.published_to = [];
         }
 
         PostEndpoint.update($scope.post).
         $promise
         .then(function () {
-            $translate('notify.post.publish_success')
+            var message = post.status == 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+            $translate(message)
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
@@ -292,6 +298,7 @@ function (
 
         return '';
     };
+    $scope.publishRole = $scope.postIsPublishedTo();
 
 }];
 
