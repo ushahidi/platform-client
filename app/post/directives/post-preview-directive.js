@@ -61,7 +61,8 @@ function (
         scope: {
             post:  '=',
             canSelect: '=',
-            editableCollections: '='
+            editableCollections: '=',
+            selectedItems: '='
         },
         templateUrl: 'templates/posts/preview.html',
         link: function (scope) {
@@ -70,6 +71,9 @@ function (
             scope.getRoleDisplayName = RoleHelper.getRole;
 
             scope.editableByMeCopy = [];
+            scope.updateSelectedItems = function () {
+                $rootScope.$broadcast('event:post:selection', scope.post);
+            };
 
             // Ensure completes stages array is numeric
             scope.post.completed_stages = scope.post.completed_stages.map(function (stageId) {

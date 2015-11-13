@@ -1,6 +1,6 @@
 <div class="single-post-listing">
     <div class="select-post" ng-if="canSelect">
-        <input type="checkbox" value="{post.id}">
+        <input type="checkbox" value="{post.id}" ng-change="updateSelectedItems()" ng-model="post.selected">
     </div>
 
     <div class="post-summary !has-img">
