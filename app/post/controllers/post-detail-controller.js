@@ -4,6 +4,7 @@ module.exports = [
     'post',
     '$translate',
     '$q',
+    '$filter',
     '$location',
     'PostEndpoint',
     'ConfigEndpoint',
@@ -24,6 +25,7 @@ function (
     post,
     $translate,
     $q,
+    $filter,
     $location,
     PostEndpoint,
     ConfigEndpoint,
@@ -173,7 +175,7 @@ function (
     };
 
     $scope.toggleCreateCollection = function () {
-        $scope.showNewCollectionInput = !$scope.showNewCollectionInput
+        $scope.showNewCollectionInput = !$scope.showNewCollectionInput;
     };
 
     $scope.toggleCollection = function (selectedCollection) {
@@ -240,7 +242,7 @@ function (
             $scope.newCollection = '';
             $scope.refreshCollections();
             $scope.addToCollection(collection);
-        }, function (errorReponse) {
+        }, function (errorResponse) {
             Notify.showApiErrors(errorResponse);
         });
     };
@@ -277,7 +279,7 @@ function (
         PostEndpoint.update($scope.post).
         $promise
         .then(function () {
-            var message = post.status == 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+            var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
             $translate(message)
             .then(function (message) {
                 Notify.showNotificationSlider(message);

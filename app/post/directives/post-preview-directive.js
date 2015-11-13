@@ -1,6 +1,7 @@
 module.exports = [
     '$translate',
     '$q',
+    '$filter',
     '$rootScope',
     'CollectionEndpoint',
     'PostEndpoint',
@@ -14,6 +15,7 @@ module.exports = [
 function (
     $translate,
     $q,
+    $filter,
     $rootScope,
     CollectionEndpoint,
     PostEndpoint,
@@ -78,7 +80,7 @@ function (
             });
 
             $scope.toggleCreateCollection = function () {
-                $scope.showNewCollectionInput = !$scope.showNewCollectionInput
+                $scope.showNewCollectionInput = !$scope.showNewCollectionInput;
             };
 
             // Replace tags with full tag object
@@ -169,7 +171,7 @@ function (
                 PostEndpoint.update($scope.post).
                 $promise
                 .then(function (post) {
-                    var message = post.status == 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+                    var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
                     $translate(message)
                     .then(function (message) {
                         Notify.showNotificationSlider(message);
@@ -220,8 +222,7 @@ function (
                     $rootScope.$broadcast('event:collection:update');
                     $scope.newCollection = '';
                     $scope.toggleCreateCollection();
-                    refreshCollections();
-                }, function (errorReponse) {
+                }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
             };
