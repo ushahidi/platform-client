@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     'post',
     '$translate',
     '$q',
@@ -19,6 +20,7 @@ module.exports = [
     'Notify',
 function (
     $scope,
+    $rootScope,
     post,
     $translate,
     $q,
@@ -162,9 +164,16 @@ function (
         });
     };
 
-    $scope.editableCollections = CollectionEndpoint.editableByMe();
+    $scope.refreshCollections = function () {
+      $scope.editableCollections = CollectionEndpoint.editableByMe();
+    };
+    $scope.refreshCollections();
     $scope.postInCollection = function (collection) {
         return _.contains($scope.post.sets, String(collection.id));
+    };
+
+    $scope.toggleCreateCollection = function () {
+        $scope.showNewCollectionInput = !$scope.showNewCollectionInput
     };
 
     $scope.toggleCollection = function (selectedCollection) {
@@ -242,15 +251,10 @@ function (
         CollectionEndpoint.save(collection)
         .$promise
         .then(function (collection) {
-            $translate('notify.collection.created_collection', {collection: collection})
-            .then(function (message) {
-                $scope.addToCollection(collection);
-                $rootScope.$broadcast('event:collection:update');
-                $scope.newCollection = '';
-                $scope.toggleCreateCollection();
-                refreshCollections();
-                Notify.showNotificationSlider(message);
-            });
+            $scope.toggleCreateCollection();
+            $scope.newCollection = '';
+            $scope.refreshCollections();
+            $scope.addToCollection(collection);
         }, function (errorReponse) {
             Notify.showApiErrors(errorResponse);
         });

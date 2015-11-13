@@ -69,6 +69,8 @@ function (
             scope.newCollection = '';
             scope.getRoleDisplayName = RoleHelper.getRole;
 
+            scope.editableByMeCopy = [];
+
             // Ensure completes stages array is numeric
             scope.post.completed_stages = scope.post.completed_stages.map(function (stageId) {
                 return parseInt(stageId);
@@ -98,6 +100,7 @@ function (
                return 'Everyone';
             };
 
+            // TODO all collection code should be moved into a separate standalone widget
             scope.postInCollection = function (collection) {
                 return _.contains(scope.post.sets, String(collection.id));
             };
@@ -139,17 +142,21 @@ function (
                     Notify.showApiErrors(errorResponse); 
                 });
             };
-
+/*
             scope.searchCollections = function (query) {
                 CollectionEndpoint.query(query)
                 .$promise
-                .then(function (collection) {
-
+                .then(function (result) {
+                   scope. 
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse); 
                 });
             };
 
+            scope.clearSearch = function() {
+              scope.editableCollection = scope.editableCollectionCopy;
+            };
+*/
             scope.createNewCollection = function (collectionName) {
                 var collection = {
                   'name': collectionName,
