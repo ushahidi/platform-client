@@ -91,13 +91,13 @@ function (
                     scope.post.form = form;
                 });
             }
-            
-            scope.publishedFor = function () {
-               if (!_.isEmpty(scope.post.published_to)) {
-                   return RoleHelper.getRole(scope.post.published_to[0]);
-               }
 
-               return 'Everyone';
+            scope.publishedFor = function () {
+                if (!_.isEmpty(scope.post.published_to)) {
+                    return RoleHelper.getRole(scope.post.published_to[0]);
+                }
+
+                return 'Everyone';
             };
 
             // TODO all collection code should be moved into a separate standalone widget
@@ -124,7 +124,7 @@ function (
                             Notify.showNotificationSlider(message);
                         });
                     }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse); 
+                        Notify.showApiErrors(errorResponse);
                     });
             };
 
@@ -132,35 +132,35 @@ function (
                 var collectionId = selectedCollection.id, collection = selectedCollection.name;
 
                 CollectionEndpoint.removePost({'collectionId': collectionId, 'id': scope.post.id})
-                    .$promise.then(function () {
+                    .$promise
+                    .then(function () {
                         $translate('notify.collection.removed_from_collection', {collection: collection})
                         .then(function (message) {
                             scope.post.sets = _.without(scope.post.sets, String(collectionId));
                             Notify.showNotificationSlider(message);
                         });
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse); 
-                });
+                    }, function (errorResponse) {
+                        Notify.showApiErrors(errorResponse);
+                    });
             };
-/*
+            /*
             scope.searchCollections = function (query) {
                 CollectionEndpoint.query(query)
                 .$promise
                 .then(function (result) {
-                   scope. 
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse); 
+                    Notify.showApiErrors(errorResponse);
                 });
             };
 
             scope.clearSearch = function() {
               scope.editableCollection = scope.editableCollectionCopy;
             };
-*/
+            */
             scope.createNewCollection = function (collectionName) {
                 var collection = {
-                  'name': collectionName,
-                  'user_id': $rootScope.currentUser.userId
+                    'name': collectionName,
+                    'user_id': $rootScope.currentUser.userId
                 };
                 CollectionEndpoint.save(collection)
                 .$promise

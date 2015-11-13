@@ -165,7 +165,7 @@ function (
     };
 
     $scope.refreshCollections = function () {
-      $scope.editableCollections = CollectionEndpoint.editableByMe();
+        $scope.editableCollections = CollectionEndpoint.editableByMe();
     };
     $scope.refreshCollections();
     $scope.postInCollection = function (collection) {
@@ -195,10 +195,10 @@ function (
                     Notify.showNotificationSlider(message);
                 });
             }, function (errorResponse) {
-                Notify.showApiErrors(errorResponse); 
+                Notify.showApiErrors(errorResponse);
             });
     };
-/*
+    /*
     $scope.setPublishedFor = function () {
         PostEndpoint.update(post)
         .$promise
@@ -209,44 +209,44 @@ function (
                 Notify.showNotificationSlider(message);
             });
         }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse); 
+            Notify.showApiErrors(errorResponse);
         });
     };
-*/
+    */
 
     $scope.removeFromCollection = function (selectedCollection) {
         var collectionId = selectedCollection.id, collection = selectedCollection.name;
 
         CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
-            .$promise.then(function () {
-                $translate('notify.collection.removed_from_collection', {collection: collection})
-                .then(function (message) {
-                    $scope.post.sets = _.without($scope.post.sets, String(collectionId));
-                    Notify.showNotificationSlider(message);
-                });
+        .$promise
+        .then(function () {
+            $translate('notify.collection.removed_from_collection', {collection: collection})
+            .then(function (message) {
+                $scope.post.sets = _.without($scope.post.sets, String(collectionId));
+                Notify.showNotificationSlider(message);
+            });
         }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse); 
+            Notify.showApiErrors(errorResponse);
         });
     };
-/*
+    /*
     scope.searchCollections = function (query) {
         CollectionEndpoint.query(query)
         .$promise
         .then(function (result) {
-           scope. 
         }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse); 
+            Notify.showApiErrors(errorResponse);
         });
     };
 
     scope.clearSearch = function() {
         scope.editableCollection = scope.editableCollectionCopy;
     };
-*/
+    */
     $scope.createNewCollection = function (collectionName) {
         var collection = {
-          'name': collectionName,
-          'user_id': $rootScope.currentUser.userId
+            'name': collectionName,
+            'user_id': $rootScope.currentUser.userId
         };
         CollectionEndpoint.save(collection)
         .$promise
@@ -293,6 +293,5 @@ function (
         return '';
     };
 
-   
 }];
 

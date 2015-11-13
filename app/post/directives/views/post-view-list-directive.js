@@ -51,7 +51,7 @@ function (
                 $scope.editableCollections = CollectionEndpoint.editableByMe();
             };
 
-            $scope.$on('event:collection:update', function () { 
+            $scope.$on('event:collection:update', function () {
                 refreshCollections();
             });
 
