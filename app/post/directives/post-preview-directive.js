@@ -72,11 +72,6 @@ function (
             $scope.getRoleDisplayName = RoleHelper.getRole;
             $scope.availableRoles = RoleHelper.roles();
 
-            $scope.editableByMeCopy = [];
-            $scope.updateSelectedItems = function () {
-                $rootScope.$broadcast('event:post:selection', $scope.post);
-            };
-
             // Ensure completes stages array is numeric
             $scope.post.completed_stages = $scope.post.completed_stages.map(function (stageId) {
                 return parseInt(stageId);
