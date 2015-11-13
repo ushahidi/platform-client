@@ -1,91 +1,92 @@
-<main class="page-content has-aside post-detail">
-
-    <aside class="is-right has-border" role="complementary">
-        <div ng-hide="true">
-            <h4 translate>post.view</h4>
-            <div class="btn-group" dropdown>
-                <a class="btn btn-primary dropdown-toggle" dropdown-toggle href="#">
-                    post.published_to_everyone
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="active"><a translate>post.published_to_everyone</a></li>
-                    <li><a translate translate-values="{role : 'administrators'}">post.published_to_role</a></li>
-                    <li><a translate>post.history</a></li>
-                </ul>
+<main class="page-content post-detail">
+   <div class="main-col">
+        <article class="post-detail" role="article">
+            <header class="post-header">
+                <h1 class="post-title">
+                    {{post.title}}
+                </h1>
+                <div class="post-permissions">
+                    <div class="form-field select">
+                        <div class="custom-select init fa-user">
+                            <select>
+                               <option data-icon="fa-globe">Everyone</option>
+                               <option>Editors</option>
+                               <option data-icon="fa-user" selected="">Administrators</option>
+                            </select>
+                        </div>
+                        <label><span class="nodisplay">Who</span> can see this post</label>
+                    </div>
+                </div>
+                <div class="actions-toggle">
+                    <div class="actions-toggle-trigger">
+                        <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
+                    </div>
+                    <div id="options" class="actions-content init active">
+                        <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
+                            <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
+                        </a>
+                    <!--    <button type="button" class="button-secondary">
+                            <span class="icon-left fa-share">Share</span>
+                        </button>
+                    -->
+                        <fieldset dropdown auto-close="outsideClick" ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1" class="custom-fieldset init">
+                            <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
+                                <span class="icon-left fa-th" translate>global_filter.collections.collections</span>
+                            </legend>
+                            <div class="dropdown-menu init" dropdown-menu>
+                                <div class="form-field search bar">
+                                    <label for="search-collections" class="nodisplay" translate>global_filter.collections.search_collections</label>
+                                    <input id="search-collections" placeholder="Search Collections" type="search">
+                                </div>
+                                <div class="fieldset-results" ng-repeat="collection in editableCollections">
+                                    <div class="form-field checkbox">
+                                        <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
+                                        <label for="collection">{{collection.name}}</label>
+                                    </div>
+                                </div> 
+                                <div class="form-field bar">
+                                    <a class="button button-link init" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
+                                        <i class="fa fa-plus"></i>
+                                        set.create_collection
+                                    </a>
+                                    <div ng-show="showNewCollectionInput">
+                                        <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
+                                        <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
+                                    </div>   
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </header>
+            <div class="vertical-tabs">
+                <div class="vertical-tabs-content">
+                    <div class="post-author">
+                       <img class="circular" src="http://placehold.it/100x100" alt="">
+                       <p>
+                          <strong class="icon-left fa-circle">
+                              {{post.type}}
+                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.author_realname != null">by <a href="/settings/users/{{post.user_id}}">{{post.author_realname}}</a></span>
+                      </p>
+                    </div>
+                    <div ng-if="post.content" class="post-field">
+                        <p sd-model-to-html="post.content"></p>
+                    </div>
+                    <div ng-repeat="(key,value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)" class="post-field">
+                      <post-value
+                          key="key"
+                          value="value"
+                          attribute="form_attributes[key]"
+                      ></post-value>
+                    </div>
+                    <div ng-if="mapDataLoaded" class="post-field">
+                        <h4 ng-if="mapDataLoaded" translate>post.location</h4>
+                        <div ng-if="mapDataLoaded">
+                            <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
+                          </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div ng-show="user.id">
-            <p class="delta-alt" translate>post.posted_by</p>
-            <p><i class="fa  fa-user"></i><a ng-href="/users/{{user.id}}"></a> {{user.realname || post.user.id}}</p>
-        </div>
-
-        <div ng-show="form_name">
-            <p class="delta-alt" translate>post.type</p>
-            <p>
-                {{form_name}}
-            </p>
-        </div>
-
-        <p class="delta-alt" translate>post.status</p>
-        <p>
-            <span ng-show="post.status == 'published'"><i class="fa  fa-check-circle"></i> <span translate>post.published</span></span>
-            <span ng-show="post.status == 'draft'"><i class="fa  fa-circle-o"></i> <span translate>post.unpublished</span></span>
-        </p>
-
-        <p ng-show="post.allowed_privileges.indexOf('update') !== -1">
-            <a type="button" class="button-secondary edit" ng-href="/posts/{{post.id}}/edit">
-                <span translate>post.post_actions.edit</span>
-            </a>
-        </p>
-
-        <div ng-show="editableCollections.length > 0" class="custom-select">
-            <select ng-model="addToCollectionModel">
-                <option value="" translate>set.add_to_collection</option>
-                <option value="{{collection.id}}" ng-repeat="collection in editableCollections">{{collection.name}}</option>
-            </select>
-        </div>
-
-        <p ng-show="post.allowed_privileges.indexOf('delete') !== -1">
-            <button type="button" class="button-destructive delete" ng-click="deletePost()">
-                <i class="fa  fa-trash"></i> <span translate>post.post_actions.delete</span>
-            </button>
-        </p>
-
-    </aside>
-
-    <div class="main-col">
-        <article role="article">
-            <span class="meta-data has-categories"><span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}} <!-- via SMS --></span>
-
-            <ul class="categories-list-inline" ng-show="!!post.tags.length">
-                <li class="category" ng-repeat="tag in post.tags">
-                    <i class="fa fa-{{tag.icon}}" style="color:{{tag.color}}"></i> {{tag.tag}}
-                </li>
-            </ul>
-
-            <h1 class="post-header">{{post.title}}</h1>
-
-        	<div ng-if="post.content" class="post-content" sd-model-to-html="post.content">
-        	</div> <!-- end .post-content -->
-
-            <ul class="post-values list-unstyled">
-                <li
-                    ng-repeat="(key, value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)">
-                    <post-value
-                        key="key"
-                        value="value"
-                        attribute="form_attributes[key]"
-                    ></post-value>
-                </li>
-            </ul><!-- end .post-values -->
-
-            <h3 ng-if="mapDataLoaded" translate>post.location</h3>
-            <div ng-if="mapDataLoaded">
-                <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
-            </div>
-        </article>
+       </article> 
     </div>
-
 </main> <!-- end .post-detail -->
