@@ -92,7 +92,7 @@ angular.module('app',
     })
 
     .config(['$compileProvider', function ($compileProvider) {
-      $compileProvider.debugInfoEnabled(false);
+        $compileProvider.debugInfoEnabled(false);
     }])
 
     .factory('_', function () {
