@@ -85,6 +85,10 @@ function (
                 return 'post.publish_for_everyone';
             };
             // Ensure completes stages array is numeric
+            $scope.updateSelectedItems = function () {
+                $rootScope.$broadcast('event:post:selection', $scope.post);
+            };
+
             $scope.post.completed_stages = $scope.post.completed_stages.map(function (stageId) {
                 return parseInt(stageId);
             });

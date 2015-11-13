@@ -71,6 +71,8 @@ function (
                         var deletePostsPromises = _.map(
                             $scope.selectedPosts,
                             function (post) {
+                                $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id}));
+                                $scope.selectedItems--;
                                 return PostEndpoint.delete({ id: post.id }).$promise;
                             });
                         $q.all(deletePostsPromises).then(getPostsForPagination, handleResponseErrors)
@@ -94,6 +96,7 @@ function (
                 $event && $event.preventDefault();
                 _.forEach($scope.posts, function (post) {
                     post.selected = false;
+                    $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id}));
                     $scope.selectedItems--;
                 });
             };
@@ -102,6 +105,7 @@ function (
                 $event && $event.preventDefault();
                 _.forEach($scope.posts, function (post) {
                     post.selected = true;
+                    $scope.selectedPosts.push(post);
                     $scope.selectedItems++;
                 });
             };
