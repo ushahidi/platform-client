@@ -4,15 +4,16 @@ module.exports = [
     'ConfigEndpoint',
     'Config',
     '$rootScope',
+    'MenuHelper',
 function (
     $scope,
     Authentication,
     ConfigEndpoint,
     Config,
-    $rootScope
+    $rootScope,
+    MenuHelper
 ) {
     $scope.isHome = true;
-    $scope.activityIsAvailable = (typeof Config.features.views !== 'undefined') ? Config.features.views.activity : true;
 
     // Start with preloaded config
     $scope.site = Config.site;
@@ -64,6 +65,7 @@ function (
         Authentication.logout();
     };
 
-
+    $scope.mainMenu = MenuHelper.getMenuItems('main');
+    $scope.settingsMenu = MenuHelper.getMenuItems('settings');
 
 }];

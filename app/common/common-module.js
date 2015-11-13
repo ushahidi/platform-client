@@ -7,8 +7,11 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.file-upload',
   'ushahidi.common.notification-slider',
 	'ushahidi.common.sticky-sidebar',
-    'ushahidi.common.chart'
+	'ushahidi.common.chart'
 ])
+
+.provider('MenuHelper', require('./providers/menu-helper.js'))
+.factory('MenuHelperClass', require('./services/menu-helper.js'))
 
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
