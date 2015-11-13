@@ -140,6 +140,16 @@ function (
                 });
             };
 
+            scope.searchCollections = function (query) {
+                CollectionEndpoint.query(query)
+                .$promise
+                .then(function (collection) {
+
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse); 
+                });
+            };
+
             scope.createNewCollection = function (collectionName) {
                 var collection = {
                   'name': collectionName,

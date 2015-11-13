@@ -15,6 +15,7 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
+    'RoleHelper',
     'Notify',
 function (
     $scope,
@@ -33,10 +34,12 @@ function (
     L,
     leafletData,
     _,
+    RoleHelper,
     Notify
 ) {
     $scope.post = post;
     $scope.mapDataLoaded = false;
+    $scope.availableRoles = RoleHelper.roles();
 
     // Set page title to post title, if there is one available.
     if (post.title && post.title.length) {
@@ -160,18 +163,132 @@ function (
     };
 
     $scope.editableCollections = CollectionEndpoint.editableByMe();
-
-    var addToCollection = function (collectionId) {
-        CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id});
+    $scope.postInCollection = function (collection) {
+        return _.contains($scope.post.sets, String(collection.id));
     };
-    $scope.$watch(function () {
-        return $scope.addToCollectionModel;
-    }, function (collectionId) {
-        if (collectionId) {
-            addToCollection(collectionId);
-        }
-        $scope.addToCollectionModel = '';
-    });
 
+    $scope.toggleCollection = function (selectedCollection) {
+        if (_.contains($scope.post.sets, String(selectedCollection.id))) {
+            $scope.removeFromCollection(selectedCollection);
+        } else {
+            $scope.addToCollection(selectedCollection);
+        }
+    };
+
+    $scope.addToCollection = function (selectedCollection) {
+        var collectionId = selectedCollection.id, collection = selectedCollection.name;
+
+        CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id})
+            .$promise.then(function () {
+                $translate('notify.collection.add_to_collection', {collection: collection})
+                .then(function (message) {
+                    $scope.post.sets.push(String(collectionId));
+                    Notify.showNotificationSlider(message);
+                });
+            }, function (errorResponse) {
+                Notify.showApiErrors(errorResponse); 
+            });
+    };
+/*
+    $scope.setPublishedFor = function () {
+        PostEndpoint.update(post)
+        .$promise
+        .then(function () {
+            $translate('notify.post.visible_to', {visible_to: visible_to})
+            .then(function (message) {
+                $scope.post.sets.push(String(collectionId));
+                Notify.showNotificationSlider(message);
+            });
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse); 
+        });
+    };
+*/
+
+    $scope.removeFromCollection = function (selectedCollection) {
+        var collectionId = selectedCollection.id, collection = selectedCollection.name;
+
+        CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
+            .$promise.then(function () {
+                $translate('notify.collection.removed_from_collection', {collection: collection})
+                .then(function (message) {
+                    $scope.post.sets = _.without($scope.post.sets, String(collectionId));
+                    Notify.showNotificationSlider(message);
+                });
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse); 
+        });
+    };
+/*
+    scope.searchCollections = function (query) {
+        CollectionEndpoint.query(query)
+        .$promise
+        .then(function (result) {
+           scope. 
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse); 
+        });
+    };
+
+    scope.clearSearch = function() {
+        scope.editableCollection = scope.editableCollectionCopy;
+    };
+*/
+    $scope.createNewCollection = function (collectionName) {
+        var collection = {
+          'name': collectionName,
+          'user_id': $rootScope.currentUser.userId
+        };
+        CollectionEndpoint.save(collection)
+        .$promise
+        .then(function (collection) {
+            $translate('notify.collection.created_collection', {collection: collection})
+            .then(function (message) {
+                $scope.addToCollection(collection);
+                $rootScope.$broadcast('event:collection:update');
+                $scope.newCollection = '';
+                $scope.toggleCreateCollection();
+                refreshCollections();
+                Notify.showNotificationSlider(message);
+            });
+        }, function (errorReponse) {
+            Notify.showApiErrors(errorResponse);
+        });
+    };
+
+    $scope.publishRole;
+    $scope.publishPostTo = function () {
+
+        if ($scope.publishRole) {
+            $scope.post.published_to = [$scope.publishRole];
+        } else {
+            $scope.post.published_to = [];
+        }
+
+        PostEndpoint.update($scope.post).
+        $promise
+        .then(function () {
+            $translate('notify.post.publish_success')
+            .then(function (message) {
+                Notify.showNotificationSlider(message);
+            });
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse);
+        });
+    };
+
+    $scope.postIsPublishedTo = function () {
+        if ($scope.post.status === 'draft') {
+            return 'draft';
+        }
+
+        if (!_.isEmpty($scope.post.published_to)) {
+            return $scope.post.published_to[0];
+        }
+
+        return '';
+    };
+
+   
 }];
 

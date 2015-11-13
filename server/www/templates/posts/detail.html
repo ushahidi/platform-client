@@ -8,13 +8,34 @@
                 <div class="post-permissions">
                     <div class="form-field select">
                         <div class="custom-select init fa-user">
-                            <select>
-                               <option data-icon="fa-globe">Everyone</option>
-                               <option>Editors</option>
-                               <option data-icon="fa-user" selected="">Administrators</option>
+                            <select 
+                                ng-change="publishPostTo()" 
+                                ng-model="publishRole"
+                            >
+                               <option 
+                                  ng-selected="postIsPublishedTo() === 'draft'"
+                                  value="draft"
+                                  translate>
+                                      post.publish_for_you
+                                  </option>
+                               <option 
+                                  ng-selected="postIsPublishedTo() === ''"
+                                  data-icon="fa-globe"
+                                  value=""
+                                  translate>
+                                      post.publish_for_everyone
+                                </option>
+                               <option
+                                  ng-repeat="role in availableRoles track by role.name"
+                                  ng-selected="postIsPublishedTo() === role.name"
+                                  data-icon="fa-user"
+                                  value="{{role.name}}"
+                                  >
+                                      {{role.display_name}}
+                                </option>
                             </select>
                         </div>
-                        <label><span class="nodisplay">Who</span> can see this post</label>
+                        <label><span class="nodisplay">Who</span> <span translate>post.can_see_this_post</span></label>
                     </div>
                 </div>
                 <div class="actions-toggle">
@@ -66,7 +87,7 @@
                        <p>
                           <strong class="icon-left fa-circle">
                               {{post.type}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.author_realname != null">by <a href="/settings/users/{{post.user_id}}">{{post.author_realname}}</a></span>
+                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="user.realname != null">by <a href="/settings/users/{{user.id}}">{{post.author_realname}}</a></span>
                       </p>
                     </div>
                     <div ng-if="post.content" class="post-field">

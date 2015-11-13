@@ -196,6 +196,8 @@
     },
     "post": {
         "posts" : "Posts",
+        "publish_for_you" : "Just you",
+        "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
         "no_search_results" : "Your search didn't match any posts",
         "no_posts_yet" : "This are no posts yet!",
@@ -222,6 +224,7 @@
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
         "who_can_see_this" : "Who can see this",
+        "can_see_this_post" : "can see this post",
         "location" : "Location",
         "categories" : "Categories",
         "status" : "Status",
@@ -569,6 +572,7 @@
         },
         "collection" : {
             "delete_collection_confirm" : "Are you sure you want to delete this collection?",
+            "created_collection" : "Collection {{collection}} created successfully",
             "add_to_collection" : "Post has been added to {{collection}}",
             "removed_from_collection" : "Post has been removed from {{collection}}",
             "bulk_add_to_collection" : "{{count}} posts have been added to {{collection}}"
