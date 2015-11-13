@@ -6,7 +6,13 @@
                     {{post.title}}
                 </h1>
                 <div class="post-permissions">
-                    <div class="form-field select">
+                    <p ng-if="post.allowed_privileges.indexOf('update') == -1">
+                        <span class="icon-left fa-globe" translate>
+                            {{publishedFor()}}
+                        </span>
+                    </p>
+
+                    <div ng-if="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
                         <div class="custom-select init fa-user">
                             <select 
                                 ng-change="publishPostTo()" 
@@ -48,7 +54,7 @@
                             <span class="icon-left fa-share">Share</span>
                         </button>
                     -->
-                        <fieldset dropdown auto-close="outsideClick" ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1" class="custom-fieldset init">
+                        <fieldset ng-if="post.allowed_privileges.indexOf('update') !== -1" dropdown auto-close="outsideClick" ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1" class="custom-fieldset init">
                             <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
                                 <span class="icon-left fa-th" translate>global_filter.collections.collections</span>
                             </legend>

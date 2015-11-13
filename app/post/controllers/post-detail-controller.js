@@ -44,6 +44,16 @@ function (
     $scope.post = post;
     $scope.mapDataLoaded = false;
     $scope.availableRoles = RoleHelper.roles();
+    $scope.publishedFor = function () {
+        if ($scope.post.status === 'draft') {
+            return 'post.publish_for_you';
+        }
+        if (!_.isEmpty($scope.post.published_to)) {
+            return RoleHelper.getRole($scope.post.published_to[0]);
+        }
+
+        return 'post.publish_for_everyone';
+    };
 
     // Set page title to post title, if there is one available.
     if (post.title && post.title.length) {
@@ -265,7 +275,7 @@ function (
         }
 
         if ($scope.publishRole) {
-            if($scope.publishRole === 'draft') {
+            if ($scope.publishRole === 'draft') {
                 $scope.post.status = 'draft';
             } else {
                 $scope.post.status = 'published';

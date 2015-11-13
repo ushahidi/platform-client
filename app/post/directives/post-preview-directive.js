@@ -74,6 +74,16 @@ function (
             $scope.getRoleDisplayName = RoleHelper.getRole;
             $scope.availableRoles = RoleHelper.roles();
 
+            $scope.publishedFor = function () {
+                if ($scope.post.status === 'draft') {
+                    return 'post.publish_for_you';
+                }
+                if (!_.isEmpty($scope.post.published_to)) {
+                    return RoleHelper.getRole($scope.post.published_to[0]);
+                }
+
+                return 'post.publish_for_everyone';
+            };
             // Ensure completes stages array is numeric
             $scope.post.completed_stages = $scope.post.completed_stages.map(function (stageId) {
                 return parseInt(stageId);
@@ -157,7 +167,7 @@ function (
                 }
 
                 if ($scope.publishRole) {
-                    if($scope.publishRole === 'draft') {
+                    if ($scope.publishRole === 'draft') {
                         $scope.post.status = 'draft';
                     } else {
                         $scope.post.status = 'published';
