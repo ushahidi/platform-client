@@ -47,6 +47,21 @@ function (
                 }
             });
 
+            var refreshCollections = function () {
+                $scope.editableCollections = CollectionEndpoint.editableByMe();
+            };
+
+            $scope.$on('event:post:selection', function (event, post) {
+                (post.selected ? $scope.selectedItems++ : $scope.selectedItems--);
+                (post.selected ? $scope.selectedPosts.push(post) : $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id})));
+            });
+
+            $scope.$on('event:collection:update', function () {
+                refreshCollections();
+            });
+
+            refreshCollections();
+
             $scope.deleteSelectedPosts = function () {
 
                 $translate('notify.post.destroy_confirm').then(function (message) {
@@ -54,40 +69,16 @@ function (
                         // ask server to delete selected posts
                         // and refetch posts from server
                         var deletePostsPromises = _.map(
-                            $scope.selectedItems,
+                            $scope.selectedPosts,
                             function (post) {
+                                $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id}));
+                                $scope.selectedItems--;
                                 return PostEndpoint.delete({ id: post.id }).$promise;
                             });
                         $q.all(deletePostsPromises).then(getPostsForPagination, handleResponseErrors)
                         .finally(getPostsForPagination);
                     });
                 });
-            };
-
-            $scope.addSelectedPostsToCollection = function (selectedCollection) {
-                if ($scope.selectedItems.length === 0) {
-                    return;
-                }
-                var collectionId = selectedCollection.id,
-                    collection = selectedCollection.name,
-                    // Add each post to the collection and return a promise
-                    promises = _.map($scope.selectedItems, function (post) {
-                        return CollectionEndpoint.addPost({'collectionId': collectionId, 'id': post.id}).$promise;
-                    });
-
-                // Show a single notification when all selected posts have been added to the collection
-                $q.all(promises).then(function () {
-                    $translate('notify.collection.bulk_add_to_collection', {
-                        count: $scope.selectedItems.length,
-                        collection: collection
-                    }).then(function (message) {
-                        Notify.showSingleAlert(message);
-                    });
-                    // Deselect posts
-                    _.forEach($scope.selectedItems, function (post) {
-                        post.selected = false;
-                    });
-                }, handleResponseErrors);
             };
 
             $scope.itemsPerPageChanged = function (count) {
@@ -105,6 +96,8 @@ function (
                 $event && $event.preventDefault();
                 _.forEach($scope.posts, function (post) {
                     post.selected = false;
+                    $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id}));
+                    $scope.selectedItems--;
                 });
             };
 
@@ -112,11 +105,13 @@ function (
                 $event && $event.preventDefault();
                 _.forEach($scope.posts, function (post) {
                     post.selected = true;
+                    $scope.selectedPosts.push(post);
+                    $scope.selectedItems++;
                 });
             };
 
             $scope.allSelectedOnCurrentPage = function ($event) {
-                return $scope.selectedItems.length === $scope.posts.length;
+                return $scope.selectedItems === $scope.posts.length;
             };
 
             $scope.hasFilters = function () {
@@ -129,7 +124,8 @@ function (
             // --- start: initialization
             $scope.pageChanged = getPostsForPagination;
             $scope.currentPage = 1;
-            $scope.selectedItems = [];
+            $scope.selectedItems = 0;
+            $scope.selectedPosts = [];
             $scope.itemsPerPageOptions = [10, 20, 50];
             $scope.itemsPerPage = $scope.itemsPerPageOptions[0];
 
