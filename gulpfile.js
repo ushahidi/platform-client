@@ -145,7 +145,7 @@ gulp.task('css', [], function () {
         .pipe(gulp.dest(options.www + '/css'));
 });
 
-/**
+/** 
  * Copy icon files for leaflet from node_modules into server/www/css/images
  */
 gulp.task('copy-leaflet-icons', [], function () {

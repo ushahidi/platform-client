@@ -48,7 +48,13 @@ function (
             url: Util.apiUrl('/posts/:id/stats'),
             isArray: false,
             paramSerializer: '$httpParamSerializerJQLike'
+        },
+        collections: {
+            method: 'GET',
+            url: Util.apiUrl('/posts/:id/collections'),
+            isArray: true
         }
+
     });
 
     $rootScope.$on('event:authentication:logout:succeeded', function () {
