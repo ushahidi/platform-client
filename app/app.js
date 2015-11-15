@@ -91,6 +91,10 @@ angular.module('app',
         CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders')
     })
 
+    .config(['$compileProvider', function ($compileProvider) {
+        $compileProvider.debugInfoEnabled(false);
+    }])
+
     .factory('_', function () {
         return require('underscore/underscore');
     })

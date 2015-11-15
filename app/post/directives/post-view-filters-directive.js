@@ -12,6 +12,7 @@ function (
         replace: true,
         scope: {
             halfWidth: '=',
+            hasAside: '=',
             isLoading: '='
         },
         templateUrl: 'templates/posts/post-view-filters.html',
