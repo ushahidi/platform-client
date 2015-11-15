@@ -95,10 +95,10 @@ var helpers = {
     }
 };
 
-function errorHandler(err) {
+function errorHandler(error) {
     gutil.beep();
-    gutil.log(err.message || err);
-    notify.onError('Error: <%= error %>')(err.message || err);
+    gutil.log(error);
+    notify.onError('Error: <%= error.message %>')(error);
 }
 
 /**
@@ -145,47 +145,7 @@ gulp.task('css', [], function () {
         .pipe(gulp.dest(options.www + '/css'));
 });
 
-/**
- * Rename tasks
- */
-gulp.task('rename-colorpicker', function () {
-    return gulp.src(['node_modules/angular-bootstrap-colorpicker/css/colorpicker.css'])
-        .pipe(rename('_colorpicker.scss'))
-        .pipe(gulp.dest('node_modules/angular-bootstrap-colorpicker/scss/'))
-        ;
-});
-gulp.task('rename-leaflet', [], function () {
-    return gulp.src(['node_modules/leaflet/dist/leaflet.css'])
-        .pipe(rename('_leaflet.scss'))
-        .pipe(gulp.dest('node_modules/leaflet/dist/scss'))
-        ;
-});
-gulp.task('rename-leaflet-markercluster', [], function () {
-    return gulp.src(['node_modules/leaflet.markercluster/dist/MarkerCluster.css'])
-        .pipe(rename('_MarkerCluster.scss'))
-        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/scss'))
-        ;
-});
-gulp.task('rename-leaflet-markercluster-default', [], function () {
-    return gulp.src(['node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css'])
-        .pipe(rename('_MarkerCluster.Default.scss'))
-        .pipe(gulp.dest('node_modules/leaflet.markercluster/dist/scss'))
-        ;
-});
-gulp.task('rename-nvd3', function () {
-    return gulp.src(['node_modules/nvd3/build/nv.d3.css'])
-        .pipe(rename('_nv.d3.scss'))
-        .pipe(gulp.dest('node_modules/nvd3/build/scss'))
-        ;
-});
-gulp.task('rename-angular-datepicker', function () {
-    return gulp.src(['node_modules/angular-datepicker/dist/index.css'])
-        .pipe(rename('_index.scss'))
-        .pipe(gulp.dest('node_modules/angular-datepicker/dist/scss'))
-        ;
-});
-
-/**
+/** 
  * Copy icon files for leaflet from node_modules into server/www/css/images
  */
 gulp.task('copy-leaflet-icons', [], function () {
@@ -194,13 +154,7 @@ gulp.task('copy-leaflet-icons', [], function () {
 });
 
 gulp.task('rename', [
-    'copy-leaflet-icons',
-    'rename-leaflet',
-    'rename-colorpicker',
-    'rename-leaflet-markercluster',
-    'rename-leaflet-markercluster-default',
-    'rename-nvd3',
-    'rename-angular-datepicker'
+    'copy-leaflet-icons'
     ], function () {});
 
 /**
