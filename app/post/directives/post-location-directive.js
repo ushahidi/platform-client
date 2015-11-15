@@ -2,11 +2,13 @@ module.exports = [
     '$http',
     'leafletData',
     'Geocoding',
+    'Maps',
     '_',
 function (
     $http,
     leafletData,
     Geocoding,
+    Maps,
     _
 ) {
 
@@ -29,14 +31,20 @@ function (
             $scope,
             Leaflet
         ) {
-
             var markers = {},
-                center = {
-                    lat: 36.079868,
-                    lng: -79.819416,
-                    zoom: 4
-                },
                 mapName = $scope.id + '-map';
+
+            angular.extend($scope, Maps.getInitialScope());
+
+            // Try to use value from settings
+            var config = Maps.getAngularScopeParams();
+
+            config.then(function (params) {
+                angular.extend($scope, params);
+
+                // save initial center for reset
+                $scope.initialCenter = params.center;
+            });
 
             // init markers with current model value
             if ($scope.model) {
@@ -46,7 +54,8 @@ function (
                         lng: $scope.model.lon
                     }
                 };
-                center = {
+
+                $scope.center = {
                     lat: $scope.model.lat,
                     lng: $scope.model.lon,
                     zoom: 4
@@ -55,12 +64,6 @@ function (
 
             // leaflet map or location attribute
             angular.extend($scope, {
-                defaults: {
-                    scrollWheelZoom: false
-                },
-
-                center: center,
-
                 markers: markers,
 
                 updateLatLon: function (lat, lon) {
@@ -69,7 +72,6 @@ function (
                         lon: lon
                     };
                 },
-
 
                 updateMarkerPosition: function (lat, lon) {
                     $scope.markers.m1 = {
@@ -105,7 +107,7 @@ function (
 
                 clear: function () {
                     $scope.model = null;
-                    $scope.center = center;
+                    $scope.center = $scope.initialCenter;
                     $scope.markers = {};
                 }
             });
