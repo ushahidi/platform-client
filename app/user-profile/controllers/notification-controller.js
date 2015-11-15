@@ -8,6 +8,7 @@ module.exports = [
     'UserEndpoint',
     'ContactEndpoint',
     'CollectionEndpoint',
+    'SavedSearchEndpoint',
     'NotificationEndpoint',
     'Notify',
     function (
@@ -20,6 +21,7 @@ module.exports = [
         UserEndpoint,
         ContactEndpoint,
         CollectionEndpoint,
+        SavedSearchEndpoint,
         NotificationEndpoint,
         Notify
 ) {
@@ -39,7 +41,12 @@ module.exports = [
                 _.forEach(notifications, function (notification) {
                     // Add name of the subscribed collection
                     CollectionEndpoint.get({collectionId: notification.set.id}, function (collection) {
-                        notification.collection = collection.name;
+                        notification.name = collection.name;
+                    }, function () {
+                        // Try to get the SavedSearch name instead
+                        SavedSearchEndpoint.get({id: notification.set.id}, function (savedSearch) {
+                            notification.name = savedSearch.name;
+                        });
                     });
 
                     // @todo Probably use something else here instead of toggling.
@@ -55,17 +62,17 @@ module.exports = [
 
         $scope.deleteNotification = function (notification) {
             $translate('notify.notification.delete_confirm').then(function (message) {
-                if (window.confirm(message)) {
+                Notify.showConfirm(message).then(function () {
                     notification.$delete({id: notification.id}, function () {
                         // releod notificatons;
                         loadNotifications();
                     }, function () {
                         showErrorMessage('notification.error_message');
                     });
-                } else {
+                }, function () {
                     // Toggle this back on after the user cancels
                     notification.checked = true;
-                }
+                });
             });
         };
 

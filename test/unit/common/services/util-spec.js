@@ -47,7 +47,8 @@ describe('Util', function () {
             expect(Util.transformResponse(responseString)).toEqual(
                 {
                     'id': 'map',
-                    'another_key': 'another_value'
+                    'another_key': 'another_value',
+                    'url': 'http://ushahidi-backend/api/v2/config/map'
                 }
             );
         });

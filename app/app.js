@@ -23,6 +23,7 @@ window.d3 = require('d3'); // Required for nvd3
 window.dc = require('dc'); // Required for charting used in activity page
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
+require('angular-cache');
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -71,6 +72,7 @@ angular.module('app',
         'ngGeolocation',
         'nvd3',
         'selectionModel',
+        'angular-cache',
         'ushahidi.common',
         'ushahidi.posts',
         'ushahidi.tools',
@@ -88,6 +90,10 @@ angular.module('app',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
         CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders')
     })
+
+    .config(['$compileProvider', function ($compileProvider) {
+        $compileProvider.debugInfoEnabled(false);
+    }])
 
     .factory('_', function () {
         return require('underscore/underscore');

@@ -88,6 +88,10 @@
                 <ng-view></ng-view>
             </div>
 
+            <div class="wrapper">
+                <ng-include src="'templates/partials/notification-system.html'"></ng-include>
+            </div>
+
             <footer role="contentinfo" ng-controller="navigation">
                 <div class="wrapper">
                     <div class="footer-container">
@@ -102,11 +106,6 @@
                                 <li><a href="https://github.com/ushahidi/platform/issues/new" translate>app.report_a_bug</a></li>
                                 <li><a ng-href="/tools/settings" ng-show="isAdmin()" translate>nav.settings</a></li>
                             </ul>
-                        </div>
-                        <div class="footer-secondary-col">
-                            <a class="button button-create" ng-href="/posts/create">
-                                <span translate>nav.add_post</span>
-                            </a>
                         </div>
                     </div>
                 </div>

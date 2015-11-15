@@ -5,6 +5,7 @@ function (
         '$scope',
         '$filter',
         '$location',
+        '$translate',
         'PostEntity',
         'PostEndpoint',
         'RoleHelper',
@@ -18,6 +19,7 @@ function (
             $scope,
             $filter,
             $location,
+            $translate,
             postEntity,
             PostEndpoint,
             RoleHelper,
@@ -34,6 +36,7 @@ function (
             $scope.getRoleDisplayName = RoleHelper.getRole;
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
+            $scope.validationErrors = [];
 
             var
                 fetchAttributes = function (formId) {
@@ -186,6 +189,7 @@ function (
                 }
 
                 $scope.post.status = 'published';
+                $scope.userSavedPost = true;
                 if (role) {
                     $scope.post.published_to = [role];
                 } else {
@@ -245,7 +249,16 @@ function (
 
                 request.$promise.then(function (response) {
                     if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
-                        $location.path('/posts/' + response.id);
+                        $scope.saving_post = false;
+                        $scope.post.id = response.id;
+                        $translate(
+                            'notify.post.save_success',
+                            {
+                                id: $scope.post.id,
+                                name: $scope.post.title
+                            }).then(function (message) {
+                            Notify.showNotificationSlider(message);
+                        });
                     } else {
                         Notify.showSingleAlert('Saved!');
                         $location.path('/');

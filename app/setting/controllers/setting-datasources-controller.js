@@ -4,12 +4,14 @@ module.exports = [
     '$translate',
     'ConfigEndpoint',
     'DataProviderEndpoint',
+    'Notify',
 function (
     $q,
     $scope,
     $translate,
     ConfigEndpoint,
-    DataProviderEndpoint
+    DataProviderEndpoint,
+    Notify
 ) {
 
     // Displays a loading indicator when busy querying endpoints.
@@ -35,12 +37,18 @@ function (
         if (form.$valid) {
             $scope.saving = true;
 
-            $scope.settings.$update({ id: 'data-provider' }, function () {
+            $scope.settings.id = 'data-provider';
+            ConfigEndpoint.saveCache($scope.settings).$promise.then(function (result) {
                 $scope.saving = false;
-
-                // No errors found; disable this.
-                $scope.formsSubmitted[provider] = false;
+                $translate('notify.datasource.save_success').then(function (message) {
+                    Notify.showNotificationSlider(message);
+                });
+            }, function (errorResponse) { // error
+                Notify.showApiErrors(errorResponse);
             });
+
+            // No errors found; disable this.
+            $scope.formsSubmitted[provider] = false;
         } else {
             // Force the accordian group for the form is pop open, to display field errors.
             $scope.formsSubmitted[provider] = true;
@@ -48,10 +56,13 @@ function (
         }
     };
 
-    // Get data providers from bacend.
-    $q.all([DataProviderEndpoint.query(), ConfigEndpoint.get({ id: 'data-provider' })]).then(function (response) {
-        $scope.providers = response[0];
-        $scope.settings = response[1];
+    // Get data providers from backend.
+    ConfigEndpoint.get({ id: 'data-provider'}).$promise.then(function (response) {
+        $scope.settings = response;
+    });
+
+    DataProviderEndpoint.queryFresh().$promise.then(function (response) {
+        $scope.providers = response;
     });
 
 }];

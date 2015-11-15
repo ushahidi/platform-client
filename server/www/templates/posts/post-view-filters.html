@@ -1,10 +1,9 @@
 <div class="filters" dropdown auto-close="disabled">
-    <div class="filters-show-hide" ng-class="{ half : halfWidth }">
+    <div class="filters-toggle init" ng-show="! hasAside" dropdown-toggle>
         <label class="delta-alt">Search <span>&amp; Filter</span></label>
-        <button type="button" class="button-toggle filter-button-js" dropdown-toggle></button>
     </div>
 
-    <div class="filters-container" dropdown-menu>
+    <div class="filters-container init" ng-class="{'active': hasAside}" dropdown-menu>
         <form ng-submit="applyFilter()" role="search">
             <div class="keyword-search">
                 <input type="text" name="q" class="keyword-input" placeholder="{{'global_filter.search' | translate}}" ng-model="filter.q">

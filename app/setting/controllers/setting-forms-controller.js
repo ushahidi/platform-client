@@ -5,13 +5,15 @@ module.exports = [
     '$q',
     'FormEndpoint',
     'FormStageEndpoint',
+    'Notify',
 function (
     $scope,
     $translate,
     $location,
     $q,
     FormEndpoint,
-    FormStageEndpoint
+    FormStageEndpoint,
+    Notify
 ) {
 
     $translate('nav.posts_and_entities').then(function (title) {
@@ -33,7 +35,7 @@ function (
     $scope.saveNewForm = function (form) {
         // Save the form and translate the Structure stage label
         $q.all({
-            form: FormEndpoint.save(form).$promise,
+            form: FormEndpoint.saveCache(form).$promise,
             label: $translate('form.structure_step')
         }).then(function (data) {
             form = data.form;
@@ -43,11 +45,14 @@ function (
 
             // Save the Structure stage and go to the editor
             FormStageEndpoint
-                .save(stage)
+                .saveCache(stage)
                 .$promise
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
+                    $translate('notify.form.save_success', {name: form.name}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
                     $location.url('/settings/forms/' + form.id + '/stages/' + stage.id);
                 });
         });

@@ -8,6 +8,7 @@ module.exports = function (config) {
             'node_modules/angular-translate/dist/angular-translate.js',
             'node_modules/angular-resource/angular-resource.js',
             'node_modules/angular-mocks/angular-mocks.js',
+            'node_modules/angular-cache/dist/angular-cache.js',
             'node_modules/underscore/underscore.js',
             'app/common/**/*.js',
             'app/post/**/*.js',

@@ -12,13 +12,18 @@
         "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
         "add_field_instructions_placeholder": "Instructions for field",
         "add_new_step": "Add New Step",
+        "added_form_stage_attribute": "Saved field",
         "field_allowed_relation_post_type": "Allowed post types",
+        "created_form_stage": "Saved step",
         "currently_disabled": "This post type is currently disabled.",
         "custom_structure": "Custom Structure",
         "default_date_placeholder": "Default date",
         "default_default_placeholder": "Default value",
         "default_location_placeholder": "Nairobi, Kenya",
         "delete_post_type": "Delete this post type",
+        "deleted_form": "Deleted Post Type",
+        "deleted_form_stage": "Deleted Post Type Step",
+        "deleted_form_stage_attribute": "Deleted field",
         "editable_by": "Editable By",
         "edit_post_step": "Edit Step: {{step}}",
         "edit_post_type": "Edit Post Type: {{form}}",
@@ -35,14 +40,17 @@
         "form_name": "Post Type Name",
         "form_description": "Post Type Description",
         "forms" : "Forms",
+        "form_stage_settings_saved": "Saved settings",
         "permission_public": "Public",
         "permission_admin": "Admin",
         "permission_self": "Only Me",
         "post_type_settings": "Post Type Settings",
         "post_step_settings": "Post Step Settings",
+        "priority_changed": "Changed priority",
         "save_and_close": "Save & Close",
         "save_post_type": "Save Post Type",
         "save_post_step": "Save Post Step",
+        "saved_form": "Post Type saved.",
         "step_name": "Step Name",
         "step_required": "This step is required",
         "structure_step" : "Structure",
@@ -318,13 +326,15 @@
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
         "set_settings" : "Collection Settings",
-        "add_notification" : "Add notification"
+        "add_notification" : "Add Notification"
     },
     "tag": {
         "add_tag" : "Add Category",
         "save" : "Save Category",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
+        "saved_tag": "Category saved.",
+        "deleted_tags": "Categories deleted.",
         "manage_tags" : "Manage Categories",
         "edit_tag" : "Edit Category",
         "editor" : {
@@ -358,7 +368,8 @@
         "tools" : "Tools"
     },
     "map_settings" : {
-        "admin_map_settings" : "Map Settings"
+        "admin_map_settings" : "Map Settings",
+        "saved_map_settings": "Map Settings saved."
     },
     "settings": {
         "appearance" : "Appearance Settings",
@@ -377,6 +388,8 @@
         "site_language" : "Site language",
         "select_image" : "Select image",
         "save" : "Save",
+        "saved_settings" : "Deployment settings saved!",
+        "saved_map_settings" : "Map settings saved!",
         "features" : {
             "features" : "Features",
             "please_select_features" : "Please select the features you would like to enable."
@@ -432,6 +445,8 @@
         "register" : "Register",
         "role" : "Role: ",
         "roles" : "Roles",
+        "saved_user": "User saved",
+        "deleted_user": "User deleted",
         "search_and_filter" : "Search & Filter Users",
         "passwordreset_instructions" : "Enter your email to request a password reset",
         "passwordreset_confirm_instructions" : "If your email exists in our database, you will receive a password recovery email soon.",
@@ -477,6 +492,18 @@
             "bulk_destroy_error" : "Unable to delete resource, please try again",
             "bulk_destroy_cancelled" : "Delete cancelled"
         },
+        "general_settings" : {
+            "save_success" : "General settings saved"
+        },
+        "map_settings" : {
+            "save_success" : "Map settings saved"
+        },
+        "generic" : {
+            "okay" : "Ok",
+            "cancel": "Cancel",
+            "alerts": "Alerts",
+            "confirm": "Confirmation"
+        },
         "login" : {
             "failed" : "Login failed, check your email and password."
         },
@@ -485,34 +512,56 @@
             "success" : "Registration complete! You can now log in.."
         },
         "post" : {
-            "save_success" : "Saved post",
+            "save_success" : "Saved <a href\"/post/{{id}}\">name</a> post",
             "save_error" : "Unable to save post, please try again",
             "publish_success" : "Post has been published",
             "publish_error" : "Unable to publish post, please try again",
             "unpublish_success" : "Post has been unpublished",
             "unpublish_error" : "Unable to unpublish post, please try again",
+            "yes_confirm_delete" : "Yes, delete this post",
+            "confirm_delete" : "Confirm Delete",
+            "destroy_title" : "Delete Post",
+            "delete_question" : "Are you sure you want to delete your post <a href=\"/posts/{{id}}\">{{post}}</a>?",
+            "destroy_success" : "Post {{name}} deleted",
             "destroy_confirm" : "Are you sure you want to delete this post?",
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?"
         },
         "tag" : {
+            "save_success" : "Saved category {{name}}",
             "destroy_confirm" : "Are you sure you want to delete this category?",
             "destroy_success" : "Category deleted",
             "destroy_error" : "Unable to delete category, please try again",
-            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?"
+            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
+            "bulk_destroy_success" : "{{count}} categories deleted"
+        },
+        "datasource" : {
+            "save_success" : "Saved Data Source {{name}}",
         },
         "user" : {
+            "save_success" : "User {{name}} saved",
+            "edit_success" : "User {{name}} updated",
             "destroy_confirm" : "Are you sure you want to delete this user?",
             "destroy_success" : "User deleted",
             "destroy_error" : "Unable to delete user, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} users?",
-            "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?"
+            "bulk_destroy_success" : "Users deleted",
+            "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
+            "bulk_role_change_success" : "User roles changed to {{role_name}}"
         },
         "form" : {
+            "save_success" : "Post Type {{name}} saved",
+            "save_stage_success" : "Post Type step {{name}} saved",
+            "save_attribute_success" : "Field {{name}} added",
+            "edit_form_success" : "Post Type {{name}} updated",
+            "edit_stage_success" : "Post Type step {{name}} updated",
             "delete_form_confirm" : "Are you sure you want to delete this form?",
+            "destroy_form_success" : "Post type {{name}} deleted",
             "delete_stage_confirm" : "Are you sure you want to delete this step?",
-            "delete_attribute_confirm" : "Are you sure you want to delete this field?"
+            "destroy_stage_success" : "Post type step {{name}} deleted",
+            "delete_attribute_confirm" : "Are you sure you want to delete this field?",
+            "destroy_attribute_success" : "Field {{name}} deleted"
         },
         "collection" : {
             "delete_collection_confirm" : "Are you sure you want to delete this collection?",
@@ -527,7 +576,7 @@
             "success": "Your password has been reset"
         },
         "notification" : {
-            "add" : "You will now be notified when new posts are added to {{collection}}",
+            "add" : "You will now be notified when new posts are added to {{set}}",
             "delete_confirm" : "Are you sure you want to remove this notification?"
         }
     },

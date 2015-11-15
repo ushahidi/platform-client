@@ -4,12 +4,14 @@ module.exports = [
     '$q',
     'TagEndpoint',
     'RoleHelper',
+    'Notify',
 function (
     $scope,
     $translate,
     $q,
     TagEndpoint,
-    RoleHelper
+    RoleHelper,
+    Notify
 ) {
     $translate('tool.manage_tags').then(function (title) {
         $scope.title = title;
@@ -28,13 +30,22 @@ function (
         $translate('notify.tag.bulk_destroy_confirm', {
             count: $scope.selectedTags.length
         }).then(function (message) {
-            if (window.confirm(message)) {
+            Notify.showConfirm(message).then(function () {
                 var calls = [];
                 angular.forEach($scope.selectedTags, function (tagId) {
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
-                $q.all(calls).then($scope.refreshView);
-            }
+                $q.all(calls).then(function () {
+                    $translate(
+                        'notify.tag.bulk_destroy_success',
+                        {
+                            count: $scope.selectedTags.length
+                        }).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                    $scope.refreshView();
+                });
+            });
         });
     };
 
