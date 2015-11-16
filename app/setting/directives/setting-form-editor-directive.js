@@ -76,7 +76,7 @@ function (
             $scope.deleteStage = function (stage, $index) {
                 $translate('notify.form.delete_stage_confirm')
                 .then(function (message) {
-                    if (Notify.showConfirm(message)) {
+                    Notify.showConfirm(message).then(function () {
                         FormStageEndpoint.delete({
                             formId: $scope.form.id,
                             id: stage.id
@@ -87,7 +87,7 @@ function (
                             });
                             $scope.form.stages.splice($index, 1);
                         });
-                    }
+                    });
                 });
             };
 
