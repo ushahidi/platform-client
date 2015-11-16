@@ -6,8 +6,8 @@ var getLastUrlPart = function (url) {
     return match[1];
 };
 
-var userMenuLinkSelector = '.header .user-admin .toggle-wrapper',
-userMenuSelector = '.header .user-admin .toggle-content',
+var userMenuLinkSelector = '.header .user-admin [dropdown-toggle]',
+userMenuSelector = '.header .user-admin .dropdown-menu',
 userProfileLinkSelector = '.header a.my-profile';
 
 

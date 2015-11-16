@@ -4,7 +4,7 @@ var getLastUrlPart = function (url) {
 
 var loginLinkSelector = '.header a.user-login',
     logoutLinkSelector = '.header a.user-logout',
-    userMenuLinkSelector = '.header .user-admin .toggle-wrapper';
+    userMenuLinkSelector = '.header .user-admin [dropdown-toggle]';
 
 describe('authentication', function () {
 

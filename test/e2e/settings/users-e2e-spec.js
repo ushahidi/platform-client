@@ -20,7 +20,7 @@ describe('users management', function () {
 
 
         describe('clicking the "settings" menu link in the menu', function () {
-            var settingsLinkSelector = '.settings-nav-header a';
+            var settingsLinkSelector = '.settings-nav span.settings-nav-button';
 
             beforeEach(function () {
                 var settingsMenuLink = element(by.css(settingsLinkSelector));
