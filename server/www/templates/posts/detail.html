@@ -14,11 +14,11 @@
 
                     <div ng-if="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
                         <div class="custom-select init fa-user">
-                            <select 
-                                ng-change="publishPostTo()" 
+                            <select
+                                ng-change="publishPostTo()"
                                 ng-model="publishRole"
                             >
-                               <option 
+                               <option
                                   value="draft"
                                   translate>
                                       post.publish_for_you
@@ -30,7 +30,7 @@
                                   >
                                       {{role.display_name}}
                                </option>
-                               <option 
+                               <option
                                   data-icon="fa-globe"
                                   value=""
                                   translate>
@@ -39,7 +39,7 @@
 
                             </select>
                         </div>
-                        <label><span class="nodisplay">Who</span> <span translate>post.can_see_this_post</span></label>
+                        <label><span translate>post.can_see_this_post</span></label>
                     </div>
                 </div>
                 <div class="actions-toggle">
@@ -68,7 +68,7 @@
                                         <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
                                         <label for="collection">{{collection.name}}</label>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="form-field bar">
                                     <a class="button button-link init" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
                                         <i class="fa fa-plus"></i>
@@ -77,7 +77,7 @@
                                     <div ng-show="showNewCollectionInput">
                                         <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
                                         <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
-                                    </div>   
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
@@ -112,6 +112,6 @@
                     </div>
                 </div>
             </div>
-       </article> 
+       </article>
     </div>
 </main> <!-- end .post-detail -->
