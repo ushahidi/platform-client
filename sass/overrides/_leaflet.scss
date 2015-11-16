@@ -8,6 +8,9 @@
 }
 
 // Override leaflet layer image path
+.leaflet-container {
+  z-index: 199;
+}
 .leaflet-control-layers-toggle {
 	background-image: url(../img/layers.png);
 	}
