@@ -9,9 +9,7 @@
         <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
         <li><a ng-href="/activity" translate>nav.activity</a></li>
         <li class="settings-nav" dropdown auto-close="disabled" ng-show="isAdmin()">
-            <div class="settings-nav-header">
-                <a class="toggle-content-trigger" dropdown-toggle translate>nav.settings</a>
-            </div>
+            <span data-toggle="toggle-content" dropdown-toggle translate>nav.settings</span>
             <ul class="toggle-content" dropdown-menu>
                 <li><a ng-href="/settings/general" translate>nav.general</a></li>
                 <li><a ng-href="/settings/map-settings" translate>nav.map_settings</a></li>
