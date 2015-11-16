@@ -6,8 +6,8 @@
 angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
 
 .constant('dropdownConfig', {
-    openClass: 'open',
-    toggleOpenClass: 'open',
+    openClass: 'active',
+    toggleOpenClass: 'active',
     menuOpenClass: 'visible'
 })
 

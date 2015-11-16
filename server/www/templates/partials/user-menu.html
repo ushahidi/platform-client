@@ -2,26 +2,16 @@
     <a ng-href="/login" class="user-login" translate>nav.login</a>
     <a ng-href="/register" class="user-register" translate>nav.register</a>
 </div>
-<div class="user-admin logged-in" ng-show="currentUser"n>
-    <div>
-        <!-- TODO: add correct user gravatar here -->
+<div class="user-admin logged-in" ng-show="currentUser" dropdown>
+    <div class="init" data-toggle="toggle-content" dropdown-toggle>
         <div class="user-avatar">
-            <!-- <img class="todo" src="http://www.gravatar.com/avatar/00000000000000000000000000000000" alt="Avatar">-->
+            <img src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}">
         </div>
         <span class="username">{{currentUser.realname}}</span>
-        <span class="toggle-wrapper" dropdown>
-            <button 
-                dropdown-toggle 
-                type="button" 
-                class="init button-secondary dropdown toggle-content-trigger"
-            >
-            </button>
-            <ul class="dropdown-menu init toggle-content" dropdown-menu role="menu">
-                <li><a class="my-profile" ng-href="/users/me">Account Settings</a></li>
-                <li><a ng-href="/users/me/notifications">Notifications</a></li>
-                <li><a class="user-logout" ng-click="logoutClick($event)">Logout</a></li>
-            </ul>
-        </span>
-
     </div>
+    <ul class="dropdown-menu init toggle-content" dropdown-menu role="menu">
+        <li><a class="my-profile" ng-href="/users/me">Account Settings</a></li>
+        <li><a ng-href="/users/me/notifications">Notifications</a></li>
+        <li><a class="user-logout" ng-click="logoutClick($event)">Logout</a></li>
+    </ul>
 </div>
