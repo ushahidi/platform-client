@@ -95,18 +95,16 @@
             <footer role="contentinfo" ng-controller="navigation">
                 <div class="wrapper">
                     <div class="footer-container">
-                        <div class="footer-main-col">
-                            <h2 ng-bind="site.name"></h2>
-                            <p ng-bind="site.description"></p>
-                            <ul class="footer-nav">
-                                <li><a ng-href="/" translate>nav.home</a></li>
-                                <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
-                                <li><a ng-href="/activity" translate>nav.activity</a></li>
-                                <li><a href="http://docs.ushahidi.com" translate>app.documentation</a></li>
-                                <li><a href="https://github.com/ushahidi/platform/issues/new" translate>app.report_a_bug</a></li>
-                                <li><a ng-href="/tools/settings" ng-show="isAdmin()" translate>nav.settings</a></li>
-                            </ul>
-                        </div>
+                        <h2 ng-bind="site.name"></h2>
+                        <p ng-bind="site.description"></p>
+                        <ul class="footer-nav">
+                            <li><a ng-href="/" translate>nav.home</a></li>
+                            <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
+                            <li><a ng-href="/activity" translate>nav.activity</a></li>
+                            <li><a href="http://docs.ushahidi.com" translate>app.documentation</a></li>
+                            <li><a href="https://github.com/ushahidi/platform/issues/new" translate>app.report_a_bug</a></li>
+                            <li><a ng-href="/tools/settings" ng-show="isAdmin()" translate>nav.settings</a></li>
+                        </ul>
                     </div>
                 </div>
             </footer>
