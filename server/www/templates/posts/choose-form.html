@@ -1,17 +1,18 @@
 <div class="post-create-choose-form clearfix">
-    <div class="main-col">
+    <div class="page-header">
         <h1 class="inline" translate translate-values="{ type: activeForm.name }" ng-if="! post.id">post.modify.add_a_post</h1>
         <h1 class="inline" translate translate-values="{ title: post.title }" ng-if="!! post.id">post.modify.edit_post</h1>
         <a ng-href="/settings/forms" class="cta edit" ng-if="isAdmin()">Edit Post Types</a>
-
+    </div>
+    <div class="main-col">
         <h6 translate>post.modify.intro</h6>
-        <div class="cards-select">
-            <div class="selection-card" ng-repeat="form in availableForms | filter:filterNotDisabled" >
-                <a ng-click="chooseForm(form)">
-                    <h3>{{form.name}}</h3>
-                    <p>{{form.description}}</p>
-                </a>
+        <dl>
+            <div ng-repeat="form in availableForms | filter:filterNotDisabled">
+                <dt class="list-item">
+                    <a ng-click="chooseForm(form)">{{form.name}}</a>
+                </dt>
+                <dd>{{form.description}}</dd>
             </div>
-        </div>
+        </dl>
     </div>
 </div>
