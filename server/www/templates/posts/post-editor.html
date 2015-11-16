@@ -1,4 +1,18 @@
 <form name="form" ng-submit="savePost()" novalidate>
+    <ul class="breadcrumb" ng-if="! isEdit">
+        <li>
+            <a ng-click="goBack()" ng-href="/posts/create" translate>post.modify.add_a_post</a>
+        </li>
+    </ul>
+<!--
+    <a ng-click="goBack()" class="back-button" ng-if="! isEdit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
+-->
+    <ul class="breadcrumb" ng-if="isEdit">
+        <li>
+            <a ng-href="/posts/{{post.id}}" translate>{{post.title}}</a>
+        </li>
+    </ul>
+
     <div class="post-detail">
         <div class="page-header">
             <div class="page-header-body">
