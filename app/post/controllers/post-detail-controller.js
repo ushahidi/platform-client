@@ -290,7 +290,7 @@ function (
         $promise
         .then(function () {
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-            $translate(message)
+            $translate(message, { role: $scope.publishRole })
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });

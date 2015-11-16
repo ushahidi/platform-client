@@ -6,35 +6,35 @@
                     {{post.title}}
                 </h1>
                 <div class="post-permissions">
-                    <p ng-if="post.allowed_privileges.indexOf('update') == -1">
+                    <p ng-show="post.allowed_privileges.indexOf('update') == -1">
                         <span class="icon-left fa-globe" translate>
                             {{publishedFor()}}
                         </span>
                     </p>
 
-                    <div ng-if="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
+                    <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
                         <div class="custom-select init fa-user">
                             <select
                                 ng-change="publishPostTo()"
                                 ng-model="publishRole"
                             >
-                               <option
-                                  value="draft"
-                                  translate>
-                                      post.publish_for_you
-                              </option>
-                              <option
-                                  ng-repeat="role in availableRoles"
-                                  data-icon="fa-user"
-                                  value="{{role.name}}"
-                                  >
-                                      {{role.display_name}}
-                               </option>
-                               <option
-                                  data-icon="fa-globe"
-                                  value=""
-                                  translate>
-                                      post.publish_for_everyone
+                                <option
+                                    value="draft"
+                                    translate>
+                                    post.publish_for_you
+                                </option>
+                                <option
+                                    ng-repeat="role in availableRoles"
+                                    data-icon="fa-user"
+                                    value="{{role.name}}"
+                                    >
+                                    {{role.display_name}}
+                                </option>
+                                <option
+                                    data-icon="fa-globe"
+                                    value=""
+                                    translate>
+                                    post.publish_for_everyone
                                 </option>
 
                             </select>

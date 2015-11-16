@@ -33,12 +33,12 @@
             <h4 class="delta-alt" translate>
                 post.who_can_see_this
             </h4>
-            <p ng-if="post.allowed_privileges.indexOf('update') == -1">
+            <p ng-show="post.allowed_privileges.indexOf('update') == -1">
                 <span class="icon-left fa-globe" translate>
                     {{publishedFor()}}
                 </span>
             </p>
-            <div ng-if="post.allowed_privileges.indexOf('update') !== -1" class="custom-select cta init">
+            <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="custom-select cta init">
                 <select
                     ng-change="publishPostTo()"
                     ng-model="publishRole"
