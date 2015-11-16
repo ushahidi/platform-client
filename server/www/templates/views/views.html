@@ -2,7 +2,7 @@
     <div class="page-header">
         <ng-transclude></ng-transclude>
 
-        <div class="tabs-with-filter">
+        <div class="tabs-with-filter" data-view="{{currentView}}">
             <post-view-tabs active="currentView" base-url="{{ baseUrl }}"></post-view-tabs>
             <post-view-filters half-width="false" has-aside="hasAside" is-loading="isLoading"></post-view-filters>
         </div>
