@@ -126,7 +126,7 @@ function (
 
     // --- start: definitions
     getUsersForPagination = function () {
-        UserEndpoint.query({
+        UserEndpoint.queryFresh({
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
             role: $scope.filter.role,
