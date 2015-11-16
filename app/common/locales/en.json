@@ -195,6 +195,7 @@
         "timeline" : "Timeline"
     },
     "post": {
+        "add_incident" : "Add Incident",
         "posts" : "Posts",
         "publish_for_you" : "Just you",
         "publish_for_everyone" : "Everyone",
@@ -260,9 +261,9 @@
             "author_email" : "Email",
             "form" : {
                 "categories" : "Categories",
-                "description" : "Post Description",
+                "description" : "Description",
                 "location" : "Location",
-                "title" : "Post Title",
+                "title" : "Title",
                 "link" : {
                     "name" : "Link Name",
                     "url" : "Link url",
