@@ -1,30 +1,32 @@
 <form name="form" ng-submit="savePost()" novalidate>
-    <ul class="breadcrumb" ng-if="! isEdit">
-        <li>
-            <a ng-click="goBack()" ng-href="/posts/create" translate>post.modify.add_a_post</a>
-        </li>
-    </ul>
-<!--
-    <a ng-click="goBack()" class="back-button" ng-if="! isEdit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
--->
-    <ul class="breadcrumb" ng-if="isEdit">
-        <li>
-            <a ng-href="/posts/{{post.id}}" translate>{{post.title}}</a>
-        </li>
-    </ul>
+   
 
-    <div class="post-detail">
         <div class="page-header">
-            <div class="page-header-body">
+            <ul class="breadcrumb" ng-if="! isEdit">
+                <li>
+                    <a ng-click="goBack()" ng-href="/posts/create" translate>post.modify.add_a_post</a>
+                </li>
+            </ul>
+        <!--
+            <a ng-click="goBack()" class="back-button" ng-if="! isEdit"><i class="fa  fa-arrow-left"></i> <span translate>post.modify.change_type</span></a>
+        -->
+            <ul class="breadcrumb" ng-if="isEdit">
+                <li>
+                    <a ng-href="/posts/{{post.id}}" translate>{{post.title}}</a>
+                </li>
+            </ul>
+            <div ng-if="! isEdit" class="page-header-body">
                 <h1 class="page-title"><span class="icon-left fa-plus" translate>post.add_incident</span></h1>
             </div>
+            <div ng-if="isEdit" class="page-header-body">
+                <h1 class="page-title"><span class="icon-left fa-pencil" translate>post.edit_incident</span></h1>
+            </div>
             <div class="page-header-actions">
-                <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save</span>
+                <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save_post</span>
                  </button>
             </div>
         </div> 
-        <div class="divider white"></div>
-        <div class="post-header">
+        <div class="page-header">
             <div class="form-field title">
                 <label class="input-label required"
                     ng-class="{ 'error': form.title.$invalid && form.title.$dirty, 'success': !form.title.$invalid && form.title.$dirty }"
@@ -41,7 +43,35 @@
                     class="alert error"
                     translate="{{'post.valid.title.' + error}}"></p>
             </div>
-          
+            <div ng-if="isEdit" class="form-field select">
+                <div class="custom-select init fa-user">
+                    <select
+                        ng-change="publishPostTo()"
+                        ng-model="publishRole"
+                    >
+                        <option
+                            value="draft"
+                            translate>
+                            post.publish_for_you
+                        </option>
+                        <option
+                            ng-repeat="role in availableRoles"
+                            data-icon="fa-user"
+                            value="{{role.name}}"
+                            >
+                            {{role.display_name}}
+                        </option>
+                        <option
+                            data-icon="fa-globe"
+                            value=""
+                            translate>
+                            post.publish_for_everyone
+                        </option>
+
+                    </select>
+                </div>
+                <label><span translate>post.can_see_this_post</span></label>
+            </div> 
            <!--
            <div class="form-field">
               <p class="alert"><strong class="icon-left fa-user">Your post will need to be moderated</strong> before it’s visible to the public</p>
@@ -218,5 +248,4 @@
                   </div>
               </div>
           </div>
-    </div>
 </form>

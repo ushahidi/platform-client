@@ -1,11 +1,10 @@
-<main class="page-content post-detail">
-   <div class="main-col">
-        <article class="post-detail" role="article">
-            <header class="post-header">
+<main class="page-content layout-c" role="main">
+        <article role="article">
+            <header class="page-header">
                 <h1 class="post-title">
                     {{post.title}}
                 </h1>
-                <div class="post-permissions">
+                <div class="page-permissions">
                     <p ng-show="post.allowed_privileges.indexOf('update') == -1">
                         <span class="icon-left fa-globe" translate>
                             {{publishedFor()}}
@@ -112,5 +111,4 @@
                 </div>
             </div>
        </article>
-    </div>
 </main> <!-- end .post-detail -->
