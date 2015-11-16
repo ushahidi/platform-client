@@ -11,7 +11,7 @@
         </div>
         -->
         <div class="meta-data">
-            <span class="post-type-marker" style="border-top-color: #4fab2f;">
+            <span class="post-type-marker"><!-- todo marker style based on post type -->
                 {{post.type}}
             </span>
             <span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}}<!--, via SMS -->
@@ -43,12 +43,12 @@
                     ng-change="publishPostTo()"
                     ng-model="publishRole"
                 >
-                     <option 
+                     <option
                           value="draft"
                           translate>
                               post.publish_for_you
                      </option>
-                     <option 
+                     <option
                           data-icon="fa-globe"
                           value=""
                           translate>
@@ -92,7 +92,7 @@
                                 <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
                                 <label for="collection">{{collection.name}}</label>
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-field bar">
                             <a class="button button-link init" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
                                 <i class="fa fa-plus"></i>
@@ -101,7 +101,7 @@
                             <div ng-show="showNewCollectionInput">
                                 <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
                                 <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
-                            </div>   
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -118,4 +118,4 @@
 -->
 </div>
 
-    
+
