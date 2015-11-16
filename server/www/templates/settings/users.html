@@ -14,7 +14,7 @@
                     <div class="filters-toggle" data-toggle="filters-container" dropdown-toggle>
                         <h3 class="delta-alt" translate>user.search_and_filter</h3>
                     </div>
-    
+
                     <div class="filters-container" data-message="search" dropdown-menu>
                         <div class="keyword-search">
                             <input name="keyword" class="keyword-input" placeholder="Search Users..." type="text" ng-model="filter.q">
@@ -83,7 +83,7 @@
                     <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
                 </div>
                 <div class="img">
-                    <img class="circular" gravatar-src="user.email" alt="" />
+                    <img class="circular" src="http://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
                 </div>
                 <div class="user bd">
                     <h3><a ng-href="/settings/users/{{user.id}}">{{user.realname}}</a></h3>

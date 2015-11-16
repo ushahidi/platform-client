@@ -64,7 +64,6 @@
     "angular-bootstrap-colorpicker": "buberdds/angular-bootstrap-colorpicker.git#v3.0.11",
     "angular-cache": "^4.3.2",
     "angular-filter": "^0.5.4",
-    "angular-gravatar": "^0.2.4",
     "angular-lazy-bootstarp": "rajeshsegu/angular-lazy-bootstrap",
     "angular-leaflet-directive": "tombatossals/angular-leaflet-directive.git#v0.8.1",
     "angular-local-storage": "^0.1.5",

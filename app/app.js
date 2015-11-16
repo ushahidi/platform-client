@@ -14,8 +14,6 @@ require('angular-sanitize');
 require('angular-filter');
 require('angular-local-storage');
 require('checklist-model/checklist-model');
-require('angular-gravatar/build/md5');
-require('angular-gravatar/build/angular-gravatar');
 require('selection-model/dist/selection-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown/src/ng-showdown');
@@ -65,7 +63,6 @@ angular.module('app',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
         'datePicker',
-        'ui.gravatar',
         'leaflet-directive',
         'angular.filter',
         'showdown',
