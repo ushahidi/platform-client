@@ -413,7 +413,7 @@
             "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
             "provider_options": "Options",
             "configure": "Configure data sattings",
-            "edit": "Edit",
+            "options": "Options",
             "save_changes": "Save Changes",
             "saving_changes": "Saving"
         },

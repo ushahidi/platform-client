@@ -1,10 +1,12 @@
 <main class="page-content" role="main">
-    <div class="main-col">
+    <div class="page-header">
         <ul class="breadcrumb">
             <li><a ng-href="/settings" translate>nav.settings</a></li>
         </ul>
 
         <h1 class="inline">{{title}}</h1>
+    </div>
+    <div class="main-col">
         <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
 
         <div class="settings-listing" ng-repeat="provider in providers.results | orderBy:'name'" dropdown auto-close="disabled" is-open="panelVisible[provider.id]">
@@ -13,50 +15,53 @@
                 <label class="tgl-btn" for="{{provider.id}}_enable"></label>
             </div>
 
-            <h3><a dropdown-toggle>{{provider.name}}</a></h3>
+            <h3>{{provider.name}}</h3>
 
-            <div class="actions" ng-if="forms[provider.id].$invalid">
-                <button type="button" class="button-secondary icon-only-when-small plus toggle-content-trigger" dropdown-toggle>
-                    <span translate>settings.data_sources.configure</span>
-                </button>
-            </div>
+            <button type="button"  class="actions button-secondary icon-only-when-small plus toggle-content-trigger init" dropdown-toggle data-toggle="toggle-content">
+                <span ng-if="forms[provider.id].$invalid" translate>settings.data_sources.configure</span>
+                <span ng-if="forms[provider.id].$valid" translate>settings.data_sources.options</span>
+            </button>
 
-            <div class="actions" ng-if="forms[provider.id].$valid">
-                <button type="button" class="button-secondary icon-only-when-small edit toggle-content-trigger" dropdown-toggle>
-                    <span translate>settings.data_sources.edit</span>
-                </button>
-            </div>
- 
-            <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="toggle-content" dropdown-menu>
+            <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="toggle-content init" dropdown-menu>
                 <p class="alert error" ng-if="forms[provider.id].$invalid" translate>settings.data_sources.hint_plugin_needs_configuring</p>
 
-                <div ng-repeat="(option_key, option) in provider.options track by option_key">
-                    <label ng-if="option.label" for="{{provider.id}}_{{option_key}}" class="input-label" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">{{option.label}}</label>
+                <div ng-repeat="(option_key, option) in provider.options track by option_key" ng-class="{ error : formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid, 'form-field' : option.input !== 'radio', 'required' : option.rules.indexOf('required') > -1 }">
 
-                    <div ng-if="option.description">
-                        <p ng-if="option.input == 'read-only-text'" ng-bind-html="option.description"></p>
-                        <p ng-if="option.input != 'read-only-text'" class="small" ng-bind-html="option.description"></p>
+                    <div ng-if="option.input == 'read-only-text'">
+                        <label ng-if="option.label" class="input-label">{{option.label}}</label>
+                        <p ng-bind-html="option.description"></p>
                     </div>
 
                     <div ng-if="option.input == 'text'">
+                        <legend ng-if="option.label" class="input-label">{{option.label}}</legend>
+
+                        <div ng-if="option.description">
+                            <small ng-bind-html="option.description"></small>
+                        </div>
+
                         <input ng-if="option.rules.indexOf('number') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="number" ng-pattern="/^\d+$/" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
                         <input ng-if="option.rules.indexOf('email') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
                         <input ng-if="option.rules.indexOf('password') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="password" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
                         <input ng-if="option.rules.indexOf('number') == -1 && option.rules.indexOf('email') == -1 && option.rules.indexOf('password') == -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="{{option.input}}" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
-
-                        <p ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid" class="alert error" translate>settings.generic_field_error</p>
                     </div>
 
-                    <div ng-if="option.input == 'radio'">
-                        <div ng-repeat="radio_option in option.options track by $index">
-                            <label class="radio-label" for="{{provider.id}}_{{option_key}}_{{$index}}">
-                            <input name="{{option_key}}" id="{{provider.id}}_{{option_key}}_{{$index}}" type="{{option.input}}" ng-value="radio_option" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving">
-                            {{radio_option}}
-                            </label>
+                    <fieldset ng-if="option.input == 'radio'">
+                        <label ng-if="option.label" for="{{provider.id}}_{{option_key}}" class="input-label">{{option.label}}</label>
+
+                        <div ng-if="option.description">
+                            <p ng-if="option.input == 'read-only-text'" ng-bind-html="option.description"></p>
+                            <p ng-if="option.input != 'read-only-text'" class="small" ng-bind-html="option.description"></p>
                         </div>
 
-                        <p ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid" class="alert error" translate>settings.generic_field_error</p>
-                    </div>
+                        <div class="form-field checkbox" ng-repeat="radio_option in option.options track by $index">
+                            <input name="{{option_key}}" id="{{provider.id}}_{{option_key}}_{{$index}}" type="{{option.input}}" ng-value="radio_option" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving">
+                            <label for="{{provider.id}}_{{option_key}}_{{$index}}">
+                                {{radio_option}}
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <p ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid" class="alert error" translate>settings.generic_field_error</p>
                 </div>
 
                 <button type="submit" class="button-primary" ng-disabled="saving">
