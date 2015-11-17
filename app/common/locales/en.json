@@ -215,6 +215,7 @@
         "unselect_all" : "Unselect All",
         "per_page" : "{{count}} posts",
         "post_details" : "Post Details",
+        "post" : "Post",
         "steps" : "This post's steps",
         "mark_complete" : "Mark as Complete",
         "complete" : "Complete",

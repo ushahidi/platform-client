@@ -7,8 +7,8 @@
     <div class="main-col">
         <h6 translate>post.modify.intro</h6>
         <dl>
-            <dt class="list-item" ng-repeat-start="form in availableForms | filter:filterNotDisabled" ng-bind="form.name">
-                <a ng-click="chooseForm(form)">{{form.name}}</a>
+            <dt class="list-item" ng-repeat-start="form in availableForms | filter:filterNotDisabled">
+                <a ng-bind="form.name" ng-click="chooseForm(form)">{{form.name}}</a>
             </dt>
             <dd ng-repeat-end="" ng-bind="form.description"></dd>
         </dl>
