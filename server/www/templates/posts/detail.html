@@ -1,11 +1,11 @@
-<main class="page-content post-detail">
+<main class="page-content layout-c">
    <div class="main-col">
-        <article class="post-detail" role="article">
-            <header class="post-header">
-                <h1 class="post-title">
+        <article role="article">
+            <header class="page-header">
+                <h1 class="page-title">
                     {{post.title}}
                 </h1>
-                <div class="post-permissions">
+                <div class="page-permissions">
                     <p ng-show="post.allowed_privileges.indexOf('update') == -1">
                         <span class="icon-left fa-globe" translate>
                             {{publishedFor()}}
@@ -93,6 +93,14 @@
                     </div>
                     <div ng-if="post.content" class="post-field">
                         <p sd-model-to-html="post.content"></p>
+                    </div>
+                    <div ng-if="!!post.tags.length" class="form-field">
+                        <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
+                        <div class="form-field checkbox" ng-repeat="category in post.tags">
+                            <label>
+                                <i class="fa fa-{{category.icon}}" style="color:{{category.color}}"></i> {{category.tag}}
+                            </label>
+                        </div>
                     </div>
                     <div ng-repeat="(key,value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)" class="post-field">
                       <post-value
