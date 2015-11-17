@@ -76,6 +76,21 @@
           -->
         </div>
         <div class="vertical-tabs">
+            <nav class="vertical-tabs-menu init">
+                <ul>
+                    <li 
+                        ng-repeat="stage in stages"
+                        ng-class="{'active': visibleStage == stage.id}"  >
+                        <a ng-click="setVisibleStage(stage.id)">
+                            <span class="icon-left fa-file{{stage.icon}}">
+                                {{stage.label}}
+                            </span>
+                        </a>
+                        <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
+                        </span>
+                    </li>
+                </ul>
+            </nav>
             <div class="vertical-tabs-content">
                 <div class="form-field">
                     <label
