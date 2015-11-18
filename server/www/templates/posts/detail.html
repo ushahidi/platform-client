@@ -45,7 +45,7 @@
                         <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
                     </div>
                     <div id="options" class="actions-content init active">
-                        <button ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" onclick="location.href='/posts/{{post.id}}/edit'">
+                        <button ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-click="goEdit()">
                             <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
                         </button>
                     <!--    <button type="button" class="button-secondary">
@@ -91,6 +91,7 @@
                         </li>
                         <li>
                             <a href="">
+                                <span> test</span
                             </a>
                             <span class="status">
                             </span>

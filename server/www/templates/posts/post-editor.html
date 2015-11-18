@@ -78,11 +78,18 @@
         <div class="vertical-tabs">
             <nav class="vertical-tabs-menu init">
                 <ul>
+                    <li ng-class="{'active': visibleStage == 'post'}">
+                        <a ng-click="setVisibleStage('post')">
+                            <span class="icon-left fa-file-o" translate>
+                                post.post
+                           </span>
+                        </a>
+                    </li>
                     <li 
                         ng-repeat="stage in stages"
                         ng-class="{'active': visibleStage == stage.id}"  >
                         <a ng-click="setVisibleStage(stage.id)">
-                            <span class="icon-left fa-file{{stage.icon}}">
+                            <span class="icon-left fa-{{stage.icon}}">
                                 {{stage.label}}
                             </span>
                         </a>
@@ -92,7 +99,9 @@
                 </ul>
             </nav>
             <div class="vertical-tabs-content">
-                <div class="form-field">
+                <div class="form-field" 
+                    ng-show="visibleStage == 'post'" 
+                    >
                     <label
                         class="input-label required" for="content"
                         ng-class="{ 'error': form.content.$invalid && form.content.$dirty }" 
@@ -104,7 +113,10 @@
                         <textarea id="content" name="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required class="form-control"></textarea>
                     </div>
                 </div>
-                <div ng-if="categories.length" class="form-field">
+                <div ng-if="categories.length" 
+                    class="form-field"
+                    ng-show="visibleStage == 'post'" 
+                    >
                     <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
                     <div class="form-field checkbox" ng-repeat="category in categories">
                         <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
