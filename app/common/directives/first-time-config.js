@@ -112,7 +112,7 @@ function (
                 $scope.site.first_login = false;
 
                 uploadHeaderImage().then(function () {
-                    $scope.site.$update({ id: 'site' }, function () {
+                    ConfigEndpoint.saveCache($scope.site).$promise.then(function (result) {
                         $scope.saving_config = false;
                         $scope.step = 'first-post';
                         updateSiteHeader();
