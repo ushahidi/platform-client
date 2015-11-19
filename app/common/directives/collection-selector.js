@@ -9,18 +9,30 @@ function (
     var controller = [
         '$scope',
         '$rootScope',
+        '$translate',
+        'Notify',
         'CollectionEndpoint',
+        '_',
         function (
             $scope,
             $rootScope,
-            CollectionEndpoint
+            $translate,
+            Notify,
+            CollectionEndpoint,
+            _
         ) {
             $scope.showNewCollectionInput = false;
             $scope.newCollection = '';
 
             $scope.refreshCollections = function () {
-                $rootScope.$broadcast('event:collection:update');
+                $scope.editableCollections = CollectionEndpoint.editableByMe();
             };
+
+            $scope.editableCollections = $scope.refreshCollections();
+
+            $scope.$on('event:collection-selector:update', function () {
+                $scope.refrehCollections();
+            });
 
             $scope.postInCollection = function (collection) {
                 return _.contains($scope.post.sets, String(collection.id));
@@ -92,21 +104,25 @@ function (
                 .then(function (collection) {
                     $scope.toggleCreateCollection();
                     $scope.newCollection = '';
-                    $scope.refreshCollections();
                     $scope.addToCollection(collection);
+
+                    // Where collection selectors can appear multiple times
+                    // it is necessary to force a collection refresh when an update occurs
+                    // on anyone collection selector - to ensure that newly created collections
+                    // are available in all lists on the page.
+                    // TODO: add caching for collections to reduce requests.
+                    $rootScope.$broadcast('event:collection:update');
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
             };
 
-    }];
-
+        }];
     return {
         restrict: 'E',
         templateUrl: 'templates/collection-selector/collection-selector.html',
         scope: {
-            post: '=',
-            editableCollections: '='
+            post: '='
         },
         controller: controller
     };

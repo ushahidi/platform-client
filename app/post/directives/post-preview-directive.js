@@ -62,8 +62,7 @@ function (
         replace: true,
         scope: {
             post:  '=',
-            canSelect: '=',
-            editableCollections: '='
+            canSelect: '='
         },
         templateUrl: 'templates/posts/preview.html',
         link: function ($scope) {
