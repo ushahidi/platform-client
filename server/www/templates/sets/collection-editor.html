@@ -26,16 +26,16 @@
                 <translate>set.featured_collection</translate>
             </label>
         </div>
-        <div ng-show="collection.id" class="clearfix">
+        <div ng-if="collection.id" class="clearfix">
           <label class="input-label" translate>set.delete_collection</label>
               <button ng-click="deleteCollection()" type="button" class="button-destructive icon-only-when-small alt trash">
                 <span translate>nav.delete</span>
               </button>
          </div>
     </div>
-
-    <div class="modal-submit clearfix">
-        <button type="button" class="button-primary" ng-click="saveCollection(cpyCollection)" translate>set.save_set</button>
+    <div class="divider white"></div>
+    <div class="modal-submit">
+        <button type="button" ng-click="saveCollection(cpyCollection)" translate>set.save_set</button>
     </div>
 </modal>
 </div>
