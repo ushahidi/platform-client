@@ -160,8 +160,7 @@ function (
             $scope.publishPostTo = function () {
 
                 // first check if stages required have been marked complete
-                var requiredStages = _.where($scope.stages, {required: true}),
-                    errors = [];
+                var requiredStages = _.where($scope.stages, {required: true}), errors = [];
 
                 _.each(requiredStages, function (stage) {
                     // if this stage isn't complete, add to errors

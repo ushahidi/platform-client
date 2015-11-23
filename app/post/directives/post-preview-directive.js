@@ -209,6 +209,7 @@ function (
             };
 
             $scope.publishRole = $scope.postIsPublishedTo();
+            
             /*
             $scope.searchCollections = function (query) {
                 CollectionEndpoint.query(query)
@@ -225,6 +226,7 @@ function (
                 $scope.editableCollectionsLocal = $scope.editableCollections;
             };
             */
+
             $scope.createNewCollection = function (collectionName) {
                 var collection = {
                     'name': collectionName,

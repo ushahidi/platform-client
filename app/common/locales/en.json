@@ -195,9 +195,9 @@
         "timeline" : "Timeline"
     },
     "post": {
+        "posts" : "Posts",
         "add_incident" : "Add Incident",
         "edit_incident" : "Edit Incident",
-        "posts" : "Posts",
         "publish_for_you" : "Just you",
         "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
