@@ -31,7 +31,7 @@ function (
             $scope.saving_config = false;
             $scope.fileContainer = {
                 file : null
-            }
+            };
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
             $scope.userSavedSettings = false;

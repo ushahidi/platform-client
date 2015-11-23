@@ -7,5 +7,5 @@ angular.module('ushahidi.common.custom-on-change', [])
             var onChangeFunc = $scope.$eval($attrs.customOnChange);
             $element.bind('change', onChangeFunc);
         }
-    }
+    };
 });

@@ -13,9 +13,9 @@ angular.module('ushahidi.common.file-upload', [])
             function (
                 $scope
             ) {
-                $scope.uploadFile = function () {
-                    $scope.fileContainer.file = event.target.files[0];
+                $scope.uploadFile = function ($event) {
+                    $scope.fileContainer.file = $event.target.files[0];
                 };
-        }]
+            }]
     };
 });
