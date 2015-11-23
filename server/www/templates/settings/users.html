@@ -5,12 +5,9 @@
           <li class="active" translate>nav.users</li>
         </ul>
         <h1 class="inline" translate>tool.manage_users</h1>
-        <a ng-href="/settings/users/create" class="cta plus">
-            <span translate>user.add_user</span>
-        </a>
-        <div class="tabs-with-filter" data-view="users">
+          <div class="tabs-with-filter" data-view="users">
             <form ng-submit="applyFilters()" role="search">
-                <div class="filters" dropdown>
+                <div class="filters" dropdown auto-close="outsideClick">
                     <div class="filters-toggle" data-toggle="filters-container" dropdown-toggle>
                         <h3 class="delta-alt" translate>user.search_and_filter</h3>
                     </div>
@@ -70,6 +67,12 @@
                     ng-disabled="!selectedUsers.length"
                     ng-click="deleteUsers()">
                         <span translate>nav.delete</span>
+                </button>
+                <button type="button"
+                    class="button-secondary"
+                    id="add-user"
+                    ng-click="addUser()">
+                        <span class="icon-left fa-plus" translate>user.add_user</span>
                 </button>
             </div>
         </div>

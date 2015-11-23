@@ -152,7 +152,6 @@ function (
                         Notify.showApiErrors(errorResponse);
                     });
             };
-
             $scope.publishPostTo = function () {
 
                 // first check if stages required have been marked complete

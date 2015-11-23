@@ -3,6 +3,8 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
 	'ushahidi.common.modal',
+	'ushahidi.common.custom-on-change',
+	'ushahidi.common.file-upload',
   'ushahidi.common.notification-slider',
 	'ushahidi.common.sticky-sidebar',
     'ushahidi.common.chart'
@@ -56,6 +58,8 @@ require('./directives/dropdown.js');
 require('./directives/accordion.js');
 require('./directives/offcanvas.js');
 require('./directives/modal.js');
+require('./directives/custom-on-change.js');
+require('./directives/file-upload.js');
 require('./directives/notification-slider.js');
 require('./directives/sticky-sidebar.js');
 require('./directives/chart.js');

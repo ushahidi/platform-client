@@ -27,7 +27,7 @@ function (
     });
 
     $rootScope.$on('$routeChangeSuccess', function (ev, current) {
-        if (current.$$route &&
+        if (current && current.$$route &&
                 (current.$$route.originalPath === '/views/:view?' || current.$$route.originalPath === '/')
             ) {
             $scope.isHome = true;

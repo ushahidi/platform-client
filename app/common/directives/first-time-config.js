@@ -30,6 +30,9 @@ function (
             $scope.site = {};
             $scope.saving_config = false;
             $scope.step = 'customize';
+            $scope.fileContainer = {
+                file : null
+            };
 
             // Load config, and open modal if first time login
             var checkConfig = function () {
@@ -65,13 +68,6 @@ function (
                 $scope.modalOpen = false;
             };
 
-            // @todo Copied from settings-editor. Move to shared directive
-
-            // Get selected file
-            // @todo move file handling to own directive, or find a 3rd party implementation
-            $scope.fileNameChanged = function (element) {
-                $scope.file = element.files[0];
-            };
             $scope.clearHeader = function () {
                 $scope.site.image_header = null;
             };
@@ -82,9 +78,9 @@ function (
             var uploadHeaderImage = function () {
                 var dfd = $q.defer();
 
-                if ($scope.file) {
+                if ($scope.fileContainer.file) {
                     var formData = new FormData();
-                    formData.append('file', $scope.file);
+                    formData.append('file', $scope.fileContainer.file);
 
                     $http.post(
                         Util.apiUrl('/media'),
@@ -112,7 +108,7 @@ function (
                 $scope.site.first_login = false;
 
                 uploadHeaderImage().then(function () {
-                    $scope.site.$update({ id: 'site' }, function () {
+                    ConfigEndpoint.saveCache($scope.site).$promise.then(function (result) {
                         $scope.saving_config = false;
                         $scope.step = 'first-post';
                         updateSiteHeader();
