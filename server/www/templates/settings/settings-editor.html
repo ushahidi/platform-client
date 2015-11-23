@@ -12,7 +12,8 @@
 
     <label class="input-label" for="appearance-header-image" translate>settings.appearance_header_image</label>
         <p class="small" translate>settings.appearance_header_image_instructions</p>
-    <input id="appearance-header-image" name="file" type="file" onchange="angular.element(this).scope().fileNameChanged(this)" />
+        <file-upload file-container="fileContainer">
+        </file-upload>
     <p class="small" ng-show="site.image_header"><a href="{{ site.image_header }}" translate>settings.current_header</a> <button type="button" ng-click="clearHeader()" class="button button-secondary icon-only trash"></button></p>
 
     <label class="input-label" for="site-settings-email" translate>settings.site_email</label>
