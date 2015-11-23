@@ -1,16 +1,17 @@
-<main class="page-content layout-c">
+<main class="page-content post-detail">
    <div class="main-col">
-        <article role="article">
-            <header class="page-header">
-                <h1 class="page-title">
+        <article class="post-detail" role="article">
+            <header class="post-header">
+                <h1 class="post-title">
                     {{post.title}}
                 </h1>
-                <div class="page-permissions">
+                <div class="post-permissions">
                     <p ng-show="post.allowed_privileges.indexOf('update') == -1">
                         <span class="icon-left fa-globe" translate>
                             {{publishedFor()}}
                         </span>
                     </p>
+
                     <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
                         <div class="custom-select init fa-user">
                             <select
@@ -35,6 +36,7 @@
                                     translate>
                                     post.publish_for_everyone
                                 </option>
+
                             </select>
                         </div>
                         <label><span translate>post.can_see_this_post</span></label>
@@ -45,9 +47,9 @@
                         <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
                     </div>
                     <div id="options" class="actions-content init active">
-                        <button ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-click="goEdit()">
+                        <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
                             <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
-                        </button>
+                        </a>
                     <!--    <button type="button" class="button-secondary">
                             <span class="icon-left fa-share">Share</span>
                         </button>
@@ -82,22 +84,6 @@
                 </div>
             </header>
             <div class="vertical-tabs">
-                <nav class="vertical-tabs-menu init">
-                    <ul>
-                        <li class="active">
-                            <span class="icon-left fa-file-o" translate>
-                                post.post
-                            </span>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span> test</span
-                            </a>
-                            <span class="status">
-                            </span>
-                        </li>
-                    </ul>
-                </nav>
                 <div class="vertical-tabs-content">
                     <div class="post-author">
                        <img class="circular" src="http://placehold.it/100x100" alt="">
@@ -109,14 +95,6 @@
                     </div>
                     <div ng-if="post.content" class="post-field">
                         <p sd-model-to-html="post.content"></p>
-                    </div>
-                    <div ng-if="!!post.tags.length" class="form-field">
-                        <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
-                        <div class="form-field checkbox" ng-repeat="category in post.tags">
-                            <label>
-                                <i class="fa fa-{{category.icon}}" style="color:{{category.color}}"></i> {{category.tag}}
-                            </label>
-                        </div>
                     </div>
                     <div ng-repeat="(key,value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)" class="post-field">
                       <post-value
