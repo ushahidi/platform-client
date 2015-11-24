@@ -90,7 +90,7 @@
                                 {{stage.label}}
                             </span>
                         </a>
-                        <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
+                        <span class="status {{stageIsComplete(stage.id)? 'complete' : ''}}">
                         </span>
                     </li>
                 </ul>
@@ -126,6 +126,14 @@
                           translate="{{'post.valid.tags.' + error}}"></p>
                     </div>
                 </div>
+                <button ng-repeat="stage in stages" type="button"
+                    class="button-secondary check"
+                    ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
+                    ng-show="stage.id == visibleStage"
+                    ng-click="toggleStageCompletion(stage.id)"
+                    translate="{{ stageIsComplete(stage.id) ? 'post.complete' : 'post.mark_complete' }}"
+                    >
+                </button>
                 <div
                     ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                     ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
