@@ -196,6 +196,7 @@
     },
     "post": {
         "posts" : "Posts",
+        "by" : "by",
         "add_incident" : "Add Incident",
         "edit_incident" : "Edit Incident",
         "publish_for_you" : "Just you",

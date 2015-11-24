@@ -110,7 +110,7 @@
                        <p>
                           <strong class="icon-left fa-circle">
                               {{post.type}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="user.realname != null">by <a href="/settings/users/{{user.id}}">{{post.author_realname}}</a></span>
+                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{user.id}}">{{user.realname}}</a></span>
                       </p>
                     </div>
                     <div 
