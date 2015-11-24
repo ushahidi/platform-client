@@ -12,6 +12,7 @@ module.exports = [
     'UserEndpoint',
     'TagEndpoint',
     'FormAttributeEndpoint',
+    'FormStageEndpoint',
     'FormEndpoint',
     'Maps',
     'Leaflet',
@@ -33,6 +34,7 @@ function (
     UserEndpoint,
     TagEndpoint,
     FormAttributeEndpoint,
+    FormStageEndpoint,
     FormEndpoint,
     Maps,
     L,
@@ -53,6 +55,36 @@ function (
         }
 
         return 'post.publish_for_everyone';
+    };
+
+    var fetchStages = function (formId) {
+        $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
+            var post = $scope.post;
+
+            // If number of completed stages matches number of stages,
+            // assume they're all complete, and just show the first stage
+            if (post.completed_stages.length === stages.length) {
+                $scope.setVisibleStage(stages[0].id);
+            } else {
+                // Get incomplete stages
+                var incompleteStages = _.filter(stages, function (stage) {
+                    return !_.contains(post.completed_stages, stage.id);
+                });
+
+                // Return lowest priority incomplete stage
+                $scope.setVisibleStage(incompleteStages[0].id);
+            }
+        });
+    };
+
+    fetchStages($scope.post.form.id);
+
+    $scope.setVisibleStage = function (stageId) {
+        $scope.visibleStage = stageId;
+    };
+
+    $scope.stageIsComplete = function (stageId) {
+        return _.includes($scope.post.completed_stages, stageId);
     };
 
     // Set page title to post title, if there is one available.
