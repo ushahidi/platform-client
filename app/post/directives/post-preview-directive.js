@@ -209,7 +209,7 @@ function (
             };
 
             $scope.publishRole = $scope.postIsPublishedTo();
-            
+
             /*
             $scope.searchCollections = function (query) {
                 CollectionEndpoint.query(query)

@@ -210,7 +210,7 @@ function (
 
     // Why is this not builtin behaviour in angular?!?!?!
     $scope.goEdit = function () {
-       $location.path('/posts/'+$scope.post.id+'/edit'); 
+        $location.path('/posts/' + $scope.post.id + '/edit');
     };
 
     $scope.refreshCollections = function () {
