@@ -10,8 +10,11 @@ module.exports = function (config) {
             'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/angular-cache/dist/angular-cache.js',
             'node_modules/underscore/underscore.js',
+            'node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js',
+            'node_modules/leaflet/dist/leaflet.js',
             'app/common/**/*.js',
             'app/post/**/*.js',
+            'app/set/**/*.js',
             'app/user-profile/**/*.js',
             'app/common/locales/**/*.json',
             'test/unit/**/*.js'

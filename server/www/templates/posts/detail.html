@@ -85,6 +85,17 @@
                 </div>
             </header>
             <div class="vertical-tabs">
+              <nav class="vertical-tabs-menu init">
+                <ul>
+                  <li ng-class="{'active': stage.id === visibleStage}" ng-repeat="stage in stages">
+                    <a href="" ng-click="activateStageTab(stage)">
+                        <span ng-class="{'icon-left fa-file-o': stage.hasFileIcon}">
+                        {{stage.label}}</span></a>
+                    <span ng-class="{'status complete': stage.completed, 'status': !stage.completed}" ng-click="toggleCompletedStage(stage)"></span>
+                    </li>
+                </ul>
+               </nav>
+
                 <div class="vertical-tabs-content">
                     <div class="post-author">
                        <img class="circular" src="http://placehold.it/100x100" alt="">
@@ -94,15 +105,16 @@
                           </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="user.realname != null">by <a href="/settings/users/{{user.id}}">{{post.author_realname}}</a></span>
                       </p>
                     </div>
-                    <div ng-if="post.content" class="post-field">
+                    <div ng-if="post.content && isFirstStage(visibleStage)" class="post-field">
                         <p sd-model-to-html="post.content"></p>
                     </div>
-                    <div ng-repeat="(key,value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)" class="post-field">
+                    <div ng-repeat="(key,value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)" class="post-field"
+                         ng-show="form_attributes[key].form_stage_id == visibleStage">
                       <post-value
                           key="key"
                           value="value"
                           attribute="form_attributes[key]"
-                      ></post-value>
+                        ></post-value>
                     </div>
                     <div ng-if="mapDataLoaded" class="post-field">
                         <h4 ng-if="mapDataLoaded" translate>post.location</h4>
