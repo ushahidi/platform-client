@@ -529,7 +529,7 @@
         "post" : {
             "save_success" : "Saved <a href\"/post/{{id}}\">name</a> post",
             "save_error" : "Unable to save post, please try again",
-            "publish_success" : "Post has been published to {{role}}",
+            "publish_success" : "Post has been published for {{role}}",
             "set_draft" : "Post is now visible to just you",
             "publish_error" : "Unable to publish post, please try again",
             "unpublish_success" : "Post has been unpublished",
@@ -538,7 +538,9 @@
             "confirm_delete" : "Confirm Delete",
             "destroy_title" : "Delete Post",
             "delete_question" : "Are you sure you want to delete your post <a href=\"/posts/{{id}}\">{{post}}</a>?",
+
             "destroy_success" : "Post {{name}} deleted",
+            "destroy_success_bulk" : "Posts deleted",
             "destroy_confirm" : "Are you sure you want to delete this post?",
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",

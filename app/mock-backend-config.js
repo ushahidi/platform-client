@@ -72,6 +72,10 @@ angular.module('e2e-mocks', ['ngMockE2E'])
         // pass through all template fetches
         // to the server which delivers the angular app
         $httpBackend.whenGET(/templates.*/).passThrough();
+
+        $httpBackend.whenDELETE(matcher).respond(function (method, url, data) {
+            return [200, data, {}];  
+        });
     }]);
 
 angular.module('app').requires.push('e2e-mocks');

@@ -86,8 +86,8 @@
                         ng-repeat="stage in stages"
                         ng-class="{'active': visibleStage == stage.id}"  >
                         <a ng-click="setVisibleStage(stage.id)">
-                            <span class="icon-left fa-{{stage.icon}}">
-                                {{stage.label}}
+                            <span class="icon-left fa-{{stage.icon||'file-o'}}">
+                                {{stage.label}} is really long
                             </span>
                         </a>
                         <span class="status {{stageIsComplete(stage.id)? 'complete' : ''}}">

@@ -3,7 +3,7 @@ var config = {
     getPageTimeout: 30000,
 
     specs: [
-        'e2e/**/*.js'
+        'e2e/post/*.js'
     ],
 
     baseUrl: 'http://localhost:8080/',
