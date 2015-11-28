@@ -4,6 +4,7 @@ describe('post detail interaction', function () {
     // Selectors
     var whoCanSeeSelector = '.step span'
         , selectAllLinkSelector = '.list-actions a'
+        , postLink = '.post-text a'
         , postSelectSelector = '.select-post input'
         , postCheckedSelectSelector = '.select-post input:checked'
         , deleteButtonSelector = '.bulk-actions button'
@@ -140,14 +141,18 @@ describe('post detail interaction', function () {
                 });
             });
         });
-    });
-});
 
-        /*
         describe('checking the editability of a post', function () {
             describe('when clicking the edit button of a post', function () {
-                it('should change to the post edit page', function () {
+                afterEach(function () {
+                    element.all(by.css('a[href="/"]')).get(0).click();
+                    element(by.css('.view-list')).click();
+                });
 
+                it('should change to the post edit page', function () {
+                    element.all(by.css(postLink)).get(0).click().then(function () {
+                        expect(browser.getCurrentUrl()).toContain('posts/120');   
+                    });
                 });
             });
 
@@ -204,7 +209,8 @@ describe('post detail interaction', function () {
             });
         });
     });
-
+});
+  /*
     describe('as a non-user', function () {
         beforeEach(function () {
             browser.get('/views/list');
