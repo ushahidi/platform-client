@@ -9,7 +9,11 @@ describe('post detail interaction', function () {
         , postCheckedSelectSelector = '.select-post input:checked'
         , deleteButtonSelector = '.bulk-actions button'
         , postEditButtonSelector = ''
-        , postCollectionsButtonSelector = ''
+        , openCreateCollectionButton = '.form-field.bar a'
+        , createCollectionButton = '.form-field.bar button'
+        , postCollectionsButtonSelector = '.actions-content .dropdown-trigger.init.dropdown-toggle'
+        , postCollectionsMenuSelector = '.actions-content .dropdown-menu.init'
+        , collectionItem = '.form-field.checkbox input'
         , visibilityButtonsSelector = '.step select'
         , visibilityButtonsCheckedSelector = '.step select option:checked'
         , confirmationMessageSelector = '.confirmation-message-wrapper p';
@@ -157,53 +161,70 @@ describe('post detail interaction', function () {
             });
 
             describe('when clicking the collections button of a post', function () {
-
+                var collectionMenu;
                 beforeEach(function () {
-
+                    element.all(by.css(postCollectionsButtonSelector)).get(0).click();
+                    collectionMenu = element.all(by.css(postCollectionsMenuSelector)).get(0);
                 });
+
                 describe('the user will see a menu of collection options', function () {
                     it('should show existing collections with toggles', function () {
-
+                        expect(collectionMenu.isDisplayed()).toBe(true);
                     });
 
-                    it('should show create collections', function () {
+                    it('should show 3 collections for post 120', function () {
+                        var collections = collectionMenu.all(by.css(collectionItem));
+                        expect(collections.count()).toEqual(3);
+                    });
 
+                    it('with Explosion collections ticked', function () {
+                        var explosion = collectionMenu.all(by.css(collectionItem)).get(1);
+                        expect(explosion.isSelected()).toBe(true);
                     });
                 });
                 
                 describe('when the user adds a post to a collection', function () {
-                    it('should add the post to a collection', function () {
+                    beforeEach(function () {
+                        var collectionInput = collectionMenu.all(by.css(collectionItem)).get(0);
+                        collectionInput.click();
+                    });
 
+                    it('should add the post to a collection', function () {
+                        expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Post has been added to Test collection');
                     });
                 });
 
                 describe('when the user removes a post from a collection', function () {
+                    beforeEach(function () {
+                        var collectionInput = collectionMenu.all(by.css(collectionItem)).get(1);
+                        collectionInput.click();
+                    });
+
                     it('should remove the post from the collection', function () {
+                        expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Post has been removed from Explosion');
 
                     });
                 });
 
                 describe('when the user creates a new collections', function () {
-                    beforeEach(function () {
+                    var openCreateCollection
+                        , collectionInput;
 
+                    beforeEach(function () {
+                        openCreateCollection = collectionMenu.element(by.css(openCreateCollectionButton));
+                        openCreateCollection.click();
+                        collectionInput = element.all(by.css('#create-collection')).get(0);
                     });
                     
                     it('should show the new collection input', function () {
-
+                        expect(collectionInput.isDisplayed()).toBe(true);
                     });
 
-                    describe('when the user enters a new collection and creates', function () {
-                        it('should create the collection', function () {
-
-                        });
-
-                        it('and should add the collection to the list', function () {
-
-                        });
-
-                        it('and add the post to the collection', function () {
-
-                        });
+                    it('should create the collection', function () {
+                        collectionInput.sendKeys('new test collection');
+                        createCollectionButton = collectionMenu.element(by.css(createCollectionButton));
+                        createCollectionButton.click();
+                        expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Post has been added to new test collection');
                     });
                 });
             });
