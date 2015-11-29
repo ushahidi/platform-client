@@ -47,6 +47,9 @@ describe('Post detail controller', function () {
             $scope: $scope,
             post: {
                 tags: [],
+                form: {
+                  id: 1
+                },
                 completed_stages: ['1', '2', '3']
             }
         });
