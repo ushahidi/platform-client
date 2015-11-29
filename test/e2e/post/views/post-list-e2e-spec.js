@@ -22,7 +22,13 @@ describe('post detail interaction', function () {
             element(by.css('.view-list')).click();
         });
 
-        afterEach(function () {
+        describe('when clicking the visibility select', function () {
+            var visibilitySelect;
+            beforeEach(function () {
+                visibilitySelect = element.all(by.css(visibilityButtonsSelector)).get(0);
+                visibilitySelect.click();
+            });
+afterEach(function () {
             // Clear localStorage to reset session
             browser.executeScript('window.sessionStorage.clear();');
             browser.executeScript('window.localStorage.clear();');
@@ -43,19 +49,12 @@ describe('post detail interaction', function () {
             });
         });
 
-        describe('when clicking the visibility select', function () {
-            var visibilitySelect;
-            beforeEach(function () {
-                visibilitySelect = element.all(by.css(visibilityButtonsSelector)).get(0);
-                visibilitySelect.click();
-            });
 
             describe('when clicking a visibility option', function () {
                 beforeEach(function () {
                     visibilitySelect.element(by.cssContainingText('option', 'Member')).click();
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
-                    browser.sleep(5000);
                     element(by.css(confirmationMessageSelector)).getText().then(
                         function (text) {
                             expect(text).toEqual('Post has been published for Member');
