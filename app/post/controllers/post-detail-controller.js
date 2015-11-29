@@ -387,6 +387,7 @@ function (
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
+        });
     };
 
     $scope.postIsPublishedTo = function () {

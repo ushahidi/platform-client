@@ -3,9 +3,9 @@ var config = {
     getPageTimeout: 30000,
 
     suites: {
-      post_views: './e2e/post/views/*.js',
-      settings: './e2e/settings/*.js',
-      full: './e2e/*.js'
+        post_views: './e2e/post/views/*.js',
+        settings: './e2e/settings/*.js',
+        full: './e2e/*.js'
     },
 
     baseUrl: 'http://localhost:8080/',
