@@ -544,7 +544,8 @@
             "destroy_confirm" : "Are you sure you want to delete this post?",
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",
-            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?"
+            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
+            "stage_save_success" : "Updated {{stage}}"
         },
         "tag" : {
             "save_success" : "Saved category {{name}}",

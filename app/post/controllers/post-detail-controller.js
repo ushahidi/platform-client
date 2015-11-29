@@ -44,6 +44,7 @@ function (
     Notify
 ) {
     $scope.post = post;
+
     $scope.mapDataLoaded = false;
     $scope.availableRoles = RoleHelper.roles();
     $scope.publishedFor = function () {
@@ -117,12 +118,46 @@ function (
             }
         });
 
+        FormStageEndpoint.get({formId: $scope.post.form.id}, function (stages) {
+            $scope.stages = stages.results;
+
+            // Convert ids to strings
+            _.forEach($scope.stages, function (stage) {
+                stage.id = stage.id.toString();
+            });
+
+            // Make the first stage visible
+            if (!_.isEmpty($scope.stages)) {
+                $scope.visibleStage = $scope.stages[0].id;
+                $scope.stages[0].hasFileIcon = true;
+            }
+
+            // Get completed stages
+            _.forEach($scope.stages, function (stage) {
+                if (_.indexOf($scope.post.completed_stages, stage.id) !== -1) {
+                    stage.completed = true;
+                }
+            });
+        });
+
         FormAttributeEndpoint.query({formId: $scope.post.form.id}, function (attributes) {
             angular.forEach(attributes, function (attr) {
                 this[attr.key] = attr;
             }, $scope.form_attributes);
         });
     }
+
+    $scope.activateStageTab = function (selectedStage) {
+        $scope.visibleStage = selectedStage.id;
+    };
+
+    $scope.isFirstStage = function (stageId) {
+        if (!_.isEmpty($scope.stages)) {
+            return stageId === $scope.stages[0].id;
+        }
+
+        return false;
+    };
 
     // Replace tags with full tag object
     $scope.post.tags = $scope.post.tags.map(function (tag) {
@@ -294,6 +329,26 @@ function (
         });
     };
 
+    $scope.toggleCompletedStage = function (stage) {
+        // @todo how to validate this before saving
+        if (_.includes($scope.post.completed_stages, stage.id)) {
+            $scope.post.completed_stages = _.without($scope.post.completed_stages, stage.id);
+        } else {
+            $scope.post.completed_stages.push(stage.id);
+        }
+
+        PostEndpoint.update($scope.post).$promise
+            .then(function () {
+                $translate('notify.post.stage_save_success', {stage: stage.label})
+                    .then(function (message) {
+                        Notify.showNotificationSlider(message);
+                        stage.completed = !stage.completed;
+                    });
+            }, function (errorResponse) {
+                Notify.showApiErrors(errorResponse);
+            });
+    };
+
     $scope.publishPostTo = function () {
         // first check if stages required have been marked complete
         var requiredStages = _.where($scope.stages, {required: true}),
@@ -332,9 +387,6 @@ function (
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
     };
 
     $scope.postIsPublishedTo = function () {
@@ -351,4 +403,3 @@ function (
     $scope.publishRole = $scope.postIsPublishedTo();
 
 }];
-
