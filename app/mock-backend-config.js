@@ -77,9 +77,6 @@ angular.module('e2e-mocks', ['ngMockE2E'])
         // pass through all template fetches
         // to the server which delivers the angular app
         $httpBackend.whenGET(/templates.*/).passThrough();
-        $httpBackend.whenGET(/locales.*/).respond(function (method, url) {
-            return [200, {}, {}];
-        });
 
         $httpBackend.whenDELETE(matcher).respond(function (method, url, data) {
             return [200, data, {}];

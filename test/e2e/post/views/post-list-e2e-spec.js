@@ -22,7 +22,13 @@ describe('post detail interaction', function () {
             element(by.css('.view-list')).click();
         });
 
-          describe('when clicking the visibility select', function () {
+        afterEach(function () {
+            // Clear localStorage to reset session
+            browser.executeScript('window.sessionStorage.clear();');
+            browser.executeScript('window.localStorage.clear();');
+        });
+
+        describe('when clicking the visibility select', function () {
             var visibilitySelect;
             beforeEach(function () {
                 visibilitySelect = element.all(by.css(visibilityButtonsSelector)).get(0);
@@ -31,13 +37,16 @@ describe('post detail interaction', function () {
 
             describe('when clicking a visibility option', function () {
                 beforeEach(function () {
-                    visibilitySelect.element(by.cssContainingText('option', 'Member')).click();
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
+
+                    visibilitySelect.element(by.cssContainingText('option', 'Member')).click().then(
+                      function () {
                     element(by.css(confirmationMessageSelector)).getText().then(
                         function (text) {
                             expect(text).toEqual('Post has been published for Member');
                         });
+                      });
                 });
             });
         });
