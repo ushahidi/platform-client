@@ -2,9 +2,11 @@ var config = {
     allScriptsTimeout: 11000,
     getPageTimeout: 30000,
 
-    specs: [
-        'e2e/*/*.js'
-    ],
+    suites: {
+      post_views: 'e2e/post/views/*.js',
+      settings: 'e2e/settings/*.js',
+      full: 'e2e/*.js'
+    },
 
     baseUrl: 'http://localhost:8080/',
 
