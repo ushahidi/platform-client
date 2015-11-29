@@ -53,9 +53,9 @@ describe('post detail interaction', function () {
             describe('when clicking a visibility option', function () {
                 beforeEach(function () {
                     visibilitySelect.element(by.cssContainingText('option', 'Member')).click();
-                    browser.sleep(500);
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
+                    browser.sleep(5000);
                     element(by.css(confirmationMessageSelector)).getText().then(
                         function (text) {
                             expect(text).toEqual('Post has been published for Member');
