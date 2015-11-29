@@ -22,33 +22,12 @@ describe('post detail interaction', function () {
             element(by.css('.view-list')).click();
         });
 
-        describe('when clicking the visibility select', function () {
+          describe('when clicking the visibility select', function () {
             var visibilitySelect;
             beforeEach(function () {
                 visibilitySelect = element.all(by.css(visibilityButtonsSelector)).get(0);
                 visibilitySelect.click();
             });
-afterEach(function () {
-            // Clear localStorage to reset session
-            browser.executeScript('window.sessionStorage.clear();');
-            browser.executeScript('window.localStorage.clear();');
-            browser.manage().logs().get('browser').then(function(browserLog) {
-                var i = 0,
-                    severWarnings = false;
-
-                for(i; i<=browserLog.length-1; i++){
-                    if(browserLog[i].level.name === 'SEVERE'){
-                        console.log('\n' + browserLog[i].level.name);
-                        console.log('(Possibly exception) \n' + browserLog[i].message);
-
-                        severWarnings = true;
-                    }
-                }
-
-                //expect(severWarnings).toBe(false);
-            });
-        });
-
 
             describe('when clicking a visibility option', function () {
                 beforeEach(function () {
@@ -89,7 +68,7 @@ afterEach(function () {
 
                     it('should ask to confirm the post\'s deletion', function () {
                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
-                        //expect(element(by.css('#alert-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
+                        expect(element(by.css('#alert-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
                     });
 
                     describe('when the user clicks ok', function () {
