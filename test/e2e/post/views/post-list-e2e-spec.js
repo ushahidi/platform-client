@@ -1,22 +1,17 @@
-var _ = require('underscore');
-
 describe('post detail interaction', function () {
     // Selectors
-    var whoCanSeeSelector = '.step span'
-        , selectAllLinkSelector = '.list-actions a'
-        , postLink = '.post-text a'
-        , postSelectSelector = '.select-post input'
-        , postCheckedSelectSelector = '.select-post input:checked'
-        , deleteButtonSelector = '.bulk-actions button'
-        , postEditButtonSelector = ''
-        , openCreateCollectionButton = '.form-field.bar a'
-        , createCollectionButton = '.form-field.bar button'
-        , postCollectionsButtonSelector = '.actions-content .dropdown-trigger.init.dropdown-toggle'
-        , postCollectionsMenuSelector = '.actions-content .dropdown-menu.init'
-        , collectionItem = '.form-field.checkbox input'
-        , visibilityButtonsSelector = '.step select'
-        , visibilityButtonsCheckedSelector = '.step select option:checked'
-        , confirmationMessageSelector = '.confirmation-message-wrapper p';
+        var selectAllLinkSelector = '.list-actions a',
+        postLink = '.post-text a',
+        postSelectSelector = '.select-post input',
+        postCheckedSelectSelector = '.select-post input:checked',
+        deleteButtonSelector = '.bulk-actions button',
+        openCreateCollectionButton = '.form-field.bar a',
+        createCollectionButton = '.form-field.bar button',
+        postCollectionsButtonSelector = '.actions-content .dropdown-trigger.init.dropdown-toggle',
+        postCollectionsMenuSelector = '.actions-content .dropdown-menu.init',
+        collectionItem = '.form-field.checkbox input',
+        visibilityButtonsSelector = '.step select',
+        confirmationMessageSelector = '.confirmation-message-wrapper p';
 
     describe('as a logged in admin user', function () {
         beforeEach(function () {
@@ -47,15 +42,14 @@ describe('post detail interaction', function () {
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
                     element(by.css(confirmationMessageSelector)).getText().then(
-                        function(text) {
-                          expect(text).toEqual('Post has been published for Member');
+                        function (text) {
+                            expect(text).toEqual('Post has been published for Member');
                         });
                 });
             });
         });
 
         describe('checking bulk edit actions', function () {
-           
             it('the delete button should initially be disabled', function () {
                 var deleteButton = element(by.css(deleteButtonSelector));
                 expect(deleteButton.isEnabled()).toEqual(false);
@@ -73,13 +67,12 @@ describe('post detail interaction', function () {
                 });
 
                 describe('when clicking the delete button', function () {
-                    
                     beforeEach(function () {
                         var deleteButton = element(by.css(deleteButtonSelector));
                         deleteButton.click();
                         browser.sleep(500);
                     });
-                    
+
                     it('should ask to confirm the post\'s deletion', function () {
                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
                     });
@@ -104,17 +97,17 @@ describe('post detail interaction', function () {
                         function (count) {
                             postSelects = count;
                         });
-                    element(by.css(selectAllLinkSelector)).click(); 
+                    element(by.css(selectAllLinkSelector)).click();
                 });
-                     
-                it('should select all posts', function  () {
+
+                it('should select all posts', function () {
                     var postSelecteds = element.all(by.css(postCheckedSelectSelector)).count();
                     expect(postSelecteds).toEqual(postSelects);
                 });
                 it('should change select all to unselect all', function () {
                     element(by.css(selectAllLinkSelector)).getText().then(
-                        function(text) {
-                          expect(text).toEqual('Unselect All');
+                        function (text) {
+                            expect(text).toEqual('Unselect All');
                         });
                 });
 
@@ -122,14 +115,14 @@ describe('post detail interaction', function () {
                     var deleteButton = element(by.css(deleteButtonSelector));
                     expect(deleteButton.isEnabled()).toEqual(true);
                 });
-                
+
                 describe('when clicking delete', function () {
                     beforeEach(function () {
                         var deleteButton = element(by.css(deleteButtonSelector));
                         deleteButton.click();
                         browser.sleep(500);
                     });
-               
+
                     it('should ask to confirm deletion', function () {
                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
                         describe('when clicking ok', function () {
@@ -155,7 +148,7 @@ describe('post detail interaction', function () {
 
                 it('should change to the post edit page', function () {
                     element.all(by.css(postLink)).get(0).click().then(function () {
-                        expect(browser.getCurrentUrl()).toContain('posts/120');   
+                        expect(browser.getCurrentUrl()).toContain('posts/120');
                     });
                 });
             });
@@ -182,7 +175,7 @@ describe('post detail interaction', function () {
                         expect(explosion.isSelected()).toBe(true);
                     });
                 });
-                
+
                 describe('when the user adds a post to a collection', function () {
                     beforeEach(function () {
                         var collectionInput = collectionMenu.all(by.css(collectionItem)).get(0);
@@ -207,15 +200,14 @@ describe('post detail interaction', function () {
                 });
 
                 describe('when the user creates a new collections', function () {
-                    var openCreateCollection
-                        , collectionInput;
+                    var openCreateCollection, collectionInput;
 
                     beforeEach(function () {
                         openCreateCollection = collectionMenu.element(by.css(openCreateCollectionButton));
                         openCreateCollection.click();
                         collectionInput = element.all(by.css('#create-collection')).get(0);
                     });
-                    
+
                     it('should show the new collection input', function () {
                         expect(collectionInput.isDisplayed()).toBe(true);
                     });
@@ -247,7 +239,6 @@ describe('post detail interaction', function () {
         });
 
         describe('checking the editablity of each post', function () {
-            
             describe('when user does not have bulk action permisions', function () {
                 var selectAllLink = element(by.css(selectAllLinkSelector));
                 it('should not be possible to select all of the posts', function () {
@@ -270,7 +261,7 @@ describe('post detail interaction', function () {
                 var editButtons = element(by.css(postEditButtonSelector));
 
                 it('should not be possible to see the post actions buttons', function () {
-                    expect(editButtons.toEqual(null));    
+                    expect(editButtons.toEqual(null));
                 });
 
                 var collectionsButtons - element(by.css(postCollectionsButtonSelector));

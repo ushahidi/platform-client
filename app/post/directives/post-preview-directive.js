@@ -186,7 +186,7 @@ function (
                 PostEndpoint.update($scope.post).
                 $promise
                 .then(function (post) {
-                    var role = $scope.publishRole === '' ? 'Everyone' :RoleHelper.getRole($scope.publishRole);
+                    var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
                     $translate(message, {role: role})
                     .then(function (message) {

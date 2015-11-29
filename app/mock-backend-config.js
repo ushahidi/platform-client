@@ -79,7 +79,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
         $httpBackend.whenGET(/templates.*/).passThrough();
 
         $httpBackend.whenDELETE(matcher).respond(function (method, url, data) {
-            return [200, data, {}];  
+            return [200, data, {}];
         });
     }]);
 
