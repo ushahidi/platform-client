@@ -26,6 +26,23 @@ describe('post detail interaction', function () {
             // Clear localStorage to reset session
             browser.executeScript('window.sessionStorage.clear();');
             browser.executeScript('window.localStorage.clear();');
+
+            browser.manage().logs().get('browser').then(function(browserLog) {
+                var i = 0,
+                    severWarnings = false;
+
+                for(i; i<=browserLog.length-1; i++){
+                    if(browserLog[i].level.name === 'SEVERE'){
+                        console.log('\n' + browserLog[i].level.name);
+                        //uncomment to see the error
+                        //console.log('(Possibly exception) \n' + browserLog[i].message);
+
+                        severWarnings = true;
+                    }
+                }
+
+                expect(severWarnings).toBe(false);
+            });
         });
 
         describe('when clicking the visibility select', function () {
