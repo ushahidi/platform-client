@@ -68,7 +68,6 @@ describe('post detail interaction', function () {
 
                     it('should ask to confirm the post\'s deletion', function () {
                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
-                        expect(element(by.css('#alert-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
                     });
 
                     describe('when the user clicks ok', function () {
