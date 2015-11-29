@@ -1,6 +1,6 @@
 describe('post detail interaction', function () {
     // Selectors
-        var selectAllLinkSelector = '.list-actions a',
+    var selectAllLinkSelector = '.list-actions a',
         postLink = '.post-text a',
         postSelectSelector = '.select-post input',
         postCheckedSelectSelector = '.select-post input:checked',
