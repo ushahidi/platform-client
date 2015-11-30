@@ -37,16 +37,13 @@ describe('post detail interaction', function () {
 
             describe('when clicking a visibility option', function () {
                 beforeEach(function () {
+                    var optionElement = visibilitySelect.element(by.cssContainingText('option', 'Member'));
+                    optionElement.click();
+                    browser.sleep(500);
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
-
-                    visibilitySelect.element(by.cssContainingText('option', 'Member')).click().then(
-                      function () {
-                    element(by.css(confirmationMessageSelector)).getText().then(
-                        function (text) {
-                            expect(text).toEqual('Post has been published for Member');
-                        });
-                      });
+                    var confirmMessage = element(by.css(confirmationMessageSelector));
+                    expect(confirmMessage.getInnerHtml()).toEqual('Post has been published for Member');
                 });
             });
         });
@@ -87,7 +84,8 @@ describe('post detail interaction', function () {
                         });
 
                         it('should show a deletion confirmation message', function () {
-                            expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Posts deleted');
+                            var confirmMessage = element(by.css(confirmationMessageSelector));
+                            expect(confirmMessage.getInnerHtml()).toEqual('Posts deleted');
                         });
                     });
                 });
@@ -131,11 +129,14 @@ describe('post detail interaction', function () {
                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to delete this post?');
                         describe('when clicking ok', function () {
                             beforeEach(function () {
-                                element(by.css('button#confirm-modal-ok')).click();
+                                var confirmModal = element(by.css('button#confirm-modal-ok'));
+                                confirmModal.click();
+                                browser.sleep(500);
                             });
 
                             it('should show a deletion confirmation message', function () {
-                                expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Posts deleted');
+                                var confirmMessage = element(by.css(confirmationMessageSelector));
+                                expect(confirmMessage.getInnerHtml()).toEqual('Posts deleted');
                             });
                         });
                     });
@@ -184,10 +185,12 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var collectionInput = collectionMenu.all(by.css(collectionItem)).get(0);
                         collectionInput.click();
+                        browser.sleep(500);
                     });
 
                     it('should add the post to a collection', function () {
-                        expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Post has been added to Test collection');
+                        var confirmMessage = element(by.css(confirmationMessageSelector));
+                        expect(confirmMessage.getInnerHtml()).toEqual('Post has been added to Test collection');
                     });
                 });
 
@@ -195,10 +198,12 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var collectionInput = collectionMenu.all(by.css(collectionItem)).get(1);
                         collectionInput.click();
+                        browser.sleep(500);
                     });
 
                     it('should remove the post from the collection', function () {
-                        expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Post has been removed from Explosion');
+                        var confirmMessage = element(by.css(confirmationMessageSelector));
+                        expect(confirmMessage.getInnerHtml()).toEqual('Post has been removed from Explosion');
 
                     });
                 });
@@ -220,7 +225,9 @@ describe('post detail interaction', function () {
                         collectionInput.sendKeys('new test collection');
                         createCollectionButton = collectionMenu.element(by.css(createCollectionButton));
                         createCollectionButton.click();
-                        expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Post has been added to new test collection');
+                        browser.sleep(500);
+                        var confirmMessage = element(by.css(confirmationMessageSelector));
+                        expect(confirmMessage.getInnerHtml()).toEqual('Post has been added to new test collection');
                     });
                 });
             });
