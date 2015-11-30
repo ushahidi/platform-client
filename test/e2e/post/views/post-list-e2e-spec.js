@@ -85,7 +85,7 @@ describe('post detail interaction', function () {
                         });
 
                         it('should show a deletion confirmation message', function () {
-                            expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Posts deleted');
+                            expect(element(by.css(confirmationMessageSelector)).getInnerHtml()).toEqual('Posts deleted');
                         });
                     });
                 });
