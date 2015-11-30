@@ -3,23 +3,23 @@
         <ul class="breadcrumb">
             <li><a ng-href="/settings" translate>nav.settings</a></li>
             <li><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
-            <li class="active" translate>nav.create_post_type</li>
+            <li class="active" translate>nav.edit_post_type</li>
         </ul>
         <div class="page-header-body">
             <h1 class="page-title"><span class="icon-left fa-pencil">Edit Post Type</span></h1>
         </div>
         <div class="page-header-actions">
-            <button ng-click="saveFormSettings(form)">Save Post Type</button>
+            <button ng-click="saveFormSettings(form)" translate>form.save_post_type</button>
         </div>
     </div>
 
     <div class="main-col">
         <div class="form-field title">
-            <label>Name</label>
+            <label translate>form.name</label>
             <input type="text" value="{{form.name}}">
         </div>
         <div class="form-field">
-            <label>Description</label>
+            <label translate>form.description</label>
             <textarea>{{form.description}}</textarea>
         </div>
         <!--
@@ -75,17 +75,17 @@
                 </li>
 
 
-                <li><a ng-click="openNewStage()"><span class="icon-left fa-plus">Add Step</span></a></li>
+                <li><a ng-click="openNewStage()"><span class="icon-left fa-plus" translate>form.add_step</span></a></li>
             </ul>
         </nav>
         <div class="vertical-tabs-content">
             <div class="page-header">
                 <div class="page-header-body">
                     <h2 class="delta-alt">Fields</h2>
-                    <p class="small">Choose and order the fields that you would like to include in this post type.</p>
+                    <p class="small" translate>form.choose_order_message</p>
                 </div>
                 <div class="page-header-actions">
-                    <button class="button-secondary" ng-click="openNewAttribute()" data-modal="add-field"><span class="icon-left fa-plus">Add field</span></button>
+                    <button class="button-secondary" ng-click="openNewAttribute()" data-modal="add-field"><span class="icon-left fa-plus" translate>form.add_field</span></button>
                 </div>
             </div>
 

@@ -24,21 +24,9 @@ function (
         controller: require('./controllers/setting-forms-controller.js'),
         templateUrl: 'templates/settings/forms/forms.html'
     })
-    .when('/settings/forms/create', {
-        controller: require('./controllers/setting-forms-create-controller.js'),
-        templateUrl: 'templates/settings/forms/forms-create.html'
-    })
-    .when('/settings/forms/create/:id', {
-        controller: require('./controllers/setting-forms-create-template-controller.js'),
-        templateUrl: 'templates/settings/forms/form-edit.html'
-    })
     .when('/settings/forms/:id', {
         controller: require('./controllers/setting-forms-edit-controller.js'),
         templateUrl: 'templates/settings/forms/form-edit.html'
-    })
-    .when('/settings/forms/:formId/stages/:id', {
-        controller: require('./controllers/setting-forms-edit-stage-controller.js'),
-        templateUrl: 'templates/settings/forms/forms-edit-stage.html'
     })
     .when('/settings/categories', {
         controller: require('./controllers/setting-categories-controller.js'),
