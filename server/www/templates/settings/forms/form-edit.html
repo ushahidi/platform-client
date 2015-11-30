@@ -75,7 +75,7 @@
                 </li>
 
 
-                <li><a ng-click="addStage()"><span class="icon-left fa-plus">Add Step</span></a></li>
+                <li><a ng-click="openNewStage()"><span class="icon-left fa-plus">Add Step</span></a></li>
             </ul>
         </nav>
         <div class="vertical-tabs-content">
@@ -85,19 +85,24 @@
                     <p class="small">Choose and order the fields that you would like to include in this post type.</p>
                 </div>
                 <div class="page-header-actions">
-                    <button class="button-secondary" ng-click="addField(visibleStage)" data-modal="add-field"><span class="icon-left fa-plus">Add field</span></button>
+                    <button class="button-secondary" ng-click="openNewAttribute()" data-modal="add-field"><span class="icon-left fa-plus">Add field</span></button>
                 </div>
             </div>
 
             <div
-                ng-repeat="attribute in form.attributes" 
+                ng-repeat="attribute in form.attributes track by $index" 
                 ng-show="visibleStage == attribute.form_stage_id"
+                is-open="editIsOpen[$index]"
                 dropdown
                 auto-close="disabled"
                 class="settings-listing">
                 <div class="upvote-downvote">
-                    <button type="button" class="button-secondary icon-only alt upvote" disabled=""></button>
-                    <button type="button" class="button-secondary icon-only alt downvote"></button>
+                    <button
+                        ng-click="changeAttributePriority(attribute, -1)"
+                        type="button" class="button-secondary icon-only alt upvote" disabled=""></button>
+                    <button 
+                        ng-click="changeAttributePriority(attribute, +1)"
+                        type="button" class="button-secondary icon-only alt downvote"></button>
                 </div>
                 <h3 
                     dropdown-toggle 
@@ -152,11 +157,36 @@
                        </label>
                     </p>
                    <div>
-                       <button type="button" class="button-primary" ng-click="$parent.saveAttribute(attribute, $index)">{{ 'form.save_and_close'|translate }}</button>
+                       <button type="button" class="button-primary" ng-click="saveAttribute(attribute, $index)">{{ 'form.save_and_close'|translate }}</button>
                    </div>
                </form>     
             </div>
         </div>
    </div>
+    <modal title="form.add_field" visible="isNewAttributeOpen">
+        <div class="cards-select">
+            <div class="selection-card" ng-repeat="type in availableAttrTypes">
+                <a ng-click="addNewAttribute(type.type, type.input, type.label)" >
+                    <h3>{{ type.label }}</h3>
+                </a>
+            </div>
+        </div>
+    </modal>
+
+    <modal title="form.add_new_step" visible="isNewStageOpen">
+        <div class="form-info">
+            <label class="input-label" translate>form.step_name</label>
+            <input type="text" ng-model="newStage.label">
+            <label class="checkbox-label">
+                <input type="checkbox" ng-model="newStage.required">
+                <span translate>form.step_required</span>
+            </label>
+        </div>
+
+        <div class="modal-submit">
+            <button type="button" class="button-primary" ng-click="saveNewStage(newStage)" translate>form.save_post_step</button>
+        </div>
+    </modal>
+
 </main>
 
