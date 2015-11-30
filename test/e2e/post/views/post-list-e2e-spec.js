@@ -40,7 +40,6 @@ describe('post detail interaction', function () {
                     var optionElement = visibilitySelect.element(by.cssContainingText('option', 'Member'));
                     optionElement.click();
 
-                    //browser.sleep(500);
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
                     var confirmMessage = element(by.css(confirmationMessageSelector));
@@ -70,7 +69,7 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var deleteButton = element(by.css(deleteButtonSelector));
                         deleteButton.click();
-                        //browser.sleep(500);
+                        browser.sleep(500);
                     });
 
                     it('should ask to confirm the post\'s deletion', function () {
@@ -81,7 +80,7 @@ describe('post detail interaction', function () {
                         beforeEach(function () {
                             var confirmModal = element(by.css('button#confirm-modal-ok'));
                             confirmModal.click();
-                            //browser.sleep(500);
+                            browser.sleep(500);
                         });
 
                         it('should show a deletion confirmation message', function () {
@@ -123,7 +122,7 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var deleteButton = element(by.css(deleteButtonSelector));
                         deleteButton.click();
-                        //browser.sleep(500);
+                        browser.sleep(500);
                     });
 
                     it('should ask to confirm deletion', function () {
@@ -132,7 +131,6 @@ describe('post detail interaction', function () {
                             beforeEach(function () {
                                 var confirmModal = element(by.css('button#confirm-modal-ok'));
                                 confirmModal.click();
-                                //browser.sleep(500);
                             });
 
                             it('should show a deletion confirmation message', function () {
@@ -186,7 +184,6 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var collectionInput = collectionMenu.all(by.css(collectionItem)).get(0);
                         collectionInput.click();
-                        //browser.sleep(500);
                     });
 
                     it('should add the post to a collection', function () {
@@ -199,7 +196,6 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var collectionInput = collectionMenu.all(by.css(collectionItem)).get(1);
                         collectionInput.click();
-                        //browser.sleep(500);
                     });
 
                     it('should remove the post from the collection', function () {
@@ -226,7 +222,6 @@ describe('post detail interaction', function () {
                         collectionInput.sendKeys('new test collection');
                         createCollectionButton = collectionMenu.element(by.css(createCollectionButton));
                         createCollectionButton.click();
-                        //browser.sleep(500);
                         var confirmMessage = element(by.css(confirmationMessageSelector));
                         expect(confirmMessage.getInnerHtml()).toEqual('Post has been added to new test collection');
                     });
