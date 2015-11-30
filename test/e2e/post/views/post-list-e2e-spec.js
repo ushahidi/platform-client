@@ -81,11 +81,13 @@ describe('post detail interaction', function () {
 
                     describe('when the user clicks ok', function () {
                         beforeEach(function () {
-                            element(by.css('button#confirm-modal-ok')).click();
+                            var confirmModal = element(by.css('button#confirm-modal-ok'));
+                            confirmModal.click();
+                            browser.sleep(500);
                         });
 
                         it('should show a deletion confirmation message', function () {
-                            expect(element(by.css(confirmationMessageSelector)).getInnerHtml()).toEqual('Posts deleted');
+                            expect(element(by.css(confirmationMessageSelector)).getText()).toEqual('Posts deleted');
                         });
                     });
                 });
