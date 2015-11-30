@@ -95,7 +95,7 @@
                             ng-repeat="stage in stages"
                             ng-class="{'active': visibleStage == stage.id}"  >
                             <a ng-click="setVisibleStage(stage.id)">
-                                <span class="icon-left fa-{{stage.icon}}">
+                                <span class="icon-left" ng-class="{'fa-{{stage.icon}}': stage.icon}">
                                     {{stage.label}}
                                 </span>
                             </a>

@@ -18,24 +18,30 @@ function (
     Notify
 ) {
     return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-            formId: '@',
-            formTemplate: '@'
-        },
-        templateUrl: 'templates/settings/forms/form-editor.html',
+        restrict: 'A',
         link: function ($scope, $element, $attrs) {
             // If we're editing an existing form,
             // load the form info and all the fields.
             $q.all([
-                FormEndpoint.get({ id: $attrs.formId }).$promise,
-                FormStageEndpoint.query({ formId: $attrs.formId }).$promise
+                FormEndpoint.get({ id: $scope.formId }).$promise,
+                FormStageEndpoint.query({ formId: $scope.formId }).$promise,
+                FormAttributeEndpoint.query({ formId: $scope.formId }).$promise
             ]).then(function (results) {
-                var form = results[0];
+                var form = results[0],
+                    firstStage = results[1][0].id;
+
                 form.stages = _.sortBy(results[1], 'priority');
+                form.attributes = _.chain(results[2])
+                    .sortBy('priority')
+                    .value();
+
                 $scope.form = form;
+                $scope.setVisibleStage(firstStage);
             });
+
+            $scope.setVisibleStage = function (stageId) {
+                $scope.visibleStage = stageId;
+            };
 
             $scope.isSettingsOpen = false;
             $scope.openSettings = function () {

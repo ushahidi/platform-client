@@ -1,10 +1,101 @@
-<main class="page-content has-aside main-col" role="main">
-    <ul class="breadcrumb">
-        <li><a ng-href="/settings" translate>nav.settings</a></li>
-        <li><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
-        <li class="active">{{form.name}}</li>
-    </ul>
+<main class="page-content" role="main">
+    <div class="page-header">
+        <ul class="breadcrumb">
+            <li><a ng-href="/settings" translate>nav.settings</a></li>
+            <li><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
+            <li class="active" translate>nav.create_post_type</li>
+        </ul>
+        <div class="page-header-body">
+            <h1 class="page-title"><span class="icon-left fa-pencil">Edit Post Type</span></h1>
+        </div>
+        <div class="page-header-actions">
+            <button>Save Post Type</button>
+        </div>
+    </div>
 
-    <form-editor form-id="{{ formId }}"></form-editor>
-
+    <div class="main-col">
+        <div class="form-field title">
+            <label>Name</label>
+            <input type="text" value="Incident">
+        </div>
+        <div class="form-field">
+            <label>Description</label>
+            <textarea>Vestibulum faucibus efficitur erat. Mauris varius mollis consectetur. Ut et sem ut lacus rutrum dignissim.</textarea>
+        </div>
+        <!--
+        <div class="form-field">
+            <label>Who can contribute to this post type</label>
+            <div class="custom-select init">
+                <select>
+                    <option selected="">Everyone</option>
+                    <option>Members</option>
+                    <option>Administrators</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-field">
+            <label>Require moderation of new posts before they’re visible to everyone</label>
+            <div class="toggle-switch">
+                <input class="tgl" id="switch1" type="checkbox">
+                <label class="tgl-btn" for="switch1"></label>
+            </div>
+        </div>
+        <fieldset>
+            <legend>Presentation</legend>
+            <div class="form-field radio">
+                <input type="radio" name="presentation" id="basic" value="basic">
+                <label for="basic">Basic</label>
+            </div>
+            <div class="form-field radio">
+                <input type="radio" name="presentation" id="article" value="article">
+                <label for="article">Article</label>
+            </div>
+            <div class="form-field radio">
+                <input type="radio" name="presentation" id="location" value="location">
+                <label for="location">Location</label>
+            </div>
+        </fieldset>
+        -->
+    </div><!--end main col-->
+    <div class="vertical-tabs">
+        <nav class="vertical-tabs-menu init">
+            <ul>
+                <li class="active"><span class="icon-left fa-file-o">Post</span></li>
+                <li><a href=""><span class="icon-left fa-plus">Add Step</span></a></li>
+                <!-- 
+                <li><a href=""><span class="icon-left fa-plus">Add Translation</span></a></li>
+                -->
+            </ul>
+        </nav>
+        <div class="vertical-tabs-content">
+            <div class="page-header">
+                <div class="page-header-body">
+                    <h2 class="delta-alt">Fields</h2>
+                    <p class="small">Choose and order the fields that you would like to include in this post type.</p>
+                </div>
+                <div class="page-header-actions">
+                    <button class="button-secondary" data-modal="add-field"><span class="icon-left fa-plus">Add field</span></button>
+                </div>
+            </div>
+            <!--
+            <div class="settings-listing">
+                <h3 class="settings-listing-title"><a href="">Title</a></h3>
+            </div>
+            <div class="settings-listing">
+                <h3 class="settings-listing-title"><a href="">Description</a></h3>
+            </div>
+            -->
+            <div class="settings-listing">
+                <div class="upvote-downvote">
+                    <button type="button" class="button-secondary icon-only alt upvote" disabled=""></button>
+                    <button type="button" class="button-secondary icon-only alt downvote"></button>
+                </div>
+                <h3 class="settings-listing-title"><a href="">Location</a></h3>
+                <div class="actions">
+                    <button type="button" class="button-destructive alt"><span class="icon-only fa-trash">Delete</span></button>
+                </div>
+            </div>
+        </div>
+   </div>
 </main>
+

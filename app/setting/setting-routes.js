@@ -30,11 +30,11 @@ function (
     })
     .when('/settings/forms/create/:id', {
         controller: require('./controllers/setting-forms-create-template-controller.js'),
-        templateUrl: 'templates/settings/forms/forms-create-template.html'
+        templateUrl: 'templates/settings/forms/form-edit.html'
     })
     .when('/settings/forms/:id', {
         controller: require('./controllers/setting-forms-edit-controller.js'),
-        templateUrl: 'templates/settings/forms/forms-edit.html'
+        templateUrl: 'templates/settings/forms/form-edit.html'
     })
     .when('/settings/forms/:formId/stages/:id', {
         controller: require('./controllers/setting-forms-edit-stage-controller.js'),
