@@ -39,6 +39,7 @@ describe('post detail interaction', function () {
                 beforeEach(function () {
                     var optionElement = visibilitySelect.element(by.cssContainingText('option', 'Member'));
                     optionElement.click();
+
                     //browser.sleep(500);
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
