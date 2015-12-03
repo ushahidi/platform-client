@@ -1,0 +1,18 @@
+{
+    "id": 3,
+    "url": "http://192.168.33.110/api/v3/forms/3",
+    "parent_id": null,
+    "name": "new test title",
+    "description": "new test description",
+    "type": "report",
+    "disabled": false,
+    "created": "1970-01-01T00:00:00+00:00",
+    "updated": "2015-11-30T15:09:53+00:00",
+    "allowed_privileges": [
+        "read",
+        "create",
+        "update",
+        "delete",
+        "search"
+    ]
+}

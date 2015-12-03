@@ -15,11 +15,11 @@
 
     <div class="main-col">
         <div class="form-field title">
-            <label translate>form.name</label>
+            <label translate>form.form_name</label>
             <input type="text" value="{{form.name}}">
         </div>
         <div class="form-field">
-            <label translate>form.description</label>
+            <label translate>form.form_description</label>
             <textarea>{{form.description}}</textarea>
         </div>
         <!--
@@ -88,9 +88,8 @@
                     <button class="button-secondary" ng-click="openNewAttribute()" data-modal="add-field"><span class="icon-left fa-plus" translate>form.add_field</span></button>
                 </div>
             </div>
-
             <div
-                ng-repeat="attribute in form.attributes track by $index" 
+                ng-repeat="attribute in form.grouped_attributes track by $index" 
                 ng-show="visibleStage == attribute.form_stage_id"
                 is-open="editIsOpen[$index]"
                 dropdown
@@ -99,10 +98,10 @@
                 <div class="upvote-downvote">
                     <button
                         ng-click="changeAttributePriority(attribute, -1)"
-                        type="button" class="button-secondary icon-only alt upvote" disabled=""></button>
+                        type="button" class="button-secondary icon-only alt upvote" ng-disabled="($index == 0) || (form.grouped_attributes[$index-1].form_stage_id != attribute.form_stage_id)"></button>
                     <button 
                         ng-click="changeAttributePriority(attribute, +1)"
-                        type="button" class="button-secondary icon-only alt downvote"></button>
+                        type="button" class="button-secondary icon-only alt downvote" ng-disabled="($index == attributes.length-1) || (form.grouped_attributes[$index+1].form_stage_id != attribute.form_stage_id)"></button>
                 </div>
                 <h3 
                     dropdown-toggle 
@@ -110,7 +109,7 @@
                     <a href="">{{attribute.label}}</a>
                 </h3>
                 <div class="actions">
-                    <button type="button" ng-click="deleteAttribute(attribute)"class="button-destructive alt"><span class="icon-only fa-trash">Delete</span></button>
+                    <button type="button" ng-click="deleteAttribute(attribute, $index)"class="button-destructive alt"><span class="icon-only fa-trash">Delete</span></button>
                 </div>
                 <form class="init toggle-content" dropdown-menu>
                     <label class="input-label" translate>form.field_name</label>
@@ -173,7 +172,7 @@
         </div>
     </modal>
 
-    <modal title="form.add_new_step" visible="isNewStageOpen">
+    <modal title="form.add_step" visible="isNewStageOpen">
         <div class="form-info">
             <label class="input-label" translate>form.step_name</label>
             <input type="text" ng-model="newStage.label">

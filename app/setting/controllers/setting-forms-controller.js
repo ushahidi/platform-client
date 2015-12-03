@@ -45,11 +45,11 @@ function (
                 }).$promise.then(function () {
                     $translate('notify.form.destroy_form_success', { name: form.name }).then(function (message) {
                         Notify.showNotificationSlider(message);
-                    }); 
+                    });
                     $scope.refreshForms();
-                }); 
-            }); 
-        }); 
+                });
+            });
+        });
     };
 
     $scope.saveNewForm = function (form) {
@@ -73,7 +73,7 @@ function (
                     $translate('notify.form.save_success', {name: form.name}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
-                    $location.url('/settings/forms/' + form.id + '/stages/' + stage.id);
+                    $location.url('/settings/forms/' + form.id);
                 });
         });
     };

@@ -14,10 +14,12 @@
     <div class="main-col">
         <div class="divider white"></div>
         <div ng-show="forms.length" ng-repeat="form in forms" class="settings-listing">
+            <!--
             <div class="upvote-downvote">
-                <button type="button" class="button-secondary icon-only alt upvote" disabled=""></button>
+                <button ng-click="changePriority()" type="button" class="button-secondary icon-only alt upvote" disabled=""></button>
                 <button type="button" class="button-secondary icon-only alt downvote"></button>
             </div>
+            -->
             <h3 class="settings-listing-title"><a href="/settings/forms/{{form.id}}">{{form.name}}</a></h3>
             <div class="actions">
                 <button ng-click="deleteForm(form)" type="button" class="button-destructive alt"><span class="icon-only fa-trash" translate>form.delete</span></button>

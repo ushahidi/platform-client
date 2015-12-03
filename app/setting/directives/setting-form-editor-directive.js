@@ -34,7 +34,7 @@ function (
                 form.attributes = _.chain(results[2])
                     .sortBy('priority')
                     .value();
-
+                form.grouped_attributes = _.sortBy(form.attributes, 'form_stage_id');
                 $scope.form = form;
                 $scope.setVisibleStage(firstStage);
             });
@@ -166,7 +166,15 @@ function (
                 $scope.isNewAttributeOpen = true;
             };
             $scope.addNewAttribute = function (type, input, label) {
-                var lastPriority = $scope.form.attributes.length ? _.last($scope.form.attributes).priority : 0;
+                //have to copy as reverse() changes in place
+                var cloneAttributes = _.clone($scope.form.attributes);
+                var count = _.countBy($scope.form.attributes, function (attribute) {
+                    return attribute.form_stage_id;
+                });
+
+                var lastPriority = count[$scope.visibleStage] ? _.find(cloneAttributes.reverse(), function (item) {
+                    return item.form_stage_id === $scope.visibleStage;
+                }).priority : 0;
 
                 newAttrCount++;
                 $scope.isNewAttributeOpen = false;
@@ -182,7 +190,12 @@ function (
                 };
 
                 $scope.form.attributes.push(attribute);
-                $scope.editIsOpen[$scope.form.attributes.length - 1] = true;
+                $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
+
+                var index = _.findLastIndex($scope.form.grouped_attributes, function (item, index) {
+                    return item.form_stage_id === $scope.visibleStage;
+                });
+                $scope.editIsOpen[index] = true;
             };
 
             // Attribute Functions
@@ -203,7 +216,7 @@ function (
                 });
             };
 
-            $scope.deleteAttribute = function (attribute, $index) {
+            $scope.deleteAttribute = function (attribute) {
 
                 $translate('notify.form.delete_attribute_confirm')
                 .then(function (message) {
@@ -214,7 +227,12 @@ function (
                                 id: attribute.id
                             }).$promise.then(function () {
                                 // Remove attribute from scope, binding should take care of the rest
-                                $scope.form.attributes.splice($index, 1);
+                                var index = _.findIndex($scope.form.attributes, function (item) {
+                                    return item.id === attribute.id;
+                                });
+
+                                $scope.form.attributes.splice(index, 1);
+                                $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
 
                                 FormStageEndpoint.invalidateCache();
 
@@ -224,14 +242,19 @@ function (
                             });
                         } else { // If this was a new attribute, just remove from scope
                             // Remove attribute from scope, binding should take care of the rest
-                            $scope.form.attributes.splice($index, 1);
+                            var index = _.findIndex($scope.form.attributes, function (item) {
+                                return item.label === attribute.label;
+                            });
+                            $scope.form.attributes.splice(index, 1);
+                            $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
                         }
                     });
                 });
             };
 
             $scope.changeAttributePriority = function (attribute, increment) {
-                var attributes = $scope.form.attributes,
+
+                var attributes = $scope.form.grouped_attributes,
                     // Find our current stage
                     index = _.indexOf(attributes, attribute),
                     // Grab prev/next stage
@@ -258,6 +281,7 @@ function (
 
                 // Resort attribute list
                 $scope.form.attributes = _.sortBy(attributes, 'priority');
+                $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
             };
 
             $scope.availableAttrTypes = [

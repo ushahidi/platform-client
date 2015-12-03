@@ -4,6 +4,11 @@ angular.module('e2e-mocks', ['ngMockE2E'])
 
         var resourceToJsonMapping = {
             'posts': require('../mocked_backend/api/v3/posts.json'),
+            'forms': require('../mocked_backend/api/v3/forms.json'),
+            'forms/1': require('../mocked_backend/api/v3/forms/1.json'),
+            'forms/3': require('../mocked_backend/api/v3/forms/3.json'),
+            'forms/1/stages': require('../mocked_backend/api/v3/stages.json'),
+            'forms/1/attributes': require('../mocked_backend/api/v3/attributes.json'),
             'config/map': require('../mocked_backend/api/v3/config/map.json'),
             'sets': require('../mocked_backend/api/v3/sets.json'),
             'collections': require('../mocked_backend/api/v3/collections.json'),
@@ -67,6 +72,9 @@ angular.module('e2e-mocks', ['ngMockE2E'])
         });
 
         $httpBackend.whenPOST(matcher).respond(function (method, url, data) {
+            if (url.contains('forms')) {
+                return getResultForResource('forms/3');
+            }
             return [200, data, {}];
         });
 
