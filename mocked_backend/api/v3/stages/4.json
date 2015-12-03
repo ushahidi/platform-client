@@ -1,0 +1,16 @@
+{
+    "id": 4,
+    "url": "http://192.168.33.110/api/v3/form_stages/1",
+    "form_id": 1,
+    "label": "4th step",
+    "priority": 99,
+    "icon": null,
+    "required": false,
+    "allowed_privileges": [
+        "read",
+        "create",
+        "update",
+        "delete",
+        "search"
+    ]
+}

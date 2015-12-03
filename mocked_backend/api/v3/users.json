@@ -35,7 +35,10 @@
             "allowed_methods": [
                 "get",
                 "post",
-                "put"
+                "put",
+                "delete",
+                "update",
+                "change_status"
             ]
         },
         {

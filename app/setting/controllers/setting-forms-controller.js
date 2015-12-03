@@ -22,9 +22,12 @@ function (
     });
 
     // Get all the forms for display
-    FormEndpoint.get().$promise.then(function (response) {
-        $scope.forms = response.results;
-    });
+    $scope.refreshForms = function () {
+        FormEndpoint.get().$promise.then(function (response) {
+            $scope.forms = response.results;
+        });
+    };
+    $scope.refreshForms();
 
     // Manage new form settings
     $scope.isNewFormOpen = false;
@@ -32,6 +35,23 @@ function (
         $scope.newForm = {};
         $scope.isNewFormOpen = !$scope.isNewFormOpen;
     };
+
+    $scope.deleteForm = function (form) {
+        $translate('notify.form.delete_form_confirm')
+        .then(function (message) {
+            Notify.showConfirm(message).then(function () {
+                FormEndpoint.delete({
+                    id: form.id
+                }).$promise.then(function () {
+                    $translate('notify.form.destroy_form_success', { name: form.name }).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                    $scope.refreshForms();
+                });
+            });
+        });
+    };
+
     $scope.saveNewForm = function (form) {
         // Save the form and translate the Structure stage label
         $q.all({
@@ -53,7 +73,7 @@ function (
                     $translate('notify.form.save_success', {name: form.name}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
-                    $location.url('/settings/forms/' + form.id + '/stages/' + stage.id);
+                    $location.url('/settings/forms/' + form.id);
                 });
         });
     };

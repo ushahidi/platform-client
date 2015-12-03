@@ -1,37 +1,31 @@
-<main class="page-content has-aside main-col" role="main">
-    <ul class="breadcrumb">
-        <li><a ng-href="/settings" translate>nav.settings</a></li>
-        <li class="active" translate>nav.posts_and_entities</li>
-    </ul>
-
-    <h1 class="title">{{title}}</h1>
-    <p>
-        Post types define the structure of posts in your deployment.
-    </p>
-
-    <div class="divider padded"></div>
-
-    <h4>Start from scratch:</h4>
-    <div class="cards-select">
-        <div class="selection-card custom">
-            <a ng-click="openNewForm()" >
-                <h3>Add a new post type</h3>
-            </a>
+<main class="page-content" role="main">
+    <div class="page-header">
+        <ul class="breadcrumb">
+            <li><a ng-href="/settings" translate>nav.settings</a></li>
+            <li class="active" translate>nav.posts_and_entities</li>
+        </ul>
+        <div class="page-header-body">
+            <h1 class="page-title">Post Types</h1>
+        </div>
+        <div class="page-header-actions">
+            <button ng-click="openNewForm()" class="button-secondary"><span class="icon-left fa-plus" translate>form.add_post_type</span></button>
         </div>
     </div>
-
-    <div ng-show="forms.length">
-        <h4>Or edit existing post types:</h4>
-
-        <div class="cards-select">
-            <div class="selection-card" ng-repeat="form in forms">
-                <a href="/settings/forms/{{ form.id }}">
-                    <h3>{{ form.name }}</h3>
-                    <p>{{ form.description }}</p>
-                </a>
+    <div class="main-col">
+        <div class="divider white"></div>
+        <div ng-show="forms.length" ng-repeat="form in forms" class="settings-listing">
+            <!--
+            <div class="upvote-downvote">
+                <button ng-click="changePriority()" type="button" class="button-secondary icon-only alt upvote" disabled=""></button>
+                <button type="button" class="button-secondary icon-only alt downvote"></button>
+            </div>
+            -->
+            <h3 class="settings-listing-title"><a href="/settings/forms/{{form.id}}">{{form.name}}</a></h3>
+            <div class="actions">
+                <button ng-click="deleteForm(form)" type="button" class="button-destructive alt"><span class="icon-only fa-trash" translate>form.delete</span></button>
             </div>
         </div>
-    </div>
+    </div><!--end main col-->
 
     <modal visible="isNewFormOpen">
         <h3 class="settings" translate>form.post_type_settings</h3>
@@ -48,5 +42,6 @@
             <button type="button" class="button-primary" ng-click="saveNewForm(form)" translate>form.save_post_type</button>
         </div>
     </modal>
+
 
 </main>

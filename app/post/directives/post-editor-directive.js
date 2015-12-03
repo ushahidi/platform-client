@@ -157,24 +157,10 @@ function (
                 }
             };
 
-            $scope.postIsPublishedTo = function () {
-
-                if ($scope.post.status === 'draft') {
-                    return 'draft';
-                }
-
-                if (!_.isEmpty($scope.post.published_to)) {
-                    return $scope.post.published_to[0];
-                }
-
-                return '';
-            };
-
-            $scope.publishPostTo = function (role) {
+            $scope.publishPostTo = function () {
 
                 // first check if stages required have been marked complete
-                var requiredStages = _.where($scope.stages, {required: true}),
-                    errors = [];
+                var requiredStages = _.where($scope.stages, {required: true}), errors = [];
 
                 _.each(requiredStages, function (stage) {
                     // if this stage isn't complete, add to errors
@@ -188,14 +174,44 @@ function (
                     return;
                 }
 
-                $scope.post.status = 'published';
-                $scope.userSavedPost = true;
-                if (role) {
-                    $scope.post.published_to = [role];
+                if ($scope.publishRole) {
+                    if ($scope.publishRole === 'draft') {
+                        $scope.post.status = 'draft';
+                    } else {
+                        $scope.post.status = 'published';
+                        $scope.post.published_to = [$scope.publishRole];
+                    }
                 } else {
+                    $scope.post.status = 'published';
                     $scope.post.published_to = [];
                 }
+
+                PostEndpoint.update($scope.post).
+                $promise
+                .then(function (post) {
+                    var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+                    $translate(message)
+                    .then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
+                });
             };
+
+            $scope.postIsPublishedTo = function () {
+                if ($scope.post.status === 'draft') {
+                    return 'draft';
+                }
+
+                if (!_.isEmpty($scope.post.published_to)) {
+                    return $scope.post.published_to[0];
+                }
+
+                return '';
+            };
+
+            $scope.publishRole = $scope.postIsPublishedTo();
 
             $scope.canSavePost = function () {
                 var valid = true;

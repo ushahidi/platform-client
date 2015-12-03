@@ -152,6 +152,7 @@ function (
                         Notify.showApiErrors(errorResponse);
                     });
             };
+
             $scope.publishPostTo = function () {
 
                 // first check if stages required have been marked complete
@@ -185,8 +186,9 @@ function (
                 PostEndpoint.update($scope.post).
                 $promise
                 .then(function (post) {
+                    var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-                    $translate(message)
+                    $translate(message, {role: role})
                     .then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
@@ -208,6 +210,7 @@ function (
             };
 
             $scope.publishRole = $scope.postIsPublishedTo();
+
             /*
             $scope.searchCollections = function (query) {
                 CollectionEndpoint.query(query)
@@ -224,6 +227,7 @@ function (
                 $scope.editableCollectionsLocal = $scope.editableCollections;
             };
             */
+
             $scope.createNewCollection = function (collectionName) {
                 var collection = {
                     'name': collectionName,

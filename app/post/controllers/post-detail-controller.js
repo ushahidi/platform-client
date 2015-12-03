@@ -58,6 +58,36 @@ function (
         return 'post.publish_for_everyone';
     };
 
+    var fetchStages = function (formId) {
+        $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
+            var post = $scope.post;
+
+            // If number of completed stages matches number of stages,
+            // assume they're all complete, and just show the first stage
+            if (post.completed_stages.length === stages.length) {
+                $scope.setVisibleStage(stages[0].id);
+            } else {
+                // Get incomplete stages
+                var incompleteStages = _.filter(stages, function (stage) {
+                    return !_.contains(post.completed_stages, stage.id);
+                });
+
+                // Return lowest priority incomplete stage
+                $scope.setVisibleStage(incompleteStages[0].id);
+            }
+        });
+    };
+
+    fetchStages($scope.post.form.id);
+
+    $scope.setVisibleStage = function (stageId) {
+        $scope.visibleStage = stageId;
+    };
+
+    $scope.stageIsComplete = function (stageId) {
+        return _.includes($scope.post.completed_stages, stageId);
+    };
+
     // Set page title to post title, if there is one available.
     if (post.title && post.title.length) {
         $scope.$emit('setPageTitle', post.title);
@@ -213,6 +243,11 @@ function (
         });
     };
 
+    // Why is this not builtin behaviour in angular?!?!?!
+    $scope.goEdit = function () {
+        $location.path('/posts/' + $scope.post.id + '/edit');
+    };
+
     $scope.refreshCollections = function () {
         $scope.editableCollections = CollectionEndpoint.editableByMe();
     };
@@ -343,16 +378,16 @@ function (
             $scope.post.published_to = [];
         }
 
-        PostEndpoint.update($scope.post).$promise
-            .then(function () {
-                var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-                $translate(message, { role: $scope.publishRole })
-                    .then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-            }, function (errorResponse) {
-                Notify.showApiErrors(errorResponse);
+        PostEndpoint.update($scope.post).
+        $promise
+        .then(function () {
+            var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
+            var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+            $translate(message, { role: role })
+            .then(function (message) {
+                Notify.showNotificationSlider(message);
             });
+        });
     };
 
     $scope.postIsPublishedTo = function () {
