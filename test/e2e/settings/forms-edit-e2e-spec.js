@@ -248,7 +248,7 @@ describe('forms interaction', function () {
 
                         it('should show a confirmation of the step adding', function () {
                             var confirmMessage = element(by.css(confirmationMessageSelector));
-                            expect(confirmMessage.getInnerHtml()).toEqual('Post Type step 4th saved');
+                            expect(confirmMessage.getInnerHtml()).toEqual('Post Type step 4th step saved');
                         });
                         /*
                          * Need to add additonal mock data to allow displaying of new steps
