@@ -8,6 +8,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
             'forms/1': require('../mocked_backend/api/v3/forms/1.json'),
             'forms/3': require('../mocked_backend/api/v3/forms/3.json'),
             'forms/1/stages': require('../mocked_backend/api/v3/stages.json'),
+            'forms/1/stages/4': require('../mocked_backend/api/v3/stages/4.json'),
             'forms/1/attributes': require('../mocked_backend/api/v3/attributes.json'),
             'config/map': require('../mocked_backend/api/v3/config/map.json'),
             'sets': require('../mocked_backend/api/v3/sets.json'),
@@ -72,6 +73,9 @@ angular.module('e2e-mocks', ['ngMockE2E'])
         });
 
         $httpBackend.whenPOST(matcher).respond(function (method, url, data) {
+            if (url.contains('forms/1/stages')) {
+                return getResultForResource('forms/1/stages/4');
+            }
             if (url.contains('forms')) {
                 return getResultForResource('forms/3');
             }
