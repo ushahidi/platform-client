@@ -16,6 +16,10 @@ function (
         controller: require('./controllers/setting-map-settings.js'),
         templateUrl: 'templates/settings/map-settings.html'
     })
+    .when('/settings/data-import', {
+        controller: require('./controllers/setting-data-import-controller.js'),
+        templateUrl: 'templates/settings/data-import.html'
+    })
     .when('/settings/plugins', {
         controller: require('./controllers/setting-plugins-controller.js'),
         templateUrl: 'templates/settings/todo.html'

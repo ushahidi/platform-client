@@ -439,6 +439,10 @@
             }
         }
     },
+    "data-import" :{
+        "import" : "Import",
+        "import_explanation" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type."
+    },
     "user": {
         "add_user" : "Add User",
         "edit_user" : "Edit User",
