@@ -1,5 +1,4 @@
 module.exports = [
-    '$q',
     '$location',
     '$translate',
     'FormEndpoint',
@@ -7,7 +6,6 @@ module.exports = [
     '_',
     'Notify',
 function (
-    $q,
     $location,
     $translate,
     FormEndpoint,
@@ -22,16 +20,17 @@ function (
             $scope.file;
             $scope.importCSV = function () {
                 DataImportEndpoint.save({
-                    'form_id': $scope.formId,
-                    'file': $scope.file
+                    form_id: $scope.formId,
+                    file: $scope.file
                 }).$promise.then(function () {
-                    $translate('notify.data-import.csv_upload', {$scope.file.name}).then(
-                    function (message)
+                    $translate('notify.data_import.csv_upload', {name: $scope.file.name}).then(
+                    function (message) {
                         Notify.showNotificationSlider(message);
                     });
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
             };
-        });
-});
+        }
+    };
+}];

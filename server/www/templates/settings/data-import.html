@@ -1,19 +1,19 @@
-<main class="page-content" role="main">
+<main data-import class="page-content" role="main">
     <div class="page-header">
         <ul class="breadcrumb">
             <li translate>
                 nav.settings
             </li>
         </ul>
-        <h1 translate>data-import.import</h1>
+        <h1 translate>data_import.import</h1>
     </div>
     <div class="main-col">
         <form class="dk-bg">
-            <h2 translate>data-import.csv</h2>
-            <p><em> translatedata-import.import_explanation_csv</em></p>
+            <h2 translate>data_import.csv</h2>
+            <p><em translate>data_import.import_explanation_csv</em></p>
             <div class="divider padded"></div>
             <div class="form-field">
-                <label translate>data-import.post_type</label>
+                <label translate>data_import.post_type</label>
                 <div class="custom-select init">
                     <select ng-model="formId">
                         <option value="{{form.id}}" ng-repeat="form in forms">
@@ -23,11 +23,11 @@
                 </div>
             </div>
             <div class="form-field">
-                <label translate>data-import.file_csv</label>
+                <label translate>data_import.file_csv</label>
                 <input ng-model="csv" type="file">
             </div>
             <div class="form-field">
-                <button ng-click="importCSV()" type="submit" translate>data-import.import_csv</button>
+                <button ng-click="importCSV()" type="submit" translate>data_import.import_csv</button>
             </div>
         </form>
     </div>

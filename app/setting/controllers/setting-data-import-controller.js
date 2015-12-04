@@ -11,7 +11,7 @@ function (
     Notify,
     _
 ) {
-    FormEndpoint.query().then(function (results) {
-        $scope.form = results;
+    FormEndpoint.get().$promise.then(function (response) {
+        $scope.forms = response.results;
     });
-});
+}];

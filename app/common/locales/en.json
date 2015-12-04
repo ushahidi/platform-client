@@ -147,6 +147,7 @@
         "collections" : "Collections",
         "comments" : "Comments",
         "data_sources" : "Data Sources",
+        "data_import" : "Data Import",
         "edit_profile" : "Edit Profile",
         "edit_post_type": "Edit Post Type",
         "forbidden" : "Access Denied",
@@ -439,9 +440,14 @@
             }
         }
     },
-    "data-import" :{
+    "data_import" :{
         "import" : "Import",
-        "import_explanation" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type."
+        "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type.",
+        "csv" : "CSV",
+        "post_type" : "Import to which post type?",
+        "file_csv" : "CSV file",
+        "import_csv" : "Import CSV"
+        
     },
     "user": {
         "add_user" : "Add User",
@@ -514,6 +520,9 @@
             "bulk_destroy_success" : "Deleted resource",
             "bulk_destroy_error" : "Unable to delete resource, please try again",
             "bulk_destroy_cancelled" : "Delete cancelled"
+        },
+        "data_import" : {
+            "csv_upload" : "File {{name}} successfully uploaded"
         },
         "general_settings" : {
             "save_success" : "General settings saved"
