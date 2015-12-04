@@ -1,29 +1,35 @@
 module.exports = [
+    '$q',
+    '$http',
     '$resource',
     '$rootScope',
     'Util',
 function (
+    $q,
+    $http,
     $resource,
     $rootScope,
     Util
 ) {
 
-    var DataImportEndpoint = $resource(Util.apiUrl('/csv/:id'), {
-        id: '@id'
-    }, {
-        query: {
-            method: 'GET',
-            isArray: true,
-            transformResponse: function (data /*, header*/) {
-                return Util.transformResponse(data).results;
+    var DataImportEndpoint = function (formData) {
+        var dfd = $q.defer();
+        $http.post(
+            Util.apiUrl('/csv'),
+            formData,
+            {
+                headers: {
+                    'Content-Type': undefined
+                }
             }
-        },
-        update: {
-            method: 'POST'
-        }
-    });
-
-
-    return DataEndpoint;
+        ).then(function (response) {
+             dfd.resolve();
+        }, function (errorResponse) {
+            dfd.reject(errorResponse);
+        })
+        return dfd.promise;
+    };
+    
+    return DataImportEndpoint;
 
 }];

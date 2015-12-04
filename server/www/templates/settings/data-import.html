@@ -1,4 +1,4 @@
-<main data-import class="page-content" role="main">
+<main importer class="page-content" role="main">
     <div class="page-header">
         <ul class="breadcrumb">
             <li translate>
@@ -24,7 +24,8 @@
             </div>
             <div class="form-field">
                 <label translate>data_import.file_csv</label>
-                <input ng-model="csv" type="file">
+                <file-upload file-container="fileContainer">
+                </file-upload>
             </div>
             <div class="form-field">
                 <button ng-click="importCSV()" type="submit" translate>data_import.import_csv</button>

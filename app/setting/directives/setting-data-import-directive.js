@@ -1,36 +1,40 @@
 module.exports = [
-    '$location',
     '$translate',
     'FormEndpoint',
     'DataImportEndpoint',
-    '_',
     'Notify',
 function (
-    $location,
     $translate,
     FormEndpoint,
     DataImportEndpoint,
-    _,
     Notify
 ) {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
             $scope.formId;
-            $scope.file;
+
             $scope.importCSV = function () {
-                DataImportEndpoint.save({
-                    form_id: $scope.formId,
-                    file: $scope.file
-                }).$promise.then(function () {
-                    $translate('notify.data_import.csv_upload', {name: $scope.file.name}).then(
-                    function (message) {
-                        Notify.showNotificationSlider(message);
+                if ($scope.fileContainer.file) {
+                    var formData = new FormData();
+                    formData.append('file', $scope.fileContainer.file);
+                    formData.append('form_id', $scope.formId);
+
+                    DataImportEndpoint(formData)
+                    .then(function () {
+                        $translate('notify.data_import.csv_upload', {name: $scope.file.name}).then(
+                        function (message) {
+                            Notify.showNotificationSlider(message);
+                        });
+                    }, function (errorResponse) {
+                        Notify.showApiErrors(errorResponse);
                     });
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
+                } else {
+                    $translate('notify.fata_import.file_missing').then(function (message) {
+                      Notify.showApiErrors(message);
+                    });
+                }
             };
         }
-    };
+    }
 }];

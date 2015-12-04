@@ -12,6 +12,10 @@ function (
     _
 ) {
     FormEndpoint.get().$promise.then(function (response) {
+        $scope.fileContainer = {
+            file : null
+        };
+
         $scope.forms = response.results;
     });
 }];
