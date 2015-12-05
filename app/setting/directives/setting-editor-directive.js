@@ -29,6 +29,9 @@ function (
         templateUrl: 'templates/settings/settings-editor.html',
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
+            $scope.fileContainer = {
+                file : null
+            };
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
             $scope.userSavedSettings = false;
@@ -46,10 +49,6 @@ function (
 
             $scope.languages = Languages.languages;
 
-            // @todo move file handling to own directive, or find a 3rd party implementation
-            $scope.fileNameChanged = function (element) {
-                $scope.file = element.files[0];
-            };
             $scope.clearHeader = function () {
                 $scope.site.image_header = null;
             };
@@ -60,9 +59,9 @@ function (
             var uploadHeaderImage = function () {
                 var dfd = $q.defer();
 
-                if ($scope.file) {
+                if ($scope.fileContainer.file) {
                     var formData = new FormData();
-                    formData.append('file', $scope.file);
+                    formData.append('file', $scope.fileContainer.file);
 
                     $http.post(
                         Util.apiUrl('/media'),

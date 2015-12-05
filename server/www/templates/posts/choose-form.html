@@ -4,15 +4,14 @@
         <h1 class="inline" translate translate-values="{ title: post.title }" ng-if="!! post.id">post.modify.edit_post</h1>
         <a ng-href="/settings/forms" class="cta edit" ng-if="isAdmin()">Edit Post Types</a>
     </div>
+
     <div class="main-col">
         <h6 translate>post.modify.intro</h6>
         <dl>
-            <div ng-repeat="form in availableForms | filter:filterNotDisabled">
-                <dt class="list-item">
-                    <a ng-click="chooseForm(form)">{{form.name}}</a>
-                </dt>
-                <dd>{{form.description}}</dd>
-            </div>
+            <dt class="list-item" ng-repeat-start="form in availableForms | filter:filterNotDisabled">
+                <a ng-bind="form.name" ng-click="chooseForm(form)">{{form.name}}</a>
+            </dt>
+            <dd ng-repeat-end="" ng-bind="form.description"></dd>
         </dl>
     </div>
 </div>

@@ -2,6 +2,7 @@ module.exports = [
     '$scope',
     '$translate',
     '$q',
+    '$location',
     '_',
     '$window',
     'Session',
@@ -12,6 +13,7 @@ function (
     $scope,
     $translate,
     $q,
+    $location,
     _,
     $window,
     Session,
@@ -62,6 +64,10 @@ function (
             return true;
         }
         return false;
+    };
+
+    $scope.addUser = function () {
+        $location.path('/settings/users/create');
     };
 
     $scope.deleteUsers = function () {

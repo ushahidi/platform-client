@@ -1,0 +1,61 @@
+{
+    "count": 3,
+    "results": [
+        {
+            "id": 1,
+            "url": "http://192.168.33.110/api/v3/form_stages/1",
+            "form_id": 1,
+            "label": "Main",
+            "priority": 99,
+            "icon": null,
+            "required": false,
+            "allowed_privileges": [
+                "read",
+                "create",
+                "update",
+                "delete",
+                "search"
+            ]
+        },
+        {
+            "id": 2,
+            "url": "http://192.168.33.110/api/v3/form_stages/2",
+            "form_id": 1,
+            "label": "2nd step",
+            "priority": 99,
+            "icon": null,
+            "required": false,
+            "allowed_privileges": [
+                "read",
+                "create",
+                "update",
+                "delete",
+                "search"
+            ]
+        },
+        {
+            "id": 3,
+            "url": "http://192.168.33.110/api/v3/form_stages/3",
+            "form_id": 1,
+            "label": "3rd step",
+            "priority": 99,
+            "icon": null,
+            "required": false,
+            "allowed_privileges": [
+                "read",
+                "create",
+                "update",
+                "delete",
+                "search"
+            ]
+        }
+    ],
+    "limit": null,
+    "offset": 0,
+    "order": "asc",
+    "orderby": "priority",
+    "curr": "http://192.168.33.110/api/v3/forms/1/stages?order=asc&orderby=priority&offset=0",
+    "next": "http://192.168.33.110/api/v3/forms/1/stages?order=asc&orderby=priority&offset=0",
+    "prev": "http://192.168.33.110/api/v3/forms/1/stages?order=asc&orderby=priority&offset=0",
+    "total_count": 3
+}

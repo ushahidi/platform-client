@@ -12,6 +12,7 @@ module.exports = [
     'UserEndpoint',
     'TagEndpoint',
     'FormAttributeEndpoint',
+    'FormStageEndpoint',
     'FormEndpoint',
     'Maps',
     'Leaflet',
@@ -33,6 +34,7 @@ function (
     UserEndpoint,
     TagEndpoint,
     FormAttributeEndpoint,
+    FormStageEndpoint,
     FormEndpoint,
     Maps,
     L,
@@ -42,6 +44,7 @@ function (
     Notify
 ) {
     $scope.post = post;
+
     $scope.mapDataLoaded = false;
     $scope.availableRoles = RoleHelper.roles();
 
@@ -54,6 +57,36 @@ function (
         }
 
         return 'post.publish_for_everyone';
+    };
+
+    var fetchStages = function (formId) {
+        $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
+            var post = $scope.post;
+
+            // If number of completed stages matches number of stages,
+            // assume they're all complete, and just show the first stage
+            if (post.completed_stages.length === stages.length) {
+                $scope.setVisibleStage(stages[0].id);
+            } else {
+                // Get incomplete stages
+                var incompleteStages = _.filter(stages, function (stage) {
+                    return !_.contains(post.completed_stages, stage.id);
+                });
+
+                // Return lowest priority incomplete stage
+                $scope.setVisibleStage(incompleteStages[0].id);
+            }
+        });
+    };
+
+    fetchStages($scope.post.form.id);
+
+    $scope.setVisibleStage = function (stageId) {
+        $scope.visibleStage = stageId;
+    };
+
+    $scope.stageIsComplete = function (stageId) {
+        return _.includes($scope.post.completed_stages, stageId);
     };
 
     // Set page title to post title, if there is one available.
@@ -86,12 +119,46 @@ function (
             }
         });
 
+        FormStageEndpoint.get({formId: $scope.post.form.id}, function (stages) {
+            $scope.stages = stages.results;
+
+            // Convert ids to strings
+            _.forEach($scope.stages, function (stage) {
+                stage.id = stage.id.toString();
+            });
+
+            // Make the first stage visible
+            if (!_.isEmpty($scope.stages)) {
+                $scope.visibleStage = $scope.stages[0].id;
+                $scope.stages[0].hasFileIcon = true;
+            }
+
+            // Get completed stages
+            _.forEach($scope.stages, function (stage) {
+                if (_.indexOf($scope.post.completed_stages, stage.id) !== -1) {
+                    stage.completed = true;
+                }
+            });
+        });
+
         FormAttributeEndpoint.query({formId: $scope.post.form.id}, function (attributes) {
             angular.forEach(attributes, function (attr) {
                 this[attr.key] = attr;
             }, $scope.form_attributes);
         });
     }
+
+    $scope.activateStageTab = function (selectedStage) {
+        $scope.visibleStage = selectedStage.id;
+    };
+
+    $scope.isFirstStage = function (stageId) {
+        if (!_.isEmpty($scope.stages)) {
+            return stageId === $scope.stages[0].id;
+        }
+
+        return false;
+    };
 
     // Replace tags with full tag object
     $scope.post.tags = $scope.post.tags.map(function (tag) {
@@ -209,13 +276,12 @@ function (
         PostEndpoint.update($scope.post).
         $promise
         .then(function () {
+            var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-            $translate(message, { role: $scope.publishRole })
+            $translate(message, { role: role })
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
         });
     };
 
@@ -233,4 +299,3 @@ function (
     $scope.publishRole = $scope.postIsPublishedTo();
 
 }];
-

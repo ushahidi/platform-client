@@ -1,0 +1,78 @@
+{
+    "count": 3,
+    "results": [
+        {
+            "id": 1,
+            "url": null,
+            "user_id": null,
+            "name": "Test collection",
+            "description": "",
+            "view": "list",
+            "view_options": null,
+            "visible_to": null,
+            "featured": false,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "allowed_privileges": [
+                "read",
+                "create",
+                "update",
+                "delete",
+                "search"
+            ]
+        },
+        {
+            "id": 2,
+            "url": null,
+            "user": {
+                "id": 3,
+                "url": "http://192.168.33.110/api/v3/users/3"
+            },
+            "name": "Explosion",
+            "description": "",
+            "view": "list",
+            "view_options": null,
+            "visible_to": null,
+            "featured": false,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "allowed_privileges": [
+                "read",
+                "create",
+                "update",
+                "delete",
+                "search"
+            ]
+        },
+        {
+            "id": 3,
+            "url": null,
+            "user_id": null,
+            "name": "Admin only collection",
+            "description": "",
+            "view": "list",
+            "view_options": null,
+            "visible_to": [
+                "admin"
+            ],
+            "featured": false,
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "allowed_privileges": [
+                "read",
+                "create",
+                "update",
+                "delete",
+                "search"
+            ]
+        }
+    ],
+    "limit": null,
+    "offset": 0,
+    "order": "asc",
+    "orderby": "id",
+    "curr": "http://192.168.33.110/api/v3/collections?editableBy=me&orderby=id&order=asc&offset=0",
+    "next": "http://192.168.33.110/api/v3/collections?editableBy=me&orderby=id&order=asc&offset=0",
+    "prev": "http://192.168.33.110/api/v3/collections?editableBy=me&orderby=id&order=asc&offset=0",
+    "total_count": 3
+}

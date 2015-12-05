@@ -1,14 +1,14 @@
 <div class="post-values-list__item">
-    <h3 class="value-label">
+    <h4 class="value-label">
         {{attribute.label}}
-    </h3>
+    </h4>
 
     <ul class="list-unstyled">
         <li ng-repeat="entry in value" ng-if="attribute.type === 'relation'">
             <a ng-href="/posts/{{entry.id}}">{{entry.title}}</a>
         </li>
         <li ng-repeat="entry in value" ng-if="attribute.type !== 'relation'">
-            {{entry}}
+            <p>{{entry}}</p>
         </li>
     </ul>
 </div>

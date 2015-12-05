@@ -36,7 +36,13 @@ function (
             },
             handleResponseErrors = function (errorResponse) {
                 Notify.showApiErrors(errorResponse);
+            },
+            handleSuccess = function () {
+                $translate('notify.post.destroy_success_bulk').then(function (message) {
+                    Notify.showNotificationSlider(message);
+                });
             };
+
 
             // whenever the filters changes, update the current list of posts
             $scope.$watch(function () {
@@ -65,7 +71,7 @@ function (
                                 $scope.selectedItems--;
                                 return PostEndpoint.delete({ id: post.id }).$promise;
                             });
-                        $q.all(deletePostsPromises).then(getPostsForPagination, handleResponseErrors)
+                        $q.all(deletePostsPromises).then(handleSuccess, handleResponseErrors)
                         .finally(getPostsForPagination);
                     });
                 });
