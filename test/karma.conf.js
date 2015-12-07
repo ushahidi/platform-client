@@ -17,7 +17,10 @@ module.exports = function (config) {
             'app/set/**/*.js',
             'app/user-profile/**/*.js',
             'app/common/locales/**/*.json',
-            'test/unit/**/*.js'
+            'test/unit/**/*.js',
+
+            //include template files for directive testing
+            'server/www/template/**/*.html'
         ],
 
         // we don't want to include the sub module manifest files
@@ -51,7 +54,8 @@ module.exports = function (config) {
         preprocessors: {
             'app/**/*.js': ['commonjs', 'coverage'],
             'app/common/locales/**/*.json': ['commonjs'],
-            'test/unit/**/*.js': ['commonjs']
+            'test/unit/**/*.js': ['commonjs'],
+            'server/www/templates/**/*.html': 'html2js'
         },
 
         coverageReporter: {
