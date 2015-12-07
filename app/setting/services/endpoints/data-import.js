@@ -12,7 +12,15 @@ function (
     Util
 ) {
 
-    var DataImportEndpoint = function (formData) {
+    var DataImportEndpoint = $resource(Util.apiUrl('/csv/:id'), {
+        id: '@id'
+    }, {
+        get: {
+            method: 'GET'
+        }
+    });
+    
+    DataImportEndpoint.upload = function (formData) {
         var dfd = $q.defer();
         $http.post(
             Util.apiUrl('/csv'),

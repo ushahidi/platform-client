@@ -18,7 +18,11 @@ function (
     })
     .when('/settings/data-import', {
         controller: require('./controllers/setting-data-import-controller.js'),
-        templateUrl: 'templates/settings/data-import.html'
+        templateUrl: 'templates/settings/data-import/data-import.html'
+    })
+    .when('/settings/data-mapper/:formId/:id', {
+        controller: require('./controllers/setting-data-mapper-controller.js'),
+        templateUrl: 'templates/settings/data-import/data-mapper.html'
     })
     .when('/settings/plugins', {
         controller: require('./controllers/setting-plugins-controller.js'),
