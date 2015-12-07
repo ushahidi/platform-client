@@ -448,7 +448,7 @@
         "file_csv" : "CSV file",
         "import_csv" : "Import CSV",
         "choose_file" : "Choose file",
-        "organizw_data" : "Organize data",
+        "organize_data" : "Organize data",
         "organize_your_imported_data" : "Assign CSV columns to post fields",
         "assign_csv_message" : "Assign CSV columns to post fields",
         "csv_instructions" : "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",

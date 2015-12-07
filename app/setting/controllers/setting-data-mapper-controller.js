@@ -2,14 +2,16 @@ module.exports = [
     '$scope',
     '$q',
     '$translate',
+    '$routeParams',
     'FormEndpoint',
     'DataImportEndpoint',
     'Notify',
     '_',
 function (
     $scope,
-    $q
+    $q,
     $translate,
+    $routeParams,
     FormEndpoint,
     DataImportEndpoint,
     Notify,

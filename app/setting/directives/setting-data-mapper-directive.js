@@ -4,7 +4,7 @@ module.exports = [
     'FormEndpoint',
     'DataImportEndpoint',
     'Notify',
-    '_'
+    '_',
 function (
     $translate,
     $location,
