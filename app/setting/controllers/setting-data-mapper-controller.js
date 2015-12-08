@@ -22,9 +22,13 @@ function (
     
     $q.all([
         FormEndpoint.get({id: $scope.formId}).$promise,
+        FormAttributeEndpoint.query({ formId: $scope.formId }).$promise,
         DataImportEndpoint.get({id: $scope.csv}).$promise
     ]).then(function (results) {
         $scope.form = results[0];
-        $scope.csv = result[1];
+        form.attributes = _.chain(results[1])
+            .sortBy('priority')
+            .value();
+        $scope.csv = result[2];
     });
 }];

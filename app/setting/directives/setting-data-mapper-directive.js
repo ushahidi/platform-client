@@ -25,7 +25,7 @@ function (
             };
 
             $scope.submitMappings = function () {
-                _.defaults($scope.csv, {form_attribute_id: null});
+                _.defaults($scope.csv, {maps_to: null});
                 DataImportEndpoint.save(csv)
                 .then(function (csv) {
                     $translate('notify.data_import.csv_mappings_set', {name: $scope.file.name}).then(
