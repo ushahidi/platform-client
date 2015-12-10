@@ -20,7 +20,7 @@
                 <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save_post</span>
                  </button>
             </div>
-        </div> 
+        </div>
         <div class="page-header">
             <div class="form-field title">
                 <label class="input-label required"
@@ -65,7 +65,7 @@
                     </select>
                 </div>
                 <label><span translate>post.can_see_this_post</span></label>
-            </div> 
+            </div>
            <!--
            <div class="form-field">
               <p class="alert"><strong class="icon-left fa-user">Your post will need to be moderated</strong> before it’s visible to the public</p>
@@ -82,12 +82,12 @@
                            </span>
                         </a>
                     </li>
-                    <li 
+                    <li
                         ng-repeat="stage in stages"
                         ng-class="{'active': visibleStage == stage.id}"  >
                         <a ng-click="setVisibleStage(stage.id)">
                             <span class="icon-left fa-{{stage.icon||'file-o'}}">
-                                {{stage.label}} is really long
+                                {{stage.label}}
                             </span>
                         </a>
                         <span class="status {{stageIsComplete(stage.id)? 'complete' : ''}}">
@@ -96,12 +96,12 @@
                 </ul>
             </nav>
             <div class="vertical-tabs-content">
-                <div class="form-field" 
-                    ng-show="visibleStage == 'post'" 
+                <div class="form-field"
+                    ng-show="visibleStage == 'post'"
                     >
                     <label
                         class="input-label required" for="content"
-                        ng-class="{ 'error': form.content.$invalid && form.content.$dirty }" 
+                        ng-class="{ 'error': form.content.$invalid && form.content.$dirty }"
                     >{{'post.modify.form.description' | translate}}</label>
                     <div
                         class="input-icon"
@@ -110,9 +110,9 @@
                         <textarea id="content" name="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required class="form-control"></textarea>
                     </div>
                 </div>
-                <div ng-if="categories.length" 
+                <div ng-if="categories.length"
                     class="form-field"
-                    ng-show="visibleStage == 'post'" 
+                    ng-show="visibleStage == 'post'"
                     >
                     <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
                     <div class="form-field checkbox" ng-repeat="category in categories">
@@ -137,9 +137,9 @@
                 <div
                     ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                     ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
-                    ng-show="attribute.form_stage_id == visibleStage" 
+                    ng-show="attribute.form_stage_id == visibleStage"
                     class="form-field">
-                    
+
                       <label
                           class="input-label" for="values[{{attribute.key}}][0]"
                           ng-class="{
@@ -272,7 +272,7 @@
                         translate-values="{ label : attribute.label }"></p>
 
                     <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
-                                    
+
                   </div>
               </div>
           </div>
