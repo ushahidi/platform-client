@@ -4,6 +4,7 @@ module.exports = [
     '$translate',
     '$routeParams',
     'FormEndpoint',
+    'FormAttributeEndpoint',
     'DataImportEndpoint',
     'Notify',
     '_',
@@ -13,6 +14,7 @@ function (
     $translate,
     $routeParams,
     FormEndpoint,
+    FormAttributeEndpoint,
     DataImportEndpoint,
     Notify,
     _
@@ -23,12 +25,13 @@ function (
     $q.all([
         FormEndpoint.get({id: $scope.formId}).$promise,
         FormAttributeEndpoint.query({ formId: $scope.formId }).$promise,
-        DataImportEndpoint.get({id: $scope.csv}).$promise
+        DataImportEndpoint.get({id: $scope.csvId}).$promise
     ]).then(function (results) {
         $scope.form = results[0];
-        form.attributes = _.chain(results[1])
+        $scope.form.attributes = _.chain(results[1])
             .sortBy('priority')
             .value();
-        $scope.csv = result[2];
+        $scope.csv = results[2];
+        $scope.csv.maps_to = Array.apply(null, Array($scope.csv.columns.length));
     });
 }];

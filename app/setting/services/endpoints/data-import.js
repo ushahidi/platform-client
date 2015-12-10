@@ -17,6 +17,9 @@ function (
     }, {
         get: {
             method: 'GET'
+        },
+        update: {
+            method: 'PUT'
         }
     });
     
@@ -31,7 +34,7 @@ function (
                 }
             }
         ).then(function (response) {
-             dfd.resolve();
+             dfd.resolve(Util.transformResponse(response.data));
         }, function (errorResponse) {
             dfd.reject(errorResponse);
         })

@@ -531,7 +531,8 @@
             "bulk_destroy_cancelled" : "Delete cancelled"
         },
         "data_import" : {
-            "csv_upload" : "File {{name}} successfully uploaded"
+            "csv_upload" : "File {{name}} successfully uploaded",
+            "csv_mappings_set" : "CSV mappings set successfully"
         },
         "general_settings" : {
             "save_success" : "General settings saved"

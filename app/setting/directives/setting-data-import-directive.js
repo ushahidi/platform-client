@@ -24,7 +24,7 @@ function (
 
                     DataImportEndpoint.upload(formData)
                     .then(function (csv) {
-                        $translate('notify.data_import.csv_upload', {name: $scope.file.name}).then(
+                        $translate('notify.data_import.csv_upload', {name: $scope.fileContainer.file.name}).then(
                         function (message) {
                             Notify.showNotificationSlider(message);
                             $location.url('/settings/data-mapper/' + $scope.formId + '/' + csv.id);

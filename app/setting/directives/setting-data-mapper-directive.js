@@ -20,15 +20,18 @@ function (
                 $translate('notify.data_import.csv_import_cancel')
                 .then(function (message) {
                     Notify.showNotificationSlider(message);
-                    $location.url('/settings/data-mapper/' + $scope.formId + '/' + csv.id);
+                    $location.url('/settings/data-import/');
                 });
             };
 
-            $scope.submitMappings = function () {
-                _.defaults($scope.csv, {maps_to: null});
-                DataImportEndpoint.save(csv)
+            $scope.submitMappings = function (csv) {
+                csv.maps_to = _.map(csv.maps_to, function (item) {
+                    return item ? item.label : null;
+                });
+                DataImportEndpoint.update(csv)
+                .$promise
                 .then(function (csv) {
-                    $translate('notify.data_import.csv_mappings_set', {name: $scope.file.name}).then(
+                    $translate('notify.data_import.csv_mappings_set').then(
                     function (message) {
                         Notify.showNotificationSlider(message);
                         //$location.url('/settings/data-mapper/' + $scope.formId + '/' + csv.id);
