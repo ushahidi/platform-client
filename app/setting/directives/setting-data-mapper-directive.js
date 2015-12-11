@@ -26,7 +26,7 @@ function (
 
             $scope.submitMappings = function (csv) {
                 csv.maps_to = _.map(csv.maps_to, function (item) {
-                    return item ? item.label : null;
+                    return item ? item.key : null;
                 });
                 csv.completed = true;
                 csv.unmapped = [];
@@ -36,7 +36,7 @@ function (
                     $translate('notify.data_import.csv_mappings_set').then(
                     function (message) {
                         Notify.showNotificationSlider(message);
-                        //$location.url('/settings/data-mapper/' + $scope.formId + '/' + csv.id);
+                        $location.url('/views/list');
                     });
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
