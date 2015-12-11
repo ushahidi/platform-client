@@ -151,6 +151,11 @@ function (
         return true;
     };
 
+
+    $scope.activateStageTab = function (selectedStage) {
+        $scope.visibleStage = selectedStage.id;
+    };
+
     // Set initial map params
     angular.extend($scope, Maps.getInitialScope());
     // Load map params, including config from server (async)
