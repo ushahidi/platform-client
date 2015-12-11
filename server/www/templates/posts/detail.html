@@ -108,13 +108,13 @@
                     </div>
                     <div 
                         ng-if="post.content" 
-                        ng-show="visibleStage == stages[0].id" 
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
                         class="post-field">
                         <p sd-model-to-html="post.content"></p>
                     </div>
                     <div 
                         ng-if="!!post.tags.length" 
-                        ng-show="visibleStage == stages[0].id" 
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
                         class="form-field"
                     >
                         <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
@@ -138,7 +138,7 @@
                     </div>
                     <div 
                         ng-if="mapDataLoaded" 
-                        ng-show="visibleStage == stages[0].id" 
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
                         class="post-field"
                         >
                         <h4 ng-if="mapDataLoaded" translate>post.location</h4>

@@ -123,11 +123,9 @@ function (
                 this[attr.key] = attr;
             }, $scope.form_attributes);
         });
+    } else {
+        $scope.visibleStage = 'post';
     }
-
-    $scope.activateStageTab = function (selectedStage) {
-        $scope.visibleStage = selectedStage.id;
-    };
 
     $scope.isFirstStage = function (stageId) {
         if (!_.isEmpty($scope.stages)) {
