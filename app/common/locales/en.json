@@ -201,8 +201,8 @@
     "post": {
         "posts" : "Posts",
         "by" : "by",
-        "add_incident" : "Add Incident",
-        "edit_incident" : "Edit Incident",
+        "add_post_type" : "Add {{form_name}}",
+        "edit_post_type" : "Edit {{form_name}}",
         "publish_for_you" : "Just you",
         "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
