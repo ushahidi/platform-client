@@ -100,7 +100,7 @@ function (
 
     // Load the post author
     if ($scope.post.user && $scope.post.user.id) {
-        $scope.user = UserEndpoint.get({id: $scope.post.user.id});
+        $scope.post.user = UserEndpoint.get({id: $scope.post.user.id});
     }
 
     // Load the post form
