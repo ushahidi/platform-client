@@ -111,7 +111,7 @@
                        </div>
                        <p>
                           <strong class="icon-left fa-circle">
-                              {{post.type}}
+                              {{form_name || "Unstructured"}}
                           </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
                       </p>
                     </div>
