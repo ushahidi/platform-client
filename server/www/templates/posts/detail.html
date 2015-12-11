@@ -99,11 +99,13 @@
                 </nav>
                 <div class="vertical-tabs-content">
                     <div class="post-author">
-                       <img class="circular" src="http://placehold.it/100x100" alt="">
+                       <div class="user-avatar" ng-show="post.user">
+                          <img class="circular" src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ post.user.realname }}">
+                       </div>
                        <p>
                           <strong class="icon-left fa-circle">
                               {{post.type}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{user.id}}">{{user.realname}}</a></span>
+                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
                       </p>
                     </div>
                     <div 
