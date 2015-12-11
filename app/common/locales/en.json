@@ -532,7 +532,8 @@
         },
         "data_import" : {
             "csv_upload" : "File {{name}} successfully uploaded",
-            "csv_mappings_set" : "CSV mappings set successfully"
+            "csv_mappings_set" : "CSV mappings set successfully",
+            "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}"
         },
         "general_settings" : {
             "save_success" : "General settings saved"
