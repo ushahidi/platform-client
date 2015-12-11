@@ -1,5 +1,5 @@
-describe('Testing CSV UI interaction', functon () {
-/*
+describe('Testing CSV UI interaction', function () {
+    /*
     describe('as a loggedin admin user', function () {
 
         beforeEach(function () {
