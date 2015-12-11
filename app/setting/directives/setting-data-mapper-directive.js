@@ -28,6 +28,8 @@ function (
                 csv.maps_to = _.map(csv.maps_to, function (item) {
                     return item ? item.label : null;
                 });
+                csv.completed = true;
+                csv.unmapped = [];
                 DataImportEndpoint.update(csv)
                 .$promise
                 .then(function (csv) {
