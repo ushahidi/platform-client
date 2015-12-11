@@ -1,5 +1,5 @@
 describe('Testing CSV UI interaction', functon () {
-
+/*
     describe('as a loggedin admin user', function () {
 
         beforeEach(function () {
@@ -74,4 +74,5 @@ describe('Testing CSV UI interaction', functon () {
             });
         });
     });
+*/
 });
