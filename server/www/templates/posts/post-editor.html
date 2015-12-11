@@ -11,10 +11,10 @@
                 </li>
             </ul>
             <div ng-if="! isEdit" class="page-header-body">
-                <h1 class="page-title"><span class="icon-left fa-plus" translate>post.add_incident</span></h1>
+                <h1 class="page-title"><span class="icon-left fa-plus" translate translate-values="{ form_name: post.form.name}">post.add_post_type</span></h1>
             </div>
             <div ng-if="isEdit" class="page-header-body">
-                <h1 class="page-title"><span class="icon-left fa-pencil" translate>post.edit_incident</span></h1>
+                <h1 class="page-title"><span class="icon-left fa-pencil" translate translate-values="{form_name: post.form.name}">post.edit_post_type</span></h1>
             </div>
             <div class="page-header-actions">
                 <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save_post</span>
