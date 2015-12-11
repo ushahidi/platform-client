@@ -279,20 +279,7 @@ function (
             Notify.showApiErrors(errorResponse);
         });
     };
-    /*
-    scope.searchCollections = function (query) {
-        CollectionEndpoint.query(query)
-        .$promise
-        .then(function (result) {
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
 
-    scope.clearSearch = function() {
-        scope.editableCollection = scope.editableCollectionCopy;
-    };
-    */
     $scope.createNewCollection = function (collectionName) {
         var collection = {
             'name': collectionName,
