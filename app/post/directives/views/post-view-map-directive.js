@@ -42,7 +42,7 @@ function (
             }
         });
 
-        // Initial load
+        // initial load
         reloadMapPosts();
     }];
 

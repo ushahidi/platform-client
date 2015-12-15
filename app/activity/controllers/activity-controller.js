@@ -6,7 +6,6 @@ module.exports = [
     'dc',
     'd3',
     '_',
-    'Config',
 function (
     $scope,
     $translate,
@@ -14,14 +13,8 @@ function (
     PostEndpoint,
     dc,
     d3,
-    _,
-    Config
+    _
 ) {
-
-    $scope.unavailableView = true;
-    if (Config.features.views.activity) {
-        $scope.unavailableView = false;
-    }
 
     // Set the page title
     $translate('nav.activity').then(function (title) {

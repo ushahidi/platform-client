@@ -140,7 +140,6 @@ function (
 
             // Initial load
             getPostsForPagination();
-
         }
     ];
 

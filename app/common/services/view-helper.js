@@ -1,35 +1,30 @@
 module.exports = [
     '_',
-    'ConfigEndpoint',
-    '$translate',
 function (
-    _,
-    ConfigEndpoint,
-    $translate
+    _
 ) {
     var allViews = [
             {
                 name: 'map',
-                display_name: $translate.instant('view_tabs.map')
+                display_name: 'Map'
             },
             {
                 name: 'list',
-                display_name: $translate.instant('view_tabs.list')
+                display_name: 'List'
             },
             {
                 name: 'chart',
-                display_name: $translate.instant('view_tabs.chart')
+                display_name: 'Chart'
             },
             {
                 name: 'timeline',
-                display_name: $translate.instant('view_tabs.timeline')
+                display_name: 'Timeline'
             }
         ],
-        availableViews = [],
 
     PostViewHelper = {
-        views: function (allViews) {
-            return allViews ? allViews : availableViews;
+        views: function () {
+            return allViews;
         },
         getView: function (view, views) {
             if (!views) {
@@ -37,9 +32,6 @@ function (
             }
             var match = _.findWhere(views, {name: view});
             return match ? match.display_name : view;
-        },
-        isViewAvailable: function (view) {
-            return _.findWhere(availableViews, {name: view});
         },
         getDefault: function (views) {
             if (!views) {
@@ -51,16 +43,5 @@ function (
             return match ? match.display_name : 'Map';
         }
     };
-
-    ConfigEndpoint.get({ id: 'features' }, function (features) {
-            // Push available views into array
-            // Rely on JS magic to
-            _.each(allViews, function (view) {
-                if (features.views[view.name]) {
-                    availableViews.push(view);
-                }
-            });
-        });
-
     return PostViewHelper;
 }];
