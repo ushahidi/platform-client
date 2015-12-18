@@ -271,7 +271,6 @@ function (
                         $translate(
                             'notify.post.save_success',
                             {
-                                id: $scope.post.id,
                                 name: $scope.post.title
                             }).then(function (message) {
                             Notify.showNotificationSlider(message);
