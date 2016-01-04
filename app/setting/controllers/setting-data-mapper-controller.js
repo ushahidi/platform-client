@@ -21,7 +21,7 @@ function (
 ) {
     $scope.formId = $routeParams.formId;
     $scope.csvId = $routeParams.id;
-    
+
     $q.all([
         FormEndpoint.get({id: $scope.formId}).$promise,
         FormAttributeEndpoint.query({ formId: $scope.formId }).$promise,
@@ -32,6 +32,6 @@ function (
             .sortBy('priority')
             .value();
         $scope.csv = results[2];
-        $scope.csv.maps_to = Array.apply(null, Array($scope.csv.columns.length));
+        $scope.csv.maps_to = new Array.apply(null, new Array($scope.csv.columns.length));
     });
 }];

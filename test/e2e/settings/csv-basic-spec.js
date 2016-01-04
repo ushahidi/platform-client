@@ -22,7 +22,6 @@ describe('Testing CSV UI interaction', function () {
 
         describe('When user opens page and selects a form type', function () {
             beforeEach(function () {
-                
 
             });
 
@@ -50,7 +49,7 @@ describe('Testing CSV UI interaction', function () {
                     it('should set No file selected to the name of the file', function () {
 
                     });
-                    
+
                     describe('when the user clicks import csv', function () {
                         beforeEach(function () {
 

@@ -28,29 +28,28 @@ function (
                 csv.maps_to = _.map(csv.maps_to, function (item) {
                     return item ? item.key : null;
                 });
-                
-                var dups = _.countBy(csv.maps_to, function (item) {
-                    return item;     
-                });
 
+                var dups = _.countBy(csv.maps_to, function (item) {
+                    return item;
+                });
 
                 var duplicateVars = _.filter(csv.maps_to, function (item) {
                     if (dups[item] > 1) {
-                        return item; 
-                    };
+                        return item;
+                    }
                 });
 
                 duplicateVars = _.uniq(duplicateVars);
 
-                if(duplicateVars.length > 0) {
+                if (duplicateVars.length > 0) {
 
                     $translate('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')}).then(
                     function (message) {
                         Notify.showAlerts([message]);
                     });
                     return;
-                };
-                
+                }
+
                 csv.completed = true;
                 csv.unmapped = [];
                 DataImportEndpoint.update(csv)
@@ -66,5 +65,5 @@ function (
                 });
             };
         }
-    }
+    };
 }];

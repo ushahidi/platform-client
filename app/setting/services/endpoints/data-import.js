@@ -22,7 +22,7 @@ function (
             method: 'PUT'
         }
     });
-    
+
     DataImportEndpoint.upload = function (formData) {
         var dfd = $q.defer();
         $http.post(
@@ -34,13 +34,13 @@ function (
                 }
             }
         ).then(function (response) {
-             dfd.resolve(Util.transformResponse(response.data));
+            dfd.resolve(Util.transformResponse(response.data));
         }, function (errorResponse) {
             dfd.reject(errorResponse);
-        })
+        });
         return dfd.promise;
     };
-    
+
     return DataImportEndpoint;
 
 }];

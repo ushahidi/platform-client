@@ -34,10 +34,10 @@ function (
                     });
                 } else {
                     $translate('notify.fata_import.file_missing').then(function (message) {
-                      Notify.showApiErrors(message);
+                        Notify.showApiErrors(message);
                     });
                 }
             };
         }
-    }
+    };
 }];
