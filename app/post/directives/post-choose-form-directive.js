@@ -19,6 +19,10 @@ function (
 
             FormEndpoint.query().$promise.then(function (forms) {
                 $scope.availableForms = forms;
+
+                if ($scope.availableForms.length === 1) {
+                    $scope.chooseForm($scope.availableForms[0]);
+                }
             });
 
             $scope.filterNotDisabled = function (form) {
