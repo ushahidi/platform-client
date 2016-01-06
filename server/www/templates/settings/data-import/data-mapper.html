@@ -8,25 +8,19 @@
               <a href="/settings/data-import" translate>data_import.import</a>
            </li>
         </ul>
-
         <h1 translate>data_import.import_csv</h1>
      </div>
-
      <div class="main-col">
         <ol class="progress">
            <li><span class="complete" translate>data_import.choose_file</span></li>
            <li class="active" translate>data_import.organize_data</li>
            <!-- <li class="disabled">Configure posts</li> -->
         </ol>
-
         <h2 translate>data_import.organize_your_imported_data</h2>
-
         <form class="segment">
-
            <fieldset class="form-field">
               <legend translate>data_import.assign_csv_message</legend>
               <p class="small" translate translate-values="{form_name: form.name}">data_import.csv_instructions</p>
-
               <table>
                  <thead>
                     <tr>
@@ -34,7 +28,6 @@
                        <th translate translate-values="{form_name: form.name}"> data_import.post_type_title</th>
                     </tr>
                  </thead>
-
                  <tbody>
                     <tr ng-repeat="column in csv.columns track by $index">
                        <td>{{column}}</td>
@@ -53,12 +46,10 @@
                  </tbody>
               </table>
            </fieldset>
-
            <div class="actions-inline actions-right">
               <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
               <button type="submit" ng-click="submitMappings(csv)" translate>data_import.finish_import</button>
            </div>
         </form>
      </div><!--end main col-->
-
   </main>
