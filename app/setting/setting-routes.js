@@ -26,7 +26,7 @@ function (
         resolve: {
             initialData: function ($route, DataRetriever) {
                 return DataRetriever.dataMapperInitialData(
-                    $route.current.params.formId, 
+                    $route.current.params.formId,
                     $route.current.params.id
                 );
             }
