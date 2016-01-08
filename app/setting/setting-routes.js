@@ -22,7 +22,15 @@ function (
     })
     .when('/settings/data-mapper/:formId/:id', {
         controller: require('./controllers/setting-data-mapper-controller.js'),
-        templateUrl: 'templates/settings/data-import/data-mapper.html'
+        templateUrl: 'templates/settings/data-import/data-mapper.html',
+        resolve: {
+            initialData: function ($route, DataRetriever) {
+                return DataRetriever.dataMapperInitialData(
+                    $route.current.params.formId, 
+                    $route.current.params.id
+                );
+            }
+        }
     })
     .when('/settings/plugins', {
         controller: require('./controllers/setting-plugins-controller.js'),

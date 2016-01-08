@@ -31,7 +31,7 @@ function (
                 var dups = _.countBy(csv.maps_to, function (item) {
                     return item;
                 });
-            
+
                 // Second, check if any of the keys appears more than once
                 var duplicateVars = _.filter(csv.maps_to, function (item) {
                     if (dups[item] > 1) {

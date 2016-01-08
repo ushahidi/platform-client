@@ -18,7 +18,7 @@ function (
 
             $scope.importCSV = function () {
                 if (!$scope.fileContainer.file) {
-                     $translate('notify.data_import.file_missing').then(function (message) {
+                    $translate('notify.data_import.file_missing').then(function (message) {
                         Notify.showApiErrors(message);
                     });
                     return;
