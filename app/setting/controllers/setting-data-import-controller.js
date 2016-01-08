@@ -11,11 +11,11 @@ function (
     Notify,
     _
 ) {
-    FormEndpoint.get().$promise.then(function (response) {
-        $scope.fileContainer = {
-            file : null
-        };
+    $scope.fileContainer = {
+        file : null
+    };
 
+    FormEndpoint.get().$promise.then(function (response) {
         $scope.forms = response.results;
     });
 }];

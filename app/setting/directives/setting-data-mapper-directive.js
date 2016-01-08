@@ -25,14 +25,14 @@ function (
             };
 
             $scope.submitMappings = function (csv) {
-                csv.maps_to = _.map(csv.maps_to, function (item) {
-                    return item ? item.key : null;
-                });
 
+                // Check to make sure the user hasn't double mapped a key
+                // First, collect the coutns for all keys
                 var dups = _.countBy(csv.maps_to, function (item) {
                     return item;
                 });
-
+            
+                // Second, check if any of the keys appears more than once
                 var duplicateVars = _.filter(csv.maps_to, function (item) {
                     if (dups[item] > 1) {
                         return item;
@@ -41,6 +41,7 @@ function (
 
                 duplicateVars = _.uniq(duplicateVars);
 
+                // third, warn the user which keys have been duplicated
                 if (duplicateVars.length > 0) {
 
                     $translate('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')}).then(
