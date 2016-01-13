@@ -70,7 +70,7 @@
 
                             <div class="create-admin">
                               <a class="button button-primary" ng-href="/posts/create"
-                                 ng-show="!site.private || site.private && loggedin">
+                                 ng-show="canCreatePost()">
                                     <span class="icon-left fa-plus" translate>nav.add_post</span>
                                 </a>
 
