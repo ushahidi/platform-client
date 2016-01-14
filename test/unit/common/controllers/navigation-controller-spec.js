@@ -6,7 +6,6 @@ describe('navigation controller', function () {
         $scope,
         $controller,
         ConfigEndpoint,
-        mockAuthenticationService,
         BootstrapConfig;
 
     beforeEach(function () {
