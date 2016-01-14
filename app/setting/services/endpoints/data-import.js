@@ -12,14 +12,21 @@ function (
     Util
 ) {
 
-    var DataImportEndpoint = $resource(Util.apiUrl('/csv/:id'), {
-        id: '@id'
+    var DataImportEndpoint = $resource(Util.apiUrl('/csv/:id/:action'), {
+        id: '@id',
+        action: '@action'
     }, {
         get: {
             method: 'GET'
         },
         update: {
             method: 'PUT'
+        },
+        delete: {
+            method: 'DELETE'
+        },
+        import: {
+            method: 'GET'
         }
     });
 

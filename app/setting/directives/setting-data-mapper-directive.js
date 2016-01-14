@@ -20,7 +20,29 @@ function (
                 $translate('notify.data_import.csv_import_cancel')
                 .then(function (message) {
                     Notify.showNotificationSlider(message);
+
+                    $scope.deleteDataImport($scope.csv);
                     $location.url('/settings/data-import/');
+                });
+            };
+
+            $scope.deleteDataImport = function () {
+                DataImportEndpoint.delete($scope.csv);
+            };
+
+            $scope.triggerImport = function () {
+                DataImportEndpoint.import({id: $scope.csv.id, action: 'import'})
+                .$promise
+                .then(function (response) {
+                    $translate('notify.data_import.csv_mappings_set').then(
+                    function (message) {
+                        Notify.showNotificationSlider(message);
+
+                        $scope.deleteDataImport($scope.csv);
+                        $location.url('/views/list');
+                    });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             };
 
@@ -51,16 +73,13 @@ function (
                     return;
                 }
 
-                csv.completed = true;
-                csv.unmapped = [];
+                csv.fixed = {
+                    'form': $scope.form.id
+                };
                 DataImportEndpoint.update(csv)
                 .$promise
                 .then(function (csv) {
-                    $translate('notify.data_import.csv_mappings_set').then(
-                    function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.url('/views/list');
-                    });
+                    $scope.triggerImport(csv);
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
