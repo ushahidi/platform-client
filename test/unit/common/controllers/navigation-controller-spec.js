@@ -47,7 +47,7 @@ describe('navigation controller', function () {
         });
     });
 
-    describe('private deployment', function() {
+    describe('private deployment', function () {
         it('should not allow a user to register on a private deployment', function () {
             expect($scope.site.private).toBe(true);
             expect($scope.canRegister()).toBe(false);
