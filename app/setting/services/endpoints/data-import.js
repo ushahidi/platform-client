@@ -26,7 +26,7 @@ function (
             method: 'DELETE'
         },
         import: {
-            method: 'GET'
+            method: 'POST'
         }
     });
 
