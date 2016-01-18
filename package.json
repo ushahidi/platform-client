@@ -97,7 +97,7 @@
     "node": ">=0.10"
   },
   "scripts": {
-  "start": "node app",
+  "start": "node gulpfile.js",
   "postinstall": "gulp default"
   }
 }
