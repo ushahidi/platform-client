@@ -95,5 +95,9 @@
   },
   "engines": {
     "node": ">=0.10"
+  },
+  "scripts": {
+  "start": "node gulpfile.js",
+  "postinstall": "gulp default"
   }
 }
