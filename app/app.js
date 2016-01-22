@@ -84,6 +84,7 @@ angular.module('app',
     .constant('CONST', {
         BACKEND_URL         : backendUrl,
         API_URL             : apiUrl,
+        INTERCOM_APP_ID     : intercomAppId,
         DEFAULT_LOCALE      : 'en_US',
         OAUTH_CLIENT_ID     : 'ushahidiui',
         OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261',
