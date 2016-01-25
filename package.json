@@ -17,7 +17,8 @@
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
-    "jshint": "jshint ."
+    "jshint": "jshint .",
+    "jscs": "jscs app/* test/*"
   },
   "devDependencies": {
     "body-parser": "^1.9.2",
@@ -51,6 +52,7 @@
     "karma-firefox-launcher": "*",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
+    "pre-commit": "^1.1.2",
     "protractor": "^2.1.0",
     "serve-static": "^1.10.0",
     "underscore.string": "^2.3.3",
@@ -93,6 +95,10 @@
     "transifex": "^1.4.3",
     "underscore": "^1.7.0"
   },
+  "pre-commit": [
+    "jshint",
+    "jscs"
+  ],
   "engines": {
     "node": ">=0.10"
   }
