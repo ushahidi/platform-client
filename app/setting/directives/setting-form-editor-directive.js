@@ -165,7 +165,7 @@ function (
             $scope.openNewAttribute = function () {
                 $scope.isNewAttributeOpen = true;
             };
-            $scope.addNewAttribute = function (type, input, label) {
+            $scope.addNewAttribute = function (attribute) {
                 //have to copy as reverse() changes in place
                 var cloneAttributes = _.clone($scope.form.attributes);
                 var count = _.countBy($scope.form.attributes, function (attribute) {
@@ -178,16 +178,13 @@ function (
 
                 newAttrCount++;
                 $scope.isNewAttributeOpen = false;
-                var attribute = {
-                    type: type,
-                    input: input,
-                    label: 'New ' + label.toLowerCase() + ' field',
-                    required: false,
-                    options: [],
-                    config: {},
-                    priority: lastPriority + 1,
-                    form_stage_id: $scope.visibleStage
-                };
+                
+                attribute.label = 'New ' + attribute.label.toLowerCase() + ' field';
+                attribute.required = false;
+                attribute.options = [];
+                attribute.config = {};
+                attribute.priority = lastPriority + 1;
+                attribute.form_stage_id = $scope.visibleStage
 
                 $scope.form.attributes.push(attribute);
                 $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
@@ -343,7 +340,8 @@ function (
                 {
                     label: 'Checkbox',
                     type: 'varchar',
-                    input: 'checkbox'
+                    input: 'checkbox',
+                    cardinality: 0
                 },
                 {
                     label: 'Related Post',
