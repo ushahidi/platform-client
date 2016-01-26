@@ -178,15 +178,15 @@ function (
 
                 newAttrCount++;
                 $scope.isNewAttributeOpen = false;
-                
-                attribute.label = 'New ' + attribute.label.toLowerCase() + ' field';
-                attribute.required = false;
-                attribute.options = [];
-                attribute.config = {};
-                attribute.priority = lastPriority + 1;
-                attribute.form_stage_id = $scope.visibleStage
+                var newAttribute = _.clone(attribute);
+                newAttribute.label = 'New ' + attribute.label.toLowerCase() + ' field';
+                newAttribute.required = false;
+                newAttribute.options = [];
+                newAttribute.config = {};
+                newAttribute.priority = lastPriority + 1;
+                newAttribute.form_stage_id = $scope.visibleStage;
 
-                $scope.form.attributes.push(attribute);
+                $scope.form.attributes.push(newAttribute);
                 $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
 
                 var index = _.findLastIndex($scope.form.grouped_attributes, function (item, index) {
