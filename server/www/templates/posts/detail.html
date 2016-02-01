@@ -64,13 +64,6 @@
             <div class="vertical-tabs">
                 <nav class="vertical-tabs-menu init">
                     <ul>
-                        <li ng-class="{'active': visibleStage == 'post'}">
-                            <a ng-click="setVisibleStage('post')">
-                                <span class="icon-left fa-file-o" translate>
-                                    post.post
-                               </span>
-                            </a>
-                        </li>
                         <li 
                             ng-repeat="stage in stages"
                             ng-class="{'active': visibleStage == stage.id}"  >
@@ -86,22 +79,24 @@
                 </nav>
                 <div class="vertical-tabs-content">
                     <div class="post-author">
-                       <img class="circular" src="http://placehold.it/100x100" alt="">
+                       <div class="user-avatar" ng-show="post.user">
+                          <img class="circular" src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ post.user.realname }}">
+                       </div>
                        <p>
                           <strong class="icon-left fa-circle">
-                              {{post.type}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{user.id}}">{{user.realname}}</a></span>
+                              {{form_name || "Unstructured"}}
+                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
                       </p>
                     </div>
                     <div 
                         ng-if="post.content" 
-                        ng-show="visibleStage == 'post'" 
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
                         class="post-field">
                         <p sd-model-to-html="post.content"></p>
                     </div>
                     <div 
                         ng-if="!!post.tags.length" 
-                        ng-show="visibleStage == 'post'" 
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
                         class="form-field"
                     >
                         <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
@@ -125,7 +120,7 @@
                     </div>
                     <div 
                         ng-if="mapDataLoaded" 
-                        ng-show="visibleStage == 'post'" 
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
                         class="post-field"
                         >
                         <h4 ng-if="mapDataLoaded" translate>post.location</h4>

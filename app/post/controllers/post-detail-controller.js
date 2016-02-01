@@ -59,28 +59,6 @@ function (
         return 'post.publish_for_everyone';
     };
 
-    var fetchStages = function (formId) {
-        $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
-            var post = $scope.post;
-
-            // If number of completed stages matches number of stages,
-            // assume they're all complete, and just show the first stage
-            if (post.completed_stages.length === stages.length) {
-                $scope.setVisibleStage(stages[0].id);
-            } else {
-                // Get incomplete stages
-                var incompleteStages = _.filter(stages, function (stage) {
-                    return !_.contains(post.completed_stages, stage.id);
-                });
-
-                // Return lowest priority incomplete stage
-                $scope.setVisibleStage(incompleteStages[0].id);
-            }
-        });
-    };
-
-    fetchStages($scope.post.form.id);
-
     $scope.setVisibleStage = function (stageId) {
         $scope.visibleStage = stageId;
     };
@@ -101,7 +79,7 @@ function (
 
     // Load the post author
     if ($scope.post.user && $scope.post.user.id) {
-        $scope.user = UserEndpoint.get({id: $scope.post.user.id});
+        $scope.post.user = UserEndpoint.get({id: $scope.post.user.id});
     }
 
     // Load the post form
@@ -146,11 +124,9 @@ function (
                 this[attr.key] = attr;
             }, $scope.form_attributes);
         });
+    } else {
+        $scope.visibleStage = 'post';
     }
-
-    $scope.activateStageTab = function (selectedStage) {
-        $scope.visibleStage = selectedStage.id;
-    };
 
     $scope.isFirstStage = function (stageId) {
         if (!_.isEmpty($scope.stages)) {
@@ -174,6 +150,11 @@ function (
         }
 
         return true;
+    };
+
+
+    $scope.activateStageTab = function (selectedStage) {
+        $scope.visibleStage = selectedStage.id;
     };
 
     // Set initial map params
@@ -242,6 +223,99 @@ function (
                 });
             });
         });
+    };
+
+    // Why is this not builtin behaviour in angular?!?!?!
+    $scope.goEdit = function () {
+        $location.path('/posts/' + $scope.post.id + '/edit');
+    };
+
+    $scope.refreshCollections = function () {
+        $scope.editableCollections = CollectionEndpoint.editableByMe();
+    };
+    $scope.refreshCollections();
+    $scope.postInCollection = function (collection) {
+        return _.contains($scope.post.sets, String(collection.id));
+    };
+
+    $scope.toggleCreateCollection = function () {
+        $scope.showNewCollectionInput = !$scope.showNewCollectionInput;
+    };
+
+    $scope.toggleCollection = function (selectedCollection) {
+        if (_.contains($scope.post.sets, String(selectedCollection.id))) {
+            $scope.removeFromCollection(selectedCollection);
+        } else {
+            $scope.addToCollection(selectedCollection);
+        }
+    };
+
+    $scope.addToCollection = function (selectedCollection) {
+        var collectionId = selectedCollection.id, collection = selectedCollection.name;
+
+        CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id})
+            .$promise.then(function () {
+                $translate('notify.collection.add_to_collection', {collection: collection})
+                .then(function (message) {
+                    $scope.post.sets.push(String(collectionId));
+                    Notify.showNotificationSlider(message);
+                });
+            }, function (errorResponse) {
+                Notify.showApiErrors(errorResponse);
+            });
+    };
+
+    $scope.removeFromCollection = function (selectedCollection) {
+        var collectionId = selectedCollection.id, collection = selectedCollection.name;
+
+        CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
+        .$promise
+        .then(function () {
+            $translate('notify.collection.removed_from_collection', {collection: collection})
+            .then(function (message) {
+                $scope.post.sets = _.without($scope.post.sets, String(collectionId));
+                Notify.showNotificationSlider(message);
+            });
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse);
+        });
+    };
+
+    $scope.createNewCollection = function (collectionName) {
+        var collection = {
+            'name': collectionName,
+            'user_id': $rootScope.currentUser.userId
+        };
+        CollectionEndpoint.save(collection)
+        .$promise
+        .then(function (collection) {
+            $scope.toggleCreateCollection();
+            $scope.newCollection = '';
+            $scope.refreshCollections();
+            $scope.addToCollection(collection);
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse);
+        });
+    };
+
+    $scope.toggleCompletedStage = function (stage) {
+        // @todo how to validate this before saving
+        if (_.includes($scope.post.completed_stages, stage.id)) {
+            $scope.post.completed_stages = _.without($scope.post.completed_stages, stage.id);
+        } else {
+            $scope.post.completed_stages.push(stage.id);
+        }
+
+        PostEndpoint.update($scope.post).$promise
+            .then(function () {
+                $translate('notify.post.stage_save_success', {stage: stage.label})
+                    .then(function (message) {
+                        Notify.showNotificationSlider(message);
+                        stage.completed = !stage.completed;
+                    });
+            }, function (errorResponse) {
+                Notify.showApiErrors(errorResponse);
+            });
     };
 
     $scope.publishPostTo = function () {

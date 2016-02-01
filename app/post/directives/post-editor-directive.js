@@ -78,6 +78,7 @@ function (
             $scope.$watch(function () {
                 return $scope.post.form.id || $scope.post.form;
             }, function (formId, oldValue) {
+                $scope.post.form = FormEndpoint.get({ id: formId });
                 fetchAttributes(formId);
                 fetchStages(formId);
             });
@@ -270,7 +271,6 @@ function (
                         $translate(
                             'notify.post.save_success',
                             {
-                                id: $scope.post.id,
                                 name: $scope.post.title
                             }).then(function (message) {
                             Notify.showNotificationSlider(message);
