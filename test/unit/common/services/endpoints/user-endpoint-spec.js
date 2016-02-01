@@ -59,7 +59,7 @@ describe('UserEndpoint', function () {
                 var successCallback = jasmine.createSpy('success');
                 $httpBackend.expectGET(BACKEND_URL + '/api/v2/users').respond(mockUserDataResponse);
 
-                UserEndpoint.query().$promise.then(successCallback);
+                UserEndpoint.queryFresh().$promise.then(successCallback);
 
                 $httpBackend.flush();
                 $rootScope.$digest();

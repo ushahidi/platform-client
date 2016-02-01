@@ -12,7 +12,7 @@
         -->
         <div class="meta-data">
             <span class="post-type-marker"><!-- todo marker style based on post type -->
-                {{post.type}}
+                {{ post.form.name || "Incoming" }}
             </span>
             <span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}}<!--, via SMS -->
         </div>

@@ -58,28 +58,6 @@ function (
         return 'post.publish_for_everyone';
     };
 
-    var fetchStages = function (formId) {
-        $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
-            var post = $scope.post;
-
-            // If number of completed stages matches number of stages,
-            // assume they're all complete, and just show the first stage
-            if (post.completed_stages.length === stages.length) {
-                $scope.setVisibleStage(stages[0].id);
-            } else {
-                // Get incomplete stages
-                var incompleteStages = _.filter(stages, function (stage) {
-                    return !_.contains(post.completed_stages, stage.id);
-                });
-
-                // Return lowest priority incomplete stage
-                $scope.setVisibleStage(incompleteStages[0].id);
-            }
-        });
-    };
-
-    fetchStages($scope.post.form.id);
-
     $scope.setVisibleStage = function (stageId) {
         $scope.visibleStage = stageId;
     };
@@ -100,7 +78,7 @@ function (
 
     // Load the post author
     if ($scope.post.user && $scope.post.user.id) {
-        $scope.user = UserEndpoint.get({id: $scope.post.user.id});
+        $scope.post.user = UserEndpoint.get({id: $scope.post.user.id});
     }
 
     // Load the post form
@@ -145,11 +123,9 @@ function (
                 this[attr.key] = attr;
             }, $scope.form_attributes);
         });
+    } else {
+        $scope.visibleStage = 'post';
     }
-
-    $scope.activateStageTab = function (selectedStage) {
-        $scope.visibleStage = selectedStage.id;
-    };
 
     $scope.isFirstStage = function (stageId) {
         if (!_.isEmpty($scope.stages)) {
@@ -173,6 +149,11 @@ function (
         }
 
         return true;
+    };
+
+
+    $scope.activateStageTab = function (selectedStage) {
+        $scope.visibleStage = selectedStage.id;
     };
 
     // Set initial map params
@@ -298,20 +279,7 @@ function (
             Notify.showApiErrors(errorResponse);
         });
     };
-    /*
-    scope.searchCollections = function (query) {
-        CollectionEndpoint.query(query)
-        .$promise
-        .then(function (result) {
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
 
-    scope.clearSearch = function() {
-        scope.editableCollection = scope.editableCollectionCopy;
-    };
-    */
     $scope.createNewCollection = function (collectionName) {
         var collection = {
             'name': collectionName,
