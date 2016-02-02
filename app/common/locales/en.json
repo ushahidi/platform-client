@@ -189,6 +189,8 @@
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
+        "role" : "Role",
+        "roles" : "Roles",
         "views" : "Views",
         "workspace" : "Workspace"
     },
