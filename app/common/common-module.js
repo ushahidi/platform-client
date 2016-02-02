@@ -18,6 +18,7 @@ angular.module('ushahidi.common', [
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
+.service('RoleEndpoint', require('./services/endpoints/role.js'))
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
 .service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
 .service('RoleHelper', require('./services/role-helper.js'))
