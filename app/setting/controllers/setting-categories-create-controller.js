@@ -3,7 +3,7 @@ module.exports = [
     '$location',
     '$translate',
     'multiTranslate',
-    'RoleHelper',
+    'RoleEndpoint',
     'TagEndpoint',
     'Notify',
     '_',
@@ -12,7 +12,7 @@ function (
     $location,
     $translate,
     multiTranslate,
-    RoleHelper,
+    RoleEndpoint,
     TagEndpoint,
     Notify,
     _
@@ -23,7 +23,7 @@ function (
     });
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
-    $scope.roles = RoleHelper.roles();
+    $scope.roles = RoleEndpoint.query();
 
     $scope.tag = { type: 'category', icon: 'tag' };
     $scope.processing = false;
