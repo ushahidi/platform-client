@@ -23,7 +23,6 @@ angular.module('ushahidi.common', [
 .service('PermissionEndpoint', require('./services/endpoints/permission.js'))
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
 
-.service('RoleHelper', require('./services/role-helper.js'))
 .service('PostViewHelper', require('./services/view-helper.js'))
 .service('Config', require('./services/config.js'))
 .service('Util', require('./services/util.js'))
