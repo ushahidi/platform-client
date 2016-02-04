@@ -9,21 +9,21 @@ function (
 ) {
     var cache;
 
-    if (!(cache = CacheFactory.get('roleCache'))) {
-        cache = new CacheFactory('roleCache');
+    if (!(cache = CacheFactory.get('permissionCache'))) {
+        cache = new CacheFactory('permissionCache');
     }
 
     cache.setOnExpire(function (key, value) {
-        RoleEndpoint.get(value.id);
+        PermissionEndpoint.get(value.id);
     });
 
-    var RoleEndpoint = $resource(Util.apiUrl('/roles/:id'), {
+    var PermissionEndpoint = $resource(Util.apiUrl('/permissions/:id'), {
             id: '@id'
         }, {
         query: {
             method: 'GET',
             isArray: true,
-            transformResponse: function (data /*, header*/) {
+            transpermissionResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }
         },
@@ -39,32 +39,32 @@ function (
         }
     });
 
-    RoleEndpoint.getFresh = function (id) {
+    PermissionEndpoint.getFresh = function (id) {
         cache.remove(Util.apiUrl(id));
-        return RoleEndpoint.get(id);
+        return PermissionEndpoint.get(id);
     };
 
-    RoleEndpoint.invalidateCache = function () {
+    PermissionEndpoint.invalidateCache = function () {
         return cache.removeAll();
     };
 
-    RoleEndpoint.queryFresh = function () {
+    PermissionEndpoint.queryFresh = function () {
         cache.removeAll();
-        return RoleEndpoint.query();
+        return PermissionEndpoint.query();
     };
 
-    RoleEndpoint.saveCache = function (item) {
-        var persist = item.id ? RoleEndpoint.update : RoleEndpoint.save;
+    PermissionEndpoint.saveCache = function (item) {
+        var persist = item.id ? PermissionEndpoint.update : PermissionEndpoint.save;
         cache.removeAll();
         var result = persist(item);
         return result;
     };
 
-    RoleEndpoint.delete = function (item) {
+    PermissionEndpoint.delete = function (item) {
         cache.removeAll();
-        return RoleEndpoint.deleteEntity(item);
+        return PermissionEndpoint.deleteEntity(item);
     };
 
-    return RoleEndpoint;
+    return PermissionEndpoint;
 
 }];
