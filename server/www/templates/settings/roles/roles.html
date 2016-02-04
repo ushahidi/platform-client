@@ -1,0 +1,46 @@
+<main custom-roles class="page-content has-aside" role="main">
+    <div class="page-header">
+        <ul class="breadcrumb">
+          <li><a ng-href="/settings" translate>nav.settings</a></li>
+          <li class="active" translate>nav.roles</li>
+        </ul>
+        <h1 class="inline" translate>tool.manage_tags</h1>
+        <a ng-href="/settings/roles/create" class="cta plus">
+            <span translate>role.add_role</span>
+        </a>
+    </div>
+    <div class="divider white"></div>
+    <div class="main-col">
+
+        <div class="panel-body" ng-hide="tags.length">
+            <p class="text-muted text-center" ng-hide="tags.length"><em translate>empty.role</em></p>
+        </div>
+
+        <div ng-show="roles.length">
+
+            <div class="list-actions">
+                <button type="button"
+                    class="button-secondary icon-only-when-small alt trash"
+                    ng-disabled="!selectedRoles.length"
+                    ng-click="deleteRoles()">
+                        <span translate>nav.delete</span>
+                </button>
+            </div>
+
+            <div class="settings-listing" ng-repeat="role in roles | orderBy:'role'" ng-class="{ 'warning': isToggled(role) }" ng-click="toggleRole(role)">
+                <div class="select">
+                    <input type="checkbox" value="{{role.id}}" ng-checked="isToggled(role)">
+                </div>
+                <div class="bd">
+                    <a ng-href="/settings/roles/{{role.id}}">
+                        <h3><i class="fa fa-{{role.icon}} circle" style="color:{{role.color}}"></i>
+                        {{tag.tag}}</h3>
+                    </a>
+                    <p class="small">{{role.description}}</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+    </div>
+</main>

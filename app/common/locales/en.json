@@ -323,6 +323,10 @@
             }
         }
     },
+    "role": {
+        "add_role" : "Add Role",
+        "delete" : "Delete",
+    },
     "set": {
         "create_collection" : "Create Collection",
         "create_savedsearch": "Create Saved Search",
@@ -584,6 +588,9 @@
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
             "bulk_destroy_success" : "{{count}} categories deleted"
         },
+        "role" : {
+            
+        },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}",
         },
@@ -635,6 +642,7 @@
         "post" : "No posts found.",
         "user" : "No users found.",
         "category" : "No categories found.",
+        "role" : "No roles found.",
         "form": "No forms found."
     },
     "location": {

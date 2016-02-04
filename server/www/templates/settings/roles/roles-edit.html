@@ -1,0 +1,44 @@
+<main custom-roles-editor class="page-content has-aside" role="main">
+    <ul class="breadcrumb">
+      <li><a ng-href="/settings" translate>nav.settings</a></li>
+      <li><a ng-href="/settings/categories" translate>nav.roles</a></li>
+      <li class="active">{{title}}</li>
+    </ul>
+
+    <div class="main-col">
+
+        <h1 class="inline">{{title}}</h1>
+
+        <div class="divider white"></div>
+        <form>
+
+            <label class="input-label" for="name" translate>role.name</label>
+            <input id="name" type="text" class="form-control"
+                ng-minlength="3"
+                ng-maxlength="150"
+                ng-model="tag.tag"
+                required>
+
+            <label class="input-label" for="description" translate>role.description</label>
+            <input id="description" type="text" class="form-control"
+                ng-maxlength="150"
+                ng-model="tag.description">
+
+            <label class="input-label" for="color" translate>role.color</label>
+            <input id="color" type="text" class="form-control"
+                colorpicker="hex"
+                ng-model="tag.color">
+
+            <label class="input-label" for="icon" translate>role.icon</label>
+            <icon-picker class="icon" ng-model="tag.icon" icon-lib-name="fontAwesome" ></icon-picker>
+
+            <div class="save-button clearfix">
+                <button class="save" ng-click="saveRole(role)" ng-disabled="form.$invalid || processing">
+                    <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
+                    <span translate>role.save</span>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</main>
