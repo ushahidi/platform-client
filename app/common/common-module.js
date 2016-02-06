@@ -42,6 +42,7 @@ angular.module('ushahidi.common', [
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('notifier', require('./controllers/notifier.js'))
 
+.directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 

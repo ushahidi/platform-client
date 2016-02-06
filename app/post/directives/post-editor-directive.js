@@ -45,6 +45,8 @@ function (
                             if (!$scope.post.values[attr.key]) {
                                 if (attr.input === 'location') {
                                     $scope.post.values[attr.key] = [null];
+                                } else if (attr.input === 'checkbox') {
+                                    $scope.post.values[attr.key] = [];
                                 } else {
                                     $scope.post.values[attr.key] = [attr.default];
                                 }
