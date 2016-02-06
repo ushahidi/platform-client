@@ -47,6 +47,7 @@ function (
 
     $scope.mapDataLoaded = false;
     $scope.availableRoles = RoleHelper.roles();
+
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
