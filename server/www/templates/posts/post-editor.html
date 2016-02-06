@@ -149,8 +149,22 @@
                       >
                           {{attribute.label}}
                       </label>
+                      <!-- type: checkbox -->
+                      <div class="form-field checkbox" ng-if="isCheckbox(attribute)" ng-repeat="option in attribute.options">
+                          <input 
+                              type="checkbox" 
+                              checklist-model="post.values[attribute.key]" 
+                              ng-required="attribute.required" 
+                              checklist-value="option" 
+                              value="option"
+                              ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
+                         <label>
+                              {{option}} 
+                          </label>
+                      </div>
+
                       <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
-                          <div ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
+                          <div ng-if="!isCheckbox(attribute)">
                               <!-- type: date -->
                               <div class="input-inline" ng-if="isDate(attribute)">
                                   <input
@@ -194,11 +208,6 @@
                                 ng-required="attribute.required">
                                 <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
                             </select>
-
-                            <!-- type: checkbox -->
-                            <div class="input-group" ng-if="isCheckbox(attribute)">
-                                <label class="checkbox-label">{{attribute.label}} <input name="values_{{attribute.key}}" type="checkbox" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="1" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></label>
-                            </div>
 
                             <!-- type: radio -->
                             <div class="input-group" ng-if="isRadio(attribute)">
@@ -257,11 +266,6 @@
                                 ng-required="attribute.required"
                                 ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
 
-                            <button
-                                type="button"
-                                class="button-secondary icon-only alt trash"
-                                ng-if="canRemoveValue(attribute, key)"
-                                ng-click="removeValue(attribute, key)"></button>
                         </div>
                     </div>
 
@@ -270,9 +274,6 @@
                         class="alert error"
                         translate="{{'post.valid.values.' + error}}"
                         translate-values="{ label : attribute.label }"></p>
-
-                    <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
-
                   </div>
               </div>
           </div>
