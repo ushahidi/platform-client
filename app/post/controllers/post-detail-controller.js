@@ -18,7 +18,7 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
-    'RoleHelper',
+    'RoleEndpoint',
     'Notify',
 function (
     $scope,
@@ -40,19 +40,19 @@ function (
     L,
     leafletData,
     _,
-    RoleHelper,
+    RoleEndpoint,
     Notify
 ) {
     $scope.post = post;
 
     $scope.mapDataLoaded = false;
-    $scope.availableRoles = RoleHelper.roles();
+    $scope.availableRoles = RoleEndpoint.query();
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
         }
         if (!_.isEmpty($scope.post.published_to)) {
-            return RoleHelper.getRole($scope.post.published_to[0]);
+            return RoleEndpoint.get({id:$scope.post.published_to[0]});
         }
 
         return 'post.publish_for_everyone';
@@ -349,7 +349,7 @@ function (
         PostEndpoint.update($scope.post).
         $promise
         .then(function () {
-            var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
+            var role = $scope.publishRole === '' ? 'Everyone' : RoleEndpoint.getRole({id: $scope.publishRole});
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
             $translate(message, { role: role })
             .then(function (message) {

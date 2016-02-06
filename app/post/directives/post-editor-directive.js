@@ -8,7 +8,7 @@ function (
         '$translate',
         'PostEntity',
         'PostEndpoint',
-        'RoleHelper',
+        'RoleEndpoint',
         'TagEndpoint',
         'FormEndpoint',
         'FormStageEndpoint',
@@ -22,7 +22,7 @@ function (
             $translate,
             postEntity,
             PostEndpoint,
-            RoleHelper,
+            RoleEndpoint,
             TagEndpoint,
             FormEndpoint,
             FormStageEndpoint,
@@ -32,8 +32,7 @@ function (
         ) {
 
             $scope.categories = TagEndpoint.query();
-            $scope.availableRoles = RoleHelper.roles();
-            $scope.getRoleDisplayName = RoleHelper.getRole;
+            $scope.availableRoles = RoleEndpoint.query();
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];

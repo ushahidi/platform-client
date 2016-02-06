@@ -24,14 +24,6 @@
                 ng-maxlength="150"
                 ng-model="tag.description">
 
-            <label class="input-label" for="color" translate>role.color</label>
-            <input id="color" type="text" class="form-control"
-                colorpicker="hex"
-                ng-model="tag.color">
-
-            <label class="input-label" for="icon" translate>role.icon</label>
-            <icon-picker class="icon" ng-model="tag.icon" icon-lib-name="fontAwesome" ></icon-picker>
-
             <div class="save-button clearfix">
                 <button class="save" ng-click="saveRole(role)" ng-disabled="form.$invalid || processing">
                     <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>

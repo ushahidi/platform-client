@@ -9,7 +9,7 @@ module.exports = [
     'UserEndpoint',
     'FormEndpoint',
     'FormStageEndpoint',
-    'RoleHelper',
+    'RoleEndpoint',
     'Notify',
     '_',
 function (
@@ -23,7 +23,7 @@ function (
     UserEndpoint,
     FormEndpoint,
     FormStageEndpoint,
-    RoleHelper,
+    RoleEndpoint,
     Notify,
     _
 ) {
@@ -71,19 +71,19 @@ function (
         link: function ($scope) {
             $scope.showNewCollectionInput = false;
             $scope.newCollection = '';
-            $scope.getRoleDisplayName = RoleHelper.getRole;
-            $scope.availableRoles = RoleHelper.roles();
+            $scope.availableRoles = RoleEndpoint.query();
 
             $scope.publishedFor = function () {
                 if ($scope.post.status === 'draft') {
                     return 'post.publish_for_you';
                 }
                 if (!_.isEmpty($scope.post.published_to)) {
-                    return RoleHelper.getRole($scope.post.published_to[0]);
+                    return RoleEndpoint.get({id: $scope.post.published_to[0]});
                 }
 
                 return 'post.publish_for_everyone';
             };
+
             // Ensure completes stages array is numeric
             $scope.updateSelectedItems = function () {
                 $rootScope.$broadcast('event:post:selection', $scope.post);
@@ -186,9 +186,9 @@ function (
                 PostEndpoint.update($scope.post).
                 $promise
                 .then(function (post) {
-                    var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
+                    var role = $scope.publishRole === '' ? 'Everyone' : RoleEndpoint.getRole({id: $scope.publishRole});
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-                    $translate(message, {role: role})
+                    $translate(message, {role: role.name})
                     .then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
