@@ -24,6 +24,7 @@ angular.module('ushahidi.common', [
 .service('PostViewHelper', require('./services/view-helper.js'))
 .service('Config', require('./services/config.js'))
 .service('Util', require('./services/util.js'))
+.service('DataRetriever', require('./services/data-retriever.js'))
 .service('Notify', require('./services/notify.js'))
 .service('multiTranslate', require('./services/multi-translate.js'))
 .service('GlobalFilter', require('./services/global-filter.js'))
@@ -38,6 +39,7 @@ angular.module('ushahidi.common', [
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('notifier', require('./controllers/notifier.js'))
 
+.directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
