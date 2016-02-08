@@ -23,12 +23,15 @@ function (
         ) {
             $scope.showNewCollectionInput = false;
             $scope.newCollection = '';
+            $scope.editableCollections = [];
 
             $scope.refreshCollections = function () {
-                $scope.editableCollections = CollectionEndpoint.editableByMe();
+                CollectionEndpoint.editableByMe().$promise.then(function (results) {
+                    $scope.editableCollections = results; 
+                });
             };
 
-            $scope.editableCollections = $scope.refreshCollections();
+            $scope.refreshCollections();
 
             $scope.$on('event:collection-selector:update', function () {
                 $scope.refrehCollections();
