@@ -453,10 +453,11 @@
         "assign_csv_message" : "Assign CSV columns to post fields",
         "csv_instructions" : "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",
         "csv_column_name" : "CSV column name",
-        "post_type_title" : "{{form_name}} field name",   
+        "post_type_title" : "{{form_name}} field name",
         "dont_import" : "Don\'t import",
         "cancel_import" : "Cancel import",
-        "finish_import" : "Finish import"
+        "finish_import" : "Finish import",
+        "select_post_type" : "Select Post Type",
     },
     "user": {
         "add_user" : "Add User",
