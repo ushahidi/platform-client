@@ -31,6 +31,7 @@ describe('Post detail controller', function () {
     };
 
    beforeEach(function () {
+        
         var testApp = angular.module('testApp', [
             'pascalprecht.translate',
             'ngResource',

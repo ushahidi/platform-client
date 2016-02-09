@@ -7,15 +7,14 @@ describe('setting categories controller', function () {
         $controller;
 
     beforeEach(function () {
+        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+
         var testApp = angular.module('testApp', [
-        'pascalprecht.translate'
+        'pascalprecht.translate',
+        'ushahidi.mock'
         ]);
 
-        testApp.service('Session', function () {
-            return mockedSessionService;
-        })
-        .controller('settingCategoriesController', require(ROOT_PATH + 'app/setting/controllers/setting-categories-controller.js'))
-        .service('Notify', require(ROOT_PATH + 'app/common/services/notify.js'))
+        testApp.controller('settingCategoriesController', require(ROOT_PATH + 'app/setting/controllers/setting-categories-controller.js'))
         .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
@@ -51,20 +50,10 @@ describe('setting categories controller', function () {
             return {then: function (successCallback){ successCallback();}};
         };
 
-        var mockNotify = {
-            showConfirm: function (message){
-                return {
-                    then: function (successCallback) {
-                        successCallback();
-                    }
-                }
-            }
-        };
 
         $controller('settingCategoriesController', {
            $scope: $scope,
            $translate: mockTranslate,
-           Notify: mockNotify,
            TagEndpoint: mockTagEndpoint
         });
 
