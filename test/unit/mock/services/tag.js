@@ -12,6 +12,14 @@ module.exports = [function () {
                     successCallback();
                 }
             }};
+        },
+        saveCache: function () {
+            return {$promise: {
+                then: function (successCallback) {
+                    successCallback({id:1});
+                }
+            }};
         }
+
     };
 }];
