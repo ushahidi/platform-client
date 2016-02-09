@@ -16,14 +16,14 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    function clearLoginForm() {
+    $scope.clearLoginForm = function () {
         $scope.failed = true;
         $scope.processing = false;
         $scope.email = '';
         $scope.password = '';
     }
 
-    function finishedLogin() {
+    $scope.finishedLogin = function() {
         $scope.failed = false;
         $scope.processing = false;
     }
@@ -33,7 +33,7 @@ function (
 
         Authentication
             .login($scope.email, $scope.password)
-            .then(finishedLogin, clearLoginForm);
+            .then($scope.finishedLogin, $scope.clearLoginForm);
     };
 
     // If we're already logged in
@@ -41,5 +41,5 @@ function (
         $location.url('/');
     }
 
-    finishedLogin();
+    $scope.finishedLogin();
 }];

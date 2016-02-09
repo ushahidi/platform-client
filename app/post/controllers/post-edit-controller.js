@@ -2,7 +2,6 @@ module.exports = [
     '$scope',
     '$translate',
     '$location',
-    '$routeParams',
     '$controller',
     'post',
     'FormEndpoint',
@@ -10,7 +9,6 @@ function (
     $scope,
     $translate,
     $location,
-    $routeParams,
     $controller,
     post,
     FormEndpoint
