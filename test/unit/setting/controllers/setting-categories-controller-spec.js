@@ -10,7 +10,6 @@ describe('setting categories controller', function () {
         require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
         var testApp = angular.module('testApp', [
-        'pascalprecht.translate',
         'ushahidi.mock'
         ]);
 
@@ -30,31 +29,8 @@ describe('setting categories controller', function () {
 
 
     beforeEach(function () {
-       var mockTagEndpoint = {
-            query: function () {
-                return [{
-                    name: 'test tag',
-                    id: 1
-                }];
-            },
-            delete: function () {
-                return {$promise: {
-                    then: function (successCallback) {
-                        successCallback();
-                    }
-                }};
-            }
-        };
-
-        var mockTranslate = function (value) {
-            return {then: function (successCallback){ successCallback();}};
-        };
-
-
         $controller('settingCategoriesController', {
-           $scope: $scope,
-           $translate: mockTranslate,
-           TagEndpoint: mockTagEndpoint
+           $scope: $scope
         });
 
         $rootScope.$digest();
