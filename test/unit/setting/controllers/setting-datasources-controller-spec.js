@@ -1,6 +1,6 @@
 var ROOT_PATH = '../../../../';
 
-describe('setting categories create controller', function () {
+describe('setting datasources controller', function () {
 
     var $rootScope,
         $scope,
@@ -14,11 +14,7 @@ describe('setting categories create controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingCategoriesCreateController', require(ROOT_PATH + 'app/setting/controllers/setting-categories-create-controller.js'))
-
-
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'))
-        .service('multiTranslate', require(ROOT_PATH + 'app/common/services/multi-translate.js'));
+        testApp.controller('settingDataSourcesController', require(ROOT_PATH + 'app/setting/controllers/setting-datasources-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -36,27 +32,46 @@ describe('setting categories create controller', function () {
     beforeEach(function () {
         spyOn($scope, '$emit').and.callThrough();
 
-        $controller('settingCategoriesCreateController', {
-           $scope: $scope
+        $controller('settingDataSourcesController', {
+           $scope: $scope,
+           $rootScope: $rootScope
         });
+
+        $scope.forms = {
+              'pass': {
+                  $valid: true
+              },
+              'fail': {
+                  $valid: true
+              }
+        };
 
         $rootScope.$digest();
         $rootScope.$apply();
+
     });
 
     it('should retrieve load and set title', function () {
         expect($scope.$emit).toHaveBeenCalled();
     });
 
-    it('should save a tag and update the path', function () {
+    it('should save provider settings successfully', function () {
         spyOn(Notify, 'showNotificationSlider');
-        $scope.saveTag({id:'pass'});
+        $scope.saveProviderSettings('pass');
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should open the providers accordion group to show errors when form is invalid', function () {
+        $scope.forms['pass'].$valid = false;
+
+        $scope.saveProviderSettings('pass');
+        expect($scope.formsSubmitted['pass']).toBe(true);
     });
 
     it('should show an error on save failure', function () {
         spyOn(Notify, 'showApiErrors');
-        $scope.saveTag({id :'fail'});
+        $scope.saveProviderSettings('fail');
         expect(Notify.showApiErrors).toHaveBeenCalled();
     });
+
 });

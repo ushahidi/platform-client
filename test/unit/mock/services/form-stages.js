@@ -1,14 +1,18 @@
 module.exports = [function () {
     return {
         query: function () {
-            return [{
-                name: 'test tag',
-                id: 1
-            }];
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback([{
+                        name: 'test form stages',
+                        id: 1
+                    }]);
+                }
+            }};
         },
         getFresh: function () {
             return {
-                name: 'test tag',
+                name: 'test form stages',
                 id: 1
             };
         },
@@ -19,13 +23,13 @@ module.exports = [function () {
                 }
             }};
         },
-        saveCache: function (tag) {
+        saveCache: function (stage) {
+          console.log(stage);
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                  tag.id === 'pass' ? successCallback({id:1}) : failCallback('error');
+                  stage.formId === 1 ? successCallback({id:1}) : failCallback('error');
                 }
             }};
         }
-
     };
 }];

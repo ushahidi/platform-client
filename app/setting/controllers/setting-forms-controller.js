@@ -23,8 +23,8 @@ function (
 
     // Get all the forms for display
     $scope.refreshForms = function () {
-        FormEndpoint.get().$promise.then(function (response) {
-            $scope.forms = response.results;
+        FormEndpoint.query().$promise.then(function (response) {
+            $scope.forms = response;
         });
     };
     $scope.refreshForms();

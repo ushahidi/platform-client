@@ -1,6 +1,6 @@
 var ROOT_PATH = '../../../../';
 
-describe('setting categories create controller', function () {
+describe('setting categories edit controller', function () {
 
     var $rootScope,
         $scope,
@@ -14,11 +14,12 @@ describe('setting categories create controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingCategoriesCreateController', require(ROOT_PATH + 'app/setting/controllers/setting-categories-create-controller.js'))
+        testApp.controller('settingCategoriesEditController', require(ROOT_PATH + 'app/setting/controllers/setting-categories-edit-controller.js'))
 
 
         .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'))
-        .service('multiTranslate', require(ROOT_PATH + 'app/common/services/multi-translate.js'));
+        .service('multiTranslate', require(ROOT_PATH + 'app/common/services/multi-translate.js'))
+        .run(require(ROOT_PATH + 'app/common/global/event-handlers.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -34,10 +35,17 @@ describe('setting categories create controller', function () {
 
 
     beforeEach(function () {
-        spyOn($scope, '$emit').and.callThrough();
+        spyOn($rootScope, '$emit').and.callThrough();
+        spyOn($rootScope, 'goBack').and.callThrough();
+        
+        var mockRouteParams = {
+            id: 1
+        };
 
-        $controller('settingCategoriesCreateController', {
-           $scope: $scope
+        $controller('settingCategoriesEditController', {
+           $scope: $scope,
+           $rootScope: $rootScope,
+           $routeParams: mockRouteParams
         });
 
         $rootScope.$digest();

@@ -16,6 +16,7 @@
                 <label translate>data_import.post_type</label>
                 <div class="custom-select init">
                     <select ng-model="formId">
+                        <option value="" translate>data_import.select_post_type</option>
                         <option value="{{form.id}}" ng-repeat="form in forms">
                             {{form.name}}
                         </option>
