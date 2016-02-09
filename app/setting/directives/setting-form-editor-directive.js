@@ -165,7 +165,7 @@ function (
             $scope.openNewAttribute = function () {
                 $scope.isNewAttributeOpen = true;
             };
-            $scope.addNewAttribute = function (type, input, label) {
+            $scope.addNewAttribute = function (attribute) {
                 //have to copy as reverse() changes in place
                 var cloneAttributes = _.clone($scope.form.attributes);
                 var count = _.countBy($scope.form.attributes, function (attribute) {
@@ -178,18 +178,15 @@ function (
 
                 newAttrCount++;
                 $scope.isNewAttributeOpen = false;
-                var attribute = {
-                    type: type,
-                    input: input,
-                    label: 'New ' + label.toLowerCase() + ' field',
-                    required: false,
-                    options: [],
-                    config: {},
-                    priority: lastPriority + 1,
-                    form_stage_id: $scope.visibleStage
-                };
+                var newAttribute = _.clone(attribute);
+                newAttribute.label = 'New ' + attribute.label.toLowerCase() + ' field';
+                newAttribute.required = false;
+                newAttribute.options = [];
+                newAttribute.config = {};
+                newAttribute.priority = lastPriority + 1;
+                newAttribute.form_stage_id = $scope.visibleStage;
 
-                $scope.form.attributes.push(attribute);
+                $scope.form.attributes.push(newAttribute);
                 $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
 
                 var index = _.findLastIndex($scope.form.grouped_attributes, function (item, index) {
@@ -343,7 +340,8 @@ function (
                 {
                     label: 'Checkbox',
                     type: 'varchar',
-                    input: 'checkbox'
+                    input: 'checkbox',
+                    cardinality: 0
                 },
                 {
                     label: 'Related Post',
