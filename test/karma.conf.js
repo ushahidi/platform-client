@@ -15,6 +15,7 @@ module.exports = function (config) {
             'app/common/**/*.js',
             'app/post/**/*.js',
             'app/set/**/*.js',
+            'app/setting/**/*.js',
             'app/user-profile/**/*.js',
             'app/common/locales/**/*.json',
             'test/unit/**/*.js',
