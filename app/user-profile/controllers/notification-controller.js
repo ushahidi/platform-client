@@ -2,7 +2,6 @@ module.exports = [
     '$scope',
     '$translate',
     '$q',
-    '$route',
     '$location',
     '_',
     'UserEndpoint',
@@ -15,7 +14,6 @@ module.exports = [
         $scope,
         $translate,
         $q,
-        $route,
         $location,
         _,
         UserEndpoint,
@@ -37,7 +35,8 @@ module.exports = [
         };
 
         var loadNotifications = function () {
-            NotificationEndpoint.get(function (notifications) {
+            NotificationEndpoint.query().$promise.then(function (notifications) {
+              
                 _.forEach(notifications, function (notification) {
                     // Add name of the subscribed collection
                     CollectionEndpoint.get({collectionId: notification.set.id}, function (collection) {
@@ -63,8 +62,15 @@ module.exports = [
         $scope.deleteNotification = function (notification) {
             $translate('notify.notification.delete_confirm').then(function (message) {
                 Notify.showConfirm(message).then(function () {
-                    notification.$delete({id: notification.id}, function () {
+                    NotificationEndpoint.delete({id: notification.id}).$promise.then(function () {
                         // releod notificatons;
+                        $translate(
+                            'notify.notification.destroy_notification_success',
+                            {name: notification.name}
+                        ).then(function (message) {
+                            Notify.showNotificationSlider(message);
+                        });
+
                         loadNotifications();
                     }, function () {
                         showErrorMessage('notification.error_message');
@@ -77,7 +83,7 @@ module.exports = [
         };
 
         var loadContacts = function () {
-            ContactEndpoint.get(function (contacts) {
+            ContactEndpoint.get().$promise.then(function (contacts) {
                 _.forEach(contacts, function (contact) {
                     // Save the original contact value
                     // and use it to track changes
@@ -124,8 +130,13 @@ module.exports = [
             $scope.saving = true;
 
             if (contact.id) {
-                contact.$update({id: contact.id}, function (contact) {
+                ContactEndpoint.update(contact).$promise.then(function (contact) {
                     // update original value of contact
+                    $translate(
+                       'notify.contact.save_success'
+                    ).then(function (message) {
+                       Notify.showNotificationSlider(message);
+                    });
                     contact.original = contact.contact;
                 }, function () {
                     showErrorMessage('contact.error_message');
@@ -134,12 +145,17 @@ module.exports = [
             } else {
                 // Enable notifications for new contacts by default
                 contact.can_notify = true;
-                ContactEndpoint.save(contact, function () {
+                ContactEndpoint.save(contact).$promise.then(function () {
                     // Reset new contact field
                     $scope.contact = {
                         type: contact.type,
                         contact: ''
                     };
+                    $translate(
+                       'notify.contact.save_success'
+                    ).then(function (message) {
+                       Notify.showNotificationSlider(message);
+                    });
                     // Reload contacts
                     loadContacts();
                 }, function () {

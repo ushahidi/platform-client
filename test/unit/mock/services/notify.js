@@ -7,6 +7,13 @@ module.exports = [function () {
                 }
             }
         },
+        showSingleAlert: function (message){
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            }
+        },
         showApiErrors: function (message){
             return {
                 then: function (successCallback) {
