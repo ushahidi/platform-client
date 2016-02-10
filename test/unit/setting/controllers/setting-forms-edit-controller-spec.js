@@ -1,9 +1,11 @@
 var ROOT_PATH = '../../../../';
 
-describe('setting data mapper controller', function () {
+describe('setting forms edit controller', function () {
 
     var $rootScope,
         $scope,
+        $q,
+        Notify,
         $controller;
 
     beforeEach(function () {
@@ -13,34 +15,37 @@ describe('setting data mapper controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingDataMapperController', require(ROOT_PATH + 'app/setting/controllers/setting-data-mapper-controller.js'));
+        testApp.controller('settingFormsEditController', require(ROOT_PATH + 'app/setting/controllers/setting-forms-edit-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_, _Notify_) {
+    beforeEach(inject(function (_$q_, _$rootScope_, _$controller_, _Notify_) {
         $rootScope = _$rootScope_;
+        $q = _$q_;
         $controller = _$controller_;
+        Notify = _Notify_;
         $scope = _$rootScope_.$new();
     }));
 
 
     beforeEach(function () {
-        $controller('settingDataMapperController', {
+        $controller('settingFormsEditController', {
            $scope: $scope,
-           initialData: {form:1, csv:1},
+           $q: $q,
+           $routeParams: {id: 1},
            $rootScope: $rootScope
         });
 
         $rootScope.$digest();
         $rootScope.$apply();
+
     });
 
-    it('should retrieve and set initalData', function () {
-        expect($scope.form).toEqual(1);
-        expect($scope.csv).toEqual(1);
+    it('should load forms and stages', function () {
+        expect($scope.form.name).toEqual('test form');
     });
 
 });

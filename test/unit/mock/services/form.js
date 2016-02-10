@@ -10,6 +10,16 @@ module.exports = [function () {
                 }
             }};
         },
+        get: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({
+                        name: 'test form',
+                        id: 1
+                    });
+                }
+            }};
+        },
         getFresh: function () {
             return {
                 name: 'test form',

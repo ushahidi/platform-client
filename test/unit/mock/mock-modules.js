@@ -9,7 +9,9 @@ angular.module('ushahidi.mock', [])
         });
     }
 })
+.service('leafletData', require('./services/third_party/leaflet.js'))
 
+.service('PostEndpoint', require('./services/post.js'))
 .service('FormEndpoint', require('./services/form.js'))
 .service('FormStageEndpoint', require('./services/form-stages.js'))
 .service('TagEndpoint', require('./services/tag.js'))
@@ -18,4 +20,5 @@ angular.module('ushahidi.mock', [])
 
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
+.service('Maps', require('./services/maps.js'))
 .service('Notify', require('./services/notify.js'));

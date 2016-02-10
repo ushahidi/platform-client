@@ -1,6 +1,6 @@
 var ROOT_PATH = '../../../../';
 
-describe('setting forms controller', function () {
+describe('setting map settings controller', function () {
 
     var $rootScope,
         $scope,
@@ -15,7 +15,7 @@ describe('setting forms controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingFormsController', require(ROOT_PATH + 'app/setting/controllers/setting-forms-controller.js'));
+        testApp.controller('settingMapSettingsController', require(ROOT_PATH + 'app/setting/controllers/setting-map-settings.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -32,11 +32,11 @@ describe('setting forms controller', function () {
 
 
     beforeEach(function () {
-        spyOn($scope, '$emit').and.callThrough();
+        spyOn($rootScope, '$emit').and.callThrough();
 
-        $controller('settingFormsController', {
+        $controller('settingMapSettingsController', {
            $scope: $scope,
-           $q: $q,
+           leafletEvents: {},
            $rootScope: $rootScope
         });
 
@@ -46,32 +46,26 @@ describe('setting forms controller', function () {
     });
 
     it('should retrieve load and set title', function () {
-        expect($scope.$emit).toHaveBeenCalled();
+        expect($rootScope.$emit).toHaveBeenCalled();
     });
 
-    it('should refresh the forms', function () {
-        $scope.refreshForms();
-        expect($scope.forms[0].name).toEqual('test form');
+    it('should set markers', function () {
+        expect($scope.markers.dragger.lat).toEqual(-1.3048035);
     });
 
-    it('should open a new form', function () {
-        $scope.openNewForm();
-        expect($scope.newForm).toEqual({});
-        expect($scope.isNewFormOpen).toEqual(true);
+    it('should set min and max zoom level', function () {
+        expect($scope.minZoom).toEqual(0);
+        expect($scope.maxZoom).toEqual(0);
     });
 
-    it('should delete a form successfully', function () {
+    it('should set centre', function () {
+        expect($scope.center.lat).toEqual(-1.3048035);
+    });
+
+    it('should update config', function () {
         spyOn(Notify, 'showNotificationSlider');
-        $scope.deleteForm({id: 'pass'});
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
-    });
-
-    it('should save a form successfully', function () {
-        spyOn(Notify, 'showNotificationSlider');
-        $scope.saveNewForm({id: 'pass'});
-        $rootScope.$digest();
-        $rootScope.$apply();
-
+        //TODO: make configendpoint more general
+        $scope.updateConfig('map', {providers:{pass: true}});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });
