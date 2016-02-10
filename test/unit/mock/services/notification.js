@@ -28,10 +28,10 @@ module.exports = [function () {
                   }
               }};
           },
-          saveCache: function (notification) {
+          save: function (notification) {
               return {$promise: {
                   then: function (successCallback, failCallback) {
-                    notification.id === 'pass' ? successCallback({id:1}) : failCallback('error');
+                    notification.set === 'pass' ? successCallback({id:1}) : failCallback('error');
                   }
               }};
           }
