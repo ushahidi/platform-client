@@ -21,12 +21,12 @@ function (
         $scope.processing = false;
         $scope.email = '';
         $scope.password = '';
-    }
+    };
 
     $scope.finishedLogin = function() {
         $scope.failed = false;
         $scope.processing = false;
-    }
+    };
 
     $scope.loginSubmit = function () {
         $scope.processing = true;

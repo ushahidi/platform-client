@@ -3,6 +3,7 @@ var ROOT_PATH = '../../../../';
 describe('navigation controller', function () {
 
     var $rootScope,
+        $controller,
         $scope;
 
     beforeEach(function () {
@@ -28,10 +29,6 @@ describe('navigation controller', function () {
             logout: function (username, password) {
                 return {};
             }
-        };
-
-        var successCallback = function () {
-          return {name: 'test'};
         };
 
         var mockBootstrapConfig = {};

@@ -27,7 +27,7 @@ module.exports = [function () {
                         }
                     });
                 }
-            }
+            };
         },
         getConfig: function () {
             return {
@@ -37,10 +37,10 @@ module.exports = [function () {
                         clustering: false,
                         id: 'map',
                         default_view: {
-                            baselayer: "MapQuestAerial",
-                            color: "blue",
+                            baselayer: 'MapQuestAerial',
+                            color: 'blue',
                             fit_map_boundaries: true,
-                            icon: "map-marker",
+                            icon: 'map-marker',
                             lat: -1.3048035,
                             lon: 36.8473969,
                             zoom: 3

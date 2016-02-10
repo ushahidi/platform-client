@@ -33,7 +33,7 @@ describe('setting data import controller', function () {
         $controller('settingDataImportController', {
            $scope: $scope,
            $rootScope: $rootScope
-        });3
+        });
 
         $rootScope.$digest();
         $rootScope.$apply();

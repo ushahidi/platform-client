@@ -3,6 +3,7 @@ var ROOT_PATH = '../../../../';
 describe('page-metadata controller', function () {
 
     var $rootScope,
+        $controller,
         $scope;
 
     beforeEach(function () {

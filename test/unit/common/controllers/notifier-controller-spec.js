@@ -3,10 +3,9 @@ var ROOT_PATH = '../../../../';
 describe('notifier controller', function () {
 
     var $rootScope,
+        $controller,
         $scope;
     
-    var message = 'test message';
-
     beforeEach(function () {
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'

@@ -62,10 +62,10 @@ describe('setting datasources controller', function () {
     });
 
     it('should open the providers accordion group to show errors when form is invalid', function () {
-        $scope.forms['pass'].$valid = false;
+        $scope.forms.pass.$valid = false;
 
         $scope.saveProviderSettings('pass');
-        expect($scope.formsSubmitted['pass']).toBe(true);
+        expect($scope.formsSubmitted.pass).toBe(true);
     });
 
     it('should show an error on save failure', function () {

@@ -3,7 +3,7 @@ module.exports = [function () {
        getPostQuery: function (){
             return {
                 q: 'dummy'
-            }
+            };
         },
         setSelected: function () {},
         clearSelected: function (){

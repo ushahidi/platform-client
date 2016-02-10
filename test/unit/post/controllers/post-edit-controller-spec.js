@@ -21,7 +21,7 @@ describe('Post edit controller', function () {
         ])
        .controller('postEditController', require(ROOT_PATH + 'app/post/controllers/post-edit-controller.js'))
        .service('PostEndpoint', require(ROOT_PATH + 'app/post/services/endpoints/post-endpoint.js'))
-       .service('FormEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-stages.js'))
+       .service('FormEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-stages.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -40,7 +40,6 @@ describe('Post edit controller', function () {
     }));
 
     beforeEach(function () {
-        var mockRouteParams
 
         $controller('postEditController', {
             $scope: $scope,

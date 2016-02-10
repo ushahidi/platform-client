@@ -22,14 +22,6 @@ describe('Post detail controller', function () {
         }
     };
 
-    var mockFormAttributeEndpoint = {
-        query: function(parameters, success, error) {
-            return success([
-                {key: 'test-select'}
-            ]);
-        }
-    };
-
    beforeEach(function () {
         
         var testApp = angular.module('testApp', [
