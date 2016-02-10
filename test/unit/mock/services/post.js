@@ -10,6 +10,17 @@ module.exports = [function () {
                 }
             }};
         },
+        stats: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback(
+                        {'totals':[{
+                            values: [1,2,3,4,5]
+                        }]}
+                    );
+                }
+            }};
+        },
         get: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
