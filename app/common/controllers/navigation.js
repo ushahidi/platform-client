@@ -48,11 +48,20 @@ function (
         $scope.collectionOpen.data = !$scope.collectionOpen.data;
     };
 
+    $scope.canCreatePost = function () {
+        return $scope.loggedin || !$scope.site.private;
+    };
+
+    $scope.canRegister = function () {
+        return !$scope.site.private;
+    };
 
     $scope.logoutClick = function (e) {
         e.preventDefault();
         e.stopPropagation();
         Authentication.logout();
     };
+
+
 
 }];
