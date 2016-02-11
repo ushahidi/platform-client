@@ -31,31 +31,53 @@ describe('PermissionEndpoint', function () {
     describe('"permissions/:id" for data of all permissions', function () {
         describe('get all permissions', function () {
 
-            var mockPermissionsDataResponse;
+            var mockPermissionDataResponse;
 
             beforeEach(function () {
-                mockPermissionsDataResponse =
+                mockPermissionDataResponse =
                 {
                     'count': 2,
-                    'results':
-                    [
+                    'results': [
                         {
                             'id': 1,
-                            'url': 'http://ushahidi-backend/api/v3/permissions/1',
-                            'permission': 'admin'
+                            'url': 'http://192.168.33.110/api/v3/permissions/1',
+                            'description': null,
+                            'name': 'test permission',
+                            'display_name': 'Test permission', 
+                            'created': '1970-01-01T00:00:00+00:00',
+                            'permission': null,
+                            'allowed_privileges': [
+                                'read',
+                                'search'
+                            ]
                         },
                         {
                             'id': 2,
-                            'url': 'http://ushahidi-backend/api/v3/permissions/2',
-                            'permission': 'member'
+                            'url': 'http://192.168.33.110/api/v3/permissions/2',
+                            'description': 'test desc',
+                            'name': 'test permission',
+                            'display_name': 'Test permission', 
+                            'created': '1970-01-01T00:00:00+00:00',
+                            'allowed_privileges': [
+                                'read',
+                                'search'
+                            ]
                         }
-                    ]
+                    ],
+                    'limit': null,
+                    'offset': 0,
+                    'order': 'asc',
+                    'orderby': 'id',
+                    'curr': 'http://192.168.33.110/api/v3/permissions?orderby=id&order=asc&offset=0',
+                    'next': 'http://192.168.33.110/api/v3/permissions?orderby=id&order=asc&offset=0',
+                    'prev': 'http://192.168.33.110/api/v3/permissions?orderby=id&order=asc&offset=0',
+                    'total_count': 2
                 };
             });
 
             it('should call the correct url and parse and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
-                $httpBackend.expectGET(BACKEND_URL + '/api/v3/permissions').respond(mockPermissionDataResponse);
+                $httpBackend.expectGET(BACKEND_URL + '/api/v2/permissions').respond(mockPermissionDataResponse);
 
                 PermissionEndpoint.queryFresh().$promise.then(successCallback);
 
@@ -64,31 +86,49 @@ describe('PermissionEndpoint', function () {
 
                 expect(successCallback).toHaveBeenCalled();
 
-                var actualPermissionData = successCallback.calls.mostRecent().args[0];
-                expect(actualPermissionData.results.length).toEqual(mockPermissionDataResponse.results.length);
-                expect(actualPermissionData.results[0].email).toEqual(mockPermissionDataResponse.results[0].email);
+                var actualPermissionData = successCallback.calls.mostRecent().args[0].results;
+                expect(actualPermissionData.length).toEqual(mockPermissionDataResponse.results.length);
+                expect(actualPermissionData[0].name).toEqual(mockPermissionDataResponse.results[0].name);
             });
+
+            it('using queryFresh should call the correct url and return the correct data', function () {
+                var successCallback = jasmine.createSpy('success');
+
+                spyOn(PermissionEndpoint, 'query').and.callThrough();
+
+                PermissionEndpoint.queryFresh().$promise.then(successCallback);
+
+                expect(PermissionEndpoint.query).toHaveBeenCalled();
+            });
+
         });
     });
 
-    describe('"permissions/1" for specific permission', function () {
+    describe('get data for "permissions/1"', function () {
 
         var mockPermissionDataResponse;
 
         beforeEach(function () {
             mockPermissionDataResponse = {
                 'id': 1,
-                'url': 'http://ushahidi-backend/api/v3/permissions/1',
-                'permission': 'admin'
+                'url': 'http://192.168.33.110/api/v3/permissions/1',
+                'name': 'test permission',
+                'display_name': ' Test permission',
+                'description': null,
+                'created': '1970-01-01T00:00:00+00:00',
+                'allowed_privileges': [
+                    'read',
+                    'search'
+                ]
             };
         });
 
         describe('get permission data', function () {
             it('should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
-                $httpBackend.expectGET(BACKEND_URL + '/api/v3/permissions/1').respond(mockPermissionDataResponse);
+                $httpBackend.expectGET(BACKEND_URL + '/api/v2/permissions/1').respond(mockPermissionDataResponse);
 
-                PermissionEndpoint.get({id: '1'}).$promise.then(successCallback);
+                PermissionEndpoint.get({id: 1}).$promise.then(successCallback);
 
                 $httpBackend.flush();
                 $rootScope.$digest();
@@ -97,43 +137,19 @@ describe('PermissionEndpoint', function () {
 
                 var actualPermissionData = successCallback.calls.mostRecent().args[0];
                 expect(actualPermissionData.id).toEqual(mockPermissionDataResponse.id);
-                expect(actualPermissionData.realname).toEqual(mockPermissionDataResponse.realname);
-                expect(actualPermissionData.email).toEqual(mockPermissionDataResponse.email);
-            });
-        });
-
-        describe('update permission data', function () {
-
-            beforeEach(function () {
-                mockPermissionDataResponse = {
-                    'id': 2,
-                    'url': 'http://ushahidi-backend/api/v3/permissions/2',
-                    'permission': 'new'
-                };
+                expect(actualPermissionData.display_name).toEqual(mockPermissionDataResponse.display_name);
+                expect(actualPermissionData.name).toEqual(mockPermissionDataResponse.name);
             });
 
-            it('should call the correct url and return the updated permission data', function () {
+            it('using getFresh should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
-                $httpBackend.expectPUT(BACKEND_URL + '/api/v3/permissions/2').respond(mockPermissionDataResponse);
 
-                var permissionDataToUpdate = {
-                    'permission': 'new'
-                };
+                spyOn(PermissionEndpoint, 'get').and.callThrough();
 
-                PermissionEndpoint.update({id: '2'}, permissionDataToUpdate).$promise.then(successCallback);
-
-                $httpBackend.flush();
-                $rootScope.$digest();
-
-                expect(successCallback).toHaveBeenCalled();
-
-                var actualPermissionData = successCallback.calls.mostRecent().args[0];
-                expect(actualPermissionData.id).toEqual(mockPermissionDataResponse.id);
-                expect(actualPermissionData.realname).toEqual(permissionDataToUpdate.realname);
-                expect(actualPermissionData.email).toEqual(permissionDataToUpdate.email);
+                PermissionEndpoint.getFresh({id: 1}).$promise.then(successCallback);
+                expect(PermissionEndpoint.get).toHaveBeenCalled();
             });
+
         });
-
     });
-
 });
