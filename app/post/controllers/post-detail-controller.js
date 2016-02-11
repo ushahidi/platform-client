@@ -46,7 +46,9 @@ function (
     $scope.post = post;
 
     $scope.mapDataLoaded = false;
-    $scope.availableRoles = RoleEndpoint.query();
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.availableRoles = roles;
+    });
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';

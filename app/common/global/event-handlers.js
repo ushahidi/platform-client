@@ -2,12 +2,16 @@ module.exports = [
     '$rootScope',
     '$location',
     'Authentication',
+    'PermissionEndpoint',
     'Session',
+    '_',
 function (
     $rootScope,
     $location,
     Authentication,
-    Session
+    PermissionEndpoint,
+    Session,
+    _
 ) {
     function loadSessionData() {
         $rootScope.currentUser = Session.getSessionData();
@@ -29,6 +33,18 @@ function (
         }
     }
 
+    PermissionEndpoint.query().$promise.then(function (permissions) {
+        $rootScope.permissions = permissions.results;
+    });
+
+    $rootScope.hasManagePermission = function () {
+        return (($rootScope.currentUser || {}).permissions.length > 0);
+    };
+
+    $rootScope.hasPermission = function (permission) {
+        return _.contains($rootScope.permissions, permission);
+    };
+
     $rootScope.isAdmin = function () {
         return (($rootScope.currentUser || {}).role === 'admin');
     };
@@ -44,7 +60,7 @@ function (
 
     $rootScope.switchRtl = function () {
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
-    };
+    }; 
 
     $rootScope.$on('event:authentication:login:succeeded', function () {
         doLogin(Session.getSessionDataEntry('loginPath') || '/');

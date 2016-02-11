@@ -24,7 +24,8 @@ function (
             userId: userData.id,
             realname: userData.realname,
             email: userData.email,
-            role: userData.role
+            role: userData.role,
+            permissions: userData.permissions
         });
 
         loginStatus = true;

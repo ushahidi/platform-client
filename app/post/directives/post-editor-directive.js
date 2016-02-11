@@ -32,7 +32,9 @@ function (
         ) {
 
             $scope.categories = TagEndpoint.query();
-            $scope.availableRoles = RoleEndpoint.query();
+            RoleEndpoint.query().$promise.then(function (roles) {
+                $scope.availableRoles = roles;
+            });
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
