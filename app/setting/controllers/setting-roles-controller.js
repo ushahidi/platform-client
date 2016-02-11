@@ -7,9 +7,4 @@ function (
     RoleEndpoint,
     PermissionEndpoint
 ) {
-  
-    RoleEndpoint.queryFresh().$promise.then(function (roles) {
-        $scope.roles = roles.results;
-    });
-
 }];

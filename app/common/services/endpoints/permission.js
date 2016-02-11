@@ -22,7 +22,6 @@ function (
         }, {
         query: {
             method: 'GET',
-            isArray: true,
             transpermissionResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }

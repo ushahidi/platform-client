@@ -19,17 +19,17 @@
     <div class="main-col">
         <div class="divider white"></div>
 
-        <div class="panel-body" ng-hide="tags.length">
-            <p class="text-muted text-center" ng-hide="tags.length"><em translate>empty.role</em></p>
+        <div class="alert" ng-hide="roles.length">
+            <p ng-hide="roles.length"><em translate>empty.role</em></p>
         </div>
 
         <div ng-show="roles.length">
             <div class="settings-listing" ng-repeat="role in roles | orderBy:'role'">
                 <h3 class="settings-listing-title">
-                    <a ng-href="/settings/roles/{{role.id}}">{{role.name}}</a>
+                    <a ng-href="/settings/roles/{{role.id}}">{{role.display_name}}</a>
                </h3>
                <div class="actions">
-                  <button type="button" ng-click="deleteRole(role.id)" class="button-destructive alt"></button>
+                  <button type="button" ng-click="deleteRole(role)" class="button-destructive alt"></button>
                </div>
             </div>
         </div>

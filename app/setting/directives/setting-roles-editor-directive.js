@@ -17,9 +17,15 @@ function (
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
 
-            $translate('role.add_role').then(function (title) {
-                $scope.title = title;
-                $scope.$emit('setPageTitle', title);
+            RoleEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (role) {
+                $scope.role = role;
+
+                $scope.title = $scope.role.id ? 'role.edit_role' : 'role.add_role';
+
+                $translate($scope.title).then(function (title) {
+                    $scope.title = title;
+                    $scope.$emit('setPageTitle', title);
+                });
             });
 
 
@@ -27,19 +33,19 @@ function (
                 $scope.permissions = permissions.results;
             });
 
-            $scope.role = RoleEndpoint.getFresh({id: $routeParams.id});
-
             $scope.saveRole = function (role) {
                 $scope.processing = true;
+                role.name = role.display_name;
+
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
-                    $rootScope.goBack();
-                    $translate('notify.role.save_success', {name: role.role}).then(function (message) {
+                    $translate('notify.role.save_success', {role: role.display_name}).then(function (message) {
                         Notify.showNotificationSlider(message);
+                        $location.path('/settings/roles/' + response.id);
                     });
                 }, function (errorResponse) { // error
                     Notify.showApiErrors(errorResponse);
-                    $scope.processing = false;
                 });
+                $scope.processing = false;
             };
         }
     };
