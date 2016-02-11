@@ -5,28 +5,28 @@
         <div class="tabs-menu" dropdown>
             <button type="button" class="button-toggle tabs-menu-button-js" dropdown-toggle></button>
             <ul class="tabs-menu-list" dropdown-menu>
-                <li ng-class="{ active: currentInterval == 'week' }"><a translate ng-click="update('week')">act.thisweek</a></li>
-                <li ng-class="{ active: currentInterval == 'month' }"><a translate ng-click="update('month')">act.thismonth</a></li>
-                <li ng-class="{ active: currentInterval == 'all' }"><a translate ng-click="update('all')">act.alltime</a></li>
+                <li ng-class="{ active: currentInterval == 'week' }"><a translate ng-click="update('week')">act.this_week</a></li>
+                <li ng-class="{ active: currentInterval == 'month' }"><a translate ng-click="update('month')">act.this_month</a></li>
+                <li ng-class="{ active: currentInterval == 'all' }"><a translate ng-click="update('all')">act.all_time</a></li>
             </ul>
         </div>
     </div>
 
     <div class="main-col">
         <div class="one-col activity-data-single">
-            <h4 class="header-border">Number of Posts</h4>
+            <h4 translate class="header-border">act.number_of_posts</h4>
             <div class="activity-chart">
                 <dc-chart chart-type="lineChart" chart-options="postTrendOptions" chart-data='postTrendData'></dc-chart>
             </div>
         </div>
         <div class="one-col activity-data-single">
-            <h4 class="header-border">Active Categories</h4>
+            <h4 translate class="header-border">act.active_categories</h4>
             <div class="activity-chart">
                 <dc-chart chart-type="barChart" chart-options="postCategoryOptions" chart-data='postCategoryData'></dc-chart>
             </div>
         </div>
         <div class="one-col activity-data-single">
-            <h4 class="header-border">Active Regions</h4>
+            <h4 translate class="header-border">act.active_regions</h4>
             <post-view-map is-loading="isLoading" filters="mapQuery"></post-view-map>
         </div>
     </div> <!--end main column-->
