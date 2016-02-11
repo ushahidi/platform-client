@@ -275,6 +275,7 @@ function (
                                 name: $scope.post.title
                             }).then(function (message) {
                             Notify.showNotificationSlider(message);
+                            $location.path('/posts/' + response.id);
                         });
                     } else {
                         Notify.showSingleAlert('Saved!');
