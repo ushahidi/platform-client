@@ -77,6 +77,7 @@ function (
                 };
 
             // Load attributes and stages whenever form id changes
+            /*
             $scope.$watch(function () {
                 return $scope.post.form.id || $scope.post.form;
             }, function (formId, oldValue) {
@@ -84,7 +85,7 @@ function (
                 fetchAttributes(formId);
                 fetchStages(formId);
             });
-
+*/
             $scope.goBack = function () {
                 $scope.post.form = null;
             };

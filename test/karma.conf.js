@@ -22,7 +22,11 @@ module.exports = function (config) {
             'test/unit/**/*.js',
 
             //include template files for directive testing
-            'server/www/template/**/*.html'
+            'server/www/templates/**/*.html',
+
+            {
+                pattern: 'mocked_backend/**/*.json'
+            }
         ],
 
         // we don't want to include the sub module manifest files
@@ -38,11 +42,15 @@ module.exports = function (config) {
 
         autoWatch : true,
 
-        frameworks: ['jasmine', 'commonjs'],
+        frameworks: ['jasmine', 'commonjs', 'fixture'],
 
         browsers: ['Chrome', 'Firefox', 'PhantomJS'],
 
         reporters: ['progress', 'coverage'],
+
+        jsonFixturesPreprocessor: {
+            variableName: '__json__'
+        },
 
         plugins : [
             'karma-jasmine',
@@ -50,6 +58,10 @@ module.exports = function (config) {
             'karma-coverage',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
+            'karma-fixture',
+            'karma-html2js-preprocessor',
+            'karma-ng-html2js-preprocessor',
+            'karma-json-fixtures-preprocessor',
             'karma-phantomjs-launcher'
         ],
 
@@ -57,7 +69,13 @@ module.exports = function (config) {
             'app/**/*.js': ['commonjs', 'coverage'],
             'app/common/locales/**/*.json': ['commonjs'],
             'test/unit/**/*.js': ['commonjs'],
-            'server/www/templates/**/*.html': 'html2js'
+            'mocked_backend/**/*.json': ['json_fixtures'],
+            'server/www/templates/**/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'server/www/',
+            moduleName: 'client-templates'
         },
 
         coverageReporter: {
