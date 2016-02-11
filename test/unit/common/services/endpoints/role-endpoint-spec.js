@@ -44,7 +44,7 @@ describe('RoleEndpoint', function () {
                             'description': null,
                             'name': 'test role',
                             'permissions': ['Manage Users', 'Manage Posts'],
-                            'display_name': 'Test role', 
+                            'display_name': 'Test role',
                             'created': '1970-01-01T00:00:00+00:00',
                             'role': null,
                             'allowed_privileges': [
@@ -61,7 +61,7 @@ describe('RoleEndpoint', function () {
                             'description': 'test desc',
                             'name': 'test role',
                             'permissions': ['Manage Users', 'Manage Posts'],
-                            'display_name': 'Test role', 
+                            'display_name': 'Test role',
                             'created': '1970-01-01T00:00:00+00:00',
                             'allowed_privileges': [
                                 'read',

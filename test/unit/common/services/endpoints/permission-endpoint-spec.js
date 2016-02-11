@@ -43,7 +43,7 @@ describe('PermissionEndpoint', function () {
                             'url': 'http://192.168.33.110/api/v3/permissions/1',
                             'description': null,
                             'name': 'test permission',
-                            'display_name': 'Test permission', 
+                            'display_name': 'Test permission',
                             'created': '1970-01-01T00:00:00+00:00',
                             'permission': null,
                             'allowed_privileges': [
@@ -56,7 +56,7 @@ describe('PermissionEndpoint', function () {
                             'url': 'http://192.168.33.110/api/v3/permissions/2',
                             'description': 'test desc',
                             'name': 'test permission',
-                            'display_name': 'Test permission', 
+                            'display_name': 'Test permission',
                             'created': '1970-01-01T00:00:00+00:00',
                             'allowed_privileges': [
                                 'read',

@@ -52,7 +52,7 @@ function (
             return 'post.publish_for_you';
         }
         if (!_.isEmpty($scope.post.published_to)) {
-            return RoleEndpoint.get({id:$scope.post.published_to[0]});
+            return RoleEndpoint.get({id: $scope.post.published_to[0]});
         }
 
         return 'post.publish_for_everyone';

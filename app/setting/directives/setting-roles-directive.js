@@ -12,18 +12,18 @@ function (
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
-            handleResponseErrors = function (errorResponse) {
+            var handleResponseErrors = function (errorResponse) {
                 Notify.showApiErrors(errorResponse);
             };
-        
+
             $scope.refreshView = function () {
                 RoleEndpoint.queryFresh().$promise.then(function (roles) {
                     $scope.roles = roles;
                 });
             };
-            
+
             $scope.refreshView();
-           
+
             $scope.deleteRole = function (role) {
                 $translate('notify.role.delete_question', {
                     role: role.display_name
