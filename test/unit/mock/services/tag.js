@@ -1,10 +1,14 @@
 module.exports = [function () {
     return {
         query: function () {
-            return [{
-                name: 'test tag',
-                id: 1
-            }];
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback([{
+                        name: 'test tag',
+                        id: 1
+                    }]);
+                }
+            }};
         },
         getFresh: function () {
             return {
