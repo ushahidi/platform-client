@@ -36,7 +36,10 @@ function (
 
             $scope.isAdmin = $rootScope.isAdmin;
 
-            $scope.roles = RoleEndpoint.query();
+            RoleEndpoint.query().$promise.then(function (roles) {
+                $scope.roles = roles;
+            });
+
             $scope.views = PostViewHelper.views();
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);

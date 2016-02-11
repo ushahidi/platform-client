@@ -66,7 +66,9 @@ function (
         },
         templateUrl: 'templates/posts/preview.html',
         link: function ($scope) {
-            $scope.availableRoles = RoleEndpoint.query();
+            RoleEndpoint.query().$promise.then(function (roles) {
+                $scope.availableRoles = roles;
+            });
 
             $scope.publishedFor = function () {
                 if ($scope.post.status === 'draft') {

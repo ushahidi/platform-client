@@ -27,7 +27,9 @@ function (
     });
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
-    $scope.roles = RoleEndpoint.query();
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;
+    });
 
     $scope.tag = TagEndpoint.getFresh({id: $routeParams.id});
     $scope.processing = false;
