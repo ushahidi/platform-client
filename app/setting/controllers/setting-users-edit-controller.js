@@ -49,5 +49,7 @@ function (
         });
     };
 
-    $scope.roles = RoleEndpoint.query();
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;  
+    });
 }];
