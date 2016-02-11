@@ -40,7 +40,7 @@ function (
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
                     $translate('notify.role.save_success', {role: role.display_name}).then(function (message) {
                         Notify.showNotificationSlider(message);
-                        $location.path('/settings/roles/' + response.id);
+                        $location.path('/settings/roles/' + result.id);
                     });
                 }, function (errorResponse) { // error
                     Notify.showApiErrors(errorResponse);
