@@ -38,9 +38,9 @@ describe('activity activity controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('activityController', {
-           $scope: $scope,
-           dc: { units: { ordinals: 1 } },
-           $routeParams: {view: 'list'}
+            $scope: $scope,
+            dc: { units: { ordinals: 1 } },
+            $routeParams: {view: 'list'}
         });
 
         $rootScope.$digest();

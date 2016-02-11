@@ -36,7 +36,7 @@ describe('setting users controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingUsersController', {
-           $scope: $scope
+            $scope: $scope
         });
 
         $rootScope.$digest();
@@ -53,17 +53,17 @@ describe('setting users controller', function () {
     });
 
     it('should toggle selected users', function () {
-        $scope.toggleUser({id:1});
+        $scope.toggleUser({id: 1});
         expect($scope.selectedUsers.indexOf(1)).not.toBeLessThan(0);
 
-        $scope.toggleUser({id:1});
+        $scope.toggleUser({id: 1});
         expect($scope.selectedUsers.indexOf(1)).toBeLessThan(0);
     });
 
     it('should delete users upon request', function () {
         spyOn(Notify, 'showNotificationSlider');
-        $scope.toggleUser({id:1});
-        
+        $scope.toggleUser({id: 1});
+
         $scope.deleteUsers();
         $rootScope.$digest();
         $rootScope.$apply();
@@ -73,7 +73,7 @@ describe('setting users controller', function () {
 
     it('should fail to delete the user itself', function () {
         spyOn(Notify, 'showSingleAlert');
-        $scope.toggleUser({id:1});
+        $scope.toggleUser({id: 1});
         Session.setSessionData({'userId': 1});
         $scope.deleteUsers();
         $rootScope.$digest();
@@ -84,8 +84,8 @@ describe('setting users controller', function () {
 
     it('should change the roles of selected users', function () {
         spyOn(Notify, 'showNotificationSlider');
-        $scope.toggleUser({id:'pass'});
-        
+        $scope.toggleUser({id: 'pass'});
+
         $scope.changeRole('admin');
         $rootScope.$digest();
         $rootScope.$apply();
@@ -98,7 +98,7 @@ describe('setting users controller', function () {
 
         // Cause UserEndpoint to return fail
         $scope.toggleUser({id: 'fail'});
-        
+
         $scope.changeRole('admin');
         $rootScope.$digest();
         $rootScope.$apply();
@@ -107,11 +107,11 @@ describe('setting users controller', function () {
     });
 
     it('should set items per page and call getUsersForPagination', function () {
-      spyOn($scope, 'getUsersForPagination');
-      $scope.itemsPerPageChanged(5);
+        spyOn($scope, 'getUsersForPagination');
+        $scope.itemsPerPageChanged(5);
 
-      expect($scope.itemsPerPage).toEqual(5);
-      expect($scope.getUsersForPagination).toHaveBeenCalled();
+        expect($scope.itemsPerPage).toEqual(5);
+        expect($scope.getUsersForPagination).toHaveBeenCalled();
     });
 
 });

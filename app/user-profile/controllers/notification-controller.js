@@ -36,7 +36,6 @@ module.exports = [
 
         var loadNotifications = function () {
             NotificationEndpoint.query().$promise.then(function (notifications) {
-              
                 _.forEach(notifications, function (notification) {
                     // Add name of the subscribed collection
                     CollectionEndpoint.get({collectionId: notification.set.id}, function (collection) {
@@ -135,7 +134,7 @@ module.exports = [
                     $translate(
                        'notify.contact.save_success'
                     ).then(function (message) {
-                       Notify.showNotificationSlider(message);
+                        Notify.showNotificationSlider(message);
                     });
                     contact.original = contact.contact;
                 }, function () {
@@ -152,9 +151,9 @@ module.exports = [
                         contact: ''
                     };
                     $translate(
-                       'notify.contact.save_success'
+                        'notify.contact.save_success'
                     ).then(function (message) {
-                       Notify.showNotificationSlider(message);
+                        Notify.showNotificationSlider(message);
                     });
                     // Reload contacts
                     loadContacts();

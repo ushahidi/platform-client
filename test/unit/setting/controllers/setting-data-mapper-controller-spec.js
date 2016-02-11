@@ -29,9 +29,9 @@ describe('setting data mapper controller', function () {
 
     beforeEach(function () {
         $controller('settingDataMapperController', {
-           $scope: $scope,
-           initialData: {form:1, csv:1},
-           $rootScope: $rootScope
+            $scope: $scope,
+            initialData: {form: 1, csv: 1},
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

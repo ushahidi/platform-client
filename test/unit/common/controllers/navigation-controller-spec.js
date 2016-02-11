@@ -36,7 +36,7 @@ describe('navigation controller', function () {
         var mockConfigEndpoint = {
             get: function (id) {
                 return {$promise: {
-                    then: function(successCallback, failureCallBack) {
+                    then: function (successCallback, failureCallBack) {
                         successCallback();
                     }
                 }};

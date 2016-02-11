@@ -35,9 +35,9 @@ describe('setting forms controller', function () {
         spyOn($scope, '$emit').and.callThrough();
 
         $controller('settingFormsController', {
-           $scope: $scope,
-           $q: $q,
-           $rootScope: $rootScope
+            $scope: $scope,
+            $q: $q,
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

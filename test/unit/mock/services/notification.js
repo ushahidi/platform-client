@@ -10,30 +10,30 @@ module.exports = [function () {
                     }]);
                 }
             }};
-          },
-          get: function () {
-              return {$promise: {
-                  then: function (successCallback) {
-                      successCallback({ 
-                          name: 'test notification',
-                          id: 1
-                      });
-                  }
-              }};
-          },
-          delete: function (notification) {
-              return {$promise: {
-                  then: function (successCallback, failCallback) {
-                    notification.id === 'pass' ? successCallback({id:1}) : failCallback('error');
-                  }
-              }};
-          },
-          save: function (notification) {
-              return {$promise: {
-                  then: function (successCallback, failCallback) {
-                    notification.set === 'pass' ? successCallback({id:1}) : failCallback('error');
-                  }
-              }};
-          }
-      };
-  }];
+        },
+        get: function () {
+            return {$promise: {
+                then: function (successCallback) {
+                    successCallback({
+                        name: 'test notification',
+                        id: 1
+                    });
+                }
+            }};
+        },
+        delete: function (notification) {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    notification.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
+                }
+            }};
+        },
+        save: function (notification) {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    notification.set === 'pass' ? successCallback({id: 1}) : failCallback('error');
+                }
+            }};
+        }
+    };
+}];

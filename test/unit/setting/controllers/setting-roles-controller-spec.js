@@ -35,8 +35,8 @@ describe('setting roles controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingRolesController', {
-           $scope: $scope,
-           $rootScope: $rootScope
+            $scope: $scope,
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

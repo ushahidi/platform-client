@@ -4,8 +4,12 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
-                        getMinZoom: function() { return 0;},
-                        getMaxZoom: function () { return 0;}
+                        getMinZoom: function () {
+                            return 0;
+                        },
+                        getMaxZoom: function () {
+                            return 0;
+                        }
                     });
                 }
             }};
@@ -51,4 +55,3 @@ module.exports = [function () {
         }
     };
 }];
- 

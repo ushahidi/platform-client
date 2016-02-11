@@ -31,8 +31,8 @@ describe('setting data import controller', function () {
 
     beforeEach(function () {
         $controller('settingDataImportController', {
-           $scope: $scope,
-           $rootScope: $rootScope
+            $scope: $scope,
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

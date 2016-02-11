@@ -18,7 +18,7 @@ module.exports = [function () {
         },
         get: function () {
             return {$promise: {
-                then: function(successCallback, failCallback) {
+                then: function (successCallback, failCallback) {
                     successCallback({
                         'providers': {
                             pass: false,
@@ -39,7 +39,7 @@ module.exports = [function () {
         saveCache: function (config) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                  config.providers.pass === true ? successCallback({id:1}) : failCallback('error');
+                    config.providers.pass === true ? successCallback({id: 1}) : failCallback('error');
                 }
             }};
         }

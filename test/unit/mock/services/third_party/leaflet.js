@@ -5,12 +5,15 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback({
                         setZoom: function () {},
-                        getMinZoom: function() { return 0;},
-                        getMaxZoom: function () { return 0;}
+                        getMinZoom: function () {
+                            return 0;
+                        },
+                        getMaxZoom: function () {
+                            return 0;
+                        }
                     });
                 }
             };
         }
     };
 }];
- 

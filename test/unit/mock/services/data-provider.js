@@ -18,7 +18,7 @@ module.exports = [function () {
         },
         getFresh: function () {
             return {$promise: {
-                then: function(successCallback, failCallback) {
+                then: function (successCallback, failCallback) {
                     successCallback({
                         name: 'test data-provider',
                         id: 1
@@ -36,7 +36,7 @@ module.exports = [function () {
         saveCache: function (dataProvider) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                  dataProvider.id === 'pass' ? successCallback({id:1}) : failCallback('error');
+                    dataProvider.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
                 }
             }};
         }

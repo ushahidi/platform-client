@@ -35,8 +35,8 @@ describe('setting general controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingGeneralController', {
-           $scope: $scope,
-           $rootScope: $rootScope
+            $scope: $scope,
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

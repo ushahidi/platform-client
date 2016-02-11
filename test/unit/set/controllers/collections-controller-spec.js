@@ -38,11 +38,11 @@ describe('set collections controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('collectionsController', {
-           $scope: $scope,
-           collection: {
-              allowed_privileges: 'update'
-           },
-           $routeParams: {view: 'list'}
+            $scope: $scope,
+            collection: {
+                allowed_privileges: 'update'
+            },
+            $routeParams: {view: 'list'}
         });
 
         $rootScope.$digest();
@@ -52,10 +52,10 @@ describe('set collections controller', function () {
     it('should retrieve load and set title', function () {
         expect($rootScope.$emit).toHaveBeenCalled();
     });
-   
+
     it('should save a notification', function () {
         spyOn(Notify, 'showNotificationSlider');
-        $scope.saveNotification({id:'pass'});
+        $scope.saveNotification({id: 'pass'});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });

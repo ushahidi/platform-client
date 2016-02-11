@@ -37,7 +37,7 @@ describe('setting categories create controller', function () {
         spyOn($scope, '$emit').and.callThrough();
 
         $controller('settingCategoriesCreateController', {
-           $scope: $scope
+            $scope: $scope
         });
 
         $rootScope.$digest();
@@ -50,13 +50,13 @@ describe('setting categories create controller', function () {
 
     it('should save a tag and update the path', function () {
         spyOn(Notify, 'showNotificationSlider');
-        $scope.saveTag({id:'pass'});
+        $scope.saveTag({id: 'pass'});
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });
 
     it('should show an error on save failure', function () {
         spyOn(Notify, 'showApiErrors');
-        $scope.saveTag({id :'fail'});
+        $scope.saveTag({id: 'fail'});
         expect(Notify.showApiErrors).toHaveBeenCalled();
     });
 });

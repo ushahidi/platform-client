@@ -23,7 +23,7 @@ function (
         $scope.password = '';
     };
 
-    $scope.finishedLogin = function() {
+    $scope.finishedLogin = function () {
         $scope.failed = false;
         $scope.processing = false;
     };

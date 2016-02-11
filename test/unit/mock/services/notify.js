@@ -1,27 +1,27 @@
 module.exports = [function () {
     return {
-       showNotificationSlider: function (message){
+        showNotificationSlider: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showSingleAlert: function (message){
+        showSingleAlert: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showApiErrors: function (message){
+        showApiErrors: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showConfirm: function (message){
+        showConfirm: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();

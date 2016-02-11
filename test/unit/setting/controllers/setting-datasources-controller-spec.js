@@ -33,17 +33,17 @@ describe('setting datasources controller', function () {
         spyOn($scope, '$emit').and.callThrough();
 
         $controller('settingDataSourcesController', {
-           $scope: $scope,
-           $rootScope: $rootScope
+            $scope: $scope,
+            $rootScope: $rootScope
         });
 
         $scope.forms = {
-              'pass': {
-                  $valid: true
-              },
-              'fail': {
-                  $valid: true
-              }
+            'pass': {
+                $valid: true
+            },
+            'fail': {
+                $valid: true
+            }
         };
 
         $rootScope.$digest();

@@ -38,8 +38,8 @@ describe('setting users edit controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingUsersEditController', {
-           $scope: $scope,
-           $routeParams: {id: 1}
+            $scope: $scope,
+            $routeParams: {id: 1}
         });
 
         $rootScope.$digest();
@@ -56,7 +56,7 @@ describe('setting users edit controller', function () {
 
     it('should save users upon request', function () {
         spyOn(Notify, 'showNotificationSlider');
-        
+
         $scope.saveUser({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();

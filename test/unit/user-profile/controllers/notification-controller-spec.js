@@ -38,7 +38,7 @@ describe('user-profile notification controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('notificationController', {
-           $scope: $scope
+            $scope: $scope
         });
 
         $rootScope.$digest();
@@ -51,7 +51,7 @@ describe('user-profile notification controller', function () {
 
     it('should delete notification upon request', function () {
         spyOn(Notify, 'showNotificationSlider');
-        
+
         $scope.deleteNotification({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();
@@ -72,7 +72,7 @@ describe('user-profile notification controller', function () {
     it('should update a contact', function () {
         spyOn(Notify, 'showNotificationSlider');
 
-        $scope.saveContact({id: 'pass'});  
+        $scope.saveContact({id: 'pass'});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });
@@ -80,7 +80,7 @@ describe('user-profile notification controller', function () {
     it('should fail to update a contact', function () {
         spyOn(Notify, 'showSingleAlert');
 
-        $scope.saveContact({id: 'fail'});  
+        $scope.saveContact({id: 'fail'});
 
         expect(Notify.showSingleAlert).toHaveBeenCalled();
     });
@@ -88,7 +88,7 @@ describe('user-profile notification controller', function () {
     it('should save a contact', function () {
         spyOn(Notify, 'showNotificationSlider');
 
-        $scope.saveContact({name: 'pass'});  
+        $scope.saveContact({name: 'pass'});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });
@@ -96,7 +96,7 @@ describe('user-profile notification controller', function () {
     it('should fail to save a contact', function () {
         spyOn(Notify, 'showSingleAlert');
 
-        $scope.saveContact({name: 'fail'});  
+        $scope.saveContact({name: 'fail'});
 
         expect(Notify.showSingleAlert).toHaveBeenCalled();
     });

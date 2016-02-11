@@ -30,7 +30,7 @@ describe('setting categories controller', function () {
 
     beforeEach(function () {
         $controller('settingCategoriesController', {
-           $scope: $scope
+            $scope: $scope
         });
 
         $rootScope.$digest();
@@ -42,15 +42,15 @@ describe('setting categories controller', function () {
     });
 
     it('should toggle selected categories', function () {
-        $scope.toggleTag({id:1});
+        $scope.toggleTag({id: 1});
         expect($scope.selectedTags.indexOf(1)).not.toBeLessThan(0);
 
-        $scope.toggleTag({id:1});
+        $scope.toggleTag({id: 1});
         expect($scope.selectedTags.indexOf(1)).toBeLessThan(0);
     });
 
     it('should delete tags upon request', function () {
-        $scope.toggleTag({id:1});
+        $scope.toggleTag({id: 1});
         $scope.deleteTags();
 
     });

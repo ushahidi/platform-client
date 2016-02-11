@@ -36,7 +36,7 @@ describe('setting users create controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingUsersCreateController', {
-           $scope: $scope
+            $scope: $scope
         });
 
         $rootScope.$digest();
@@ -49,7 +49,7 @@ describe('setting users create controller', function () {
 
     it('should save users upon request', function () {
         spyOn(Notify, 'showNotificationSlider');
-        
+
         $scope.saveUser({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();

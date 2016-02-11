@@ -7,12 +7,12 @@ describe('Post edit controller', function () {
        FormEndpoint;
 
     var mockFormEndpoint = {
-        get: function(parameters, success, error) {
+        get: function (parameters, success, error) {
             return success({name: 'test form'});
         }
     };
 
-   beforeEach(function () {
+    beforeEach(function () {
         var testApp = angular.module('testApp', [
             'pascalprecht.translate',
             'ngResource',

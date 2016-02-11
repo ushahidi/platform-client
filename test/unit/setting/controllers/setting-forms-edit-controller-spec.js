@@ -33,10 +33,10 @@ describe('setting forms edit controller', function () {
 
     beforeEach(function () {
         $controller('settingFormsEditController', {
-           $scope: $scope,
-           $q: $q,
-           $routeParams: {id: 1},
-           $rootScope: $rootScope
+            $scope: $scope,
+            $q: $q,
+            $routeParams: {id: 1},
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

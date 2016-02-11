@@ -35,8 +35,8 @@ describe('setting plugins controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingPluginsController', {
-           $scope: $scope,
-           $rootScope: $rootScope
+            $scope: $scope,
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

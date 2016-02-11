@@ -36,7 +36,7 @@ module.exports = [function () {
         saveCache: function (form) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                  form.id === 'pass' ? successCallback({id:1}) : failCallback('error');
+                    form.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
                 }
             }};
         }

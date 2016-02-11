@@ -38,7 +38,7 @@ describe('setting views controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingViewsController', {
-           $scope: $scope
+            $scope: $scope
         });
 
         $rootScope.$digest();

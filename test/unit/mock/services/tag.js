@@ -22,7 +22,7 @@ module.exports = [function () {
         saveCache: function (tag) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                  tag.id === 'pass' ? successCallback({id:1}) : failCallback('error');
+                    tag.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
                 }
             }};
         }

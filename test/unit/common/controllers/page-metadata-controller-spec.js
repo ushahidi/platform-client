@@ -36,7 +36,7 @@ describe('page-metadata controller', function () {
         var mockConfigEndpoint = {
             get: function (id) {
                 return {$promise: {
-                    then: function() {
+                    then: function () {
                         return {name: 'test'};
                     }
                 }};

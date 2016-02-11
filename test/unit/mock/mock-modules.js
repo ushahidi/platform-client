@@ -1,7 +1,7 @@
 angular.module('ushahidi.mock', [])
-.factory('$translate', function translateFactory () {
-    return ($translate);        
-    function $translate (text){ 
+.factory('$translate', function translateFactory() {
+    return ($translate);
+    function $translate(text) {
         return ({
             then: function (successCallback) {
                 successCallback();

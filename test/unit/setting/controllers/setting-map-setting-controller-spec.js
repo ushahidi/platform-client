@@ -35,9 +35,9 @@ describe('setting map settings controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingMapSettingsController', {
-           $scope: $scope,
-           leafletEvents: {},
-           $rootScope: $rootScope
+            $scope: $scope,
+            leafletEvents: {},
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();
@@ -65,7 +65,7 @@ describe('setting map settings controller', function () {
     it('should update config', function () {
         spyOn(Notify, 'showNotificationSlider');
         //TODO: make configendpoint more general
-        $scope.updateConfig('map', {providers:{pass: true}});
+        $scope.updateConfig('map', {providers: {pass: true}});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });

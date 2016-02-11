@@ -110,7 +110,6 @@ function (
                     calls.push(UserEndpoint.saveCache({ id: userId, role: role.name }).$promise);
                 });
                 $q.all(calls).then(function () {
-        console.log('here');
                     $translate('notify.user.bulk_role_change_success', {role_name: role.name}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });

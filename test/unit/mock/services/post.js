@@ -14,7 +14,7 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback(
-                        {'totals':[{
+                        {'totals': [{
                             values: [1,2,3,4,5]
                         }]}
                     );
@@ -47,7 +47,7 @@ module.exports = [function () {
         saveCache: function (post) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                  post.id === 'pass' ? successCallback({id:1}) : failCallback('error');
+                    post.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
                 }
             }};
         }

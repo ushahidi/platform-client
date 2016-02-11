@@ -5,7 +5,7 @@ describe('notifier controller', function () {
     var $rootScope,
         $controller,
         $scope;
-    
+
     beforeEach(function () {
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
