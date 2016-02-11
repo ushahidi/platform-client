@@ -30,12 +30,6 @@ function (
         get: {
             method: 'GET',
             cache: cache
-        },
-        update: {
-            method: 'PUT'
-        },
-        deleteEntity: {
-            method: 'DELETE'
         }
     });
 
@@ -51,18 +45,6 @@ function (
     PermissionEndpoint.queryFresh = function () {
         cache.removeAll();
         return PermissionEndpoint.query();
-    };
-
-    PermissionEndpoint.saveCache = function (item) {
-        var persist = item.id ? PermissionEndpoint.update : PermissionEndpoint.save;
-        cache.removeAll();
-        var result = persist(item);
-        return result;
-    };
-
-    PermissionEndpoint.delete = function (item) {
-        cache.removeAll();
-        return PermissionEndpoint.deleteEntity(item);
     };
 
     return PermissionEndpoint;
