@@ -198,6 +198,14 @@
         "chart" : "Bar Chart",
         "timeline" : "Timeline"
     },
+    "act":{
+      "this_week": "This Week",
+      "this_month": "This Month",
+      "all_time": "All Time",
+      "number_of_posts": "Number of Posts",
+      "active_categories": "Active Categories",
+      "active_regions": "Active Regions"
+    },
     "post": {
         "posts" : "Posts",
         "by" : "by",

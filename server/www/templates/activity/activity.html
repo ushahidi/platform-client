@@ -5,9 +5,9 @@
         <div class="tabs-menu" dropdown>
             <button type="button" class="button-toggle tabs-menu-button-js" dropdown-toggle></button>
             <ul class="tabs-menu-list" dropdown-menu>
-                <li ng-class="{ active: currentInterval == 'week' }"><a ng-click="update('week')">This Week</a></li>
-                <li ng-class="{ active: currentInterval == 'month' }"><a ng-click="update('month')">This Month</a></li>
-                <li ng-class="{ active: currentInterval == 'all' }"><a ng-click="update('all')">All Time</a></li>
+                <li ng-class="{ active: currentInterval == 'week' }"><a translate ng-click="update('week')">act.thisweek</a></li>
+                <li ng-class="{ active: currentInterval == 'month' }"><a translate ng-click="update('month')">act.thismonth</a></li>
+                <li ng-class="{ active: currentInterval == 'all' }"><a translate ng-click="update('all')">act.alltime</a></li>
             </ul>
         </div>
     </div>
