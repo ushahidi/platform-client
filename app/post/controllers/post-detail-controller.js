@@ -48,17 +48,23 @@ function (
     $scope.mapDataLoaded = false;
     RoleEndpoint.query().$promise.then(function (roles) {
         $scope.availableRoles = roles;
-    });
-    $scope.publishedFor = function () {
-        if ($scope.post.status === 'draft') {
-            return 'post.publish_for_you';
-        }
-        if (!_.isEmpty($scope.post.published_to)) {
-            return RoleEndpoint.get({id: $scope.post.published_to[0]});
-        }
+        $scope.publishedFor = function () {
+            if ($scope.post.status === 'draft') {
+                return 'post.publish_for_you';
+            }
+            if (!_.isEmpty($scope.post.published_to)) {
+                var publishedFor = $scope.post.published_to[0];
 
-        return 'post.publish_for_everyone';
-    };
+                var publishedRole = _.find($scope.availableRoles, function (role) {
+                    return role.name === publishedFor;
+                });
+
+                return publishedRole.display_name;
+            }
+
+            return 'post.publish_for_everyone';
+        };
+    });
 
     $scope.setVisibleStage = function (stageId) {
         $scope.visibleStage = stageId;
