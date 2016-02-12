@@ -50,6 +50,6 @@ function (
     };
 
     RoleEndpoint.query().$promise.then(function (roles) {
-        $scope.roles = roles;  
+        $scope.roles = roles;
     });
 }];

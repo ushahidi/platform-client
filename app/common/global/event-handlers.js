@@ -60,7 +60,7 @@ function (
 
     $rootScope.switchRtl = function () {
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
-    }; 
+    };
 
     $rootScope.$on('event:authentication:login:succeeded', function () {
         doLogin(Session.getSessionDataEntry('loginPath') || '/');
