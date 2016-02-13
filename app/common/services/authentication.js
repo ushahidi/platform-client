@@ -71,7 +71,8 @@ function (
                             var role = _.find(roles, function (role) {
                                 return role.name === userDataResponse.data.role;
                             });
-                            userDataResponse.data.permissions = role.permissions;
+                            console.log(role);
+                            userDataResponse.data.permissions = role ? role.permissions : [];
                             setToLoginState(userDataResponse.data);
 
                             $rootScope.$broadcast('event:authentication:login:succeeded');
