@@ -161,7 +161,7 @@ function (
                 }
             };
 
-            $scope.publishPostTo = function () {
+            $scope.publishPostTo = function (updatedPost) {
 
                 // first check if stages required have been marked complete
                 var requiredStages = _.where($scope.stages, {required: true}), errors = [];
@@ -178,17 +178,7 @@ function (
                     return;
                 }
 
-                if ($scope.publishRole) {
-                    if ($scope.publishRole === 'draft') {
-                        $scope.post.status = 'draft';
-                    } else {
-                        $scope.post.status = 'published';
-                        $scope.post.published_to = [$scope.publishRole];
-                    }
-                } else {
-                    $scope.post.status = 'published';
-                    $scope.post.published_to = [];
-                }
+                $scope.post = updatedPost;
 
                 PostEndpoint.update($scope.post).
                 $promise
