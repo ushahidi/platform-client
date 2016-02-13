@@ -2,14 +2,12 @@ module.exports = [
     '$rootScope',
     '$location',
     'Authentication',
-    'PermissionEndpoint',
     'Session',
     '_',
 function (
     $rootScope,
     $location,
     Authentication,
-    PermissionEndpoint,
     Session,
     _
 ) {
@@ -33,17 +31,13 @@ function (
         }
     }
 
-    PermissionEndpoint.query().$promise.then(function (permissions) {
-        $rootScope.permissions = permissions.results;
-    });
-
     $rootScope.hasManagePermission = function () {
-        return $rootScope.isAdmin ? true : (($rootScope.currentUser || {}).permissions.length > 0);
+        return $rootScope.isAdmin() ? true : (($rootScope.currentUser || {}).permissions.length > 0);
     };
 
     $rootScope.hasPermission = function (permission) {
         
-        return $rootScope.isAdmin ? true : _.contains($rootScope.permissions, permission);
+        return $rootScope.isAdmin() ? true : _.contains($rootScope.currentUser.permissions, permission);
     };
 
     $rootScope.isAdmin = function () {
