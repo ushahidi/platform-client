@@ -457,7 +457,7 @@
         "dont_import" : "Don\'t import",
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
-        "select_post_type" : "Select Post Type",
+        "select_post_type" : "Select Post Type"
     },
     "user": {
         "add_user" : "Add User",
