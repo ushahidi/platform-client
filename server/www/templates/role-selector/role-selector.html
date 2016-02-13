@@ -4,24 +4,24 @@
         <div class="form-fieldgroup">
             <div class="form-field radio">
                 <input 
-                    name="special" 
-                    id="special1"
+                    name="{{post.id}}_draft" 
+                    id="{{post.id}}_draft"
                     value="draft" 
                     type="radio"
-                    ng-model="status"
+                    ng-checked="post.status==='draft'"
                     ng-click="toggleRole('draft')">
-                <label for="special1" translate>post.publish_for_you</label>
+                <label for="{{post.id}}_draft" translate>post.publish_for_you</label>
             </div>
 
             <div class="form-field radio">
                 <input 
-                    name="special" 
-                    id="special2" 
+                    name="{{post.id}}_everyone" 
+                    id="{{post.id}}_everyone" 
                     value="" 
                     type="radio" 
-                    ng-model="status"
+                    ng-checked="post.status==='published' && post.published_to.length === 0"
                     ng-click="toggleRole('')">
-                <label for="special2" translate>post.publish_for_everyone</label>
+                <label for="{{post.id}}_everyone" translate>post.publish_for_everyone</label>
             </div>
         </div>
         <div class="form-fieldgroup">

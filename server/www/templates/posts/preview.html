@@ -30,15 +30,17 @@
     </div>
     <div class="step-and-actions">
         <div class="step todo">
-            <h4 class="delta-alt" translate>
-                post.who_can_see_this
-            </h4>
-            <p ng-show="post.allowed_privileges.indexOf('update') == -1">
-                <span class="icon-left fa-globe" translate>
-                    {{publishedFor()}}
-                </span>
-            </p>
-            <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="custom-select cta init">
+            <div ng-show="post.allowed_privileges.indexOf('update') == -1">
+                <h4 class="delta-alt" translate>
+                    post.who_can_see_this
+                </h4>
+                <p>
+                    <span class="icon-left fa-globe" translate>
+                        {{publishedFor()}}
+                    </span>
+                </p>
+            </div>
+            <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
                 <role-selector
                     toggle-role-func="publishPostTo(updatedPost)"
                     post="post" ></role-selector>

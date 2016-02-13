@@ -22,24 +22,6 @@ function (
             RoleEndpoint,
             _
         ) {
-            $scope.status = null;
-
-            // Check if draft, published to specific roles or for everyone
-            $scope.refreshStatus = function () {
-                if ($scope.post.status === 'draft') {
-                   $scope.status = 'draft';
-                } else if ($scope.post.status === 'published') {
-                    // If post is puslihed but published_to is empty
-                    // the post is pusblished for everyone, indicated by ''
-                    if (!$scope.post.published_to.length) {
-                        $scope.status = '';
-                    } else{
-                        $scope.status = null;
-                    }
-                }
-            };
-
-            $scope.refreshStatus();
 
             RoleEndpoint.query().$promise.then(function (roles) {
                 $scope.roles = roles;
@@ -59,7 +41,6 @@ function (
 
                 $scope.post.status = role === 'draft' ? role : 'published';
 
-                $scope.refreshStatus();
                 $scope.toggleRoleFunc({updatedPost: $scope.post});
             };
 
