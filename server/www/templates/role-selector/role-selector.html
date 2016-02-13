@@ -1,15 +1,38 @@
-<fieldset
-    dropdown auto-close="outsideClick" 
-    class="custom-fieldset init"
-    >
-    <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
-        <span class="icon-left fa-th" translate>global_filter.roles.roles</span>
-    </legend>
+ <fieldset dropdown auto-close="outsideClick" class="custom-fieldset init">
+    <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle translate>post.who_can_see_this</legend>
     <div class="dropdown-menu init" dropdown-menu>
-        <div class="fieldset-results" ng-repeat="role in roles">
-            <div class="form-field checkbox">
-                <input id="role" type="checkbox" ng-checked="userRoleSet(role)" ng-click="toggleRole(role)">
-                <label for="role">{{role.name}}</label>
+        <div class="form-fieldgroup">
+            <div class="form-field radio">
+                <input 
+                    name="special" 
+                    id="special1"
+                    value="draft" 
+                    type="radio"
+                    ng-model="status"
+                    ng-click="toggleRole('draft')">
+                <label for="special1" translate>post.publish_for_you</label>
+            </div>
+
+            <div class="form-field radio">
+                <input 
+                    name="special" 
+                    id="special2" 
+                    value="" 
+                    type="radio" 
+                    ng-model="status"
+                    ng-click="toggleRole('')">
+                <label for="special2" translate>post.publish_for_everyone</label>
+            </div>
+        </div>
+        <div class="form-fieldgroup">
+            <div class="form-field checkbox" ng-repeat="role in roles">
+                <input 
+                    id="{{role.id}}" 
+                    type="checkbox" 
+                    checklist-model="post.published_to" 
+                    checklist-value="role.name"
+                    ng-click="toggleRole(role.name)">
+                <label for="{{role.id}}">{{role.display_name}}</label>
             </div>
         </div>
     </div>

@@ -43,6 +43,7 @@ angular.module('ushahidi.common', [
 .controller('notifier', require('./controllers/notifier.js'))
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
+.directive('roleSelector', require('./directives/role-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 

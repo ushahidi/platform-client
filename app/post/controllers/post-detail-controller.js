@@ -325,7 +325,7 @@ function (
             });
     };
 
-    $scope.publishPostTo = function () {
+    $scope.publishPostTo = function (role) {
         // first check if stages required have been marked complete
         var requiredStages = _.where($scope.stages, {required: true}),
             errors = [];
@@ -351,7 +351,7 @@ function (
             }
         } else {
             $scope.post.status = 'published';
-            $scope.post.published_to = [];
+            $scope.post.published_to = null;
         }
 
         PostEndpoint.update($scope.post).
