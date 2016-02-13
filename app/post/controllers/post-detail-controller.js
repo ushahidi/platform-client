@@ -221,11 +221,6 @@ function (
         });
     };
 
-    // Why is this not builtin behaviour in angular?!?!?!
-    $scope.goEdit = function () {
-        $location.path('/posts/' + $scope.post.id + '/edit');
-    };
-
     $scope.toggleCompletedStage = function (stage) {
         // @todo how to validate this before saving
         if (_.includes($scope.post.completed_stages, stage.id)) {
