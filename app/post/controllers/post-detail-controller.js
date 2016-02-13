@@ -18,7 +18,6 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
-    'RoleEndpoint',
     'Notify',
 function (
     $scope,
@@ -40,31 +39,21 @@ function (
     L,
     leafletData,
     _,
-    RoleEndpoint,
     Notify
 ) {
     $scope.post = post;
 
     $scope.mapDataLoaded = false;
-    RoleEndpoint.query().$promise.then(function (roles) {
-        $scope.availableRoles = roles;
-        $scope.publishedFor = function () {
-            if ($scope.post.status === 'draft') {
-                return 'post.publish_for_you';
-            }
-            if (!_.isEmpty($scope.post.published_to)) {
-                var publishedFor = $scope.post.published_to[0];
+    $scope.publishedFor = function () {
+        if ($scope.post.status === 'draft') {
+            return 'post.publish_for_you';
+        }
+        if (!_.isEmpty($scope.post.published_to)) {
+            return $scope.post.published_to;
+        }
 
-                var publishedRole = _.find($scope.availableRoles, function (role) {
-                    return role.name === publishedFor;
-                });
-
-                return publishedRole.display_name;
-            }
-
-            return 'post.publish_for_everyone';
-        };
-    });
+        return 'post.publish_for_everyone';
+    };
 
     $scope.setVisibleStage = function (stageId) {
         $scope.visibleStage = stageId;

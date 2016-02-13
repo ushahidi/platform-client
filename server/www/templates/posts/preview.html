@@ -39,29 +39,9 @@
                 </span>
             </p>
             <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="custom-select cta init">
-                <select
-                    ng-change="publishPostTo()"
-                    ng-model="publishRole"
-                >
-                     <option
-                          value="draft"
-                          translate>
-                              post.publish_for_you
-                     </option>
-                     <option
-                          data-icon="fa-globe"
-                          value=""
-                          translate>
-                              post.publish_for_everyone
-                     </option>
-                     <option
-                          ng-repeat="role in availableRoles"
-                          data-icon="fa-user"
-                          value="{{role.name}}"
-                          >
-                              {{role.display_name}}
-                     </option>
-                </select>
+                <role-selector
+                    toggle-role-func="publishPostTo(updatedPost)"
+                    post="post" ></role-selector>
             </div>
         </div>
         <div class="actions-toggle">

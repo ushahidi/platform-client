@@ -8,7 +8,6 @@ module.exports = [
     'UserEndpoint',
     'FormEndpoint',
     'FormStageEndpoint',
-    'RoleEndpoint',
     'Notify',
     '_',
 function (
@@ -21,7 +20,6 @@ function (
     UserEndpoint,
     FormEndpoint,
     FormStageEndpoint,
-    RoleEndpoint,
     Notify,
     _
 ) {
@@ -66,39 +64,14 @@ function (
         },
         templateUrl: 'templates/posts/preview.html',
         link: function ($scope) {
-            RoleEndpoint.query().$promise.then(function (roles) {
-                $scope.availableRoles = roles;
-
-                $scope.publishedFor = function () {
-                    if ($scope.post.status === 'draft') {
-                        return 'post.publish_for_you';
-                    }
-                    if (!_.isEmpty($scope.post.published_to)) {
-                        var publishedFor = $scope.post.published_to[0];
-
-                        var publishedRole = _.find($scope.availableRoles, function (role) {
-                            return role.name === publishedFor;
-                        });
-
-                        return publishedRole.display_name;
-                    }
-
-                    return 'post.publish_for_everyone';
-                };
-            });
 
             $scope.publishedFor = function () {
                 if ($scope.post.status === 'draft') {
                     return 'post.publish_for_you';
                 }
                 if (!_.isEmpty($scope.post.published_to)) {
-                    var publishedFor = $scope.post.published_to[0];
 
-                    var publishedRole = _.find($scope.availableRoles, function (role) {
-                        return role.name === publishedFor;
-                    });
-
-                    return publishedRole.display_name;
+                    return $scope.post.published_to;
                 }
 
                 return 'post.publish_for_everyone';
@@ -125,7 +98,7 @@ function (
                 });
             }
 
-            $scope.publishPostTo = function () {
+            $scope.publishPostTo = function (updatePost) {
 
                 // first check if stages required have been marked complete
                 var requiredStages = _.where($scope.stages, {required: true}),
@@ -143,24 +116,13 @@ function (
                     return;
                 }
 
-                if ($scope.publishRole) {
-                    if ($scope.publishRole === 'draft') {
-                        $scope.post.status = 'draft';
-                    } else {
-                        $scope.post.status = 'published';
-                        $scope.post.published_to = [$scope.publishRole];
-                    }
-                } else {
-                    $scope.post.status = 'published';
-                    $scope.post.published_to = [];
-                }
+                $scope.post = updatePost;
 
                 PostEndpoint.update($scope.post).
                 $promise
                 .then(function (post) {
-                    var role = $scope.publishRole === '' ? 'Everyone' : RoleEndpoint.getRole({id: $scope.publishRole});
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-                    $translate(message, {role: role.name})
+                    $translate(message)
                     .then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
@@ -168,20 +130,6 @@ function (
                     Notify.showApiErrors(errorResponse);
                 });
             };
-
-            $scope.postIsPublishedTo = function () {
-                if ($scope.post.status === 'draft') {
-                    return 'draft';
-                }
-
-                if (!_.isEmpty($scope.post.published_to)) {
-                    return $scope.post.published_to[0];
-                }
-
-                return '';
-            };
-
-            $scope.publishRole = $scope.postIsPublishedTo();
 
             // determine which stage the post is at
             getCurrentStage($scope.post).then(function (currentStage) {

@@ -31,7 +31,7 @@ function (
                 } else if ($scope.post.status === 'published') {
                     // If post is puslihed but published_to is empty
                     // the post is pusblished for everyone, indicated by ''
-                    if (!$scope.post.published_to) {
+                    if (!$scope.post.published_to.length) {
                         $scope.status = '';
                     } else{
                         $scope.status = null;
@@ -51,10 +51,10 @@ function (
 
             $scope.toggleRole = function (role) {
                 if ( role === 'draft' || role === '') {
-                    $scope.post.published_to = null;
+                    $scope.post.published_to = [];
                 } else if ($scope.checkIfAllSelected()) {
                     // All check boxes selected, therefore publish to everyone
-                    $scope.post.published_to = null;
+                    $scope.post.published_to = [];
                 }
 
                 $scope.post.status = role === 'draft' ? role : 'published';

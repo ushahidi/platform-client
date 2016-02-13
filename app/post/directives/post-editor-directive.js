@@ -8,7 +8,6 @@ function (
         '$translate',
         'PostEntity',
         'PostEndpoint',
-        'RoleEndpoint',
         'TagEndpoint',
         'FormEndpoint',
         'FormStageEndpoint',
@@ -22,7 +21,6 @@ function (
             $translate,
             postEntity,
             PostEndpoint,
-            RoleEndpoint,
             TagEndpoint,
             FormEndpoint,
             FormStageEndpoint,
@@ -32,9 +30,6 @@ function (
         ) {
 
             $scope.categories = TagEndpoint.query();
-            RoleEndpoint.query().$promise.then(function (roles) {
-                $scope.availableRoles = roles;
-            });
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
@@ -192,20 +187,6 @@ function (
                     Notify.showApiErrors(errorResponse);
                 });
             };
-
-            $scope.postIsPublishedTo = function () {
-                if ($scope.post.status === 'draft') {
-                    return 'draft';
-                }
-
-                if (!_.isEmpty($scope.post.published_to)) {
-                    return $scope.post.published_to[0];
-                }
-
-                return '';
-            };
-
-            $scope.publishRole = $scope.postIsPublishedTo();
 
             $scope.canSavePost = function () {
                 var valid = true;
