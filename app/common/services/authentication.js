@@ -71,7 +71,6 @@ function (
                             var role = _.find(roles, function (role) {
                                 return role.name === userDataResponse.data.role;
                             });
-                            console.log(role);
                             userDataResponse.data.permissions = role ? role.permissions : [];
                             setToLoginState(userDataResponse.data);
 
