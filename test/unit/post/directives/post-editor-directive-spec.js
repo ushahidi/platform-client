@@ -49,7 +49,4 @@ describe('post editor directive', function () {
         $scope.$digest();
     }));
 
-    it('should do something', function () {
-        console.log($scope.post);
-    });
 });
