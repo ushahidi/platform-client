@@ -36,7 +36,6 @@ function (
     };
 
     $rootScope.hasPermission = function (permission) {
-        
         return $rootScope.isAdmin() ? true : _.contains($rootScope.currentUser.permissions, permission);
     };
 

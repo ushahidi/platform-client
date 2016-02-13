@@ -27,7 +27,7 @@ function (
 
             $scope.refreshCollections = function () {
                 CollectionEndpoint.editableByMe().$promise.then(function (results) {
-                    $scope.editableCollections = results; 
+                    $scope.editableCollections = results;
                 });
             };
 

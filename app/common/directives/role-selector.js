@@ -32,7 +32,7 @@ function (
             };
 
             $scope.toggleRole = function (role) {
-                if ( role === 'draft' || role === '') {
+                if (role === 'draft' || role === '') {
                     $scope.post.published_to = [];
                 } else if ($scope.checkIfAllSelected()) {
                     // All check boxes selected, therefore publish to everyone

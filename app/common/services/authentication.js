@@ -6,6 +6,7 @@ module.exports = [
     'Util',
     'CONST',
     'Session',
+    '_',
 function (
     $rootScope,
     RoleEndpoint,
@@ -13,7 +14,8 @@ function (
     $q,
     Util,
     CONST,
-    Session
+    Session,
+    _
 ) {
 
     // check whether we have initially an old access_token and userId
@@ -65,8 +67,11 @@ function (
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
 
-                        RoleEndpoint.query({name: userDataResponse.data.role}).$promise.then( function (role) {
-                            userDataResponse.data.permissions = role[0].permissions;
+                        RoleEndpoint.query().$promise.then(function (roles) {
+                            var role = _.find(roles, function (role) {
+                                return role.name === userDataResponse.data.role;
+                            });
+                            userDataResponse.data.permissions = role.permissions;
                             setToLoginState(userDataResponse.data);
 
                             $rootScope.$broadcast('event:authentication:login:succeeded');
