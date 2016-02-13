@@ -60,7 +60,7 @@ function (
                 $scope.post.status = role === 'draft' ? role : 'published';
 
                 $scope.refreshStatus();
-                //$scope.toggleRoleFunc({role: role});
+                $scope.toggleRoleFunc({updatedPost: $scope.post});
             };
 
         }];

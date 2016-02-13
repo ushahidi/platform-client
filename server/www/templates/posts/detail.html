@@ -13,7 +13,7 @@
                     </p>
                     <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
                         <role-selector
-                            toggle-role-func="publishPostTo(role)"
+                            toggle-role-func="publishPostTo(updatedPost)"
                             post="post" ></role-selector>
                     </div>
                 </div>

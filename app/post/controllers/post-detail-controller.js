@@ -325,7 +325,7 @@ function (
             });
     };
 
-    $scope.publishPostTo = function (role) {
+    $scope.publishPostTo = function (updatedPost) {
         // first check if stages required have been marked complete
         var requiredStages = _.where($scope.stages, {required: true}),
             errors = [];
@@ -342,41 +342,16 @@ function (
             return;
         }
 
-        if ($scope.publishRole) {
-            if ($scope.publishRole === 'draft') {
-                $scope.post.status = 'draft';
-            } else {
-                $scope.post.status = 'published';
-                $scope.post.published_to = [$scope.publishRole];
-            }
-        } else {
-            $scope.post.status = 'published';
-            $scope.post.published_to = null;
-        }
+        $scope.post = updatedPost;
 
         PostEndpoint.update($scope.post).
         $promise
         .then(function () {
-            var role = $scope.publishRole === '' ? 'Everyone' : RoleEndpoint.getRole({id: $scope.publishRole});
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-            $translate(message, { role: role })
+            $translate(message)
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
         });
     };
-
-    $scope.postIsPublishedTo = function () {
-        if ($scope.post.status === 'draft') {
-            return 'draft';
-        }
-
-        if (!_.isEmpty($scope.post.published_to)) {
-            return $scope.post.published_to[0];
-        }
-
-        return '';
-    };
-    $scope.publishRole = $scope.postIsPublishedTo();
-
 }];
