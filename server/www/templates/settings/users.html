@@ -1,4 +1,4 @@
-<main class="page-content has-aside" role="main">
+<main class="page-content" role="main">
     <div class="page-header">
         <ul class="breadcrumb">
           <li><a ng-href="/settings" translate>nav.settings</a></li>
@@ -68,12 +68,12 @@
                     ng-click="deleteUsers()">
                         <span translate>nav.delete</span>
                 </button>
-                <button type="button"
+                <a type="button"
                     class="button-secondary"
                     id="add-user"
                     ng-click="addUser()">
                         <span class="icon-left fa-plus" translate>user.add_user</span>
-                </button>
+                </a>
             </div>
         </div>
         <div ng-hide="users.length">
