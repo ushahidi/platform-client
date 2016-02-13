@@ -63,11 +63,14 @@ function (
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
 
-                        setToLoginState(userDataResponse.data);
+                        RoleEndpoint.query({name: userDataResponse.data.role}).$promise.then( function (role) {
+                            userDataResponse.data.permissions = role.results[0].permissions;
+                            setToLoginState(userDataResponse.data);
 
-                        $rootScope.$broadcast('event:authentication:login:succeeded');
-                        deferred.resolve();
+                            $rootScope.$broadcast('event:authentication:login:succeeded');
 
+                            deferred.resolve();
+                        });
                     }, handleRequestError);
             };
 

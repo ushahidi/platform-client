@@ -38,11 +38,12 @@ function (
     });
 
     $rootScope.hasManagePermission = function () {
-        return (($rootScope.currentUser || {}).permissions.length > 0);
+        return $rootScope.isAdmin ? true : (($rootScope.currentUser || {}).permissions.length > 0);
     };
 
     $rootScope.hasPermission = function (permission) {
-        return _.contains($rootScope.permissions, permission);
+        
+        return $rootScope.isAdmin ? true : _.contains($rootScope.permissions, permission);
     };
 
     $rootScope.isAdmin = function () {
