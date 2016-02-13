@@ -1,4 +1,4 @@
-<main class="page-content" role="main">
+<main class="page-content data-sources" role="main">
     <div class="page-header">
         <ul class="breadcrumb">
             <li><a ng-href="/settings" translate>nav.settings</a></li>
@@ -7,8 +7,9 @@
         <h1 class="inline">{{title}}</h1>
     </div>
     <div class="main-col">
-        <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
-
+        <div class="alert">
+            <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
+        </div>
         <div class="settings-listing" ng-repeat="provider in providers.results | orderBy:'name'" dropdown auto-close="disabled" is-open="panelVisible[provider.id]">
             <div ng-if="forms[provider.id].$valid" class="toggle-switch">
                 <input class="tgl" id="{{provider.id}}_enable" ng-model="settings.providers[provider.id]" type="checkbox" ng-change="saveProviderSettings(provider.id)" ng-disabled="saving">
@@ -23,7 +24,9 @@
             </button>
 
             <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" class="toggle-content init" dropdown-menu>
-                <p class="alert error" ng-if="forms[provider.id].$invalid" translate>settings.data_sources.hint_plugin_needs_configuring</p>
+                <div class="alert error">
+                    <p ng-if="forms[provider.id].$invalid" translate>settings.data_sources.hint_plugin_needs_configuring</p>
+                </div>
 
                 <div ng-repeat="(option_key, option) in provider.options track by option_key" ng-class="{ error : formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid, 'form-field' : option.input !== 'radio', 'required' : option.rules.indexOf('required') > -1 }">
 
@@ -61,7 +64,9 @@
                         </div>
                     </fieldset>
 
-                    <p ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid" class="alert error" translate>settings.generic_field_error</p>
+                    <div class="alert error">
+                        <p ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid" translate>settings.generic_field_error</p>
+                    </div>
                 </div>
 
                 <button type="submit" class="button-primary" ng-disabled="saving">
