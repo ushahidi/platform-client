@@ -65,7 +65,6 @@ function (
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
 
-                        userDataResponse.data.permissions = role ? role.permissions : [];
                         setToLoginState(userDataResponse.data);
 
                         $rootScope.$broadcast('event:authentication:login:succeeded');
