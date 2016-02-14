@@ -156,7 +156,7 @@ describe('users management', function () {
                                         browser.sleep(500);
                                     });
                                     it('shows an alert which asks if you really want to change the roles', function () {
-                                        expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to change the role of 2 users to Member?');
+                                        expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to change the role of 4 users to Member?');
                                     });
                                 });
 
