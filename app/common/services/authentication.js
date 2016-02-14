@@ -1,6 +1,5 @@
 module.exports = [
     '$rootScope',
-    'RoleEndpoint',
     '$http',
     '$q',
     'Util',
@@ -9,7 +8,6 @@ module.exports = [
     '_',
 function (
     $rootScope,
-    RoleEndpoint,
     $http,
     $q,
     Util,
@@ -67,17 +65,12 @@ function (
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
 
-                        RoleEndpoint.query().$promise.then(function (roles) {
-                            var role = _.find(roles, function (role) {
-                                return role.name === userDataResponse.data.role;
-                            });
-                            userDataResponse.data.permissions = role ? role.permissions : [];
-                            setToLoginState(userDataResponse.data);
+                        userDataResponse.data.permissions = role ? role.permissions : [];
+                        setToLoginState(userDataResponse.data);
 
-                            $rootScope.$broadcast('event:authentication:login:succeeded');
+                        $rootScope.$broadcast('event:authentication:login:succeeded');
 
-                            deferred.resolve();
-                        });
+                        deferred.resolve();
                     }, handleRequestError);
             };
 
