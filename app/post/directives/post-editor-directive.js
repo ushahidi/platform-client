@@ -179,7 +179,7 @@ function (
                 $promise
                 .then(function (post) {
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-                    var role = message == 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(", "));
+                    var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
                     $translate(message, {role: role})
                     .then(function (message) {
                         Notify.showNotificationSlider(message);
