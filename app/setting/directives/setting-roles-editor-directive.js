@@ -35,7 +35,7 @@ function (
 
             $scope.saveRole = function (role) {
                 $scope.processing = true;
-                role.name = role.name === '' ? role.display_name : role.name;
+                role.name = role.name ? role.name : role.display_name;
 
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
                     $translate('notify.role.save_success', {role: role.display_name}).then(function (message) {
