@@ -35,6 +35,10 @@ function (
         return $rootScope.isAdmin() ? true : ((($rootScope.currentUser || {}).permissions || {}).length > 0);
     };
 
+    $rootScope.hasManageSettingsPermission = function () {
+        return $rootScope.isAdmin() ? true : (_.intersection(($rootScope.currentUser || {}).permissions, ["Manage Users", "Manage Settings", "Bulk Data Import"]).length > 0);
+    };
+
     $rootScope.hasPermission = function (permission) {
         return $rootScope.isAdmin() ? true : _.contains(($rootScope.currentUser || {}).permissions, permission);
     };

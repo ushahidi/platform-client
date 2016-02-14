@@ -8,7 +8,7 @@
         <li><a ng-href="/" translate>nav.home</a></li>
         <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
         <li><a ng-href="/activity" translate>nav.activity</a></li>
-        <li class="settings-nav" dropdown auto-close="disabled" ng-show="hasManagePermission()">
+        <li class="settings-nav" dropdown auto-close="disabled" ng-show="hasManageSettingsPermission()">
             <span class="settings-nav-button" data-toggle="toggle-content" dropdown-toggle translate>nav.settings</span>
             <ul class="toggle-content" dropdown-menu>
                 <li ng-show="hasPermission('Manage Settings')"><a ng-href="/settings/general" translate>nav.general</a></li>
