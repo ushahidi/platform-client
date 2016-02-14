@@ -11,15 +11,15 @@
         <li class="settings-nav" dropdown auto-close="disabled" ng-show="hasManagePermission()">
             <span class="settings-nav-button" data-toggle="toggle-content" dropdown-toggle translate>nav.settings</span>
             <ul class="toggle-content" dropdown-menu>
-                <li><a ng-show="hasPermission('Manage Settings')" ng-href="/settings/general" translate>nav.general</a></li>
-                <li><a ng-show="hasPermission('Manage Settings')" ng-href="/settings/map-settings" translate>nav.map_settings</a></li>
-                <li><a ng-show="hasPermission('Bulk Data Import')" ng-href="/settings/datasources" translate>nav.data_sources</a></li>
-                <li><a ng-show="hasPermission('Bulk Data Import')" ng-href="/settings/data-import" translate>nav.data_import</a></li>
+                <li ng-show="hasPermission('Manage Settings')"><a ng-href="/settings/general" translate>nav.general</a></li>
+                <li ng-show="hasPermission('Manage Settings')"><a ng-href="/settings/map-settings" translate>nav.map_settings</a></li>
+                <li ng-show="hasPermission('Bulk Data Import')"><a ng-href="/settings/datasources" translate>nav.data_sources</a></li>
+                <li ng-show="hasPermission('Bulk Data Import')"><a ng-href="/settings/data-import" translate>nav.data_import</a></li>
                 <!-- <li><a ng-href="/settings/plugins" translate>nav.plugins</a></li>-->
-                <li><a ng-show="hasPermission('Manage Posts')" ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
-                <li><a ng-show="hasPermission('Manage Posts')" ng-href="/settings/categories" translate>nav.categories</a></li>
-                <li><a ng-show="hasPermission('Manage Users')" ng-href="/settings/users" translate>nav.users</a></li>
-                <li><a ng-show="hasPermission('Manage Users')" ng-href="/settings/roles" translate>nav.roles</a></li>
+                <li ng-show="hasPermission('Manage Posts')" ><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
+                <li ng-show="hasPermission('Manage Posts')"><a ng-href="/settings/categories" translate>nav.categories</a></li>
+                <li ng-show="hasPermission('Manage Users')"><a ng-href="/settings/users" translate>nav.users</a></li>
+                <li ng-show="hasPermission('Manage Users')"><a ng-href="/settings/roles" translate>nav.roles</a></li>
                 <!-- <li><a ng-href="/settings/permission" translate>nav.permissions</a></li> -->
             </ul>
         </li>
