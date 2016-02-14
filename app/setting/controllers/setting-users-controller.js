@@ -28,7 +28,9 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.roles = RoleEndpoint.query();
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;
+    });
 
     $scope.filter = {
         role: '',
