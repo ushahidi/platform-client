@@ -5,6 +5,7 @@ module.exports = [
     'Util',
     'CONST',
     'Session',
+    'RoleEndpoint',
     '_',
 function (
     $rootScope,
@@ -13,6 +14,7 @@ function (
     Util,
     CONST,
     Session,
+    RoleEndpoint,
     _
 ) {
 
@@ -64,12 +66,14 @@ function (
 
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
-
+                        RoleEndpoint.query({name: userDataResponse.data.role}).$promise.then(function (results) {
+                        userDataResponse.data.permissions = !_.isEmpty(results) ? results[0].permissions : [];
                         setToLoginState(userDataResponse.data);
 
                         $rootScope.$broadcast('event:authentication:login:succeeded');
 
                         deferred.resolve();
+                        });
                     }, handleRequestError);
             };
 
