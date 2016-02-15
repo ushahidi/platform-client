@@ -129,16 +129,6 @@ describe('Post detail controller', function () {
         expect($scope.publishedFor()).toEqual('post.publish_for_you');
     });
 
-    it('should publish post for everyone', function () {
-        expect($scope.postIsPublishedTo()).toEqual('draft');
-
-        spyOn(PostEndpoint, 'update').and.callThrough();
-        $scope.publishRole = '';
-        $scope.publishPostTo();
-
-        expect($scope.postIsPublishedTo()).toEqual('');
-    });
-
     it('should show type as false for point and geometry but true for other', function () {
         expect($scope.showType('point')).toEqual(false);
         expect($scope.showType('geometry')).toEqual(false);

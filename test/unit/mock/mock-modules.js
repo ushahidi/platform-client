@@ -23,6 +23,8 @@ angular.module('ushahidi.mock', [])
 .service('CollectionEndpoint', require('./services/collection.js'))
 .service('ContactEndpoint', require('./services/contact.js'))
 .service('ConfigEndpoint', require('./services/config.js'))
+.service('RoleEndpoint', require('./services/role.js'))
+.service('PermissionEndpoint', require('./services/permission.js'))
 .service('DataProviderEndpoint', require('./services/data-provider.js'))
 
 .service('Authentication', require('./services/authentication.js'))

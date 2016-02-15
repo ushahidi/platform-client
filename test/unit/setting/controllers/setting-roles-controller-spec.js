@@ -44,8 +44,4 @@ describe('setting roles controller', function () {
 
     });
 
-    it('should retrieve load and set title', function () {
-        expect($rootScope.$emit).toHaveBeenCalled();
-    });
-
 });

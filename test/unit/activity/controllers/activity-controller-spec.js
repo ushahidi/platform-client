@@ -15,8 +15,7 @@ describe('activity activity controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('activityController', require(ROOT_PATH + 'app/activity/controllers/activity-controller.js'))
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'));
+        testApp.controller('activityController', require(ROOT_PATH + 'app/activity/controllers/activity-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

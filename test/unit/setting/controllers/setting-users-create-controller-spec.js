@@ -15,8 +15,7 @@ describe('setting users create controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingUsersCreateController', require(ROOT_PATH + 'app/setting/controllers/setting-users-create-controller.js'))
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'));
+        testApp.controller('settingUsersCreateController', require(ROOT_PATH + 'app/setting/controllers/setting-users-create-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
