@@ -30,11 +30,11 @@ describe('login controller', function () {
     beforeEach(function () {
         mockAuthenticationService = {
             login: function (username, password) {
-                return {$promise: {
+                return {
                     then: function (successCallback, failureCallback) {
                         password === 'correct' ? successCallback() : failureCallback();
                     }
-                }};
+                };
             }
         };
 
@@ -56,7 +56,16 @@ describe('login controller', function () {
                 $scope.password = 'correct';
             });
 
-            it('', function () {});
+            it('should login on success', function () {
+                $scope.loginSubmit();
+                expect($scope.failed).toEqual(false);
+            });
+
+            it('should clear the form on login failure', function () {
+                $scope.password = 'incorrect';
+                $scope.loginSubmit();
+                expect($scope.failed).toEqual(true);
+            });
 
         });
     });

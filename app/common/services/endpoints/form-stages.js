@@ -48,9 +48,9 @@ function (
         return cache.removeAll();
     };
 
-    FormStageEndpoint.queryFresh = function () {
+    FormStageEndpoint.queryFresh = function (params) {
         cache.removeAll();
-        return FormStageEndpoint.query();
+        return FormStageEndpoint.query(params);
     };
 
     FormStageEndpoint.saveCache = function (item) {

@@ -18,7 +18,9 @@ function (
 
 
     $scope.refreshView = function () {
-        $scope.tags = TagEndpoint.query();
+        TagEndpoint.query().$promise.then(function (tags) {
+            $scope.tags = tags;
+        });
         $scope.selectedTags = [];
     };
     $scope.refreshView();

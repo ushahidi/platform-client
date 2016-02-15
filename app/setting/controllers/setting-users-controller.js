@@ -21,7 +21,7 @@ function (
     Notify,
     RoleEndpoint
 ) {
-    var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser, getUsersForPagination;
+    var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser;
 
     $translate('tool.manage_users').then(function (title) {
         $scope.title = title;
@@ -76,7 +76,6 @@ function (
         if (checkAndNotifyAboutManipulateOwnUser('user.cannot_delete_yourself')) {
             return;
         }
-
         $translate('notify.user.bulk_destroy_confirm', {
             count: $scope.selectedUsers.length
         }).then(function (message) {
@@ -90,7 +89,7 @@ function (
                     $translate('notify.user.bulk_destroy_success').then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
-                    getUsersForPagination();
+                    $scope.getUsersForPagination();
                 }, handleResponseErrors)
                 .finally($scope.filterRole);
             }, function () {});
@@ -115,7 +114,7 @@ function (
                     $translate('notify.user.bulk_role_change_success', {role_name: role.name}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
-                    getUsersForPagination();
+                    $scope.getUsersForPagination();
                 }, handleResponseErrors)
                 .finally($scope.filterRole);
             });
@@ -124,7 +123,7 @@ function (
 
     $scope.itemsPerPageChanged = function (count) {
         $scope.itemsPerPage = count;
-        getUsersForPagination();
+        $scope.getUsersForPagination();
     };
 
     // // hydrate!
@@ -132,7 +131,7 @@ function (
 
 
     // --- start: definitions
-    getUsersForPagination = function () {
+    $scope.getUsersForPagination = function () {
         UserEndpoint.queryFresh({
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
@@ -144,9 +143,9 @@ function (
         });
     };
 
-    $scope.pageChanged = getUsersForPagination;
+    $scope.pageChanged = $scope.getUsersForPagination;
     $scope.applyFilters = function () {
-        getUsersForPagination();
+        $scope.getUsersForPagination();
     };
     // --- end: definitions
 
@@ -159,7 +158,7 @@ function (
     // untill we have the correct total_count value from backend request:
     $scope.totalItems = $scope.itemsPerPage;
 
-    getUsersForPagination();
+    $scope.getUsersForPagination();
     // --- end: initialization
 
 }];
