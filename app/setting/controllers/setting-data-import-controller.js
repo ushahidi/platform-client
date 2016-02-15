@@ -15,7 +15,7 @@ function (
         file : null
     };
 
-    FormEndpoint.get().$promise.then(function (response) {
-        $scope.forms = response.results;
+    FormEndpoint.query().$promise.then(function (response) {
+        $scope.forms = response;
     });
 }];

@@ -33,6 +33,7 @@
     "expect",
     "inject",
     "jasmine",
+    "fixture",
     "spyOn",
     "describe",
     "beforeEach",

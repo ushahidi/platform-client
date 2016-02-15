@@ -519,6 +519,9 @@
         "role": "Role"
     },
     "notify": {
+        "contact" : {
+            "save_success" : "Contact saved",
+        },
         "default" : {
             "save_success" : "Saved resource",
             "save_error" : "Unable to save resource, please try again",
@@ -626,7 +629,8 @@
         },
         "notification" : {
             "add" : "You will now be notified when new posts are added to {{set}}",
-            "delete_confirm" : "Are you sure you want to remove this notification?"
+            "delete_confirm" : "Are you sure you want to remove this notification?",
+            "destroy_notification_success" : "Notification {{name}} deleted",
         }
     },
     "empty": {
