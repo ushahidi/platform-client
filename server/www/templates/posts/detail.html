@@ -45,16 +45,16 @@
                         <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
                     </div>
                     <div id="options" class="actions-content init active">
-                        <button ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-click="goEdit()">
+                        <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-click="goEdit()">
                             <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
-                        </button>
+                        </a>
                     <!--    <button type="button" class="button-secondary">
                             <span class="icon-left fa-share">Share</span>
                         </button>
                     -->
                         <collection-selector
                             post="post"
-                            ng-if="post.allowed_privileges.indexOf('update') !== -1" 
+                            ng-if="post.allowed_privileges.indexOf('update') !== -1"
                             ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
                             >
                         </collection-selector>
@@ -64,7 +64,7 @@
             <div class="vertical-tabs">
                 <nav class="vertical-tabs-menu init">
                     <ul>
-                        <li 
+                        <li
                             ng-repeat="stage in stages"
                             ng-class="{'active': visibleStage == stage.id}"  >
                             <a ng-click="setVisibleStage(stage.id)">
@@ -88,15 +88,15 @@
                           </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
                       </p>
                     </div>
-                    <div 
-                        ng-if="post.content" 
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
+                    <div
+                        ng-if="post.content"
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
                         class="post-field">
                         <p sd-model-to-html="post.content"></p>
                     </div>
-                    <div 
-                        ng-if="!!post.tags.length" 
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
+                    <div
+                        ng-if="!!post.tags.length"
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
                         class="form-field"
                     >
                         <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
@@ -106,9 +106,9 @@
                             </label>
                         </div>
                     </div>
-                    <div 
-                        ng-repeat="(key,value) in post.values" 
-                        ng-if="form_attributes[key] && showType(form_attributes[key].type)" 
+                    <div
+                        ng-repeat="(key,value) in post.values"
+                        ng-if="form_attributes[key] && showType(form_attributes[key].type)"
                         ng-show="form_attributes[key].form_stage_id == visibleStage"
                         class="post-field"
                     >
@@ -118,9 +118,9 @@
                           attribute="form_attributes[key]"
                         ></post-value>
                     </div>
-                    <div 
-                        ng-if="mapDataLoaded" 
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'" 
+                    <div
+                        ng-if="mapDataLoaded"
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
                         class="post-field"
                         >
                         <h4 ng-if="mapDataLoaded" translate>post.location</h4>
