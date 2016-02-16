@@ -175,8 +175,14 @@ function (
 
                 $scope.post = updatedPost;
 
-                PostEndpoint.update($scope.post).
-                $promise
+                if (!$scope.post.id) {
+                    // We're in the create interface and we should 
+                    // return having set the publised_to field of the post
+                    return;
+                }
+
+                PostEndpoint.update($scope.post)
+                .$promise
                 .then(function (post) {
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
                     var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
