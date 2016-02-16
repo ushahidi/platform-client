@@ -7,7 +7,7 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     '_',
-    'RoleHelper',
+    'RoleEndpoint',
 function (
     $scope,
     $rootScope,
@@ -17,7 +17,7 @@ function (
     UserEndpoint,
     Notify,
     _,
-    RoleHelper
+    RoleEndpoint
 ) {
     $translate('user.edit_user').then(function (title) {
         $scope.title = title;
@@ -64,5 +64,7 @@ function (
         });
     };
 
-    $scope.roles = RoleHelper.roles(true);
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;
+    });
 }];

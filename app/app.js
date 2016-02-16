@@ -53,6 +53,8 @@ var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || proc
         'messages',
         'notifications',
         'contacts',
+        'roles',
+        'permissions',
         'csv'
     ];
 

@@ -8,7 +8,7 @@ module.exports = [
     'Session',
     'UserEndpoint',
     'Notify',
-    'RoleHelper',
+    'RoleEndpoint',
 function (
     $scope,
     $translate,
@@ -19,7 +19,7 @@ function (
     Session,
     UserEndpoint,
     Notify,
-    RoleHelper
+    RoleEndpoint
 ) {
     var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser;
 
@@ -28,8 +28,9 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.roles = RoleHelper.roles(true);
-    $scope.getRole = RoleHelper.getRole;
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;
+    });
 
     $scope.filter = {
         role: '',

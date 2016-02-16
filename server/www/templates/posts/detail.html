@@ -12,32 +12,9 @@
                         </span>
                     </p>
                     <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
-                        <div class="custom-select init fa-user">
-                            <select
-                                ng-change="publishPostTo()"
-                                ng-model="publishRole"
-                            >
-                                <option
-                                    value="draft"
-                                    translate>
-                                    post.publish_for_you
-                                </option>
-                                <option
-                                    ng-repeat="role in availableRoles"
-                                    data-icon="fa-user"
-                                    value="{{role.name}}"
-                                    >
-                                    {{role.display_name}}
-                                </option>
-                                <option
-                                    data-icon="fa-globe"
-                                    value=""
-                                    translate>
-                                    post.publish_for_everyone
-                                </option>
-                            </select>
-                        </div>
-                        <label><span translate>post.can_see_this_post</span></label>
+                        <role-selector
+                            toggle-role-func="publishPostTo(updatedPost)"
+                            post="post" ></role-selector>
                     </div>
                 </div>
                 <div class="actions-toggle">
@@ -45,6 +22,7 @@
                         <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
                     </div>
                     <div id="options" class="actions-content init active">
+                        <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
                         <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-click="goEdit()">
                             <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
                         </a>

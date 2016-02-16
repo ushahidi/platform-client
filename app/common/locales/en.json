@@ -200,6 +200,8 @@
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
+        "role" : "Role",
+        "roles" : "Roles",
         "views" : "Views",
         "workspace" : "Workspace"
     },
@@ -331,6 +333,15 @@
                 "email": "Invalid email"
             }
         }
+    },
+    "role": {
+        "add_role" : "Add Role",
+        "edit_role" : "Edit Role",
+        "name" : "Name",
+        "description" : "Description",
+        "save" : "Save Role",
+        "permissions" : "Permissions",
+        "delete" : "Delete",
     },
     "set": {
         "create_collection" : "Create Collection",
@@ -598,6 +609,11 @@
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
             "bulk_destroy_success" : "{{count}} categories deleted"
         },
+        "role" : {
+            "delete_question" : "Are you sure you want to delete the role {{role}}?",
+            "destroy_success" : "Role {{role}} deleted.",
+            "save_success" : "Role {{role}} saved.",
+        },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}",
         },
@@ -650,6 +666,8 @@
         "post" : "No posts found.",
         "user" : "No users found.",
         "category" : "No categories found.",
+        "role" : "No roles found.",
+        "permission" : "No permissions found.",
         "form": "No forms found."
     },
     "location": {

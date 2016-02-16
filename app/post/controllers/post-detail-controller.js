@@ -17,7 +17,6 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
-    'RoleHelper',
     'Notify',
 function (
     $scope,
@@ -38,20 +37,17 @@ function (
     L,
     leafletData,
     _,
-    RoleHelper,
     Notify
 ) {
     $scope.post = post;
 
     $scope.mapDataLoaded = false;
-    $scope.availableRoles = RoleHelper.roles();
-
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
         }
         if (!_.isEmpty($scope.post.published_to)) {
-            return RoleHelper.getRole($scope.post.published_to[0]);
+            return $scope.post.published_to;
         }
 
         return 'post.publish_for_everyone';
@@ -223,11 +219,6 @@ function (
         });
     };
 
-    // Why is this not builtin behaviour in angular?!?!?!
-    $scope.goEdit = function () {
-        $location.path('/posts/' + $scope.post.id + '/edit');
-    };
-
     $scope.toggleCompletedStage = function (stage) {
         // @todo how to validate this before saving
         if (_.includes($scope.post.completed_stages, stage.id)) {
@@ -248,7 +239,7 @@ function (
             });
     };
 
-    $scope.publishPostTo = function () {
+    $scope.publishPostTo = function (updatedPost) {
         // first check if stages required have been marked complete
         var requiredStages = _.where($scope.stages, {required: true}),
             errors = [];
@@ -265,41 +256,17 @@ function (
             return;
         }
 
-        if ($scope.publishRole) {
-            if ($scope.publishRole === 'draft') {
-                $scope.post.status = 'draft';
-            } else {
-                $scope.post.status = 'published';
-                $scope.post.published_to = [$scope.publishRole];
-            }
-        } else {
-            $scope.post.status = 'published';
-            $scope.post.published_to = [];
-        }
+        $scope.post = updatedPost;
 
         PostEndpoint.update($scope.post).
         $promise
         .then(function () {
-            var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-            $translate(message, { role: role })
+            var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
+            $translate(message, {role: role})
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
         });
     };
-
-    $scope.postIsPublishedTo = function () {
-        if ($scope.post.status === 'draft') {
-            return 'draft';
-        }
-
-        if (!_.isEmpty($scope.post.published_to)) {
-            return $scope.post.published_to[0];
-        }
-
-        return '';
-    };
-    $scope.publishRole = $scope.postIsPublishedTo();
-
 }];

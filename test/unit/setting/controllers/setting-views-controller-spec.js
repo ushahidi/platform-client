@@ -15,8 +15,7 @@ describe('setting views controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingViewsController', require(ROOT_PATH + 'app/setting/controllers/setting-views-controller.js'))
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'));
+        testApp.controller('settingViewsController', require(ROOT_PATH + 'app/setting/controllers/setting-views-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

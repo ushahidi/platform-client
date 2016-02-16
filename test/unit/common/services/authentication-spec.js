@@ -12,7 +12,10 @@ describe('Authentication', function () {
         mockedUserDataResponse;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', []);
+        var testApp = angular.module('testApp', [
+            'ngResource',
+            'angular-cache'
+        ]);
 
         mockedSessionData = {};
         testApp.service('Session', function () {
@@ -28,6 +31,21 @@ describe('Authentication', function () {
                 },
                 setSessionDataEntry: function (key, value) {
                     mockedSessionData[key] = value;
+                }
+            };
+        })
+        .service('RoleEndpoint', function () {
+            return {
+                query: function () {
+                    return {$promise: {
+                        then: function (successCallback, failCallback) {
+                            successCallback([{
+                                name: 'role',
+                                permissions: [],
+                                id: 1
+                            }]);
+                        }
+                    }};
                 }
             };
         })
@@ -77,7 +95,8 @@ describe('Authentication', function () {
                         'id': 2,
                         'url': 'http://ushahidi-backend/api/v2/users/2',
                         'email': 'admin@example.com',
-                        'realname': 'Admin Joe'
+                        'realname': 'Admin Joe',
+                        'role': 'role'
                     };
                     $httpBackend.whenGET(BACKEND_URL + '/api/v2/users/me').respond(mockedUserDataResponse);
                 });
@@ -207,6 +226,7 @@ describe('Authentication', function () {
                 userId: 2,
                 realname: 'Max Doe',
                 email: 'max@doe.org',
+                role: 'role',
                 accessToken: 'fooBarAccessToken'
             };
 

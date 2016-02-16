@@ -15,8 +15,7 @@ describe('user-profile notification controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('notificationController', require(ROOT_PATH + 'app/user-profile/controllers/notification-controller.js'))
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'));
+        testApp.controller('notificationController', require(ROOT_PATH + 'app/user-profile/controllers/notification-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
