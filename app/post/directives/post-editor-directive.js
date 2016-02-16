@@ -176,7 +176,7 @@ function (
                 $scope.post = updatedPost;
 
                 if (!$scope.post.id) {
-                    // We're in the create interface and we should 
+                    // We're in the create interface and we should
                     // return having set the publised_to field of the post
                     return;
                 }
