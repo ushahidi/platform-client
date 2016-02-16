@@ -7,7 +7,7 @@ module.exports = [
     '_',
     'Notify',
     'PostViewHelper',
-    'RoleHelper',
+    'RoleEndpoint',
 function (
     $q,
     $location,
@@ -17,7 +17,7 @@ function (
     _,
     Notify,
     PostViewHelper,
-    RoleHelper
+    RoleEndpoint
 ) {
     return {
         restrict: 'E',
@@ -30,7 +30,10 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.isAdmin = $rootScope.isAdmin;
 
-            $scope.roles = RoleHelper.roles();
+            RoleEndpoint.query().$promise.then(function (roles) {
+                $scope.roles = roles;
+            });
+
             $scope.views = PostViewHelper.views();
 
             // Set default view for Collection to be Map

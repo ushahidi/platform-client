@@ -16,14 +16,14 @@ function (
     // Start with preloaded config
     $scope.site = BootstrapConfig;
     // Then update from server
-    var reloadSiteConfig = function () {
+    $scope.reloadSiteConfig = function () {
         ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
             $scope.site = site;
         });
     };
 
     $rootScope.$on('event:update:header', function () {
-        reloadSiteConfig();
+        $scope.reloadSiteConfig();
     });
 
     $rootScope.$on('$routeChangeSuccess', function (ev, current) {
@@ -36,7 +36,7 @@ function (
         }
     });
 
-    reloadSiteConfig();
+    $scope.reloadSiteConfig();
 
     // @todo: Integrate the modal state controller into a globally accessible
     // directive which binds the same logic but does not effect markup.
@@ -48,11 +48,20 @@ function (
         $scope.collectionOpen.data = !$scope.collectionOpen.data;
     };
 
+    $scope.canCreatePost = function () {
+        return $scope.loggedin || !$scope.site.private;
+    };
+
+    $scope.canRegister = function () {
+        return !$scope.site.private;
+    };
 
     $scope.logoutClick = function (e) {
         e.preventDefault();
         e.stopPropagation();
         Authentication.logout();
     };
+
+
 
 }];

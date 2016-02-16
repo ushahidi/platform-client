@@ -189,6 +189,8 @@
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
+        "role" : "Role",
+        "roles" : "Roles",
         "views" : "Views",
         "workspace" : "Workspace"
     },
@@ -321,6 +323,16 @@
             }
         }
     },
+    "role": {
+        "add_role" : "Add Role",
+        "edit_role" : "Edit Role",
+        "name" : "Name",
+        "description" : "Description",
+        "save" : "Save Role",
+        "save_add_another" : "Save & Add Another",
+        "permissions" : "Permissions",
+        "delete" : "Delete",
+    },
     "set": {
         "create_collection" : "Create Collection",
         "create_savedsearch": "Create Saved Search",
@@ -349,6 +361,7 @@
     "tag": {
         "add_tag" : "Add Category",
         "save" : "Save Category",
+        "save_add_another" : "Save & Add Another",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "saved_tag": "Category saved.",
@@ -464,6 +477,7 @@
         "edit_user" : "Edit User",
         "change_role" : "Change Role",
         "save" : "Save User",
+        "save_add_another" : "Save & Add Another",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",
@@ -519,6 +533,9 @@
         "role": "Role"
     },
     "notify": {
+        "contact" : {
+            "save_success" : "Contact saved",
+        },
         "default" : {
             "save_success" : "Saved resource",
             "save_error" : "Unable to save resource, please try again",
@@ -583,6 +600,12 @@
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
             "bulk_destroy_success" : "{{count}} categories deleted"
         },
+        "role" : {
+            "delete_question" : "Are you sure you want to delete the role {{role}}?",
+            "destroy_success" : "Role {{role}} deleted.",
+            "save_success" : "Role {{role}} saved.",
+            "last_admin" : "You can not delete the only admin role"
+        },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}",
         },
@@ -626,7 +649,8 @@
         },
         "notification" : {
             "add" : "You will now be notified when new posts are added to {{set}}",
-            "delete_confirm" : "Are you sure you want to remove this notification?"
+            "delete_confirm" : "Are you sure you want to remove this notification?",
+            "destroy_notification_success" : "Notification {{name}} deleted",
         }
     },
     "empty": {
@@ -634,6 +658,8 @@
         "post" : "No posts found.",
         "user" : "No users found.",
         "category" : "No categories found.",
+        "role" : "No roles found.",
+        "permission" : "No permissions found.",
         "form": "No forms found."
     },
     "location": {

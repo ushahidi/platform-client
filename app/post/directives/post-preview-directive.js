@@ -8,7 +8,6 @@ module.exports = [
     'UserEndpoint',
     'FormEndpoint',
     'FormStageEndpoint',
-    'RoleHelper',
     'Notify',
     '_',
 function (
@@ -21,7 +20,6 @@ function (
     UserEndpoint,
     FormEndpoint,
     FormStageEndpoint,
-    RoleHelper,
     Notify,
     _
 ) {
@@ -66,15 +64,14 @@ function (
         },
         templateUrl: 'templates/posts/preview.html',
         link: function ($scope) {
-            $scope.getRoleDisplayName = RoleHelper.getRole;
-            $scope.availableRoles = RoleHelper.roles();
 
             $scope.publishedFor = function () {
                 if ($scope.post.status === 'draft') {
                     return 'post.publish_for_you';
                 }
                 if (!_.isEmpty($scope.post.published_to)) {
-                    return RoleHelper.getRole($scope.post.published_to[0]);
+
+                    return $scope.post.published_to;
                 }
 
                 return 'post.publish_for_everyone';
@@ -101,7 +98,7 @@ function (
                 });
             }
 
-            $scope.publishPostTo = function () {
+            $scope.publishPostTo = function (updatePost) {
 
                 // first check if stages required have been marked complete
                 var requiredStages = _.where($scope.stages, {required: true}),
@@ -119,23 +116,13 @@ function (
                     return;
                 }
 
-                if ($scope.publishRole) {
-                    if ($scope.publishRole === 'draft') {
-                        $scope.post.status = 'draft';
-                    } else {
-                        $scope.post.status = 'published';
-                        $scope.post.published_to = [$scope.publishRole];
-                    }
-                } else {
-                    $scope.post.status = 'published';
-                    $scope.post.published_to = [];
-                }
+                $scope.post = updatePost;
 
                 PostEndpoint.update($scope.post).
                 $promise
                 .then(function (post) {
-                    var role = $scope.publishRole === '' ? 'Everyone' : RoleHelper.getRole($scope.publishRole);
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+                    var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
                     $translate(message, {role: role})
                     .then(function (message) {
                         Notify.showNotificationSlider(message);
@@ -144,20 +131,6 @@ function (
                     Notify.showApiErrors(errorResponse);
                 });
             };
-
-            $scope.postIsPublishedTo = function () {
-                if ($scope.post.status === 'draft') {
-                    return 'draft';
-                }
-
-                if (!_.isEmpty($scope.post.published_to)) {
-                    return $scope.post.published_to[0];
-                }
-
-                return '';
-            };
-
-            $scope.publishRole = $scope.postIsPublishedTo();
 
             // determine which stage the post is at
             getCurrentStage($scope.post).then(function (currentStage) {
