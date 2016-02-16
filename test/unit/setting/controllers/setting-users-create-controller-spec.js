@@ -35,7 +35,8 @@ describe('setting users create controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingUsersCreateController', {
-            $scope: $scope
+            $scope: $scope,
+            $route: {reload: function () {}}
         });
 
         $rootScope.$digest();

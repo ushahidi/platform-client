@@ -50,10 +50,15 @@
             </div>
 
             <div class="save-button clearfix">
-                <button class="save" ng-click="saveTag(tag)" ng-disabled="form.$invalid || processing">
+                <button class="save" ng-click="saveTag(tag, false)" ng-disabled="form.$invalid || processing">
                     <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
                     <span translate>tag.save</span>
                 </button>
+                <button class="save" ng-show="!tag.id" ng-click="saveTag(tag, true)" ng-disabled="form.$invalid || processing">
+                    <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
+                    <span translate>tag.save_add_another</span>
+                </button>
+
             </div>
         </form>
 

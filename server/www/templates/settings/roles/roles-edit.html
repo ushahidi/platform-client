@@ -19,9 +19,13 @@
             </hi>
         </div>
         <div class="page-header-actions">
-            <button ng-click="saveRole(role)" ng-disabled="form.$invalid || processing" translate>
+            <button ng-click="saveRole(role, false)" ng-disabled="form.$invalid || processing" translate>
                 role.save
             </button>
+            <button ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
+                role.save_add_another
+            </button>
+
         </div>
     </div>
 
