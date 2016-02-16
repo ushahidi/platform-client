@@ -3,60 +3,83 @@ var ROOT_PATH = '../../../../';
 describe('navigation controller', function () {
 
     var $rootScope,
-        $scope,
         $controller,
-        ConfigEndpoint,
-        BootstrapConfig;
+        $scope;
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
-            'pascalprecht.translate',
-            'ngResource',
-            'angular-cache'
+        'pascalprecht.translate'
         ])
-        .controller('navigationController', require(ROOT_PATH + 'app/common/controllers/navigation.js'))
-        .service('ConfigEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/config.js'))
-        .factory('BootstrapConfig', function () {
-            return {
-                private: true
-            };
-        });
+        // .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
+        .controller('navigationController', require(ROOT_PATH + 'app/common/controllers/navigation.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_,
-                                _$controller_,
-                                _ConfigEndpoint_,
-                                 _BootstrapConfig_) {
+    beforeEach(inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
-        ConfigEndpoint = _ConfigEndpoint_;
-        BootstrapConfig = _BootstrapConfig_;
         $scope = _$rootScope_.$new();
     }));
 
     beforeEach(function () {
+        var mockAuthenticationService = {
+            logout: function (username, password) {
+                return {};
+            }
+        };
+
+        var mockBootstrapConfig = {};
+
+        var mockConfigEndpoint = {
+            get: function (id) {
+                return {$promise: {
+                    then: function (successCallback, failureCallBack) {
+                        successCallback();
+                    }
+                }};
+            }
+        };
         $controller('navigationController', {
             $rootScope: $rootScope,
-            $scope: $scope,
-            Authentication: {}
+            Authentication: mockAuthenticationService,
+            ConfigEndpoint: mockConfigEndpoint,
+            BootstrapConfig: mockBootstrapConfig,
+            $scope: $scope
         });
+
+        $rootScope.$digest();
+        $rootScope.$apply();
     });
 
-    describe('private deployment', function () {
-        it('should not allow a user to register on a private deployment', function () {
-            expect($scope.site.private).toBe(true);
-            expect($scope.canRegister()).toBe(false);
-        });
+    it('should change collection open bool', function () {
+        $scope.collectionIsOpen();
+        expect($scope.collectionOpen.data).toEqual(true);
+    });
 
-        it('should not allow a non-logged in user to create a post on a private deployment', function () {
-            $scope.loggedin = false;
+    it('should respond to event:update:header', function () {
+        spyOn($rootScope, '$emit').and.callThrough();
+        spyOn($scope, 'reloadSiteConfig');
+        $rootScope.$emit('event:update:header');
+        expect($scope.reloadSiteConfig).toHaveBeenCalled();
+    });
 
-            expect($scope.site.private).toBe(true);
-            expect($scope.canCreatePost()).toBe(false);
-        });
+    it('should respond to $routeChangeSuccess', function () {
+        spyOn($rootScope, '$emit').and.callThrough();
+        $rootScope.$emit('$routeChangeSuccess');
+        expect($scope.isHome).toEqual(false);
+    });
+
+    it('should set isHome to true when original path is /', function () {
+        spyOn($rootScope, '$emit').and.callThrough();
+        var mockCurrent = {
+            $$route: {
+                originalPath: '/'
+            }
+        };
+        $rootScope.$emit('$routeChangeSuccess', mockCurrent);
+        expect($scope.isHome).toEqual(true);
     });
 });

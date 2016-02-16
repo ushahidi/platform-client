@@ -19,6 +19,7 @@ function (
         query: {
             method: 'GET',
             isArray: true,
+            cache: cache,
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }

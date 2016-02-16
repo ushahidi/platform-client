@@ -53,20 +53,10 @@ function (
                 }
             });
 
-            var refreshCollections = function () {
-                $scope.editableCollections = CollectionEndpoint.editableByMe();
-            };
-
             $scope.$on('event:post:selection', function (event, post) {
                 (post.selected ? $scope.selectedItems++ : $scope.selectedItems--);
                 (post.selected ? $scope.selectedPosts.push(post) : $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id})));
             });
-
-            $scope.$on('event:collection:update', function () {
-                refreshCollections();
-            });
-
-            refreshCollections();
 
             $scope.deleteSelectedPosts = function () {
 

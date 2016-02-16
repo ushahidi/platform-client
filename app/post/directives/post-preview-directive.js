@@ -3,7 +3,6 @@ module.exports = [
     '$q',
     '$filter',
     '$rootScope',
-    'CollectionEndpoint',
     'PostEndpoint',
     'TagEndpoint',
     'UserEndpoint',
@@ -17,7 +16,6 @@ function (
     $q,
     $filter,
     $rootScope,
-    CollectionEndpoint,
     PostEndpoint,
     TagEndpoint,
     UserEndpoint,
@@ -64,13 +62,10 @@ function (
         replace: true,
         scope: {
             post:  '=',
-            canSelect: '=',
-            editableCollections: '='
+            canSelect: '='
         },
         templateUrl: 'templates/posts/preview.html',
         link: function ($scope) {
-            $scope.showNewCollectionInput = false;
-            $scope.newCollection = '';
             $scope.getRoleDisplayName = RoleHelper.getRole;
             $scope.availableRoles = RoleHelper.roles();
 
@@ -84,18 +79,15 @@ function (
 
                 return 'post.publish_for_everyone';
             };
-            // Ensure completes stages array is numeric
+
             $scope.updateSelectedItems = function () {
                 $rootScope.$broadcast('event:post:selection', $scope.post);
             };
 
+            // Ensure completes stages array is numeric
             $scope.post.completed_stages = $scope.post.completed_stages.map(function (stageId) {
                 return parseInt(stageId);
             });
-
-            $scope.toggleCreateCollection = function () {
-                $scope.showNewCollectionInput = !$scope.showNewCollectionInput;
-            };
 
             // Replace tags with full tag object
             $scope.post.tags = $scope.post.tags.map(function (tag) {
@@ -108,50 +100,6 @@ function (
                     $scope.post.form = form;
                 });
             }
-
-            // TODO all collection code should be moved into a separate standalone widget
-            $scope.postInCollection = function (collection) {
-                return _.contains($scope.post.sets, String(collection.id));
-            };
-
-            $scope.toggleCollection = function (selectedCollection) {
-                if (_.contains($scope.post.sets, String(selectedCollection.id))) {
-                    $scope.removeFromCollection(selectedCollection);
-                } else {
-                    $scope.addToCollection(selectedCollection);
-                }
-            };
-
-            $scope.addToCollection = function (selectedCollection) {
-                var collectionId = selectedCollection.id, collection = selectedCollection.name;
-
-                CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id})
-                    .$promise.then(function () {
-                        $translate('notify.collection.add_to_collection', {collection: collection})
-                        .then(function (message) {
-                            $scope.post.sets.push(String(collectionId));
-                            Notify.showNotificationSlider(message);
-                        });
-                    }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse);
-                    });
-            };
-
-            $scope.removeFromCollection = function (selectedCollection) {
-                var collectionId = selectedCollection.id, collection = selectedCollection.name;
-
-                CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
-                    .$promise
-                    .then(function () {
-                        $translate('notify.collection.removed_from_collection', {collection: collection})
-                        .then(function (message) {
-                            $scope.post.sets = _.without($scope.post.sets, String(collectionId));
-                            Notify.showNotificationSlider(message);
-                        });
-                    }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse);
-                    });
-            };
 
             $scope.publishPostTo = function () {
 
@@ -210,40 +158,6 @@ function (
             };
 
             $scope.publishRole = $scope.postIsPublishedTo();
-
-            /*
-            $scope.searchCollections = function (query) {
-                CollectionEndpoint.query(query)
-                .$promise
-                .then(function (result) {
-                   $scope.editableCollectionsLocal = results;
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
-            };
-
-            $scope.clearSearch = function() {
-                $rootScope.$broadcast('event:collection:update');
-                $scope.editableCollectionsLocal = $scope.editableCollections;
-            };
-            */
-
-            $scope.createNewCollection = function (collectionName) {
-                var collection = {
-                    'name': collectionName,
-                    'user_id': $rootScope.currentUser.userId
-                };
-                CollectionEndpoint.save(collection)
-                .$promise
-                .then(function (collection) {
-                    $scope.addToCollection(collection);
-                    $rootScope.$broadcast('event:collection:update');
-                    $scope.newCollection = '';
-                    $scope.toggleCreateCollection();
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
-            };
 
             // determine which stage the post is at
             getCurrentStage($scope.post).then(function (currentStage) {
