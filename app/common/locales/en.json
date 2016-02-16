@@ -417,6 +417,7 @@
         "site_description_placeholder" : "An optional one sentence description",
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
+        "site_private" : "Make this deployment private",
         "select_image" : "Select image",
         "save" : "Save",
         "saved_settings" : "Deployment settings saved!",
