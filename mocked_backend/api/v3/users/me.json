@@ -9,7 +9,7 @@
     "last_attempt": null,
     "created": "1970-01-01T00:00:00+00:00",
     "updated": "2014-12-13T19:17:57+00:00",
-    "role": "Admin",
+    "role": "admin",
     "allowed_methods": [
         "get",
         "post",
