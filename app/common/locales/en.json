@@ -456,6 +456,10 @@
     "data_import" :{
         "import" : "Import",
         "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type.",
+        "import_explanation_file_size" : " - The size for a single file is limited to 2 MB.",
+        "import_explanation_format_location_1" : " - In order to include location geographic points in your csv. That location should have the following format:",
+        "import_explanation_format_location_2" : "{lat: coordinate, lon: coordinate}",
+        "import_explanation_format_location_3" : "where coordinate is a point value, for example, 41.54332",
         "csv" : "CSV",
         "post_type" : "Import to which post type?",
         "file_csv" : "CSV file",
@@ -465,6 +469,7 @@
         "organize_your_imported_data" : "Assign CSV columns to post fields",
         "assign_csv_message" : "Assign CSV columns to post fields",
         "csv_instructions" : "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",
+        "csv_instructions_required_fields" : " - Fields marked with a * are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
         "dont_import" : "Don\'t import",
@@ -551,7 +556,8 @@
         "data_import" : {
             "csv_upload" : "File {{name}} successfully uploaded",
             "csv_mappings_set" : "CSV mappings set successfully",
-            "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}"
+            "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}",
+            "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}"
         },
         "general_settings" : {
             "save_success" : "General settings saved"
