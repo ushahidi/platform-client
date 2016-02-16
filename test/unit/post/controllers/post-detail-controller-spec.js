@@ -32,6 +32,7 @@ describe('Post detail controller', function () {
        .controller('postDetailController', require(ROOT_PATH + 'app/post/controllers/post-detail-controller.js'))
        .service('PostEndpoint', require(ROOT_PATH + 'app/post/services/endpoints/post-endpoint.js'))
        .service('UserEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/user-endpoint.js'))
+       .service('RoleEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/role.js'))
        .service('ConfigEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/config.js'))
        .service('CollectionEndpoint', require(ROOT_PATH + 'app/set/services/endpoints/collection.js'))
        .service('TagEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/tag.js'))
@@ -40,7 +41,6 @@ describe('Post detail controller', function () {
        .service('FormEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-stages.js'))
        .service('Maps', require(ROOT_PATH + 'app/common/services/maps.js'))
        .service('Notify', require(ROOT_PATH + 'app/common/services/notify.js'))
-       .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'))
        .factory('Leaflet', function () {
            return window.L;
        });
@@ -127,16 +127,6 @@ describe('Post detail controller', function () {
 
     it('should show the current published state as draft', function () {
         expect($scope.publishedFor()).toEqual('post.publish_for_you');
-    });
-
-    it('should publish post for everyone', function () {
-        expect($scope.postIsPublishedTo()).toEqual('draft');
-
-        spyOn(PostEndpoint, 'update').and.callThrough();
-        $scope.publishRole = '';
-        $scope.publishPostTo();
-
-        expect($scope.postIsPublishedTo()).toEqual('');
     });
 
     it('should show type as false for point and geometry but true for other', function () {

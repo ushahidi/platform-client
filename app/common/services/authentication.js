@@ -5,13 +5,17 @@ module.exports = [
     'Util',
     'CONST',
     'Session',
+    'RoleEndpoint',
+    '_',
 function (
     $rootScope,
     $http,
     $q,
     Util,
     CONST,
-    Session
+    Session,
+    RoleEndpoint,
+    _
 ) {
 
     // check whether we have initially an old access_token and userId
@@ -24,7 +28,8 @@ function (
             userId: userData.id,
             realname: userData.realname,
             email: userData.email,
-            role: userData.role
+            role: userData.role,
+            permissions: userData.permissions
         });
 
         loginStatus = true;
@@ -61,12 +66,14 @@ function (
 
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
+                        RoleEndpoint.query({name: userDataResponse.data.role}).$promise.then(function (results) {
+                            userDataResponse.data.permissions = !_.isEmpty(results) ? results[0].permissions : [];
+                            setToLoginState(userDataResponse.data);
 
-                        setToLoginState(userDataResponse.data);
+                            $rootScope.$broadcast('event:authentication:login:succeeded');
 
-                        $rootScope.$broadcast('event:authentication:login:succeeded');
-                        deferred.resolve();
-
+                            deferred.resolve();
+                        });
                     }, handleRequestError);
             };
 

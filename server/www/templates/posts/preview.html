@@ -30,38 +30,20 @@
     </div>
     <div class="step-and-actions">
         <div class="step todo">
-            <h4 class="delta-alt" translate>
-                post.who_can_see_this
-            </h4>
-            <p ng-show="post.allowed_privileges.indexOf('update') == -1">
-                <span class="icon-left fa-globe" translate>
-                    {{publishedFor()}}
-                </span>
-            </p>
-            <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="custom-select cta init">
-                <select
-                    ng-change="publishPostTo()"
-                    ng-model="publishRole"
-                >
-                     <option
-                          value="draft"
-                          translate>
-                              post.publish_for_you
-                     </option>
-                     <option
-                          data-icon="fa-globe"
-                          value=""
-                          translate>
-                              post.publish_for_everyone
-                     </option>
-                     <option
-                          ng-repeat="role in availableRoles"
-                          data-icon="fa-user"
-                          value="{{role.name}}"
-                          >
-                              {{role.display_name}}
-                     </option>
-                </select>
+            <div ng-show="post.allowed_privileges.indexOf('update') == -1">
+                <h4 class="delta-alt" translate>
+                    post.who_can_see_this
+                </h4>
+                <p>
+                    <span class="icon-left fa-globe" translate>
+                        {{publishedFor()}}
+                    </span>
+                </p>
+            </div>
+            <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
+                <role-selector
+                    toggle-role-func="publishPostTo(updatedPost)"
+                    post="post" ></role-selector>
             </div>
         </div>
         <div class="actions-toggle">

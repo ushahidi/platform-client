@@ -8,7 +8,6 @@ function (
         '$translate',
         'PostEntity',
         'PostEndpoint',
-        'RoleHelper',
         'TagEndpoint',
         'FormEndpoint',
         'FormStageEndpoint',
@@ -22,7 +21,6 @@ function (
             $translate,
             postEntity,
             PostEndpoint,
-            RoleHelper,
             TagEndpoint,
             FormEndpoint,
             FormStageEndpoint,
@@ -32,8 +30,6 @@ function (
         ) {
 
             $scope.categories = TagEndpoint.query();
-            $scope.availableRoles = RoleHelper.roles();
-            $scope.getRoleDisplayName = RoleHelper.getRole;
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
@@ -160,7 +156,7 @@ function (
                 }
             };
 
-            $scope.publishPostTo = function () {
+            $scope.publishPostTo = function (updatedPost) {
 
                 // first check if stages required have been marked complete
                 var requiredStages = _.where($scope.stages, {required: true}), errors = [];
@@ -177,23 +173,14 @@ function (
                     return;
                 }
 
-                if ($scope.publishRole) {
-                    if ($scope.publishRole === 'draft') {
-                        $scope.post.status = 'draft';
-                    } else {
-                        $scope.post.status = 'published';
-                        $scope.post.published_to = [$scope.publishRole];
-                    }
-                } else {
-                    $scope.post.status = 'published';
-                    $scope.post.published_to = [];
-                }
+                $scope.post = updatedPost;
 
                 PostEndpoint.update($scope.post).
                 $promise
                 .then(function (post) {
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-                    $translate(message)
+                    var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
+                    $translate(message, {role: role})
                     .then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
@@ -201,20 +188,6 @@ function (
                     Notify.showApiErrors(errorResponse);
                 });
             };
-
-            $scope.postIsPublishedTo = function () {
-                if ($scope.post.status === 'draft') {
-                    return 'draft';
-                }
-
-                if (!_.isEmpty($scope.post.published_to)) {
-                    return $scope.post.published_to[0];
-                }
-
-                return '';
-            };
-
-            $scope.publishRole = $scope.postIsPublishedTo();
 
             $scope.canSavePost = function () {
                 var valid = true;
@@ -276,6 +249,7 @@ function (
                                 name: $scope.post.title
                             }).then(function (message) {
                             Notify.showNotificationSlider(message);
+                            $location.path('/posts/' + response.id);
                         });
                     } else {
                         Notify.showSingleAlert('Saved!');

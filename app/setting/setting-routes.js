@@ -74,7 +74,15 @@ function (
     })
     .when('/settings/roles', {
         controller: require('./controllers/setting-roles-controller.js'),
-        templateUrl: 'templates/settings/todo.html'
+        templateUrl: 'templates/settings/roles/roles.html'
+    })
+    .when('/settings/roles/create', {
+        controller: require('./controllers/setting-roles-controller.js'),
+        templateUrl: 'templates/settings/roles/roles-edit.html'
+    })
+    .when('/settings/roles/:id', {
+        controller: require('./controllers/setting-roles-controller.js'),
+        templateUrl: 'templates/settings/roles/roles-edit.html'
     })
     .when('/settings/datasources', {
         controller: require('./controllers/setting-datasources-controller.js'),

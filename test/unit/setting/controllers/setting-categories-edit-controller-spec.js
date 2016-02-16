@@ -17,7 +17,6 @@ describe('setting categories edit controller', function () {
         testApp.controller('settingCategoriesEditController', require(ROOT_PATH + 'app/setting/controllers/setting-categories-edit-controller.js'))
 
 
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'))
         .service('multiTranslate', require(ROOT_PATH + 'app/common/services/multi-translate.js'))
         .run(require(ROOT_PATH + 'app/common/global/event-handlers.js'));
 

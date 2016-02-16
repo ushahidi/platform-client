@@ -13,6 +13,7 @@ angular.module('e2e-mocks', ['ngMockE2E'])
             'config/map': require('../mocked_backend/api/v3/config/map.json'),
             'sets': require('../mocked_backend/api/v3/sets.json'),
             'collections': require('../mocked_backend/api/v3/collections.json'),
+            'roles': require('../mocked_backend/api/v3/roles.json'),
             'users': require('../mocked_backend/api/v3/users.json'),
             'users/me': require('../mocked_backend/api/v3/users/me.json'),
             'config/site': require('../mocked_backend/api/v3/config/site.json')

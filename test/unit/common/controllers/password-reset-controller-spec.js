@@ -15,8 +15,7 @@ describe('common password reset controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('passwordResetController', require(ROOT_PATH + 'app/common/controllers/password-reset-controller.js'))
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'));
+        testApp.controller('passwordResetController', require(ROOT_PATH + 'app/common/controllers/password-reset-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

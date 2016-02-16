@@ -12,15 +12,17 @@ angular.module('ushahidi.common', [
 
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
+
 .service('ConfigEndpoint', require('./services/endpoints/config.js'))
 .service('UserEndpoint', require('./services/endpoints/user-endpoint.js'))
 .service('FormEndpoint', require('./services/endpoints/form.js'))
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
+.service('RoleEndpoint', require('./services/endpoints/role.js'))
+.service('PermissionEndpoint', require('./services/endpoints/permission.js'))
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
-.service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
-.service('RoleHelper', require('./services/role-helper.js'))
+
 .service('PostViewHelper', require('./services/view-helper.js'))
 .service('Config', require('./services/config.js'))
 .service('Util', require('./services/util.js'))
@@ -34,12 +36,14 @@ angular.module('ushahidi.common', [
 .service('Registration', require('./services/registration.js'))
 .service('PasswordReset', require('./services/password-reset.js'))
 .service('IconManager', require('./services/icon-manager.js'))
+.service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
 
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('notifier', require('./controllers/notifier.js'))
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
+.directive('roleSelector', require('./directives/role-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 

@@ -17,7 +17,6 @@ describe('setting categories create controller', function () {
         testApp.controller('settingCategoriesCreateController', require(ROOT_PATH + 'app/setting/controllers/setting-categories-create-controller.js'))
 
 
-        .service('RoleHelper', require(ROOT_PATH + 'app/common/services/role-helper.js'))
         .service('multiTranslate', require(ROOT_PATH + 'app/common/services/multi-translate.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);

@@ -3,14 +3,12 @@ module.exports = [
     '$translate',
     '$q',
     'TagEndpoint',
-    'RoleHelper',
     'Notify',
 function (
     $scope,
     $translate,
     $q,
     TagEndpoint,
-    RoleHelper,
     Notify
 ) {
     $translate('tool.manage_tags').then(function (title) {
@@ -18,7 +16,6 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.getRole = RoleHelper.getRole;
 
     $scope.refreshView = function () {
         TagEndpoint.query().$promise.then(function (tags) {
