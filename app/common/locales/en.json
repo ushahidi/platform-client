@@ -601,6 +601,7 @@
             "delete_question" : "Are you sure you want to delete the role {{role}}?",
             "destroy_success" : "Role {{role}} deleted.",
             "save_success" : "Role {{role}} saved.",
+            "last_admin" : "You can not delete the only admin role"
         },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}",
