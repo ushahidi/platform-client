@@ -18,7 +18,7 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.formId;
 
-            $scope.csvEnabled = Config.features.data-import.csv.enabled ? true : false;
+            $scope.csvEnabled = Config.features['data-import'].csv.enabled ? true : false;
 
             $scope.importCSV = function () {
                 if (!$scope.fileContainer.file) {
