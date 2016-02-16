@@ -22,7 +22,7 @@
             <button ng-click="saveRole(role, false)" ng-disabled="form.$invalid || processing" translate>
                 role.save
             </button>
-            <button ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
+            <button class="save save-add" ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
                 role.save_add_another
             </button>
 
