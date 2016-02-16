@@ -3,11 +3,13 @@ module.exports = [
     '$location',
     'RoleEndpoint',
     'Notify',
+    'Config',
 function (
     $translate,
     $location,
     RoleEndpoint,
-    Notify
+    Notify,
+    Config
 ) {
     return {
         restrict: 'A',
@@ -23,6 +25,8 @@ function (
             };
 
             $scope.refreshView();
+
+            $scope.rolesEnabled = Config.features.roles.enabled ? true : false;
 
             $scope.deleteRole = function (role) {
                 $translate('notify.role.delete_question', {
