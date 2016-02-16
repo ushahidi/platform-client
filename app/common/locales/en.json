@@ -329,6 +329,7 @@
         "name" : "Name",
         "description" : "Description",
         "save" : "Save Role",
+        "save_add_another" : "Save & Add Another",
         "permissions" : "Permissions",
         "delete" : "Delete",
     },
@@ -360,6 +361,7 @@
     "tag": {
         "add_tag" : "Add Category",
         "save" : "Save Category",
+        "save_add_another" : "Save & Add Another",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "saved_tag": "Category saved.",
@@ -475,6 +477,7 @@
         "edit_user" : "Edit User",
         "change_role" : "Change Role",
         "save" : "Save User",
+        "save_add_another" : "Save & Add Another",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",

@@ -2,6 +2,7 @@ module.exports = [
     '$translate',
     '$location',
     '$routeParams',
+    '$route',
     'RoleEndpoint',
     'PermissionEndpoint',
     'Notify',
@@ -9,6 +10,7 @@ function (
     $translate,
     $location,
     $routeParams,
+    $route,
     RoleEndpoint,
     PermissionEndpoint,
     Notify
@@ -33,14 +35,15 @@ function (
                 $scope.permissions = permissions.results;
             });
 
-            $scope.saveRole = function (role) {
+            $scope.saveRole = function (role, addAnother) {
                 $scope.processing = true;
                 role.name = role.name ? role.name : role.display_name;
+                var whereToNext = 'settings/roles';
 
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
                     $translate('notify.role.save_success', {role: role.display_name}).then(function (message) {
                         Notify.showNotificationSlider(message);
-                        $location.path('/settings/roles/' + result.id);
+                        addAnother ? $route.reload() : $location.path(whereToNext);
                     });
                 }, function (errorResponse) { // error
                     Notify.showApiErrors(errorResponse);
