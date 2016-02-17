@@ -71,7 +71,7 @@ function (
                 }
                 if (!_.isEmpty($scope.post.published_to)) {
 
-                    return $scope.post.published_to;
+                    return $scope.post.published_to.join(', ');
                 }
 
                 return 'post.publish_for_everyone';
