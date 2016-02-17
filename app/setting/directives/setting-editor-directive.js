@@ -4,6 +4,7 @@ module.exports = [
     '$translate',
     '$rootScope',
     'ConfigEndpoint',
+    'Config',
     '_',
     'Notify',
     'Util',
@@ -14,6 +15,7 @@ function (
     $translate,
     $rootScope,
     ConfigEndpoint,
+    Config,
     _,
     Notify,
     Util,
@@ -31,6 +33,10 @@ function (
             $scope.saving_config = false;
             $scope.fileContainer = {
                 file : null
+            };
+
+            $scope.isPrivateEnabled = function () {
+                return Config.features.private.enabled;
             };
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
