@@ -24,6 +24,7 @@ describe('Post detail controller', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
+            'ushahidi.mock',
             'pascalprecht.translate',
             'ngResource',
             'angular-cache',
@@ -69,7 +70,8 @@ describe('Post detail controller', function () {
             post: {
                 tags: [],
                 form: {
-                    id: 1
+                    id: 1,
+                    name: 'test form'
                 },
                 user: {
                     id: 1

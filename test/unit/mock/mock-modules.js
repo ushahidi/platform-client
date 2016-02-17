@@ -27,6 +27,8 @@ angular.module('ushahidi.mock', [])
 .service('PermissionEndpoint', require('./services/permission.js'))
 .service('DataProviderEndpoint', require('./services/data-provider.js'))
 
+.service('Config', require('./services/configWrapper.js'))
+
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
 .service('Maps', require('./services/maps.js'))

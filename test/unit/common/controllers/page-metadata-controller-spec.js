@@ -8,6 +8,7 @@ describe('page-metadata controller', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
+        'ushahidi.mock',
         'pascalprecht.translate'
         ])
         // .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
