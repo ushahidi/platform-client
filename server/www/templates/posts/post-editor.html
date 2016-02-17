@@ -70,6 +70,7 @@
                         <span class="status {{stageIsComplete(stage.id)? 'complete' : ''}}">
                         </span>
                     </li>
+                    <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank. -->
                 </ul>
             </nav>
             <div class="vertical-tabs-content">
@@ -128,17 +129,17 @@
                       </label>
                       <!-- type: checkbox -->
                       <div class="form-field checkbox" ng-if="isCheckbox(attribute)" ng-repeat="option in attribute.options">
-                          <input 
-                              type="checkbox" 
-                              checklist-model="post.values[attribute.key]" 
-                              ng-required="attribute.required" 
+                          <input
+                              type="checkbox"
+                              checklist-model="post.values[attribute.key]"
+                              ng-required="attribute.required"
                               id="values[{{attribute.key}}][{{key}}]"
                               name="values_{{attribute.key}}_{{option}}"
-                              checklist-value="option" 
+                              checklist-value="option"
                               value="option"
                               ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
                          <label>
-                              {{option}} 
+                              {{option}}
                           </label>
                       </div>
 
