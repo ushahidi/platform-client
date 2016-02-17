@@ -4,7 +4,7 @@
         {
             "id": 1,
             "url": "http://api.ushahidi.dev/api/v3/roles/1",
-            "name": "Admin",
+            "name": "admin",
             "display_name": "Admin",
             "created": "1970-01-01T00:00:00+00:00",
             "updated": null,

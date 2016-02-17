@@ -44,7 +44,7 @@ function (
     };
 
     $rootScope.isAdmin = function () {
-        return (($rootScope.currentUser || {}).role === 'Admin');
+        return (($rootScope.currentUser || {}).role === 'admin');
     };
 
     $rootScope.goBack = function () {

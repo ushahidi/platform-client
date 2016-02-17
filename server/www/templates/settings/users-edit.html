@@ -49,9 +49,13 @@
             </div>
 
             <div class="save-button">
-                <button class="save" ng-click="saveUser(user)" ng-disabled="form.$invalid || processing">
+                <button class="save" ng-click="saveUser(user, false)" ng-disabled="form.$invalid || processing">
                     <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
                     <span translate>user.save</span>
+                </button>
+                <button class="save save-add" ng-show="!user.id" ng-click="saveUser(user, true)" ng-disabled="form.$invalid || processing">
+                    <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
+                    <span translate>user.save_add_another</span>
                 </button>
             </div>
         </form>

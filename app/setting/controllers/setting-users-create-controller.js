@@ -3,6 +3,7 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
+    '$route',
     'UserEndpoint',
     'Notify',
     '_',
@@ -12,6 +13,7 @@ function (
     $rootScope,
     $translate,
     $location,
+    $route,
     UserEndpoint,
     Notify,
     _,
@@ -25,8 +27,10 @@ function (
     $scope.user = {};
     $scope.processing = false;
 
-    $scope.saveUser = function (user) {
+    $scope.saveUser = function (user, addAnother) {
         $scope.processing = true;
+        var whereToNext = '/settings/users';
+
         UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
                 $translate('notify.user.save_success', {name: user.realname}).then(function (message) {
@@ -35,7 +39,7 @@ function (
                 $scope.processing = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
-                $location.path('/settings/users/' + response.id);
+                addAnother ? $route.reload() : $location.path(whereToNext);
             }
         }, function (errorResponse) { // error
             var validationErrors = [];

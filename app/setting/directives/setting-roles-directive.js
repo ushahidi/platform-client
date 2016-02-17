@@ -4,12 +4,14 @@ module.exports = [
     'RoleEndpoint',
     'Notify',
     'Config',
+    '_',
 function (
     $translate,
     $location,
     RoleEndpoint,
     Notify,
-    Config
+    Config,
+    _
 ) {
     return {
         restrict: 'A',
@@ -28,7 +30,27 @@ function (
 
             $scope.rolesEnabled = Config.features.roles.enabled ? true : false;
 
+            $scope.checkIfLastAdmin = function () {
+                var admins = 0;
+                _.each($scope.roles, function (role) {
+                    if (role.name === 'admin') {
+                        admins++;
+                    }
+                });
+
+                return admins === 1;
+            };
+
             $scope.deleteRole = function (role) {
+                if (role.name === 'admin' && $scope.checkIfLastAdmin()) {
+                    $translate('notify.role.last_admin')
+                    .then(function (message) {
+                        Notify.showSingleAlert(message);
+                    });
+                    return;
+
+                }
+
                 $translate('notify.role.delete_question', {
                     role: role.display_name
                 }).then(function (message) {

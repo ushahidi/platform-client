@@ -46,6 +46,22 @@ function (
                 });
             };
 
+            // Check for missing required fields and return the missing fields
+            $scope.checkRequiredFields = function (fields) {
+                var missing = [];
+                var difference = _.difference($scope.required_fields, fields);
+
+                if (!_.isEmpty(difference)) {
+                    _.each(difference, function (field) {
+                        missing.push(
+                            $scope.required_fields_map[field]
+                        );
+                    });
+                }
+
+                return missing;
+            };
+
             $scope.submitMappings = function (csv) {
 
                 // Check to make sure the user hasn't double mapped a key
@@ -73,9 +89,20 @@ function (
                     return;
                 }
 
+                //Check required fields are set
+                var missing = $scope.checkRequiredFields(csv.maps_to);
+                if (!_.isEmpty(missing)) {
+                    $translate('notify.data_import.required_fields', {required: missing.join(', ')})
+                    .then(function (message) {
+                        Notify.showAlerts([message]);
+                    });
+                    return;
+                }
+
                 csv.fixed = {
                     'form': $scope.form.id
                 };
+
                 DataImportEndpoint.update(csv)
                 .$promise
                 .then(function (csv) {

@@ -269,7 +269,7 @@
             "add_a_post" : "Add a post",
             "edit_post" : "Edit {{title}}",
             "change_type" : "Change type",
-            "incomplete_step" : "The required step {{stage}} is not marked complete",
+            "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
             "save" : "Save",
             "save_post" : "Save Post",
             "publish" : "Publish to...",
@@ -340,6 +340,7 @@
         "name" : "Name",
         "description" : "Description",
         "save" : "Save Role",
+        "save_add_another" : "Save & Add Another",
         "permissions" : "Permissions",
         "delete" : "Delete",
     },
@@ -371,6 +372,7 @@
     "tag": {
         "add_tag" : "Add Category",
         "save" : "Save Category",
+        "save_add_another" : "Save & Add Another",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "saved_tag": "Category saved.",
@@ -426,6 +428,7 @@
         "site_description_placeholder" : "An optional one sentence description",
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
+        "site_private" : "Make this deployment private",
         "select_image" : "Select image",
         "save" : "Save",
         "saved_settings" : "Deployment settings saved!",
@@ -466,6 +469,11 @@
     "data_import" :{
         "import" : "Import",
         "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type.",
+        "import_explanation_file_size" : " - The size for a single file is limited to 2 MB.",
+        "import_explanation_format_location_1" : " - In order to include location geographic points in your csv. That location should have the following format:",
+        "import_explanation_format_location_2" : "'{\"lat\": coordinate, \"lon\": coordinate}'",
+        "import_explanation_format_location_3" : "where coordinate is a point value, for example, 41.54332",
+        "import_explanation_required_fields" : " - All required post type fields must have an associated value set in the CSV. For example, if the field title is required then the field must be mapped to a CSV column where all rows of that column have a value set.",
         "csv" : "CSV",
         "post_type" : "Import to which post type?",
         "file_csv" : "CSV file",
@@ -475,6 +483,7 @@
         "organize_your_imported_data" : "Assign CSV columns to post fields",
         "assign_csv_message" : "Assign CSV columns to post fields",
         "csv_instructions" : "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",
+        "csv_instructions_required_fields" : " - Fields marked with a * are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
         "dont_import" : "Don\'t import",
@@ -487,6 +496,7 @@
         "edit_user" : "Edit User",
         "change_role" : "Change Role",
         "save" : "Save User",
+        "save_add_another" : "Save & Add Another",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",
@@ -560,7 +570,8 @@
         "data_import" : {
             "csv_upload" : "File {{name}} successfully uploaded",
             "csv_mappings_set" : "CSV mappings set successfully",
-            "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}"
+            "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}",
+            "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}"
         },
         "general_settings" : {
             "save_success" : "General settings saved"
@@ -613,6 +624,7 @@
             "delete_question" : "Are you sure you want to delete the role {{role}}?",
             "destroy_success" : "Role {{role}} deleted.",
             "save_success" : "Role {{role}} saved.",
+            "last_admin" : "You can not delete the only admin role"
         },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}",

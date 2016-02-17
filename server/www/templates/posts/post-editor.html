@@ -70,6 +70,7 @@
                         <span class="status {{stageIsComplete(stage.id)? 'complete' : ''}}">
                         </span>
                     </li>
+                    <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank. -->
                 </ul>
             </nav>
             <div class="vertical-tabs-content">
@@ -128,15 +129,17 @@
                       </label>
                       <!-- type: checkbox -->
                       <div class="form-field checkbox" ng-if="isCheckbox(attribute)" ng-repeat="option in attribute.options">
-                          <input 
-                              type="checkbox" 
-                              checklist-model="post.values[attribute.key]" 
-                              ng-required="attribute.required" 
-                              checklist-value="option" 
+                          <input
+                              type="checkbox"
+                              checklist-model="post.values[attribute.key]"
+                              ng-required="attribute.required"
+                              id="values[{{attribute.key}}][{{key}}]"
+                              name="values_{{attribute.key}}_{{option}}"
+                              checklist-value="option"
                               value="option"
                               ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
                          <label>
-                              {{option}} 
+                              {{option}}
                           </label>
                       </div>
 
@@ -147,6 +150,8 @@
                                   <input
                                         type="text"
                                         view="date"
+                                        id="values[{{attribute.key}}][{{key}}]"
+                                        name="values_{{attribute.key}}"
                                         min-view="date"
                                         date-time="post.values[attribute.key][key]"
                                         format="yyyy-MM-dd"
@@ -159,6 +164,8 @@
                              <div ng-if="isDateTime(attribute)" class="">
                                 <input
                                     type="text"
+                                    id="values[{{attribute.key}}][{{key}}]"
+                                    name="values_{{attribute.key}}"
                                     date-time="post.values[attribute.key][key]"
                                     ng-model="post.values[attribute.key][key]"
                                     auto-close="true"

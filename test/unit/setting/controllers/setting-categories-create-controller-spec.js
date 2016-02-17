@@ -36,7 +36,8 @@ describe('setting categories create controller', function () {
         spyOn($scope, '$emit').and.callThrough();
 
         $controller('settingCategoriesCreateController', {
-            $scope: $scope
+            $scope: $scope,
+            $route: {reload: function () {}}
         });
 
         $rootScope.$digest();

@@ -30,6 +30,11 @@
         <select id="site-settings-language" ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages"></select>
     </div>
 
+    <div ng-show="isPrivateEnabled()" class="form-field checkbox">
+        <input id="private" ng-model="site.private" type="checkbox">
+        <label for="private" translate>settings.site_private</label>
+    </div>
+
     <div class="divider white"></div>
 
     <div class="save-button">

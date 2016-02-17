@@ -23,7 +23,6 @@
                     </div>
                     <div id="options" class="actions-content init active">
                         <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
-                        <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-click="goEdit()">
                             <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
                         </a>
                     <!--    <button type="button" class="button-secondary">
@@ -53,6 +52,7 @@
                             <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
                             </span>
                         </li>
+                        <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank.-->
                     </ul>
                 </nav>
                 <div class="vertical-tabs-content">
