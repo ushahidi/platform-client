@@ -34,6 +34,10 @@ function (
                 };
             }
 
+            $scope.featuredEnabled = function () {
+                return $rootScope.hasPermission('Manage Posts');
+            };
+
             $scope.isAdmin = $rootScope.isAdmin;
 
             RoleEndpoint.query().$promise.then(function (roles) {
