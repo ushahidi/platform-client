@@ -132,10 +132,22 @@ function (
                 return _.chain($scope.attributes)
                 .where({form_stage_id : stageId, required: true})
                 .reduce(function (isValid, attr) {
-                    if (_.isUndefined($scope.form['values_' + attr.key]) || $scope.form['values_' + attr.key].$invalid) {
-                        return false;
+                    // checkbox validity needs to be handled differently
+                    // because it has multiple inputs identified via the options
+                    if (attr.input === 'checkbox') {
+                        var checkboxValidity = false;
+                        _.each(attr.options, function (option) {
+                            if (!_.isUndefined($scope.form['values_' + attr.key + '_' + option]) && !$scope.form['values_' + attr.key + '_' + option].$invalid) {
+                                checkboxValidity = isValid;
+                            }
+                        });
+                        return checkboxValidity;
+                    } else {
+                        if (_.isUndefined($scope.form['values_' + attr.key]) || $scope.form['values_' + attr.key].$invalid) {
+                            return false;
+                        }
+                        return isValid;
                     }
-                    return isValid;
                 }, true)
                 .value();
             };
