@@ -35,7 +35,14 @@ function (
                         $location.url('/settings/data-mapper/' + $scope.formId + '/' + csv.id);
                     });
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    $translate('notify.data_import.generic_error').then(function (message) {
+                        if (!errorResponse.data) {
+                            errorResponse.data = {errors: [
+                                {message: message}
+                            ]};
+                        }
+                        Notify.showApiErrors(errorResponse);
+                    });
                 });
             };
         }
