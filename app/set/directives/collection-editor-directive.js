@@ -36,6 +36,10 @@ function (
 
             $scope.views = PostViewHelper.views();
 
+            $scope.featuredEnabled = function () {
+                return $rootScope.hasPermission('Manage Posts');
+            };
+
             // Set default view for Collection to be Map
             if (!$scope.collection) {
                 $scope.collection = {};

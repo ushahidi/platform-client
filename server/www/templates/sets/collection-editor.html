@@ -20,7 +20,7 @@
             <select ng-options="view.name as view.display_name for view in views" ng-model="cpyCollection.view">
             </select>
         </div>
-        <div ng-if="hasPermission('Manage Posts')" class="">
+        <div ng-if="featuredEnabled()" class="">
             <label class="checkbox-label">
                 <input type="checkbox" ng-model="cpyCollection.featured">
                 <translate>set.featured_collection</translate>

@@ -16,6 +16,11 @@
         "post_type_limit_reached" : "You have reached the limit of post types for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
         "upgrade" : "Upgrade"
     },
+    "activity": {
+        "recent_activity_timeline" : "Recent Activity timeline",
+        "new_post" : "New Post",
+        "by" : "By",
+    },
     "form": {
         "add_field" : "Add field",
         "add_field_instructions": "Add instructions to this field",

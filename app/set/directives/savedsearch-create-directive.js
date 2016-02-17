@@ -1,5 +1,7 @@
 module.exports = [
+    '$rootScope',
 function (
+    $rootScope
 ) {
     return {
         restrict: 'E',
@@ -14,6 +16,10 @@ function (
             $scope.savedSearch = {
                 view : 'map',
                 visibile_to : []
+            };
+
+            $scope.featuredEnabled = function () {
+                return $rootScope.hasPermission('Manage Posts');
             };
 
             // Compare current filters to default filters
