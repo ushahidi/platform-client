@@ -24,7 +24,7 @@ function (
         replace: true,
         templateUrl: 'templates/sets/collection-editor.html',
         scope: {
-            collection: '=',
+            collection: '=?',
             isOpen: '='
         },
         link: function ($scope, $element, $attrs) {
