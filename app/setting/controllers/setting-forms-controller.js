@@ -19,7 +19,7 @@ function (
     Config,
     _
 ) {
-    $scope.formQuota = Config.features.limits.forms;
+    $scope.formQuota = (typeof Config.features.limits !== 'undefined') ? Config.features.limits.forms : true;
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
