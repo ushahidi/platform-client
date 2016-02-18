@@ -5,6 +5,12 @@ module.exports = [function () {
                 q: 'dummy'
             };
         },
+        options: {
+            tags: {},
+            collections: {},
+            forms: {}
+        },
+        getDefaults: function () {},
         setSelected: function () {},
         clearSelected: function () {}
     };

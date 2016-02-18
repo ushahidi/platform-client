@@ -49,7 +49,6 @@ describe('post editor directive', function () {
         element = '<post-editor post="post" active-form="activeForm"></post-editor>';
         element = $compile(element)($scope);
         $rootScope.$digest();
-
         isolateScope = element.isolateScope();
     }));
 
