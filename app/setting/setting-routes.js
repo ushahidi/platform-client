@@ -24,12 +24,12 @@ function (
         controller: require('./controllers/setting-data-mapper-controller.js'),
         templateUrl: 'templates/settings/data-import/data-mapper.html',
         resolve: {
-            initialData: function ($route, DataRetriever) {
+            initialData: ['$route', 'DataRetriever', function ($route, DataRetriever) {
                 return DataRetriever.dataMapperInitialData(
                     $route.current.params.formId,
                     $route.current.params.id
                 );
-            }
+            }]
         }
     })
     .when('/settings/plugins', {
