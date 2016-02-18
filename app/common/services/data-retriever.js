@@ -43,6 +43,7 @@ function (
                     .value();
 
                 form.attributes = _.chain(results[1])
+                    .reject({type : 'point'})
                     .concat(points)
                     // Add in the Post specific mappable fields
                     .push({
