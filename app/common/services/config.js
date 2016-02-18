@@ -3,12 +3,11 @@ module.exports = [
     'BootstrapConfig',
     'Util',
     'Notify',
-    'BootstrapConfig',
     '_',
 function (
     ConfigEndpoint,
-    Util,
     BootstrapConfig,
+    Util,
     Notify,
     _
 ) {
