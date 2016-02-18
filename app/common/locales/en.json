@@ -487,6 +487,7 @@
     "user": {
         "add_user" : "Add User",
         "edit_user" : "Edit User",
+        "update_password" : "Update Password",
         "change_role" : "Change Role",
         "save" : "Save User",
         "save_add_another" : "Save & Add Another",
