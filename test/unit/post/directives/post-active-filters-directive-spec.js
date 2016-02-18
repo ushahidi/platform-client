@@ -15,7 +15,8 @@ describe('post active filters directive', function () {
         require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
         var testApp = angular.module('testApp', [
-            'ushahidi.mock'
+            'ushahidi.mock',
+            'pascalprecht.translate'
         ]);
 
         testApp.directive('postActiveFilters', require(ROOT_PATH + 'app/post/directives/post-active-filters-directive'))
