@@ -43,4 +43,18 @@ describe('Notify', function () {
             expect(alertMessage[1]).toEqual(['Test message 1', 'Test message 2']);
         });
     });
+
+    describe('showNotificationSlider', function () {
+        beforeEach(function () {
+            spyOn($rootScope, '$emit').and.callThrough();
+            Notify.showNotificationSlider('Test message');
+        });
+
+        it('calls $rootScope.$on with the combined alert messages', function () {
+            expect($rootScope.$emit).toHaveBeenCalled();
+            var notificationMessage = $rootScope.$emit.calls.mostRecent().args;
+            expect(notificationMessage[1]).toEqual('Test message');
+        });
+    });
+
 });

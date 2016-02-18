@@ -9,10 +9,11 @@ angular.module('ushahidi.common.file-upload', [])
         },
 
         controller: [
-            '$scope',
+            '$scope', '$attrs',
             function (
-                $scope
+                $scope, $attrs
             ) {
+                $scope.required = typeof $attrs.required !== 'undefined';
                 $scope.uploadFile = function ($event) {
                     $scope.fileContainer.file = $event.target.files[0];
                 };

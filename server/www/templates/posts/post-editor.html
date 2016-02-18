@@ -39,32 +39,9 @@
                     translate="{{'post.valid.title.' + error}}"></p>
             </div>
             <div ng-show="allowedChangeStatus()" class="form-field select">
-                <div class="custom-select init fa-user">
-                    <select
-                        ng-change="publishPostTo()"
-                        ng-model="publishRole"
-                    >
-                        <option
-                            value="draft"
-                            translate>
-                            post.publish_for_you
-                        </option>
-                        <option
-                            ng-repeat="role in availableRoles"
-                            data-icon="fa-user"
-                            value="{{role.name}}"
-                            >
-                            {{role.display_name}}
-                        </option>
-                        <option
-                            data-icon="fa-globe"
-                            value=""
-                            translate>
-                            post.publish_for_everyone
-                        </option>
-                    </select>
-                </div>
-                <label><span translate>post.can_see_this_post</span></label>
+                <role-selector
+                    toggle-role-func="publishPostTo(updatedPost)"
+                    post="post" ></role-selector>
             </div>
            <!--
            <div class="form-field">
@@ -93,6 +70,7 @@
                         <span class="status {{stageIsComplete(stage.id)? 'complete' : ''}}">
                         </span>
                     </li>
+                    <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank. -->
                 </ul>
             </nav>
             <div class="vertical-tabs-content">
@@ -149,13 +127,31 @@
                       >
                           {{attribute.label}}
                       </label>
+                      <!-- type: checkbox -->
+                      <div class="form-field checkbox" ng-if="isCheckbox(attribute)" ng-repeat="option in attribute.options">
+                          <input
+                              type="checkbox"
+                              checklist-model="post.values[attribute.key]"
+                              ng-required="attribute.required"
+                              id="values[{{attribute.key}}][{{key}}]"
+                              name="values_{{attribute.key}}_{{option}}"
+                              checklist-value="option"
+                              value="option"
+                              ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
+                         <label>
+                              {{option}}
+                          </label>
+                      </div>
+
                       <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
-                          <div ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
+                          <div ng-if="!isCheckbox(attribute)">
                               <!-- type: date -->
                               <div class="input-inline" ng-if="isDate(attribute)">
                                   <input
                                         type="text"
                                         view="date"
+                                        id="values[{{attribute.key}}][{{key}}]"
+                                        name="values_{{attribute.key}}"
                                         min-view="date"
                                         date-time="post.values[attribute.key][key]"
                                         format="yyyy-MM-dd"
@@ -168,6 +164,8 @@
                              <div ng-if="isDateTime(attribute)" class="">
                                 <input
                                     type="text"
+                                    id="values[{{attribute.key}}][{{key}}]"
+                                    name="values_{{attribute.key}}"
                                     date-time="post.values[attribute.key][key]"
                                     ng-model="post.values[attribute.key][key]"
                                     auto-close="true"
@@ -194,11 +192,6 @@
                                 ng-required="attribute.required">
                                 <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
                             </select>
-
-                            <!-- type: checkbox -->
-                            <div class="input-group" ng-if="isCheckbox(attribute)">
-                                <label class="checkbox-label">{{attribute.label}} <input name="values_{{attribute.key}}" type="checkbox" ng-model="post.values[attribute.key][key]" ng-required="attribute.required" value="1" ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></label>
-                            </div>
 
                             <!-- type: radio -->
                             <div class="input-group" ng-if="isRadio(attribute)">
@@ -257,11 +250,6 @@
                                 ng-required="attribute.required"
                                 ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
 
-                            <button
-                                type="button"
-                                class="button-secondary icon-only alt trash"
-                                ng-if="canRemoveValue(attribute, key)"
-                                ng-click="removeValue(attribute, key)"></button>
                         </div>
                     </div>
 
@@ -270,9 +258,6 @@
                         class="alert error"
                         translate="{{'post.valid.values.' + error}}"
                         translate-values="{ label : attribute.label }"></p>
-
-                    <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
-
                   </div>
               </div>
           </div>

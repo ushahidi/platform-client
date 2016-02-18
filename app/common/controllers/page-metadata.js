@@ -19,16 +19,16 @@ function (
     $scope.pageRobots = null;
 
     // Then update from server
-    var reloadSiteConfig = function () {
+    $scope.reloadSiteConfig = function () {
         ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
             $scope.siteTitle = site.name ? site.name : USHAHIDI;
         });
     };
 
     $rootScope.$on('event:update:header', function () {
-        reloadSiteConfig();
+        $scope.reloadSiteConfig();
     });
-    reloadSiteConfig();
+    $scope.reloadSiteConfig();
 
     $rootScope.$on('setPageTitle', function (event, title) {
         $scope.pageTitle = null;

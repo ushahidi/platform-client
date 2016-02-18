@@ -26,6 +26,10 @@ function (
                 };
             }
 
+            $scope.featuredEnabled = function () {
+                return $rootScope.hasPermission('Manage Posts');
+            };
+
             // Compare current filters to saved filters
             $scope.filtersChanged = function () {
                 return !angular.equals($scope.filters, $scope.savedSearch.filter);

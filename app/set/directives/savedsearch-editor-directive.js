@@ -7,7 +7,7 @@ module.exports = [
     '_',
     'Notify',
     'PostViewHelper',
-    'RoleHelper',
+    'RoleEndpoint',
 function (
     $q,
     $location,
@@ -17,7 +17,7 @@ function (
     _,
     Notify,
     PostViewHelper,
-    RoleHelper
+    RoleEndpoint
 ) {
     return {
         restrict: 'E',
@@ -34,9 +34,16 @@ function (
                 };
             }
 
+            $scope.featuredEnabled = function () {
+                return $rootScope.hasPermission('Manage Posts');
+            };
+
             $scope.isAdmin = $rootScope.isAdmin;
 
-            $scope.roles = RoleHelper.roles();
+            RoleEndpoint.query().$promise.then(function (roles) {
+                $scope.roles = roles;
+            });
+
             $scope.views = PostViewHelper.views();
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);

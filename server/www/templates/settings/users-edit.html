@@ -36,7 +36,8 @@
             <label class="input-label"
                 ng-class="{ 'error': form.password.$invalid && form.password.$dirty }"
                 for="password" translate>user.password</label>
-            <input id="password" name="password" type="password"
+            <a ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>     
+            <input ng-show="passwordShown" id="password" name="password" type="password"
                 ng-class="{ 'error': form.password.$invalid && form.password.$dirty }"
                 ng-minlength="7"
                 ng-maxlength="72"
@@ -45,13 +46,17 @@
 
             <label class="input-label" for="role" translate>user.role</label>
             <div class="custom-select" ng-class="{ 'error': form.role.$invalid && form.role.$dirty }">
-                <select id="role" name="role" ng-model="user.role" ng-options="role.name as role.display_name for role in roles"></select>
+                <select id="role" name="role" ng-model="user.role" ng-options="r.name as r.display_name for r in roles"></select>
             </div>
 
             <div class="save-button">
-                <button class="save" ng-click="saveUser(user)" ng-disabled="form.$invalid || processing">
+                <button class="save" ng-click="saveUser(user, false)" ng-disabled="processing">
                     <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
                     <span translate>user.save</span>
+                </button>
+                <button class="save save-add" ng-show="!user.id" ng-click="saveUser(user, true)" ng-disabled="processing">
+                    <i class="fa fa-cog fa-spin ng-hide" ng-show="processing"></i>
+                    <span translate>user.save_add_another</span>
                 </button>
             </div>
         </form>

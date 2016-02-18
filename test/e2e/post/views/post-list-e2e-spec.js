@@ -10,7 +10,7 @@ describe('post detail interaction', function () {
         postCollectionsButtonSelector = '.actions-content .dropdown-trigger.init.dropdown-toggle',
         postCollectionsMenuSelector = '.actions-content .dropdown-menu.init',
         collectionItem = '.form-field.checkbox input',
-        visibilityButtonsSelector = '.step select',
+        visibilityButtonsSelector = '.step legend',
         confirmationMessageSelector = '.confirmation-message-wrapper p';
 
     describe('as a logged in admin user', function () {
@@ -37,13 +37,13 @@ describe('post detail interaction', function () {
 
             describe('when clicking a visibility option', function () {
                 beforeEach(function () {
-                    var optionElement = visibilitySelect.element(by.cssContainingText('option', 'Member'));
+                    var optionElement = element.all(by.css('.step .radio input')).get(1);
                     optionElement.click();
 
                 });
                 it('should set the visibility of the post and display a confirmation', function () {
                     var confirmMessage = element(by.css(confirmationMessageSelector));
-                    expect(confirmMessage.getInnerHtml()).toEqual('Post has been published for Member');
+                    expect(confirmMessage.getInnerHtml()).toEqual('Post has been published for everyone');
                 });
             });
         });

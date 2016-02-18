@@ -9,6 +9,13 @@ function (
     var NotificationEndpoint = $resource(Util.apiUrl('/notifications/:id'), {
         id: '@id'
     }, {
+        query: {
+            method: 'GET',
+            isArray: true,
+            transformResponse: function (data /*, header*/) {
+                return angular.fromJson(data).results;
+            }
+        },
         get: {
             method: 'GET',
             isArray: true,
@@ -21,6 +28,9 @@ function (
         },
         update: {
             method: 'PUT'
+        },
+        delete: {
+            method: 'DELETE'
         }
     });
 

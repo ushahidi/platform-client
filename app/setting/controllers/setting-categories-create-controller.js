@@ -2,8 +2,9 @@ module.exports = [
     '$scope',
     '$location',
     '$translate',
+    '$route',
     'multiTranslate',
-    'RoleHelper',
+    'RoleEndpoint',
     'TagEndpoint',
     'Notify',
     '_',
@@ -11,8 +12,9 @@ function (
     $scope,
     $location,
     $translate,
+    $route,
     multiTranslate,
-    RoleHelper,
+    RoleEndpoint,
     TagEndpoint,
     Notify,
     _
@@ -23,13 +25,17 @@ function (
     });
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
-    $scope.roles = RoleHelper.roles();
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;
+    });
 
     $scope.tag = { type: 'category', icon: 'tag' };
     $scope.processing = false;
 
-    $scope.saveTag = function (tag) {
+    $scope.saveTag = function (tag, addAnother) {
         $scope.processing = true;
+        var whereToNext = 'settings/categories';
+
         TagEndpoint.saveCache(tag).$promise.then(function (response) {
             if (response.id) {
                 $translate(
@@ -39,7 +45,7 @@ function (
                     }).then(function (message) {
                     Notify.showNotificationSlider(message);
                 });
-                $location.path('/settings/categories/' + response.id);
+                addAnother ? $route.reload() : $location.path(whereToNext);
             }
         }, function (errorResponse) { // error
             Notify.showApiErrors(errorResponse);

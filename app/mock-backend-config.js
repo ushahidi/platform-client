@@ -10,12 +10,15 @@ angular.module('e2e-mocks', ['ngMockE2E'])
             'forms/1/stages': require('../mocked_backend/api/v3/stages.json'),
             'forms/1/stages/4': require('../mocked_backend/api/v3/stages/4.json'),
             'forms/1/attributes': require('../mocked_backend/api/v3/attributes.json'),
-            'config/map': require('../mocked_backend/api/v3/config/map.json'),
             'sets': require('../mocked_backend/api/v3/sets.json'),
             'collections': require('../mocked_backend/api/v3/collections.json'),
+            'roles': require('../mocked_backend/api/v3/roles.json'),
             'users': require('../mocked_backend/api/v3/users.json'),
             'users/me': require('../mocked_backend/api/v3/users/me.json'),
-            'config/site': require('../mocked_backend/api/v3/config/site.json')
+            'config/site': require('../mocked_backend/api/v3/config/site.json'),
+            'config/map': require('../mocked_backend/api/v3/config/map.json'),
+            'config/features': require('../mocked_backend/api/v3/config/features.json'),
+            'config': require('../mocked_backend/api/v3/config.json')
         },
 
         getResultForResource = function (resourceName, offset, limit) {

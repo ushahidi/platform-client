@@ -63,15 +63,15 @@
                 <!--
                 <li class="active"><span class="icon-left fa-file-o">Post</span></li>
                 -->
-                <li          
+                <li
                     ng-repeat="stage in form.stages"
-                    ng-class="{'active': visibleStage == stage.id}"  
+                    ng-class="{'active': visibleStage == stage.id}"
                 >
                     <a ng-click="setVisibleStage(stage.id)">
-                        <span 
-                            class="icon-left" 
+                        <span
+                            class="icon-left"
                             ng-class="{'fa-{{stage.icon}}': stage.icon}">{{stage.label}}</span>
-                    </a>    
+                    </a>
                 </li>
 
 
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div
-                ng-repeat="attribute in form.grouped_attributes track by $index" 
+                ng-repeat="attribute in form.grouped_attributes track by $index"
                 ng-show="visibleStage == attribute.form_stage_id"
                 is-open="editIsOpen[$index]"
                 dropdown
@@ -99,17 +99,17 @@
                     <button
                         ng-click="changeAttributePriority(attribute, -1)"
                         type="button" class="button-secondary icon-only alt upvote" ng-disabled="($index == 0) || (form.grouped_attributes[$index-1].form_stage_id != attribute.form_stage_id)"></button>
-                    <button 
+                    <button
                         ng-click="changeAttributePriority(attribute, +1)"
                         type="button" class="button-secondary icon-only alt downvote" ng-disabled="($index == attributes.length-1) || (form.grouped_attributes[$index+1].form_stage_id != attribute.form_stage_id)"></button>
                 </div>
-                <h3 
-                    dropdown-toggle 
+                <h3
+                    dropdown-toggle
                     class="dropdown toggle-content-trigger settings-listing-title">
                     <a href="">{{attribute.label}}</a>
                 </h3>
                 <div class="actions">
-                    <button type="button" ng-click="deleteAttribute(attribute, $index)"class="button-destructive alt"><span class="icon-only fa-trash">Delete</span></button>
+                    <button type="button" ng-click="deleteAttribute(attribute, $index)"class="button-destructive alt"><span class="icon-only" translate>form.delete</span></button>
                 </div>
                 <form class="init toggle-content" dropdown-menu>
                     <label class="input-label" translate>form.field_name</label>
@@ -158,14 +158,14 @@
                    <div>
                        <button type="button" class="button-primary" ng-click="saveAttribute(attribute, $index)">{{ 'form.save_and_close'|translate }}</button>
                    </div>
-               </form>     
+               </form>
             </div>
         </div>
    </div>
     <modal title="form.add_field" visible="isNewAttributeOpen">
         <div class="cards-select">
             <div class="selection-card" ng-repeat="type in availableAttrTypes">
-                <a ng-click="addNewAttribute(type.type, type.input, type.label)" >
+                <a ng-click="addNewAttribute(type)" >
                     <h3>{{ type.label }}</h3>
                 </a>
             </div>
@@ -188,4 +188,3 @@
     </modal>
 
 </main>
-

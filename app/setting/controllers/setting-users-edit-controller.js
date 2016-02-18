@@ -7,7 +7,7 @@ module.exports = [
     'UserEndpoint',
     'Notify',
     '_',
-    'RoleHelper',
+    'RoleEndpoint',
 function (
     $scope,
     $rootScope,
@@ -17,17 +17,24 @@ function (
     UserEndpoint,
     Notify,
     _,
-    RoleHelper
+    RoleEndpoint
 ) {
     $translate('user.edit_user').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
 
+    $scope.passwordShown = true;
+
     UserEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (user) {
         $scope.$emit('setPageTitle', $scope.title + ' - ' + user.realname);
         $scope.user = user;
+        $scope.passwordShown = false;
     });
+
+    $scope.showPassword = function () {
+        $scope.passwordShown = true;
+    };
 
     $scope.processing = false;
 
@@ -49,5 +56,7 @@ function (
         });
     };
 
-    $scope.roles = RoleHelper.roles(true);
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;
+    });
 }];

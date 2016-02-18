@@ -67,12 +67,12 @@ module.exports = [
         $scope.saveNotification = function (savedSearch) {
             var notification = {set: savedSearch.id};
 
-            NotificationEndpoint.save(notification, function (notification) {
+            NotificationEndpoint.save(notification).$promise.then(function (notification) {
                 // No need to show the link after subscription
                 $scope.showNotificationLink = false;
                 $translate('notify.notification.add', {set: savedSearch.name})
                     .then(function (message) {
-                        Notify.showSingleAlert(message);
+                        Notify.showNotificationSlider(message);
                     });
             });
         };

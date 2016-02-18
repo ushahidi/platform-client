@@ -16,6 +16,22 @@ function (
         controller: require('./controllers/setting-map-settings.js'),
         templateUrl: 'templates/settings/map-settings.html'
     })
+    .when('/settings/data-import', {
+        controller: require('./controllers/setting-data-import-controller.js'),
+        templateUrl: 'templates/settings/data-import/data-import.html'
+    })
+    .when('/settings/data-mapper/:formId/:id', {
+        controller: require('./controllers/setting-data-mapper-controller.js'),
+        templateUrl: 'templates/settings/data-import/data-mapper.html',
+        resolve: {
+            initialData: ['$route', 'DataRetriever', function ($route, DataRetriever) {
+                return DataRetriever.dataMapperInitialData(
+                    $route.current.params.formId,
+                    $route.current.params.id
+                );
+            }]
+        }
+    })
     .when('/settings/plugins', {
         controller: require('./controllers/setting-plugins-controller.js'),
         templateUrl: 'templates/settings/todo.html'
@@ -58,7 +74,15 @@ function (
     })
     .when('/settings/roles', {
         controller: require('./controllers/setting-roles-controller.js'),
-        templateUrl: 'templates/settings/todo.html'
+        templateUrl: 'templates/settings/roles/roles.html'
+    })
+    .when('/settings/roles/create', {
+        controller: require('./controllers/setting-roles-controller.js'),
+        templateUrl: 'templates/settings/roles/roles-edit.html'
+    })
+    .when('/settings/roles/:id', {
+        controller: require('./controllers/setting-roles-controller.js'),
+        templateUrl: 'templates/settings/roles/roles-edit.html'
     })
     .when('/settings/datasources', {
         controller: require('./controllers/setting-datasources-controller.js'),

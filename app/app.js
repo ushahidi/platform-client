@@ -51,7 +51,10 @@ var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || proc
         'config',
         'messages',
         'notifications',
-        'contacts'
+        'contacts',
+        'roles',
+        'permissions',
+        'csv'
     ];
 
 angular.module('app',

@@ -133,9 +133,6 @@ describe('users management', function () {
                             _.range(3, 6).forEach(function (i) {
                                 element(by.css('#user-' + i + ' input[type="checkbox"]')).click();
                             });
-                            // element.all(by.css('tr.user input[type="checkbox"]')).then(function(userCheckBoxes){
-                            //
-                            // });
                             element(by.css('#user-1 input[type="checkbox"]')).click();
                         });
 
@@ -160,7 +157,6 @@ describe('users management', function () {
                                     });
                                     it('shows an alert which asks if you really want to change the roles', function () {
                                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to change the role of 4 users to Member?');
-                                        element(by.css('button#confirm-modal-ok')).click();
                                     });
                                 });
 

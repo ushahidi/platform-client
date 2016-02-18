@@ -1,6 +1,6 @@
 <div class="user-admin logged-out" ng-hide="currentUser">
     <a ng-href="/login" class="user-login" translate>nav.login</a>
-    <a ng-href="/register" class="user-register" translate>nav.register</a>
+    <a ng-href="/register" class="user-register" translate ng-show="canRegister()">nav.register</a>
 </div>
 <div class="user-admin logged-in" ng-show="currentUser" dropdown>
     <div class="init" data-toggle="toggle-content" dropdown-toggle>
