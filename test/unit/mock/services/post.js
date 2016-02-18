@@ -47,7 +47,14 @@ module.exports = [function () {
         saveCache: function (post) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                    post.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
+                    post.id === 'pass' ? successCallback({id: 1, allowed_privileges: ['read']}) : failCallback('error');
+                }
+            }};
+        },
+        update: function (post) {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    post.id === 'pass' ? successCallback({id: 1, allowed_privileges: ['read']}) : failCallback('error');
                 }
             }};
         }

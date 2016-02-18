@@ -3,10 +3,22 @@ module.exports = [function () {
         query: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                    successCallback([{
-                        name: 'test form attributes',
-                        id: 1
-                    }]);
+                    successCallback([
+                        {
+                            name: 'test form attributes',
+                            id: 1,
+                            form_stage_id: 1,
+                            key: 'test_attr1',
+                            required: false
+                        },
+                        {
+                            name: 'test form attributes 2',
+                            id: 2,
+                            form_stage_id: 1,
+                            key: 'test_attr2',
+                            required: true
+                        }
+                    ]);
                 }
             }};
         },
