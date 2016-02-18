@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-client",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
