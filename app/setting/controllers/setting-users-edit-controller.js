@@ -24,10 +24,17 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
+    $scope.passwordShown = true;
+
     UserEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (user) {
         $scope.$emit('setPageTitle', $scope.title + ' - ' + user.realname);
         $scope.user = user;
+        $scope.passwordShown = false;
     });
+
+    $scope.showPassword = function () {
+        $scope.passwordShown = true;
+    };
 
     $scope.processing = false;
 

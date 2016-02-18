@@ -24,6 +24,7 @@ function (
         $rootScope.$emit('setPageTitle', title);
     });
 
+    $scope.passwordShown = true;
     $scope.user = {};
     $scope.processing = false;
 
