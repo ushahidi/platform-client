@@ -1,6 +1,7 @@
 module.exports = [
     '_',
     '$q',
+    '$translate',
     'FormEndpoint',
     'FormAttributeEndpoint',
     'DataImportEndpoint',
@@ -8,6 +9,7 @@ module.exports = [
 function (
     _,
     $q,
+    $translate,
     FormEndpoint,
     FormAttributeEndpoint,
     DataImportEndpoint,
@@ -30,7 +32,11 @@ function (
                 form.attributes.push(
                     {
                         'key': 'title',
-                        'label': 'title'
+                        'label': $translate.instant('post.modify.form.title')
+                    },
+                    {
+                        'key': 'content',
+                        'label': $translate.instant('post.modify.form.description')
                     }
                 );
                 var csv = results[2];
