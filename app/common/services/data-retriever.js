@@ -24,21 +24,41 @@ function (
                 DataImportEndpoint.get({id: csvId}).$promise
             ]).then(function (results) {
                 var form = results[0];
+                // Split locations into lat/lon
+                var points = _.chain(results[1])
+                    .where({'type' : 'point'})
+                    .reduce(function (collection, item) {
+                        return collection.concat(
+                            {
+                                key: item.key + '.lat',
+                                label: item.label + ' (Latitude)',
+                                priority: item.priority
+                            }, {
+                                key: item.key + '.lon',
+                                label: item.label + ' (Longitude)',
+                                priority: item.priority
+                            }
+                        );
+                    }, [])
+                    .value();
+
                 form.attributes = _.chain(results[1])
+                    .concat(points)
+                    // Add in the Post specific mappable fields
+                    .push({
+                            'key': 'title',
+                            'label': $translate.instant('post.modify.form.title'),
+                            'priority': 0
+                        },
+                        {
+                            'key': 'content',
+                            'label': $translate.instant('post.modify.form.description'),
+                            'priority': 1
+                        }
+                    )
                     .sortBy('priority')
                     .value();
 
-                // Add in the Post specific mappable fields
-                form.attributes.push(
-                    {
-                        'key': 'title',
-                        'label': $translate.instant('post.modify.form.title')
-                    },
-                    {
-                        'key': 'content',
-                        'label': $translate.instant('post.modify.form.description')
-                    }
-                );
                 var csv = results[2];
                 csv.maps_to = Util.autoMap(
                                          csv.columns,
