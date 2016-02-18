@@ -34,13 +34,16 @@ function (
                 DataImportEndpoint.import({id: $scope.csv.id, action: 'import'})
                 .$promise
                 .then(function (response) {
-                    $translate('notify.data_import.csv_mappings_set').then(
-                    function (message) {
-                        Notify.showNotificationSlider(message);
+                    $translate('notify.data_import.csv_mappings_set', {
+                        processed: response.processed,
+                        errors: response.errors
+                    }).then(
+                        function (message) {
+                            Notify.showNotificationSlider(message);
 
-                        $scope.deleteDataImport($scope.csv);
-                        $location.url('/views/list');
-                    });
+                            $scope.deleteDataImport($scope.csv);
+                            $location.url('/views/list');
+                        });
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
