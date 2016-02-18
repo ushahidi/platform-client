@@ -1,17 +1,18 @@
 {
     "id": "map",
     "clustering": false,
-    "maxClusterRadius": 50,
+    "cluster_radius": 50,
     "default_view": {
-        "baseLayer": "MapQuest",
-        "zoom": 2,
         "lat": -1.3048035,
-        "lon": 36.8473969
+        "lon": 36.8473969,
+        "zoom": 2,
+        "baselayer": "MapQuest",
+        "fit_map_boundaries": true,
+        "icon": "map-marker",
+        "color": "blue"
     },
-    "allowed_methods": {
-        "get": true,
-        "post": true,
-        "put": true,
-        "delete": true
-    }
+    "allowed_privileges": [
+        "read",
+        "search"
+    ]
 }
