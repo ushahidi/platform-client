@@ -17,6 +17,11 @@ function (
         link: function ($scope) {
             $scope.isAdmin = $rootScope.isAdmin;
 
+            $scope.chooseForm = function (form) {
+                angular.copy(form, $scope.activeForm);
+                $scope.post.form  = { id: form.id };
+            };
+
             FormEndpoint.query().$promise.then(function (forms) {
                 $scope.availableForms = forms;
 
@@ -28,12 +33,6 @@ function (
             $scope.filterNotDisabled = function (form) {
                 return !form.disabled;
             };
-
-            $scope.chooseForm = function (form) {
-                angular.copy(form, $scope.activeForm);
-                $scope.post.form  = { id: form.id };
-            };
         }
     };
-
 }];
