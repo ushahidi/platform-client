@@ -67,13 +67,20 @@ function (
 
             $scope.submitMappings = function (csv) {
 
+                if (_.every(csv.maps_to, _.isEmpty)) {
+                    $translate('notify.data_import.no_mappings').then(function (message) {
+                        Notify.showAlerts([message]);
+                    });
+                    return;
+                };
+
                 // Check to make sure the user hasn't double mapped a key
-                // First, collect the coutns for all keys
+                // First, collect the counts for all keys
                 var dups = _.countBy(csv.maps_to, function (item) {
                     return item;
                 });
 
-                // Second, check if any of the keys appears more than once
+                // Second, check if any of the keys appear more than once
                 var duplicateVars = _.filter(csv.maps_to, function (item) {
                     if (dups[item] > 1) {
                         return item;
