@@ -72,7 +72,7 @@ function (
                         Notify.showAlerts([message]);
                     });
                     return;
-                };
+                }
 
                 // Check to make sure the user hasn't double mapped a key
                 // First, collect the counts for all keys
