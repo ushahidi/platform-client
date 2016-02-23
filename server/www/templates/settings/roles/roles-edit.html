@@ -55,12 +55,22 @@
                 </div>
 
                 <div ng-repeat="permission in permissions">
-                    <label class=checkbox-label" for="{{permission.id}}">
+                    <label class="checkbox-label" for="{{permission.id}}">
                         <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="role.permissions" checklist-value="permission.name">
                         {{permission.name}}
                     </label>
                 </div>
             </fieldset>
+
+            <div class="save-button clearfix">
+                <button ng-click="saveRole(role, false)" ng-disabled="form.$invalid || processing" translate>
+                    role.save
+                </button>
+                <button class="save save-add" ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
+                    role.save_add_another
+                </button>
+            </div>
+            
         </form>
     </div>
 </main>
