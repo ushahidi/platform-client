@@ -15,11 +15,13 @@ describe('post preview directive', function () {
         require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
         var testApp = angular.module('testApp', [
-            'ushahidi.mock',
-            'pascalprecht.translate'
+            'ushahidi.mock'
         ]);
 
-        testApp.directive('postPreview', require(ROOT_PATH + 'app/post/directives/post-preview-directive'));
+        testApp.directive('postPreview', require(ROOT_PATH + 'app/post/directives/post-preview-directive'))
+        .value('$filter', function () {
+            return function () {};
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -41,7 +43,6 @@ describe('post preview directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
-
     }));
 
     describe('test directive functions', function () {
@@ -65,13 +66,15 @@ describe('post preview directive', function () {
             spyOn(Notify, 'showAlerts');
 
             $scope.post.id = 'pass';
-            isolateScope.stages[1].required = true;
+            isolateScope.stages = [{
+                id: 1,
+                name: 'test stage',
+                required: true
+            }];
             isolateScope.post.completed_stages = [];
 
             isolateScope.publishPostTo($scope.post);
             expect(Notify.showAlerts).toHaveBeenCalled();
         });
-
-
     });
 });
