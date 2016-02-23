@@ -76,5 +76,23 @@ describe('post preview directive', function () {
             isolateScope.publishPostTo($scope.post);
             expect(Notify.showAlerts).toHaveBeenCalled();
         });
+
+        it('should return which role or status a post is published for', function () {
+            $scope.post.status = 'draft';
+
+            var result = isolateScope.publishedFor();
+            expect(result).toEqual('post.publish_for_you');
+
+            $scope.post.status = 'published';
+            $scope.post.published_to = ['user', 'test role'];
+            result = isolateScope.publishedFor();
+
+            expect(result).toEqual('user, test role');
+
+            $scope.post.published_to = [];
+            result = isolateScope.publishedFor();
+
+            expect(result).toEqual('post.publish_for_everyone');
+        });
     });
 });
