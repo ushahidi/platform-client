@@ -93,7 +93,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "novus/nvd3#v1.7.1",
     "selection-model": "jtrussell/angular-selection-model.git",
-    "platform-pattern-library": "ushahidi/platform-pattern-library#v3.2.0",
+    "platform-pattern-library": "ushahidi/platform-pattern-library#gh-pages",
     "transifex": "^1.4.3",
     "underscore": "^1.7.0"
   },
