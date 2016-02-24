@@ -42,8 +42,4 @@ describe('post location directive', function () {
         isolateScope = element.children().scope();
 
     }));
-
-    describe('test directive functions', function () {
-        
-    });
 });

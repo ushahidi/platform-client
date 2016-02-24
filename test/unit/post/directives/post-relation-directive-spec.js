@@ -70,7 +70,7 @@ describe('post relation directive', function () {
 
         it('should query based on a given event', function () {
             isolateScope.searchTerm = 'test';
-            
+
             var mockEvent = {
                 preventDefault: function () {}
             };

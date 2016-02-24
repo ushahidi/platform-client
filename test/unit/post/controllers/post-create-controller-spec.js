@@ -4,7 +4,6 @@ describe('Post create controller', function () {
     var $scope,
        $controller,
        PostEndpoint,
-       Notify,
        FormEndpoint;
 
     beforeEach(function () {
@@ -49,7 +48,7 @@ describe('Post create controller', function () {
         });
     });
 
-   it('should load and set options', function () {
-      expect($scope.post.allowed_privileges[0]).toEqual('read');
-   });
+    it('should load and set options', function () {
+        expect($scope.post.allowed_privileges[0]).toEqual('read');
+    });
 });

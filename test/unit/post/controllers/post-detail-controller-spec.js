@@ -165,7 +165,7 @@ describe('Post detail controller', function () {
         $scope.publishPostTo($scope.post);
         expect(Notify.showAlerts).toHaveBeenCalled();
     });
-    
+
     it('should delete a post', function () {
         spyOn(Notify, 'showNotificationSlider');
 

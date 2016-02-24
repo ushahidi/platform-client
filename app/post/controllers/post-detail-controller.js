@@ -218,7 +218,7 @@ function (
                         });
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
-                })
+                });
             });
         });
     };
