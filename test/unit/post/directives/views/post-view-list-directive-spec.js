@@ -60,7 +60,6 @@ describe('post view list directive', function () {
     });
 
     it('should select and unselect all posts', function () {
-        
         isolateScope.selectAllPosts(mockEvent);
 
         expect(isolateScope.posts[0].selected).toBe(true);

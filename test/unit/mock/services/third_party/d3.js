@@ -15,7 +15,7 @@ module.exports = [function () {
             ordinal : function () {},
             category20: function () {
                 return {
-                    range: function () {}  
+                    range: function () {}
                 };
             }
         },

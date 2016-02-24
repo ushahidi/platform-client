@@ -7,9 +7,6 @@ describe('post view timeline directive', function () {
         isolateScope,
         Notify,
         element;
-    var mockEvent = {
-        preventDefault: function () {}
-    };
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
