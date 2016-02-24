@@ -165,13 +165,42 @@ describe('Post detail controller', function () {
         $scope.publishPostTo($scope.post);
         expect(Notify.showAlerts).toHaveBeenCalled();
     });
-
-
-    /*
+    
     it('should delete a post', function () {
-        spyOn(PostEndpoint, 'delete');
+        spyOn(Notify, 'showNotificationSlider');
+
+        $scope.post.id = 'pass';
         $scope.deletePost();
-        expect(PostEndpoint.delete).toHaveBeenCalledWith({ id: $scope.post.id });
+
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });
-    */
+
+    it('should fail to delete a post', function () {
+        spyOn(Notify, 'showApiErrors');
+
+        $scope.post.id = 'fail';
+        $scope.deletePost();
+
+        expect(Notify.showApiErrors).toHaveBeenCalled();
+    });
+
+    it('should toggle stage completion and attempt to update post', function () {
+        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'showApiErrors');
+
+        $scope.post.id = 'pass';
+        $scope.post.completed_stages = [];
+
+        $scope.toggleCompletedStage({id: 1});
+        expect($scope.post.completed_stages.length).toEqual(1);
+
+        $scope.toggleCompletedStage({id: 1});
+        expect($scope.post.completed_stages.length).toEqual(0);
+
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+
+        $scope.post.id = 'fail';
+        $scope.toggleCompletedStage({id: 1});
+        expect(Notify.showApiErrors).toHaveBeenCalled();
+    });
 });

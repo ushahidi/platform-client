@@ -21,6 +21,17 @@ module.exports = [function () {
                 }
             }};
         },
+        options: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({
+                        allowed_privileges: ['read'],
+                        name: 'test post',
+                        id: 1
+                    });
+                }
+            }};
+        },
         geojson: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
@@ -47,10 +58,10 @@ module.exports = [function () {
                 id: 1
             };
         },
-        delete: function () {
+        delete: function (post) {
             return {$promise: {
-                then: function (successCallback) {
-                    successCallback();
+                then: function (successCallback, failCallback) {
+                    post.id === 'pass' ? successCallback({id: 1, allowed_privileges: ['read']}) : failCallback('error');
                 }
             }};
         },

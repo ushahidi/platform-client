@@ -216,7 +216,9 @@ function (
                             Notify.showNotificationSlider(message);
                             $location.path('/');
                         });
-                });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
+                })
             });
         });
     };

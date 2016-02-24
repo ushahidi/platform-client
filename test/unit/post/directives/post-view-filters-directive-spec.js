@@ -19,6 +19,9 @@ describe('post view filters directive', function () {
         ]);
 
         testApp.directive('postViewFilters', require(ROOT_PATH + 'app/post/directives/post-view-filters-directive'))
+        .value('Geocoding', {
+            search: function () {}
+        })
         .value('$filter', function () {
             return function () {};
         });
@@ -46,5 +49,21 @@ describe('post view filters directive', function () {
     }));
 
     describe('test directive functions', function () {
+        it('should clear different filters', function () {
+            isolateScope.clearFilters();
+
+            isolateScope.showAllTagsHandler();
+            expect(GlobalFilter.tags).toEqual([]);
+
+            isolateScope.showAllFormsHandler();
+            expect(GlobalFilter.form).toEqual([]);
+
+            isolateScope.showAllPostStagesHandler();
+            expect(GlobalFilter.current_stage).toEqual([]);
+
+            isolateScope.showAllCollectionsHandler();
+            expect(GlobalFilter.set).toEqual([]);
+
+        });
     });
 });
