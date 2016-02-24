@@ -5,6 +5,11 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback({results: [{
                         name: 'test post',
+                        allowed_privileges: [
+                            'update',
+                            'delete',
+                            'change_status'
+                        ],
                         id: 1
                     }]});
                 }

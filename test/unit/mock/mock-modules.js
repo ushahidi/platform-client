@@ -71,6 +71,6 @@ angular.module('ushahidi.mock', [])
 
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
-.service('Maps', require('./services/maps.js'))
 .service('GlobalFilter', require('./services/global-filters.js'))
-.service('Notify', require('./services/notify.js'));
+.service('Notify', require('./services/notify.js'))
+.service('Maps', require('./services/maps.js'));

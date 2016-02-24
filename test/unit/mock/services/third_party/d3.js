@@ -12,7 +12,12 @@ module.exports = [function () {
             month: function () {}
         },
         scale: {
-            ordinal : function () {}
+            ordinal : function () {},
+            category20: function () {
+                return {
+                    range: function () {}  
+                };
+            }
         },
         format: function () {},
         svg: {
