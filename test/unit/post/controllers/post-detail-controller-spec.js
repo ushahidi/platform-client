@@ -4,6 +4,7 @@ describe('Post detail controller', function () {
     var $scope,
        $controller,
        PostEndpoint,
+       Notify,
        FormEndpoint;
 
     var mockFormEndpoint = {
@@ -25,12 +26,12 @@ describe('Post detail controller', function () {
     beforeEach(function () {
         var testApp = angular.module('testApp', [
             'pascalprecht.translate',
+            'ushahidi.mock',
             'ngResource',
             'angular-cache',
             'leaflet-directive'
         ])
        .controller('postDetailController', require(ROOT_PATH + 'app/post/controllers/post-detail-controller.js'))
-       .service('PostEndpoint', require(ROOT_PATH + 'app/post/services/endpoints/post-endpoint.js'))
        .service('UserEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/user-endpoint.js'))
        .service('RoleEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/role.js'))
        .service('ConfigEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/config.js'))
@@ -40,7 +41,6 @@ describe('Post detail controller', function () {
        .service('FormStageEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-stages.js'))
        .service('FormEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-stages.js'))
        .service('Maps', require(ROOT_PATH + 'app/common/services/maps.js'))
-       .service('Notify', require(ROOT_PATH + 'app/common/services/notify.js'))
        .factory('Leaflet', function () {
            return window.L;
        });
@@ -52,10 +52,12 @@ describe('Post detail controller', function () {
 
     beforeEach(inject(function (_$rootScope_,
                                 _$controller_,
+                                _Notify_,
                                 _PostEndpoint_,
                                 _FormEndpoint_
                                ) {
         $scope = _$rootScope_.$new();
+        Notify = _Notify_;
         $controller = _$controller_;
         PostEndpoint = _PostEndpoint_;
         FormEndpoint = _FormEndpoint_;
@@ -134,6 +136,37 @@ describe('Post detail controller', function () {
         expect($scope.showType('geometry')).toEqual(false);
         expect($scope.showType('other')).toEqual(true);
     });
+
+    it('should publish a post to a given role', function () {
+        spyOn(Notify, 'showNotificationSlider');
+
+        $scope.post.id = 'pass';
+        $scope.publishPostTo($scope.post);
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should fail to publish a post to a given role', function () {
+        spyOn(Notify, 'showApiErrors');
+
+        $scope.post.id = 'fail';
+        $scope.publishPostTo($scope.post);
+        expect(Notify.showApiErrors).toHaveBeenCalled();
+    });
+
+    it('should fail to publish a post to a given role when a required stage is not completed', function () {
+        spyOn(Notify, 'showAlerts');
+
+        $scope.post.id = 'pass';
+        $scope.stages = [{
+            required: true
+        }];
+        $scope.post.completed_stages = [];
+
+        $scope.publishPostTo($scope.post);
+        expect(Notify.showAlerts).toHaveBeenCalled();
+    });
+
+
     /*
     it('should delete a post', function () {
         spyOn(PostEndpoint, 'delete');

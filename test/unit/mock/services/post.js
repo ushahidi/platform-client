@@ -21,6 +21,16 @@ module.exports = [function () {
                 }
             }};
         },
+        geojson: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({
+                        name: 'test post',
+                        id: 1
+                    });
+                }
+            }};
+        },
         get: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {

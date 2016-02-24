@@ -269,6 +269,8 @@ function (
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse);
         });
     };
 }];
