@@ -39,4 +39,105 @@ describe('setting form editor directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
     }));
+
+    it('should set the visible stage', function () {
+        $scope.setVisibleStage(1);
+
+        expect($scope.visibleStage).toEqual(1);
+    });
+
+    it('should save form setting', function () {
+        spyOn(Notify, 'showNotificationSlider');
+
+        $scope.saveFormSettings({id: 'pass'});
+
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should fail to save form settings', function () {
+        spyOn(Notify, 'showApiErrors');
+
+        $scope.saveFormSettings({id: 'fail'});
+
+        expect(Notify.showApiErrors).toHaveBeenCalled();
+    });
+
+    it('should delete the given form', function () {
+        spyOn(Notify, 'showNotificationSlider');
+        $scope.form.id = 'pass';
+        $scope.deleteForm(1);
+
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should delete the given stage', function () {
+        spyOn(Notify, 'showNotificationSlider');
+
+        $scope.deleteStage({id: 1}, 1);
+
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should change priority of a given stage', function () {
+        $scope.form.id = 1;
+
+        $scope.changePriority($scope.form.stages[0], 1);
+        expect($scope.form.stages[0].id).toEqual(2);
+    });
+
+    it('should open a new stage modal', function () {
+        $scope.openNewStage();
+        expect($scope.isNewStageOpen).toBe(true);
+    });
+
+    it('should save a new stage', function () {
+        spyOn(Notify, 'showNotificationSlider');
+
+        $scope.saveNewStage({name: 'new test stage'});
+
+        expect($scope.isNewStageOpen).toBe(false);
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should open a new attribute modal', function () {
+        $scope.openNewAttribute();
+        expect($scope.isNewAttributeOpen).toBe(true);
+    });
+
+    it('should add a new attribute', function () {
+        $scope.addNewAttribute({label: 'checkbox'});
+
+        expect($scope.editIsOpen[2]).toBe(true);
+    });
+
+    it('should save a attribute stage', function () {
+        spyOn(Notify, 'showNotificationSlider');
+
+        $scope.saveAttribute({label: 'new test attribute'}, 1);
+
+        expect($scope.isNewAttributeOpen).toBe(false);
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should delete an existing attribute', function () {
+        spyOn(Notify, 'showNotificationSlider');
+        $scope.deleteAttribute({id: 1});
+
+        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+    });
+
+    it('should delete an unsaved attribute', function () {
+        $scope.addNewAttribute({label: 'test new'});
+        $scope.deleteAttribute({label: 'test new'});
+
+        expect($scope.form.attributes.length).toEqual(2);
+    });
+
+    it('should change priority of a given attribute', function () {
+        $scope.form.id = 1;
+
+        $scope.changeAttributePriority($scope.form.attributes[0], 1);
+        expect($scope.form.attributes[0].id).toEqual(2);
+    });
+
 });

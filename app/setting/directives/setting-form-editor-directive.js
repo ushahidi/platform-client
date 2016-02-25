@@ -114,7 +114,6 @@ function (
                 if (_.isUndefined(next)) {
                     return;
                 }
-
                 // Swap priorities
                 next.priority = stage.priority;
                 stage.priority = stage.priority + increment;
@@ -261,7 +260,6 @@ function (
                 if (_.isUndefined(next)) {
                     return;
                 }
-
                 // Swap priorities
                 next.priority = attribute.priority;
                 attribute.priority = attribute.priority + increment;

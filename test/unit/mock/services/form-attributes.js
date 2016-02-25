@@ -8,6 +8,7 @@ module.exports = [function () {
                             name: 'test form attributes',
                             id: 1,
                             form_stage_id: 1,
+                            priority: 1,
                             key: 'test_attr1',
                             required: false
                         },
@@ -15,6 +16,7 @@ module.exports = [function () {
                             name: 'test form attributes 2',
                             id: 2,
                             form_stage_id: 1,
+                            priority: 2,
                             key: 'test_attr2',
                             required: true
                         }
