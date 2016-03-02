@@ -564,6 +564,7 @@
             "csv_mappings_set" : "CSV imported. {{processed}} records imported, {{errors}} records failed.",
             "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
+            "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled"
         },
         "general_settings" : {

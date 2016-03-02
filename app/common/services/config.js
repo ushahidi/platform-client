@@ -5,7 +5,6 @@ module.exports = [
     '_',
 function (
     ConfigEndpoint,
-    BootstrapConfig,
     Util,
     Notify,
     _
