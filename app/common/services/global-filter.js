@@ -86,32 +86,36 @@ function (
         },
         getDefaults: function () {
             return angular.copy(filterDefaults);
+        },
+        loadInitialData: function () {
+            TagEndpoint.query().$promise.then(function (tags) {
+                GlobalFilter.options.tags = _.indexBy(tags, 'id');
+            });
+
+            CollectionEndpoint.query().$promise.then(function (collections) {
+                GlobalFilter.options.collections = _.indexBy(collections, 'id');
+            });
+
+            FormEndpoint.query().$promise.then(function (response) {
+                GlobalFilter.options.forms = _.indexBy(response, 'id');
+
+                _.each(GlobalFilter.options.forms, function (form, formid) {
+                    FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
+                        if (response.length) {
+                            GlobalFilter.options.postStages[formid] = response;
+                        }
+                    });
+                });
+            });
         }
     };
 
     // Add default filter values
     GlobalFilter.clearSelected();
-
-    TagEndpoint.query().$promise.then(function (tags) {
-        GlobalFilter.options.tags = _.indexBy(tags, 'id');
-    });
-
-    CollectionEndpoint.query().$promise.then(function (collections) {
-        GlobalFilter.options.collections = _.indexBy(collections, 'id');
-    });
-
-    FormEndpoint.query().$promise.then(function (response) {
-        GlobalFilter.options.forms = _.indexBy(response, 'id');
-
-        _.each(GlobalFilter.options.forms, function (form, formid) {
-            FormStageEndpoint.query({formId: formid}).$promise.then(function (response) {
-                if (response.length) {
-                    GlobalFilter.options.postStages[formid] = response;
-                }
-            });
-        });
-    });
-
+    
+    // Load initial data
+    GlobalFilter.loadInitialData();
+   
     GlobalFilter.options.postStatuses = ['draft', 'published'];
 
     return Util.bindAllFunctionsToSelf(GlobalFilter);

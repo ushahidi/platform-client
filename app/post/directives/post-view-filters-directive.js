@@ -19,6 +19,7 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.filter = {};
             $scope.globalFilter = GlobalFilter;
+            $scope.globalFilter.loadInitialData();
             $scope.startDateOpen = false;
             $scope.endDateOpen = false;
             $scope.showFilterControls = false;
