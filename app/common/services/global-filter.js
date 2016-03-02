@@ -112,10 +112,8 @@ function (
 
     // Add default filter values
     GlobalFilter.clearSelected();
-    
     // Load initial data
     GlobalFilter.loadInitialData();
-   
     GlobalFilter.options.postStatuses = ['draft', 'published'];
 
     return Util.bindAllFunctionsToSelf(GlobalFilter);
