@@ -34,8 +34,8 @@
     <div class="sub-nav">
       <h6 class="zeta collections" translate>nav.collections</h6>
       <sets-menu endpoint='CollectionEndpoint' type="collections"></sets-menu>
-      <button ng-show="loggedin" type="button" class="button-secondary plus">
-        <a ng-click="collectionIsOpen()" class="add-new"><span translate>nav.new_collection</span></a>
+      <button  ng-click="collectionIsOpen()" ng-show="loggedin" type="button" class="button-secondary plus">
+        <a class="add-new"><span translate>nav.new_collection</span></a>
       </button>
     </div>
     <collection-editor is-open="collectionOpen"></collection-editor>

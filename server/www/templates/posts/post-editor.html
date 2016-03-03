@@ -52,13 +52,6 @@
         <div class="vertical-tabs">
             <nav class="vertical-tabs-menu init">
                 <ul>
-                    <li ng-class="{'active': visibleStage == 'post'}">
-                        <a ng-click="setVisibleStage('post')">
-                            <span class="icon-left fa-file-o" translate>
-                                post.post
-                           </span>
-                        </a>
-                    </li>
                     <li
                         ng-repeat="stage in stages"
                         ng-class="{'active': visibleStage == stage.id}"  >
@@ -74,8 +67,16 @@
                 </ul>
             </nav>
             <div class="vertical-tabs-content">
+                <button ng-repeat="stage in stages" type="button"
+                    class="button-secondary check"
+                    ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
+                    ng-show="stage.id == visibleStage"
+                    ng-click="toggleStageCompletion(stage.id)"
+                    translate="{{ stageIsComplete(stage.id) ? 'post.complete' : 'post.mark_complete' }}"
+                    >
+                </button>
                 <div class="form-field"
-                    ng-show="visibleStage == 'post'"
+                    ng-show="isFirstStage(visibleStage)"
                     >
                     <label
                         class="input-label required" for="content"
@@ -90,7 +91,7 @@
                 </div>
                 <div ng-if="categories.length"
                     class="form-field"
-                    ng-show="visibleStage == 'post'"
+                    ng-show="isFirstStage(visibleStage)"
                     >
                     <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
                     <div class="form-field checkbox" ng-repeat="category in categories">
@@ -104,14 +105,6 @@
                           translate="{{'post.valid.tags.' + error}}"></p>
                     </div>
                 </div>
-                <button ng-repeat="stage in stages" type="button"
-                    class="button-secondary check"
-                    ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
-                    ng-show="stage.id == visibleStage"
-                    ng-click="toggleStageCompletion(stage.id)"
-                    translate="{{ stageIsComplete(stage.id) ? 'post.complete' : 'post.mark_complete' }}"
-                    >
-                </button>
                 <div
                     ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                     ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
@@ -261,4 +254,9 @@
                   </div>
               </div>
           </div>
+
+        <div class="page-footer">
+            <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save_post</span>
+            </button>
+        </div>
 </form>

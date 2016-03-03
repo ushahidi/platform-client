@@ -125,7 +125,7 @@ describe('forms interaction', function () {
 
                 describe('When the user clicks add new field', function () {
                     beforeEach(function () {
-                        var newField = element(by.css('.vertical-tabs-content .page-header-actions button'));
+                        var newField = element.all(by.css('.vertical-tabs-content .page-header-actions button')).get(0);
                         newField.click();
                         browser.sleep(500);
                     });
@@ -222,7 +222,7 @@ describe('forms interaction', function () {
 
                 describe('When user adds a new post type step', function () {
                     beforeEach(function () {
-                        var addStep = element(by.cssContainingText('span', 'Add Step'));
+                        var addStep = element.all(by.cssContainingText('span', 'Add Step')).get(0);
                         addStep.click();
                         browser.sleep(500);
                     });

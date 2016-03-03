@@ -1,0 +1,76 @@
+{
+    "count": 3,
+    "results": [
+        {
+            "id": "features",
+            "views": {
+                "map": true,
+                "list": true,
+                "chart": true,
+                "timeline": true,
+                "activity": true
+            },
+            "data-providers": {
+                "smssync": true,
+                "twitter": true,
+                "frontlinesms": true,
+                "email": true,
+                "twilio": true,
+                "nexmo": true
+            },
+            "limits": {
+                "posts": true,
+                "forms": true,
+                "admin_users": true
+            },
+            "private": {
+                "enabled": true
+            },
+            "roles": {
+                "enabled": true
+            },
+            "data-import": {
+                "enabled": true
+            },
+            "allowed_privileges": [
+                "read",
+                "search"
+            ]
+        },
+        {
+            "id": "site",
+            "name": "",
+            "description": "",
+            "email": "",
+            "timezone": "UTC",
+            "language": "en-US",
+            "date_format": "n/j/Y",
+            "client_url": false,
+            "first_login": true,
+            "tier": "free",
+            "private": false,
+            "allowed_privileges": [
+                "read",
+                "search"
+            ]
+        },
+        {
+            "id": "map",
+            "clustering": false,
+            "cluster_radius": 50,
+            "default_view": {
+                "lat": -1.3048035,
+                "lon": 36.8473969,
+                "zoom": 2,
+                "baselayer": "MapQuest",
+                "fit_map_boundaries": true,
+                "icon": "map-marker",
+                "color": "blue"
+            },
+            "allowed_privileges": [
+                "read",
+                "search"
+            ]
+        }
+    ]
+}

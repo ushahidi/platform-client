@@ -59,7 +59,9 @@
         "save_post_type": "Save Post Type",
         "save_post_step": "Save Post Step",
         "saved_form": "Post Type saved.",
+        "step_delete": "Delete",
         "step_name": "Step Name",
+        "step_rename": "Rename",
         "step_required": "This step is required",
         "structure_step" : "Structure",
         "type" : "type",
@@ -461,12 +463,10 @@
     },
     "data_import" :{
         "import" : "Import",
-        "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type.",
-        "import_explanation_file_size" : " - The size for a single file is limited to 2 MB.",
-        "import_explanation_format_location_1" : " - In order to include location geographic points in your csv. That location should have the following format:",
-        "import_explanation_format_location_2" : "'{\"lat\": coordinate, \"lon\": coordinate}'",
-        "import_explanation_format_location_3" : "where coordinate is a point value, for example, 41.54332",
-        "import_explanation_required_fields" : " - All required post type fields must have an associated value set in the CSV. For example, if the field title is required then the field must be mapped to a CSV column where all rows of that column have a value set.",
+        "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type",
+        "import_explanation_file_size" : " - The size for a single file is limited to 10 MB",
+        "import_explanation_format_location_1" : " - Geographic locations should be included as separate latitude and longitude columns in your CSV",
+        "import_explanation_required_fields" : " - All required post type fields must have an associated value set in the CSV. For example, if the field title is required then the field must be mapped to a CSV column where all rows of that column have a value set",
         "csv" : "CSV",
         "post_type" : "Import to which post type?",
         "file_csv" : "CSV file",
@@ -487,6 +487,7 @@
     "user": {
         "add_user" : "Add User",
         "edit_user" : "Edit User",
+        "update_password" : "Update Password",
         "change_role" : "Change Role",
         "save" : "Save User",
         "save_add_another" : "Save & Add Another",
@@ -562,9 +563,11 @@
         },
         "data_import" : {
             "csv_upload" : "File {{name}} successfully uploaded",
-            "csv_mappings_set" : "CSV mappings set successfully",
+            "csv_mappings_set" : "CSV imported. {{processed}} records imported, {{errors}} records failed.",
             "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}",
-            "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}"
+            "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
+            "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
+            "csv_import_cancel" : "CSV import cancelled"
         },
         "general_settings" : {
             "save_success" : "General settings saved"
