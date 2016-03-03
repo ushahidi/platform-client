@@ -17,7 +17,8 @@ var config = {
     },
 
     capabilities: {
-        'browserName': 'chrome'
+        'browserName': 'chrome',
+        'sharedTestFiles: true
     },
 
     directConnect: true,
