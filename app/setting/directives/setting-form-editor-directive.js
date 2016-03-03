@@ -97,9 +97,8 @@ function (
                             $translate('notify.form.destroy_stage_success', {name: stage.label}).then(function (message) {
                                 Notify.showNotificationSlider(message);
                             });
-                            
                             $scope.form.stages = _.filter($scope.form.stages, function (item) {
-                                return item.id != stage.id;
+                                return item.id !== stage.id;
                             });
                             $scope.refreshStages();
 
