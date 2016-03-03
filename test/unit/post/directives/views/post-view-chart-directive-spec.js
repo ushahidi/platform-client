@@ -44,7 +44,7 @@ describe('post view chart directive', function () {
         isolateScope = element.isolateScope();
     }));
 
-    it('should ', function () {
+    it('should load initial values', function () {
         // This directive is better tested via e2e
         expect(isolateScope.data[0].values).toEqual([1,2,3,4,5]);
 
