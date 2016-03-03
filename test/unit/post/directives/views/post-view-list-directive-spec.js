@@ -41,6 +41,7 @@ describe('post view list directive', function () {
         $scope.isLoading = true;
         $scope.filters = {};
         element = '<post-view-list filters="filters" is-loading="isLoading"></post-view-list>';
+
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
