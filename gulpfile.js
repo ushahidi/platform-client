@@ -34,7 +34,7 @@ var defaultOptions = {
     mockBackend: false,
     useChromeForKarma : false,
     backendUrl: false,
-    uglifyJs: true,
+    uglifyJs: false,
     compressedCSS: true
 };
 
@@ -344,7 +344,7 @@ gulp.task('tar', ['build'], function () {
  */
 gulp.task('release', ['transifex-download'], function () {
     // Enable uglifyjs
-    options.uglifyJs = true;
+    options.uglifyJs = false;
 
     // @todo update this once gulp 4 is out
     return gulp.run('tar');
