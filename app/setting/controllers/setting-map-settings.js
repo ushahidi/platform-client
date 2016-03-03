@@ -40,6 +40,7 @@ function (
 
         $scope.map = map;
 
+console.log(view);
         $scope.baseLayers = view.layers.baselayers;
 
         // Create a draggable marker for changing the default center.

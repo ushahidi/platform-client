@@ -91,8 +91,6 @@ function (
             this.getConfig().then(function (config) {
                 // Set active baselayer
                 var localLayers = angular.copy(layers);
-                console.log(localLayers);
-                console.log(config);
                 if (localLayers.baselayers[config.default_view.baselayer]) {
                     localLayers.baselayers[config.default_view.baselayer].top = true;
                 }
