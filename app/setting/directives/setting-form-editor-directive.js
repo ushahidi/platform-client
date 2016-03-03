@@ -98,7 +98,7 @@ function (
                                 Notify.showNotificationSlider(message);
                             });
                             $scope.form.stages = _.filter($scope.form.stages, function (item) {
-                                return item.id != stage.id;
+                                return item.id !== stage.id;
                             });
                             $scope.refreshStages();
 
