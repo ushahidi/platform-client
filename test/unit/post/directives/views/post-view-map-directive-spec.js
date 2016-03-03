@@ -35,8 +35,10 @@ describe('post view map directive', function () {
         $scope = _$rootScope_.$new();
 
         Notify = _Notify_;
+        $scope.isLoading = true;
+        $scope.filters = {};
+        element = '<post-view-map filters="filters" is-loading="isLoading"></post-view-map>';
 
-        element = '<post-view-map></post-view-map>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();

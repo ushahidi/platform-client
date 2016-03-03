@@ -37,8 +37,10 @@ describe('post view chart directive', function () {
         Notify = _Notify_;
 
         $scope.post = fixture.load('posts/120.json');
+        $scope.isLoading = true;
+        $scope.filters = {};
+        element = '<post-view-chart filters="filters" is-loading="isLoading"></post-view-chart>';
 
-        element = '<post-view-chart></post-view-chart>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();

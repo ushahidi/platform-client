@@ -36,7 +36,10 @@ describe('post view timeline directive', function () {
 
         Notify = _Notify_;
 
-        element = '<post-view-timeline></post-view-timeline>';
+        $scope.isLoading = true;
+        $scope.filters = {};
+        element = '<post-view-timeline filters="filters" is-loading="isLoading"></post-view-timeline>';
+
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
