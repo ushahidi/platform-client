@@ -18,7 +18,8 @@ var config = {
 
     capabilities: {
         'browserName': 'chrome',
-        'sharedTestFiles: true
+        'sharedTestFiles': true,
+        'maxInstances': 2
     },
 
     directConnect: true,
