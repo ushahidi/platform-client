@@ -14,6 +14,7 @@ module.exports = [function () {
             collections: {},
             forms: {}
         },
+        loadInitialData: function () {},
         getDefaults: function () {},
         setSelected: function () {},
         clearSelected: function () {}

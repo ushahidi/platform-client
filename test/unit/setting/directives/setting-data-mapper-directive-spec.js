@@ -107,8 +107,7 @@ describe('setting data mapper directive', function () {
             id: 'pass'
         };
 
-
-        $scope.submitMappings({id: 'pass'});
+        $scope.submitMappings({id: 'pass', maps_to: ['test']});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });

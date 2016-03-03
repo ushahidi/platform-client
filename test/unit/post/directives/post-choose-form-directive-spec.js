@@ -32,6 +32,8 @@ describe('post choose form directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
+        $rootScope.hasPermission = function () {};
+
         GlobalFilter = _GlobalFilter_;
         Notify = _Notify_;
 
