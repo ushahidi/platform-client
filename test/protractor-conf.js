@@ -8,6 +8,11 @@ var config = {
         full: './e2e/*.js'
     },
 
+    specs: [
+        './e2e/post/**/*.js',
+        './e2e/settings/**/*.js'
+    ],
+
     baseUrl: 'http://localhost:8080/',
 
     framework: 'jasmine2',
@@ -17,9 +22,9 @@ var config = {
     },
 
     capabilities: {
-        'browserName': 'chrome',
-        'sharedTestFiles': true,
-        'maxInstances': 2
+        browserName: 'chrome',
+        shardTestFiles: true,
+        maxInstances: 2
     },
 
     directConnect: true,
