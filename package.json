@@ -18,7 +18,8 @@
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
-    "jscs": "jscs app/**/*.js test/**/*.js"
+    "jscs": "jscs ./app/* ./test/*",
+    "jscs-fix": "jscs -x ./app/* ./test/*"
   },
   "pre-commit": [
       "jshint",
