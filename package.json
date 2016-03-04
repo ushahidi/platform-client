@@ -18,12 +18,12 @@
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
-    "jscs": "jscs app/**/*.js test/**/*.js",
-    "pre-commit": [
-        "jshint",
-        "jscs" 
-    ]
+    "jscs": "jscs app/**/*.js test/**/*.js"
   },
+  "pre-commit": [
+      "jshint",
+      "jscs" 
+  ],
   "devDependencies": {
     "body-parser": "^1.9.2",
     "brfs": "^1.2.0",
@@ -61,6 +61,7 @@
     "karma-json-fixtures-preprocessor": "0.0.6",
     "karma-fixture": "^0.2.5",
     "protractor": "^2.1.0",
+    "pre-commit": "^1.1.",
     "serve-static": "^1.10.0",
     "underscore.string": "^2.3.3",
     "vinyl-buffer": "^1.0.0",
