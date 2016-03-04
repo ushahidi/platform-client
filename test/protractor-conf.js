@@ -9,6 +9,7 @@ var config = {
     },
 
     specs: [
+        './e2e/*.js',
         './e2e/post/**/*.js',
         './e2e/settings/**/*.js'
     ],
