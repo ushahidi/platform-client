@@ -97,6 +97,7 @@ function (
                             $translate('notify.form.destroy_stage_success', {name: stage.label}).then(function (message) {
                                 Notify.showNotificationSlider(message);
                             });
+
                             $scope.form.stages = _.filter($scope.form.stages, function (item) {
                                 return item.id !== stage.id;
                             });
@@ -120,7 +121,6 @@ function (
                 if (_.isUndefined(next)) {
                     return;
                 }
-
                 // Swap priorities
                 next.priority = stage.priority;
                 stage.priority = stage.priority + increment;
@@ -273,7 +273,6 @@ function (
                 if (_.isUndefined(next)) {
                     return;
                 }
-
                 // Swap priorities
                 next.priority = attribute.priority;
                 attribute.priority = attribute.priority + increment;

@@ -7,6 +7,13 @@ module.exports = [function () {
                 }
             };
         },
+        showAlerts: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
         showSingleAlert: function (message) {
             return {
                 then: function (successCallback) {
