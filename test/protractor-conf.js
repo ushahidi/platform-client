@@ -42,6 +42,8 @@ if (process.env.TRAVIS_BUILD_NUMBER) {
         'username': process.env.SAUCE_USERNAME,
         'accessKey': process.env.SAUCE_ACCESS_KEY,
         'browserName': 'chrome',
+        shardTestFiles: true,
+        maxInstances: 2,
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
         'build': process.env.TRAVIS_BUILD_NUMBER,
         'name': 'Ushahidi Angular Client: Protractor e2e specs',
