@@ -254,4 +254,9 @@
                   </div>
               </div>
           </div>
+
+        <div class="page-footer">
+            <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save_post</span>
+            </button>
+        </div>
 </form>

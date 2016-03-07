@@ -1,5 +1,15 @@
 module.exports = [function () {
     return {
+        queryFresh: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback([{
+                        name: 'test role',
+                        id: 1
+                    }]);
+                }
+            }};
+        },
         query: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
@@ -32,10 +42,14 @@ module.exports = [function () {
             }};
         },
         getFresh: function () {
-            return {
-                name: 'test role',
-                id: 1
-            };
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({
+                        name: 'test role',
+                        id: 1
+                    });
+                }
+            }};
         },
         delete: function () {
             return {$promise: {

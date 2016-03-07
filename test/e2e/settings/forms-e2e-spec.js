@@ -90,7 +90,7 @@ describe('forms interaction', function () {
                 beforeEach(function () {
                     var deleteButton = element.all(by.css('.button-destructive')).get(0);
                     deleteButton.click();
-                    browser.sleep(500);
+                    browser.sleep(50);
                 });
 
                 it('should confirm the deletion of the form', function () {
@@ -101,7 +101,7 @@ describe('forms interaction', function () {
                     beforeEach(function () {
                         var confirmModal = element(by.css('button#confirm-modal-ok'));
                         confirmModal.click();
-                        browser.sleep(500);
+                        browser.sleep(50);
                     });
 
                     it('should show a confirmation of the form deletion', function () {
@@ -129,7 +129,7 @@ describe('forms interaction', function () {
             beforeEach(function () {
                 var addPostType = element(by.css('.page-header-actions button'));
                 addPostType.click();
-                browser.sleep(500);
+                browser.sleep(50);
             });
 
             it('should open the add post type modal', function () {

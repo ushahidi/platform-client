@@ -214,6 +214,8 @@ function (
                             Notify.showNotificationSlider(message);
                             $location.path('/');
                         });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             });
         });
@@ -267,6 +269,8 @@ function (
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
+        }, function (errorResponse) {
+            Notify.showApiErrors(errorResponse);
         });
     };
 }];

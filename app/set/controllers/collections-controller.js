@@ -68,7 +68,7 @@ module.exports = [
         // Show Add Notification link
         $scope.showNotificationLink = false;
 
-        NotificationEndpoint.get({set: collection.id, ignore403: true}, function (notifications) {
+        NotificationEndpoint.get({set: collection.id, ignore403: true, user: 'me'}, function (notifications) {
             // show link if subscription does not exist
             $scope.showNotificationLink = notifications.length === 0;
         });
