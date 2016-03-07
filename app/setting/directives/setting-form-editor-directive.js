@@ -27,8 +27,8 @@ function (
                 FormStageEndpoint.query({ formId: $scope.formId }).$promise,
                 FormAttributeEndpoint.query({ formId: $scope.formId }).$promise
             ]).then(function (results) {
-                var form = results[0],
-                    firstStage = results[1][0].id;
+                var form = results[0];
+                var firstStage = results[1].length ? results[1][0].id : '';
 
                 form.stages = _.sortBy(results[1], 'priority');
                 form.attributes = _.chain(results[2])
@@ -85,7 +85,7 @@ function (
                 });
             };
 
-            $scope.deleteStage = function (stage, $index) {
+            $scope.deleteStage = function (stage) {
                 $translate('notify.form.delete_stage_confirm')
                 .then(function (message) {
                     Notify.showConfirm(message).then(function () {
@@ -97,7 +97,13 @@ function (
                             $translate('notify.form.destroy_stage_success', {name: stage.label}).then(function (message) {
                                 Notify.showNotificationSlider(message);
                             });
-                            $scope.form.stages.splice($index, 1);
+                            $scope.form.stages = _.filter($scope.form.stages, function (item) {
+                                return item.id !== stage.id;
+                            });
+                            $scope.refreshStages();
+
+                            var firstStage = $scope.form.stages.length ? $scope.form.stages[0].id : '';
+                            $scope.setVisibleStage(firstStage);
                         });
                     });
                 });
@@ -140,6 +146,11 @@ function (
                 $scope.isNewStageOpen = !$scope.isNewStageOpen;
             };
 
+            $scope.editStage = function (stage) {
+                $scope.newStage = stage;
+                $scope.isNewStageOpen = !$scope.isNewStageOpen;
+            };
+
             $scope.saveNewStage = function (stage) {
                 var lastPriority = $scope.form.stages.length ? _.last($scope.form.stages).priority : 0;
                 FormStageEndpoint
@@ -155,6 +166,7 @@ function (
                         Notify.showNotificationSlider(message);
                     });
                     $scope.refreshStages();
+                    $scope.setVisibleStage(stage.id);
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
