@@ -103,7 +103,6 @@ function (
                 // first check if stages required have been marked complete
                 var requiredStages = _.where($scope.stages, {required: true}),
                     errors = [];
-
                 _.each(requiredStages, function (stage) {
                     // if this stage isn't complete, add to errors
                     if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
@@ -123,6 +122,7 @@ function (
                 .then(function (post) {
                     var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
                     var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
+
                     $translate(message, {role: role})
                     .then(function (message) {
                         Notify.showNotificationSlider(message);

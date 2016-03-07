@@ -1,18 +1,15 @@
 module.exports = [function () {
     return {
         getMap: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback({
-                        getMinZoom: function () {
-                            return 0;
-                        },
-                        getMaxZoom: function () {
-                            return 0;
-                        }
-                    });
+            return {
+                reloadPosts: function (posts) {},
+                getMinZoom: function () {
+                    return 0;
+                },
+                getMaxZoom: function () {
+                    return 0;
                 }
-            }};
+            };
         },
         getInitialScope: function () {
 

@@ -29,57 +29,12 @@ function (
             _
         ) {
 
-            $scope.categories = TagEndpoint.query();
+            TagEndpoint.query().$promise.then(function (results) {
+                $scope.categories = results;
+            });
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
-
-            var
-                fetchAttributes = function (formId) {
-                    FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
-                        // Initialize values on post (helps avoid madness in the template)
-                        attrs.map(function (attr) {
-                            if (!$scope.post.values[attr.key]) {
-                                if (attr.input === 'location') {
-                                    $scope.post.values[attr.key] = [null];
-                                } else if (attr.input === 'checkbox') {
-                                    $scope.post.values[attr.key] = [];
-                                } else {
-                                    $scope.post.values[attr.key] = [attr.default];
-                                }
-                            }
-                        });
-                        $scope.attributes = attrs;
-                    });
-                },
-                fetchStages = function (formId) {
-                    $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
-                        var post = $scope.post;
-
-                        // If number of completed stages matches number of stages,
-                        // assume they're all complete, and just show the first stage
-                        if (post.completed_stages.length === stages.length) {
-                            $scope.setVisibleStage(stages[0].id);
-                        } else {
-                            // Get incomplete stages
-                            var incompleteStages = _.filter(stages, function (stage) {
-                                return !_.contains(post.completed_stages, stage.id);
-                            });
-
-                            // Return lowest priority incomplete stage
-                            $scope.setVisibleStage(incompleteStages[0].id);
-                        }
-                    });
-                };
-
-            // Load attributes and stages whenever form id changes
-            $scope.$watch(function () {
-                return $scope.post.form.id || $scope.post.form;
-            }, function (formId, oldValue) {
-                $scope.post.form = FormEndpoint.get({ id: formId });
-                fetchAttributes(formId);
-                fetchStages(formId);
-            });
 
             $scope.goBack = function () {
                 $scope.post.form = null;
@@ -102,7 +57,7 @@ function (
                 if (!_.isEmpty($scope.stages)) {
                     return stageId === $scope.stages[0].id;
                 }
-                return 0;
+                return false;
 
             };
 
@@ -127,7 +82,6 @@ function (
                         return false;
                     }
                 }
-
                 // now checking all other post attributes that are required
                 return _.chain($scope.attributes)
                 .where({form_stage_id : stageId, required: true})
@@ -159,7 +113,6 @@ function (
             $scope.toggleStageCompletion = function (stageId) {
 
                 stageId = parseInt(stageId);
-
                 if (_.includes($scope.post.completed_stages, stageId)) {
                     $scope.post.completed_stages = _.without($scope.post.completed_stages, stageId);
 
@@ -184,7 +137,6 @@ function (
                     Notify.showAlerts(errors);
                     return;
                 }
-
                 $scope.post = updatedPost;
 
                 if (!$scope.post.id) {
@@ -270,8 +222,14 @@ function (
                             $location.path('/posts/' + response.id);
                         });
                     } else {
-                        Notify.showSingleAlert('Saved!');
-                        $location.path('/');
+                        $translate(
+                            'notify.post.save_success',
+                            {
+                                name: $scope.post.title
+                            }).then(function (message) {
+                                Notify.showNotificationSlider(message);
+                                $location.path('/');
+                            });
                     }
                 }, function (errorResponse) { // errors
 
@@ -332,6 +290,56 @@ function (
                 $scope.post.values[attr.key].splice(key, 1);
             };
 
+            $scope.fetchAttributes = function (formId) {
+                FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
+                    // Initialize values on post (helps avoid madness in the template)
+                    attrs.map(function (attr) {
+                        if (!$scope.post.values[attr.key]) {
+                            if (attr.input === 'location') {
+                                $scope.post.values[attr.key] = [null];
+                            } else if (attr.input === 'checkbox') {
+                                $scope.post.values[attr.key] = [];
+                            } else {
+                                $scope.post.values[attr.key] = [attr.default];
+                            }
+                        }
+                    });
+                    $scope.attributes = attrs;
+                });
+            };
+
+            $scope.fetchStages = function (formId) {
+                FormStageEndpoint.query({ formId: formId }).$promise.then(function (stages) {
+                    var post = $scope.post;
+                    $scope.stages = stages;
+
+                    // If number of completed stages matches number of stages,
+                    // assume they're all complete, and just show the first stage
+                    if (post.completed_stages.length === stages.length) {
+                        $scope.setVisibleStage(stages[0].id);
+                    } else {
+                        // Get incomplete stages
+                        var incompleteStages = _.filter(stages, function (stage) {
+                            return !_.contains(post.completed_stages, stage.id);
+                        });
+
+                        // Return lowest priority incomplete stage
+                        $scope.setVisibleStage(incompleteStages[0].id);
+                    }
+                });
+            };
+
+            $scope.fetchForm = function (formId) {
+                FormEndpoint.get({id: formId}).$promise.then(function (form) {
+                    $scope.post.form = form;
+                    $scope.fetchAttributes(form.id);
+                    $scope.fetchStages(form.id);
+                });
+            };
+
+            if ($scope.post.form.id) {
+                $scope.fetchForm($scope.post.form.id);
+            }
         }];
 
     return {

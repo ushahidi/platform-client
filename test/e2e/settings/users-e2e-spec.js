@@ -92,7 +92,7 @@ describe('users management', function () {
                                 describe('selecting "Member" as new role', function () {
                                     beforeEach(function () {
                                         element(by.linkText('Member')).click();
-                                        browser.sleep(500);
+                                        browser.sleep(50);
                                     });
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
                                         element(by.css('#alert-modal-text')).getText().then(
@@ -117,7 +117,7 @@ describe('users management', function () {
                                         deleteButton.click();
                                     });
 
-                                    browser.sleep(500);
+                                    browser.sleep(50);
                                 });
 
                                 it('shows an error alert that you cannot delete your own user (the user as which your are signed in)', function () {
@@ -153,7 +153,7 @@ describe('users management', function () {
                                 describe('selecting "Member" as new role', function () {
                                     beforeEach(function () {
                                         element(by.linkText('Member')).click();
-                                        browser.sleep(500);
+                                        browser.sleep(50);
                                     });
                                     it('shows an alert which asks if you really want to change the roles', function () {
                                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to change the role of 4 users to Member?');

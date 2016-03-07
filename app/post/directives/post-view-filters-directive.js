@@ -112,26 +112,6 @@ function (
                 }
             };
 
-            $scope.uiOpenDate = function (datepicker) {
-                if (datepicker === 'startDate') {
-                    $scope.startDateOpen = true;
-                } else if (datepicker === 'endDate') {
-                    $scope.endDateOpen = true;
-                }
-
-                return false;
-            };
-
-            $scope.uiCloseDate = function (datepicker) {
-                if (datepicker === 'startDate') {
-                    $scope.startDateOpen = false;
-                } else if (datepicker === 'endDate') {
-                    $scope.endDateOpen = false;
-                }
-
-                return false;
-            };
-
             $scope.$watchCollection('filter', function (filters, previous) {
                 var showControls = false,
                     defaults = GlobalFilter.getDefaults();
