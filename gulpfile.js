@@ -364,6 +364,8 @@ gulp.task('transifex-download', function () {
         locales_dir = options.www + '/locales/',
         mode = 'default',
         resource = 'client-en',
+        // Get languages that are at least 90% translated
+        completion_threshold = 90,
         config = {};
 
     // Try to load user's ~/.transifexrc config
@@ -387,8 +389,8 @@ gulp.task('transifex-download', function () {
         credential: config.username + ':' + config.password
     });
 
-    // Download languages
-    transifex.languageSetMethod(project_slug, function (err, data) {
+    // Get language info
+    transifex.languageSetMethods(function (err, data) {
         if (err) {
             throw err;
         }
@@ -402,18 +404,45 @@ gulp.task('transifex-download', function () {
             }
         }
 
-        // Download translations for each language code
-        data.forEach(function (language) {
-            transifex.translationInstanceMethod(project_slug, resource, language.language_code, { mode: mode }, function (err, data) {
-                if (err) {
-                    throw err;
+        // Get language stats
+        transifex.statisticsMethods(project_slug, resource, function (err, stats) {
+            if (err) {
+                throw err;
+            }
+            
+            // Only download languages that have been translated past the completion threshold
+            data = data.filter(function (language) {
+                if (stats[language.code] !== undefined && parseInt(stats[language.code].completed) >= completion_threshold) {
+                    return true;
                 }
-
-                fs.writeFileSync(locales_dir +
-                                 // Replace underscore with hyphen
-                                 language.language_code.replace('_', '-') +
-                                 '.json', data);
+                
+                return false;
             });
+
+            // Download translations
+            data.forEach(function (language) {
+                transifex.translationInstanceMethod(project_slug, resource, language.code, { mode: mode }, function (err, data) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    fs.writeFileSync(locales_dir +
+                                     // Replace underscore with hyphen
+                                     language.code.replace('_', '-') +
+                                     '.json', data);
+                });
+            });
+
+
+            // Replace language code underscores with hyphens
+            var languages = data.map(function (language) {
+                language.code = language.code.replace('_', '-');
+                return language;
+            });
+
+            // Save translated language list
+            fs.writeFileSync(locales_dir + 'languages.json', JSON.stringify({languages: languages}));
+
         });
     });
 });
