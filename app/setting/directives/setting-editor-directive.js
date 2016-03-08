@@ -54,7 +54,7 @@ function (
             $scope.timezones.push('UTC');
 
             Languages.then(function (languages) {
-                $scope.languages = languages; 
+                $scope.languages = languages;
             });
 
             $scope.clearHeader = function () {
