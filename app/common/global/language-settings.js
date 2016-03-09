@@ -17,10 +17,12 @@ function (
         if (langKey) {
             $translate.preferredLanguage(BootstrapConfig.language);
 
-            angular.forEach(Languages.languages, function (language) {
-                if (language.code === BootstrapConfig.language) {
-                    $rootScope.rtlEnabled = language.rtl;
-                }
+            Languages.then(function (languages) {
+                angular.forEach(languages, function (language) {
+                    if (language.code === BootstrapConfig.language) {
+                        $rootScope.rtlEnabled = language.rtl;
+                    }
+                });
             });
         }
     });
