@@ -4,22 +4,22 @@ module.exports = [
     '$translate',
     '$rootScope',
     'ConfigEndpoint',
-    'Config',
     '_',
     'Notify',
     'Util',
     'Languages',
+    'Features',
 function (
     $q,
     $http,
     $translate,
     $rootScope,
     ConfigEndpoint,
-    Config,
     _,
     Notify,
     Util,
-    Languages
+    Languages,
+    Features
 ) {
     return {
         restrict: 'E',
@@ -35,9 +35,7 @@ function (
                 file : null
             };
 
-            $scope.isPrivateEnabled = function () {
-                return Config.features.private.enabled;
-            };
+            $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
             $scope.userSavedSettings = false;

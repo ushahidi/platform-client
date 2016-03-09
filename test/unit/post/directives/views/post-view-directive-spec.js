@@ -18,6 +18,7 @@ describe('post view directive', function () {
         ]);
 
         testApp.directive('postView', require(ROOT_PATH + 'app/post/directives/views/post-view-directive'))
+        .service('PostViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
         .value('$filter', function () {
             return function () {};
         })

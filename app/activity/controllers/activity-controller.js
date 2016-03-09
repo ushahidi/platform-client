@@ -3,18 +3,24 @@ module.exports = [
     '$translate',
     '$routeParams',
     'PostEndpoint',
+    'ConfigEndpoint',
     'dc',
     'd3',
     '_',
+    'Features',
 function (
     $scope,
     $translate,
     $routeParams,
     PostEndpoint,
+    ConfigEndpoint,
     dc,
     d3,
-    _
+    _,
+    Features
 ) {
+
+    $scope.unavailableView = !Features.isViewEnabled('activity');
 
     // Set the page title
     $translate('nav.activity').then(function (title) {

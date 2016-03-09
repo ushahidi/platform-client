@@ -2,19 +2,19 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
-    'BootstrapConfig',
     '$rootScope',
+    'Features',
 function (
     $scope,
     Authentication,
     ConfigEndpoint,
-    BootstrapConfig,
-    $rootScope
+    $rootScope,
+    Features
 ) {
     $scope.isHome = true;
+    $scope.activityIsAvailable = Features.isViewEnabled('activity');
+    $scope.planIsAvailable = Features.isViewEnabled('plan');
 
-    // Start with preloaded config
-    $scope.site = BootstrapConfig;
     // Then update from server
     $scope.reloadSiteConfig = function () {
         ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {

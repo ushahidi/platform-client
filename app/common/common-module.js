@@ -24,7 +24,7 @@ angular.module('ushahidi.common', [
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
 
 .service('PostViewHelper', require('./services/view-helper.js'))
-.service('Config', require('./services/config.js'))
+.service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
 .service('DataRetriever', require('./services/data-retriever.js'))
 .service('Notify', require('./services/notify.js'))

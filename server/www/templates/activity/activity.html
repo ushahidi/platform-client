@@ -2,7 +2,7 @@
     <div class="page-header">
         <h1 translate>nav.activity</h1>
 
-        <div class="tabs-menu" dropdown>
+        <div class="tabs-menu" ng-show="!unavailableView"  dropdown>
             <button type="button" class="button-toggle tabs-menu-button-js" dropdown-toggle></button>
             <ul class="tabs-menu-list" dropdown-menu>
                 <li ng-class="{ active: currentInterval == 'week' }"><a ng-click="update('week')">This Week</a></li>
@@ -12,7 +12,11 @@
         </div>
     </div>
 
-    <div class="main-col">
+	<!-- unavailable view -->
+    <post-view-unavailable ng-show="unavailableView" view="'nav.activity' | translate"></post-view-unavailable>
+    <img ng-show="unavailableView" src="/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" />
+
+    <div ng-show="!unavailableView" class="main-col">
         <div class="one-col activity-data-single">
             <h4 class="header-border">Number of Posts</h4>
             <div class="activity-chart">
