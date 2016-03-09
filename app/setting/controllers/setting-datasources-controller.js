@@ -6,6 +6,7 @@ module.exports = [
     'DataProviderEndpoint',
     'Notify',
     '_',
+    'Features',
 function (
     $q,
     $scope,
@@ -13,7 +14,8 @@ function (
     ConfigEndpoint,
     DataProviderEndpoint,
     Notify,
-    _
+    _,
+    Features
 ) {
 
     // Displays a loading indicator when busy querying endpoints.
@@ -88,10 +90,5 @@ function (
         });
     });
 
-    ConfigEndpoint.get({ id: 'features' }).$promise.then(function (features) {
-        $scope.available_providers = features['data-providers'];
-    });
-
-
-
+    $scope.available_providers = Features.clientFeatures['data-providers'];
 }];

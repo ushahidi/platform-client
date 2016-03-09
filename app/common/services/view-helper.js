@@ -1,12 +1,10 @@
 module.exports = [
     '_',
-    'Config',
-    'ConfigEndpoint',
+    'Features',
     '$translate',
 function (
     _,
-    Config,
-    ConfigEndpoint,
+    Features,
     $translate
 ) {
     var allViews = [
@@ -64,11 +62,7 @@ function (
         });
     };
 
-    if (_.isEmpty(Config.features)) {
-        ConfigEndpoint.get({ id: 'features' }, populateAvailableView);
-    } else {
-        populateAvailableView(Config.features);
-    }
+    populateAvailableView(Features.clientFeatures);
 
     return PostViewHelper;
 }];

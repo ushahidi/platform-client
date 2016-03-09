@@ -6,6 +6,7 @@ describe('view helper', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
+        'ushahidi.mock',
         'ngResource',
         'pascalprecht.translate'
         ])
@@ -14,9 +15,6 @@ describe('view helper', function () {
             return {
                 get : function () {}
             };
-        })
-        .service('Config', function () {
-            return {};
         })
         .factory('BootstrapConfig', function () {
             return { map: {}, site: {}, features: {} };

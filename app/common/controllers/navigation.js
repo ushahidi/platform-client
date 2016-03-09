@@ -2,23 +2,21 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
-    'Config',
     '$rootScope',
+    'Features',
 function (
     $scope,
     Authentication,
     ConfigEndpoint,
-    Config,
-    $rootScope
+    $rootScope,
+    Features
 ) {
     $scope.isHome = true;
-    $scope.activityIsAvailable = (typeof Config.features.views !== 'undefined') ? Config.features.views.activity : true;
-
-    // Start with preloaded config
-    $scope.site = Config.site;
+    $scope.activityIsAvailable = Features.isViewEnabled('activity');
+    $scope.planIsAvailable = Features.isViewEnabled('plan');
+    
     // Then update from server
     $scope.reloadSiteConfig = function () {
-        // @todo use config service
         ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
             $scope.site = site;
         });

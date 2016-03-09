@@ -1,24 +1,28 @@
 module.exports = [
     '$rootScope',
     '$translate',
-    'Config',
+    'ConfigEndpoint',
     'Languages',
 function (
     $rootScope,
     $translate,
-    Config,
+    ConfigEndpoint,
     Languages
 ) {
-    var lang = Config.site.language || 'en-US';
+    var lang = 'en-US';
+
+    ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
+        lang = site.language ? site.language : 'en-US';
+    });
 
     $rootScope.rtlEnabled = false;
 
     $translate.use(lang).then(function (langKey) {
         if (langKey) {
-            $translate.preferredLanguage(Config.site.language);
+            $translate.preferredLanguage(lang);
 
             angular.forEach(Languages.languages, function (language) {
-                if (language.code === Config.site.language) {
+                if (language.code === lang) {
                     $rootScope.rtlEnabled = language.rtl;
                 }
             });

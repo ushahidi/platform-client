@@ -3,16 +3,14 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
-    'Config',
 function (
     $rootScope,
     $scope,
     Authentication,
-    ConfigEndpoint,
-    Config
+    ConfigEndpoint
 ) {
     var USHAHIDI = 'Ushahidi';
-    $scope.siteTitle = Config.site.name ? Config.site.name : USHAHIDI;
+    $scope.siteTitle = USHAHIDI;
     $scope.pageTitle = null;
     $scope.pageDescription = null;
     $scope.pageKeywords = null;
@@ -20,7 +18,6 @@ function (
 
     // Then update from server
     $scope.reloadSiteConfig = function () {
-        // use config service
         ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
             $scope.siteTitle = site.name ? site.name : USHAHIDI;
         });
@@ -68,6 +65,4 @@ function (
             }
         }
     });
-
-
 }];

@@ -21,7 +21,7 @@
                 <li ng-show="hasPermission('Manage Users')"><a ng-href="/settings/users" translate>nav.users</a></li>
                 <li ng-show="isAdmin()"><a ng-href="/settings/roles" translate>nav.roles</a></li>
                 <!-- <li><a ng-href="/settings/permission" translate>nav.permissions</a></li> -->
-                <li><a ng-href="/settings/plan" translate>nav.plan_settings</a></li>
+                <li ng-show="planIsAvailable"><a ng-href="/settings/plan" translate>nav.plan_settings</a></li>
             </ul>
         </li>
     </ul>

@@ -3,13 +3,13 @@ module.exports = [
     '$translate',
     '$rootScope',
     'CONST',
-    'Config',
+    'ConfigEndpoint',
 function (
     $scope,
     $translate,
     $rootScope,
     CONST,
-    Config
+    ConfigEndpoint
 ) {
 
     $translate('nav.plan_settings').then(function (title) {
@@ -17,7 +17,9 @@ function (
         $rootScope.$emit('setPageTitle', title);
     });
 
-    $scope.tier = Config.site.tier;
+    ConfigEndpoint.get({id: 'site'}).$promise.then(function (site) {
+        $scope.tier = site.tier;
+    });
     $scope.username = ($rootScope.currentUser || {}).email;
     /* globals apiDomain, deploymentsDomain */
     $scope.cloudDomain = typeof deploymentsDomain !== 'undefined' ? deploymentsDomain : 'ushahidi.io' ;

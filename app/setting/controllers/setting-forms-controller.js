@@ -6,8 +6,8 @@ module.exports = [
     'FormEndpoint',
     'FormStageEndpoint',
     'Notify',
-    'Config',
     '_',
+    'Features',
 function (
     $scope,
     $translate,
@@ -16,10 +16,10 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     Notify,
-    Config,
-    _
+    _,
+    Features
 ) {
-    $scope.formQuota = (typeof Config.features.limits !== 'undefined') ? Config.features.limits.forms : true;
+    $scope.formQuota = Features.getLimit('forms');
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
