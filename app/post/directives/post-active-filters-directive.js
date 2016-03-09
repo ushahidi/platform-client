@@ -23,7 +23,7 @@ function (
             var options = GlobalFilter.options;
             var defaults = GlobalFilter.getDefaults();
 
-            var makeArray = function (value) {
+            $scope.makeArray = function (value) {
                 if (!angular.isArray(value)) {
                     return [value];
                 }
@@ -41,7 +41,7 @@ function (
 
                 delete activeFilters.within_km;
 
-                $scope.activeFilters = _.mapObject(activeFilters, makeArray);
+                $scope.activeFilters = _.mapObject(activeFilters, $scope.makeArray);
             });
 
             var transformers = {

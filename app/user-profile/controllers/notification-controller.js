@@ -35,7 +35,7 @@ module.exports = [
         };
 
         var loadNotifications = function () {
-            NotificationEndpoint.query().$promise.then(function (notifications) {
+            NotificationEndpoint.query({user: 'me'}).$promise.then(function (notifications) {
                 _.forEach(notifications, function (notification) {
                     // Add name of the subscribed collection
                     CollectionEndpoint.get({collectionId: notification.set.id}, function (collection) {
@@ -82,7 +82,7 @@ module.exports = [
         };
 
         var loadContacts = function () {
-            ContactEndpoint.get().$promise.then(function (contacts) {
+            ContactEndpoint.query({user: 'me'}).$promise.then(function (contacts) {
                 _.forEach(contacts, function (contact) {
                     // Save the original contact value
                     // and use it to track changes

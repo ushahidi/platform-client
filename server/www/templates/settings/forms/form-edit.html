@@ -58,7 +58,7 @@
         -->
     </div><!--end main col-->
     <div class="vertical-tabs">
-        <nav class="vertical-tabs-menu init">
+        <nav class="vertical-tabs-menu init" ng-show="form.stages.length">
             <ul>
                 <!--
                 <li class="active"><span class="icon-left fa-file-o">Post</span></li>
@@ -79,13 +79,19 @@
             </ul>
         </nav>
         <div class="vertical-tabs-content">
-            <div class="page-header">
+            <div class="page-header" ng-show="form.stages.length">
                 <div class="page-header-body">
                     <h2 class="delta-alt">Fields</h2>
                     <p class="small" translate>form.choose_order_message</p>
                 </div>
                 <div class="page-header-actions">
                     <button class="button-secondary" ng-click="openNewAttribute()" data-modal="add-field"><span class="icon-left fa-plus" translate>form.add_field</span></button>
+                </div>
+            </div>
+            <!-- If no stages exist -->
+            <div class="page-header" ng-show="!form.stages.length">
+                <div class="page-header-actions">
+                    <button class="button-secondary" ng-click="openNewStage()" data-modal="add-field"><span class="icon-left fa-plus" translate>form.add_step</span></button>
                 </div>
             </div>
             <div
@@ -160,8 +166,20 @@
                    </div>
                </form>
             </div>
+            <div class="step-actions"
+                ng-repeat="stage in form.stages"
+                ng-show="visibleStage == stage.id"
+                >
+                <button type="button" class="button-secondary" ng-click="editStage(stage)" translate>form.step_rename</button>
+                <button type="button" class="button-destructive" ng-click="deleteStage(stage)" translate>form.step_delete</button>
+            </div>
         </div>
    </div>
+
+   <div class="page-footer">
+       <button ng-click="saveFormSettings(form)" translate>form.save_post_type</button>
+   </div>
+   
     <modal title="form.add_field" visible="isNewAttributeOpen">
         <div class="cards-select">
             <div class="selection-card" ng-repeat="type in availableAttrTypes">

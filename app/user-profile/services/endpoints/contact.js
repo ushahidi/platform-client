@@ -11,12 +11,15 @@ function (
     var ContactEndpoint = $resource(Util.apiUrl('/contacts/:id'), {
         id: '@id'
     }, {
-        get: {
+        query: {
             method: 'GET',
             isArray: true,
-            transformResponse: function (data) {
+            transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data).results;
             }
+        },
+        get: {
+            method: 'GET'
         },
         update: {
             method: 'PUT'
