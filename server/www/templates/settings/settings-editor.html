@@ -27,7 +27,7 @@
 
     <label class="input-label" for="site-settings-language" translate>settings.site_language</label>
     <div class="custom-select">
-        <select id="site-settings-language" ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages"></select>
+        <select id="site-settings-language" ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages" ng-change="changeLanguage(site.language)"></select>
     </div>
 
     <div ng-show="isPrivateEnabled()" class="form-field checkbox">
