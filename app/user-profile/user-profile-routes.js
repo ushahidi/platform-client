@@ -11,7 +11,7 @@ function (
         templateUrl: 'templates/users/me.html',
         resolve: {
             user: ['UserEndpoint', function (UserEndpoint) {
-                return UserEndpoint.get({id: 'me'}).$promise;
+                return UserEndpoint.getFresh({id: 'me'}).$promise;
             }]
         }
     })

@@ -1,6 +1,6 @@
 module.exports = [function () {
     return {
-        queryFresh: function () {
+        query: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
