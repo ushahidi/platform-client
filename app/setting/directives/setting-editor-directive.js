@@ -62,6 +62,7 @@ function (
             var updateSiteHeader = function () {
                 $rootScope.$broadcast('event:update:header');
             };
+
             var uploadHeaderImage = function () {
                 var dfd = $q.defer();
 

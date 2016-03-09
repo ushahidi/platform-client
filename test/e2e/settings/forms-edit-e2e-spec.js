@@ -125,9 +125,9 @@ describe('forms interaction', function () {
 
                 describe('When the user clicks add new field', function () {
                     beforeEach(function () {
-                        var newField = element(by.css('.vertical-tabs-content .page-header-actions button'));
+                        var newField = element.all(by.css('.vertical-tabs-content .page-header-actions button')).get(0);
                         newField.click();
-                        browser.sleep(500);
+                        browser.sleep(50);
                     });
 
                     it('should open a select model', function () {
@@ -191,7 +191,7 @@ describe('forms interaction', function () {
                                 return elem.isDisplayed();
                             }).first();
                         deleteField.click();
-                        browser.sleep(500);
+                        browser.sleep(50);
                     });
 
                     it('should confirm the deletion', function () {
@@ -202,7 +202,7 @@ describe('forms interaction', function () {
                         beforeEach(function () {
                             var confirmModal = element(by.css('button#confirm-modal-ok'));
                             confirmModal.click();
-                            browser.sleep(500);
+                            browser.sleep(50);
                         });
 
                         it('should show a confirmation of the field deletion', function () {
@@ -222,9 +222,9 @@ describe('forms interaction', function () {
 
                 describe('When user adds a new post type step', function () {
                     beforeEach(function () {
-                        var addStep = element(by.cssContainingText('span', 'Add Step'));
+                        var addStep = element.all(by.cssContainingText('span', 'Add Step')).get(0);
                         addStep.click();
-                        browser.sleep(500);
+                        browser.sleep(50);
                     });
 
                     it('should open the new step modal', function () {
