@@ -69,7 +69,7 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var deleteButton = element(by.css(deleteButtonSelector));
                         deleteButton.click();
-                        browser.sleep(50);
+                        browser.sleep(200);
                     });
 
                     it('should ask to confirm the post\'s deletion', function () {
@@ -80,7 +80,7 @@ describe('post detail interaction', function () {
                         beforeEach(function () {
                             var confirmModal = element(by.css('button#confirm-modal-ok'));
                             confirmModal.click();
-                            browser.sleep(50);
+                            browser.sleep(200);
                         });
 
                         it('should show a deletion confirmation message', function () {
@@ -122,7 +122,7 @@ describe('post detail interaction', function () {
                     beforeEach(function () {
                         var deleteButton = element(by.css(deleteButtonSelector));
                         deleteButton.click();
-                        browser.sleep(50);
+                        browser.sleep(200);
                     });
 
                     it('should ask to confirm deletion', function () {

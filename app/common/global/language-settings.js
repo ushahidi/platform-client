@@ -21,10 +21,12 @@ function (
         if (langKey) {
             $translate.preferredLanguage(lang);
 
-            angular.forEach(Languages.languages, function (language) {
-                if (language.code === lang) {
-                    $rootScope.rtlEnabled = language.rtl;
-                }
+            Languages.then(function (languages) {
+                angular.forEach(languages, function (language) {
+                    if (language.code === lang) {
+                        $rootScope.rtlEnabled = language.rtl;
+                    }
+                });
             });
         }
     });
