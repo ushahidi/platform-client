@@ -20,6 +20,15 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
+                        'test': {
+                            enabled: true
+                        },
+                        'views': {
+                            'test': true
+                        },
+                        limits: {
+                            'test': 1
+                        },
                         'providers': {
                             pass: false,
                             enabledProvider: true

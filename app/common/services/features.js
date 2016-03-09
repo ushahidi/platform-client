@@ -14,13 +14,13 @@ function (
             });
         },
         isFeatureEnabled: function (feature) {
-            return Features.clientFeatures[feature];
+            return Features.clientFeatures[feature].enabled;
         },
         isViewEnabled: function (view) {
-            return Features.clientFeatures[view];
+            return Features.clientFeatures.views[view];
         },
         getLimit: function (feature) {
-            return Features.clientFeatures.limits[feautre];
+            return Features.clientFeatures.limits[feature];
         }
     };
 

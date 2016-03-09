@@ -5,8 +5,8 @@ module.exports = [function () {
         isViewEnabled: function (feature) {},
         getLimit: function (feature) {},
         clientFeatures: {
-            id: "features", 
-            url: "http://192.168.33.110/api/v3/config/features", 
+            id: 'features',
+            url: 'http://192.168.33.110/api/v3/config/features',
             'data-import': {
                 enabled: true
             },
@@ -37,6 +37,6 @@ module.exports = [function () {
                 plans: false,
                 timeline: true
             }
-        }  
+        }
     };
 }];

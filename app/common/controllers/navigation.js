@@ -14,7 +14,7 @@ function (
     $scope.isHome = true;
     $scope.activityIsAvailable = Features.isViewEnabled('activity');
     $scope.planIsAvailable = Features.isViewEnabled('plan');
-    
+
     // Then update from server
     $scope.reloadSiteConfig = function () {
         ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
