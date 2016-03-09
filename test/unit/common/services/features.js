@@ -32,7 +32,7 @@ describe('Features', function () {
     });
 
     it('should reload features', function () {
-        Features.clientFeatures = {}
+        Features.clientFeatures = {};
         Features.reloadFeatures();
 
         expect(Features.clientFeatures.limits.test).toEqual(1);
