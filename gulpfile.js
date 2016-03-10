@@ -145,7 +145,7 @@ gulp.task('css', [], function () {
         .pipe(gulp.dest(options.www + '/css'));
 });
 
-/** 
+/**
  * Copy icon files for leaflet from node_modules into server/www/css/images
  */
 gulp.task('copy-leaflet-icons', [], function () {
@@ -365,7 +365,7 @@ gulp.task('transifex-download', function () {
         mode = 'default',
         resource = 'client-en',
         // Get languages that are at least 90% translated
-        completion_threshold = 90,
+        completion_threshold = 70,
         config = {};
 
     // Try to load user's ~/.transifexrc config
@@ -409,13 +409,13 @@ gulp.task('transifex-download', function () {
             if (err) {
                 throw err;
             }
-            
+
             // Only download languages that have been translated past the completion threshold
             data = data.filter(function (language) {
                 if (stats[language.code] !== undefined && parseInt(stats[language.code].completed) >= completion_threshold) {
                     return true;
                 }
-                
+
                 return false;
             });
 
