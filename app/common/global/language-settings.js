@@ -19,7 +19,7 @@ function (
 
             Languages.then(function (languages) {
                 angular.forEach(languages, function (language) {
-                    if (language.code === BootstrapConfig.language) {
+                    if (language.code === lang) {
                         $rootScope.rtlEnabled = language.rtl;
                     }
                 });
