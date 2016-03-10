@@ -8,7 +8,6 @@ function (
         '$translate',
         'PostEntity',
         'PostEndpoint',
-        'RoleHelper',
         'TagEndpoint',
         'FormEndpoint',
         'FormStageEndpoint',
@@ -22,7 +21,6 @@ function (
             $translate,
             postEntity,
             PostEndpoint,
-            RoleHelper,
             TagEndpoint,
             FormEndpoint,
             FormStageEndpoint,
@@ -31,56 +29,12 @@ function (
             _
         ) {
 
-            $scope.categories = TagEndpoint.query();
-            $scope.availableRoles = RoleHelper.roles();
-            $scope.getRoleDisplayName = RoleHelper.getRole;
+            TagEndpoint.query().$promise.then(function (results) {
+                $scope.categories = results;
+            });
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
-
-            var
-                fetchAttributes = function (formId) {
-                    FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
-                        // Initialize values on post (helps avoid madness in the template)
-                        attrs.map(function (attr) {
-                            if (!$scope.post.values[attr.key]) {
-                                if (attr.input === 'location') {
-                                    $scope.post.values[attr.key] = [null];
-                                } else {
-                                    $scope.post.values[attr.key] = [attr.default];
-                                }
-                            }
-                        });
-                        $scope.attributes = attrs;
-                    });
-                },
-                fetchStages = function (formId) {
-                    $scope.stages = FormStageEndpoint.query({ formId: formId }, function (stages) {
-                        var post = $scope.post;
-
-                        // If number of completed stages matches number of stages,
-                        // assume they're all complete, and just show the first stage
-                        if (post.completed_stages.length === stages.length) {
-                            $scope.setVisibleStage(stages[0].id);
-                        } else {
-                            // Get incomplete stages
-                            var incompleteStages = _.filter(stages, function (stage) {
-                                return !_.contains(post.completed_stages, stage.id);
-                            });
-
-                            // Return lowest priority incomplete stage
-                            $scope.setVisibleStage(incompleteStages[0].id);
-                        }
-                    });
-                };
-
-            // Load attributes and stages whenever form id changes
-            $scope.$watch(function () {
-                return $scope.post.form.id || $scope.post.form;
-            }, function (formId, oldValue) {
-                fetchAttributes(formId);
-                fetchStages(formId);
-            });
 
             $scope.goBack = function () {
                 $scope.post.form = null;
@@ -103,7 +57,7 @@ function (
                 if (!_.isEmpty($scope.stages)) {
                     return stageId === $scope.stages[0].id;
                 }
-                return 0;
+                return false;
 
             };
 
@@ -128,15 +82,26 @@ function (
                         return false;
                     }
                 }
-
                 // now checking all other post attributes that are required
                 return _.chain($scope.attributes)
                 .where({form_stage_id : stageId, required: true})
                 .reduce(function (isValid, attr) {
-                    if (_.isUndefined($scope.form['values_' + attr.key]) || $scope.form['values_' + attr.key].$invalid) {
-                        return false;
+                    // checkbox validity needs to be handled differently
+                    // because it has multiple inputs identified via the options
+                    if (attr.input === 'checkbox') {
+                        var checkboxValidity = false;
+                        _.each(attr.options, function (option) {
+                            if (!_.isUndefined($scope.form['values_' + attr.key + '_' + option]) && !$scope.form['values_' + attr.key + '_' + option].$invalid) {
+                                checkboxValidity = isValid;
+                            }
+                        });
+                        return checkboxValidity;
+                    } else {
+                        if (_.isUndefined($scope.form['values_' + attr.key]) || $scope.form['values_' + attr.key].$invalid) {
+                            return false;
+                        }
+                        return isValid;
                     }
-                    return isValid;
                 }, true)
                 .value();
             };
@@ -148,7 +113,6 @@ function (
             $scope.toggleStageCompletion = function (stageId) {
 
                 stageId = parseInt(stageId);
-
                 if (_.includes($scope.post.completed_stages, stageId)) {
                     $scope.post.completed_stages = _.without($scope.post.completed_stages, stageId);
 
@@ -157,24 +121,10 @@ function (
                 }
             };
 
-            $scope.postIsPublishedTo = function () {
-
-                if ($scope.post.status === 'draft') {
-                    return 'draft';
-                }
-
-                if (!_.isEmpty($scope.post.published_to)) {
-                    return $scope.post.published_to[0];
-                }
-
-                return '';
-            };
-
-            $scope.publishPostTo = function (role) {
+            $scope.publishPostTo = function (updatedPost) {
 
                 // first check if stages required have been marked complete
-                var requiredStages = _.where($scope.stages, {required: true}),
-                    errors = [];
+                var requiredStages = _.where($scope.stages, {required: true}), errors = [];
 
                 _.each(requiredStages, function (stage) {
                     // if this stage isn't complete, add to errors
@@ -187,14 +137,26 @@ function (
                     Notify.showAlerts(errors);
                     return;
                 }
+                $scope.post = updatedPost;
 
-                $scope.post.status = 'published';
-                $scope.userSavedPost = true;
-                if (role) {
-                    $scope.post.published_to = [role];
-                } else {
-                    $scope.post.published_to = [];
+                if (!$scope.post.id) {
+                    // We're in the create interface and we should
+                    // return having set the publised_to field of the post
+                    return;
                 }
+
+                PostEndpoint.update($scope.post)
+                .$promise
+                .then(function (post) {
+                    var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+                    var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
+                    $translate(message, {role: role})
+                    .then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
+                });
             };
 
             $scope.canSavePost = function () {
@@ -254,14 +216,20 @@ function (
                         $translate(
                             'notify.post.save_success',
                             {
-                                id: $scope.post.id,
                                 name: $scope.post.title
                             }).then(function (message) {
                             Notify.showNotificationSlider(message);
+                            $location.path('/posts/' + response.id);
                         });
                     } else {
-                        Notify.showSingleAlert('Saved!');
-                        $location.path('/');
+                        $translate(
+                            'notify.post.save_success',
+                            {
+                                name: $scope.post.title
+                            }).then(function (message) {
+                                Notify.showNotificationSlider(message);
+                                $location.path('/');
+                            });
                     }
                 }, function (errorResponse) { // errors
                     var validationErrors = [];
@@ -336,6 +304,56 @@ function (
                 $scope.post.values[attr.key].splice(key, 1);
             };
 
+            $scope.fetchAttributes = function (formId) {
+                FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
+                    // Initialize values on post (helps avoid madness in the template)
+                    attrs.map(function (attr) {
+                        if (!$scope.post.values[attr.key]) {
+                            if (attr.input === 'location') {
+                                $scope.post.values[attr.key] = [null];
+                            } else if (attr.input === 'checkbox') {
+                                $scope.post.values[attr.key] = [];
+                            } else {
+                                $scope.post.values[attr.key] = [attr.default];
+                            }
+                        }
+                    });
+                    $scope.attributes = attrs;
+                });
+            };
+
+            $scope.fetchStages = function (formId) {
+                FormStageEndpoint.query({ formId: formId }).$promise.then(function (stages) {
+                    var post = $scope.post;
+                    $scope.stages = stages;
+
+                    // If number of completed stages matches number of stages,
+                    // assume they're all complete, and just show the first stage
+                    if (post.completed_stages.length === stages.length) {
+                        $scope.setVisibleStage(stages[0].id);
+                    } else {
+                        // Get incomplete stages
+                        var incompleteStages = _.filter(stages, function (stage) {
+                            return !_.contains(post.completed_stages, stage.id);
+                        });
+
+                        // Return lowest priority incomplete stage
+                        $scope.setVisibleStage(incompleteStages[0].id);
+                    }
+                });
+            };
+
+            $scope.fetchForm = function (formId) {
+                FormEndpoint.get({id: formId}).$promise.then(function (form) {
+                    $scope.post.form = form;
+                    $scope.fetchAttributes(form.id);
+                    $scope.fetchStages(form.id);
+                });
+            };
+
+            if ($scope.post.form.id) {
+                $scope.fetchForm($scope.post.form.id);
+            }
         }];
 
     return {

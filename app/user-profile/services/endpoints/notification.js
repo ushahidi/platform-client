@@ -9,18 +9,24 @@ function (
     var NotificationEndpoint = $resource(Util.apiUrl('/notifications/:id'), {
         id: '@id'
     }, {
-        get: {
+        query: {
             method: 'GET',
             isArray: true,
-            // Short term fix to handle boucing to login when unviewable
-            // notification is returned
-            params: {'ignore403': '@ignore403'},
-            transformResponse: function (data) {
+            transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data).results;
             }
         },
+        get: {
+            method: 'GET',
+            // Short term fix to handle boucing to login when unviewable
+            // notification is returned
+            params: {'ignore403': '@ignore403'}
+        },
         update: {
             method: 'PUT'
+        },
+        delete: {
+            method: 'DELETE'
         }
     });
 

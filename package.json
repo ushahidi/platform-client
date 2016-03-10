@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-client",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
@@ -18,8 +18,13 @@
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
-    "jscs": "jscs app/* test/*"
+    "jscs": "jscs ./app/* ./test/*",
+    "jscs-fix": "jscs -x ./app/* ./test/*"
   },
+  "pre-commit": [
+      "jshint",
+      "jscs" 
+  ],
   "devDependencies": {
     "body-parser": "^1.9.2",
     "brfs": "^1.2.0",
@@ -52,8 +57,16 @@
     "karma-firefox-launcher": "*",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
+<<<<<<< HEAD
     "pre-commit": "^1.1.2",
+=======
+    "karma-html2js-preprocessor": "^0.1.0",
+    "karma-ng-html2js-preprocessor": "^0.2.0",
+    "karma-json-fixtures-preprocessor": "0.0.6",
+    "karma-fixture": "^0.2.5",
+>>>>>>> develop
     "protractor": "^2.1.0",
+    "pre-commit": "^1.1.2",
     "serve-static": "^1.10.0",
     "underscore.string": "^2.3.3",
     "vinyl-buffer": "^1.0.0",
@@ -90,8 +103,8 @@
     "ng-showdown": "rjmackay/ng-showdown#patch-1",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "novus/nvd3#v1.7.1",
-    "platform-pattern-library": "ushahidi/platform-pattern-library#v3.1.0",
     "selection-model": "jtrussell/angular-selection-model.git",
+    "platform-pattern-library": "ushahidi/platform-pattern-library#gh-pages",
     "transifex": "^1.4.3",
     "underscore": "^1.7.0"
   },

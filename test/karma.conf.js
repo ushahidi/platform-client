@@ -10,11 +10,23 @@ module.exports = function (config) {
             'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/angular-cache/dist/angular-cache.js',
             'node_modules/underscore/underscore.js',
+            'node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js',
+            'node_modules/leaflet/dist/leaflet.js',
+            'app/activity/**/*.js',
             'app/common/**/*.js',
             'app/post/**/*.js',
+            'app/set/**/*.js',
+            'app/setting/**/*.js',
             'app/user-profile/**/*.js',
             'app/common/locales/**/*.json',
-            'test/unit/**/*.js'
+            'test/unit/**/*.js',
+
+            //include template files for directive testing
+            'server/www/templates/**/*.html',
+
+            {
+                pattern: 'mocked_backend/**/*.json'
+            }
         ],
 
         // we don't want to include the sub module manifest files
@@ -30,11 +42,15 @@ module.exports = function (config) {
 
         autoWatch : true,
 
-        frameworks: ['jasmine', 'commonjs'],
+        frameworks: ['jasmine', 'commonjs', 'fixture'],
 
         browsers: ['Chrome', 'Firefox', 'PhantomJS'],
 
         reporters: ['progress', 'coverage'],
+
+        jsonFixturesPreprocessor: {
+            variableName: '__json__'
+        },
 
         plugins : [
             'karma-jasmine',
@@ -42,13 +58,24 @@ module.exports = function (config) {
             'karma-coverage',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
+            'karma-fixture',
+            'karma-html2js-preprocessor',
+            'karma-ng-html2js-preprocessor',
+            'karma-json-fixtures-preprocessor',
             'karma-phantomjs-launcher'
         ],
 
         preprocessors: {
             'app/**/*.js': ['commonjs', 'coverage'],
             'app/common/locales/**/*.json': ['commonjs'],
-            'test/unit/**/*.js': ['commonjs']
+            'test/unit/**/*.js': ['commonjs'],
+            'mocked_backend/**/*.json': ['json_fixtures'],
+            'server/www/templates/**/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'server/www/',
+            moduleName: 'client-templates'
         },
 
         coverageReporter: {

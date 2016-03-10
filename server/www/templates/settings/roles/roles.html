@@ -1,0 +1,37 @@
+<main custom-roles class="page-content" role="main">
+    <div class="page-header">
+        <ul class="breadcrumb">
+          <li>
+              <a ng-href="/settings" translate>nav.settings</a>
+          </li>
+          <li translate>nav.roles</li>
+        </ul>
+        <div class="page-header-body">
+            <h1 class="page-title" translate>tool.manage_roles</h1>
+        </div>
+        <div class="page-header-actions">
+            <a ng-href="/settings/roles/create" class="button-secondary">
+                <span class="icon-left fa-plus" translate>role.add_role</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-col">
+        <div class="divider white"></div>
+
+        <div class="alert" ng-hide="roles.length">
+            <p ng-hide="roles.length"><em translate>empty.role</em></p>
+        </div>
+
+        <div ng-show="roles.length">
+            <div class="settings-listing" ng-repeat="role in roles | orderBy:'role'">
+                <h3 class="settings-listing-title">
+                    <a ng-href="/settings/roles/{{role.id}}">{{role.display_name}}</a>
+               </h3>
+               <div class="actions">
+                  <button type="button" ng-click="deleteRole(role)" class="button-destructive alt"></button>
+               </div>
+            </div>
+        </div>
+    </div>
+</main>

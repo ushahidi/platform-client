@@ -13,6 +13,7 @@ describe('Session', function () {
             realname: undefined,
             email: undefined,
             role: undefined,
+            permissions: undefined,
             accessToken: undefined,
             loginPath: undefined
         };
@@ -86,6 +87,7 @@ describe('Session', function () {
                     realname: undefined,
                     email: undefined,
                     role: undefined,
+                    permissions: undefined,
                     accessToken: 'secrettoken',
                     loginPath: undefined
                 };

@@ -1,0 +1,79 @@
+{
+    "count": 4,
+    "results": [
+        {
+            "id": 1,
+            "url": "http://api.ushahidi.dev/api/v3/roles/1",
+            "name": "admin",
+            "display_name": "Admin",
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "permissions": [],
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete"
+            ]
+        },
+        {
+            "id": 2,
+            "url": "http://api.ushahidi.dev/api/v3/roles/2",
+            "name": "Member",
+            "display_name": "Member",
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "permissions": [],
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete",
+                "update",
+                "change_status"
+            ]
+        },
+        {
+            "id": 3,
+            "url": "http://api.ushahidi.dev/api/v3/roles/2",
+            "name": "Importer",
+            "display_name": "Importer",
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "permissions": ["Bulk Data Import"],
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete",
+                "update",
+                "change_status"
+            ]
+        },
+        {
+            "id": 4,
+            "url": "http://api.ushahidi.dev/api/v3/roles/2",
+            "name": "Manager",
+            "display_name": "Manager",
+            "created": "1970-01-01T00:00:00+00:00",
+            "updated": null,
+            "permissions": ["Manage Settings", "Manage Users", "Manage Posts"],
+            "allowed_methods": [
+                "get",
+                "post",
+                "put",
+                "delete",
+                "update",
+                "change_status"
+            ]
+        }
+    ],
+    "limit": 100,
+    "offset": 0,
+    "order": "desc",
+    "orderby": "created",
+    "curr": "http://api.ushahidi.dev/api/v3/roles?access_token=defaulttoken&orderby=created&order=desc&limit=100&offset=0",
+    "next": "http://api.ushahidi.dev/api/v3/roles?access_token=defaulttoken&orderby=created&order=desc&limit=100&offset=100",
+    "prev": "http://api.ushahidi.dev/api/v3/roles?access_token=defaulttoken&orderby=created&order=desc&limit=100&offset=0",
+    "total_count": 4
+}

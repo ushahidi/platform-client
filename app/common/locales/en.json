@@ -16,14 +16,21 @@
         "post_type_limit_reached" : "You have reached the limit of post types for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
         "upgrade" : "Upgrade"
     },
+    "activity": {
+        "recent_activity_timeline" : "Recent Activity timeline",
+        "new_post" : "New Post",
+        "by" : "By",
+    },
     "form": {
-        "add_field" : "Add New Field",
+        "add_field" : "Add field",
         "add_field_instructions": "Add instructions to this field",
         "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
         "add_field_instructions_placeholder": "Instructions for field",
-        "add_new_step": "Add New Step",
+        "add_post_type": "Add Post Type",
+        "add_step": "Add Step",
         "added_form_stage_attribute": "Saved field",
         "field_allowed_relation_post_type": "Allowed post types",
+        "choose_order_message": "Choose and order the fields that you would like to include in this post type",
         "created_form_stage": "Saved step",
         "currently_disabled": "This post type is currently disabled.",
         "custom_structure": "Custom Structure",
@@ -31,6 +38,7 @@
         "default_default_placeholder": "Default value",
         "default_location_placeholder": "Nairobi, Kenya",
         "delete_post_type": "Delete this post type",
+        "delete": "Delete",
         "deleted_form": "Deleted Post Type",
         "deleted_form_stage": "Deleted Post Type Step",
         "deleted_form_stage_attribute": "Deleted field",
@@ -47,8 +55,8 @@
         "field_name_placeholder": "Title",
         "field_option_placeholder": "Option 1",
         "field_required": "This field is required",
-        "form_name": "Post Type Name",
-        "form_description": "Post Type Description",
+        "form_name": "Name",
+        "form_description": "Description",
         "forms" : "Forms",
         "form_stage_settings_saved": "Saved settings",
         "permission_public": "Public",
@@ -61,7 +69,9 @@
         "save_post_type": "Save Post Type",
         "save_post_step": "Save Post Step",
         "saved_form": "Post Type saved.",
+        "step_delete": "Delete",
         "step_name": "Step Name",
+        "step_rename": "Rename",
         "step_required": "This step is required",
         "structure_step" : "Structure",
         "type" : "type",
@@ -154,7 +164,9 @@
         "collections" : "Collections",
         "comments" : "Comments",
         "data_sources" : "Data Sources",
+        "data_import" : "Data Import",
         "edit_profile" : "Edit Profile",
+        "edit_post_type": "Edit Post Type",
         "forbidden" : "Access Denied",
         "general" : "General",
         "dashboard" : "Dashboard",
@@ -195,6 +207,8 @@
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
+        "role" : "Role",
+        "roles" : "Roles",
         "views" : "Views",
         "workspace" : "Workspace"
     },
@@ -207,6 +221,9 @@
     },
     "post": {
         "posts" : "Posts",
+        "by" : "by",
+        "add_post_type" : "Add {{form_name}}",
+        "edit_post_type" : "Edit {{form_name}}",
         "publish_for_you" : "Just you",
         "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
@@ -224,6 +241,7 @@
         "unselect_all" : "Unselect All",
         "per_page" : "{{count}} posts",
         "post_details" : "Post Details",
+        "post" : "Post",
         "steps" : "This post's steps",
         "mark_complete" : "Mark as Complete",
         "complete" : "Complete",
@@ -258,8 +276,9 @@
             "add_a_post" : "Add a post",
             "edit_post" : "Edit {{title}}",
             "change_type" : "Change type",
-            "incomplete_step" : "The required step {{stage}} is not marked complete",
+            "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
             "save" : "Save",
+            "save_post" : "Save Post",
             "publish" : "Publish to...",
             "publish_to" : "Publish to {{role}}",
             "published_to" : "Published to {{role}}",
@@ -271,9 +290,9 @@
             "author_email" : "Email",
             "form" : {
                 "categories" : "Categories",
-                "description" : "Post Description",
+                "description" : "Description",
                 "location" : "Location",
-                "title" : "Post Title",
+                "title" : "Title",
                 "link" : {
                     "name" : "Link Name",
                     "url" : "Link url",
@@ -322,6 +341,16 @@
             }
         }
     },
+    "role": {
+        "add_role" : "Add Role",
+        "edit_role" : "Edit Role",
+        "name" : "Name",
+        "description" : "Description",
+        "save" : "Save Role",
+        "save_add_another" : "Save & Add Another",
+        "permissions" : "Permissions",
+        "delete" : "Delete",
+    },
     "set": {
         "create_collection" : "Create Collection",
         "create_savedsearch": "Create Saved Search",
@@ -350,6 +379,7 @@
     "tag": {
         "add_tag" : "Add Category",
         "save" : "Save Category",
+        "save_add_another" : "Save & Add Another",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "saved_tag": "Category saved.",
@@ -405,6 +435,7 @@
         "site_description_placeholder" : "An optional one sentence description",
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
+        "site_private" : "Make this deployment private",
         "select_image" : "Select image",
         "save" : "Save",
         "saved_settings" : "Deployment settings saved!",
@@ -442,11 +473,36 @@
             }
         }
     },
+    "data_import" :{
+        "import" : "Import",
+        "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type",
+        "import_explanation_file_size" : " - The size for a single file is limited to 10 MB",
+        "import_explanation_format_location_1" : " - Geographic locations should be included as separate latitude and longitude columns in your CSV",
+        "import_explanation_required_fields" : " - All required post type fields must have an associated value set in the CSV. For example, if the field title is required then the field must be mapped to a CSV column where all rows of that column have a value set",
+        "csv" : "CSV",
+        "post_type" : "Import to which post type?",
+        "file_csv" : "CSV file",
+        "import_csv" : "Import CSV",
+        "choose_file" : "Choose file",
+        "organize_data" : "Organize data",
+        "organize_your_imported_data" : "Assign CSV columns to post fields",
+        "assign_csv_message" : "Assign CSV columns to post fields",
+        "csv_instructions" : "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",
+        "csv_instructions_required_fields" : " - Fields marked with a * are required and must be assigned a value.",
+        "csv_column_name" : "CSV column name",
+        "post_type_title" : "{{form_name}} field name",
+        "dont_import" : "Don\'t import",
+        "cancel_import" : "Cancel import",
+        "finish_import" : "Finish import",
+        "select_post_type" : "Select Post Type"
+    },
     "user": {
         "add_user" : "Add User",
         "edit_user" : "Edit User",
+        "update_password" : "Update Password",
         "change_role" : "Change Role",
         "save" : "Save User",
+        "save_add_another" : "Save & Add Another",
         "show_all_roles" : "Show All Roles",
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",
@@ -502,6 +558,9 @@
         "role": "Role"
     },
     "notify": {
+        "contact" : {
+            "save_success" : "Contact saved",
+        },
         "default" : {
             "save_success" : "Saved resource",
             "save_error" : "Unable to save resource, please try again",
@@ -513,6 +572,14 @@
             "bulk_destroy_success" : "Deleted resource",
             "bulk_destroy_error" : "Unable to delete resource, please try again",
             "bulk_destroy_cancelled" : "Delete cancelled"
+        },
+        "data_import" : {
+            "csv_upload" : "File {{name}} successfully uploaded",
+            "csv_mappings_set" : "CSV imported. {{processed}} records imported, {{errors}} records failed.",
+            "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}",
+            "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
+            "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
+            "csv_import_cancel" : "CSV import cancelled"
         },
         "general_settings" : {
             "save_success" : "General settings saved"
@@ -534,9 +601,9 @@
             "success" : "Registration complete! You can now log in.."
         },
         "post" : {
-            "save_success" : "Saved <a href\"/post/{{id}}\">name</a> post",
+            "save_success" : "Post {{name}} saved",
             "save_error" : "Unable to save post, please try again",
-            "publish_success" : "Post has been published to {{role}}",
+            "publish_success" : "Post has been published for {{role}}",
             "set_draft" : "Post is now visible to just you",
             "publish_error" : "Unable to publish post, please try again",
             "unpublish_success" : "Post has been unpublished",
@@ -544,12 +611,14 @@
             "yes_confirm_delete" : "Yes, delete this post",
             "confirm_delete" : "Confirm Delete",
             "destroy_title" : "Delete Post",
-            "delete_question" : "Are you sure you want to delete your post <a href=\"/posts/{{id}}\">{{post}}</a>?",
+            "delete_question" : "Are you sure you want to delete your post {{post}}?",
             "destroy_success" : "Post {{name}} deleted",
+            "destroy_success_bulk" : "Posts deleted",
             "destroy_confirm" : "Are you sure you want to delete this post?",
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",
-            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?"
+            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
+            "stage_save_success" : "Updated {{stage}}"
         },
         "tag" : {
             "save_success" : "Saved category {{name}}",
@@ -558,6 +627,12 @@
             "destroy_error" : "Unable to delete category, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
             "bulk_destroy_success" : "{{count}} categories deleted"
+        },
+        "role" : {
+            "delete_question" : "Are you sure you want to delete the role {{role}}?",
+            "destroy_success" : "Role {{role}} deleted.",
+            "save_success" : "Role {{role}} saved.",
+            "last_admin" : "You can not delete the only admin role"
         },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}",
@@ -579,7 +654,7 @@
             "save_attribute_success" : "Field {{name}} added",
             "edit_form_success" : "Post Type {{name}} updated",
             "edit_stage_success" : "Post Type step {{name}} updated",
-            "delete_form_confirm" : "Are you sure you want to delete this form?",
+            "delete_form_confirm" : "Are you sure you want to delete this post type?",
             "destroy_form_success" : "Post type {{name}} deleted",
             "delete_stage_confirm" : "Are you sure you want to delete this step?",
             "destroy_stage_success" : "Post type step {{name}} deleted",
@@ -602,7 +677,8 @@
         },
         "notification" : {
             "add" : "You will now be notified when new posts are added to {{set}}",
-            "delete_confirm" : "Are you sure you want to remove this notification?"
+            "delete_confirm" : "Are you sure you want to remove this notification?",
+            "destroy_notification_success" : "Notification {{name}} deleted",
         }
     },
     "empty": {
@@ -610,6 +686,8 @@
         "post" : "No posts found.",
         "user" : "No users found.",
         "category" : "No categories found.",
+        "role" : "No roles found.",
+        "permission" : "No permissions found.",
         "form": "No forms found."
     },
     "location": {

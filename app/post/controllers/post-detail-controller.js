@@ -11,12 +11,12 @@ module.exports = [
     'UserEndpoint',
     'TagEndpoint',
     'FormAttributeEndpoint',
+    'FormStageEndpoint',
     'FormEndpoint',
     'Maps',
     'Leaflet',
     'leafletData',
     '_',
-    'RoleHelper',
     'Notify',
 function (
     $scope,
@@ -31,26 +31,34 @@ function (
     UserEndpoint,
     TagEndpoint,
     FormAttributeEndpoint,
+    FormStageEndpoint,
     FormEndpoint,
     Maps,
     L,
     leafletData,
     _,
-    RoleHelper,
     Notify
 ) {
     $scope.post = post;
+
     $scope.mapDataLoaded = false;
-    $scope.availableRoles = RoleHelper.roles();
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
         }
         if (!_.isEmpty($scope.post.published_to)) {
-            return RoleHelper.getRole($scope.post.published_to[0]);
+            return $scope.post.published_to.join(', ');
         }
 
         return 'post.publish_for_everyone';
+    };
+
+    $scope.setVisibleStage = function (stageId) {
+        $scope.visibleStage = stageId;
+    };
+
+    $scope.stageIsComplete = function (stageId) {
+        return _.includes($scope.post.completed_stages, stageId);
     };
 
     // Set page title to post title, if there is one available.
@@ -65,7 +73,7 @@ function (
 
     // Load the post author
     if ($scope.post.user && $scope.post.user.id) {
-        $scope.user = UserEndpoint.get({id: $scope.post.user.id});
+        $scope.post.user = UserEndpoint.get({id: $scope.post.user.id});
     }
 
     // Load the post form
@@ -83,12 +91,44 @@ function (
             }
         });
 
+        FormStageEndpoint.get({formId: $scope.post.form.id}, function (stages) {
+            $scope.stages = stages.results;
+
+            // Convert ids to strings
+            _.forEach($scope.stages, function (stage) {
+                stage.id = stage.id.toString();
+            });
+
+            // Make the first stage visible
+            if (!_.isEmpty($scope.stages)) {
+                $scope.visibleStage = $scope.stages[0].id;
+                $scope.stages[0].hasFileIcon = true;
+            }
+
+            // Get completed stages
+            _.forEach($scope.stages, function (stage) {
+                if (_.indexOf($scope.post.completed_stages, stage.id) !== -1) {
+                    stage.completed = true;
+                }
+            });
+        });
+
         FormAttributeEndpoint.query({formId: $scope.post.form.id}, function (attributes) {
             angular.forEach(attributes, function (attr) {
                 this[attr.key] = attr;
             }, $scope.form_attributes);
         });
+    } else {
+        $scope.visibleStage = 'post';
     }
+
+    $scope.isFirstStage = function (stageId) {
+        if (!_.isEmpty($scope.stages)) {
+            return stageId === $scope.stages[0].id;
+        }
+
+        return false;
+    };
 
     // Replace tags with full tag object
     $scope.post.tags = $scope.post.tags.map(function (tag) {
@@ -104,6 +144,11 @@ function (
         }
 
         return true;
+    };
+
+
+    $scope.activateStageTab = function (selectedStage) {
+        $scope.visibleStage = selectedStage.id;
     };
 
     // Set initial map params
@@ -169,93 +214,34 @@ function (
                             Notify.showNotificationSlider(message);
                             $location.path('/');
                         });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
                 });
             });
         });
     };
 
-    $scope.refreshCollections = function () {
-        $scope.editableCollections = CollectionEndpoint.editableByMe();
-    };
-    $scope.refreshCollections();
-    $scope.postInCollection = function (collection) {
-        return _.contains($scope.post.sets, String(collection.id));
-    };
-
-    $scope.toggleCreateCollection = function () {
-        $scope.showNewCollectionInput = !$scope.showNewCollectionInput;
-    };
-
-    $scope.toggleCollection = function (selectedCollection) {
-        if (_.contains($scope.post.sets, String(selectedCollection.id))) {
-            $scope.removeFromCollection(selectedCollection);
+    $scope.toggleCompletedStage = function (stage) {
+        // @todo how to validate this before saving
+        if (_.includes($scope.post.completed_stages, stage.id)) {
+            $scope.post.completed_stages = _.without($scope.post.completed_stages, stage.id);
         } else {
-            $scope.addToCollection(selectedCollection);
+            $scope.post.completed_stages.push(stage.id);
         }
-    };
 
-    $scope.addToCollection = function (selectedCollection) {
-        var collectionId = selectedCollection.id, collection = selectedCollection.name;
-
-        CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id})
-            .$promise.then(function () {
-                $translate('notify.collection.add_to_collection', {collection: collection})
-                .then(function (message) {
-                    $scope.post.sets.push(String(collectionId));
-                    Notify.showNotificationSlider(message);
-                });
+        PostEndpoint.update($scope.post).$promise
+            .then(function () {
+                $translate('notify.post.stage_save_success', {stage: stage.label})
+                    .then(function (message) {
+                        Notify.showNotificationSlider(message);
+                        stage.completed = !stage.completed;
+                    });
             }, function (errorResponse) {
                 Notify.showApiErrors(errorResponse);
             });
     };
 
-    $scope.removeFromCollection = function (selectedCollection) {
-        var collectionId = selectedCollection.id, collection = selectedCollection.name;
-
-        CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
-        .$promise
-        .then(function () {
-            $translate('notify.collection.removed_from_collection', {collection: collection})
-            .then(function (message) {
-                $scope.post.sets = _.without($scope.post.sets, String(collectionId));
-                Notify.showNotificationSlider(message);
-            });
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
-    /*
-    scope.searchCollections = function (query) {
-        CollectionEndpoint.query(query)
-        .$promise
-        .then(function (result) {
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
-
-    scope.clearSearch = function() {
-        scope.editableCollection = scope.editableCollectionCopy;
-    };
-    */
-    $scope.createNewCollection = function (collectionName) {
-        var collection = {
-            'name': collectionName,
-            'user_id': $rootScope.currentUser.userId
-        };
-        CollectionEndpoint.save(collection)
-        .$promise
-        .then(function (collection) {
-            $scope.toggleCreateCollection();
-            $scope.newCollection = '';
-            $scope.refreshCollections();
-            $scope.addToCollection(collection);
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
-
-    $scope.publishPostTo = function () {
+    $scope.publishPostTo = function (updatedPost) {
         // first check if stages required have been marked complete
         var requiredStages = _.where($scope.stages, {required: true}),
             errors = [];
@@ -272,23 +258,14 @@ function (
             return;
         }
 
-        if ($scope.publishRole) {
-            if ($scope.publishRole === 'draft') {
-                $scope.post.status = 'draft';
-            } else {
-                $scope.post.status = 'published';
-                $scope.post.published_to = [$scope.publishRole];
-            }
-        } else {
-            $scope.post.status = 'published';
-            $scope.post.published_to = [];
-        }
+        $scope.post = updatedPost;
 
         PostEndpoint.update($scope.post).
         $promise
         .then(function () {
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-            $translate(message, { role: $scope.publishRole })
+            var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
+            $translate(message, {role: role})
             .then(function (message) {
                 Notify.showNotificationSlider(message);
             });
@@ -296,19 +273,4 @@ function (
             Notify.showApiErrors(errorResponse);
         });
     };
-
-    $scope.postIsPublishedTo = function () {
-        if ($scope.post.status === 'draft') {
-            return 'draft';
-        }
-
-        if (!_.isEmpty($scope.post.published_to)) {
-            return $scope.post.published_to[0];
-        }
-
-        return '';
-    };
-    $scope.publishRole = $scope.postIsPublishedTo();
-
 }];
-

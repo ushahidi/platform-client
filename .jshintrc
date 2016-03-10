@@ -19,6 +19,7 @@
 	"globals": {
 		"jQuery": true,
 		"$": true,
+    "_": true,
 		"angular": true,
 		"console" : false,
 		"document" : true
@@ -33,6 +34,7 @@
     "expect",
     "inject",
     "jasmine",
+    "fixture",
     "spyOn",
     "describe",
     "beforeEach",

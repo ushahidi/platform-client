@@ -4,6 +4,7 @@ module.exports = [
     '$translate',
     '$rootScope',
     'ConfigEndpoint',
+    'Config',
     '_',
     'Notify',
     'Util',
@@ -14,6 +15,7 @@ function (
     $translate,
     $rootScope,
     ConfigEndpoint,
+    Config,
     _,
     Notify,
     Util,
@@ -33,6 +35,10 @@ function (
                 file : null
             };
 
+            $scope.isPrivateEnabled = function () {
+                return Config.features.private.enabled;
+            };
+
             $scope.site = ConfigEndpoint.get({ id: 'site' });
             $scope.userSavedSettings = false;
 
@@ -47,7 +53,9 @@ function (
             }
             $scope.timezones.push('UTC');
 
-            $scope.languages = Languages.languages;
+            Languages.then(function (languages) {
+                $scope.languages = languages;
+            });
 
             $scope.clearHeader = function () {
                 $scope.site.image_header = null;
@@ -56,6 +64,7 @@ function (
             var updateSiteHeader = function () {
                 $rootScope.$broadcast('event:update:header');
             };
+
             var uploadHeaderImage = function () {
                 var dfd = $q.defer();
 

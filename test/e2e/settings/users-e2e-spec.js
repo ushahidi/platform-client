@@ -90,12 +90,14 @@ describe('users management', function () {
                                 });
 
                                 describe('selecting "Member" as new role', function () {
+                                    var alertModalText;
                                     beforeEach(function () {
                                         element(by.linkText('Member')).click();
-                                        browser.sleep(500);
+                                        alertModalText = element(by.css('#alert-modal-text'));
+                                        browser.wait(alertModalText.isDisplayed, 200);
                                     });
                                     it('shows an error alert that you cannot change your own role (the user as which your are signed in)', function () {
-                                        element(by.css('#alert-modal-text')).getText().then(
+                                        alertModalText.getText().then(
                                             function (text) {
                                                 expect(text).toEqual('You cannot change your own role');
                                             });
@@ -117,7 +119,7 @@ describe('users management', function () {
                                         deleteButton.click();
                                     });
 
-                                    browser.sleep(500);
+                                    browser.sleep(200);
                                 });
 
                                 it('shows an error alert that you cannot delete your own user (the user as which your are signed in)', function () {
@@ -133,9 +135,6 @@ describe('users management', function () {
                             _.range(3, 6).forEach(function (i) {
                                 element(by.css('#user-' + i + ' input[type="checkbox"]')).click();
                             });
-                            // element.all(by.css('tr.user input[type="checkbox"]')).then(function(userCheckBoxes){
-                            //
-                            // });
                             element(by.css('#user-1 input[type="checkbox"]')).click();
                         });
 
@@ -156,11 +155,10 @@ describe('users management', function () {
                                 describe('selecting "Member" as new role', function () {
                                     beforeEach(function () {
                                         element(by.linkText('Member')).click();
-                                        browser.sleep(500);
+                                        browser.sleep(200);
                                     });
                                     it('shows an alert which asks if you really want to change the roles', function () {
                                         expect(element(by.css('#confirm-modal-text')).getText()).toEqual('Are you sure you want to change the role of 4 users to Member?');
-                                        element(by.css('button#confirm-modal-ok')).click();
                                     });
                                 });
 

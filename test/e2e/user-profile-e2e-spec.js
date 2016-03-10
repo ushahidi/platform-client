@@ -38,7 +38,7 @@ describe('user profile management', function () {
                 userMenuLink = element(by.css(userMenuLinkSelector));
                 userMenu = element(by.css(userMenuSelector));
                 userMenuLink.click();
-                browser.wait(userMenu.isDisplayed, 500);
+                browser.wait(userMenu.isDisplayed, 200);
 
                 userProfileLink = element(by.css(userProfileLinkSelector));
             });

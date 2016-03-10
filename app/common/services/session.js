@@ -10,6 +10,7 @@ function (
         email: undefined,
         accessToken: undefined,
         role: undefined,
+        permissions: undefined,
         loginPath: undefined
     };
 

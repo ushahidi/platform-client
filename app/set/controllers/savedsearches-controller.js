@@ -59,7 +59,7 @@ module.exports = [
         // Show Add Notification link
         $scope.showNotificationLink = false;
 
-        NotificationEndpoint.get({set: savedSearch.id, ignore403: true}, function (notifications) {
+        NotificationEndpoint.query({set: savedSearch.id, ignore403: true, user: 'me'}, function (notifications) {
             // show link if subscription does not exist
             $scope.showNotificationLink = notifications.length === 0;
         });
@@ -67,12 +67,12 @@ module.exports = [
         $scope.saveNotification = function (savedSearch) {
             var notification = {set: savedSearch.id};
 
-            NotificationEndpoint.save(notification, function (notification) {
+            NotificationEndpoint.save(notification).$promise.then(function (notification) {
                 // No need to show the link after subscription
                 $scope.showNotificationLink = false;
                 $translate('notify.notification.add', {set: savedSearch.name})
                     .then(function (message) {
-                        Notify.showSingleAlert(message);
+                        Notify.showNotificationSlider(message);
                     });
             });
         };

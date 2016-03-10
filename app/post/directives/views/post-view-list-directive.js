@@ -36,7 +36,13 @@ function (
             },
             handleResponseErrors = function (errorResponse) {
                 Notify.showApiErrors(errorResponse);
+            },
+            handleSuccess = function () {
+                $translate('notify.post.destroy_success_bulk').then(function (message) {
+                    Notify.showNotificationSlider(message);
+                });
             };
+
 
             // whenever the filters changes, update the current list of posts
             $scope.$watch(function () {
@@ -47,20 +53,10 @@ function (
                 }
             });
 
-            var refreshCollections = function () {
-                $scope.editableCollections = CollectionEndpoint.editableByMe();
-            };
-
             $scope.$on('event:post:selection', function (event, post) {
                 (post.selected ? $scope.selectedItems++ : $scope.selectedItems--);
                 (post.selected ? $scope.selectedPosts.push(post) : $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id})));
             });
-
-            $scope.$on('event:collection:update', function () {
-                refreshCollections();
-            });
-
-            refreshCollections();
 
             $scope.deleteSelectedPosts = function () {
 
@@ -75,7 +71,7 @@ function (
                                 $scope.selectedItems--;
                                 return PostEndpoint.delete({ id: post.id }).$promise;
                             });
-                        $q.all(deletePostsPromises).then(getPostsForPagination, handleResponseErrors)
+                        $q.all(deletePostsPromises).then(handleSuccess, handleResponseErrors)
                         .finally(getPostsForPagination);
                     });
                 });

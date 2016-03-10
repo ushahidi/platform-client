@@ -1,4 +1,4 @@
-<div class="filters" dropdown auto-close="disabled">
+<div class="filters" dropdown is-open="hasAside" auto-close="disabled">
     <div class="filters-toggle init" dropdown-toggle data-toggle="filters-container">
         <h3 class="delta-alt">Search <span>&amp; Filter</span></h3>
     </div>
@@ -99,7 +99,7 @@
                         </ul>
                     </li>
 
-                    <li class="accordion-menu-list__item" accordion-group ng-if="isAdmin()">
+                    <li class="accordion-menu-list__item" accordion-group ng-if="hasPermission('Manage Posts')">
                         <div class="accordion-menu-header">
                             <a class="accordion-menu-trigger delta" accordion-trigger translate>global_filter.post_statuses.post_statuses</a>
                         </div>

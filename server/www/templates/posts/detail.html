@@ -1,51 +1,24 @@
-<main class="page-content post-detail">
+<main class="page-content layout-c">
    <div class="main-col">
-        <article class="post-detail" role="article">
-            <header class="post-header">
-                <h1 class="post-title">
+        <article role="article">
+            <header class="page-header">
+                <h1 class="page-title">
                     {{post.title}}
                 </h1>
-                <div class="post-permissions">
+                <div class="page-permissions">
                     <p ng-show="post.allowed_privileges.indexOf('update') == -1">
                         <span class="icon-left fa-globe" translate>
                             {{publishedFor()}}
                         </span>
                     </p>
-
                     <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
-                        <div class="custom-select init fa-user">
-                            <select
-                                ng-change="publishPostTo()"
-                                ng-model="publishRole"
-                            >
-                                <option
-                                    value="draft"
-                                    translate>
-                                    post.publish_for_you
-                                </option>
-                                <option
-                                    ng-repeat="role in availableRoles"
-                                    data-icon="fa-user"
-                                    value="{{role.name}}"
-                                    >
-                                    {{role.display_name}}
-                                </option>
-                                <option
-                                    data-icon="fa-globe"
-                                    value=""
-                                    translate>
-                                    post.publish_for_everyone
-                                </option>
-
-                            </select>
-                        </div>
-                        <label><span translate>post.can_see_this_post</span></label>
+                        <role-selector
+                            toggle-role-func="publishPostTo(updatedPost)"
+                            post="post" ></role-selector>
                     </div>
                 </div>
                 <div class="actions-toggle">
-                    <div class="actions-toggle-trigger">
-                        <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
-                    </div>
+
                     <div id="options" class="actions-content init active">
                         <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
                             <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
@@ -54,56 +27,78 @@
                             <span class="icon-left fa-share">Share</span>
                         </button>
                     -->
-                        <fieldset ng-if="post.allowed_privileges.indexOf('update') !== -1" dropdown auto-close="outsideClick" ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1" class="custom-fieldset init">
-                            <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
-                                <span class="icon-left fa-th" translate>global_filter.collections.collections</span>
-                            </legend>
-                            <div class="dropdown-menu init" dropdown-menu>
-                                <!-- div class="form-field search bar">
-                                    <label for="search-collections" class="nodisplay" translate>global_filter.collections.search_collections</label>
-                                    <input id="search-collections" placeholder="Search Collections" type="search">
-                                </div -->
-                                <div class="fieldset-results" ng-repeat="collection in editableCollections">
-                                    <div class="form-field checkbox">
-                                        <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
-                                        <label for="collection">{{collection.name}}</label>
-                                    </div>
-                                </div>
-                                <div class="form-field bar">
-                                    <a class="button button-link init icon-left fa-plus" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
-                                        set.create_collection
-                                    </a>
-                                    <div ng-show="showNewCollectionInput">
-                                        <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
-                                        <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
+                        <collection-selector
+                            post="post"
+                            ng-if="post.allowed_privileges.indexOf('update') !== -1"
+                            ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
+                            >
+                        </collection-selector>
                     </div>
                 </div>
             </header>
             <div class="vertical-tabs">
+                <nav class="vertical-tabs-menu init">
+                    <ul>
+                        <li
+                            ng-repeat="stage in stages"
+                            ng-class="{'active': visibleStage == stage.id}"  >
+                            <a ng-click="setVisibleStage(stage.id)">
+                                <span class="icon-left" ng-class="{'fa-{{stage.icon}}': stage.icon}">
+                                    {{stage.label}}
+                                </span>
+                            </a>
+                            <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
+                            </span>
+                        </li>
+                        <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank.-->
+                    </ul>
+                </nav>
                 <div class="vertical-tabs-content">
                     <div class="post-author">
-                       <img class="circular" src="http://placehold.it/100x100" alt="">
+                       <div class="user-avatar" ng-show="post.user">
+                          <img class="circular" src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ post.user.realname }}">
+                       </div>
                        <p>
                           <strong class="icon-left fa-circle">
-                              {{post.type}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="user.realname != null">by <a href="/settings/users/{{user.id}}">{{post.author_realname}}</a></span>
+                              {{form_name || "Unstructured"}}
+                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
                       </p>
                     </div>
-                    <div ng-if="post.content" class="post-field">
+                    <div
+                        ng-if="post.content"
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+                        class="post-field">
                         <p sd-model-to-html="post.content"></p>
                     </div>
-                    <div ng-repeat="(key,value) in post.values" ng-if="form_attributes[key] && showType(form_attributes[key].type)" class="post-field">
+                    <div
+                        ng-if="!!post.tags.length"
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+                        class="form-field"
+                    >
+                        <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
+                        <div class="form-field checkbox" ng-repeat="category in post.tags">
+                            <label>
+                                <i class="fa fa-{{category.icon}}" style="color:{{category.color}}"></i> {{category.tag}}
+                            </label>
+                        </div>
+                    </div>
+                    <div
+                        ng-repeat="(key,value) in post.values"
+                        ng-if="form_attributes[key] && showType(form_attributes[key].type)"
+                        ng-show="form_attributes[key].form_stage_id == visibleStage"
+                        class="post-field"
+                    >
                       <post-value
                           key="key"
                           value="value"
                           attribute="form_attributes[key]"
-                      ></post-value>
+                        ></post-value>
                     </div>
-                    <div ng-if="mapDataLoaded" class="post-field">
+                    <div
+                        ng-if="mapDataLoaded"
+                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+                        class="post-field"
+                        >
                         <h4 ng-if="mapDataLoaded" translate>post.location</h4>
                         <div ng-if="mapDataLoaded">
                             <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
@@ -113,4 +108,4 @@
             </div>
        </article>
     </div>
-</main> <!-- end .post-detail -->
+</main>

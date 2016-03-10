@@ -1,0 +1,76 @@
+<main custom-roles-editor class="page-content" role="main">
+    <div class="page-header">
+        <ul class="breadcrumb">
+            <li>
+                <a ng-href="/settings" translate>nav.settings</a>
+            </li>
+            <li>
+                <a ng-href="/settings/roles" translate>nav.roles</a>
+            </li>
+            <li>
+                {{title}}
+            </li>
+        </ul>
+        <div class="page-header-body">
+            <h1 class="page-title">
+                <span class="icon-left fa-pencil">
+                    {{title}}
+                </span>
+            </hi>
+        </div>
+        <div class="page-header-actions">
+            <button ng-click="saveRole(role, false)" ng-disabled="form.$invalid || processing" translate>
+                role.save
+            </button>
+            <button class="save save-add" ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
+                role.save_add_another
+            </button>
+
+        </div>
+    </div>
+
+    <div class="main-col">
+        <form>
+            <div class="form-field title">
+                <label translate>role.name</label>
+                <input id="name" type="text" class="form-control"
+                    ng-minlength="3"
+                    ng-maxlength="150"
+                    ng-model="role.display_name"
+                    required>
+            <div>
+
+            <div class="form-field">
+                <label translate>role.description</label>
+                <input id="description" type="text" class="form-control"
+                    ng-maxlength="150"
+                    ng-model="role.description">
+            </div>
+
+            <fieldset>
+                <legend translate>role.permissions</legend>
+
+                <div class="alert" ng-hide="permissions.length">
+                    <p ng-hide="permissions.length"><em translate>empty.permission</em></p>
+                </div>
+
+                <div ng-repeat="permission in permissions">
+                    <label class="checkbox-label" for="{{permission.id}}">
+                        <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="role.permissions" checklist-value="permission.name">
+                        {{permission.name}}
+                    </label>
+                </div>
+            </fieldset>
+
+            <div class="save-button clearfix">
+                <button ng-click="saveRole(role, false)" ng-disabled="form.$invalid || processing" translate>
+                    role.save
+                </button>
+                <button class="save save-add" ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
+                    role.save_add_another
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</main>
