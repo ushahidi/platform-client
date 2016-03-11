@@ -90,5 +90,7 @@ function (
         });
     });
 
-    $scope.available_providers = Features.clientFeatures['data-providers'];
+    Features.loadFeatures().then(function (features) {
+        $scope.available_providers = features['data-providers'];
+    });
 }];

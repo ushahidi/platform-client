@@ -19,7 +19,9 @@ function (
     _,
     Features
 ) {
-    $scope.formQuota = Features.getLimit('forms');
+    Features.loadFeatures().then(function () {
+        $scope.formQuota = Features.getLimit('forms');
+    });
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;

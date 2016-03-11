@@ -27,9 +27,9 @@ function (
             };
 
             $scope.refreshView();
-
-            $scope.rolesEnabled = Features.isFeatureEnabled('roles');
-
+            Features.loadFeatures().then(function () {
+                $scope.rolesEnabled = Features.isFeatureEnabled('roles');
+            });
             $scope.checkIfLastAdmin = function () {
                 var admins = 0;
                 _.each($scope.roles, function (role) {

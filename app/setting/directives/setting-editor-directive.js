@@ -34,8 +34,9 @@ function (
             $scope.fileContainer = {
                 file : null
             };
-
-            $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
+            Features.loadFeatures().then(function () {
+                $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
+            });
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
             $scope.userSavedSettings = false;

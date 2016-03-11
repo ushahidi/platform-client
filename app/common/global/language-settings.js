@@ -2,14 +2,16 @@ module.exports = [
     '$rootScope',
     '$translate',
     'ConfigEndpoint',
+    'BootstrapConfig',
     'Languages',
 function (
     $rootScope,
     $translate,
     ConfigEndpoint,
+    BootstrapConfig,
     Languages
 ) {
-    var lang = 'en-US';
+    var lang = BootstrapConfig.language || 'en-US';
 
     ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
         lang = site.language ? site.language : 'en-US';
