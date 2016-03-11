@@ -17,6 +17,7 @@ describe('Features', function () {
     beforeEach(inject(function (_$rootScope_, _Features_) {
         $rootScope = _$rootScope_;
         Features = _Features_;
+        Features.loadFeatures();
     }));
 
     it('should check if feature is enabled', function () {
@@ -32,9 +33,9 @@ describe('Features', function () {
     });
 
     it('should reload features', function () {
-        Features.clientFeatures = {};
-        Features.reloadFeatures();
+        Features.features = undefined;
+        Features.loadFeatures();
 
-        expect(Features.clientFeatures.limits.test).toEqual(1);
+        expect(Features.features.limits.test).toEqual(1);
     });
 });
