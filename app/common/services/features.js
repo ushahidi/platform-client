@@ -15,7 +15,7 @@ function (
             if (Features.features) {
                 deferred.resolve(Features.features);
             } else {
-                ConfigEndpoint.getFresh({id: 'features'}).$promise.then(function (features){
+                ConfigEndpoint.getFresh({id: 'features'}).$promise.then(function (features) {
                     Features.features = features;
                     deferred.resolve(Features.features);
                 });
@@ -23,7 +23,7 @@ function (
             return deferred.promise;
         },
         isFeatureEnabled: function (feature) {
-            return Features.features['feature'].enabled;
+            return Features.features[feature].enabled;
         },
         isViewEnabled: function (view) {
             return Features.features.views[view];
