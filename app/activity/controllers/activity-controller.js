@@ -3,7 +3,6 @@ module.exports = [
     '$translate',
     '$routeParams',
     'PostEndpoint',
-    'ConfigEndpoint',
     'dc',
     'd3',
     '_',
@@ -13,15 +12,14 @@ function (
     $translate,
     $routeParams,
     PostEndpoint,
-    ConfigEndpoint,
     dc,
     d3,
     _,
     Features
 ) {
-
-    $scope.unavailableView = !Features.isViewEnabled('activity');
-
+    Features.loadFeatures().then(function () {
+        $scope.unavailableView = !Features.isViewEnabled('activity');
+    });
     // Set the page title
     $translate('nav.activity').then(function (title) {
         $scope.title = title;
@@ -54,7 +52,6 @@ function (
             var date = new Date(parseInt(d.label) * 1000);
             return date;
         },
-
         elasticY: true,
         valueAccessor: function (d) {
             return d.total;

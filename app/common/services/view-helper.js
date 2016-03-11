@@ -61,8 +61,9 @@ function (
             }
         });
     };
-
-    populateAvailableView(Features.clientFeatures);
+    Features.loadFeatures().then(function (features) {
+        populateAvailableView(features);
+    });
 
     return PostViewHelper;
 }];

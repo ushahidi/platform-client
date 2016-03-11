@@ -1,29 +1,37 @@
 module.exports = [
     'ConfigEndpoint',
     'Util',
+    '$q',
 function (
     ConfigEndpoint,
-    Util
+    Util,
+    $q
 ) {
 
     var Features = {
-        clientFeatures: {},
-        reloadFeatures: function () {
-            ConfigEndpoint.get({id: 'features'}).$promise.then(function (features) {
-                Features.clientFeatures = features;
-            });
+        features: undefined,
+        loadFeatures: function () {
+            var deferred = $q.defer();
+            if (Features.features) {
+                deferred.resolve(Features.features);
+            } else {
+                ConfigEndpoint.getFresh({id: 'features'}).$promise.then(function (features){
+                    Features.features = features;
+                    deferred.resolve(Features.features);
+                });
+            }
+            return deferred.promise;
         },
         isFeatureEnabled: function (feature) {
-            return Features.clientFeatures[feature].enabled;
+            return Features.features['feature'].enabled;
         },
         isViewEnabled: function (view) {
-            return Features.clientFeatures.views[view];
+            return Features.features.views[view];
         },
         getLimit: function (feature) {
-            return Features.clientFeatures.limits[feature];
+            return Features.features.limits[feature];
         }
     };
 
-    Features.reloadFeatures();
     return Util.bindAllFunctionsToSelf(Features);
 }];

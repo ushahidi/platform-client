@@ -65,7 +65,7 @@ function (
 
     var Maps = {
         maps: {},
-        config: {},
+        config: undefined,
         getMap: function (name) {
             if (!this.maps[name]) {
                 this.maps[name] = Object.create(Map).init(name);
