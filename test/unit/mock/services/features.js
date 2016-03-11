@@ -38,7 +38,7 @@ module.exports = [function () {
                         }
                     });
                 }
-            };  
+            };
         },
         isFeatureEnabled: function (feature) {},
         isViewEnabled: function (feature) {},
