@@ -80,8 +80,15 @@ module.exports = [function () {
         update: function (post) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                    post.id === 'pass' ? successCallback({id: 1, allowed_privileges: ['read']}) : failCallback('error');
-                }
+                    post.id === 'pass' ? successCallback({id: 1, allowed_privileges: ['read']}) : failCallback(
+                    {
+                        data: {
+                            errors: [
+                                'error'
+                            ]
+                        }
+                    });
+                 }
             }};
         }
     };

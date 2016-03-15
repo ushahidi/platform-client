@@ -21,6 +21,7 @@ describe('post view directive', function () {
         .value('$filter', function () {
             return function () {};
         })
+        .service('PostViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
         .value('PostEntity', {});
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
@@ -45,7 +46,7 @@ describe('post view directive', function () {
     }));
 
     it('should load initial values', function () {
-        expect(isolateScope.currentView).toEqual('list');
+        expect(isolateScope.currentView).toEqual('unavailable');
     });
 
 
@@ -64,6 +65,6 @@ describe('post view directive', function () {
             isolateScope = element.isolateScope();
         });
 
-        expect(isolateScope.currentView).toEqual('map');
+        expect(isolateScope.currentView).toEqual('unavailable');
     });
 });

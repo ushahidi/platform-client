@@ -25,7 +25,6 @@ describe('Post detail controller', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
-            'ushahidi.mock',
             'pascalprecht.translate',
             'ushahidi.mock',
             'ngResource',
