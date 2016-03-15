@@ -20,6 +20,7 @@ function (
 
             // Load sets + users
             var reloadSets = function () {
+                $scope.sets = [];
                 endpoint.query().$promise.then(function (sets) {
                     $scope.sets = sets;
 

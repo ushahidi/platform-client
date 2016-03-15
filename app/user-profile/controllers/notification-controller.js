@@ -82,7 +82,7 @@ module.exports = [
         };
 
         var loadContacts = function () {
-            ContactEndpoint.get({user: 'me'}).$promise.then(function (contacts) {
+            ContactEndpoint.query({user: 'me'}).$promise.then(function (contacts) {
                 _.forEach(contacts, function (contact) {
                     // Save the original contact value
                     // and use it to track changes
