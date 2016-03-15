@@ -3,16 +3,16 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
-    'BootstrapConfig',
+    'Config',
 function (
     $rootScope,
     $scope,
     Authentication,
     ConfigEndpoint,
-    BootstrapConfig
+    Config
 ) {
     var USHAHIDI = 'Ushahidi';
-    $scope.siteTitle = BootstrapConfig.name ? BootstrapConfig.name : USHAHIDI;
+    $scope.siteTitle = Config.site.name ? Config.site.name : USHAHIDI;
     $scope.pageTitle = null;
     $scope.pageDescription = null;
     $scope.pageKeywords = null;

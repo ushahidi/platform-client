@@ -28,6 +28,7 @@ require('./common/common-module.js');
 require('./post/post-module.js');
 require('./activity/activity-module.js');
 require('./setting/setting-module.js');
+require('./plans/plans-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
 
@@ -36,6 +37,7 @@ window.ushahidi = window.ushahidi || {};
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || process.env.BACKEND_URL || 'http://ushahidi-backend',
+    intercomAppId = window.ushahidi.intercomAppId = process.env.INTERCOM_APP_ID || 'hl5rfiga',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
         'posts',
@@ -76,6 +78,7 @@ angular.module('app',
         'ushahidi.common',
         'ushahidi.posts',
         'ushahidi.tools',
+        'ushahidi.plans',
         'ushahidi.sets',
         'ushahidi.activity',
         'ushahidi.user-profile'
@@ -84,6 +87,7 @@ angular.module('app',
     .constant('CONST', {
         BACKEND_URL         : backendUrl,
         API_URL             : apiUrl,
+        INTERCOM_APP_ID     : intercomAppId,
         DEFAULT_LOCALE      : 'en_US',
         OAUTH_CLIENT_ID     : 'ushahidiui',
         OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261',
@@ -110,9 +114,11 @@ angular.module('app',
     .factory('Leaflet', function () {
         return window.L;
     })
-    .factory('BootstrapConfig', function () {
-        return window.ushahidi.bootstrapConfig || {};
-    })
+    .factory('BootstrapConfig', ['_', function (_) {
+        return window.ushahidi.bootstrapConfig ?
+            _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
+            { map: {}, site: {}, features: {} };
+    }])
     .run(function () {
         // Once bootstrapped, show the app
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');

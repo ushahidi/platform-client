@@ -104,6 +104,10 @@
     "transifex": "^1.4.3",
     "underscore": "^1.7.0"
   },
+  "pre-commit": [
+    "jshint",
+    "jscs"
+  ],
   "engines": {
     "node": ">=0.10"
   }
