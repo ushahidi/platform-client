@@ -34,6 +34,7 @@ var defaultOptions = {
     mockBackend: false,
     useChromeForKarma : false,
     backendUrl: false,
+    intercomAppId: false,
     uglifyJs: true,
     compressedCSS: true
 };
@@ -53,6 +54,7 @@ var options = {
     mockBackend         : gutil.env['mock-backend'] || getBooleanOption(process.env.MOCK_BACKEND, defaultOptions.mockBackend),
     useChromeForKarma   : gutil.env['karma-chrome'] || getBooleanOption(process.env.KARMA_CHROME, defaultOptions.useChromeForKarma),
     backendUrl          : gutil.env['backend-url'] || process.env.BACKEND_URL,
+    intercomAppId       : gutil.env['intercom-app-id'] || process.env.INTERCOM_APP_ID,
     uglifyJs            : gutil.env['uglify-js'] || getBooleanOption(process.env.UGLIFY_JS, defaultOptions.uglifyJs),
     compressedCSS       : gutil.env['compressed-css'] || getBooleanOption(process.env.COMPRESSED_CSS, defaultOptions.compressedCSS),
     www                 : 'server/www'
@@ -81,7 +83,8 @@ var helpers = {
     },
     setBackendUrl: function () {
         return envify({
-            BACKEND_URL: options.backendUrl
+            BACKEND_URL: options.backendUrl,
+            INTERCOM_APP_ID: options.intercomAppId
         });
     },
     createDefaultTaskDependencies: function () {
