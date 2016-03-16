@@ -590,6 +590,7 @@
         },
         "post" : {
             "save_success" : "Post {{name}} saved",
+            "save_success_review" : "Post {{name}} saved. Your post will be reviewed by a moderator before publishing.",
             "save_error" : "Unable to save post, please try again",
             "publish_success" : "Post has been published for {{role}}",
             "set_draft" : "Post is now visible to just you",
