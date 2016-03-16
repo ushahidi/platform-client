@@ -236,7 +236,7 @@ function bundleBrowserify(stream) {
  * Task: `build`
  * Builds sass, fonts and js
  */
-gulp.task('build', ['sass', 'css', 'font', 'browserify']);
+gulp.task('build', ['sass', 'css', 'font', 'browserify', 'transifex-download']);
 
 /**
  * Task: `watch`
