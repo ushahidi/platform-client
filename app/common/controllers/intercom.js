@@ -11,6 +11,8 @@ function (
     ConfigEndpoint,
     $q
 ) {
+    var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
+
     $rootScope.$on('event:authentication:login:succeeded', function () {
         $q.all([
             ConfigEndpoint.get({ id: 'site' }).$promise,
@@ -18,12 +20,14 @@ function (
         ]).then(function (results) {
             var site = results[0];
             var user = results[1];
+            var domain = pattern.exec(window.ushahidi.apiUrl);
+            domain = domain[1].replace('api.', '');
 
             window.Intercom('boot', {
                 app_id: window.ushahidi.intercomAppId,
                 email: user.email,
                 created_at: user.created,
-                user_id: window.ushahidi.apiUrl + '_' + user.id,
+                user_id: domain + '_' + user.id,
                 'company': site.name,
                 'deployment_url': window.ushahidi.apiUrl,
                 'realname' : user.realname,
