@@ -3,12 +3,14 @@ module.exports = [
     '$location',
     'RoleEndpoint',
     'Notify',
+    'Config',
     '_',
 function (
     $translate,
     $location,
     RoleEndpoint,
     Notify,
+    Config,
     _
 ) {
     return {
@@ -25,6 +27,8 @@ function (
             };
 
             $scope.refreshView();
+
+            $scope.rolesEnabled = Config.features.roles.enabled ? true : false;
 
             $scope.checkIfLastAdmin = function () {
                 var admins = 0;

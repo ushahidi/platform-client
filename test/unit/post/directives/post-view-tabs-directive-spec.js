@@ -18,7 +18,8 @@ describe('post view tabs directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postViewTabs', require(ROOT_PATH + 'app/post/directives/post-view-tabs-directive'));
+        testApp.directive('postViewTabs', require(ROOT_PATH + 'app/post/directives/post-view-tabs-directive'))
+        .service('PostViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -44,7 +45,7 @@ describe('post view tabs directive', function () {
 
     describe('test directive functions', function () {
         it('should set the list of available tabs', function () {
-            expect(isolateScope.views.length).toEqual(4);
+            expect(isolateScope.views.length).toEqual(0);
         });
     });
 });

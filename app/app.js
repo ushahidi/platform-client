@@ -28,6 +28,7 @@ require('./common/common-module.js');
 require('./post/post-module.js');
 require('./activity/activity-module.js');
 require('./setting/setting-module.js');
+require('./plans/plans-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
 
@@ -77,6 +78,7 @@ angular.module('app',
         'ushahidi.common',
         'ushahidi.posts',
         'ushahidi.tools',
+        'ushahidi.plans',
         'ushahidi.sets',
         'ushahidi.activity',
         'ushahidi.user-profile'
@@ -112,9 +114,11 @@ angular.module('app',
     .factory('Leaflet', function () {
         return window.L;
     })
-    .factory('BootstrapConfig', function () {
-        return window.ushahidi.bootstrapConfig || {};
-    })
+    .factory('BootstrapConfig', ['_', function (_) {
+        return window.ushahidi.bootstrapConfig ?
+            _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
+            { map: {}, site: {}, features: {} };
+    }])
     .run(function () {
         // Once bootstrapped, show the app
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');

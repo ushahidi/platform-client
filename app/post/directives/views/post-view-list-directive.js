@@ -130,6 +130,7 @@ function (
 
             // Initial load
             getPostsForPagination();
+
         }
     ];
 

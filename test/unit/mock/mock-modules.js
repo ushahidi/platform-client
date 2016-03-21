@@ -70,6 +70,8 @@ angular.module('ushahidi.mock', [])
 .service('DataProviderEndpoint', require('./services/data-provider.js'))
 .service('DataImportEndpoint', require('./services/data-import.js'))
 
+.service('Config', require('./services/configWrapper.js'))
+
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
 .service('GlobalFilter', require('./services/global-filters.js'))
