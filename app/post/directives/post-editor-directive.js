@@ -210,11 +210,13 @@ function (
                 }
 
                 request.$promise.then(function (response) {
+                    var success_message = $scope.allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
+
                     if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                         $scope.saving_post = false;
                         $scope.post.id = response.id;
                         $translate(
-                            'notify.post.save_success',
+                            success_message,
                             {
                                 name: $scope.post.title
                             }).then(function (message) {
@@ -223,7 +225,7 @@ function (
                         });
                     } else {
                         $translate(
-                            'notify.post.save_success',
+                            success_message,
                             {
                                 name: $scope.post.title
                             }).then(function (message) {

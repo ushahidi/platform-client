@@ -144,15 +144,37 @@
         <!--
         Intercom integration
         -->
-        <script>
-            if (window.ushahidi.intercomAppId !== '') {
-                window.intercomSettings = {
-                    app_id: window.ushahidi.intercomAppId
-                };
-                (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/' + window.ushahidi.intercomAppId;var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
-            }
-        </script>
+        <script type="text/javascript">
+            (function(){
+              var per_app_intercom_widget;
 
+              function getAppId() {
+                if (typeof window.intercomSettings !== 'undefined' &&
+                  typeof(window.intercomSettings.app_id) !== 'undefined') {
+                  return window.intercomSettings.app_id
+                } else if (typeof window.analytics !== 'undefined' &&
+                  typeof window.analytics._integrations !== 'undefined' &&
+                  typeof analytics._integrations.Intercom !== 'undefined' &&
+                  typeof analytics._integrations.Intercom.options !== 'undefined' &&
+                  typeof analytics._integrations.Intercom.options.appId !== 'undefined') {
+                  return analytics._integrations.Intercom.options.appId;
+                } else {
+                  return '';
+                }
+              }
+
+              per_app_intercom_widget = 'https://widget.intercom.io/widget/' + getAppId();
+              var script_tag = document.createElement('script');
+              script_tag.type = 'text/javascript';
+              script_tag.async = true;
+              script_tag.src = per_app_intercom_widget;
+
+              var existing_script = document.getElementsByTagName('script')[0];
+              existing_script.parentNode.insertBefore(script_tag, existing_script);
+            })();
+        </script>
+        <ng-include src="'templates/partials/intercom-system.html'"></ng-include>
+        
         <script>
             if (window.ushahidi && window.ushahidi.gaEnabled) {
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

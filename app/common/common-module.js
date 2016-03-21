@@ -41,6 +41,7 @@ angular.module('ushahidi.common', [
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('notifier', require('./controllers/notifier.js'))
+.controller('intercom', require('./controllers/intercom.js'))
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('roleSelector', require('./directives/role-selector.js'))
