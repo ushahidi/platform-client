@@ -7,7 +7,6 @@ module.exports = [
     '$filter',
     '$location',
     'PostEndpoint',
-    'ConfigEndpoint',
     'CollectionEndpoint',
     'UserEndpoint',
     'TagEndpoint',
@@ -28,7 +27,6 @@ function (
     $filter,
     $location,
     PostEndpoint,
-    ConfigEndpoint,
     CollectionEndpoint,
     UserEndpoint,
     TagEndpoint,
@@ -267,6 +265,7 @@ function (
         .then(function () {
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
             var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
+
             $translate(message, {role: role})
             .then(function (message) {
                 Notify.showNotificationSlider(message);

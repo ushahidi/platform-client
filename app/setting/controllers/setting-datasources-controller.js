@@ -6,6 +6,7 @@ module.exports = [
     'DataProviderEndpoint',
     'Notify',
     '_',
+    'Features',
 function (
     $q,
     $scope,
@@ -13,12 +14,14 @@ function (
     ConfigEndpoint,
     DataProviderEndpoint,
     Notify,
-    _
+    _,
+    Features
 ) {
 
     // Displays a loading indicator when busy querying endpoints.
     $scope.saving = false;
     $scope.settings = {};
+    $scope.available_providers = [];
     $scope.forms = {};
     $scope.formsSubmitted = {};
     $scope.panelVisible = {};
@@ -85,5 +88,9 @@ function (
                 addSavedProvider(provider.id);
             }
         });
+    });
+
+    Features.loadFeatures().then(function (features) {
+        $scope.available_providers = features['data-providers'];
     });
 }];

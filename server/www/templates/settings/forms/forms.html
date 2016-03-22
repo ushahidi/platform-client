@@ -6,6 +6,10 @@
         </ul>
         <div class="page-header-body">
             <h1 class="page-title">Post Types</h1>
+            <div class="" ng-show="forms.length >= formQuota && formQuota !== true">
+                <p translate>limit.post_type_limit_reached</p>
+            </div>
+
         </div>
         <div class="page-header-actions">
             <button ng-click="openNewForm()" class="button-secondary"><span class="icon-left fa-plus" translate>form.add_post_type</span></button>

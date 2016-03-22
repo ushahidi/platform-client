@@ -71,7 +71,8 @@ describe('Post detail controller', function () {
             post: {
                 tags: [],
                 form: {
-                    id: 1
+                    id: 1,
+                    name: 'test form'
                 },
                 user: {
                     id: 1
