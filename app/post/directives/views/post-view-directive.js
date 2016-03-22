@@ -4,33 +4,34 @@ function (
     var controller = [
         '$scope',
         'GlobalFilter',
-        'PostViewHelper',
+        'Features',
         '_',
         function (
             $scope,
             GlobalFilter,
-            PostViewHelper,
+            Features,
             _
         ) {
-            // Initial scope
-            $scope.isLoading = false;
+            Features.loadFeatures().then(function () {
+                // Initial scope
+                $scope.isLoading = false;
 
-            // Set default view
-            if (!$scope.currentView) {
-                $scope.currentView = 'map';
-            }
+                // Set default view
+                if (!$scope.currentView) {
+                    $scope.currentView = 'map';
+                }
+                if (!Features.isViewEnabled($scope.currentView)) {
+                    $scope.unavailableView = $scope.currentView;
+                    $scope.currentView = 'unavailable';
+                }
 
-            if (!PostViewHelper.isViewAvailable($scope.currentView)) {
-                $scope.unavailableView = $scope.currentView;
-                $scope.currentView = 'unavailable';
-            }
-
-            // Enable / Disable aside depending on currentView
-            if ($scope.currentView === 'map') {
-                $scope.hasAside = true;
-            } else {
-                $scope.hasAside = false;
-            }
+                // Enable / Disable aside depending on currentView
+                if ($scope.currentView === 'map') {
+                    $scope.hasAside = true;
+                } else {
+                    $scope.hasAside = false;
+                }
+            });
         }
     ];
 
