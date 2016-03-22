@@ -23,7 +23,7 @@
   },
   "pre-commit": [
       "jshint",
-      "jscs-fix" 
+      "jscs" 
   ],
   "devDependencies": {
     "body-parser": "^1.9.2",

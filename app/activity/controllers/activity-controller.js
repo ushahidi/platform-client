@@ -6,7 +6,7 @@ module.exports = [
     'dc',
     'd3',
     '_',
-    'Features',
+    'features',
 function (
     $scope,
     $translate,
@@ -15,11 +15,11 @@ function (
     dc,
     d3,
     _,
-    Features
+    features
 ) {
-    Features.loadFeatures().then(function () {
-        $scope.unavailableView = !Features.isViewEnabled('activity');
-    });
+
+    $scope.unavailableView = !features.isViewEnabled('activity');
+
     // Set the page title
     $translate('nav.activity').then(function (title) {
         $scope.title = title;
