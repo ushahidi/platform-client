@@ -3,16 +3,14 @@ module.exports = [
     '$scope',
     'Authentication',
     'ConfigEndpoint',
-    'BootstrapConfig',
 function (
     $rootScope,
     $scope,
     Authentication,
-    ConfigEndpoint,
-    BootstrapConfig
+    ConfigEndpoint
 ) {
     var USHAHIDI = 'Ushahidi';
-    $scope.siteTitle = BootstrapConfig.name ? BootstrapConfig.name : USHAHIDI;
+    $scope.siteTitle = USHAHIDI;
     $scope.pageTitle = null;
     $scope.pageDescription = null;
     $scope.pageKeywords = null;
@@ -67,6 +65,4 @@ function (
             }
         }
     });
-
-
 }];

@@ -15,6 +15,10 @@ function ($window, _, $q, $rootScope) {
         $rootScope.$emit('event:show:notification-slider', message);
     };
 
+    var showLimitSlider = function (message) {
+        $rootScope.$emit('event:show:limit-slider', message);
+    };
+
     var showAlerts = function (alertMessages) {
         $rootScope.$emit('event:show:modal-alerts', alertMessages);
     };
@@ -40,7 +44,8 @@ function ($window, _, $q, $rootScope) {
         showNotificationSlider: showNotificationSlider,
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
-        showConfirm: showConfirm
+        showConfirm: showConfirm,
+        showLimitSlider: showLimitSlider
     };
 
 }];
