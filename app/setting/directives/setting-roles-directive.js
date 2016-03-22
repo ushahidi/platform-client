@@ -4,12 +4,14 @@ module.exports = [
     'RoleEndpoint',
     'Notify',
     '_',
+    'Features',
 function (
     $translate,
     $location,
     RoleEndpoint,
     Notify,
-    _
+    _,
+    Features
 ) {
     return {
         restrict: 'A',
@@ -25,7 +27,9 @@ function (
             };
 
             $scope.refreshView();
-
+            Features.loadFeatures().then(function () {
+                $scope.rolesEnabled = Features.isFeatureEnabled('roles');
+            });
             $scope.checkIfLastAdmin = function () {
                 var admins = 0;
                 _.each($scope.roles, function (role) {

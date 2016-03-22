@@ -11,15 +11,41 @@ module.exports = [function () {
             }};
         },
         getFresh: function () {
-            return {
-                name: 'test config',
-                id: 1
-            };
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({
+                        'test': {
+                            enabled: true
+                        },
+                        'views': {
+                            'test': true
+                        },
+                        limits: {
+                            'test': 1
+                        },
+                        'providers': {
+                            pass: false,
+                            enabledProvider: true
+                        },
+                        'enabledProvider': {}
+                    });
+                }
+            }};
         },
+
         get: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
+                        'test': {
+                            enabled: true
+                        },
+                        'views': {
+                            'test': true
+                        },
+                        limits: {
+                            'test': 1
+                        },
                         'providers': {
                             pass: false,
                             enabledProvider: true

@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-client",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
@@ -23,7 +23,7 @@
   },
   "pre-commit": [
       "jshint",
-      "jscs" 
+      "jscs"
   ],
   "devDependencies": {
     "body-parser": "^1.9.2",
@@ -100,7 +100,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "novus/nvd3#v1.7.1",
     "selection-model": "jtrussell/angular-selection-model.git",
-    "platform-pattern-library": "ushahidi/platform-pattern-library#gh-pages",
+    "platform-pattern-library": "ushahidi/platform-pattern-library#v3.2.1",
     "transifex": "^1.4.3",
     "underscore": "^1.7.0"
   },

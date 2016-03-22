@@ -6,6 +6,7 @@ module.exports = [
     'dc',
     'd3',
     '_',
+    'features',
 function (
     $scope,
     $translate,
@@ -13,8 +14,11 @@ function (
     PostEndpoint,
     dc,
     d3,
-    _
+    _,
+    features
 ) {
+
+    $scope.unavailableView = !features.isViewEnabled('activity');
 
     // Set the page title
     $translate('nav.activity').then(function (title) {
@@ -48,7 +52,6 @@ function (
             var date = new Date(parseInt(d.label) * 1000);
             return date;
         },
-
         elasticY: true,
         valueAccessor: function (d) {
             return d.total;
