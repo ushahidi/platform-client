@@ -13,7 +13,7 @@
         "plan_limit" : "Ushahidi Plan Limit",
         "post_limit_reached" : "You have reached the limit of published Posts for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
         "admin_limit_reached" : "You have reached the limit of admin users for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
-        "post_type_limit_reached" : "You have reached the limit of post types for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
+        "post_type_limit_reached" : "You have reached the post types limit. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
         "upgrade" : "Upgrade"
     },
     "activity": {
@@ -459,7 +459,8 @@
             "options": "Options",
             "save_changes": "Save Changes",
             "saving_changes": "Saving",
-            "unavailable": "{{value}} is unavailable for your Ushahidi plan. To get access to this feature upgrade your Ushahidi plan."
+            "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
+
         },
         "generic_field_error": "Invalid entry, please try again.",
         "skip" : "Skip this step",
