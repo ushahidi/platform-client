@@ -2,10 +2,12 @@ module.exports = [
     '_',
     'Features',
     '$translate',
+    '$q',
 function (
     _,
     Features,
-    $translate
+    $translate,
+    $q
 ) {
     var allViews = [
             {
@@ -26,6 +28,7 @@ function (
             }
         ],
         availableViews = [],
+        availableViewsDeferred = $q.defer(),
 
     PostViewHelper = {
         views: function (allViews) {
@@ -39,7 +42,9 @@ function (
             return match ? match.display_name : view;
         },
         isViewAvailable: function (view) {
-            return _.findWhere(availableViews, {name: view});
+            return availableViewsDeferred.promise.then(function (availableViews) {
+                return _.findWhere(availableViews, {name: view});
+            });
         },
         getDefault: function (views) {
             if (!views) {
@@ -60,6 +65,7 @@ function (
                 availableViews.push(view);
             }
         });
+        availableViewsDeferred.resolve(availableViews);
     };
     Features.loadFeatures().then(function (features) {
         populateAvailableView(features);
