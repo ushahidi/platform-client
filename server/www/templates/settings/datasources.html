@@ -85,10 +85,10 @@
                     </button>
                 </div>
 
-                <div ng-if="!available_providers[provider.id]">
-                    <span translate translate-values="{value: '{{provider.name}}'}">
+                <div class="" ng-if="!available_providers[provider.id]">
+                    <p translate translate-values="{value: '{{provider.name}}'}">
                         settings.data_sources.unavailable
-                    </span>
+                    </p>
                 </div>
             </form>
         </div>
