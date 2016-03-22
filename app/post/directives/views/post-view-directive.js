@@ -20,17 +20,20 @@ function (
                 $scope.currentView = 'map';
             }
 
-            if (!PostViewHelper.isViewAvailable($scope.currentView)) {
-                $scope.unavailableView = $scope.currentView;
-                $scope.currentView = 'unavailable';
-            }
+            // Watch views, in case we get new feature config
+            PostViewHelper.isViewAvailable($scope.currentView).then(function (available) {
+                if (!available) {
+                    $scope.unavailableView = $scope.currentView;
+                    $scope.currentView = 'unavailable';
+                }
 
-            // Enable / Disable aside depending on currentView
-            if ($scope.currentView === 'map') {
-                $scope.hasAside = true;
-            } else {
-                $scope.hasAside = false;
-            }
+                // Enable / Disable aside depending on currentView
+                if ($scope.currentView === 'map') {
+                    $scope.hasAside = true;
+                } else {
+                    $scope.hasAside = false;
+                }
+            });
         }
     ];
 
