@@ -61,6 +61,7 @@ function (
             }
         });
     };
+
     Features.loadFeatures().then(function (features) {
         populateAvailableView(features);
     });
