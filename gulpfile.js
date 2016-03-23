@@ -306,6 +306,11 @@ gulp.task('jscs', function () {
         .pipe(jscs());
 });
 
+gulp.task('jscs-fix', function () {
+    return gulp.src(['app/**/*.js', 'test/**/*.js'])
+        .pipe(jscs({ fix : true }));
+});
+
 /**
  * Task `bump` - bump version in package.json
  * Options
