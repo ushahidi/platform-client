@@ -14,6 +14,21 @@ node_js:
 - 0.10
 - 0.12
 - iojs-v1.2
+env:
+- TEST_SUITE=unit
+- TEST_SUITE=e2e
+- TEST_SUITE=lint
+matrix:
+  exclude:
+  - node_js: 0.10
+    env: TEST_SUITE=e2e
+  - node_js: iojs-v1.2
+    env: TEST_SUITE=e2e
+  - node_js: 0.10
+    env: TEST_SUITE=lint
+  - node_js: iojs-v1.2
+    env: TEST_SUITE=lint
+  fast_finish: true
 cache:
   directories:
     - node_modules
@@ -21,17 +36,12 @@ install:
 - npm install -g gulp
 - npm install
 before_script:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- sleep 3
-- gulp build --mock-backend
-- gulp node-server &
-- sleep 3
+#- export DISPLAY=:99.0
+#- sh -e /etc/init.d/xvfb start
+#- sleep 3
+- test/pre_test.sh
 script:
-- gulp test
-- npm run protractor
-- gulp jscs
-- npm run jshint
+- test/test.sh
 after_script:
 - gulp send-stats-to-coveralls
 before_deploy:
