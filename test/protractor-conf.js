@@ -31,7 +31,10 @@ var config = {
 // configuration for sauce labs selenium testing when running specs on travis-ci
 if (process.env.TRAVIS_BUILD_NUMBER) {
     config.directConnect = false;
-    config.seleniumAddress = 'http://localhost:4445/wd/hub';
+    config.capabilities = {
+        'browserName' : 'firefox'
+    };
+    /*config.seleniumAddress = 'http://localhost:4445/wd/hub';
     config.capabilities = {
         'username': process.env.SAUCE_USERNAME,
         'accessKey': process.env.SAUCE_ACCESS_KEY,
@@ -41,7 +44,7 @@ if (process.env.TRAVIS_BUILD_NUMBER) {
         'name': 'Ushahidi Angular Client: Protractor e2e specs',
         'platform': 'Windows 8',
         'screen-resolution': '1280x1024'
-    };
+    };*/
 }
 
 exports.config = config;
