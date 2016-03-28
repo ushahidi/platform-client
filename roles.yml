@@ -1,0 +1,3 @@
+- src: git+https://github.com/zhalloran/ansible-platform-client-deploy.git
+  version: master
+  name: platform-client-code

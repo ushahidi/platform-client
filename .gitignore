@@ -8,3 +8,6 @@ test/coverage/
 build/*
 .DS_Store
 server/www/locales/
+*.aes
+deployment.env
+vault.txt
