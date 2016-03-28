@@ -1,0 +1,4 @@
+- service: app
+  command: ansible-vault decrypt hosts/rackspace_staging --vault-password-file /opt/vault.txt
+- service: app
+  command: ansible-playbook playbooks/platform-client-code.yml -i hosts/rackspace_staging -vvvv --vault-password-file /opt/vault.txt
