@@ -8,6 +8,8 @@ module.exports = [
     'MessageEndpoint',
     'Notify',
     'UserEndpoint',
+    'PostEndpoint',
+    '$filter',
     '_',
 function (
     $scope,
@@ -19,6 +21,8 @@ function (
     MessageEndpoint,
     Notify,
     UserEndpoint,
+    PostEndpoint,
+    $filter,
     _
 ) {
 
