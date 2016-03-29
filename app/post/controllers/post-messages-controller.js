@@ -65,7 +65,7 @@ function (
 
         var reply = {
             message: $scope.reply_text,
-            direction: "outgoing",
+            direction: 'outgoing',
             contact_id: $scope.post.contact.id,
             parent_id: $scope.messages[$scope.messages.length - 1].id
         };
