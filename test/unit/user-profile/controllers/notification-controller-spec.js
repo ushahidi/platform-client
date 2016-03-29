@@ -87,7 +87,7 @@ describe('user-profile notification controller', function () {
     it('should save a contact', function () {
         spyOn(Notify, 'showNotificationSlider');
 
-        $scope.saveContact({name: 'pass'});
+        $scope.saveContact({contact: 'pass'});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });
