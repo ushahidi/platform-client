@@ -1,0 +1,91 @@
+<main class="page-content post-messages">
+	<article class="post-messages" role="article">
+		<header class="page-header">
+			<h1 class="page-header">{{ post.title || post.content }}</h1>
+			<div class="page-permissions">
+                <p ng-show="post.allowed_privileges.indexOf('update') == -1">
+                    <span class="icon-left fa-globe" translate>
+                        {{publishedFor()}}
+                    </span>
+                </p>
+                <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
+                    <role-selector
+                        toggle-role-func="publishPostTo(updatedPost)"
+                        post="post" ></role-selector>
+                </div>
+            </div>
+            <div class="actions-toggle">
+                <div class="actions-toggle-trigger">
+                    <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
+                </div>
+                <div id="options" class="actions-content init active">
+                    <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
+                        <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
+                    </a>
+                <!--    <button type="button" class="button-secondary">
+                        <span class="icon-left fa-share">Share</span>
+                    </button>
+                -->
+                    <fieldset ng-if="post.allowed_privileges.indexOf('update') !== -1" dropdown auto-close="outsideClick" ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1" class="custom-fieldset init">
+                        <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
+                            <span class="icon-left fa-th" translate>global_filter.collections.collections</span>
+                        </legend>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <!-- div class="form-field search bar">
+                                <label for="search-collections" class="nodisplay" translate>global_filter.collections.search_collections</label>
+                                <input id="search-collections" placeholder="Search Collections" type="search">
+                            </div -->
+                            <div class="fieldset-results" ng-repeat="collection in editableCollections">
+                                <div class="form-field checkbox">
+                                    <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
+                                    <label for="collection">{{collection.name}}</label>
+                                </div>
+                            </div>
+                            <div class="form-field bar">
+                                <a class="button button-link init icon-left fa-plus" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
+                                    set.create_collection
+                                </a>
+                                <div ng-show="showNewCollectionInput">
+                                    <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
+                                    <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+		</header>
+		<div class="main-col">
+			<ul class="breadcrumb">
+				<li><a ng-href="/posts/{{post.id}}" translate>post.post</a></li>
+				<li translate>post.message</li>
+			</ul>
+		    <div class="activity-timeline timeline-full-width">
+                <div ng-repeat="message in messages" class="activity-listing" ng-class="{ 'alt': message.direction == 'incoming' }">
+                    <p>{{message.updated || message.created | date:'mediumDate'}} at {{message.updated || message.created | date:'shortTime'}}</p>
+                    <div class="listing-summary">
+                        <p>{{ message.message }}</p>
+                    </div>
+                    <div ng-if="message.direction == 'incoming'" class="activity-type sms">{{ contact.contact }}</div>
+                    <div ng-if="message.direction == 'outgoing' && message.user.realname" class="activity-type user" >{{ message.user.realname }}</div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+	        <div class="activity-listing">
+				<form name="form" ng-submit="sendMessage()">
+	                <label class="input-label"
+	                	ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty, 'success': !form.reply.$invalid && form.reply.$dirty }" for="reply"
+	                translate>post.messages.reply</label>
+	                <div class="input-icon" ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty }">
+	                    <textarea id="reply" name="reply" placeholder="Send message to {{ contact.contact }}" ng-model="reply_text" ng-minlength=2 ng-maxlength=140 required class="form-control"></textarea>
+	                </div>
+	                <button type="submit" class="button-primary"
+	                	ng-submit="sendMessage()"
+	                	ng-disabled="form.reply.$invalid"
+	                	translate>post.messages.send</button>
+	            </form>
+	            <div class="clearfix"></div>
+	        </div>
+        </div>
+	</article>
+</main>

@@ -20,6 +20,16 @@ module.exports = [function () {
                 }
             }};
         },
+        editableByMe: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({'results': [{
+                        name: 'test collection',
+                        id: 1
+                    }]});
+                }
+            }};
+        },
         get: function () {
             return {$promise: {
                 then: function (successCallback) {
