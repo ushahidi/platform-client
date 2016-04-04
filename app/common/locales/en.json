@@ -138,9 +138,11 @@
         "date_range" : "Date Range"
     },
     "google2fa" : {
-        "enabled" : "Enabled",
+        "enabled" : "Google 2fa Enabled",
+        "enable" : "Enable Google 2fa",
         "update" : "Update",
         "disable" : "Disable",
+        "modal_title": "Manage Google 2fa settings",
         "steps_message" : "",
         "not_verified_message" : "The access code given was invalid. To try again enter a new code.",
         "completed_message" : "Two factor authentication has been successfully enabled",
