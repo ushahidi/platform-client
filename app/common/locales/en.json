@@ -137,6 +137,17 @@
         "search" : "Search",
         "date_range" : "Date Range"
     },
+    "google2fa" : {
+        "enabled" : "Enabled",
+        "update" : "Update",
+        "disable" : "Disable",
+        "steps_message" : "",
+        "not_verified_message" : "The access code given was invalid. To try again enter a new code.",
+        "completed_message" : "Two factor authentication has been successfully enabled",
+        "proceed" : "Proceed",
+        "verify" : "Verify",
+        "finish" : "Finish"
+    },
     "graph" : {
         "group_by_placeholder" : "Graph",
         "none" : "None",

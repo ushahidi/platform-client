@@ -1,0 +1,38 @@
+<div>
+    <!-- Enable 2fa for user -->
+    <div ng-show="!user.google2fa_enabled">
+        <button type="button" id="google2fa-enable" class="button-primary" ng-click="enable2fa()" translate>google2ga.enable</button>
+    </div>
+
+    <div ng-show="user.google2fa_enabled">
+        <button type="button" id="google2fa-update" class="button-primary" ng-click="enable2fa()" translate>google2ga.update</button>
+        <button type="button" id="google2fa-disable" class="button-primary" ng-click="disable2fa()" translate>google2ga.disable</button>
+    </div>
+
+    <modal visible="showEnableModal" title="google2fa.modal.title">
+        <div ng-show="step=='guide'" translation>
+            google2fa.steps_message
+        <div>
+        
+        <div ng-show="step=='qr_verify'" translation>
+            <div ng-show="notVerified" translate>
+                google2fa.not_verified_message
+            </div>
+            <img ng-src="{{user.google2fa_url}}" />
+            <input type="text" placeholder="Google Authenticator code" ng-model="google2fa_secret">
+        <div>
+
+        <div ng-show="step=='verified'" translaton>
+            google2fa.completed_message
+        </div>
+        <div class="modal-submit">
+            <button ng-show="step===''" type="button" id="google2fa-modal-next-step" class="button-primary" ng-click="setup()" translate>google2ga.proceed</button>
+
+            <button ng-show="step==='verify'" type="button" id="google2fa-modal-finish" class="button-primary" ng-click="finish()" translate>google2ga.verify</button>
+
+            <button ng-show="step=='verified'" type="button" id="google2fa-modal-finish" class="button-primary" ng-click="finish()" translate>google2ga.finish</button>
+
+            <button type="button" id="google2fa-modal-cancel" class="button-primary" ng-click="cancel()" translate>notify.generic.cancel</button>
+        </div> 
+    </modal>
+</div>

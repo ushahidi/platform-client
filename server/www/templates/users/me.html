@@ -40,6 +40,8 @@
 
             <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
 
+            <google2fa user="user"></google2fa> 
+
             <div ng-if="state.changingPassword">
                 <label class="input-label"
                     ng-class="{ 'error': form.password.$invalid && form.password.$dirty, 'success': form.password.$valid }"
