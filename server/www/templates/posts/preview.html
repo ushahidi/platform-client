@@ -18,7 +18,7 @@
         </div>
         <div class="post-text">
             <a href="/posts/{{post.id}}">
-                <h3>{{ post.title || post.content | limitTo:50 }} ...</h3>
+                <h3>{{ post.title || post.content | limitTo:50 }}{{ post.content.length > 50 ? ' ...' : ''}}</h3>
             </a>
             <p>
                 {{post.content}}
