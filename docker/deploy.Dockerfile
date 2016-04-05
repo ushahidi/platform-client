@@ -14,7 +14,7 @@ COPY ./ansible /opt
 RUN ["ansible-galaxy", "install", "-r", "roles.yml"]
 
 # ==> Add wrapper script
-COPY docker_run.sh /docker_run.sh
+COPY ./docker/docker_run.sh /docker_run.sh
 
 # ==> Turn off host key checking for Ansible
 ENV ANSIBLE_HOST_KEY_CHECKING False
