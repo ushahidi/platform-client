@@ -65,6 +65,7 @@
                           <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
                           <span ng-if="post.source == 'sms'" translate>post.messages.by_sms</span>
                           <span ng-if="post.source == 'email'" translate>post.messages.by_email</span>
+                          <span ng-if="post.source == 'twitter'" translate>post.messages.by_twitter</span>
                           <a class="cta" ng-href="/posts/{{post.id}}/messages" translate>post.messages.associated_messages</a>
                       </p>
                     </div>

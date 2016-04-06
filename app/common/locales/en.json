@@ -323,6 +323,7 @@
         "messages" : {
             "by_sms" : "By SMS",
             "by_email" : "By Email",
+            "by_twitter" : "By Twitter",
             "reply" : "Reply to Message thread",
             "send" : "Send Message",
             "associated_messages": "View messages associated with this post"
