@@ -19,7 +19,7 @@
     "activity": {
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
-        "by" : "By",
+        "by" : "By"
     },
     "form": {
         "add_field" : "Add field",
