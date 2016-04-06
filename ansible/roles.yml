@@ -1,0 +1,3 @@
+- src: git+https://github.com/ushahidi/ansible-platform-client-code.git
+  version: master
+  name: platform-client-code

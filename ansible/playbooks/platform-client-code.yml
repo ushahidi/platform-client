@@ -1,0 +1,14 @@
+---
+- name: deploy platform-client code
+  hosts: platform-client
+
+  roles:
+    - platform-client-code
+
+  vars:
+    DEPLOYMENTS_API_DOMAIN: "api.{{DEPLOYMENTS_DOMAIN}}"
+
+  tasks:
+  - name: copy config.js file to server
+    template: src="../templates/config.js.j2" dest=/var/www/platform-client/server/www/config.js
+    sudo: false
