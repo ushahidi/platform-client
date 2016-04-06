@@ -2,7 +2,7 @@
 	<article class="post-messages" role="article">
 		<header class="page-header">
 			<h1 class="page-header">{{ post.title || post.content }}</h1>
-			<div class="page-permissions">
+            <div class="page-permissions">
                 <p ng-show="post.allowed_privileges.indexOf('update') == -1">
                     <span class="icon-left fa-globe" translate>
                         {{publishedFor()}}
@@ -15,9 +15,6 @@
                 </div>
             </div>
             <div class="actions-toggle">
-                <div class="actions-toggle-trigger">
-                    <a href="#options" class="button-secondary init active" data-toggle="options"><span class="icon-left fa-ellipsis-h" translate>post.options</span></a>
-                </div>
                 <div id="options" class="actions-content init active">
                     <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
                         <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
@@ -26,32 +23,12 @@
                         <span class="icon-left fa-share">Share</span>
                     </button>
                 -->
-                    <fieldset ng-if="post.allowed_privileges.indexOf('update') !== -1" dropdown auto-close="outsideClick" ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1" class="custom-fieldset init">
-                        <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
-                            <span class="icon-left fa-th" translate>global_filter.collections.collections</span>
-                        </legend>
-                        <div class="dropdown-menu init" dropdown-menu>
-                            <!-- div class="form-field search bar">
-                                <label for="search-collections" class="nodisplay" translate>global_filter.collections.search_collections</label>
-                                <input id="search-collections" placeholder="Search Collections" type="search">
-                            </div -->
-                            <div class="fieldset-results" ng-repeat="collection in editableCollections">
-                                <div class="form-field checkbox">
-                                    <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
-                                    <label for="collection">{{collection.name}}</label>
-                                </div>
-                            </div>
-                            <div class="form-field bar">
-                                <a class="button button-link init icon-left fa-plus" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
-                                    set.create_collection
-                                </a>
-                                <div ng-show="showNewCollectionInput">
-                                    <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
-                                    <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
+                    <collection-selector
+                        post="post"
+                        ng-if="post.allowed_privileges.indexOf('update') !== -1"
+                        ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
+                        >
+                    </collection-selector>
                 </div>
             </div>
 		</header>
