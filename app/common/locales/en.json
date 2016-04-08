@@ -148,7 +148,7 @@
         "step_2": "Second, once you have setup the device with Google Authenticator you can return here and click 'Proceed'",
         "step_3": "Our system will generate a QR code for you that you can scan with your device to link to your Ushahidi account",
         "scan_qr_1": "To setup Google Authenticator with your Ushahidi account, scan the QR code below. To do this, tap 'Scan Barcode' in Google Authenticator on your device, and point the device at QR code.",
-        "scanr_qr_2": "The Google Authenticator app will provide you with a One Time Password, enter it below and click 'Verify'",
+        "scan_qr_2": "The Google Authenticator app will provide you with a One Time Password, enter it below and click 'Verify'",
         "not_verified_message" : "The access code given was invalid. To try again enter a new code.",
         "completed_message" : "Two factor authentication has been successfully enabled. You may now close this dialog.",
         "proceed" : "Proceed",

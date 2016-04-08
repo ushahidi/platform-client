@@ -42,7 +42,11 @@ function (
             method: 'POST'
         },
         verify2fa: {
-            url: Util.apiUrl('/users/:id/2fa'),
+            url: Util.apiUrl('/users/:id/2fa/verify'),
+            method: 'POST'
+        },
+        disable2fa: {
+            url: Util.apiUrl('/users/:id/2fa/disable'),
             method: 'POST'
         },
         deleteEntity: {

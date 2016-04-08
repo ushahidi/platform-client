@@ -13,18 +13,20 @@ function (
         'Notify',
         'UserEndpoint',
         '_',
+        '$q',
         function (
             $scope,
             $rootScope,
             $translate,
             Notify,
             UserEndpoint,
-            _
+            _,
+            $q
         ) {
             $scope.showEnableModal = false;
-            $scope.notVerified = true;
-            $scope.google2fa_otp = '';
+            $scope.notVerified = false;
             $scope.google2fa_url = '';
+            $scope.google2fa_otp = undefined;
 
             $scope.step = 'guide';
 
@@ -38,11 +40,17 @@ function (
 
             $scope.start2faEnable = function () {
                 $scope.showEnableModal = true;
+                $scope.google2fa_otp = undefined;
+                $scope.setStep();
             };
 
             $scope.update2faDisable = function () {
                 $scope.user.google2fa_enabled = false;
-                UserEndpoint.update($scope.user).$promise.then(function (user) {
+                $q.all([
+                    UserEndpoint.update($scope.user).$promise,
+                    UserEndpoint.disable2fa({id: 'me'}).$promise
+                ]).then(function (results) {
+                    var user = results[0];
                     $translate('notify.user.save_success', {name: user.realname}).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
@@ -54,7 +62,6 @@ function (
 
             $scope.cancel = function () {
                 $scope.showEnableModal = false;
-                $scope.google2fa_otp = '';
             };
 
             $scope.setup = function () {
@@ -87,14 +94,14 @@ function (
                 });
             };
 
-            $scope.verify = function () {
+            $scope.verify = function (google2fa_otp) {
                 UserEndpoint.verify2fa({
                     id: 'me',
-                    google2fa_otp: $scope.google2fa_otp
+                    google2fa_otp: google2fa_otp
                 })
                 .$promise
                 .then(function (result) {
-                    result.valid ? $scope.verificationSucceeded() : $scope.verificationFailed();
+                    result.google2fa_valid ? $scope.verificationSucceeded() : $scope.verificationFailed();
                 },
                 function (errorResponse) {
                     $scope.showEnableModal = false;
