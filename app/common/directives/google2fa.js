@@ -23,7 +23,7 @@ function (
         ) {
             $scope.showEnableModal = false;
             $scope.notVerified = true;
-            $scope.google2fa_secret = '';
+            $scope.google2fa_otp = '';
             $scope.google2fa_url = '';
 
             $scope.step = 'guide';
@@ -54,11 +54,11 @@ function (
 
             $scope.cancel = function () {
                 $scope.showEnableModal = false;
-                $scope.google2fa_secret = '';
+                $scope.google2fa_otp = '';
             };
 
             $scope.setup = function () {
-                UserEndpoint.enable2fa({id: $scope.user.id}).$promise.then(function (result) {
+                UserEndpoint.enable2fa({id: 'me'}).$promise.then(function (result) {
                     $scope.google2fa_url = result.google2fa_url;
                     $scope.setStep('qr_verify');
                 }, function (errorResponse) {
@@ -72,19 +72,29 @@ function (
                 $scope.notVerified = true;
             };
 
+            $scope.verificationSucceeded = function () {
+                $scope.notVerified = false;
+                $scope.setStep('verified');
+                $scope.user.google2fa_enabled = true;
+                UserEndpoint.update($scope.user).$promise.then(function (user) {
+                    $translate('notify.user.save_success', {name: user.realname}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+                }, function (errorResponse) {
+                    $scope.showEnableModal = false;
+                    Notify.showApiErrors(errorResponse);
+                    $scope.setStep();
+                });
+            };
+
             $scope.verify = function () {
                 UserEndpoint.verify2fa({
-                    id: $scope.user.id,
-                    google2fa_secret: $scope.google2fa_secret
+                    id: 'me',
+                    google2fa_otp: $scope.google2fa_otp
                 })
                 .$promise
                 .then(function (result) {
-                    if (result.valid) {
-                        $scope.setStep('verified');
-                        $scope.user.google2fa_enabled = true;
-                    } else {
-                        $scope.verificationFailed();
-                    }
+                    result.valid ? $scope.verificationSucceeded() : $scope.verificationFailed();
                 },
                 function (errorResponse) {
                     $scope.showEnableModal = false;
@@ -92,7 +102,6 @@ function (
                     $scope.setStep();
                 });
             };
-
         }];
     return {
         restrict: 'E',
