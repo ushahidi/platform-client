@@ -6,6 +6,7 @@ module.exports = [
     'CONST',
     'Session',
     'RoleEndpoint',
+    'UserEndpoint',
     '_',
 function (
     $rootScope,
@@ -15,6 +16,7 @@ function (
     CONST,
     Session,
     RoleEndpoint,
+    UserEndpoint,
     _
 ) {
 
@@ -37,6 +39,7 @@ function (
 
     setToLogoutState = function () {
         Session.clearSessionData();
+        UserEndpoint.invalidateCache();
         loginStatus = false;
     };
 
