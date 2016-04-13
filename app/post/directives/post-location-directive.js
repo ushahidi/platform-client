@@ -91,6 +91,7 @@ function (
                 searchLocation: function () {
                     var that = this;
                     $scope.processing = true;
+
                     Geocoding.search($scope.searchLocationTerm).then(function (coordinates) {
                         $scope.processing = false;
 
