@@ -1,4 +1,4 @@
-<main mapper-csv class="page-content" role="main">
+<main configure-csv class="page-content" role="main">
      <div class="page-header">
         <ul class="breadcrumb">
            <li translate>
@@ -13,15 +13,31 @@
      <div class="main-col">
         <ol class="progress">
            <li><span class="complete" translate>data_import.choose_file</span></li>
-           <li class="active" translate>data_import.organize_data</li>
-           <li class="disabled">Configure posts</li>
+           <li class="complete" translate>data_import.organize_data</li>
+           <li class="active">data_import.configure_posts</li>
         </ol>
-        <h2 translate>data_import.organize_your_imported_data</h2>
+        <h2 translate>data_import.configure_all_imported_posts</h2>
         <form class="segment" ng-submit="submitMappings(csv)">
-           <fieldset class="form-field">
-              <legend translate>data_import.assign_csv_message</legend>
-              <p class="small" translate translate-values="{form_name: form.name}">data_import.csv_instructions</p>
-            <p class="small"><em translate>data_import.csv_instructions_required_fields</em></p>
+
+            <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
+                <role-selector
+                    toggle-role-func="publishPostTo(updatedPost)"
+                    post="post" ></role-selector>
+            </div>
+            <div ng-if="categories.length" class="form-field">
+                <legend class="input-label" for="tags" translate>Select categories that apply to all posts</legend>
+                <div class="form-field checkbox" ng-repeat="category in categories">
+                    <input type="checkbox" value="category.id" name="tags" checklist-model="csv.tags" checklist-value="category.id">
+                    <label>
+                        {{category.tag}}
+                    </label>
+                </div>
+            </div>
+            <fieldset class="form-field">
+                <legend translate>Assign value to unused post fields</legend>
+                <p class="small" translate translate-values="{form_name: form.name}">
+                    Any unused <strong>--formname--</strong> fields are listed below. You can assign the same value to each field for all imported posts, or leave the unused fields blank.
+                </p>
               <table>
                  <thead>
                     <tr>
@@ -30,7 +46,7 @@
                     </tr>
                  </thead>
                  <tbody>
-                    <tr ng-repeat="column in csv.columns track by $index">
+                    <tr ng-repeat="column in csv.unmapped_columns track by $index">
                        <td>{{column}}</td>
                        <td>
                           <div class="custom-select init">

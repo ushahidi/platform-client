@@ -1,0 +1,146 @@
+<div
+    ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+    ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
+    ng-show="attribute.form_stage_id == visibleStage"
+    class="form-field">
+    <label
+        class="input-label" for="values[{{attribute.key}}][0]"
+        ng-class="{
+              'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+              'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+              'required': attribute.required}"
+        >
+        {{attribute.label}}
+    </label>
+    <!-- type: checkbox -->
+    <div
+        class="form-field checkbox"
+        ng-if="isCheckbox(attribute)"
+        ng-repeat="option in attribute.options"
+        >
+        <input
+            type="checkbox"
+            checklist-model="post.values[attribute.key]"
+            ng-required="attribute.required"
+            id="values[{{attribute.key}}][{{key}}]"
+            name="values_{{attribute.key}}_{{option}}"
+            checklist-value="option"
+            value="option"
+            ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
+        <label>
+            {{option}}
+        </label>
+    </div>
+    <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
+        <div ng-if="!isCheckbox(attribute)" ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
+            <!-- type: date -->
+            <div class="input-inline" ng-if="isDate(attribute)">
+                <input
+                    type="text"
+                    view="date"
+                    id="values[{{attribute.key}}][{{key}}]"
+                    name="values_{{attribute.key}}"
+                    min-view="date"
+                    date-time="post.values[attribute.key][key]"
+                    format="yyyy-MM-dd"
+                    ng-model="post.values[attribute.key][key]"
+                    auto-close="true"
+                />
+            </div>
+            <!-- type: datetime -->
+            <div ng-if="isDateTime(attribute)" class="">
+                <input
+                    type="text"
+                    id="values[{{attribute.key}}][{{key}}]"
+                    name="values_{{attribute.key}}"
+                    date-time="post.values[attribute.key][key]"
+                    ng-model="post.values[attribute.key][key]"
+                    auto-close="true"
+                />
+            </div>
+            <!-- type: location -->
+            <post-location
+                attribute="attribute"
+                key="key"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                model="post.values[attribute.key][key]"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                ng-if="isLocation(attribute)"></post-location>
+            <!-- type: select -->
+            <select
+                ng-if="isSelect(attribute)"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required">
+                <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
+            </select>
+            <!-- type: radio -->
+            <div class="input-group" ng-if="isRadio(attribute)">
+                <label class="radio-label" ng-repeat="opt in attribute.options">{{opt}}
+                <input
+                    name="values_{{attribute.key}}"
+                    type="radio"
+                    ng-model="post.values[attribute.key][key]"
+                    ng-required="attribute.required"
+                    value="{{opt}}"
+                    ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></label>
+            </div>
+            <!-- type: number -->
+            <input
+                ng-if="isNumber(attribute)"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                type="number"
+                placeholder="{{attribute.label}}"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
+                >
+            <!-- type: text -->
+            <input
+                ng-if="isText(attribute)"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                type="text"
+                placeholder="{{attribute.label}}"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
+                >
+            <!-- type: relation -->
+            <post-relation
+                attribute="attribute"
+                key="key"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                model="post.values[attribute.key][key]"
+                required="attribute.required"
+                ng-if="isRelation(attribute)"></post-relation>
+            <!-- type: textarea -->
+            <textarea
+                rows="10"
+                ng-if="isTextarea(attribute)"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                placeholder="{{attribute.label}}"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
+            <button
+                type="button"
+                class="button-secondary icon-only alt trash"
+                ng-if="canRemoveValue(attribute, key)"
+                ng-click="removeValue(attribute, key)"></button>
+        </div>
+    </div>
+    <p ng-repeat="(error, value) in form['values_' + attribute.key].$error"
+        ng-show="form['values_' + attribute.key].$dirty"
+        class="alert error"
+        translate="{{'post.valid.values.' + error}}"
+        translate-values="{ label : attribute.label }"></p>
+
+        <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
+</div>
