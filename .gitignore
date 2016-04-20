@@ -10,5 +10,6 @@ build/*
 server/www/locales/
 *.aes
 *.swp
+*.swo
 deployment.env
 vault.txt

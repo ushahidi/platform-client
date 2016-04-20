@@ -1,7 +1,5 @@
 <div
-    ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
     ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
-    ng-show="attribute.form_stage_id == visibleStage"
     class="form-field">
     <label
         class="input-label" for="values[{{attribute.key}}][0]"

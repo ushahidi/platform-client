@@ -1,13 +1,19 @@
-module.exports = ['PostEndpoint', function (PostEndpoint) {
+module.exports = [
+    '_',
+function (
+    _
+) {
     return {
         restrict: 'E',
         replace: true,
         scope: {
             post: '=',
-            attributes: '='
+            attribute: '='
         },
         templateUrl: 'templates/posts/post-value-edit.html',
-        link: function ($scope) {
+        controller: [
+            '$scope',
+        function ($scope) {
             $scope.isDate = function (attr) {
                 return attr.input === 'date';
             };
@@ -59,6 +65,6 @@ module.exports = ['PostEndpoint', function (PostEndpoint) {
             $scope.removeValue = function (attr, key) {
                 $scope.post.values[attr.key].splice(key, 1);
             };
-        }
+        }]
     };
 }];

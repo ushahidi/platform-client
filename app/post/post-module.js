@@ -5,12 +5,12 @@ angular.module('ushahidi.posts', [])
 .directive('postActiveFilters', require('./directives/post-active-filters-directive.js'))
 .directive('postPreview', require('./directives/post-preview-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
-.directive('postValueEdit', require('./directives/post-value-edit-directive.js'))
 .directive('postLocation', require('./directives/post-location-directive.js'))
 .directive('postRelation', require('./directives/post-relation-directive.js'))
 // Post editing workflows
 .directive('postEditor', require('./directives/post-editor-directive.js'))
 .directive('postChooseForm', require('./directives/post-choose-form-directive.js'))
+.directive('postValueEdit', require('./directives/post-value-edit-directive.js'))
 // Views
 .directive('postView', require('./directives/views/post-view-directive.js'))
 .directive('postViewMap', require('./directives/views/post-view-map-directive.js'))

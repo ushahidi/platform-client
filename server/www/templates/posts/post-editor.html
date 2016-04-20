@@ -105,7 +105,12 @@
                           translate="{{'post.valid.tags.' + error}}"></p>
                     </div>
                 </div>
-                <post-value-edit post="post" attributes="attributes"></post-value-edit>
+                <post-value-edit 
+                        ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+                        ng-show="attribute.form_stage_id == visibleStage"
+                        post="post" 
+                        attribute="attribute"
+                ></post-value-edit>
               </div>
           </div>
 
