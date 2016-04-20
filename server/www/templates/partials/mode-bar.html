@@ -1,0 +1,71 @@
+<div class="mode-bar">
+    <nav>
+        <ul class="deployment-menu">
+            <li ng-class="{ active: active == view.name }">
+                <a ng-href="{{baseUrl + view.name }}">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#map-marker"></use>
+                    </svg>
+                    Map
+                </a>
+            </li>
+            <li>
+                <a ng-href="{{baseUrl + view.name }}">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#list-rich"></use>
+                    </svg>
+                    Timeline
+                </a>
+            </li>
+            <li>
+                <a ng-href="{{baseUrl + view.name }}">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#pulse"></use>
+                    </svg>
+                    Activity
+                </a>
+            </li>
+            <li>
+                <a ng-href="{{baseUrl + view.name }}">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#cog"></use>
+                    </svg>
+                    Settings
+                </a>
+            </li>
+            <li class="more-menu-trigger">
+                <a href="#">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
+                    </svg>
+                    More
+                </a>
+            </li>
+        </ul>
+
+        <ul class="account-menu">
+            <li>
+                <a ng-href="{{baseUrl + view.name }}">
+                    <img src="http://placehold.it/40x40" class="avatar" />
+                    <span class="label">Aaliyah Williams</span>
+                </a>
+            </li>
+            <li>
+                <a ng-href="{{baseUrl + view.name }}">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+                    </svg>
+                    <span class="label">Collections</span>
+                </a>
+            </li>
+            <li>
+                <a ng-href="{{baseUrl + view.name }}">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                    </svg>
+                    <span class="label">Alerts <span class="badge">2</span></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

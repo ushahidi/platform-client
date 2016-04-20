@@ -1,0 +1,143 @@
+<form role="search" class="searchbar">
+    <div class="searchbar-input form-field search">
+        <input type="search" placeholder="Search">
+    </div>
+
+    <div class="searchbar-options">
+        <a href="#" class="button" data-toggle="search-saved">
+            <svg class="iconic">
+              <use xlink:href="../../img/iconic-sprite.svg#star"></use>
+            </svg>
+            <span class="button-label hidden">Saved</span>
+        </a>
+
+        <a href="#" class="button searchbar-options-filter" data-toggle="search-filters">
+            <svg class="iconic">
+              <use xlink:href="../../img/iconic-sprite.svg#bolt"></use>
+            </svg>
+            <span class="button-label">Filters</span>
+            <svg class="iconic">
+              <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        </a>
+    </div>
+
+    <div class="dropdown-menu" data-toggle-target="search-saved">
+
+        <div class="form-field search">
+             <label>Find a saved search</label>
+             <input type="search" placeholder="Find a saved search...">
+        </div>
+        <dl class="dropdown-menu-body">
+            <dt class="list-item"><a href="#">Actions on Congress Avenue</a></dt>
+
+            <dt class="list-item"><a href="#">Photos</a></dt>
+
+            <dt class="list-item"><a href="#">Reports on Wednesday</a></dt>
+
+            <dt class="list-item"><a href="#">Assigned to me</a></dt>
+
+            <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+            <dd>by <a href="">Robbie MacKay</a></dd>
+
+            <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+            <dd>by <a href="">Robbie MacKay</a></dd>
+
+            <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+            <dd>by <a href="">Robbie MacKay</a></dd>
+
+            <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+            <dd>by <a href="">Robbie MacKay</a></dd>
+        </dl>
+        <div class="form-field">
+            <button type="button" class="button-beta">
+                <svg class="iconic">
+                  <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                </svg>
+                <span class="button-label">Create new</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" data-toggle-target="search-filters">
+        <div class="dropdown-menu-body">
+            <fieldset>
+                <legend>Surveys</legend>
+
+                <div class="form-field checkbox">
+                    <label for="traffic">
+                        <input type="checkbox" name="traffic" value="Traffic" id="traffic"> Traffic
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="police-encounters">
+                        <input type="checkbox" name="police-encounters" value="Police encounters" id="police-encounters"> Police encounters
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="protester-photos">
+                        <input type="checkbox" name="protester-photos" value="Protester photos" id="protester-photos"> Protester photos
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="traffic">
+                        <input type="checkbox" name="traffic" value="Traffic" id="traffic"> Traffic
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="police-encounters">
+                        <input type="checkbox" name="police-encounters" value="Police encounters" id="police-encounters"> Police encounters
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="protester-photos">
+                        <input type="checkbox" name="protester-photos" value="Protester photos" id="protester-photos"> Protester photos
+                    </label>
+                </div>
+                <span class="form-field-toggle">More</span>
+            </fieldset>
+
+            <fieldset>
+                <legend>Categories</legend>
+
+                <div class="form-field checkbox">
+                    <label for="speakers">
+                        <input type="checkbox" name="speakers" value="Speakers" id="speakers"> Speakers
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="opposition">
+                        <input type="checkbox" name="opposition" value="Opposition" id="opposition"> Opposition
+                    </label>
+                </div>
+                <span class="form-field-toggle">More</span>
+            </fieldset>
+
+            <fieldset>
+                <legend>Who Can See It</legend>
+
+                <div class="form-field radio">
+                    <label for="everyone">
+                        <input type="radio" name="everyone" value="Everyone" id="everyone"> Everyone
+                    </label>
+                </div>
+                <div class="form-field radio">
+                    <label for="members">
+                        <input type="radio" name="members" value="Members" id="members"> Members
+                    </label>
+                </div>
+                <div class="form-field radio">
+                    <label for="administrators">
+                        <input type="radio" name="administrators" value="Administrators" id="administrators"> Administrators
+                    </label>
+                </div>
+                <span class="form-field-toggle">More</span>
+            </fieldset>
+        </div>
+
+        <div class="form-field">
+            <button type="button" class="button-link" disabled>Cancel</button>
+            <button type="button" class="button-alpha" disabled>Apply filters</button>
+        </div>
+    </div>
+</form>
