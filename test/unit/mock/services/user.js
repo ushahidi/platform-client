@@ -27,6 +27,9 @@ module.exports = [function () {
                 }
             }};
         },
+        invalidateCache: function (user) {
+            return;
+        },
         saveCache: function (user) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
