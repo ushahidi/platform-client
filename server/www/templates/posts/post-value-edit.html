@@ -1,6 +1,7 @@
 <div
     ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
     class="form-field">
+    <!-- Attribute Label -->
     <label
         class="input-label" for="values[{{attribute.key}}][0]"
         ng-class="{
