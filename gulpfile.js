@@ -149,6 +149,15 @@ gulp.task('css', [], function () {
 });
 
 /**
+ * Task: `svg-iconic-sprite`
+ * Move Iconic Sprite from pattern library into server/www
+ */
+gulp.task('svg-iconic-sprite', [], function () {
+    return gulp.src(['node_modules/platform-pattern-library/assets/img/iconic-sprite.svg'])
+        .pipe(gulp.dest(options.www + '/img'));
+});
+
+/**
  * Copy icon files for leaflet from node_modules into server/www/css/images
  */
 gulp.task('copy-leaflet-icons', [], function () {
@@ -236,7 +245,7 @@ function bundleBrowserify(stream) {
  * Task: `build`
  * Builds sass, fonts and js
  */
-gulp.task('build', ['sass', 'css', 'font', 'browserify']);
+gulp.task('build', ['sass', 'css', 'font', 'svg-iconic-sprite', 'browserify']);
 
 /**
  * Task: `watch`

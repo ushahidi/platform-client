@@ -208,13 +208,13 @@
         <div class="tool">
             <h6 class="tool-heading">How to add a post</h6>
 
-            <span data-toggle="toggle-content">
-                <svg class="iconic">
+            <span data-toggle="toggle-content" ng-class="{ 'active': howToToggle }">
+                <svg ng-click="howToToggle = ! howToToggle" class="iconic">
                     <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                 </svg>
                 <span class="label hidden">Show/hide</span>
             </span>
-            <div class="toggle-content active">
+            <div ng-show="howToToggle" ng-class="{ 'active': howToToggle }">
                 <p>Use the <a href="#">web form</a>.</p>
                 <p>Send a text message to </br> <a href="tel:15551234567">+1-555-123-4567</a>.</p>
                 <p>Send an email to <a href="mailto:cityhallmarch@domain.com" title="Subject">cityhallmarch@domain.com</a>.</p>
