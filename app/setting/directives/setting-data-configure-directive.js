@@ -1,21 +1,53 @@
 module.exports = [
     '$translate',
     '$location',
-    'FormEndpoint',
     'DataImportEndpoint',
+    'FormAttributeEndpoint',
     'Notify',
     '_',
 function (
     $translate,
     $location,
-    FormEndpoint,
     DataImportEndpoint,
+    FormAttributeEndpoint,
     Notify,
     _
 ) {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
+            $scope.post = {
+                values: {}
+            };
+
+            $scope.configureAttributes = function (formId) {
+                FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
+                    var reducedAttributes = [];
+                    // Remove already mapped fields
+                    _.each(attrs, function (attr) {
+                        if (!_.contains($scope.csv.maps_to, attr.key)) {
+                            reducedAttributes.push(attr);
+                        }
+                    });
+
+                    // Initialize values on post (helps avoid madness in the template)
+                    reducedAttributes.map(function (attr) {
+                        if (!$scope.post.values[attr.key]) {
+                            if (attr.input === 'location') {
+                                $scope.post.values[attr.key] = [null];
+                            } else if (attr.input === 'checkbox') {
+                                $scope.post.values[attr.key] = [];
+                            } else {
+                                $scope.post.values[attr.key] = [attr.default];
+                            }
+                        }
+                    });
+                    $scope.attributes = reducedAttributes;
+                });
+            };
+
+            $scope.configureAttributes($scope.csv.fixed.form);
+
             $scope.cancelImport = function () {
                 $translate('notify.data_import.csv_import_cancel')
                 .then(function (message) {

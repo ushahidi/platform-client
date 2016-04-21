@@ -18,7 +18,6 @@
         </ol>
         <h2 translate>data_import.configure_all_imported_posts</h2>
         <form class="segment" ng-submit="submitMappings(csv)">
-
             <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
                 <role-selector
                     toggle-role-func="publishPostTo(updatedPost)"
@@ -33,40 +32,16 @@
                     </label>
                 </div>
             </div>
-            <fieldset class="form-field">
-                <legend translate>Assign value to unused post fields</legend>
-                <p class="small" translate translate-values="{form_name: form.name}">
-                    Any unused <strong>--formname--</strong> fields are listed below. You can assign the same value to each field for all imported posts, or leave the unused fields blank.
-                </p>
-              <table>
-                 <thead>
-                    <tr>
-                       <th translate> data_import.csv_column_name</th>
-                       <th translate translate-values="{form_name: form.name}"> data_import.post_type_title</th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                    <tr ng-repeat="column in form.unmapped_columns track by $index">
-                       <td>{{column}}</td>
-                       <td>
-                          <div class="custom-select init">
-                             <select 
-                                ng-model="csv.maps_to[$index]" 
-                                ng-options="attribute.key as attribute.label for attribute in form.attributes"> 
-                                <option selected="true" value="" translate>
-                                    data_import.dont_import
-                                </option>
-                             </select>
-                          </div>
-                       </td>
-                    </tr>
-                 </tbody>
-              </table>
-           </fieldset>
-           <div class="actions-inline actions-right">
-              <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
-              <button type="submit" id="submit" translate>data_import.finish_import</button>
-           </div>
+            <post-value-edit 
+                ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+                post="post" 
+                attribute="attribute" 
+            >
+            </post-value-edit>
+            <div class="actions-inline actions-right">
+                <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
+                <button type="submit" id="submit" translate>data_import.finish_import</button>
+            </div>
         </form>
      </div><!--end main col-->
   </main>

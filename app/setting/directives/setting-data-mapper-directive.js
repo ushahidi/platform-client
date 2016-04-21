@@ -3,6 +3,7 @@ module.exports = [
     '$location',
     'FormEndpoint',
     'DataImportEndpoint',
+    'DataRetriever',
     'Notify',
     '_',
 function (
@@ -10,6 +11,7 @@ function (
     $location,
     FormEndpoint,
     DataImportEndpoint,
+    DataRetriever,
     Notify,
     _
 ) {
@@ -65,7 +67,7 @@ function (
                 return missing;
             };
 
-            $scope.submitMappings = function (csv) {
+            $scope.progressToConfigure = function (csv) {
 
                 if (_.every(csv.maps_to, _.isEmpty)) {
                     $translate('notify.data_import.no_mappings').then(function (message) {
@@ -113,13 +115,10 @@ function (
                     'form': $scope.form.id
                 };
 
-                DataImportEndpoint.update(csv)
-                .$promise
-                .then(function (csv) {
-                    $scope.triggerImport(csv);
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
+                // Pass data to configure stage via DataRetriever service
+                DataRetriever.setImportData(csv);
+                $location.url('/settings/data-configure/');
+
             };
         }
     };

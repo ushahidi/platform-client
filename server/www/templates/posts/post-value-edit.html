@@ -32,6 +32,7 @@
     </div>
     <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
         <div ng-if="!isCheckbox(attribute)" ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
+            <!-- Standard fields -->
             <!-- type: date -->
             <div class="input-inline" ng-if="isDate(attribute)">
                 <input
@@ -57,17 +58,7 @@
                     auto-close="true"
                 />
             </div>
-            <!-- type: location -->
-            <post-location
-                attribute="attribute"
-                key="key"
-                id="values[{{attribute.key}}][{{key}}]"
-                name="values_{{attribute.key}}"
-                model="post.values[attribute.key][key]"
-                ng-model="post.values[attribute.key][key]"
-                ng-required="attribute.required"
-                ng-if="isLocation(attribute)"></post-location>
-            <!-- type: select -->
+           <!-- type: select -->
             <select
                 ng-if="isSelect(attribute)"
                 id="values[{{attribute.key}}][{{key}}]"
@@ -109,15 +100,6 @@
                 ng-required="attribute.required"
                 ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
                 >
-            <!-- type: relation -->
-            <post-relation
-                attribute="attribute"
-                key="key"
-                id="values[{{attribute.key}}][{{key}}]"
-                name="values_{{attribute.key}}"
-                model="post.values[attribute.key][key]"
-                required="attribute.required"
-                ng-if="isRelation(attribute)"></post-relation>
             <!-- type: textarea -->
             <textarea
                 rows="10"
@@ -128,6 +110,28 @@
                 ng-model="post.values[attribute.key][key]"
                 ng-required="attribute.required"
                 ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
+
+            <!-- Non standard fields -->
+            <!-- type: relation -->
+            <post-relation
+                attribute="attribute"
+                key="key"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                model="post.values[attribute.key][key]"
+                required="attribute.required"
+                ng-if="isRelation(attribute)"></post-relation>
+            <!-- type: location -->
+            <post-location
+                attribute="attribute"
+                key="key"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.key}}"
+                model="post.values[attribute.key][key]"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                ng-if="isLocation(attribute)"></post-location>
+
             <button
                 type="button"
                 class="button-secondary icon-only alt trash"
