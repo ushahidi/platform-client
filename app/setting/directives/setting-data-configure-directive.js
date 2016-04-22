@@ -81,71 +81,25 @@ function (
                 });
             };
 
-            // Check for missing required fields and return the missing fields
-            $scope.checkRequiredFields = function (fields) {
-                var missing = [];
-                var difference = _.difference($scope.required_fields, fields);
-
-                if (!_.isEmpty(difference)) {
-                    _.each(difference, function (field) {
-                        missing.push(
-                            $scope.required_fields_map[field]
-                        );
-                    });
-                }
-
-                return missing;
-            };
-
-            $scope.submitMappings = function (csv) {
-
-                if (_.every(csv.maps_to, _.isEmpty)) {
-                    $translate('notify.data_import.no_mappings').then(function (message) {
-                        Notify.showAlerts([message]);
-                    });
-                    return;
-                }
-
-                // Check to make sure the user hasn't double mapped a key
-                // First, collect the counts for all keys
-                var dups = _.countBy(csv.maps_to, function (item) {
-                    return item;
-                });
-
-                // Second, check if any of the keys appear more than once
-                var duplicateVars = _.filter(csv.maps_to, function (item) {
-                    if (dups[item] > 1) {
-                        return item;
+            $scope.cleanPostValues = function (values) {
+                // Clean up post values object
+                _.each(values, function (value, key) {
+                    // Strip out empty values
+                    values[key] = _.filter(value);
+                    // Remove entirely if no values are left
+                    if (!values[key].length) {
+                        delete values[key];
                     }
                 });
+                return values;
+            };
 
-                duplicateVars = _.uniq(duplicateVars);
+            $scope.submitMappings = function () {
 
-                // third, warn the user which keys have been duplicated
-                if (duplicateVars.length > 0) {
+                var post = angular.copy($scope.post);
+                $scope.csv.fixed.values = $scope.cleanPostValues(post.values);
 
-                    $translate('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')}).then(
-                    function (message) {
-                        Notify.showAlerts([message]);
-                    });
-                    return;
-                }
-
-                //Check required fields are set
-                var missing = $scope.checkRequiredFields(csv.maps_to);
-                if (!_.isEmpty(missing)) {
-                    $translate('notify.data_import.required_fields', {required: missing.join(', ')})
-                    .then(function (message) {
-                        Notify.showAlerts([message]);
-                    });
-                    return;
-                }
-
-                csv.fixed = {
-                    'form': $scope.form.id
-                };
-
-                DataImportEndpoint.update(csv)
+                DataImportEndpoint.update($scope.csv)
                 .$promise
                 .then(function (csv) {
                     $scope.triggerImport(csv);

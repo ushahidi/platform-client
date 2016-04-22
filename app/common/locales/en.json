@@ -475,6 +475,8 @@
         }
     },
     "data_import" :{
+        "continue" : "Continue",
+        "configure_posts": "Configure Posts",
         "import" : "Import",
         "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type",
         "import_explanation_file_size" : " - The size for a single file is limited to 10 MB",

@@ -13,8 +13,8 @@
      <div class="main-col">
         <ol class="progress">
            <li><span class="complete" translate>data_import.choose_file</span></li>
-           <li class="complete" translate>data_import.organize_data</li>
-           <li class="active">data_import.configure_posts</li>
+           <li><pan class="complete"translate>data_import.organize_data</span></li>
+           <li class="active" translate>data_import.configure_posts</li>
         </ol>
         <h2 translate>data_import.configure_all_imported_posts</h2>
         <form class="segment" ng-submit="submitMappings(csv)">
@@ -40,7 +40,7 @@
             </post-value-edit>
             <div class="actions-inline actions-right">
                 <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
-                <button type="submit" id="submit" translate>data_import.finish_import</button>
+                <button type="submit" id="submit" ng-click="submitMappings()" translate>data_import.finish_import</button>
             </div>
         </form>
      </div><!--end main col-->
