@@ -12,9 +12,10 @@
         -->
         <div class="meta-data">
             <span class="post-type-marker"><!-- todo marker style based on post type -->
-                {{ post.form.name || "Incoming" }}
+                {{ post.form.name || (post.source | uppercase) }}
             </span>
-            <span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}}<!--, via SMS -->
+            <span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}}
+            <span ng-if="post.source" translate-values="{ source : (post.source | uppercase) }" translate="post.source"></span>
         </div>
         <div class="post-text">
             <a href="/posts/{{post.id}}">
