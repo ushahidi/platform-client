@@ -158,7 +158,9 @@ describe('authentication interceptor', function () {
 
                 beforeEach(function () {
                     mockAuthentication.loginStatus = true;
-                    $httpBackend.whenGET(CONST.BACKEND_URL + '/some-url').respond(401);
+                    $httpBackend.whenGET(CONST.BACKEND_URL + '/some-url').respond(function () {
+                        return [/*status*/ 401, /*data*/ [{data: { error: 'unauthorized'}}]];
+                    });
                     $http.get(CONST.BACKEND_URL + '/some-url');
                     $httpBackend.flush();
                     broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;

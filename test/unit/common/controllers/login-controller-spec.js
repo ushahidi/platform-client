@@ -28,11 +28,16 @@ describe('login controller', function () {
     }));
 
     beforeEach(function () {
+        var errorResponse = {
+            data: {
+                error: 'error'
+            }
+        };
         mockAuthenticationService = {
             login: function (username, password) {
                 return {
                     then: function (successCallback, failureCallback) {
-                        password === 'correct' ? successCallback() : failureCallback();
+                        password === 'correct' ? successCallback() : failureCallback(errorResponse);
                     }
                 };
             }
