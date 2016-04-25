@@ -11,3 +11,6 @@ server/www/locales/
 *.aes
 deployment.env
 vault.txt
+
+*.svg
+server/www/icons/
