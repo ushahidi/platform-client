@@ -18,7 +18,7 @@
         </ol>
         <h2 translate>data_import.configure_all_imported_posts</h2>
         <form class="segment" ng-submit="submitMappings(csv)">
-            <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
+            <div class="form-field select">
                 <role-selector
                     toggle-role-func="publishPostTo(updatedPost)"
                     post="post" ></role-selector>

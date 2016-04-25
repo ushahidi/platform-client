@@ -8,7 +8,6 @@ function (
         '$translate',
         'PostEntity',
         'PostEndpoint',
-        'TagEndpoint',
         'FormEndpoint',
         'FormStageEndpoint',
         'FormAttributeEndpoint',
@@ -21,143 +20,77 @@ function (
             $translate,
             postEntity,
             PostEndpoint,
-            TagEndpoint,
             FormEndpoint,
             FormStageEndpoint,
             FormAttributeEndpoint,
             Notify,
             _
         ) {
+            // Setup initial stages container
 
-            TagEndpoint.query().$promise.then(function (results) {
-                $scope.categories = results;
-            });
             $scope.everyone = $filter('translate')('post.modify.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
+            $scope.visibleStage = 1;
 
             $scope.goBack = function () {
                 $scope.post.form = null;
-            };
-
-            $scope.allowedChangeStatus = function () {
-                return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
-            };
-
-            $scope.setDraft = function () {
-                $scope.post.status = 'draft';
             };
 
             $scope.setVisibleStage = function (stageId) {
                 $scope.visibleStage = stageId;
             };
 
-            $scope.isFirstStage = function (stageId) {
-
-                if (!_.isEmpty($scope.stages)) {
-                    return stageId === $scope.stages[0].id;
-                }
-                return false;
-
-            };
-
-            $scope.isStageValid = function (stageId) {
-
-                if ($scope.isFirstStage(stageId)) {
-
-                    // The first stage is assumed to contain the title, content, and the tags
-                    //  - these are not stored in attributes and do not have a 'required' field
-                    //   thus, if any of these are invalid, the first stage is not ready to complete
-
-                    // Return if form isn't initialized yet
-                    if (!$scope.form) {
-                        return false;
-                    }
-
-                    if ($scope.form.title.$invalid || $scope.form.content.$invalid) {
-                        return false;
-                    }
-
-                    if ($scope.form.tags && $scope.form.tags.$invalid) {
-                        return false;
-                    }
-                }
-                // now checking all other post attributes that are required
-                return _.chain($scope.attributes)
-                .where({form_stage_id : stageId, required: true})
-                .reduce(function (isValid, attr) {
-                    // checkbox validity needs to be handled differently
-                    // because it has multiple inputs identified via the options
-                    if (attr.input === 'checkbox') {
-                        var checkboxValidity = false;
-                        _.each(attr.options, function (option) {
-                            if (!_.isUndefined($scope.form['values_' + attr.key + '_' + option]) && !$scope.form['values_' + attr.key + '_' + option].$invalid) {
-                                checkboxValidity = isValid;
+            $scope.fetchAttributes = function (formId) {
+                FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
+                    // Initialize values on post (helps avoid madness in the template)
+                    attrs.map(function (attr) {
+                        if (!$scope.post.values[attr.key]) {
+                            if (attr.input === 'location') {
+                                $scope.post.values[attr.key] = [null];
+                            } else if (attr.input === 'checkbox') {
+                                $scope.post.values[attr.key] = [];
+                            } else {
+                                $scope.post.values[attr.key] = [attr.default];
                             }
-                        });
-                        return checkboxValidity;
-                    } else {
-                        if (_.isUndefined($scope.form['values_' + attr.key]) || $scope.form['values_' + attr.key].$invalid) {
-                            return false;
                         }
-                        return isValid;
-                    }
-                }, true)
-                .value();
-            };
-
-            $scope.stageIsComplete = function (stageId) {
-                return _.includes($scope.post.completed_stages, stageId);
-            };
-
-            $scope.toggleStageCompletion = function (stageId) {
-
-                stageId = parseInt(stageId);
-                if (_.includes($scope.post.completed_stages, stageId)) {
-                    $scope.post.completed_stages = _.without($scope.post.completed_stages, stageId);
-
-                } else if ($scope.isStageValid(stageId)) {
-                    $scope.post.completed_stages.push(stageId);
-                }
-            };
-
-            $scope.publishPostTo = function (updatedPost) {
-
-                // first check if stages required have been marked complete
-                var requiredStages = _.where($scope.stages, {required: true}), errors = [];
-
-                _.each(requiredStages, function (stage) {
-                    // if this stage isn't complete, add to errors
-                    if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
-                        errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
-                    }
-                });
-
-                if (errors.length) {
-                    Notify.showAlerts(errors);
-                    return;
-                }
-                $scope.post = updatedPost;
-
-                if (!$scope.post.id) {
-                    // We're in the create interface and we should
-                    // return having set the publised_to field of the post
-                    return;
-                }
-
-                PostEndpoint.update($scope.post)
-                .$promise
-                .then(function (post) {
-                    var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-                    var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
-                    $translate(message, {role: role})
-                    .then(function (message) {
-                        Notify.showNotificationSlider(message);
                     });
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    $scope.attributes = attrs;
                 });
             };
+
+            $scope.fetchStages = function (formId) {
+                FormStageEndpoint.query({ formId: formId }).$promise.then(function (stages) {
+                    var post = $scope.post;
+                    $scope.stages = stages;
+
+                    // If number of completed stages matches number of stages,
+                    // assume they're all complete, and just show the first stage
+                    if (post.completed_stages.length === stages.length) {
+                        $scope.setVisibleStage(stages[0].id);
+                    } else {
+                        // Get incomplete stages
+                        var incompleteStages = _.filter(stages, function (stage) {
+                            return !_.contains(post.completed_stages, stage.id);
+                        });
+
+                        // Return lowest priority incomplete stage
+                        $scope.setVisibleStage(incompleteStages[0].id);
+                    }
+                });
+            };
+
+            $scope.fetchForm = function (formId) {
+                FormEndpoint.get({id: formId}).$promise.then(function (form) {
+                    $scope.post.form = form;
+                    $scope.fetchAttributes(form.id);
+                    $scope.fetchStages(form.id);
+                });
+            };
+
+            if ($scope.post.form.id) {
+                $scope.fetchForm($scope.post.form.id);
+            }
 
             $scope.canSavePost = function () {
                 var valid = true;
@@ -253,59 +186,7 @@ function (
                     $scope.saving_post = false;
                 });
             };
-
-            $scope.fetchAttributes = function (formId) {
-                FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
-                    // Initialize values on post (helps avoid madness in the template)
-                    attrs.map(function (attr) {
-                        if (!$scope.post.values[attr.key]) {
-                            if (attr.input === 'location') {
-                                $scope.post.values[attr.key] = [null];
-                            } else if (attr.input === 'checkbox') {
-                                $scope.post.values[attr.key] = [];
-                            } else {
-                                $scope.post.values[attr.key] = [attr.default];
-                            }
-                        }
-                    });
-                    $scope.attributes = attrs;
-                });
-            };
-
-            $scope.fetchStages = function (formId) {
-                FormStageEndpoint.query({ formId: formId }).$promise.then(function (stages) {
-                    var post = $scope.post;
-                    $scope.stages = stages;
-
-                    // If number of completed stages matches number of stages,
-                    // assume they're all complete, and just show the first stage
-                    if (post.completed_stages.length === stages.length) {
-                        $scope.setVisibleStage(stages[0].id);
-                    } else {
-                        // Get incomplete stages
-                        var incompleteStages = _.filter(stages, function (stage) {
-                            return !_.contains(post.completed_stages, stage.id);
-                        });
-
-                        // Return lowest priority incomplete stage
-                        $scope.setVisibleStage(incompleteStages[0].id);
-                    }
-                });
-            };
-
-            $scope.fetchForm = function (formId) {
-                FormEndpoint.get({id: formId}).$promise.then(function (form) {
-                    $scope.post.form = form;
-                    $scope.fetchAttributes(form.id);
-                    $scope.fetchStages(form.id);
-                });
-            };
-
-            if ($scope.post.form.id) {
-                $scope.fetchForm($scope.post.form.id);
-            }
         }];
-
     return {
         restrict: 'E',
         scope: {

@@ -1,6 +1,7 @@
 module.exports = [
     '$translate',
     '$location',
+    '$filter',
     'DataImportEndpoint',
     'FormAttributeEndpoint',
     'Notify',
@@ -8,6 +9,7 @@ module.exports = [
 function (
     $translate,
     $location,
+    $filter,
     DataImportEndpoint,
     FormAttributeEndpoint,
     Notify,
@@ -47,6 +49,25 @@ function (
             };
 
             $scope.configureAttributes($scope.csv.fixed.form);
+
+            $scope.publishPostTo = function (updatedPost) {
+
+                // first check if stages required have been marked complete
+                var requiredStages = _.where($scope.stages, {required: true}), errors = [];
+
+                _.each(requiredStages, function (stage) {
+                    // if this stage isn't complete, add to errors
+                    if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
+                        errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
+                    }
+                });
+
+                if (errors.length) {
+                    Notify.showAlerts(errors);
+                    return;
+                }
+                $scope.post = updatedPost;
+            };
 
             $scope.cancelImport = function () {
                 $translate('notify.data_import.csv_import_cancel')

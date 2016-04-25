@@ -1,0 +1,65 @@
+<div class="vertical-tabs">
+    <nav class="vertical-tabs-menu init">
+        <ul>
+            <li
+                ng-repeat="stage in stages"
+                ng-class="{'active': visibleStage == stage.id}"  >
+                <a ng-click="setVisibleStage(stage.id)">
+                    <span class="icon-left fa-{{stage.icon||'file-o'}}">
+                        {{stage.label}}
+                    </span>
+                </a>
+                <span class="status {{stageIsComplete(stage.id)? 'complete' : ''}}">
+                </span>
+            </li>
+            <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank. -->
+        </ul>
+    </nav>
+    <div class="vertical-tabs-content">
+        <button ng-repeat="stage in stages" type="button"
+            class="button-secondary check"
+            ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
+            ng-show="stage.id == visibleStage"
+            ng-click="toggleStageCompletion(stage.id)"
+            translate="{{ stageIsComplete(stage.id) ? 'post.complete' : 'post.mark_complete' }}"
+            >
+        </button>
+        <div class="form-field"
+            ng-show="isFirstStage(visibleStage)"
+            >
+            <label
+                class="input-label required" for="content"
+                ng-class="{ 'error': form.content.$invalid && form.content.$dirty }"
+            >{{'post.modify.form.description' | translate}}</label>
+            <div
+                class="input-icon"
+                ng-class="{ 'error': form.content.$invalid && form.content.$dirty }"
+            >
+                <textarea id="content" name="content" rows="10" placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required class="form-control"></textarea>
+            </div>
+        </div>
+        <div ng-if="categories.length"
+            class="form-field"
+            ng-show="isFirstStage(visibleStage)"
+            >
+            <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
+            <div class="form-field checkbox" ng-repeat="category in categories">
+                <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
+                <label>
+                    {{category.tag}}
+                </label>
+                <p ng-repeat="(error, value) in form.tags.$error"
+                  ng-show="form.tags.$dirty"
+                  class="alert error"
+                  translate="{{'post.valid.tags.' + error}}"></p>
+            </div>
+        </div>
+        <post-value-edit 
+                ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+                ng-show="attribute.form_stage_id == visibleStage"
+                post="post" 
+                attribute="attribute"
+        ></post-value-edit>
+      </div>
+  </div>
+
