@@ -254,6 +254,8 @@ describe('post editor directive', function () {
             $scope.post.id = 'pass';
             isolateScope.savePost();
 
+            $rootScope.$apply();
+
             expect(Notify.showNotificationSlider).toHaveBeenCalled();
         });
 
@@ -262,6 +264,8 @@ describe('post editor directive', function () {
 
             $scope.post.id = 'fail';
             isolateScope.savePost();
+
+            $rootScope.$apply();
 
             expect(Notify.showApiErrors).toHaveBeenCalled();
         });
