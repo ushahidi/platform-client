@@ -243,7 +243,19 @@
                                 ng-required="attribute.required"
                                 ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
 
-                        </div>
+                          </div>
+
+                          <!-- type: upload -->
+                          <div ng-if=isUpload(attribute)>
+                            <a ng-href="{{ mediaAttributes[attribute.key].url }}" ng-if="mediaAttributes[attribute.key].url" target="_blank" translate>post.media.current_url</a>
+                            <file-upload file-container="fileContainers[attribute.key]">
+                            </file-upload>
+                            <p class="small" translate>post.media.add_caption</p>
+                            <input
+                              type="text"
+                              placeholder="{{ 'post.media.add_caption' | translate }}"
+                              ng-model="mediaAttributes[attribute.key].caption">
+                          </div>
                     </div>
 
                     <p ng-repeat="(error, value) in form['values_' + attribute.key].$error"

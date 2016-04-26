@@ -82,6 +82,14 @@
                             </label>
                         </div>
                     </div>
+
+                    <!-- Show images -->
+                    <div ng-repeat="(key, value) in mediaAttributes">
+                      <div class="post-field">
+                        <img ng-src="{{ value.url }}">
+                        <p class="small"><em>{{ value.caption }}</em></p>
+                      </div>
+                    </div>
                     <div
                         ng-repeat="(key,value) in post.values"
                         ng-if="form_attributes[key] && showType(form_attributes[key].type)"

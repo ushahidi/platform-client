@@ -124,13 +124,15 @@
                     <label class="input-label" translate>form.field_key</label>
                     <input type="text" value="{{ attribute.key }}" placeholder="{{ 'form.field_key_placeholder'|translate }}" ng-model="attribute.key">
 
-                    <label class="input-label" translate>form.field_default</label>
-                    <div ng-switch="attribute.input">
-                       <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="attribute.default">
+                    <div ng-if="attribute.input !== 'upload'">
+                      <label class="input-label" translate>form.field_default</label>
+                      <div ng-switch="attribute.input">
+                        <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="attribute.default">
                         <input ng-switch-when="date" type="text" date-time="attribute.default" ng-model="attribute.default">
                         <input ng-switch-when="int" type="number" step="1" ng-model="attribute.default">
                         <input ng-switch-when="decimal" type="number" ng-model="attribute.default">
                         <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="attribute.default">
+                      </div>
                     </div>
                     <div ng-if="hasOptions(attribute)" >
                         <label class="input-label" translate>form.field_options</label>
@@ -155,8 +157,9 @@
                       <label class="input-label" translate>form.field_type</label>
                       <p>{{attribute.input}} ({{attribute.type}})</p>
                    </div>
-                   <p class="clearfix">
-                       <label class="checkbox-label">
+                    <p class="clearfix">
+                      <!-- TODO: handle required fields for uploads-->
+                       <label class="checkbox-label" ng-if="attribute.input !== 'upload'">
                           <input type="checkbox" ng-model="attribute.required">
                           <span translate>form.field_required</span>
                        </label>

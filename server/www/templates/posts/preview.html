@@ -5,11 +5,11 @@
 
     <div class="post-summary !has-img">
         <div class="clearfix"></div>
-        <!--
-        <div ng-if="has-img" class="post-img">
-            <img src="http://placehold.it/700x600" alt="">
+
+        <div ng-if="post.media.url" class="post-img">
+            <img ng-src="{{ post.media.url }}" alt="{{ post.media.caption }}">
         </div>
-        -->
+
         <div class="meta-data">
             <span class="post-type-marker"><!-- todo marker style based on post type -->
                 {{ post.form.name || "Incoming" }}
