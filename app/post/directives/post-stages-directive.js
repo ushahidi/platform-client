@@ -32,6 +32,8 @@ function (
                 $scope.visibleStage = stageId;
             };
 
+            $scope.setVisibleStage($scope.visibleStage);
+
             $scope.isFirstStage = function (stageId) {
 
                 if (!_.isEmpty($scope.stages)) {
