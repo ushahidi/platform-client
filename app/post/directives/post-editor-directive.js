@@ -18,7 +18,6 @@ function (
         'MediaEndpoint',
         '$http',
         'Util',
-        '$timeout',
         function (
             $scope,
             $filter,
@@ -35,8 +34,7 @@ function (
             $q,
             MediaEndpoint,
             $http,
-            Util,
-            $timeout
+            Util
         ) {
 
             TagEndpoint.query().$promise.then(function (results) {
