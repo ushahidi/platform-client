@@ -35,7 +35,12 @@ function (
                 PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                     $scope.posts = postsResponse.results;
 
+                    // Show image with post listing
                     angular.forEach($scope.posts, function (post) {
+                        if (_.isUndefined(post.form)) {
+                            return;
+                        }
+
                         FormAttributeEndpoint.query({ formId: post.form.id}, function (attributes) {
                             // Use image from the first media attribute
                             var mediaAttribute = _.find(attributes, function (attribute) {
