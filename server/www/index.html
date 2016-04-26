@@ -34,13 +34,13 @@
 
         <div id="bootstrap-app" class="hidden">
 
-            <ng-include src="'templates/partials/mode-bar.html'"></ng-include>
+            <mode-bar></mode-bar>
 
-            <ng-include src="'templates/partials/mode-context.html'"></ng-include>
+            <mode-context></mode-context>
 
             <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
             <main role="main">
-                <ng-include src="'templates/partials/toolbar.html'"></ng-include>
+                <tool-bar></tool-bar>
                 <ng-include src="'templates/partials/toolbox.html'"></ng-include>
 
                 <ng-view></ng-view>

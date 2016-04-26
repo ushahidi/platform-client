@@ -1,6 +1,6 @@
-<!-- mode bar -->
-<!-- PL JS -->
 <div class="mode-bar">
+    <!-- mode bar -->
+    <!-- PL JS -->
     <nav>
         <!-- main menu -->
         <ul class="deployment-menu">
@@ -47,34 +47,9 @@
         </ul>
         <!-- main menu -->
 
-        <!-- user account menu -->
-        <ul class="account-menu">
-            <li>
-                <a ng-href="{{baseUrl + view.name }}">
-                    <img src="http://placehold.it/40x40" class="avatar" />
-                    <span class="label">Aaliyah Williams</span>
-                </a>
-            </li>
-            <li>
-                <a ng-href="{{baseUrl + view.name }}">
-                    <svg class="iconic">
-                        <use xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
-                    </svg>
-                    <span class="label">Collections</span>
-                </a>
-            </li>
-            <li>
-                <a ng-href="{{baseUrl + view.name }}">
-                    <svg class="iconic">
-                        <use xlink:href="../../img/iconic-sprite.svg#bell"></use>
-                    </svg>
-                    <span class="label">Alerts <span class="badge">2</span></span>
-                </a>
-            </li>
-        </ul>
-        <!-- user account menu -->
+        <ng-include src="'templates/partials/user-menu.html'"></ng-include>
 
     </nav>
+    <!-- PL JS -->
+    <!-- mode bar -->
 </div>
-<!-- PL JS -->
-<!-- mode bar -->
