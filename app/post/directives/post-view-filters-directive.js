@@ -17,7 +17,7 @@ function (
         },
         templateUrl: 'templates/posts/post-view-filters.html',
         link: function ($scope, $element, $attrs) {
-            $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
+            $scope.hasPermission = $rootScope.hasPermission;
             $scope.filter = {};
             $scope.globalFilter = GlobalFilter;
             $scope.globalFilter.loadInitialData();
