@@ -13,6 +13,7 @@ describe('Authentication', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
+            'ushahidi.mock',
             'ngResource',
             'angular-cache'
         ]);

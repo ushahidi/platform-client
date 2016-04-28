@@ -18,8 +18,8 @@
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
-    "jscs": "jscs ./app/* ./test/*",
-    "jscs-fix": "jscs -x ./app/* ./test/*"
+    "jscs": "gulp jscs",
+    "jscs-fix": "gulp jscs-fix"
   },
   "pre-commit": [
       "jshint",
@@ -100,7 +100,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "novus/nvd3#v1.7.1",
     "selection-model": "jtrussell/angular-selection-model.git",
-    "platform-pattern-library": "ushahidi/platform-pattern-library#v3.2.1",
+    "platform-pattern-library": "ushahidi/platform-pattern-library#gh-pages",
     "transifex": "^1.4.3",
     "underscore": "^1.7.0"
   },

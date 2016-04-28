@@ -4,7 +4,7 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
-                        name: 'test contact',
+                        contact: 'test@ushahidi.com',
                         id: 1
                     }]});
                 }
@@ -14,7 +14,7 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback) {
                     successCallback({
-                        name: 'test contact',
+                        contact: 'test@ushahidi.com',
                         id: 1
                     });
                 }
@@ -30,7 +30,7 @@ module.exports = [function () {
         save: function (contact) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                    contact.name === 'pass' ? successCallback({id: 1}) : failCallback('error');
+                    contact.contact === 'pass' ? successCallback({id: 1}) : failCallback('error');
                 }
             }};
         },
