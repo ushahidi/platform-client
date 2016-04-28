@@ -14,7 +14,7 @@
         <p class="small" translate>settings.appearance_header_image_instructions</p>
         <file-upload file-container="fileContainer">
         </file-upload>
-    <p class="small" ng-show="site.image_header"><a href="{{ site.image_header }}" translate>settings.current_header</a> <button type="button" ng-click="clearHeader()" class="button button-secondary icon-only trash"></button></p>
+    <p class="small" ng-show="site.image_header"><a target="_blank" href="{{ site.image_header }}" translate>settings.current_header</a> <button type="button" ng-click="clearHeader()" class="button button-secondary icon-only trash"></button></p>
 
     <label class="input-label" for="site-settings-email" translate>settings.site_email</label>
     <p class="small" translate>settings.site_email_note</p>
@@ -30,7 +30,7 @@
         <select id="site-settings-language" ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages" ng-change="changeLanguage(site.language)"></select>
     </div>
 
-    <div ng-show="isPrivateEnabled()" class="form-field checkbox">
+    <div ng-show="isPrivateEnabled" class="form-field checkbox">
         <input id="private" ng-model="site.private" type="checkbox">
         <label for="private" translate>settings.site_private</label>
     </div>

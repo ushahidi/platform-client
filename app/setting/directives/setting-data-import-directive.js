@@ -4,18 +4,22 @@ module.exports = [
     'FormEndpoint',
     'DataImportEndpoint',
     'Notify',
+    'Features',
 function (
     $translate,
     $location,
     FormEndpoint,
     DataImportEndpoint,
-    Notify
+    Notify,
+    Features
 ) {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
             $scope.formId;
-
+            Features.loadFeatures().then(function () {
+                $scope.csvEnabled = Features.isFeatureEnabled('data-import');
+            });
             $scope.importCSV = function () {
                 if (!$scope.fileContainer.file) {
                     $translate('notify.data_import.file_missing').then(function (message) {

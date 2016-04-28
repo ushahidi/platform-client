@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class="main-col map-background" ng-switch="currentView">
+    <div class="main-col" ng-switch="currentView">
 
         <!-- Each of the views in sequence, which are shown or hidden by tabs -->
 
@@ -23,6 +23,9 @@
 
         <!-- timeline view -->
         <post-view-timeline ng-switch-when="timeline" is-loading="isLoading" filters="filters"></post-view-timeline>
+
+        <!-- unavailable view -->
+        <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>
 
         <!-- default view -->
         <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>

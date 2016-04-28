@@ -30,7 +30,7 @@ module.exports = [function () {
         saveCache: function (user) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                    user.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
+                    user.id === 'pass' ? successCallback({id: 1}) : failCallback({data: {errors: 'error'}});
                 }
             }};
         }
