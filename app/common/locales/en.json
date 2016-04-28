@@ -488,11 +488,15 @@
         }
     },
     "data_import" :{
+        "continue" : "Continue",
+        "configure_posts": "Configure Posts",
         "import" : "Import",
         "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type",
         "import_explanation_file_size" : " - The size for a single file is limited to 10 MB",
         "import_explanation_format_location_1" : " - Geographic locations should be included as separate latitude and longitude columns in your CSV",
         "import_explanation_required_fields" : " - All required post type fields must have an associated value set in the CSV. For example, if the field title is required then the field must be mapped to a CSV column where all rows of that column have a value set",
+        "configure_posts" : "Configure Posts",
+        "configure_all_imported_posts" : "Configure all imported posts",
         "csv" : "CSV",
         "post_type" : "Import to which post type?",
         "file_csv" : "CSV file",
