@@ -7,6 +7,7 @@ function (
         restrict: 'E',
         replace: true,
         scope: {
+            form: '=',
             post: '=',
             attribute: '='
         },

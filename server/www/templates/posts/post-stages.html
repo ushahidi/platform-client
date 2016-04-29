@@ -29,7 +29,7 @@
             >
             <label
                 class="input-label required" for="content"
-                ng-class="{ 'error': form.content.$invalid && form.content.$dirty }"
+                ng-class="{ 'error': form.content.$invalid && form.content.$dirty, 'success': !form.content.$invalid && form.content.$dirty }"
             >{{'post.modify.form.description' | translate}}</label>
             <div
                 class="input-icon"
@@ -58,6 +58,7 @@
                 ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                 ng-show="attribute.form_stage_id == visibleStage"
                 post="post" 
+                form="form"
                 attribute="attribute"
         ></post-value-edit>
       </div>

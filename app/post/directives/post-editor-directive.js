@@ -92,6 +92,11 @@ function (
                 $scope.fetchForm($scope.post.form.id);
             }
 
+            // TODO: this function should be moved to a general service handling permissions
+            $scope.allowedChangeStatus = function () {
+                return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
+            };
+
             $scope.canSavePost = function () {
                 var valid = true;
                 if ($scope.post.status === 'published') {

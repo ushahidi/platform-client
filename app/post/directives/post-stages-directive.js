@@ -15,6 +15,7 @@ function (
         restrict: 'E',
         replace: true,
         scope: {
+            form: '=',
             post: '=',
             stages: '=',
             attributes: '=',
