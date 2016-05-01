@@ -36,14 +36,13 @@
             <!-- type: date -->
             <div class="input-inline" ng-if="isDate(attribute)">
                 <input
-                    type="text"
-                    view="date"
                     id="values[{{attribute.key}}][{{key}}]"
                     name="values_{{attribute.key}}"
-                    min-view="date"
-                    date-time="post.values[attribute.key][key]"
-                    format="yyyy-MM-dd"
+                    date-time
                     ng-model="post.values[attribute.key][key]"
+                    view="date"
+                    min-view="date"
+                    format="yyyy-MM-dd"
                     auto-close="true"
                 />
             </div>

@@ -3,7 +3,7 @@ module.exports = [
     '$location',
     '$filter',
     'DataImportEndpoint',
-    'FormAttributeEndpoint',
+    'PostEditService',
     'Notify',
     '_',
 function (
@@ -11,63 +11,28 @@ function (
     $location,
     $filter,
     DataImportEndpoint,
-    FormAttributeEndpoint,
+    PostEditService,
     Notify,
     _
 ) {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
+            // Create template post
             $scope.post = {
-                values: {}
+                form: {
+                    id: $scope.csv.fixed.form
+                },
+                values: {},
+                completed_stages: {},
+                // Enable status setting for bulk import posts
+                allowed_privileges: [
+                    'change_status'
+                ]
             };
 
-            $scope.configureAttributes = function (formId) {
-                FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
-                    var reducedAttributes = [];
-                    // Remove already mapped fields
-                    _.each(attrs, function (attr) {
-                        if (!_.contains($scope.csv.maps_to, attr.key)) {
-                            reducedAttributes.push(attr);
-                        }
-                    });
-
-                    // Initialize values on post (helps avoid madness in the template)
-                    reducedAttributes.map(function (attr) {
-                        if (!$scope.post.values[attr.key]) {
-                            if (attr.input === 'location') {
-                                $scope.post.values[attr.key] = [null];
-                            } else if (attr.input === 'checkbox') {
-                                $scope.post.values[attr.key] = [];
-                            } else {
-                                $scope.post.values[attr.key] = [attr.default];
-                            }
-                        }
-                    });
-                    $scope.attributes = reducedAttributes;
-                });
-            };
-
-            $scope.configureAttributes($scope.csv.fixed.form);
-
-            $scope.publishPostTo = function (updatedPost) {
-
-                // first check if stages required have been marked complete
-                var requiredStages = _.where($scope.stages, {required: true}), errors = [];
-
-                _.each(requiredStages, function (stage) {
-                    // if this stage isn't complete, add to errors
-                    if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
-                        errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
-                    }
-                });
-
-                if (errors.length) {
-                    Notify.showAlerts(errors);
-                    return;
-                }
-                $scope.post = updatedPost;
-            };
+            // Set post-editor mode to 'bulk_data_import'
+            $scope.postMode = 'bulk_data_import';
 
             $scope.cancelImport = function () {
                 $translate('notify.data_import.csv_import_cancel')
@@ -102,23 +67,14 @@ function (
                 });
             };
 
-            $scope.cleanPostValues = function (values) {
-                // Clean up post values object
-                _.each(values, function (value, key) {
-                    // Strip out empty values
-                    values[key] = _.filter(value);
-                    // Remove entirely if no values are left
-                    if (!values[key].length) {
-                        delete values[key];
-                    }
-                });
-                return values;
-            };
-
             $scope.submitMappings = function () {
 
-                var post = angular.copy($scope.post);
-                $scope.csv.fixed.values = $scope.cleanPostValues(post.values);
+                var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+                // Set post fixed values
+                $scope.csv.fixed.values = post.values;
+                (post.tags.length) ? $scope.csv.fixed.tags = post.tags : '';
+                (post.title) ? $scope.csv.fixed.title = post.title : '';
+                (post.content) ? $scope.csv.fixed.content = post.content : '';
 
                 DataImportEndpoint.update($scope.csv)
                 .$promise

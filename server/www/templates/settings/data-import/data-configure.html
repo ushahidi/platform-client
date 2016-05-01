@@ -1,5 +1,5 @@
 <main configure-csv class="page-content" role="main">
-     <div class="page-header">
+    <div class="page-header">
         <ul class="breadcrumb">
            <li translate>
               nav.settings
@@ -9,39 +9,22 @@
            </li>
         </ul>
         <h1 translate>data_import.import_csv</h1>
-     </div>
-     <div class="main-col">
+    </div>
+    <div class="main-col">
         <ol class="progress">
-           <li><span class="complete" translate>data_import.choose_file</span></li>
-           <li><pan class="complete"translate>data_import.organize_data</span></li>
-           <li class="active" translate>data_import.configure_posts</li>
+            <li><span class="complete" translate>data_import.choose_file</span></li>
+            <li><pan class="complete"translate>data_import.organize_data</span></li>
+            <li class="active" translate>data_import.configure_posts</li>
         </ol>
         <h2 translate>data_import.configure_all_imported_posts</h2>
-        <form class="segment" ng-submit="submitMappings(csv)">
-            <div class="form-field select">
-                <role-selector
-                    toggle-role-func="publishPostTo(updatedPost)"
-                    post="post" ></role-selector>
-            </div>
-            <div ng-if="categories.length" class="form-field">
-                <legend class="input-label" for="tags" translate>Select categories that apply to all posts</legend>
-                <div class="form-field checkbox" ng-repeat="category in categories">
-                    <input type="checkbox" value="category.id" name="tags" checklist-model="csv.tags" checklist-value="category.id">
-                    <label>
-                        {{category.tag}}
-                    </label>
-                </div>
-            </div>
-            <post-value-edit 
-                ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
-                post="post" 
-                attribute="attribute" 
-            >
-            </post-value-edit>
-            <div class="actions-inline actions-right">
-                <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
-                <button type="submit" id="submit" ng-click="submitMappings()" translate>data_import.finish_import</button>
-            </div>
-        </form>
-     </div><!--end main col-->
-  </main>
+        <post-editor 
+              post="post"
+              attributes-to-ignore="csv.maps_to"
+              post-mode="postMode"
+        ></post-editor>
+        <div class="actions-inline actions-right">
+            <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
+            <button type="submit" id="submit" ng-click="submitMappings()" translate>data_import.finish_import</button>
+        </div>
+    </div><!--end main col-->
+</main>

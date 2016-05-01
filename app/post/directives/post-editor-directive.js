@@ -8,6 +8,7 @@ function (
         '$translate',
         'PostEntity',
         'PostEndpoint',
+        'PostEditService',
         'FormEndpoint',
         'FormStageEndpoint',
         'FormAttributeEndpoint',
@@ -20,6 +21,7 @@ function (
             $translate,
             postEntity,
             PostEndpoint,
+            PostEditService,
             FormEndpoint,
             FormStageEndpoint,
             FormAttributeEndpoint,
@@ -32,6 +34,14 @@ function (
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
             $scope.visibleStage = 1;
+            $scope.enableTitle = true;
+
+            // Set bulk data import mode params
+            if ($scope.postMode === 'bulk_data_import') {
+                if (_.contains($scope.attributesToIgnore, 'title')) {
+                    $scope.enableTitle = false;
+                }
+            }
 
             $scope.goBack = function () {
                 $scope.post.form = null;
@@ -43,8 +53,17 @@ function (
 
             $scope.fetchAttributes = function (formId) {
                 FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
+                    // If attributesToIgnore is set, remove those attributes from set of fields to display
+                    var attributes = [];
+                    _.each(attrs, function (attr) {
+                        if (!_.contains($scope.attributesToIgnore, attr.key)) {
+                            attributes.push(attr);
+                        }
+                    });
+                    attributes = (attributes.length) ? attributes : attrs;
+
                     // Initialize values on post (helps avoid madness in the template)
-                    attrs.map(function (attr) {
+                    attributes.map(function (attr) {
                         if (!$scope.post.values[attr.key]) {
                             if (attr.input === 'location') {
                                 $scope.post.values[attr.key] = [null];
@@ -55,7 +74,7 @@ function (
                             }
                         }
                     });
-                    $scope.attributes = attrs;
+                    $scope.attributes = attributes;
                 });
             };
 
@@ -98,26 +117,7 @@ function (
             };
 
             $scope.canSavePost = function () {
-                var valid = true;
-                if ($scope.post.status === 'published') {
-                    // first check if stages required have been marked complete
-                    var requiredStages = _.where($scope.stages, {required: true}) ;
-
-                    valid = _.reduce(requiredStages, function (isValid, stage) {
-                        // if this stage isn't complete, add to errors
-                        if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
-                            return false;
-                        }
-
-                        return isValid;
-                    }, valid);
-
-                    valid = _.reduce($scope.post.completed_stages, function (isValid, stageId) {
-                        return $scope.isStageValid(stageId) && isValid;
-                    }, valid);
-                }
-
-                return valid;
+                return PostEditService.canSavePost($scope.post, $scope.form, $scope.stages, $scope.attributes);
             };
 
             $scope.savePost = function () {
@@ -128,17 +128,8 @@ function (
                 $scope.saving_post = true;
 
                 // Avoid messing with original object
-                var post = angular.copy($scope.post);
-
                 // Clean up post values object
-                _.each(post.values, function (value, key) {
-                    // Strip out empty values
-                    post.values[key] = _.filter(value);
-                    // Remove entirely if no values are left
-                    if (!post.values[key].length) {
-                        delete post.values[key];
-                    }
-                });
+                var post = PostEditService.cleanPostValues(angular.copy($scope.post));
 
                 var request;
                 if (post.id) {
@@ -196,7 +187,9 @@ function (
         restrict: 'E',
         scope: {
             post: '=',
-            activeForm: '='
+            activeForm: '=',
+            attributesToIgnore: '=',
+            postMode: '='
         },
         templateUrl: 'templates/posts/post-editor.html',
         controller: controller

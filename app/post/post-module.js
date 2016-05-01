@@ -24,6 +24,8 @@ angular.module('ushahidi.posts', [])
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('PostEntity', require('./services/entities/post-entity.js'))
 
+.service('PostEditService', require('./services/post-edit-service.js'))
+
 .config(require('./post-routes.js'))
 
 .run(['$window', function ($window) {

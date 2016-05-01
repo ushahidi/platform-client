@@ -1,5 +1,5 @@
 <form name="form" ng-submit="savePost()" novalidate>
-        <div class="page-header">
+        <div class="page-header" ng-if="postMode !== 'bulk_data_import'">
             <ul class="breadcrumb" ng-if="! isEdit">
                 <li>
                     <a ng-click="goBack()" ng-href="/posts/create" translate>post.modify.add_a_post</a>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="page-header">
-            <div class="form-field title">
+            <div class="form-field title" ng-show="enableTitle">
                 <label class="input-label required"
                     ng-class="{ 'error': form.title.$invalid && form.title.$dirty, 'success': !form.title.$invalid && form.title.$dirty }"
                     for="title">{{'post.modify.form.title' | translate }}</label>
@@ -50,7 +50,7 @@
                 attributes="attributes"
                 visible-stage="visibleStage"
         ></post-stages>
-        <div class="page-footer">
+        <div class="page-footer" ng-if="postMode !== 'bulk_data_import'">
             <button type="submit" ng-disabled="! canSavePost() || saving_post" class="button-primary"><i class="fa fa-cog fa-spin" ng-show="saving_post"></i> <span translate>post.modify.save_post</span>
             </button>
         </div>
