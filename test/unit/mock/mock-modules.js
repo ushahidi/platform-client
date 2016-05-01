@@ -69,6 +69,7 @@ angular.module('ushahidi.mock', [])
 .service('PermissionEndpoint', require('./services/permission.js'))
 .service('DataProviderEndpoint', require('./services/data-provider.js'))
 .service('DataImportEndpoint', require('./services/data-import.js'))
+.service('DataRetriever', require('./services/data-retriever.js'))
 
 .service('Features', require('./services/features.js'))
 

@@ -40,18 +40,6 @@ describe('setting data mapper directive', function () {
         $scope.$digest();
     }));
 
-    it('should attempt to import a csv', function () {
-        spyOn(Notify, 'showNotificationSlider');
-
-        $scope.csv = {
-            id: 'pass'
-        };
-
-        $scope.triggerImport();
-
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
-    });
-
     it('should check required fields', function () {
         $scope.required_fields = ['test', 'test 2'];
         $scope.required_fields_map = {
@@ -72,7 +60,7 @@ describe('setting data mapper directive', function () {
                 'test'
             ]
         };
-        $scope.submitMappings(csv);
+        $scope.progressToConfigure(csv);
 
         expect(Notify.showAlerts).toHaveBeenCalled();
     });
@@ -92,24 +80,9 @@ describe('setting data mapper directive', function () {
             'test 2': 'Test 2'
         };
 
-        $scope.submitMappings(csv);
+        $scope.progressToConfigure(csv);
 
         expect(Notify.showAlerts).toHaveBeenCalled();
-    });
-
-    it('should import the mappings', function () {
-        spyOn(Notify, 'showNotificationSlider');
-
-        $scope.form = {
-            id: 1
-        };
-        $scope.csv = {
-            id: 'pass'
-        };
-
-        $scope.submitMappings({id: 'pass', maps_to: ['test']});
-
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });
 
     it('should cancel the import', function () {

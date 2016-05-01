@@ -24,6 +24,7 @@ function (
                     id: $scope.csv.fixed.form
                 },
                 values: {},
+                tags: {},
                 completed_stages: {},
                 // Enable status setting for bulk import posts
                 allowed_privileges: [
@@ -68,7 +69,6 @@ function (
             };
 
             $scope.submitMappings = function () {
-
                 var post = PostEditService.cleanPostValues(angular.copy($scope.post));
                 // Set post fixed values
                 $scope.csv.fixed.values = post.values;
