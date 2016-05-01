@@ -4,12 +4,8 @@
     </div>
 
     <div class="post-summary !has-img">
-        <div class="clearfix"></div>
-
-        <div ng-if="post.media.url" class="post-img">
-            <img ng-src="{{ post.media.url }}" alt="{{ post.media.caption }}">
-        </div>
-
+      <div class="clearfix"></div>
+      <post-preview-media post="post"></post-preview-media>
         <div class="meta-data">
             <span class="post-type-marker"><!-- todo marker style based on post type -->
                 {{ post.form.name || "Incoming" }}

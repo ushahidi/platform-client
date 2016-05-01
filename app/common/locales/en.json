@@ -342,7 +342,8 @@
         },
         "media" : {
             "current_url" : "Current image",
-            "add_caption" : "Add caption"
+            "add_caption" : "Add caption",
+            "upload" : "Upload"
         }
     },
     "role": {

@@ -62,7 +62,7 @@ describe('post editor directive', function () {
         });
 
         it('should load the associated form attributes', function () {
-            expect(isolateScope.attributes.length).toEqual(2);
+            expect(isolateScope.attributes.length).toEqual(3);
         });
 
         it('should load the associated form stages', function () {

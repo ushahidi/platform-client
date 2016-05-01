@@ -18,7 +18,6 @@ module.exports = [
     'leafletData',
     '_',
     'Notify',
-    'MediaEndpoint',
 function (
     $scope,
     $rootScope,
@@ -38,8 +37,7 @@ function (
     L,
     leafletData,
     _,
-    Notify,
-    MediaEndpoint
+    Notify
 ) {
     $scope.post = post;
 
@@ -115,23 +113,9 @@ function (
             });
         });
 
-        // Track media attributes
-        $scope.mediaAttributes = {};
-
         FormAttributeEndpoint.query({formId: $scope.post.form.id}, function (attributes) {
             angular.forEach(attributes, function (attr) {
-
-                // Get media url
-                if (attr.input === 'upload') {
-                    MediaEndpoint.get({ id: post.values[attr.key] }, function (media) {
-                        $scope.mediaAttributes[attr.key] = {
-                            url: media.original_file_url,
-                            caption: media.caption
-                        };
-                    });
-                } else {
-                    this[attr.key] = attr;
-                }
+                this[attr.key] = attr;
             }, $scope.form_attributes);
         });
     } else {

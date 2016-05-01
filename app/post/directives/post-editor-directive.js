@@ -14,10 +14,6 @@ function (
         'FormAttributeEndpoint',
         'Notify',
         '_',
-        '$q',
-        'MediaEndpoint',
-        '$http',
-        'Util',
         function (
             $scope,
             $filter,
@@ -30,11 +26,7 @@ function (
             FormStageEndpoint,
             FormAttributeEndpoint,
             Notify,
-            _,
-            $q,
-            MediaEndpoint,
-            $http,
-            Util
+            _
         ) {
 
             TagEndpoint.query().$promise.then(function (results) {
@@ -197,75 +189,68 @@ function (
 
                 $scope.saving_post = true;
 
-                // Upload media first...
-                var deletes = deleteMedia();
-                var uploads = uploadMedia();
+                // Avoid messing with original object
+                var post = angular.copy($scope.post);
 
-                $q.all(deletes.concat(uploads)).then(function () {
-                    // ...then save post
-                    var post = angular.copy($scope.post);
-
-                    // Clean up post values object
-                    _.each(post.values, function (value, key) {
-                        // Strip out empty values
-                        post.values[key] = _.filter(value);
-                        // Remove entirely if no values are left
-                        if (!post.values[key].length) {
-                            delete post.values[key];
-                        }
-                    });
-
-                    var request;
-
-                    if (post.id) {
-                        request = PostEndpoint.update(post);
-                    } else {
-                        request = PostEndpoint.save(post);
+                // Clean up post values object
+                _.each(post.values, function (value, key) {
+                    // Strip out empty values
+                    post.values[key] = _.filter(value);
+                    // Remove entirely if no values are left
+                    if (!post.values[key].length) {
+                        delete post.values[key];
                     }
+                });
 
-                    request.$promise.then(function (response) {
-                        var success_message = $scope.allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
+                var request;
+                if (post.id) {
+                    request = PostEndpoint.update(post);
+                } else {
+                    request = PostEndpoint.save(post);
+                }
 
-                        if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
-                            $scope.saving_post = false;
-                            $scope.post.id = response.id;
-                            $translate(
-                                success_message,
-                                {
-                                    name: $scope.post.title
-                                }).then(function (message) {
-                                    Notify.showNotificationSlider(message);
-                                    $location.path('/posts/' + response.id);
-                                });
-                        } else {
-                            $translate(
-                                success_message,
-                                {
-                                    name: $scope.post.title
-                                }).then(function (message) {
-                                    Notify.showNotificationSlider(message);
-                                    $location.path('/');
-                                });
-                        }
-                    }, function (errorResponse) { // errors
-                        var validationErrors = [];
-                        // @todo refactor limit handling
-                        _.each(errorResponse.data.errors, function (value, key) {
-                            // Ultimately this should check individual status codes
-                            // for the moment just check for the message we expect
-                            if (value.title === 'limit::posts') {
-                                $translate('limit.post_limit_reached').then(function (message) {
-                                    Notify.showLimitSlider(message);
-                                });
-                            } else {
-                                validationErrors.push(value);
-                            }
-                        });
+                request.$promise.then(function (response) {
+                    var success_message = $scope.allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
-                        Notify.showApiErrors(validationErrors);
-
+                    if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                         $scope.saving_post = false;
+                        $scope.post.id = response.id;
+                        $translate(
+                            success_message,
+                            {
+                                name: $scope.post.title
+                            }).then(function (message) {
+                                Notify.showNotificationSlider(message);
+                                $location.path('/posts/' + response.id);
+                            });
+                    } else {
+                        $translate(
+                            success_message,
+                            {
+                                name: $scope.post.title
+                            }).then(function (message) {
+                                Notify.showNotificationSlider(message);
+                                $location.path('/');
+                            });
+                    }
+                }, function (errorResponse) { // errors
+                    var validationErrors = [];
+                    // @todo refactor limit handling
+                    _.each(errorResponse.data.errors, function (value, key) {
+                        // Ultimately this should check individual status codes
+                        // for the moment just check for the message we expect
+                        if (value.title === 'limit::posts') {
+                            $translate('limit.post_limit_reached').then(function (message) {
+                                Notify.showLimitSlider(message);
+                            });
+                        } else {
+                            validationErrors.push(value);
+                        }
                     });
+
+                    Notify.showApiErrors(validationErrors);
+
+                    $scope.saving_post = false;
                 });
             };
 
@@ -338,35 +323,8 @@ function (
                             }
                         }
                     });
+
                     $scope.attributes = attrs;
-
-                    // Get media attributes
-                    $scope.mediaAttributeKeys = [];
-                    $scope.fileContainers = {};
-                    $scope.mediaAttributes = {};
-
-                    angular.forEach($scope.attributes, function (attribute) {
-                        if (attribute.input === 'upload') {
-                            // Track media attribute keys
-                            $scope.mediaAttributeKeys.push(attribute.key);
-
-                            // Initialize file containers
-                            $scope.fileContainers[attribute.key] = { file: null };
-
-                            // Get media caption and url
-                            if (_.isNull($scope.post.values[attribute.key][0])) {
-                                return;
-                            }
-
-                            MediaEndpoint.get({id: $scope.post.values[attribute.key]}).$promise
-                                .then(function (media) {
-                                    $scope.mediaAttributes[attribute.key] = {
-                                       caption: media.caption,
-                                       url: media.original_file_url
-                                   };
-                                });
-                        }
-                    });
                 });
             };
 
@@ -402,56 +360,6 @@ function (
             if ($scope.post.form.id) {
                 $scope.fetchForm($scope.post.form.id);
             }
-
-            // Media uploads
-            var deleteMedia = function () {
-                var promises = [];
-
-                angular.forEach($scope.mediaAttributeKeys, function (attribute) {
-                    if (!_.isNull($scope.fileContainers[attribute].file)) {
-                        // Delete previous media if it exists
-                        if (!_.isNull($scope.post.values[attribute][0])) {
-                            promises.push(MediaEndpoint.delete({ id: $scope.post.values[attribute][0] }).$promise);
-                        }
-                    }
-                });
-
-                return promises;
-            };
-
-            var uploadMedia = function () {
-                var promises = [];
-
-                angular.forEach($scope.mediaAttributeKeys, function (attribute) {
-                    if (!_.isNull($scope.fileContainers[attribute].file)) {
-                        var deferred = $q.defer();
-
-                        var formData = new FormData(attribute);
-
-                        formData.append('file', $scope.fileContainers[attribute].file);
-                        formData.append('caption', $scope.mediaAttributes[attribute].caption);
-
-                        $http.post(
-                            Util.apiUrl('/media'),
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': undefined
-                                }
-                            }
-                        ).then(function (response) {
-                            $scope.post.values[attribute] = [response.data.id];
-                            deferred.resolve();
-                        }, function (error) {
-                            deferred.reject(error);
-                        });
-
-                        promises.push(deferred.promise);
-                    }
-                });
-
-                return promises;
-            };
         }];
 
     return {

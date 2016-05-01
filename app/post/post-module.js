@@ -7,6 +7,9 @@ angular.module('ushahidi.posts', [])
 .directive('postValue', require('./directives/post-value-directive.js'))
 .directive('postLocation', require('./directives/post-location-directive.js'))
 .directive('postRelation', require('./directives/post-relation-directive.js'))
+.directive('postMedia', require('./directives/post-media-directive.js'))
+.directive('postMediaValue', require('./directives/post-media-value-directive.js'))
+.directive('postPreviewMedia', require('./directives/post-preview-media-directive.js'))
 // Post editing workflows
 .directive('postEditor', require('./directives/post-editor-directive.js'))
 .directive('postChooseForm', require('./directives/post-choose-form-directive.js'))
@@ -20,7 +23,7 @@ angular.module('ushahidi.posts', [])
 
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('PostEntity', require('./services/entities/post-entity.js'))
-.service('MediaEndpoint', require('../common/services/endpoints/MediaEndpoint.js'))
+
 .config(require('./post-routes.js'))
 
 .run(['$window', function ($window) {

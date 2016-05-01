@@ -134,6 +134,7 @@
                         <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="attribute.default">
                       </div>
                     </div>
+
                     <div ng-if="hasOptions(attribute)" >
                         <label class="input-label" translate>form.field_options</label>
                         <div class="input-inline" ng-repeat="(key, option) in attribute.options track by $index">
@@ -157,9 +158,8 @@
                       <label class="input-label" translate>form.field_type</label>
                       <p>{{attribute.input}} ({{attribute.type}})</p>
                    </div>
-                    <p class="clearfix">
-                      <!-- TODO: handle required fields for uploads-->
-                       <label class="checkbox-label" ng-if="attribute.input !== 'upload'">
+                   <p class="clearfix">
+                       <label class="checkbox-label">
                           <input type="checkbox" ng-model="attribute.required">
                           <span translate>form.field_required</span>
                        </label>

@@ -83,23 +83,24 @@
                         </div>
                     </div>
 
-                    <!-- Show images -->
-                    <div ng-repeat="(key, value) in mediaAttributes">
-                      <div class="post-field">
-                        <img ng-src="{{ value.url }}">
-                        <p class="small"><em>{{ value.caption }}</em></p>
-                      </div>
-                    </div>
                     <div
                         ng-repeat="(key,value) in post.values"
                         ng-if="form_attributes[key] && showType(form_attributes[key].type)"
                         ng-show="form_attributes[key].form_stage_id == visibleStage"
                         class="post-field"
-                    >
+                      >
+
+                       <!-- Show images -->
+                      <post-media-value
+                        ng-if="form_attributes[key].type === 'media'"
+                        label="{{form_attributes[key].label}}"
+                        media-id="value"></post-media-value>
+
                       <post-value
-                          key="key"
-                          value="value"
-                          attribute="form_attributes[key]"
+                        key="key"
+                        value="value"
+                        attribute="form_attributes[key]"
+                        ng-if="form_attributes[key].type !== 'media'">
                         ></post-value>
                     </div>
                     <div
