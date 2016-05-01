@@ -130,7 +130,6 @@ function (
                 // Avoid messing with original object
                 // Clean up post values object
                 var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-
                 var request;
                 if (post.id) {
                     request = PostEndpoint.update(post);

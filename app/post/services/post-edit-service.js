@@ -32,7 +32,7 @@ function (
                 }, valid);
 
                 valid = _.reduce(post.completed_stages, function (isValid, stageId) {
-                    return this.isStageValid(stageId, form, stages, attributes) && isValid;
+                    return PostEditService.isStageValid(stageId, form, stages, attributes) && isValid;
                 }, valid);
             }
 
@@ -45,7 +45,7 @@ function (
             return false;
         },
         isStageValid: function (stageId, form, stages, attributes) {
-            if (this.isFirstStage(stages, stageId)) {
+            if (PostEditService.isFirstStage(stages, stageId)) {
 
                 // The first stage is assumed to contain the title, content, and the tags
                 //  - these are not stored in attributes and do not have a 'required' field
