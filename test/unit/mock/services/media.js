@@ -5,7 +5,7 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
                         original_file_url: 'http://localhost/test.png',
-                        caption: "test caption"
+                        caption: 'test caption'
                     }]});
                 }
             }};
@@ -15,7 +15,7 @@ module.exports = [function () {
                 then: function (successCallback) {
                     successCallback({
                         original_file_url: 'http://localhost/test.png',
-                        caption: "test caption"
+                        caption: 'test caption'
                     });
                 }
             }};
