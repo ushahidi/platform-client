@@ -17,6 +17,11 @@
             <li class="active" translate>data_import.configure_posts</li>
         </ol>
         <h2 translate>data_import.configure_all_imported_posts</h2>
+        <p><em translate>data_import.configure_explanation</em></p>
+        <div class="actions-inline actions-right">
+            <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
+            <button type="submit" id="submit" ng-click="submitMappings()" translate>data_import.finish_import</button>
+        </div>
         <post-editor 
               post="post"
               attributes-to-ignore="csv.maps_to"
