@@ -19,7 +19,7 @@
         </div>
         <div class="post-text">
             <a href="/posts/{{post.id}}">
-                <h3>{{post.title}}</h3>
+                <h3>{{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}</h3>
             </a>
             <p>
                 {{post.content}}
@@ -62,7 +62,7 @@
 -->
                 <collection-selector
                     post="post"
-                    ng-if="post.allowed_privileges.indexOf('update') !== -1" 
+                    ng-if="post.allowed_privileges.indexOf('update') !== -1"
                     ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
                     >
                 </collection-selector>
@@ -78,5 +78,3 @@
         </span>
 -->
 </div>
-
-
