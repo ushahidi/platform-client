@@ -272,7 +272,8 @@
         "source" : "via {{source}}",
         "post_actions" : {
             "edit" : "Edit",
-            "delete" : "Delete"
+            "delete" : "Delete",
+            "export" : "Export"
         },
         "modify" : {
             "intro" : "Select post type:",
@@ -633,7 +634,8 @@
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
-            "stage_save_success" : "Updated {{stage}}"
+            "stage_save_success" : "Updated {{stage}}",
+            "export" : "This will export filtered posts. Are you sure you want to continue?"
         },
         "tag" : {
             "save_success" : "Saved category {{name}}",

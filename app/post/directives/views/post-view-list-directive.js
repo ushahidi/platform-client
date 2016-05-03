@@ -10,6 +10,7 @@ function (
         'Session',
         'Notify',
         '_',
+        'ConfigEndpoint',
         function (
             $scope,
             $q,
@@ -18,7 +19,8 @@ function (
             CollectionEndpoint,
             Session,
             Notify,
-            _
+            _,
+            ConfigEndpoint
         ) {
             var getPostsForPagination = function (query) {
                 query = query || $scope.filters;
@@ -108,6 +110,47 @@ function (
 
             $scope.allSelectedOnCurrentPage = function ($event) {
                 return $scope.selectedItems === $scope.posts.length;
+            };
+
+            $scope.exportPosts = function () {
+                // prepare filters for export
+                var filters = {};
+
+                angular.extend(filters, $scope.filters, {format: 'csv'});
+
+                $translate('notify.post.export').then(function (message) {
+                    Notify.showConfirm(message).then(function (message) {
+
+                        var site = ConfigEndpoint.get({ id: 'site' }).$promise,
+                            postExport = PostEndpoint.export(filters),
+                            format = 'csv'; // @todo handle more formats
+
+                        $q.all([site, postExport]).then(function (response) {
+                            var siteName = response[0].name;
+
+                            // Save export to file
+
+                            // Create anchor link
+                            var anchor = angular.element('<a/>');
+
+                            // Attach it to the document
+                            angular.element(document.body).append(anchor);
+
+                            // Set attributes
+                            anchor.attr({
+                                href: 'data:attachment/' + format + ';charset=utf-8,' + encodeURIComponent(response[1].data),
+                                target: '_self',
+                                download: siteName + '.csv'
+                            });
+
+                            // Save to file
+                            anchor[0].click();
+
+                            // ... and finally remove the link
+                            anchor.remove();
+                        });
+                    });
+                });
             };
 
             $scope.hasFilters = function () {
