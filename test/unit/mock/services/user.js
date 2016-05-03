@@ -30,13 +30,28 @@ module.exports = [function () {
         invalidateCache: function (user) {
             return;
         },
+        enable2fa: function (user) {
+            return;
+        },
+        disable2fa: function (user) {
+            return;
+        },
+        verify2fa: function (user) {
+            return;
+        },
         saveCache: function (user) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     user.id === 'pass' ? successCallback({id: 1}) : failCallback({data: {errors: 'error'}});
                 }
             }};
+        },
+        update: function (user) {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    user.id === 'pass' ? successCallback({id: 1}) : failCallback({data: {errors: 'error'}});
+                }
+            }};
         }
-
     };
 }];

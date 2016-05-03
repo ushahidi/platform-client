@@ -24,9 +24,9 @@ function (
             $q
         ) {
             $scope.showEnableModal = false;
-            $scope.notVerified = false;
             $scope.google2fa_url = '';
             $scope.google2fa_otp = undefined;
+            $scope.verifyFailed = false;
 
             $scope.step = 'guide';
 
@@ -76,11 +76,11 @@ function (
             };
 
             $scope.verificationFailed = function () {
-                $scope.notVerified = true;
+                $scope.verifyFailed = true;
             };
 
             $scope.verificationSucceeded = function () {
-                $scope.notVerified = false;
+                $scope.verifyFailed = false;
                 $scope.setStep('verified');
                 $scope.user.google2fa_enabled = true;
                 UserEndpoint.update($scope.user).$promise.then(function (user) {

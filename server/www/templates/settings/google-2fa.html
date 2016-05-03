@@ -14,54 +14,54 @@
 
     <modal visible="showEnableModal" title="google2fa.modal_title">
         <div>
-            <div ng-show="step=='guide'">
-                <p translate>
-                    google2fa.steps_overview
-                </p>
-                <ul>
-                    <li translate>
-                        google2fa.step_1
-                    </li>
-                    <li translate>
-                        google2fa.step_2
-                    </li>
-                    <li translate>
-                        google2fa.step_3
-                    </li>
-                </ul>
-            </div>
-            
-            <div ng-show="step=='qr_verify'" translation>
-                <ul>
-                    <li translate>
-                        google2fa.scan_qr_1
-                    </li>
-                    <li translate>
-                        google2fa.scan_qr_2
-                    </li>
-                </ul>
-                <img ng-src="{{google2fa_url}}" />
-                <div ng-show="notVerified">
-                    <p class="alert" translate>
-                    google2fa.not_verified_message
+            <div ng-switch="step">
+                <div ng-switch-when="guide">
+                    <p translate>
+                        google2fa.steps_overview
                     </p>
+                    <ul>
+                        <li translate>
+                            google2fa.step_1
+                        </li>
+                        <li translate>
+                            google2fa.step_2
+                        </li>
+                        <li translate>
+                            google2fa.step_3
+                        </li>
+                    </ul>
+                </div>
+                <div ng-switch-when="qr_verify" translation>
+                    <ul>
+                        <li translate>
+                            google2fa.scan_qr_1
+                        </li>
+                        <li translate>
+                            google2fa.scan_qr_2
+                        </li>
+                    </ul>
+                    <img ng-src="{{google2fa_url}}" />
+                    <div ng-show="verifyFailed">
+                        <p class="alert" translate>
+                            google2fa.not_verified_message
+                        </p>
+                    </div>
+                    <input type="number" ngMinlength="6" ngMaxlength="6"  placeholder="Google Authenticator code" ng-model="google2fa_otp">
+                </div>
+                <div ng-swithc-when="verified" translate>
+                    google2fa.completed_message
                 </div>
 
-                <input type="number" ngMinlength="6" ngMaxlength="6"  placeholder="Google Authenticator code" ng-model="google2fa_otp">
-            </div>
-
-            <div ng-show="step=='verified'" translate>
-                google2fa.completed_message
-            </div>
-
             <div class="modal-submit">
-                <button ng-show="step==='guide'" type="button" id="google2fa-modal-next-step" class="button-primary" ng-click="setup()" translate>google2fa.proceed</button>
+                <div ng-switch="step">
+                    <button ng-switch-when="guide" type="button" id="google2fa-modal-next-step" class="button-primary" ng-click="setup()" translate>google2fa.proceed</button>
 
-                <button ng-show="step==='qr_verify'" type="button" id="google2fa-modal-verify" class="button-primary" ng-click="verify(google2fa_otp)" translate>google2fa.verify</button>
+                    <button ng-switch-when="qr_verify" type="button" id="google2fa-modal-verify" class="button-primary" ng-click="verify(google2fa_otp)" translate>google2fa.verify</button>
 
-                <button ng-show="step=='verified'" type="button" id="google2fa-modal-close" class="button-primary" ng-click="cancel()" translate>google2fa.close</button>
+                    <button ng-switch-when="verified" type="button" id="google2fa-modal-close" class="button-primary" ng-click="cancel()" translate>google2fa.close</button>
 
-                <button ng-show="step!=='verified'" type="button" id="google2fa-modal-cancel" class="button-primary" ng-click="cancel()" translate>notify.generic.cancel</button>
+                    <button ng-show="step!=='verified'" type="button" id="google2fa-modal-cancel" class="button-primary" ng-click="cancel()" translate>notify.generic.cancel</button>
+                </div>
             </div> 
         </div>
     </modal>
