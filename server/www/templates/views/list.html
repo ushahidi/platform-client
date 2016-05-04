@@ -1,8 +1,10 @@
 <div>
 
-    <div class="list-actions" ng-if="userHasBulkActionPermissions()">
+  <div class="list-actions">
+    <span ng-if="userHasBulkActionPermissions()">
         <a ng-if="!allSelectedOnCurrentPage()" ng-click="selectAllPosts($event)" class="cta" translate>post.select_all</a>
         <a ng-if="allSelectedOnCurrentPage()" ng-click="unselectAllPosts($event)" class="cta" translate>post.unselect_all</a>
+    </span>
 
         <div class="bulk-actions">
             <!-- <div class="dropdown-group dropdown" dropdown>
@@ -18,12 +20,12 @@
                 </div>
             </div> -->
 
-            <button type="button" class="button-secondary alt icon-only-when-small export" ng-click="exportPosts()">
+            <button type="button" class="button-secondary alt icon-only-when-small export" ng-if="posts.length > 0" ng-click="exportPosts()">
                 <span translate>post.post_actions.export</span>
             </button>
 
 
-            <button type="button" class="button-secondary icon-only-when-small alt trash" ng-disabled="selectedItems <= 0" ng-click="deleteSelectedPosts()">
+            <button type="button" class="button-secondary icon-only-when-small alt trash" ng-if="userHasBulkActionPermissions()" ng-disabled="selectedItems <= 0" ng-click="deleteSelectedPosts()">
                 <span translate>post.post_actions.delete</span>
             </button>
 
