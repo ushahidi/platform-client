@@ -62,7 +62,7 @@ describe('post editor directive', function () {
         });
 
         it('should load the associated form attributes', function () {
-            expect(isolateScope.attributes.length).toEqual(2);
+            expect(isolateScope.attributes.length).toEqual(3);
         });
 
         it('should load the associated form stages', function () {
@@ -254,6 +254,8 @@ describe('post editor directive', function () {
             $scope.post.id = 'pass';
             isolateScope.savePost();
 
+            $rootScope.$apply();
+
             expect(Notify.showNotificationSlider).toHaveBeenCalled();
         });
 
@@ -262,6 +264,8 @@ describe('post editor directive', function () {
 
             $scope.post.id = 'fail';
             isolateScope.savePost();
+
+            $rootScope.$apply();
 
             expect(Notify.showApiErrors).toHaveBeenCalled();
         });

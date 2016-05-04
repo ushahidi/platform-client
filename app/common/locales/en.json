@@ -352,6 +352,11 @@
             "author_email" : {
                 "email": "Invalid email"
             }
+        },
+        "media" : {
+            "current_url" : "Current image",
+            "add_caption" : "Add caption",
+            "upload" : "Upload"
         }
     },
     "role": {

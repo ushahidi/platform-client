@@ -241,9 +241,17 @@
                                 placeholder="{{attribute.label}}"
                                 ng-model="post.values[attribute.key][key]"
                                 ng-required="attribute.required"
-                                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
+                              ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
 
-                        </div>
+                            <!-- type: upload -->
+                            <post-media
+                              ng-if=isUpload(attribute)
+                              name="values_{{attribute.key}}"
+                              media-id="post.values[attribute.key][key]"
+                              ng-model="post.values[attribute.key][key]"
+                              ng-required="attribute.required"
+                              ></post-media>
+                          </div>
                     </div>
 
                     <p ng-repeat="(error, value) in form['values_' + attribute.key].$error"
