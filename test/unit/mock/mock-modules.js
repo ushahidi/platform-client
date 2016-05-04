@@ -70,10 +70,13 @@ angular.module('ushahidi.mock', [])
 .service('PermissionEndpoint', require('./services/permission.js'))
 .service('DataProviderEndpoint', require('./services/data-provider.js'))
 .service('DataImportEndpoint', require('./services/data-import.js'))
+.service('DataRetriever', require('./services/data-retriever.js'))
 .service('MediaEndpoint', require('./services/media.js'))
+
 .service('Features', require('./services/features.js'))
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
 .service('GlobalFilter', require('./services/global-filters.js'))
-.service('Notify', require('./services/notify.js'))
-.service('Maps', require('./services/maps.js'));
+.service('Maps', require('./services/maps.js'))
+.service('PostEditService', require('./services/post-edit-service.js'))
+.service('Notify', require('./services/notify.js'));

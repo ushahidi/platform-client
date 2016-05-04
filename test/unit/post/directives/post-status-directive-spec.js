@@ -17,7 +17,7 @@ describe('post editor directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postEditor', require(ROOT_PATH + 'app/post/directives/post-editor-directive'))
+        testApp.directive('postStatus', require(ROOT_PATH + 'app/post/directives/post-status-directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -37,60 +37,50 @@ describe('post editor directive', function () {
         Notify = _Notify_;
 
         $scope.post = fixture.load('posts/120.json');
+        var stages = fixture.load('stages.json');
+        $scope.stages = stages.results;
 
-        $scope.activeForm = {
-            id: 1,
-            name: 'Test form',
-            type: 'Report',
-            description: 'Testing form',
-            created: '1970-01-01T00:00:00+00:00'
-        };
-
-        element = '<post-editor post="post" active-form="activeForm"></post-editor>';
+        element = '<post-status post="post" stages="stages"></post-status>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
     }));
 
-    describe('Initial parameter loading', function () {
-        it('should load provided post', function () {
-            expect($scope.post.id).toEqual(120);
-        });
-
-        it('should load the associated form', function () {
-            expect($scope.post.form.name).toEqual('test form');
-        });
-
-        it('should load the associated form attributes', function () {
-            expect(isolateScope.attributes.length).toEqual(3);
-        });
-
-        it('should load the associated form stages', function () {
-            expect(isolateScope.stages.length).toEqual(2);
-        });
-    });
-
     describe('test directive functions', function () {
-        it('should save a post', function () {
+        it('should publish a post to a given role', function () {
             spyOn(Notify, 'showNotificationSlider');
 
             isolateScope.post.id = 'pass';
-            isolateScope.savePost();
-
-            $rootScope.$apply();
-
+            isolateScope.publishPostTo();
             expect(Notify.showNotificationSlider).toHaveBeenCalled();
         });
 
-        it('should fail to save a post', function () {
+        it('should fail to publish a post to a given role', function () {
             spyOn(Notify, 'showApiErrors');
 
             isolateScope.post.id = 'fail';
-            isolateScope.savePost();
-
-            $rootScope.$apply();
-
+            isolateScope.publishPostTo();
             expect(Notify.showApiErrors).toHaveBeenCalled();
+        });
+
+        it('should fail to publish a post to a given role when a required stage is not completed', function () {
+            spyOn(Notify, 'showAlerts');
+
+            isolateScope.post.id = 'pass';
+            $scope.stages[1].required = true;
+            isolateScope.post.completed_stages = [];
+
+            isolateScope.publishPostTo();
+            expect(Notify.showAlerts).toHaveBeenCalled();
+        });
+
+        it('should only set the publish field and not call an update', function () {
+            $scope.stages[1].required = false;
+
+            var cpyPost = {published_to: ['user']};
+            isolateScope.post = cpyPost;
+            isolateScope.publishPostTo();
+            expect(isolateScope.post.published_to).toEqual(['user']);
         });
     });
 });

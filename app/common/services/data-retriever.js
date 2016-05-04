@@ -15,8 +15,16 @@ function (
     DataImportEndpoint,
     Util
 ) {
-
+    var importData = {
+        data: {}
+    };
     var DataRetriever = {
+        setImportData: function (data) {
+            importData.data = data;
+        },
+        getImportData: function () {
+            return importData.data;
+        },
         dataMapperInitialData: function (formId, csvId) {
             return $q.all([
                 FormEndpoint.get({id: formId}).$promise,
