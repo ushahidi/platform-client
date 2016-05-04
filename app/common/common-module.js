@@ -22,6 +22,8 @@ angular.module('ushahidi.common', [
 .service('RoleEndpoint', require('./services/endpoints/role.js'))
 .service('PermissionEndpoint', require('./services/endpoints/permission.js'))
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
+.service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
+.service('MessageEndpoint', require('./services/endpoints/message.js'))
 
 .service('PostViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))

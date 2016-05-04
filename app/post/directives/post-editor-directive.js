@@ -148,9 +148,9 @@ function (
                             {
                                 name: $scope.post.title
                             }).then(function (message) {
-                            Notify.showNotificationSlider(message);
-                            $location.path('/posts/' + response.id);
-                        });
+                                Notify.showNotificationSlider(message);
+                                $location.path('/posts/' + response.id);
+                            });
                     } else {
                         $translate(
                             success_message,

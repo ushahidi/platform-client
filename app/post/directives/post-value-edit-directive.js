@@ -45,6 +45,9 @@ function (
             $scope.isRelation = function (attr) {
                 return attr.input === 'relation';
             };
+            $scope.isUpload = function (attr) {
+                return attr.input === 'upload';
+            };
             // Can more values be added for this attribute?
             $scope.canAddValue = function (attr) {
                 return (

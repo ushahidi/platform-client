@@ -4,21 +4,18 @@
     </div>
 
     <div class="post-summary !has-img">
-        <div class="clearfix"></div>
-        <!--
-        <div ng-if="has-img" class="post-img">
-            <img src="http://placehold.it/700x600" alt="">
-        </div>
-        -->
+      <div class="clearfix"></div>
+      <post-preview-media post="post"></post-preview-media>
         <div class="meta-data">
             <span class="post-type-marker"><!-- todo marker style based on post type -->
-                {{ post.form.name || "Incoming" }}
+                {{ post.form.name || (post.source | uppercase) }}
             </span>
-            <span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}}<!--, via SMS -->
+            <span class="date">{{post.updated || post.created | date:'longDate'}}</span> {{post.updated || post.created | date:'shortTime'}}
+            <span ng-if="post.source" translate-values="{ source : (post.source | uppercase) }" translate="post.source"></span>
         </div>
         <div class="post-text">
             <a href="/posts/{{post.id}}">
-                <h3>{{post.title}}</h3>
+                <h3>{{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}</h3>
             </a>
             <p>
                 {{post.content}}
@@ -61,7 +58,7 @@
 -->
                 <collection-selector
                     post="post"
-                    ng-if="post.allowed_privileges.indexOf('update') !== -1" 
+                    ng-if="post.allowed_privileges.indexOf('update') !== -1"
                     ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
                     >
                 </collection-selector>
@@ -77,5 +74,3 @@
         </span>
 -->
 </div>
-
-

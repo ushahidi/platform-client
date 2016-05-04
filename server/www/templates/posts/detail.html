@@ -61,7 +61,12 @@
                        <p>
                           <strong class="icon-left fa-circle">
                               {{form_name || "Unstructured"}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
+                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br>
+                          <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
+                          <span ng-if="post.source == 'sms'" translate>post.messages.by_sms</span>
+                          <span ng-if="post.source == 'email'" translate>post.messages.by_email</span>
+                          <span ng-if="post.source == 'twitter'" translate>post.messages.by_twitter</span>
+                          <a class="cta" ng-href="/posts/{{post.id}}/messages" translate>post.messages.associated_messages</a>
                       </p>
                     </div>
                     <div
@@ -82,16 +87,25 @@
                             </label>
                         </div>
                     </div>
+
                     <div
                         ng-repeat="(key,value) in post.values"
                         ng-if="form_attributes[key] && showType(form_attributes[key].type)"
                         ng-show="form_attributes[key].form_stage_id == visibleStage"
                         class="post-field"
-                    >
+                      >
+
+                       <!-- Show images -->
+                      <post-media-value
+                        ng-if="form_attributes[key].type === 'media'"
+                        label="{{form_attributes[key].label}}"
+                        media-id="value"></post-media-value>
+
                       <post-value
-                          key="key"
-                          value="value"
-                          attribute="form_attributes[key]"
+                        key="key"
+                        value="value"
+                        attribute="form_attributes[key]"
+                        ng-if="form_attributes[key].type !== 'media'">
                         ></post-value>
                     </div>
                     <div

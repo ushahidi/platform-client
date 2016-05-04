@@ -130,6 +130,14 @@
                 ng-model="post.values[attribute.key][key]"
                 ng-required="attribute.required"
                 ng-if="isLocation(attribute)"></post-location>
+            <!-- type: upload -->
+            <post-media
+                ng-if=isUpload(attribute)
+                name="values_{{attribute.key}}"
+                media-id="post.values[attribute.key][key]"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+            ></post-media>
 
             <button
                 type="button"
