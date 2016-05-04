@@ -113,37 +113,35 @@ function (
             };
 
             $scope.exportPosts = function () {
-                // prepare filters for export
-                var filters = {};
-
-                angular.extend(filters, $scope.filters, {format: 'csv'});
-
                 $translate('notify.post.export').then(function (message) {
                     Notify.showConfirm(message).then(function (message) {
+                        var filters = {},
+                            format = 'csv'; //@todo handle more formats
+
+                        // Prepare filters for export
+                        angular.extend(filters, $scope.filters, {format: format});
 
                         var site = ConfigEndpoint.get({ id: 'site' }).$promise,
-                            postExport = PostEndpoint.export(filters),
-                            format = 'csv'; // @todo handle more formats
+                            postExport = PostEndpoint.export(filters);
 
+                        // Save export data to file
                         $q.all([site, postExport]).then(function (response) {
-                            var siteName = response[0].name;
-
-                            // Save export to file
+                            var filename = response[0].name + '.' + format,
+                                data = response[1].data;
 
                             // Create anchor link
                             var anchor = angular.element('<a/>');
 
-                            // Attach it to the document
+                            // ...and attach it.
                             angular.element(document.body).append(anchor);
 
                             // Set attributes
                             anchor.attr({
-                                href: 'data:attachment/' + format + ';charset=utf-8,' + encodeURIComponent(response[1].data),
-                                target: '_self',
-                                download: siteName + '.csv'
+                                href: 'data:attachment/' + format + ';charset=utf-8,' + encodeURIComponent(data),
+                                download: filename
                             });
 
-                            // Save to file
+                            // Show file download dialog
                             anchor[0].click();
 
                             // ... and finally remove the link
