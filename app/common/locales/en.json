@@ -19,7 +19,7 @@
     "activity": {
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
-        "by" : "By",
+        "by" : "By"
     },
     "form": {
         "add_field" : "Add field",
@@ -224,6 +224,10 @@
         "by" : "by",
         "add_post_type" : "Add {{form_name}}",
         "edit_post_type" : "Edit {{form_name}}",
+        "messages" : "Message Thread",
+        "post" : "Post",
+        "message" : "Message",
+        "message_thread" : "Message Thread",
         "publish_for_you" : "Just you",
         "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
@@ -265,6 +269,7 @@
         "complete_draft" : "Complete (Draft)",
         "complete_published" : "Complete (Published)",
         "structure" : "Structure",
+        "source" : "via {{source}}",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete"
@@ -314,6 +319,14 @@
                 "unpublish" : "unpublish",
                 "delete" : "delete"
             }
+        },
+        "messages" : {
+            "by_sms" : "By SMS",
+            "by_email" : "By Email",
+            "by_twitter" : "By Twitter",
+            "reply" : "Reply to Message thread",
+            "send" : "Send Message",
+            "associated_messages": "View messages associated with this post"
         },
         "valid" : {
             "title" : {
@@ -685,7 +698,10 @@
         "notification" : {
             "add" : "You will now be notified when new posts are added to {{set}}",
             "delete_confirm" : "Are you sure you want to remove this notification?",
-            "destroy_notification_success" : "Notification {{name}} deleted",
+            "destroy_notification_success" : "Notification {{name}} deleted"
+        },
+        "message" : {
+            "sent_to" : "Message sent to {{contact}}"
         }
     },
     "empty": {
