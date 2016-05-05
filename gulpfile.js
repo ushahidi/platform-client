@@ -324,7 +324,7 @@ gulp.task('jscs', function () {
         .pipe(jscs());
 });
 
-gulp.task('jscs-fix', function () {
+gulp.task('jscsfix', function () {
     return gulp.src(['app/**/*.js', 'test/**/*.js'])
         .pipe(jscs({ fix : true }));
 });
