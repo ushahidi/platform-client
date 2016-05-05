@@ -2,29 +2,32 @@
     <!-- toolbar -->
 
     <!-- floating action button -->
-    <div class="fab">
+    <div class="fab" data-message="add-post">
         <button type="button" class="button-alpha button-fab" data-toggle="fab-options" ng-click="fabToggle = ! fabToggle"  ng-class="{ 'active': fabToggle }">
             <svg class="iconic">
-              <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                <foreignObject>
+                    <img class="icon" src="../../img/icons/png/plus-2x.png">
+                </foreignObject>
             </svg>
             <span class="hidden">Add</span>
         </button>
-        <ul ng-show="fabToggle" ng-class="{ 'active': fabToggle }" class="fab-options">
+        <ul class="fab-options" ng-show="fabToggle" ng-class="{ 'active': fabToggle }" data-toggle-animate="flex">
             <li>
                 <a href="">
                     <span class="fab-action-type" style="background-color: red;">
                         <svg class="iconic">
-                          <use xlink:href="../../img/iconic-sprite.svg#file"></use>
+                            <use xlink:href="../../img/iconic-sprite.svg#file"></use>
                         </svg>
                     </span>
-                    <span class="bug">Traffic</span>
+                    <span class="bug">Getting Around</span>
                 </a>
             </li>
             <li>
                 <a href="">
                     <span class="fab-action-type" style="background-color: yellow;">
                         <svg class="iconic">
-                          <use xlink:href="../../img/iconic-sprite.svg#file"></use>
+                            <use xlink:href="../../img/iconic-sprite.svg#file"></use>
                         </svg>
                     </span>
                     <span class="bug">Police encounters</span>
@@ -34,7 +37,7 @@
                 <a href="">
                     <span class="fab-action-type" style="background-color: blue;">
                         <svg class="iconic">
-                          <use xlink:href="../../img/iconic-sprite.svg#file"></use>
+                            <use xlink:href="../../img/iconic-sprite.svg#file"></use>
                         </svg>
                     </span>
                     <span class="bug">Protester photos</span>
@@ -44,7 +47,7 @@
                 <a href="">
                     <span class="fab-action-type" style="background-color: green;">
                         <svg class="iconic">
-                          <use xlink:href="../../img/iconic-sprite.svg#file"></use>
+                            <use xlink:href="../../img/iconic-sprite.svg#file"></use>
                         </svg>
                     </span>
                     <span class="bug">Official events</span>
@@ -55,31 +58,71 @@
     <!-- floating action button -->
 
     <!-- search filters -->
-    <form role="search" class="searchbar">
-        <div class="searchbar-input form-field search">
-            <input type="search" placeholder="Search">
+    <form role="search" class="searchbar" data-message="search">
+        <div class="searchbar-input">
+            <div class="form-field search">
+                <svg class="iconic">
+                    <use xlink:href="/assets/img/iconic-sprite.svg#magnifying-glass"></use>
+                </svg>
+                <input type="search" placeholder="Search">
+            </div>
+            <div class="searchbar-results dropdown-menu">
+                <div class="form-field">
+                    <button class="button-plain">
+                        <span class="button-label">Search all posts for "<em>Polic</em>"</span>
+                    </button>
+                </div>
+
+                <!-- IF: LOADING SEARCH SUGGESTIONS //
+                <div class="loading">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                // END IF -->
+
+                <div class="tool">
+                    <h6 class="tool-heading">Suggestions</h6>
+                    <dl class="dropdown-menu-body">
+                        <dt class="list-item"><a href="#"><em>Polic</em>e</a></dt>
+                    </dl>
+                </div>
+
+                <div class="tool">
+                    <h6 class="tool-heading">
+                        <svg class="iconic">
+                            <use xlink:href="/assets/img/iconic-sprite.svg#star"></use>
+                        </svg>
+                        Saved
+                    </h6>
+                    <dl class="dropdown-menu-body">
+                        <dt class="list-item"><a href="#">City <em>Polic</em>e Hearings</a></dt>
+                        <dt class="list-item"><a href="#">Incidents involving <em>Polic</em>e</a></dt>
+                    </dl>
+                </div>
+            </div>
         </div>
 
         <div class="searchbar-options">
             <a href="#" class="button" data-toggle="search-saved" ng-click="searchSavedToggle = ! searchSavedToggle" ng-class="{ 'active': searchSavedToggle }">
                 <svg class="iconic">
-                  <use xlink:href="../../img/iconic-sprite.svg#star"></use>
+                    <use xlink:href="../../img/iconic-sprite.svg#star"></use>
                 </svg>
                 <span class="button-label hidden">Saved</span>
             </a>
 
             <a href="#" class="button searchbar-options-filter" data-toggle="search-filters" ng-click="searchFiltersToggle = ! searchFiltersToggle" ng-class="{ 'active': searchFiltersToggle }">
                 <svg class="iconic">
-                  <use xlink:href="../../img/iconic-sprite.svg#bolt"></use>
+                    <use xlink:href="../../img/iconic-sprite.svg#bolt"></use>
                 </svg>
                 <span class="button-label">Filters</span>
                 <svg class="iconic">
-                  <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                    <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                 </svg>
             </a>
         </div>
 
-        <div class="dropdown-menu" data-toggle-target="search-saved" ng-show="searchSavedToggle" ng-class="{ 'active': searchSavedToggle }">
+        <div class="dropdown-menu" data-toggle-target="search-saved" ng-show="searchSavedToggle" ng-class="{ 'active': searchSavedToggle }" data-toggle-animate>
 
             <div class="form-field search">
                  <label>Find a saved search</label>
@@ -109,14 +152,14 @@
             <div class="form-field">
                 <button type="button" class="button-beta">
                     <svg class="iconic">
-                      <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                        <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
                     </svg>
                     <span class="button-label">Create new</span>
                 </button>
             </div>
         </div>
 
-        <div class="dropdown-menu" data-toggle-target="search-filters" ng-show="searchFiltersToggle" ng-class="{ 'active': searchFiltersToggle }">
+        <div class="dropdown-menu" data-toggle-target="search-filters" ng-show="searchFiltersToggle" ng-class="{ 'active': searchFiltersToggle }" data-toggle-animate>
             <div class="dropdown-menu-body">
                 <fieldset>
                     <legend>Surveys</legend>
@@ -171,7 +214,7 @@
                 </fieldset>
 
                 <fieldset>
-                    <legend>Who Can See It</legend>
+                    <legend>Who it's visible to</legend>
 
                     <div class="form-field radio">
                         <label for="everyone">
@@ -204,7 +247,7 @@
     <div class="button-group">
         <button type="button">
             <svg class="iconic">
-              <use xlink:href="../../img/iconic-sprite.svg#share"></use>
+                <use xlink:href="../../img/iconic-sprite.svg#share"></use>
             </svg>
             <span class="button-label">Share</span>
         </button>

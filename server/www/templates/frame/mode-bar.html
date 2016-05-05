@@ -4,40 +4,23 @@
     <nav>
         <!-- main menu -->
         <ul class="deployment-menu">
-            <li ng-class="{ active: active == view.name }">
-                <a ng-href="{{baseUrl + view.name }}">
-                    <svg class="iconic">
-                        <use xlink:href="../../img/iconic-sprite.svg#map-marker"></use>
+            <li ng-repeat="view in views" ng-class="{ active: activeView === view.name }">
+                <a ng-href="{{baseUrl + 'views/' + view.name }}" class="view-{{view.name}}" ng-click="setActiveView(view.name)">
+                    <svg class="iconic" ng-switch="view.name">
+                        <use xlink:href="../../img/iconic-sprite.svg#map-marker" ng-switch-when="map"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#list-rich" ng-switch-when="timeline"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#pulse" ng-switch-when="activity"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#cog" ng-switch-when="settings"></use>
                     </svg>
-                    Map
+                    {{ view.display_name }}
                 </a>
             </li>
-            <li>
-                <a ng-href="{{baseUrl + view.name }}">
-                    <svg class="iconic">
-                        <use xlink:href="../../img/iconic-sprite.svg#list-rich"></use>
-                    </svg>
-                    Timeline
-                </a>
-            </li>
-            <li>
-                <a ng-href="{{baseUrl + view.name }}">
-                    <svg class="iconic">
-                        <use xlink:href="../../img/iconic-sprite.svg#pulse"></use>
-                    </svg>
-                    Activity
-                </a>
-            </li>
-            <li>
-                <a ng-href="{{baseUrl + view.name }}">
-                    <svg class="iconic">
-                        <use xlink:href="../../img/iconic-sprite.svg#cog"></use>
-                    </svg>
-                    Settings
-                </a>
-            </li>
+
             <li class="more-menu-trigger">
-                <a href="#">
+                <a ng-href="#">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
                     </svg>
