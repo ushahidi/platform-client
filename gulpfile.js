@@ -162,7 +162,7 @@ gulp.task('svg-iconic-sprite', [], function () {
  * Move svg icons from pattern library into server/www/img
  */
 gulp.task('svg-icons', [], function () {
-    return gulp.src(['node_modules/platform-pattern-library/assets/img/icons/*'])
+    return gulp.src(['node_modules/platform-pattern-library/assets/img/icons/**/*'])
         .pipe(gulp.dest(options.www + '/img/icons'));
 });
 

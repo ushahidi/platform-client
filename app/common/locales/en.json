@@ -212,12 +212,12 @@
         "views" : "Views",
         "workspace" : "Workspace"
     },
-    "view_tabs" : {
-        "view" : "View",
+    "view_modes" : {
         "map" : "Map",
-        "list" : "List",
-        "chart" : "Bar Chart",
-        "timeline" : "Timeline"
+        "timeline" : "Timeline",
+        "activity" : "Activity",
+        "settings" : "Settings",
+        "more" : "More"
     },
     "post": {
         "posts" : "Posts",
