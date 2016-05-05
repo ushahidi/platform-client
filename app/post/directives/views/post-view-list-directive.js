@@ -10,8 +10,6 @@ function (
         'Session',
         'Notify',
         '_',
-        'FormAttributeEndpoint',
-        'MediaEndpoint',
         function (
             $scope,
             $q,
@@ -20,9 +18,7 @@ function (
             CollectionEndpoint,
             Session,
             Notify,
-            _,
-            FormAttributeEndpoint,
-            MediaEndpoint
+            _
         ) {
             var getPostsForPagination = function (query) {
                 query = query || $scope.filters;
@@ -34,31 +30,6 @@ function (
                 $scope.isLoading = true;
                 PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                     $scope.posts = postsResponse.results;
-
-                    // Show image with post listing
-                    angular.forEach($scope.posts, function (post) {
-                        if (_.isUndefined(post.form)) {
-                            return;
-                        }
-
-                        FormAttributeEndpoint.query({ formId: post.form.id}, function (attributes) {
-                            // Use image from the first media attribute
-                            var mediaAttribute = _.find(attributes, function (attribute) {
-                                return attribute.type === 'media';
-                            });
-
-                            // Get the media url and caption
-                            if (!_.isUndefined(post.values[mediaAttribute.key])) {
-                                MediaEndpoint.get({ id: post.values[mediaAttribute.key] }, function (media) {
-                                    post.media = {
-                                        url: media.original_file_url,
-                                        caption: media.caption
-                                    };
-                                });
-                            }
-                        });
-                    });
-
                     $scope.totalItems = postsResponse.total_count;
                     $scope.isLoading = false;
                 });

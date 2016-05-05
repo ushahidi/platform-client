@@ -15,7 +15,8 @@ function (
         },
         templateUrl: 'templates/posts/post-preview-media.html',
         link: function ($scope) {
-            if (_.isUndefined($scope.post.form)) {
+
+            if (!$scope.post.form) {
                 return;
             }
 
@@ -28,7 +29,7 @@ function (
                     });
 
                     // Get the media url and caption
-                    if (!_.isUndefined($scope.post.values[mediaAttribute.key])) {
+                    if (mediaAttribute && !_.isUndefined($scope.post.values[mediaAttribute.key])) {
                         MediaEndpoint.get({id: $scope.post.values[mediaAttribute.key]}).$promise
                             .then(function (media) {
                                 $scope.media = media;
