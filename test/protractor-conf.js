@@ -31,16 +31,17 @@ var config = {
 // configuration for sauce labs selenium testing when running specs on travis-ci
 if (process.env.TRAVIS_BUILD_NUMBER) {
     config.directConnect = false;
-    config.seleniumAddress = 'http://localhost:4445/wd/hub';
+    config.seleniumAddress = 'http://' + process.env.SELENIUM_HOST + ':' + process.env.SELENIUM_PORT + '/wd/hub';
     config.capabilities = {
-        'username': process.env.SAUCE_USERNAME,
-        'accessKey': process.env.SAUCE_ACCESS_KEY,
         'browserName': 'chrome',
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        'build': process.env.TRAVIS_BUILD_NUMBER,
         'name': 'Ushahidi Angular Client: Protractor e2e specs',
-        'platform': 'Windows 8',
-        'screen-resolution': '1280x1024'
+        'platform': 'Windows',
+        'screen-resolution': '1280x1024',
+        'build': process.env.BS_AUTOMATE_BUILD,
+        'project': process.env.BS_AUTOMATE_PROJECT,
+        'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+        'browserstack.key': process.env.BROWSERSTACK_KEY
     };
 }
 
