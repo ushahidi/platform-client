@@ -36,12 +36,13 @@ if (process.env.TRAVIS_BUILD_NUMBER) {
         'browserName': 'chrome',
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
         'name': 'Ushahidi Angular Client: Protractor e2e specs',
-        'platform': 'Windows',
-        'screen-resolution': '1280x1024',
+        //'platform': 'Windows',
+        //'resolution': '1280x1024',
         'build': process.env.BS_AUTOMATE_BUILD,
         'project': process.env.BS_AUTOMATE_PROJECT,
         'browserstack.user': process.env.BROWSERSTACK_USERNAME,
-        'browserstack.key': process.env.BROWSERSTACK_KEY
+        'browserstack.key': process.env.BROWSERSTACK_KEY,
+        'browserstack.local': 'true'
     };
 }
 
