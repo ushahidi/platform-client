@@ -23,7 +23,11 @@ matrix:
   include:
   # Run everything with v5 (match production)
   - node_js: 5
-    env: TEST_SUITE=e2e
+    env: TEST_SUITE=e2e PROTRACTOR_SUITE=full
+  - node_js: 5
+    env: TEST_SUITE=e2e PROTRACTOR_SUITE=post_views
+  - node_js: 5
+    env: TEST_SUITE=e2e PROTRACTOR_SUITE=settings
   - node_js: 5
     env: TEST_SUITE=lint
   - node_js: 5
