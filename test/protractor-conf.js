@@ -42,7 +42,9 @@ if (process.env.TRAVIS_BUILD_NUMBER) {
         'project': process.env.BS_AUTOMATE_PROJECT,
         'browserstack.user': process.env.BROWSERSTACK_USERNAME,
         'browserstack.key': process.env.BROWSERSTACK_KEY,
-        'browserstack.local': 'true'
+        'browserstack.local': 'true',
+        'shardTestFiles': true,
+        'maxInstances': 3
     };
 }
 
