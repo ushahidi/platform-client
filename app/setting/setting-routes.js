@@ -47,15 +47,15 @@ function (
     })
     .when('/settings/categories', {
         controller: require('./controllers/setting-categories-controller.js'),
-        templateUrl: 'templates/settings/categories.html'
+        templateUrl: 'templates/settings/categories/categories.html'
     })
     .when('/settings/categories/create', {
         controller: require('./controllers/setting-categories-create-controller.js'),
-        templateUrl: 'templates/settings/categories-edit.html'
+        templateUrl: 'templates/settings/categories/categories-edit.html'
     })
     .when('/settings/categories/:id', {
         controller: require('./controllers/setting-categories-edit-controller.js'),
-        templateUrl: 'templates/settings/categories-edit.html'
+        templateUrl: 'templates/settings/categories/categories-edit.html'
     })
     .when('/settings/views', {
         controller: require('./controllers/setting-views-controller.js'),
@@ -87,7 +87,7 @@ function (
     })
     .when('/settings/datasources', {
         controller: require('./controllers/setting-datasources-controller.js'),
-        templateUrl: 'templates/settings/datasources.html'
+        templateUrl: 'templates/settings/datasources/datasources.html'
     })
     ;
 
