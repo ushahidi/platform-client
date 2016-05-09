@@ -58,7 +58,8 @@ function (
                 '<strong><a href="/posts/' + feature.properties.id + '">' +
                 title +
                 '</a></strong>' +
-                '<p>' + description + '</p>'
+                '<p>' + description + '</p>' +
+                '<p> Collection: '+ feature.properties.set_name + '</p>'
             );
         }
     };
