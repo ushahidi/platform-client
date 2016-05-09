@@ -8,10 +8,10 @@ var gulp         = require('gulp'),
     notify       = require('gulp-notify'),
     source       = require('vinyl-source-stream'),
     browserify   = require('browserify'),
-    watchify    = require('watchify'),
+    watchify     = require('watchify'),
     envify       = require('envify/custom'),
     fs           = require('fs'),
-    karma        = require('karma').server,
+    KarmaServer  = require('karma').Server,
     buffer       = require('vinyl-buffer'),
     uglify       = require('gulp-uglify'),
     sourcemaps   = require('gulp-sourcemaps'),
@@ -268,11 +268,12 @@ gulp.task('node-server', [], require('./server/server'));
  */
 gulp.task('test', function (done) {
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
-    karma.start({
+    var server = new KarmaServer({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
         singleRun: true
     }, done);
+    server.start();
 });
 
 /**
@@ -290,12 +291,13 @@ gulp.task('send-stats-to-coveralls', function () {
  */
 gulp.task('tdd', function (done) {
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
-    karma.start({
+    var server = new KarmaServer({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
         autoWatch: true,
         singleRun: false
     }, done);
+    server.start();
 });
 
 /**
