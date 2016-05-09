@@ -19,26 +19,26 @@ function (
 
     $scope.refreshView = function () {
         TagEndpoint.query().$promise.then(function (tags) {
-            $scope.tags = tags;
+            $scope.categories = tags;
         });
-        $scope.selectedTags = [];
+        $scope.selectedCategories = [];
     };
     $scope.refreshView();
 
-    $scope.deleteTags = function () {
+    $scope.deleteCategories = function () {
         $translate('notify.tag.bulk_destroy_confirm', {
-            count: $scope.selectedTags.length
+            count: $scope.selectedCategories.length
         }).then(function (message) {
             Notify.showConfirm(message).then(function () {
                 var calls = [];
-                angular.forEach($scope.selectedTags, function (tagId) {
+                angular.forEach($scope.selectedCategories, function (tagId) {
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
                     $translate(
                         'notify.tag.bulk_destroy_success',
                         {
-                            count: $scope.selectedTags.length
+                            count: $scope.selectedCategories.length
                         }).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
