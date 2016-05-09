@@ -1,75 +1,64 @@
-<div class="main-col">
+<div custom-roles-editor class="main-col">
 
-    <div class="form-sheet">
-       <div class="form-field title">
-           <label class="hidden">Name</label>
-           <input type="text" placeholder="Role name" value="Editor">
-       </div>
+    <!-- mode-context needs to be in each template -->
+    <mode-context></mode-context>
 
-        <div class="form-field form-field-adapt">
-            <label>
-                Description
-            </label>
-            <textarea name="description" data-min-rows='1' rows='1'>Vestibulum faucibus efficitur erat. Mauris varius mollis consectetur. Ut et sem ut lacus rutrum dignissim.</textarea>
+    <!-- toolbar -->
+    <div class="toolbar">
+        <div class="button-group">
+            <button type="button" class="button-flat">Cancel</button>
+            <button class="button-alpha" type="button" ng-click="saveRole(role)" type="submit" ng-disabled="form.$invalid || processing" translate>
+                role.save
+            </button>
+        </div>
+    </div>
+    <!-- end toolbar -->
+
+    <form>
+        <div class="form-sheet">
+           <div class="form-field title">
+               <label class="hidden" translate>role.name</label>
+               <input type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
+           </div>
+
+            <div class="form-field form-field-adapt">
+                <label translate>role.description</label>
+                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="role.description"></textarea>
+            </div>
+
+           <fieldset>
+               <legend translate>role.permissions</legend>
+
+               <div class="alert" ng-hide="permissions.length">
+                   <p ng-hide="permissions.length"><em translate>empty.permission</em></p>
+               </div>
+
+               <div class="form-field checkbox" ng-repeat="permission in permissions">
+                   <label for="{{permission.id}}">
+                       <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="role.permissions" checklist-value="permission.name">
+                       {{permission.name}}
+                   </label>
+               </div>
+           </fieldset>
         </div>
 
-       <fieldset>
-           <legend>Permission</legend>
+        <div class="form-sheet">
+           <div class="form-sheet-summary">
+               <h3 class="form-sheet-title" translate>role.delete_role</h3>
+           </div>
 
-           <div class="form-field checkbox">
-               <label for="users">
-                   <input type="checkbox" id="users">
-                   Add, edit, and delete users
-               </label>
-           </div>
-           <div class="form-field checkbox">
-               <label for="surveys">
-                   <input type="checkbox" id="surveys">
-                   Add, edit, and delete surveys
-               </label>
-           </div>
-           <div class="form-field checkbox">
-               <label for="categories">
-                   <input type="checkbox" id="categories">
-                   Add, edit, and delete categories
-               </label>
-           </div>
-           <div class="form-field checkbox">
-               <label for="sources">
-                   <input type="checkbox" id="sources">
-                   Add, edit, and delete data sources
-               </label>
-           </div>
-           <div class="form-field checkbox">
-               <label for="posts-edit">
-                   <input type="checkbox" id="posts-edit">
-                   Edit posts
-               </label>
-           </div>
-           <div class="form-field checkbox">
-               <label for="posts-import">
-                   <input type="checkbox" id="posts-import">
-                   Import posts
-               </label>
-           </div>
-       </fieldset>
-    </div>
+           <div class="form-field">
+               <p translate>role.delete_role_desc</p>
 
-    <div class="form-sheet">
-       <div class="form-sheet-summary">
-           <h3 class="form-sheet-title">Delete this role</h3>
-       </div>
+               <button class="button-destructive" ng-click="deleteRole(role)">
+                   <svg class="iconic">
+                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                   </svg>
+                   <span class="button-label" translate>role.delete_role</span>
+               </button>
+           </div>
 
-       <div class="form-field">
-           <p><strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.</p>
-
-           <button class="button-destructive">
-               <svg class="iconic">
-                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#trash"></use>
-               </svg>
-               <span class="button-label">Delete role</span>
-           </button>
-       </div>
-    </div>
+        </div>
+    </form>
 
 </div>
