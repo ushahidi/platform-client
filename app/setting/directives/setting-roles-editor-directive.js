@@ -35,7 +35,7 @@ function (
                 $scope.permissions = permissions.results;
             });
 
-            $scope.saveRole = function (role, addAnother) {
+            $scope.saveRole = function (role) {
                 $scope.processing = true;
                 role.name = role.name ? role.name : role.display_name;
                 var whereToNext = 'settings/roles';
@@ -43,7 +43,7 @@ function (
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
                     $translate('notify.role.save_success', {role: role.display_name}).then(function (message) {
                         Notify.showNotificationSlider(message);
-                        addAnother ? $route.reload() : $location.path(whereToNext);
+                        $location.path(whereToNext);
                     });
                 }, function (errorResponse) { // error
                     Notify.showApiErrors(errorResponse);
