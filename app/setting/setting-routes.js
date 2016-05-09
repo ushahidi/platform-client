@@ -6,11 +6,12 @@ function (
     /* todo: these routes should only exist when the user is admin! */
     $routeProvider
     .when('/settings', {
-        redirectTo: '/settings/general'
+        controller: require('./controllers/setting-controller.js'),
+        templateUrl: 'templates/settings/settings.html'
     })
     .when('/settings/general', {
         controller: require('./controllers/setting-general-controller.js'),
-        templateUrl: 'templates/settings/settings.html'
+        templateUrl: 'templates/settings/settings-general.html'
     })
     .when('/settings/map-settings', {
         controller: require('./controllers/setting-map-settings.js'),

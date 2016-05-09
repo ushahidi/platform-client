@@ -427,6 +427,7 @@
         "appearance_settings" : "Appearance Settings",
         "map_settings" : "Map Settings",
         "site_settings" : "Site Settings",
+        "settings" : "Settings",
         "tools" : "Tools"
     },
     "map_settings" : {
@@ -438,6 +439,24 @@
         "continue" : "Continue",
         "current_header" : "Current background image",
         "customize_your_new_deployment" : "Customize your new deployment",
+        "settings_list": {
+            "general" : "General",
+            "general_desc" : "Change your deployment\'s name, description, logo, and other details.",
+            "surveys" : "Surveys",
+            "surveys_desc" : "Create and configure the surveys your deployment collects.",
+            "data_sources" : "Data Sources",
+            "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
+            "import" : "Import",
+            "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "users" : "Users",
+            "users_desc" : "Create and manage the people that contribute to your deployment.",
+            "roles" : "Roles",
+            "roles_desc" : "Create and manage the type of permissions your users have on your deployment.",
+            "categories" : "Categories",
+            "categories_desc" : "",
+            "plan" : "Plan",
+            "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+        },
         "data_sources": {
             "data_sources": "Data Sources",
             "hint_turn_on_off": "You can configure options for data sources, and then turn sources on and off.",
