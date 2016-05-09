@@ -61,7 +61,7 @@
     "karma-json-fixtures-preprocessor": "0.0.6",
     "karma-ng-html2js-preprocessor": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.0",
-    "phantomjs": "^2.1.7",
+    "phantomjs-prebuilt": "^2.1.7",
     "pre-commit": "^1.1.2",
     "protractor": "^3.3.0",
     "serve-static": "^1.10.0",
