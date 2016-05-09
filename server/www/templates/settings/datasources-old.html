@@ -1,22 +1,6 @@
 <div class="main-col">
 
-    <!-- mode-context needs to be in each template -->
     <mode-context></mode-context>
-
-    <!-- toolbar -->
-    <div class="toolbar">
-        <div class="button-group">
-            <button type="button" class="button-flat">Cancel</button>
-            <button type="button" ng-click="updateConfig()" class="button-alpha" type="submit" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>
-                settings.save
-            </button>
-        </div>
-    </div>
-    <!-- end toolbar -->
-
-    <div class="alert">
-        <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
-    </div>
 
     <div class="listing card">
 
