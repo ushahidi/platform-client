@@ -59,7 +59,7 @@ function (
                 title +
                 '</a></strong>' +
                 '<p>' + description + '</p>' +
-                '<p> Collection: '+ feature.properties.set_name + '</p>'
+                '<p><b>Collection: </b>' + feature.properties.set_name + '</p>'
             );
         }
     };
