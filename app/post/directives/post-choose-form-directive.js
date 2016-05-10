@@ -15,7 +15,7 @@ function (
         },
         templateUrl: 'templates/posts/choose-form.html',
         link: function ($scope) {
-            $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
+            $scope.hasPermission = $rootScope.hasPermission;
 
             $scope.chooseForm = function (form) {
                 angular.copy(form, $scope.activeForm);

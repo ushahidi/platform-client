@@ -358,6 +358,11 @@ function (
                     label: 'Related Post',
                     type: 'relation',
                     input: 'relation'
+                },
+                {
+                    label: 'Image',
+                    type: 'media',
+                    input: 'upload'
                 }
             ];
 
