@@ -15,4 +15,4 @@ deployment.env
 vault.txt
 
 *.svg
-server/www/icons/
+server/www/img/icons/
