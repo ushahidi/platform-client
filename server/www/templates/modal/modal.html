@@ -1,14 +1,18 @@
 <div ng-class="{ 'modal-visible': classVisible, 'modal-detached': classDetached }">
-    <div class="modal">
-        <div class="modal-window" ng-style="{ top : modalOffset }">
-            <a ng-click="closeModal('standard')" ng-if="showCloseButton" class="close modal-trigger"></a>
+    <div class="modal" style="display:block">
+        <div class="modal-window">
+          <button href="" class="button-beta button-flat modal-trigger modal-trigger-close" ng-click="closeModal('standard')">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="img/iconic-sprite.svg#x"></use>
+            </svg>
+           <span class="hidden">Close</span>
+        </button>
 
-            <h3 ng-if="title">{{ title | translate }}</h3>
-            <div ng-if="title" class="divider padded"></div>
-
+            <h3 class="modal-title">{{ title | translate }}</h3>
+ 
             <ng-transclude></ng-transclude>
         </div>
 
-        <div ng-click="closeModal('overlay')" class="modal-overlay"></div>
+        <div></div>
     </div>
 </div>

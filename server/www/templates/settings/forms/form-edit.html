@@ -183,14 +183,20 @@
        <button ng-click="saveFormSettings(form)" translate>form.save_post_type</button>
    </div>
    
-    <modal title="form.add_field" visible="isNewAttributeOpen">
-        <div class="cards-select">
-            <div class="selection-card" ng-repeat="type in availableAttrTypes">
+   <modal title="form.add_field" visible="isNewAttributeOpen">
+     <div class="modal-body">
+     <div class="listing init">
+        <div class="listing-item" ng-repeat="type in availableAttrTypes">
+          <div class="listing-item-primary">
+            <h2 class="listing-item-title">
                 <a ng-click="addNewAttribute(type)" >
                     <h3>{{ type.label }}</h3>
                 </a>
+            </h2>
             </div>
         </div>
+     </div>
+     </div>
     </modal>
 
     <modal title="form.add_step" visible="isNewStageOpen">
