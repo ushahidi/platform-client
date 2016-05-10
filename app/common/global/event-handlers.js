@@ -60,6 +60,12 @@ function (
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
     };
 
+    // Setup PL layout and switching function
+    $rootScope.globalLayout = 'layout-a';
+    $rootScope.setLayout = function (layout) {
+        $rootScope.globalLayout = layout;
+    };
+
     $rootScope.$on('event:authentication:login:succeeded', function () {
         doLogin(Session.getSessionDataEntry('loginPath') || '/');
     });

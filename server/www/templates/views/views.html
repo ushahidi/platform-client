@@ -1,34 +1,22 @@
-<main class="page-content" ng-class="{ 'has-aside' : hasAside }">
-    <div class="page-header">
-        <ng-transclude></ng-transclude>
+<div ng-switch="currentView">
 
-        <div class="tabs-with-filter" data-view="{{currentView}}">
-            <post-view-tabs active="currentView" base-url="{{ baseUrl }}"></post-view-tabs>
-            <post-view-filters half-width="false" has-aside="hasAside" is-loading="isLoading"></post-view-filters>
-        </div>
-    </div>
+    <!-- Each of the views in sequence, which are shown or hidden by tabs -->
 
-    <div class="main-col" ng-switch="currentView">
+    <!-- map view -->
+    <post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>
 
-        <!-- Each of the views in sequence, which are shown or hidden by tabs -->
+    <!-- list view -->
+    <post-view-list ng-switch-when="list" is-loading="isLoading" filters="filters"></post-view-list>
 
-        <!-- map view -->
-        <post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>
+    <!-- chart view -->
+    <post-view-chart ng-switch-when="chart" is-loading="isLoading" filters="filters"></post-view-chart>
 
-        <!-- list view -->
-        <post-view-list ng-switch-when="list" is-loading="isLoading" filters="filters"></post-view-list>
+    <!-- timeline view -->
+    <post-view-timeline ng-switch-when="timeline" is-loading="isLoading" filters="filters"></post-view-timeline>
 
-        <!-- chart view -->
-        <post-view-chart ng-switch-when="chart" is-loading="isLoading" filters="filters"></post-view-chart>
+    <!-- unavailable view -->
+    <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>
 
-        <!-- timeline view -->
-        <post-view-timeline ng-switch-when="timeline" is-loading="isLoading" filters="filters"></post-view-timeline>
-
-        <!-- unavailable view -->
-        <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>
-
-        <!-- default view -->
-        <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>
-    </div>
-
-</main>
+    <!-- default view -->
+    <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>
+</div>

@@ -149,6 +149,24 @@ gulp.task('css', [], function () {
 });
 
 /**
+ * Task: `svg-iconic-sprite`
+ * Move Iconic Sprite from pattern library into server/www/img
+ */
+gulp.task('svg-iconic-sprite', [], function () {
+    return gulp.src(['node_modules/platform-pattern-library/assets/img/iconic-sprite.svg'])
+        .pipe(gulp.dest(options.www + '/img'));
+});
+
+/**
+ * Task: `svg-icons`
+ * Move svg icons from pattern library into server/www/img
+ */
+gulp.task('svg-icons', [], function () {
+    return gulp.src(['node_modules/platform-pattern-library/assets/img/icons/**/*'])
+        .pipe(gulp.dest(options.www + '/img/icons'));
+});
+
+/**
  * Copy icon files for leaflet from node_modules into server/www/css/images
  */
 gulp.task('copy-leaflet-icons', [], function () {
@@ -236,7 +254,7 @@ function bundleBrowserify(stream) {
  * Task: `build`
  * Builds sass, fonts and js
  */
-gulp.task('build', ['sass', 'css', 'font', 'browserify']);
+gulp.task('build', ['sass', 'css', 'font', 'svg-iconic-sprite', 'svg-icons', 'browserify']);
 
 /**
  * Task: `watch`
@@ -306,7 +324,7 @@ gulp.task('jscs', function () {
         .pipe(jscs());
 });
 
-gulp.task('jscs-fix', function () {
+gulp.task('jscsfix', function () {
     return gulp.src(['app/**/*.js', 'test/**/*.js'])
         .pipe(jscs({ fix : true }));
 });

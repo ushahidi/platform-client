@@ -1,17 +1,26 @@
-<div class="user-admin logged-out" ng-hide="currentUser">
-    <a ng-href="/login" class="user-login" translate>nav.login</a>
-    <a ng-href="/register" class="user-register" translate ng-show="canRegister()">nav.register</a>
-</div>
-<div class="user-admin logged-in" ng-show="currentUser" dropdown>
-    <div class="init" data-toggle="toggle-content" dropdown-toggle>
-        <div class="user-avatar">
-            <img src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}">
-        </div>
-        <span class="username">{{currentUser.realname}}</span>
-    </div>
-    <ul class="dropdown-menu init toggle-content" dropdown-menu role="menu">
-        <li><a class="my-profile" ng-href="/users/me">Account Settings</a></li>
-        <li><a ng-href="/users/me/notifications">Notifications</a></li>
-        <li><a class="user-logout" ng-click="logoutClick($event)">Logout</a></li>
-    </ul>
-</div>
+<ul class="account-menu">
+<!-- user account menu -->
+    <li>
+        <a ng-href="{{baseUrl + view.name }}">
+            <img class="avatar" src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
+            <span class="label">{{currentUser.realname || 'Aaliyah Williams'}}</span>
+        </a>
+    </li>
+    <li>
+        <a ng-href="{{baseUrl + view.name }}">
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+            </svg>
+            <span class="label">Collections</span>
+        </a>
+    </li>
+    <li>
+        <a ng-href="{{baseUrl + view.name }}">
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#bell"></use>
+            </svg>
+            <span class="label">Alerts <span class="badge">2</span></span>
+        </a>
+    </li>
+<!-- user account menu -->
+</ul>

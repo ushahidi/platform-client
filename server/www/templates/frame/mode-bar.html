@@ -1,0 +1,38 @@
+<div class="mode-bar">
+    <!-- mode bar -->
+    <!-- PL JS -->
+    <nav>
+        <!-- main menu -->
+        <ul class="deployment-menu">
+            <li ng-repeat="view in views" ng-class="{ active: activeView === view.name }">
+                <a ng-href="{{baseUrl + 'views/' + view.name }}" class="view-{{view.name}}" ng-click="setActiveView(view.name)">
+                    <svg class="iconic" ng-switch="view.name">
+                        <use xlink:href="../../img/iconic-sprite.svg#map-marker" ng-switch-when="map"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#list-rich" ng-switch-when="timeline"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#pulse" ng-switch-when="activity"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#cog" ng-switch-when="settings"></use>
+                    </svg>
+                    {{ view.display_name }}
+                </a>
+            </li>
+
+            <li class="more-menu-trigger">
+                <a ng-href="#">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
+                    </svg>
+                    More
+                </a>
+            </li>
+        </ul>
+        <!-- main menu -->
+
+        <ng-include src="'templates/partials/user-menu.html'"></ng-include>
+
+    </nav>
+    <!-- PL JS -->
+    <!-- mode bar -->
+</div>
