@@ -67,8 +67,8 @@ function (
                         if (!$scope.post.values[attr.key]) {
                             if (attr.input === 'location') {
                                 // Prepopulate location fields from message location
-                                if ($scope.post.values['message_location']) {
-                                    $scope.post.values[attr.key] = angular.copy($scope.post.values['message_location']);
+                                if ($scope.post.values.message_location) {
+                                    $scope.post.values[attr.key] = angular.copy($scope.post.values.message_location);
                                 } else {
                                     $scope.post.values[attr.key] = [null];
                                 }
