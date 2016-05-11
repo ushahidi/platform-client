@@ -21,6 +21,10 @@ function (
         controller: require('./controllers/setting-data-import-controller.js'),
         templateUrl: 'templates/settings/data-import/data-import.html'
     })
+    .when('/settings/data-configure', {
+        controller: require('./controllers/setting-data-configure-controller.js'),
+        templateUrl: 'templates/settings/data-import/data-configure.html'
+    })
     .when('/settings/data-mapper/:formId/:id', {
         controller: require('./controllers/setting-data-mapper-controller.js'),
         templateUrl: 'templates/settings/data-import/data-mapper.html',

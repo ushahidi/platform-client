@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="form-field">
-                        <button type="button" class="button-link" disabled="">Cancel</button>
+                        <button type="button" class="button-link" disabled="">app.cancel</button>
                         <button type="button" class="button-alpha" disabled="">Apply filters</button>
                     </div>
                 </div>
@@ -96,8 +96,6 @@
             </div>
         </div>
 
-        <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
-
         <div class="listing-toolbar">
             <div class="listing-toolbar-summary">
                 <strong><span class="total">2</span> <span translate>user.selected</span></strong>
@@ -126,5 +124,7 @@
             </div>
        </div>
    </div>
+
+   <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
 
 </div>

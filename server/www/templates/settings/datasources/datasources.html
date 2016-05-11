@@ -3,374 +3,110 @@
     <!-- mode-context needs to be in each template -->
     <mode-context></mode-context>
 
-    <!-- toolbar -->
-    <div class="toolbar">
-        <div class="button-group">
-            <button type="button" class="button-flat">Cancel</button>
-            <button type="button" ng-click="updateConfig()" class="button-alpha" type="submit" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>
-                settings.save
-            </button>
-        </div>
-    </div>
-    <!-- end toolbar -->
-
     <div class="alert">
         <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
     </div>
 
-    <div class="listing card">
+    <div class="listing card" ng-repeat="provider in providers.results | orderBy:'name'">
 
-        <div class="listing-item">
+        <!-- TODO: fix active class toggle -->
+        <div class="listing-item active" is-open="panelVisible[provider.id]" ng-if="available_providers[provider.id]">
+
             <div class="listing-item-secondary">
                 <button type="button" class="button-beta button-flat listing-item-toggle">
                     <svg class="iconic">
                       <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                     </svg>
-                    <span class="button-label">Configure</span>
+                    <span class="button-label" translate>settings.data_sources.configure</span>
                 </button>
             </div>
 
             <div class="listing-item-primary">
                 <h2 class="listing-item-title">
-                    Email
-                    <span class="status-indicator"></span>
+                    {{provider.name}}
+                    <span class="status-indicator" ng-class="{ 'green' : available_providers[provider.id] && settings.providers[provider.id] }"></span>
                 </h2>
             </div>
 
             <div class="listing-item-body">
 
-                <form>
-
-                    <div class="form-field switch">
-                       <label>Accept survey submissions from this source</label>
-                       <div class="toggle-switch">
-                          <input class="tgl" id="switch1" type="checkbox" disabled>
-                          <label class="tgl-btn" for="switch1"></label>
-                       </div>
-                       <p class="alert">You need to configure this data source below before it can begin accepting submissions.</p>
-                    </div>
-
-                    <nav class="tabs-menu" data-tabs="email-tab">
-                        <ul>
-                            <li><a href="#email-address">Address</a></li>
-                            <li><a href="#email-incoming">Incoming server</a></li>
-                            <li><a href="#email-outgoing">Incoming server</a></li>
-                        </ul>
-                    </nav>
-
-
-                    <div id="email-address" class="email-tab">
-                        <div class="form-field">
-                            <label>Email address</label>
-                            <p>This will be used to send outgoing emails</p>
-                            <input type="email" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Sender name</label>
-                            <p>Appears in the 'from:' field on outgoing emails</p>
-                            <input type="text" />
-                        </div>
-                    </div>
-
-                    <div id="email-incoming" class="email-tab form-fieldgroup">
-                        <div class="form-field">
-                            <label>Incoming server type</label>
-                            <div class="custom-select">
-                                <select>
-                                    <option>POP</option>
-                                    <option>IMAP</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label>Incoming server</label>
-                            <p>Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com</p>
-                            <input type="text" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Incoming server port</label>
-                            <p>Common ports: 110 (POP3), 143 (IMAP), 995 (POP3 with SSL), 993 (IMAP with SSL)</p>
-                            <input type="number" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Incoming server security</label>
-                            <div class="custom-select">
-                                <select>
-                                    <option>None</option>
-                                    <option>SSL</option>
-                                    <option>TLS</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label>Incoming username</label>
-                            <input type="text" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Incoming password</label>
-                            <input type="password" />
-                        </div>
-
-                    </div>
-
-                    <div id="email-outgoing" class="email-tab form-fieldgroup">
-                        <div class="form-field">
-                            <label>Outgoing server type</label>
-                            <div class="custom-select">
-                                <select>
-                                    <option>SMTP</option>
-                                    <option>sendmail</option>
-                                    <option>Native</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label>Outgoing server</label>
-                            <p>Examples: smtp.yourhost.com, smtp.gmail.com</p>
-                            <input type="text" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Outgoing server port</label>
-                            <p>Common ports: 25 (SMTP default), 465 (SMTP with SSL)</p>
-                            <input type="number" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Outgoing server security</label>
-                            <div class="custom-select">
-                                <select>
-                                    <option>None</option>
-                                    <option>SSL</option>
-                                    <option>TLS</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label>Outgoing username</label>
-                            <input type="text" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Outgoing password</label>
-                            <input type="password" />
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="listing-item">
-            <div class="listing-item-secondary">
-                <button type="button" class="button-beta button-flat listing-item-toggle">
-                    <svg class="iconic">
-                      <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                    </svg>
-                    <span class="button-label">Configure</span>
-                </button>
-            </div>
-
-            <div class="listing-item-primary">
-                <div class="listing-item-image">
-                    <img class="icon" src="../../img/twitter.png" alt="">
+                <div class="alert error" ng-if="forms[provider.id].$invalid">
+                    <p translate>settings.data_sources.hint_plugin_needs_configuring</p>
                 </div>
 
-                <h2 class="listing-item-title">
-                    Tweets from user
-                    <span class="status-indicator green"></span>
-                </h2>
-            </div>
-
-            <div class="listing-item-body">
-
-                <div class="form-field switch">
-                   <label>Accept survey submissions from this source</label>
-                   <div class="toggle-switch">
-                      <input class="tgl" id="switch1" type="checkbox" checked>
-                      <label class="tgl-btn" for="switch1"></label>
-                   </div>
+                <div class="alert" ng-if="!available_providers[provider.id]">
+                    <p translate translate-values="{value: '{{provider.name}}'}">
+                        settings.data_sources.unavailable
+                    </p>
                 </div>
 
-                <form class="form-fieldgroup">
-                    <div class="form-field">
-                        <label>
-                            Twitter username
-                            <input type="text" placeholder="@ushahidi" value="@ushahidi" />
-                        </label>
+                <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" ng-if="available_providers[provider.id]">
+
+                    <div class="form-field switch" ng-if="forms[provider.id].$valid">
+                        <label translate>settings.data_sources.enable_provider_message</label>
+                        <div class="toggle-switch">
+                            <input class="tgl" id="{{provider.id}}_enable" type="checkbox" ng-model="settings.providers[provider.id]" ng-change="saveProviderSettings(provider.id)">
+                            <label class="tgl-btn" for="{{provider.id}}_enable"></label>
+                       </div>
                     </div>
 
-                    <div class="form-field select">
-                        <label>Import as</label>
-                        <div class="custom-select">
-                            <select>
-                                <option>Survey 1</option>
-                                <option selected>Survey 2</option>
-                                <option>Survey 3</option>
-                            </select>
+                    <div ng-repeat="(option_key, option) in provider.options track by option_key" ng-class="{ error : formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid, 'form-field' : option.input !== 'radio', 'required' : option.rules.indexOf('required') > -1 }">
+
+                        <div class="" ng-if="option.input == 'read-only-text'">
+                            <label ng-if="option.label" class="input-label">{{option.label}}</label>
+                            <p ng-bind-html="option.description"></p>
                         </div>
-                    </div>
 
-                    <div class="form-field switch">
-                       <label>Require moderation of new submissions</label>
-                       <div class="toggle-switch">
-                          <input class="tgl" id="switch2" type="checkbox">
-                          <label class="tgl-btn" for="switch2"></label>
-                       </div>
-                    </div>
+                        <div class="form-field" ng-if="option.input == 'text'">
+                            <label ng-if="option.label">
+                                {{option.label}}
+                            </label>
 
-                </form>
-            </div>
-        </div>
+                            <p ng-if="option.description">
+                                {{option.description}}
+                            </p>
 
-        <div class="listing-item">
-            <div class="listing-item-secondary">
-                <button type="button" class="button-beta button-flat listing-item-toggle">
-                    <svg class="iconic">
-                      <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                    </svg>
-                    <span class="button-label">Configure</span>
-                </button>
-            </div>
+                            <input ng-if="option.rules.indexOf('number') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="number" ng-pattern="/^\d+$/" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                            <input ng-if="option.rules.indexOf('email') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                            <input ng-if="option.rules.indexOf('password') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="password" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                            <input ng-if="option.rules.indexOf('number') == -1 && option.rules.indexOf('email') == -1 && option.rules.indexOf('password') == -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="{{option.input}}" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                        </div>
 
-            <div class="listing-item-primary">
-                <div class="listing-item-image">
-                    <img class="icon" src="../../img/twitter.png" alt="">
-                </div>
+                        <fieldset ng-if="option.input == 'radio'">
+                            <label ng-if="option.label">
+                                {{option.label}}
+                            </label>
 
-                <h2 class="listing-item-title">
-                    Tweets with keyword
-                    <span class="status-indicator"></span>
-                </h2>
-            </div>
+                            <p ng-if="option.description">
+                                {{option.description}}
+                            </p>
 
-            <div class="listing-item-body">
-                <form>
-                    <div class="form-field switch">
-                       <label>Accept survey submissions from this source</label>
-                       <div class="toggle-switch">
-                          <input class="tgl" id="switch3" type="checkbox">
-                          <label class="tgl-btn" for="switch3"></label>
-                       </div>
-                    </div>
-
-                    <div class="form-field">
-                        <label>
-                            Keyword
-                            <input type="text" placeholder="#ushahidi" />
-                        </label>
-                    </div>
-
-                    <div class="form-field select">
-                        <label>
-                            Import as
-                            <div class="custom-select">
-                                <select>
-                                    <option>Survey 1</option>
-                                    <option selected>Survey 2</option>
-                                    <option>Survey 3</option>
-                                </select>
+                            <div class="form-field radio" ng-repeat="radio_option in option.options track by $index">
+                                <label for="{{provider.id}}_{{option_key}}_{{$index}}">
+                                    <input id="{{provider.id}}_{{option_key}}_{{$index}}" type="{{option.input}}" name="{{option_key}}" ng-value="radio_option" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving">{{radio_option}}
+                                </label>
                             </div>
-                        </label>
+                        </fieldset>
+
+                        <div class="alert error" ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid">
+                            <p translate>settings.generic_field_error</p>
+                        </div>
+
                     </div>
 
-                    <div class="form-field switch">
-                       <label>Require moderation of new submissions</label>
-                       <div class="toggle-switch">
-                          <input class="tgl" id="switch4" type="checkbox">
-                          <label class="tgl-btn" for="switch4"></label>
-                       </div>
-                    </div>
+                    <button type="submit" class="button-alpha">
+                        <div class="loading" ng-show="saving">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span ng-hide="saving" translate>app.save</span>
+                    </button>
+
                 </form>
-            </div>
-        </div>
 
-        <div class="listing-item">
-            <div class="listing-item-secondary">
-                <button type="button" class="button-beta button-flat listing-item-toggle">
-                    <svg class="iconic">
-                      <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                    </svg>
-                    <span class="button-label">Configure</span>
-                </button>
             </div>
 
-            <div class="listing-item-primary">
-                <h2 class="listing-item-title">
-                    SMS
-                    <span class="status-indicator green"></span>
-                </h2>
-            </div>
-
-            <div class="listing-item-body">
-                <form>
-                    <div class="form-field switch">
-                       <label>Accept survey submissions from this source</label>
-                       <div class="toggle-switch">
-                          <input class="tgl" id="switch5" type="checkbox" checked="">
-                          <label class="tgl-btn" for="switch5"></label>
-                       </div>
-                    </div>
-
-                    <div class="form-field">
-                        <label>
-                            Sender's phone number
-                            <input type="tel" placeholder="123-456-7890" value="+1-123-456-7890" />
-                        </label>
-                    </div>
-
-                    <div class="form-field select">
-                        <label>
-                            Import as
-                            <div class="custom-select">
-                                <select>
-                                    <option>Survey 1</option>
-                                    <option selected>Survey 2</option>
-                                    <option>Survey 3</option>
-                                </select>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="form-field switch">
-                       <label>Require moderation of new survey submssions</label>
-                       <div class="toggle-switch">
-                          <input class="tgl" id="switch6" type="checkbox" checked="">
-                          <label class="tgl-btn" for="switch6"></label>
-                       </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="listing-item">
-            <div class="listing-item-secondary">
-                <button type="button" class="button-beta button-flat listing-item-toggle">
-                    <svg class="iconic">
-                      <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                    </svg>
-                    <span class="button-label">Configure</span>
-                </button>
-            </div>
-
-            <div class="listing-item-primary">
-                <div class="listing-item-image">
-                    <img class="icon" src="../../img/facebook.png" alt="">
-                </div>
-
-                <h2 class="listing-item-title">
-                    Facebook
-                    <span class="status-indicator"></span>
-                </h2>
-            </div>
         </div>
 
     </div>

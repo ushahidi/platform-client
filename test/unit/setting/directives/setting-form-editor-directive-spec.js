@@ -107,7 +107,7 @@ describe('setting form editor directive', function () {
     it('should add a new attribute', function () {
         $scope.addNewAttribute({label: 'checkbox'});
 
-        expect($scope.editIsOpen[2]).toBe(true);
+        expect($scope.editIsOpen[3]).toBe(true);
     });
 
     it('should save a attribute stage', function () {
@@ -130,7 +130,7 @@ describe('setting form editor directive', function () {
         $scope.addNewAttribute({label: 'test new'});
         $scope.deleteAttribute({label: 'test new'});
 
-        expect($scope.form.attributes.length).toEqual(2);
+        expect($scope.form.attributes.length).toEqual(3);
     });
 
     it('should change priority of a given attribute', function () {
@@ -139,5 +139,4 @@ describe('setting form editor directive', function () {
         $scope.changeAttributePriority($scope.form.attributes[0], 1);
         expect($scope.form.attributes[0].id).toEqual(2);
     });
-
 });
