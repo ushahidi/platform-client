@@ -8,9 +8,14 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="button-group">
-                <button type="button" class="button-flat">Cancel</button>
+                <button type="button" class="button-flat" translate>app.cancel</button>
                 <button type="button" ng-click="updateConfig()" class="button-alpha" type="submit" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>
-                    settings.save
+                    <div class="loading" ng-show="saving">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    <span ng-hide="saving" translate>app.save</span>
                 </button>
             </div>
         </div>

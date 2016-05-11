@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="form-field">
-                        <button type="button" class="button-link" disabled="">Cancel</button>
+                        <button type="button" class="button-link" disabled="" translate>app.cancel</button>
                         <button type="button" class="button-alpha" disabled="">Apply filters</button>
                     </div>
                 </div>
@@ -81,7 +81,8 @@
             <p ng-hide="categories.length"><em translate>empty.category</em></p>
         </div>
 
-            <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
+        <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
+
             <div class="listing-item-select">
                 <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
             </div>
@@ -90,9 +91,8 @@
                 <h2 class="listing-item-title"><a ng-href="/settings/categories/{{category.id}}">{{category.tag}}</a></h2>
                 <p class="listing-item-secondary">{{category.description}}</p>
             </div>
-        </div>
 
-        <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+        </div>
 
         <div class="listing-toolbar">
             <div class="listing-toolbar-summary">
@@ -102,7 +102,6 @@
             </div>
 
             <div class="listing-toolbar-actions">
-
                 <button type="button" class="button-destructive"  ng-click="deleteCategories()">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
@@ -111,6 +110,9 @@
                 </button>
             </div>
        </div>
+
    </div>
+
+   <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
 
 </div>

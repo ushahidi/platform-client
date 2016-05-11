@@ -59,8 +59,12 @@
 
             <div class="save-button">
                 <button type="submit" class="save btn" ng-click="saveUser(user)" ng-disabled="form.$invalid || state.processing">
-                    <i class="fa fa-cog fa-spin ng-hide" ng-show="state.processing"></i>
-                    <span translate>user_profile.save</span>
+                    <div class="loading" ng-show="saving">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    <span ng-hide="saving" translate>app.save</span>
                 </button>
             </div>
 

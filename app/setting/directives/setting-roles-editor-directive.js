@@ -40,7 +40,7 @@ function (
             };
 
             $scope.saveRole = function (role) {
-                $scope.processing = true;
+                $scope.saving = true;
                 role.name = role.name ? role.name : role.display_name;
 
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
@@ -51,7 +51,7 @@ function (
                 }, function (errorResponse) { // error
                     Notify.showApiErrors(errorResponse);
                 });
-                $scope.processing = false;
+                $scope.saving = false;
             };
 
             var handleResponseErrors = function (errorResponse) {

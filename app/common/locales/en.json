@@ -4,7 +4,11 @@
         "support" : "Support",
         "documentation": "Documentation",
         "report_a_bug": "Report a bug",
-        "forbidden": "Sorry, you're not allowed to do that."
+        "forbidden": "Sorry, you're not allowed to do that.",
+        "cancel" : "Cancel",
+        "save" : "Save",
+        "saving" : "Saving",
+        "delete" : "Delete"
     },
     "feature_limits": {
         "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
@@ -283,7 +287,6 @@
             "edit_post" : "Edit {{title}}",
             "change_type" : "Change type",
             "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
-            "save" : "Save",
             "save_post" : "Save Post",
             "publish" : "Publish to...",
             "publish_to" : "Publish to {{role}}",
@@ -394,7 +397,6 @@
     },
     "category": {
         "add_tag" : "Add Category",
-        "save" : "Save Category",
         "save_add_another" : "Save & Add Another",
         "selected" : "selected",
         "deselect" : "Deselect",
@@ -468,12 +470,12 @@
         },
         "data_sources": {
             "data_sources": "Data Sources",
+            "enable_provider_message" : "Accept survey submissions from this source",
             "hint_turn_on_off": "You can configure options for data sources, and then turn sources on and off.",
             "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
             "provider_options": "Options",
-            "configure": "Configure data settings",
+            "configure": "Configure",
             "options": "Options",
-            "save_changes": "Save Changes",
             "saving_changes": "Saving",
             "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
 
@@ -498,7 +500,6 @@
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
         "select_image" : "Select image",
-        "save" : "Save",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",
         "features" : {
@@ -597,7 +598,6 @@
     },
     "user_profile" : {
         "title" : "Edit profile",
-        "save" : "Save changes",
         "update_password" : "Update password",
         "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected."
     },
@@ -638,7 +638,6 @@
         },
         "generic" : {
             "okay" : "Ok",
-            "cancel": "Cancel",
             "alerts": "Alerts",
             "confirm": "Confirmation"
         },
@@ -759,8 +758,6 @@
     "contact": {
         "edit": "Edit",
         "add_new_contact": "Add New Contact",
-        "save": "Save contact",
-        "saving": "Saving",
         "save_changes": "Save changes",
         "saving_changes": "Saving changes",
         "cancel_edit": "Cancel",
