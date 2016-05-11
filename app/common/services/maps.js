@@ -53,13 +53,17 @@ function (
     var geojsonLayerOptions = {
         onEachFeature: function (feature, layer) {
             var description = feature.properties.description || '',
-                title = feature.properties.title || feature.properties.id;
+                title = feature.properties.title || feature.properties.id,
+                collections = [];
+            for (var i in feature.properties.collections) {
+                collections.push(feature.properties.collections[i].name);
+            }
             layer.bindPopup(
                 '<strong><a href="/posts/' + feature.properties.id + '">' +
                 title +
                 '</a></strong>' +
                 '<p>' + description + '</p>' +
-                '<p><b>Collection: </b>' + feature.properties.set_name + '</p>'
+                '<p><b>Collection: </b>' + collections.join(', ') + '</p>'
             );
         }
     };
