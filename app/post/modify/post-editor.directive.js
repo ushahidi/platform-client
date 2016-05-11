@@ -104,7 +104,12 @@ function PostEditorController(
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
                     if (attr.input === 'location') {
-                        $scope.post.values[attr.key] = [null];
+                        // Prepopulate location fields from message location
+                        if ($scope.post.values.message_location) {
+                            $scope.post.values[attr.key] = angular.copy($scope.post.values.message_location);
+                        } else {
+                            $scope.post.values[attr.key] = [null];
+                        }
                     } else if (attr.input === 'checkbox') {
                         $scope.post.values[attr.key] = [];
                     } else if (attr.input === 'number') {
