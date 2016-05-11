@@ -3,6 +3,7 @@ module.exports = [
     '$location',
     'FormEndpoint',
     'DataImportEndpoint',
+    'DataRetriever',
     'Notify',
     '_',
 function (
@@ -10,6 +11,7 @@ function (
     $location,
     FormEndpoint,
     DataImportEndpoint,
+    DataRetriever,
     Notify,
     _
 ) {
@@ -30,25 +32,6 @@ function (
                 DataImportEndpoint.delete($scope.csv);
             };
 
-            $scope.triggerImport = function () {
-                DataImportEndpoint.import({id: $scope.csv.id, action: 'import'})
-                .$promise
-                .then(function (response) {
-                    $translate('notify.data_import.csv_mappings_set', {
-                        processed: response.processed,
-                        errors: response.errors
-                    }).then(
-                        function (message) {
-                            Notify.showNotificationSlider(message);
-
-                            $scope.deleteDataImport($scope.csv);
-                            $location.url('/views/list');
-                        });
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
-            };
-
             // Check for missing required fields and return the missing fields
             $scope.checkRequiredFields = function (fields) {
                 var missing = [];
@@ -65,7 +48,7 @@ function (
                 return missing;
             };
 
-            $scope.submitMappings = function (csv) {
+            $scope.progressToConfigure = function (csv) {
 
                 if (_.every(csv.maps_to, _.isEmpty)) {
                     $translate('notify.data_import.no_mappings').then(function (message) {
@@ -113,13 +96,10 @@ function (
                     'form': $scope.form.id
                 };
 
-                DataImportEndpoint.update(csv)
-                .$promise
-                .then(function (csv) {
-                    $scope.triggerImport(csv);
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
+                // Pass data to configure stage via DataRetriever service
+                DataRetriever.setImportData(csv);
+                $location.url('/settings/data-configure/');
+
             };
         }
     };

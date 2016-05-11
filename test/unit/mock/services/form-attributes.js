@@ -10,6 +10,7 @@ module.exports = [function () {
                             form_stage_id: 1,
                             priority: 1,
                             key: 'test_attr1',
+                            type: 'input',
                             required: false
                         },
                         {
@@ -18,7 +19,17 @@ module.exports = [function () {
                             form_stage_id: 1,
                             priority: 2,
                             key: 'test_attr2',
+                            type: 'input',
                             required: true
+                        },
+                        {
+                            name: 'media test',
+                            id: 3,
+                            form_stage_id: 1,
+                            priority: 2,
+                            key: 'media_test',
+                            type: 'media',
+                            required: false
                         }
                     ]);
                 }
