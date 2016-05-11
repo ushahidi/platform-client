@@ -40,10 +40,15 @@ function (
             var config = Maps.getAngularScopeParams();
 
             config.then(function (params) {
-                angular.extend($scope, params);
-
-                // save initial center for reset
+                // Save initial center for reset
                 $scope.initialCenter = params.center;
+
+                // If we already have a location wipe the center
+                if ($scope.model) {
+                    delete params.center;
+                }
+                // Then save params into scope
+                angular.extend($scope, params);
             });
 
             // init markers with current model value
