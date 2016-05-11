@@ -12,24 +12,26 @@
     </notification-slider>
 
     <modal visible="showModalAlerts" title="notify.generic.alerts">
-
+      <div class="modal-body">
         <div id="alert-modal-text" ng-repeat="alert in modalAlertMessages">
-            {{alert}}
+          {{alert}}
         </div>
         <div class="modal-submit">
-            <button type="button" id="alert-modal-ok" class="button-primary" ng-click="acknowledgeAlert()" translate>notify.generic.okay</button>
+          <button type="button" id="alert-modal-ok" class="button-primary" ng-click="acknowledgeAlert()" translate>notify.generic.okay</button>
         </div>
+      </div>
     </modal>
 
     <modal visible="showModalConfirm" title="notify.generic.confirm">
-
+      <div class="modal-body">
         <div id="confirm-modal-text">
-            {{modalConfirmMessage}}
+          {{modalConfirmMessage}}
         </div>
         <div class="modal-submit">
-            <button type="button" id="confirm-modal-ok" class="button-primary" ng-click="confirmResult(true)" translate>notify.generic.okay</button>
-            <button type="button" id="confirm-modal-cancel" class="button-primary" ng-click="confirmResult(false)" translate>notify.generic.cancel</button>
+          <button type="button" id="confirm-modal-ok" class="button-primary" ng-click="confirmResult(true)" translate>notify.generic.okay</button>
+          <button type="button" id="confirm-modal-cancel" class="button-primary" ng-click="confirmResult(false)" translate>notify.generic.cancel</button>
         </div>
+      </div>
     </modal>
 
 </div>
