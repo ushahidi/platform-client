@@ -49,15 +49,15 @@ function (
     };
 
     $scope.isToggled = function (tag) {
-        return $scope.selectedTags.indexOf(tag.id) > -1;
+        return $scope.selectedCategories.indexOf(tag.id) > -1;
     };
 
-    $scope.toggleTag = function (tag) {
-        var idx = $scope.selectedTags.indexOf(tag.id);
+    $scope.toggleCategory = function (tag) {
+        var idx = $scope.selectedCategories.indexOf(tag.id);
         if (idx > -1) {
-            $scope.selectedTags.splice(idx, 1);
+            $scope.selectedCategories.splice(idx, 1);
         } else {
-            $scope.selectedTags.push(tag.id);
+            $scope.selectedCategories.push(tag.id);
         }
     };
 

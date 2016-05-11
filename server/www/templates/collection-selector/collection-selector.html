@@ -1,29 +1,60 @@
-<fieldset
-    dropdown auto-close="outsideClick" 
-    class="custom-fieldset init"
-    >
-    <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
-        <span class="icon-left fa-th" translate>global_filter.collections.collections</span>
-    </legend>
-    <div class="dropdown-menu init" dropdown-menu>
-        <!-- div class="form-field search bar">
-            <label for="search-collections" class="nodisplay" translate>global_filter.collections.search_collections</label>
-            <input id="search-collections" placeholder="Search Collections" type="search">
-        </div -->
-        <div class="fieldset-results" ng-repeat="collection in editableCollections">
-            <div class="form-field checkbox">
-                <input id="collection" type="checkbox" ng-checked="postInCollection(collection)" ng-click="toggleCollection(collection)">
-                <label for="collection">{{collection.name}}</label>
+<div>
+    <button type="button" class="button-beta" data-modal="add-to-collection">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+        </svg>
+        <span class="button-label" translate>set.add_to_collection</span>
+    </button>
+    <!-- TODO: make title settable by directive -->
+    <!-- TODO: make icon settable by directive -->
+    <modal visible="showCollectionModal" title="{{title}}" icon="{{icon}}">
+        <div class="form-field search">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+            </svg>
+            <label>Find a Collection</label>
+            <input type="search" placeholder="Find a Collection...">
+        </div>
+
+        <div class="listing init">
+            <div class="listing-item" ng-repeat="collection in editableCollection">
+                <div class="listing-item-select">
+                    <input type="checkbox" ng-checked="postInCollection(collection)" ng-disabled="postInCollection(collection)" ng-click="toggleCollection(collection)">
+                </div>
+                <div class="listing-item-secondary" ng-show="postInCollection(collection)" ng-click="toggleCollection(collection)">
+                    <button type="button" class="button-link" data-message="remove-collection">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#circle-x"></use>
+                        </svg>
+                        <span class="button-label" translate>set.remove</span>
+                    </button>
+                </div>
+                <div class="listing-item-primary">
+                    <h2 class="listing-item-title">
+                        <!-- TODO: setup collection route -->
+                        <a href="collections/{{collection.id}}">
+                            {{collection.name}}
+                        </a>
+                    </h2>
+                    <!-- TODO: make sure to return user -->
+                    <p ng-show ="collection.user_id" class="listing-item-secondary">
+                        <!-- TODO: check this span is ok to add -->
+                        <span translate>set.by</span>
+                        <a href="/users/{{collection.user_id}}">
+                            {{collection.user.realname}}
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="form-field bar">
-            <a class="button button-link init icon-left fa-plus" ng-show="!showNewCollectionInput" ng-click="toggleCreateCollection()" translate>
-                set.create_collection
-            </a>
-            <div ng-show="showNewCollectionInput">
-                <input id="create-collection" ng-model="newCollection" placeholder="Create Collection" type="text">
-                <button type="button" ng-click="createNewCollection(newCollection)" translate>post.create</button>
-            </div>
+
+        <div class="form-field">
+            <button type="button" class="button-beta">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                </svg>
+                <span class="button-label" translate>set.create_new</span>
+            </button>
         </div>
-    </div>
-</fieldset>
+    </modal>
+</div>

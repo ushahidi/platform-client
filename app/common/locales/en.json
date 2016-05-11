@@ -368,7 +368,9 @@
         "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
     },
     "set": {
+        "by" : "by",
         "create_collection" : "Create Collection",
+        "create_new" : " Create New",
         "create_savedsearch": "Create Saved Search",
         "description" : "Description",
         "delete_collection" : "Delete this collection",
@@ -390,7 +392,8 @@
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
         "set_settings" : "Collection Settings",
-        "add_notification" : "Add Notification"
+        "add_notification" : "Add Notification",
+        "remove" : "remove"
     },
     "category": {
         "add_tag" : "Add Category",

@@ -125,7 +125,7 @@ function (
         restrict: 'E',
         templateUrl: 'templates/collection-selector/collection-selector.html',
         scope: {
-            post: '='
+            posts: '='
         },
         controller: controller
     };
