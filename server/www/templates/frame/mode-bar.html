@@ -9,13 +9,20 @@
                     <svg class="iconic" ng-switch="view.name">
                         <use xlink:href="../../img/iconic-sprite.svg#map-marker" ng-switch-when="map"></use>
 
-                        <use xlink:href="../../img/iconic-sprite.svg#list-rich" ng-switch-when="timeline"></use>
+                        <use xlink:href="../../img/iconic-sprite.svg#list-rich" ng-switch-when="list"></use>
 
                         <use xlink:href="../../img/iconic-sprite.svg#pulse" ng-switch-when="activity"></use>
-
-                        <use xlink:href="../../img/iconic-sprite.svg#cog" ng-switch-when="settings"></use>
                     </svg>
                     {{ view.display_name }}
+                </a>
+            </li>
+
+            <li class="tuck" data-message="customize">
+                <a href="/settings">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
+                    </svg>
+                    <translate>nav.settings</translate>
                 </a>
             </li>
 
