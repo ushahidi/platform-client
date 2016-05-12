@@ -1,0 +1,34 @@
+<fieldset dropdown auto-close="outsideClick" class="custom-fieldset init">
+    <legend data-toggle="dropdown-menu" dropdown-toggle>
+        <span class="legend-label" translate>
+            post.who_can_see_this
+        </span>
+        <svg class="iconic chevron">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom">
+            </use>
+        </svg>
+    </legend>
+    <div class="dropdown-menu init" dropdown-menu>
+        <div class="form-fieldgroup">
+            <div class="form-field radio">
+                <input 
+                    id="everyone" 
+                    type="radio" 
+                    ng-checked="selectedRoles === []"
+                    ng-click="toggleRole('')">
+                <label for="everyone" translate>post.publish_for_everyone</label>
+            </div>
+        </div>
+        <div class="form-fieldgroup">
+            <div class="form-field checkbox" ng-repeat="role in roles">
+                <input 
+                    id="{{role.id}}" 
+                    type="checkbox" 
+                    checklist-model="selectedRoles" 
+                    checklist-value="role.name"
+                    ng-click="toggleRole(role.name)">
+                <label for="{{role.id}}">{{role.display_name}}</label>
+            </div>
+        </div>
+    </div>
+</fieldset>

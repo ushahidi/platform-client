@@ -57,9 +57,10 @@ function (
     return {
         restrict: 'E',
         templateUrl: 'templates/common/listing-toolbar.html',
+        replace: true,
         scope: {
             collectionEnabled: '=',
-            visibilityEnabled: '=',
+            roleEnabled: '=',
             entityEndpoint: '=',
             entities: '=',
             selectedSet: '='

@@ -76,7 +76,7 @@
     </div>
     <!-- end toolbar -->
 
-    <div class="listing card">
+    <div class="listing card" ng-class="{'toolbar-active': selectedUsers.length}">
         <div class="alert" ng-hide="users.length">
             <p ng-hide="users.length"><em translate>empty.user</em></p>
         </div>
@@ -95,35 +95,8 @@
                 <p class="listing-item-secondary">{{ user.role }}</p>
             </div>
         </div>
-
-        <div class="listing-toolbar">
-            <div class="listing-toolbar-summary">
-                <strong><span class="total">2</span> <span translate>user.selected</span></strong>
-                <button class="button-link" translate>user.deselect</button>
-                <button class="button-link" translate>user.select_all</button>
-            </div>
-
-            <div class="listing-toolbar-actions">
-                <fieldset class="custom-fieldset">
-                    <legend translate>user.change_role</legend>
-
-                    <div class="form-field radio" ng-repeat="role in roles">
-                        <label for="{{role.name}}">
-                            <input id="{{role.name}}" ng-click="changeRole(role)" type="radio" name="role">
-                            {{role.display_name}}
-                        </label>
-                    </div>
-                </fieldset>
-
-                <button type="button" class="button-destructive" ng-disabled="!selectedUsers.length" ng-click="deleteUsers()">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-                    </svg>
-                    <span class="button-label hidden">nav.delete</span>
-                </button>
-            </div>
-       </div>
-   </div>
+        <listing-toolbar role-enabled="true" collection-enabled="true" end-point="UserEndpoint" selected-set="selectedUsers"></listing-toolbar>
+     </div>
 
    <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
 

@@ -32,20 +32,24 @@ function (
             };
 
             $scope.toggleRole = function (role) {
-                if (role === 'draft' || role === '' || $scope.checkifAllSelected()) {
-                    $scope.selectedRoles = [];
+                if (role === 'draft' || role === '') {
+                    $scope.post.published_to = [];
+                } else if ($scope.checkIfAllSelected()) {
+                    // All check boxes selected, therefore publish to everyone
+                    $scope.post.published_to = [];
                 }
 
-                $scope.toggleRoleFunc({roles: $scope.selectedRoles});
+                $scope.post.status = role === 'draft' ? role : 'published';
+
+                $scope.toggleRoleFunc({updatedPost: $scope.post});
             };
 
         }];
     return {
         restrict: 'E',
-        replace: true,
-        templateUrl: 'templates/common/role-selector/role-selector.html',
+        templateUrl: 'templates/publish-selector/publish-selector.html',
         scope: {
-            selectedRoles: '=',
+            post: '=',
             toggleRoleFunc: '&'
         },
         controller: controller

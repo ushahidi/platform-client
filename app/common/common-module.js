@@ -48,6 +48,7 @@ angular.module('ushahidi.common', [
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
+.directive('publishSelector', require('./directives/publish-selector.js'))
 .directive('roleSelector', require('./directives/role-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))

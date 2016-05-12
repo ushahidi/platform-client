@@ -24,6 +24,7 @@ function (
             $scope.showNewCollectionInput = false;
             $scope.newCollection = '';
             $scope.editableCollections = [];
+            $scope.showCollectionModal = false;
 
             $scope.refreshCollections = function () {
                 CollectionEndpoint.editableByMe().$promise.then(function (results) {
@@ -123,7 +124,8 @@ function (
         }];
     return {
         restrict: 'E',
-        templateUrl: 'templates/collection-selector/collection-selector.html',
+        replace: true,
+        templateUrl: 'templates/common/collection-selector/collection-selector.html',
         scope: {
             posts: '='
         },
