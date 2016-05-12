@@ -23,6 +23,14 @@ function ($window, _, $q, $rootScope) {
         $rootScope.$emit('event:show:modal-alerts', alertMessages);
     };
 
+    var showErrorMessage = function (error, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:message-error', error, callbackEvent, buttonText, action);
+    };
+
+    var showConfirmationMessage = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:message-confirmation', message, callbackEvent, buttonText, action);
+    };
+
     var showApiErrors = function (errorResponse) {
         var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
 
@@ -45,7 +53,9 @@ function ($window, _, $q, $rootScope) {
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
         showConfirm: showConfirm,
-        showLimitSlider: showLimitSlider
+        showLimitSlider: showLimitSlider,
+        showErrorMessage: showErrorMessage,
+        showConfirmationMessage: showConfirmationMessage
     };
 
 }];
