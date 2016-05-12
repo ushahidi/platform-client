@@ -24,13 +24,54 @@
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
                     </svg>
-                    More
+                    <translate>nav.more</translate>
                 </a>
             </li>
         </ul>
         <!-- main menu -->
 
-        <ng-include src="'templates/partials/user-menu.html'"></ng-include>
+        <ul class="account-menu">
+        <!-- user account menu -->
+            <li ng-hide="currentUser" ng-show="canRegister()">
+                <a href="/register" data-modal="signup">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#person"></use>
+                    </svg>
+                    <translate translate="nav.register">Sign up</translate>
+                </a>
+            </li>
+            <li ng-hide="currentUser">
+                <a href="/login" data-modal="login">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#account-login"></use>
+                    </svg>
+                    <translate translate="nav.login">Log in</translate>
+                </a>
+            </li>
+            <li ng-show="currentUser">
+                <a>
+                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
+                    <span class="label">{{currentUser.realname || currentUser.email}}</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+                    </svg>
+                    <span class="label" translate="nav.collections"></span>
+                </a>
+            </li>
+            <li ng-if="todo">
+                <a>
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                    </svg>
+                    <span class="label"><translate>nav.alerts</translate> <span class="badge">2</span></span>
+                </a>
+            </li>
+        <!-- user account menu -->
+        </ul>
 
     </nav>
     <!-- PL JS -->
