@@ -55,9 +55,7 @@ function (
             var description = feature.properties.description || '',
                 title = feature.properties.title || feature.properties.id,
                 collections = [];
-            for (var i in feature.properties.collections) {
-                collections.push(feature.properties.collections[i].name);
-            }
+            collections = _.pluck(feature.properties.collections, 'name');
             layer.bindPopup(
                 '<strong><a href="/posts/' + feature.properties.id + '">' +
                 title +
