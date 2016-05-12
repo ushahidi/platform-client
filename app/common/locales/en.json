@@ -213,12 +213,10 @@
         "views" : "Views",
         "more" : "More"
     },
-    "view_modes" : {
+    "views" : {
         "map" : "Map",
-        "timeline" : "Timeline",
-        "activity" : "Activity",
-        "settings" : "Settings",
-        "more" : "More"
+        "list" : "Timeline",
+        "activity" : "Activity"
     },
     "post": {
         "posts" : "Posts",

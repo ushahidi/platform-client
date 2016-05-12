@@ -4,12 +4,12 @@ function (
     var controller = [
         '$scope',
         'GlobalFilter',
-        'PostViewHelper',
+        'ViewHelper',
         '_',
         function (
             $scope,
             GlobalFilter,
-            PostViewHelper,
+            ViewHelper,
             _
         ) {
             // Initial scope
@@ -21,7 +21,7 @@ function (
             }
 
             // Watch views, in case we get new feature config
-            PostViewHelper.isViewAvailable($scope.currentView).then(function (available) {
+            ViewHelper.isViewAvailable($scope.currentView).then(function (available) {
                 if (!available) {
                     $scope.unavailableView = $scope.currentView;
                     $scope.currentView = 'unavailable';
