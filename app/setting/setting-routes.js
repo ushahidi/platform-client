@@ -11,11 +11,7 @@ function (
     })
     .when('/settings/general', {
         controller: require('./controllers/setting-general-controller.js'),
-        templateUrl: 'templates/settings/settings-general.html'
-    })
-    .when('/settings/map-settings', {
-        controller: require('./controllers/setting-map-settings.js'),
-        templateUrl: 'templates/settings/map-settings.html'
+        templateUrl: 'templates/settings/general/settings-general.html'
     })
     .when('/settings/data-import', {
         controller: require('./controllers/setting-data-import-controller.js'),
@@ -37,10 +33,6 @@ function (
             }]
         }
     })
-    .when('/settings/plugins', {
-        controller: require('./controllers/setting-plugins-controller.js'),
-        templateUrl: 'templates/settings/todo.html'
-    })
     .when('/settings/forms', {
         controller: require('./controllers/setting-forms-controller.js'),
         templateUrl: 'templates/settings/forms/forms.html'
@@ -60,10 +52,6 @@ function (
     .when('/settings/categories/:id', {
         controller: require('./controllers/setting-categories-edit-controller.js'),
         templateUrl: 'templates/settings/categories/categories-edit.html'
-    })
-    .when('/settings/views', {
-        controller: require('./controllers/setting-views-controller.js'),
-        templateUrl: 'templates/settings/todo.html'
     })
     .when('/settings/users', {
         controller: require('./controllers/setting-users-controller.js'),

@@ -28,7 +28,7 @@ function (
             formId: '@',
             formTemplate: '@'
         },
-        templateUrl: 'templates/settings/settings-editor.html',
+        templateUrl: 'templates/settings/general/settings-editor.html',
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
             $scope.fileContainer = {
