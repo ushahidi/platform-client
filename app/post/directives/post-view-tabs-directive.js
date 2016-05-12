@@ -1,9 +1,9 @@
 module.exports = [
     '$location',
-    'PostViewHelper',
+    'ViewHelper',
 function (
     $location,
-    PostViewHelper
+    ViewHelper
 ) {
     return {
         restrict: 'E',
@@ -15,7 +15,7 @@ function (
         templateUrl: 'templates/posts/post-view-tabs.html',
         link: function ($scope, $element, $attrs) {
 
-            $scope.views = PostViewHelper.views();
+            $scope.views = ViewHelper.views();
 
         }
     };

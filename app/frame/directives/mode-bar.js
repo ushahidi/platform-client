@@ -1,8 +1,8 @@
 module.exports = [
-    'ModeViewHelper',
+    'ViewHelper',
     '$rootScope',
 function (
-    ModeViewHelper,
+    ViewHelper,
     $rootScope
 ) {
     return {
@@ -12,7 +12,7 @@ function (
         },
         templateUrl: 'templates/frame/mode-bar.html',
         link: function ($scope, $element, $attrs) {
-            $scope.views = ModeViewHelper.views();
+            $scope.views = ViewHelper.views();
 
             // TODO: move this out of function
             $scope.activeView = 'map';

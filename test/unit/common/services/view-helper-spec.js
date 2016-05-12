@@ -2,7 +2,7 @@ var ROOT_PATH = '../../../../';
 
 describe('view helper', function () {
 
-    var PostViewHelper;
+    var ViewHelper;
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
@@ -10,7 +10,7 @@ describe('view helper', function () {
         'ngResource',
         'pascalprecht.translate'
         ])
-        .service('PostViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
+        .service('ViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
         .service('ConfigEndpoint', function () {
             return {
                 get : function () {}
@@ -26,8 +26,8 @@ describe('view helper', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_PostViewHelper_) {
-        PostViewHelper = _PostViewHelper_;
+    beforeEach(inject(function (_ViewHelper_) {
+        ViewHelper = _ViewHelper_;
     }));
 
     describe('some existing view names', function () {
@@ -49,7 +49,7 @@ describe('view helper', function () {
             describe('with an existing view name', function () {
 
                 beforeEach(function () {
-                    returnedView = PostViewHelper.getView('map', existingViews);
+                    returnedView = ViewHelper.getView('map', existingViews);
                 });
 
                 it('should return the display_name for the view name', function () {
@@ -59,7 +59,7 @@ describe('view helper', function () {
 
             describe('with an non existing view name', function () {
                 beforeEach(function () {
-                    returnedView = PostViewHelper.getView('foo', existingViews);
+                    returnedView = ViewHelper.getView('foo', existingViews);
                 });
 
                 it('should return the value of the input view', function () {
