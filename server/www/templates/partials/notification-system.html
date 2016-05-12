@@ -1,6 +1,35 @@
 <div ng-controller="notifier">
-    <notification-slider visible="showNotificationSlider">
+    <notification-slider visible="sliderIsVisible">
+      <div class="message-image confirmation" ng-show="isConfirmation">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#thumb-up"></use>
+        </svg>
+      </div>
+
+      <div class="message-image error" ng-show="isError">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+        </svg>
+      </div>
+
+      <div class="message-body">
         <p>{{notificationSliderMessage}}</p>
+        <button class="button-beta button-flat" ng-show="!!buttonText">
+          <svg class="iconic" ng-show="action === 'edit'">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
+          </svg>
+          <svg class="iconic" ng-show="action === 'delete'">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+          </svg>
+
+          <span class="button-label">{{buttonText | translate}}</span>
+        </button>
+
+        <button class="button-flat message-trigger" ng-click="acknowledgeAlert()" translate>
+          message.button.dismiss
+        </button>
+      </div>
+
     </notification-slider>
 
     <notification-slider visible="showLimitSlider" >

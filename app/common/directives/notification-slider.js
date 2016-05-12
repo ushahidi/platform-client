@@ -11,20 +11,13 @@ angular.module('ushahidi.common.notification-slider', [])
         templateUrl: 'templates/notification-slider/notification-slider.html',
 
         scope: {
-            title: '@?',
-            visible: '=?',
-            showCloseButton: '=?'
+            visible: '=?'
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
             var classChangePromise = null;
 
             $scope.classVisible = false;
-
-            // If showCloseButton isn't passed, default to true
-            if (typeof $scope.showCloseButton === 'undefined') {
-                $scope.showCloseButton = true;
-            }
 
             $scope.$watch('visible', function (state, previousState) {
                 if (state === true) {
