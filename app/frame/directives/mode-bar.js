@@ -1,7 +1,9 @@
 module.exports = [
     'ModeViewHelper',
+    '$rootScope',
 function (
-    ModeViewHelper
+    ModeViewHelper,
+    $rootScope
 ) {
     return {
         restrict: 'E',
@@ -17,6 +19,8 @@ function (
             $scope.setActiveView = function (view_name) {
                 $scope.activeView = view_name;
             };
+
+            $scope.currentUser = $rootScope.currentUser;
         }
     };
 }];

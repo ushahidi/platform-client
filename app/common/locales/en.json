@@ -154,6 +154,7 @@
         "activity" : "Activity",
         "add_post" : "Add Post",
         "account_settings" : "Account Settings",
+        "alerts": "Alerts",
         "all" : "All",
         "author_tagline" : "By ",
         "appearance" : "Appearance",
@@ -210,7 +211,7 @@
         "role" : "Role",
         "roles" : "Roles",
         "views" : "Views",
-        "workspace" : "Workspace"
+        "more" : "More"
     },
     "view_modes" : {
         "map" : "Map",
@@ -368,7 +369,7 @@
         "save" : "Save Role",
         "save_add_another" : "Save & Add Another",
         "permissions" : "Permissions",
-        "delete" : "Delete",
+        "delete" : "Delete"
     },
     "set": {
         "create_collection" : "Create Collection",
