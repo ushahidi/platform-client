@@ -7,6 +7,7 @@ function (
     initialData,
     _
 ) {
+
     $scope.required_fields = [];
     $scope.required_fields_map = {};
     $scope.form = initialData.form;
@@ -15,7 +16,7 @@ function (
         if (attribute.required) {
             $scope.required_fields.push(attribute.key);
             $scope.required_fields_map[attribute.key] = attribute.label;
-            $scope.form.attributes[index].label = attribute.label + ' *';
+            $scope.form.attributes[index].label = attribute.label + '<span class="required"></span>';
         }
     });
     $scope.csv = initialData.csv;
