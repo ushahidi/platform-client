@@ -1,8 +1,6 @@
-require('angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module');
 require('angular-xeditable');
 
 angular.module('ushahidi.tools', [
-    'colorpicker.module',
     'xeditable'
 ])
 .directive('importerCsv', require('./directives/setting-data-import-directive.js'))
