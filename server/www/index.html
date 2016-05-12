@@ -17,6 +17,7 @@
         <base href="/">
     </head>
 
+    <!-- TODO: set layouts per view directive -->
     <body ng-class="{ rtl : rtlEnabled }" class="{{ globalLayout }}" canvas>
         <div id="bootstrap-loading">
             <h1 class="beta"><i class="fa fa-refresh fa-4 fa-spin"></i></h1>
@@ -36,19 +37,12 @@
 
             <mode-bar></mode-bar>
 
-            <mode-context></mode-context>
+            <ng-view></ng-view>
 
-            <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
-            <main role="main">
-                <tool-bar></tool-bar>
-                <ng-include src="'templates/partials/toolbox.html'"></ng-include>
-
-                <ng-view></ng-view>
-            </main>
-
-            <div class="wrapper">
+            <!-- TODO: fix and uncomment -->
+            <!-- <div class="wrapper">
                 <ng-include src="'templates/partials/notification-system.html'"></ng-include>
-            </div>
+            </div> -->
 
             <first-time-config></first-time-config>
         </div>
