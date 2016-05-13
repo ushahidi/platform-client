@@ -1,6 +1,6 @@
 <div class="listing-toolbar">
     <div class="listing-toolbar-summary">
-        <strong ng-show="!selectedSet.length">
+        <strong ng-show="selectedSet.length">
             <span class="total">
                 {{selectedSet.length}}
             </span>
@@ -11,7 +11,8 @@
     </div>
 
     <div class="listing-toolbar-actions">
-        <role-selector ng-show="roleEnabled"></role-selector>
+        <role-selector ng-if="roleEnabled" mode="roleMode" toggle-role-func="changeRole(roles)"></role-selector>
+        <role-selector ng-if="permissionEnabled" mode="roleMode" toggle-role-func="setVisiblity(roles)"></role-selector>
         <collection-selector ng-show="collectionEnabled"></collection-selector>
         <button type="button" class="button-destructive" ng-disabled="!selectedSet.length" ng-click="deleteSet()">
             <svg class="iconic">
@@ -21,4 +22,3 @@
         </button>
     </div>
 </div>
-

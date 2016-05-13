@@ -10,16 +10,12 @@ function (
     var controller = [
         '$scope',
         '$rootScope',
-        '$q',
         '$translate',
-        'Notify',
         '_',
         function (
             $scope,
             $rootScope,
-            $q,
             $translate,
-            Notify,
             _
         ) {
 
@@ -31,27 +27,16 @@ function (
                 $scope.selectedSet = [];
             };
 
+            $scope.changeRole = function (role) {
+                $scope.changeRoleFunc({role: role});
+            };
+
+            $scope.setVisibility = function (roles) {
+                $scope.setVisibilityFunc({roles: roles});
+            };
+
             $scope.deleteSet = function () {
-                //TODO: update message to be generic
-                $translate('notify.tag.bulk_destroy_confirm', {
-                    count: $scope.selectedEntity.length
-                }).then(function (message) {
-                    Notify.showConfirm(message).then(function () {
-                        var calls = [];
-                        angular.forEach($scope.selectedSet, function (entityId) {
-                            calls.push($scope.entityEndpoint.delete({ id: entityId }).$promise);
-                        });
-                        $q.all(calls).then(function () {
-                            // TODO: update message to be generic
-                            $translate('notify.tag.bulk_destroy_success', {
-                                count: $scope.selectedSet.length
-                            }).then(function (message) {
-                                Notify.showNotificationSlider(message);
-                            });
-                            $scope.refreshView();
-                        });
-                    });
-                });
+                $scope.deleteFunc();
             };
         }];
     return {
@@ -59,9 +44,13 @@ function (
         templateUrl: 'templates/common/listing-toolbar.html',
         replace: true,
         scope: {
+            deleteFunc: '&',
+            changeRoleFunc: '&',
+            setVisiblityFunc: '&',
             collectionEnabled: '=',
+            permissionEnabled: '=',
             roleEnabled: '=',
-            entityEndpoint: '=',
+            roleMode: '=',
             entities: '=',
             selectedSet: '='
         },

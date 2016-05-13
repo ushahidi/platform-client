@@ -1,7 +1,7 @@
 <fieldset dropdown auto-close="outsideClick" class="custom-fieldset init">
     <legend class="dropdown-trigger init" dropdown-toggle>
         <span class="legend-label" translate>
-            post.who_can_see_this
+            {{title}}
         </span>
         <svg class="iconic chevron">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom">
@@ -9,7 +9,8 @@
         </svg>
     </legend>
     <div class="dropdown-menu init" dropdown-menu>
-        <div class="form-fieldgroup">
+        <!-- This block is used in permission mode -->
+        <div ng-if="mode === 'permission'" class="form-fieldgroup">
             <div class="form-field radio">
                 <input 
                     id="everyone" 
@@ -20,14 +21,22 @@
             </div>
         </div>
         <div class="form-fieldgroup">
-            <div class="form-field checkbox" ng-repeat="role in roles">
-                <input 
-                    id="{{role.id}}" 
+            <div class="form-field {{fieldType}}" ng-repeat="role in roles">
+                <input ng-if="mode === 'permission'" 
                     type="checkbox" 
+                    id="{{role.id}}" 
                     checklist-model="selectedRoles" 
                     checklist-value="role.name"
                     ng-click="toggleRole(role.name)">
-                <label for="{{role.id}}">{{role.display_name}}</label>
+
+                <input ng-if="mode === 'role'" 
+                    type="radio" 
+                    id="{{role.id}}" 
+                    ng-click="toggleRole(role)">
+
+                <label for="{{role.id}}">
+                    {{role.display_name}}
+                </label>
             </div>
         </div>
     </div>

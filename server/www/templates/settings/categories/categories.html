@@ -76,7 +76,7 @@
     </div>
     <!-- end toolbar -->
 
-    <div class="listing card">
+    <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
         <div class="alert" ng-hide="categories.length">
             <p ng-hide="categories.length"><em translate>empty.category</em></p>
         </div>
@@ -94,22 +94,11 @@
 
         </div>
 
-        <div class="listing-toolbar">
-            <div class="listing-toolbar-summary">
-                <strong><span class="total">2</span> <span translate>category.selected</span></strong>
-                <button class="button-link" translate>category.deselect</button>
-                <button class="button-link" translate>category.select_all</button>
-            </div>
-
-            <div class="listing-toolbar-actions">
-                <button type="button" class="button-destructive"  ng-click="deleteCategories()">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-                    </svg>
-                    <span class="button-label hidden">nav.delete</span>
-                </button>
-            </div>
-       </div>
+        <listing-toolbar
+            delete-func="deleteCategories()"
+            entities="categories"
+            selected-set="selectedCategories"
+            ></listing-toolbar>
 
    </div>
 
