@@ -95,7 +95,7 @@
                 <p class="listing-item-secondary">{{ user.role }}</p>
             </div>
         </div>
-        <listing-toolbar role-enabled="true" collection-enabled="true" end-point="UserEndpoint" selected-set="selectedUsers"></listing-toolbar>
+        <listing-toolbar role-enabled="true" collection-enabled="true" end-point="UserEndpoint" entities="users" selected-set="selectedUsers"></listing-toolbar>
      </div>
 
    <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
