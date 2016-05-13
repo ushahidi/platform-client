@@ -5,7 +5,7 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.modal',
 	'ushahidi.common.custom-on-change',
 	'ushahidi.common.file-upload',
-  'ushahidi.common.notification-slider',
+	'ushahidi.common.notification-slider',
 	'ushahidi.common.sticky-sidebar',
     'ushahidi.common.chart'
 ])

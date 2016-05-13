@@ -4,7 +4,11 @@
  */
 angular.module('ushahidi.common.modal', [])
 
-.directive('modal', function () {
+.directive('modal', [
+    '$rootScope',
+function (
+    $rootScope
+) {
     return {
         restrict: 'E',
         transclude: true,
@@ -20,7 +24,6 @@ angular.module('ushahidi.common.modal', [])
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
             var classChangePromise = null;
 
-            $scope.classDetached = true;
             $scope.classVisible = false;
             $scope.modalOffset = 0;
 
@@ -38,8 +41,8 @@ angular.module('ushahidi.common.modal', [])
                 if (state === true) {
                     if (!$scope.classVisible) {
                         // Animate in.
-                        $scope.classDetached = false;
                         $scope.classVisible = true;
+                        $rootScope.toggleModalVisible();
 
                         // Set offset based on window position
                         // @todo move offset to a config param
@@ -54,6 +57,7 @@ angular.module('ushahidi.common.modal', [])
                     if ($scope.classVisible) {
                         // Animate out.
                         $scope.classVisible = false;
+                        $rootScope.toggleModalVisible();
 
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);
@@ -81,6 +85,4 @@ angular.module('ushahidi.common.modal', [])
             });
         }]
     };
-})
-
-;
+}]);
