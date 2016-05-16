@@ -1,0 +1,23 @@
+<div class="dropdown-menu init" data-toggle-target="search-filters">
+    <div class="dropdown-menu-body">
+        <fieldset>
+            <legend translate>app.roles</legend>
+            <div class="form-field checkbox" ng-repeat="role in roles">
+                <label>
+                    <input 
+                        id="{{role.id}}" 
+                        type="checkbox" 
+                        checklist-model="selectedRoles" 
+                        checklist-value="role.name"
+                        >
+                    {{role.display_name}}
+                </label>
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="form-field">
+        <button type="button" class="button-link" disabled="" ng-click="cancel()" translate>app.cancel</button>
+        <button type="button" class="button-alpha" disabled="" ng-click="applyFilters()" tranlsate>app.apply_filters</button>
+    </div>
+</div>

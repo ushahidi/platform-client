@@ -20,7 +20,14 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "plan" : "Plan",
-        "delete" : "Delete"
+        "delete" : "Delete",
+        "apply_filters" : "Apply filters",
+        "filters" : "Filters"
+    },
+    "toolbar": {
+        "users" : {
+            "search_users" : "Search users",
+        }
     },
     "feature_limits": {
         "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
