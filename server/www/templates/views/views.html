@@ -1,15 +1,7 @@
-<main class="page-content" ng-class="{ 'has-aside' : hasAside }">
-    <div class="page-header">
-        <ng-transclude></ng-transclude>
+<div>
+    <ng-transclude></ng-transclude>
 
-        <div class="tabs-with-filter" data-view="{{currentView}}">
-            <post-view-tabs active="currentView" base-url="{{ baseUrl }}"></post-view-tabs>
-            <post-view-filters half-width="false" has-aside="hasAside" is-loading="isLoading"></post-view-filters>
-        </div>
-    </div>
-
-    <div class="main-col" ng-switch="currentView">
-
+    <div ng-switch="currentView">
         <!-- Each of the views in sequence, which are shown or hidden by tabs -->
 
         <!-- map view -->
@@ -30,5 +22,4 @@
         <!-- default view -->
         <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>
     </div>
-
-</main>
+</div>

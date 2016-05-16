@@ -25,7 +25,7 @@ angular.module('ushahidi.common', [
 .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
 .service('MessageEndpoint', require('./services/endpoints/message.js'))
 
-.service('PostViewHelper', require('./services/view-helper.js'))
+.service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
 .service('DataRetriever', require('./services/data-retriever.js'))

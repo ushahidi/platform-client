@@ -6,7 +6,7 @@ module.exports = [
     'CollectionEndpoint',
     '_',
     'Notify',
-    'PostViewHelper',
+    'ViewHelper',
     'RoleEndpoint',
 function (
     $q,
@@ -16,7 +16,7 @@ function (
     CollectionEndpoint,
     _,
     Notify,
-    PostViewHelper,
+    ViewHelper,
     RoleEndpoint
 ) {
     return {
@@ -34,7 +34,7 @@ function (
                 $scope.roles = roles;
             });
 
-            $scope.views = PostViewHelper.views();
+            $scope.views = ViewHelper.views();
 
             $scope.featuredEnabled = function () {
                 return $rootScope.hasPermission('Manage Posts');

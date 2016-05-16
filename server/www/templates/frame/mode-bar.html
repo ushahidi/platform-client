@@ -1,0 +1,86 @@
+<div class="mode-bar">
+    <!-- mode bar -->
+    <!-- PL JS -->
+    <nav>
+        <!-- main menu -->
+        <ul class="deployment-menu">
+            <li ng-repeat="view in views" ng-class="{ active: activeView === view.name }">
+                <a ng-href="{{baseUrl + 'views/' + view.name }}" class="view-{{view.name}}" ng-click="setActiveView(view.name)">
+                    <svg class="iconic" ng-switch="view.name">
+                        <use xlink:href="../../img/iconic-sprite.svg#map-marker" ng-switch-when="map"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#list-rich" ng-switch-when="list"></use>
+
+                        <use xlink:href="../../img/iconic-sprite.svg#pulse" ng-switch-when="activity"></use>
+                    </svg>
+                    {{ view.display_name }}
+                </a>
+            </li>
+
+            <li class="tuck" data-message="customize">
+                <a href="/settings">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
+                    </svg>
+                    <translate>nav.settings</translate>
+                </a>
+            </li>
+
+            <li class="more-menu-trigger">
+                <a ng-href="#">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
+                    </svg>
+                    <translate>nav.more</translate>
+                </a>
+            </li>
+        </ul>
+        <!-- main menu -->
+
+        <ul class="account-menu">
+        <!-- user account menu -->
+            <li ng-hide="currentUser" ng-show="canRegister()">
+                <a href="/register" data-modal="signup">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#person"></use>
+                    </svg>
+                    <translate translate="nav.register">Sign up</translate>
+                </a>
+            </li>
+            <li ng-hide="currentUser">
+                <a href="/login" data-modal="login">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#account-login"></use>
+                    </svg>
+                    <translate translate="nav.login">Log in</translate>
+                </a>
+            </li>
+            <li ng-show="currentUser">
+                <a>
+                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
+                    <span class="label">{{currentUser.realname || currentUser.email}}</span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+                    </svg>
+                    <span class="label" translate="nav.collections"></span>
+                </a>
+            </li>
+            <li ng-if="todo">
+                <a>
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                    </svg>
+                    <span class="label"><translate>nav.alerts</translate> <span class="badge">2</span></span>
+                </a>
+            </li>
+        <!-- user account menu -->
+        </ul>
+
+    </nav>
+    <!-- PL JS -->
+    <!-- mode bar -->
+</div>

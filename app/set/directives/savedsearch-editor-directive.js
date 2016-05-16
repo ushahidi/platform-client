@@ -6,7 +6,7 @@ module.exports = [
     'SavedSearchEndpoint',
     '_',
     'Notify',
-    'PostViewHelper',
+    'ViewHelper',
     'RoleEndpoint',
 function (
     $q,
@@ -16,7 +16,7 @@ function (
     SavedSearchEndpoint,
     _,
     Notify,
-    PostViewHelper,
+    ViewHelper,
     RoleEndpoint
 ) {
     return {
@@ -44,7 +44,7 @@ function (
                 $scope.roles = roles;
             });
 
-            $scope.views = PostViewHelper.views();
+            $scope.views = ViewHelper.views();
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 

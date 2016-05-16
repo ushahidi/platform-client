@@ -24,6 +24,7 @@ require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 
 // Load ushahidi modules
+require('./frame/frame-module.js');
 require('./common/common-module.js');
 require('./post/post-module.js');
 require('./activity/activity-module.js');
@@ -75,6 +76,7 @@ angular.module('app',
         'nvd3',
         'selectionModel',
         'angular-cache',
+        'ushahidi.frame',
         'ushahidi.common',
         'ushahidi.posts',
         'ushahidi.tools',

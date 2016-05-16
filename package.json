@@ -19,16 +19,16 @@
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
     "jscs": "gulp jscs",
-    "jscs-fix": "gulp jscs-fix"
+    "jscs-fix": "gulp jscsfix"
   },
   "pre-commit": [
     "jshint",
     "jscs"
   ],
   "devDependencies": {
-    "body-parser": "^1.9.2",
+    "body-parser": "^1.15.1",
     "brfs": "^1.2.0",
-    "browserify": "^11.0.1",
+    "browserify": "^13.0.1",
     "connect": "^3.4.0",
     "cors": "2.7.1",
     "dotenv": "^1.2.0",
@@ -101,7 +101,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "novus/nvd3#v1.7.1",
     "selection-model": "jtrussell/angular-selection-model.git",
-    "platform-pattern-library": "ushahidi/platform-pattern-library#gh-pages",
+    "platform-pattern-library": "ushahidi/platform-pattern-library#mustang",
     "transifex": "^1.4.3",
     "underscore": "^1.7.0"
   },
