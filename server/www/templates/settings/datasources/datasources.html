@@ -10,10 +10,10 @@
     <div class="listing card" ng-repeat="provider in providers.results | orderBy:'name'">
 
         <!-- TODO: fix active class toggle -->
-        <div class="listing-item active" is-open="panelVisible[provider.id]" ng-if="available_providers[provider.id]">
+        <div class="listing-item active" is-open="panelVisible[provider.id]"  dropdown auto-close="disabled" ng-if="available_providers[provider.id]">
 
             <div class="listing-item-secondary">
-                <button type="button" class="button-beta button-flat listing-item-toggle">
+                <button type="button" class="button-beta button-flat listing-item-toggle" dropdown-toggle>
                     <svg class="iconic">
                       <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                     </svg>
@@ -28,7 +28,7 @@
                 </h2>
             </div>
 
-            <div class="listing-item-body">
+            <div class="listing-item-body" dropdown-menu>
 
                 <div class="alert error" ng-if="forms[provider.id].$invalid">
                     <p translate>settings.data_sources.hint_plugin_needs_configuring</p>
