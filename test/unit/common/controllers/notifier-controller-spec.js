@@ -31,14 +31,14 @@ describe('notifier controller', function () {
         });
     });
 
-    it('should hide modal on confirmation result', function () {
+    it('should hide slider on confirmation result', function () {
         $scope.confirmResult('ok');
-        expect($scope.showModalConfirm).toEqual(false);
+        expect($scope.showConfirmationSlider).toEqual(false);
     });
 
-    it('should hide alerts modal on alert result', function () {
+    it('should hide alerts slider on alert result', function () {
         $scope.acknowledgeAlert();
-        expect($scope.showModalAlerts).toEqual(false);
+        expect($scope.showAlertSlider).toEqual(false);
     });
 
     it('should respond to event:show:notification-slider', function () {
@@ -47,15 +47,15 @@ describe('notifier controller', function () {
         expect($scope.notificationSliderMessage).toEqual('test');
     });
 
-    it('should respond to event:show:modal-alerts', function () {
+    it('should respond to event:show:alerts', function () {
         spyOn($rootScope, '$emit').and.callThrough();
-        $rootScope.$emit('event:show:modal-alerts', 'test');
-        expect($scope.modalAlertMessages).toEqual('test');
+        $rootScope.$emit('event:show:alerts', 'test');
+        expect($scope.alerts).toEqual('test');
     });
 
-    it('should respond to event:show:modal-confirm', function () {
+    it('should respond to event:show:message-confirm', function () {
         spyOn($rootScope, '$emit').and.callThrough();
-        $rootScope.$emit('event:show:modal-confirm', 'test');
-        expect($scope.modalConfirmMessage).toEqual('test');
+        $rootScope.$emit('event:show:message-confirm', 'test');
+        expect($scope.confirmationMessage).toEqual('test');
     });
 });
