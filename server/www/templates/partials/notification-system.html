@@ -1,64 +1,91 @@
 <div ng-controller="notifier">
-    <notification-slider visible="sliderIsVisible">
-      <div class="message-image confirmation" ng-show="isConfirmation">
-        <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#thumb-up"></use>
+    <notification-slider visible="showNotificationSlider">
+    <div class="message-body">
+      <p>{{notificationSliderMessage}}</p>
+
+      <button class="button-flat message-trigger"
+              ng-click="acknowledgeNotification()"
+              translate>
+        message.button.dismiss
+      </button>
+    </div>
+  </notification-slider>
+
+  <notification-slider visible="showConfirmationSlider">
+    <div class="message-image confirmation" ng-show="isSuccess">
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#thumb-up"></use>
+      </svg>
+    </div>
+
+    <div class="message-image error" ng-show="isAlert">
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+      </svg>
+    </div>
+
+    <div class="message-body">
+      <p>{{confirmationMessage}}</p>
+      <button class="button-beta button-flat"
+              ng-show="buttonText"
+              ng-click="emitCallbackEvent(callbackEvent)">
+        <svg class="iconic" ng-show="action === 'edit'">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
         </svg>
-      </div>
-
-      <div class="message-image error" ng-show="isError">
-        <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+        <svg class="iconic" ng-show="action === 'delete'">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
         </svg>
+
+        <span class="button-label">buttonText</span>
+      </button>
+
+      <button class="button-beta button-flat"
+              ng-show="!buttonText"
+              ng-click="emitCallbackEvent(callbackEvent)">
+        <span class="button-label" translate>message.button.default</span>
+      </button>
+
+      <button class="button-flat message-trigger"
+              ng-click="confirmResult(false)"
+              translate>
+        message.button.dismiss
+      </button>
+    </div>
+  </notification-slider>
+
+  <notification-slider visible="showAlertSlider">
+    <div class="message-image error" ng-show="isAlert">
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+      </svg>
+    </div>
+
+    <div class="message-body">
+      <div ng-repeat="alert in alerts">
+        {{alert}}
       </div>
 
-      <div class="message-body">
-        <p>{{notificationSliderMessage}}</p>
-        <button class="button-beta button-flat" ng-show="!!buttonText">
-          <svg class="iconic" ng-show="action === 'edit'">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
-          </svg>
-          <svg class="iconic" ng-show="action === 'delete'">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-          </svg>
+      <button class="button-flat message-trigger"
+              ng-show="isError"
+              ng-click="acknowledgeAlert()"
+              translate>
+        message.button.default
+      </button>
+    </div>
 
-          <span class="button-label">{{buttonText | translate}}</span>
-        </button>
+  </notification-slider>
 
-        <button class="button-flat message-trigger" ng-click="acknowledgeAlert()" translate>
-          message.button.dismiss
-        </button>
-      </div>
+  <notification-slider visible="showLimitSlider" >
+    <div class="message-image error" ng-show="isError">
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+      </svg>
+    </div>
 
-    </notification-slider>
-
-    <notification-slider visible="showLimitSlider" >
-        <h1 translate>limit.plan_limit</h1>
-        <div translate>{{limitSliderMessage}}</div>
-        <div class="divider padded"></div>
-        <a class="button" href="/settings/plan" translate>limit.upgrade</a>
-        <div class="divider white"></div>
-    </notification-slider>
-
-    <modal visible="showModalAlerts" title="notify.generic.alerts">
-
-        <div id="alert-modal-text" ng-repeat="alert in modalAlertMessages">
-            {{alert}}
-        </div>
-        <div class="modal-submit">
-            <button type="button" id="alert-modal-ok" class="button-primary" ng-click="acknowledgeAlert()" translate>notify.generic.okay</button>
-        </div>
-    </modal>
-
-    <modal visible="showModalConfirm" title="notify.generic.confirm">
-
-        <div id="confirm-modal-text">
-            {{modalConfirmMessage}}
-        </div>
-        <div class="modal-submit">
-            <button type="button" id="confirm-modal-ok" class="button-primary" ng-click="confirmResult(true)" translate>notify.generic.okay</button>
-            <button type="button" id="confirm-modal-cancel" class="button-primary" ng-click="confirmResult(false)" translate>notify.generic.cancel</button>
-        </div>
-    </modal>
-
+    <div class="message-body">
+      <p>{{limitSliderMessage}}</p>
+      <div class="divider padded"></div>
+      <a class="button" href="/settings/plan" translate>limit.upgrade</a>
+    </div>
+  </notification-slider>
 </div>

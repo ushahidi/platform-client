@@ -19,16 +19,26 @@ function ($window, _, $q, $rootScope) {
         $rootScope.$emit('event:show:limit-slider', message);
     };
 
-    var showAlerts = function (alertMessages) {
-        $rootScope.$emit('event:show:modal-alerts', alertMessages);
+    var showAlerts = function (error, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:alerts', error, callbackEvent, buttonText, action);
     };
 
-    var showErrorMessage = function (error, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:message-error', error, callbackEvent, buttonText, action);
+    var showConfirmMessage = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:message-confirm', message, callbackEvent, buttonText, action);
+        deffered = $q.defer();
+        return deffered.promise;
     };
 
-    var showConfirmationMessage = function (message, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:message-confirmation', message, callbackEvent, buttonText, action);
+    var showConfirmSuccess = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:success-confirm', message, callbackEvent, buttonText, action);
+        deffered = $q.defer();
+        return deffered.promise;
+    };
+
+    var showConfirmAlert = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:alert-confirm', message, callbackEvent, buttonText, action);
+        deffered = $q.defer();
+        return deffered.promise;
     };
 
     var showApiErrors = function (errorResponse) {
@@ -41,21 +51,17 @@ function ($window, _, $q, $rootScope) {
         result ? deffered.resolve(result) : deffered.reject(result);
     });
 
-    var showConfirm = function (confirmMessage) {
-        $rootScope.$emit('event:show:modal-confirm', confirmMessage);
-        deffered = $q.defer();
-        return deffered.promise;
-    };
-
     return {
         showSingleAlert: showSingleAlert,
         showNotificationSlider: showNotificationSlider,
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
-        showConfirm: showConfirm,
-        showLimitSlider: showLimitSlider,
-        showErrorMessage: showErrorMessage,
-        showConfirmationMessage: showConfirmationMessage
+        // TODO: Update showConfirm with either showConfirmMessage or showConfirmAlert
+        //showConfirm: showConfirm,
+        showConfirmMessage: showConfirmMessage,
+        showConfirmSuccess: showConfirmSuccess,
+        showConfirmAlert: showConfirmAlert,
+        showLimitSlider: showLimitSlider
     };
 
 }];
