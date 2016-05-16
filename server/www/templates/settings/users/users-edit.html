@@ -6,7 +6,7 @@
     <!-- toolbar -->
     <div class="toolbar">
         <div class="button-group">
-            <button type="button" class="button-flat" translate>app.cancel</button>
+            <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
             <button class="button-alpha" type="button" ng-click="saveUser(user)" type="submit" ng-disabled="form.$invalid" translate>
                 <div class="loading" ng-show="saving">
                     <div class="line"></div>

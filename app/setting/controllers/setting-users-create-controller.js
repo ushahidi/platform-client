@@ -62,6 +62,10 @@ function (
         });
     };
 
+    $scope.cancel = function () {
+        $location.path('/settings/users');
+    };
+
     RoleEndpoint.query().$promise.then(function (roles) {
         $scope.roles = roles;
     });

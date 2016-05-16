@@ -2,6 +2,7 @@ module.exports = [
     '$q',
     '$http',
     '$translate',
+    '$location',
     '$rootScope',
     'ConfigEndpoint',
     '_',
@@ -13,6 +14,7 @@ function (
     $q,
     $http,
     $translate,
+    $location,
     $rootScope,
     ConfigEndpoint,
     _,
@@ -122,6 +124,10 @@ function (
                     Notify.showApiErrors(errorResponse);
                     $scope.saving_config = false;
                 });
+            };
+
+            $scope.cancel = function () {
+                $location.path('/settings');
             };
         }
     };

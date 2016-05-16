@@ -3,6 +3,7 @@ module.exports = [
     '$rootScope',
     '$routeParams',
     '$translate',
+    '$location',
     'multiTranslate',
     'RoleEndpoint',
     'TagEndpoint',
@@ -14,6 +15,7 @@ function (
     $rootScope,
     $routeParams,
     $translate,
+    $location,
     multiTranslate,
     RoleEndpoint,
     TagEndpoint,
@@ -46,5 +48,9 @@ function (
             Notify.showApiErrors(errorResponse);
             $scope.saving = false;
         });
+    };
+
+    $scope.cancel = function () {
+        $location.path('/settings/categories');
     };
 }];
