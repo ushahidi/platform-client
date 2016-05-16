@@ -24,6 +24,7 @@ function (
         },
         templateUrl: 'templates/settings/settings-list.html',
         link: function ($scope, $element, $attrs) {
+            $scope.isAdmin = $rootScope.isAdmin;
             $scope.hasPermission = $rootScope.hasPermission;
             $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
 
