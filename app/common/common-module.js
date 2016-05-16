@@ -53,6 +53,11 @@ angular.module('ushahidi.common', [
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
+.directive('filterSystem', require('./directives/filter-system/filter-system.js'))
+.directive('filterUsers', require('./directives/filter-system/filter-users.js'))
+.directive('filterCategoriess', require('./directives/filter-system/filter-categories.js'))
+.directive('filterPosts', require('./directives/filter-system/filter-posts.js'))
+
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))
 .config(require('./configs/ui-bootstrap-template-decorators.js'))
