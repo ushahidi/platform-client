@@ -23,7 +23,9 @@ function (
             _
         ) {
             $scope.search_placeholder = 'toolbar.' + $scope.entityType + '.search_' + $scope.entityType;
-            $scope.query = {};
+            $scope.query = {
+                q: ''
+            };
 
             $scope.search = function (query) {
                 $scope.query.q = query;
