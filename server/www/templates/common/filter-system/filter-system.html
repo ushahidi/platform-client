@@ -1,4 +1,4 @@
-<form role="search" class="searchbar">
+<form role="search" class="searchbar" dropdown auto-close="outsideClick">
     <div class="searchbar-input">
         <div class="form-field search">
             <input type="search" placeholder="{{ search_placeholder|translate }}" ng-model="searchQuery" ng-keypress="($event.which === 13)?search(searchQuery):0">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="searchbar-options">
-        <a href="#" class="button searchbar-options-filter init" data-toggle="search-filters">
+        <a href="#" class="button searchbar-options-filter init" data-toggle="search-filters" dropdown-toggle>
             <span class="button-label" translate>app.filters</span>
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
@@ -17,7 +17,7 @@
         </a>
     </div>
 
-    <div class="dropdown-menu init" data-toggle-target="search-filters" ng-switch-when="entityType">
+    <div ng-switch="entityType">
         <filter-users ng-switch-when="users" users="entities" query="query"></filter-users>
         <filter-categories ng-switch-when="categories" categories="entities" query="query"></filter-categories>
         <filter-posts ng-switch-when="posts" posts="entities" query="query"></filter-posts>
