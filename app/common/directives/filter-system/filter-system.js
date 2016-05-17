@@ -22,13 +22,16 @@ function (
             RoleEndpoint,
             _
         ) {
-            $scope.search_placeholder = 'toolbar.' + $scope.entityType + '.search_' + $scope.entityType;
-            $scope.query = {
-                q: ''
+            $scope.searchResultsActive = false;
+
+            $scope.setSearchResultsActive = function () {
+                $scope.searchResultsActive = true;
             };
 
             $scope.search = function (query) {
-                $scope.query.q = query;
+                $scope.searchResultsActive = false;
+                $scope.filters.q = query;
+                $scope.queryFnc();
             };
 
         }];
@@ -38,7 +41,8 @@ function (
         templateUrl: 'templates/common/filter-system/filter-system.html',
         scope: {
             entityType: '=',
-            entities: '='
+            filters: '=',
+            queryFnc: '&'
         },
         controller: controller
     };

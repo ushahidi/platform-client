@@ -5,7 +5,7 @@
     <!-- toolbar -->
     <div class="toolbar">
         <div class="fab">
-            <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab" disabled>
+            <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab">
                 <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
                 </svg>
@@ -13,7 +13,7 @@
             </a>
         </div>
 
-       <filter-system entity-type="'users'" entities="users"></filter-system>
+       <filter-system entity-type="'users'" filters="filters" query-fnc="applyFilters()"></filter-system>
 
         <div class="button-group">
             <button type="button">
