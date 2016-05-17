@@ -1,12 +1,17 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     'initialData',
     '_',
 function (
     $scope,
+    $rootScope,
     initialData,
     _
 ) {
+
+    // Change layout class
+    $rootScope.setLayout('layout-c');
 
     $scope.required_fields = [];
     $scope.required_fields_map = {};
