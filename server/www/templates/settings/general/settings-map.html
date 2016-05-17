@@ -1,4 +1,9 @@
-<div>
+<div ng-if="mapSettingsReady">
+    <div class="form-field">
+        <label class="input-label" translate>settings.map_default_location</label>
+        <leaflet defaults="defaults" tiles="baselayer" markers="markers" center="center" height="300px" width="100%"></leaflet>
+    </div>
+
     <div class="form-field">
         <label translate>settings.map_default_baselayer</label>
         <select id="map-settings-base-layer" class="form-control" ng-model="map.default_view.baselayer" ng-options="index as layer.name for (index, layer) in baseLayers" ng-change="updateMapPreview()"></select>

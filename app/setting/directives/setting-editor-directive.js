@@ -36,7 +36,6 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
             $scope.map = {};
-            $scope.view = {};
 
             $scope.fileContainer = {
                 file : null
@@ -44,11 +43,6 @@ function (
 
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
-            });
-
-            $q.all([Maps.getAngularScopeParams(), Maps.getConfig()]).then(function (config) {
-                $scope.view = config[0];
-                $scope.map = config[1];
             });
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });

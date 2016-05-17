@@ -19,12 +19,10 @@ function (
         restrict: 'E',
         replace: true,
         scope: {
-            map: '=',
-            view: '='
+            map: '='
         },
         templateUrl: 'templates/settings/general/settings-map.html',
         link: function ($scope, $element, $attrs) {
-            $scope.saving_config = {};
             $scope.patternDigitsOnly = /^[0-9]+$/;
             $scope.patternFloat = /[-+]?(\d*[.])?\d+/;
 
@@ -33,53 +31,58 @@ function (
 
             $scope.minZoom = 0;
             $scope.maxZoom = 18;
+            $q.all([Maps.getAngularScopeParams(), Maps.getConfig()]).then(function (config) {
+                var view = config[0],
+                    map = config[1];
 
+                $scope.map = map;
 
-            $scope.baseLayers = $scope.view.layers.baselayers;
+                $scope.baseLayers = view.layers.baselayers;
 
-            // Create a draggable marker for changing the default center.
-            $scope.markers = {
-                dragger: {
-                    lat: $scope.map.default_view.lat,
-                    lng: $scope.map.default_view.lon,
-                    focus: true,
-                    draggable: true
-                }
-            };
-
-            // Get this map's available zoom levels.
-            $scope.getMapZoomLevels = function () {
-                leafletData.getMap().then(function (map) {
-                    $scope.minZoom = $scope.map.getMinZoom();
-                    $scope.maxZoom = $scope.map.getMaxZoom();
-                });
-            };
-
-            $scope.updateMapPreview = function () {
-                // Set the preview map's tileset to the current default.
-                $scope.baselayer = $scope.baseLayers[$scope.map.default_view.baselayer];
-
-                // Center the map at our current default.
-                $scope.center = {
-                    lat: $scope.map.default_view.lat,
-                    lng: $scope.map.default_view.lon,
-                    zoom: $scope.map.default_view.zoom
+                // Create a draggable marker for changing the default center.
+                $scope.markers = {
+                    dragger: {
+                        lat: map.default_view.lat,
+                        lng: map.default_view.lon,
+                        focus: true,
+                        draggable: true
+                    }
                 };
 
-                // Update our draggable marker to the default.
-                $scope.markers.dragger.lat = $scope.map.default_view.lat;
-                $scope.markers.dragger.lng = $scope.map.default_view.lon;
+                // Get this map's available zoom levels.
+                $scope.getMapZoomLevels = function () {
+                    leafletData.getMap().then(function (map) {
+                        $scope.minZoom = map.getMinZoom();
+                        $scope.maxZoom = map.getMaxZoom();
+                    });
+                };
 
-                // Set the zoom level to our default zoom.
-                leafletData.getMap().then(function (map) {
-                    map.setZoom(map.default_view.zoom);
-                });
-            };
+                $scope.updateMapPreview = function () {
+                    // Set the preview map's tileset to the current default.
+                    $scope.baselayer = $scope.baseLayers[map.default_view.baselayer];
 
-            $scope.getMapZoomLevels();
-            $scope.updateMapPreview();
+                    // Center the map at our current default.
+                    $scope.center = {
+                        lat: map.default_view.lat,
+                        lng: map.default_view.lon,
+                        zoom: map.default_view.zoom
+                    };
 
-            $scope.mapSettingsReady = true;
+                    // Update our draggable marker to the default.
+                    $scope.markers.dragger.lat = map.default_view.lat;
+                    $scope.markers.dragger.lng = map.default_view.lon;
+
+                    // Set the zoom level to our default zoom.
+                    leafletData.getMap().then(function (map) {
+                        map.setZoom($scope.map.default_view.zoom);
+                    });
+                };
+
+                $scope.getMapZoomLevels();
+                $scope.updateMapPreview();
+
+                $scope.mapSettingsReady = true;
+            });
 
             // Update our map defaults when the marker is dragged to a new spot.
             $scope.$on('leafletDirectiveMarker.dragend', function (event, args) {
