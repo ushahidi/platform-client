@@ -7,6 +7,7 @@ module.exports = [
     'ConfigEndpoint',
     '_',
     'Notify',
+    'Maps',
     'Util',
     'Languages',
     'Features',
@@ -19,6 +20,7 @@ function (
     ConfigEndpoint,
     _,
     Notify,
+    Maps,
     Util,
     Languages,
     Features
@@ -33,11 +35,20 @@ function (
         templateUrl: 'templates/settings/general/settings-editor.html',
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
+            $scope.map = {};
+            $scope.view = {};
+
             $scope.fileContainer = {
                 file : null
             };
+
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
+            });
+
+            $q.all([Maps.getAngularScopeParams(), Maps.getConfig()]).then(function (config) {
+                $scope.view = config[0];
+                $scope.map = config[1];
             });
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
@@ -110,7 +121,10 @@ function (
                 $scope.saving_config = true;
 
                 uploadHeaderImage().then(function () {
-                    ConfigEndpoint.saveCache($scope.site).$promise.then(function (result) {
+                    $q.all([
+                        ConfigEndpoint.saveCache($scope.site).$promise,
+                        ConfigEndpoint.saveCache($scope.map).$promise
+                    ]).then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
                         $translate('notify.general_settings.save_success').then(function (message) {
