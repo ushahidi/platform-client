@@ -216,7 +216,8 @@
         "role" : "Role",
         "roles" : "Roles",
         "views" : "Views",
-        "more" : "More"
+        "more" : "More",
+        "selected_items" : "{{selectedItems}} selected"
     },
     "views" : {
         "map" : "Map",
@@ -232,8 +233,6 @@
         "post" : "Post",
         "message" : "Message",
         "message_thread" : "Message Thread",
-        "publish_for_you" : "Just you",
-        "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
         "no_search_results" : "Your search didn't match any posts",
         "no_posts_yet" : "This are no posts yet!",
@@ -260,7 +259,6 @@
         "published" : "Published",
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
-        "who_can_see_this" : "Who can see this",
         "can_see_this_post" : "can see this post",
         "location" : "Location",
         "categories" : "Categories",
@@ -274,6 +272,9 @@
         "complete_published" : "Complete (Published)",
         "structure" : "Structure",
         "source" : "via {{source}}",
+        "visible_to_public": "This post is visible to the public",
+        "visible_to_you": "This post is visible to just you and admins",
+        "visible_to_roles": "This post is visible to {{roles}}",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete",
@@ -288,10 +289,6 @@
             "change_type" : "Change type",
             "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
             "save_post" : "Save Post",
-            "publish" : "Publish to...",
-            "publish_to" : "Publish to {{role}}",
-            "published_to" : "Published to {{role}}",
-            "unpublish" : "Revert to Draft",
             "everyone" : "Everyone",
             "back" : "Back",
             "contact_info": "Enter your contact info (optional)",
