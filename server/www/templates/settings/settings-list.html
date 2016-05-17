@@ -1,6 +1,7 @@
 <div class="main-col">
     <!-- mode-context needs to be in each template -->
     <mode-context></mode-context>
+    
     <div class="listing card init" ng-show="hasManageSettingsPermission()">
        <div class="listing-item" ng-show="hasPermission('Manage Settings')">
            <div class="listing-item-primary">
@@ -54,7 +55,7 @@
        <div class="listing-item" ng-show="planIsAvailable">
            <div class="listing-item-primary">
                <h2 class="listing-item-title"><a href="/settings/plan" translate>settings.settings_list.plan</a></h2>
-               <p class="listing-item-secondary"  translate-values="{current_plan: '{{tier}}'}" translate>settings.settingslist.plan_desc</p>
+               <p class="listing-item-secondary"  translate-values="{current_plan: '{{tier}}'}" translate>settings.settings_list.plan_desc</p>
            </div>
        </div>
    </div>

@@ -4,7 +4,7 @@
             {{title}}
         </span>
         <svg class="iconic chevron">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../../img/iconic-sprite.svg#chevron-bottom">
             </use>
         </svg>
     </legend>
@@ -12,9 +12,9 @@
         <!-- This block is used in permission mode -->
         <div ng-if="mode === 'permission'" class="form-fieldgroup">
             <div class="form-field radio">
-                <input 
-                    id="everyone" 
-                    type="radio" 
+                <input
+                    id="everyone"
+                    type="radio"
                     ng-checked="selectedRoles === []"
                     ng-click="toggleRole('')">
                 <label for="everyone" translate>post.publish_for_everyone</label>
@@ -22,16 +22,16 @@
         </div>
         <div class="form-fieldgroup">
             <div class="form-field {{fieldType}}" ng-repeat="role in roles">
-                <input ng-if="mode === 'permission'" 
-                    type="checkbox" 
-                    id="{{role.id}}" 
-                    checklist-model="selectedRoles" 
+                <input ng-if="mode === 'permission'"
+                    type="checkbox"
+                    id="{{role.id}}"
+                    checklist-model="selectedRoles"
                     checklist-value="role.name"
                     ng-click="toggleRole(role.name)">
 
-                <input ng-if="mode === 'role'" 
-                    type="radio" 
-                    id="{{role.id}}" 
+                <input ng-if="mode === 'role'"
+                    type="radio"
+                    id="{{role.id}}"
                     ng-click="toggleRole(role)">
 
                 <label for="{{role.id}}">
