@@ -1,6 +1,7 @@
 module.exports = [
     '$q',
     '$scope',
+    '$rootScope',
     '$translate',
     'ConfigEndpoint',
     'DataProviderEndpoint',
@@ -10,6 +11,7 @@ module.exports = [
 function (
     $q,
     $scope,
+    $rootScope,
     $translate,
     ConfigEndpoint,
     DataProviderEndpoint,
@@ -17,6 +19,9 @@ function (
     _,
     Features
 ) {
+
+    // Change layout class
+    $rootScope.setLayout('layout-c');
 
     // Displays a loading indicator when busy querying endpoints.
     $scope.saving = false;

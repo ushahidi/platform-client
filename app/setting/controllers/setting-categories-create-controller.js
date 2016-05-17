@@ -52,4 +52,8 @@ function (
             $scope.processing = false;
         });
     };
+
+    $scope.cancel = function () {
+        $location.path('/settings/categories');
+    };
 }];

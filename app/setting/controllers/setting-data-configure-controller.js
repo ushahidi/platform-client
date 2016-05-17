@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$q',
     'Notify',
@@ -7,11 +8,16 @@ module.exports = [
     '_',
 function (
     $scope,
+    $rootScope,
     $translate,
     $q,
     Notify,
     DataRetriever,
     _
 ) {
+
+    // Change layout class
+    $rootScope.setLayout('layout-c');
+
     $scope.csv = DataRetriever.getImportData();
 }];

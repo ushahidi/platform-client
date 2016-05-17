@@ -66,6 +66,12 @@ function (
         $rootScope.globalLayout = layout;
     };
 
+    // Setup PL modal visible and switching function
+    $rootScope.modalVisible = false;
+    $rootScope.toggleModalVisible = function () {
+        $rootScope.modalVisible = !$rootScope.modalVisible;
+    };
+
     $rootScope.$on('event:authentication:login:succeeded', function () {
         doLogin(Session.getSessionDataEntry('loginPath') || '/');
     });

@@ -1,0 +1,109 @@
+<div class="main-col">
+
+    <!-- mode-context needs to be in each template -->
+    <mode-context></mode-context>
+
+    <!-- toolbar -->
+    <div class="toolbar">
+        <div class="fab">
+            <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab" disabled>
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                </svg>
+                <span class="hidden" translate>user.add_user</span>
+            </a>
+        </div>
+
+        <form role="search" class="searchbar">
+            <div class="searchbar-input">
+                <div class="form-field search">
+                    <input type="search" placeholder="Search users">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="searchbar-options">
+                <a href="#" class="button searchbar-options-filter init" data-toggle="search-filters">
+                    <span class="button-label">Filters</span>
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="dropdown-menu init" data-toggle-target="search-filters">
+                <div class="dropdown-menu init" data-toggle-target="search-filters">
+                    <div class="dropdown-menu-body">
+                        <fieldset>
+                            <legend>Roles</legend>
+
+                            <div class="form-field checkbox">
+                                <label for="member" class="checked">
+                                    <input type="checkbox" name="member" checked="" id="member"> Member
+                                </label>
+                            </div>
+                            <div class="form-field checkbox">
+                                <label for="editor" class="checked">
+                                    <input type="checkbox" name="editor" checked="" value="Police encounters" id="editor"> Editor
+                                </label>
+                            </div>
+                            <div class="form-field checkbox">
+                                <label for="administrator" class="checked">
+                                    <input type="checkbox" name="administrator" checked="" id="administrator"> Administrator
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-field">
+                        <button type="button" class="button-link" disabled="">app.cancel</button>
+                        <button type="button" class="button-alpha" disabled="">Apply filters</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="button-group">
+            <button type="button">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
+                </svg>
+                <span class="button-label" translate>nav.export</span>
+            </button>
+        </div>
+    </div>
+    <!-- end toolbar -->
+
+    <div class="listing card" ng-class="{'toolbar-active': selectedUsers.length}">
+        <div class="alert" ng-hide="users.length">
+            <p ng-hide="users.length"><em translate>empty.user</em></p>
+        </div>
+
+        <div id="user-{{user.id}}" class="listing-item" ng-repeat="user in users | orderBy:'realname'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
+            <div class="listing-item-select">
+                <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
+            </div>
+
+            <div class="listing-item-primary">
+                <div class="listing-item-image">
+                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
+                </div>
+
+                <h2 class="listing-item-title"><a ng-href="/settings/users/{{user.id}}">{{user.realname}}</a></h2>
+                <p class="listing-item-secondary">{{ user.role }}</p>
+            </div>
+        </div>
+        <listing-toolbar
+            delete-func="deleteUsers()"
+            change-role-func="changeRole(role)"
+            role-enabled="true"
+            entities="users"
+            selected-set="selectedUsers"
+            role-mode="'role'"></listing-toolbar>
+     </div>
+
+   <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+
+</div>

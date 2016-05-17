@@ -36,16 +36,16 @@ function (
         $scope.passwordShown = true;
     };
 
-    $scope.processing = false;
+    $scope.saving = false;
 
     $scope.saveUser = function (user) {
-        $scope.processing = true;
+        $scope.saving = true;
         UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
                 $translate('notify.user.edit_success', {name: user.realname}).then(function (message) {
                     Notify.showNotificationSlider(message);
                 });
-                $scope.processing = false;
+                $scope.saving = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
             }
@@ -67,8 +67,12 @@ function (
 
             Notify.showApiErrors(validationErrors);
 
-            $scope.processing = false;
+            $scope.saving = false;
         });
+    };
+
+    $scope.cancel = function () {
+        $location.path('/settings/users');
     };
 
     RoleEndpoint.query().$promise.then(function (roles) {

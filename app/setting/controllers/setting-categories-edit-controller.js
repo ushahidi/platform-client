@@ -3,6 +3,7 @@ module.exports = [
     '$rootScope',
     '$routeParams',
     '$translate',
+    '$location',
     'multiTranslate',
     'RoleEndpoint',
     'TagEndpoint',
@@ -14,6 +15,7 @@ function (
     $rootScope,
     $routeParams,
     $translate,
+    $location,
     multiTranslate,
     RoleEndpoint,
     TagEndpoint,
@@ -32,10 +34,10 @@ function (
     });
 
     $scope.tag = TagEndpoint.getFresh({id: $routeParams.id});
-    $scope.processing = false;
+    $scope.saving = false;
 
     $scope.saveTag = function (tag) {
-        $scope.processing = true;
+        $scope.saving = true;
         // @todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {
             $rootScope.goBack();
@@ -44,7 +46,11 @@ function (
             });
         }, function (errorResponse) { // error
             Notify.showApiErrors(errorResponse);
-            $scope.processing = false;
+            $scope.saving = false;
         });
+    };
+
+    $scope.cancel = function () {
+        $location.path('/settings/categories');
     };
 }];
