@@ -14,8 +14,9 @@
         "roles" : "Roles"
     },
     "toolbar": {
-        "users" : {
-            "search_users" : "Search users",
+        "searchbar" : {
+            "search_entity" : "Search {{entity}}",
+            "search_all_entities_for" : "Search all {{entity}} for "
         }
     },
     "feature_limits": {

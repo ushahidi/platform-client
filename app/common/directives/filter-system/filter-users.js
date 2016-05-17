@@ -21,23 +21,18 @@ function (
             UserEndpoint,
             _
         ) {
+            $scope.selectedRoles = [];
             RoleEndpoint.query().$promise.then(function (roles) {
                 $scope.roles = roles;
             });
 
             $scope.cancel = function () {
+                //TODO: check expected behaviour - should close dropdown
             };
 
             $scope.applyFilters = function () {
-                UserEndpoint.queryFresh({
-                    offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-                    limit: $scope.itemsPerPage,
-                    role: $scope.filter.role,
-                    q: $scope.filter.q
-                }).$promise.then(function (usersResponse) {
-                    $scope.users = usersResponse.results;
-                    $scope.totalItems = usersResponse.total_count;
-                });
+                $scope.filters.roles = $scope.selectedRoles;
+                $scope.queryFnc();
             };
         }];
     return {
@@ -45,8 +40,8 @@ function (
         replace: true,
         templateUrl: 'templates/common/filter-system/filter-users.html',
         scope: {
-            query: '=',
-            users: '='
+            filters: '=',
+            queryFnc: '&'
         },
         controller: controller
     };
