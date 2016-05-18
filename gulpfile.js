@@ -20,7 +20,9 @@ var gulp         = require('gulp'),
     gzip         = require('gulp-gzip'),
     jscs         = require('gulp-jscs'),
     dotenv       = require('dotenv'),
-    Transifex    = require('transifex');
+    Transifex    = require('transifex'),
+    // default is required on gulp=sort-json via "Usage" requirements - https://github.com/jwbay/gulp-json-sort#usage
+    sortJSON     = require('gulp-sort-json');
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
@@ -174,6 +176,7 @@ gulp.task('copy-leaflet-icons', [], function () {
         .pipe(gulp.dest(options.www + '/img'));
 });
 
+
 gulp.task('rename', [
     'copy-leaflet-icons'
     ], function () {});
@@ -187,6 +190,18 @@ gulp.task('font', function () {
         .pipe(gulp.dest(options.www + '/fonts'))
         .pipe(livereload())
         ;
+});
+
+/**
+ * Task: `sort-json`
+ * Sorts JSON locales alphabetically.
+ */
+gulp.task('sort-json', function() {
+    return gulp.src(['app/common/locales/fake.json'])
+        .pipe(sortJSON( { space: 2 } ))
+        .pipe(gulp.dest('app/common/locales/'));
+
+        // return sortJSON( { space: 2 } );
 });
 
 /**
