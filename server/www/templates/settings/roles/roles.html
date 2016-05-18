@@ -4,20 +4,20 @@
 
     <main role="main">
 
-        <div custom-roles class="main-col">
-
-            <!-- toolbar -->
-            <div class="toolbar">
-                <div class="fab" ng-show="rolesEnabled">
-                    <a ng-href="/settings/roles/create" type="button" class="button button-alpha button-fab">
-                        <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
-                        </svg>
-                        <span class="hidden" translate>role.add_role</span>
-                    </a>
-                </div>
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="fab" ng-show="rolesEnabled">
+                <a ng-href="/settings/roles/create" type="button" class="button button-alpha button-fab">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    <span class="hidden" translate>role.add_role</span>
+                </a>
             </div>
-            <!-- end toolbar -->
+        </div>
+        <!-- end toolbar -->
+
+        <div custom-roles class="main-col">
 
             <div class="alert" ng-show="!rolesEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom roles'}"></div>
 
