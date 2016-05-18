@@ -1,107 +1,113 @@
-<div class="main-col">
-
+<div>
     <!-- mode-context needs to be in each template -->
     <mode-context></mode-context>
 
-    <!-- toolbar -->
-    <div class="toolbar">
-        <div class="fab">
-            <a ng-href="/settings/categories/create" type="button" class="button button-alpha button-fab">
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
-                </svg>
-                <span class="hidden" translate>category.add_category</span>
-            </a>
-        </div>
+    <main role="main">
 
-        <form role="search" class="searchbar">
-            <div class="searchbar-input">
-                <div class="form-field search">
-                    <input type="search" placeholder="Search categories">
-                    <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
-                    </svg>
+        <div class="main-col">
+
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="fab">
+                    <a ng-href="/settings/categories/create" type="button" class="button button-alpha button-fab">
+                        <svg class="iconic">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                        </svg>
+                        <span class="hidden" translate>category.add_category</span>
+                    </a>
                 </div>
-            </div>
 
-            <div class="searchbar-options">
-                <a href="#" class="button searchbar-options-filter init" data-toggle="search-filters">
-                    <span class="button-label">Filters</span>
-                    <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="dropdown-menu init" data-toggle-target="search-filters">
-                <div class="dropdown-menu init" data-toggle-target="search-filters">
-                    <div class="dropdown-menu-body">
-                        <fieldset>
-                            <legend>Roles</legend>
-
-                            <div class="form-field checkbox">
-                                <label for="member" class="checked">
-                                    <input type="checkbox" name="member" checked="" id="member"> Member
-                                </label>
-                            </div>
-                            <div class="form-field checkbox">
-                                <label for="editor" class="checked">
-                                    <input type="checkbox" name="editor" checked="" value="Police encounters" id="editor"> Editor
-                                </label>
-                            </div>
-                            <div class="form-field checkbox">
-                                <label for="administrator" class="checked">
-                                    <input type="checkbox" name="administrator" checked="" id="administrator"> Administrator
-                                </label>
-                            </div>
-                        </fieldset>
+                <form role="search" class="searchbar">
+                    <div class="searchbar-input">
+                        <div class="form-field search">
+                            <input type="search" placeholder="Search categories">
+                            <svg class="iconic">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+                            </svg>
+                        </div>
                     </div>
 
-                    <div class="form-field">
-                        <button type="button" class="button-link" disabled="" translate>app.cancel</button>
-                        <button type="button" class="button-alpha" disabled="">Apply filters</button>
+                    <div class="searchbar-options">
+                        <a href="#" class="button searchbar-options-filter init" data-toggle="search-filters">
+                            <span class="button-label">Filters</span>
+                            <svg class="iconic">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </a>
                     </div>
+
+                    <div class="dropdown-menu init" data-toggle-target="search-filters">
+                        <div class="dropdown-menu init" data-toggle-target="search-filters">
+                            <div class="dropdown-menu-body">
+                                <fieldset>
+                                    <legend>Roles</legend>
+
+                                    <div class="form-field checkbox">
+                                        <label for="member" class="checked">
+                                            <input type="checkbox" name="member" checked="" id="member"> Member
+                                        </label>
+                                    </div>
+                                    <div class="form-field checkbox">
+                                        <label for="editor" class="checked">
+                                            <input type="checkbox" name="editor" checked="" value="Police encounters" id="editor"> Editor
+                                        </label>
+                                    </div>
+                                    <div class="form-field checkbox">
+                                        <label for="administrator" class="checked">
+                                            <input type="checkbox" name="administrator" checked="" id="administrator"> Administrator
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="form-field">
+                                <button type="button" class="button-link" disabled="" translate>app.cancel</button>
+                                <button type="button" class="button-alpha" disabled="">Apply filters</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="button-group">
+                    <button type="button">
+                        <svg class="iconic">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
+                        </svg>
+                        <span class="button-label" translate>nav.export</span>
+                    </button>
                 </div>
             </div>
-        </form>
+            <!-- end toolbar -->
 
-        <div class="button-group">
-            <button type="button">
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
-                </svg>
-                <span class="button-label" translate>nav.export</span>
-            </button>
+            <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
+                <div class="alert" ng-hide="categories.length">
+                    <p ng-hide="categories.length"><em translate>empty.category</em></p>
+                </div>
+
+                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
+
+                    <div class="listing-item-select">
+                        <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title"><a ng-href="/settings/categories/{{category.id}}">{{category.tag}}</a></h2>
+                        <p class="listing-item-secondary">{{category.description}}</p>
+                    </div>
+
+                </div>
+
+                <listing-toolbar
+                    delete-func="deleteCategories()"
+                    entities="categories"
+                    selected-set="selectedCategories"
+                    ></listing-toolbar>
+
+           </div>
+
+           <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+
         </div>
-    </div>
-    <!-- end toolbar -->
 
-    <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
-        <div class="alert" ng-hide="categories.length">
-            <p ng-hide="categories.length"><em translate>empty.category</em></p>
-        </div>
-
-        <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
-
-            <div class="listing-item-select">
-                <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
-            </div>
-
-            <div class="listing-item-primary">
-                <h2 class="listing-item-title"><a ng-href="/settings/categories/{{category.id}}">{{category.tag}}</a></h2>
-                <p class="listing-item-secondary">{{category.description}}</p>
-            </div>
-
-        </div>
-
-        <listing-toolbar
-            delete-func="deleteCategories()"
-            entities="categories"
-            selected-set="selectedCategories"
-            ></listing-toolbar>
-
-   </div>
-
-   <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
-
+    </main>
 </div>

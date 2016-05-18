@@ -1,29 +1,35 @@
-<div class="main-col">
-
+<div>
     <!-- mode-context needs to be in each template -->
     <mode-context></mode-context>
 
-    <ol class="progress">
-       <li translate>data_import.choose_file</li>
-       <li translate>data_import.organize_data</li>
-       <li class="active" translate>data_import.configure_posts</li>
-    </ol>
+    <main role="main">
 
-    <div class="form-sheet">
+        <div class="main-col">
 
-        <div class="form-sheet-summary">
-            <h2 class="form-sheet-title" translate>data_import.configure_all_imported_posts</h2>
-            <p translate>data_import.configure_explanation</p>
+            <ol class="progress">
+               <li translate>data_import.choose_file</li>
+               <li translate>data_import.organize_data</li>
+               <li class="active" translate>data_import.configure_posts</li>
+            </ol>
+
+            <div class="form-sheet">
+
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate>data_import.configure_all_imported_posts</h2>
+                    <p translate>data_import.configure_explanation</p>
+                </div>
+
+                <form>
+                    <post-editor post="post" attributes-to-ignore="csv.maps_to" post-mode="postMode"></post-editor>
+
+                    <div class="form-field">
+                        <button type="button" class="button-link" ng-click="cancelImport()" translate>data_import.cancel_import</button>
+                        <button type="button" class="button-alpha" ng-click="submitMappings()" translate>data_import.finish_import</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
 
-        <form>
-            <post-editor post="post" attributes-to-ignore="csv.maps_to" post-mode="postMode"></post-editor>
-
-            <div class="form-field">
-                <button type="button" class="button-link" ng-click="cancelImport()" translate>data_import.cancel_import</button>
-                <button type="button" class="button-alpha" ng-click="submitMappings()" translate>data_import.finish_import</button>
-            </div>
-        </form>
-
-    </div>
+    </main>
 </div>
