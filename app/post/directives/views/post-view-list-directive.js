@@ -34,11 +34,19 @@ function (
                 $scope.isLoading = true;
                 PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                     $scope.posts = postsResponse.results;
-                    var now = moment();
+                    var now = moment(),
+                        yesterday = moment().subtract(1, 'days');
+
                     $scope.groupedPosts = _.groupBy(postsResponse.results, function (post) {
                         var created = moment(post.created);
                         // @todo translate today
-                        return now.isSame(created, 'd') ? 'Today' : created.fromNow();
+                        if (now.isSame(created, 'd')) {
+                            return 'Today';
+                        } else if (yesterday.isSame(created, 'd')) {
+                            return 'Yesterday';
+                        } else {
+                            return created.fromNow();
+                        }
                     });
                     $scope.totalItems = postsResponse.total_count;
                     $scope.isLoading = false;
