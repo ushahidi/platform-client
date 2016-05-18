@@ -11,6 +11,7 @@ function (
         'Notify',
         '_',
         'ConfigEndpoint',
+        'moment',
         function (
             $scope,
             $q,
@@ -20,7 +21,8 @@ function (
             Session,
             Notify,
             _,
-            ConfigEndpoint
+            ConfigEndpoint,
+            moment
         ) {
             var getPostsForPagination = function (query) {
                 query = query || $scope.filters;
@@ -32,6 +34,12 @@ function (
                 $scope.isLoading = true;
                 PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                     $scope.posts = postsResponse.results;
+                    var now = moment();
+                    $scope.groupedPosts = _.groupBy(postsResponse.results, function (post) {
+                        var created = moment(post.created);
+                        // @todo translate today
+                        return now.isSame(created, 'd') ? 'Today' : created.fromNow();
+                    });
                     $scope.totalItems = postsResponse.total_count;
                     $scope.isLoading = false;
                 });

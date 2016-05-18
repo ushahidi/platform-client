@@ -3,12 +3,15 @@
     <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedItems > 0 }">
 
         <!-- todo: group by dates -->
-        <h2 class="listing-heading-section">Today</h2>
+        <h2 class="listing-heading-section" ng-repeat-start="(timeAgo, posts) in groupedPosts">
+            {{ timeAgo }}
+        </h2>
 
-        <post-card
+        <post-card ng-repeat-end
             ng-repeat="post in posts"
             can-select="userHasBulkActionPermissions()"
             post="post"
+            selected-posts="selectedPosts"
         >
         </post-card>
 

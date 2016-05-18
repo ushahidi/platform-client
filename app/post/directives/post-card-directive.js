@@ -10,6 +10,7 @@ module.exports = [
     'FormStageEndpoint',
     'Notify',
     '_',
+    'moment',
 function (
     $translate,
     $q,
@@ -21,7 +22,8 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     Notify,
-    _
+    _,
+    moment
 ) {
     var getCurrentStage = function (post) {
         var dfd = $q.defer();
@@ -113,6 +115,19 @@ function (
                     $scope.post.form = form;
                 });
             }
+
+            var created = moment($scope.post.created),
+                weekAgo =
+                now = moment();
+
+            if (now.isSame(created, 'day')) {
+                $scope.displayTime = created.fromNow();
+            } else if (now.isSame(created, 'week')) {
+                $scope.displayTime = created.format('LT');
+            } else {
+                $scope.displayTime = created.format('LL');
+            }
+            $scope.displayTimeFull = created.format('LLL');
         }
     };
 

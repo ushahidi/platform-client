@@ -10,7 +10,7 @@
             <!-- todo: cleanup / combine this line into a single translation string -->
             <span ng-show="post.user" class="metadata-author"><img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">{{ post.user.realname }}</span>
 
-            {{ post.updated || post.created | date: 'medium' }}
+            <span title="{{ displayTimeFull }}">{{ displayTime }}</span>
 
             <span translate-values="{ source : post.source }" translate="post.source"></span>
 
