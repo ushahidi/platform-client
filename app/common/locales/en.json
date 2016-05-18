@@ -170,6 +170,7 @@
         "comments" : "Comments",
         "data_sources" : "Data Sources",
         "data_import" : "Data Import",
+        "deselect" : "Deselect",
         "edit_profile" : "Edit Profile",
         "edit_post_type": "Edit Post Type",
         "export": "Export",
@@ -205,7 +206,8 @@
         "roles" : "Roles",
         "saved_searches" : "Saved Searches",
         "search" : "Search",
-        "select_all" : "Select All",
+        "select_all" : "Select all",
+        "selected_items" : "{{selectedItems}} selected",
         "settings" : "Settings",
         "tags" : "Categories",
         "general" : "General Settings",
@@ -216,8 +218,7 @@
         "role" : "Role",
         "roles" : "Roles",
         "views" : "Views",
-        "more" : "More",
-        "selected_items" : "{{selectedItems}} selected"
+        "more" : "More"
     },
     "views" : {
         "map" : "Map",
@@ -403,8 +404,6 @@
     "category": {
         "add_tag" : "Add Category",
         "save_add_another" : "Save & Add Another",
-        "selected" : "selected",
-        "deselect" : "Deselect",
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
         "delete_category_desc" : "<strong>If you delete this category</strong>, ...",
@@ -581,9 +580,6 @@
         "role" : "Role: ",
         "roles" : "Roles",
         "saved_user": "User saved",
-        "selected" : "selected",
-        "deselect" : "Deselect",
-        "select_all" : "Select All",
         "deleted_user": "User deleted",
         "search_and_filter" : "Search & Filter Users",
         "passwordreset_instructions" : "Enter your email to request a password reset",

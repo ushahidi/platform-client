@@ -43,16 +43,7 @@ function (
                     $scope.totalItems = postsResponse.total_count;
                     $scope.isLoading = false;
                 });
-            },
-            handleResponseErrors = function (errorResponse) {
-                Notify.showApiErrors(errorResponse);
-            },
-            handleSuccess = function () {
-                $translate('notify.post.destroy_success_bulk').then(function (message) {
-                    Notify.showNotificationSlider(message);
-                });
             };
-
 
             // whenever the filters changes, update the current list of posts
             $scope.$watch(function () {
@@ -63,25 +54,30 @@ function (
                 }
             });
 
-            $scope.$on('event:post:selection', function (event, post) {
-                (post.selected ? $scope.selectedItems++ : $scope.selectedItems--);
-                (post.selected ? $scope.selectedPosts.push(post) : $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id})));
-            });
-
             $scope.deleteSelectedPosts = function () {
-
-                $translate('notify.post.destroy_confirm').then(function (message) {
+                $translate('notify.post.destroy_confirm', {
+                    count: $scope.selectedPosts.length
+                }).then(function (message) {
                     Notify.showConfirm(message).then(function () {
+
+                        var handleDeleteErrors = function (errorResponse) {
+                            Notify.showApiErrors(errorResponse);
+                        },
+                        handleDeleteSuccess = function () {
+                            $translate('notify.post.destroy_success_bulk').then(function (message) {
+                                Notify.showNotificationSlider(message);
+                            });
+                        };
+
                         // ask server to delete selected posts
                         // and refetch posts from server
                         var deletePostsPromises = _.map(
                             $scope.selectedPosts,
-                            function (post) {
-                                $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id}));
-                                $scope.selectedItems--;
-                                return PostEndpoint.delete({ id: post.id }).$promise;
+                            function (postId) {
+                                $scope.selectedPosts = _.without($scope.selectedPosts, postId);
+                                return PostEndpoint.delete({ id: postId }).$promise;
                             });
-                        $q.all(deletePostsPromises).then(handleSuccess, handleResponseErrors)
+                        $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
                         .finally(getPostsForPagination);
                     });
                 });
@@ -92,32 +88,11 @@ function (
                 getPostsForPagination();
             };
 
+            // @todo reconsider: show this for ALL logged in users??
             $scope.userHasBulkActionPermissions = function () {
                 return _.any($scope.posts, function (post) {
                     return _.intersection(post.allowed_privileges, ['update', 'delete', 'change_status']).length > 0;
                 });
-            };
-
-            $scope.unselectAllPosts = function ($event) {
-                $event && $event.preventDefault();
-                _.forEach($scope.posts, function (post) {
-                    post.selected = false;
-                    $scope.selectedPosts = _.without($scope.selectedPosts, _.findWhere($scope.selectedPosts, {id: post.id}));
-                    $scope.selectedItems--;
-                });
-            };
-
-            $scope.selectAllPosts = function ($event) {
-                $event && $event.preventDefault();
-                _.forEach($scope.posts, function (post) {
-                    post.selected = true;
-                    $scope.selectedPosts.push(post);
-                    $scope.selectedItems++;
-                });
-            };
-
-            $scope.allSelectedOnCurrentPage = function ($event) {
-                return $scope.selectedItems === $scope.posts.length;
             };
 
             $scope.exportPosts = function () {
@@ -169,7 +144,6 @@ function (
             // --- start: initialization
             $scope.pageChanged = getPostsForPagination;
             $scope.currentPage = 1;
-            $scope.selectedItems = 0;
             $scope.selectedPosts = [];
             $scope.itemsPerPageOptions = [10, 20, 50];
             $scope.itemsPerPage = $scope.itemsPerPageOptions[0];

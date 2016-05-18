@@ -1,6 +1,6 @@
 <div class="main-col">
 
-    <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedItems > 0 }">
+    <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
 
         <!-- todo: group by dates -->
         <h2 class="listing-heading-section" ng-repeat-start="(timeAgo, posts) in groupedPosts">
@@ -15,62 +15,12 @@
         >
         </post-card>
 
-        <div class="listing-toolbar truncated" ng-if="userHasBulkActionPermissions()">
-            <div class="listing-toolbar-summary">
-                <!-- todo: untranslatable-->
-                <strong translate="nav.selected_items" translate-value="{ selectedItems : selectedItems }"></strong>
-                <button class="button-link" ng-click="unselectAllPosts($event)">Deselect</button>
-            </div>
-
-            <div class="listing-toolbar-actions">
-
-                <!-- <fieldset class="custom-fieldset init">
-                    <legend class="dropdown-trigger init" data-toggle="dropdown-menu"><span class="legend-label">Mark as</span><svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use></svg></legend>
-
-                    <div class="dropdown-menu init"><div class="form-field radio">
-                        <label for="contributor">
-                            <input type="radio" name="role" id="contributor">
-                            Spam
-                        </label>
-                    </div><div class="form-field radio">
-                        <label for="editor">
-                            <input type="radio" name="role" id="editor">
-                            Duplicates
-                        </label>
-                    </div></div>
-
-
-                </fieldset> -->
-
-                <button type="button" class="button-beta" data-modal="add-to-collection">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
-                    </svg>
-                    <span class="button-label">Add to Collection</span>
-                </button>
-
-                <button type="button" class="button-destructive">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-                    </svg>
-                    <span class="button-label hidden" translate="nav.delete">Delete</span>
-                </button>
-
-                <button type="button" class="listing-toolbar-toggle more">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
-                    </svg>
-                    <span class="button-label">Show more</span>
-                </button>
-
-                <button type="button" class="listing-toolbar-toggle less">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#x"></use>
-                    </svg>
-                    <span class="button-label">Show less</span>
-                </button>
-            </div>
-        </div>
+        <listing-toolbar
+            delete-func="deletePosts()"
+            entities="posts"
+            selected-set="selectedPosts"
+            collection-enabled="true"
+            ></listing-toolbar>
 
         <!-- todo: check style -->
         <div class="list-item" ng-if="posts.length == 0 && hasFilters()">

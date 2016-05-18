@@ -74,14 +74,11 @@ function (
         replace: true,
         scope: {
             post:  '=',
-            canSelect: '='
+            canSelect: '=',
+            selectedPosts: '='
         },
         templateUrl: 'templates/posts/card.html',
         link: function ($scope) {
-            $scope.updateSelectedItems = function () {
-                $rootScope.$broadcast('event:post:selection', $scope.post);
-            };
-
             $scope.visibleTo = visibleTo($scope.post);
 
             // Format source (fixme!)
