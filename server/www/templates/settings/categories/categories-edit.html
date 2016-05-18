@@ -1,81 +1,86 @@
-<div custom-categorys-editor class="main-col">
-
+<div>
     <!-- mode-context needs to be in each template -->
     <mode-context></mode-context>
 
-    <!-- toolbar -->
-    <div class="toolbar">
-        <div class="button-group">
-            <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-            <button class="button-alpha" type="button" ng-click="saveCategory(category)" type="submit" ng-disabled="form.$invalid" translate>
-                <div class="loading" ng-show="saving">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
+    <main role="main">
+
+        <div custom-categorys-editor class="main-col">
+
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                    <button class="button-alpha" type="button" ng-click="saveCategory(category)" type="submit" ng-disabled="form.$invalid" translate>
+                        <div class="loading" ng-show="saving">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span ng-hide="saving" translate>app.save</span>
+                    </button>
                 </div>
-                <span ng-hide="saving" translate>app.save</span>
-            </button>
-        </div>
-    </div>
-    <!-- end toolbar -->
-
-    <form>
-        <div class="form-sheet">
-           <div class="form-field title">
-               <label class="hidden" translate>category.editor.name</label>
-               <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.tag" required>
-           </div>
-
-            <div class="form-field form-field-adapt">
-                <label translate>category.editor.description</label>
-                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
             </div>
+            <!-- end toolbar -->
 
-            <fieldset class="custom-fieldset init" data-fieldset-type="color">
-                <legend class="dropdown-trigger init" data-toggle="dropdown-menu"><span class="swatch" style="background-color: #8D1919;"></span>Color<svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use></svg></legend>
+            <form>
+                <div class="form-sheet">
+                   <div class="form-field title">
+                       <label class="hidden" translate>category.editor.name</label>
+                       <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.tag" required>
+                   </div>
 
-                <div class="dropdown-menu init"><div class="form-field">
-                    <label>Hex value</label>
-                    <input type="text" data-input-type="color" value="8D1919">
-                </div><div class="form-field">
-                    <button class="button-gamma" data-button-type="color" value="8D1919" disabled="" style="border-top-color: #8D1919;">Red</button>
-                    <button class="button-gamma" data-button-type="color" value="CB872E" style="border-top-color: #CB872E;">Orange</button>
-                    <button class="button-gamma" data-button-type="color" value="2274B4" style="border-top-color: #2274B4;">Blue</button>
-                    <button class="button-gamma" data-button-type="color" value="517923" style="border-top-color: #517923;">Green</button>
-                </div></div>
-            </fieldset>
-
-            <div class="form-field select">
-                <label>
-                    <div class="custom-select">
-                        <select ng-options="role.name as role.display_name for role in roles" ng-model="">
-                            <option value="" translate>post.modify.everyone</option>
-                        </select>
+                    <div class="form-field form-field-adapt">
+                        <label translate>category.editor.description</label>
+                        <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
                     </div>
 
-                    <!-- TODO:  translate this string-->
-                    <span class="nodisplay">Who</span> can see this category
-                </label>
-            </div>
+                    <fieldset class="custom-fieldset init" data-fieldset-type="color">
+                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu"><span class="swatch" style="background-color: #8D1919;"></span>Color<svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use></svg></legend>
+
+                        <div class="dropdown-menu init"><div class="form-field">
+                            <label>Hex value</label>
+                            <input type="text" data-input-type="color" value="8D1919">
+                        </div><div class="form-field">
+                            <button class="button-gamma" data-button-type="color" value="8D1919" disabled="" style="border-top-color: #8D1919;">Red</button>
+                            <button class="button-gamma" data-button-type="color" value="CB872E" style="border-top-color: #CB872E;">Orange</button>
+                            <button class="button-gamma" data-button-type="color" value="2274B4" style="border-top-color: #2274B4;">Blue</button>
+                            <button class="button-gamma" data-button-type="color" value="517923" style="border-top-color: #517923;">Green</button>
+                        </div></div>
+                    </fieldset>
+
+                    <div class="form-field select">
+                        <label>
+                            <div class="custom-select">
+                                <select ng-options="role.name as role.display_name for role in roles" ng-model="">
+                                    <option value="" translate>post.modify.everyone</option>
+                                </select>
+                            </div>
+
+                            <!-- TODO:  translate this string-->
+                            <span class="nodisplay">Who</span> can see this category
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-sheet">
+                   <div class="form-sheet-summary">
+                       <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
+                   </div>
+
+                   <div class="form-field">
+                       <p translate>category.delete_category_desc</p>
+
+                       <button class="button-destructive" ng-click="deleteCategory(category)">
+                           <svg class="iconic">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                           </svg>
+                           <span class="button-label" translate>category.delete_category</span>
+                       </button>
+                   </div>
+
+                </div>
+            </form>
+
         </div>
-
-        <div class="form-sheet">
-           <div class="form-sheet-summary">
-               <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
-           </div>
-
-           <div class="form-field">
-               <p translate>category.delete_category_desc</p>
-
-               <button class="button-destructive" ng-click="deleteCategory(category)">
-                   <svg class="iconic">
-                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-                   </svg>
-                   <span class="button-label" translate>category.delete_category</span>
-               </button>
-           </div>
-
-        </div>
-    </form>
-
+    </main>
 </div>
