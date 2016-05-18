@@ -167,6 +167,7 @@
         "activity" : "Activity",
         "add_post" : "Add Post",
         "account_settings" : "Account Settings",
+        "alerts": "Alerts",
         "all" : "All",
         "author_tagline" : "By ",
         "appearance" : "Appearance",
@@ -224,14 +225,12 @@
         "role" : "Role",
         "roles" : "Roles",
         "views" : "Views",
-        "workspace" : "Workspace"
-    },
-    "view_modes" : {
-        "map" : "Map",
-        "timeline" : "Timeline",
-        "activity" : "Activity",
-        "settings" : "Settings",
         "more" : "More"
+    },
+    "views" : {
+        "map" : "Map",
+        "list" : "Timeline",
+        "activity" : "Activity"
     },
     "post": {
         "posts" : "Posts",
@@ -381,9 +380,13 @@
         "save" : "Save Role",
         "save_add_another" : "Save & Add Another",
         "permissions" : "Permissions",
+<<<<<<< HEAD
         "delete" : "Delete",
         "delete_role" : "Delete this role",
         "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
+=======
+        "delete" : "Delete"
+>>>>>>> develop
     },
     "set": {
         "by" : "by",

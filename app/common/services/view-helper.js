@@ -12,25 +12,29 @@ function (
     var allViews = [
             {
                 name: 'map',
-                display_name: $translate.instant('view_tabs.map')
+                display_name: $translate.instant('views.map')
             },
             {
                 name: 'list',
-                display_name: $translate.instant('view_tabs.list')
+                display_name: $translate.instant('views.list')
             },
             {
-                name: 'chart',
-                display_name: $translate.instant('view_tabs.chart')
-            },
-            {
-                name: 'timeline',
-                display_name: $translate.instant('view_tabs.timeline')
+                name: 'activity',
+                display_name: $translate.instant('views.activity')
             }
+            // {
+            //     name: 'chart',
+            //     display_name: $translate.instant('views.chart')
+            // },
+            // {
+            //     name: 'timeline',
+            //     display_name: $translate.instant('views.timeline')
+            // }
         ],
         availableViews = [],
         availableViewsDeferred = $q.defer(),
 
-    PostViewHelper = {
+    ViewHelper = {
         views: function (allViews) {
             return allViews ? allViews : availableViews;
         },
@@ -71,5 +75,5 @@ function (
         populateAvailableView(features);
     });
 
-    return PostViewHelper;
+    return ViewHelper;
 }];

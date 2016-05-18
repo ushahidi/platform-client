@@ -1,7 +1,9 @@
 module.exports = [
-    'ModeViewHelper',
+    'ViewHelper',
+    '$rootScope',
 function (
-    ModeViewHelper
+    ViewHelper,
+    $rootScope
 ) {
     return {
         restrict: 'E',
@@ -10,13 +12,15 @@ function (
         },
         templateUrl: 'templates/frame/mode-bar.html',
         link: function ($scope, $element, $attrs) {
-            $scope.views = ModeViewHelper.views();
+            $scope.views = ViewHelper.views();
 
             // TODO: move this out of function
             $scope.activeView = 'map';
             $scope.setActiveView = function (view_name) {
                 $scope.activeView = view_name;
             };
+
+            $scope.currentUser = $rootScope.currentUser;
         }
     };
 }];
