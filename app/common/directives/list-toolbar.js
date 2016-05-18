@@ -20,11 +20,17 @@ function (
         ) {
 
             $scope.selectAll = function () {
-                $scope.selectedSet = _.pluck($scope.entities, 'id');
+                // Add all entities to the array, but don't
+                // break references that already refer to this array
+                Array.prototype.splice.apply(
+                    $scope.selectedSet,
+                    [0, $scope.selectedSet.length].concat(_.pluck($scope.entities, 'id'))
+                );
             };
 
             $scope.deselectAll = function () {
-                $scope.selectedSet = [];
+                // Empty the array, but don't break references that already refer to this array
+                $scope.selectedSet.splice(0);
             };
 
             $scope.changeRole = function (role) {
