@@ -45,7 +45,7 @@ function (
 
     return {
 
-        login: function (username, password) {
+        login: function (username, password, google2fa_otp) {
             var payload = {
                 username: username,
                 password: password,
@@ -57,8 +57,8 @@ function (
 
             deferred = $q.defer(),
 
-            handleRequestError = function () {
-                deferred.reject();
+            handleRequestError = function (rejection) {
+                deferred.reject(rejection);
                 setToLogoutState();
                 $rootScope.$broadcast('event:authentication:login:failed');
             },
@@ -80,6 +80,10 @@ function (
                     }, handleRequestError);
             };
 
+            // If set append google2fa_otp
+            if (google2fa_otp) {
+                payload.google2fa_otp = google2fa_otp;
+            }
             $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, handleRequestError);
 
             return deferred.promise;

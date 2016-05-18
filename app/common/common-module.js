@@ -51,6 +51,8 @@ angular.module('ushahidi.common', [
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
+.directive('google2fa', require('./directives/google2fa.js'))
+
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))
 .config(require('./configs/ui-bootstrap-template-decorators.js'))

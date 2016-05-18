@@ -141,6 +141,25 @@
         "search" : "Search",
         "date_range" : "Date Range"
     },
+    "google2fa" : {
+        "enabled" : "Google 2 Factor Authentication Enabled",
+        "enable" : "Enable Google 2 Factor Authentication",
+        "update" : "Update",
+        "google2fa_otp": "Google Authenticator One Time Password",
+        "disable" : "Disable",
+        "modal_title": "Manage Google 2fa settings",
+        "steps_overview" : "Our One Time Password system uses <a href='https://support.google.com/accounts/answer/1066447?hl=en'>Google Authenticator</a> to provide one time passwords for additional security when logging into your deployment. Google Authenticator, is available for <a href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en'>Android</a>, <a href='https://itunes.apple.com/ca/app/google-authenticator/id388497605?mt=8'>iPhone</a> and <a href='https://appworld.blackberry.com/webstore/content/29401059/?countrycode=US&countrycode=CA&lang=en'>Blackberry</a> devices. The following steps will guide you through the setup process:",
+        "step_1": "First, download and install the Google Authenticator app for your device.",
+        "step_2": "Second, once you have setup the device with Google Authenticator you can return here and click 'Proceed'",
+        "step_3": "Our system will generate a QR code for you that you can scan with your device to link to your Ushahidi account",
+        "scan_qr_1": "To setup Google Authenticator with your Ushahidi account, scan the QR code below. To do this, tap 'Scan Barcode' in Google Authenticator on your device, and point the device at QR code.",
+        "scan_qr_2": "The Google Authenticator app will provide you with a One Time Password, enter it below and click 'Verify'",
+        "not_verified_message" : "The access code given was invalid. To try again enter a new code.",
+        "completed_message" : "Two factor authentication has been successfully enabled. You may now close this dialog.",
+        "proceed" : "Proceed",
+        "verify" : "Verify",
+        "close" : "Close"
+    },
     "graph" : {
         "group_by_placeholder" : "Graph",
         "none" : "None",
@@ -656,6 +675,9 @@
         },
         "login" : {
             "failed" : "Login failed, check your email and password."
+        },
+        "otp" : {
+            "failed" : "Google Authenicator OTP invalid, please enter valid one time password",
         },
         "register" : {
             "failed" : "There were errors during registration. Check your input and try again.",

@@ -94,8 +94,15 @@ function (
                 // either our token expired, or we didn't have one.
                 if (rejection.status === 401) {
                     $injector.invoke(['Authentication', '$http', function (Authentication, $http) {
+                        // Check if 2fa required
+                        var errors2fa = [
+                            'google2fa_secret_required',
+                            'google2fa_secret_invalid'
+                        ];
+                        if (_.contains(errors2fa, rejection.data.error)) {
+                            deferred.reject(rejection);
                         // Check if were were logged in
-                        if (Authentication.getLoginStatus()) {
+                        } else if (Authentication.getLoginStatus()) {
                             // If we were, trigger an unauthorized
                             // event and show the login page
                             $rootScope.$broadcast('event:unauthorized');

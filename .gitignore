@@ -8,6 +8,8 @@ test/coverage/
 build/*
 .DS_Store
 server/www/locales/
+*.swp
+*.swo
 *.aes
 *.swp
 *.swo

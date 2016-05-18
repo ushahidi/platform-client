@@ -37,6 +37,18 @@ function (
         update: {
             method: 'PUT'
         },
+        enable2fa: {
+            url: Util.apiUrl('/users/:id/2fa'),
+            method: 'POST'
+        },
+        verify2fa: {
+            url: Util.apiUrl('/users/:id/2fa/verify'),
+            method: 'POST'
+        },
+        disable2fa: {
+            url: Util.apiUrl('/users/:id/2fa/disable'),
+            method: 'POST'
+        },
         deleteEntity: {
             method: 'DELETE'
         }
