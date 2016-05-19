@@ -34,7 +34,6 @@ function (
 
     $scope.saveTag = function (tag, addAnother) {
         $scope.processing = true;
-        tag.role = [$scope.selectedRole];
         var whereToNext = 'settings/categories';
 
         TagEndpoint.saveCache(tag).$promise.then(function (response) {

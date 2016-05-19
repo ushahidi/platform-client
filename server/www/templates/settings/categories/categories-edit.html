@@ -62,18 +62,28 @@
                         </div></div>
                     </fieldset>
 
-                    <div class="form-field select">
-                        <label>
-                            <div class="custom-select">
-                                <select ng-options="role.name as role.display_name for role in roles" ng-model="selectedRole">
-                                    <option value="" translate>post.modify.everyone</option>
-                                </select>
+                    <fieldset class="custom-fieldset init" dropdown auto-close="outsideClick">
+                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                            <span class="legend-label" translate>
+                                app.roles
+                            </span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </legend>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field checkbox" ng-repeat="role in roles">
+                                <input type="checkbox" id="collection1">
+                                <input type="checkbox" id="{{role.id}}"
+                                    checklist-model="category.role"
+                                    checklist-value="role.name"
+                                >
+                                <label for="{{role.id}}">
+                                    {{role.display_name}}
+                                </label>
                             </div>
-
-                            <!-- TODO:  translate this string-->
-                            <span class="nodisplay">Who</span> can see this category
-                        </label>
-                    </div>
+                        </div>
+                    </fieldset>
                 </div>
 
                 <div class="form-sheet">
