@@ -50,6 +50,14 @@ angular.module('ushahidi.common', [
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
+// Event actions
+.constant('EVENT', {
+    ACTIONS : {
+        EDIT : 'edit',
+        DELETE : 'delete'
+    }
+})
+
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))
 .config(require('./configs/ui-bootstrap-template-decorators.js'))
