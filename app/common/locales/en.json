@@ -472,7 +472,7 @@
         "customize_your_new_deployment" : "Customize your new deployment",
         "settings_list": {
             "general" : "General",
-            "general_desc" : "Change your deployment\'s name, description, logo, and other details.",
+            "general_desc" : "Change your deployment's name, description, logo, and other details.",
             "surveys" : "Surveys",
             "surveys_desc" : "Create and configure the surveys your deployment collects.",
             "data_sources" : "Data Sources",
@@ -561,7 +561,7 @@
         "csv_instructions_required_fields" : "Fields marked with a <span class=\"required\"></span> are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
-        "dont_import" : "Don\'t import",
+        "dont_import" : "Don't import",
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
         "select_post_type" : "Select Post Type"
@@ -633,7 +633,7 @@
     },
     "notify": {
         "contact" : {
-            "save_success" : "Contact saved",
+            "save_success" : "Contact saved"
         },
         "default" : {
             "save_success" : "Saved resource",
@@ -710,7 +710,7 @@
             "last_admin" : "You can not delete the only admin role"
         },
         "datasource" : {
-            "save_success" : "Saved Data Source {{name}}",
+            "save_success" : "Saved Data Source {{name}}"
         },
         "user" : {
             "save_success" : "User {{name}} saved",
