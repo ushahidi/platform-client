@@ -20,6 +20,7 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "plan" : "Plan",
+        "show_more_less" : "Show more/less",
         "delete" : "Delete"
     },
     "feature_limits": {

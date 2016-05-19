@@ -11,10 +11,14 @@ module.exports = [function () {
             }};
         },
         getFresh: function () {
-            return {
-                name: 'test tag',
-                id: 1
-            };
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({
+                        name: 'test tag',
+                        id: 1
+                    });
+                }
+            }};
         },
         delete: function () {
             return {$promise: {

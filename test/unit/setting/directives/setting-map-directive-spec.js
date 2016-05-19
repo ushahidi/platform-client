@@ -1,6 +1,6 @@
 var ROOT_PATH = '../../../../';
 
-describe('setting roles directive', function () {
+describe('setting map directive', function () {
 
     var $rootScope,
         $scope,
@@ -16,7 +16,7 @@ describe('setting roles directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('roles', require(ROOT_PATH + 'app/setting/directives/setting-roles-directive'))
+        testApp.directive('settings-map', require(ROOT_PATH + 'app/setting/directives/setting-map-directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -35,14 +35,22 @@ describe('setting roles directive', function () {
 
         Notify = _Notify_;
 
-        element = '<div roles></div>';
+        element = '<settings-map map="map"></settings-map>';
         element = $compile(element)($scope);
         $scope.$digest();
     }));
 
-    it('shuld refresh the view', function () {
-        $scope.refreshView();
-        expect($scope.roles.length).toEqual(1);
+    it('should set markers', function () {
+        expect($scope.markers.dragger.lat).toEqual(-1.3048035);
+    });
+
+    it('should set min and max zoom level', function () {
+        expect($scope.minZoom).toEqual(0);
+        expect($scope.maxZoom).toEqual(0);
+    });
+
+    it('should set centre', function () {
+        expect($scope.center.lat).toEqual(-1.3048035);
     });
 
 });

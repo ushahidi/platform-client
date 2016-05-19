@@ -28,6 +28,7 @@ describe('setting data mapper controller', function () {
 
 
     beforeEach(function () {
+        $rootScope.setLayout = function () {};
         $controller('settingDataMapperController', {
             $scope: $scope,
             initialData: {form: 1, csv: 1},
