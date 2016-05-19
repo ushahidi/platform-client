@@ -40,10 +40,6 @@ angular.module('ushahidi.common.notification-slider', [])
                 }
             });
 
-            $scope.closeConfirm = function (context) {
-                $scope.visible = false;
-            };
-
             $scope.$on('$destroy', function (event) {
                 if (classChangePromise) {
                     $timeout.cancel(classChangePromise);

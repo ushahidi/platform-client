@@ -12,32 +12,33 @@
     </div>
   </notification-slider>
 
-  <notification-slider visible="showConfirmationSlider">
-    <div class="message-image confirmation" ng-show="isSuccess">
-      <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#thumb-up"></use>
-      </svg>
-    </div>
+    <notification-slider visible="showConfirmationSlider">
+      <div class="message-image confirmation" ng-show="isSuccess">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#thumb-up"></use>
+        </svg>
+      </div>
 
-    <div class="message-image error" ng-show="isAlert">
-      <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
-      </svg>
-    </div>
+      <div class="message-image error" ng-show="isAlert">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
+        </svg>
+      </div>
 
     <div class="message-body">
       <p>{{confirmationMessage}}</p>
       <button class="button-beta button-flat"
               ng-show="buttonText"
               ng-click="emitCallbackEvent(callbackEvent)">
-        <svg class="iconic" ng-show="action === 'edit'">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
+
+        <svg class="iconic" ng-show="action === eventActions.EDIT">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#pencil"></use>
         </svg>
-        <svg class="iconic" ng-show="action === 'delete'">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+        <svg class="iconic" ng-show="action === eventActions.DELETE">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#trash"></use>
         </svg>
 
-        <span class="button-label">buttonText</span>
+        <span class="button-label">{{buttonText}}</span>
       </button>
 
       <button class="button-beta button-flat"
@@ -57,7 +58,7 @@
   <notification-slider visible="showAlertSlider">
     <div class="message-image error" ng-show="isAlert">
       <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
       </svg>
     </div>
 
@@ -67,7 +68,6 @@
       </div>
 
       <button class="button-flat message-trigger"
-              ng-show="isError"
               ng-click="acknowledgeAlert()"
               translate>
         message.button.default
@@ -77,9 +77,9 @@
   </notification-slider>
 
   <notification-slider visible="showLimitSlider" >
-    <div class="message-image error" ng-show="isError">
+    <div class="message-image error">
       <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
       </svg>
     </div>
 

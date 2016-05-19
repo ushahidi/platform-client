@@ -8,7 +8,7 @@ function ($window, _, $q, $rootScope) {
     var deffered;
 
     var showSingleAlert = function (alertMessage) {
-        $rootScope.$emit('event:show:modal-alerts', [alertMessage]);
+        showAlerts([alertMessage]);
     };
 
     var showNotificationSlider = function (message) {
@@ -19,11 +19,11 @@ function ($window, _, $q, $rootScope) {
         $rootScope.$emit('event:show:limit-slider', message);
     };
 
-    var showAlerts = function (error, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:alerts', error, callbackEvent, buttonText, action);
+    var showAlerts = function (alertMessages, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:alerts', alertMessages, callbackEvent, buttonText, action);
     };
 
-    var showConfirmMessage = function (message, callbackEvent, buttonText, action) {
+    var showConfirm = function (message, callbackEvent, buttonText, action) {
         $rootScope.$emit('event:show:message-confirm', message, callbackEvent, buttonText, action);
         deffered = $q.defer();
         return deffered.promise;
@@ -56,12 +56,9 @@ function ($window, _, $q, $rootScope) {
         showNotificationSlider: showNotificationSlider,
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
-        // TODO: Update showConfirm with either showConfirmMessage or showConfirmAlert
-        //showConfirm: showConfirm,
-        showConfirmMessage: showConfirmMessage,
+        showConfirm: showConfirm,
         showConfirmSuccess: showConfirmSuccess,
         showConfirmAlert: showConfirmAlert,
         showLimitSlider: showLimitSlider
     };
-
 }];

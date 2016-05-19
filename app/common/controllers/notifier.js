@@ -1,14 +1,17 @@
 module.exports = [
     '$scope',
     '$rootScope',
+    'EVENT',
 function (
     $scope,
-    $rootScope
+    $rootScope,
+    EVENT
 ) {
     $scope.showNotificationSlider = false;
     $scope.showLimitSlider = false;
     $scope.showAlertSlider = false;
     $scope.showConfirmationSlider = false;
+    $scope.eventActions = EVENT.ACTIONS;
 
     $rootScope.$on('event:show:notification-slider', function (event, message) {
         $scope.notificationSliderMessage = message;

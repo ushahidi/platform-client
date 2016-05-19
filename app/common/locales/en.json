@@ -165,6 +165,17 @@
         "updated": "Updated time",
         "select_one": "Select one"
     },
+    "message" : {
+        "button" : {
+            "dismiss" : "Dismiss",
+            "default" : "Ok"
+        }
+    },
+    "modal" : {
+        "button" : {
+            "close" : "Close"
+        }
+    },
     "nav" : {
         "about" : "About",
         "activity" : "Activity",
