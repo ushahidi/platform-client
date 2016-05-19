@@ -90,7 +90,7 @@
     "angular-datepicker": "ushahidi/angular-datepicker.git#1.0.12-patched.1",
     "angular-xeditable": "0.0.1",
     "checklist-model": "~0.2",
-    "d3": "^3.5.5",
+    "d3": "^3.5.17",
     "dc": "dc-js/dc.js#2.0.0-beta.17",
     "leaflet": "~0.7.3",
     "leaflet-draw": "~0.2.1",
