@@ -69,6 +69,26 @@ function (
         return 'everyone';
     };
 
+    // @todo move to shared service?
+    var deletePost = function (post) {
+        $translate('notify.post.destroy_confirm').then(function (message) {
+            Notify.showConfirmAlert(message).then(function () {
+                PostEndpoint.delete({ id: post.id }).$promise.then(function () {
+                    $translate(
+                        'notify.post.destroy_success',
+                        {
+                            name: $scope.post.title
+                        }).then(function (message) {
+                            Notify.showNotificationSlider(message);
+                            $location.path('/');
+                        });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
+                });
+            });
+        });
+    };
+
     return {
         restrict: 'E',
         replace: true,
@@ -125,6 +145,8 @@ function (
                 $scope.displayTime = created.format('LL');
             }
             $scope.displayTimeFull = created.format('LLL');
+
+            $scope.deletePost = deletePost;
         }
     };
 
