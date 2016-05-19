@@ -31,6 +31,7 @@ describe('setting datasources controller', function () {
 
     beforeEach(function () {
         spyOn($scope, '$emit').and.callThrough();
+        $rootScope.setLayout = function () {};
 
         $controller('settingDataSourcesController', {
             $scope: $scope,

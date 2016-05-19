@@ -33,30 +33,13 @@ function (
                 $scope.selectedSet.splice(0);
             };
 
-            $scope.changeRole = function (role) {
-                $scope.changeRoleFunc({role: role});
-            };
-
-            $scope.setVisibility = function (roles) {
-                $scope.setVisibilityFunc({roles: roles});
-            };
-
-            $scope.deleteSet = function () {
-                $scope.deleteFunc();
-            };
         }];
     return {
         restrict: 'E',
         templateUrl: 'templates/common/listing-toolbar.html',
         replace: true,
+        transclude: true,
         scope: {
-            deleteFunc: '&',
-            changeRoleFunc: '&',
-            setVisiblityFunc: '&',
-            collectionEnabled: '=',
-            permissionEnabled: '=',
-            roleEnabled: '=',
-            roleMode: '=',
             entities: '=',
             selectedSet: '='
         },

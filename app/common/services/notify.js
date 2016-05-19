@@ -8,7 +8,7 @@ function ($window, _, $q, $rootScope) {
     var deffered;
 
     var showSingleAlert = function (alertMessage) {
-        $rootScope.$emit('event:show:modal-alerts', [alertMessage]);
+        showAlerts([alertMessage]);
     };
 
     var showNotificationSlider = function (message) {
@@ -19,8 +19,26 @@ function ($window, _, $q, $rootScope) {
         $rootScope.$emit('event:show:limit-slider', message);
     };
 
-    var showAlerts = function (alertMessages) {
-        $rootScope.$emit('event:show:modal-alerts', alertMessages);
+    var showAlerts = function (alertMessages, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:alerts', alertMessages, callbackEvent, buttonText, action);
+    };
+
+    var showConfirm = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:message-confirm', message, callbackEvent, buttonText, action);
+        deffered = $q.defer();
+        return deffered.promise;
+    };
+
+    var showConfirmSuccess = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:success-confirm', message, callbackEvent, buttonText, action);
+        deffered = $q.defer();
+        return deffered.promise;
+    };
+
+    var showConfirmAlert = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:alert-confirm', message, callbackEvent, buttonText, action);
+        deffered = $q.defer();
+        return deffered.promise;
     };
 
     var showApiErrors = function (errorResponse) {
@@ -33,19 +51,14 @@ function ($window, _, $q, $rootScope) {
         result ? deffered.resolve(result) : deffered.reject(result);
     });
 
-    var showConfirm = function (confirmMessage) {
-        $rootScope.$emit('event:show:modal-confirm', confirmMessage);
-        deffered = $q.defer();
-        return deffered.promise;
-    };
-
     return {
         showSingleAlert: showSingleAlert,
         showNotificationSlider: showNotificationSlider,
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
         showConfirm: showConfirm,
+        showConfirmSuccess: showConfirmSuccess,
+        showConfirmAlert: showConfirmAlert,
         showLimitSlider: showLimitSlider
     };
-
 }];

@@ -20,6 +20,7 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "plan" : "Plan",
+        "show_more_less" : "Show more/less",
         "delete" : "Delete"
     },
     "feature_limits": {
@@ -164,6 +165,17 @@
         "created": "Created time",
         "updated": "Updated time",
         "select_one": "Select one"
+    },
+    "message" : {
+        "button" : {
+            "dismiss" : "Dismiss",
+            "default" : "Ok"
+        }
+    },
+    "modal" : {
+        "button" : {
+            "close" : "Close"
+        }
     },
     "nav" : {
         "about" : "About",

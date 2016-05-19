@@ -1,7 +1,21 @@
 <div>
-    <!-- mode-context needs to be in each template -->
-    <mode-context-settings settings-view="'categories'" view-type="'edit'"></mode-context-settings>
+    <div class="mode-context init">
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/">{{site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/categories" translate>app.categories</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.edit_category</h1>
+        </header>
 
+        <span class="mode-context-trigger">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden">app.show_more_less</span>
+        </span>
+    </div>
     <main role="main">
 
         <div custom-categorys-editor class="main-col">
@@ -48,18 +62,28 @@
                         </div></div>
                     </fieldset>
 
-                    <div class="form-field select">
-                        <label>
-                            <div class="custom-select">
-                                <select ng-options="role.name as role.display_name for role in roles" ng-model="">
-                                    <option value="" translate>post.modify.everyone</option>
-                                </select>
+                    <fieldset class="custom-fieldset init" dropdown auto-close="outsideClick">
+                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                            <span class="legend-label" translate>
+                                app.roles
+                            </span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </legend>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field checkbox" ng-repeat="role in roles">
+                                <input type="checkbox" id="collection1">
+                                <input type="checkbox" id="{{role.id}}"
+                                    checklist-model="category.role"
+                                    checklist-value="role.name"
+                                >
+                                <label for="{{role.id}}">
+                                    {{role.display_name}}
+                                </label>
                             </div>
-
-                            <!-- TODO:  translate this string-->
-                            <span class="nodisplay">Who</span> can see this category
-                        </label>
-                    </div>
+                        </div>
+                    </fieldset>
                 </div>
 
                 <div class="form-sheet">

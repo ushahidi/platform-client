@@ -1,7 +1,20 @@
 <div>
-    <!-- mode-context needs to be in each template -->
-    <mode-context-settings settings-view="'categories'"></mode-context-settings>
+    <div class="mode-context init">
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/">{{site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.categories</h1>
+        </header>
 
+        <span class="mode-context-trigger">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden">app.show_more_less</span>
+        </span>
+    </div>
     <main role="main">
 
         <!-- toolbar -->
@@ -96,16 +109,17 @@
                     </div>
 
                 </div>
-
-                <listing-toolbar
-                    delete-func="deleteCategories()"
-                    entities="categories"
-                    selected-set="selectedCategories"
-                    ></listing-toolbar>
-
+                <listing-toolbar entities="categories" selected-set="selectedCategories">
+                    <button type="button" class="button-destructive" ng-disabled="!selectedCategories.length" ng-click="deleteCategories()">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                        </svg>
+                        <span class="button-label hidden">nav.delete</span>
+                    </button>
+                </listing-toolbar>
            </div>
 
-           <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+           <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
 
         </div>
 

@@ -6,14 +6,6 @@
     </div>
 
     <div class="listing-toolbar-actions">
-        <role-selector ng-if="roleEnabled" mode="roleMode" toggle-role-func="changeRole(roles)"></role-selector>
-        <role-selector ng-if="permissionEnabled" mode="roleMode" toggle-role-func="setVisiblity(roles)"></role-selector>
-        <collection-selector ng-show="collectionEnabled"></collection-selector>
-        <button type="button" class="button-destructive" ng-disabled="!selectedSet.length" ng-click="deleteSet()">
-            <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-            </svg>
-            <span class="button-label hidden">nav.delete</span>
-        </button>
+        <ng-transclude></ng-transclude> 
     </div>
 </div>
