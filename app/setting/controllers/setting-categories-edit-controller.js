@@ -33,10 +33,12 @@ function (
         $scope.roles = roles;
     });
 
-    $scope.tag = TagEndpoint.getFresh({id: $routeParams.id});
+    TagEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (category) {
+        $scope.category = category;
+    });
     $scope.saving = false;
 
-    $scope.saveTag = function (tag) {
+    $scope.saveCategory = function (tag) {
         $scope.saving = true;
         // @todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {

@@ -51,7 +51,9 @@ function (
             };
 
             $scope.toggleRole = function (role) {
-                $scope.toggleRoleFunc({roles: role});
+                if ($scope.toggleRoleFunc) {
+                    $scope.toggleRoleFunc({roles: role});
+                }
             };
 
         }];

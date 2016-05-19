@@ -1,7 +1,21 @@
 <div>
-    <!-- mode-context needs to be in each template -->
-    <mode-context-settings settings-view="'categories'" view-type="'edit'"></mode-context-settings>
+    <div class="mode-context init">
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/">{{site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/categories" translate>app.categories</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.edit_category</h1>
+        </header>
 
+        <span class="mode-context-trigger">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden">app.show_more_less</span>
+        </span>
+    </div>
     <main role="main">
 
         <div custom-categorys-editor class="main-col">
@@ -51,7 +65,7 @@
                     <div class="form-field select">
                         <label>
                             <div class="custom-select">
-                                <select ng-options="role.name as role.display_name for role in roles" ng-model="">
+                                <select ng-options="role.name as role.display_name for role in roles" ng-model="selectedRole">
                                     <option value="" translate>post.modify.everyone</option>
                                 </select>
                             </div>
