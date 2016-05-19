@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$location',
     '$q',
@@ -10,6 +11,7 @@ module.exports = [
     'Features',
 function (
     $scope,
+    $rootScope,
     $translate,
     $location,
     $q,
@@ -19,6 +21,10 @@ function (
     _,
     Features
 ) {
+
+    // Change layout class
+    $rootScope.setLayout('layout-b');
+
     Features.loadFeatures().then(function () {
         $scope.formQuota = Features.getLimit('forms');
     });

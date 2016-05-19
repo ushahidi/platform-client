@@ -30,7 +30,7 @@ function (
         ) {
             // Setup initial stages container
 
-            $scope.everyone = $filter('translate')('post.modify.everyone');
+            $scope.everyone = $filter('translate')('app.everyone');
             $scope.isEdit = !!$scope.post.id;
             $scope.validationErrors = [];
             $scope.visibleStage = 1;

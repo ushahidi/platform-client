@@ -33,13 +33,13 @@ function (
             }]
         }
     })
-    .when('/settings/forms', {
-        controller: require('./controllers/setting-forms-controller.js'),
-        templateUrl: 'templates/settings/forms/forms.html'
+    .when('/settings/surveys', {
+        controller: require('./controllers/setting-surveys-controller.js'),
+        templateUrl: 'templates/settings/surveys/surveys.html'
     })
-    .when('/settings/forms/:id', {
-        controller: require('./controllers/setting-forms-edit-controller.js'),
-        templateUrl: 'templates/settings/forms/form-edit.html'
+    .when('/settings/surveys/:id', {
+        controller: require('./controllers/setting-surveys-edit-controller.js'),
+        templateUrl: 'templates/settings/surveys/survey-edit.html'
     })
     .when('/settings/categories', {
         controller: require('./controllers/setting-categories-controller.js'),

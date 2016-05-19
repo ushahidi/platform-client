@@ -1,27 +1,14 @@
 <main form-editor class="page-content" role="main">
-    <div class="page-header">
-        <ul class="breadcrumb">
-            <li><a ng-href="/settings" translate>nav.settings</a></li>
-            <li><a ng-href="/settings/forms" translate>nav.posts_and_entities</a></li>
-            <li class="active" translate>nav.edit_post_type</li>
-        </ul>
-        <div class="page-header-body">
-            <h1 class="page-title"><span class="icon-left fa-pencil">Edit Post Type</span></h1>
-        </div>
-        <div class="page-header-actions">
-            <button ng-click="saveFormSettings(form)" translate>form.save_post_type</button>
-        </div>
-    </div>
 
     <div class="main-col">
-        <div class="form-field title">
+        {# <div class="form-field title">
             <label translate>form.form_name</label>
             <input type="text" value="{{form.name}}">
-        </div>
-        <div class="form-field">
+        </div> #}
+        {# <div class="form-field">
             <label translate>form.form_description</label>
             <textarea>{{form.description}}</textarea>
-        </div>
+        </div> #}
         <!--
         <div class="form-field">
             <label>Who can contribute to this post type</label>
@@ -115,7 +102,7 @@
                     <a href="">{{attribute.label}}</a>
                 </h3>
                 <div class="actions">
-                    <button type="button" ng-click="deleteAttribute(attribute, $index)"class="button-destructive alt"><span class="icon-only" translate>form.delete</span></button>
+                    <button type="button" ng-click="deleteAttribute(attribute, $index)"class="button-destructive alt"><span class="icon-only" translate>app.delete</span></button>
                 </div>
                 <form class="init toggle-content" dropdown-menu>
                     <label class="input-label" translate>form.field_name</label>

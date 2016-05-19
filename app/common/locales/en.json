@@ -11,6 +11,7 @@
         "settings": "Settings",
         "general" : "General",
         "surveys" : "Surveys",
+        "edit_survey" : "Edit Survey",
         "data_sources" : "Data Sources",
         "import" : "Import",
         "users" : "Users",
@@ -20,7 +21,11 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "plan" : "Plan",
-        "delete" : "Delete"
+        "delete" : "Delete",
+        "description" : "Description",
+        "color" : "Color",
+        "search_users" : "Search users",
+        "fields" : "Fields"
     },
     "feature_limits": {
         "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
@@ -54,7 +59,6 @@
         "default_default_placeholder": "Default value",
         "default_location_placeholder": "Nairobi, Kenya",
         "delete_post_type": "Delete this post type",
-        "delete": "Delete",
         "deleted_form": "Deleted Post Type",
         "deleted_form_stage": "Deleted Post Type Step",
         "deleted_form_stage_attribute": "Deleted field",
@@ -93,6 +97,25 @@
         "type" : "type",
         "visible_to": "Visible To"
     },
+
+    "survey": {
+        "delete" : {
+            "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
+            "delete" : "Delete survey",
+            "delete_this" : "Delete this survey"
+        },
+        "name": "Survey name",
+        "color" : {
+            "color" : "Color",
+            "hex" : "Hex value",
+            "red" : "Red",
+            "gold" : "Gold",
+            "blue" : "Blue",
+            "green" : "Green"
+        },
+        "who" : "Who can see this?"
+    },
+
     "global_filter": {
         "filter" : "Filter",
         "categories" : {
@@ -303,7 +326,6 @@
             "publish_to" : "Publish to {{role}}",
             "published_to" : "Published to {{role}}",
             "unpublish" : "Revert to Draft",
-            "everyone" : "Everyone",
             "back" : "Back",
             "contact_info": "Enter your contact info (optional)",
             "author_realname" : "Name",
@@ -384,7 +406,9 @@
         "permissions" : "Permissions",
         "delete" : "Delete",
         "delete_role" : "Delete this role",
-        "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution."
+        "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
+        "everyone" : "Everyone",
+        "just_you" : "Just you"
     },
     "set": {
         "by" : "by",
