@@ -5,7 +5,7 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.modal',
 	'ushahidi.common.custom-on-change',
 	'ushahidi.common.file-upload',
-  'ushahidi.common.notification-slider',
+	'ushahidi.common.notification-slider',
 	'ushahidi.common.sticky-sidebar',
     'ushahidi.common.chart'
 ])
@@ -46,6 +46,7 @@ angular.module('ushahidi.common', [
 .controller('intercom', require('./controllers/intercom.js'))
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
+.directive('listingToolbar', require('./directives/list-toolbar.js'))
 .directive('roleSelector', require('./directives/role-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))

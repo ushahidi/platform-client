@@ -13,6 +13,7 @@ server/www/locales/
 *.swo
 deployment.env
 vault.txt
-
+*.swo
+*.swp
 *.svg
 server/www/img/icons/
