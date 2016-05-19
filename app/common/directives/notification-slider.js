@@ -6,46 +6,19 @@ angular.module('ushahidi.common.notification-slider', [])
 
 .directive('notificationSlider', function () {
     return {
-        restrict: 'E',
-        transclude: true,
-        templateUrl: 'templates/notification-slider/notification-slider.html',
-
+        restrict: 'A',
         scope: {
-            visible: '=?'
+            visible: '=notificationSlider'
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
-            var classChangePromise = null;
-
-            $scope.classVisible = false;
-
             $scope.$watch('visible', function (state, previousState) {
                 if (state === true) {
-                    if (!$scope.classVisible) {
-                        // Animate in.
-                        $scope.classVisible = true;
-                        classChangePromise = $timeout(function () {
-                            $scope.visible = false;
-                        }, 5000);
-                    }
-                } else if (state === false) {
-                    if ($scope.classVisible) {
-                        // Animate out.
-                        $scope.classVisible = false;
-
-                        if (classChangePromise) {
-                            $timeout.cancel(classChangePromise);
-                        }
-                    }
+                    $timeout(function () {
+                        $scope.visible = false;
+                    }, 5000);
                 }
             });
-
-            $scope.$on('$destroy', function (event) {
-                if (classChangePromise) {
-                    $timeout.cancel(classChangePromise);
-                }
-            });
-
         }]
     };
 })

@@ -1,6 +1,7 @@
 <div ng-controller="notifier">
-    <notification-slider visible="showNotificationSlider">
 
+  <div class="message" ng-class="{active: showNotificationSlider}"
+       notification-slider="showNotificationSlider">
     <div class="message-body">
       <p>{{notificationSliderMessage}}</p>
 
@@ -10,20 +11,21 @@
         message.button.dismiss
       </button>
     </div>
-  </notification-slider>
+  </div>
 
-    <notification-slider visible="showConfirmationSlider">
-      <div class="message-image confirmation" ng-show="isSuccess">
-        <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#thumb-up"></use>
-        </svg>
-      </div>
+  <div class="message" ng-class="{active: showConfirmationSlider}"
+       notification-slider="showConfirmationSlider">
+    <div class="message-image confirmation" ng-show="isSuccess">
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#thumb-up"></use>
+      </svg>
+    </div>
 
-      <div class="message-image error" ng-show="isAlert">
-        <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
-        </svg>
-      </div>
+    <div class="message-image error" ng-show="isAlert">
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
+      </svg>
+    </div>
 
     <div class="message-body">
       <p>{{confirmationMessage}}</p>
@@ -53,9 +55,11 @@
         message.button.dismiss
       </button>
     </div>
-  </notification-slider>
+  </div>
 
-  <notification-slider visible="showAlertSlider">
+  
+  <div class="message" ng-class="{active: showAlertSlider}"
+       notification-slider="showAlertSlider">
     <div class="message-image error" ng-show="isAlert">
       <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
@@ -74,9 +78,10 @@
       </button>
     </div>
 
-  </notification-slider>
+  </div>
 
-  <notification-slider visible="showLimitSlider" >
+  <div class="message" ng-class="{active: showLimitSlider}"
+       notification-slider="showLimitSlider">
     <div class="message-image error">
       <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
@@ -88,5 +93,5 @@
       <div class="divider padded"></div>
       <a class="button" href="/settings/plan" translate>limit.upgrade</a>
     </div>
-  </notification-slider>
+  </div>
 </div>
