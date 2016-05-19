@@ -19,26 +19,26 @@ function (
 
     $scope.refreshView = function () {
         TagEndpoint.query().$promise.then(function (tags) {
-            $scope.tags = tags;
+            $scope.categories = tags;
         });
-        $scope.selectedTags = [];
+        $scope.selectedCategories = [];
     };
     $scope.refreshView();
 
-    $scope.deleteTags = function () {
+    $scope.deleteCategories = function () {
         $translate('notify.tag.bulk_destroy_confirm', {
-            count: $scope.selectedTags.length
+            count: $scope.selectedCategories.length
         }).then(function (message) {
             Notify.showConfirm(message).then(function () {
                 var calls = [];
-                angular.forEach($scope.selectedTags, function (tagId) {
+                angular.forEach($scope.selectedCategories, function (tagId) {
                     calls.push(TagEndpoint.delete({ id: tagId }).$promise);
                 });
                 $q.all(calls).then(function () {
                     $translate(
                         'notify.tag.bulk_destroy_success',
                         {
-                            count: $scope.selectedTags.length
+                            count: $scope.selectedCategories.length
                         }).then(function (message) {
                         Notify.showNotificationSlider(message);
                     });
@@ -49,15 +49,15 @@ function (
     };
 
     $scope.isToggled = function (tag) {
-        return $scope.selectedTags.indexOf(tag.id) > -1;
+        return $scope.selectedCategories.indexOf(tag.id) > -1;
     };
 
-    $scope.toggleTag = function (tag) {
-        var idx = $scope.selectedTags.indexOf(tag.id);
+    $scope.toggleCategory = function (tag) {
+        var idx = $scope.selectedCategories.indexOf(tag.id);
         if (idx > -1) {
-            $scope.selectedTags.splice(idx, 1);
+            $scope.selectedCategories.splice(idx, 1);
         } else {
-            $scope.selectedTags.push(tag.id);
+            $scope.selectedCategories.push(tag.id);
         }
     };
 

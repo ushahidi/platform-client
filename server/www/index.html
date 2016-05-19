@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/fonts/Lato/css/fonts.css" rel="stylesheet" type="text/css">
         <!-- @todo minify CSS -->
-        <link rel="stylesheet" href="/css/style.css" ng-href="{{rtlEnabled ? '/css/rtl-style.css' : '/css/style.css'}}">
         <link rel="stylesheet" href="/css/vendor.css">
+        <link rel="stylesheet" href="/css/style.css" ng-href="{{rtlEnabled ? '/css/rtl-style.css' : '/css/style.css'}}">
         <script src="/config.js"></script>
 
         <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
@@ -18,9 +18,15 @@
     </head>
 
     <!-- TODO: set layouts per view directive -->
-    <body ng-class="{ rtl : rtlEnabled }" class="{{ globalLayout }}" canvas>
+    <body ng-class="{ rtl : rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }}" canvas>
         <div id="bootstrap-loading">
-            <h1 class="beta"><i class="fa fa-refresh fa-4 fa-spin"></i></h1>
+            <!-- loading the document -->
+            <div class="loading">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <!-- end loading the document -->
         </div>
 
         <div id="bootstrap-error" class="hidden">
@@ -39,12 +45,13 @@
 
             <ng-view></ng-view>
 
-            <!-- TODO: fix and uncomment -->
             <div class="wrapper">
                 <ng-include src="'templates/partials/notification-system.html'"></ng-include>
-            </div>
 
+            </div>
+            <!-- TODO: fix and uncomment 
             <first-time-config></first-time-config>
+            -->
         </div>
 
         <script src="/js/bundle.js"></script>

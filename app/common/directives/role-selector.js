@@ -22,34 +22,46 @@ function (
             RoleEndpoint,
             _
         ) {
+            // This directive has two states 'role' and 'permission'
+            // in permission state it returns an array of roles via a provided function
+            // in role state it returns a single role via a provided function
+            // Default state for role selector is selecting permissions for entities
+            $scope.fieldType = 'checkbox';
+            $scope.title = 'post.who_can_see_this';
+
+            if ($scope.mode === 'role') {
+                $scope.fieldType = 'radio';
+                $scope.title = 'user.change_role';
+            }
 
             RoleEndpoint.query().$promise.then(function (roles) {
                 $scope.roles = roles;
             });
 
             $scope.checkIfAllSelected = function () {
-                return ($scope.roles.length === $scope.post.published_to.length);
+                return ($scope.roles.length === $scope.selectedRoles.length());
+            };
+
+            $scope.togglePermission = function (role) {
+                if (role === 'draft' || role === '' || $scope.checkifAllSelected()) {
+                    $scope.selectedRoles = [];
+                }
+
+                $scope.toggleRoleFunc({roles: $scope.selectedRoles});
             };
 
             $scope.toggleRole = function (role) {
-                if (role === 'draft' || role === '') {
-                    $scope.post.published_to = [];
-                } else if ($scope.checkIfAllSelected()) {
-                    // All check boxes selected, therefore publish to everyone
-                    $scope.post.published_to = [];
-                }
-
-                $scope.post.status = role === 'draft' ? role : 'published';
-
-                $scope.toggleRoleFunc({updatedPost: $scope.post});
+                $scope.toggleRoleFunc({roles: role});
             };
 
         }];
     return {
         restrict: 'E',
-        templateUrl: 'templates/role-selector/role-selector.html',
+        replace: true,
+        templateUrl: 'templates/common/role-selector/role-selector.html',
         scope: {
-            post: '=',
+            selectedRoles: '=',
+            mode: '=',
             toggleRoleFunc: '&'
         },
         controller: controller

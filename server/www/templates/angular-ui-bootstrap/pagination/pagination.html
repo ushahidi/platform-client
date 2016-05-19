@@ -1,13 +1,14 @@
 <nav class="pagination">
     <ul>
-        <li ng-if="boundaryLinks" ng-class="{disabled: noPrevious()}" ng-click="selectPage(1, $event)">{{getText('first')}}</li>
-        <li ng-if="directionLinks" ng-class="{disabled: noPrevious()}" class="prev" ng-click="selectPage(page - 1, $event)"></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" ng-click="selectPage(1, $event)">{{::getText('first')}}</li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="prev" ng-click="selectPage(page - 1, $event)"></li>
         <li>
         	<ul class="page-numbers">
         		<li class="pg-number" ng-repeat="page in pages track by $index" ng-click="selectPage(page.number, $event)" ng-class="{active: page.active}">{{page.text}}</li>
         	</ul>
         </li>
-        <li ng-if="directionLinks" ng-class="{disabled: noNext()}" class="next" ng-click="selectPage(page + 1, $event)"></li>
-        <li ng-if="boundaryLinks" ng-class="{disabled: noNext()}" ng-click="selectPage(totalPages, $event)">{{getText('last')}}</li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="next" ng-click="selectPage(page + 1, $event)"></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" ng-click="selectPage(totalPages, $event)">{{::getText('last')}}</li>
     </ul>
 </nav>
+

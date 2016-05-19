@@ -7,7 +7,7 @@ function (
     $routeProvider
     .when('/settings/plan', {
         controller: require('./controllers/setting-plan-controller.js'),
-        templateUrl: 'templates/settings/plan.html'
+        templateUrl: 'templates/settings/plan/plan.html'
     })
     ;
 

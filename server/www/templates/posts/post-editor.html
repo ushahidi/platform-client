@@ -1,4 +1,4 @@
-<form name="form" ng-submit="savePost()" novalidate>
+´<form name="form" ng-submit="savePost()" novalidate>
         <div class="page-header" ng-if="postMode !== 'bulk_data_import'">
             <ul class="breadcrumb" ng-if="! isEdit">
                 <li>
@@ -25,7 +25,7 @@
             <div class="form-field title" ng-show="enableTitle">
                 <label class="input-label required"
                     ng-class="{ 'error': form.title.$invalid && form.title.$dirty, 'success': !form.title.$invalid && form.title.$dirty }"
-                    for="title">{{'post.modify.form.title' | translate }}</label>
+                    for="title" translate>post.modify.form.title</label>
                 <div
                     class="input-icon"
                     ng-class="{ 'error': form.title.$invalid && form.title.$dirty }"
@@ -43,7 +43,7 @@
                 stages="stages"
             ></post-status>
         </div>
-        <post-stages 
+        <post-stages
                 form="form"
                 post="post"
                 stages="stages"

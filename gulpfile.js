@@ -8,10 +8,10 @@ var gulp         = require('gulp'),
     notify       = require('gulp-notify'),
     source       = require('vinyl-source-stream'),
     browserify   = require('browserify'),
-    watchify    = require('watchify'),
+    watchify     = require('watchify'),
     envify       = require('envify/custom'),
     fs           = require('fs'),
-    karma        = require('karma').server,
+    KarmaServer  = require('karma').Server,
     buffer       = require('vinyl-buffer'),
     uglify       = require('gulp-uglify'),
     sourcemaps   = require('gulp-sourcemaps'),
@@ -20,7 +20,9 @@ var gulp         = require('gulp'),
     gzip         = require('gulp-gzip'),
     jscs         = require('gulp-jscs'),
     dotenv       = require('dotenv'),
-    Transifex    = require('transifex');
+    Transifex    = require('transifex'),
+    // default is required on gulp=sort-json via "Usage" requirements - https://github.com/jwbay/gulp-json-sort#usage
+    sortJSON     = require('gulp-sort-json');
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
@@ -174,6 +176,7 @@ gulp.task('copy-leaflet-icons', [], function () {
         .pipe(gulp.dest(options.www + '/img'));
 });
 
+
 gulp.task('rename', [
     'copy-leaflet-icons'
     ], function () {});
@@ -187,6 +190,18 @@ gulp.task('font', function () {
         .pipe(gulp.dest(options.www + '/fonts'))
         .pipe(livereload())
         ;
+});
+
+/**
+ * Task: `sort-json`
+ * Sorts JSON locales alphabetically.
+ */
+gulp.task('sort-json', function() {
+    return gulp.src(['app/common/locales/fake.json'])
+        .pipe(sortJSON( { space: 2 } ))
+        .pipe(gulp.dest('app/common/locales/'));
+
+        // return sortJSON( { space: 2 } );
 });
 
 /**
@@ -261,7 +276,7 @@ gulp.task('build', ['sass', 'css', 'font', 'svg-iconic-sprite', 'svg-icons', 'br
  * Rebuilds styles and runs live reloading.
  */
 gulp.task('watch', ['watchify'], function () {
-    livereload.listen();
+    livereload.listen(35732);
     gulp.watch('sass/**/*.scss', ['sass']);
     gulp.watch('server/www/**/*.html', ['html']);
 });
@@ -286,11 +301,12 @@ gulp.task('node-server', [], require('./server/server'));
  */
 gulp.task('test', function (done) {
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
-    karma.start({
+    var server = new KarmaServer({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
         singleRun: true
     }, done);
+    server.start();
 });
 
 /**
@@ -308,12 +324,13 @@ gulp.task('send-stats-to-coveralls', function () {
  */
 gulp.task('tdd', function (done) {
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
-    karma.start({
+    var server = new KarmaServer({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
         autoWatch: true,
         singleRun: false
     }, done);
+    server.start();
 });
 
 /**
