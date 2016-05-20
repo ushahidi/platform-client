@@ -29,15 +29,15 @@
 
         <!-- todo: check style -->
         <div class="list-item" ng-if="posts.length == 0 && hasFilters()">
-            <h5 translate>post.no_search_results</h5>
+            <h4 translate>post.no_search_results</h5>
         </div>
 
         <!-- todo: check style -->
         <div class="list-item" ng-if="posts.length == 0 && ! hasFilters()">
-            <h5 translate>post.no_posts_yet</h5>
+            <h4 translate>post.no_posts_yet</h5>
             <br />
-            <a class="button button-create" ng-href="/posts/create">
-                <span translate>post.add_first_post</span>
+            <a class="button button-alpha" ng-href="/posts/create" translate>
+                post.add_first_post
             </a>
         </div>
 
