@@ -391,17 +391,9 @@
         "save" : "Save Role",
         "save_add_another" : "Save & Add Another",
         "permissions" : "Permissions",
-<<<<<<< HEAD
         "delete" : "Delete",
         "delete_role" : "Delete this role",
-<<<<<<< HEAD
-        "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
-=======
-        "delete" : "Delete"
->>>>>>> develop
-=======
         "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution."
->>>>>>> develop
     },
     "set": {
         "by" : "by",
