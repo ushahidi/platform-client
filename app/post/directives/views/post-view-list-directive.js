@@ -62,11 +62,11 @@ function (
                 }
             });
 
-            $scope.deleteSelectedPosts = function () {
-                $translate('notify.post.destroy_confirm', {
+            $scope.deletePosts = function () {
+                $translate('notify.post.bulk_destroy_confirm', {
                     count: $scope.selectedPosts.length
                 }).then(function (message) {
-                    Notify.showConfirm(message).then(function () {
+                    Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
 
                         var handleDeleteErrors = function (errorResponse) {
                             Notify.showApiErrors(errorResponse);
