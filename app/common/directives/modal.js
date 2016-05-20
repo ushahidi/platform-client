@@ -48,6 +48,8 @@ function (
                         // @todo move offset to a config param
                         var windowYpos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
                         $scope.modalOffset = (windowYpos + 40) + 'px';
+                        // @todo set max height
+                        // $('.modal-body').css('max-height', $(window).height() * 0.66);
 
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);

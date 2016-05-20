@@ -169,7 +169,8 @@
     "message" : {
         "button" : {
             "dismiss" : "Dismiss",
-            "default" : "Ok"
+            "default" : "Ok",
+            "cancel" : "Cancel"
         }
     },
     "modal" : {
@@ -194,6 +195,7 @@
         "comments" : "Comments",
         "data_sources" : "Data Sources",
         "data_import" : "Data Import",
+        "deselect" : "Deselect",
         "edit_profile" : "Edit Profile",
         "edit_post_type": "Edit Post Type",
         "export": "Export",
@@ -228,7 +230,8 @@
         "roles" : "Roles",
         "saved_searches" : "Saved Searches",
         "search" : "Search",
-        "select_all" : "Select All",
+        "select_all" : "Select all",
+        "selected_items" : "{{selectedItems}} selected",
         "settings" : "Settings",
         "tags" : "Categories",
         "general" : "General Settings",
@@ -255,8 +258,6 @@
         "post" : "Post",
         "message" : "Message",
         "message_thread" : "Message Thread",
-        "publish_for_you" : "Just you",
-        "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
         "no_search_results" : "Your search didn't match any posts",
         "no_posts_yet" : "This are no posts yet!",
@@ -283,7 +284,6 @@
         "published" : "Published",
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
-        "who_can_see_this" : "Who can see this",
         "can_see_this_post" : "can see this post",
         "location" : "Location",
         "categories" : "Categories",
@@ -297,6 +297,9 @@
         "complete_published" : "Complete (Published)",
         "structure" : "Structure",
         "source" : "via {{source}}",
+        "visible_to_public": "This post is visible to the public",
+        "visible_to_you": "This post is visible to just you and admins",
+        "visible_to_roles": "This post is visible to {{roles}}",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete",
@@ -311,10 +314,6 @@
             "change_type" : "Change type",
             "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
             "save_post" : "Save Post",
-            "publish" : "Publish to...",
-            "publish_to" : "Publish to {{role}}",
-            "published_to" : "Published to {{role}}",
-            "unpublish" : "Revert to Draft",
             "everyone" : "Everyone",
             "back" : "Back",
             "contact_info": "Enter your contact info (optional)",
@@ -429,8 +428,6 @@
     "category": {
         "add_tag" : "Add Category",
         "save_add_another" : "Save & Add Another",
-        "selected" : "selected",
-        "deselect" : "Deselect",
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
         "delete_category_desc" : "<strong>If you delete this category</strong>, ...",
@@ -607,9 +604,6 @@
         "role" : "Role: ",
         "roles" : "Roles",
         "saved_user": "User saved",
-        "selected" : "selected",
-        "deselect" : "Deselect",
-        "select_all" : "Select All",
         "deleted_user": "User deleted",
         "search_and_filter" : "Search & Filter Users",
         "passwordreset_instructions" : "Enter your email to request a password reset",

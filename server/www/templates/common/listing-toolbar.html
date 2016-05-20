@@ -1,13 +1,8 @@
 <div class="listing-toolbar">
     <div class="listing-toolbar-summary">
-        <strong ng-show="selectedSet.length">
-            <span class="total">
-                {{selectedSet.length}}
-            </span>
-            <span translate>user.selected</span>
-        </strong>
-        <button class="button-link" ng-click="deselectAll()" translate>user.deselect</button>
-        <button class="button-link" ng-click="selectAll()" translate>user.select_all</button>
+        <strong translate="nav.selected_items" translate-values="{ selectedItems : selectedSet.length }"></strong>
+        <button class="button-link" ng-click="deselectAll()" translate="nav.deselect">Deselect</button>
+        <button class="button-link" ng-click="selectAll()" translate="nav.select_all">Select all</button>
     </div>
 
     <div class="listing-toolbar-actions">
