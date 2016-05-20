@@ -47,14 +47,21 @@ angular.module('ushahidi.common', [
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
-.directive('roleSelector', require('./directives/role-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
+.directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
 .directive('filterSystem', require('./directives/filter-system/filter-system.js'))
 .directive('filterUsers', require('./directives/filter-system/filter-users.js'))
 .directive('filterCategoriess', require('./directives/filter-system/filter-categories.js'))
 .directive('filterPosts', require('./directives/filter-system/filter-posts.js'))
+// Event actions
+.constant('EVENT', {
+    ACTIONS : {
+        EDIT : 'edit',
+        DELETE : 'delete'
+    }
+})
 
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))

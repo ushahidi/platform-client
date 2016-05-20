@@ -30,10 +30,13 @@ describe('setting data import controller', function () {
 
 
     beforeEach(function () {
+        $rootScope.setLayout = function () {};
         $controller('settingDataImportController', {
             $scope: $scope,
             $rootScope: $rootScope
         });
+
+        $rootScope.setLayout = function () {};
 
         $rootScope.$digest();
         $rootScope.$apply();

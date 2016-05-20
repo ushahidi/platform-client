@@ -51,7 +51,12 @@ function (
     })
     .when('/settings/categories/:id', {
         controller: require('./controllers/setting-categories-edit-controller.js'),
-        templateUrl: 'templates/settings/categories/categories-edit.html'
+        templateUrl: 'templates/settings/categories/categories-edit.html',
+        resolve: {
+            category: ['$route', 'TagEndpoint', function ($route, TagEndpoint) {
+                return TagEndpoint.getFresh({id: $route.current.params.id});
+            }]
+        }
     })
     .when('/settings/users', {
         controller: require('./controllers/setting-users-controller.js'),

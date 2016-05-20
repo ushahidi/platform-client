@@ -1,9 +1,11 @@
 var ROOT_PATH = '../../../../';
 
-describe('setting roles directive', function () {
+describe('post card directive', function () {
 
     var $rootScope,
         $scope,
+        isolateScope,
+        GlobalFilter,
         Notify,
         element;
 
@@ -16,11 +18,10 @@ describe('setting roles directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('roles', require(ROOT_PATH + 'app/setting/directives/setting-roles-directive'))
+        testApp.directive('postCard', require(ROOT_PATH + 'app/post/directives/post-card-directive'))
         .value('$filter', function () {
             return function () {};
-        })
-        .value('PostEntity', {});
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -29,20 +30,21 @@ describe('setting roles directive', function () {
 
     beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
+    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _GlobalFilter_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
+        GlobalFilter = _GlobalFilter_;
         Notify = _Notify_;
 
-        element = '<div roles></div>';
+        $scope.post = fixture.load('posts/120.json');
+
+        element = '<post-card post="post"></post-card>';
         element = $compile(element)($scope);
         $scope.$digest();
+        isolateScope = element.children().scope();
     }));
 
-    it('shuld refresh the view', function () {
-        $scope.refreshView();
-        expect($scope.roles.length).toEqual(1);
+    describe('test directive functions', function () {
     });
-
 });

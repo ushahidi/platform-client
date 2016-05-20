@@ -1,6 +1,21 @@
 <div>
-    <!-- mode-context needs to be in each template -->
-    <mode-context-settings settings-view="'general'"></mode-context-settings>
+    <div class="mode-context init">
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/">{{site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.general</h1>
+        </header>
+
+        <span class="mode-context-trigger">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden">app.show_more_less</span>
+        </span>
+    </div>
 
     <main role="main">
 
@@ -79,7 +94,7 @@
                          <label for="private" translate>settings.site_private</label>
                     </div>
 
-                    <settings-map map="map" map-settings-ready="mapSettingsReady" view="view"></settings-map>
+                    <settings-map map="map"></settings-map>
                 </div>
 
                 <div class="form-sheet">
@@ -95,7 +110,7 @@
 
                         <button class="button-destructive">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#trash"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
                             </svg>
                             <span class="button-label" translate>settings.deployment_delete</span>
                         </button>
