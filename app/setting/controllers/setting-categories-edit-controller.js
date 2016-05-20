@@ -10,6 +10,7 @@ module.exports = [
     'Notify',
     '_',
     'Util',
+    'category',
 function (
     $scope,
     $rootScope,
@@ -21,8 +22,10 @@ function (
     TagEndpoint,
     Notify,
     _,
-    Util
+    Util,
+    category
 ) {
+    $scope.category = category;
     $translate('tag.edit_tag').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
@@ -33,9 +36,6 @@ function (
         $scope.roles = roles;
     });
 
-    TagEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (category) {
-        $scope.category = category;
-    });
     $scope.saving = false;
 
     $scope.saveCategory = function (tag) {

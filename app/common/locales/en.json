@@ -23,6 +23,13 @@
         "show_more_less" : "Show more/less",
         "delete" : "Delete"
     },
+    "color_picker": {
+        "hex_value" : "Hex Value",
+        "red" : "Red",
+        "gold" : "Gold",
+        "blue" : "Blue",
+        "green" : "Green"
+    },
     "feature_limits": {
         "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
     },

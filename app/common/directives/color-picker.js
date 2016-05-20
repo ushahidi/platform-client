@@ -12,7 +12,6 @@ module.exports = [
                 $scope,
                 $translate
             ) {
-                $scope.colorContainer.color = '';
                 $scope.setColor = function(color) {
                     $scope.colorContainer.color = color;
                 };
