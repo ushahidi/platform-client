@@ -24,7 +24,20 @@ describe('post view list directive', function () {
         .value('$filter', function () {
             return function () {};
         })
-        .value('PostEntity', {});
+        .value('PostEntity', {})
+        .value('moment', function () {
+            return {
+                subtract : function () {
+                    return this;
+                },
+                fromNow : function () {
+                    return '';
+                },
+                isSame : function () {
+                    return true;
+                }
+            };
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -61,22 +74,6 @@ describe('post view list directive', function () {
         expect(result).toBe(true);
     });
 
-    it('should select and unselect all posts', function () {
-        isolateScope.selectAllPosts(mockEvent);
-
-        expect(isolateScope.posts[0].selected).toBe(true);
-
-        isolateScope.unselectAllPosts(mockEvent);
-
-        expect(isolateScope.posts[0].selected).toBe(false);
-    });
-
-    it('should check if all the posts of the current page are selected', function () {
-        isolateScope.selectAllPosts(mockEvent);
-        var result = isolateScope.allSelectedOnCurrentPage(mockEvent);
-        expect(result).toBe(true);
-    });
-
     it('should check if filters have been set', function () {
         isolateScope.filters = {
             status: 'all'
@@ -87,13 +84,13 @@ describe('post view list directive', function () {
     });
 
     it('should delete selected posts', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'showConfirmModal').and.callThrough();
         isolateScope.posts[0].id = 'pass';
-        isolateScope.selectAllPosts(mockEvent);
+        isolateScope.selectedPosts.push = 'pass';
 
-        isolateScope.deleteSelectedPosts();
+        isolateScope.deletePosts();
 
         $rootScope.$digest();
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.showConfirmModal).toHaveBeenCalled();
     });
 });
