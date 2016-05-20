@@ -234,6 +234,7 @@
         "selected_items" : "{{selectedItems}} selected",
         "settings" : "Settings",
         "tags" : "Categories",
+        "today" : "Today",
         "general" : "General Settings",
         "type" : "Type",
         "unselect_all" : "Unselect All",
@@ -242,7 +243,8 @@
         "role" : "Role",
         "roles" : "Roles",
         "views" : "Views",
-        "more" : "More"
+        "more" : "More",
+        "yesterday" : "Yesterday"
     },
     "views" : {
         "map" : "Map",

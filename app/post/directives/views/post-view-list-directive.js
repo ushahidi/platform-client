@@ -82,11 +82,10 @@ function PostListDirective() {
 
                 $scope.groupedPosts = _.groupBy(postsResponse.results, function (post) {
                     var created = moment(post.created);
-                    // @todo translate today
                     if (now.isSame(created, 'd')) {
-                        return 'Today';
+                        return $translate.instant('nav.today');
                     } else if (yesterday.isSame(created, 'd')) {
-                        return 'Yesterday';
+                        return $translate.instant('nav.yesterday');
                     } else {
                         return created.fromNow();
                     }
