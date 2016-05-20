@@ -7,7 +7,7 @@ require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
-require('angular-ui-bootstrap/ui-bootstrap-tpls');
+require('angular-ui-bootstrap');
 require('angular-datepicker');
 require('moment-timezone');
 require('angular-sanitize');

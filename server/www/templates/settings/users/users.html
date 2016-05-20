@@ -1,60 +1,66 @@
-<div class="main-col">
+<div>
 
-    <!-- mode-context needs to be in each template -->
-    <mode-context></mode-context>
 
-    <!-- toolbar -->
-    <div class="toolbar">
-        <div class="fab">
-            <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab">
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
-                </svg>
-                <span class="hidden" translate>user.add_user</span>
-            </a>
-        </div>
+    <mode-context-settings settings-view="'users'"></mode-context-settings>
 
-       <filter-system entity-type="'users'" filters="filters" query-fnc="applyFilters()"></filter-system>
+    <main role="main">
 
-        <div class="button-group">
-            <button type="button">
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
-                </svg>
-                <span class="button-label" translate>nav.export</span>
-            </button>
-        </div>
-    </div>
-    <!-- end toolbar -->
-
-    <div class="listing card" ng-class="{'toolbar-active': selectedUsers.length}">
-        <div class="alert" ng-hide="users.length">
-            <p ng-hide="users.length"><em translate>empty.user</em></p>
-        </div>
-
-        <div id="user-{{user.id}}" class="listing-item" ng-repeat="user in users | orderBy:'realname'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
-            <div class="listing-item-select">
-                <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="fab">
+                <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab" disabled>
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    <span class="hidden" translate>user.add_user</span>
+                </a>
             </div>
 
-            <div class="listing-item-primary">
-                <div class="listing-item-image">
-                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
+            <filter-system entity-type="'users'" filters="filters" query-fnc="applyFilters()"></filter-system>
+           
+            <div class="button-group">
+                <button type="button">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
+                    </svg>
+                    <span class="button-label" translate>nav.export</span>
+                </button>
+            </div>
+        </div>
+        <!-- end toolbar -->
+
+        <div class="main-col">
+
+            <div class="listing card" ng-class="{'toolbar-active': selectedUsers.length}">
+                <div class="alert" ng-hide="users.length">
+                    <p ng-hide="users.length"><em translate>empty.user</em></p>
                 </div>
 
-                <h2 class="listing-item-title"><a ng-href="/settings/users/{{user.id}}">{{user.realname}}</a></h2>
-                <p class="listing-item-secondary">{{ user.role }}</p>
-            </div>
+                <div id="user-{{user.id}}" class="listing-item" ng-repeat="user in users | orderBy:'realname'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
+                    <div class="listing-item-select">
+                        <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <div class="listing-item-image">
+                            <img class="avatar" src="http://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
+                        </div>
+
+                        <h2 class="listing-item-title"><a ng-href="/settings/users/{{user.id}}">{{user.realname}}</a></h2>
+                        <p class="listing-item-secondary">{{ user.role }}</p>
+                    </div>
+                </div>
+                <listing-toolbar
+                    delete-func="deleteUsers()"
+                    change-role-func="changeRole(role)"
+                    role-enabled="true"
+                    entities="users"
+                    selected-set="selectedUsers"
+                    role-mode="'role'"></listing-toolbar>
+             </div>
+
+           <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+
         </div>
-        <listing-toolbar
-            delete-func="deleteUsers()"
-            change-role-func="changeRole(role)"
-            role-enabled="true"
-            entities="users"
-            selected-set="selectedUsers"
-            role-mode="'role'"></listing-toolbar>
-     </div>
-
-   <pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
-
+    </main>
 </div>

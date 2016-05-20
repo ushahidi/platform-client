@@ -8,10 +8,22 @@
         "cancel" : "Cancel",
         "save" : "Save",
         "saving" : "Saving",
-        "delete" : "Delete",
         "apply_filters" : "Apply filters",
         "filters" : "Filters",
-        "roles" : "Roles"
+        "roles" : "Roles",
+        "settings": "Settings",
+        "general" : "General",
+        "surveys" : "Surveys",
+        "data_sources" : "Data Sources",
+        "import" : "Import",
+        "users" : "Users",
+        "edit_user" : "Edit User",
+        "roles" : "Roles",
+        "edit_role" : "Edit Role",
+        "categories" : "Categories",
+        "edit_category" : "Edit Category",
+        "plan" : "Plan",
+        "delete" : "Delete"
     },
     "toolbar": {
         "searchbar" : {
@@ -183,7 +195,6 @@
         "edit_post_type": "Edit Post Type",
         "export": "Export",
         "forbidden" : "Access Denied",
-        "general" : "General",
         "dashboard" : "Dashboard",
         "delete" : "Delete",
         "edit" : "Edit",
@@ -383,9 +394,13 @@
 <<<<<<< HEAD
         "delete" : "Delete",
         "delete_role" : "Delete this role",
+<<<<<<< HEAD
         "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
 =======
         "delete" : "Delete"
+>>>>>>> develop
+=======
+        "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution."
 >>>>>>> develop
     },
     "set": {
@@ -473,7 +488,7 @@
         "customize_your_new_deployment" : "Customize your new deployment",
         "settings_list": {
             "general" : "General",
-            "general_desc" : "Change your deployment\'s name, description, logo, and other details.",
+            "general_desc" : "Change your deployment's name, description, logo, and other details.",
             "surveys" : "Surveys",
             "surveys_desc" : "Create and configure the surveys your deployment collects.",
             "data_sources" : "Data Sources",
@@ -562,7 +577,7 @@
         "csv_instructions_required_fields" : "Fields marked with a <span class=\"required\"></span> are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
-        "dont_import" : "Don\'t import",
+        "dont_import" : "Don't import",
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
         "select_post_type" : "Select Post Type"
@@ -634,7 +649,7 @@
     },
     "notify": {
         "contact" : {
-            "save_success" : "Contact saved",
+            "save_success" : "Contact saved"
         },
         "default" : {
             "save_success" : "Saved resource",
@@ -711,7 +726,7 @@
             "last_admin" : "You can not delete the only admin role"
         },
         "datasource" : {
-            "save_success" : "Saved Data Source {{name}}",
+            "save_success" : "Saved Data Source {{name}}"
         },
         "user" : {
             "save_success" : "User {{name}} saved",

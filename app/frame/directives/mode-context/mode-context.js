@@ -6,7 +6,7 @@ function (
         replace: true,
         scope: {
         },
-        templateUrl: 'templates/frame/mode-context.html',
+        templateUrl: 'templates/frame/mode-context/mode-context.html',
         link: function ($scope, $element, $attrs) {
         }
     };

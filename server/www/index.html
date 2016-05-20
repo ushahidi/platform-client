@@ -18,11 +18,7 @@
     </head>
 
     <!-- TODO: set layouts per view directive -->
-<<<<<<< HEAD
     <body ng-class="{ rtl : rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }}" canvas>
-=======
-    <body ng-class="{ rtl : rtlEnabled }" class="{{ globalLayout }}" canvas>
->>>>>>> develop
         <div id="bootstrap-loading">
             <!-- loading the document -->
             <div class="loading">
@@ -47,25 +43,17 @@
 
             <mode-bar></mode-bar>
 
-<<<<<<< HEAD
             <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
             <main role="main">
                 <ng-view></ng-view>
             </main>
-=======
-            <ng-view></ng-view>
->>>>>>> develop
 
             <!-- TODO: fix and uncomment -->
             <!-- <div class="wrapper">
                 <ng-include src="'templates/partials/notification-system.html'"></ng-include>
             </div> -->
-<<<<<<< HEAD
             <!-- TODO: fix and uncomment -->
             <!--
-=======
-
->>>>>>> develop
             <first-time-config></first-time-config>
             -->
         </div>
