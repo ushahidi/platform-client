@@ -11,6 +11,7 @@ module.exports = [
     'Notify',
     '_',
     'moment',
+    '$location',
 function (
     $translate,
     $q,
@@ -23,40 +24,9 @@ function (
     FormStageEndpoint,
     Notify,
     _,
-    moment
+    moment,
+    $location
 ) {
-    var getCurrentStage = function (post) {
-        var dfd = $q.defer();
-
-        if (!post.form || !post.form.id) {
-            // if there is no pre-defined structure in place (eg from SMS, stage is 'Structure'), and the
-            // update link enables you to select a type of structure
-            $translate('post.structure').then(dfd.resolve);
-        } else {
-            // Assume form is already loading/loaded
-            FormStageEndpoint.query({formId: post.form.id}).$promise.then(function (stages) {
-                // If number of completed stages matches number of stages, assume they're all complete
-                if (post.completed_stages.length === stages.length) {
-                    if (post.status === 'published') {
-                        $translate('post.complete_published').then(dfd.resolve);
-                    } else {
-                        $translate('post.complete_draft').then(dfd.resolve);
-                    }
-                } else {
-                    // Get incomplete stages
-                    var incompleteStages = _.filter(stages, function (stage) {
-                        return !_.contains(post.completed_stages, stage.id);
-                    });
-
-                    // Return lowest priority incomplete stage
-                    dfd.resolve(incompleteStages[0].label);
-                }
-            });
-        }
-
-        return dfd.promise;
-    };
-
     var visibleTo = function (post) {
         if (post.status === 'draft') {
             return 'draft';
@@ -72,16 +42,16 @@ function (
     // @todo move to shared service?
     var deletePost = function (post) {
         $translate('notify.post.destroy_confirm').then(function (message) {
-            Notify.showConfirmAlert(message).then(function () {
+            Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
                 PostEndpoint.delete({ id: post.id }).$promise.then(function () {
                     $translate(
                         'notify.post.destroy_success',
                         {
-                            name: $scope.post.title
-                        }).then(function (message) {
-                            Notify.showNotificationSlider(message);
-                            $location.path('/');
-                        });
+                            name: post.title
+                        }
+                    ).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
@@ -102,7 +72,7 @@ function (
             $scope.visibleTo = visibleTo($scope.post);
 
             // Format source (fixme!)
-            if ($scope.post.source == 'sms') {
+            if ($scope.post.source === 'sms') {
                 $scope.post.source = 'SMS';
             } else if ($scope.post.source) {
                 // Uppercase first character
@@ -134,7 +104,6 @@ function (
             }
 
             var created = moment($scope.post.created),
-                weekAgo =
                 now = moment();
 
             if (now.isSame(created, 'day')) {

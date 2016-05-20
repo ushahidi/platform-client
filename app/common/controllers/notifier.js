@@ -11,6 +11,7 @@ function (
     $scope.showLimitSlider = false;
     $scope.showAlertSlider = false;
     $scope.showConfirmationSlider = false;
+    $scope.showConfirmationModal = false;
     $scope.eventActions = EVENT.ACTIONS;
 
     $rootScope.$on('event:show:notification-slider', function (event, message) {
@@ -25,6 +26,14 @@ function (
 
     $rootScope.$on('event:show:message-confirm', function (event, message, callbackEvent, buttonText, action) {
         $scope.showConfirmationSlider = true;
+        $scope.confirmationMessage = message;
+        $scope.callbackEvent = callbackEvent;
+        $scope.buttonText = buttonText;
+        $scope.action = action;
+    });
+
+    $rootScope.$on('event:show:message-confirm-modal', function (event, message, callbackEvent, buttonText, action) {
+        $scope.showConfirmationModal = true;
         $scope.confirmationMessage = message;
         $scope.callbackEvent = callbackEvent;
         $scope.buttonText = buttonText;
@@ -61,6 +70,7 @@ function (
     $scope.confirmResult = function (result) {
         $rootScope.$emit('event:confirm:return-confirm', result);
         $scope.showConfirmationSlider = false;
+        $scope.showConfirmationModal = false;
     };
 
     $scope.acknowledgeAlert = function () {
@@ -80,6 +90,7 @@ function (
         }
 
         $scope.showConfirmationSlider = false;
+        $scope.showConfirmationModal = false;
     };
 }];
 

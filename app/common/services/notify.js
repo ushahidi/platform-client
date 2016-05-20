@@ -29,6 +29,12 @@ function ($window, _, $q, $rootScope) {
         return deffered.promise;
     };
 
+    var showConfirmModal = function (message, callbackEvent, buttonText, action) {
+        $rootScope.$emit('event:show:message-confirm-modal', message, callbackEvent, buttonText, action);
+        deffered = $q.defer();
+        return deffered.promise;
+    };
+
     var showConfirmSuccess = function (message, callbackEvent, buttonText, action) {
         $rootScope.$emit('event:show:success-confirm', message, callbackEvent, buttonText, action);
         deffered = $q.defer();
@@ -57,6 +63,7 @@ function ($window, _, $q, $rootScope) {
         showAlerts: showAlerts,
         showApiErrors: showApiErrors,
         showConfirm: showConfirm,
+        showConfirmModal: showConfirmModal,
         showConfirmSuccess: showConfirmSuccess,
         showConfirmAlert: showConfirmAlert,
         showLimitSlider: showLimitSlider

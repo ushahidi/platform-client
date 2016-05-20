@@ -1,92 +1,130 @@
 <div ng-controller="notifier">
     <notification-slider visible="showNotificationSlider">
 
-    <div class="message-body">
-      <p>{{notificationSliderMessage}}</p>
+        <div class="message-body">
+            <p>{{notificationSliderMessage}}</p>
 
-      <button class="button-flat message-trigger"
-              ng-click="acknowledgeNotification()"
-              translate>
-        message.button.dismiss
-      </button>
-    </div>
-  </notification-slider>
+            <button class="button-flat message-trigger"
+                            ng-click="acknowledgeNotification()"
+                            translate>
+                message.button.dismiss
+            </button>
+        </div>
+    </notification-slider>
 
     <notification-slider visible="showConfirmationSlider">
-      <div class="message-image confirmation" ng-show="isSuccess">
-        <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#thumb-up"></use>
-        </svg>
-      </div>
+        <div class="message-image confirmation" ng-show="isSuccess">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#thumb-up"></use>
+            </svg>
+        </div>
 
-      <div class="message-image error" ng-show="isAlert">
-        <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
-        </svg>
-      </div>
+        <div class="message-image error" ng-show="isAlert">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
+            </svg>
+        </div>
 
-    <div class="message-body">
-      <p>{{confirmationMessage}}</p>
-      <button class="button-beta button-flat"
-              ng-show="buttonText"
-              ng-click="emitCallbackEvent(callbackEvent)">
+        <div class="message-body">
+            <p>{{confirmationMessage}}</p>
 
-        <svg class="iconic" ng-show="action === eventActions.EDIT">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#pencil"></use>
-        </svg>
-        <svg class="iconic" ng-show="action === eventActions.DELETE">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#trash"></use>
-        </svg>
+            <button class="button-flat message-trigger"
+                            ng-click="confirmResult(false)"
+                            translate>
+                message.button.dismiss
+            </button>
 
-        <span class="button-label">{{buttonText}}</span>
-      </button>
+            <button class="button-beta button-flat"
+                            ng-show="!buttonText"
+                            ng-click="emitCallbackEvent(callbackEvent)">
+                <span class="button-label" translate>message.button.default</span>
+            </button>
 
-      <button class="button-beta button-flat"
-              ng-show="!buttonText"
-              ng-click="emitCallbackEvent(callbackEvent)">
-        <span class="button-label" translate>message.button.default</span>
-      </button>
+            <button class="button-beta button-flat"
+                            ng-show="buttonText"
+                            ng-click="emitCallbackEvent(callbackEvent)">
 
-      <button class="button-flat message-trigger"
-              ng-click="confirmResult(false)"
-              translate>
-        message.button.dismiss
-      </button>
-    </div>
-  </notification-slider>
+                <svg class="iconic" ng-show="action === eventActions.EDIT">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#pencil"></use>
+                </svg>
+                <svg class="iconic" ng-show="action === eventActions.DELETE">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#trash"></use>
+                </svg>
 
-  <notification-slider visible="showAlertSlider">
-    <div class="message-image error" ng-show="isAlert">
-      <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
-      </svg>
-    </div>
+                <span class="button-label">{{buttonText}}</span>
+            </button>
+        </div>
+    </notification-slider>
 
-    <div class="message-body">
-      <div ng-repeat="alert in alerts">
-        {{alert}}
-      </div>
+    <notification-slider visible="showAlertSlider">
+        <div class="message-image error" ng-show="isAlert">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
+            </svg>
+        </div>
 
-      <button class="button-flat message-trigger"
-              ng-click="acknowledgeAlert()"
-              translate>
-        message.button.default
-      </button>
-    </div>
+        <div class="message-body">
+            <div ng-repeat="alert in alerts">
+                {{alert}}
+            </div>
 
-  </notification-slider>
+            <button class="button-flat message-trigger"
+                            ng-click="acknowledgeAlert()"
+                            translate>
+                message.button.default
+            </button>
+        </div>
+    </notification-slider>
 
-  <notification-slider visible="showLimitSlider" >
-    <div class="message-image error">
-      <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
-      </svg>
-    </div>
+    <notification-slider visible="showLimitSlider" >
+        <div class="message-image error">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../img/iconic-sprite.svg#warning"></use>
+            </svg>
+        </div>
 
-    <div class="message-body">
-      <p>{{limitSliderMessage}}</p>
-      <div class="divider padded"></div>
-      <a class="button" href="/settings/plan" translate>limit.upgrade</a>
-    </div>
-  </notification-slider>
+        <div class="message-body">
+            <p>{{limitSliderMessage}}</p>
+            <div class="divider padded"></div>
+            <a class="button" href="/settings/plan" translate>limit.upgrade</a>
+        </div>
+    </notification-slider>
+
+    <modal visible="showConfirmationModal" show-close-button="false">
+
+        <h3 class="modal-title">{{ confirmationMessage }}</h3>
+        <div class="modal-body">
+
+            <!-- <p>{{confirmationMessage}}</p> -->
+
+            <div class="form-field">
+                <button class="button-beta button-flat"
+                                ng-click="confirmResult(false)"
+                                translate>
+                    message.button.cancel
+                </button>
+
+                <button class="button-flat"
+                                ng-show="!buttonText"
+                                ng-click="confirmResult(true)">
+                    <span class="button-label" translate>message.button.default</span>
+                </button>
+
+                <button
+                        ng-class="{ 'button-destructive' : (action === eventActions.DELETE), 'button-flat' : (action !== eventActions.EDIT) }"
+                        ng-show="buttonText"
+                        ng-click="confirmResult(true)">
+
+                    <svg class="iconic" ng-show="action === eventActions.EDIT">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
+                    </svg>
+                    <svg class="iconic" ng-show="action === eventActions.DELETE">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                    </svg>
+
+                    <span class="button-label">{{buttonText}}</span>
+                </button>
+            </div>
+        </div>
+    </modal>
 </div>

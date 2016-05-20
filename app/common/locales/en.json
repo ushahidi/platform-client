@@ -169,7 +169,8 @@
     "message" : {
         "button" : {
             "dismiss" : "Dismiss",
-            "default" : "Ok"
+            "default" : "Ok",
+            "cancel" : "Cancel"
         }
     },
     "modal" : {
