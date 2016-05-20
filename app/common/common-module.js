@@ -48,6 +48,7 @@ angular.module('ushahidi.common', [
 .directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
+.directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
 // Event actions
