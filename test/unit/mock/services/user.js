@@ -20,6 +20,30 @@ module.exports = [function () {
                 }
             }};
         },
+        update: function (_, user) {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    if (user.email !== 'Bad email') {
+                        successCallback({
+                            realname: 'Changed name',
+                            id: 1,
+                            someField: 'addedByServer'
+                        });
+                    } else {
+                        failCallback({
+                            status: 400,
+                            data: {
+                                'errors': [
+                                    {
+                                        'message': 'invalid email address'
+                                    }
+                                ]
+                            }
+                        });
+                    }
+                }
+            }};
+        },
         delete: function () {
             return {$promise: {
                 then: function (successCallback) {

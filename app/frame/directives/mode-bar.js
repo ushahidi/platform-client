@@ -21,6 +21,11 @@ function (
             };
 
             $scope.currentUser = $rootScope.currentUser;
+
+            // Show account settings modal
+            $scope.viewAccountSettings = function () {
+                $rootScope.$emit('event:show:account_settings');
+            };
         }
     };
 }];
