@@ -34,6 +34,13 @@ module.exports = [function () {
                     successCallback();
                 }
             };
+        },
+        showConfirmModal: function (message, callbackEvent, buttonText, action) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
         }
     };
 }];

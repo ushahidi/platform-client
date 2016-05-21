@@ -72,7 +72,6 @@ describe('setting users edit controller', function () {
         $rootScope.$apply();
 
         expect(Notify.showApiErrors).toHaveBeenCalled();
-        expect($scope.processing).toBe(false);
     });
 
 });

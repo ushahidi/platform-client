@@ -8,7 +8,27 @@
         "cancel" : "Cancel",
         "save" : "Save",
         "saving" : "Saving",
+        "settings": "Settings",
+        "general" : "General",
+        "surveys" : "Surveys",
+        "data_sources" : "Data Sources",
+        "import" : "Import",
+        "users" : "Users",
+        "edit_user" : "Edit User",
+        "roles" : "Roles",
+        "edit_role" : "Edit Role",
+        "categories" : "Categories",
+        "edit_category" : "Edit Category",
+        "plan" : "Plan",
+        "show_more_less" : "Show more/less",
         "delete" : "Delete"
+    },
+    "color_picker": {
+        "hex_value" : "Hex Value",
+        "red" : "Red",
+        "gold" : "Gold",
+        "blue" : "Blue",
+        "green" : "Green"
     },
     "feature_limits": {
         "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
@@ -153,6 +173,18 @@
         "updated": "Updated time",
         "select_one": "Select one"
     },
+    "message" : {
+        "button" : {
+            "dismiss" : "Dismiss",
+            "default" : "Ok",
+            "cancel" : "Cancel"
+        }
+    },
+    "modal" : {
+        "button" : {
+            "close" : "Close"
+        }
+    },
     "nav" : {
         "about" : "About",
         "activity" : "Activity",
@@ -170,11 +202,11 @@
         "comments" : "Comments",
         "data_sources" : "Data Sources",
         "data_import" : "Data Import",
+        "deselect" : "Deselect",
         "edit_profile" : "Edit Profile",
         "edit_post_type": "Edit Post Type",
         "export": "Export",
         "forbidden" : "Access Denied",
-        "general" : "General",
         "dashboard" : "Dashboard",
         "delete" : "Delete",
         "edit" : "Edit",
@@ -205,9 +237,11 @@
         "roles" : "Roles",
         "saved_searches" : "Saved Searches",
         "search" : "Search",
-        "select_all" : "Select All",
+        "select_all" : "Select all",
+        "selected_items" : "{{selectedItems}} selected",
         "settings" : "Settings",
         "tags" : "Categories",
+        "today" : "Today",
         "general" : "General Settings",
         "type" : "Type",
         "unselect_all" : "Unselect All",
@@ -216,7 +250,8 @@
         "role" : "Role",
         "roles" : "Roles",
         "views" : "Views",
-        "more" : "More"
+        "more" : "More",
+        "yesterday" : "Yesterday"
     },
     "views" : {
         "map" : "Map",
@@ -232,11 +267,9 @@
         "post" : "Post",
         "message" : "Message",
         "message_thread" : "Message Thread",
-        "publish_for_you" : "Just you",
-        "publish_for_everyone" : "Everyone",
         "all_posts" : "All Posts",
         "no_search_results" : "Your search didn't match any posts",
-        "no_posts_yet" : "This are no posts yet!",
+        "no_posts_yet" : "There are no posts yet!",
         "add_first_post": "Add the first post",
         "create_post" : "Create Post",
         "create" : "Create",
@@ -260,7 +293,6 @@
         "published" : "Published",
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
-        "who_can_see_this" : "Who can see this",
         "can_see_this_post" : "can see this post",
         "location" : "Location",
         "categories" : "Categories",
@@ -274,6 +306,9 @@
         "complete_published" : "Complete (Published)",
         "structure" : "Structure",
         "source" : "via {{source}}",
+        "visible_to_public": "This post is visible to the public",
+        "visible_to_you": "This post is visible to just you and admins",
+        "visible_to_roles": "This post is visible to {{roles}}",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete",
@@ -288,10 +323,6 @@
             "change_type" : "Change type",
             "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
             "save_post" : "Save Post",
-            "publish" : "Publish to...",
-            "publish_to" : "Publish to {{role}}",
-            "published_to" : "Published to {{role}}",
-            "unpublish" : "Revert to Draft",
             "everyone" : "Everyone",
             "back" : "Back",
             "contact_info": "Enter your contact info (optional)",
@@ -406,8 +437,6 @@
     "category": {
         "add_tag" : "Add Category",
         "save_add_another" : "Save & Add Another",
-        "selected" : "selected",
-        "deselect" : "Deselect",
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
         "delete_category_desc" : "<strong>If you delete this category</strong>, ...",
@@ -460,7 +489,7 @@
         "customize_your_new_deployment" : "Customize your new deployment",
         "settings_list": {
             "general" : "General",
-            "general_desc" : "Change your deployment\'s name, description, logo, and other details.",
+            "general_desc" : "Change your deployment's name, description, logo, and other details.",
             "surveys" : "Surveys",
             "surveys_desc" : "Create and configure the surveys your deployment collects.",
             "data_sources" : "Data Sources",
@@ -549,7 +578,7 @@
         "csv_instructions_required_fields" : "Fields marked with a <span class=\"required\"></span> are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
-        "dont_import" : "Don\'t import",
+        "dont_import" : "Don't import",
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
         "select_post_type" : "Select Post Type"
@@ -584,9 +613,6 @@
         "role" : "Role: ",
         "roles" : "Roles",
         "saved_user": "User saved",
-        "selected" : "selected",
-        "deselect" : "Deselect",
-        "select_all" : "Select All",
         "deleted_user": "User deleted",
         "search_and_filter" : "Search & Filter Users",
         "passwordreset_instructions" : "Enter your email to request a password reset",
@@ -709,7 +735,7 @@
             "last_admin" : "You can not delete the only admin role"
         },
         "datasource" : {
-            "save_success" : "Saved Data Source {{name}}",
+            "save_success" : "Saved Data Source {{name}}"
         },
         "user" : {
             "save_success" : "User {{name}} saved",

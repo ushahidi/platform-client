@@ -1,12 +1,14 @@
-<div ng-if="mapSettingsReady">
-    <div class="form-field">
+<div>
+
+    <div class="form-field" ng-if="mapSettingsReady">
         <label class="input-label" translate>settings.map_default_location</label>
         <leaflet defaults="defaults" tiles="baselayer" markers="markers" center="center" height="300px" width="100%"></leaflet>
     </div>
 
     <div class="form-field">
         <label translate>settings.map_default_baselayer</label>
-        <select id="map-settings-base-layer" class="form-control" ng-model="map.default_view.baselayer" ng-options="index as layer.name for (index, layer) in baseLayers" ng-change="updateMapPreview()"></select>
+        <select id="map-settings-base-layer" class="form-control" ng-model="map.default_view.baselayer" ng-change="updateMapPreview()" ng-options="index as layer.name for (index, layer) in layers.baselayers">
+        </select>
     </div>
 
     <div class="form-field">
@@ -32,7 +34,7 @@
         <input id="map-settings-zoom" type="number" ng-min="minZoom" ng-max="maxZoom" required class="form-control" ng-model="map.default_view.zoom" ng-pattern="onlyNumbers" ng-change="updateMapPreview()" />
     </div>
     <div class="form-field checkbox">
-        <input type="checkbox" ng-model="map.clustering" id="map-settings-clustering"> 
+        <input type="checkbox" ng-model="map.clustering" id="map-settings-clustering">
         <label for="map-settings-clustering" translate>settings.map_clustering</label>
     </div>
 </div>

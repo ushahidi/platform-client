@@ -7,9 +7,8 @@ require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
-require('angular-ui-bootstrap/ui-bootstrap-tpls');
+require('angular-ui-bootstrap');
 require('angular-datepicker');
-require('moment-timezone');
 require('angular-sanitize');
 require('angular-filter');
 require('angular-local-storage');
@@ -115,6 +114,9 @@ angular.module('app',
     })
     .factory('Leaflet', function () {
         return window.L;
+    })
+    .factory('moment', function () {
+        return require('moment');
     })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
