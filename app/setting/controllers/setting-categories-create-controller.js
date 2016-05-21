@@ -29,7 +29,7 @@ function (
         $scope.roles = roles;
     });
 
-    $scope.tag = { type: 'category', icon: 'tag' };
+    $scope.tag = { type: 'category', icon: 'tag' , color: ''};
     $scope.processing = false;
 
     $scope.saveTag = function (tag, addAnother) {

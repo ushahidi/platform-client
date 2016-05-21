@@ -313,6 +313,7 @@ gulp.task('tdd', function (done) {
     var server = new KarmaServer({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
+        reporters: ['progress', 'notify'],
         autoWatch: true,
         singleRun: false
     }, done);

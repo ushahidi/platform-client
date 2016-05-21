@@ -1,6 +1,21 @@
 <div>
-    <!-- mode-context needs to be in each template -->
-    <mode-context-settings settings-view="'users'"></mode-context-settings>
+    <div class="mode-context init">
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/">{{site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.users</h1>
+        </header>
+
+        <span class="mode-context-trigger">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden">app.show_more_less</span>
+        </span>
+    </div>
 
     <!-- toolbar -->
     <div class="toolbar">
@@ -47,13 +62,32 @@
                         <p class="listing-item-secondary">{{ user.role }}</p>
                     </div>
                 </div>
-                <listing-toolbar
-                    delete-func="deleteUsers()"
-                    change-role-func="changeRole(role)"
-                    role-enabled="true"
-                    entities="users"
-                    selected-set="selectedUsers"
-                    role-mode="'role'"></listing-toolbar>
+                <listing-toolbar entities="users" selected-set="selectedUsers">
+                    <fieldset class="custom-fieldset init" dropdown>
+                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                            <span class="legend-label" translate>
+                                user.change_role
+                            </span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </legend>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field radio" ng-repeat="role in roles">
+                                <label for="{{role.nam}}">
+                                    <input type="radio" name="role" id="contributor" ng-click="changeRole(role)">
+                                        {{role.display_name}}
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <button type="button" class="button-destructive" ng-disabled="!selectedUsers.length" ng-click="deleteUsers()">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                        </svg>
+                        <span class="button-label hidden">nav.delete</span>
+                    </button>
+                </listing-toolbar>
              </div>
 
            <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
