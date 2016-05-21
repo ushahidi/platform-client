@@ -28,7 +28,10 @@
             </a>
         </div>
 
-       <filter-system entity-type="'users'" filters="filters" query-fnc="applyFilters()"></filter-system>
+        <form role="search" class="searchbar">
+            <filter-searchbar filters="filters"></filter-searchbar>
+            <filter-users filters="filters"></filter-users>
+        </form>
 
         <div class="button-group">
             <button type="button">
