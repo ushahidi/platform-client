@@ -1,7 +1,6 @@
 module.exports = [
     '$scope',
     '$rootScope',
-    '$routeParams',
     '$translate',
     '$location',
     'multiTranslate',
@@ -14,7 +13,6 @@ module.exports = [
 function (
     $scope,
     $rootScope,
-    $routeParams,
     $translate,
     $location,
     multiTranslate,

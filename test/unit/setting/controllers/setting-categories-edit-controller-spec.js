@@ -37,14 +37,14 @@ describe('setting categories edit controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
         spyOn($rootScope, 'goBack').and.callThrough();
 
-        var mockRouteParams = {
+        var category = {
             id: 1
         };
 
         $controller('settingCategoriesEditController', {
             $scope: $scope,
             $rootScope: $rootScope,
-            $routeParams: mockRouteParams
+            category: category
         });
 
         $rootScope.$digest();
