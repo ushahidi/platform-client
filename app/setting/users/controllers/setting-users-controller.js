@@ -128,12 +128,11 @@ function (
 
     // --- start: definitions
     $scope.getUsersForPagination = function () {
-        UserEndpoint.queryFresh({
-            offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-            limit: $scope.itemsPerPage,
-            role: $scope.filters.role,
-            q: $scope.filters.q
-        }).$promise.then(function (usersResponse) {
+        var filters = _.extend({
+                            offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
+                            limit: $scope.itemsPerPage
+                        }, $scope.filters);
+        UserEndpoint.queryFresh(filters).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
             $scope.totalItems = usersResponse.total_count;
         });
