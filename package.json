@@ -22,8 +22,8 @@
     "jscs-fix": "gulp jscsfix"
   },
   "pre-commit": [
-    "jshint",
-    "jscs"
+    //"jshint",
+    //"jscs"
   ],
   "devDependencies": {
     "body-parser": "^1.15.1",
