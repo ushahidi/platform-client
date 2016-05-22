@@ -17,32 +17,30 @@
         </span>
     </div>
 
-    <!-- toolbar -->
-    <div class="toolbar">
-        <div class="fab">
-            <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab">
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
-                </svg>
-                <span class="hidden" translate>user.add_user</span>
-            </a>
-        </div>
+    <main role="main">
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="fab">
+                <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    <span class="hidden" translate>user.add_user</span>
+                </a>
+            </div>
 
-        <form role="search" class="searchbar">
-            <filter-searchbar filters="filters"></filter-searchbar>
             <filter-users filters="filters"></filter-users>
-        </form>
 
-        <div class="button-group">
-            <button type="button">
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
-                </svg>
-                <span class="button-label" translate>nav.export</span>
-            </button>
+            <div class="button-group">
+                <button type="button">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
+                    </svg>
+                    <span class="button-label" translate>nav.export</span>
+                </button>
+            </div>
         </div>
-    </div>
-    <!-- end toolbar -->
+        <!-- end toolbar -->
 
         <div class="main-col">
 
@@ -65,32 +63,13 @@
                         <p class="listing-item-secondary">{{ user.role }}</p>
                     </div>
                 </div>
-                <listing-toolbar entities="users" selected-set="selectedUsers">
-                    <fieldset class="custom-fieldset init" dropdown>
-                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
-                            <span class="legend-label" translate>
-                                user.change_role
-                            </span>
-                            <svg class="iconic chevron">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                            </svg>
-                        </legend>
-                        <div class="dropdown-menu init" dropdown-menu>
-                            <div class="form-field radio" ng-repeat="role in roles">
-                                <label for="{{role.nam}}">
-                                    <input type="radio" name="role" id="contributor" ng-click="changeRole(role)">
-                                        {{role.display_name}}
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <button type="button" class="button-destructive" ng-disabled="!selectedUsers.length" ng-click="deleteUsers()">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-                        </svg>
-                        <span class="button-label hidden">nav.delete</span>
-                    </button>
-                </listing-toolbar>
+                <listing-toolbar
+                    delete-func="deleteUsers()"
+                    change-role-func="changeRole(role)"
+                    role-enabled="true"
+                    entities="users"
+                    selected-set="selectedUsers"
+                    role-mode="'role'"></listing-toolbar>
              </div>
 
            <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>

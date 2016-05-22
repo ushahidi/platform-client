@@ -131,7 +131,7 @@ function (
         UserEndpoint.queryFresh({
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
-            roles: $scope.filters.roles,
+            role: $scope.filters.role,
             q: $scope.filters.q
         }).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
@@ -156,5 +156,8 @@ function (
 
     $scope.getUsersForPagination();
     // --- end: initialization
+    $scope.$watch('filters', function () {
+        $scope.getUsersForPagination();
+    }, true);
 
 }];

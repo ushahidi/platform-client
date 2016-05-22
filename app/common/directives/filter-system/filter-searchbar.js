@@ -11,16 +11,10 @@ function (
         '$scope',
         '$rootScope',
         '$translate',
-        'Notify',
-        'RoleEndpoint',
-        '_',
         function (
             $scope,
             $rootScope,
-            $translate,
-            Notify,
-            RoleEndpoint,
-            _
+            $translate
         ) {
             $scope.showQueryResults = false;
 
@@ -28,19 +22,14 @@ function (
                 $scope.showQueryResults = true;
             };
 
-            $scope.search = function (query) {
-                $scope.showQueryResults = false;
-                $scope.searchResultsActive = false;
-                $scope.filters.q = query;
-            };
-
         }];
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/common/filter-searchbar/filter-searchbar.html',
+        templateUrl: 'templates/common/filter-system/filter-searchbar.html',
         scope: {
-            filters: '='
+            filters: '=',
+            placeholdeEntity: '='
         },
         controller: controller
     };
