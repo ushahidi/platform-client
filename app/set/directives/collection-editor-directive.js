@@ -78,6 +78,7 @@ function (
                     $scope.collection = _.clone(collection);
                     $scope.collectionEditorVisible = false;
                     $rootScope.$broadcast('event:collection:update');
+                    $location.path('/collections/' + collection.id);
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
