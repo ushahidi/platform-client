@@ -43,7 +43,10 @@
 
             <mode-bar></mode-bar>
 
-            <ng-view></ng-view>
+            <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
+            <main role="main">
+                <ng-view></ng-view>
+            </main>
 
 
             <div class="wrapper">

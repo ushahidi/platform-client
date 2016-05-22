@@ -1,0 +1,37 @@
+<form role="search" class="searchbar" dropdown auto-close="outsideClick">
+    <div class="searchbar-input">
+        <div class="form-field search">
+            <input type="search" placeholder="{{ 'toolbar.searchbar.search_entity' | translate:{entity: entityType} }}" ng-model="searchQuery" ng-keypress="($event.which === 13)?search(searchQuery):setSearchResultsActive()">
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+            </svg>
+        </div>
+        <div class="searchbar-results dropdown-menu" ng-class="{active: searchResultsActive }">
+            <div class="form-field">
+                <button class="button-plain" ng-click="search(searchQuery)">
+                    <span class="button-label">
+                        <span translate-values="{entity: entityType}" translate>
+                            toolbar.searchbar.search_all_entities_for
+                        </span>
+                        "<em>{{searchQuery}}</em>"
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="searchbar-options">
+        <a href="#" class="button searchbar-options-filter init" data-toggle="search-filters" dropdown-toggle>
+            <span class="button-label" translate>app.filters</span>
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        </a>
+    </div>
+
+    <div ng-switch="entityType">
+        <filter-users ng-switch-when="users" query-fnc="queryFnc()" filters="filters"></filter-users>
+        <filter-categories ng-switch-when="categories" query-fnc="queryFnc()" filters="filters"></filter-categories>
+        <filter-posts ng-switch-when="posts" query-fnc="queryFnc()" filters="filters"></filter-posts>
+    </div>
+</form>

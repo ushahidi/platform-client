@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$q',
     '$location',
@@ -8,9 +9,9 @@ module.exports = [
     'Session',
     'UserEndpoint',
     'Notify',
-    'RoleEndpoint',
 function (
     $scope,
+    $rootScope,
     $translate,
     $q,
     $location,
@@ -18,22 +19,17 @@ function (
     $window,
     Session,
     UserEndpoint,
-    Notify,
-    RoleEndpoint
+    Notify
 ) {
     var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser;
-
+    $rootScope.setLayout('layout-a');
     $translate('tool.manage_users').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
 
-    RoleEndpoint.query().$promise.then(function (roles) {
-        $scope.roles = roles;
-    });
-
-    $scope.filter = {
-        role: '',
+    $scope.filters = {
+        roles: [],
         q: null
     };
 
@@ -135,8 +131,8 @@ function (
         UserEndpoint.queryFresh({
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
-            role: $scope.filter.role,
-            q: $scope.filter.q
+            roles: $scope.filters.roles,
+            q: $scope.filters.q
         }).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
             $scope.totalItems = usersResponse.total_count;

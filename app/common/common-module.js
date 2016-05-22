@@ -51,6 +51,10 @@ angular.module('ushahidi.common', [
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
+.directive('filterSystem', require('./directives/filter-system/filter-system.js'))
+.directive('filterUsers', require('./directives/filter-system/filter-users.js'))
+.directive('filterCategoriess', require('./directives/filter-system/filter-categories.js'))
+.directive('filterPosts', require('./directives/filter-system/filter-posts.js'))
 // Event actions
 .constant('EVENT', {
     ACTIONS : {

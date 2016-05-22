@@ -8,6 +8,9 @@
         "cancel" : "Cancel",
         "save" : "Save",
         "saving" : "Saving",
+        "apply_filters" : "Apply filters",
+        "filters" : "Filters",
+        "roles" : "Roles",
         "settings": "Settings",
         "general" : "General",
         "surveys" : "Surveys",
@@ -22,6 +25,12 @@
         "plan" : "Plan",
         "show_more_less" : "Show more/less",
         "delete" : "Delete"
+    },
+    "toolbar": {
+        "searchbar" : {
+            "search_entity" : "Search {{entity}}",
+            "search_all_entities_for" : "Search all {{entity}} for "
+        }
     },
     "color_picker": {
         "hex_value" : "Hex Value",
