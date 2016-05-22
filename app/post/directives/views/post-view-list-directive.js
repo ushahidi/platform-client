@@ -1,17 +1,6 @@
 module.exports = PostListDirective;
-
 PostListDirective.$inject = [];
 function PostListDirective() {
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-            filters: '=',
-            isLoading: '='
-        },
-        controller: PostListController,
-        templateUrl: 'templates/views/list.html'
-    };
 
     PostListController.$inject = [
         '$scope',
@@ -93,7 +82,7 @@ function PostListDirective() {
                 $scope.totalItems = postsResponse.total_count;
                 $scope.isLoading = false;
             });
-        };
+        }
 
         function deletePosts() {
             $translate('notify.post.bulk_destroy_confirm', {
@@ -122,19 +111,19 @@ function PostListDirective() {
                     .finally(getPostsForPagination);
                 });
             });
-        };
+        }
 
         function itemsPerPageChanged(count) {
             $scope.itemsPerPage = count;
             getPostsForPagination();
-        };
+        }
 
         // @todo reconsider: show this for ALL logged in users??
         function userHasBulkActionPermissions() {
             return _.any($scope.posts, function (post) {
                 return _.intersection(post.allowed_privileges, ['update', 'delete', 'change_status']).length > 0;
             });
-        };
+        }
 
         function exportPosts() {
             $translate('notify.post.export').then(function (message) {
@@ -173,13 +162,24 @@ function PostListDirective() {
                     });
                 });
             });
-        };
+        }
 
         function hasFilters() {
             if ($scope.filters.status !== 'all') {
                 return true;
             }
             return !_.isEmpty(_.omit(_.omit($scope.filters, 'within_km'), 'status'));
-        };
+        }
     }
-};
+  return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            filters: '=',
+            isLoading: '='
+        },
+        controller: PostListController,
+        templateUrl: 'templates/views/list.html'
+    };
+
+}

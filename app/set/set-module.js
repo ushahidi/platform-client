@@ -8,6 +8,7 @@ angular.module('ushahidi.sets', [])
 .directive('savedsearchUpdate', require('./directives/savedsearch-update-directive.js'))
 .directive('collectionEditor', require('./directives/collection-editor-directive.js'))
 .directive('selectCollection', require('./directives/select-collection-directive.js'))
+.directive('collectionListing', require('./directives/collection-listing.js'))
 
 .service('CollectionEndpoint', require('./services/endpoints/collection.js'))
 .service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'));

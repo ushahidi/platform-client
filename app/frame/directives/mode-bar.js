@@ -21,6 +21,11 @@ function (
             };
 
             $scope.currentUser = $rootScope.currentUser;
+
+            // Show collection listing  
+            $scope.viewCollectionListing = function () {
+                $rootScope.$emit('event:collection:show:listing');
+            };
         }
     };
 }];
