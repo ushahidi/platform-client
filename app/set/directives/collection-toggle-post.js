@@ -2,6 +2,7 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
+    '$q',
     'Notify',
     'CollectionEndpoint',
     '_',
@@ -9,6 +10,7 @@ function (
     $rootScope,
     $translate,
     $location,
+    $q,
     Notify,
     CollectionEndpoint,
     _
@@ -30,11 +32,8 @@ function (
                 });
             };
 
-            // Load collection set
-            //$scope.loadCollections();
-
             $scope.postInCollection = function (collection) {
-                return $scope.post ? _.contains($scope.post.sets, String(collection.id)) : false;
+                return $scope.posts.length === 1 ? _.contains($scope.posts[0].sets, String(collection.id)) : false;
             };
 
             $scope.goToCollection = function (id) {
@@ -52,21 +51,40 @@ function (
             };
 
             $scope.toggleCollection = function (selectedCollection) {
-                if (_.contains($scope.post.sets, String(selectedCollection.id))) {
-                    $scope.removeFromCollection(selectedCollection);
+                if ($scope.posts.length === 1) {
+                    if (_.contains($scope.posts[0].sets, String(selectedCollection.id))) {
+                        $scope.removeFromCollection(selectedCollection);
+                    } else {
+                        $scope.addToCollection(selectedCollection);
+                    }
                 } else {
                     $scope.addToCollection(selectedCollection);
                 }
             };
 
+            $scope.addToPostsSet = function (collectionId) {
+                _.each($scope.posts, function (post) {
+                    post.sets.push(collectionId);
+                });
+            };
+
             $scope.addToCollection = function (selectedCollection) {
                 var collectionId = selectedCollection.id, collection = selectedCollection.name;
-
-                CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id})
-                    .$promise.then(function () {
+                var calls = [];
+                // Create collection update calls for all posts
+                // TODO: allow many to one update for posts to collection
+                // on api
+                _.each($scope.posts, function (post) {
+                    calls.push(
+                        CollectionEndpoint.addPost({'collectionId': collectionId, 'id': post.id})
+                    );
+                });
+                $q.all(calls)
+                    .then(function () {
                         $translate('notify.collection.add_to_collection', {collection: collection})
                         .then(function (message) {
-                            $scope.post.sets.push(String(collectionId));
+                            // Update the posts sets
+                            $scope.addToPostsSet(String(collectionId));
                             Notify.showNotificationSlider(message);
                         });
                     }, function (errorResponse) {
@@ -103,8 +121,8 @@ function (
                 $scope.loadCollections();
             });
 
-            $rootScope.$on('event:collection:show:toggle', function (event, post) {
-                $scope.post = post;
+            $rootScope.$on('event:collection:show:toggle', function (event, posts) {
+                $scope.posts = posts;
                 $scope.collectionTogglePostVisible = true;
                 $scope.loadCollections();
             });
