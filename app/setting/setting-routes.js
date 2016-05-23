@@ -59,15 +59,15 @@ function (
         }
     })
     .when('/settings/users', {
-        controller: require('./controllers/setting-users-controller.js'),
+        controller: require('./users/controllers/setting-users-controller.js'),
         templateUrl: 'templates/settings/users/users.html'
     })
     .when('/settings/users/create', {
-        controller: require('./controllers/setting-users-create-controller.js'),
+        controller: require('./users/controllers/setting-users-create-controller.js'),
         templateUrl: 'templates/settings/users/users-edit.html'
     })
     .when('/settings/users/:id', {
-        controller: require('./controllers/setting-users-edit-controller.js'),
+        controller: require('./users/controllers/setting-users-edit-controller.js'),
         templateUrl: 'templates/settings/users/users-edit.html'
     })
     .when('/settings/roles', {

@@ -7,7 +7,7 @@ function (
     $rootScope,
     $translate
 ) {
-
+    $rootScope.setLayout('layout-a');
     $translate('tool.site_settings').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
