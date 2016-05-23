@@ -9,6 +9,7 @@ angular.module('ushahidi.sets', [])
 .directive('collectionEditor', require('./directives/collection-editor-directive.js'))
 .directive('collectionTogglePost', require('./directives/collection-toggle-post.js'))
 .directive('selectCollection', require('./directives/select-collection-directive.js'))
+.directive('collectionListing', require('./directives/collection-listing.js'))
 
 .service('CollectionEndpoint', require('./services/endpoints/collection.js'))
 .service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'));

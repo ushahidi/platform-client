@@ -24,10 +24,18 @@ function (
         replace: true,
         templateUrl: 'templates/sets/collection-editor.html',
         scope: {
-            collection: '=?',
-            isOpen: '='
         },
         link: function ($scope, $element, $attrs) {
+            $scope.collectioneditorVisible = false;
+
+            $rootScope.$on('event:collection:show:editor', function (event, collection) {
+                // Set inbound collection
+                // if no collection is provided then we are creating
+                // a collection
+                $scope.collection = collection;
+                $scope.collectionEditorVisible = true;
+            });
+
             $scope.isAdmin = $rootScope.isAdmin;
 
             RoleEndpoint.query().$promise.then(function (roles) {
@@ -48,13 +56,10 @@ function (
             }
             $scope.cpyCollection = _.clone($scope.collection);
 
-            $scope.$watch(function () {
-                return $scope.isOpen.data;
-            }, function (newValue, oldValue) {
-                if (!newValue) {
-                    $scope.cpyCollection = _.clone($scope.collection);
-                }
-            });
+            $scope.cancel = function () {
+                $scope.collectionEditorVisible = false;
+            };
+
             $scope.saveCollection = function (collection) {
                 // Are we creating or updating?
                 var persist = collection.id ? CollectionEndpoint.update : CollectionEndpoint.save;
@@ -71,7 +76,7 @@ function (
                 .then(function (collection) {
                     // and close the modal
                     $scope.collection = _.clone(collection);
-                    $scope.isOpen.data = false;
+                    $scope.collectionEditorVisible = false;
                     $rootScope.$broadcast('event:collection:update');
                     $location.path('/collections/' + collection.id);
                 }, function (errorResponse) {
