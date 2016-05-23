@@ -20,8 +20,16 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "plan" : "Plan",
+        "delete" : "Delete",
+        "apply_filters" : "Apply filters",
         "show_more_less" : "Show more/less",
-        "delete" : "Delete"
+        "filters" : "Filters"
+    },
+    "toolbar": {
+        "searchbar" : {
+            "search_entity" : "Search {{entity}}",
+            "search_all_entities_for" : "Search all {{entity}} for "
+        }
     },
     "color_picker": {
         "hex_value" : "Hex Value",

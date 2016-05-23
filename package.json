@@ -78,7 +78,7 @@
     "angular-datepicker": "ushahidi/angular-datepicker.git#1.0.12-patched.1",
     "angular-filter": "^0.5.4",
     "angular-lazy-bootstarp": "rajeshsegu/angular-lazy-bootstrap",
-    "angular-leaflet-directive": "tombatossals/angular-leaflet-directive.git#v0.10.0",
+    "angular-leaflet-directive": "tombatossals/angular-leaflet-directive.git#v0.8.1",
     "angular-local-storage": "^0.2.7",
     "angular-mocks": "^1.3.0",
     "angular-nvd3": "^1.0.0-beta",

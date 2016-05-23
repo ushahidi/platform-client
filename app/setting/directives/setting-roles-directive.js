@@ -1,5 +1,6 @@
 module.exports = [
     '$translate',
+    '$rootScope',
     '$location',
     'RoleEndpoint',
     'Notify',
@@ -7,6 +8,7 @@ module.exports = [
     'Features',
 function (
     $translate,
+    $rootScope,
     $location,
     RoleEndpoint,
     Notify,
@@ -16,6 +18,7 @@ function (
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
+            $rootScope.setLayout('layout-a');
             $scope.refreshView = function () {
                 RoleEndpoint.queryFresh().$promise.then(function (roles) {
                     $scope.roles = roles;
