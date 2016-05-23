@@ -131,5 +131,5 @@ function PostCardDirective(
             }
         }
     };
-};
+}
 
