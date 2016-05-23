@@ -10,6 +10,7 @@ function (
         '$scope',
         '$rootScope',
         '$translate',
+        '$timeout',
         'RoleEndpoint',
         'UserEndpoint',
         '_',
@@ -17,6 +18,7 @@ function (
             $scope,
             $rootScope,
             $translate,
+            $timeout,
             RoleEndpoint,
             UserEndpoint,
             _
@@ -24,7 +26,15 @@ function (
             $scope.selectedRoles = [];
 
             $scope.cancel = function () {
-                //TODO: check expected behaviour - should close dropdown
+                // Reset filters
+                $scope.selectedRoles.splice(0, $scope.selectedRoles.length);
+                _.each(angular.copy($scope.filters.role), function (role) {
+                    $scope.selectedRoles.push(role);
+                });
+                // and close dropdown
+                $timeout(function() {
+                    angular.element( document.querySelector( '#toggleUserSearchFilters' ) ).triggerHandler('click');
+                }, 100);
             };
 
             $scope.applyFilters = function () {

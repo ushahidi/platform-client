@@ -29,7 +29,7 @@ function (
         templateUrl: 'templates/common/filter-system/filter-searchbar.html',
         scope: {
             filters: '=',
-            placeholdeEntity: '='
+            placeholderEntity: '='
         },
         controller: controller
     };
