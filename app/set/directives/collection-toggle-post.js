@@ -44,8 +44,11 @@ function (
 
             $scope.createNewCollection = function () {
                 $scope.collectionTogglePostVisible = false;
+                // Need to ensure that the create new dialog will return control to add collection
+                // after creating a new dialog
+                // creat new should send an event to collection toggle requesting the collection id be set 
+                // for the post(s)
                 $rootScope.$emit('event:collection:show:editor');
-
             };
 
             $scope.toggleCollection = function (selectedCollection) {
