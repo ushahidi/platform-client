@@ -11,6 +11,7 @@
         "forbidden": "Sorry, you're not allowed to do that.",
         "cancel" : "Cancel",
         "save" : "Save",
+        "save_and_close" : "Save &amp; close",
         "saving" : "Saving",
         "settings": "Settings",
         "general" : "General",
