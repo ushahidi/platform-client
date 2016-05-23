@@ -20,29 +20,35 @@ function (
         },
         link: function ($scope, $element, $attrs, ngModel) {
 
-            $scope.collectionAddPostVisible = false;
+            $scope.collectionTogglePostVisible = false;
             $scope.path = '/collections/';
             $scope.selectedCollections = [];
 
             $scope.loadCollections = function () {
-                $scope.collections = CollectionEndpoint.editableByMe();
+                CollectionEndpoint.editableByMe().$promise.then(function (collections) {
+                    $scope.collections = collections;
+                });
             };
 
             // Load collection set
-            $scope.loadCollections();
+            //$scope.loadCollections();
+
+            $scope.postInCollection = function (collection) {
+                return $scope.post ? _.contains($scope.post.sets, String(collection.id)) : false;
+            };
 
             $scope.goToCollection = function (id) {
-                $scope.collectionAddPostVisible = false;
+                $scope.collectionTogglePostVisible = false;
                 $location.path($scope.path + id);
             };
 
             $scope.createNewCollection = function () {
-                $scope.collectionAddPostVisible = false;
+                $scope.collectionTogglePostVisible = false;
                 $rootScope.$emit('event:collection:show:editor');
 
             };
 
-            $scope.toggleCollectionUpdate = function (selectedCollection) {
+            $scope.toggleCollection = function (selectedCollection) {
                 if (_.contains($scope.post.sets, String(selectedCollection.id))) {
                     $scope.removeFromCollection(selectedCollection);
                 } else {
@@ -96,7 +102,8 @@ function (
 
             $rootScope.$on('event:collection:show:toggle', function (event, post) {
                 $scope.post = post;
-                $scope.collectionAddPostVisible = true;
+                $scope.collectionTogglePostVisible = true;
+                $scope.loadCollections();
             });
         },
         templateUrl: 'templates/sets/collection-toggle-post.html'

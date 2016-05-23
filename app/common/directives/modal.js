@@ -16,6 +16,7 @@ function (
 
         scope: {
             title: '@?',
+            icon: '=?',
             visible: '=?',
             closeOnOverlayClick: '=?',
             showCloseButton: '=?'
@@ -23,7 +24,7 @@ function (
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
             var classChangePromise = null;
-
+            $scope.iconPath = '../../img/iconic-sprite.svg#' + $scope.icon;
             $scope.classVisible = false;
             $scope.modalOffset = 0;
 
