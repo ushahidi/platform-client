@@ -32,7 +32,7 @@ describe('setting roles directive', function () {
     beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        $rootScope.setLayout = function () {};
         Notify = _Notify_;
 
         element = '<div roles></div>';

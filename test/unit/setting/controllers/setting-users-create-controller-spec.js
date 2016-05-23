@@ -15,7 +15,7 @@ describe('setting users create controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingUsersCreateController', require(ROOT_PATH + 'app/setting/controllers/setting-users-create-controller.js'));
+        testApp.controller('settingUsersCreateController', require(ROOT_PATH + 'app/setting/users/controllers/setting-users-create-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -33,7 +33,7 @@ describe('setting users create controller', function () {
 
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
-
+        $rootScope.setLayout = function () {};
         $controller('settingUsersCreateController', {
             $scope: $scope,
             $route: {reload: function () {}}
