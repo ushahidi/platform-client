@@ -8,6 +8,7 @@ module.exports = [
     '$window',
     'Session',
     'UserEndpoint',
+    'RoleEndpoint',
     'Notify',
 function (
     $scope,
@@ -19,6 +20,7 @@ function (
     $window,
     Session,
     UserEndpoint,
+    RoleEndpoint,
     Notify
 ) {
     var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser;
@@ -26,6 +28,10 @@ function (
     $translate('tool.manage_users').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
+    });
+
+    RoleEndpoint.query().$promise.then(function (roles) {
+        $scope.roles = roles;
     });
 
     $scope.filters = {
