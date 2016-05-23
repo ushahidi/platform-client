@@ -16,12 +16,15 @@ function (
             $rootScope,
             $translate
         ) {
+            // Used for displaying search result preview
+            // Not currently used but working
+            /*
             $scope.showQueryResults = false;
 
             $scope.setSearchResultsActive = function () {
                 $scope.showQueryResults = true;
             };
-
+            */
         }];
     return {
         restrict: 'E',
