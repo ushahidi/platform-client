@@ -51,6 +51,9 @@ angular.module('ushahidi.common', [
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 
+.directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
+.directive('filterRole', require('./directives/filter-system/filter-role.js'))
+
 // Event actions
 .constant('EVENT', {
     ACTIONS : {
@@ -58,6 +61,7 @@ angular.module('ushahidi.common', [
         DELETE : 'delete'
     }
 })
+
 
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))
