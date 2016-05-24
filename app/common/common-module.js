@@ -39,6 +39,7 @@ angular.module('ushahidi.common', [
 .service('PasswordReset', require('./services/password-reset.js'))
 .service('IconManager', require('./services/icon-manager.js'))
 .service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
+.service('ModalService', require('./services/modal.service.js'))
 
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
@@ -53,6 +54,7 @@ angular.module('ushahidi.common', [
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
+.directive('ushModalContainer', require('./directives/modal-container.directive.js'))
 
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
