@@ -92,6 +92,10 @@ function (
                 });
             };
 
+            $scope.collectionClickHandler = function (id) {
+                $scope.isToggleMode ? $scope.toggleCollection(id) : $scope.goToCollection(id);
+            };
+
             $scope.goToCollection = function (id) {
                 $scope.collectionListingVisible = false;
                 $location.path($scope.path + id);
