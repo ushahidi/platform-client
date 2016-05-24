@@ -38,10 +38,9 @@ function (
             };
 
             $scope.applyFilters = function () {
-                // If the objects are directly linked the watch will be fired
-                // each time a role is clicked, so instead we copy the object
-                $scope.filters.q = angular.copy($scope.usersFiltersForm.q.$viewValue);
-                $scope.filters.role = angular.copy($scope.selectedRoles);
+                // ngFormController automatically commits changes to the model ($scope.filters)
+                // Just close the dropdown
+                $scope.filtersMenuOpen = false;
             };
         }];
     return {
