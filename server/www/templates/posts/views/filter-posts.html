@@ -1,0 +1,111 @@
+<form name="usersFiltersForm" role="search" class="searchbar" dropdown auto-close="outsideClick" ng-submit="applyFilters()">
+    <!-- Include search bar -->
+    <filter-searchbar filters="filters"></filter-searchbar>
+
+    <!-- Toggle Filters show/hide -->
+    <div class="searchbar-options">
+        <a class="button" data-toggle="search-saved" ng-click="searchSavedToggle = ! searchSavedToggle; searchFiltersToggle = false;" ng-class="{ 'active': searchSavedToggle }">
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#star"></use>
+            </svg>
+            <span class="button-label hidden" translate>app.saved</span>
+        </a>
+
+        <a id="togglePostSearchFilters" class="button searchbar-options-filter" data-toggle="search-filters" ng-click="searchFiltersToggle = ! searchFiltersToggle; searchSavedToggle = false;" ng-class="{ 'active': searchFiltersToggle }">
+            <span class="button-label" translate>app.filters</span>
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        </a>
+    </div>
+
+    <ng-include src="'templates/posts/views/saved-search-dropdown.html'"></ng-include>
+
+    <!-- Filters menu -->
+    <div class="dropdown-menu" data-toggle-target="search-filters" ng-show="searchFiltersToggle" ng-class="{ 'active': searchFiltersToggle }" data-toggle-animate>
+        <div class="dropdown-menu-body">
+            <survey-select filters="filters"></survey-select>
+            <fieldset>
+                <legend>Surveys</legend>
+
+                <div class="form-field checkbox">
+                    <label for="traffic">
+                        <input type="checkbox" name="traffic" value="Traffic" id="traffic"> Traffic
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="police-encounters">
+                        <input type="checkbox" name="police-encounters" value="Police encounters" id="police-encounters"> Police encounters
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="protester-photos">
+                        <input type="checkbox" name="protester-photos" value="Protester photos" id="protester-photos"> Protester photos
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="traffic">
+                        <input type="checkbox" name="traffic" value="Traffic" id="traffic"> Traffic
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="police-encounters">
+                        <input type="checkbox" name="police-encounters" value="Police encounters" id="police-encounters"> Police encounters
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="protester-photos">
+                        <input type="checkbox" name="protester-photos" value="Protester photos" id="protester-photos"> Protester photos
+                    </label>
+                </div>
+                <span class="form-field-toggle">More</span>
+            </fieldset>
+
+            <category-select filters="filters"></category-select>
+            <fieldset>
+                <legend>Categories</legend>
+
+                <div class="form-field checkbox">
+                    <label for="speakers">
+                        <input type="checkbox" name="speakers" value="Speakers" id="speakers"> Speakers
+                    </label>
+                </div>
+                <div class="form-field checkbox">
+                    <label for="opposition">
+                        <input type="checkbox" name="opposition" value="Opposition" id="opposition"> Opposition
+                    </label>
+                </div>
+                <span class="form-field-toggle">More</span>
+            </fieldset>
+
+            <visible-to-select filters="filters"></visible-to-select>
+            <fieldset>
+                <legend>Who it's visible to</legend>
+
+                <div class="form-field radio">
+                    <label for="everyone">
+                        <input type="radio" name="everyone" value="Everyone" id="everyone"> Everyone
+                    </label>
+                </div>
+                <div class="form-field radio">
+                    <label for="members">
+                        <input type="radio" name="members" value="Members" id="members"> Members
+                    </label>
+                </div>
+                <div class="form-field radio">
+                    <label for="administrators">
+                        <input type="radio" name="administrators" value="Administrators" id="administrators"> Administrators
+                    </label>
+                </div>
+                <span class="form-field-toggle">More</span>
+            </fieldset>
+
+            <date-select filters="filters"></date-select>
+        </div>
+
+        <div class="form-field">
+            <button type="button" class="button-link" disabled translate>app.cancel</button>
+            <button type="button" class="button-alpha" disabled>Apply filters</button>
+        </div>
+    </div>
+</form>

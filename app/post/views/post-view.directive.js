@@ -47,6 +47,6 @@ function (
             baseUrl: '@'
         },
         controller: controller,
-        templateUrl: 'templates/views/views.html'
+        templateUrl: 'templates/posts/views/post-view.html'
     };
 }];
