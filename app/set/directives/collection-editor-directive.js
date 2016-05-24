@@ -27,6 +27,25 @@ function (
         },
         link: function ($scope, $element, $attrs) {
             $scope.collectioneditorVisible = false;
+            $scope.redirectToCollectionListing = false;
+            $scope.isAdmin = $rootScope.isAdmin;
+            $scope.views = ViewHelper.views();
+
+            // Set default view for Collection to be Map
+            $scope.setBasicCollection = function () {
+                $scope.collection = {};
+                $scope.collection.view = 'map';
+                $scope.collection.visible_to = [];
+                $scope.cpyCollection = _.clone($scope.collection);
+            };
+
+            if (!$scope.collection) {
+                $scope.setBasicCollection();
+            }
+
+            RoleEndpoint.query().$promise.then(function (roles) {
+                $scope.roles = roles;
+            });
 
             $rootScope.$on('event:collection:show:editor', function (event, collection) {
                 // Set inbound collection
@@ -36,26 +55,27 @@ function (
                 $scope.collectionEditorVisible = true;
             });
 
-            $scope.isAdmin = $rootScope.isAdmin;
-
-            RoleEndpoint.query().$promise.then(function (roles) {
-                $scope.roles = roles;
+            $rootScope.$on('event:collection:show:create', function (event, posts) {
+                // Set inbound posts
+                // if posts are provided then we need to pass flow
+                // back to collection listing once creation is complete
+                if (posts) {
+                    // Posts will be passed back to collection listing
+                    // This is a stop-gap until we have a data layer to maintain
+                    // state
+                    $scope.posts = posts;
+                    $scope.redirectToCollectionListing = true;
+                }
+                $scope.collectionEditorVisible = true;
             });
-
-            $scope.views = ViewHelper.views();
 
             $scope.featuredEnabled = function () {
                 return $rootScope.hasPermission('Manage Posts');
             };
 
-            // Set default view for Collection to be Map
-            if (!$scope.collection) {
-                $scope.collection = {};
-                $scope.collection.view = 'map';
-                $scope.collection.visible_to = [];
-            }
-            $scope.cpyCollection = _.clone($scope.collection);
-
+            $scope.continueFlow = function (collection) {
+                $scope.redirectToCollectionListing ? $rootScope.$emit('event:collection:show:toggle:after:create', $scope.posts, collection ) : $location.path('/collections/' + collection.id);
+            };
             $scope.cancel = function () {
                 $scope.collectionEditorVisible = false;
             };
@@ -78,7 +98,9 @@ function (
                     $scope.collection = _.clone(collection);
                     $scope.collectionEditorVisible = false;
                     $rootScope.$broadcast('event:collection:update');
-                    $location.path('/collections/' + collection.id);
+                    $scope.setBasicCollection();
+                    $scope.continueFlow(collection);
+
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
