@@ -37,7 +37,6 @@ angular.module('ushahidi.common', [
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
-.service('multiTranslate', require('./services/multi-translate.js'))
 .service('GlobalFilter', require('./services/global-filter.js'))
 .service('Maps', require('./services/maps.js'))
 .service('Geocoding', require('./services/geocoding.js'))

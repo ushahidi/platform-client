@@ -3,7 +3,6 @@ module.exports = [
     '$location',
     '$translate',
     '$route',
-    'multiTranslate',
     'RoleEndpoint',
     'TagEndpoint',
     'Notify',
@@ -13,7 +12,6 @@ function (
     $location,
     $translate,
     $route,
-    multiTranslate,
     RoleEndpoint,
     TagEndpoint,
     Notify,
@@ -24,7 +22,6 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     RoleEndpoint.query().$promise.then(function (roles) {
         $scope.roles = roles;
     });
