@@ -1,14 +1,10 @@
-module.exports = [
-    '$scope',
-    '$translate',
-    '$routeParams',
-    'PostFilters',
-function (
-    $scope,
-    $translate,
-    $routeParams,
-    PostFilters
-) {
+module.exports = PostViewsControllers;
+
+PostViewsControllers.$inject = ['$scope', '$translate', '$routeParams', 'PostFilters', '$rootScope'];
+function PostViewsControllers($scope, $translate, $routeParams, PostFilters, $rootScope) {
+    // Change layout class
+    $rootScope.setLayout('layout-a');
+
     // Set view based out route
     $scope.currentView = $routeParams.view;
 
@@ -19,4 +15,4 @@ function (
     });
 
     $scope.filters = PostFilters.getFilters();
-}];
+}
