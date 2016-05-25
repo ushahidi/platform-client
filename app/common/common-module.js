@@ -1,12 +1,8 @@
 angular.module('ushahidi.common', [
     'ushahidi.common.dropdown',
     'ushahidi.common.accordion',
-    'ushahidi.common.offcanvas',
     'ushahidi.common.modal',
     'ushahidi.common.custom-on-change',
-    'ushahidi.common.file-upload',
-    'ushahidi.common.notification-slider',
-    'ushahidi.common.sticky-sidebar',
     'ushahidi.common.chart'
 ])
 
@@ -17,6 +13,12 @@ angular.module('ushahidi.common', [
 .service('PasswordReset', require('./auth/password-reset.service.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
+
+// Locale setup
+.service('Languages', require('./language/languages.service.js'))
+.config(require('./language/translate.config.js'))
+// Use language settings from config
+.run(require('./language/language-settings.run.js'))
 
 // API Endpoint wrappers
 .service('ConfigEndpoint', require('./services/endpoints/config.js'))
@@ -35,33 +37,36 @@ angular.module('ushahidi.common', [
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
-.service('DataRetriever', require('./services/data-retriever.js'))
-.service('Notify', require('./services/notify.js'))
 .service('multiTranslate', require('./services/multi-translate.js'))
 .service('GlobalFilter', require('./services/global-filter.js'))
 .service('Maps', require('./services/maps.js'))
 .service('Geocoding', require('./services/geocoding.js'))
-.service('Languages', require('./services/languages.js'))
-.service('IconManager', require('./services/icon-manager.js'))
-.service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
 .service('ModalService', require('./services/modal.service.js'))
 
 // Controllers
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
-.controller('notifier', require('./controllers/notifier.js'))
 .controller('intercom', require('./controllers/intercom.js'))
+
+// Notifications
+.service('Notify', require('./notifications/notify.service.js'))
+.controller('notifier', require('./notifications/notifier.controller.js'))
+.directive('notificationSlider', require('./notifications/notification-slider.directive.js'))
+
+// Form components
+.service('IconManager', require('./form-components/icon-manager.service.js'))
+.service('FontAwesomeIcons', require('./form-components/FontAwesomeIcons.service.js'))
+.directive('iconPicker', require('./form-components/iconpicker.directive.js'))
+.directive('colorPicker', require('./form-components/color-picker.directive.js'))
+.directive('filterSearchbar', require('./form-components/filters/filter-searchbar.directive.js'))
+.directive('filterRole', require('./form-components/filters/filter-role.directive.js'))
+.directive('fileUpload', require('./form-components/file-upload.directive.js'))
 
 // Global directives
 .directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
-.directive('iconPicker', require('./directives/iconpicker.js'))
-.directive('colorPicker', require('./directives/color-picker.js'))
-.directive('firstTimeConfig', require('./directives/first-time-config.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
 
-.directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
-.directive('filterRole', require('./directives/filter-system/filter-role.js'))
 
 // Event actions
 .constant('EVENT', {
@@ -71,24 +76,17 @@ angular.module('ushahidi.common', [
     }
 })
 
-.config(require('./configs/locale-config.js'))
 .config(require('./configs/ui-bootstrap-template-decorators.js'))
 .config(require('./configs/cache-config.js'))
 
 .config(require('./common-routes.js'))
 
 .run(require('./global/event-handlers.js'))
-// Use language settings from config
-.run(require('./global/language-settings.js'))
 ;
 
 // Load submodules
 require('./directives/dropdown.js');
 require('./directives/accordion.js');
-require('./directives/offcanvas.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
-require('./directives/file-upload.js');
-require('./directives/notification-slider.js');
-require('./directives/sticky-sidebar.js');
 require('./directives/chart.js');

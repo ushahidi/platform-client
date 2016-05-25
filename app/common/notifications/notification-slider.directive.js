@@ -2,9 +2,9 @@
  * Ushahidi Angular Confirmation Message directive
  * Based on the Angular Bootstrap Modal directive
  */
-angular.module('ushahidi.common.notification-slider', [])
+module.exports = NotificationSlider;
 
-.directive('notificationSlider', function () {
+function NotificationSlider() {
     return {
         restrict: 'E',
         transclude: true,
@@ -48,6 +48,4 @@ angular.module('ushahidi.common.notification-slider', [])
 
         }]
     };
-})
-
-;
+}
