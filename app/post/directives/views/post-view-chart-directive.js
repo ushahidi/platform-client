@@ -60,7 +60,7 @@ function (
         };
 
         var getPostStats = function (query) {
-            query = query || $scope.filters;
+            query = query || PostFilters.getQueryParams($scope.filters);
             var postQuery = _.extend({}, query, {
                 'group_by' : $scope.groupBy
             });

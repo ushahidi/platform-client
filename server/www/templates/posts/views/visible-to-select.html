@@ -1,0 +1,20 @@
+<fieldset>
+    <legend translate>Who it's visible to</legend>
+
+    <div class="form-field radio">
+        <label>
+            <input type="radio" name="visible_to" ng-model="visible_to" value="everyone"> <span translate="nav.everyone">Everyone</span>
+        </label>
+    </div>
+    <div class="form-field radio" ng-repeat="role in roles">
+        <label>
+            <input type="radio" name="visible_to" ng-model="visible_to" value="{{ role.id }}"> {{ ::role.display_name }}
+        </label>
+    </div>
+    <div class="form-field radio">
+        <label>
+            <input type="radio" name="visible_to" ng-model="visible_to" value="draft"> <span translate="nav.only_you">Only you</span>
+        </label>
+    </div>
+    <span class="form-field-toggle" translate="nav.more">More</span>
+</fieldset>

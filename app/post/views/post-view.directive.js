@@ -3,12 +3,10 @@ function (
 ) {
     var controller = [
         '$scope',
-        'GlobalFilter',
         'ViewHelper',
         '_',
         function (
             $scope,
-            GlobalFilter,
             ViewHelper,
             _
         ) {

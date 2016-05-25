@@ -19,24 +19,22 @@ PostListController.$inject = [
     '$q',
     '$translate',
     'PostEndpoint',
-    'CollectionEndpoint',
-    'Session',
     'Notify',
     '_',
     'ConfigEndpoint',
-    'moment'
+    'moment',
+    'PostFilters'
 ];
 function PostListController(
     $scope,
     $q,
     $translate,
     PostEndpoint,
-    CollectionEndpoint,
-    Session,
     Notify,
     _,
     ConfigEndpoint,
-    moment
+    moment,
+    PostFilters
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -69,7 +67,7 @@ function PostListController(
     }
 
     function getPostsForPagination(query) {
-        query = query || $scope.filters;
+        query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
@@ -177,9 +175,6 @@ function PostListController(
     }
 
     function hasFilters() {
-        if ($scope.filters.status !== 'all') {
-            return true;
-        }
-        return !_.isEmpty(_.omit(_.omit($scope.filters, 'within_km'), 'status'));
+        return PostFilters.hasFilters($scope.filters);
     }
 }

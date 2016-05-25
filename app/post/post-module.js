@@ -23,6 +23,13 @@ angular.module('ushahidi.posts', [])
 .directive('filterPosts', require('./views/filter-posts.directive.js'))
 .directive('modeContextFormFilter', require('./views/mode-context-form-filter.directive.js'))
 .directive('postToolbar', require('./views/post-toolbar.directive.js'))
+.directive('categorySelect', require('./views/category-select.directive.js'))
+.directive('dateSelect', require('./views/date-select.directive.js'))
+.directive('formSelect', require('./views/form-select.directive.js'))
+.directive('visibleToSelect', require('./views/visible-to-select.directive.js'))
+
+.service('PostFilters', require('./views/post-filters.service.js'))
+
 .directive('postViewMap', require('./directives/views/post-view-map-directive.js'))
 .directive('postViewTimeline', require('./directives/views/post-view-timeline-directive.js'))
 .directive('postViewChart', require('./directives/views/post-view-chart-directive.js'))

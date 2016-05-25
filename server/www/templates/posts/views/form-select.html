@@ -1,0 +1,10 @@
+<fieldset>
+    <legend translate="app.surveys">Surveys</legend>
+
+    <div class="form-field checkbox" ng-repeat="(index, form) in forms">
+        <label>
+            <input checklist-value="form.id" checklist-model="model" type="checkbox" name="selectedForms" > {{ ::form.name }}
+        </label>
+    </div>
+    <span class="form-field-toggle" translate="nav.more">More</span>
+</fieldset>

@@ -5,12 +5,20 @@ function ModeContextFormFilterDirective() {
     return {
         restrict: 'E',
         scope: {},
-        controller: FormFilterController,
+        controller: ModeContextFormFilter,
         templateUrl: 'templates/posts/views/mode-context-form-filter.html'
     };
 }
 
-FormFilterController.$inject = [];
-function FormFilterController() {
+ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint'];
+function ModeContextFormFilter($scope, FormEndpoint) {
+    $scope.forms = [];
+    $scope.selectedForms = [];
 
+    activate();
+
+    function activate() {
+        // Load forms
+        $scope.forms = FormEndpoint.query();
+    }
 }

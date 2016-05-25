@@ -73,7 +73,7 @@ function (
         };
 
         var getPostStats = function (query) {
-            query = query || $scope.filters;
+            query = query || PostFilters.getQueryParams($scope.filters);
             var postQuery = _.extend({}, query, {
                 'timeline' : 1,
                 'timeline_attribute' : $scope.timelineAttribute,
