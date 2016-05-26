@@ -53,7 +53,7 @@ function FilterPostsController($scope, $timeout) {
         $scope.searchSavedToggle = false;
 
         // If we're toggling closed
-        if ($scope.searchFiltersToggle == false) {
+        if ($scope.searchFiltersToggle === false) {
             // .. reset the form
             // @todo avoid resetting 'q'
             $scope.postFiltersForm.$rollbackViewValue();

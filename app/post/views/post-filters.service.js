@@ -20,7 +20,7 @@ function PostFiltersService(_, FormEndpoint) {
 
     function activate() {
         FormEndpoint.query().$promise.then(function (forms) {
-            if (filterState.form.length == 0) { // just in case of race conditions
+            if (filterState.form.length === 0) { // just in case of race conditions
                 Array.prototype.splice.apply(filterState.form, [0, 0].concat(_.pluck(forms, 'id')));
             }
         });
@@ -82,11 +82,11 @@ function PostFiltersService(_, FormEndpoint) {
             filters,
             function (value, key, object) {
                 // Ignore difference in within_km
-                if (key == 'within_km') {
+                if (key === 'within_km') {
                     return true;
                 }
                 // Is the same as the default?
-                if (defaults[key] == value) {
+                if (defaults[key] === value) {
                     return true;
                 }
                 // Is value empty? ..and not a date object
