@@ -9,12 +9,8 @@ function (
 ) {
     var controller = [
         '$scope',
-        '$rootScope',
-        '$translate',
         function (
-            $scope,
-            $rootScope,
-            $translate
+            $scope
         ) {
             // Used for displaying search result preview
             // Not currently used but working
@@ -31,7 +27,7 @@ function (
         replace: true,
         templateUrl: 'templates/common/filter-system/filter-searchbar.html',
         scope: {
-            filters: '=',
+            model: '=',
             placeholderEntity: '='
         },
         controller: controller
