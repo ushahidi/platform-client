@@ -1,9 +1,14 @@
 <fieldset>
     <legend translate="app.surveys">Surveys</legend>
 
-    <div class="form-field checkbox" ng-repeat="(index, form) in forms">
+    <div class="form-field checkbox" ng-repeat="(index, form) in forms" ng-class="{ overflow : ($index > 1) }">
         <label>
             <input checklist-value="form.id" checklist-model="model" type="checkbox" name="selectedForms" > {{ ::form.name }}
+        </label>
+    </div>
+    <div class="form-field checkbox" ng-class="{ overflow : (forms.length > 2) }">
+        <label>
+            <input checklist-value="'none'" checklist-model="model" type="checkbox" name="selectedForms" > <span translate="nav.unknown">Unknown</span>
         </label>
     </div>
     <span class="form-field-toggle" translate="nav.more">More</span>

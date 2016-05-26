@@ -6,11 +6,13 @@ function (
         'PostEndpoint',
         'Maps',
         '_',
+        'PostFilters',
     function (
         $scope,
         PostEndpoint,
         Maps,
-        _
+        _,
+        PostFilters
     ) {
         // Set initial map params
         angular.extend($scope, Maps.getInitialScope());
@@ -38,7 +40,7 @@ function (
             if (newValue !== oldValue) {
                 reloadMapPosts();
             }
-        });
+        }, true);
 
         // Initial load
         reloadMapPosts();

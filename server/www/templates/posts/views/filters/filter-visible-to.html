@@ -6,12 +6,13 @@
             <input type="radio" name="visible_to" ng-model="visible_to" value="everyone"> <span translate="nav.everyone">Everyone</span>
         </label>
     </div>
-    <div class="form-field radio" ng-repeat="role in roles">
+
+    <div class="form-field radio" ng-repeat="role in roles" ng-class="{ overflow : ($index > 0) }">
         <label>
-            <input type="radio" name="visible_to" ng-model="visible_to" value="{{ role.id }}"> {{ ::role.display_name }}
+            <input type="radio" name="visible_to" ng-model="$parent.visible_to" value="{{ role.name }}"> {{ ::role.display_name }}
         </label>
     </div>
-    <div class="form-field radio">
+    <div class="form-field radio" ng-class="{ overflow : (roles.length > 0) }">
         <label>
             <input type="radio" name="visible_to" ng-model="visible_to" value="draft"> <span translate="nav.only_you">Only you</span>
         </label>

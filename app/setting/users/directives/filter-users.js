@@ -31,7 +31,7 @@ function (
                 $scope.filtersMenuOpen = false;
             };
 
-            $scope.applyFilters = function () {console.log($scope.filters);
+            $scope.applyFilters = function () {
                 // ngFormController automatically commits changes to the model ($scope.filters)
                 // Just close the dropdown
                 $scope.filtersMenuOpen = false;

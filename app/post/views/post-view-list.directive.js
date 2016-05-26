@@ -59,7 +59,7 @@ function PostListController(
         if (newValue !== oldValue) {
             getPostsForPagination();
         }
-    });
+    }, true);
 
     function activate() {
         // Initial load

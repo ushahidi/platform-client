@@ -7,12 +7,14 @@ function (
         'PostEndpoint',
         'd3',
         '_',
+        'PostFilters',
     function (
         $scope,
         $filter,
         PostEndpoint,
         d3,
-        _
+        _,
+        PostFilters
     ) {
         $scope.options = {
             chart: {
@@ -83,7 +85,7 @@ function (
             if (newValue !== oldValue) {
                 getPostStats();
             }
-        });
+        }, true);
 
         // Initial values
         $scope.reload = getPostStats;

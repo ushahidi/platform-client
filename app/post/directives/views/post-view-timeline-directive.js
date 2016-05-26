@@ -7,12 +7,14 @@ function (
         'PostEndpoint',
         'd3',
         '_',
+        'PostFilters',
     function (
         $scope,
         $filter,
         PostEndpoint,
         d3,
-        _
+        _,
+        PostFilters
     ) {
         var yAxisLabelCumulative = $filter('translate')('graph.cumulative_post_count'),
             yAxisLabel = $filter('translate')('graph.new_post_count'),
@@ -94,7 +96,7 @@ function (
             if (newValue !== oldValue) {
                 getPostStats();
             }
-        });
+        }, true);
 
         $scope.$watch(function () {
             return $scope.showCumulative;

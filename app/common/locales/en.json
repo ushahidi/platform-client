@@ -261,6 +261,7 @@
         "today" : "Today",
         "general" : "General Settings",
         "type" : "Type",
+        "unknown" : "Unknown",
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
@@ -308,6 +309,7 @@
         "edit_post" : "Edit Post",
         "history" : "History",
         "hide_form" : "Hide {{form}}",
+        "hide_unknown_form" : "Hide Unknown",
         "publish" : "Publish to...",
         "published" : "Published",
         "unpublished" : "Unpublished",
@@ -329,6 +331,7 @@
         "visible_to_you": "This post is visible to just you and admins",
         "visible_to_roles": "This post is visible to {{roles}}",
         "show_only_form" : "Show only {{form}}",
+        "show_only_unknown_form" : "Show only Unknown",
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete",

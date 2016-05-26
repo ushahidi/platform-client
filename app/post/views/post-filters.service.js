@@ -1,9 +1,13 @@
 module.exports = PostFiltersService;
 
-PostFiltersService.inject = ['_'];
-function PostFiltersService(_) {
+PostFiltersService.inject = ['_', 'FormEndpoint'];
+function PostFiltersService(_, FormEndpoint) {
     // Create initial filter state
-    var filterState = getDefaults();
+    var filterState = window.filterState = getDefaults();
+
+    // @todo take this out of the service
+    // but ensure it happens at the right times
+    activate();
 
     return {
         getDefaults: getDefaults,
@@ -13,6 +17,14 @@ function PostFiltersService(_) {
         clearFilters: clearFilters,
         hasFilters: hasFilters
     };
+
+    function activate() {
+        FormEndpoint.query().$promise.then(function (forms) {
+            if (filterState.form.length == 0) { // just in case of race conditions
+                Array.prototype.splice.apply(filterState.form, [0, 0].concat(_.pluck(forms, 'id')));
+            }
+        });
+    }
 
     // Get filterState
     function getFilters() {
@@ -32,7 +44,8 @@ function PostFiltersService(_) {
             q: '',
             created_after: '',
             created_before: '',
-            status: 'all',
+            status: 'published',
+            published_to: '',
             center_point: '',
             within_km: '1',
             current_stage: [],
@@ -55,6 +68,8 @@ function PostFiltersService(_) {
         if (filters.center_point) {
             query.center_point = filters.center_point;
             query.within_km = filters.within_km || 10;
+        } else {
+            delete query.within_km;
         }
 
         return query;

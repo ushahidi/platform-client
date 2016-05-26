@@ -27,6 +27,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterDate', require('./views/filters/filter-date.directive.js'))
 .directive('filterForm', require('./views/filters/filter-form.directive.js'))
 .directive('filterVisibleTo', require('./views/filters/filter-visible-to.directive.js'))
+.directive('filterLocation', require('./views/filters/filter-location.directive.js'))
 
 .service('PostFilters', require('./views/post-filters.service.js'))
 
