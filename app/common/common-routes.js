@@ -7,27 +7,27 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
             redirectTo: '/views/map'
         })
         .when('/login', {
-            controller: require('./controllers/login-controller.js'),
+            controller: require('./auth/login.controller.js'),
             templateUrl: 'templates/login.html'
         })
         .when('/forbidden', {
-            controller: require('./controllers/forbidden-controller.js'),
+            controller: require('./auth/forbidden.controller.js'),
             templateUrl: 'templates/forbidden.html'
         })
         .when('/register', {
-            controller: require('./controllers/register-controller.js'),
+            controller: require('./auth/register.controller.js'),
             templateUrl: 'templates/register.html'
         })
         .when('/forgotpassword', {
-            controller: require('./controllers/password-reset-controller.js'),
+            controller: require('./auth/password-reset.controller.js'),
             templateUrl: 'templates/password-reset.html'
         })
         .when('/forgotpassword/confirm', {
-            controller: require('./controllers/password-reset-confirm-controller.js'),
+            controller: require('./auth/password-reset-confirm.controller.js'),
             templateUrl: 'templates/password-reset-confirm.html'
         })
         .when('/forgotpassword/confirm/:token*', {
-            controller: require('./controllers/password-reset-confirm-controller.js'),
+            controller: require('./auth/password-reset-confirm.controller.js'),
             templateUrl: 'templates/password-reset-confirm.html'
         })
         ;
