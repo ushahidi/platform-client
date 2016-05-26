@@ -75,8 +75,8 @@
                         </legend>
                         <div class="dropdown-menu init" dropdown-menu>
                             <div class="form-field radio" ng-repeat="role in roles">
-                                <label for="{{role.nam}}">
-                                    <input type="radio" name="role" id="contributor" ng-click="changeRole(role)">
+                                <label>
+                                    <input type="radio" name="role" ng-click="changeRole(role)">
                                         {{role.display_name}}
                                 </label>
                             </div>

@@ -2,10 +2,9 @@
     <legend translate>app.roles</legend>
     <div class="form-field checkbox" ng-repeat="role in roles">
         <label>
-            <input 
-                id="{{role.id}}" 
-                type="checkbox" 
-                checklist-model="selectedRoles" 
+            <input
+                type="checkbox"
+                checklist-model="model"
                 checklist-value="role.name"
                 >
             {{role.display_name}}

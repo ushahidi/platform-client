@@ -36,7 +36,7 @@ function (
 
     $scope.filters = {
         role: [],
-        q: null
+        q: ''
     };
 
     $scope.selectedUsers = [];
