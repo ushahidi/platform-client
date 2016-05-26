@@ -4,7 +4,7 @@ describe('setting map directive', function () {
 
     var $rootScope,
         $scope,
-        Notify,
+        isolateScope,
         element;
 
     beforeEach(function () {
@@ -16,7 +16,7 @@ describe('setting map directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('settings-map', require(ROOT_PATH + 'app/setting/directives/setting-map-directive'))
+        testApp.directive('settingsMap', require(ROOT_PATH + 'app/setting/directives/setting-map-directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -29,15 +29,14 @@ describe('setting map directive', function () {
 
     beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
+    beforeEach(inject(function (_$rootScope_, $compile) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
-        Notify = _Notify_;
 
         element = '<settings-map map="map"></settings-map>';
         element = $compile(element)($scope);
         $scope.$digest();
+        isolateScope = element.isolateScope();
     }));
 
     it('should have template markup', function () {
@@ -45,18 +44,17 @@ describe('setting map directive', function () {
         expect(baseLayerSelect).toBeDefined();
     });
 
-    // Can't seem to get the correct scope - disable tests for now
-    // it('should set markers', function () {
-    //     expect($scope.markers.dragger.lat).toEqual(-1.3048035);
-    // });
+    it('should set markers', function () {
+        expect(isolateScope.markers.dragger.lat).toEqual(-1.3048035);
+    });
 
-    // it('should set min and max zoom level', function () {
-    //     expect($scope.minZoom).toEqual(0);
-    //     expect($scope.maxZoom).toEqual(0);
-    // });
+    it('should set min and max zoom level', function () {
+        expect(isolateScope.minZoom).toEqual(0);
+        expect(isolateScope.maxZoom).toEqual(0);
+    });
 
-    // it('should set centre', function () {
-    //     expect($scope.center.lat).toEqual(-1.3048035);
-    // });
+    it('should set centre', function () {
+        expect(isolateScope.center.lat).toEqual(-1.3048035);
+    });
 
 });

@@ -12,7 +12,26 @@ module.exports = [function () {
             };
         },
         getInitialScope: function () {
-
+            return {
+                layers : {
+                    baselayers : {
+                        mapQuest : {
+                            name: 'Map',
+                            url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png',
+                            type: 'xyz',
+                            layerOptions: {
+                                subdomains: '1234',
+                                attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
+                            }
+                        }
+                    }
+                },
+                center: {
+                    lat: 0,
+                    lon: 0,
+                    zoom: 3
+                }
+            };
         },
         getAngularScopeParams : function () {
             return {
