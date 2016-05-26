@@ -8,7 +8,7 @@ function CategorySelectDirective() {
             model: '='
         },
         controller: CategorySelectController,
-        templateUrl: 'templates/posts/views/category-select.html'
+        templateUrl: 'templates/posts/views/filters/filter-category.html'
     };
 }
 

@@ -9,7 +9,7 @@ function FilterPostsDirective() {
         },
         replace: true,
         controller: FilterPostsController,
-        templateUrl: 'templates/posts/views/filter-posts.html'
+        templateUrl: 'templates/posts/views/filters/filter-posts.html'
     };
 }
 
@@ -44,12 +44,12 @@ function FilterPostsController($scope, $timeout) {
     }
 
     function toggleSaved() {
-        $scope.searchSavedToggle = ! $scope.searchSavedToggle;
+        $scope.searchSavedToggle = !$scope.searchSavedToggle;
         $scope.searchFiltersToggle = false;
     }
 
     function toggleFilters() {
-        $scope.searchFiltersToggle = ! $scope.searchFiltersToggle;
+        $scope.searchFiltersToggle = !$scope.searchFiltersToggle;
         $scope.searchSavedToggle = false;
 
         // If we're toggling closed

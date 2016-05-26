@@ -8,7 +8,7 @@ function FormSelectDirective() {
             model: '='
         },
         controller: FormSelectController,
-        templateUrl: 'templates/posts/views/form-select.html'
+        templateUrl: 'templates/posts/views/filters/filter-form.html'
     };
 }
 

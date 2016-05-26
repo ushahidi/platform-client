@@ -1,6 +1,6 @@
 <form name="postFiltersForm" role="search" class="searchbar" dropdown auto-close="outsideClick" ng-submit="applyFilters()" ng-model-options="{ updateOn : 'submit' }">
     <!-- Include search bar -->
-    <filter-searchbar filters="filters"></filter-searchbar>
+    <filter-searchbar model="filters.q"></filter-searchbar>
 
     <!-- Toggle Filters show/hide -->
     <div class="searchbar-options">
@@ -24,15 +24,15 @@
     <!-- Filters menu -->
     <div class="dropdown-menu" data-toggle-target="search-filters" ng-show="searchFiltersToggle" ng-class="{ 'active': searchFiltersToggle }" data-toggle-animate>
         <div class="dropdown-menu-body">
-            <form-select model="filters.form"></form-select>
+            <filter-form model="filters.form"></filter-form>
 
-            <category-select model="filters.tag"></category-select>
+            <filter-category model="filters.tag"></filter-category>
 
-            <visible-to-select model="filters.visible_to"></visible-to-select>
+            <filter-visible-to model="filters.visible_to"></filter-visible-to>
 
-            <date-select model="filters.date"></date-select>
+            <filter-date model="filters.date"></filter-date-select>
 
-            <location-select model="filters.location"></location-select>
+            <filter-location model="filters.location"></filter-location>
         </div>
 
         <div class="form-field">

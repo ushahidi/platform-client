@@ -8,7 +8,7 @@ function DateSelectDirective() {
             model: '='
         },
         controller: DateSelectController,
-        templateUrl: 'templates/posts/views/date-select.html'
+        templateUrl: 'templates/posts/views/filters/filter-date.html'
     };
 }
 
