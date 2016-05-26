@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset overflow-toggle has-overflow="roles.length">
     <legend translate>Who it's visible to</legend>
 
     <div class="form-field radio">
@@ -17,5 +17,10 @@
             <input type="radio" name="visible_to" ng-model="visible_to" value="draft"> <span translate="nav.only_you">Only you</span>
         </label>
     </div>
-    <span class="form-field-toggle" translate="nav.more">More</span>
+    <span class="form-field-toggle">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span translate="nav.more">More</span>
+    </span>
 </fieldset>
