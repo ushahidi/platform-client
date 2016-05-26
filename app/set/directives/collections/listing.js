@@ -92,13 +92,13 @@ function (
                 });
             };
 
-            $scope.collectionClickHandler = function (id) {
-                $scope.isToggleMode ? $scope.toggleCollection(id) : $scope.goToCollection(id);
+            $scope.collectionClickHandler = function (collection) {
+                $scope.isToggleMode ? $scope.toggleCollection(collection.id) : $scope.goToCollection(collection);
             };
 
-            $scope.goToCollection = function (id) {
+            $scope.goToCollection = function (collection) {
                 $scope.collectionListingVisible = false;
-                $location.path($scope.path + id);
+                $location.path($scope.path + collection.id + '/' + collection.view);
             };
 
             $scope.createNewCollection = function () {
@@ -139,6 +139,6 @@ function (
                 $scope.loadCollections();
             });
         },
-        templateUrl: 'templates/sets/collection-listing.html'
+        templateUrl: 'templates/sets/collections/collection-listing.html'
     };
 }];
