@@ -1,7 +1,7 @@
-module.exports = PostViewsControllers;
+module.exports = PostViewsController;
 
-PostViewsControllers.$inject = ['$scope', '$translate', '$routeParams', 'PostFilters', '$rootScope'];
-function PostViewsControllers($scope, $translate, $routeParams, PostFilters, $rootScope) {
+PostViewsController.$inject = ['$scope', '$translate', '$routeParams', 'PostFilters', '$rootScope'];
+function PostViewsController($scope, $translate, $routeParams, PostFilters, $rootScope) {
     // Change layout class
     $rootScope.setLayout('layout-a');
 
