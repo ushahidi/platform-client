@@ -1,6 +1,6 @@
 module.exports = PostFiltersService;
 
-PostFiltersService.inject = ['_', 'FormEndpoint'];
+PostFiltersService.$inject = ['_', 'FormEndpoint'];
 function PostFiltersService(_, FormEndpoint) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
