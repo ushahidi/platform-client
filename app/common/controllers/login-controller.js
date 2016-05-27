@@ -11,10 +11,10 @@ function (
     Authentication,
     $location
 ) {
-    $translate('nav.login').then(function (title) {
-        $scope.title = title;
-        $scope.$emit('setPageTitle', title);
-    });
+    // $translate('nav.login').then(function (title) {
+    //     $scope.title = title;
+    //     $scope.$emit('setPageTitle', title);
+    // });
 
     $scope.clearLoginForm = function () {
         $scope.failed = true;

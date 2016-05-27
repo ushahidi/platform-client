@@ -1,8 +1,10 @@
 module.exports = [
     'ViewHelper',
+    'Authentication',
     '$rootScope',
 function (
     ViewHelper,
+    Authentication,
     $rootScope
 ) {
     return {
@@ -20,9 +22,20 @@ function (
                 $scope.activeView = view_name;
             };
 
+            $scope.loggedin = $rootScope.loggedin;
             $scope.currentUser = $rootScope.currentUser;
 
-            // Show collection listing  
+            // Show login modal
+            $scope.login = function () {
+                $rootScope.$emit('event:login:show:loginModal');
+            };
+
+            // Log user out
+            $scope.logout = function () {
+                Authentication.logout();
+            };
+
+            // Show collection listing
             $scope.viewCollectionListing = function () {
                 $rootScope.$emit('event:collection:show:listing');
             };

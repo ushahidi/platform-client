@@ -52,6 +52,7 @@ angular.module('ushahidi.common', [
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
+.directive('login', require('./auth/login.directive.js'))
 
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
