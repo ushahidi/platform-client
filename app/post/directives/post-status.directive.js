@@ -8,7 +8,7 @@ function (
             post: '=',
             stages: '='
         },
-        templateUrl: 'templates/posts/post-status.html',
+        templateUrl: 'templates/posts/modify/post-status.html',
         controller: [
             '$scope',
             '$translate',

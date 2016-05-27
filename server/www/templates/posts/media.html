@@ -1,15 +1,15 @@
 <form ng-submit="uploadFile()">
-<div>
-  <a ng-href="{{media.original_file_url}}" ng-if="media.original_file_url" target="_blank" translate>post.media.current_url</a>
+    <div>
+      <a ng-href="{{media.original_file_url}}" ng-if="media.original_file_url" target="_blank" translate>post.media.current_url</a>
 
-  <file-upload file-container="fileContainer"
-               custom-on-change="onChange">
-  </file-upload>
-  <p class="small" translate>post.media.add_caption</p>
-  <input
-    type="text"
-    placeholder="{{ 'post.media.add_caption' | translate }}"
-    ng-model="media.caption">
-  <button ng-disabled="!canUpload" type="submit" translate>post.media.upload</button>
-</div>
+      <file-upload file-container="fileContainer"
+                   custom-on-change="onChange">
+      </file-upload>
+      <p class="small" translate>post.media.add_caption</p>
+      <input
+        type="text"
+        placeholder="{{ 'post.media.add_caption' | translate }}"
+        ng-model="media.caption">
+      <button ng-disabled="!canUpload" type="submit" translate>post.media.upload</button>
+    </div>
 </form>

@@ -1,0 +1,91 @@
+<form name="postEditForm" ng-submit="savePost()" novalidate>
+  <div class="mode-context init">
+    <header class="mode-context-header">
+        <ol class="breadcrumbs">
+            <li><a href="/">{{site.name}}</a></li>
+        </ol>
+
+        <h1 class="mode-context-title">{{post.form.name}}</h1>
+    </header>
+
+    <span class="mode-context-trigger">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span class="label hidden" translate="app.show_more_less">Show more/less</span>
+    </span>
+
+    <div class="mode-context-body">
+        <p>{{post.form.description}}</p>
+    </div>
+  </div>
+
+  <main role="main">
+      <div class="toolbar">
+          <div class="button-group">
+              <button type="button" class="button-flat" translate="app.cancel">Cancel</button>
+              <button type="submit" class="button-alpha" translate="app.save">Save</button>
+          </div>
+      </div>
+
+     <div class="main-col">
+
+          <div class="form-sheet">
+              <div class="form-field form-field-adapt title init">
+                  <label translate="post.modify.form.title">Title</label>
+                  <input id="title" ng-class="{ 'error': form.title.$invalid && form.title.$dirty }"
+                      name="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
+              </div>
+
+              <!-- IF: Editing an existing post -->
+              <div class="metadata">
+                  <a href="" class="metadata-author">
+                      <img src="https://api.adorable.io/avatars/40/abott@adorable.io.png" class="avatar">
+                        Jess Shorland
+                  </a>, 45 mins, via SMS
+              </div>
+              <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
+              <div class="postcard-metadata">
+                  <strong>This post will need to be moderated</strong> before it's visible to the public.
+              </div>
+              END: IF -->
+
+              <!-- IF: User has permission to manage who it's visible to -->
+              <post-status
+                  post="post"
+                  stages="stages"
+              ></post-status>
+              <!-- END: IF -->
+
+             <!-- IF: User has permission to see other 'Tasks' -->
+
+             <post-vertical-tabs
+                 form="postEditForm"
+                 post="post"
+                 stages="stages"
+                 attributes="attributes"
+                 visible-stage="visibleStage">
+              </post-vertical-tabs>
+         </div>
+
+          <div class="form-sheet">
+              <div class="form-sheet-summary">
+                  <h3 class="form-sheet-title" translate="">Delete this post</h3>
+              </div>
+
+              <div class="form-field">
+                  <p><strong>If you delete this post</strong>, all of its comments and messages will also be deleted. Proceed with caution.</p>
+</div>
+                  <button class="button-destructive" ng-click="deletePost()">
+                      <svg class="iconic">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                      </svg>
+                      <span class="button-label">Delete post</span>
+                  </button>
+              </div>
+          </div>
+
+      </div> <!-- END main column -->
+
+  </main>
+</form>

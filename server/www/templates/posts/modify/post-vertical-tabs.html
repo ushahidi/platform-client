@@ -1,0 +1,59 @@
+<div>
+    <nav class="tabs-menu init" data-tabs="tabs-tasks" data-tabs-hash="">
+        <ul>
+            <li ng-class="{'active': visibleStage == stage.id}" ng-repeat="stage in stages">
+                <a href="#tasks-post" ng-click="setVisibleStage(stage.id)">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#file"></use>
+                    </svg>
+                    {{stage.label}}
+                </a>
+            </li>
+            <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank. -->
+        </ul>
+    </nav>
+    <!--// END IF -->
+
+    <div class="tabs-tasks active tabs-target">
+        <!-- Handle stage completion -->
+        <div class="form-field switch"
+            ng-repeat="stage in stages"
+            ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
+            ng-show="stage.id == visibleStage"
+        >
+            <label translate="post.mark_complete">Mark completed/label>
+            <div class="toggle-switch">
+                <input class="tgl" id="switchT" type="checkbox" ng-checked="tageIsComplete(stage.id)" ng-click="toggleStageCompletion(stage.id)">
+                <label class="tgl-btn" for="switchT"></label>
+            </div>
+        </div>
+        <!-- END stage completion -->
+        <!-- Post stage default fields -->
+        <div class="form-field form-field-adapt init value" ng-show="isFirstStage(visibleStage)">
+            <label translate="post.form.modify.description">
+                Description
+            </label>
+            <textarea name="description" data-min-rows="1" rows="1" style="overflow-x: hidden; word-wrap: break-word; height: 109px;"
+                placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required>
+            </textarea>
+        </div>
+
+        <fieldset id="categories" class="error" ng-show="isFirstStage(visibleStage)">
+            <legend translate="post.modify.form.categories">Categories</legend>
+            <div class="form-field checkbox" ng-repeat="category in categories">
+                <label for="cat1">
+                    <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
+                    <span>{{category.tag}}</span>
+                </label>
+            </div>
+        </fieldset>
+        <!-- End post stage default fields -->
+        <post-value-edit
+                ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+                ng-show="attribute.form_stage_id == visibleStage"
+                post="post"
+                form="form"
+                attribute="attribute"
+        ></post-value-edit>
+    </div>
+</div>

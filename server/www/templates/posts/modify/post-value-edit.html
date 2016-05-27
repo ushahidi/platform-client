@@ -3,7 +3,7 @@
     class="form-field">
     <!-- Attribute Label -->
     <label
-        class="input-label" for="values[{{attribute.key}}][0]"
+        for="values[{{attribute.key}}][0]"
         ng-class="{
               'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
               'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
