@@ -47,6 +47,9 @@ angular.module('ushahidi.common', [
 .controller('intercom', require('./controllers/intercom.js'))
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
+.directive('collectionToggleButton', require('./directives/collection-toggle/collection-toggle-button.js'))
+.directive('collectionToggleLink', require('./directives/collection-toggle/collection-toggle-link.js'))
+
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 .directive('colorPicker', require('./directives/color-picker.js'))

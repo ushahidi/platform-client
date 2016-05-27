@@ -12,9 +12,9 @@ function ModalService($rootScope, $q) {
         onClose: onClose
     };
 
-    function open(templateUrl, title, closeOnOverlayClick, showCloseButton) {
+    function open(templateUrl, title, icon, closeOnOverlayClick, showCloseButton) {
         deferredOpen.promise.then(function () {
-            $rootScope.$emit('modal:open', templateUrl, title, closeOnOverlayClick, showCloseButton);
+            $rootScope.$emit('modal:open', templateUrl, title, icon, closeOnOverlayClick, showCloseButton);
         });
     }
 

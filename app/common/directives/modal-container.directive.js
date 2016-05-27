@@ -20,6 +20,7 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
         $scope.classVisible = false;
         $scope.modalOffset = 0;
         $scope.title = '';
+        $scope.icon = '';
         $scope.closeOnOverlayClick = true; // Could move out of scope
         $scope.showCloseButton = true;
         // Callbacks
@@ -34,13 +35,14 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
 
         //var classChangePromise = null;
 
-        function openModal(ev, templateUrl, title, closeOnOverlayClick, showCloseButton) {
+        function openModal(ev, templateUrl, title, icon, closeOnOverlayClick, showCloseButton) {
             // Load template markup
             $templateRequest(templateUrl).then(function (template) {
                 modalContent.html(template);
                 $compile(modalContent)($scope);
 
                 $scope.title = title;
+                $scope.icon = icon;
 
                 // If closeOnOverlayClick isn't passed, default to true
                 if (typeof closeOnOverlayClick === 'undefined') {
