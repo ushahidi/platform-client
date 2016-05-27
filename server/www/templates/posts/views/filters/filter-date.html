@@ -1,0 +1,21 @@
+<fieldset>
+    <legend>Date range</legend>
+
+    <div class="form-field date">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+        </svg>
+        <label class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
+        <input type="text" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" id="P1206222737" class="picker__input" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1206222737_root" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;);" ng-model="createdAfterModel">
+        <span class="date-joiner">to</span>
+    </div>
+
+    <div class="form-field date">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+        </svg>
+        <label class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
+        <input type="text" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" id="P396168542" class="picker__input" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P396168542_root" ng-model="createdBeforeModel">
+    </div>
+
+</fieldset>

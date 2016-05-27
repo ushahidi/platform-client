@@ -1,19 +1,24 @@
 <div>
+    <layout-class layout="a"></layout-class>
     <div class="mode-context init" ng-controller="navigation as nav">
         <header class="mode-context-header has-logo">
             <h1 class="mode-context-title"><a href="/" ng-bind="site.name"></a></h1>
             <img ng-if="site.image_header" ng-src="site.image_header" class="deployment-logo" />
         </header>
 
+        <!-- todo: wire up show/hide -->
         <span class="mode-context-trigger">
             <svg class="iconic">
-                <use xlink:href="../../iconic-sprite.svg#chevron-bottom"></use>
+                <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden">Show more/less</span>
         </span>
 
         <div class="mode-context-body">
             <p ng-bind="site.description"></p>
+
+            <mode-context-form-filter model="filters.form"></mode-context-form-filter>
+
         </div>
     </div>
 
@@ -21,7 +26,7 @@
     <main role="main">
 
         <post-view current-view="currentView" filters="filters" base-url="/views/">
-            <tool-bar></tool-bar>
+            <post-toolbar></post-toolbar>
 
             <div class="applied-filters">
                 <post-active-filters filters="filters"></post-active-filters>

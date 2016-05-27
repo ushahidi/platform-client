@@ -18,7 +18,8 @@ app.use(serveStatic('server/www', {
 
 function setCustomCacheControl(res, path) {
     if (serveStatic.mime.lookup(path) === 'text/html' ||
-        serveStatic.mime.lookup(path) === 'application/javascript') {
+        serveStatic.mime.lookup(path) === 'application/javascript' ||
+        serveStatic.mime.lookup(path) === 'application/json') {
         // Custom Cache-Control for HTML or JS files
         res.setHeader('Cache-Control', 'public, max-age=0');
     }
