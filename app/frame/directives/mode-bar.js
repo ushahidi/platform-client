@@ -12,20 +12,19 @@ function (
         },
         templateUrl: 'templates/frame/mode-bar.html',
         link: function ($scope, $element, $attrs) {
-            $scope.views = ViewHelper.views();
-
-            // TODO: move this out of function
-            $scope.activeView = 'map';
-            $scope.setActiveView = function (view_name) {
-                $scope.activeView = view_name;
-            };
-
+            $scope.baseUrl = '';
+            $scope.activeMode = 'map';
             $scope.currentUser = $rootScope.currentUser;
+            $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
 
-            // Show collection listing  
+            // Show collection listing
             $scope.viewCollectionListing = function () {
                 $rootScope.$emit('event:collection:show:listing');
             };
+
+            $rootScope.$on('event:mode:change', function (ev, mode) {
+                $scope.activeMode = mode;
+            });
         }
     };
 }];
