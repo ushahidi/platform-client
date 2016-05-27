@@ -8,12 +8,12 @@ function CollectionModeContext () {
         scope: {
             collection: '='
         },
-        controller: ModeContextController,
+        controller: CollectionModeContextController,
         templateUrl: 'templates/sets/collections/mode-context.html'
      };
  }
 
-ModeContextController.$inject = [
+CollectionModeContextController.$inject = [
     '$scope',
     '$rootScope',
     '$translate',
@@ -24,7 +24,7 @@ ModeContextController.$inject = [
     'ModalService',
     '_'
 ];
-function ModeContextController(
+function CollectionModeContextController(
     $scope,
     $rootScope,
     $translate,
@@ -37,14 +37,17 @@ function ModeContextController(
 ) {
     $scope.editCollection = editCollection;
     $scope.deleteCollection = deleteCollection;
+    $scope.saveNotification = saveNotification;
+    $scope.removeNotification = removeNotification;
+
+    // Show Add Notification link
+    $scope.showNotificationLink = false;
 
     activate();
 
     function activate() {
-        $scope.saveNotification = saveNotification;
-        $scope.removeNotification = removeNotification;
-        // Show Add Notification link
-        $scope.showNotificationLink = false;
+        $scope.canEditCollection = canEdit($scope.collection);
+
         NotificationEndpoint.query({set: $scope.collection.id, ignore403: true, user: 'me'}, function (notifications) {
             // show link if subscription does not exist
             if (notifications.length) {
@@ -52,19 +55,17 @@ function ModeContextController(
                 $scope.collectionNotification = notifications[0];
             }
         });
-
-        $scope.canEditCollection = canEdit($scope.collection);
     }
 
-    function canEdit (collection) {
+    function canEdit(collection) {
         return _.contains(collection.allowed_privileges, 'update');
     }
 
-    function editCollection () {
+    function editCollection() {
         $rootScope.$emit('collectionEditor:show', $scope.collection);
     }
 
-    function deleteCollection () {
+    function deleteCollection() {
         $translate('notify.collection.delete_collection_confirm')
             .then(function (message) {
                 Notify.showConfirm(message).then(function () {
@@ -80,7 +81,7 @@ function ModeContextController(
           });
     }
 
-    function saveNotification (collection) {
+    function saveNotification(collection) {
         var notification = {set: collection.id};
         NotificationEndpoint.save(notification).$promise.then(function (notification) {
             // No need to show the link after subscription
@@ -92,7 +93,7 @@ function ModeContextController(
         });
     }
 
-    function removeNotification () {
+    function removeNotification() {
         $translate('notify.notification.delete_confirm')
         .then(function (message) {
             Notify.showConfirm(message).then(function () {

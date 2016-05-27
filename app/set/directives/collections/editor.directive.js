@@ -40,21 +40,24 @@ function CollectionEditorController (
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.views = ViewHelper.views();
 
-    // Set default view for Collection to be Map
-    $scope.setBasicCollection = function () {
-        $scope.collection = {};
-        $scope.collection.view = 'map';
-        $scope.collection.visible_to = [];
-        $scope.cpyCollection = _.clone($scope.collection);
-    };
+    $scope.setBasicCollection = setBasicCollection;
+    $scope.featuredEnabled = featuredEnabled;
+    $scope.continueFlow = continueFlow;
+    $scope.cancel = cancel;
+    $scope.saveCollection = saveCollection;
+    $scope.deleteCollection = deleteCollection;
 
-    if (!$scope.collection) {
-        $scope.setBasicCollection();
+    activate();
+
+    function activate () {
+        if (!$scope.collection) {
+            $scope.setBasicCollection();
+        }
+
+        RoleEndpoint.query().$promise.then(function (roles) {
+            $scope.roles = roles;
+        });
     }
-
-    RoleEndpoint.query().$promise.then(function (roles) {
-        $scope.roles = roles;
-    });
 
     $rootScope.$on('collectionEditor:show', function (event, collection) {
         // Set inbound collection
@@ -79,19 +82,27 @@ function CollectionEditorController (
         $scope.collectionEditorVisible = true;
     });
 
-    $scope.featuredEnabled = function () {
+    // Set default view for Collection to be Map
+    function setBasicCollection() {
+        $scope.collection = {};
+        $scope.collection.view = 'map';
+        $scope.collection.visible_to = [];
+        $scope.cpyCollection = _.clone($scope.collection);
+    }
+
+    function featuredEnabled() {
         return $rootScope.hasPermission('Manage Posts');
-    };
+    }
 
-    $scope.continueFlow = function (collection) {
+    function continueFlow(collection) {
         $scope.redirectToCollectionListing ? $rootScope.$emit('collectionToggle:show:afterCreate', $scope.posts, collection ) : $location.path('/collections/' + collection.id);
-    };
-    
-    $scope.cancel = function () {
-        $scope.collectionEditorVisible = false;
-    };
+    }
 
-    $scope.saveCollection = function (collection) {
+    function cancel() {
+        $scope.collectionEditorVisible = false;
+    }
+
+    function saveCollection(collection) {
         // Are we creating or updating?
         var persist = collection.id ? CollectionEndpoint.update : CollectionEndpoint.save;
 
@@ -115,9 +126,9 @@ function CollectionEditorController (
         }, function (errorResponse) {
             Notify.showApiErrors(errorResponse);
         });
-    };
+    }
 
-    $scope.deleteCollection = function () {
+    function deleteCollection() {
         $translate('notify.collection.delete_collection_confirm')
         .then(function (message) {
             Notify.showConfirm(message).then(function () {
@@ -131,5 +142,5 @@ function CollectionEditorController (
                 });
             });
         });
-    };
+    }
 }

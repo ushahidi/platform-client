@@ -16,12 +16,12 @@ function (
         },
         link: function ($scope, $element, $attrs, ngModel) {
             $scope.toggleCollection = function () {
-
-                var postsSet = _.filter($scope.posts, function (post) {
+                // Reduce set of post of objects to only those currently selected
+                var selectedPostObjects = _.filter($scope.posts, function (post) {
                     return _.contains($scope.selectedPosts, post.id);
                 });
 
-                $rootScope.$emit('collectionToggle:show', postsSet);
+                $rootScope.$emit('collectionToggle:show', selectedPostObjects);
             };
         },
         templateUrl: 'templates/common/collection-toggle/collection-toggle-button.html'
