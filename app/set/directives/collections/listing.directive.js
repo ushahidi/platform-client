@@ -63,24 +63,9 @@ function CollectionListingController(
         // all collections it exists in as checked
         // If we are dealing with multiple posts the user
         // does not have the option to remove posts from collections only to add
-        return $scope.posts.length === 1 ? _.contains($scope.posts[0].sets, String(collection.id)) : false;
-    }
 
-    // Toggle a post as selected or not
-    // This behaviour is specific to the Toggle mode of collection listing
-    // It allows a user to select a collection by clicking on the whole row
-    function toggleCollection(selectedCollection) {
-        // If we are dealing with a single post the user can add and remove from collection
-        // For mass updates of many post the user is only permitted to add to collection
-        if ($scope.posts.length === 1) {
-            if (_.contains($scope.posts[0].sets, String(selectedCollection.id))) {
-                $scope.removeFromCollection(selectedCollection);
-            } else {
-                $scope.addToCollection(selectedCollection);
-            }
-        } else {
-            $scope.addToCollection(selectedCollection);
-        }
+        // TODO figure out to set newly created checkbox checked once it's been addToCollection
+        return $scope.posts.length === 1 ? _.contains($scope.posts[0].sets, String(collection.id)) : false;
     }
 
     // Update post set with collection(s) it has been added to
@@ -145,6 +130,23 @@ function CollectionListingController(
     function goToCollection(collection) {
         $scope.collectionListingVisible = false;
         $location.path($scope.path + collection.id + '/' + collection.view);
+    }
+
+    // Toggle a post as selected or not
+    // This behaviour is specific to the Toggle mode of collection listing
+    // It allows a user to select a collection by clicking on the whole row
+    function toggleCollection(selectedCollection) {
+        // If we are dealing with a single post the user can add and remove from collection
+        // For mass updates of many post the user is only permitted to add to collection
+        if ($scope.posts.length === 1) {
+            if (_.contains($scope.posts[0].sets, String(selectedCollection.id))) {
+                $scope.removeFromCollection(selectedCollection);
+            } else {
+                $scope.addToCollection(selectedCollection);
+            }
+        } else {
+            $scope.addToCollection(selectedCollection);
+        }
     }
 
     // This function passes flow control to the Collection Creation modal
