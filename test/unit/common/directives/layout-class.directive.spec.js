@@ -5,7 +5,6 @@ describe('layout class directive', function () {
     var $rootScope,
         $compile,
         $scope,
-        isolateScope,
         element;
 
     beforeEach(function () {
