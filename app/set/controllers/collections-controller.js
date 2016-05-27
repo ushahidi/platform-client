@@ -20,6 +20,11 @@ module.exports = [
             return $routeParams.view || collection.view;
         };
 
+        $scope.$emit('event:collection:show', collection);
+        $scope.$on('$destroy', function () {
+            $scope.$emit('event:collection:close');
+        });
+
         // Add set to the scope
         $scope.collection = collection;
         $scope.getCollectionUser = function () {
