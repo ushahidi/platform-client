@@ -61,7 +61,7 @@ function ModeContextController(
     }
 
     function editCollection () {
-        $rootScope.$emit('event:collection:show:editor', $scope.collection);
+        $rootScope.$emit('collectionEditor:show', $scope.collection);
     }
 
     function deleteCollection () {
@@ -72,7 +72,7 @@ function ModeContextController(
                         collectionId: $scope.collection.id
                     }).$promise.then(function () {
                         $location.url('/');
-                        $rootScope.$broadcast('event:collection:update');
+                        $rootScope.$broadcast('scollection:update');
                     }, function (errorResponse) {
                         Notify.showApiErrors(errorResponse);
                     });

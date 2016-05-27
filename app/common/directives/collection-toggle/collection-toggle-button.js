@@ -5,7 +5,7 @@ module.exports = [
 function (
     $rootScope,
     $translate,
-    _ 
+    _
 ) {
     return {
         restrict: 'E',
@@ -21,7 +21,7 @@ function (
                     return _.contains($scope.selectedPosts, post.id);
                 });
 
-                $rootScope.$emit('event:collection:show:toggle', postsSet);
+                $rootScope.$emit('collectionToggle:show', postsSet);
             };
         },
         templateUrl: 'templates/common/collection-toggle/collection-toggle-button.html'

@@ -31,7 +31,7 @@ function (
             $scope.iconPath = '../../img/iconic-sprite.svg#' + $scope.icon;
             $scope.classVisible = false;
             $scope.modalOffset = 0;
-            $scope.title = $translate($scope.title);
+            $scope.title = $translate.instant($scope.title);
 
             // If closeOnOverlayClick isn't passed, default to true
             if (typeof $scope.closeOnOverlayClick === 'undefined') {

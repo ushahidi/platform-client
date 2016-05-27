@@ -56,7 +56,7 @@ function CollectionEditorController (
         $scope.roles = roles;
     });
 
-    $rootScope.$on('event:collection:show:editor', function (event, collection) {
+    $rootScope.$on('collectionEditor:show', function (event, collection) {
         // Set inbound collection
         // if no collection is provided then we are creating
         // a collection
@@ -65,7 +65,7 @@ function CollectionEditorController (
         $scope.collectionEditorVisible = true;
     });
 
-    $rootScope.$on('event:collection:show:create', function (event, posts) {
+    $rootScope.$on('collectionCreate:show', function (event, posts) {
         // Set inbound posts
         // if posts are provided then we need to pass flow
         // back to collection listing once creation is complete
@@ -84,8 +84,9 @@ function CollectionEditorController (
     };
 
     $scope.continueFlow = function (collection) {
-        $scope.redirectToCollectionListing ? $rootScope.$emit('event:collection:show:toggle:after:create', $scope.posts, collection ) : $location.path('/collections/' + collection.id);
+        $scope.redirectToCollectionListing ? $rootScope.$emit('collectionToggle:show:afterCreate', $scope.posts, collection ) : $location.path('/collections/' + collection.id);
     };
+    
     $scope.cancel = function () {
         $scope.collectionEditorVisible = false;
     };
@@ -107,7 +108,7 @@ function CollectionEditorController (
             // and close the modal
             $scope.collection = _.clone(collection);
             $scope.collectionEditorVisible = false;
-            $rootScope.$broadcast('event:collection:update');
+            $rootScope.$broadcast('collection:update');
             $scope.setBasicCollection();
             $scope.continueFlow(collection);
 
@@ -124,7 +125,7 @@ function CollectionEditorController (
                     collectionId: $scope.collection.id
                 }).$promise.then(function () {
                     $location.url('/');
-                    $rootScope.$broadcast('event:collection:update');
+                    $rootScope.$broadcast('collection:update');
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });

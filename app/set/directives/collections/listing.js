@@ -103,7 +103,7 @@ function (
 
             $scope.createNewCollection = function () {
                 $scope.collectionListingVisible = false;
-                $scope.isToggleMode ? $rootScope.$emit('event:collection:show:create', $scope.posts) : $rootScope.$emit('event:collection:show:editor');
+                $scope.isToggleMode ? $rootScope.$emit('collectionCreate:show', $scope.posts) : $rootScope.$emit('collectionEditor:show');
             };
 
             $scope.searchCollections = function (collectionQuery) {
@@ -115,23 +115,23 @@ function (
             };
             // Update collection listing when collection are updated elsewhere
             // in the app
-            $rootScope.$on('event:collection:update', function () {
+            $rootScope.$on('collection:update', function () {
                 $scope.loadCollections();
             });
 
-            $rootScope.$on('event:collection:show:listing', function () {
+            $rootScope.$on('collectionListing:show', function () {
                 $scope.collectionListingVisible = true;
                 $scope.loadCollections();
             });
 
-            $rootScope.$on('event:collection:show:toggle', function (event, posts) {
+            $rootScope.$on('collectionToggle:show', function (event, posts) {
                 $scope.posts = posts;
                 $scope.collectionListingVisible = true;
                 $scope.isToggleMode = true;
                 $scope.loadCollections();
             });
 
-            $rootScope.$on('event:collection:show:toggle:after:create', function (event, posts, collection) {
+            $rootScope.$on('collectionToggle:show:afterCreate', function (event, posts, collection) {
                 $scope.posts = posts;
                 $scope.addToCollection(collection);
                 $scope.collectionListingVisible = true;
