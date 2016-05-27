@@ -43,9 +43,6 @@ describe('posts views controller', function () {
 
         spyOn(mockPostFilters, 'getFilters').and.callThrough();
 
-        $rootScope.setLayout = function () {};
-        spyOn($rootScope, 'setLayout').and.callThrough();
-
         $controller('postViewsController', {
             $scope: $scope,
             $routeParams: mockRouteParams
@@ -57,10 +54,6 @@ describe('posts views controller', function () {
 
     it('should have the right title', function () {
         expect($scope.title).toBe('Posts');
-    });
-
-    it('should set the layout', function () {
-        expect($rootScope.setLayout).toHaveBeenCalledWith('layout-a');
     });
 
     it('should set the current view', function () {
