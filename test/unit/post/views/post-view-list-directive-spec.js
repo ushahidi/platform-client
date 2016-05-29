@@ -1,4 +1,4 @@
-var ROOT_PATH = '../../../../../';
+var ROOT_PATH = '../../../../';
 
 describe('post view list directive', function () {
 
@@ -6,10 +6,8 @@ describe('post view list directive', function () {
         $scope,
         isolateScope,
         Notify,
+        PostFilters,
         element;
-    var mockEvent = {
-        preventDefault: function () {}
-    };
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -20,7 +18,7 @@ describe('post view list directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postViewList', require(ROOT_PATH + 'app/post/directives/views/post-view-list-directive'))
+        testApp.directive('postViewList', require(ROOT_PATH + 'app/post/views/post-view-list.directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -46,11 +44,12 @@ describe('post view list directive', function () {
 
     beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
+    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
         Notify = _Notify_;
+        PostFilters = _PostFilters_;
         $scope.isLoading = true;
         $scope.filters = {};
         element = '<post-view-list filters="filters" is-loading="isLoading"></post-view-list>';
@@ -75,12 +74,16 @@ describe('post view list directive', function () {
     });
 
     it('should check if filters have been set', function () {
+        spyOn(PostFilters, 'hasFilters').and.returnValue(false);
+
         isolateScope.filters = {
             status: 'all'
         };
 
         var result = isolateScope.hasFilters();
+
         expect(result).toBe(false);
+        expect(PostFilters.hasFilters).toHaveBeenCalledWith({ status: 'all' });
     });
 
     it('should delete selected posts', function () {

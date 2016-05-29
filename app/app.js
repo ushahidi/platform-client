@@ -8,7 +8,7 @@ require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap');
-require('angular-datepicker');
+require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
 require('angular-filter');
 require('angular-local-storage');
@@ -67,7 +67,7 @@ angular.module('app',
         'LocalStorageModule',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
-        'datePicker',
+        'angular-datepicker',
         'leaflet-directive',
         'angular.filter',
         'showdown',

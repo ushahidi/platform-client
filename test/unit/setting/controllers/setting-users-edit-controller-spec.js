@@ -15,7 +15,7 @@ describe('setting users edit controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingUsersEditController', require(ROOT_PATH + 'app/setting/controllers/setting-users-edit-controller.js'));
+        testApp.controller('settingUsersEditController', require(ROOT_PATH + 'app/setting/users/controllers/setting-users-edit-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

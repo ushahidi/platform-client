@@ -16,12 +16,15 @@ function (
 
         scope: {
             title: '@?',
+            icon: '=?',
             visible: '=?',
             closeOnOverlayClick: '=?',
             showCloseButton: '=?'
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
+            $scope.iconPath = $scope.icon ? '../../img/iconic-sprite.svg#' + $scope.icon : '';
+
             var classChangePromise = null;
 
             $scope.classVisible = false;

@@ -26,6 +26,11 @@ function (
             $scope.viewAccountSettings = function () {
                 $rootScope.$emit('event:show:account_settings');
             };
+
+            // Show collection listing
+            $scope.viewCollectionListing = function () {
+                $rootScope.$emit('event:collection:show:listing');
+            };
         }
     };
 }];

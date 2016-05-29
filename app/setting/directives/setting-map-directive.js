@@ -2,7 +2,6 @@ module.exports = [
     '$q',
     '$translate',
     'ConfigEndpoint',
-    'leafletEvents',
     'leafletData',
     'Maps',
     'Notify',
@@ -10,7 +9,6 @@ function (
     $q,
     $translate,
     ConfigEndpoint,
-    leafletEvents,
     leafletData,
     Maps,
     Notify
@@ -68,7 +66,7 @@ function (
                     $scope.minZoom = map.getMinZoom();
                     $scope.maxZoom = map.getMaxZoom();
                 });
-            };
+            }
 
             // Update map view from config
             function updateMapPreview() {
@@ -90,7 +88,7 @@ function (
                 leafletData.getMap().then(function (map) {
                     map.setZoom($scope.map.default_view.zoom);
                 });
-            };
+            }
 
             // Update our map defaults when the marker is dragged to a new spot.
             function handleDragEnd(event, args) {
@@ -98,14 +96,14 @@ function (
                 $scope.map.default_view.lon = args.leafletEvent.target._latlng.lng;
 
                 $scope.updateMapPreview();
-            };
+            }
 
             // Update our default zoom level when the preview map's is changed.
             function handleMoveEnd(event) {
                 leafletData.getMap().then(function (map) {
                     $scope.map.default_view.zoom = map.getZoom();
                 });
-            };
+            }
         }
     };
 }];
