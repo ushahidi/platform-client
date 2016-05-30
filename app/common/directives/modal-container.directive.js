@@ -35,11 +35,12 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
 
         //var classChangePromise = null;
 
-        function openModal(ev, templateUrl, title, icon, closeOnOverlayClick, showCloseButton) {
+        function openModal(ev, templateUrl, title, icon, scope, closeOnOverlayClick, showCloseButton) {
             // Load template markup
             $templateRequest(templateUrl).then(function (template) {
+                scope = scope || $scope.$new();
                 modalContent.html(template);
-                $compile(modalContent)($scope);
+                $compile(modalContent)(scope);
 
                 $scope.title = title;
                 $scope.icon = icon;
