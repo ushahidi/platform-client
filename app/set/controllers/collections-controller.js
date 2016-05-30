@@ -34,7 +34,7 @@ module.exports = [
 
         // Extend filters, always adding the current collection id
         var extendFilters = function (filters) {
-            filters = _.extend({ set : [] }, filters);
+            filters = angular.copy(filters, { set : [] });
             filters.set.push(collection.id);
             return filters;
         };
@@ -42,7 +42,7 @@ module.exports = [
         // whenever the GlobalFilter post query changes,
         // update the current list of posts
         $scope.$watch(function () {
-            return PostFilters.getFilters
+            return PostFilters.getFilters();
         }, function (newValue, oldValue) {
             $scope.filters = extendFilters(newValue);
         }, true);
