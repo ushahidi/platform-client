@@ -21,7 +21,6 @@ CollectionModeContextController.$inject = [
     'NotificationEndpoint',
     'CollectionEndpoint',
     'Notify',
-    'ModalService',
     '_'
 ];
 function CollectionModeContextController(
@@ -32,7 +31,6 @@ function CollectionModeContextController(
     NotificationEndpoint,
     CollectionEndpoint,
     Notify,
-    ModalService,
     _
 ) {
     $scope.editCollection = editCollection;

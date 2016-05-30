@@ -52,21 +52,6 @@ describe('set collections controller', function () {
         expect($rootScope.$emit).toHaveBeenCalled();
     });
 
-    it('should save a notification', function () {
-        spyOn(Notify, 'showNotificationSlider');
-        $scope.saveNotification({id: 'pass'});
-
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
-    });
-
-    it('should set teoggle is open', function () {
-        $scope.setIsOpen();
-        expect($scope.isOpen.data).toBe(true);
-
-        $scope.setIsOpen();
-        expect($scope.isOpen.data).toBe(false);
-    });
-
     it('should return current view', function () {
         var test = $scope.currentView();
 
