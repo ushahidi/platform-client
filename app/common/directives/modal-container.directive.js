@@ -8,7 +8,6 @@ ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService'];
 function ModalContainer($timeout, $rootScope, $compile, ModalService) {
     return {
         restrict: 'E',
-        transclude: true,
         templateUrl: 'templates/modal/modal-container.html',
 
         scope: true,
@@ -36,10 +35,13 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
 
         //var classChangePromise = null;
 
-        function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
-            scope = scope || $scope.$new();
+        function openModal(ev, template, title, icon, templateScope, closeOnOverlayClick, showCloseButton) {
+            templateScope = templateScope || $scope.$new();
+            // Inject closeModal function onto template scope
+            templateScope.closeModal = closeModal;
+
             modalContent.html(template);
-            $compile(modalContent)(scope);
+            $compile(modalContent)(templateScope);
 
             $scope.title = title;
             $scope.icon = icon ? iconPath + icon : icon;
@@ -47,11 +49,15 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             // If closeOnOverlayClick isn't passed, default to true
             if (typeof closeOnOverlayClick === 'undefined') {
                 $scope.closeOnOverlayClick = true;
+            } else {
+                $scope.closeOnOverlayClick = closeOnOverlayClick;
             }
 
             // If showCloseButton isn't passed, default to true
             if (typeof showCloseButton === 'undefined') {
                 $scope.showCloseButton = true;
+            } else {
+                $scope.showCloseButton = showCloseButton;
             }
 
             // @todo fade in
@@ -91,9 +97,6 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             // @todo move offset to a config param
             var windowYpos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
             $scope.modalOffset = (windowYpos + 40) + 'px';
-
-            // @todo set max height
-            // $('.modal-body').css('max-height', $(window).height() * 0.66);
         }
 
         // $scope.$on('$destroy', function (event) {
