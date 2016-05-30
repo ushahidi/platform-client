@@ -21,8 +21,7 @@ function SavedSearchListingController($scope, $element, $attrs, $rootScope, User
     // Reload searches on login / logout events
     $scope.$on('event:authentication:logout:succeeded', loadSavedSearches);
     $scope.$on('event:authentication:login:succeeded', loadSavedSearches);
-    $scope.$on('event:collection:update', loadSavedSearches);
-    $scope.$on('event:savedSearch:update', loadSavedSearches);
+    $scope.$on('savedSearch:update', loadSavedSearches);
 
     function activate() {
         loadSavedSearches();
@@ -32,7 +31,7 @@ function SavedSearchListingController($scope, $element, $attrs, $rootScope, User
     function loadSavedSearches(query) {
         $scope.searches = [];
         query = query || {};
-console.log(query);
+
         SavedSearchEndpoint.query(query).$promise.then(function (searches) {
             $scope.searches = searches;
 
