@@ -1,9 +1,7 @@
 module.exports = [
     '$rootScope',
-    '$translate',
 function (
-    $rootScope,
-    $translate
+    $rootScope
 ) {
     return {
         restrict: 'E',

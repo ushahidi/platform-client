@@ -1,10 +1,8 @@
 module.exports = [
     '$rootScope',
-    '$translate',
     '_',
 function (
     $rootScope,
-    $translate,
     _
 ) {
     return {
