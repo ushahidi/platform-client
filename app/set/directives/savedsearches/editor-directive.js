@@ -24,8 +24,7 @@ function (
         replace: true,
         templateUrl: 'templates/sets/savedsearches/savedsearch-editor.html',
         scope: {
-            savedSearch: '=',
-            isOpen: '='
+            savedSearch: '='
         },
         link: function ($scope, $element, $attrs) {
             if (!$scope.savedSearch) {
@@ -48,14 +47,6 @@ function (
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 
-            $scope.$watch(function () {
-                return $scope.isOpen.data;
-            }, function (newValue, oldValue) {
-                if (newValue !== oldValue) {
-                    $scope.cpySavedSearch = _.clone($scope.savedSearch);
-                }
-            });
-
             $scope.saveSavedsearch = function (savedSearch) {
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
 
@@ -67,7 +58,6 @@ function (
                 .then(function (savedSearch) {
                     $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
-                    $scope.isOpen.data = false;
                     $rootScope.$broadcast('event:savedSearch:update');
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
