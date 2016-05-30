@@ -57,8 +57,11 @@ function PostEditorController(
     $scope.fetchAttributes = fetchAttributes;
     $scope.fetchStages = fetchStages;
     $scope.allowedChangeStatus = allowedChangeStatus;
+
+    $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
+    $scope.cacnel = cancel;
 
 
     activate();
@@ -136,6 +139,32 @@ function PostEditorController(
 
     function canSavePost() {
         return PostEditService.canSavePost($scope.post, $scope.form, $scope.stages, $scope.attributes);
+    }
+
+    function cancel () {
+
+        var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
+        $location.path(path);
+    }
+
+    function deletePost(post) {
+        $translate('notify.post.destroy_confirm').then(function (message) {
+            Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
+                PostEndpoint.delete({ id: post.id }).$promise.then(function () {
+                    $translate(
+                        'notify.post.destroy_success',
+                        {
+                            name: post.title
+                        }
+                    ).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                        $location.path('/');
+                    });
+                }, function (errorResponse) {
+                    Notify.showApiErrors(errorResponse);
+                });
+            });
+        });
     }
 
     function savePost() {

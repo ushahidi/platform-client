@@ -47,7 +47,7 @@ function (
         }];
     return {
         restrict: 'E',
-        templateUrl: 'templates/publish-selector/publish-selector.html',
+        templateUrl: 'templates/common/publish-selector/publish-selector.html',
         scope: {
             post: '=',
             toggleRoleFunc: '&'

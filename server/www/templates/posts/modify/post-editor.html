@@ -1,4 +1,4 @@
-<form name="postEditForm" ng-submit="savePost()" novalidate>
+<form name="form" ng-submit="savePost()" novalidate>
   <div class="mode-context init">
     <header class="mode-context-header">
         <ol class="breadcrumbs">
@@ -23,7 +23,7 @@
   <main role="main">
       <div class="toolbar">
           <div class="button-group">
-              <button type="button" class="button-flat" translate="app.cancel">Cancel</button>
+              <button type="button" class="button-flat" ng-click="cancel()" translate="app.cancel">Cancel</button>
               <button type="submit" class="button-alpha" translate="app.save">Save</button>
           </div>
       </div>
@@ -60,7 +60,7 @@
              <!-- IF: User has permission to see other 'Tasks' -->
 
              <post-vertical-tabs
-                 form="postEditForm"
+                 form="form"
                  post="post"
                  stages="stages"
                  attributes="attributes"
@@ -70,17 +70,17 @@
 
           <div class="form-sheet">
               <div class="form-sheet-summary">
-                  <h3 class="form-sheet-title" translate="">Delete this post</h3>
+                  <h3 class="form-sheet-title" translate="post.delete_post">Delete this post</h3>
               </div>
 
               <div class="form-field">
-                  <p><strong>If you delete this post</strong>, all of its comments and messages will also be deleted. Proceed with caution.</p>
+                  <p translate="post.delete_post_desc"><strong>If you delete this post</strong>, all of its comments and messages will also be deleted. Proceed with caution.</p>
 </div>
-                  <button class="button-destructive" ng-click="deletePost()">
+                  <button class="button-destructive" ng-click="deletePost(post)">
                       <svg class="iconic">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
                       </svg>
-                      <span class="button-label">Delete post</span>
+                      <span class="button-label" translate="post.delete_post">Delete post</span>
                   </button>
               </div>
           </div>

@@ -1,14 +1,12 @@
 <div
-    ng-class="{ 'has-error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
-    class="form-field">
+    class="form-field"
+    ng-class="{
+      'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+      'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+      'required': attribute.required}"
+    >
     <!-- Attribute Label -->
-    <label
-        for="values[{{attribute.key}}][0]"
-        ng-class="{
-              'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-              'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-              'required': attribute.required}"
-        >
+    <label for="values[{{attribute.key}}][0]">
         {{attribute.label}}
     </label>
     <!-- type: checkbox -->
@@ -24,8 +22,7 @@
             id="values[{{attribute.key}}][{{key}}]"
             name="values_{{attribute.key}}_{{option}}"
             checklist-value="option"
-            value="option"
-            ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }">
+            value="option">
         <label>
             {{option}}
         </label>
@@ -69,13 +66,14 @@
             <!-- type: radio -->
             <div class="input-group" ng-if="isRadio(attribute)">
                 <label class="radio-label" ng-repeat="opt in attribute.options">{{opt}}
-                <input
-                    name="values_{{attribute.key}}"
-                    type="radio"
-                    ng-model="post.values[attribute.key][key]"
-                    ng-required="attribute.required"
-                    value="{{opt}}"
-                    ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></label>
+                    <input
+                        name="values_{{attribute.key}}"
+                        type="radio"
+                        ng-model="post.values[attribute.key][key]"
+                        ng-required="attribute.required"
+                        value="{{opt}}"
+                      >
+                </label>
             </div>
             <!-- type: number -->
             <input
@@ -86,7 +84,6 @@
                 placeholder="{{attribute.label}}"
                 ng-model="post.values[attribute.key][key]"
                 ng-required="attribute.required"
-                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
                 >
             <!-- type: text -->
             <input
@@ -97,7 +94,6 @@
                 placeholder="{{attribute.label}}"
                 ng-model="post.values[attribute.key][key]"
                 ng-required="attribute.required"
-                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"
                 >
             <!-- type: textarea -->
             <textarea
@@ -107,8 +103,8 @@
                 name="values_{{attribute.key}}"
                 placeholder="{{attribute.label}}"
                 ng-model="post.values[attribute.key][key]"
-                ng-required="attribute.required"
-                ng-class="{ 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty }"></textarea>
+                ng-required="attribute.required">
+            </textarea>
 
             <!-- Non standard fields -->
             <!-- type: relation -->
@@ -118,7 +114,7 @@
                 id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.key}}"
                 model="post.values[attribute.key][key]"
-                required="attribute.required"
+                ng-required="attribute.required"
                 ng-if="isRelation(attribute)"></post-relation>
             <!-- type: location -->
             <post-location

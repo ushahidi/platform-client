@@ -1,8 +1,13 @@
  <fieldset dropdown auto-close="outsideClick" class="custom-fieldset init">
-    <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle translate>post.who_can_see_this</legend>
+    <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
+      <span translate="post.who_can_see_this">Who can see this?</span>
+      <svg class="iconic chevron">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom">
+      </svg>
+    </legend>
     <div class="dropdown-menu init" dropdown-menu>
         <div class="form-fieldgroup">
-            <div class="form-field radio"> 
+            <div class="form-field radio">
                 <input
                     name="{{post.id}}_draft"
                     id="{{post.id}}_draft"
@@ -10,7 +15,7 @@
                     type="radio"
                     ng-checked="post.status==='draft'"
                     ng-click="toggleRole('draft')">
-                <label for="{{post.id}}_draft" translate>post.publish_for_you</label>
+                <label for="{{post.id}}_draft" translate="post.just_you">Just you</label>
             </div>
 
             <div class="form-field radio">
@@ -21,7 +26,7 @@
                     type="radio"
                     ng-checked="post.status==='published' && post.published_to.length === 0"
                     ng-click="toggleRole('')">
-                <label for="{{post.id}}_everyone" translate>post.publish_for_everyone</label>
+                <label for="{{post.id}}_everyone" translate="post.everyone">Everyone</label>
             </div>
         </div>
         <div class="form-fieldgroup">

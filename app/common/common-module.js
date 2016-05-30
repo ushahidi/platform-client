@@ -46,6 +46,8 @@ angular.module('ushahidi.common', [
 .controller('notifier', require('./controllers/notifier.js'))
 .controller('intercom', require('./controllers/intercom.js'))
 
+.directive('publishSelector', require('./directives/publish-selector.js'))
+
 .directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('collectionToggleButton', require('./directives/collection-toggle/collection-toggle-button.js'))
 .directive('collectionToggleLink', require('./directives/collection-toggle/collection-toggle-link.js'))
