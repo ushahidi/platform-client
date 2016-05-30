@@ -44,8 +44,7 @@ function (
         transclude: true,
         scope: {
             filters: '=',
-            currentView: '=',
-            baseUrl: '@'
+            currentView: '='
         },
         controller: controller,
         templateUrl: 'templates/posts/views/post-view.html'

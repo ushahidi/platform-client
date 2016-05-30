@@ -20,17 +20,17 @@
         <div class="metadata">
             <span ng-if="collection.user">
                 <span translate='app.created_by'>Created by</span>
-                <a ng-href="/users/{{collection.user.id}}" class="metadata-author">test{{collection.user.realname}}</a>
+                <a ng-href="/users/{{collection.user.id}}" class="metadata-author">{{collection.user.realname}}</a>
             </span>
             <span class="metadata-visibility public tooltip">
                 <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#globe"></use>
                 </svg>
-                <span class="bug">This Collection is visible to the public</span>
+                <span class="bug" translate="collection.visible_to_public">This Collection is visible to the public</span>
             </span>
 
             <!--// IF: User has permission to edit the Saved Search //-->
-            <div class="form-field" ng-if="canEditCollection" dropdown>
+            <div class="form-field" ng-if="canEdit" dropdown>
                 <button type="button" data-modal="edit-collection" ng-click="editCollection()">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
@@ -74,7 +74,7 @@
             <!--// END IF //-->
 
             <!--// IF: User does not have permission to edit the Saved Search //-->
-            <div class="form-field" ng-if="!canEditCollection">
+            <div class="form-field" ng-if="!canEdit">
                 <!-- // IF: User is not yet getting notifications about this Saved Search //-->
                 <button type="button" ng-if="showNotificationLink" ng-click="saveNotification(collection)">
                     <svg class="iconic">
