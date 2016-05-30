@@ -20,6 +20,7 @@ function PostFiltersService(_, FormEndpoint) {
 
     function activate() {
         FormEndpoint.query().$promise.then(function (forms) {
+            filterState.form = filterState.form || [];
             if (filterState.form.length === 0) { // just in case of race conditions
                 Array.prototype.splice.apply(filterState.form, [0, 0].concat(_.pluck(forms, 'id')));
             }
