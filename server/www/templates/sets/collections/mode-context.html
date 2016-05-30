@@ -19,8 +19,7 @@
 
         <div class="metadata">
             <span ng-if="collection.user">
-                <span translate='app.created_by'>Created by</span>
-                <a ng-href="/users/{{collection.user.id}}" class="metadata-author">{{collection.user.realname}}</a>
+                <span translate='app.created_by' translate-values="{ author : collection.user.realname }">Created by</span>
             </span>
             <span class="metadata-visibility public tooltip">
                 <svg class="iconic">

@@ -30,7 +30,7 @@ module.exports = [
         // Add set to the scope
         $scope.savedSearch = savedSearch;
         $scope.getSavedSearchUser = function () {
-            return $scope.savedSearch.user_id ? UserEndpoint.get({id: $scope.savedSearch.user_id}) : undefined;
+            return $scope.savedSearch.user ? UserEndpoint.get({id: $scope.savedSearch.user.id}) : undefined;
         };
         $scope.savedSearch.user = $scope.getSavedSearchUser();
 

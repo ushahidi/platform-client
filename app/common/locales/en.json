@@ -6,7 +6,7 @@
         "can_see_this" : "can see this",
         "collections" : "Collections",
         "create_new" : "Create new",
-        "created_by" : "Created by ",
+        "created_by" : "Created by {{author}}",
         "documentation": "Documentation",
         "report_a_bug": "Report a bug",
         "forbidden": "Sorry, you're not allowed to do that.",
@@ -435,8 +435,16 @@
         "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution."
     },
     "saved_search": {
+        "visible_to_public" : "This Saved Search is visible to the public",
+        "visible_to_you": "This Saved Search is visible to just you and admins",
+        "visible_to_roles": "This Saved Search is visible to {{roles}}",
         "featured": "Featured",
         "featured_tooltip": "Featured searches appear to all users in <br>the \"Saved Searches\" menu"
+    },
+    "collection": {
+        "visible_to_public" : "This Collection is visible to the public",
+        "visible_to_you": "This Collection is visible to just you and admins",
+        "visible_to_roles": "This Collection is visible to {{roles}}"
     },
     "set": {
         "by" : "by",
