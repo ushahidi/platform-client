@@ -6,7 +6,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/sets/savedsearch-create.html',
+        templateUrl: 'templates/sets/savedsearches/savedsearch-create.html',
         scope: {
             filters: '='
         },

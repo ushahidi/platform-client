@@ -14,7 +14,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/sets/savedsearch-update.html',
+        templateUrl: 'templates/sets/savedsearches/savedsearch-update.html',
         scope: {
             savedSearch: '=',
             filters: '='

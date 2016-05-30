@@ -22,7 +22,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/sets/savedsearch-editor.html',
+        templateUrl: 'templates/sets/savedsearches/savedsearch-editor.html',
         scope: {
             savedSearch: '=',
             isOpen: '='
