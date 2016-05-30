@@ -6,8 +6,8 @@ function (
 
     $routeProvider
     .when('/views/:view?', {
-        controller: require('./controllers/post-views-controller.js'),
-        templateUrl: 'templates/posts/views.html'
+        controller: require('./views/post-views.controller.js'),
+        templateUrl: 'templates/posts/views/main.html'
     })
     .when('/posts/create', {
         controller: require('./controllers/post-create-controller.js'),

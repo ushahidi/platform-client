@@ -1,4 +1,4 @@
-var ROOT_PATH = '../../../../../';
+var ROOT_PATH = '../../../../';
 
 describe('post view directive', function () {
 
@@ -17,7 +17,7 @@ describe('post view directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postView', require(ROOT_PATH + 'app/post/directives/views/post-view-directive'))
+        testApp.directive('postView', require(ROOT_PATH + 'app/post/views/post-view.directive'))
         .service('ViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
         .value('$filter', function () {
             return function () {};

@@ -7,12 +7,14 @@ function (
         'PostEndpoint',
         'd3',
         '_',
+        'PostFilters',
     function (
         $scope,
         $filter,
         PostEndpoint,
         d3,
-        _
+        _,
+        PostFilters
     ) {
         $scope.options = {
             chart: {
@@ -60,7 +62,7 @@ function (
         };
 
         var getPostStats = function (query) {
-            query = query || $scope.filters;
+            query = query || PostFilters.getQueryParams($scope.filters);
             var postQuery = _.extend({}, query, {
                 'group_by' : $scope.groupBy
             });
@@ -83,7 +85,7 @@ function (
             if (newValue !== oldValue) {
                 getPostStats();
             }
-        });
+        }, true);
 
         // Initial values
         $scope.reload = getPostStats;
