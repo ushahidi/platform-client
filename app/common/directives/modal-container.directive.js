@@ -4,8 +4,8 @@
  */
 module.exports = ModalContainer;
 
-ModalContainer.$inject = ['$timeout', '$rootScope', '$templateRequest', '$compile', 'ModalService'];
-function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalService) {
+ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService'];
+function ModalContainer($timeout, $rootScope, $compile, ModalService) {
     return {
         restrict: 'E',
         transclude: true,
@@ -20,12 +20,13 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
         $scope.classVisible = false;
         $scope.modalOffset = 0;
         $scope.title = '';
-        $scope.icon = '';
+        $scope.icon = false;
         $scope.closeOnOverlayClick = true; // Could move out of scope
         $scope.showCloseButton = true;
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
 
+        var iconPath = '../../img/iconic-sprite.svg#';
         // Modal content element
         var modalContent = $element.find('modal-content');
 
@@ -35,35 +36,32 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
 
         //var classChangePromise = null;
 
-        function openModal(ev, templateUrl, title, icon, scope, closeOnOverlayClick, showCloseButton) {
-            // Load template markup
-            $templateRequest(templateUrl).then(function (template) {
-                scope = scope || $scope.$new();
-                modalContent.html(template);
-                $compile(modalContent)(scope);
+        function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
+            scope = scope || $scope.$new();
+            modalContent.html(template);
+            $compile(modalContent)(scope);
 
-                $scope.title = title;
-                $scope.icon = icon;
+            $scope.title = title;
+            $scope.icon = icon ? iconPath + icon : icon;
 
-                // If closeOnOverlayClick isn't passed, default to true
-                if (typeof closeOnOverlayClick === 'undefined') {
-                    $scope.closeOnOverlayClick = true;
-                }
+            // If closeOnOverlayClick isn't passed, default to true
+            if (typeof closeOnOverlayClick === 'undefined') {
+                $scope.closeOnOverlayClick = true;
+            }
 
-                // If showCloseButton isn't passed, default to true
-                if (typeof showCloseButton === 'undefined') {
-                    $scope.showCloseButton = true;
-                }
+            // If showCloseButton isn't passed, default to true
+            if (typeof showCloseButton === 'undefined') {
+                $scope.showCloseButton = true;
+            }
 
-                // @todo fade in
-                modalYPos();
-                $scope.classVisible = true;
-                $rootScope.toggleModalVisible();
+            // @todo fade in
+            modalYPos();
+            $scope.classVisible = true;
+            $rootScope.toggleModalVisible();
 
-                // if (classChangePromise) {
-                //     $timeout.cancel(classChangePromise);
-                // }
-            });
+            // if (classChangePromise) {
+            //     $timeout.cancel(classChangePromise);
+            // }
         }
 
         function closeModal() {
