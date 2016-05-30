@@ -38,6 +38,13 @@
             <textarea id="content" name="content" data-min-rows="1" rows="1" style="overflow-x: hidden; word-wrap: break-word; height: 109px;"
                 placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required>
             </textarea>
+            
+            <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="{{'post.valid.content.' + error}}"></span>
+            </div>
         </div>
 
         <fieldset id="categories" ng-show="isFirstStage(visibleStage)">

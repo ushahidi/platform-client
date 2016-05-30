@@ -35,6 +35,17 @@
                   <label translate="post.modify.form.title">Title</label>
                   <input id="title" ng-class="{ 'error': form.title.$invalid && form.title.$dirty }"
                       name="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
+
+                  <div
+                      class="alert error"
+                      ng-show="form.title.$dirty"
+                      ng-repeat="(error, value) in form.title.$error"
+                      >
+                      <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                      </svg>
+                      <span translate="{{'post.valid.title.' + error}}"></span>
+                  </div>
               </div>
 
               <!-- IF: Editing an existing post -->
