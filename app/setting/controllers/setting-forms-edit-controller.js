@@ -12,6 +12,8 @@ function (
     FormStageEndpoint
 ) {
 
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
     $scope.formId = $routeParams.id;
 
     // If we're editing an existing form,

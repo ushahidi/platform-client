@@ -27,6 +27,8 @@ function (
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
     // Get all the forms for display
     $scope.refreshForms = function () {
