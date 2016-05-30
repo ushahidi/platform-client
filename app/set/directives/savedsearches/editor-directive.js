@@ -47,7 +47,7 @@ function (
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 
-            $scope.saveSavedsearch = function (savedSearch) {
+            $scope.save = function (savedSearch) {
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
 
                 // Strip out any null values from visible_to
@@ -58,25 +58,14 @@ function (
                 .then(function (savedSearch) {
                     $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
+                    $scope.$parent.closeModal();
                     $rootScope.$broadcast('event:savedSearch:update');
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
             };
 
-            $scope.deleteSavedSearch = function () {
-                $translate('notify.savedsearch.delete_savedsearch_confirm')
-                .then(function (message) {
-                    Notify.showConfirm(message).then(function () {
-                        SavedSearchEndpoint.delete({ id: $scope.savedSearch.id }).$promise.then(function () {
-                            $location.url('/');
-                            $rootScope.$broadcast('event:savedSearch:update');
-                        }, function (errorResponse) {
-                            Notify.showApiErrors(errorResponse);
-                        });
-                    });
-                });
-            };
+            $scope.cancel = $scope.$parent.closeModal;
         }
     };
 }];

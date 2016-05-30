@@ -434,6 +434,10 @@
         "delete_role" : "Delete this role",
         "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution."
     },
+    "saved_search": {
+        "featured": "Featured",
+        "featured_tooltip": "Featured searches appear to all users in <br>the \"Saved Searches\" menu"
+    },
     "set": {
         "by" : "by",
         "create_collection" : "Create Collection",
@@ -443,12 +447,11 @@
         "delete_collection" : "Delete this collection",
         "delete_savedsearch" : "Delete this Saved Search",
         "default_viewing_mode" : "Default viewing mode",
-        "edit_collection_settings" : "Collection Settings",
-        "edit_search_settings" : "Saved Search Settings",
+        "edit_collection_settings" : "Edit Collection",
+        "edit_search_settings" : "Edit Saved Search",
         "featured" : "Featured",
         "featured_collection" : "This collection is featured",
         "featured_collection_tooltip" : "Featured Collections appear to all users in <br>the \"Collections\" menu",
-        "featured_savedsearch" : "This saved search is featured",
         "find_a_collection" : "Find a collection...",
         "find_a_saved_search" : "Find a saved search...",
         "add_to_collection" : "Add to Collection",
@@ -459,7 +462,6 @@
         "name_savedsearch" : "Saved Search name",
         "visible_to_collection" : "Who can see this Collection",
         "visible_to_savedsearch" : "Who can see this Saved Search",
-        "default_view" : "Default view",
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",

@@ -62,7 +62,7 @@ function SavedSearchModeContextController(
     }
 
     function editSavedSearch() {
-        ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.edit_search_settings', 'star', $scope);
+        ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.edit_search_settings', 'star', $scope, false, false);
         //$rootScope.$emit('savedSearchEditor:show', $scope.collection);
     }
 
