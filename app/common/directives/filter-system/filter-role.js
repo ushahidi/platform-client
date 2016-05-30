@@ -27,7 +27,7 @@ function (
         replace: true,
         templateUrl: 'templates/common/filter-system/filter-role.html',
         scope: {
-            selectedRoles: '='
+            model: '='
         },
         controller: controller
     };

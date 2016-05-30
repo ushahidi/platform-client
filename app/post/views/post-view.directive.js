@@ -3,12 +3,10 @@ function (
 ) {
     var controller = [
         '$scope',
-        'GlobalFilter',
         'ViewHelper',
         '_',
         function (
             $scope,
-            GlobalFilter,
             ViewHelper,
             _
         ) {
@@ -47,6 +45,6 @@ function (
             baseUrl: '@'
         },
         controller: controller,
-        templateUrl: 'templates/views/views.html'
+        templateUrl: 'templates/posts/views/post-view.html'
     };
 }];
