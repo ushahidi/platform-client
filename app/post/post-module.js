@@ -1,7 +1,5 @@
 angular.module('ushahidi.posts', [])
 
-.directive('postViewTabs', require('./directives/post-view-tabs-directive.js'))
-.directive('postViewFilters', require('./directives/post-view-filters-directive.js'))
 .directive('postActiveFilters', require('./directives/post-active-filters-directive.js'))
 .directive('postCard', require('./directives/post-card-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
