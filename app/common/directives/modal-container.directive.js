@@ -4,11 +4,10 @@
  */
 module.exports = ModalContainer;
 
-ModalContainer.$inject = ['$timeout', '$rootScope', '$templateRequest', '$compile', 'ModalService'];
-function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalService) {
+ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService'];
+function ModalContainer($timeout, $rootScope, $compile, ModalService) {
     return {
         restrict: 'E',
-        transclude: true,
         templateUrl: 'templates/modal/modal-container.html',
 
         scope: true,
@@ -20,12 +19,13 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
         $scope.classVisible = false;
         $scope.modalOffset = 0;
         $scope.title = '';
-        $scope.icon = '';
+        $scope.icon = false;
         $scope.closeOnOverlayClick = true; // Could move out of scope
         $scope.showCloseButton = true;
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
 
+        var iconPath = '../../img/iconic-sprite.svg#';
         // Modal content element
         var modalContent = $element.find('modal-content');
 
@@ -35,34 +35,39 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
 
         //var classChangePromise = null;
 
-        function openModal(ev, templateUrl, title, icon, closeOnOverlayClick, showCloseButton) {
-            // Load template markup
-            $templateRequest(templateUrl).then(function (template) {
-                modalContent.html(template);
-                $compile(modalContent)($scope);
+        function openModal(ev, template, title, icon, templateScope, closeOnOverlayClick, showCloseButton) {
+            templateScope = templateScope || $scope.$new();
+            // Inject closeModal function onto template scope
+            templateScope.closeModal = closeModal;
 
-                $scope.title = title;
-                $scope.icon = icon;
+            modalContent.html(template);
+            $compile(modalContent)(templateScope);
 
-                // If closeOnOverlayClick isn't passed, default to true
-                if (typeof closeOnOverlayClick === 'undefined') {
-                    $scope.closeOnOverlayClick = true;
-                }
+            $scope.title = title;
+            $scope.icon = icon ? iconPath + icon : icon;
 
-                // If showCloseButton isn't passed, default to true
-                if (typeof showCloseButton === 'undefined') {
-                    $scope.showCloseButton = true;
-                }
+            // If closeOnOverlayClick isn't passed, default to true
+            if (typeof closeOnOverlayClick === 'undefined') {
+                $scope.closeOnOverlayClick = true;
+            } else {
+                $scope.closeOnOverlayClick = closeOnOverlayClick;
+            }
 
-                // @todo fade in
-                modalYPos();
-                $scope.classVisible = true;
-                $rootScope.toggleModalVisible();
+            // If showCloseButton isn't passed, default to true
+            if (typeof showCloseButton === 'undefined') {
+                $scope.showCloseButton = true;
+            } else {
+                $scope.showCloseButton = showCloseButton;
+            }
 
-                // if (classChangePromise) {
-                //     $timeout.cancel(classChangePromise);
-                // }
-            });
+            // @todo fade in
+            modalYPos();
+            $scope.classVisible = true;
+            $rootScope.toggleModalVisible();
+
+            // if (classChangePromise) {
+            //     $timeout.cancel(classChangePromise);
+            // }
         }
 
         function closeModal() {
@@ -92,9 +97,6 @@ function ModalContainer($timeout, $rootScope, $templateRequest, $compile, ModalS
             // @todo move offset to a config param
             var windowYpos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
             $scope.modalOffset = (windowYpos + 40) + 'px';
-
-            // @todo set max height
-            // $('.modal-body').css('max-height', $(window).height() * 0.66);
         }
 
         // $scope.$on('$destroy', function (event) {

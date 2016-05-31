@@ -1,20 +1,31 @@
 module.exports = ModalService;
 
-ModalService.$inject = ['$rootScope', '$q'];
-function ModalService($rootScope, $q) {
+ModalService.$inject = ['$rootScope', '$q', '$templateRequest'];
+function ModalService($rootScope, $q, $templateRequest) {
     var deferredOpen = $q.defer(),
         deferredClose = $q.defer();
 
     return {
-        open: open,
+        open: openUrl,
+        openUrl: openUrl,
+        openTemplate: openTemplate,
         close: close,
         onOpen: onOpen,
         onClose: onClose
     };
 
-    function open(templateUrl, title, icon, closeOnOverlayClick, showCloseButton) {
+    function openUrl(templateUrl, title, icon, scope, closeOnOverlayClick, showCloseButton) {
         deferredOpen.promise.then(function () {
-            $rootScope.$emit('modal:open', templateUrl, title, icon, closeOnOverlayClick, showCloseButton);
+            // Load template
+            $templateRequest(templateUrl).then(function (template) {
+                $rootScope.$emit('modal:open', template, title, icon, scope, closeOnOverlayClick, showCloseButton);
+            });
+        });
+    }
+
+    function openTemplate(template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
+        deferredOpen.promise.then(function () {
+            $rootScope.$emit('modal:open', template, title, icon, scope, closeOnOverlayClick, showCloseButton);
         });
     }
 

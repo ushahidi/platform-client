@@ -61,7 +61,7 @@ function PostEditorController(
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
-    $scope.cacnel = cancel;
+    $scope.cancel = cancel;
 
 
     activate();
