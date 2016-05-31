@@ -18,6 +18,9 @@ function (
                 $scope.currentView = 'map';
             }
 
+            // Change mode
+            $scope.$emit('event:mode:change', $scope.currentView);
+
             // Watch views, in case we get new feature config
             ViewHelper.isViewAvailable($scope.currentView).then(function (available) {
                 if (!available) {

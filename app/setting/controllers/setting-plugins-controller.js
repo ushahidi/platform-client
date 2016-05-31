@@ -9,8 +9,10 @@ function (
 ) {
 
     $translate('tool.manage_plugins').then(function (title) {
-      $scope.title = title;
-      $rootScope.$emit('setPageTitle', title);
-  });
+        $scope.title = title;
+        $rootScope.$emit('setPageTitle', title);
+    });
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
 }];

@@ -28,6 +28,8 @@ function (
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     RoleEndpoint.query().$promise.then(function (roles) {

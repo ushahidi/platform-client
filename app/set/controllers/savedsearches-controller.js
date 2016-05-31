@@ -22,6 +22,11 @@ module.exports = [
             return $routeParams.view || savedSearch.view;
         };
 
+        $scope.$emit('event:savedsearch:show', savedSearch);
+        $scope.$on('$destroy', function () {
+            $scope.$emit('event:savedsearch:close');
+        });
+
         // Add set to the scope
         $scope.savedSearch = savedSearch;
 
