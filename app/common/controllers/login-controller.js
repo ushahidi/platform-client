@@ -11,10 +11,9 @@ function (
     Authentication,
     $location
 ) {
-    // $translate('nav.login').then(function (title) {
-    //     $scope.title = title;
-    //     $scope.$emit('setPageTitle', title);
-    // });
+
+    $scope.$emit('event:login:show:loginModal');
+    $location.url('/');
 
     $scope.clearLoginForm = function () {
         $scope.failed = true;

@@ -22,7 +22,6 @@ function (
                 $scope.activeView = view_name;
             };
 
-            $scope.loggedin = $rootScope.loggedin;
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
             $scope.currentUser = $rootScope.currentUser;

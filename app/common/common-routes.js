@@ -6,6 +6,9 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
         .when('/', {
             redirectTo: '/views/map'
         })
+        .when('/login', {
+            controller: require('./controllers/login-controller.js'),
+        })
         .when('/forbidden', {
             controller: require('./controllers/forbidden-controller.js'),
             templateUrl: 'templates/forbidden.html'
