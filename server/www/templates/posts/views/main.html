@@ -2,8 +2,8 @@
     <layout-class layout="a"></layout-class>
     <div class="mode-context init" ng-controller="navigation as nav">
         <header class="mode-context-header has-logo">
-            <h1 class="mode-context-title"><a href="/" ng-bind="site.name"></a></h1>
-            <img ng-if="site.image_header" ng-src="site.image_header" class="deployment-logo" />
+            <h1 class="mode-context-title"><a href="/" ng-bind="nav.site.name"></a></h1>
+            <img ng-if="site.image_header" ng-src="nav.site.image_header" class="deployment-logo" />
         </header>
 
         <!-- todo: wire up show/hide -->
@@ -15,7 +15,7 @@
         </span>
 
         <div class="mode-context-body">
-            <p ng-bind="site.description"></p>
+            <p ng-bind="nav.site.description"></p>
 
             <mode-context-form-filter model="filters.form"></mode-context-form-filter>
 
