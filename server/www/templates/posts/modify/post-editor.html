@@ -31,9 +31,14 @@
      <div class="main-col">
 
           <div class="form-sheet">
-              <div class="form-field title form-field-adapt init">
+              <div class="form-field title form-field-adapt init"
+              adaptive-form
+              ng-class="{
+                'error': form.title.$invalid && form.title.$dirty,
+                'success': !form.title.$invalid && form.title.$dirty
+              }">
                   <label translate="post.modify.form.title">Title</label>
-                  <input id="title" ng-class="{ 'error': form.title.$invalid && form.title.$dirty }"
+                  <input id="title"
                       name="title" type="text" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 adaptive-input>
 
                   <div

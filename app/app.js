@@ -10,6 +10,7 @@ require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap');
 require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
+require('angular-elastic');
 require('angular-filter');
 require('angular-local-storage');
 require('checklist-model/checklist-model');
@@ -62,6 +63,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || pro
 angular.module('app',
     [
         'checklist-model',
+        'monospaced.elastic',
         'ngRoute',
         'ngResource',
         'LocalStorageModule',

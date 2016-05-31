@@ -5,13 +5,28 @@
  * type form-field-adaptive,
  */
 
-module.exports = AdaptiveInput;
+angular.module('ushahidi.common.adaptive-input',[])
 
-AdaptiveInput.$inject = [];
-function AdaptiveInput() {
+.directive('adaptiveForm', function () {
     return {
         restrict: 'A',
-        link: function ($scope, $element, $attrs){
+        controller: function ($scope, $element, $attrs) {
+
+            this.classAdd = function(className) {
+                $element.addClass(className);
+            };
+            this.classRemove = function(className) {
+                $element.removeClass(className);
+            };
+        }
+    };
+})
+
+.directive('adaptiveInput', function () {
+    return {
+        require: '?^adaptiveForm',
+        restrict: 'A',
+        link: function ($scope, $element, $attrs, adaptiveController){
 
             activate();
 
@@ -22,19 +37,20 @@ function AdaptiveInput() {
 
             // Check on initial load if field has value
             // If so set focus
-            $scope.$watch('$element.val()', function (){
-                $element.val() ? $element.parent().addClass('focus') : '';
+            $scope.$watch($attrs.ngModel, function (value){
+                value ? adaptiveController.classAdd('value') : '';
             });
 
             function focusOn($event) {
                 $event.preventDefault();
-                $element.parent().addClass('focus');
+                adaptiveController.classAdd('focus');
             }
 
             function focusOff($event) {
                 $event.preventDefault();
-                !$element.val() ? $element.parent().removeClass('focus') : '';
+                adaptiveController.classRemove('focus');
+                !$element.val() ? adaptiveController.classRemove('value')  : '';
             }
         }
     };
-}
+});

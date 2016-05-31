@@ -1,4 +1,5 @@
 angular.module('ushahidi.common', [
+	'ushahidi.common.adaptive-input',
 	'ushahidi.common.dropdown',
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
@@ -54,7 +55,7 @@ angular.module('ushahidi.common', [
 
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
-.directive('adaptiveInput', require('./directives/adaptive-input.js'))
+
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
@@ -63,6 +64,7 @@ angular.module('ushahidi.common', [
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
+
 
 // Event actions
 .constant('EVENT', {
@@ -86,6 +88,7 @@ angular.module('ushahidi.common', [
 ;
 
 // Load submodules
+require('./directives/adaptive-input.js');
 require('./directives/dropdown.js');
 require('./directives/accordion.js');
 require('./directives/offcanvas.js');

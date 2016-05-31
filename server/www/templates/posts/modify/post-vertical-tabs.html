@@ -30,13 +30,16 @@
         <!-- END stage completion -->
         <!-- Post stage default fields -->
         <div class="form-field form-field-adapt init" ng-show="isFirstStage(visibleStage)"
-            ng-class="{ 'error': form.content.$invalid && form.content.$dirty, 'success': !form.content.$invalid && form.content.$dirty }"
-            >
+            ng-class="{
+              'error': form.content.$invalid && form.content.$dirty,
+              'success': !form.content.$invalid && form.content.$dirty
+            }"
+            adaptive-form>
             <label translate="post.modify.form.description">
                 Description
             </label>
             <textarea id="content" name="content" data-min-rows="1" rows="1" class="adapt-field" style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
-                ng-model="post.content" required adaptive-input>
+                ng-model="post.content" required adaptive-input msd-elastic>
             </textarea>
 
             <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">

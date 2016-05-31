@@ -1,10 +1,12 @@
 <div
-    class="form-field"
+    class="form-field init"
+    adaptive-form
     ng-class="{
       'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
       'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-      'required': attribute.required}"
-    >
+      'required': attribute.required,
+      'form-field-adapt': isText(attribute) || isTextarea(attribute)
+    }">
     <!-- Attribute Label -->
     <label for="values[{{attribute.key}}][0]">
         {{attribute.label}}
@@ -91,19 +93,23 @@
                 id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.key}}"
                 type="text"
-                placeholder="{{attribute.label}}"
                 ng-model="post.values[attribute.key][key]"
                 ng-required="attribute.required"
+                adaptive-input
                 >
             <!-- type: textarea -->
             <textarea
-                rows="10"
                 ng-if="isTextarea(attribute)"
+                data-min-rows="1"
+                rows="1"
+                class="adapt-field"
+                style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
                 id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.key}}"
-                placeholder="{{attribute.label}}"
                 ng-model="post.values[attribute.key][key]"
-                ng-required="attribute.required">
+                ng-required="attribute.required"
+                adaptive-input
+                msd-elastic>
             </textarea>
 
             <!-- Non standard fields -->
