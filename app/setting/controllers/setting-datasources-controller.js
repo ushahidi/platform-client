@@ -22,6 +22,8 @@ function (
 
     // Change layout class
     $rootScope.setLayout('layout-c');
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
     // Displays a loading indicator when busy querying endpoints.
     $scope.saving = false;

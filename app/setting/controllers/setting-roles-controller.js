@@ -13,5 +13,7 @@ function (
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
 }];
