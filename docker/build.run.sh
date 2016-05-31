@@ -15,9 +15,15 @@ check_vols_out() {
   fi
 }
 
-sync() {
+function sync {
   check_vols_src
-  rsync -arv --exclude=node_modules --delete-after /vols/src/ ./  
+  {
+    echo "- .git"
+    echo "- .bin"
+    echo "- node_modules"
+    echo "- tmp"
+  } > /tmp/rsync_exclude
+  rsync -ar --exclude-from=/tmp/rsync_exclude --delete-during /vols/src/ ./
 }
 
 build() {
@@ -27,7 +33,9 @@ build() {
 
 bundle() {
   check_vols_out
-  tar -C ./server/www -cz -f /vols/out/platform-client-$(date -u +%Y%m%d-%H%M%S).tgz .
+  local version=${GITHUB_VERSION:-${CI_BRANCH:-v0.0.0}}
+  mkdir /tmp/ushahidi-platform-client-bundle-${version}; rsync -ar ./server/www/ /tmp/ushahidi-platform-client-bundle-${version}/
+  tar -C /tmp -cz -f /vols/out/ushahidi-platform-client-bundle-${version}.tgz ushahidi-platform-client-bundle-${version}
 }
 
 watch() {
@@ -35,7 +43,7 @@ watch() {
 }
 
 case "$1" in
-  bundle)
+  build)
     sync
     build
     bundle
