@@ -1,8 +1,9 @@
 /**
  * Ushahidi adaptive input directive
- * For the moment, the input element that this
- * directive is applied to expects that it's parent should be of
- * type form-field-adaptive,
+ * The adaptive-form attribute should be added to the parent div that
+ * will receive the class updates.
+ * The adaptive-input attribute should be added to a child input of the above
+ * div
  */
 
 angular.module('ushahidi.common.adaptive-input',[])
