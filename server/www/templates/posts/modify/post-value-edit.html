@@ -5,8 +5,10 @@
       'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
       'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
       'required': attribute.required,
-      'form-field-adapt': isText(attribute) || isTextarea(attribute)
+      'form-field-adapt': isText(attribute) || isTextarea(attribute),
+      'date' : isDate(attribute) || isDateTime(attribute)
     }">
+
     <!-- Attribute Label -->
     <label for="values[{{attribute.key}}][0]">
         {{attribute.label}}
@@ -33,23 +35,29 @@
         <div ng-if="!isCheckbox(attribute)" ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
             <!-- Standard fields -->
             <!-- type: date -->
-            <div class="input-inline" ng-if="isDate(attribute)">
+            <div ng-if="isDate(attribute)">
+                <!-- Date icon -->
+                <svg ng-if="isDate(attribute)" class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+                </svg>
                 <input
-                    id="values[{{attribute.key}}][{{key}}]"
+                    type="date"
+                    pick-a-date="date"
+                    pick-a-date-options="{ format: 'yyyy-mm-dd' }"
+
                     name="values_{{attribute.key}}"
                     ng-model="post.values[attribute.key][key]"
-                    pick-a-date="date"`
+
                 />
             </div>
             <!-- type: datetime -->
-            <div ng-if="isDateTime(attribute)" class="">
+            <div ng-if="isDateTime(attribute)" >
+
                 <input
-                    type="text"
-                    id="values[{{attribute.key}}][{{key}}]"
+                    type="date"
+                    pick-a-date="time"
                     name="values_{{attribute.key}}"
-                    date-time="post.values[attribute.key][key]"
                     ng-model="post.values[attribute.key][key]"
-                    auto-close="true"
                 />
             </div>
            <!-- type: select -->
