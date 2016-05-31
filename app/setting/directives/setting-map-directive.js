@@ -2,7 +2,6 @@ module.exports = [
     '$q',
     '$translate',
     'ConfigEndpoint',
-    'leafletEvents',
     'leafletData',
     'Maps',
     'Notify',
@@ -10,7 +9,6 @@ function (
     $q,
     $translate,
     ConfigEndpoint,
-    leafletEvents,
     leafletData,
     Maps,
     Notify

@@ -51,7 +51,7 @@ angular.module('ushahidi.mock', [])
         return $translate;
     }];
 })
-.service('leafletData', require('./services/third_party/leaflet.js'))
+.service('leafletData', require('./services/third_party/leaflet-data.js'))
 .service('d3', require('./services/third_party/d3.js'))
 
 .service('PostEndpoint', require('./services/post.js'))
@@ -77,6 +77,7 @@ angular.module('ushahidi.mock', [])
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))
 .service('GlobalFilter', require('./services/global-filters.js'))
+.service('PostFilters', require('./services/post-filters.js'))
 .service('Maps', require('./services/maps.js'))
 .service('PostEditService', require('./services/post-edit-service.js'))
 .service('Notify', require('./services/notify.js'));
