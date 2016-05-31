@@ -12,17 +12,16 @@ function AdaptiveInput() {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs){
-            $scope.focused = false;
 
             activate();
 
             function activate () {
                 $element.bind('focus', focusOn);
                 $element.bind('blur', focusOff);
-
-                $scope.focused = $element.parent().hasClass('focus') ? true : false;
             }
 
+            // Check on initial load if field has value
+            // If so set focus
             $scope.$watch('$element.val()', function (){
                 $element.val() ? $element.parent().addClass('focus') : '';
             });
