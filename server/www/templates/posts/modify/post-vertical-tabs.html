@@ -29,16 +29,16 @@
         </div>
         <!-- END stage completion -->
         <!-- Post stage default fields -->
-        <div class="form-field form-field-adapt init value" ng-show="isFirstStage(visibleStage)"
+        <div class="form-field form-field-adapt init" ng-show="isFirstStage(visibleStage)"
             ng-class="{ 'error': form.content.$invalid && form.content.$dirty, 'success': !form.content.$invalid && form.content.$dirty }"
             >
             <label translate="post.modify.form.description">
                 Description
             </label>
-            <textarea id="content" name="content" data-min-rows="1" rows="1" style="overflow-x: hidden; word-wrap: break-word; height: 109px;"
-                placeholder="{{'post.modify.form.description' | translate}}" ng-model="post.content" required>
+            <textarea id="content" name="content" data-min-rows="1" rows="1" class="adapt-field" style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                ng-model="post.content" required adaptive-input>
             </textarea>
-            
+
             <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
                 <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>

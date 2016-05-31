@@ -31,10 +31,10 @@
      <div class="main-col">
 
           <div class="form-sheet">
-              <div class="form-field form-field-adapt title init">
+              <div class="form-field title form-field-adapt init">
                   <label translate="post.modify.form.title">Title</label>
                   <input id="title" ng-class="{ 'error': form.title.$invalid && form.title.$dirty }"
-                      name="title" type="text" placeholder="{{'post.modify.form.title' | translate }}" ng-model="post.title" required ng-minlength=2 ng-maxlength=150>
+                      name="title" type="text" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 adaptive-input>
 
                   <div
                       class="alert error"
