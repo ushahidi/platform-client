@@ -9,9 +9,14 @@ function (
         controller: require('./views/post-views.controller.js'),
         templateUrl: 'templates/posts/views/main.html'
     })
-    .when('/posts/create', {
+    .when('/posts/create/:id', {
         controller: require('./controllers/post-create-controller.js'),
-        templateUrl: 'templates/posts/modify.html'
+        templateUrl: 'templates/posts/modify/modify.html',
+        resolve: {
+            form: ['$route', 'FormEndpoint', function ($route, FormEndpoint) {
+                return FormEndpoint.get({ id: $route.current.params.id }).$promise;
+            }]
+        }
     })
     .when('/posts/:id', {
         controller: require('./controllers/post-detail-controller.js'),

@@ -6,6 +6,7 @@ module.exports = [
     'PostEntity',
     'PostEndpoint',
     'FormEndpoint',
+    'form',
 function (
     $scope,
     $translate,
@@ -13,9 +14,10 @@ function (
     $controller,
     postEntity,
     PostEndpoint,
-    FormEndpoint
+    FormEndpoint,
+    form
 ) {
-    $scope.activeForm = {};
+
 
     $translate('post.create_post').then(function (title) {
         $scope.title = title;
@@ -23,6 +25,8 @@ function (
     });
 
     $scope.post = postEntity();
+    $scope.post.form = form;
+    
     PostEndpoint.options().$promise.then(function (options) {
         $scope.post.allowed_privileges = options.allowed_privileges;
     });

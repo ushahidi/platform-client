@@ -7,7 +7,6 @@ function PostEditor() {
         restrict: 'E',
         scope: {
             post: '=',
-            activeForm: '=',
             attributesToIgnore: '=',
             postMode: '='
         },
@@ -77,7 +76,7 @@ function PostEditorController(
             }
         }
         $scope.moment = moment($scope.post.created).fromNow();
-        $scope.post.source = formatSource($scope.post.source);
+        $scope.source = formatSource($scope.post.source);
 
         $scope.post.form = FormEndpoint.get({id: $scope.post.form.id});
         $scope.fetchAttributes($scope.post.form.id);
