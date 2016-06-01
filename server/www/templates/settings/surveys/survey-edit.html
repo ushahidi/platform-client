@@ -71,26 +71,64 @@
                 </fieldset>
             </div>
 
-            <div class="listing card init">
-                <h3 class="listing-heading">Tasks</h3>
+            <div class="listing card init" dropdown>
+                <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
 
-                <div class="listing-item">
+                <div class="listing-item" ng-repeat="task in tasks">
+                    <div class="listing-item-select" ng-if="canReorderTask(task)">
+                        <div class="buttons-updown">
+                           <button type="button" class="button-beta" disabled="">
+                               <svg class="iconic">
+                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-top"></use>
+                               </svg>
+                               <span class="label hidden">Move up</span>
+                           </button>
+                           <button type="button" class="button-beta">
+                               <svg class="iconic">
+                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                               </svg>
+                               <span class="label hidden">Move down</span>
+                           </button>
+                       </div>
+                    </div>
+
                     <div class="listing-item-secondary">
-                        <button type="button" class="button-beta button-flat listing-item-toggle">
+                        <button type="button" class="button-beta button-flat listing-item-toggle" dropdown-toggle>
                             <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                             </svg>
-                            <span class="button-label">Configure</span>
+                            <span class="button-label" translate="app.configure">Configure</span>
                         </button>
                     </div>
 
                     <div class="listing-item-primary">
                         <h2 class="listing-item-title">
-                            Post
+                            {{task.name}}
                         </h2>
                     </div>
 
-                    <div class="listing-item-body">
+                    <div class="listing-item-body" dropdown-menu>
+
+                        <div class="form-field switch">
+                           <label>Require this task be completed before a post can be visible to the public</label>
+                           <div class="toggle-switch">
+                              <input class="tgl" id="switch1" type="checkbox">
+                              <label class="tgl-btn" for="switch1"></label>
+                           </div>
+                        </div>
+
+                        <div class="listing init">
+                            <h3 class="listing-heading">Name</h3>
+
+                            <div class="listing-item">
+                                <div class="listing-item-primary">
+                                    <div class="form-field">
+                                        <label class="hidden">Name</label>
+                                        <input type="text" placeholder="Task name" value="Verification">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="listing init">
                             <h3 class="listing-heading">Fields</h3>
 
@@ -157,164 +195,30 @@
                                     <h2 class="listing-item-title">
                                         <a href="" class="button button-beta" data-modal="add-field">
                                             <svg class="iconic">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#plus"></use>
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
                                             </svg>
-                                           Add field
+                                           <span translate="app.add_field">Add field</span>
                                         </a>
                                     </h2>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="listing-item">
-                    <div class="listing-item-select">
-                        <div class="buttons-updown">
-                           <button type="button" class="button-beta" disabled="">
-                               <svg class="iconic">
-                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-top"></use>
-                               </svg>
-                               <span class="label hidden">Move up</span>
-                           </button>
-                           <button type="button" class="button-beta">
-                               <svg class="iconic">
-                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
-                               </svg>
-                               <span class="label hidden">Move down</span>
-                           </button>
-                       </div>
-                    </div>
-
-                    <div class="listing-item-secondary">
-                        <button type="button" class="button-beta button-flat listing-item-toggle">
-                            <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
-                            </svg>
-                            <span class="button-label">Configure</span>
-                        </button>
-                    </div>
-
-                    <div class="listing-item-primary">
-                        <h2 class="listing-item-title">
-                            Verification
-                        </h2>
-                    </div>
-
-                    <div class="listing-item-body">
-                        <div class="form-field switch">
-                            <label>Require this task be completed before a post can be visible to the public</label>
-                           <div class="toggle-switch">
-                              <input class="tgl" id="switch1" type="checkbox">
-                              <label class="tgl-btn" for="switch1"></label>
-                           </div>
-                        </div>
-
-                        <div class="listing init">
-                            <h3 class="listing-heading">Fields</h3>
-
-                            <div class="listing-item">
-                                <div class="listing-item-select">
-                                    <div class="buttons-updown">
-                                       <button type="button" class="button-beta" disabled="">
-                                           <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-top"></use>
-                                           </svg>
-                                           <span class="label hidden">Move up</span>
-                                       </button>
-                                       <button type="button" class="button-beta">
-                                           <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
-                                           </svg>
-                                           <span class="label hidden">Move down</span>
-                                       </button>
-                                   </div>
-                                </div>
-
-                                <div class="listing-item-primary">
-                                    <h2 class="listing-item-title"><a href="">Verified</a> <em>toggle switch</em></h2>
-                                </div>
-                            </div>
-
-                            <div class="listing-item">
-                                <div class="listing-item-select">
-                                    <div class="buttons-updown">
-                                       <button type="button" class="button-beta">
-                                           <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-top"></use>
-                                           </svg>
-                                           <span class="label hidden">Move up</span>
-                                       </button>
-                                       <button type="button" class="button-beta" disabled="">
-                                           <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
-                                           </svg>
-                                           <span class="label hidden">Move down</span>
-                                       </button>
-                                   </div>
-                                </div>
-
-                                <div class="listing-item-primary">
-                                    <h2 class="listing-item-title"><a href="">Notes</a> <em>long text</em></h2>
-                                </div>
-                            </div>
+                            <div class="listing init">
+                            <h3 class="listing-heading">Delete this task</h3>
 
                             <div class="listing-item">
                                 <div class="listing-item-primary">
                                     <h2 class="listing-item-title">
-                                        <a href="" class="button button-beta" data-modal="add-field">
+                                        <button class="button-destructive">
                                             <svg class="iconic">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#plus"></use>
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#trash"></use>
                                             </svg>
-                                           Add field
-                                        </a>
+                                            <span class="button-label">Delete task</span>
+                                        </button>
                                     </h2>
+                                    <p><strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="listing-item">
-                    <div class="listing-item-select">
-                        <div class="buttons-updown">
-                           <button type="button" class="button-beta">
-                               <svg class="iconic">
-                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-top"></use>
-                               </svg>
-                               <span class="label hidden">Move up</span>
-                           </button>
-                           <button type="button" class="button-beta" disabled="">
-                               <svg class="iconic">
-                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
-                               </svg>
-                               <span class="label hidden">Move down</span>
-                           </button>
-                       </div>
-                    </div>
-
-                    <div class="listing-item-secondary">
-                        <button type="button" class="button-beta button-flat listing-item-toggle">
-                            <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
-                            </svg>
-                            <span class="button-label">Configure</span>
-                        </button>
-                    </div>
-
-                    <div class="listing-item-primary">
-                        <h2 class="listing-item-title">
-                            Translation
-                        </h2>
-                    </div>
-
-                    <div class="listing-item-body">
-                        <div class="form-field switch">
-                           <label>Require this task be completed before a post can be visible to the public</label>
-                           <div class="toggle-switch">
-                              <input class="tgl" id="switchtranslate" type="checkbox">
-                              <label class="tgl-btn" for="switchtranslate"></label>
-                           </div>
                         </div>
                     </div>
                 </div>
@@ -324,9 +228,9 @@
                         <h2 class="listing-item-title">
                             <a href="" class="button button-flat" data-modal="add-task">
                                 <svg class="iconic">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#plus"></use>
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
                                 </svg>
-                               Add task
+                               <span translate="app.add_task">Add task</span>
                             </a>
                         </h2>
                     </div>

@@ -39,7 +39,11 @@
         "apply_filters" : "Apply filters",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
-        "tasks" : "Tasks"
+        "tasks" : "Tasks",
+        "add_task" : "Add task",
+        "add_field" : "Add field",
+        "configure" : "Configure",
+        "post" : "Post"
     },
     "toolbar": {
         "searchbar" : {
@@ -120,7 +124,7 @@
         "step_name": "Step Name",
         "step_rename": "Rename",
         "step_required": "This step is required",
-        "structure_step" : "Structure",
+        "post_step" : "Post",
         "type" : "type",
         "visible_to": "Visible To"
     },
