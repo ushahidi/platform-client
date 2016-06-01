@@ -8,6 +8,7 @@ angular.module('ushahidi.posts', [])
 .directive('postLocation', require('./directives/post-location-directive.js'))
 .directive('postRelation', require('./directives/post-relation-directive.js'))
 .directive('postMedia', require('./directives/post-media-directive.js'))
+.directive('postDatetime', require('./directives/post-datetime-value.js'))
 .directive('postMediaValue', require('./directives/post-media-value-directive.js'))
 .directive('postPreviewMedia', require('./directives/post-preview-media-directive.js'))
 // Post editing workflows

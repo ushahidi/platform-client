@@ -21,12 +21,14 @@ PostEditorController.$inject = [
     '$filter',
     '$location',
     '$translate',
+    'moment',
     'PostEntity',
     'PostEndpoint',
     'PostEditService',
     'FormEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
+    'UserEndpoint',
     'Notify',
     '_'
   ];
@@ -36,12 +38,14 @@ function PostEditorController(
     $filter,
     $location,
     $translate,
+    moment,
     postEntity,
     PostEndpoint,
     PostEditService,
     FormEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
+    UserEndpoint,
     Notify,
     _
   ) {
@@ -63,7 +67,6 @@ function PostEditorController(
     $scope.savePost = savePost;
     $scope.cancel = cancel;
 
-
     activate();
 
     function activate() {
@@ -73,12 +76,32 @@ function PostEditorController(
                 $scope.enableTitle = false;
             }
         }
+        $scope.moment = moment($scope.post.created).fromNow();
+        $scope.post.source = formatSource($scope.post.source);
 
         $scope.post.form = FormEndpoint.get({id: $scope.post.form.id});
         $scope.fetchAttributes($scope.post.form.id);
         $scope.fetchStages($scope.post.form.id);
+
+        if ($scope.post.user) {
+            $scope.user = getUser($scope.post.user.id);
+        }
     }
 
+    function formatSource(source) {
+        if (source === 'sms') {
+            return 'SMS';
+        } else if (source) {
+            // Uppercase first character
+            return source.charAt(0).toUpperCase() + source.slice(1);
+        } else {
+            return 'Web';
+        }
+    }
+
+    function getUser(id) {
+        return UserEndpoint.get({id: id});
+    }
 
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
@@ -107,7 +130,7 @@ function PostEditorController(
                     }
                 } else if (attr.input === 'date') {
                     // Date picker requires date object
-                    $scope.post.values[attr.key] = new Date($scope.post.values[attr.key]);
+                    $scope.post.values[attr.key][0] = new Date($scope.post.values[attr.key]);
                 }
             });
             $scope.attributes = attributes;

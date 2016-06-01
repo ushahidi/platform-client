@@ -35,41 +35,26 @@
         <div ng-if="!isCheckbox(attribute)" ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
             <!-- Standard fields -->
             <!-- type: date -->
-            <div ng-if="isDate(attribute)">
+            <div ng-if="isDate(attribute)" >
                 <!-- Date icon -->
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
-                </svg>
-                <input
-                    type="date"
-                    pick-a-date="date"
-                    pick-a-date-options="{ format: 'yyyy-mm-dd' }"
+                <div class="input-with-icon">
+                  <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+                  </svg>
+                  <input
+                      type="date"
+                      pick-a-date="date"
+                      pick-a-date-options="{ format: 'yyyy-mm-dd' }"
 
-                    name="values_{{attribute.key}}"
-                    ng-model="post.values[attribute.key][key]"
+                      name="values_{{attribute.key}}"
+                      ng-model="post.values[attribute.key][key]"
 
-                />
+                  />
+                </div>
             </div>
             <!-- type: datetime -->
-            <div ng-if="isDateTime(attribute)" >
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
-                </svg>
-                <input
-                    type="date"
-                    pick-a-date="date"
-                    pick-a-date-options="{ format: 'yyyy-mm-dd' }"
-
-                    name="values_{{attribute.key}}"
-                    ng-model="post.values[attribute.key][key]"
-
-                />
-                <input
-                    type="text"
-                    pick-a-date="time"
-                    name="values_{{attribute.key}}"
-                    ng-model="post.values[attribute.key][key]"
-                />
+            <div ng-if="isDateTime(attribute)" class="input-with-icon">
+                <post-datetime value="post.values[attribute.key][key]"></post-datetime>
             </div>
            <!-- type: select -->
             <select
@@ -173,5 +158,5 @@
 
 <!-- Add additional values of specific fields
         <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
--->        
+-->
 </div>

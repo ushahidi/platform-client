@@ -1,0 +1,24 @@
+<div>
+  <div class="input-with-icon">
+    <svg class="iconic">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+    </svg>
+    <input
+        type="date"
+        pick-a-date="date"
+        pick-a-date-options="{ format: 'yyyy-mm-dd' }"
+        ng-model="date"
+    />
+  </div>
+  <div class="input-with-icon">
+    <svg class="iconic">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#clock"></use>
+    </svg>
+    <input
+        type="date"
+        pick-a-time="time"
+        pick-a-time-options="{ format: 'HH:i' }"
+        ng-model="time"
+    />
+  </div>
+</div>
