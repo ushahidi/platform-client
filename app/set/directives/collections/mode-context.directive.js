@@ -6,7 +6,8 @@ function CollectionModeContext () {
     return {
         restrict: 'E',
         scope: {
-            collection: '='
+            collection: '=',
+            filters: '='
         },
         controller: CollectionModeContextController,
         templateUrl: 'templates/sets/collections/mode-context.html'

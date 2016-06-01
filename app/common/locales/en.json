@@ -155,7 +155,9 @@
             "current_stage": "Current Step",
             "set": "Collection",
             "status": "Status",
-            "location_value": "Within {{km}} km of {{value}}"
+            "location_value": "Within {{km}} km of {{value}}",
+            "visible_to": "Visible to",
+            "user": "User"
         },
         "more" : "More",
         "keyword" : "Keyword",

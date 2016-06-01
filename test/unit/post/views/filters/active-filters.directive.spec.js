@@ -1,4 +1,4 @@
-var ROOT_PATH = '../../../../';
+var ROOT_PATH = '../../../../../';
 
 describe('post active filters directive', function () {
 
@@ -19,7 +19,7 @@ describe('post active filters directive', function () {
             'pascalprecht.translate'
         ]);
 
-        testApp.directive('postActiveFilters', require(ROOT_PATH + 'app/post/directives/post-active-filters-directive'))
+        testApp.directive('postActiveFilters', require(ROOT_PATH + 'app/post/views/filters/active-filters.directive'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';

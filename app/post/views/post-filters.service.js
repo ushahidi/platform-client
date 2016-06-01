@@ -15,6 +15,7 @@ function PostFiltersService(_, FormEndpoint) {
         getFilters: getFilters,
         setFilters: setFilters,
         clearFilters: clearFilters,
+        clearFilter: clearFilter,
         hasFilters: hasFilters
     };
 
@@ -33,11 +34,22 @@ function PostFiltersService(_, FormEndpoint) {
     }
 
     function setFilters(newState) {
-        return angular.copy(newState, filterState);
+        // Replace filterState with defaults + newState
+        // Including defaults ensures all values are always defined
+        return angular.merge(filterState, getDefaults(), newState);
     }
 
     function clearFilters() {
         return angular.copy(getDefaults(), filterState);
+    }
+
+    function clearFilter(filterKey, value) {
+        if (angular.isArray(filterState[filterKey])) {
+            filterState[filterKey] = _.without(filterState[filterKey], value);
+        } else {
+            filterState[filterKey] = getDefaults()[filterKey];
+        }
+        console.log(filterKey, value, filterState);
     }
 
     function getDefaults() {
@@ -52,7 +64,8 @@ function PostFiltersService(_, FormEndpoint) {
             current_stage: [],
             tags: [],
             form: [],
-            set: []
+            set: [],
+            user: false
         };
     }
 
@@ -60,9 +73,13 @@ function PostFiltersService(_, FormEndpoint) {
         var query = _.omit(
             filters,
             function (value, key, object) {
-                // Is value empty? ..and not a date object
-                // _.empty only works on arrays, object and strings.
-                return (_.isEmpty(value) && !_.isDate(value));
+                // Is value empty?
+                // Is it an empty object or array?
+                if (_.isObject(value) || _.isArray(value)) {
+                    return _.isEmpty(value);
+                }
+                // Or is it just falsy?
+                return !value;
             }
         );
 
@@ -71,6 +88,10 @@ function PostFiltersService(_, FormEndpoint) {
             query.within_km = filters.within_km || 10;
         } else {
             delete query.within_km;
+        }
+
+        if (query.status === 'published' && !query.published_to) {
+            delete query.status;
         }
 
         return query;

@@ -1,25 +1,38 @@
 module.exports = CategorySelectDirective;
 
-CategorySelectDirective.$inject = [];
-function CategorySelectDirective() {
+CategorySelectDirective.$inject = ['TagEndpoint'];
+function CategorySelectDirective(TagEndpoint) {
     return {
         restrict: 'E',
-        scope: {
-            model: '='
-        },
-        controller: CategorySelectController,
+        scope: {},
+        require: 'ngModel',
+        link: CategorySelectLink,
         templateUrl: 'templates/posts/views/filters/filter-category.html'
     };
-}
 
-CategorySelectController.$inject = ['$scope', 'TagEndpoint'];
-function CategorySelectController($scope, TagEndpoint) {
-    $scope.categories = [];
+    function CategorySelectLink(scope, element, attrs, ngModel) {
+        if (!ngModel) return;
 
-    activate();
+        scope.categories = [];
+        scope.selectedCategories = [];
 
-    function activate() {
-        // Load forms
-        $scope.categories = TagEndpoint.query();
+        activate();
+
+        function activate() {
+            // Load categories
+            scope.categories = TagEndpoint.query();
+
+            scope.$watch('selectedCategories', saveValueToView, true);
+            ngModel.$render = renderModelValue;
+        }
+
+        function renderModelValue() {
+            // Update selectCategories w/o breaking references used by checklist-model
+            Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
+        }
+
+        function saveValueToView(selectedCategories) {
+            ngModel.$setViewValue(angular.copy(selectedCategories));
+        }
     }
 }
