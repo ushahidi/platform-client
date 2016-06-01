@@ -6,6 +6,8 @@ module.exports = ModalContainer;
 
 ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService'];
 function ModalContainer($timeout, $rootScope, $compile, ModalService) {
+    var scopeToDestroy;
+
     return {
         restrict: 'E',
         templateUrl: 'templates/modal/modal-container.html',
@@ -36,9 +38,14 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         //var classChangePromise = null;
 
         function openModal(ev, template, title, icon, templateScope, closeOnOverlayClick, showCloseButton) {
+
             templateScope = templateScope || $scope.$new();
+
             // Inject closeModal function onto template scope
             templateScope.closeModal = closeModal;
+
+            // Destroy scope when done with the modal
+            scopeToDestroy = templateScope;
 
             modalContent.html(template);
             $compile(modalContent)(templateScope);
@@ -74,6 +81,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             // @todo fade out
             $scope.classVisible = false;
             $rootScope.toggleModalVisible();
+            scopeToDestroy.$destroy();
 
             // if (classChangePromise) {
             //     $timeout.cancel(classChangePromise);

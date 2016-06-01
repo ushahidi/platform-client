@@ -1,11 +1,11 @@
 module.exports = [
     '$rootScope',
     'UserEndpoint',
-    '$timeout',
+    'ModalService',
 function (
     $rootScope,
     UserEndpoint,
-    $timeout
+    ModalService
 ) {
     return {
         restrict: 'E',
@@ -13,28 +13,38 @@ function (
         scope: {
         },
         templateUrl: 'templates/users/account_settings.html',
-        link: function ($scope) {
-            $rootScope.$on('event:show:account_settings', function () {
-                $scope.visible = true;
-            });
+        link: function (scope) {
+            var title,
+                template = '<account-settings ng-show="visible"></account-settings>',
 
-            $scope.general = true;
-            $scope.notifications = false;
+                unbind = $rootScope.$on('event:show:account_settings', function () {
+                    scope = $rootScope.$new();
+                    scope.visible = true;
 
-            $scope.showGeneral = function () {
-                $scope.general = true;
-                $scope.notifications = false;
+                    UserEndpoint.getFresh({id: 'me'}).$promise
+                        .then(function (user) {
+                            title = user.realname || user.email;
+                            ModalService.openTemplate(template, title, false, scope, true, true);
+                        });
+                });
+
+            scope.$on('$destroy', unbind);
+
+            scope.general = true;
+            scope.notifications = false;
+
+            scope.showGeneral = function () {
+                scope.general = true;
+                scope.notifications = false;
             };
 
-            $scope.showNotifications = function () {
-                $scope.general = false;
-                $scope.notifications = true;
+            scope.showNotifications = function () {
+                scope.general = false;
+                scope.notifications = true;
             };
 
-            $scope.user = UserEndpoint.getFresh({id: 'me'});
-
-            $scope.$on('event:close', function () {
-                $scope.visible = false;
+            scope.$on('event:close', function () {
+                ModalService.close();
             });
         }
     };

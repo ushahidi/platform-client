@@ -41,19 +41,17 @@
 
         <div id="bootstrap-app" class="hidden">
 
-            <mode-bar></mode-bar>
-            <account-settings></account-settings>
-            <collection-listing></collection-listing>
-            <collection-editor></collection-editor>
+          <mode-bar></mode-bar>
+          <account-settings ng-show="visible"></account-settings>
+          <collection-listing></collection-listing>
+          <collection-editor></collection-editor>
 
-            <ng-view></ng-view>
-
-
-            <div class="wrapper">
-                <ng-include src="'templates/partials/notification-system.html'"></ng-include>
-            </div>
+          <ng-view></ng-view>
 
 
+          <div class="wrapper">
+            <ng-include src="'templates/partials/notification-system.html'"></ng-include>
+          </div>
 
             <!-- TODO: fix and uncomment
             <first-time-config></first-time-config>
