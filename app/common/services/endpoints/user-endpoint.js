@@ -25,6 +25,7 @@ function (
         query: {
             method: 'GET',
             isArray: false,
+            paramSerializer: '$httpParamSerializerJQLike',
             transformResponse: function (data /*, header*/) {
                 return angular.fromJson(data);
             },

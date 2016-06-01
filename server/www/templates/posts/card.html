@@ -1,0 +1,94 @@
+<article class="postcard">
+    <div class="post-band" todo-style="background-color: #A51A1A;"></div>
+    <div class="listing-item-select" ng-if="canSelect">
+        <input type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+    </div>
+    <div class="postcard-body">
+        <h1 class="postcard-title"><a ng-href="/posts/{{post.id}}">{{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}</a></h1>
+
+        <div class="metadata">
+            <!-- todo: cleanup / combine this line into a single translation string -->
+            <span ng-show="post.user" class="metadata-author"><img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">{{ post.user.realname }}</span>
+
+            <span title="{{ displayTimeFull }}">{{ displayTime }}</span>
+
+            <span translate-values="{ source : post.source }" translate="post.source"></span>
+
+            <span class="metadata-visibility public tooltip" ng-show="visibleTo == 'everyone'">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#globe"></use>
+                </svg>
+                <span class="bug" translate="post.visible_to_public">This post is visible to the public</span>
+            </span>
+
+            <span class="metadata-visibility tooltip" ng-show="visibleTo == 'draft'">
+                <svg class="iconic">
+                  <use xlink:href="../../img/iconic-sprite.svg#lock-locked"></use>
+                </svg>
+                <span class="bug"  translate="post.visible_to_you">This post is only visible to you</span>
+            </span>
+
+            <span class="metadata-visibility tooltip" ng-show="visibleTo != 'everyone' && visibleTo != 'draft'">
+                <svg class="iconic">
+                  <use xlink:href="../../img/iconic-sprite.svg#lock-locked"></use>
+                </svg>
+                <span class="bug" translate="post.visible_to_roles" translate-values="{ roles : visibleTo }">This post is only visible to Editors</span>
+            </span>
+        </div>
+
+        <div class="postcard-field">
+            <post-preview-media post="post"></post-preview-media>
+            <!-- <img src="http://lorempixel.com/400/300/" class="postcard-image"> -->
+        </div>
+
+        <div class="postcard-field">
+            <p>{{ post.content }}</p>
+        </div>
+    </div> <!-- /postcard-body -->
+
+    <div dropdown>
+        <span class="postcard-actions-trigger init" dropdown-toggle>
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        </span>
+        <ul class="dropdown-menu init" dropdown-menu>
+            <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
+                <a ng-href="/posts/{{post.id}}/edit">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
+                    </svg>
+                    <span class="label" translate="nav.edit">Edit</span>
+                </a>
+            </li>
+            <li>
+                <!-- Collection toggle link -->
+                <collection-toggle-link post="post"></collection-toggle-link>
+            </li>
+            <!-- <li>
+                <a href="" data-modal="share">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#share"></use>
+                </svg>
+                <span class="label">Share</span>
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#task"></use>
+                </svg>
+                <span class="label">Assign to ...</span>
+                </a>
+            </li> -->
+            <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
+                <a ng-click="deletePost(post)">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                    </svg>
+                    <span class="label" translate="nav.delete">Delete</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</article>

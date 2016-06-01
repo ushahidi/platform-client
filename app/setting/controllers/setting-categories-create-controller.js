@@ -23,13 +23,15 @@ function (
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     RoleEndpoint.query().$promise.then(function (roles) {
         $scope.roles = roles;
     });
 
-    $scope.tag = { type: 'category', icon: 'tag' };
+    $scope.tag = { type: 'category', icon: 'tag' , color: ''};
     $scope.processing = false;
 
     $scope.saveTag = function (tag, addAnother) {

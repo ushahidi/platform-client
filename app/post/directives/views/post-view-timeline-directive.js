@@ -7,12 +7,14 @@ function (
         'PostEndpoint',
         'd3',
         '_',
+        'PostFilters',
     function (
         $scope,
         $filter,
         PostEndpoint,
         d3,
-        _
+        _,
+        PostFilters
     ) {
         var yAxisLabelCumulative = $filter('translate')('graph.cumulative_post_count'),
             yAxisLabel = $filter('translate')('graph.new_post_count'),
@@ -73,7 +75,7 @@ function (
         };
 
         var getPostStats = function (query) {
-            query = query || $scope.filters;
+            query = query || PostFilters.getQueryParams($scope.filters);
             var postQuery = _.extend({}, query, {
                 'timeline' : 1,
                 'timeline_attribute' : $scope.timelineAttribute,
@@ -94,7 +96,7 @@ function (
             if (newValue !== oldValue) {
                 getPostStats();
             }
-        });
+        }, true);
 
         $scope.$watch(function () {
             return $scope.showCumulative;

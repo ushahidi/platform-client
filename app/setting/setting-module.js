@@ -12,6 +12,8 @@ angular.module('ushahidi.tools', [
 .directive('settingsMap', require('./directives/setting-map-directive.js'))
 .directive('settingsEditor', require('./directives/setting-editor-directive.js'))
 
+.directive('filterUsers', require('./users/directives/filter-users.js'))
+
 .directive('customRoles', require('./directives/setting-roles-directive.js'))
 .directive('customRolesEditor', require('./directives/setting-roles-editor-directive.js'))
 

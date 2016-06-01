@@ -7,9 +7,8 @@ require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
-require('angular-ui-bootstrap/ui-bootstrap-tpls');
-require('angular-datepicker');
-require('moment-timezone');
+require('angular-ui-bootstrap');
+require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
 require('angular-filter');
 require('angular-local-storage');
@@ -68,7 +67,7 @@ angular.module('app',
         'LocalStorageModule',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
-        'datePicker',
+        'angular-datepicker',
         'leaflet-directive',
         'angular.filter',
         'showdown',
@@ -115,6 +114,9 @@ angular.module('app',
     })
     .factory('Leaflet', function () {
         return window.L;
+    })
+    .factory('moment', function () {
+        return require('moment');
     })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?

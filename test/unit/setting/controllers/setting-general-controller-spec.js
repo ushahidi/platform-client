@@ -33,7 +33,7 @@ describe('setting general controller', function () {
 
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
-
+        $rootScope.setLayout = function () {};
         $controller('settingGeneralController', {
             $scope: $scope,
             $rootScope: $rootScope

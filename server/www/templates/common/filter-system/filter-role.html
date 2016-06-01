@@ -1,0 +1,14 @@
+<fieldset>
+    <legend translate>app.roles</legend>
+    <div class="form-field checkbox" ng-repeat="role in roles">
+        <label>
+            <input
+                type="checkbox"
+                checklist-model="model"
+                checklist-value="role.name"
+                >
+            {{role.display_name}}
+        </label>
+    </div>
+</fieldset>
+

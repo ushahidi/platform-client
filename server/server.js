@@ -11,7 +11,19 @@ app.use(function (req, res, next) {
         }
         next();
     });
-app.use(serveStatic('server/www'));
+app.use(serveStatic('server/www', {
+    maxAge: '1h',
+    setHeaders: setCustomCacheControl
+}));
+
+function setCustomCacheControl(res, path) {
+    if (serveStatic.mime.lookup(path) === 'text/html' ||
+        serveStatic.mime.lookup(path) === 'application/javascript' ||
+        serveStatic.mime.lookup(path) === 'application/json') {
+        // Custom Cache-Control for HTML or JS files
+        res.setHeader('Cache-Control', 'public, max-age=0');
+    }
+}
 
 module.exports = function () {
     var server = app.listen(process.env.PORT || 8080, function () {

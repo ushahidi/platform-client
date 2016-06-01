@@ -5,8 +5,10 @@
 angular.module('ushahidi.common.modal', [])
 
 .directive('modal', [
+    '$translate',
     '$rootScope',
 function (
+    $translate,
     $rootScope
 ) {
     return {
@@ -16,16 +18,20 @@ function (
 
         scope: {
             title: '@?',
+            icon: '=?',
             visible: '=?',
             closeOnOverlayClick: '=?',
             showCloseButton: '=?'
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
-            var classChangePromise = null;
+            $scope.iconPath = $scope.icon ? '../../img/iconic-sprite.svg#' + $scope.icon : '';
 
+            var classChangePromise = null;
+            $scope.iconPath = '../../img/iconic-sprite.svg#' + $scope.icon;
             $scope.classVisible = false;
             $scope.modalOffset = 0;
+            $scope.title = $translate.instant($scope.title);
 
             // If closeOnOverlayClick isn't passed, default to true
             if (typeof $scope.closeOnOverlayClick === 'undefined') {
@@ -48,6 +54,8 @@ function (
                         // @todo move offset to a config param
                         var windowYpos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
                         $scope.modalOffset = (windowYpos + 40) + 'px';
+                        // @todo set max height
+                        // $('.modal-body').css('max-height', $(window).height() * 0.66);
 
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);

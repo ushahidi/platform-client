@@ -51,18 +51,23 @@ function (
     })
     .when('/settings/categories/:id', {
         controller: require('./controllers/setting-categories-edit-controller.js'),
-        templateUrl: 'templates/settings/categories/categories-edit.html'
+        templateUrl: 'templates/settings/categories/categories-edit.html',
+        resolve: {
+            category: ['$route', 'TagEndpoint', function ($route, TagEndpoint) {
+                return TagEndpoint.getFresh({id: $route.current.params.id});
+            }]
+        }
     })
     .when('/settings/users', {
-        controller: require('./controllers/setting-users-controller.js'),
+        controller: require('./users/controllers/setting-users-controller.js'),
         templateUrl: 'templates/settings/users/users.html'
     })
     .when('/settings/users/create', {
-        controller: require('./controllers/setting-users-create-controller.js'),
+        controller: require('./users/controllers/setting-users-create-controller.js'),
         templateUrl: 'templates/settings/users/users-edit.html'
     })
     .when('/settings/users/:id', {
-        controller: require('./controllers/setting-users-edit-controller.js'),
+        controller: require('./users/controllers/setting-users-edit-controller.js'),
         templateUrl: 'templates/settings/users/users-edit.html'
     })
     .when('/settings/roles', {

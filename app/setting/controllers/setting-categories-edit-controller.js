@@ -1,7 +1,6 @@
 module.exports = [
     '$scope',
     '$rootScope',
-    '$routeParams',
     '$translate',
     '$location',
     'multiTranslate',
@@ -10,10 +9,10 @@ module.exports = [
     'Notify',
     '_',
     'Util',
+    'category',
 function (
     $scope,
     $rootScope,
-    $routeParams,
     $translate,
     $location,
     multiTranslate,
@@ -21,22 +20,25 @@ function (
     TagEndpoint,
     Notify,
     _,
-    Util
+    Util,
+    category
 ) {
+    $scope.category = category;
     $translate('tag.edit_tag').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
     $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     RoleEndpoint.query().$promise.then(function (roles) {
         $scope.roles = roles;
     });
 
-    $scope.tag = TagEndpoint.getFresh({id: $routeParams.id});
     $scope.saving = false;
 
-    $scope.saveTag = function (tag) {
+    $scope.saveCategory = function (tag) {
         $scope.saving = true;
         // @todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {

@@ -39,6 +39,7 @@ angular.module('ushahidi.common', [
 .service('PasswordReset', require('./services/password-reset.js'))
 .service('IconManager', require('./services/icon-manager.js'))
 .service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
+.service('ModalService', require('./services/modal.service.js'))
 
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
@@ -46,10 +47,29 @@ angular.module('ushahidi.common', [
 .controller('intercom', require('./controllers/intercom.js'))
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
+.directive('collectionToggleButton', require('./directives/collection-toggle/collection-toggle-button.js'))
+.directive('collectionToggleLink', require('./directives/collection-toggle/collection-toggle-link.js'))
+
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
-.directive('roleSelector', require('./directives/role-selector.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
+.directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
+.directive('ushModalContainer', require('./directives/modal-container.directive.js'))
+.directive('modalBody', require('./directives/modal-body.directive.js'))
+.directive('layoutClass', require('./directives/layout-class.directive.js'))
+
+.directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
+.directive('filterRole', require('./directives/filter-system/filter-role.js'))
+.directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
+
+// Event actions
+.constant('EVENT', {
+    ACTIONS : {
+        EDIT : 'edit',
+        DELETE : 'delete'
+    }
+})
+
 
 .config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))
