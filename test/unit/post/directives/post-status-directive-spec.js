@@ -17,7 +17,7 @@ describe('post editor directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postStatus', require(ROOT_PATH + 'app/post/directives/post-status-directive'))
+        testApp.directive('postStatus', require(ROOT_PATH + 'app/post/directives/post-status.directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -47,40 +47,10 @@ describe('post editor directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('should publish a post to a given role', function () {
-            spyOn(Notify, 'showNotificationSlider');
+        it('should check allowed status', function () {
 
-            isolateScope.post.id = 'pass';
-            isolateScope.publishPostTo();
-            expect(Notify.showNotificationSlider).toHaveBeenCalled();
-        });
-
-        it('should fail to publish a post to a given role', function () {
-            spyOn(Notify, 'showApiErrors');
-
-            isolateScope.post.id = 'fail';
-            isolateScope.publishPostTo();
-            expect(Notify.showApiErrors).toHaveBeenCalled();
-        });
-
-        it('should fail to publish a post to a given role when a required stage is not completed', function () {
-            spyOn(Notify, 'showAlerts');
-
-            isolateScope.post.id = 'pass';
-            $scope.stages[1].required = true;
-            isolateScope.post.completed_stages = [];
-
-            isolateScope.publishPostTo();
-            expect(Notify.showAlerts).toHaveBeenCalled();
-        });
-
-        it('should only set the publish field and not call an update', function () {
-            $scope.stages[1].required = false;
-
-            var cpyPost = {published_to: ['user']};
-            isolateScope.post = cpyPost;
-            isolateScope.publishPostTo();
-            expect(isolateScope.post.published_to).toEqual(['user']);
+            isolateScope.post.allowed_privileges = 'change_status';
+            expect(isolateScope.allowedChangeStatus()).toBe(true);
         });
     });
 });

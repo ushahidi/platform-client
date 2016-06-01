@@ -1,6 +1,6 @@
 var ROOT_PATH = '../../../../';
 
-describe('post stages directive', function () {
+describe('post vertical tabs directive', function () {
 
     var $rootScope,
         $scope,
@@ -17,7 +17,7 @@ describe('post stages directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postStages', require(ROOT_PATH + 'app/post/directives/post-stages-directive'))
+        testApp.directive('postVerticalTabs', require(ROOT_PATH + 'app/post/directives/post-vertical-tabs.directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -43,7 +43,7 @@ describe('post stages directive', function () {
         $scope.attributes = attributes.results;
         $scope.visbileStage = 1;
 
-        element = '<post-stages form="form" post="post" stages="stages" attributes="attributes" visibleStage="visibleStage"></post-stages>';
+        element = '<post-vertical-tabs form="form" post="post" stages="stages" attributes="attributes" visibleStage="visibleStage"></post-vertical-tabs>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
@@ -81,4 +81,3 @@ describe('post stages directive', function () {
         });
     });
 });
-

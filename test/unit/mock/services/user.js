@@ -20,6 +20,16 @@ module.exports = [function () {
                 }
             }};
         },
+        get: function () {
+            return {$promise: {
+                then: function (successCallback) {
+                    successCallback({
+                        name: 'test user',
+                        id: 1
+                    });
+                }
+            }};
+        },
         delete: function () {
             return {$promise: {
                 then: function (successCallback) {

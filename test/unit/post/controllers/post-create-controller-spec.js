@@ -44,7 +44,8 @@ describe('Post create controller', function () {
 
     beforeEach(function () {
         $controller('postCreateController', {
-            $scope: $scope
+            $scope: $scope,
+            form: {id:1}
         });
     });
 

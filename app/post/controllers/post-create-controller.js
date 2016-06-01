@@ -24,9 +24,8 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.post = postEntity();
-    $scope.post.form = form;
-    
+    $scope.post = postEntity();    
+
     PostEndpoint.options().$promise.then(function (options) {
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
