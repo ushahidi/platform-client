@@ -41,7 +41,6 @@ function (
 
                 $scope.post.status = role === 'draft' ? role : 'published';
 
-                $scope.toggleRoleFunc({updatedPost: $scope.post});
             };
 
         }];
@@ -49,8 +48,7 @@ function (
         restrict: 'E',
         templateUrl: 'templates/common/publish-selector/publish-selector.html',
         scope: {
-            post: '=',
-            toggleRoleFunc: '&'
+            post: '='
         },
         controller: controller
     };

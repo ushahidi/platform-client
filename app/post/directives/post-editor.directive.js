@@ -105,6 +105,9 @@ function PostEditorController(
                     } else {
                         $scope.post.values[attr.key] = [attr.default];
                     }
+                } else if (attr.input === 'date') {
+                    // Date picker requires date object
+                    $scope.post.values[attr.key] = new Date($scope.post.values[attr.key]);
                 }
             });
             $scope.attributes = attributes;

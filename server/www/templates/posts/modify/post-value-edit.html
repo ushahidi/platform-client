@@ -37,7 +37,7 @@
             <!-- type: date -->
             <div ng-if="isDate(attribute)">
                 <!-- Date icon -->
-                <svg ng-if="isDate(attribute)" class="iconic">
+                <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
                 </svg>
                 <input
@@ -52,9 +52,20 @@
             </div>
             <!-- type: datetime -->
             <div ng-if="isDateTime(attribute)" >
-
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+                </svg>
                 <input
                     type="date"
+                    pick-a-date="date"
+                    pick-a-date-options="{ format: 'yyyy-mm-dd' }"
+
+                    name="values_{{attribute.key}}"
+                    ng-model="post.values[attribute.key][key]"
+
+                />
+                <input
+                    type="text"
                     pick-a-date="time"
                     name="values_{{attribute.key}}"
                     ng-model="post.values[attribute.key][key]"
@@ -144,12 +155,13 @@
                 ng-model="post.values[attribute.key][key]"
                 ng-required="attribute.required"
             ></post-media>
-
+            <!-- Add additional values of specific fields
             <button
                 type="button"
                 class="button-secondary icon-only alt trash"
                 ng-if="canRemoveValue(attribute, key)"
                 ng-click="removeValue(attribute, key)"></button>
+              -->
         </div>
     </div>
     <div class="alert error" ng-show="form['values_' + attribute.key].$dirty" ng-repeat="(error, value) in form['values_' + attribute.key].$error">
@@ -159,6 +171,7 @@
         <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
     </div>
 
-
+<!-- Add additional values of specific fields
         <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
+-->        
 </div>
