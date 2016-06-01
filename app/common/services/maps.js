@@ -55,10 +55,15 @@ function (
             var description = feature.properties.description || '',
                 title = feature.properties.title || feature.properties.id;
             layer.bindPopup(
-                '<strong><a href="/posts/' + feature.properties.id + '">' +
-                title +
-                '</a></strong>' +
-                '<p>' + description + '</p>'
+				'<article class="postcard">' +
+				    '<div class="post-band" style="background-color: #A51A1A;"></div>' +
+				    '<div class="postcard-body">' +
+				        '<h1 class="postcard-title"><a href="/posts/' + feature.properties.id + '">' + title + '</a></h1>' +
+                        '<div class="postcard-field">' +
+                        '<p>' + description + '</p>' +
+                        '</div>' +
+                    '</div>' +
+                '</article>'
             );
         }
     };
