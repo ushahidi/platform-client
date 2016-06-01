@@ -450,6 +450,7 @@
     },
     "set": {
         "by" : "by",
+        "clear_search" : "Clear Search",
         "create_collection" : "Create Collection",
         "create_new" : " Create New",
         "create_savedsearch": "Create Saved Search",
@@ -472,6 +473,7 @@
         "name_savedsearch" : "Saved Search name",
         "visible_to_collection" : "Who can see this Collection",
         "visible_to_savedsearch" : "Who can see this Saved Search",
+        "reset_savedsearch" : "Reset Search",
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",

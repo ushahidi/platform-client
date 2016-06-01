@@ -52,6 +52,6 @@ module.exports = [
         // Slight hack: to avoid incorrectly detecting a changed search
         // we push the real query we're using back into the saved search.
         // This will now include any default params we excluded before
-        savedSearch.filter = PostFilters.getFilters();
+        savedSearch.filter = angular.copy(PostFilters.getFilters());
     }
 ];

@@ -78,7 +78,7 @@
             <!--// END IF //-->
 
             <!--// IF: User does not have permission to edit the Saved Search //-->
-            <div class="form-field" ng-if="!canEdit">
+            <div class="form-field" ng-if="!canEdit && $root.loggedin">
                 <!-- // IF: User is not yet getting notifications about this Saved Search //-->
                 <button type="button" ng-if="showNotificationLink" ng-click="saveNotification(savedSearch)">
                     <svg class="iconic">
@@ -102,10 +102,9 @@
 
         <mode-context-form-filter model="filters.form"></mode-context-form-filter>
 
-        <div class="applied-filters">
-            <post-active-filters filters="filters"></post-active-filters>
-            <saved-search-update saved-search="savedSearch" filters="filters" ng-show="canEdit"></saved-search-update>
-        </div>
+        <post-active-filters filters="filters"></post-active-filters>
+
+        <saved-search-update saved-search="savedSearch" filters="filters" ng-show="canEdit"></saved-search-update>
 
     </div>
 </div>

@@ -1,7 +1,11 @@
 module.exports = [
     '$rootScope',
+    'ModalService',
+    'PostFilters',
 function (
-    $rootScope
+    $rootScope,
+    ModalService,
+    PostFilters
 ) {
     return {
         restrict: 'E',
@@ -18,23 +22,21 @@ function (
                 visibile_to : []
             };
 
-            $scope.featuredEnabled = function () {
-                return $rootScope.hasPermission('Manage Posts');
-            };
-
             // Compare current filters to default filters
-            $scope.filtersChanged = function () {
-                return !angular.equals($scope.filters, { status : 'all' });
+            $scope.hasFilters = function () {
+                return PostFilters.hasFilters($scope.filters);
             };
 
-            $scope.savedSearchOpen = {};
-            $scope.savedSearchOpen.data = false;
-            $scope.setSavedSearchOpen = function () {
+            $scope.saveSearch = function () {
                 // Copy the current filters into our search..
                 $scope.savedSearch.filter = $scope.filters;
-                // .. and trigger the modal open
-                $scope.savedSearchOpen.data = !$scope.savedSearchOpen.data;
+
+                ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
             };
+
+            $scope.clearFilters = function () {
+                PostFilters.clearFilters();
+            }
         }
     };
 }];

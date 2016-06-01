@@ -1,9 +1,8 @@
-<div class="savedsearch-update">
-    <div class="save-button">
-        <button ng-if="filtersChanged()" ng-click="saveSavedSearchFilters()" class="save" type="button">
-            <span translate>
-                set.update_savedsearch
-            </span>
-        </button>
-    </div>
+<div class="savedsearch-update form-field">
+    <button ng-if="filtersChanged()" ng-click="saveSearch()" class="button-alpha" type="button" translate>
+        set.update_savedsearch
+    </button>
+    <button ng-if="filtersChanged()" ng-click="resetSearch()" class="button-link" type="button" translate>
+        set.reset_savedsearch
+    </button>
 </div>
