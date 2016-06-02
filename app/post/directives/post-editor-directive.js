@@ -184,7 +184,7 @@ function (
                 return valid;
             };
 
-            $scope.correctlyFormateDates = function (post) {
+            $scope.correctlyFormatDates = function (post) {
                 _.each(post.values, function (value) {
                     value[0] = value[0] instanceof Date ? moment(value[0]).format('YYYY-MM-DD HH:mm:ss') : value[0];
                 });
@@ -210,7 +210,7 @@ function (
                         delete post.values[key];
                     }
                 });
-                post = $scope.correctlyFormateDates(post);
+                post = $scope.correctlyFormatDates(post);
 
                 var request;
                 if (post.id) {
