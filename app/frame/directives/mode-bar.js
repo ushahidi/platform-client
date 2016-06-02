@@ -1,10 +1,12 @@
 module.exports = [
     'ViewHelper',
     'Authentication',
+    'ModalService',
     '$rootScope',
 function (
     ViewHelper,
     Authentication,
+    ModalService,
     $rootScope
 ) {
     return {
@@ -15,21 +17,13 @@ function (
         },
         templateUrl: 'templates/frame/mode-bar.html',
         link: function ($scope, $element, $attrs) {
-            $scope.views = ViewHelper.views();
-
-            // TODO: move this out of function
-            $scope.activeView = 'map';
-            $scope.setActiveView = function (view_name) {
-                $scope.activeView = view_name;
-            };
-
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
 
             // Show login modal
             $scope.login = function () {
-                $rootScope.$emit('event:login:show:loginModal');
+                ModalService.openTemplate('<login></login>', 'nav.login', false, false, true, false);
             };
 
             // Log user out

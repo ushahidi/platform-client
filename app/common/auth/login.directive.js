@@ -4,44 +4,35 @@ Login.$inject = [];
 function Login () {
     return {
         restrict: 'E',
-        scope: {
-        },
+        scope: true,
         controller: LoginController,
         templateUrl: 'templates/auth/login.html',
     };
 }
 LoginController.$inject = [
     '$scope',
-    '$rootScope',
-    '$translate',
     'Authentication',
     '$location'
 ];
 function LoginController (
     $scope,
-    $rootScope,
-    $translate,
     Authentication,
     $location
 ) {
+    $scope.email = '';
+    $scope.password = '';
+    $scope.failed = false;
+    $scope.processing = false;
+    $scope.loginSubmit = loginSubmit;
+    $scope.cancel = cancel;
 
     activate();
 
-    $rootScope.$on('event:login:show:loginModal', function () {
-        $scope.showLoginModal = true;
-    });
-
     function activate () {
-        $scope.loginSubmit = loginSubmit;
-        $scope.cancel = cancel;
-        $scope.email = '';
-        $scope.password = '';
-        $scope.showLoginModal = false;
         // If we're already logged in
-        if ($rootScope.loggedin) {
-            $location.url('/');
+        if (Authentication.getLoginStatus()) {
+            $scope.$parent.closeModal();
         }
-        finishedLogin();
     }
 
     function clearLoginForm () {
@@ -53,14 +44,13 @@ function LoginController (
 
     function cancel () {
         clearLoginForm();
-        $scope.showLoginModal = false;
+        $scope.$parent.closeModal();
     }
 
     function finishedLogin () {
         $scope.failed = false;
         $scope.processing = false;
-        $scope.showLoginModal = false;
-        clearLoginForm();
+        $scope.$parent.closeModal();
     }
 
     function loginSubmit (email, password) {
