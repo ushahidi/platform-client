@@ -21,15 +21,18 @@ function (
             $scope.activeMode = 'map';
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
 
-            // Show login modal
-            $scope.login = function () {
-                ModalService.openTemplate('<login></login>', 'nav.login', false, false, true, false);
-            };
+            $scope.login = openLoginModal;
+            $scope.logout = Authentication.logout;
+            $scope.register = openRegisterModal;
 
-            // Log user out
-            $scope.logout = function () {
-                Authentication.logout();
-            };
+            // Show login modal
+            function openLoginModal() {
+                ModalService.openTemplate('<login></login>', 'nav.login', false, false, true, false);
+            }
+
+            function openRegisterModal() {
+                ModalService.openTemplate('<register></register>', 'nav.register', false, false, true, false);
+            }
 
             // Show collection listing
             $scope.viewCollectionListing = function () {
