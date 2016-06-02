@@ -1,14 +1,14 @@
-<fieldset overflow-toggle has-overflow="forms.length > 1">
+<fieldset overflow-toggle has-overflow="forms.length > 1" ng-model-options="{ updateOn: 'default' }">
     <legend translate="app.surveys">Surveys</legend>
 
     <div class="form-field checkbox" ng-repeat="(index, form) in forms" ng-class="{ overflow : ($index > 1) }">
         <label>
-            <input checklist-value="form.id" checklist-model="model" type="checkbox" name="selectedForms" > {{ ::form.name }}
+            <input checklist-value="form.id" checklist-model="selectedForms" type="checkbox" name="selectedForms" > {{ ::form.name }}
         </label>
     </div>
     <div class="form-field checkbox" ng-class="{ overflow : (forms.length > 2) }">
         <label>
-            <input checklist-value="'none'" checklist-model="model" type="checkbox" name="selectedForms" > <span translate="nav.unknown">Unknown</span>
+            <input checklist-value="'none'" checklist-model="selectedForms" type="checkbox" name="selectedForms" > <span translate="nav.unknown">Unknown</span>
         </label>
     </div>
     <span class="form-field-toggle">

@@ -1,8 +1,5 @@
 angular.module('ushahidi.posts', [])
 
-.directive('postViewTabs', require('./directives/post-view-tabs-directive.js'))
-.directive('postViewFilters', require('./directives/post-view-filters-directive.js'))
-.directive('postActiveFilters', require('./directives/post-active-filters-directive.js'))
 .directive('postCard', require('./directives/post-card-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
 .directive('postLocation', require('./directives/post-location-directive.js'))
@@ -28,6 +25,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterForm', require('./views/filters/filter-form.directive.js'))
 .directive('filterVisibleTo', require('./views/filters/filter-visible-to.directive.js'))
 .directive('filterLocation', require('./views/filters/filter-location.directive.js'))
+.directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
 
 .service('PostFilters', require('./views/post-filters.service.js'))
 

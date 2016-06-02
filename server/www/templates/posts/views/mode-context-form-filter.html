@@ -1,9 +1,9 @@
 <form class="survey-filter">
-    <div class="survey-filter-checkbox init" ng-class="{ checked : (model.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
+    <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
         <div class="survey-filter-label">
             <span class="post-band" todo-style="background-color:#A51A1A;"></span>
             <label class="checked">
-                <input type="checkbox" checklist-value="form.id" checklist-model="model" >
+                <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" >
                 {{ ::form.name }}
             </label>
         </div>
@@ -44,11 +44,11 @@
             </li>
         </ul>
     </div>
-    <div class="survey-filter-checkbox init" ng-class="{ checked : (model.indexOf('none') !== -1) }"  dropdown>
+    <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf('none') !== -1) }"  dropdown>
         <div class="survey-filter-label">
             <span class="post-band" todo-style="background-color:#A51A1A;"></span>
             <label class="checked">
-                <input type="checkbox" checklist-value="'unknown'" checklist-model="model" >
+                <input type="checkbox" checklist-value="'none'" checklist-model="filters.form" >
                 <span translate="nav.unknown">Unknown</span>
             </label>
         </div>

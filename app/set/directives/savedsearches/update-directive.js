@@ -4,21 +4,18 @@ module.exports = [
     'SavedSearchEndpoint',
     '_',
     'Notify',
+    'PostFilters',
 function (
     $q,
     $rootScope,
     SavedSearchEndpoint,
     _,
-    Notify
+    Notify,
+    PostFilters
 ) {
     return {
         restrict: 'E',
-        replace: true,
-        templateUrl: 'templates/sets/savedsearch-update.html',
-        scope: {
-            savedSearch: '=',
-            filters: '='
-        },
+        templateUrl: 'templates/sets/savedsearches/savedsearch-update.html',
         link: function ($scope, $element, $attrs) {
             if (!$scope.savedSearch) {
                 throw {
@@ -26,18 +23,14 @@ function (
                 };
             }
 
-            $scope.featuredEnabled = function () {
-                return $rootScope.hasPermission('Manage Posts');
-            };
-
             // Compare current filters to saved filters
             $scope.filtersChanged = function () {
                 return !angular.equals($scope.filters, $scope.savedSearch.filter);
             };
 
-            $scope.saveSavedSearchFilters = function () {
+            $scope.saveSearch = function () {
                 // Copy the current filters into our search..
-                $scope.savedSearch.filter = $scope.filters;
+                $scope.savedSearch.filter = PostFilters.getQueryParams($scope.filters);
 
                 // Strip out any null values from visible_to
                 $scope.savedSearch.visible_to = _.without(_.values($scope.savedSearch.visible_to), null);
@@ -50,6 +43,14 @@ function (
                     Notify.showApiErrors(errorResponse);
                 });
             };
+
+            $scope.resetSearch = function () {
+                PostFilters.setFilters($scope.savedSearch.filter);
+                // Slight hack: to avoid incorrectly detecting a changed search
+                // we push the real query we're using back into the saved search.
+                // This will now include any default params we excluded before
+                $scope.savedSearch.filter = angular.copy(PostFilters.getFilters());
+            }
         }
     };
 }];

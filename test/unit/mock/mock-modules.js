@@ -79,5 +79,9 @@ angular.module('ushahidi.mock', [])
 .service('GlobalFilter', require('./services/global-filters.js'))
 .service('PostFilters', require('./services/post-filters.js'))
 .service('Maps', require('./services/maps.js'))
+.service('ModalService', require('./services/modal.service.js'))
 .service('PostEditService', require('./services/post-edit-service.js'))
-.service('Notify', require('./services/notify.js'));
+.service('Notify', require('./services/notify.js'))
+
+.controller('navigation', require('./controllers/navigation.controller.mock.js'))
+;

@@ -22,10 +22,9 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/sets/savedsearch-editor.html',
+        templateUrl: 'templates/sets/savedsearches/savedsearch-editor.html',
         scope: {
-            savedSearch: '=',
-            isOpen: '='
+            savedSearch: '='
         },
         link: function ($scope, $element, $attrs) {
             if (!$scope.savedSearch) {
@@ -48,15 +47,7 @@ function (
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 
-            $scope.$watch(function () {
-                return $scope.isOpen.data;
-            }, function (newValue, oldValue) {
-                if (newValue !== oldValue) {
-                    $scope.cpySavedSearch = _.clone($scope.savedSearch);
-                }
-            });
-
-            $scope.saveSavedsearch = function (savedSearch) {
+            $scope.save = function (savedSearch) {
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
 
                 // Strip out any null values from visible_to
@@ -67,26 +58,14 @@ function (
                 .then(function (savedSearch) {
                     $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
-                    $scope.isOpen.data = false;
+                    $scope.$parent.closeModal();
                     $rootScope.$broadcast('event:savedSearch:update');
                 }, function (errorResponse) {
                     Notify.showApiErrors(errorResponse);
                 });
             };
 
-            $scope.deleteSavedSearch = function () {
-                $translate('notify.savedsearch.delete_savedsearch_confirm')
-                .then(function (message) {
-                    Notify.showConfirm(message).then(function () {
-                        SavedSearchEndpoint.delete({ id: $scope.savedSearch.id }).$promise.then(function () {
-                            $location.url('/');
-                            $rootScope.$broadcast('event:savedSearch:update');
-                        }, function (errorResponse) {
-                            Notify.showApiErrors(errorResponse);
-                        });
-                    });
-                });
-            };
+            $scope.cancel = $scope.$parent.closeModal;
         }
     };
 }];
