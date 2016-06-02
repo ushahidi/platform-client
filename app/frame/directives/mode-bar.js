@@ -11,6 +11,7 @@ function (
         restrict: 'E',
         replace: true,
         scope: {
+            currentUser: '='
         },
         templateUrl: 'templates/frame/mode-bar.html',
         link: function ($scope, $element, $attrs) {
@@ -24,7 +25,6 @@ function (
 
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
-            $scope.currentUser = $rootScope.currentUser;
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
 
             // Show login modal
