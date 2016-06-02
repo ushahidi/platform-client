@@ -3,6 +3,7 @@ module.exports = [
     'Authentication',
     'ModalService',
     '$rootScope',
+    'ModalService',
 function (
     ViewHelper,
     Authentication,
@@ -20,6 +21,11 @@ function (
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
+
+            // Show account settings
+            $scope.viewAccountSettings = function () {
+                ModalService.openTemplate('<account-settings></account-settings>', '', false, false, true, true);
+            };
 
             $scope.login = openLoginModal;
             $scope.logout = Authentication.logout;

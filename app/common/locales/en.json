@@ -683,9 +683,17 @@
         }
     },
     "user_profile" : {
-        "title" : "Edit profile",
+        "title" : "account settings",
         "update_password" : "Update password",
-        "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected."
+        "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected.",
+        "button" : {
+            "save" : "Save &amp; close",
+            "cancel" : "Cancel"
+        },
+        "nav" : {
+            "general": "General",
+            "notifications" : "Notifications"
+        }
     },
     "user_create" :  {
         "full_name": "Display Name",
@@ -694,7 +702,10 @@
     },
     "notify": {
         "contact" : {
-            "save_success" : "Contact saved"
+            "save_success" : "Contact saved",
+            "delete_confirm" : "Do you want to remove your account?",
+            "error_message" : "An error occurred while trying to remove your account",
+            "destroy_success" : "Account removed successfully"
         },
         "default" : {
             "save_success" : "Saved resource",
@@ -814,7 +825,7 @@
         "notification" : {
             "add" : "You will now be notified when new posts are added to {{set}}",
             "delete_confirm" : "Are you sure you want to remove this notification?",
-            "destroy_notification_success" : "Notification {{name}} deleted"
+            "destroy_success" : "<strong>You will no longer receive notifications about</strong> {{name}}."
         },
         "message" : {
             "sent_to" : "Message sent to {{contact}}"
@@ -840,11 +851,14 @@
         "title": "Notifications",
         "contacts_heading": "How you get notifications",
         "notifications_heading": "What you get notified about",
-        "error_message": "The notification could not be deleted at this time"
+        "error_message": "The notification could not be deleted at this time",
+        "send_to_address" : "Send notifications to this address",
+        "button" : {
+            "delete" : "Delete notification"
+        }
     },
     "contact": {
         "edit": "Edit",
-        "add_new_contact": "Add New Contact",
         "save_changes": "Save changes",
         "saving_changes": "Saving changes",
         "cancel_edit": "Cancel",
@@ -856,6 +870,10 @@
         "type" : {
             "phone": "Phone",
             "email": "Email"
+        },
+        "button" : {
+            "add" : "Add account",
+            "delete" : "Remove account"
         },
         "valid": {
             "email" : {
