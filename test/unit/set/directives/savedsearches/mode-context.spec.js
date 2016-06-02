@@ -4,7 +4,6 @@ describe('collections mode context directive', function () {
 
     var $rootScope,
         $scope,
-        isolateScope,
         element,
         Notify;
 
@@ -33,15 +32,14 @@ describe('collections mode context directive', function () {
 
         $scope.savedSearch = {};
 
-        element = '<saved-search-mode-context saved-search="savedSearch"></saved-search-mode-context>';
+        element = '<saved-search-mode-context></saved-search-mode-context>';
         element = $compile(element)($scope);
         $scope.$digest();
-        isolateScope = element.isolateScope();
     }));
 
     it('should save a notification', function () {
         spyOn(Notify, 'showNotificationSlider');
-        isolateScope.saveNotification({id: 'pass'});
+        $scope.saveNotification({id: 'pass'});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });

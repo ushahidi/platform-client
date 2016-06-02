@@ -47,16 +47,20 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
 
             // Transform status + published_to into visible to value
             // @todo move to service
-            if (activeFilters.status === 'draft') {
-                activeFilters.visible_to = 'draft';
-            } else if (activeFilters.status === 'published' && activeFilters.published_to) {
-                activeFilters.visible_to = activeFilters.published_to;
-            } else {
-                // todo: Ignore this because its the default?
-                // activeFilters.visible_to = 'everyone'
+            if (activeFilters.status) {
+                if (activeFilters.status === 'draft') {
+                    activeFilters.visible_to = 'draft';
+                } else if (activeFilters.status === 'published' && activeFilters.published_to) {
+                    activeFilters.visible_to = activeFilters.published_to;
+                } else {
+                    // todo: Ignore this because its the default?
+                    // activeFilters.visible_to = 'everyone'
+                }
+                delete activeFilters.status;
             }
-            delete activeFilters.published_to;
-            delete activeFilters.status;
+            if (activeFilters.published_to) {
+                delete activeFilters.published_to;
+            }
 
             // Remove form filter as its shown by the mode-context-form-filter already
             delete activeFilters.form;
