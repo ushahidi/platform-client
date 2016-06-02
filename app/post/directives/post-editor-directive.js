@@ -6,6 +6,7 @@ function (
         '$filter',
         '$location',
         '$translate',
+        'moment',
         'PostEntity',
         'PostEndpoint',
         'TagEndpoint',
@@ -19,6 +20,7 @@ function (
             $filter,
             $location,
             $translate,
+            moment,
             postEntity,
             PostEndpoint,
             TagEndpoint,
@@ -182,6 +184,13 @@ function (
                 return valid;
             };
 
+            $scope.correctlyFormateDates = function (post) {
+                _.each(post.values, function (value) {
+                    value[0] = value[0] instanceof Date ? moment(value[0]).format('YYYY-MM-DD HH:mm:ss') : value[0];
+                });
+                return post;
+            };
+
             $scope.savePost = function () {
                 if (!$scope.canSavePost()) {
                     return;
@@ -201,6 +210,7 @@ function (
                         delete post.values[key];
                     }
                 });
+                post = $scope.correctlyFormateDates(post);
 
                 var request;
                 if (post.id) {
