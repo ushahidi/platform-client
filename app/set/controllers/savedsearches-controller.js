@@ -39,16 +39,9 @@ module.exports = [
             $scope.$emit('setPageTitle', title);
         });
 
-        // whenever the GlobalFilter post query changes,
-        // update the current list of posts
-        $scope.$watch(function () {
-            return PostFilters.getFilters();
-        }, function (newValue, oldValue) {
-            $scope.filters = PostFilters.getFilters();
-        }, true);
-
         // Set initial filter state
         PostFilters.setFilters(savedSearch.filter);
+        $scope.filters = PostFilters.getFilters();
         // Slight hack: to avoid incorrectly detecting a changed search
         // we push the real query we're using back into the saved search.
         // This will now include any default params we excluded before

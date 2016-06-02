@@ -5,10 +5,6 @@ CollectionModeContext.$inject = [];
 function CollectionModeContext () {
     return {
         restrict: 'E',
-        scope: {
-            collection: '=',
-            filters: '='
-        },
         controller: CollectionModeContextController,
         templateUrl: 'templates/sets/collections/mode-context.html'
      };

@@ -29,9 +29,6 @@ function FilterPostsController($scope, $timeout) {
         // $scope.$watch('filters', handleFilterChange, true);
     }
 
-    // @todo watch filters for changes
-    //
-
     function cancel() {
         // Reset filters
         rollbackForm();
@@ -54,11 +51,8 @@ function FilterPostsController($scope, $timeout) {
         $scope.searchFiltersToggle = !$scope.searchFiltersToggle;
         $scope.searchSavedToggle = false;
 
-        // If we're toggling closed
-        if ($scope.searchFiltersToggle === false) {
-            // .. reset the form
-            rollbackForm();
-        }
+        // Reset the form
+        rollbackForm();
     }
 
     function rollbackForm () {

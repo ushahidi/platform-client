@@ -15,12 +15,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        replace: true,
         templateUrl: 'templates/sets/savedsearches/savedsearch-update.html',
-        scope: {
-            savedSearch: '=',
-            filters: '='
-        },
         link: function ($scope, $element, $attrs) {
             if (!$scope.savedSearch) {
                 throw {
