@@ -4,7 +4,7 @@ Login.$inject = [];
 function Login () {
     return {
         restrict: 'E',
-        scope: true,
+        scope: {},
         controller: LoginController,
         templateUrl: 'templates/auth/login.html',
     };
