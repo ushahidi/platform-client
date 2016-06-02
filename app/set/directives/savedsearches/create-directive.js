@@ -32,7 +32,7 @@ function (
 
             $scope.clearFilters = function () {
                 PostFilters.clearFilters();
-            }
+            };
         }
     };
 }];

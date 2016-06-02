@@ -43,7 +43,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         }
 
         function handleFiltersUpdate(filters) {
-            var activeFilters = rawFilters = angular.copy(filters);
+            var activeFilters = angular.copy(filters);
+            rawFilters = angular.copy(filters);
 
             // Transform status + published_to into visible to value
             // @todo move to service
@@ -118,7 +119,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
                 } else if (value === 'draft') {
                     return $translate.instant('nav.only_you');
                 } else {
-                    return roles[value] ? roles[value].display_name : value
+                    return roles[value] ? roles[value].display_name : value;
                 }
             }
         };

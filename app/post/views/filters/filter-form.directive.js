@@ -11,7 +11,9 @@ function FormSelectDirective(FormEndpoint) {
     };
 
     function FormSelectLink(scope, element, attrs, ngModel) {
-        if (!ngModel) return;
+        if (!ngModel) {
+            return;
+        }
 
         scope.forms = [];
         scope.selectedForms = [];

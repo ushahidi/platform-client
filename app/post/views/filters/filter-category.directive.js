@@ -11,7 +11,9 @@ function CategorySelectDirective(TagEndpoint) {
     };
 
     function CategorySelectLink(scope, element, attrs, ngModel) {
-        if (!ngModel) return;
+        if (!ngModel) {
+            return;
+        }
 
         scope.categories = [];
         scope.selectedCategories = [];

@@ -13,6 +13,8 @@ function SavedSearchModeContext () {
 SavedSearchModeContextController.$inject = [
     '$scope',
     '$translate',
+    '$location',
+    '$rootScope',
     'NotificationEndpoint',
     'SavedSearchEndpoint',
     'Notify',
@@ -22,6 +24,8 @@ SavedSearchModeContextController.$inject = [
 function SavedSearchModeContextController(
     $scope,
     $translate,
+    $location,
+    $rootScope,
     NotificationEndpoint,
     SavedSearchEndpoint,
     Notify,

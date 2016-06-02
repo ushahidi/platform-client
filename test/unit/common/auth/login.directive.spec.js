@@ -88,7 +88,7 @@ describe('login directive', function () {
 
         it('should login on successfully with correct username/password', function () {
             directiveScope.email = 'testuser';
-            directiveScope.password = 'correct'
+            directiveScope.password = 'correct';
             directiveScope.loginSubmit('testuser', 'correct');
             expect(mockAuthenticationService.login).toHaveBeenCalledWith('testuser', 'correct');
             expect(directiveScope.failed).toEqual(false);

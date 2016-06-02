@@ -45,4 +45,4 @@ function NavigationController(Authentication, ConfigEndpoint, BootstrapConfig, $
     //     e.stopPropagation();
     //     Authentication.logout();
     // };
-};
+}

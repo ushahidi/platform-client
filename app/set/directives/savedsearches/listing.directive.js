@@ -53,5 +53,5 @@ function SavedSearchListingController($scope, $element, $attrs, $rootScope, User
         loadSavedSearches({
             q : query
         });
-    };
+    }
 }

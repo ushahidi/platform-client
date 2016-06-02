@@ -50,7 +50,7 @@ function (
                 // we push the real query we're using back into the saved search.
                 // This will now include any default params we excluded before
                 $scope.savedSearch.filter = angular.copy(PostFilters.getFilters());
-            }
+            };
         }
     };
 }];
