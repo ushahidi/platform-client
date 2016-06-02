@@ -114,6 +114,9 @@ angular.module('app',
     .factory('Leaflet', function () {
         return window.L;
     })
+    .factory('moment', function () {
+        return require('moment');
+    })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
