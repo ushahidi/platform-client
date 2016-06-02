@@ -53,12 +53,15 @@ function (
     var geojsonLayerOptions = {
         onEachFeature: function (feature, layer) {
             var description = feature.properties.description || '',
-                title = feature.properties.title || feature.properties.id;
+                title = feature.properties.title || feature.properties.id,
+                collections = [];
+            collections = _.pluck(feature.properties.collections, 'name');
             layer.bindPopup(
                 '<strong><a href="/posts/' + feature.properties.id + '">' +
                 title +
                 '</a></strong>' +
-                '<p>' + description + '</p>'
+                '<p>' + description + '</p>' +
+                '<p><b>Collection: </b>' + collections.join(', ') + '</p>'
             );
         }
     };
