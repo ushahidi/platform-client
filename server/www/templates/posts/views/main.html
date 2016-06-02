@@ -17,12 +17,11 @@
         <div class="mode-context-body">
             <p ng-bind="nav.site.description"></p>
 
-            <mode-context-form-filter model="filters.form"></mode-context-form-filter>
+            <mode-context-form-filter></mode-context-form-filter>
 
-            <div class="applied-filters">
-                <post-active-filters filters="filters"></post-active-filters>
-                <saved-search-create filters="filters"></saved-search-create>
-            </div>
+            <post-active-filters></post-active-filters>
+
+            <saved-search-create></saved-search-create>
 
         </div>
     </div>

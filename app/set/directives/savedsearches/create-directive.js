@@ -9,11 +9,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        replace: true,
         templateUrl: 'templates/sets/savedsearches/savedsearch-create.html',
-        scope: {
-            filters: '='
-        },
         link: function ($scope, $element, $attrs) {
 
             // Init an empty saved search
