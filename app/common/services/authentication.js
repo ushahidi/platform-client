@@ -69,12 +69,18 @@ function (
 
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
-                        RoleEndpoint.query({name: userDataResponse.data.role}).$promise.then(function (results) {
+                        RoleEndpoint.query({name: userDataResponse.data.role}).$promise
+                        .then(function (results) {
                             userDataResponse.data.permissions = !_.isEmpty(results) ? results[0].permissions : [];
+                            return userDataResponse;
+                        })
+                        .catch(function (errors) {
+                            userDataResponse.data.permissions = [];
+                            return userDataResponse;
+                        })
+                        .finally(function () {
                             setToLoginState(userDataResponse.data);
-
                             $rootScope.$broadcast('event:authentication:login:succeeded');
-
                             deferred.resolve();
                         });
                     }, handleRequestError);
