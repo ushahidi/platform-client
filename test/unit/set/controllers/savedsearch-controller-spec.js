@@ -52,21 +52,6 @@ describe('set savedsearches controller', function () {
         expect($rootScope.$emit).toHaveBeenCalled();
     });
 
-    it('should save a notification', function () {
-        spyOn(Notify, 'showNotificationSlider');
-        $scope.saveNotification({id: 'pass'});
-
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
-    });
-
-    it('should set teoggle is open', function () {
-        $scope.setSavedSearchOpen();
-        expect($scope.savedSearchOpen.data).toBe(true);
-
-        $scope.setSavedSearchOpen();
-        expect($scope.savedSearchOpen.data).toBe(false);
-    });
-
     it('should return current view', function () {
         var test = $scope.currentView();
 

@@ -10,6 +10,16 @@ module.exports = [function () {
                 }
             }};
         },
+        query: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback([{
+                        name: 'test user',
+                        id: 1
+                    }]);
+                }
+            }};
+        },
         getFresh: function () {
             return {$promise: {
                 then: function (successCallback) {

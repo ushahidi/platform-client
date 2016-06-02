@@ -55,7 +55,11 @@ function CollectionListingController(
     }
 
     function loadCollections() {
-        $scope.collections = CollectionEndpoint.editableByMe();
+        if ($scope.isToggleMode) {
+            $scope.collections = CollectionEndpoint.editableByMe();
+        } else {
+            $scope.collections = CollectionEndpoint.query();
+        }
     }
 
     function postInCollection(collection) {
@@ -176,6 +180,7 @@ function CollectionListingController(
     // Show listing modal
     $rootScope.$on('collectionListing:show', function () {
         $scope.collectionListingVisible = true;
+        $scope.isToggleMode = false;
         $scope.loadCollections();
     });
 

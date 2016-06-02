@@ -52,7 +52,10 @@ function (
                 function (value, key, object) {
                     // Is value empty? ..and not a date object
                     // _.empty only works on arrays, object and strings.
-                    return (_.isEmpty(value) && !_.isDate(value));
+                    if (_.isObject(value) || _.isArray(value)) {
+                        return _.isEmpty(value);
+                    }
+                    return !value;
                 }
             );
 

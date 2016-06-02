@@ -16,7 +16,7 @@ describe('collections mode context directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('collectionsModeContext', require(ROOT_PATH + 'app/set/directives/collections/mode-context.directive'));
+        testApp.directive('savedSearchModeContext', require(ROOT_PATH + 'app/set/directives/savedsearches/mode-context.directive'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -30,9 +30,9 @@ describe('collections mode context directive', function () {
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
 
-        $scope.collection = {};
+        $scope.savedSearch = {};
 
-        element = '<collections-mode-context></collections-mode-context>';
+        element = '<saved-search-mode-context></saved-search-mode-context>';
         element = $compile(element)($scope);
         $scope.$digest();
     }));

@@ -13,7 +13,7 @@ function DateSelectDirective() {
     };
 }
 
-DateSelectController.$inject = [];
-function DateSelectController() {
-
+DateSelectController.$inject = ['$scope'];
+function DateSelectController($scope) {
+	$scope.options = { format : 'yyyy-mm-dd' };
 }

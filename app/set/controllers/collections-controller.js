@@ -28,7 +28,7 @@ module.exports = [
         // Add set to the scope
         $scope.collection = collection;
         $scope.getCollectionUser = function () {
-            return $scope.collection.user_id ? UserEndpoint.get({id: $scope.collection.user_id}) : undefined;
+            return $scope.collection.user ? UserEndpoint.get({id: $scope.collection.user.id}) : undefined;
         };
         $scope.collection.user = $scope.getCollectionUser();
         // Set the page title

@@ -1,13 +1,13 @@
 <div class="mode-context init">
     <header class="mode-context-header">
         <ol class="breadcrumbs" ng-controller="navigation as nav">
-            <li><a href="/">{{ nav.site.name }}</a></li>
+            <li><a href="/">{{nav.site.name}}</a></li>
         </ol>
         <h1 class="mode-context-title">
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#star"></use>
             </svg>
-            {{collection.name}}
+            {{savedSearch.name}}
         </h1>
     </header>
 
@@ -19,23 +19,23 @@
     </span>
     <div class="mode-context-body">
         <!--// IF: Saved Search has description //-->
-        <p ng-if="collection.description">{{collection.description}}</p>
+        <p ng-if="savedSearch.description">{{savedSearch.description}}</p>
         <!--// END IF //-->
 
         <div class="metadata">
-            <span ng-if="collection.user">
-                <span translate='app.created_by' translate-values="{ author : collection.user.realname }">Created by</span>
+            <span ng-if="savedSearch.user">
+                <span translate='app.created_by' translate-values="{ author : savedSearch.user.realname }">Created by</span>
             </span>
             <span class="metadata-visibility public tooltip">
                 <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#globe"></use>
                 </svg>
-                <span class="bug" translate="collection.visible_to_public">This Collection is visible to the public</span>
+                <span class="bug" translate="saved_search.visible_to_public">This Saved Search is visible to the public</span>
             </span>
 
             <!--// IF: User has permission to edit the Saved Search //-->
             <div class="form-field" ng-if="canEdit" dropdown>
-                <button type="button" data-modal="edit-collection" ng-click="editCollection()">
+                <button type="button" data-modal="edit-savedSearch" ng-click="editSavedSearch()">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
                     </svg>
@@ -50,15 +50,15 @@
                 </button>
                 <ul class="dropdown-menu init" dropdown-menu>
                     <li ng-if="showNotificationLink">
-                        <a ng-click="saveNotification(collection)">
+                        <a ng-click="saveNotification(savedSearch)">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#bell"></use>
                             </svg>
-                            <span class="label" ng-click="saveNotification(collection)" translate="app.get_notifications">Get notifications</span>
+                            <span class="label" ng-click="saveNotification(savedSearch)" translate="app.get_notifications">Get notifications</span>
                         </a>
                     </li>
                     <li ng-if="!showNotificationLink">
-                        <a ng-click="removeNotification(collection)">
+                        <a ng-click="removeNotification(savedSearch)">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#bell"></use>
                             </svg>
@@ -66,7 +66,7 @@
                         </a>
                     </li>
                     <li>
-                        <a ng-click="deleteCollection()">
+                        <a ng-click="deleteSavedSearch()">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
                             </svg>
@@ -80,7 +80,7 @@
             <!--// IF: User does not have permission to edit the Saved Search //-->
             <div class="form-field" ng-if="!canEdit && $root.loggedin">
                 <!-- // IF: User is not yet getting notifications about this Saved Search //-->
-                <button type="button" ng-if="showNotificationLink" ng-click="saveNotification(collection)">
+                <button type="button" ng-if="showNotificationLink" ng-click="saveNotification(savedSearch)">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#bell"></use>
                     </svg>
@@ -100,7 +100,11 @@
             <!--// END IF //-->
         </div>
 
+        <mode-context-form-filter></mode-context-form-filter>
+
         <post-active-filters></post-active-filters>
+
+        <saved-search-update></saved-search-update>
 
     </div>
 </div>

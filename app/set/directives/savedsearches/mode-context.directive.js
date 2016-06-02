@@ -1,51 +1,49 @@
-module.exports = CollectionModeContext;
+module.exports = SavedSearchModeContext;
 
-CollectionModeContext.$inject = [];
+SavedSearchModeContext.$inject = [];
 
-function CollectionModeContext () {
+function SavedSearchModeContext () {
     return {
         restrict: 'E',
-        controller: CollectionModeContextController,
-        templateUrl: 'templates/sets/collections/mode-context.html'
+        controller: SavedSearchModeContextController,
+        templateUrl: 'templates/sets/savedsearches/mode-context.html'
      };
  }
 
-CollectionModeContextController.$inject = [
+SavedSearchModeContextController.$inject = [
     '$scope',
-    '$rootScope',
     '$translate',
-    '$location',
     'NotificationEndpoint',
-    'CollectionEndpoint',
+    'SavedSearchEndpoint',
     'Notify',
-    '_'
+    '_',
+    'ModalService'
 ];
-function CollectionModeContextController(
+function SavedSearchModeContextController(
     $scope,
-    $rootScope,
     $translate,
-    $location,
     NotificationEndpoint,
-    CollectionEndpoint,
+    SavedSearchEndpoint,
     Notify,
-    _
+    _,
+    ModalService
 ) {
-    $scope.editCollection = editCollection;
-    $scope.deleteCollection = deleteCollection;
-    $scope.saveNotification = saveNotification;
-    $scope.removeNotification = removeNotification;
-
     // Show Add Notification link
     $scope.showNotificationLink = true;
     $scope.canEdit = false;
     $scope.notification = false;
 
+    $scope.saveNotification = saveNotification;
+    $scope.removeNotification = removeNotification;
+    $scope.editSavedSearch = editSavedSearch;
+    $scope.deleteSavedSearch = deleteSavedSearch;
+
     activate();
 
     function activate() {
-        $scope.canEdit = canEdit($scope.collection);
+        $scope.canEdit = canEdit($scope.savedSearch);
 
-        NotificationEndpoint.query({set: $scope.collection.id, ignore403: true, user: 'me'}, function (notifications) {
+        NotificationEndpoint.query({set: $scope.savedSearch.id, ignore403: true, user: 'me'}, function (notifications) {
             // show link if subscription does not exist
             $scope.showNotificationLink = notifications.length === 0;
             if (notifications.length) {
@@ -54,23 +52,25 @@ function CollectionModeContextController(
         });
     }
 
-    function canEdit(collection) {
-        return _.contains(collection.allowed_privileges, 'update');
+    // Check if we can edit
+    function canEdit(savedSearch) {
+        return _.contains(savedSearch.allowed_privileges, 'update');
     }
 
-    function editCollection() {
-        $rootScope.$emit('collectionEditor:show', $scope.collection);
+    function editSavedSearch() {
+        ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.edit_search_settings', 'star', $scope, false, false);
+        //$rootScope.$emit('savedSearchEditor:show', $scope.collection);
     }
 
-    function deleteCollection() {
-        $translate('notify.collection.delete_collection_confirm')
+    function deleteSavedSearch() {
+        $translate('notify.savedsearch.delete_savedsearch_confirm')
             .then(function (message) {
                 Notify.showConfirm(message).then(function () {
-                    CollectionEndpoint.delete({
-                        collectionId: $scope.collection.id
+                    SavedSearchEndpoint.delete({
+                        id: $scope.savedSearch.id
                     }).$promise.then(function () {
                         $location.url('/');
-                        $rootScope.$broadcast('collection:update');
+                        $rootScope.$broadcast('savedSearch:update');
                     }, function (errorResponse) {
                         Notify.showApiErrors(errorResponse);
                     });
@@ -78,15 +78,17 @@ function CollectionModeContextController(
           });
     }
 
-    function saveNotification(collection) {
-        var notification = {set: collection.id};
+    function saveNotification(savedSearch) {
+        var notification = {set: savedSearch.id};
+
         NotificationEndpoint.save(notification).$promise.then(function (notification) {
             // No need to show the link after subscription
             $scope.showNotificationLink = false;
             $scope.notification = notification;
-            $translate('notify.notification.add', {set: collection.name}).then(function (message) {
-                Notify.showNotificationSlider(message);
-            });
+            $translate('notify.notification.add', {set: savedSearch.name})
+                .then(function (message) {
+                    Notify.showNotificationSlider(message);
+                });
         });
     }
 
