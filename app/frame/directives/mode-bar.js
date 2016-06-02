@@ -1,9 +1,11 @@
 module.exports = [
     'ViewHelper',
     '$rootScope',
+    'ModalService',
 function (
     ViewHelper,
-    $rootScope
+    $rootScope,
+    ModalService
 ) {
     return {
         restrict: 'E',
@@ -17,9 +19,9 @@ function (
             $scope.currentUser = $rootScope.currentUser;
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
 
-            // Show account settings modal
+            // Show account settings
             $scope.viewAccountSettings = function () {
-                $rootScope.$emit('event:show:account_settings');
+                ModalService.openTemplate('<account-settings></account-settings>', '', false, false, true, true);
             };
 
             // Show collection listing

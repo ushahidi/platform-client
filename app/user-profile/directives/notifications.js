@@ -53,9 +53,12 @@ module.exports = [
                 var loadContacts = function () {
                     ContactEndpoint.query({user: 'me'}).$promise.then(function (contacts) {
                         _.forEach(contacts, function (contact) {
-                            // Save the original contact value
-                            // and use it to track changes
-                            contact.original = contact.contact;
+                            // Save the original contact values
+                            // and use them to track changes
+                            contact.original = {
+                                contact: contact.contact,
+                                can_notify: contact.can_notify
+                            };
 
                             // make inactive by default
                             contact.active = false;
@@ -68,7 +71,8 @@ module.exports = [
                                     type: 'email',
                                     contact: user.email,
                                     original: user.email,
-                                    active: false
+                                    active: false,
+                                    isLoginEmail: true
                                 });
                             });
 
@@ -94,7 +98,9 @@ module.exports = [
                 };
 
                 var contactHasChanged = function (contact) {
-                    return contact.original !== contact.contact;
+                    return contact.original.contact !== contact.contact ||
+                        contact.original.can_notify !== contact.can_notify;
+
                 };
 
                 loadContacts();
@@ -102,7 +108,7 @@ module.exports = [
 
                 $scope.deleteNotification = function (notification) {
                     $translate('notify.notification.delete_confirm').then(function (message) {
-                        Notify.showConfirm(message).then(function () {
+                        Notify.showConfirmAlert(message).then(function () {
                             NotificationEndpoint.delete({id: notification.id}).$promise.then(function () {
                                 $translate(
                                     'notify.notification.destroy_success',
@@ -122,7 +128,7 @@ module.exports = [
 
                 $scope.deleteContact = function (contact) {
                     $translate('notify.contact.delete_confirm').then(function (message) {
-                        Notify.showConfirm(message).then(function () {
+                        Notify.showConfirmAlert(message).then(function () {
                             ContactEndpoint.delete({id: contact.id}).$promise.then(function () {
                                 $translate(
                                     'notify.contact.destroy_success'
@@ -169,7 +175,10 @@ module.exports = [
                         return !_.isUndefined($scope.contact.contact);
                     }
 
-                    return false;
+                    // Check if you can add the login email address as a contact
+                    return _.find($scope.contacts, function (contact) {
+                        return !_.isUndefined(contact.contact) && contact.isLoginEmail;
+                    });
                 };
 
                 $scope.saveContacts = function () {
@@ -198,12 +207,13 @@ module.exports = [
                         ).then(function (message) {
                             Notify.showNotificationSlider(message);
                         });
+
+                        $scope.$emit('event:close');
                     }, function () {
                         showErrorMessage('contact.error_message');
                     });
 
                     $scope.saving = false;
-                    $scope.$emit('event:close');
                 };
 
                 $scope.cancel = function () {

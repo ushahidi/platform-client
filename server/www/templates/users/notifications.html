@@ -77,7 +77,7 @@
           </div>
         </form>
 
-        <div class="form-field">
+        <div class="form-field" ng-if="!contact.isLoginEmail">
           <button class="button-destructive" ng-click="deleteContact(contact)" translate>contact.button.delete</button>
         </div>
 
