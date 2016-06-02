@@ -11,6 +11,9 @@ function (
     Session,
     _
 ) {
+    $rootScope.currentUser = null;
+    $rootScope.loggedin = false;
+
     function loadSessionData() {
         $rootScope.currentUser = Session.getSessionData();
     }
@@ -80,9 +83,10 @@ function (
         doLogout('/');
     });
 
-    $rootScope.$on('event:authentication:login:failed', function () {
-        doLogout('/login');
-    });
+    // Don't think this is needed. We should already be logged out before this event
+    // $rootScope.$on('event:authentication:login:failed', function () {
+    //     doLogout();
+    // });
 
     $rootScope.$on('event:unauthorized', function () {
         if ($location.url() !== '/login') {
