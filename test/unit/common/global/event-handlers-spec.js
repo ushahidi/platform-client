@@ -103,9 +103,6 @@ describe('global event handlers', function () {
                             expect($rootScope.loggedin).toBe(false);
                         });
 
-                        it('should change the path to "/login"', function () {
-                            expect($location.path()).toEqual('/login');
-                        });
                     });
                 });
 
