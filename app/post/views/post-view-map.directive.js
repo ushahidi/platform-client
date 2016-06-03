@@ -54,6 +54,6 @@ function (
             isLoading: '='
         },
         controller: controller,
-        templateUrl: 'templates/views/map.html'
+        templateUrl: 'templates/posts/views/post-view-map.html'
     };
 }];

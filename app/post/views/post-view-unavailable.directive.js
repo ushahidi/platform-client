@@ -8,6 +8,6 @@ function (
         scope: {
             view: '='
         },
-        templateUrl: 'templates/views/unavailable.html'
+        templateUrl: 'templates/posts/views/post-view-unavailable.html'
     };
 }];
