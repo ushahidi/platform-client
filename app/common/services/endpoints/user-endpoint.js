@@ -43,9 +43,9 @@ function (
         }
     });
 
-    UserEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return UserEndpoint.get(id);
+    UserEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/users/' + params.id));
+        return UserEndpoint.get(params);
     };
 
     UserEndpoint.invalidateCache = function () {

@@ -39,9 +39,10 @@ function (
         }
     });
 
-    RoleEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return RoleEndpoint.get(id);
+    RoleEndpoint.getFresh = function (params) {
+        console.log(cache);
+        cache.remove(Util.apiUrl('/roles/' + params.id));
+        return RoleEndpoint.get(params);
     };
 
     RoleEndpoint.invalidateCache = function () {

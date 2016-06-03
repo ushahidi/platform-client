@@ -32,9 +32,9 @@ function (
         }
     });
 
-    PermissionEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return PermissionEndpoint.get(id);
+    PermissionEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/permissions/' + params.id));
+        return PermissionEndpoint.get(params);
     };
 
     PermissionEndpoint.invalidateCache = function () {
