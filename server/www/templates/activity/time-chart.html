@@ -10,7 +10,7 @@
         <div class="dropdown-menu init" dropdown-menu>
             <div class="form-field radio" ng-repeat="(key, value) in groupByOptions">
                 <label>
-                    <input type="radio" name="groupBy" value="{{key}}" ng-model="$parent.groupBy.value" ng-change="reload()"> {{::value | translate}}
+                    <input type="radio" name="groupBy" value="{{key}}" ng-checked="groupBy.value == key" ng-click="setGroupBy(key)"> {{::value | translate}}
                 </label>
             </div>
             <div class="form-fieldgroup">

@@ -75,6 +75,7 @@ function ActivityTimeChartController($scope, $filter, PostEndpoint, d3, _, PostF
     };
 
     $scope.reload = getPostStats;
+    $scope.setGroupBy = setGroupBy;
 
     activate();
 
@@ -114,5 +115,10 @@ function ActivityTimeChartController($scope, $filter, PostEndpoint, d3, _, PostF
         } else {
             $scope.options.chart.yAxis.axisLabel = yAxisLabel;
         }
+    }
+
+    function setGroupBy(key) {
+        $scope.groupBy.value = key;
+        getPostStats();
     }
 }
