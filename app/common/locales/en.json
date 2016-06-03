@@ -144,7 +144,14 @@
             "blue" : "Blue",
             "green" : "Green"
         },
-        "who" : "Who can see this?"
+        "who" : "Who can see this?",
+        "task" : {
+            "delete" : {
+                "desc" : "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
+                "delete" : "Delete task",
+                "delete_this" : "Delete this task"
+            }
+        }
     },
 
     "global_filter": {

@@ -71,7 +71,7 @@ function (
         // Save the form and translate the Structure stage label
         $q.all({
             form: FormEndpoint.saveCache(form).$promise,
-            label: $translate('form.structure_step')
+            label: $translate('form.post_step')
         }).then(function (data) {
             form = data.form;
             var label = data.label,

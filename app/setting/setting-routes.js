@@ -37,9 +37,13 @@ function (
         controller: require('./controllers/setting-surveys-controller.js'),
         templateUrl: 'templates/settings/surveys/surveys.html'
     })
+    .when('/settings/surveys/create', {
+        controller: require('./controllers/setting-surveys-edit-controller.js'),
+        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
+    })
     .when('/settings/surveys/:id', {
         controller: require('./controllers/setting-surveys-edit-controller.js'),
-        templateUrl: 'templates/settings/surveys/survey-edit.html'
+        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
     })
     .when('/settings/categories', {
         controller: require('./controllers/setting-categories-controller.js'),
