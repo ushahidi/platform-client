@@ -1,42 +1,140 @@
-<main class="page-content layout-c activity" role="main">
-    <div class="page-header">
-        <h1 translate>nav.activity</h1>
+<div>
+    <layout-class layout="a"></layout-class>
+    <div class="mode-context" ng-controller="navigation as nav">
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/">{{nav.site.name}}</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>nav.activity</h1>
+        </header>
 
-        <div class="tabs-menu" ng-show="!unavailableView"  dropdown>
-            <button type="button" class="button-toggle tabs-menu-button-js" dropdown-toggle></button>
-            <ul class="tabs-menu-list" dropdown-menu>
-                <li ng-class="{ active: currentInterval == 'week' }"><a ng-click="update('week')">This Week</a></li>
-                <li ng-class="{ active: currentInterval == 'month' }"><a ng-click="update('month')">This Month</a></li>
-                <li ng-class="{ active: currentInterval == 'all' }"><a ng-click="update('all')">All Time</a></li>
-            </ul>
+        <span class="mode-context-trigger">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden">app.show_more_less</span>
+        </span>
+
+        <div class="mode-context-body">
+            <p translate="activity.context_body" translate-values="{ site : nav.site.name }">A summary of how people are interacting with March on City Hall.</p>
         </div>
     </div>
 
-	<!-- unavailable view -->
-    <post-view-unavailable ng-show="unavailableView" view="'nav.activity' | translate"></post-view-unavailable>
-    <img ng-show="unavailableView" src="/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" />
+    <main role="main">
+        <div class="toolbar">
+            <form role="search" class="searchbar" name="searchForm" ng-submit="saveFilters()" ng-model-options="{ updateOn: 'submit' }">
 
-    <div ng-show="!unavailableView" class="main-col">
-        <div class="one-col activity-data-single">
-            <h4 class="header-border">Number of Posts</h4>
-            <div class="activity-chart">
-                <dc-chart chart-type="lineChart" chart-options="postTrendOptions" chart-data='postTrendData'></dc-chart>
+                <div class="searchbar-options">
+                    <fieldset class="custom-fieldset init" data-fieldset-type="date-range" dropdown auto-close="disabled" is-open="filtersMenuOpen">
+                        <legend class="dropdown-trigger init" dropdown-toggle>
+                            <span class="legend-label" translate="{{'graph.' + currentInterval }}">Date range</span>
+                            <svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use></svg>
+                        </legend>
+
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field radio">
+                                <label>
+                                    <input ng-model="currentInterval" type="radio" name="currentInterval" value="all">
+                                    <span translate="graph.all">All time<span>
+                                </label>
+                            </div>
+                            <div class="form-field radio">
+                                <label>
+                                    <input ng-model="currentInterval" type="radio" name="currentInterval" value="week">
+                                    <span translate="graph.week">This week<span>
+                                </label>
+                            </div>
+                            <div class="form-field radio">
+                                <label>
+                                    <input ng-model="currentInterval" type="radio" name="currentInterval" value="month">
+                                    <span translate="graph.month">This month<span>
+                                </label>
+                            </div>
+                            <!-- <div class="form-field radio">
+                                <label for="custom">
+                                    <input type="radio" name="daterange" value="custom">
+                                    Custom date range
+                                </label>
+                            </div>
+
+                            <div class="form-field date">
+                                <svg class="iconic">
+                                  <use xlink:href="/assets/img/iconic-sprite.svg#calendar"></use>
+                                </svg>
+                                <label for="startdate" class="hidden">Start date</label>
+                                <input type="date" name="startdate" placeholder="Start date" />
+                                <span class="date-joiner">to</span>
+                            </div>
+
+                            <div class="form-field date">
+                                <svg class="iconic">
+                                  <use xlink:href="/assets/img/iconic-sprite.svg#calendar"></use>
+                                </svg>
+                                <label for="enddate" class="hidden">End date</label>
+                                <input type="date" name="enddate" placeholder="End date" />
+                            </div> -->
+
+                            <div class="form-field">
+                                <button type="button" class="button-link" ng-click="cancelChangeFilters()" translate="app.cancel">Cancel</button>
+                                <button type="submit" class="button-alpha" translate="app.apply_filters">Apply filter</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+            </form>
+        </div>
+
+    	<!-- unavailable view -->
+        <!-- <post-view-unavailable ng-hide="isActivityAvailable" view="'nav.activity' | translate"></post-view-unavailable>
+        <img ng-hide="isActivityAvailable" src="/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" /> -->
+
+        <div ng-show="isActivityAvailable" class="main-col">
+            <div class="listing card init">
+                <div class="listing-item active">
+                   <div class="listing-item-secondary">
+                        <button ng-show="todo" type="button" class="button-beta button-flat">
+                            <svg class="iconic">
+                                <use xlink:href="../../img/iconic-sprite.svg#share"></use>
+                            </svg>
+                            <span class="hidden" translate="app.share">Share</span>
+                        </button>
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title" translate="activity.activity_over_time">Activity over time</h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <!-- <dc-chart-by-volume date-range="dateRange"></dc-chart-by-volume> -->
+                        <activity-bar-chart filters="filters"></activity-bar-chart>
+                    </div>
+                </div>
+                <div class="listing-item active">
+                   <div class="listing-item-secondary">
+                        <button ng-show="todo" type="button" class="button-beta button-flat">
+                            <svg class="iconic">
+                                <use xlink:href="../../img/iconic-sprite.svg#share"></use>
+                            </svg>
+                            <span class="hidden" translate="app.share">Share</span>
+                        </button>
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title" translate="activity.activity_by_volume">Activity by volume</h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <!-- <dc-chart-by-time date-range="dateRange"></dc-chart-by-time> -->
+                        <activity-time-chart filters="filters"></activity-time-chart>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="one-col activity-data-single">
-            <h4 class="header-border">Active Categories</h4>
-            <div class="activity-chart">
-                <dc-chart chart-type="barChart" chart-options="postCategoryOptions" chart-data='postCategoryData'></dc-chart>
-            </div>
-        </div>
-        <div class="one-col activity-data-single">
-            <h4 class="header-border">Active Regions</h4>
-            <post-view-map is-loading="isLoading" filters="mapQuery"></post-view-map>
-        </div>
-    </div> <!--end main column-->
+        </div> <!--end main column-->
 
-    <aside class="secondary-col" role="complementary">
-        <activity-timeline></activity-timeline>
-    </aside>
+        <aside class="secondary-col" role="complementary">
+            <!-- <activity-timeline></activity-timeline> -->
+        </aside>
 
-</main>
+    </main>
+</div>

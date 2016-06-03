@@ -1,0 +1,35 @@
+<fieldset class="custom-fieldset init" dropdown auto-close="disabled">
+    <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+        <span class="legend-label">Compare...</span>
+        <svg class="iconic chevron">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+    </legend>
+
+    <div class="dropdown-menu init" dropdown-menu>
+        <div class="form-field radio">
+            <label>
+                <input type="radio" name="timeline" checked="">Nothing; Show all posts
+            </label>
+        </div>
+        <div class="form-field radio">
+            <label>
+                <input type="radio" name="timeline">Surveys
+            </label>
+        </div>
+        <div class="form-field radio">
+            <label>
+                <input type="radio" name="timeline">Categories
+            </label>
+        </div>
+        <div class="form-fieldgroup">
+            <div class="form-field checkbox">
+                <label>
+                    <input type="checkbox" name="cumulative">Show cumulative totals
+                </label>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<dc-chart chart-type="lineChart" chart-options="postTrendOptions" chart-data='postTrendData'></dc-chart>

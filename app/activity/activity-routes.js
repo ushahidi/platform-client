@@ -7,13 +7,7 @@ function (
     $routeProvider
     .when('/activity', {
         controller: require('./activity.controller.js'),
-        templateUrl: 'templates/activity/activity.html',
-        resolve: {
-            features: ['Features', function (Features) {
-                Features.loadFeatures();
-                return Features;
-            }]
-        }
+        templateUrl: 'templates/activity/activity.html'
     });
 
 }];

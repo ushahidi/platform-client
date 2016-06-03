@@ -18,6 +18,7 @@
         "save_and_close" : "Save &amp; close",
         "saving" : "Saving",
         "settings": "Settings",
+        "share": "Share",
         "general" : "General",
         "surveys" : "Surveys",
         "data_sources" : "Data Sources",
@@ -59,9 +60,12 @@
         "upgrade" : "Upgrade"
     },
     "activity": {
+        "activity_over_time": "Activity over time",
+        "activity_by_volume": "Activity by volume",
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
-        "by" : "By"
+        "by" : "By",
+        "context_body": "A summary of how people are interacting with {{site}}."
     },
     "form": {
         "add_field" : "Add field",
@@ -179,19 +183,24 @@
         "apply_filters" : "Apply",
         "save_to_set" : "Save to Set",
         "search" : "Search",
-        "date_range" : "Date Range"
+        "date_range" : "Date range"
     },
     "graph" : {
+        "all_posts": "Nothing; Show all posts",
+        "all": "All time",
+        "compare": "Compare...",
+        "created": "Created time",
+        "cumulative": "Show cumulative totals",
+        "cumulative_post_count" : "Total post count",
         "group_by_placeholder" : "Graph",
+        "new_post_count" : "New posts",
         "none" : "None",
         "post_count" : "Post count",
-        "cumulative_post_count" : "Total post count",
-        "new_post_count" : "New posts",
         "post_date": "Post created date",
-        "cumulative": "Show cumulative totals",
-        "created": "Created time",
-        "updated": "Updated time",
-        "select_one": "Select one"
+        "select_one": "Select one",
+        "week": "This week",
+        "month": "This month",
+        "updated": "Updated time"
     },
     "message" : {
         "button" : {
