@@ -13,10 +13,6 @@ function (
         cache = new CacheFactory('permissionCache');
     }
 
-    cache.setOnExpire(function (key, value) {
-        PermissionEndpoint.get(value.id);
-    });
-
     var PermissionEndpoint = $resource(Util.apiUrl('/permissions/:id'), {
             id: '@id'
         }, {

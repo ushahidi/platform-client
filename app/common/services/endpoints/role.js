@@ -13,10 +13,6 @@ function (
         cache = new CacheFactory('roleCache');
     }
 
-    cache.setOnExpire(function (key, value) {
-        RoleEndpoint.get(value.id);
-    });
-
     var RoleEndpoint = $resource(Util.apiUrl('/roles/:id'), {
             id: '@id'
         }, {
