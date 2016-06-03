@@ -52,7 +52,8 @@ function ActivityController($scope, $translate, dc, d3, ViewHelper) {
     function setDateRange(interval) {
         switch (interval) {
             case 'month':
-                $scope.filters.created_after = d3.time.month(new Date());
+                // todo: convert to JS date
+                $scope.filters.created_after = d3.time.month(new Date()).toISOString();
                 $scope.filters.created_before =  null;
                 break;
             case 'all':
@@ -61,7 +62,8 @@ function ActivityController($scope, $translate, dc, d3, ViewHelper) {
                 break;
             case 'week':
             default:
-                $scope.filters.created_after = d3.time.week(new Date());
+                // todo: convert to JS date
+                $scope.filters.created_after = d3.time.week(new Date()).toISOString();
                 $scope.filters.created_before =  null;
         }
         return $scope.filters;
