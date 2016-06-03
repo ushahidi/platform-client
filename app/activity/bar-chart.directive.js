@@ -3,10 +3,8 @@ module.exports = ActivityBarChart;
 function ActivityBarChart() {
     return {
         restrict: 'E',
-        // replace: true,
         scope: {
-            filters: '=',
-            // isLoading: '='
+            filters: '='
         },
         controller: ActivityBarChartController,
         templateUrl: 'templates/activity/bar-chart.html'
@@ -58,7 +56,12 @@ function ActivityBarChartController($scope, $filter, PostEndpoint, d3, _, PostFi
                 axisLabel: $filter('translate')('graph.post_count'),
                 tickFormat: d3.format('d')
             },
-            tooltips: true,
+            tooltip : {
+                contentGenerator: function (data) {
+                    return '<h3>' + data.value + '</h3>' +
+                        '<p>' +  data.data.total + '</p>';
+                }
+            },
             forceY: 0,
             barColor: d3.scale.category20().range()
         }
@@ -70,7 +73,9 @@ function ActivityBarChartController($scope, $filter, PostEndpoint, d3, _, PostFi
 
     function activate() {
         // whenever the filters changes, update the current list of posts
-        $scope.$watch('filters', function () { getPostStats() }, true);
+        $scope.$watch('filters', function () {
+            getPostStats();
+        }, true);
     }
 
     function getPostStats(query) {

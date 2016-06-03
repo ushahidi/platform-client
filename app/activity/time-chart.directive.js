@@ -3,10 +3,8 @@ module.exports = ActivityTimeChart;
 function ActivityTimeChart() {
     return {
         restrict: 'E',
-        // replace: true,
         scope: {
-            filters: '=',
-            // isLoading: '='
+            filters: '='
         },
         controller: ActivityTimeChartController,
         templateUrl: 'templates/activity/time-chart.html'
@@ -67,10 +65,11 @@ function ActivityTimeChartController($scope, $filter, PostEndpoint, d3, _, PostF
                 tickFormat: d3.format('d')
             },
             forceY: 0,
-            tooltipContent: function (key, x, y, e, graph) {
-                return '<h3>' + key + '</h3>' +
-                    '<p>' +  x + '</p>' +
-                    '<p>' +  $scope.options.chart.yAxis.axisLabel + ' ' + y + '</p>';
+            tooltip : {
+                contentGenerator: function (data) {
+                    return '<h3>' + data.series[0].key + '</h3>' +
+                        '<p>' +  data.point.y + ' posts at ' + d3.time.format('%e %b %Y')(new Date(data.point.x)) + '</p>';
+                }
             }
         }
     };
@@ -81,8 +80,9 @@ function ActivityTimeChartController($scope, $filter, PostEndpoint, d3, _, PostF
 
     function activate() {
         // whenever filters change, reload
-        $scope.$watch('filters', function () { getPostStats() }, true);
-
+        $scope.$watch('filters', function () {
+            getPostStats();
+        }, true);
         $scope.$watch('showCumulative', updateAxisLabel);
     }
 
