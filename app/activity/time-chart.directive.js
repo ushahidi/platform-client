@@ -121,6 +121,6 @@ function (
             isLoading: '='
         },
         controller: controller,
-        templateUrl: 'templates/views/timeline.html'
+        templateUrl: 'templates/activity/time-chart.html'
     };
 }];

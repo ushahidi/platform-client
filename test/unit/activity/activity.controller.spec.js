@@ -1,4 +1,4 @@
-var ROOT_PATH = '../../../../';
+var ROOT_PATH = '../../../';
 
 describe('activity activity controller', function () {
 
@@ -20,7 +20,7 @@ describe('activity activity controller', function () {
             }
         });
 
-        testApp.controller('activityController', require(ROOT_PATH + 'app/activity/controllers/activity-controller.js'));
+        testApp.controller('activityController', require(ROOT_PATH + 'app/activity/activity.controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

@@ -1,6 +1,6 @@
-var ROOT_PATH = '../../../../../';
+var ROOT_PATH = '../../../';
 
-describe('post view chart directive', function () {
+describe('post view timeline directive', function () {
 
     var $rootScope,
         $scope,
@@ -17,7 +17,7 @@ describe('post view chart directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postViewChart', require(ROOT_PATH + 'app/post/directives/views/post-view-chart-directive'))
+        testApp.directive('activityTimeChart', require(ROOT_PATH + 'app/activity/time-chart.directive.js'))
         .value('$filter', function () {
             return function () {};
         })
@@ -36,10 +36,9 @@ describe('post view chart directive', function () {
 
         Notify = _Notify_;
 
-        $scope.post = fixture.load('posts/120.json');
         $scope.isLoading = true;
         $scope.filters = {};
-        element = '<post-view-chart filters="filters" is-loading="isLoading"></post-view-chart>';
+        element = '<activity-time-chart filters="filters" is-loading="isLoading"></activity-time-chart>';
 
         element = $compile(element)($scope);
         $rootScope.$digest();
@@ -47,8 +46,6 @@ describe('post view chart directive', function () {
     }));
 
     it('should load initial values', function () {
-        // This directive is better tested via e2e
-        expect(isolateScope.data[0].values).toEqual([1,2,3,4,5]);
-
+        expect(isolateScope.isLoading).toBe(false);
     });
 });

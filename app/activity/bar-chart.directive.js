@@ -103,6 +103,6 @@ function (
             isLoading: '='
         },
         controller: controller,
-        templateUrl: 'templates/views/chart.html'
+        templateUrl: 'templates/activity/chart.html'
     };
 }];
