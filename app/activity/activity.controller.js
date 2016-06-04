@@ -1,16 +1,18 @@
 module.exports = ActivityController;
 
-ActivityController.$inject = ['$scope', '$translate', 'd3', 'ViewHelper'];
+ActivityController.$inject = ['$scope', '$translate', 'moment', 'ViewHelper'];
 
-function ActivityController($scope, $translate, d3, ViewHelper) {
+function ActivityController($scope, $translate, moment, ViewHelper) {
     // Initial values
     $scope.isActivityAvailable = false;
     $scope.currentInterval = 'week';
+    $scope.editableInterval = 'week';
     $scope.filters = {
         created_after: null,
         created_before: null
     };
     $scope.filtersMenuOpen = false;
+    $scope.dateOptions = { format : 'yyyy-mm-dd' };
 
     $scope.saveFilters = saveFilters;
     $scope.cancelChangeFilters = cancelChangeFilters;
@@ -30,18 +32,19 @@ function ActivityController($scope, $translate, d3, ViewHelper) {
     }
 
     function saveFilters() {
+        $scope.currentInterval = $scope.editableInterval;
         update();
         $scope.filtersMenuOpen = false;
     }
 
     function cancelChangeFilters() {
-        $scope.searchForm.$rollbackViewValue();
+        $scope.editableInterval = $scope.currentInterval;
         $scope.filtersMenuOpen = false;
     }
 
     function update() {
         //$scope.currentInterval = interval;
-        $scope.dateRange = setDateRange($scope.currentInterval);
+        setDateRange($scope.currentInterval);
     }
 
     /**
@@ -52,21 +55,27 @@ function ActivityController($scope, $translate, d3, ViewHelper) {
     function setDateRange(interval) {
         switch (interval) {
             case 'month':
-                // todo: convert to JS date
-                $scope.filters.created_after = d3.time.month(new Date()).toISOString();
+                $scope.filters.created_after = moment().startOf('month').toDate();
                 $scope.filters.created_before =  null;
                 break;
             case 'all':
                 $scope.filters.created_after = null;
                 $scope.filters.created_before =  null;
                 break;
+            case 'custom':
+                // Do nothing?
+                $scope.filters.created_after = $scope.createdAfter;
+                $scope.filters.created_before = $scope.createdBefore;
+                break;
             // case 'week':
             default:
                 // Default to this week
-                // todo: convert to JS date
-                $scope.filters.created_after = d3.time.week(new Date()).toISOString();
+                $scope.filters.created_after = moment().startOf('week').toDate();
                 $scope.filters.created_before =  null;
         }
+        // Copy range to editable values
+        $scope.createdAfter = $scope.filters.created_after;
+        $scope.createdBefore = $scope.filters.created_before;
         return $scope.filters;
     }
 }

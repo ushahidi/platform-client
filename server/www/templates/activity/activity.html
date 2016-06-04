@@ -22,57 +22,64 @@
 
     <main role="main">
         <div class="toolbar">
-            <form role="search" class="searchbar" name="searchForm" ng-submit="saveFilters()" ng-model-options="{ updateOn: 'submit' }">
+            <form role="search" class="searchbar" name="searchForm" ng-submit="saveFilters()">
 
                 <div class="searchbar-options">
                     <fieldset class="custom-fieldset init" data-fieldset-type="date-range" dropdown auto-close="disabled" is-open="filtersMenuOpen">
                         <legend class="dropdown-trigger init" dropdown-toggle>
-                            <span class="legend-label" translate="{{'graph.' + currentInterval }}">Date range</span>
+                            <span class="legend-label" ng-show="currentInterval !== 'custom'" translate="{{'graph.' + currentInterval }}">Date range</span>
+                            <span class="legend-label"  ng-show="currentInterval == 'custom'"
+                                translate="graph.custom_display"
+                                translate-values="{
+                                    start: (filters.created_after | date:'mediumDate'),
+                                    end: (filters.created_before | date:'mediumDate') }"
+                                translate-compile>Date range</span>
                             <svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use></svg>
                         </legend>
 
                         <div class="dropdown-menu init" dropdown-menu>
                             <div class="form-field radio">
                                 <label>
-                                    <input ng-model="currentInterval" type="radio" name="currentInterval" value="all">
+                                    <input ng-model="editableInterval" type="radio" name="editableInterval" value="all">
                                     <span translate="graph.all">All time<span>
                                 </label>
                             </div>
                             <div class="form-field radio">
                                 <label>
-                                    <input ng-model="currentInterval" type="radio" name="currentInterval" value="week">
+                                    <input ng-model="editableInterval" type="radio" name="editableInterval" value="week">
                                     <span translate="graph.week">This week<span>
                                 </label>
                             </div>
                             <div class="form-field radio">
                                 <label>
-                                    <input ng-model="currentInterval" type="radio" name="currentInterval" value="month">
+                                    <input ng-model="editableInterval" type="radio" name="editableInterval" value="month">
                                     <span translate="graph.month">This month<span>
                                 </label>
                             </div>
-                            <!-- <div class="form-field radio">
-                                <label for="custom">
-                                    <input type="radio" name="daterange" value="custom">
-                                    Custom date range
+                            <div class="form-field radio">
+                                <label>
+                                    <input ng-model="editableInterval" type="radio" name="editableInterval" value="custom">
+                                    <span translate="graph.custom">Custom date range<span>
                                 </label>
                             </div>
 
-                            <div class="form-field date">
+                            <!-- todo: reuse filter-date -->
+                            <div class="form-field date" ng-show="editableInterval == 'custom'">
                                 <svg class="iconic">
-                                  <use xlink:href="/assets/img/iconic-sprite.svg#calendar"></use>
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
                                 </svg>
-                                <label for="startdate" class="hidden">Start date</label>
-                                <input type="date" name="startdate" placeholder="Start date" />
+                                <label class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
+                                <input type="date" pick-a-date="createdAfter" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="createdAfter" />
                                 <span class="date-joiner">to</span>
                             </div>
 
-                            <div class="form-field date">
+                            <div class="form-field date" ng-show="editableInterval == 'custom'">
                                 <svg class="iconic">
-                                  <use xlink:href="/assets/img/iconic-sprite.svg#calendar"></use>
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
                                 </svg>
-                                <label for="enddate" class="hidden">End date</label>
-                                <input type="date" name="enddate" placeholder="End date" />
-                            </div> -->
+                                <label class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
+                                <input type="date" pick-a-date="createdBefore" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="createdBefore">
+                            </div>
 
                             <div class="form-field">
                                 <button type="button" class="button-link" ng-click="cancelChangeFilters()" translate="app.cancel">Cancel</button>

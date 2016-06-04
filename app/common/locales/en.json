@@ -192,6 +192,8 @@
         "created": "Created time",
         "cumulative": "Show cumulative totals",
         "cumulative_post_count" : "Total post count",
+        "custom": "Custom date range",
+        "custom_display": "{{start || 'Beginning'}} to {{end || 'Now'}}",
         "group_by_placeholder" : "Graph",
         "new_post_count" : "New posts",
         "none" : "None",

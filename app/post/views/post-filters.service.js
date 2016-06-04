@@ -75,6 +75,10 @@ function PostFiltersService(_, FormEndpoint) {
             filters,
             function (value, key, object) {
                 // Is value empty?
+                // Is it a date?
+                if (_.isDate(value)) {
+                    return false;
+                }
                 // Is it an empty object or array?
                 if (_.isObject(value) || _.isArray(value)) {
                     return _.isEmpty(value);
