@@ -8,7 +8,7 @@ function ActivityTimeChart() {
         },
         controller: ActivityTimeChartController,
         templateUrl: 'templates/activity/time-chart.html'
-    }
+    };
 }
 
 ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', '_', 'PostFilters'];
@@ -108,7 +108,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, Po
             }
             $scope.isLoading = false;
         });
-    };
+    }
 
     function updateAxisLabel(cumulative) {
         if (cumulative) {

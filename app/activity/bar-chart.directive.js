@@ -8,7 +8,7 @@ function ActivityBarChart() {
         },
         controller: ActivityBarChartController,
         templateUrl: 'templates/activity/bar-chart.html'
-    }
+    };
 }
 
 ActivityBarChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', '_', 'PostFilters'];
@@ -94,6 +94,6 @@ function ActivityBarChartController($scope, $translate, PostEndpoint, d3, _, Pos
             $scope.data = results.totals;
             $scope.isLoading = false;
         });
-    };
+    }
 
 }

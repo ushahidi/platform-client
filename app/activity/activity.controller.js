@@ -5,7 +5,7 @@ ActivityController.$inject = ['$scope', '$translate', 'd3', 'ViewHelper'];
 function ActivityController($scope, $translate, d3, ViewHelper) {
     // Initial values
     $scope.isActivityAvailable = false;
-    $scope.currentInterval = "week";
+    $scope.currentInterval = 'week';
     $scope.filters = {
         created_after: null,
         created_before: null
@@ -60,8 +60,9 @@ function ActivityController($scope, $translate, d3, ViewHelper) {
                 $scope.filters.created_after = null;
                 $scope.filters.created_before =  null;
                 break;
-            case 'week':
+            // case 'week':
             default:
+                // Default to this week
                 // todo: convert to JS date
                 $scope.filters.created_after = d3.time.week(new Date()).toISOString();
                 $scope.filters.created_before =  null;
