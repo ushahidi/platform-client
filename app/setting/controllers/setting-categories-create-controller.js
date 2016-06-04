@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$location',
     '$translate',
     '$route',
@@ -10,6 +11,7 @@ module.exports = [
     '_',
 function (
     $scope,
+    $rootScope,
     $location,
     $translate,
     $route,
@@ -19,6 +21,12 @@ function (
     Notify,
     _
 ) {
+
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() == false) {
+        $location.path("/");
+    }
+
     $translate('tag.add_tag').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
