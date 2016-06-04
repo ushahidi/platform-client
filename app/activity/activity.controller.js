@@ -1,8 +1,8 @@
 module.exports = ActivityController;
 
-ActivityController.$inject = ['$scope', '$translate', 'dc', 'd3', 'ViewHelper'];
+ActivityController.$inject = ['$scope', '$translate', 'd3', 'ViewHelper'];
 
-function ActivityController($scope, $translate, dc, d3, ViewHelper) {
+function ActivityController($scope, $translate, d3, ViewHelper) {
     // Initial values
     $scope.isActivityAvailable = false;
     $scope.currentInterval = "week";
