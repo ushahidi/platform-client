@@ -69,7 +69,6 @@ function ActivityBarChartController($scope, $translate, PostEndpoint, d3, _, Pos
     };
 
     $scope.reload = getPostStats;
-    $scope.setGroupBy = setGroupBy;
 
     activate();
 
@@ -95,11 +94,6 @@ function ActivityBarChartController($scope, $translate, PostEndpoint, d3, _, Pos
             $scope.data = results.totals;
             $scope.isLoading = false;
         });
-    }
-
-    function setGroupBy(key) {
-        $scope.groupBy.value = key;
-        getPostStats();
-    }
+    };
 
 }
