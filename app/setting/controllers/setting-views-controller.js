@@ -12,7 +12,7 @@ function (
 
     // Redirect to home if not authorized
     if ($rootScope.hasManageSettingsPermission() == false) {
-        $location.path("/");
+        return $location.path("/");
     }
 
     $translate('tool.manage_views').then(function (title) {

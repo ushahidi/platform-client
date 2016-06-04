@@ -12,7 +12,7 @@ function (
 
     // Redirect to home if not authorized
     if ($rootScope.hasManageSettingsPermission() == false) {
-        $location.path("/");
+        return $location.path("/");
     }
 
     $rootScope.setLayout('layout-a');

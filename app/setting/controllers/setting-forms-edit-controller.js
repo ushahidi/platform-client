@@ -18,7 +18,7 @@ function (
 
     // Redirect to home if not authorized
     if ($rootScope.hasManageSettingsPermission() == false) {
-        $location.path("/");
+        return $location.path("/");
     }
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
