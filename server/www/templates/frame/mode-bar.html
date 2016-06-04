@@ -31,7 +31,7 @@
                 </a>
             </li>
 
-            <li ng-class="{ active: activeMode === 'settings' }" class="tuck" data-message="customize">
+            <li ng-class="{ active: activeMode === 'settings' }" class="tuck" data-message="customize" ng-show="hasManageSettingsPermission()">
                 <a href="/settings">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
