@@ -2,6 +2,7 @@ module.exports = [
     '$scope',
     '$translate',
     '$location',
+    '$rootScope',
     '$q',
     'FormEndpoint',
     'FormStageEndpoint',
@@ -12,6 +13,7 @@ function (
     $scope,
     $translate,
     $location,
+    $rootScope,
     $q,
     FormEndpoint,
     FormStageEndpoint,
@@ -19,6 +21,12 @@ function (
     _,
     Features
 ) {
+	
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() == false) {
+        return $location.path("/");
+    }
+
     Features.loadFeatures().then(function () {
         $scope.formQuota = Features.getLimit('forms');
     });
