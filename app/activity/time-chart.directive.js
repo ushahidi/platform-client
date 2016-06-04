@@ -11,11 +11,11 @@ function ActivityTimeChart() {
     }
 }
 
-ActivityTimeChartController.$inject = ['$scope', '$filter', 'PostEndpoint', 'd3', '_', 'PostFilters'];
-function ActivityTimeChartController($scope, $filter, PostEndpoint, d3, _, PostFilters) {
-    var yAxisLabelCumulative = $filter('translate')('graph.cumulative_post_count'),
-        yAxisLabel = $filter('translate')('graph.new_post_count'),
-        xAxisLabel = $filter('translate')('graph.post_date');
+ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', '_', 'PostFilters'];
+function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, PostFilters) {
+    var yAxisLabelCumulative = $translate.instant('graph.cumulative_post_count'),
+        yAxisLabel = $translate.instant('graph.new_post_count'),
+        xAxisLabel = $translate.instant('graph.post_date');
 
     $scope.showCumulative = true;
     $scope.timelineAttribute = 'created';
@@ -70,7 +70,8 @@ function ActivityTimeChartController($scope, $filter, PostEndpoint, d3, _, PostF
                     return '<h3>' + data.series[0].key + '</h3>' +
                         '<p>' +  data.point.y + ' posts at ' + d3.time.format('%e %b %Y')(new Date(data.point.x)) + '</p>';
                 }
-            }
+            },
+            noData: $translate.instant('graph.no_data')
         }
     };
 

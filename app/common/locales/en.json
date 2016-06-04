@@ -195,6 +195,7 @@
         "group_by_placeholder" : "Graph",
         "new_post_count" : "New posts",
         "none" : "None",
+        "no_data": "No activity to show",
         "post_count" : "Post count",
         "post_date": "Post created date",
         "select_one": "Select one",

@@ -11,8 +11,8 @@ function ActivityBarChart() {
     }
 }
 
-ActivityBarChartController.$inject = ['$scope', '$filter', 'PostEndpoint', 'd3', '_', 'PostFilters'];
-function ActivityBarChartController($scope, $filter, PostEndpoint, d3, _, PostFilters) {
+ActivityBarChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', '_', 'PostFilters'];
+function ActivityBarChartController($scope, $translate, PostEndpoint, d3, _, PostFilters) {
     $scope.data = [{
         values: []
     }];
@@ -48,12 +48,12 @@ function ActivityBarChartController($scope, $filter, PostEndpoint, d3, _, PostFi
             valueFormat: d3.format('d'),
             transitionDuration: 500,
             xAxis: {
-                axisLabel: $filter('translate')('post.categories'),
+                axisLabel: $translate.instant('post.categories'),
                 tickPadding: -10,
                 axisLabelDistance: 0
             },
             yAxis: {
-                axisLabel: $filter('translate')('graph.post_count'),
+                axisLabel: $translate.instant('graph.post_count'),
                 tickFormat: d3.format('d')
             },
             tooltip : {
@@ -63,7 +63,8 @@ function ActivityBarChartController($scope, $filter, PostEndpoint, d3, _, PostFi
                 }
             },
             forceY: 0,
-            barColor: d3.scale.category20().range()
+            barColor: d3.scale.category20().range(),
+            noData: $translate.instant('graph.no_data')
         }
     };
 
@@ -87,7 +88,7 @@ function ActivityBarChartController($scope, $filter, PostEndpoint, d3, _, PostFi
 
         $scope.isLoading = true;
         PostEndpoint.stats(postQuery).$promise.then(function (results) {
-            $scope.options.chart.xAxis.axisLabel = $filter('translate')($scope.groupByOptions[$scope.groupBy.value]);
+            $scope.options.chart.xAxis.axisLabel = $translate.instant($scope.groupByOptions[$scope.groupBy.value]);
             if (results.totals[0]) {
                 results.totals[0].key = $scope.options.chart.yAxis.axisLabel;
             }
