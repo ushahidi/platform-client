@@ -17,7 +17,7 @@ function ActivityController($scope, $translate, d3, ViewHelper) {
 
     activate();
 
-    function activate () {
+    function activate() {
         // Change mode
         $scope.$emit('event:mode:change', 'activity');
         // Set the page title

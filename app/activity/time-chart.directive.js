@@ -18,6 +18,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, Po
         xAxisLabel = $translate.instant('graph.post_date');
 
     $scope.showCumulative = true;
+    $scope.isLoading = true;
     $scope.timelineAttribute = 'created';
 
     $scope.data = [{

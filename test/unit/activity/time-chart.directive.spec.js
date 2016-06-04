@@ -5,7 +5,7 @@ describe('post view timeline directive', function () {
     var $rootScope,
         $scope,
         isolateScope,
-        Notify,
+        PostEndpoint,
         element;
 
     beforeEach(function () {
@@ -30,15 +30,15 @@ describe('post view timeline directive', function () {
 
     beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
+    beforeEach(inject(function (_$rootScope_, $compile, _PostEndpoint_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
-        Notify = _Notify_;
+        PostEndpoint = _PostEndpoint_;
+        spyOn(PostEndpoint, 'stats').and.callThrough();
 
-        $scope.isLoading = true;
         $scope.filters = {};
-        element = '<activity-time-chart filters="filters" is-loading="isLoading"></activity-time-chart>';
+        element = '<activity-time-chart filters="filters"></activity-time-chart>';
 
         element = $compile(element)($scope);
         $rootScope.$digest();
@@ -46,6 +46,22 @@ describe('post view timeline directive', function () {
     }));
 
     it('should load initial values', function () {
+        expect(isolateScope.filters).toEqual({});
         expect(isolateScope.isLoading).toBe(false);
+        expect(isolateScope.groupBy.value).toBe('tags');
+        expect(isolateScope.timelineAttribute).toBe('created');
+        expect(isolateScope.groupByOptions['']).toBe('graph.all_posts');
+    });
+
+    it('should have loaded posts', function () {
+        expect(PostEndpoint.stats).toHaveBeenCalled();
+    });
+
+    it('should load reload posts when filters change', function () {
+        isolateScope.filters.tags = 1;
+        $rootScope.$digest();
+        expect(PostEndpoint.stats).toHaveBeenCalledWith(jasmine.objectContaining({
+            tags: 1
+        }));
     });
 });

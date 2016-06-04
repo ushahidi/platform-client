@@ -16,11 +16,11 @@ module.exports = [function () {
         filterState: filterState,
         getDefaults: function () {},
         getQueryParams: function (filters) {
-            return {
-                status: 'published'
-            };
+            return filters;
         },
-        getFilters: function () { return filterState; },
+        getFilters: function () {
+            return filterState;
+        },
         setFilters: function () {},
         clearFilters: function () {},
         clearFilter: function () {},

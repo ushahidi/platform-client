@@ -14,10 +14,12 @@ describe('activity activity controller', function () {
         var testApp = angular.module('testApp', [
         'ushahidi.mock'
         ])
-        .value('features', {
-            isViewEnabled: function () {
-                return true;
-            }
+        .service('ViewHelper', function () {
+            return {
+                isViewAvailable: function (view) {
+                    return true;
+                }
+            };
         });
 
         testApp.controller('activityController', require(ROOT_PATH + 'app/activity/activity.controller.js'));
