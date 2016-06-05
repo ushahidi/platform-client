@@ -18,6 +18,7 @@ module.exports = [
     'leafletData',
     '_',
     'Notify',
+    'moment',
 function (
     $scope,
     $rootScope,
@@ -37,8 +38,10 @@ function (
     L,
     leafletData,
     _,
-    Notify
+    Notify,
+    moment
 ) {
+    $rootScope.setLayout('layout-c');
     $scope.post = post;
 
     $scope.mapDataLoaded = false;
@@ -274,4 +277,33 @@ function (
             Notify.showApiErrors(errorResponse);
         });
     };
+
+    $scope.addToSurvey = function () {
+       $location.path('/posts/create/' + post.form.id);
+    };
+
+    // Get duration since post was last updated
+    function getUpdateDuration() {
+        var postDate = post.update || post.created,
+            lastUpdateTime = moment(postDate),
+            now = moment(new Date()),
+            duration =  moment.duration(now.diff(lastUpdateTime));
+
+        // Display duration if last update was less than 24 hours
+        if (duration.asSeconds < 60) {
+            $translate('post.duration.less_than_a_minute').then(function (message) {
+                $scope.duration = message;
+            });
+        } else if (duration.asMinutes < 60) {
+            $translate('post.duration.minutes').then(function (units) {
+                $scope.duration = duration.asMinutes() + ' ' + units;
+            });
+        } else if (duration.asHours < 24) {
+            $translate('post.duration.hours').then(function (units) {
+                $scope.duration = duration.asHours() + ' ' + units;
+            });
+        }
+    }
+
+    getUpdateDuration();
 }];

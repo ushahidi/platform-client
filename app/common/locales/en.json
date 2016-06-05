@@ -371,6 +371,7 @@
             "create_type" : "Create {{type}}",
             "edit_type" : "Edit {{type}}: {{title}}",
             "add_a_post" : "Add a post",
+            "add_to_survey" : "Add to this survey",
             "edit_post" : "Edit {{title}}",
             "change_type" : "Change type",
             "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
@@ -444,7 +445,12 @@
             "current_url" : "Current image",
             "add_caption" : "Add caption",
             "upload" : "Upload"
-        }
+        },
+        "duration" : {
+            "less_than_a_minute" : "Just now",
+            "minutes" : "minutes",
+            "hours" : "hours"
+        },
     },
     "role": {
         "add_role" : "Add Role",

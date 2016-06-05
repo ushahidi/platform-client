@@ -7,6 +7,7 @@ module.exports = [
     'PostEntity',
     'PostEndpoint',
     'FormEndpoint',
+    '$routeParams',
 function (
     $scope,
     $translate,
@@ -15,7 +16,8 @@ function (
     $routeParams,
     postEntity,
     PostEndpoint,
-    FormEndpoint
+    FormEndpoint,
+    $routeParams
 ) {
     $translate('post.create_post').then(function (title) {
         $scope.title = title;

@@ -1,125 +1,147 @@
-<main class="page-content layout-c">
-   <div class="main-col">
-        <article role="article">
-            <header class="page-header">
-                <h1 class="page-title">
-                    {{post.title}}
-                </h1>
-                <div class="page-permissions">
-                    <p ng-show="post.allowed_privileges.indexOf('update') == -1">
-                        <span class="icon-left fa-globe" translate>
-                            {{publishedFor()}}
-                        </span>
-                    </p>
-                    <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
-                        <publish-selector
-                            toggle-role-func="publishPostTo(updatedPost)"
-                            post="post" ></publish-selector>
-                    </div>
-                </div>
-                <div class="actions-toggle">
+<div class="mode-context" ng-controller="navigation as nav">
 
-                    <div id="options" class="actions-content init active">
-                        <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
-                            <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
-                        </a>
-                    <!--    <button type="button" class="button-secondary">
-                            <span class="icon-left fa-share">Share</span>
-                        </button>
-                    -->
-                        <collection-selector
-                            post="post"
-                            ng-if="post.allowed_privileges.indexOf('update') !== -1"
-                            ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
-                            >
-                        </collection-selector>
-                    </div>
-                </div>
-            </header>
-            <div class="vertical-tabs">
-                <nav class="vertical-tabs-menu init">
-                    <ul>
-                        <li
-                            ng-repeat="stage in stages"
-                            ng-class="{'active': visibleStage == stage.id}"  >
-                            <a ng-click="setVisibleStage(stage.id)">
-                                <span class="icon-left" ng-class="{'fa-{{stage.icon}}': stage.icon}">
-                                    {{stage.label}}
-                                </span>
-                            </a>
-                            <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
-                            </span>
-                        </li>
-                        <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank.-->
-                    </ul>
-                </nav>
-                <div class="vertical-tabs-content">
-                    <div class="post-author">
-                       <div class="user-avatar" ng-show="post.user">
-                          <img class="circular" src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ post.user.realname }}">
-                       </div>
-                       <p>
-                          <strong class="icon-left fa-circle">
-                              {{form_name || "Unstructured"}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br>
-                          <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
-                          <span ng-if="post.source == 'sms'" translate>post.messages.by_sms</span>
-                          <span ng-if="post.source == 'email'" translate>post.messages.by_email</span>
-                          <span ng-if="post.source == 'twitter'" translate>post.messages.by_twitter</span>
-                          <a class="cta" ng-href="/posts/{{post.id}}/messages" translate>post.messages.associated_messages</a>
-                      </p>
-                    </div>
-                    <div
-                        ng-if="post.content"
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
-                        class="post-field">
-                        <p sd-model-to-html="post.content"></p>
-                    </div>
-                    <div
-                        ng-if="!!post.tags.length"
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
-                        class="form-field"
-                    >
-                        <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
-                        <div class="form-field checkbox" ng-repeat="category in post.tags">
-                            <label>
-                                <i class="fa fa-{{category.icon}}" style="color:{{category.color}}"></i> {{category.tag}}
-                            </label>
-                        </div>
-                    </div>
+  <header class="mode-context-header has-logo">
+    <h1 class="mode-context-title"><a href="/" ng-bind="nav.site.name"></a></h1>
+    <img ng-if="site.image_header" ng-src="nav.site.image_header" class="deployment-logo" />
+  </header>
 
-                    <div
-                        ng-repeat="(key,value) in post.values"
-                        ng-if="form_attributes[key] && showType(form_attributes[key].type)"
-                        ng-show="form_attributes[key].form_stage_id == visibleStage"
-                        class="post-field"
-                      >
+  <span class="mode-context-trigger">
+    <svg class="iconic">
+      <use xlink:href="../img/iconic-sprite.svg#chevron-bottom"></use>
+    </svg>
+    <span class="label hidden">Show more/less</span>
+  </span>
 
-                       <!-- Show images -->
-                      <post-media-value
-                        ng-if="form_attributes[key].type === 'media'"
-                        label="{{form_attributes[key].label}}"
-                        media-id="value"></post-media-value>
+  <div class="mode-context-body">
+    <p ng-bind="nav.site.description"></p>
 
-                      <post-value
-                        key="key"
-                        value="value"
-                        attribute="form_attributes[key]"
-                        ng-if="form_attributes[key].type !== 'media'">
-                        ></post-value>
-                    </div>
-                    <div
-                        ng-if="mapDataLoaded"
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
-                        class="post-field"
-                        >
-                        <h4 ng-if="mapDataLoaded" translate>post.location</h4>
-                        <div ng-if="mapDataLoaded">
-                            <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
-                          </div>
-                    </div>
-                </div>
+    <button class="button-flat" ng-click="addToSurvey()">
+      <svg class="iconic">
+        <use xlink:href="../img/iconic-sprite.svg#plus"></use>
+      </svg>
+      <span class="button-label" translate>post.modify.add_to_survey</span>
+    </button>
+  </div>
+</div>
+
+<main role="main">
+  <div class="main-col">
+    <article class="postcard" role="article">
+      <div class="postcard-body">
+        <h1 class="postcard-title">
+          {{post.title}}
+        </h1>
+        <div class="metadata">
+          <div>
+            <!--
+                <strong class="icon-left fa-circle">
+                  {{form_name || "Unstructured"}}
+                </strong>
+                -->
+
+            <span class="user-avatar" ng-show="post.user">
+              <img class="circular" src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ post.user.realname }}">
+            </span>
+
+            <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a>,&nbsp;</span>
+
+            <span ng-show="duration">
+              {{ duration }}
+            </span>
+            <span ng-show="!duration">
+              posted at {{post.updated || post.created | date:'shortTime'}}
+              <strong> {{post.updated || post.created | date:'mediumDate'}}</strong>
+            </span>
+
+            <span ng-if="post.source == 'sms'" translate>, post.messages.by_sms</span>
+            <span ng-if="post.source == 'email'" translate>, post.messages.by_email</span>
+            <span ng-if="post.source == 'twitter'" translate>, post.messages.by_twitter</span>
+
+            <span class="metadata-visibility tooltip"
+                  ng-show="post.allowed_privileges.indexOf('update') == -1">
+              <svg class="iconic">
+                <use xlink:href="/assets/img/iconic-sprite.svg#lock-locked"></use>
+              </svg>
+              <span class="bug">{{ publishedFor() }}</span>
+            </span>
+
+          </div>
+
+          <p>
+            <a class="cta" ng-href="/posts/{{post.id}}/messages" translate>post.messages.associated_messages</a>
+          </p>
+
+        </div>
+
+        <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
+          <ul>
+            <li
+              ng-repeat="stage in stages"
+              ng-class="{'active': visibleStage == stage.id}"  >
+              <a ng-click="setVisibleStage(stage.id)">
+                <span class="icon-left" ng-class="{'fa-{{stage.icon}}': stage.icon}">
+                  {{stage.label}}
+                </span>
+              </a>
+              <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
+              </span>
+            </li>
+          </ul>
+        </nav>
+        <div class="tasks-tabs">
+          <div
+            ng-if="post.content"
+            ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+            class="postcard-field">
+            <p sd-model-to-html="post.content"></p>
+          </div>
+          <div
+            ng-if="!!post.tags.length"
+            ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+            class="form-field"
+            >
+            <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
+            <div class="form-field checkbox" ng-repeat="category in post.tags">
+              <label>
+                <i class="fa fa-{{category.icon}}" style="color:{{category.color}}"></i> {{category.tag}}
+              </label>
             </div>
-       </article>
-    </div>
+          </div>
+
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id == visibleStage"
+            class="postcard-field"
+            >
+
+            <post-media-value
+              ng-if="form_attributes[key].type === 'media'"
+              label="{{form_attributes[key].label}}"
+              media-id="value"></post-media-value>
+
+            <post-value
+              key="key"
+              value="value"
+              attribute="form_attributes[key]"
+              ng-if="form_attributes[key].type !== 'media'">
+            </post-value>
+          </div>
+          <div
+            ng-if="mapDataLoaded"
+            ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+            class="postcard-field"
+            >
+            <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
+            <div ng-if="mapDataLoaded">
+              <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <post-detail-actions post="post"></post-detail-actions>
+      
+    </article>
+  </div>
 </main>

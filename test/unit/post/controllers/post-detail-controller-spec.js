@@ -23,6 +23,20 @@ describe('Post detail controller', function () {
         }
     };
 
+    function moment () {
+        return {
+            diff: function () {}
+        };
+    }
+
+    moment.duration = function () {
+        return {
+            asSeconds: function () {},
+            asMinutes: function () {},
+            asHours: function () {}
+        };
+    };
+
     beforeEach(function () {
         var testApp = angular.module('testApp', [
             'pascalprecht.translate',
@@ -79,6 +93,10 @@ describe('Post detail controller', function () {
                 },
                 status: 'draft',
                 completed_stages: ['1', '2', '3']
+            },
+            moment: moment,
+            $rootScope: {
+                setLayout: function () {}
             }
         });
     });

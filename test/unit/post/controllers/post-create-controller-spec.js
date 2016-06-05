@@ -51,5 +51,6 @@ describe('Post create controller', function () {
 
     it('should load and set options', function () {
         expect($scope.post.allowed_privileges[0]).toEqual('read');
+        expect($scope.post.form.id).toEqual(1);
     });
 });
