@@ -21,6 +21,7 @@ function (
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
+            $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
 
             // Show account settings
             $scope.viewAccountSettings = function () {
