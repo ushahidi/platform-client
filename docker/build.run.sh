@@ -29,6 +29,7 @@ function sync {
 build() {
   npm install
   gulp build
+  cp ./server/rewrite.htaccess ./server/www/
 }
 
 bundle() {
