@@ -23,12 +23,14 @@ function (
             method: 'GET',
             params: {
                 contact: '@contact',
+                offset: '@offset',
+                limit: '@limit',
                 order: 'asc',
                 orderby: 'created'
             },
-            isArray: true,
+            isArray: false,
             transformResponse: function (data /*, header*/) {
-                return angular.fromJson(data).results;
+                return angular.fromJson(data);
             }
         },
         save: {
