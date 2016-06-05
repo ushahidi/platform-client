@@ -44,11 +44,13 @@ describe('Post create controller', function () {
 
     beforeEach(function () {
         $controller('postCreateController', {
-            $scope: $scope
+            $scope: $scope,
+            $routeParams: {form: 2}
         });
     });
 
     it('should load and set options', function () {
         expect($scope.post.allowed_privileges[0]).toEqual('read');
+        expect($scope.post.form.id).toEqual(2);
     });
 });

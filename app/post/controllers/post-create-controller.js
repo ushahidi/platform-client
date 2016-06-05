@@ -6,6 +6,7 @@ module.exports = [
     'PostEntity',
     'PostEndpoint',
     'FormEndpoint',
+    '$routeParams',
 function (
     $scope,
     $translate,
@@ -13,7 +14,8 @@ function (
     $controller,
     postEntity,
     PostEndpoint,
-    FormEndpoint
+    FormEndpoint,
+    $routeParams
 ) {
     $scope.activeForm = {};
 
@@ -23,6 +25,11 @@ function (
     });
 
     $scope.post = postEntity();
+
+    if ($routeParams.form) {
+        $scope.post.form  = { id: $routeParams.form };
+    }
+
     PostEndpoint.options().$promise.then(function (options) {
         $scope.post.allowed_privileges = options.allowed_privileges;
     });

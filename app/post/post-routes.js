@@ -13,6 +13,10 @@ function (
         controller: require('./controllers/post-create-controller.js'),
         templateUrl: 'templates/posts/modify.html'
     })
+    .when('/posts/create/:form', {
+        controller: require('./controllers/post-create-controller.js'),
+        templateUrl: 'templates/posts/modify.html'
+    })
     .when('/posts/:id', {
         controller: require('./controllers/post-detail-controller.js'),
         templateUrl: 'templates/posts/detail.html',
