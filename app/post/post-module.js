@@ -12,7 +12,6 @@ angular.module('ushahidi.posts', [])
 .directive('postEditor', require('./directives/post-editor.directive.js'))
 .directive('postChooseForm', require('./directives/post-choose-form-directive.js'))
 .directive('postValueEdit', require('./directives/post-value-edit.directive.js'))
-.directive('postStatus', require('./directives/post-status.directive.js'))
 .directive('postTabs', require('./directives/post-tabs.directive.js'))
 // Views
 .directive('postView', require('./views/post-view.directive.js'))

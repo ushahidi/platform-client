@@ -23,6 +23,16 @@ function (
             _
         ) {
 
+            $scope.canSeeThis = function () {
+                if ($scope.post.published_to.length) {
+                    return $scope.post.published_to.join(', ');
+                } else if ($scope.post.status === 'draft') {
+                    return $translate.instant('post.just_you');
+                } else {
+                    return $translate.instant('post.everyone');
+                }
+            };
+
             RoleEndpoint.query().$promise.then(function (roles) {
                 $scope.roles = roles;
             });

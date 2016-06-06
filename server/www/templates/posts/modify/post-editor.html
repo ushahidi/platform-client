@@ -67,9 +67,7 @@
               END: IF -->
 
               <!-- IF: User has permission to manage who it's visible to -->
-              <post-status
-                  post="post"
-              ></post-status>
+              <publish-selector ng-show="allowedChangeStatus()" post="post" ></publish-selector>
               <!-- END: IF -->
 
              <!-- IF: User has permission to see other 'Tasks' -->
