@@ -35,7 +35,7 @@
         <div ng-if="!isCheckbox(attribute)" ng-switch="attribute.input" ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
             <!-- Standard fields -->
             <!-- type: date -->
-            <div ng-switch-when="date" >
+            <div ng-switch-when="datetime" >
                 <!-- Date icon -->
                 <div class="input-with-icon">
                   <svg class="iconic">
@@ -44,7 +44,7 @@
                   <input
                       type="date"
                       pick-a-date="date"
-                      pick-a-date-options="{ format: 'yyyy-mm-dd' }"
+                      pick-a-date-options="dateFormat"
 
                       name="values_{{attribute.key}}"
                       ng-model="post.values[attribute.key][key]"
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <!-- type: datetime -->
-            <div ng-switch-when="datetime" class="input-with-icon">
+            <div ng-switch-when="date" class="input-with-icon">
                 <post-datetime value="post.values[attribute.key][key]"></post-datetime>
             </div>
            <!-- type: select -->

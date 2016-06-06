@@ -128,9 +128,12 @@ function PostEditorController(
                     } else {
                         $scope.post.values[attr.key] = [attr.default];
                     }
-                } else if (attr.input === 'date') {
+                } else if (attr.input === 'date' || attr.input === 'datetime') {
                     // Date picker requires date object
-                    $scope.post.values[attr.key][0] = new Date($scope.post.values[attr.key]);
+                    // ensure that dates are preserved in UTC
+                    if ($scope.post.values[attr.key][0]) {
+                      $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).utc();
+                    }
                 }
             });
             $scope.attributes = attributes;

@@ -6,8 +6,8 @@
     <input
         type="date"
         pick-a-date="date"
-        pick-a-date-options="{ format: 'yyyy-mm-dd' }"
-        ng-model="date"
+        pick-a-date-options="dateFormat"
+        ng-model="dateChosen"
     />
   </div>
   <div class="input-with-icon">
@@ -17,8 +17,9 @@
     <input
         type="date"
         pick-a-time="time"
-        pick-a-time-options="{ format: 'HH:i' }"
-        ng-model="time"
+        pick-a-time-options="timeFormat"
+        ng-model="timeChosen"
+        ng-disabled="!dateChosen"
     />
   </div>
 </div>

@@ -28,7 +28,9 @@ function PostValueEditController(
     $scope.isDateTime = isDateTime;
     $scope.isText = isText;
     $scope.isTextarea = isTextarea;
-    $scope.isCheckbox = isCheckbox;    
+    $scope.isCheckbox = isCheckbox;
+
+    $scope.dateFormat = { format: 'yyyy-mm-dd' };
 
     $scope.canAddValue = canAddValue;
     $scope.canRemoveValue = canRemoveValue;
