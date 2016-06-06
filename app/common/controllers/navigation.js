@@ -1,73 +1,48 @@
-module.exports = [
-    '$scope',
-    'Authentication',
-    'ConfigEndpoint',
-    'BootstrapConfig',
-    '$rootScope',
-    'Features',
-function (
-    $scope,
-    Authentication,
-    ConfigEndpoint,
-    BootstrapConfig,
-    $rootScope,
-    Features
-) {
-    $scope.isHome = true;
+module.exports = NavigationController;
 
-    $scope.site = BootstrapConfig;
+NavigationController.$inject = ['Authentication', 'ConfigEndpoint', 'BootstrapConfig', '$rootScope', 'Features'];
+function NavigationController(Authentication, ConfigEndpoint, BootstrapConfig, $rootScope, Features) {
+    var vm = this;
 
-    Features.loadFeatures().then(function () {
-        $scope.activityIsAvailable = Features.isViewEnabled('activity');
-        $scope.planIsAvailable = Features.isViewEnabled('plan');
-    });
-    // Then update from server
-    $scope.reloadSiteConfig = function () {
-        ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
-            $scope.site = site;
+    vm.site = BootstrapConfig;
+    vm.reloadSiteConfig = reloadSiteConfig;
+    //vm.canCreatePost = canCreatePost;
+    //vm.canRegister = canRegister;
+    //vm.logoutClick = logoutClick;
+
+    activate();
+
+    $rootScope.$on('event:update:header', reloadSiteConfig);
+
+    function activate() {
+        Features.loadFeatures().then(function () {
+            vm.activityIsAvailable = Features.isViewEnabled('activity');
+            vm.planIsAvailable = Features.isViewEnabled('plan');
         });
-    };
 
-    $rootScope.$on('event:update:header', function () {
-        $scope.reloadSiteConfig();
-    });
+        reloadSiteConfig();
+    }
 
-    $rootScope.$on('$routeChangeSuccess', function (ev, current) {
-        if (current && current.$$route &&
-                (current.$$route.originalPath === '/views/:view?' || current.$$route.originalPath === '/')
-            ) {
-            $scope.isHome = true;
-        } else {
-            $scope.isHome = false;
-        }
-    });
+    function reloadSiteConfig() {
+        ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
+            vm.site = site;
+        });
+    }
 
-    $scope.reloadSiteConfig();
+    // Move to add post button (or associated service)
+    // function canCreatePost() {
+    //     return $rootScope.loggedin || !vm.site.private;
+    // };
 
-    // @todo: Integrate the modal state controller into a globally accessible
-    // directive which binds the same logic but does not effect markup.
-    // This is related to the same functionality in the set controller
-    // collections-controller.js
-    $scope.collectionOpen = {};
-    $scope.collectionOpen.data = false;
-    $scope.collectionIsOpen = function () {
-        $scope.collectionOpen.data = !$scope.collectionOpen.data;
-    };
+    // Move to mode bar (or associated service)
+    // function canRegister() {
+    //     return !vm.site.private;
+    // };
 
-    $scope.canCreatePost = function () {
-        return $scope.loggedin || !$scope.site.private;
-    };
-
-    $scope.canRegister = function () {
-        return !$scope.site.private;
-    };
-
-    $scope.logoutClick = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        Authentication.logout();
-    };
-
-
-
-}];
+    // Move to mode bar (or associated service)
+    // function logoutClick(e) {
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //     Authentication.logout();
+    // };
+}

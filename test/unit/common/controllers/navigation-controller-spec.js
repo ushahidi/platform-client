@@ -4,7 +4,9 @@ describe('navigation controller', function () {
 
     var $rootScope,
         $controller,
-        $scope;
+        $scope,
+        mockConfigEndpoint,
+        navigationController;
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
@@ -34,7 +36,7 @@ describe('navigation controller', function () {
 
         var mockBootstrapConfig = {};
 
-        var mockConfigEndpoint = {
+        mockConfigEndpoint = {
             get: function (id) {
                 return {$promise: {
                     then: function (successCallback, failureCallBack) {
@@ -43,44 +45,22 @@ describe('navigation controller', function () {
                 }};
             }
         };
-        $controller('navigationController', {
+        spyOn(mockConfigEndpoint, 'get').and.callThrough();
+
+        navigationController = $controller('navigationController', {
             $rootScope: $rootScope,
             Authentication: mockAuthenticationService,
             ConfigEndpoint: mockConfigEndpoint,
-            BootstrapConfig: mockBootstrapConfig,
-            $scope: $scope
+            BootstrapConfig: mockBootstrapConfig
         });
 
         $rootScope.$digest();
         $rootScope.$apply();
     });
 
-    it('should change collection open bool', function () {
-        $scope.collectionIsOpen();
-        expect($scope.collectionOpen.data).toEqual(true);
-    });
-
     it('should respond to event:update:header', function () {
-        spyOn($rootScope, '$emit').and.callThrough();
-        spyOn($scope, 'reloadSiteConfig');
+        //spyOn($rootScope, '$emit').and.callThrough();
         $rootScope.$emit('event:update:header');
-        expect($scope.reloadSiteConfig).toHaveBeenCalled();
-    });
-
-    it('should respond to $routeChangeSuccess', function () {
-        spyOn($rootScope, '$emit').and.callThrough();
-        $rootScope.$emit('$routeChangeSuccess');
-        expect($scope.isHome).toEqual(false);
-    });
-
-    it('should set isHome to true when original path is /', function () {
-        spyOn($rootScope, '$emit').and.callThrough();
-        var mockCurrent = {
-            $$route: {
-                originalPath: '/'
-            }
-        };
-        $rootScope.$emit('$routeChangeSuccess', mockCurrent);
-        expect($scope.isHome).toEqual(true);
+        expect(mockConfigEndpoint.get).toHaveBeenCalledWith({ id: 'site' });
     });
 });

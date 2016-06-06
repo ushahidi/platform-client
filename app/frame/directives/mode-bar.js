@@ -1,21 +1,45 @@
 module.exports = [
     'ViewHelper',
+    'Authentication',
+    'ModalService',
     '$rootScope',
+    'ModalService',
 function (
     ViewHelper,
+    Authentication,
+    ModalService,
     $rootScope
 ) {
     return {
         restrict: 'E',
         replace: true,
         scope: {
+            currentUser: '='
         },
         templateUrl: 'templates/frame/mode-bar.html',
         link: function ($scope, $element, $attrs) {
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
-            $scope.currentUser = $rootScope.currentUser;
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
+            $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
+
+            // Show account settings
+            $scope.viewAccountSettings = function () {
+                ModalService.openTemplate('<account-settings></account-settings>', '', false, false, true, true);
+            };
+
+            $scope.login = openLoginModal;
+            $scope.logout = Authentication.logout;
+            $scope.register = openRegisterModal;
+
+            // Show login modal
+            function openLoginModal() {
+                ModalService.openTemplate('<login></login>', 'nav.login', false, false, true, false);
+            }
+
+            function openRegisterModal() {
+                ModalService.openTemplate('<register></register>', 'nav.register', false, false, true, false);
+            }
 
             // Show collection listing
             $scope.viewCollectionListing = function () {

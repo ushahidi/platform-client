@@ -15,10 +15,15 @@ module.exports = [function () {
     return {
         filterState: filterState,
         getDefaults: function () {},
-        getQueryParams: function () {},
+        getQueryParams: function (filters) {
+            return {
+                status: 'published'
+            };
+        },
         getFilters: function () { return filterState; },
         setFilters: function () {},
         clearFilters: function () {},
+        clearFilter: function () {},
         hasFilters: function () {}
     };
 }];

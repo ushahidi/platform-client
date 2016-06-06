@@ -28,18 +28,14 @@ module.exports = [function () {
             }};
         },
         save: function (contact) {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    contact.contact === 'pass' ? successCallback({id: 1}) : failCallback('error');
-                }
-            }};
+            return function (successCallback, failCallback) {
+                contact.contact === 'pass' ? successCallback({id: 1}) : failCallback('error');
+            };
         },
         update: function (contact) {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    contact.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
-                }
-            }};
+            return function (successCallback, failCallback) {
+                contact.id === 'pass' ? successCallback({id: 1}) : failCallback('error');
+            };
         }
     };
 }];

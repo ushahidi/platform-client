@@ -4,9 +4,7 @@ ModeContextFormFilterDirective.$inject = [];
 function ModeContextFormFilterDirective() {
     return {
         restrict: 'E',
-        scope: {
-            model: '='
-        },
+        scope: true,
         controller: ModeContextFormFilter,
         templateUrl: 'templates/posts/views/mode-context-form-filter.html'
     };
@@ -26,13 +24,13 @@ function ModeContextFormFilter($scope, FormEndpoint) {
     }
 
     function showOnly(formId) {
-        $scope.model.splice(0, $scope.model.length, formId);
+        $scope.filters.form.splice(0, $scope.filters.form.length, formId);
     }
 
     function hide(formId) {
-        var index = $scope.model.indexOf(formId);
+        var index = $scope.filters.form.indexOf(formId);
         if (index !== -1) {
-            $scope.model.splice(index, 1);
+            $scope.filters.form.splice(index, 1);
         }
     }
 }

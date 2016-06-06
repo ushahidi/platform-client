@@ -13,10 +13,6 @@ function (
         cache = new CacheFactory('permissionCache');
     }
 
-    cache.setOnExpire(function (key, value) {
-        PermissionEndpoint.get(value.id);
-    });
-
     var PermissionEndpoint = $resource(Util.apiUrl('/permissions/:id'), {
             id: '@id'
         }, {
@@ -32,9 +28,9 @@ function (
         }
     });
 
-    PermissionEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return PermissionEndpoint.get(id);
+    PermissionEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/permissions/' + params.id));
+        return PermissionEndpoint.get(params);
     };
 
     PermissionEndpoint.invalidateCache = function () {

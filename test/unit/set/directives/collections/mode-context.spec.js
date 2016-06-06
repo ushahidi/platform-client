@@ -4,7 +4,6 @@ describe('collections mode context directive', function () {
 
     var $rootScope,
         $scope,
-        isolateScope,
         element,
         Notify;
 
@@ -33,15 +32,14 @@ describe('collections mode context directive', function () {
 
         $scope.collection = {};
 
-        element = '<collections-mode-context collection="collection"></collections-mode-context>';
+        element = '<collections-mode-context></collections-mode-context>';
         element = $compile(element)($scope);
         $scope.$digest();
-        isolateScope = element.isolateScope();
     }));
 
     it('should save a notification', function () {
         spyOn(Notify, 'showNotificationSlider');
-        isolateScope.saveNotification({id: 'pass'});
+        $scope.saveNotification({id: 'pass'});
 
         expect(Notify.showNotificationSlider).toHaveBeenCalled();
     });

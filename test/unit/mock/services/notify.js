@@ -35,6 +35,13 @@ module.exports = [function () {
                 }
             };
         },
+        showConfirmAlert: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
         showConfirmModal: function (message, callbackEvent, buttonText, action) {
             return {
                 then: function (successCallback) {

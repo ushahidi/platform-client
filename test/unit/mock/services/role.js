@@ -1,4 +1,4 @@
-module.exports = [function () {
+module.exports = ['$q', function ($q) {
     return {
         queryFresh: function () {
             return {$promise: {
@@ -11,14 +11,14 @@ module.exports = [function () {
             }};
         },
         query: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback([{
-                        name: 'test role',
-                        id: 1
-                    }]);
-                }
-            }};
+            var promise = $q.resolve([{
+                name: 'test role',
+                permissions: [],
+                id: 1
+            }]);
+            return {
+                $promise: promise
+            };
         },
         stats: function () {
             return {$promise: {
