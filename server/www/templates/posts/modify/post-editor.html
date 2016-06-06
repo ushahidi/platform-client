@@ -74,16 +74,16 @@
 
              <!-- IF: User has permission to see other 'Tasks' -->
 
-             <post-vertical-tabs
+             <post-tabs
                  form="form"
                  post="post"
                  stages="stages"
                  attributes="attributes"
                  visible-stage="visibleStage">
-              </post-vertical-tabs>
+              </post-tabs>
          </div>
 
-          <div class="form-sheet">
+          <div class="form-sheet" ng-if="post.id">
               <div class="form-sheet-summary">
                   <h3 class="form-sheet-title" translate="post.delete_post">Delete this post</h3>
               </div>

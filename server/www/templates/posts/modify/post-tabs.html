@@ -1,5 +1,5 @@
 <div>
-    <nav class="tabs-menu init" data-tabs="tabs-tasks" data-tabs-hash="">
+    <nav class="tabs-menu init" data-tabs="tabs-tasks" data-tabs-hash="" ng-if="stages.length > 1">
         <ul>
             <li ng-class="{'active': visibleStage == stage.id}" ng-repeat="stage in stages">
                 <a ng-click="setVisibleStage(stage.id)">

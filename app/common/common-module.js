@@ -1,5 +1,4 @@
 angular.module('ushahidi.common', [
-	'ushahidi.common.adaptive-input',
 	'ushahidi.common.dropdown',
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
@@ -66,6 +65,8 @@ angular.module('ushahidi.common', [
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
 
+.directive('adaptiveForm', require('./directives/adaptive-input.js'))
+.directive('adaptiveInput', require('./directives/adaptive-input.js'))
 
 // Event actions
 .constant('EVENT', {
@@ -89,7 +90,6 @@ angular.module('ushahidi.common', [
 ;
 
 // Load submodules
-require('./directives/adaptive-input.js');
 require('./directives/dropdown.js');
 require('./directives/accordion.js');
 require('./directives/offcanvas.js');

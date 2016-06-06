@@ -3,19 +3,19 @@ module.exports = [
     '$translate',
     '$location',
     '$controller',
+    '$route',
     'PostEntity',
     'PostEndpoint',
     'FormEndpoint',
-    'form',
 function (
     $scope,
     $translate,
     $location,
     $controller,
+    $route,
     postEntity,
     PostEndpoint,
-    FormEndpoint,
-    form
+    FormEndpoint
 ) {
 
 
@@ -24,9 +24,10 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.post = postEntity();    
+    $scope.post = postEntity();
 
     PostEndpoint.options().$promise.then(function (options) {
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
+    $scope.form = FormEndpoint.get({ id: $route.current.params.id }).$promise;
 }];

@@ -11,12 +11,7 @@ function (
     })
     .when('/posts/create/:id', {
         controller: require('./controllers/post-create-controller.js'),
-        templateUrl: 'templates/posts/modify/modify.html',
-        resolve: {
-            form: ['$route', 'FormEndpoint', function ($route, FormEndpoint) {
-                return FormEndpoint.get({ id: $route.current.params.id }).$promise;
-            }]
-        }
+        templateUrl: 'templates/posts/modify/main.html'
     })
     .when('/posts/:id', {
         controller: require('./controllers/post-detail-controller.js'),
@@ -38,12 +33,7 @@ function (
     })
     .when('/posts/:id/edit', {
         controller: require('./controllers/post-edit-controller.js'),
-        templateUrl: 'templates/posts/modify/modify.html',
-        resolve: {
-            post: ['$route', 'PostEndpoint', function ($route, PostEndpoint) {
-                return PostEndpoint.get({id: $route.current.params.id}).$promise;
-            }]
-        }
+        templateUrl: 'templates/posts/modify/main.html'
     });
 
 }];

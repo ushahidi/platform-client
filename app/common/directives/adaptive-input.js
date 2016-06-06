@@ -6,9 +6,11 @@
  * div
  */
 
-angular.module('ushahidi.common.adaptive-input',[])
+angular.exports = AdaptiveForm;
 
-.directive('adaptiveForm', function () {
+AdaptiveForm.$inject = [];
+
+function AdaptiveForm() {
     return {
         restrict: 'A',
         controller: function ($scope, $element, $attrs) {
@@ -21,9 +23,13 @@ angular.module('ushahidi.common.adaptive-input',[])
             };
         }
     };
-})
+}
 
-.directive('adaptiveInput', function () {
+angular.exports = AdaptiveInput;
+
+AdaptiveInput.$inject = [];
+
+function AdaptiveInput(){
     return {
         require: '?^adaptiveForm',
         restrict: 'A',
@@ -43,15 +49,13 @@ angular.module('ushahidi.common.adaptive-input',[])
             });
 
             function focusOn($event) {
-                $event.preventDefault();
                 adaptiveController.classAdd('focus');
             }
 
             function focusOff($event) {
-                $event.preventDefault();
                 adaptiveController.classRemove('focus');
                 !$element.val() ? adaptiveController.classRemove('value')  : '';
             }
         }
     };
-});
+}

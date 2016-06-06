@@ -26,15 +26,10 @@ function PostValueEditController(
 ) {
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
-    $scope.isLocation = isLocation;
-    $scope.isSelect = isSelect;
-    $scope.isNumber = isNumber;
     $scope.isText = isText;
     $scope.isTextarea = isTextarea;
-    $scope.isCheckbox = isCheckbox;
-    $scope.isRadio = isRadio;
-    $scope.isRelation = isRelation;
-    $scope.isUpload = isUpload;
+    $scope.isCheckbox = isCheckbox;    
+
     $scope.canAddValue = canAddValue;
     $scope.canRemoveValue = canRemoveValue;
     $scope.addValue = addValue;
@@ -52,15 +47,6 @@ function PostValueEditController(
     function isDateTime(attr) {
         return attr.input === 'datetime';
     }
-    function isLocation(attr) {
-        return attr.input === 'location';
-    }
-    function isSelect(attr) {
-        return attr.input === 'select';
-    }
-    function isNumber(attr) {
-        return attr.input === 'number';
-    }
     function isText(attr) {
         return attr.input === 'text';
     }
@@ -70,15 +56,7 @@ function PostValueEditController(
     function isCheckbox(attr) {
         return attr.input === 'checkbox';
     }
-    function isRadio(attr) {
-        return attr.input === 'radio';
-    }
-    function isRelation(attr) {
-        return attr.input === 'relation';
-    }
-    function isUpload(attr) {
-        return attr.input === 'upload';
-    }
+
     // Can more values be added for this attribute?
     function canAddValue(attr) {
         return (
