@@ -5,6 +5,7 @@ build:
   volumes:
     - .:/vols/src
     - ./tmp/out:/vols/out
+  encrypted_env_file: deployment.env.encrypted
 release:
   build:
     image: release

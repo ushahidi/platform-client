@@ -28,6 +28,7 @@ function sync {
 
 build() {
   npm install
+  gulp transifex-download
   gulp build
   cp ./server/rewrite.htaccess ./server/www/
 }
