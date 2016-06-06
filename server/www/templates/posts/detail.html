@@ -89,6 +89,11 @@
           </ul>
         </nav>
         <div class="tasks-tabs">
+          <post-media-value
+            ng-if="form_attributes[key].type === 'media'"
+            label="{{form_attributes[key].label}}"
+            media-id="value"></post-media-value>
+
           <div
             ng-if="post.content"
             ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
@@ -114,11 +119,6 @@
             ng-show="form_attributes[key].form_stage_id == visibleStage"
             class="postcard-field"
             >
-
-            <post-media-value
-              ng-if="form_attributes[key].type === 'media'"
-              label="{{form_attributes[key].label}}"
-              media-id="value"></post-media-value>
 
             <post-value
               key="key"
