@@ -1,4 +1,4 @@
-<form name="form" ng-submit="savePost()" novalidate>
+<form name="postForm" ng-submit="savePost()" novalidate>
   <div class="mode-context init">
     <header class="mode-context-header">
         <ol class="breadcrumbs">
@@ -73,7 +73,7 @@
              <!-- IF: User has permission to see other 'Tasks' -->
 
              <post-tabs
-                 form="form"
+                 form="postForm"
                  post="post"
                  stages="stages"
                  attributes="attributes"

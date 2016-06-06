@@ -15,7 +15,6 @@ function (
     FormEndpoint,
     PostEndpoint
 ) {
-    $scope.activeForm = {};
 
     $translate('post.edit_post').then(function (title) {
         $scope.title = title;
@@ -41,10 +40,9 @@ function (
                   });
                 }
             });
+        } else {
+            $location.url('/posts/' + post.id);
         }
         $scope.post = post;
     });
-
-
-
 }];

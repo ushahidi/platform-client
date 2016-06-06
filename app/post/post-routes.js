@@ -35,5 +35,4 @@ function (
         controller: require('./controllers/post-edit-controller.js'),
         templateUrl: 'templates/posts/modify/main.html'
     });
-
 }];

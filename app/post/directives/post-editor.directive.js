@@ -167,7 +167,7 @@ function PostEditorController(
     }
 
     function canSavePost() {
-        return PostEditService.canSavePost($scope.post, $scope.form, $scope.stages, $scope.attributes);
+        return PostEditService.canSavePost($scope.post, $scope.postForm, $scope.stages, $scope.attributes);
     }
 
     function cancel () {

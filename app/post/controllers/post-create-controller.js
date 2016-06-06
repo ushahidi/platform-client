@@ -17,8 +17,6 @@ function (
     PostEndpoint,
     FormEndpoint
 ) {
-
-
     $translate('post.create_post').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
@@ -29,5 +27,8 @@ function (
     PostEndpoint.options().$promise.then(function (options) {
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
-    $scope.form = FormEndpoint.get({ id: $route.current.params.id }).$promise;
+
+    FormEndpoint.get({ id: $route.current.params.id }).$promise.then(function (form){
+        $scope.form = form;
+    });
 }];

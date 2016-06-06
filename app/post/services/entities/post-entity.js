@@ -11,7 +11,8 @@ function (
             locale: CONST.DEFAULT_LOCALE,
             status: 'draft',
             values: {},
-            completed_stages: []
+            completed_stages: [],
+            published_to: []
         }, data);
     };
 }];
