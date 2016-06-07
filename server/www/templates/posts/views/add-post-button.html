@@ -1,5 +1,5 @@
 <div class="fab" data-message="add-post">
-    <button type="button" class="button-alpha button-fab" data-toggle="fab-options" ng-click="fabToggle = ! fabToggle"  ng-class="{ 'active': fabToggle }">
+    <button type="button" class="button-alpha button-fab" data-toggle="fab-options" ng-click="toggleFab()"  ng-class="{ 'active': fabToggle }">
         <svg class="iconic">
             <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
             <foreignObject>
@@ -9,7 +9,7 @@
         <span class="hidden">Add</span>
     </button>
 
-    <ul class="fab-options" ng-show="fabToggle" ng-class="{ 'active': fabToggle }" style="display: inline;" data-toggle-animate="flex">
+    <ul class="fab-options" ng-show="fabToggle" ng-class="{ 'active': fabToggle }" ng-style="fabOptionsStyle" data-toggle-animate="flex">
         <li ng-repeat="form in forms">
             <a ng-href="/posts/create/{{form.id}}">
                 <span class="fab-action-type" style="background-color:#959595;">
