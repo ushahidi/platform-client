@@ -6,17 +6,17 @@
  * div
  */
 
-angular.module('ushahidi.common.adaptive-input',[])
+angular.module('ushahidi.common.adaptive-input', [])
 
 .directive('adaptiveForm', function () {
     return {
         restrict: 'A',
         controller: function ($scope, $element, $attrs) {
 
-            this.classAdd = function(className) {
+            this.classAdd = function (className) {
                 $element.addClass(className);
             };
-            this.classRemove = function(className) {
+            this.classRemove = function (className) {
                 $element.removeClass(className);
             };
         }
@@ -27,18 +27,18 @@ angular.module('ushahidi.common.adaptive-input',[])
     return {
         require: '?^adaptiveForm',
         restrict: 'A',
-        link: function ($scope, $element, $attrs, adaptiveController){
+        link: function ($scope, $element, $attrs, adaptiveController) {
 
             activate();
 
-            function activate () {
+            function activate() {
                 $element.bind('focus', focusOn);
                 $element.bind('blur', focusOff);
             }
 
             // Check on initial load if field has value
             // If so set focus
-            $scope.$watch($attrs.ngModel, function (value){
+            $scope.$watch($attrs.ngModel, function (value) {
                 value ? adaptiveController.classAdd('value') : '';
             });
 
