@@ -77,7 +77,7 @@
             </div>
 
             <div class="listing card init">
-                <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
+                <h3 class="listing-heading" translate="survey.tasks">Tasks</h3>
 
                 <div class="listing-item" ng-repeat="task in survey.tasks" dropdown auto-close="disabled">
                     <div class="listing-item-select" ng-if="canReorderTask(task)">
@@ -115,40 +115,46 @@
                     <div class="listing-item-body" dropdown-menu>
 
                         <div class="form-field switch">
-                           <label>Require this task be completed before a post can be visible to the public</label>
+                           <label translate="survey.require_task">Require this task be completed before a post can be visible to the public</label>
                            <div class="toggle-switch">
-                              <input class="tgl" id="switch1" type="checkbox">
-                              <label class="tgl-btn" for="switch1"></label>
+                              <input class="tgl" id="switch1" type="checkbox" ng-model="task.required">
+                              <label class="tgl-btn" for="switch1" ng-click="toggleTaskRequired(task)"></label>
                            </div>
                         </div>
 
                         <div class="listing init">
-                            <h3 class="listing-heading">Name</h3>
+                            <h3 class="listing-heading" translate="app.name">Name</h3>
 
                             <div class="listing-item">
                                 <div class="listing-item-primary">
                                     <div class="form-field">
-                                        <label class="hidden">Name</label>
-                                        <input type="text" placeholder="Task name" value="Verification">
+                                        <label class="hidden" translate="app.name">Name</label>
+                                        <input type="text" placeholder="Task name" ng-model="task.label" ng-disabled="task.label === 'Post'">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="listing init">
-                            <h3 class="listing-heading">Fields</h3>
+                            <h3 class="listing-heading" translate="app.fields">Fields</h3>
 
-                            <div class="listing-item">
+                            <!-- Start Default Post fields -->
+                            <div class="listing-item" ng-show="task.label === 'Post'">
                                 <div class="listing-item-primary">
-                                    <h2 class="listing-item-title"><a href="">Title</a></h2>
+                                    <h2 class="listing-item-title">
+                                        <a href="" translate="survey.title">Title</a>
+                                    </h2>
                                 </div>
                             </div>
 
-                            <div class="listing-item">
+                            <div class="listing-item" ng-show="task.label === 'Post'">
                                 <div class="listing-item-primary">
-                                    <h2 class="listing-item-title"><a href="">Description</a></h2>
+                                    <h2 class="listing-item-title">
+                                        <a href="" translate="survey.description">Description</a>
+                                    </h2>
                                 </div>
                             </div>
-
+                            <!-- End Default Post fields -->
+                            <!--
                             <div class="listing-item">
                                 <div class="listing-item-select">
                                     <div class="buttons-updown">
@@ -194,21 +200,22 @@
                                     <h2 class="listing-item-title"><a href="" data-modal="edit-field">Witness</a> <em>text field</em></h2>
                                 </div>
                             </div>
+                          -->
 
                             <div class="listing-item">
                                 <div class="listing-item-primary">
                                     <h2 class="listing-item-title">
-                                        <a href="" class="button button-beta" data-modal="add-field">
+                                        <a ng-click="openAttributeModal()" class="button button-beta" data-modal="add-field">
                                             <svg class="iconic">
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
                                             </svg>
-                                           <span translate="app.add_field">Add field</span>
+                                           <span translate="survey.add_field">Add field</span>
                                         </a>
                                     </h2>
                                 </div>
                             </div>
 
-                            <div class="listing init" ng-if="task.id">
+                            <div class="listing init" ng-if="task.id && task.label !== 'Post'">
                                 <h3 class="listing-heading" translate="survey.task.delete.delete_this">Delete this task</h3>
 
                             <div class="listing-item">
@@ -232,11 +239,11 @@
                 <div class="listing-item">
                     <div class="listing-item-primary">
                         <h2 class="listing-item-title">
-                            <a ng-click="addTask()" class="button button-flat" data-modal="add-task">
+                            <a ng-click="openTaskModal()" class="button button-flat" data-modal="add-task">
                                 <svg class="iconic">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
                                 </svg>
-                               <span translate="app.add_task">Add task</span>
+                               <span translate="survey.add_task">Add task</span>
                             </a>
                         </h2>
                     </div>

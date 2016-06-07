@@ -38,7 +38,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         //var classChangePromise = null;
 
         function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
-            scope = scope ? scope.$new : $scope.$new();
+            scope = scope ? scope.$new() : $scope.$new();
 
             // Inject closeModal function onto template scope
             scope.closeModal = closeModal;

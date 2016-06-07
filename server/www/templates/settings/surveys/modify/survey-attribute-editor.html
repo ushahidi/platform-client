@@ -1,0 +1,24 @@
+<div>
+  <div class="form-field">
+      <label>Name</label>
+      <input type="text" ng-model="editAttribute.label" ng-change="labelChanged(editAttribute)">
+   </div>
+   <div class="form-field">
+      <label>Key</label>
+      <input type="text" ng-model="editAttribute.key">
+   </div>
+   <div class="form-field">
+      <label>Default value</label>
+      <input type="text" ng-model="editAttribute.default">
+   </div>
+   <div class="form-field switch">
+      <label>Require this field be completed</label>
+      <div class="toggle-switch">
+         <input class="tgl" id="switchnewattribute" type="checkbox" ng-model="editAttribute.required">
+         <label class="tgl-btn" for="switchnewattribute"></label>
+      </div>
+   </div>
+   <div class="form-field">
+      <button type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute)">Save &amp; close</button>
+   </div>
+</div>

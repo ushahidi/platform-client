@@ -43,11 +43,10 @@
         "apply_filters" : "Apply filters",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
-        "tasks" : "Tasks",
-        "add_task" : "Add task",
-        "add_field" : "Add field",
         "configure" : "Configure",
-        "post" : "Post"
+        "post" : "Post",
+        "name" : "Name",
+        "fields" : "Fields"
     },
     "toolbar": {
         "searchbar" : {
@@ -137,6 +136,15 @@
     },
 
     "survey": {
+        "title" : "Title",
+        "description" : "Description",
+        "tasks" : "Tasks",
+        "add_task" : "Add task",
+        "add_field" : "Add field",
+        "edit_field" : "Edit field",
+        "task_name" : "Task name",
+        "name_this_task" : "Name this task...",
+        "require_task" : "Require this task be completed before a post can be visible to the public",
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
             "delete" : "Delete survey",

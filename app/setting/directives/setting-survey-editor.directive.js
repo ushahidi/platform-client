@@ -22,7 +22,8 @@ SurveyEditorController.$inject = [
     'FormAttributeEndpoint',
     'RoleEndpoint',
     '_',
-    'Notify'
+    'Notify',
+    'ModalService'
 ];
 function SurveyEditorController(
     $scope,
@@ -34,7 +35,8 @@ function SurveyEditorController(
     FormAttributeEndpoint,
     RoleEndpoint,
     _,
-    Notify
+    Notify,
+    ModalService
 ) {
 
     $scope.canReorderTask = canReorderTask;
@@ -44,11 +46,20 @@ function SurveyEditorController(
     $scope.isLastTask = isLastTask;
 
     $scope.deleteTask = deleteTask;
-    //$scope.addTask = addTask;
+    $scope.openTaskModal = openTaskModal;
+    $scope.addNewTask = addNewTask;
+
+    $scope.openAttributeModal = openAttributeModal;
+    $scope.openAttributeEditModal = openAttributeEditModal;
+    $scope.addNewAttribute = addNewAttribute;
+    $scope.labelChanged = labelChanged;
 
     $scope.deleteSurvey = deleteSurvey;
     $scope.saveSurvey = saveSurvey;
     $scope.cancel = cancel;
+
+    $scope.toggleTaskRequired = toggleTaskRequired;
+    $scope.toggleAttributeRequired = toggleAttributeRequired;
 
     activate();
 
@@ -62,10 +73,14 @@ function SurveyEditorController(
             // When creating new survey
             // pre-fill object with default tasks and attributes
             $scope.survey = {
-                tasks: {
-                    label: 'Post'
-                },
-                attributes: {}
+                tasks: [
+                    {
+                        label: 'Post',
+                        priority: 0,
+                        required: true
+                    }
+                ],
+                attributes: []
             };
         }
     }
@@ -92,6 +107,10 @@ function SurveyEditorController(
         $location.url('/settings/surveys');
     }
 
+    function handleResponseErrors(errorResponse) {
+        Notify.showApiErrors(errorResponse);
+    }
+
     // START -- Reorder tasks
     function isFirstTask(task) {
         var tasks = $scope.survey.tasks,
@@ -109,7 +128,7 @@ function SurveyEditorController(
 
     function canReorderTask(task) {
         //Only the Post task can not be reordered
-        return task.name !== 'Post';
+        return task.label !== 'Post';
     }
 
     function moveTaskUp(task) {
@@ -118,6 +137,13 @@ function SurveyEditorController(
 
     function moveTaskDown(task) {
         changePriority(task, 1);
+    }
+
+    // Update key based on label
+    function labelChanged(attribute) {
+        if (!attribute.id) {
+            attribute.key = attribute.label.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-_]+/g, '').toLowerCase();
+        }
     }
 
     function changePriority(task, increment) {
@@ -141,7 +167,32 @@ function SurveyEditorController(
     // END - reorder tasks
 
     // Start Modify Tasks
+    function openTaskModal() {
+        ModalService.openTemplate('<survey-task-create></survey-task-create>', 'survey.add_task', '', $scope, true, true);
+    }
+
+    function addNewTask(task) {
+        ModalService.close();
+        $scope.survey.tasks.push(task);
+    }
+
+    function openAttributeModal() {
+        ModalService.openTemplate('<survey-attribute-create></survey-attribute-create>', 'survey.add_field', '', $scope, true, true);
+    }
+
+    function openAttributeEditModal(attribute) {
+        ModalService.close();
+        $scope.editAttribute = attribute;
+        ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', 'survey.edit_field', '', $scope, true, true);
+    }
+
+    function addNewAttribute(attribute) {
+        ModalService.close();
+        $scope.survey.attributes.push(attribute);
+    }
+
     function deleteTask(task) {
+
         $translate('notify.form.delete_stage_confirm')
         .then(function (message) {
             Notify.showConfirm(message).then(function () {
@@ -177,7 +228,7 @@ function SurveyEditorController(
                         Notify.showNotificationSlider(message);
                     });
                     $location.url('/settings/surveys');
-                });
+                }, handleResponseErrors);
             });
         });
     }
@@ -189,19 +240,82 @@ function SurveyEditorController(
         FormEndpoint
         .saveCache($scope.survey)
         .$promise
-        .then(function () {
+        .then(function (survey) {
+            $scope.survey.id = survey.id;
             $translate('notify.form.edit_form_success', { name: $scope.survey.name }).then(function (message) {
                 Notify.showNotificationSlider(message);
             });
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
+        }, handleResponseErrors);
 
         // Second save the survey tasks
+        saveTasks($scope.survey.id, $scope.tasks);
 
         // Third save the survey task attributes
+        saveAttributes();
     }
 
+    function saveTasks(tasks) {
+        var calls = [];
+
+        _.each(tasks, function (task) {
+            // Get the last priority
+            // if no priority yet set
+            // set priority to 0
+            var lastPriority = tasks.length ? _.last(tasks).priority : 0;
+            task = _.extend(task, {
+                formId: $scope.survey.id,
+                priority: lastPriority + 1
+            });
+            // Add each task to save loop
+            calls.push(
+                FormStageEndpoint
+                .saveCache(task).$promise
+            );
+        });
+
+        // TODO add notify and error states
+        $q.all(calls).then(function (results) {
+            // Update survey object with saved tasks
+            $scope.survey.tasks = results;
+        }, handleResponseErrors);
+    }
+
+    function toggleTaskRequired(task) {
+        task.required = !task.required;
+    }
+
+    function toggleAttributeRequired(attribute) {
+        attribute.required = !attribute.required;
+    }
+
+    function saveAttributes(attributes) {
+        var calls = [];
+
+        _.each(attributes, function (attribute) {
+            // Get the last priority
+            // if no priority yet set
+            // set priority to 0
+            var lastPriority = attributes.length ? _.last(attributes).priority : 0;
+
+            attribute = _.extend(attribute, {
+                formId: $scope.survey.id,
+                priority: lastPriority + 1
+            });
+            // Add each task to save loop
+            calls.push(
+                FormAttributeEndpoint
+                .saveCache(attribute).$promise
+            );
+        });
+
+        // TODO add notify and error states
+        $q.all(calls).then(function (results) {
+            // Update survey object with saved tasks
+            $scope.survey.tasks = results;
+        }, handleResponseErrors);
+    }
+
+    // TO BE CONVERTED
     $scope.saveNewTask = function (task) {
         var lastPriority = $scope.form.stages.length ? _.last($scope.survey.tasks).priority : 0;
         FormStageEndpoint
@@ -233,13 +347,6 @@ function SurveyEditorController(
     };
 
 
-
-
-
-
-
-
-
     // Manage stage settings
     $scope.isNewStageOpen = false;
     $scope.openNewStage = function () {
@@ -259,7 +366,7 @@ function SurveyEditorController(
     $scope.openNewAttribute = function () {
         $scope.isNewAttributeOpen = true;
     };
-    $scope.addNewAttribute = function (attribute) {
+    $scope.oldaddNewAttribute = function (attribute) {
         //have to copy as reverse() changes in place
         var cloneAttributes = _.clone($scope.form.attributes);
         var count = _.countBy($scope.form.attributes, function (attribute) {
@@ -374,80 +481,6 @@ function SurveyEditorController(
         $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
     };
 
-    $scope.availableAttrTypes = [
-        {
-            label: 'Short text',
-            type: 'varchar',
-            input: 'text'
-        },
-        {
-            label: 'Long text',
-            type: 'text',
-            input: 'textarea'
-        },
-        {
-            label: 'Number (Decimal)',
-            type: 'decimal',
-            input: 'number'
-        },
-        {
-            label: 'Number (Integer)',
-            type: 'int',
-            input: 'number'
-        },
-        {
-            label: 'Location',
-            type: 'point',
-            input: 'location'
-        },
-        // {
-        //     label: 'Geometry',
-        //     type: 'geometry',
-        //     input: 'text'
-        // },
-        {
-            label: 'Date',
-            type: 'datetime',
-            input: 'date'
-        },
-        {
-            label: 'Date & time',
-            type: 'datetime',
-            input: 'datetime'
-        },
-        // {
-        //     label: 'Time',
-        //     type: 'datetime',
-        //     input: 'time'
-        // },
-        {
-            label: 'Select',
-            type: 'varchar',
-            input: 'select'
-        },
-        {
-            label: 'Radio',
-            type: 'varchar',
-            input: 'radio'
-        },
-        {
-            label: 'Checkbox',
-            type: 'varchar',
-            input: 'checkbox',
-            cardinality: 0
-        },
-        {
-            label: 'Related Post',
-            type: 'relation',
-            input: 'relation'
-        },
-        {
-            label: 'Image',
-            type: 'media',
-            input: 'upload'
-        }
-    ];
-
     // Options functions
     $scope.hasOptions = function (attribute) {
         return _.contains(['checkbox', 'radio', 'select'], attribute.input);
@@ -459,11 +492,6 @@ function SurveyEditorController(
         attribute.options.push('');
     };
 
-    // Update key based on label
-    $scope.labelChanged = function (attribute) {
-        if (!attribute.id) {
-            attribute.key = attribute.label.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-_]+/g, '').toLowerCase();
-        }
-    };
+
 
 }
