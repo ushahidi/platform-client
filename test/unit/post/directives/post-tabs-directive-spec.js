@@ -17,7 +17,7 @@ describe('post vertical tabs directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postVerticalTabs', require(ROOT_PATH + 'app/post/directives/post-vertical-tabs.directive'))
+        testApp.directive('postTabs', require(ROOT_PATH + 'app/post/directives/post-tabs.directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -43,7 +43,7 @@ describe('post vertical tabs directive', function () {
         $scope.attributes = attributes.results;
         $scope.visbileStage = 1;
 
-        element = '<post-vertical-tabs form="form" post="post" stages="stages" attributes="attributes" visibleStage="visibleStage"></post-vertical-tabs>';
+        element = '<post-tabs form="form" post="post" stages="stages" attributes="attributes" visibleStage="visibleStage"></post-tabs>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();

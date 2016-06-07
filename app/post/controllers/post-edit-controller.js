@@ -3,7 +3,7 @@ module.exports = [
     '$translate',
     '$location',
     '$controller',
-    '$route',
+    '$routeParams',
     'FormEndpoint',
     'PostEndpoint',
 function (
@@ -11,7 +11,7 @@ function (
     $translate,
     $location,
     $controller,
-    $route,
+    $routeParams,
     FormEndpoint,
     PostEndpoint
 ) {
@@ -21,7 +21,7 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    PostEndpoint.get({ id: $route.current.params.id }).$promise.then(function (post){
+    PostEndpoint.get({ id: $routeParams.id }).$promise.then(function (post) {
         // Make post tags numeric
         post.tags = post.tags.map(function (tag) {
             return parseInt(tag.id);
@@ -36,8 +36,8 @@ function (
                 // Set page title to post title, if there is one available.
                 if (post.title && post.title.length) {
                     $translate('post.modify.edit_type', { type: form.name, title: post.title }).then(function (title) {
-                      $scope.$emit('setPageTitle', title);
-                  });
+                        $scope.$emit('setPageTitle', title);
+                    });
                 }
             });
         } else {

@@ -20,11 +20,11 @@ describe('Post create controller', function () {
         .value('PostEntity', function () {
             return fixture.load('posts/120.json');
         })
-       .controller('postCreateController', require(ROOT_PATH + 'app/post/controllers/post-create-controller.js'))
-       .service('Maps', require(ROOT_PATH + 'app/common/services/maps.js'))
-       .factory('Leaflet', function () {
-           return window.L;
-       });
+        .controller('postCreateController', require(ROOT_PATH + 'app/post/controllers/post-create-controller.js'))
+        .service('Maps', require(ROOT_PATH + 'app/common/services/maps.js'))
+        .factory('Leaflet', function () {
+            return window.L;
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -45,7 +45,7 @@ describe('Post create controller', function () {
     beforeEach(function () {
         $controller('postCreateController', {
             $scope: $scope,
-            form: {id:1}
+            $routeParams: { id: 1 }
         });
     });
 

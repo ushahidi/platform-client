@@ -3,7 +3,7 @@ module.exports = [
     '$translate',
     '$location',
     '$controller',
-    '$route',
+    '$routeParams',
     'PostEntity',
     'PostEndpoint',
     'FormEndpoint',
@@ -12,7 +12,7 @@ function (
     $translate,
     $location,
     $controller,
-    $route,
+    $routeParams,
     postEntity,
     PostEndpoint,
     FormEndpoint
@@ -28,7 +28,7 @@ function (
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
 
-    FormEndpoint.get({ id: $route.current.params.id }).$promise.then(function (form){
+    FormEndpoint.get({ id: $routeParams.id }).$promise.then(function (form){
         $scope.form = form;
     });
 }];
