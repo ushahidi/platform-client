@@ -132,7 +132,7 @@ function PostEditorController(
                     // Date picker requires date object
                     // ensure that dates are preserved in UTC
                     if ($scope.post.values[attr.key][0]) {
-                      $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).utc();
+                        $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).utc();
                     }
                 }
             });
@@ -170,7 +170,7 @@ function PostEditorController(
         return PostEditService.canSavePost($scope.post, $scope.postForm, $scope.stages, $scope.attributes);
     }
 
-    function cancel () {
+    function cancel() {
 
         var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
         $location.path(path);

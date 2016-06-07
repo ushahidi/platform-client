@@ -39,7 +39,7 @@ function PostValueEditController(
 
     activate();
 
-    function activate(){
+    function activate() {
 
     }
 

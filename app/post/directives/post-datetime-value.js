@@ -1,4 +1,4 @@
-module.exports = [ 'moment', '_', function (moment, _) {
+module.exports = ['moment', '_', function (moment, _) {
     return {
         restrict: 'E',
         replace: true,
@@ -19,7 +19,7 @@ module.exports = [ 'moment', '_', function (moment, _) {
             }
 
             $scope.$watch('date', function (newValue, oldValue) {
-                if ( newValue !== oldValue) {
+                if (newValue !== oldValue) {
                     // If date is set update model
                     if ($scope.date) {
                         var newDate = moment($scope.date);

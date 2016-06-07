@@ -17,7 +17,7 @@ function PostVerticalTabs() {
     };
 }
 
-PostVerticalTabsController.$inject =[
+PostVerticalTabsController.$inject = [
     '$scope',
     'FormEndpoint',
     'FormStageEndpoint',

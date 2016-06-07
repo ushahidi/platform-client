@@ -28,7 +28,7 @@ function (
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
 
-    FormEndpoint.get({ id: $routeParams.id }).$promise.then(function (form){
+    FormEndpoint.get({ id: $routeParams.id }).$promise.then(function (form) {
         $scope.form = form;
     });
 }];
