@@ -15,8 +15,7 @@ describe('posts views controller', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
-            'pascalprecht.translate',
-            //'ushahidi.mock'
+            'pascalprecht.translate'
         ]);
 
         testApp

@@ -55,10 +55,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
                     activeFilters.visible_to = 'draft';
                 } else if (activeFilters.status === 'published' && activeFilters.published_to) {
                     activeFilters.visible_to = activeFilters.published_to;
-                } else {
-                    // todo: Ignore this because its the default?
-                    // activeFilters.visible_to = 'everyone'
                 }
+                // Otherwise visible_to = 'everyone' which is default
                 delete activeFilters.status;
             }
             if (activeFilters.published_to) {
