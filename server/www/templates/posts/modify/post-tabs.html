@@ -1,5 +1,5 @@
 <div>
-    <nav class="tabs-menu init" data-tabs="tabs-tasks" data-tabs-hash="">
+    <nav class="tabs-menu init" data-tabs="tabs-tasks" data-tabs-hash="" ng-show="stages.length > 1">
         <ul>
             <li ng-class="{'active': visibleStage == stage.id}" ng-repeat="stage in stages">
                 <a ng-click="setVisibleStage(stage.id)">
@@ -19,7 +19,7 @@
         <div class="form-field switch"
             ng-repeat="stage in stages"
             ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
-            ng-show="stage.id == visibleStage"
+            ng-show="stage.id == visibleStage && stages.length > 1"
         >
             <label translate="post.mark_complete">Mark completed</label>
             <div class="toggle-switch">
