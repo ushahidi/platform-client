@@ -2,9 +2,7 @@ var ROOT_PATH = '../../../../';
 
 describe('Post edit controller', function () {
     var $scope,
-       $controller,
-       PostEndpoint,
-       FormEndpoint;
+       $controller;
 
     var mockFormEndpoint = {
         get: function (parameters, success, error) {
@@ -34,7 +32,7 @@ describe('Post edit controller', function () {
                         cb(post);
                     }
                 }
-            }
+            };
         }
     };
 
