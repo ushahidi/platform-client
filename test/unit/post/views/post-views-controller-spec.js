@@ -22,7 +22,9 @@ describe('posts views controller', function () {
         testApp
         .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
         .controller('postViewsController', require(ROOT_PATH + 'app/post/views/post-views.controller.js'))
-        .service('PostFilters', function() { return mockPostFilters; });
+        .service('PostFilters', function () {
+            return mockPostFilters;
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

@@ -10,7 +10,7 @@ function (
         replace: true,
         scope: {
             posts: '=',
-            selectedPosts: '=',
+            selectedPosts: '='
         },
         link: function ($scope, $element, $attrs, ngModel) {
             $scope.toggleCollection = function () {

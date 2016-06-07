@@ -2,7 +2,7 @@ module.exports = CollectionListing;
 
 CollectionListing.$inject = [];
 
-function CollectionListing () {
+function CollectionListing() {
     return {
         restrict: 'E',
         replace: true,
@@ -10,8 +10,8 @@ function CollectionListing () {
         },
         controller: CollectionListingController,
         templateUrl: 'templates/sets/collections/collection-listing.html'
-     };
- }
+    };
+}
 
 CollectionListingController.$inject = [
     '$rootScope',
@@ -50,7 +50,7 @@ function CollectionListingController(
 
     activate();
 
-    function activate () {
+    function activate() {
 
     }
 

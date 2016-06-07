@@ -28,7 +28,9 @@ describe('login directive', function () {
         ])
         // .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
         .directive('loginForm', require(ROOT_PATH + 'app/common/auth/login.directive.js'))
-        .service('Authentication', function () { return mockAuthenticationService; });
+        .service('Authentication', function () {
+            return mockAuthenticationService;
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

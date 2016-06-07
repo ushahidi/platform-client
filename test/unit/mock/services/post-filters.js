@@ -20,7 +20,9 @@ module.exports = [function () {
                 status: 'published'
             };
         },
-        getFilters: function () { return filterState; },
+        getFilters: function () {
+            return filterState;
+        },
         setFilters: function () {},
         clearFilters: function () {},
         clearFilter: function () {},

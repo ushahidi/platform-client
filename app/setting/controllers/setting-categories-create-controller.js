@@ -31,7 +31,7 @@ function (
         $scope.roles = roles;
     });
 
-    $scope.category = { type: 'category', icon: 'tag' , color: ''};
+    $scope.category = { type: 'category', icon: 'tag', color: ''};
     $scope.processing = false;
 
     $scope.saveCategory = function (category, addAnother) {

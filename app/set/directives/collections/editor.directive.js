@@ -1,7 +1,7 @@
 module.exports = CollectionEditor;
 
 CollectionEditor.$inject = [];
-function CollectionEditor () {
+function CollectionEditor() {
     return {
         restrict: 'E',
         scope: {
@@ -23,7 +23,7 @@ CollectionEditorController.$inject = [
     'ViewHelper',
     'RoleEndpoint'
 ];
-function CollectionEditorController (
+function CollectionEditorController(
     $scope,
     $q,
     $location,
@@ -49,7 +49,7 @@ function CollectionEditorController (
 
     activate();
 
-    function activate () {
+    function activate() {
         if (!$scope.collection) {
             $scope.setBasicCollection();
         }
@@ -95,7 +95,7 @@ function CollectionEditorController (
     }
 
     function continueFlow(collection) {
-        $scope.redirectToCollectionListing ? $rootScope.$emit('collectionToggle:show:afterCreate', $scope.posts, collection ) : $location.path('/collections/' + collection.id);
+        $scope.redirectToCollectionListing ? $rootScope.$emit('collectionToggle:show:afterCreate', $scope.posts, collection) : $location.path('/collections/' + collection.id);
     }
 
     function cancel() {
