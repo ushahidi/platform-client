@@ -36,7 +36,6 @@ function (
     });
 
     RoleEndpoint.getFresh = function (params) {
-        console.log(cache);
         cache.remove(Util.apiUrl('/roles/' + params.id));
         return RoleEndpoint.get(params);
     };

@@ -30,6 +30,16 @@ module.exports = [function () {
                 }
             }};
         },
+        get: function () {
+            return {$promise: {
+                then: function (successCallback) {
+                    successCallback({
+                        name: 'test user',
+                        id: 1
+                    });
+                }
+            }};
+        },
         update: function (_, user) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
