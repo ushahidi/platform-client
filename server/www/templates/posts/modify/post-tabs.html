@@ -19,7 +19,6 @@
         <div class="form-field switch"
             ng-repeat="stage in stages"
             ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
-            ng-show="stage.id == visibleStage && stages.length > 1"
         >
             <label translate="post.mark_complete">Mark completed</label>
             <div class="toggle-switch">
