@@ -2,13 +2,13 @@ module.exports = CollectionModeContext;
 
 CollectionModeContext.$inject = [];
 
-function CollectionModeContext () {
+function CollectionModeContext() {
     return {
         restrict: 'E',
         controller: CollectionModeContextController,
         templateUrl: 'templates/sets/collections/mode-context.html'
-     };
- }
+    };
+}
 
 CollectionModeContextController.$inject = [
     '$scope',
@@ -75,7 +75,7 @@ function CollectionModeContextController(
                         Notify.showApiErrors(errorResponse);
                     });
                 });
-          });
+            });
     }
 
     function saveNotification(collection) {
@@ -102,6 +102,6 @@ function CollectionModeContextController(
                     });
                 });
             });
-       });
+        });
     }
 }

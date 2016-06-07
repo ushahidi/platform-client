@@ -2,13 +2,13 @@ module.exports = SavedSearchModeContext;
 
 SavedSearchModeContext.$inject = [];
 
-function SavedSearchModeContext () {
+function SavedSearchModeContext() {
     return {
         restrict: 'E',
         controller: SavedSearchModeContextController,
         templateUrl: 'templates/sets/savedsearches/mode-context.html'
-     };
- }
+    };
+}
 
 SavedSearchModeContextController.$inject = [
     '$scope',
@@ -79,7 +79,7 @@ function SavedSearchModeContextController(
                         Notify.showApiErrors(errorResponse);
                     });
                 });
-          });
+            });
     }
 
     function saveNotification(savedSearch) {
@@ -108,6 +108,6 @@ function SavedSearchModeContextController(
                     });
                 });
             });
-       });
+        });
     }
 }

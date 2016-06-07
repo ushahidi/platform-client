@@ -15,10 +15,6 @@ function (
         cache = new CacheFactory('tagCache');
     }
 
-    cache.setOnExpire(function (key, value) {
-        TagEndpoint.get(value.id);
-    });
-
     var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {
         id: '@id'
     }, {
@@ -43,9 +39,9 @@ function (
         }
     });
 
-    TagEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return TagEndpoint.get(id);
+    TagEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/tags/' + params.id));
+        return TagEndpoint.get(params);
     };
 
     TagEndpoint.queryFresh = function () {

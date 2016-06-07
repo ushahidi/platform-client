@@ -1,9 +1,13 @@
 module.exports = [
     '_',
     'Util',
+    '$filter',
+    'Notify',
 function (
     _,
-    Util
+    Util,
+    $filter,
+    Notify
 ) {
     var PostEditService = {
         cleanPostValues: function (post) {
@@ -19,6 +23,7 @@ function (
         },
         canSavePost: function (post, form, stages, attributes) {
             var valid = true;
+            var errors = [];
             if (post.status === 'published') {
                 // first check if stages required have been marked complete
                 var requiredStages = _.where(stages, {required: true}) ;
@@ -26,10 +31,16 @@ function (
                 valid = _.reduce(requiredStages, function (isValid, stage) {
                     // if this stage isn't complete, add to errors
                     if (_.indexOf(post.completed_stages, stage.id) === -1) {
+                        errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
                         return false;
                     }
                     return isValid;
                 }, valid);
+
+                if (errors.length) {
+                    Notify.showAlerts(errors);
+                    return valid;
+                }
 
                 valid = _.reduce(post.completed_stages, function (isValid, stageId) {
                     return PostEditService.isStageValid(stageId, form, stages, attributes) && isValid;

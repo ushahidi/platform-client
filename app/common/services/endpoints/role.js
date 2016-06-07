@@ -13,10 +13,6 @@ function (
         cache = new CacheFactory('roleCache');
     }
 
-    cache.setOnExpire(function (key, value) {
-        RoleEndpoint.get(value.id);
-    });
-
     var RoleEndpoint = $resource(Util.apiUrl('/roles/:id'), {
             id: '@id'
         }, {
@@ -39,9 +35,9 @@ function (
         }
     });
 
-    RoleEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return RoleEndpoint.get(id);
+    RoleEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/roles/' + params.id));
+        return RoleEndpoint.get(params);
     };
 
     RoleEndpoint.invalidateCache = function () {

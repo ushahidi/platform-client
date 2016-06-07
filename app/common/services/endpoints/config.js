@@ -15,12 +15,6 @@ function (
         cache = new CacheFactory('configCache');
     }
 
-    // Doesn't work because value isn't populated
-    // cache.setOnExpire(function (key, value) {
-    //     ConfigEndpoint.get({ id: value.id });
-    // });
-
-
     var ConfigEndpoint = $resource(Util.apiUrl('/config/:id'), {
         'id': '@id'
     }, {

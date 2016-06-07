@@ -22,7 +22,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         activate();
 
         function activate() {
-            $scope.$watch(function () { return PostFilters.getQueryParams(PostFilters.getFilters()); }, handleFiltersUpdate, true);
+            $scope.$watch(function () {
+                return PostFilters.getQueryParams(PostFilters.getFilters());
+            }, handleFiltersUpdate, true);
 
             TagEndpoint.query().$promise.then(function (results) {
                 tags = _.indexBy(results, 'id');
@@ -53,10 +55,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
                     activeFilters.visible_to = 'draft';
                 } else if (activeFilters.status === 'published' && activeFilters.published_to) {
                     activeFilters.visible_to = activeFilters.published_to;
-                } else {
-                    // todo: Ignore this because its the default?
-                    // activeFilters.visible_to = 'everyone'
                 }
+                // Otherwise visible_to = 'everyone' which is default
                 delete activeFilters.status;
             }
             if (activeFilters.published_to) {
@@ -113,7 +113,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             created_after : function (value) {
                 return $filter('date', 'longdate')(value);
             },
-            visible_to : function(value) {
+            visible_to : function (value) {
                 if (value === 'everyone') {
                     return $translate.instant('nav.everyone');
                 } else if (value === 'draft') {

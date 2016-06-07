@@ -63,7 +63,7 @@ module.exports = function (config) {
             'karma-ng-html2js-preprocessor',
             'karma-json-fixtures-preprocessor',
             'karma-phantomjs-launcher',
-            'karma-notify-reporter',
+            'karma-notify-reporter'
         ],
 
         preprocessors: {

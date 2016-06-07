@@ -172,7 +172,7 @@ describe('FormAttributeEndpoint', function () {
 
                 spyOn(FormAttributeEndpoint, 'get').and.callThrough();
 
-                FormAttributeEndpoint.getFresh({id: 1}).$promise.then(successCallback);
+                FormAttributeEndpoint.getFresh({id: 1, formId: 1}).$promise.then(successCallback);
                 expect(FormAttributeEndpoint.get).toHaveBeenCalled();
             });
 

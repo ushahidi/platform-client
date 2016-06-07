@@ -1,4 +1,5 @@
 angular.module('ushahidi.common', [
+	'ushahidi.common.adaptive-input',
 	'ushahidi.common.dropdown',
 	'ushahidi.common.accordion',
 	'ushahidi.common.offcanvas',
@@ -45,12 +46,15 @@ angular.module('ushahidi.common', [
 .controller('notifier', require('./controllers/notifier.js'))
 .controller('intercom', require('./controllers/intercom.js'))
 
+.directive('publishSelector', require('./directives/publish-selector.js'))
+
 .directive('collectionSelector', require('./directives/collection-selector.js'))
 .directive('collectionToggleButton', require('./directives/collection-toggle/collection-toggle-button.js'))
 .directive('collectionToggleLink', require('./directives/collection-toggle/collection-toggle-link.js'))
 
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
+
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
@@ -84,6 +88,7 @@ angular.module('ushahidi.common', [
 ;
 
 // Load submodules
+require('./directives/adaptive-input.js');
 require('./directives/dropdown.js');
 require('./directives/accordion.js');
 require('./directives/offcanvas.js');

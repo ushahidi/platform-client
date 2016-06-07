@@ -55,7 +55,7 @@ function FilterPostsController($scope, $timeout) {
         rollbackForm();
     }
 
-    function rollbackForm () {
+    function rollbackForm() {
         // Store value of q
         var q = $scope.postFiltersForm.q.$viewValue;
         // Rolback form

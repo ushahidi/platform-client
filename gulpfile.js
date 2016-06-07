@@ -324,13 +324,21 @@ gulp.task('tdd', function (done) {
  * Run JSCS tests
  */
 gulp.task('jscs', function () {
-    return gulp.src(['app/**/*.js', 'test/**/*.js'])
-        .pipe(jscs());
+    return gulp.src(['app/**/*.js', 'test/**/*.js', 'gulpfile.js'])
+        .pipe(jscs())
+        .pipe(jscs.reporter())
+        .pipe(jscs.reporter('fail'));
 });
-
-gulp.task('jscsfix', function () {
-    return gulp.src(['app/**/*.js', 'test/**/*.js'])
-        .pipe(jscs({ fix : true }));
+gulp.task('jscsfix', ['jscsfix-app', 'jscsfix-test'], function () {});
+gulp.task('jscsfix-app', function () {
+    return gulp.src(['app/**/*.js'])
+        .pipe(jscs({ fix : true }))
+        .pipe(gulp.dest('app/'));
+});
+gulp.task('jscsfix-test', function () {
+    return gulp.src(['test/**/*.js'])
+        .pipe(jscs({ fix : true }))
+        .pipe(gulp.dest('test/'));
 });
 
 /**

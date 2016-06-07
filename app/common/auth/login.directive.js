@@ -1,12 +1,12 @@
 module.exports = Login;
 
 Login.$inject = [];
-function Login () {
+function Login() {
     return {
         restrict: 'E',
         scope: {},
         controller: LoginController,
-        templateUrl: 'templates/auth/login.html',
+        templateUrl: 'templates/auth/login.html'
     };
 }
 LoginController.$inject = [
@@ -14,7 +14,7 @@ LoginController.$inject = [
     'Authentication',
     '$location'
 ];
-function LoginController (
+function LoginController(
     $scope,
     Authentication,
     $location
@@ -28,32 +28,32 @@ function LoginController (
 
     activate();
 
-    function activate () {
+    function activate() {
         // If we're already logged in
         if (Authentication.getLoginStatus()) {
             $scope.$parent.closeModal();
         }
     }
 
-    function clearLoginForm () {
+    function clearLoginForm() {
         $scope.failed = true;
         $scope.processing = false;
         $scope.email = '';
         $scope.password = '';
     }
 
-    function cancel () {
+    function cancel() {
         clearLoginForm();
         $scope.$parent.closeModal();
     }
 
-    function finishedLogin () {
+    function finishedLogin() {
         $scope.failed = false;
         $scope.processing = false;
         $scope.$parent.closeModal();
     }
 
-    function loginSubmit (email, password) {
+    function loginSubmit(email, password) {
         $scope.processing = true;
 
         Authentication

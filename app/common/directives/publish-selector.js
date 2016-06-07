@@ -23,6 +23,16 @@ function (
             _
         ) {
 
+            $scope.canSeeThis = function () {
+                if ($scope.post.published_to.length) {
+                    return $scope.post.published_to.join(', ');
+                } else if ($scope.post.status === 'draft') {
+                    return $translate.instant('post.just_you');
+                } else {
+                    return $translate.instant('post.everyone');
+                }
+            };
+
             RoleEndpoint.query().$promise.then(function (roles) {
                 $scope.roles = roles;
             });
@@ -41,16 +51,14 @@ function (
 
                 $scope.post.status = role === 'draft' ? role : 'published';
 
-                $scope.toggleRoleFunc({updatedPost: $scope.post});
             };
 
         }];
     return {
         restrict: 'E',
-        templateUrl: 'templates/publish-selector/publish-selector.html',
+        templateUrl: 'templates/common/publish-selector/publish-selector.html',
         scope: {
-            post: '=',
-            toggleRoleFunc: '&'
+            post: '='
         },
         controller: controller
     };

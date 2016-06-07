@@ -31,19 +31,19 @@ function (
         $scope.roles = roles;
     });
 
-    $scope.tag = { type: 'category', icon: 'tag' , color: ''};
+    $scope.category = { type: 'category', icon: 'tag', color: ''};
     $scope.processing = false;
 
-    $scope.saveTag = function (tag, addAnother) {
+    $scope.saveCategory = function (category, addAnother) {
         $scope.processing = true;
         var whereToNext = 'settings/categories';
 
-        TagEndpoint.saveCache(tag).$promise.then(function (response) {
+        TagEndpoint.saveCache(category).$promise.then(function (response) {
             if (response.id) {
                 $translate(
                     'notify.tag.save_success',
                     {
-                        name: tag.tag
+                        name: category.tag
                     }).then(function (message) {
                     Notify.showNotificationSlider(message);
                 });
