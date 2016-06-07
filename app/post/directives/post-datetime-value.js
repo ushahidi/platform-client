@@ -3,7 +3,7 @@ module.exports = [ 'moment', '_', function (moment, _) {
         restrict: 'E',
         replace: true,
         scope: {
-            value: '='
+            model: '='
         },
         templateUrl: 'templates/posts/post-datetime.html',
         link: function ($scope) {
@@ -13,12 +13,12 @@ module.exports = [ 'moment', '_', function (moment, _) {
 
             // If datetime is already set
             // set input values appropriately
-            if($scope.value) {
-                $scope.date = moment($scope.value).toDate();
-                $scope.time = moment($scope.value).toDate();
+            if ($scope.model) {
+                $scope.date = moment($scope.model).toDate();
+                $scope.time = moment($scope.model).toDate();
             }
 
-            $scope.$watch('date', function (newValue, oldValue){
+            $scope.$watch('date', function (newValue, oldValue) {
                 if ( newValue !== oldValue) {
                     // If date is set update model
                     if ($scope.date) {
@@ -26,15 +26,15 @@ module.exports = [ 'moment', '_', function (moment, _) {
 
                         // If value already set up date
                         // date portion
-                        if ($scope.value) {
-                            $scope.value = moment().utc($scope.value)
+                        if ($scope.model) {
+                            $scope.model = moment().utc($scope.model)
                                             .year(newDate.year())
                                             .month(newDate.month())
                                             .date(newDate.date())
                                             .utc();
                         } else {
                             // Set value
-                            $scope.value = newDate.utc();
+                            $scope.model = newDate.utc();
                         }
                     } else {
                         // If date is cleared clear current values
@@ -43,21 +43,21 @@ module.exports = [ 'moment', '_', function (moment, _) {
                 }
             }, true);
 
-            $scope.$watch('time', function (newValue, oldValue){
-                if ( newValue !== oldValue) {
+            $scope.$watch('time', function (newValue, oldValue) {
+                if (newValue !== oldValue) {
                     // If time is set update model
                     if ($scope.time) {
                         var newTime = moment($scope.time);
                         // If value already set up date
                         // time portion
-                        if ($scope.value) {
-                            $scope.value = moment($scope.value)
+                        if ($scope.model) {
+                            $scope.model = moment($scope.model)
                                         .hour(newTime.hour())
                                         .minute(newTime.minute())
                                         .utc();
                         } else {
                             // Set value
-                            $scope.value = newTime.utc();
+                            $scope.model = newTime.utc();
                         }
                     } else {
                         // If time is cleared clear current values
@@ -67,7 +67,7 @@ module.exports = [ 'moment', '_', function (moment, _) {
             }, true);
 
             function clearDatetimeValues() {
-                $scope.value = null;
+                $scope.model = null;
                 $scope.date = null;
                 $scope.time = null;
                 $scope.timeChosen = null;
