@@ -1,14 +1,21 @@
 module.exports = [
     '$scope',
     '$rootScope',
+    '$location',
     'initialData',
     '_',
 function (
     $scope,
     $rootScope,
+    $location,
     initialData,
     _
 ) {
+
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
+    }
 
     // Change layout class
     $rootScope.setLayout('layout-c');

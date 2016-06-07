@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$location',
     '$translate',
     '$route',
@@ -10,6 +11,7 @@ module.exports = [
     '_',
 function (
     $scope,
+    $rootScope,
     $location,
     $translate,
     $route,
@@ -19,6 +21,12 @@ function (
     Notify,
     _
 ) {
+
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
+    }
+
     $translate('tag.add_tag').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
@@ -31,19 +39,19 @@ function (
         $scope.roles = roles;
     });
 
-    $scope.tag = { type: 'category', icon: 'tag' , color: ''};
+    $scope.category = { type: 'category', icon: 'tag', color: ''};
     $scope.processing = false;
 
-    $scope.saveTag = function (tag, addAnother) {
+    $scope.saveCategory = function (category, addAnother) {
         $scope.processing = true;
         var whereToNext = 'settings/categories';
 
-        TagEndpoint.saveCache(tag).$promise.then(function (response) {
+        TagEndpoint.saveCache(category).$promise.then(function (response) {
             if (response.id) {
                 $translate(
                     'notify.tag.save_success',
                     {
-                        name: tag.tag
+                        name: category.tag
                     }).then(function (message) {
                     Notify.showNotificationSlider(message);
                 });

@@ -23,6 +23,12 @@ function (
     Util,
     category
 ) {
+
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
+    }
+
     $scope.category = category;
     $translate('tag.edit_tag').then(function (title) {
         $scope.title = title;

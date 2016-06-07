@@ -8,7 +8,7 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
 .constant('dropdownConfig', {
     openClass: 'active',
     toggleOpenClass: 'active',
-    menuOpenClass: 'visible'
+    menuOpenClass: 'active'
 })
 
 .service('dropdownService', ['$document', '$rootScope', function ($document, $rootScope) {

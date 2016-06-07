@@ -2,7 +2,7 @@
     <div class="mode-context init">
         <header class="mode-context-header">
             <ol class="breadcrumbs">
-                <li><a href="/">{{site.name}}</a></li>
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
                 <li><a href="/settings" translate>app.settings</a></li>
             </ol>
             <h1 class="mode-context-title" translate>app.categories</h1>
@@ -26,66 +26,6 @@
                     </svg>
                     <span class="hidden" translate>category.add_category</span>
                 </a>
-            </div>
-
-            <form role="search" class="searchbar">
-                <div class="searchbar-input">
-                    <div class="form-field search">
-                        <input type="search" placeholder="Search categories">
-                        <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="searchbar-options">
-                    <a href="#" class="button searchbar-options-filter init" data-toggle="search-filters">
-                        <span class="button-label">Filters</span>
-                        <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                        </svg>
-                    </a>
-                </div>
-
-                <div class="dropdown-menu init" data-toggle-target="search-filters">
-                    <div class="dropdown-menu init" data-toggle-target="search-filters">
-                        <div class="dropdown-menu-body">
-                            <fieldset>
-                                <legend>Roles</legend>
-
-                                <div class="form-field checkbox">
-                                    <label for="member" class="checked">
-                                        <input type="checkbox" name="member" checked="" id="member"> Member
-                                    </label>
-                                </div>
-                                <div class="form-field checkbox">
-                                    <label for="editor" class="checked">
-                                        <input type="checkbox" name="editor" checked="" value="Police encounters" id="editor"> Editor
-                                    </label>
-                                </div>
-                                <div class="form-field checkbox">
-                                    <label for="administrator" class="checked">
-                                        <input type="checkbox" name="administrator" checked="" id="administrator"> Administrator
-                                    </label>
-                                </div>
-                            </fieldset>
-                        </div>
-
-                        <div class="form-field">
-                            <button type="button" class="button-link" disabled="" translate>app.cancel</button>
-                            <button type="button" class="button-alpha" disabled="">Apply filters</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <div class="button-group">
-                <button type="button">
-                    <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
-                    </svg>
-                    <span class="button-label" translate>nav.export</span>
-                </button>
             </div>
         </div>
         <!-- end toolbar -->

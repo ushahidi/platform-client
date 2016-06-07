@@ -10,6 +10,7 @@ require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap');
 require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
+require('angular-elastic');
 require('angular-filter');
 require('angular-local-storage');
 require('checklist-model/checklist-model');
@@ -17,7 +18,6 @@ require('selection-model/dist/selection-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown/src/ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
-window.dc = require('dc'); // Required for charting used in activity page
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
@@ -62,6 +62,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || pro
 angular.module('app',
     [
         'checklist-model',
+        'monospaced.elastic',
         'ngRoute',
         'ngResource',
         'LocalStorageModule',
@@ -105,9 +106,6 @@ angular.module('app',
     })
     .factory('d3', function () {
         return window.d3;
-    })
-    .factory('dc', function () {
-        return window.dc;
     })
     .factory('URI', function () {
         return require('URIjs/src/URI.js');

@@ -28,6 +28,10 @@ describe('setting users create controller', function () {
         Notify = _Notify_;
         Session = _Session_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 

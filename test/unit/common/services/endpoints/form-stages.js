@@ -172,7 +172,7 @@ describe('FormStageEndpoint', function () {
 
                 spyOn(FormStageEndpoint, 'get').and.callThrough();
 
-                FormStageEndpoint.getFresh({id: 1}).$promise.then(successCallback);
+                FormStageEndpoint.getFresh({id: 1, formId: 1}).$promise.then(successCallback);
                 expect(FormStageEndpoint.get).toHaveBeenCalled();
             });
 

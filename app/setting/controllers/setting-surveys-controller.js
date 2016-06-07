@@ -24,6 +24,10 @@ function (
 
     // Change layout class
     $rootScope.setLayout('layout-b');
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
+    }
 
     Features.loadFeatures().then(function () {
         $scope.formQuota = Features.getLimit('forms');

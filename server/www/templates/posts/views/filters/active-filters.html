@@ -1,0 +1,8 @@
+<div ng-repeat="(key, values) in activeFilters">
+    <span class="bug" ng-repeat="value in values" >
+        <svg class="iconic" ng-click="removeFilter(key, value)">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#circle-x"></use>
+        </svg>
+        <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> {{ transformFilterValue(value, key) }}</span>
+    </span>
+</div>

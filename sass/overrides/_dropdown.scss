@@ -1,0 +1,13 @@
+.dropdown {
+    .dropdown-animate {
+        display: block !important;
+        opacity: 1 !important;
+        transition: opacity 0.15s;
+    }
+
+    .dropdown-animate-flex {
+        display: flex !important;
+        opacity: 1 !important;
+        transition: opacity 0.15s ease-in;
+    }
+}

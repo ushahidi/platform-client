@@ -8,7 +8,7 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
         })
         .when('/login', {
             controller: require('./controllers/login-controller.js'),
-            templateUrl: 'templates/login.html'
+            template: ''
         })
         .when('/forbidden', {
             controller: require('./controllers/forbidden-controller.js'),

@@ -19,14 +19,14 @@
         </a>
     </div>
 
-    <ng-include src="'templates/posts/views/saved-search-dropdown.html'"></ng-include>
+    <saved-search-listing></saved-search-listing>
 
     <!-- Filters menu -->
     <div class="dropdown-menu" data-toggle-target="search-filters" ng-show="searchFiltersToggle" ng-class="{ 'active': searchFiltersToggle }" data-toggle-animate>
         <div class="dropdown-menu-body">
-            <filter-form model="filters.form"></filter-form>
+            <filter-form ng-model="filters.form"></filter-form>
 
-            <filter-category model="filters.tag"></filter-category>
+            <filter-category ng-model="filters.tags"></filter-category>
 
             <filter-visible-to status-model="filters.status" published-to-model="filters.published_to"></filter-visible-to>
 
@@ -37,7 +37,7 @@
 
         <div class="form-field">
             <button type="button" class="button-link" ng-click="cancel()" translate>app.cancel</button>
-            <button type="submit" class="button-alpha" ng-disabled="applyEnabled"  translate>app.apply_filters</button>
+            <button type="submit" class="button-alpha" translate>app.apply_filters</button>
         </div>
     </div>
 </form>

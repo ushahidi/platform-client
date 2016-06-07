@@ -12,8 +12,13 @@ describe('Post Edit Service', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        var testApp = angular.module('testApp');
-        testApp.service('PostEditService', require(rootPath + 'app/post/services/post-edit-service.js'));
+        var testApp = angular.module('testApp', [
+            'ushahidi.mock'
+        ]);
+        testApp.service('PostEditService', require(rootPath + 'app/post/services/post-edit-service.js'))
+        .value('$filter', function () {
+            return function () {};
+        });
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 

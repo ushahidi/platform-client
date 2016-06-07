@@ -31,7 +31,7 @@
                 </a>
             </li>
 
-            <li ng-class="{ active: activeMode === 'settings' }" class="tuck" data-message="customize">
+            <li ng-class="{ active: activeMode === 'settings' }" class="tuck" data-message="customize" ng-show="hasManageSettingsPermission()">
                 <a href="/settings">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
@@ -53,28 +53,48 @@
 
         <ul class="account-menu">
         <!-- user account menu -->
+
+            <li>
+                <a href="http://www.ushahidi.com">
+                    <ng-include src="'templates/frame/ushahidi-logo.html'"></ng-include>
+                    <span class="label">Ushahidi.com</span>
+                </a>
+            </li>
+
+            <li ng-show="currentUser">
+                <a ng-click="logout()" data-modal="login">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#account-logout"></use>
+                    </svg>
+                    <span class="label" translate="nav.logout">Log out</span>
+                </a>
+            </li>
+
+            <li ng-show="currentUser">
+                <a ng-click="viewAccountSettings()">
+                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
+                    <span class="label">{{currentUser.realname || currentUser.email}}</span>
+                </a>
+            </li>
+
             <li ng-hide="currentUser" ng-show="canRegister()">
-                <a href="/register" data-modal="signup">
+                <a ng-click="login()" data-modal="signup">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#person"></use>
                     </svg>
                     <translate translate="nav.register">Sign up</translate>
                 </a>
             </li>
+
             <li ng-hide="currentUser">
-                <a href="/login" data-modal="login">
+                <a ng-click="login()" data-modal="login">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#account-login"></use>
                     </svg>
                     <translate translate="nav.login">Log in</translate>
                 </a>
             </li>
-            <li ng-show="currentUser">
-                <a>
-                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
-                    <span class="label">{{currentUser.realname || currentUser.email}}</span>
-                </a>
-            </li>
+
             <li>
                 <a ng-click="viewCollectionListing()">
                     <svg class="iconic">
@@ -83,6 +103,7 @@
                     <span class="label" translate>nav.collections</span>
                 </a>
             </li>
+
             <li ng-if="todo">
                 <a>
                     <svg class="iconic">

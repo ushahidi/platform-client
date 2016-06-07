@@ -1,16 +1,26 @@
 module.exports = [
     '$scope',
     '$translate',
+    '$rootScope',
+    '$location',
     '$q',
     'TagEndpoint',
     'Notify',
 function (
     $scope,
     $translate,
+    $rootScope,
+    $location,
     $q,
     TagEndpoint,
     Notify
 ) {
+
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
+    }
+
     $translate('tool.manage_tags').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);

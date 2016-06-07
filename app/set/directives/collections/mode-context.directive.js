@@ -2,16 +2,13 @@ module.exports = CollectionModeContext;
 
 CollectionModeContext.$inject = [];
 
-function CollectionModeContext () {
+function CollectionModeContext() {
     return {
         restrict: 'E',
-        scope: {
-            collection: '='
-        },
         controller: CollectionModeContextController,
         templateUrl: 'templates/sets/collections/mode-context.html'
-     };
- }
+    };
+}
 
 CollectionModeContextController.$inject = [
     '$scope',
@@ -39,18 +36,20 @@ function CollectionModeContextController(
     $scope.removeNotification = removeNotification;
 
     // Show Add Notification link
-    $scope.showNotificationLink = false;
+    $scope.showNotificationLink = true;
+    $scope.canEdit = false;
+    $scope.notification = false;
 
     activate();
 
     function activate() {
-        $scope.canEditCollection = canEdit($scope.collection);
+        $scope.canEdit = canEdit($scope.collection);
 
         NotificationEndpoint.query({set: $scope.collection.id, ignore403: true, user: 'me'}, function (notifications) {
             // show link if subscription does not exist
+            $scope.showNotificationLink = notifications.length === 0;
             if (notifications.length) {
-                $scope.showNotificationLink = notifications.length === 0;
-                $scope.collectionNotification = notifications[0];
+                $scope.notification = notifications[0];
             }
         });
     }
@@ -71,12 +70,12 @@ function CollectionModeContextController(
                         collectionId: $scope.collection.id
                     }).$promise.then(function () {
                         $location.url('/');
-                        $rootScope.$broadcast('scollection:update');
+                        $rootScope.$broadcast('collection:update');
                     }, function (errorResponse) {
                         Notify.showApiErrors(errorResponse);
                     });
                 });
-          });
+            });
     }
 
     function saveNotification(collection) {
@@ -84,7 +83,7 @@ function CollectionModeContextController(
         NotificationEndpoint.save(notification).$promise.then(function (notification) {
             // No need to show the link after subscription
             $scope.showNotificationLink = false;
-            $scope.collectionNotification = notification;
+            $scope.notification = notification;
             $translate('notify.notification.add', {set: collection.name}).then(function (message) {
                 Notify.showNotificationSlider(message);
             });
@@ -95,7 +94,7 @@ function CollectionModeContextController(
         $translate('notify.notification.delete_confirm')
         .then(function (message) {
             Notify.showConfirm(message).then(function () {
-                NotificationEndpoint.delete($scope.collectionNotification).$promise.then(function (notification) {
+                NotificationEndpoint.delete($scope.notification).$promise.then(function (notification) {
                     $scope.showNotificationLink = true;
                     $translate('notify.notification.destroy_notification_success', {name: notification.name})
                     .then(function (message) {
@@ -103,6 +102,6 @@ function CollectionModeContextController(
                     });
                 });
             });
-       });
+        });
     }
 }

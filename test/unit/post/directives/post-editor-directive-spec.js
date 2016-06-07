@@ -17,11 +17,24 @@ describe('post editor directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postEditor', require(ROOT_PATH + 'app/post/directives/post-editor-directive'))
+        testApp.directive('postEditor', require(ROOT_PATH + 'app/post/directives/post-editor.directive'))
         .value('$filter', function () {
             return function () {};
         })
-        .value('PostEntity', {});
+        .value('PostEntity', {})
+        .value('moment', function () {
+            return {
+                subtract : function () {
+                    return this;
+                },
+                fromNow : function () {
+                    return '';
+                },
+                isSame : function () {
+                    return true;
+                }
+            };
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -38,15 +51,15 @@ describe('post editor directive', function () {
 
         $scope.post = fixture.load('posts/120.json');
 
-        $scope.activeForm = {
+        $scope.form = {
             id: 1,
-            name: 'Test form',
+            name: 'test form',
             type: 'Report',
             description: 'Testing form',
             created: '1970-01-01T00:00:00+00:00'
         };
 
-        element = '<post-editor post="post" active-form="activeForm"></post-editor>';
+        element = '<post-editor post="post" form="form"></post-editor>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();

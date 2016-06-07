@@ -53,6 +53,7 @@ angular.module('ushahidi.mock', [])
 })
 .service('leafletData', require('./services/third_party/leaflet-data.js'))
 .service('d3', require('./services/third_party/d3.js'))
+.service('moment', require('./services/third_party/moment.js'))
 
 .service('PostEndpoint', require('./services/post.js'))
 .service('FormEndpoint', require('./services/form.js'))
@@ -79,5 +80,9 @@ angular.module('ushahidi.mock', [])
 .service('GlobalFilter', require('./services/global-filters.js'))
 .service('PostFilters', require('./services/post-filters.js'))
 .service('Maps', require('./services/maps.js'))
+.service('ModalService', require('./services/modal.service.js'))
 .service('PostEditService', require('./services/post-edit-service.js'))
-.service('Notify', require('./services/notify.js'));
+.service('Notify', require('./services/notify.js'))
+
+.controller('navigation', require('./controllers/navigation.controller.mock.js'))
+;

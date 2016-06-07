@@ -4,22 +4,22 @@
 */
 
 module.exports = [
-    function() {
+    function () {
         var controller = [
             '$scope',
             '$translate',
-            function(
+            function (
                 $scope,
                 $translate
             ) {
                 // Update local color when inbound color is changed
-                $scope.$watch('colorContainer.color', function (){
+                $scope.$watch('colorContainer.color', function () {
                     if ($scope.colorContainer.color) {
-                        $scope.color = $scope.colorContainer.color.replace('#','');
+                        $scope.color = $scope.colorContainer.color.replace('#', '');
                     }
-                }); 
+                });
 
-                $scope.setColor = function(color) {
+                $scope.setColor = function (color) {
                     $scope.colorContainer.color = color.indexOf('#') > -1 ? color : '#' + color;
                 };
             }

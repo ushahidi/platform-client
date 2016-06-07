@@ -61,14 +61,13 @@ function SurveyEditorController(
         } else {
             // When creating new survey
             // pre-fill object with default tasks and attributes
-          /*  $scope.survey = {
+            $scope.survey = {
                 tasks: {
                     label: 'Post'
                 },
-                attributes
-            }; */
+                attributes: {}
+            };
         }
-
     }
 
     function loadFormData() {
@@ -105,7 +104,7 @@ function SurveyEditorController(
         var tasks = $scope.survey.tasks,
             // Find our current stage
             index = _.indexOf(tasks, task);
-        return index === tasks.length-1;
+        return index === tasks.length - 1;
     }
 
     function canReorderTask(task) {
@@ -183,7 +182,7 @@ function SurveyEditorController(
         });
     }
 
-    function saveSurvey(){
+    function saveSurvey() {
         // Saving a survey is a 3 step process
 
         // First save the actual survey
@@ -203,7 +202,7 @@ function SurveyEditorController(
         // Third save the survey task attributes
     }
 
-    $scope.saveNewTask = function(task) {
+    $scope.saveNewTask = function (task) {
         var lastPriority = $scope.form.stages.length ? _.last($scope.survey.tasks).priority : 0;
         FormStageEndpoint
         .saveCache(_.extend(task, {

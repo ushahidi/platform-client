@@ -2,7 +2,7 @@ module.exports = CollectionListing;
 
 CollectionListing.$inject = [];
 
-function CollectionListing () {
+function CollectionListing() {
     return {
         restrict: 'E',
         replace: true,
@@ -10,8 +10,8 @@ function CollectionListing () {
         },
         controller: CollectionListingController,
         templateUrl: 'templates/sets/collections/collection-listing.html'
-     };
- }
+    };
+}
 
 CollectionListingController.$inject = [
     '$rootScope',
@@ -50,12 +50,16 @@ function CollectionListingController(
 
     activate();
 
-    function activate () {
+    function activate() {
 
     }
 
     function loadCollections() {
-        $scope.collections = CollectionEndpoint.editableByMe();
+        if ($scope.isToggleMode) {
+            $scope.collections = CollectionEndpoint.editableByMe();
+        } else {
+            $scope.collections = CollectionEndpoint.query();
+        }
     }
 
     function postInCollection(collection) {
@@ -176,6 +180,7 @@ function CollectionListingController(
     // Show listing modal
     $rootScope.$on('collectionListing:show', function () {
         $scope.collectionListingVisible = true;
+        $scope.isToggleMode = false;
         $scope.loadCollections();
     });
 

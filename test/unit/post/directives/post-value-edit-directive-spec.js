@@ -17,7 +17,7 @@ describe('post value edit directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postValueEdit', require(ROOT_PATH + 'app/post/directives/post-value-edit-directive'))
+        testApp.directive('postValueEdit', require(ROOT_PATH + 'app/post/directives/post-value-edit.directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -56,14 +56,9 @@ describe('post value edit directive', function () {
         it('should return the correct value for each attr input', function () {
             expect(isolateScope.isDate({input: 'date'})).toBe(true);
             expect(isolateScope.isDateTime({input: 'datetime'})).toBe(true);
-            expect(isolateScope.isLocation({input: 'location'})).toBe(true);
-            expect(isolateScope.isSelect({input: 'select'})).toBe(true);
-            expect(isolateScope.isNumber({input: 'number'})).toBe(true);
             expect(isolateScope.isText({input: 'text'})).toBe(true);
             expect(isolateScope.isTextarea({input: 'textarea'})).toBe(true);
             expect(isolateScope.isCheckbox({input: 'checkbox'})).toBe(true);
-            expect(isolateScope.isRadio({input: 'radio'})).toBe(true);
-            expect(isolateScope.isRelation({input: 'relation'})).toBe(true);
         });
 
         it('should allow adding and removing of values', function () {

@@ -15,11 +15,6 @@ function (
         cache = new CacheFactory('configCache');
     }
 
-    cache.setOnExpire(function (key, value) {
-        ConfigEndpoint.get(value.id);
-    });
-
-
     var ConfigEndpoint = $resource(Util.apiUrl('/config/:id'), {
         'id': '@id'
     }, {
@@ -42,9 +37,9 @@ function (
         return cache.removeAll();
     };
 
-    ConfigEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return ConfigEndpoint.get(id);
+    ConfigEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/config/' + params.id));
+        return ConfigEndpoint.get(params);
     };
 
     /**

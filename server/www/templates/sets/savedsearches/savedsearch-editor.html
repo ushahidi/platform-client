@@ -1,0 +1,52 @@
+<div class="modal-body savedsearch-editor">
+
+    <div class="form-field title">
+        <label translate>set.name_savedsearch</label>
+        <input type="text" placeholder="Name your Saved Search..." ng-model="cpySavedSearch.name" />
+    </div>
+
+    <div class="form-field">
+        <label class="input-label" translate>set.description</label>
+        <textarea ng-model="cpySavedSearch.description" />
+    </div>
+
+    <div class="form-field switch" ng-if="featuredEnabled()">
+        <label for="saved-search-featured">
+            <translate translate="saved_search.featured">Featured</translate>
+            <span class="tooltip">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#question-mark"></use>
+                </svg>
+                <span class="bug" translate="saved_search.featured_tooltip">Featured searches appear to all users in <br>the "Saved Searches" menu</span>
+            </span>
+        </label>
+        <div class="toggle-switch">
+            <input class="tgl" id="saved-search-featured" type="checkbox" ng-model="cpySavedSearch.featured">
+            <label class="tgl-btn" for="saved-search-featured" value="1"></label>
+        </div>
+    </div>
+
+    <div class="form-field">
+        <label class="input-label" translate="set.default_viewing_mode">Default viewing mode</label>
+        <div class="custom-select">
+            <select ng-options="view.name as view.display_name for view in views" ng-model="cpySavedSearch.view">
+            </select>
+        </div>
+    </div>
+
+    <div class="form-field select">
+        <label class="input-label">
+            <div class="custom-select">
+                <select ng-options="role.name as role.display_name for role in roles" ng-model="cpySavedSearch.visible_to[0]">
+                    <option value="" translate>post.modify.everyone</option>
+                </select>
+            </div>
+            <span class="nodisplay">Who</span> <translate translate="app.can_see_this">can see this</translate>
+        </label>
+    </div>
+
+    <div class="form-field">
+        <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>
+        <button type="button" class="button-alpha modal-trigger" ng-click="save(cpySavedSearch)" translate>app.save_and_close</button>
+    </div>
+</div>

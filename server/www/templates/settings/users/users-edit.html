@@ -2,11 +2,12 @@
     <div class="mode-context init">
         <header class="mode-context-header">
             <ol class="breadcrumbs">
-                <li><a href="/">{{site.name}}</a></li>
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
                 <li><a href="/settings" translate>app.settings</a></li>
                 <li><a href="/settings/users" translate>app.users</a></li>
             </ol>
-            <h1 class="mode-context-title" translate>app.edit_user</h1>
+            <h1 class="mode-context-title" ng-show="user.id" translate>app.edit_user</h1>
+            <h1 class="mode-context-title" ng-show="!user.id" translate>app.add_user</h1>
         </header>
 
         <span class="mode-context-trigger">
@@ -78,22 +79,21 @@
 
                 </div>
 
-                <div class="form-sheet">
-                    <div class="form-sheet-summary">
-                        <h3 class="form-sheet-title" translate>user.delete_user</h3>
-                    </div>
+                <div class="form-sheet" ng-show="user.id">
+                   <div class="form-sheet-summary">
+                       <h3 class="form-sheet-title" translate>user.delete_user</h3>
+                   </div>
 
-                    <div class="form-field">
-                        <p translate>user.delete_user_desc</p>
+                   <div class="form-field">
+                       <p translate>user.delete_user_desc</p>
 
-                        <button class="button-destructive" ng-click="deleteUser(user)">
-                            <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-                            </svg>
-                            <span class="button-label" translate>user.delete_user</span>
-                        </button>
-                    </div>
-
+                       <button class="button-destructive" ng-click="deleteUser(user)">
+                           <svg class="iconic">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                           </svg>
+                           <span class="button-label" translate>user.delete_user</span>
+                       </button>
+                   </div>
                 </div>
             </form>
 

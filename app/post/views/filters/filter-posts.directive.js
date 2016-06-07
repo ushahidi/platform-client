@@ -26,13 +26,12 @@ function FilterPostsController($scope, $timeout) {
 
     function activate() {
         // @todo define initial filter values
+        // $scope.$watch('filters', handleFilterChange, true);
     }
-
-    // @todo watch filters for changes
 
     function cancel() {
         // Reset filters
-        $scope.postFiltersForm.$rollbackViewValue();
+        rollbackForm();
         // .. and close the dropdown
         $scope.searchFiltersToggle = false;
     }
@@ -52,11 +51,17 @@ function FilterPostsController($scope, $timeout) {
         $scope.searchFiltersToggle = !$scope.searchFiltersToggle;
         $scope.searchSavedToggle = false;
 
-        // If we're toggling closed
-        if ($scope.searchFiltersToggle === false) {
-            // .. reset the form
-            // @todo avoid resetting 'q'
-            $scope.postFiltersForm.$rollbackViewValue();
-        }
+        // Reset the form
+        rollbackForm();
+    }
+
+    function rollbackForm() {
+        // Store value of q
+        var q = $scope.postFiltersForm.q.$viewValue;
+        // Rolback form
+        $scope.postFiltersForm.$rollbackViewValue();
+        // Restore value of q
+        $scope.postFiltersForm.q.$setViewValue(q);
+        $scope.postFiltersForm.q.$render();
     }
 }

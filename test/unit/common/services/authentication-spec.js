@@ -35,21 +35,6 @@ describe('Authentication', function () {
                 }
             };
         })
-        .service('RoleEndpoint', function () {
-            return {
-                query: function () {
-                    return {$promise: {
-                        then: function (successCallback, failCallback) {
-                            successCallback([{
-                                name: 'role',
-                                permissions: [],
-                                id: 1
-                            }]);
-                        }
-                    }};
-                }
-            };
-        })
         .service('Authentication', require(rootPath + 'app/common/services/authentication.js'));
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
@@ -75,7 +60,7 @@ describe('Authentication', function () {
 
     describe('login', function () {
 
-        describe('with successfull post call to "/oauth/token"', function () {
+        describe('with successful post call to "/oauth/token"', function () {
 
             beforeEach(function () {
                 mockedOauthTokenResponse = {
