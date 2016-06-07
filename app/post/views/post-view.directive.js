@@ -22,7 +22,7 @@ function (
             $scope.$emit('event:mode:change', $scope.currentView);
 
             // Watch views, in case we get new feature config
-            ViewHelper.isViewAvailable($scope.currentView).then(function (available) {
+            /* ViewHelper.isViewAvailable($scope.currentView).then(function (available) {
                 if (!available) {
                     $scope.unavailableView = $scope.currentView;
                     $scope.currentView = 'unavailable';
@@ -34,7 +34,7 @@ function (
                 } else {
                     $scope.hasAside = false;
                 }
-            });
+            }); */
         }
     ];
 

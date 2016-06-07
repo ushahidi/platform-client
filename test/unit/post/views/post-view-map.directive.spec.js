@@ -1,6 +1,6 @@
-var ROOT_PATH = '../../../../../';
+var ROOT_PATH = '../../../../';
 
-describe('post view timeline directive', function () {
+describe('post view map directive', function () {
 
     var $rootScope,
         $scope,
@@ -17,7 +17,7 @@ describe('post view timeline directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postViewTimeline', require(ROOT_PATH + 'app/post/directives/views/post-view-timeline-directive'))
+        testApp.directive('postViewMap', require(ROOT_PATH + 'app/post/views/post-view-map.directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -35,10 +35,9 @@ describe('post view timeline directive', function () {
         $scope = _$rootScope_.$new();
 
         Notify = _Notify_;
-
         $scope.isLoading = true;
         $scope.filters = {};
-        element = '<post-view-timeline filters="filters" is-loading="isLoading"></post-view-timeline>';
+        element = '<post-view-map filters="filters" is-loading="isLoading"></post-view-map>';
 
         element = $compile(element)($scope);
         $rootScope.$digest();

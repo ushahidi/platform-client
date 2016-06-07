@@ -7,8 +7,7 @@ angular.module('ushahidi.common', [
 	'ushahidi.common.custom-on-change',
 	'ushahidi.common.file-upload',
 	'ushahidi.common.notification-slider',
-	'ushahidi.common.sticky-sidebar',
-  'ushahidi.common.chart'
+	'ushahidi.common.sticky-sidebar'
 ])
 
 .service('Authentication', require('./services/authentication.js'))
@@ -98,4 +97,3 @@ require('./directives/custom-on-change.js');
 require('./directives/file-upload.js');
 require('./directives/notification-slider.js');
 require('./directives/sticky-sidebar.js');
-require('./directives/chart.js');

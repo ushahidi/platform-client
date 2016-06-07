@@ -53,6 +53,7 @@ angular.module('ushahidi.mock', [])
 })
 .service('leafletData', require('./services/third_party/leaflet-data.js'))
 .service('d3', require('./services/third_party/d3.js'))
+.service('moment', require('./services/third_party/moment.js'))
 
 .service('PostEndpoint', require('./services/post.js'))
 .service('FormEndpoint', require('./services/form.js'))

@@ -16,6 +16,7 @@ angular.module('ushahidi.posts', [])
 // Views
 .directive('postView', require('./views/post-view.directive.js'))
 .directive('postViewList', require('./views/post-view-list.directive.js'))
+.directive('postViewMap', require('./views/post-view-map.directive.js'))
 .directive('addPostButton', require('./views/add-post-button.directive.js'))
 .directive('filterPosts', require('./views/filters/filter-posts.directive.js'))
 .directive('modeContextFormFilter', require('./views/mode-context-form-filter.directive.js'))
@@ -29,10 +30,7 @@ angular.module('ushahidi.posts', [])
 
 .service('PostFilters', require('./views/post-filters.service.js'))
 
-.directive('postViewMap', require('./directives/views/post-view-map-directive.js'))
-.directive('postViewTimeline', require('./directives/views/post-view-timeline-directive.js'))
-.directive('postViewChart', require('./directives/views/post-view-chart-directive.js'))
-.directive('postViewUnavailable', require('./directives/views/post-view-unavailable-directive.js'))
+.directive('postViewUnavailable', require('./views/post-view-unavailable.directive.js'))
 
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('PostEntity', require('./services/entities/post-entity.js'))
