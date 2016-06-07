@@ -55,7 +55,7 @@ function (
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
             }
-            $rootScope.goBack();
+            $location.path('/settings/users');
         }, function (errorResponse) { // error
             var validationErrors = [];
             // @todo refactor limit handling

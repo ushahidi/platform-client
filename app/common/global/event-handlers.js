@@ -5,15 +5,6 @@ function (
     $rootScope,
     $location
 ) {
-    $rootScope.goBack = function () {
-        var path = $location.path().split('/');
-        if (!path.length) {
-            return;
-        }
-        path.pop();
-        $location.path(path.join('/'));
-    };
-
     $rootScope.switchRtl = function () {
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
     };

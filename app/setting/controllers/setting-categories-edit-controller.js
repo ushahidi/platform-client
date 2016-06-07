@@ -48,10 +48,10 @@ function (
         $scope.saving = true;
         // @todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {
-            $rootScope.goBack();
             $translate('notify.tag.save_success', {name: tag.tag}).then(function (message) {
                 Notify.showNotificationSlider(message);
             });
+            $location.path('/settings/categories');
         }, function (errorResponse) { // error
             Notify.showApiErrors(errorResponse);
             $scope.saving = false;
