@@ -33,7 +33,7 @@ describe('setting categories edit controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

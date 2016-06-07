@@ -31,7 +31,7 @@ describe('setting roles controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

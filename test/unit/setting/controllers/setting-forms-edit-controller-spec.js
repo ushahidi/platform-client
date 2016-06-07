@@ -31,7 +31,7 @@ describe('setting forms edit controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

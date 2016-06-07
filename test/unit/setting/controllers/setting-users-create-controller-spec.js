@@ -31,7 +31,7 @@ describe('setting users create controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

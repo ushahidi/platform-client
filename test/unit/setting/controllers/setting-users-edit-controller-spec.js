@@ -33,7 +33,7 @@ describe('setting users edit controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

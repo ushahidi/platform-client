@@ -17,10 +17,10 @@ function (
 ) {
 
     // Redirect to home if not authorized
-    if ($rootScope.hasManageSettingsPermission() == false) {
-        return $location.path("/");
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
     }
-	
+
     // Change layout class
     $rootScope.setLayout('layout-c');
     // Change mode

@@ -31,7 +31,7 @@ describe('setting plugins controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

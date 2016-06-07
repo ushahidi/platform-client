@@ -13,12 +13,12 @@ function (
     RoleEndpoint,
     PermissionEndpoint
 ) {
-	
+
     // Redirect to home if not authorized
-    if ($rootScope.hasManageSettingsPermission() == false) {
-        return $location.path("/");
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
     }
-	
+
     $translate('tool.manage_roles').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);

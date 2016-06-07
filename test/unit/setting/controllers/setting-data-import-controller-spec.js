@@ -29,7 +29,7 @@ describe('setting data import controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

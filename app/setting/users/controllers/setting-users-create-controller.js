@@ -21,8 +21,8 @@ function (
 ) {
 
     // Redirect to home if not authorized
-    if ($rootScope.hasManageSettingsPermission() == false) {
-        return $location.path("/");
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
     }
 
     $translate('user.add_user').then(function (title) {

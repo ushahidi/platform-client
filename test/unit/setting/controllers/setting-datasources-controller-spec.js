@@ -29,7 +29,7 @@ describe('setting datasources controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

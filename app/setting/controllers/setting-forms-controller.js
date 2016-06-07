@@ -21,10 +21,10 @@ function (
     _,
     Features
 ) {
-	
+
     // Redirect to home if not authorized
-    if ($rootScope.hasManageSettingsPermission() == false) {
-        return $location.path("/");
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
     }
 
     Features.loadFeatures().then(function () {

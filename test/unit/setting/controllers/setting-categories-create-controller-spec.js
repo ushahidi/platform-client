@@ -32,7 +32,7 @@ describe('setting categories create controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

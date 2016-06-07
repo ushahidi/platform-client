@@ -27,7 +27,7 @@ describe('setting data mapper controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

@@ -27,7 +27,7 @@ describe('setting categories controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 

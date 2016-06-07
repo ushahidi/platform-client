@@ -33,7 +33,7 @@ describe('setting views controller', function () {
 
         $rootScope.hasManageSettingsPermission = function () {
             return true;
-        }
+        };
     }));
 
 
