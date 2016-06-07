@@ -6,7 +6,8 @@
                 <li><a href="/settings" translate>app.settings</a></li>
                 <li><a href="/settings/categories" translate>app.categories</a></li>
             </ol>
-            <h1 class="mode-context-title" translate>app.edit_category</h1>
+            <h1 class="mode-context-title" ng-show="category.id" translate>app.edit_category</h1>
+            <h1 class="mode-context-title" ng-show="!category.id" translate>app.add_category</h1>
         </header>
 
         <span class="mode-context-trigger">
@@ -74,7 +75,7 @@
                     </fieldset>
                 </div>
 
-                <div class="form-sheet">
+                <div class="form-sheet" ng-show="category.id">
                    <div class="form-sheet-summary">
                        <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
                    </div>

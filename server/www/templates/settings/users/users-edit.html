@@ -6,7 +6,8 @@
                 <li><a href="/settings" translate>app.settings</a></li>
                 <li><a href="/settings/users" translate>app.users</a></li>
             </ol>
-            <h1 class="mode-context-title" translate>app.edit_user</h1>
+            <h1 class="mode-context-title" ng-show="user.id" translate>app.edit_user</h1>
+            <h1 class="mode-context-title" ng-show="!user.id" translate>app.add_user</h1>
         </header>
 
         <span class="mode-context-trigger">
@@ -78,7 +79,7 @@
 
                 </div>
 
-                <div class="form-sheet">
+                <div class="form-sheet" ng-show="user.id">
                    <div class="form-sheet-summary">
                        <h3 class="form-sheet-title" translate>user.delete_user</h3>
                    </div>

@@ -6,7 +6,8 @@
                 <li><a href="/settings" translate>app.settings</a></li>
                 <li><a href="/settings/roles" translate>app.roles</a></li>
             </ol>
-            <h1 class="mode-context-title" translate>app.edit_role</h1>
+            <h1 class="mode-context-title" ng-show="role.id" translate>app.edit_role</h1>
+            <h1 class="mode-context-title" ng-show="!role.id" translate>app.add_role</h1>
         </header>
 
         <span class="mode-context-trigger">
@@ -65,7 +66,7 @@
                    </fieldset>
                 </div>
 
-                <div class="form-sheet">
+                <div class="form-sheet" ng-show="role.id">
                    <div class="form-sheet-summary">
                        <h3 class="form-sheet-title" translate>role.delete_role</h3>
                    </div>
