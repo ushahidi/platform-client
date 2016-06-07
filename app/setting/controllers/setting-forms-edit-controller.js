@@ -1,17 +1,25 @@
 module.exports = [
     '$scope',
     '$routeParams',
+    '$rootScope',
+    '$location',
     '$q',
     'FormEndpoint',
     'FormStageEndpoint',
 function (
     $scope,
     $routeParams,
+    $rootScope,
+    $location,
     $q,
     FormEndpoint,
     FormStageEndpoint
 ) {
 
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() == false) {
+        return $location.path("/");
+    }
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
     $scope.formId = $routeParams.id;

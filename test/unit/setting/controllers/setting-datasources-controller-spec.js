@@ -26,6 +26,10 @@ describe('setting datasources controller', function () {
         $controller = _$controller_;
         Notify = _Notify_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        }
     }));
 
 

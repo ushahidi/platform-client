@@ -1,6 +1,7 @@
 module.exports = [
     '$scope',
     '$rootScope',
+    '$location',
     '$translate',
     '$q',
     'Notify',
@@ -9,12 +10,18 @@ module.exports = [
 function (
     $scope,
     $rootScope,
+    $location,
     $translate,
     $q,
     Notify,
     DataRetriever,
     _
 ) {
+	
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() == false) {
+        return $location.path("/");
+    }
 
     // Change layout class
     $rootScope.setLayout('layout-c');
