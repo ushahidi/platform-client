@@ -30,6 +30,10 @@ describe('setting users edit controller', function () {
         $scope = _$rootScope_.$new();
 
         $rootScope.goBack = function () {};
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        }
     }));
 
 
