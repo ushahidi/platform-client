@@ -261,10 +261,6 @@ function (
         });
     };
 
-    $scope.addToSurvey = function () {
-       $location.path('/posts/create/' + post.form.id);
-    };
-
     function formatDate() {
         var created = moment($scope.post.update || $scope.post.created),
             now = moment();

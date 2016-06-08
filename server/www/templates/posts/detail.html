@@ -15,15 +15,15 @@
     <span class="label hidden">Show more/less</span>
   </span>
 
-  <div class="mode-context-body">
-    <p>{{form_description}}</p>
+  <div class="mode-context-body" ng-if="post.form">
+    <p>{{ form_description }}</p>
 
-    <button class="button-flat" ng-click="addToSurvey()">
+    <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}">
       <svg class="iconic">
         <use xlink:href="../img/iconic-sprite.svg#plus"></use>
       </svg>
       <span class="button-label" translate>post.modify.add_to_survey</span>
-    </button>
+    </a>
   </div>
 </div>
 
@@ -131,9 +131,9 @@
           </div>
         </div>
       </div>
-      
+
       <post-detail-actions post="post"></post-detail-actions>
-      
+
     </article>
     <post-add-form post="post" ng-if="!post.form && hasPermission('Manage Posts')"></post-add-form>
     <post-messages post="post" ng-if="post.contact.id"></post-messages>
