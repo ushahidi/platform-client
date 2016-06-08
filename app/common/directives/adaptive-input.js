@@ -11,7 +11,7 @@ angular.module('ushahidi.common.adaptive-input', [])
 .directive('adaptiveForm', function () {
     return {
         restrict: 'A',
-        controller: function ($scope, $element, $attrs) {
+        controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
 
             this.classAdd = function (className) {
                 $element.addClass(className);
@@ -19,7 +19,7 @@ angular.module('ushahidi.common.adaptive-input', [])
             this.classRemove = function (className) {
                 $element.removeClass(className);
             };
-        }
+        }]
     };
 })
 

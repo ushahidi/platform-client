@@ -13,32 +13,33 @@ function AddPostButtonDirective() {
 
 AddPostButtonController.$inject = [
     '$scope',
-    '$location',
+    '$rootScope',
     'FormEndpoint',
-    '_'
+    '$location'
 ];
 function AddPostButtonController(
     $scope,
-    $location,
-	FormEndpoint,
-	_
+    $rootScope,
+    FormEndpoint,
+    $location
 ) {
     $scope.forms = [];
     $scope.fabToggle = false;
     $scope.fabOptionsStyle = { opacity: 0, display: 'none' };
     $scope.toggleFab = toggleFab;
+    $scope.disabled = false;
 
     activate();
 
     function activate() {
         // Load forms
         $scope.forms = FormEndpoint.query();
-        
+        $rootScope.$on('post:list:selected', handlePostSelected);
     }
 
     function toggleFab() {
-        if (_.size($scope.forms) == 1) {
-			$location.path('/posts/create/' + _.first($scope.forms).id);
+        if ($scope.forms.length === 1) {
+            $location.path('/posts/create/' + $scope.forms[0].id);
         } else {
             $scope.fabToggle = !$scope.fabToggle;
             if ($scope.fabToggle) {
@@ -47,5 +48,9 @@ function AddPostButtonController(
                 $scope.fabOptionsStyle = { opacity: 0, display: 'none' };
             }
         }
+    }
+
+    function handlePostSelected(event, selectedPosts) {
+        $scope.disabled = selectedPosts.length > 0;
     }
 }

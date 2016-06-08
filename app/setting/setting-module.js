@@ -1,8 +1,4 @@
-require('angular-xeditable');
-
-angular.module('ushahidi.tools', [
-    'xeditable'
-])
+angular.module('ushahidi.tools', [])
 .directive('importerCsv', require('./directives/setting-data-import-directive.js'))
 .directive('mapperCsv', require('./directives/setting-data-mapper-directive.js'))
 .directive('configureCsv', require('./directives/setting-data-configure-directive.js'))
