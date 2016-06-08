@@ -1,10 +1,11 @@
-<dl class="modal-body" ng-repeat="type in availableAttrTypes">
-    <dt class="list-item">
+<dl class="modal-body" >
+
+    <dt class="list-item" ng-repeat-start="type in availableAttrTypes">
         <a ng-click="createNewAttribute(type)" data-modal="edit-field">
             {{type.label}}
         </a>
     </dt>
-    <dd>A sentence or less</dd>
+    <dd ng-repeat-end="">{{type.description}}</dd>
     <!--
     <dt class="list-item"><a ng-click="createNewAttribute()">Long text</a></dt>
     <dd>Multiple sentences or paragraphs</dd>

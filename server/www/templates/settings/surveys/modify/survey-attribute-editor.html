@@ -18,7 +18,24 @@
          <label class="tgl-btn" for="switchnewattribute"></label>
       </div>
    </div>
+   <div class="form-sheet" ng-show="editAttribute.form_stage_id">
+       <div class="form-sheet-summary">
+           <h3 class="form-sheet-title" translate="survey.delete.delete_this_field">Delete this field</h3>
+       </div>
+
+       <div class="form-field">
+           <p translate="survey.delete.desc_field"><strong>If you delete this field</strong>, all of the data that was collected within it will also be deleted. Proceed with caution.</p>
+
+           <button class="button-destructive" ng-click="deleteAttribute(editAttribute)">
+               <svg class="iconic">
+                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+               </svg>
+               <span class="button-label" translate="survey.delete.delete_field">Delete field</span>
+           </button>
+       </div>
+   </div>
    <div class="form-field">
-      <button type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute)">Save &amp; close</button>
+      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute)" translate="app.add_and_close">Add &amp; close</button>
+      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute)" translate="app.update_and_close">Update &amp; close</button>
    </div>
 </div>

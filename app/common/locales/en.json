@@ -16,6 +16,8 @@
         "cancel" : "Cancel",
         "save" : "Save",
         "save_and_close" : "Save &amp; close",
+        "add_and_close" : "Add &amp; close",
+        "update_and_close" : "Update &amp; close",
         "saving" : "Saving",
         "settings": "Settings",
         "share": "Share",
@@ -148,7 +150,10 @@
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
             "delete" : "Delete survey",
-            "delete_this" : "Delete this survey"
+            "delete_this" : "Delete this survey",
+            "delete_this_field" : "Delete this field",
+            "delete_field" : "Delete field",
+            "desc_field" : "<strong>If you delete this field</strong>, all of the data that was collected within it will also be deleted. Proceed with caution."
         },
         "name": "Survey name",
         "color" : {
@@ -867,15 +872,15 @@
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
         },
         "form" : {
-            "save_success" : "Post Type {{name}} saved",
-            "save_stage_success" : "Post Type step {{name}} saved",
+            "save_success" : "Survey {{name}} saved",
+            "save_stage_success" : "Survey task {{name}} saved",
             "save_attribute_success" : "Field {{name}} added",
-            "edit_form_success" : "Post Type {{name}} updated",
-            "edit_stage_success" : "Post Type step {{name}} updated",
-            "delete_form_confirm" : "Are you sure you want to delete this post type?",
-            "destroy_form_success" : "Post type {{name}} deleted",
-            "delete_stage_confirm" : "Are you sure you want to delete this step?",
-            "destroy_stage_success" : "Post type step {{name}} deleted",
+            "edit_form_success" : "Survey {{name}} updated",
+            "edit_stage_success" : "Survey step {{name}} updated",
+            "delete_form_confirm" : "Are you sure you want to delete this survey?",
+            "destroy_form_success" : "Survey {{name}} deleted",
+            "delete_stage_confirm" : "Are you sure you want to delete this task?",
+            "destroy_stage_success" : "Survey task {{name}} deleted",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?",
             "destroy_attribute_success" : "Field {{name}} deleted"
         },

@@ -129,7 +129,7 @@
                                 <div class="listing-item-primary">
                                     <div class="form-field">
                                         <label class="hidden" translate="app.name">Name</label>
-                                        <input type="text" placeholder="Task name" ng-model="task.label" ng-disabled="task.label === 'Post'">
+                                        <input type="text" placeholder="Task name" ng-change="changeTaskLabel(task)" ng-model="task.label" ng-disabled="task.label === 'Post'">
                                     </div>
                                 </div>
                             </div>
@@ -153,20 +153,19 @@
                                     </h2>
                                 </div>
                             </div>
-                            <!-- End Default Post fields -->
-                            <!--
-                            <div class="listing-item">
+
+                            <div class="listing-item" ng-repeat="attribute in task.attributes track by $index">
                                 <div class="listing-item-select">
                                     <div class="buttons-updown">
-                                       <button type="button" class="button-beta" disabled="">
+                                       <button type="button" class="button-beta" ng-disabled="isFirstAttribute(task, attribute)" ng-click="moveAttributeUp(task, attribute)">
                                            <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-top"></use>
+                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-top"></use>
                                            </svg>
                                            <span class="label hidden">Move up</span>
                                        </button>
-                                       <button type="button" class="button-beta">
+                                       <button type="button" class="button-beta" ng-disabled="isLastAttribute(task, attribute)" ng-click="moveAttributeDown(task, attribute)">
                                            <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
+                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                                            </svg>
                                            <span class="label hidden">Move down</span>
                                        </button>
@@ -174,38 +173,18 @@
                                 </div>
 
                                 <div class="listing-item-primary">
-                                    <h2 class="listing-item-title"><a href="">Location</a></h2>
+                                    <h2 class="listing-item-title">
+                                      <a ng-click="openAttributeEditModal(attribute)">
+                                        {{attribute.label}}
+                                      </a>
+                                    </h2>
                                 </div>
                             </div>
-
-                            <div class="listing-item">
-                                <div class="listing-item-select">
-                                    <div class="buttons-updown">
-                                       <button type="button" class="button-beta">
-                                           <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-top"></use>
-                                           </svg>
-                                           <span class="label hidden">Move up</span>
-                                       </button>
-                                       <button type="button" class="button-beta" disabled="">
-                                           <svg class="iconic">
-                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/img/iconic-sprite.svg#chevron-bottom"></use>
-                                           </svg>
-                                           <span class="label hidden">Move down</span>
-                                       </button>
-                                   </div>
-                                </div>
-
-                                <div class="listing-item-primary">
-                                    <h2 class="listing-item-title"><a href="" data-modal="edit-field">Witness</a> <em>text field</em></h2>
-                                </div>
-                            </div>
-                          -->
 
                             <div class="listing-item">
                                 <div class="listing-item-primary">
                                     <h2 class="listing-item-title">
-                                        <a ng-click="openAttributeModal()" class="button button-beta" data-modal="add-field">
+                                        <a ng-click="openAttributeModal(task)" class="button button-beta" data-modal="add-field">
                                             <svg class="iconic">
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
                                             </svg>
@@ -215,7 +194,7 @@
                                 </div>
                             </div>
 
-                            <div class="listing init" ng-if="task.id && task.label !== 'Post'">
+                            <div class="listing init" ng-if="task.label !== 'Post'">
                                 <h3 class="listing-heading" translate="survey.task.delete.delete_this">Delete this task</h3>
 
                             <div class="listing-item">

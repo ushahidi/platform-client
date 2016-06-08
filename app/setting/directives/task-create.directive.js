@@ -12,7 +12,8 @@ function (
 
             // Init an empty saved search
             $scope.newTask = {
-                required : false
+                required : false,
+                attributes: []
             };
 
             $scope.closeModal = function () {

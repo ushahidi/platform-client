@@ -54,6 +54,13 @@ function SurveyEditorController(
     $scope.addNewAttribute = addNewAttribute;
     $scope.labelChanged = labelChanged;
 
+    $scope.moveAttributeUp = moveAttributeUp;
+    $scope.moveAttributeDown = moveAttributeDown;
+    $scope.isFirstAttribute = isFirstAttribute;
+    $scope.isLastAttribute = isLastAttribute;
+
+    $scope.deleteAttribute = deleteAttribute;
+
     $scope.deleteSurvey = deleteSurvey;
     $scope.saveSurvey = saveSurvey;
     $scope.cancel = cancel;
@@ -61,9 +68,12 @@ function SurveyEditorController(
     $scope.toggleTaskRequired = toggleTaskRequired;
     $scope.toggleAttributeRequired = toggleAttributeRequired;
 
+    $scope.changeTaskLabel = changeTaskLabel;
+
     activate();
 
     function activate() {
+
         RoleEndpoint.query().$promise.then(function (roles) {
             $scope.roles = roles;
         });
@@ -77,10 +87,10 @@ function SurveyEditorController(
                     {
                         label: 'Post',
                         priority: 0,
-                        required: true
+                        required: true,
+                        attributes: []
                     }
-                ],
-                attributes: []
+                ]
             };
         }
     }
@@ -95,10 +105,15 @@ function SurveyEditorController(
         ]).then(function (results) {
             var survey = results[0];
             survey.tasks = _.sortBy(results[1], 'priority');
-            survey.attributes = _.chain(results[2])
+            var attributes = _.chain(results[2])
                 .sortBy('priority')
                 .value();
-            survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
+            _.each(survey.tasks, function (task) {
+                task.attributes = _.filter(attributes, function (attribute) {
+                    return attribute.form_stage_id === task.id;
+                });
+            });
+            //survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
             $scope.survey = survey;
         });
     }
@@ -112,11 +127,13 @@ function SurveyEditorController(
     }
 
     // START -- Reorder tasks
+    // This function assumes the default
+    // Post task is unmoveable
     function isFirstTask(task) {
         var tasks = $scope.survey.tasks,
             // Find our current stage
             index = _.indexOf(tasks, task);
-        return index === 0;
+        return index === 1;
     }
 
     function isLastTask(task) {
@@ -126,17 +143,24 @@ function SurveyEditorController(
         return index === tasks.length - 1;
     }
 
+    // START -- Reorder tasks
+    function isFirstAttribute(task, attribute) {
+        var attributes = task.attributes,
+            // Find our current attribute
+            index = _.indexOf(attributes, attribute);
+        return index === 0;
+    }
+
+    function isLastAttribute(task, attribute) {
+        var attributes = task.attributes,
+            // Find our current attribute
+            index = _.indexOf(attributes, attribute);
+        return index === attributes.length - 1;
+    }
+
     function canReorderTask(task) {
         //Only the Post task can not be reordered
         return task.label !== 'Post';
-    }
-
-    function moveTaskUp(task) {
-        changePriority(task, -1);
-    }
-
-    function moveTaskDown(task) {
-        changePriority(task, 1);
     }
 
     // Update key based on label
@@ -146,7 +170,42 @@ function SurveyEditorController(
         }
     }
 
-    function changePriority(task, increment) {
+    function moveTaskUp(task) {
+        changeTaskPriority(task, -1);
+    }
+
+    function moveTaskDown(task) {
+        changeTaskPriority(task, 1);
+    }
+
+    function moveAttributeUp(task, attribute) {
+        changeAttributePriority(task, attribute, -1);
+    }
+
+    function moveAttributeDown(task, attribute) {
+        changeAttributePriority(task, attribute, 1);
+    }
+
+    function changeAttributePriority(task, attribute, increment) {
+        var attributes = task.attributes,
+            // Find our current stage
+            index = _.indexOf(attributes, attribute),
+            // Grab prev/next stage
+            next = attributes[index + increment];
+
+        // Check we're not at the end of the list
+        if (_.isUndefined(next)) {
+            return;
+        }
+        // Swap priorities
+        next.priority = attribute.priority;
+        attribute.priority = attribute.priority + increment;
+
+        // Resort attribute list
+        task.attributes = _.sortBy(attributes, 'priority');
+    }
+
+    function changeTaskPriority(task, increment) {
         var tasks = $scope.survey.tasks,
             // Find our current stage
             index = _.indexOf(tasks, task),
@@ -164,6 +223,19 @@ function SurveyEditorController(
         // Resort stage list
         $scope.survey.tasks = _.sortBy(tasks, 'priority');
     }
+
+    function changeTaskLabel(task) {
+        // Task labels must be unique
+
+        // If the task is not yet saved we need to make sure to update
+        // it's attributes form_stage_id as this is their linkage
+        if (!task.id) {
+            _.each(task.attributes, function (attribute) {
+                attribute.form_stage_id = task.label;
+            });
+        }
+
+    }
     // END - reorder tasks
 
     // Start Modify Tasks
@@ -171,27 +243,101 @@ function SurveyEditorController(
         ModalService.openTemplate('<survey-task-create></survey-task-create>', 'survey.add_task', '', $scope, true, true);
     }
 
+    function getNewTaskPriority() {
+        return $scope.survey.tasks.length ? _.last($scope.survey.tasks).priority + 1 : 0;
+    }
+
+    function getNewAttributePriority() {
+        return $scope.activeTask.attributes.length ? _.last($scope.activeTask.attributes).priority + 1 : 0;
+    }
+
     function addNewTask(task) {
         ModalService.close();
+        // Set task priority
+        task.priority = getNewTaskPriority();
         $scope.survey.tasks.push(task);
     }
 
-    function openAttributeModal() {
+    function openAttributeModal(task) {
+        // Set active task so we know who this attribute will belong to
+        $scope.activeTask = task;
         ModalService.openTemplate('<survey-attribute-create></survey-attribute-create>', 'survey.add_field', '', $scope, true, true);
     }
 
     function openAttributeEditModal(attribute) {
-        ModalService.close();
+        // If creating a new attribute we need to close
+        // the type picker first
+        if (!attribute.form_stage_id) {
+            ModalService.close();
+        }
         $scope.editAttribute = attribute;
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', 'survey.edit_field', '', $scope, true, true);
     }
 
     function addNewAttribute(attribute) {
         ModalService.close();
-        $scope.survey.attributes.push(attribute);
+        // Set active task as form_stage_id
+        // If this task is new and has not been saved
+        // it won't have an id so in this instance we use its label
+        // Labels are not guaranteed to be unique
+        // TODO refactor this
+        if (!attribute.form_stage_id) {
+            // Set attribute priority
+            attribute.priority = getNewAttributePriority();
+            attribute.form_stage_id = $scope.activeTask.id ? $scope.activeTask.id : $scope.activeTask.label;
+            $scope.activeTask.attributes.push(attribute);
+        }
+    }
+
+    function deleteAttribute(attribute) {
+        // If we have not yet saved this attribute
+        // we can drop it immediately
+        if (!attribute.id) {
+            $scope.activeTask.attributes = _.filter($scope.activeTask.attributes, function (item) {
+                return item.label !== attribute.label;
+            });
+            // Attribute delete is currently only available in modal
+            // so close the modal
+            ModalService.close();
+            return;
+        }
+
+        $translate('notify.form.delete_attribute_confirm')
+        .then(function (message) {
+            Notify.showConfirm(message).then(function () {
+                FormAttributeEndpoint.delete({
+                    formId: $scope.survey.id,
+                    id: attribute.id
+                }).$promise.then(function (attribute) {
+                    // Remove attribute from scope, binding should take care of the rest
+                    var index = _.findIndex($scope.activeTask.attributes, function (item) {
+                        return item.id === attribute.id;
+                    });
+
+                    $scope.activeTask.attributes.splice(index, 1);
+
+                    FormStageEndpoint.invalidateCache();
+
+                    $translate('notify.form.destroy_attribute_success', {name: attribute.label}).then(function (message) {
+                        Notify.showNotificationSlider(message);
+                    });
+
+                    // Attribute is only available in modal so
+                    // close the modal
+                    ModalService.close();
+                });
+            });
+        });
     }
 
     function deleteTask(task) {
+        // If we haven't saved the task yet then we can just drop it
+        if (!task.id) {
+            $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
+                return item.label !== task.label;
+            });
+            return;
+        }
 
         $translate('notify.form.delete_stage_confirm')
         .then(function (message) {
@@ -218,6 +364,12 @@ function SurveyEditorController(
     //Start - modify Survey
 
     function deleteSurvey() {
+        // If we haven't saved the survey
+        // just go back to the surveys views
+        if (!$scope.survey.id) {
+            $location.url('/settings/surveys');
+            return;
+        }
         $translate('notify.form.delete_form_confirm')
         .then(function (message) {
             Notify.showConfirm(message).then(function () {
@@ -242,41 +394,66 @@ function SurveyEditorController(
         .$promise
         .then(function (survey) {
             $scope.survey.id = survey.id;
-            $translate('notify.form.edit_form_success', { name: $scope.survey.name }).then(function (message) {
-                Notify.showNotificationSlider(message);
-            });
+            // Second save the survey tasks
+            saveTasks();
         }, handleResponseErrors);
-
-        // Second save the survey tasks
-        saveTasks($scope.survey.id, $scope.tasks);
-
-        // Third save the survey task attributes
-        saveAttributes();
     }
 
     function saveTasks(tasks) {
         var calls = [];
 
-        _.each(tasks, function (task) {
-            // Get the last priority
-            // if no priority yet set
-            // set priority to 0
-            var lastPriority = tasks.length ? _.last(tasks).priority : 0;
-            task = _.extend(task, {
-                formId: $scope.survey.id,
-                priority: lastPriority + 1
-            });
+        _.each($scope.survey.tasks, function (task) {
+            task.form_id = $scope.survey.id;
             // Add each task to save loop
             calls.push(
                 FormStageEndpoint
-                .saveCache(task).$promise
+                .saveCache(_.extend(task, {formId: $scope.survey.id})).$promise
             );
         });
 
         // TODO add notify and error states
-        $q.all(calls).then(function (results) {
+        $q.all(calls).then(function (tasks) {
             // Update survey object with saved tasks
-            $scope.survey.tasks = results;
+            // We need to preserve the tasks attributes
+            // so we clone them and then reinstate them
+
+            // First we ensure they are ordered by priority
+            tasks = _.sortBy(tasks, 'priority');
+
+            // Next we associate them with the existing tasks
+            // to preserve associated attributes
+            _.each(tasks, function (task, index) {
+                _.extend($scope.survey.tasks[index], task);
+            });
+            // Third save the survey task attributes
+            saveAttributes();
+        }, handleResponseErrors);
+    }
+
+    function saveAttributes() {
+        var calls = [];
+
+        _.each($scope.survey.tasks, function (task) {
+            _.each(task.attributes, function (attribute) {
+                attribute.form_stage_id = task.id;
+                calls.push(
+                    FormAttributeEndpoint
+                    .saveCache(_.extend(attribute, {formId: $scope.survey.id})).$promise
+                );
+            });
+        });
+
+        $q.all(calls).then(function (attributes) {
+            // Update survey object with saved attributes
+            _.each($scope.survey.tasks, function (task) {
+                task.attributes = _.filter(attributes, function (attribute) {
+                    return attribute.form_stage_id === task.id;
+                });
+            });
+
+            $translate('notify.form.edit_form_success', { name: $scope.survey.name }).then(function (message) {
+                Notify.showNotificationSlider(message);
+            });
         }, handleResponseErrors);
     }
 
@@ -287,199 +464,6 @@ function SurveyEditorController(
     function toggleAttributeRequired(attribute) {
         attribute.required = !attribute.required;
     }
-
-    function saveAttributes(attributes) {
-        var calls = [];
-
-        _.each(attributes, function (attribute) {
-            // Get the last priority
-            // if no priority yet set
-            // set priority to 0
-            var lastPriority = attributes.length ? _.last(attributes).priority : 0;
-
-            attribute = _.extend(attribute, {
-                formId: $scope.survey.id,
-                priority: lastPriority + 1
-            });
-            // Add each task to save loop
-            calls.push(
-                FormAttributeEndpoint
-                .saveCache(attribute).$promise
-            );
-        });
-
-        // TODO add notify and error states
-        $q.all(calls).then(function (results) {
-            // Update survey object with saved tasks
-            $scope.survey.tasks = results;
-        }, handleResponseErrors);
-    }
-
-    // TO BE CONVERTED
-    $scope.saveNewTask = function (task) {
-        var lastPriority = $scope.form.stages.length ? _.last($scope.survey.tasks).priority : 0;
-        FormStageEndpoint
-        .saveCache(_.extend(task, {
-            formId: $scope.survey.id,
-            priority: lastPriority + 1
-        }))
-        .$promise
-        .then(function (stage) {
-            $scope.isNewStageOpen = false;
-            $scope.newStage = {};
-            $translate('notify.form.save_stage_success', {name: stage.label}).then(function (message) {
-                Notify.showNotificationSlider(message);
-            });
-            $scope.refreshStages();
-            $scope.setVisibleStage(stage.id);
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
-
-    $scope.refreshStages = function () {
-        FormStageEndpoint
-        .query({ formId: $scope.formId })
-        .$promise
-        .then(function (results) {
-            $scope.form.stages = _.sortBy(results, 'priority');
-        });
-    };
-
-
-    // Manage stage settings
-    $scope.isNewStageOpen = false;
-    $scope.openNewStage = function () {
-        $scope.newStage = {};
-        $scope.isNewStageOpen = !$scope.isNewStageOpen;
-    };
-
-    $scope.editStage = function (stage) {
-        $scope.newStage = stage;
-        $scope.isNewStageOpen = !$scope.isNewStageOpen;
-    };
-
-
-
-    $scope.isNewAttributeOpen = false;
-    var newAttrCount = 0;
-    $scope.openNewAttribute = function () {
-        $scope.isNewAttributeOpen = true;
-    };
-    $scope.oldaddNewAttribute = function (attribute) {
-        //have to copy as reverse() changes in place
-        var cloneAttributes = _.clone($scope.form.attributes);
-        var count = _.countBy($scope.form.attributes, function (attribute) {
-            return attribute.form_stage_id;
-        });
-
-        var lastPriority = count[$scope.visibleStage] ? _.find(cloneAttributes.reverse(), function (item) {
-            return item.form_stage_id === $scope.visibleStage;
-        }).priority : 0;
-
-        newAttrCount++;
-        $scope.isNewAttributeOpen = false;
-        var newAttribute = _.clone(attribute);
-        newAttribute.label = 'New ' + attribute.label.toLowerCase() + ' field';
-        newAttribute.required = false;
-        newAttribute.options = [];
-        newAttribute.config = {};
-        newAttribute.priority = lastPriority + 1;
-        newAttribute.form_stage_id = $scope.visibleStage;
-
-        $scope.form.attributes.push(newAttribute);
-        $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
-
-        var index = _.findLastIndex($scope.form.grouped_attributes, function (item, index) {
-            return item.form_stage_id === $scope.visibleStage;
-        });
-        $scope.editIsOpen[index] = true;
-    };
-
-    // Attribute Functions
-    $scope.saveAttribute = function (attribute, $index) {
-        var persist = FormAttributeEndpoint.saveCache;
-        persist(_.extend(attribute, {
-            formId: $scope.form.id
-        })).$promise.then(function (attributeUpdate) {
-            $scope.editIsOpen[$index] = false;
-            $scope.form.attributes[$index] = attributeUpdate;
-            FormStageEndpoint.invalidateCache();
-            $translate('notify.form.save_attribute_success', {name: attribute.label}).then(function (message) {
-                Notify.showNotificationSlider(message);
-            });
-
-        }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
-        });
-    };
-
-    $scope.deleteAttribute = function (attribute) {
-
-        $translate('notify.form.delete_attribute_confirm')
-        .then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                if (attribute.id) {
-                    FormAttributeEndpoint.delete({
-                        formId: $scope.form.id,
-                        id: attribute.id
-                    }).$promise.then(function () {
-                        // Remove attribute from scope, binding should take care of the rest
-                        var index = _.findIndex($scope.form.attributes, function (item) {
-                            return item.id === attribute.id;
-                        });
-
-                        $scope.form.attributes.splice(index, 1);
-                        $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
-
-                        FormStageEndpoint.invalidateCache();
-
-                        $translate('notify.form.destroy_attribute_success', {name: attribute.label}).then(function (message) {
-                            Notify.showNotificationSlider(message);
-                        });
-                    });
-                } else { // If this was a new attribute, just remove from scope
-                    // Remove attribute from scope, binding should take care of the rest
-                    var index = _.findIndex($scope.form.attributes, function (item) {
-                        return item.label === attribute.label;
-                    });
-                    $scope.form.attributes.splice(index, 1);
-                    $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
-                }
-            });
-        });
-    };
-
-    $scope.changeAttributePriority = function (attribute, increment) {
-
-        var attributes = $scope.form.grouped_attributes,
-            // Find our current stage
-            index = _.indexOf(attributes, attribute),
-            // Grab prev/next stage
-            next = attributes[index + increment];
-
-        // Check we're not at the end of the list
-        if (_.isUndefined(next)) {
-            return;
-        }
-        // Swap priorities
-        next.priority = attribute.priority;
-        attribute.priority = attribute.priority + increment;
-
-        // Save attribute
-        FormAttributeEndpoint.saveCache(_.extend(attribute, {
-            formId: $scope.form.id
-        }));
-
-        // Save adjacent attribute
-        FormAttributeEndpoint.saveCache(_.extend(next, {
-            formId: $scope.form.id
-        }));
-
-        // Resort attribute list
-        $scope.form.attributes = _.sortBy(attributes, 'priority');
-        $scope.form.grouped_attributes = _.sortBy($scope.form.attributes, 'form_stage_id');
-    };
 
     // Options functions
     $scope.hasOptions = function (attribute) {
