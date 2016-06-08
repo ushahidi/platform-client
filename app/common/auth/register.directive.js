@@ -61,6 +61,22 @@ function RegisterController(
         $scope.failed = true;
         $scope.processing = false;
 
+        angular.forEach(errorResponse.data.errors, function (error) {
+            if (!error.source || !error.source.pointer) {
+                return;
+            }
+
+            // @todo parse jsonpath properly
+            var index = error.source.pointer.replace('/', '');
+            if ($scope.form[index]) {
+                $scope.form[index].$setValidity(error.title, false);
+                // Clear validation on next change
+                $scope.form[index].$validators[error.title] = function () {
+                    return true;
+                }
+            }
+        });
+
         Notify.showApiErrors(errorResponse);
     }
 
