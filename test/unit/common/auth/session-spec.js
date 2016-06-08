@@ -37,7 +37,7 @@ describe('Session', function () {
                 }
             };
         })
-        .service('Session', require(rootPath + 'app/common/services/session.js'));
+        .service('Session', require(rootPath + 'app/common/auth/session.service.js'));
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 

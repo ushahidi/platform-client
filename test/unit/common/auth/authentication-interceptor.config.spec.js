@@ -1,4 +1,4 @@
-var rootPath = '../../../../../';
+var rootPath = '../../../../';
 
 describe('authentication interceptor', function () {
 
@@ -43,7 +43,7 @@ describe('authentication interceptor', function () {
         .service('Authentication', function () {
             return mockAuthentication;
         })
-        .config(require(rootPath + 'app/common/configs/authentication-interceptor.js'));
+        .config(require(rootPath + 'app/common/auth/authentication-interceptor.config.js'));
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 

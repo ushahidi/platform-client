@@ -39,7 +39,6 @@ describe('setting categories edit controller', function () {
 
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
-        spyOn($rootScope, 'goBack').and.callThrough();
 
         var category = {
             id: 1
