@@ -1,12 +1,14 @@
 module.exports = [
     'ViewHelper',
     'Authentication',
+    'Registration',
     'ModalService',
     '$rootScope',
     'ModalService',
 function (
     ViewHelper,
     Authentication,
+    Registration,
     ModalService,
     $rootScope
 ) {
@@ -28,18 +30,9 @@ function (
                 ModalService.openTemplate('<account-settings></account-settings>', '', false, false, true, true);
             };
 
-            $scope.login = openLoginModal;
+            $scope.login = Authentication.openLogin;
             $scope.logout = Authentication.logout;
-            $scope.register = openRegisterModal;
-
-            // Show login modal
-            function openLoginModal() {
-                ModalService.openTemplate('<login></login>', 'nav.login', false, false, true, false);
-            }
-
-            function openRegisterModal() {
-                ModalService.openTemplate('<register></register>', 'nav.register', false, false, true, false);
-            }
+            $scope.register = Registration.openRegister;
 
             // Show collection listing
             $scope.viewCollectionListing = function () {

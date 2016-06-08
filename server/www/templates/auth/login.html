@@ -12,7 +12,7 @@
         <div class="form-field">
             <label for="password" translate>user.password</label>
             <input id="password" type="password" ng-model="password" ng-disabled="processing" required>
-            <p><a href="/forgotpassword" translate>nav.forgotyourpassword</a></p>
+            <p><a ng-click="forgotPassword()" translate>nav.forgotyourpassword</a></p>
         </div>
 
         <div class="form-field">

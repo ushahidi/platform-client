@@ -1,18 +1,28 @@
 angular.module('ushahidi.common', [
-	'ushahidi.common.adaptive-input',
-	'ushahidi.common.dropdown',
-	'ushahidi.common.accordion',
-	'ushahidi.common.offcanvas',
-	'ushahidi.common.modal',
-	'ushahidi.common.custom-on-change',
-	'ushahidi.common.file-upload',
-	'ushahidi.common.notification-slider',
-	'ushahidi.common.sticky-sidebar'
+    'ushahidi.common.adaptive-input',
+    'ushahidi.common.dropdown',
+    'ushahidi.common.accordion',
+    'ushahidi.common.offcanvas',
+    'ushahidi.common.modal',
+    'ushahidi.common.custom-on-change',
+    'ushahidi.common.file-upload',
+    'ushahidi.common.notification-slider',
+    'ushahidi.common.sticky-sidebar'
 ])
 
-.service('Authentication', require('./services/authentication.js'))
-.service('Session', require('./services/session.js'))
+// Authentication
+.service('Authentication', require('./auth/authentication.service.js'))
+.service('Registration', require('./auth/registration.service.js'))
+.service('Session', require('./auth/session.service.js'))
+.service('PasswordReset', require('./auth/password-reset.service.js'))
+.directive('login', require('./auth/login.directive.js'))
+.directive('register', require('./auth/register.directive.js'))
+.directive('passwordReset', require('./auth/password-reset.directive.js'))
+.directive('passwordResetConfirm', require('./auth/password-reset-confirm.directive.js'))
+.config(require('./auth/authentication-interceptor.config.js'))
+.run(require('./auth/authentication-events.run.js'))
 
+// API Endpoint wrappers
 .service('ConfigEndpoint', require('./services/endpoints/config.js'))
 .service('UserEndpoint', require('./services/endpoints/user-endpoint.js'))
 .service('FormEndpoint', require('./services/endpoints/form.js'))
@@ -25,6 +35,7 @@ angular.module('ushahidi.common', [
 .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
 .service('MessageEndpoint', require('./services/endpoints/message.js'))
 
+// Other services
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
@@ -35,17 +46,17 @@ angular.module('ushahidi.common', [
 .service('Maps', require('./services/maps.js'))
 .service('Geocoding', require('./services/geocoding.js'))
 .service('Languages', require('./services/languages.js'))
-.service('Registration', require('./services/registration.js'))
-.service('PasswordReset', require('./services/password-reset.js'))
 .service('IconManager', require('./services/icon-manager.js'))
 .service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
 .service('ModalService', require('./services/modal.service.js'))
 
+// Controllers
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('notifier', require('./controllers/notifier.js'))
 .controller('intercom', require('./controllers/intercom.js'))
 
+// Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 
 .directive('collectionSelector', require('./directives/collection-selector.js'))
@@ -58,7 +69,6 @@ angular.module('ushahidi.common', [
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
-.directive('login', require('./auth/login.directive.js'))
 .directive('modalBody', require('./directives/modal-body.directive.js'))
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
 
@@ -74,8 +84,6 @@ angular.module('ushahidi.common', [
     }
 })
 
-
-.config(require('./configs/authentication-interceptor.js'))
 .config(require('./configs/locale-config.js'))
 .config(require('./configs/ui-bootstrap-template-decorators.js'))
 .config(require('./configs/cache-config.js'))
