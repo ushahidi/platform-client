@@ -1,0 +1,31 @@
+<div class="form-sheet" ng-show="surveys.length > 0">
+  <div class="form-sheet-summary">
+    <h3 class="form-sheet-title" translate>post.unstructured.add_survey.title</h3>
+  </div>
+
+  <div class="form-field">
+    <p ng-bind-html="surveyInfo"></p>
+  </div>
+
+  <form name="form" ng-submit="addForm()">
+    <fieldset>
+      <legend translate>
+        post.unstructured.add_survey.choose
+      </legend>
+
+      <div class="form-field radio" ng-repeat="survey in surveys">
+        <input id="{{survey.id}}" type="radio" ng-model="$parent.selectedSurvey" ng-value="survey.id" />
+        <label for="{{survey.id}}">{{survey.name}}</label>
+      </div>
+    </fieldset>
+
+    <div class="form-field">
+      <button class="button-alpha" type="submit">
+        <span class="button-label" translate>post.unstructured.add_survey.save_and_edit</span>
+        <svg class="iconic">
+          <use xlink:href="../../img/iconic-sprite.svg#arrow-right"></use>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>

@@ -43,6 +43,7 @@ function (
 ) {
     $rootScope.setLayout('layout-c');
     $scope.post = post;
+    $scope.hasPermission = $rootScope.hasPermission;
 
     $scope.mapDataLoaded = false;
     $scope.publishedFor = function () {
@@ -85,6 +86,7 @@ function (
 
         FormEndpoint.get({id: $scope.post.form.id}, function (form) {
             $scope.form_name = form.name;
+            $scope.form_description = form.description;
 
             // Set page title to '{form.name} Details' if a post title isn't provided.
             if (!$scope.post.title) {
@@ -205,25 +207,6 @@ function (
         }
     });
 
-    $scope.deletePost = function () {
-        $translate('notify.post.destroy_confirm').then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                PostEndpoint.delete({ id: $scope.post.id }).$promise.then(function () {
-                    $translate(
-                        'notify.post.destroy_success',
-                        {
-                            name: $scope.post.title
-                        }).then(function (message) {
-                            Notify.showNotificationSlider(message);
-                            $location.path('/');
-                        });
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
-            });
-        });
-    };
-
     $scope.toggleCompletedStage = function (stage) {
         // @todo how to validate this before saving
         if (_.includes($scope.post.completed_stages, stage.id)) {
@@ -282,28 +265,16 @@ function (
        $location.path('/posts/create/' + post.form.id);
     };
 
-    // Get duration since post was last updated
-    function getUpdateDuration() {
-        var postDate = post.update || post.created,
-            lastUpdateTime = moment(postDate),
-            now = moment(new Date()),
-            duration =  moment.duration(now.diff(lastUpdateTime));
+    function formatDate() {
+        var created = moment($scope.post.update || $scope.post.created),
+            now = moment();
 
-        // Display duration if last update was less than 24 hours
-        if (duration.asSeconds < 60) {
-            $translate('post.duration.less_than_a_minute').then(function (message) {
-                $scope.duration = message;
-            });
-        } else if (duration.asMinutes < 60) {
-            $translate('post.duration.minutes').then(function (units) {
-                $scope.duration = duration.asMinutes() + ' ' + units;
-            });
-        } else if (duration.asHours < 24) {
-            $translate('post.duration.hours').then(function (units) {
-                $scope.duration = duration.asHours() + ' ' + units;
-            });
+        if (now.isSame(created, 'day')) {
+            $scope.displayTime = created.fromNow();
+        } else {
+            $scope.displayTime = created.format('LLL');
         }
     }
 
-    getUpdateDuration();
+    formatDate();
 }];
