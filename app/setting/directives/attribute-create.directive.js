@@ -1,9 +1,11 @@
 module.exports = [
     '$rootScope',
+    '$translate',
     'ModalService',
     '_',
 function (
     $rootScope,
+    $translate,
     ModalService,
     _
 ) {
@@ -35,27 +37,32 @@ function (
                 {
                     label: 'Short text',
                     type: 'varchar',
-                    input: 'text'
+                    input: 'text',
+                    description: $translate.instant('survey.text_desc')
                 },
                 {
                     label: 'Long text',
                     type: 'text',
-                    input: 'textarea'
+                    input: 'textarea',
+                    description: $translate.instant('survey.textarea_desc')
                 },
                 {
                     label: 'Number (Decimal)',
                     type: 'decimal',
-                    input: 'number'
+                    input: 'number',
+                    description: $translate.instant('survey.decimal_desc')
                 },
                 {
                     label: 'Number (Integer)',
                     type: 'int',
-                    input: 'number'
+                    input: 'number',
+                    description: $translate.instant('survey.integer_desc')
                 },
                 {
                     label: 'Location',
                     type: 'point',
-                    input: 'location'
+                    input: 'location',
+                    description: $translate.instant('survey.location_desc')
                 },
                 // {
                 //     label: 'Geometry',
@@ -65,12 +72,14 @@ function (
                 {
                     label: 'Date',
                     type: 'datetime',
-                    input: 'date'
+                    input: 'date',
+                    description: $translate.instant('survey.date_desc')
                 },
                 {
                     label: 'Date & time',
                     type: 'datetime',
-                    input: 'datetime'
+                    input: 'datetime',
+                    description: $translate.instant('survey.datetime_desc')
                 },
                 // {
                 //     label: 'Time',
@@ -80,28 +89,33 @@ function (
                 {
                     label: 'Select',
                     type: 'varchar',
-                    input: 'select'
+                    input: 'select',
+                    description: $translate.instant('survey.select_desc')
                 },
                 {
-                    label: 'Radio',
+                    label: 'Radio Buttons(s)',
                     type: 'varchar',
-                    input: 'radio'
+                    input: 'radio',
+                    description: $translate.instant('survey.radio_desc')
                 },
                 {
-                    label: 'Checkbox',
+                    label: 'Checkbox(es)',
                     type: 'varchar',
                     input: 'checkbox',
-                    cardinality: 0
+                    cardinality: 0,
+                    description: $translate.instant('survey.checkbox_desc')
                 },
                 {
                     label: 'Related Post',
                     type: 'relation',
-                    input: 'relation'
+                    input: 'relation',
+                    description: $translate.instant('survey.relation_desc')
                 },
                 {
                     label: 'Image',
                     type: 'media',
-                    input: 'upload'
+                    input: 'upload',
+                    description: $translate.instant('survey.upload_desc')
                 }
             ];
         }
