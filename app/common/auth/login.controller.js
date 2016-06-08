@@ -1,10 +1,7 @@
-module.exports = [
-    'ModalService',
-    '$location',
-function (
-    ModalService,
-    $location
-) {
-    ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
+module.exports = LoginController;
+
+LoginController.$inject = ['Authentication','$location'];
+function LoginController(Authentication, $location) {
+    Authentication.openLogin();
     $location.url('/');
-}];
+}

@@ -4,12 +4,14 @@ module.exports = [
     '$q',
     'Util',
     '$location',
+    'ModalService',
 function (
     $rootScope,
     $http,
     $q,
     Util,
-    $location
+    $location,
+    ModalService
 ) {
 
     return {
@@ -36,6 +38,10 @@ function (
             $http.post(Util.apiUrl('/register'), payload).then(handleRequestSuccess, handleRequestError);
 
             return deferred.promise;
+        },
+
+        openRegister: function () {
+            ModalService.openTemplate('<register></register>', 'nav.register', false, false, true, false);
         }
     };
 

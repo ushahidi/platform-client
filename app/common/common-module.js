@@ -15,6 +15,8 @@ angular.module('ushahidi.common', [
 .service('Registration', require('./auth/registration.service.js'))
 .service('Session', require('./auth/session.service.js'))
 .service('PasswordReset', require('./auth/password-reset.service.js'))
+.directive('login', require('./auth/login.directive.js'))
+.directive('register', require('./auth/register.directive.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
 
@@ -65,7 +67,6 @@ angular.module('ushahidi.common', [
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
-.directive('login', require('./auth/login.directive.js'))
 .directive('modalBody', require('./directives/modal-body.directive.js'))
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
 

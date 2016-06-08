@@ -8,6 +8,7 @@ module.exports = [
     'RoleEndpoint',
     'UserEndpoint',
     '_',
+    'ModalService',
 function (
     $rootScope,
     $http,
@@ -17,7 +18,8 @@ function (
     Session,
     RoleEndpoint,
     UserEndpoint,
-    _
+    _,
+    ModalService
 ) {
 
     // check whether we have initially an old access_token and userId
@@ -102,6 +104,10 @@ function (
 
         getLoginStatus: function () {
             return loginStatus;
+        },
+
+        openLogin: function () {
+            ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
         }
     };
 

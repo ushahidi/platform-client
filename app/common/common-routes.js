@@ -7,7 +7,7 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
             redirectTo: '/views/map'
         })
         .when('/login', {
-            controller: require('./controllers/auth/login.controller.js'),
+            controller: require('./auth/login.controller.js'),
             template: ''
         })
         .when('/forbidden', {
@@ -16,7 +16,7 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
         })
         .when('/register', {
             controller: require('./auth/register.controller.js'),
-            templateUrl: 'templates/auth/register.html'
+            template: ''
         })
         .when('/forgotpassword', {
             controller: require('./auth/password-reset.controller.js'),

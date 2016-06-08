@@ -1,0 +1,70 @@
+module.exports = RegisterDirective;
+
+RegisterDirective.$inject = [];
+function RegisterDirective() {
+    return {
+        restrict: 'E',
+        scope: {},
+        controller: RegisterController,
+        templateUrl: 'templates/auth/register.html'
+    };
+}
+RegisterController.$inject = [
+    '$scope',
+    '$translate',
+    'Authentication',
+    'Registration',
+    'Notify'
+];
+function RegisterController(
+    $scope,
+    $translate,
+    Authentication,
+    Registration,
+    Notify
+) {
+    $scope.failed = false;
+    $scope.processing = false;
+    $scope.realname = '';
+    $scope.email = '';
+    $scope.password = '';
+
+    $scope.registerSubmit = registerSubmit;
+    $scope.cancel = cancel;
+
+    activate();
+
+    function activate() {
+        // If we're already logged in
+        if (Authentication.getLoginStatus()) {
+            $scope.$parent.closeModal();
+        }
+    }
+
+    function registerSubmit() {
+        $scope.processing = true;
+
+        Registration
+            .register($scope.realname, $scope.email, $scope.password)
+            .then(registerSuccess, registerFailed);
+    }
+
+    function registerSuccess() {
+        $scope.failed = false;
+        $scope.processing = false;
+
+        Notify.showNotificationSlider($translate.instant('notify.register.success'));
+        $scope.$parent.closeModal();
+    }
+
+    function registerFailed(errorResponse) {
+        $scope.failed = true;
+        $scope.processing = false;
+
+        Notify.showApiErrors(errorResponse);
+    }
+
+    function cancel() {
+        $scope.$parent.closeModal();
+    }
+}
