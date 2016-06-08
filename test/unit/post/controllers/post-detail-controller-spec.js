@@ -23,19 +23,13 @@ describe('Post detail controller', function () {
         }
     };
 
-    function moment () {
+    function moment() {
         return {
-            diff: function () {}
+            isSame: function () {},
+            fromNow: function () {},
+            format: function () {}
         };
     }
-
-    moment.duration = function () {
-        return {
-            asSeconds: function () {},
-            asMinutes: function () {},
-            asHours: function () {}
-        };
-    };
 
     beforeEach(function () {
         var testApp = angular.module('testApp', [
@@ -185,6 +179,7 @@ describe('Post detail controller', function () {
         expect(Notify.showAlerts).toHaveBeenCalled();
     });
 
+    /* @todo test in post actions
     it('should delete a post', function () {
         spyOn(Notify, 'showNotificationSlider');
 
@@ -202,6 +197,7 @@ describe('Post detail controller', function () {
 
         expect(Notify.showApiErrors).toHaveBeenCalled();
     });
+     */
 
     it('should toggle stage completion and attempt to update post', function () {
         spyOn(Notify, 'showNotificationSlider');

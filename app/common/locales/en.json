@@ -337,6 +337,8 @@
         "hide_form" : "Hide {{form}}",
         "hide_unknown_form" : "Hide Unknown",
         "publish" : "Publish to...",
+        "publish_for_you" : "You",
+        "publish_for_everyone" : "Everyone",
         "published" : "Published",
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
@@ -413,7 +415,9 @@
             "by_email" : "By Email",
             "by_twitter" : "By Twitter",
             "reply" : "Reply to Message thread",
-            "send" : "Send Message",
+            "send" : "Send New Message",
+            "save" : "Save",
+            "title" : "Conversation with author",
             "associated_messages": "View messages associated with this post"
         },
         "valid" : {
@@ -446,11 +450,15 @@
             "add_caption" : "Add caption",
             "upload" : "Upload"
         },
-        "duration" : {
-            "less_than_a_minute" : "Just now",
-            "minutes" : "minutes",
-            "hours" : "hours"
-        },
+        "unstructured" : {
+            "add_survey" : {
+                "info" : "<strong>This post hasn't yet been assigned to a survey within your deployment.</strong> That's because it was submitted via {{source}}, which doesn't provide a way for the author to add their post to a specific survey.",
+                "choose" : "Which survey would you like to add this post to?",
+                "title" : "Add this post to a survey",
+                "save_and_edit" : "Add to survey &amp; edit"
+            },
+            "survey_title" : "Unknown Survey"
+        }
     },
     "role": {
         "add_role" : "Add Role",

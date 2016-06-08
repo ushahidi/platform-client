@@ -1,0 +1,16 @@
+<div>
+  <form name="form" ng-submit="sendMessage()">
+
+    <div class="form-field" ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty }">
+      <textarea id="reply" name="reply" placeholder="Send message to {{ contact.contact }}" ng-model="reply_text" ng-minlength=2 ng-maxlength=140 required></textarea>
+    </div>
+    <div class="form-field">
+      <button type="submit" class="button-alpha modal-trigger"
+	      ng-submit="sendMessage()"
+	      ng-disabled="form.reply.$invalid"
+	      translate>post.messages.save</button>
+    </div>
+  </form>
+</div>
+
+
