@@ -13,11 +13,15 @@ function AddPostButtonDirective() {
 
 AddPostButtonController.$inject = [
     '$scope',
-    'FormEndpoint'
+    '$location',
+    'FormEndpoint',
+    '_'
 ];
 function AddPostButtonController(
     $scope,
-	FormEndpoint
+    $location,
+	FormEndpoint,
+	_
 ) {
     $scope.forms = [];
     $scope.fabToggle = false;
@@ -29,14 +33,19 @@ function AddPostButtonController(
     function activate() {
         // Load forms
         $scope.forms = FormEndpoint.query();
+        
     }
 
     function toggleFab() {
-        $scope.fabToggle = !$scope.fabToggle;
-        if ($scope.fabToggle) {
-            $scope.fabOptionsStyle = { opacity: 1, display: 'flex' };
+        if (_.size($scope.forms) == 1) {
+			$location.path('/posts/create/' + _.first($scope.forms).id);
         } else {
-            $scope.fabOptionsStyle = { opacity: 0, display: 'none' };
+            $scope.fabToggle = !$scope.fabToggle;
+            if ($scope.fabToggle) {
+                $scope.fabOptionsStyle = { opacity: 1, display: 'flex' };
+            } else {
+                $scope.fabOptionsStyle = { opacity: 0, display: 'none' };
+            }
         }
     }
 }
