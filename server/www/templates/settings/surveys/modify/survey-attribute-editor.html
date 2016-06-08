@@ -1,18 +1,46 @@
 <div>
   <div class="form-field">
-      <label>Name</label>
+      <label translate="app.name">Name</label>
       <input type="text" ng-model="editAttribute.label" ng-change="labelChanged(editAttribute)">
    </div>
    <div class="form-field">
-      <label>Key</label>
+      <label translate="app.key">Key</label>
       <input type="text" ng-model="editAttribute.key">
    </div>
-   <div class="form-field">
-      <label>Default value</label>
-      <input type="text" ng-model="editAttribute.default">
+   <div class="form-field" ng-if="editAttribute.input !== 'upload'">
+      <label translate="app.default_value">Default value</label>
+      <div ng-switch="editAttribute.input">
+          <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
+          <input ng-switch-when="date" type="text" date-time="editAttribute.default" ng-model="editAttribute.default">
+          <input ng-switch-when="int" type="number" step="1" ng-model="editAttribute.default">
+          <input ng-switch-when="decimal" type="number" ng-model="editAttribute.default">
+          <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default">
+      </div>
    </div>
+
+   <div class="form-field" ng-if="hasOptions(editAttribute)">
+      <label translate>form.field_options</label>
+      <div class="input-inline" ng-repeat="(key, option) in editAttribute.options track by $index">
+          <input type="text" placeholder="{{ 'form.field_option_placeholder'|translate }}" ng-model="editAttribute.options[key]">
+          <button type="button" class="button-secondary alt trash" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)"></button>
+      </div>
+      <button type="button" class="button-secondary alt" ng-click="addOption(editAttribute)"><i class="fa fa-plus"></i> <span translate>form.field_add_option</span></button>
+   </div>
+
+   <div class="form-field" ng-if="editAttribute.input === 'relation'">
+        <label translate>survey.field_allowed_relation_survey</label>
+        <ul name="visible-to">
+           <li ng-repeat="relationForm in availableForms | filter : filterNotCurrentForm">
+               <label>
+                   <input type="checkbox" checklist-model="editAttribute.config.input.form" checklist-value="relationForm.id" />
+                    {{relationForm.name}}
+               </label>
+           </li>
+        </ul>
+    </div>
+
    <div class="form-field switch">
-      <label>Require this field be completed</label>
+      <label translate="survey.require_field">Require this field be completed</label>
       <div class="toggle-switch">
          <input class="tgl" id="switchnewattribute" type="checkbox" ng-model="editAttribute.required">
          <label class="tgl-btn" for="switchnewattribute"></label>

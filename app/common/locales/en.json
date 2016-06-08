@@ -48,6 +48,8 @@
         "configure" : "Configure",
         "post" : "Post",
         "name" : "Name",
+        "key" : "Key",
+        "default_value" : "Default value",
         "fields" : "Fields"
     },
     "toolbar": {
@@ -139,12 +141,14 @@
 
     "survey": {
         "title" : "Title",
+        "field_allowed_relation_survey": "Allowed surveys",
         "description" : "Description",
         "tasks" : "Tasks",
         "add_task" : "Add task",
         "add_field" : "Add field",
         "edit_field" : "Edit field",
         "task_name" : "Task name",
+        "require_field" : "Require this field be completed",
         "name_this_task" : "Name this task...",
         "require_task" : "Require this task be completed before a post can be visible to the public",
         "delete" : {

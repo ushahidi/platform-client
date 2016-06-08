@@ -74,6 +74,8 @@ function SurveyEditorController(
 
     function activate() {
 
+
+
         RoleEndpoint.query().$promise.then(function (roles) {
             $scope.roles = roles;
         });
@@ -92,7 +94,17 @@ function SurveyEditorController(
                     }
                 ]
             };
+            loadAvailableForms();
         }
+    }
+
+    function loadAvailableForms() {
+        // Get available forms for relation
+        FormEndpoint.query().$promise.then(function (forms) {
+            $scope.availableForms = $scope.survey.id ? _.filter(forms, function (form) {
+                return form.id !== $scope.survey.id;
+            }) : forms;
+        });
     }
 
     function loadFormData() {
@@ -115,6 +127,7 @@ function SurveyEditorController(
             });
             //survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
             $scope.survey = survey;
+            loadAvailableForms();
         });
     }
 
