@@ -67,7 +67,7 @@ function PostListController(
 
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
-        })
+        });
     }
 
     function getPostsForPagination(query) {
