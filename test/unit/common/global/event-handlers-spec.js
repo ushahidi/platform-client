@@ -3,9 +3,8 @@ var rootPath = '../../../../';
 describe('global event handlers', function () {
 
     var mockedSessionData,
-        mockedAuthenticationData,
-        $rootScope,
-        $location;
+        mockedAuthenticationData
+        ;
 
     beforeEach(function () {
 

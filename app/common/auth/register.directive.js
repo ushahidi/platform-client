@@ -73,7 +73,7 @@ function RegisterController(
                 // Clear validation on next change
                 $scope.form[index].$validators[error.title] = function () {
                     return true;
-                }
+                };
             }
         });
 

@@ -1,16 +1,7 @@
-module.exports = [
-    '$rootScope',
-    '$location',
-    'Authentication',
-    'Session',
-    '_',
-function (
-    $rootScope,
-    $location,
-    Authentication,
-    Session,
-    _
-) {
+module.exports = AuthenticationEvents;
+
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _) {
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
 
@@ -95,4 +86,4 @@ function (
             $location.url('/login');
         }
     });
-}];
+}
