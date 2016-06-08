@@ -13,22 +13,26 @@ function AddPostButtonDirective() {
 
 AddPostButtonController.$inject = [
     '$scope',
+    '$rootScope',
     'FormEndpoint'
 ];
 function AddPostButtonController(
     $scope,
-	FormEndpoint
+    $rootScope,
+    FormEndpoint
 ) {
     $scope.forms = [];
     $scope.fabToggle = false;
     $scope.fabOptionsStyle = { opacity: 0, display: 'none' };
     $scope.toggleFab = toggleFab;
+    $scope.disabled = false;
 
     activate();
 
     function activate() {
         // Load forms
         $scope.forms = FormEndpoint.query();
+        $rootScope.$on('post:list:selected', handlePostSelected);
     }
 
     function toggleFab() {
@@ -38,5 +42,9 @@ function AddPostButtonController(
         } else {
             $scope.fabOptionsStyle = { opacity: 0, display: 'none' };
         }
+    }
+
+    function handlePostSelected(event, selectedPosts) {
+        $scope.disabled = selectedPosts.length > 0;
     }
 }
