@@ -1,9 +1,11 @@
 module.exports = [
     '$http',
     'Util',
+    'ModalService',
 function (
     $http,
-    Util
+    Util,
+    ModalService
 ) {
 
     return {
@@ -23,6 +25,14 @@ function (
             };
 
             return $http.post(Util.apiUrl('/passwordreset/confirm'), payload);
+        },
+
+        openReset: function () {
+            ModalService.openTemplate('<password-reset></password-reset>', 'nav.forgotyourpassword', false, false, true, false);
+        },
+
+        openResetConfirm: function (scope) {
+            ModalService.openTemplate('<password-reset-confirm></password-reset-confirm>', 'nav.resetpassword', false, scope, true, false);
         }
     };
 

@@ -12,11 +12,13 @@ function Login() {
 LoginController.$inject = [
     '$scope',
     'Authentication',
+    'PasswordReset',
     '$location'
 ];
 function LoginController(
     $scope,
     Authentication,
+    PasswordReset,
     $location
 ) {
     $scope.email = '';
@@ -25,6 +27,7 @@ function LoginController(
     $scope.processing = false;
     $scope.loginSubmit = loginSubmit;
     $scope.cancel = cancel;
+    $scope.forgotPassword = forgotPassword;
 
     activate();
 
@@ -61,5 +64,8 @@ function LoginController(
             .then(finishedLogin, clearLoginForm);
     }
 
+    function forgotPassword() {
+        PasswordReset.openReset();
+    }
 
 }

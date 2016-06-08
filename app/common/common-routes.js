@@ -20,15 +20,15 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
         })
         .when('/forgotpassword', {
             controller: require('./auth/password-reset.controller.js'),
-            templateUrl: 'templates/auth/password-reset.html'
+            template: ''
         })
         .when('/forgotpassword/confirm', {
             controller: require('./auth/password-reset-confirm.controller.js'),
-            templateUrl: 'templates/auth/password-reset-confirm.html'
+            template: ''
         })
         .when('/forgotpassword/confirm/:token*', {
             controller: require('./auth/password-reset-confirm.controller.js'),
-            templateUrl: 'templates/auth/password-reset-confirm.html'
+            template: ''
         })
         ;
 }];

@@ -17,7 +17,7 @@ function (
 
     // Setup PL modal visible and switching function
     $rootScope.modalVisible = false;
-    $rootScope.toggleModalVisible = function () {
-        $rootScope.modalVisible = !$rootScope.modalVisible;
+    $rootScope.toggleModalVisible = function (state) {
+        $rootScope.modalVisible = (typeof state !== 'undefined') ? state : !$rootScope.modalVisible;
     };
 }];

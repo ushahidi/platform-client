@@ -17,6 +17,8 @@ angular.module('ushahidi.common', [
 .service('PasswordReset', require('./auth/password-reset.service.js'))
 .directive('login', require('./auth/login.directive.js'))
 .directive('register', require('./auth/register.directive.js'))
+.directive('passwordReset', require('./auth/password-reset.directive.js'))
+.directive('passwordResetConfirm', require('./auth/password-reset-confirm.directive.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
 
