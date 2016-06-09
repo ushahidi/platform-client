@@ -40,7 +40,6 @@ function PostCardDirective(
         },
         templateUrl: 'templates/posts/card.html',
         link: function ($scope) {
-            $scope.deletePost = deletePost;
             $scope.visibleTo = '';
             $scope.displayTime = '';
             $scope.displayTimeFull = '';
@@ -108,26 +107,6 @@ function PostCardDirective(
                 }
 
                 return 'everyone';
-            }
-
-            // @todo move to shared service?
-            function deletePost(post) {
-                $translate('notify.post.destroy_confirm').then(function (message) {
-                    Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
-                        PostEndpoint.delete({ id: post.id }).$promise.then(function () {
-                            $translate(
-                                'notify.post.destroy_success',
-                                {
-                                    name: post.title
-                                }
-                            ).then(function (message) {
-                                Notify.showNotificationSlider(message);
-                            });
-                        }, function (errorResponse) {
-                            Notify.showApiErrors(errorResponse);
-                        });
-                    });
-                });
             }
         }
     };

@@ -18,19 +18,20 @@ function (
             var deferred = $q.defer();
 
             $translate('notify.post.destroy_confirm').then(function (message) {
-                Notify.showConfirm(message).then(function () {
+                Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
                     PostEndpoint.delete({ id: post.id }).$promise.then(function () {
                         $translate(
                             'notify.post.destroy_success',
                             {
                                 name: post.title
-                            }).then(function (message) {
-                                Notify.showNotificationSlider(message);
-                                deferred.resolve();
-                            });
+                            }
+                        ).then(function (message) {
+                            Notify.showNotificationSlider(message);
+                            deferred.resolve();
+                        });
                     }, function (errorResponse) {
                         Notify.showApiErrors(errorResponse);
-                        deferred.reject();
+                        deferred.reject(errorResponse);
                     });
                 });
             });

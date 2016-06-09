@@ -1,7 +1,7 @@
 angular.module('ushahidi.posts', [])
 
 .directive('postCard', require('./directives/post-card-directive.js'))
-.directive('postDetailActions', require('./directives/post-detail-actions-directive.js'))
+.directive('postActions', require('./directives/post-actions-directive.js'))
 .directive('postMessages', require('./directives/post-messages-directive.js'))
 .directive('postAddForm', require('./directives/post-add-form-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
