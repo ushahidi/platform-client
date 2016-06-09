@@ -1,10 +1,10 @@
-<div class="mode-bar">
+<div class="mode-bar" ng-class="{ active : moreActive }">
     <!-- mode bar -->
     <!-- PL JS -->
     <nav>
         <!-- main menu -->
         <ul class="deployment-menu">
-            <li ng-class="{ active: activeMode === 'map' }">
+            <li class="persist" ng-class="{ active: activeMode === 'map' }">
                 <a ng-href="{{baseUrl + 'map' }}" class="view-map">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#map-marker"></use>
@@ -13,7 +13,7 @@
                 </a>
             </li>
 
-            <li ng-class="{ active: activeMode === 'list' }">
+            <li class="persist" ng-class="{ active: activeMode === 'list' }">
                 <a ng-href="{{baseUrl + 'list' }}" class="view-list">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#list-rich"></use>
@@ -22,7 +22,7 @@
                 </a>
             </li>
 
-            <li ng-if="isActivityAvailable" ng-class="{ active: activeMode === 'activity' }" class="tuck" data-message="customize">
+            <li class="persist" ng-if="isActivityAvailable" ng-class="{ active: activeMode === 'activity' }" data-message="customize">
                 <a href="/activity">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pulse"></use>
@@ -31,7 +31,7 @@
                 </a>
             </li>
 
-            <li ng-class="{ active: activeMode === 'settings' }" class="tuck" data-message="customize" ng-show="hasManageSettingsPermission()">
+            <li class="tuck" ng-class="{ active: activeMode === 'settings' }" data-message="customize" ng-show="hasManageSettingsPermission()">
                 <a href="/settings">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
@@ -40,8 +40,8 @@
                 </a>
             </li>
 
-            <li class="more-menu-trigger">
-                <a ng-href="#">
+            <li class="more-menu-trigger persist" ng-class="{ active : moreActive }">
+                <a ng-click="showMore($event)">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
                     </svg>

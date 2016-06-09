@@ -22,42 +22,66 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
+            $scope.moreActive = false;
             $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
+
             $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
-
-            // Show account settings
-            $scope.viewAccountSettings = function () {
-                ModalService.openTemplate('<account-settings></account-settings>', '', false, false, true, true);
-            };
-
+            $scope.showMore = showMore;
+            $scope.viewCollectionListing = viewCollectionListing;
+            $scope.viewAccountSettings = viewAccountSettings;
             $scope.login = Authentication.openLogin;
             $scope.logout = Authentication.logout;
             $scope.register = Registration.openRegister;
 
+            activate();
+
+            function activate() {
+                $scope.$on('$locationChangeStart', handleRouteChange);
+                $rootScope.$on('event:mode:change', handleModeChange);
+                $rootScope.$on('event:collection:show', handleCollectionShow);
+                $rootScope.$on('event:collection:close', handleCollectionClose);
+                $rootScope.$on('event:savedsearch:show', handleSavedSearchShow);
+                $rootScope.$on('event:savedsearch:close', handleSavedSearchClose);
+            }
+
+            // Show account settings
+            function viewAccountSettings() {
+                ModalService.openTemplate('<account-settings></account-settings>', '', false, false, true, true);
+            }
+
             // Show collection listing
-            $scope.viewCollectionListing = function () {
+            function viewCollectionListing() {
                 $rootScope.$emit('collectionListing:show');
-            };
+            }
 
-            $rootScope.$on('event:mode:change', function (ev, mode) {
+            // Add 'click' handler to toggle trigger
+            function showMore() {
+                $scope.moreActive = !$scope.moreActive;
+            }
+
+            function handleRouteChange() {
+                $scope.moreActive = false;
+            }
+
+            function handleModeChange(ev, mode) {
                 $scope.activeMode = mode;
-            });
+            }
 
-            $rootScope.$on('event:collection:show', function (ev, collection) {
+            function handleCollectionShow(ev, collection) {
                 $scope.baseUrl = 'collections/' + collection.id + '/';
-            });
+            }
 
-            $rootScope.$on('event:collection:close', function (ev, savedsearch) {
+            function handleCollectionClose(ev, savedsearch) {
                 $scope.baseUrl = 'views/';
-            });
+            }
 
-            $rootScope.$on('event:savedsearch:show', function (ev, savedsearch) {
+            function handleSavedSearchShow(ev, savedsearch) {
                 $scope.baseUrl = 'savedsearches/' + savedsearch.id + '/';
-            });
+            }
 
-            $rootScope.$on('event:savedsearch:close', function (ev, savedsearch) {
+            function handleSavedSearchClose(ev, savedsearch) {
                 $scope.baseUrl = 'views/';
-            });
+            }
         }
     };
 }];
