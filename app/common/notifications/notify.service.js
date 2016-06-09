@@ -72,10 +72,10 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             SliderService.openTemplate(
                 '<p>{{ confirmText }}</p>' +
                 '<div class="form-field">' +
-                '    <button class="button-flat" ng-click="$parent.cancel()">Cancel</button>' +
-                '    <button class="button-beta button-flat" ng-click="$parent.confirm()">Delete</button>' +
+                '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
+                '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>' +
                 '</div>',
-            'question-mark', false, scope);
+            false, false, scope, false, false);
         });
 
         return deferred.promise;
@@ -98,8 +98,8 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             scope.confirmText = confirmText;
             ModalService.openTemplate(
                 '<div class="form-field">' +
-                '    <button class="button-flat" ng-click="$parent.cancel()">Cancel</button>' +
-                '    <button class="button-beta button-flat" ng-click="$parent.confirm()">Delete</button>' +
+                '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
+                '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>' +
                 '</div>', confirmText, false, scope, false, false);
         });
 
@@ -110,24 +110,49 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         var deferred = $q.defer();
 
         var scope = getScope();
-        scope.cancel = function () {
-            deferred.reject();
-            ModalService.close();
-        };
-        scope.confirm = function () {
-            deferred.resolve();
-            ModalService.close();
-        };
 
         $translate(confirmText, translateValues).then(function (confirmText) {
-            ModalService.openTemplate(
-            '<div class="form-field">' +
-            '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
-            '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
-            '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use></svg>' +
-            '    Delete' +
-            '    </button>' +
-            '</div>', confirmText, false, scope, false, false);
+            scope.confirmText = confirmText;
+            // If modal is already open?
+            if (ModalService.getState()) {
+                scope.cancel = function () {
+                    deferred.reject();
+                    SliderService.close();
+                };
+                scope.confirm = function () {
+                    deferred.resolve();
+                    SliderService.close();
+                };
+                // Open in slider
+                SliderService.openTemplate(
+                    '<p>{{ confirmText }}</p>' +
+                    '<div class="form-field">' +
+                    '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
+                    '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
+                    '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use></svg>' +
+                    '    <span translate="app.delete">Delete</span>' +
+                    '    </button>' +
+                    '</div>',
+                false, false, scope, false, false);
+            } else {
+                scope.cancel = function () {
+                    deferred.reject();
+                    ModalService.close();
+                };
+                scope.confirm = function () {
+                    deferred.resolve();
+                    ModalService.close();
+                };
+                // Otherwise confirm in modal
+                ModalService.openTemplate(
+                '<div class="form-field">' +
+                '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
+                '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
+                '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use></svg>' +
+                '    <span translate="app.delete">Delete</span>' +
+                '    </button>' +
+                '</div>', confirmText, false, scope, false, false);
+            }
         });
 
         return deferred.promise;

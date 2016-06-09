@@ -3,12 +3,14 @@
  * Based on the Angular Bootstrap Modal directive
  */
 module.exports = Slider;
-Slider.$inject = ['$timeout', '$compile', 'SliderService'];
-function Slider($timeout, $compile, SliderService) {
+Slider.$inject = ['$timeout', '$compile', 'SliderService', 'ModalService'];
+function Slider($timeout, $compile, SliderService, ModalService) {
     return {
         restrict: 'E',
         templateUrl: 'templates/common/notifications/slider.html',
-        scope: true,
+        scope: {
+            insideModal: '@?'
+        },
         link: SliderLink
     };
 
@@ -34,6 +36,12 @@ function Slider($timeout, $compile, SliderService) {
         SliderService.onClose(close, $scope);
 
         function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton) {
+            // If we're inside a modal, modal must be open
+            if ((typeof $scope.insideModal !== 'undefined') !== ModalService.getState()) {
+                // Ignore, the other slider can open
+                return;
+            }
+
             // Clean up any previous content
             cleanUp();
             // Create new scope and keep it to destroy when done with the
@@ -70,6 +78,11 @@ function Slider($timeout, $compile, SliderService) {
         }
 
         function close() {
+            // If we're inside a modal *and* the modal isn't open
+            if ($scope.insideModal && !ModalService.getState()) {
+                // Ignore, the other slider can open
+                return;
+            }
             // @todo fade out
             $scope.classVisible = false;
             cleanUp();

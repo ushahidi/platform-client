@@ -9,9 +9,13 @@ describe('Notify', function () {
         close: function () {}
     },
     mockModalService = {
+        state: true,
         openUrl: function () {},
         openTemplate: function () {},
-        close: function () {}
+        close: function () {},
+        getState: function () {
+            return this.state;
+        }
     };
 
     beforeEach(function () {
@@ -110,7 +114,7 @@ describe('Notify', function () {
         });
 
         it('Calls SliderService.openTemplate with message', function () {
-            expect(mockSliderService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'question-mark', false, jasmine.any(Object));
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), false, false, jasmine.any(Object), false, false);
         });
     });
 
@@ -129,12 +133,26 @@ describe('Notify', function () {
     describe('confirmDelete', function () {
         beforeEach(function () {
             spyOn(mockModalService, 'openTemplate').and.callThrough();
-            Notify.confirmDelete('Test message');
-            $rootScope.$digest();
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
         });
 
         it('Calls ModalService.openTemplate with error message', function () {
+            mockModalService.state = false;
+            Notify.confirmDelete('Test message');
+            $rootScope.$digest();
+
             expect(mockModalService.openTemplate).toHaveBeenCalled();
+        });
+
+        it('If modal is open, Calls SliderService.openTemplate with error message', function () {
+            mockModalService.state = true;
+
+            Notify.confirmDelete('Test message');
+            $rootScope.$digest();
+
+            expect(mockSliderService.openTemplate).toHaveBeenCalled();
+
+            mockModalService.state = false;
         });
     });
 

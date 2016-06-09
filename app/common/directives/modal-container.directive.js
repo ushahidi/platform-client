@@ -68,6 +68,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             // @todo fade in
             modalYPos();
             $scope.classVisible = true;
+            ModalService.setState(true);
             $rootScope.toggleModalVisible(true);
 
             // if (classChangePromise) {
@@ -79,6 +80,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             // @todo fade out
             $scope.classVisible = false;
             $rootScope.toggleModalVisible(false);
+            ModalService.setState(false);
             cleanUpModal();
 
             // if (classChangePromise) {
