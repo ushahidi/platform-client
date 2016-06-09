@@ -23,8 +23,6 @@ angular.module('ushahidi.common', [
 
 // Notifications
 .service('Notify', require('./notifications/notify.service.js'))
-.controller('notifier', require('./notifications/notifier.controller.js'))
-.directive('notification-slider', require('./notifications/notification-slider.directive.js'))
 .service('SliderService', require('./notifications/slider.service.js'))
 .directive('ushSlider', require('./notifications/slider.directive.js'))
 
