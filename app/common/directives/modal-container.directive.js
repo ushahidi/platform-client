@@ -6,8 +6,6 @@ module.exports = ModalContainer;
 
 ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService'];
 function ModalContainer($timeout, $rootScope, $compile, ModalService) {
-    var templateScope;
-
     return {
         restrict: 'E',
         templateUrl: 'templates/modal/modal-container.html',
@@ -27,6 +25,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
 
+        var templateScope;
         var iconPath = '../../img/iconic-sprite.svg#';
         // Modal content element
         var modalContent = $element.find('modal-content');
