@@ -11,7 +11,7 @@ describe('notifier controller', function () {
         'pascalprecht.translate'
         ])
         // .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
-        .controller('notifierController', require(ROOT_PATH + 'app/common/controllers/notifier.js'))
+        .controller('notifierController', require(ROOT_PATH + 'app/common/notifications/notifier.controller.js'))
         .constant('EVENT', {
             ACTIONS : {
                 EDIT : 'edit',

@@ -6,7 +6,7 @@ describe('Notify', function () {
 
     beforeEach(function () {
         var testApp = angular.module('testApp');
-        testApp.service('Notify', require(rootPath + 'app/common/services/notify.js'));
+        testApp.service('Notify', require(rootPath + 'app/common/notifications/notify.service.js'));
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
     });
