@@ -3,12 +3,14 @@ module.exports = PostMetadataDirective;
 PostMetadataDirective.$inject = [
     '$translate',
     'UserEndpoint',
+    'ContactEndpoint',
     '_',
     'moment'
 ];
 function PostMetadataDirective(
     $translate,
     UserEndpoint,
+    ContactEndpoint,
     _,
     moment
 ) {
@@ -32,6 +34,7 @@ function PostMetadataDirective(
                 $scope.visibleTo = visibleTo($scope.post);
                 $scope.post.source = formatSource($scope.post.source);
                 $scope.post.user = loadUser($scope.post.user);
+                $scope.post.contact = loadContact($scope.post.contact);
 
                 formatDates();
             }
@@ -52,6 +55,12 @@ function PostMetadataDirective(
             function loadUser(user) {
                 if (user && user.id) {
                     return UserEndpoint.get({id: $scope.post.user.id});
+                }
+            }
+
+            function loadContact(contact) {
+                if (!$scope.post.user && contact && contact.id) {
+                    return ContactEndpoint.get({ id: $scope.post.contact.id });
                 }
             }
 
