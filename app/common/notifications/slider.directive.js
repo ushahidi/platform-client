@@ -33,7 +33,7 @@ function Slider($timeout, $compile, SliderService) {
         SliderService.onOpen(open, $scope);
         SliderService.onClose(close, $scope);
 
-        function open(ev, template, icon, iconClass, scope, showCloseButton) {
+        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton) {
             // Clean up any previous content
             cleanUp();
             // Create new scope and keep it to destroy when done with the
@@ -58,9 +58,15 @@ function Slider($timeout, $compile, SliderService) {
                 $scope.showCloseButton = showCloseButton;
             }
 
+            // Default closeOnTimeout to true
+            closeOnTimeout = (typeof closeOnTimeout !== 'undefined') ? closeOnTimeout : true;
+
+            // .. and finally open the slider!!
             $scope.classVisible = true;
             // Set timeout to close in 5s
-            closeTimeout = $timeout(close, 5000);
+            if (closeOnTimeout) {
+                closeTimeout = $timeout(close, 5000);
+            }
         }
 
         function close() {
