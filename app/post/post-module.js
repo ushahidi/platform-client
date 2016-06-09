@@ -1,6 +1,10 @@
 angular.module('ushahidi.posts', [])
 
 .directive('postCard', require('./directives/post-card-directive.js'))
+.directive('postActions', require('./directives/post-actions-directive.js'))
+.directive('postMetadata', require('./directives/post-metadata.directive.js'))
+.directive('postMessages', require('./directives/post-messages-directive.js'))
+.directive('postAddForm', require('./directives/post-add-form-directive.js'))
 .directive('postValue', require('./directives/post-value-directive.js'))
 .directive('postLocation', require('./directives/post-location-directive.js'))
 .directive('postRelation', require('./directives/post-relation-directive.js'))
@@ -36,6 +40,7 @@ angular.module('ushahidi.posts', [])
 .service('PostEntity', require('./services/entities/post-entity.js'))
 
 .service('PostEditService', require('./services/post-edit-service.js'))
+.service('PostActionsService', require('./services/post-actions-service.js'))
 
 .config(require('./post-routes.js'))
 

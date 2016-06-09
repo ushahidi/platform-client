@@ -15,12 +15,12 @@ module.exports = [function () {
         allInThread: function () {
             return {$promise: {
                 then: function (successCallback) {
-                    successCallback([{
+                    successCallback({'results': [{
                         message: 'test message',
                         direction: 'incoming',
                         id: 9,
                         parent_id: null
-                    }]);
+                    }]});
                 }
             }};
         },

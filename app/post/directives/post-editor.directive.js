@@ -76,31 +76,10 @@ function PostEditorController(
                 $scope.enableTitle = false;
             }
         }
-        $scope.moment = moment($scope.post.created).fromNow();
-        $scope.source = formatSource($scope.post.source);
 
         $scope.post.form = $scope.form;
         $scope.fetchAttributes($scope.post.form.id);
         $scope.fetchStages($scope.post.form.id);
-
-        if ($scope.post.user) {
-            $scope.user = getUser($scope.post.user.id);
-        }
-    }
-
-    function formatSource(source) {
-        if (source === 'sms') {
-            return 'SMS';
-        } else if (source) {
-            // Uppercase first character
-            return source.charAt(0).toUpperCase() + source.slice(1);
-        } else {
-            return 'Web';
-        }
-    }
-
-    function getUser(id) {
-        return UserEndpoint.get({id: id});
     }
 
     function setVisibleStage(stageId) {

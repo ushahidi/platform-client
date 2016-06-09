@@ -22,6 +22,11 @@ function (
     });
 
     PostEndpoint.get({ id: $routeParams.id }).$promise.then(function (post) {
+        // Redirect to view if no edit permissions
+        if (post.allowed_privileges.indexOf('update') === -1) {
+            $location.url('/posts/' + post.id);
+        }
+
         // Make post tags numeric
         post.tags = post.tags.map(function (tag) {
             return parseInt(tag.id);

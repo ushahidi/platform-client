@@ -1,0 +1,45 @@
+<div dropdown>
+    <span class="postcard-actions-trigger init" dropdown-toggle>
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+    </span>
+    <ul class="dropdown-menu init" dropdown-menu>
+        <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
+            <a ng-href="/posts/{{post.id}}/edit">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
+                </svg>
+                <span class="label" translate="nav.edit">Edit</span>
+            </a>
+        </li>
+        <li>
+            <!-- Collection toggle link -->
+            <collection-toggle-link post="post"></collection-toggle-link>
+        </li>
+        <!-- <li>
+            <a href="" data-modal="share">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#share"></use>
+            </svg>
+            <span class="label">Share</span>
+            </a>
+        </li> -->
+        <!-- <li>
+            <a href="">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#task"></use>
+            </svg>
+            <span class="label">Assign to ...</span>
+            </a>
+        </li> -->
+        <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
+            <a ng-click="delete(post)">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                </svg>
+                <span class="label" translate="nav.delete">Delete</span>
+            </a>
+        </li>
+    </ul>
+</div>

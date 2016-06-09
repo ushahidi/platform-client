@@ -1,68 +1,73 @@
-<main class="page-content post-messages">
-	<article class="post-messages" role="article">
-		<header class="page-header">
-			<h1 class="page-header">{{ post.title || post.content }}</h1>
-            <div class="page-permissions">
-                <p ng-show="post.allowed_privileges.indexOf('update') == -1">
-                    <span class="icon-left fa-globe" translate>
-                        {{publishedFor()}}
-                    </span>
-                </p>
-                <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
-                    <publish-selector
-                        toggle-role-func="publishPostTo(updatedPost)"
-                        post="post" ></publish-selector>
-                </div>
-            </div>
-            <div class="actions-toggle">
-                <div id="options" class="actions-content init active">
-                    <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
-                        <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
-                    </a>
-                <!--    <button type="button" class="button-secondary">
-                        <span class="icon-left fa-share">Share</span>
-                    </button>
-                -->
-                    <collection-selector
-                        post="post"
-                        ng-if="post.allowed_privileges.indexOf('update') !== -1"
-                        ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
-                        >
-                    </collection-selector>
-                </div>
-            </div>
-		</header>
-		<div class="main-col">
-			<ul class="breadcrumb">
-				<li><a ng-href="/posts/{{post.id}}" translate>post.post</a></li>
-				<li translate>post.message</li>
-			</ul>
-		    <div class="activity-timeline timeline-full-width">
-                <div ng-repeat="message in messages" class="activity-listing" ng-class="{ 'alt': message.direction == 'incoming' }">
-                    <p>{{message.updated || message.created | date:'mediumDate'}} at {{message.updated || message.created | date:'shortTime'}}</p>
-                    <div class="listing-summary">
-                        <p>{{ message.message }}</p>
-                    </div>
-                    <div ng-if="message.direction == 'incoming'" class="activity-type sms">{{ contact.contact }}</div>
-                    <div ng-if="message.direction == 'outgoing' && message.user.realname" class="activity-type user" >{{ message.user.realname }}</div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-	        <div class="activity-listing">
-				<form name="form" ng-submit="sendMessage()">
-	                <label class="input-label"
-	                	ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty, 'success': !form.reply.$invalid && form.reply.$dirty }" for="reply"
-	                translate>post.messages.reply</label>
-	                <div class="input-icon" ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty }">
-	                    <textarea id="reply" name="reply" placeholder="Send message to {{ contact.contact }}" ng-model="reply_text" ng-minlength=2 ng-maxlength=140 required class="form-control"></textarea>
-	                </div>
-	                <button type="submit" class="button-primary"
-	                	ng-submit="sendMessage()"
-	                	ng-disabled="form.reply.$invalid"
-	                	translate>post.messages.send</button>
-	            </form>
-	            <div class="clearfix"></div>
-	        </div>
+<div class="listing card">
+  <h3 class="listing-heading" translate>post.messages.title</h3>
+
+    <div ng-repeat="message in messages track by message.id" class="listing-item">
+      <div class="listing-item-primary">
+        <div class="listing-item-image" ng-if="message.direction == 'outgoing'">
+            <img src="http://www.gravatar.com/avatar/{{ message.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#arrow-thick-left"></use>
+            </svg>
         </div>
-	</article>
-</main>
+      <h2 class="listing-item-title">
+
+        <span ng-if="message.direction == 'incoming'">{{ ::contact.contact }}</span>
+        <span ng-if="message.direction == 'outgoing' && message.user.realname">{{ ::message.user.realname }}</span>
+      </h2>
+      <!--
+      <p>{{message.updated || message.created | date:'mediumDate'}} at {{message.updated || message.created | date:'shortTime'}}</p>
+      -->
+      <p class="listing-item-secondary">{{message.displayTime}}</p>
+      <p>{{ message.message }}</p>
+    </div>
+  </div>
+
+  <div class="listing-item">
+    <div class="listing-item-primary">
+
+      <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
+
+    </div>
+  </div>
+
+  <div class="listing-item">
+    <div class="listing-item-primary">
+      <h2 class="listing-item-title">
+        <a href="" class="button button-flat" ng-click="reply()">
+          <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+          </svg>
+          {{ 'post.messages.send' | translate }}
+        </a>
+      </h2>
+    </div>
+  </div>
+
+
+<!--
+  <div class="listing-item">
+    <div class="listing-item-primary">
+
+    <form name="form" ng-submit="sendMessage()">
+      <label class="input-label"
+	     ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty, 'success': !form.reply.$invalid && form.reply.$dirty }" for="reply"
+	     translate>post.messages.reply</label>
+      <div class="form-field" ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty }">
+	<textarea id="reply" name="reply" placeholder="Send message to {{ contact.contact }}" ng-model="reply_text" ng-minlength=2 ng-maxlength=140 required></textarea>
+      </div>
+      <button type="submit" class="button button-flat"
+	      ng-submit="sendMessage()"
+	      ng-disabled="form.reply.$invalid"
+	      translate>post.messages.send</button>
+    </form>
+
+            <button type="submit" class="button button-flat"
+	      ng-click="reply()"
+	      ng-disabled="form.reply.$invalid"
+	      translate>post.messages.send</button>
+    </div>
+  </div>
+  -->
+</div>
+
+
