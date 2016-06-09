@@ -51,7 +51,7 @@ function (
                     }).$promise.then(function (response) {
                         var created,
                             messages = response.results;
-                        
+
                         $scope.messages = messages;
                         _.each(messages, function (message, index) {
                             if (message.user) {
