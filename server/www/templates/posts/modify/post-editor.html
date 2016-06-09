@@ -54,12 +54,7 @@
               </div>
 
               <!-- IF: Editing an existing post -->
-              <div class="metadata" ng-if="post.id">
-                  <a ng-href="settings/users/{{user.id}}" class="metadata-author" ng-if="user">
-                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}"/>
-                    {{user.realname || user.email}}
-                  </a>, {{moment}}, <span translate-values="{ source : source }" translate="post.source">via</span>
-              </div>
+              <post-metadata post="post" ng-if="post.id"></post-metadata>
               <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
               <div class="postcard-metadata">
                   <strong>This post will need to be moderated</strong> before it's visible to the public.

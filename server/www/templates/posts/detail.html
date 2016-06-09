@@ -34,40 +34,8 @@
         <h1 class="postcard-title">
           {{post.title}}
         </h1>
-        <div class="metadata">
-          <div>
-            <!--
-                <strong class="icon-left fa-circle">
-                  {{form_name || "Unstructured"}}
-                </strong>
-                -->
 
-            <span class="user-avatar" ng-show="post.user">
-              <img class="circular" src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ post.user.realname }}">
-            </span>
-
-            <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a>, </span>
-
-              {{displayTime}}
-
-            <span ng-if="post.source == 'sms'">, <span translate>post.messages.by_sms</span></span>
-            <span ng-if="post.source == 'email'">, <span translate>post.messages.by_email</span></span>
-            <span ng-if="post.source == 'twitter'">, <span translate>post.messages.by_twitter</span></span>
-
-            <span class="metadata-visibility tooltip">
-              <svg class="iconic" ng-if="post.allowed_privileges.indexOf('update') == -1">
-                <use xlink:href="../../img/iconic-sprite.svg#lock-locked"></use>
-              </svg>
-              <svg class="iconic" ng-if="post.allowed_privileges.indexOf('update') != -1">
-                <use xlink:href="../../img/iconic-sprite.svg#lock-unlocked"></use>
-              </svg>
-
-              <span class="bug">{{ publishedFor() | translate }}</span>
-            </span>
-
-          </div>
-
-        </div>
+        <post-metadata post="post"></post-metadata>
 
         <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
           <ul>
