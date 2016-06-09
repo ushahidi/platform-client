@@ -1,70 +1,152 @@
 module.exports = Notify;
 
-var deferred;
+var scope;
 
-Notify.$inject = ['$window', '_', '$q', '$rootScope'];
-function Notify($window, _, $q, $rootScope) {
-    $rootScope.$on('event:confirm:return-confirm', handleReturnConfirm);
-
+Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
+function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     return {
-        showSingleAlert: showSingleAlert,
-        showNotificationSlider: showNotificationSlider,
-        showAlerts: showAlerts,
-        showApiErrors: showApiErrors,
-        showConfirm: showConfirm,
-        showConfirmModal: showConfirmModal,
-        showConfirmSuccess: showConfirmSuccess,
-        showConfirmAlert: showConfirmAlert,
-        showLimitSlider: showLimitSlider
+        notify: notify,
+        error: error,
+        errors: errors,
+        apiErrors: apiErrors,
+        success: success,
+        confirm: confirm,
+        confirmModal: confirmModal,
+        confirmDelete: confirmDelete,
+        limit: limit
     };
 
-    function showSingleAlert(alertMessage) {
-        showAlerts([alertMessage]);
+    function notify(message, translateValues) {
+        $translate(message, translateValues).then(function (message) {
+            SliderService.openTemplate(message);
+        });
     }
 
-    function showNotificationSlider(message) {
-        $rootScope.$emit('event:show:notification-slider', message);
+    function error(errorText, translateValues) {
+        $translate(errorText, translateValues).then(function (errorText) {
+            SliderService.openTemplate(errorText, 'warning', 'error');
+        });
     }
 
-    function showLimitSlider(message) {
-        $rootScope.$emit('event:show:limit-slider', message);
+    function errors(errorTexts) {
+        var scope = getScope();
+
+        $q.all(_.map(errorTexts, $translate), function (errors) {
+            scope.errors = errors;
+            SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
+        });
     }
 
-    function showAlerts(alertMessages, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:alerts', alertMessages, callbackEvent, buttonText, action);
+    function apiErrors(errorResponse) {
+        var scope = getScope();
+        scope.errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
+
+        if (!scope.errors) {
+            return;
+        }
+
+        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
     }
 
-    function showConfirm(message, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:message-confirm', message, callbackEvent, buttonText, action);
-        deferred = $q.defer();
+    function success(successText, translateValues) {
+        $translate(successText, translateValues).then(function (successText) {
+            SliderService.openTemplate(successText, 'thumb-up', 'confirmation');
+        });
+    }
+
+    function confirm(confirmText, translateValues) {
+        var deferred = $q.defer();
+
+        var scope = getScope();
+        scope.cancel = function () {
+            deferred.reject();
+            ModalService.close();
+        };
+        scope.confirm = function () {
+            deferred.resolve();
+            ModalService.close();
+        };
+
+        $translate(confirmText, translateValues).then(function (confirmText) {
+            scope.confirmText = confirmText;
+            SliderService.openTemplate(
+                '<p>{{ confirmText }}</p>' +
+                '<div class="form-field">' +
+                '    <button class="button-flat" ng-click="$parent.cancel()">Cancel</button>' +
+                '    <button class="button-beta button-flat" ng-click="$parent.confirm()">Delete</button>' +
+                '</div>',
+            'question-mark', false, scope);
+        });
+
         return deferred.promise;
     }
 
-    function showConfirmModal(message, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:message-confirm-modal', message, callbackEvent, buttonText, action);
-        deferred = $q.defer();
+    function confirmModal(confirmText, translateValues) {
+        var deferred = $q.defer();
+
+        var scope = getScope();
+        scope.cancel = function () {
+            deferred.reject();
+            ModalService.close();
+        };
+        scope.confirm = function () {
+            deferred.resolve();
+            ModalService.close();
+        };
+
+        $translate(confirmText, translateValues).then(function (confirmText) {
+            scope.confirmText = confirmText;
+            ModalService.openTemplate(
+                '<div class="form-field">' +
+                '    <button class="button-flat" ng-click="$parent.cancel()">Cancel</button>' +
+                '    <button class="button-beta button-flat" ng-click="$parent.confirm()">Delete</button>' +
+                '</div>', confirmText, false, scope, false, false);
+        });
+
         return deferred.promise;
     }
 
-    function showConfirmSuccess(message, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:success-confirm', message, callbackEvent, buttonText, action);
-        deferred = $q.defer();
+    function confirmDelete(confirmText, translateValues) {
+        var deferred = $q.defer();
+
+        var scope = getScope();
+        scope.cancel = function () {
+            deferred.reject();
+            ModalService.close();
+        };
+        scope.confirm = function () {
+            deferred.resolve();
+            ModalService.close();
+        };
+
+        $translate(confirmText, translateValues).then(function (confirmText) {
+            ModalService.openTemplate(
+            '<div class="form-field">' +
+            '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
+            '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
+            '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use></svg>' +
+            '    Delete' +
+            '    </button>' +
+            '</div>', confirmText, false, scope, false, false);
+        });
+
         return deferred.promise;
     }
 
-    function showConfirmAlert(message, callbackEvent, buttonText, action) {
-        $rootScope.$emit('event:show:alert-confirm', message, callbackEvent, buttonText, action);
-        deferred = $q.defer();
-        return deferred.promise;
+    function limit(message, translateValues) {
+        var scope = getScope();
+
+        $translate(message, translateValues).then(function (message) {
+            scope.message = message;
+            SliderService.openUrl('templates/common/notifications/limit.html', 'warning', 'error', scope);
+        });
     }
 
-    function showApiErrors(errorResponse) {
-        var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-
-        errors && showAlerts(errors);
-    }
-
-    function handleReturnConfirm(event, result) {
-        result ? deferred.resolve(result) : deferred.reject(result);
+    function getScope() {
+        if (scope) {
+            scope.$destroy();
+        }
+        scope = $rootScope.$new();
+        return scope;
     }
 }
