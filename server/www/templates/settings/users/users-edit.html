@@ -40,40 +40,40 @@
 
             <form>
                 <div class="form-sheet">
-                   <div class="form-field title" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
-                       <label class="hidden" translate>user.full_name</label>
-                       <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="user.realname" required>
-                   </div>
+                    <div class="form-field title" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
+                        <label class="hidden" translate>user.full_name</label>
+                        <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="user.realname" required>
+                    </div>
 
-                   <div class="form-field form-field-adapt" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
-                       <label class="hidden" translate>user.email</label>
-                       <input type="text" placeholder="{{'user_create.email' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="user.email" required>
-                   </div>
+                    <div class="form-field form-field-adapt" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
+                        <label class="hidden" translate>user.email</label>
+                        <input type="text" placeholder="{{'user_create.email' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="user.email" required>
+                    </div>
 
-                   <div class="form-field" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
-                       <label class="hidden" translate>user.password</label>
+                    <div class="form-field" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
+                        <label class="hidden" translate>user.password</label>
 
-                       <a ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
+                        <a ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
 
-                       <input type="password" ng-show="passwordShown" ng-minlength="7" ng-maxlength="72" ng-model="user.password" required>
-                   </div>
+                        <input type="password" ng-show="passwordShown" ng-minlength="7" ng-maxlength="72" ng-model="user.password" required>
+                    </div>
 
-                   <fieldset class="custom-fieldset init">
+                    <fieldset class="custom-fieldset init">
                         <legend class="dropdown-trigger init" data-toggle="dropdown-menu">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
                             </svg>
-                           <span translate>user.role</span>
-                           <svg class="iconic chevron">
-                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
-                           </svg>
-                       </legend>
+                            <span translate>user.role</span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </legend>
 
-                       <div class="dropdown-menu init">
-                           <div class="form-field checkbox" ng-repeat="role in roles">
-                              <input type="checkbox" id="{{role.name}}">
-                              <label for="{{role.name}}">{{role.display_name}}</label>
-                           </div>
+                        <div class="dropdown-menu init">
+                            <div class="form-field checkbox" ng-repeat="role in roles">
+                                <input type="checkbox" id="{{role.name}}">
+                                <label for="{{role.name}}">{{role.display_name}}</label>
+                            </div>
                         </div>
                     </fieldset>
 
@@ -94,7 +94,6 @@
                            <span class="button-label" translate>user.delete_user</span>
                        </button>
                    </div>
-
                 </div>
             </form>
 
