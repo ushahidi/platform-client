@@ -21,7 +21,8 @@ describe('Post edit controller', function () {
                 },
                 title: 'test',
                 status: 'draft',
-                completed_stages: ['1', '2', '3']
+                completed_stages: ['1', '2', '3'],
+                allowed_privileges: ['get', 'update']
             };
             if (success) {
                 success(post);

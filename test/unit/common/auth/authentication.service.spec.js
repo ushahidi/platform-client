@@ -35,7 +35,7 @@ describe('Authentication', function () {
                 }
             };
         })
-        .service('Authentication', require(rootPath + 'app/common/services/authentication.js'));
+        .service('Authentication', require(rootPath + 'app/common/auth/authentication.service.js'));
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 

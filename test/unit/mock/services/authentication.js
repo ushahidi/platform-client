@@ -11,6 +11,9 @@ module.exports = [function () {
         },
         logout : function () {
             // Just a stub
+        },
+        openLogin : function () {
+
         }
     };
 }];

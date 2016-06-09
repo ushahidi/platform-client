@@ -30,6 +30,11 @@ describe('login directive', function () {
         .directive('loginForm', require(ROOT_PATH + 'app/common/auth/login.directive.js'))
         .service('Authentication', function () {
             return mockAuthenticationService;
+        })
+        .service('PasswordReset', function () {
+            return {
+                openReset: function () {}
+            };
         });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
@@ -57,7 +62,6 @@ describe('login directive', function () {
             var element = '<login-form></login-form>';
             element = $compile(element)($scope);
             $scope.$digest();
-            directiveScope = element.scope();
             directiveScope = element.isolateScope();
         }));
 

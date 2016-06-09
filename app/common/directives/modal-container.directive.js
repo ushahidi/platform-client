@@ -38,13 +38,13 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         //var classChangePromise = null;
 
         function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
-            scope = scope ? scope.$new() : $scope.$new();
+            // Clean up any previous modal content
+            cleanUpModal();
+            // Create new scope and keep it to destroy when done with the modal
+            templateScope = scope ? scope.$new() : $scope.$new();
 
             // Inject closeModal function onto template scope
-            scope.closeModal = closeModal;
-
-            // Track scope to destroy when done with the modal
-            templateScope = scope;
+            templateScope.closeModal = closeModal;
 
             modalContent.html(template);
             $compile(modalContent)(templateScope);
@@ -69,7 +69,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             // @todo fade in
             modalYPos();
             $scope.classVisible = true;
-            $rootScope.toggleModalVisible();
+            $rootScope.toggleModalVisible(true);
 
             // if (classChangePromise) {
             //     $timeout.cancel(classChangePromise);
@@ -79,9 +79,8 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         function closeModal() {
             // @todo fade out
             $scope.classVisible = false;
-            $rootScope.toggleModalVisible();
-            templateScope.$destroy();
-            modalContent.html('');
+            $rootScope.toggleModalVisible(false);
+            cleanUpModal();
 
             // if (classChangePromise) {
             //     $timeout.cancel(classChangePromise);
@@ -90,6 +89,13 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             // classChangePromise = $timeout(function () {
             //     $scope.classDetached = true;
             // }, 400);
+        }
+
+        function cleanUpModal() {
+            if (templateScope) {
+                templateScope.$destroy();
+            }
+            modalContent.html('');
         }
 
         function closeButtonClicked(context) {
