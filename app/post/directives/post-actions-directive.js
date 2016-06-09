@@ -19,15 +19,11 @@ function (
         scope: {
             post: '='
         },
-        templateUrl: 'templates/posts/post-detail-actions.html',
+        templateUrl: 'templates/posts/post-actions.html',
         link: function ($scope) {
             $scope.showDropDown = false;
             $scope.toggleDropDown = function () {
                 $scope.showDropDown = !$scope.showDropDown;
-            };
-
-            $scope.addToCollection = function (post) {
-                $rootScope.$emit('collectionToggle:show', [post]);
             };
 
             $scope.delete = function (post) {
