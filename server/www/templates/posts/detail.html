@@ -1,4 +1,4 @@
-<div class="mode-context">
+<div class="mode-context init" dropdown>
 
   <header class="mode-context-header">
     <ol class="breadcrumbs" ng-controller="navigation as nav">
@@ -8,11 +8,11 @@
     <h1 class="mode-context-title">{{form_name || 'post.unstructured.survey_title' | translate}}</h1>
   </header>
 
-  <span class="mode-context-trigger">
+  <span class="mode-context-trigger" dropdown-toggle>
     <svg class="iconic">
       <use xlink:href="../img/iconic-sprite.svg#chevron-bottom"></use>
     </svg>
-    <span class="label hidden">Show more/less</span>
+    <span class="label hidden" translate>app.show_more_less</span>
   </span>
 
   <div class="mode-context-body" ng-if="post.form">

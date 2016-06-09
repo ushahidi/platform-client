@@ -1,4 +1,4 @@
-<div class="mode-context init">
+<div class="mode-context init" dropdown>
     <header class="mode-context-header">
         <ol class="breadcrumbs" ng-controller="navigation as nav">
             <li><a href="/">{{nav.site.name}}</a></li>
@@ -11,11 +11,11 @@
         </h1>
     </header>
 
-    <span class="mode-context-trigger">
+    <span class="mode-context-trigger" dropdown-toggle>
         <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
-        <span class="label hidden">app.show_more_less</span>
+        <span class="label hidden" translate>app.show_more_less</span>
     </span>
     <div class="mode-context-body">
         <!--// IF: Saved Search has description //-->

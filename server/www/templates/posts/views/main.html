@@ -1,17 +1,17 @@
 <div>
     <layout-class layout="a"></layout-class>
-    <div class="mode-context init" ng-controller="navigation as nav">
+    <div class="mode-context init" ng-controller="navigation as nav" dropdown>
         <header class="mode-context-header has-logo">
             <h1 class="mode-context-title"><a href="/" ng-bind="nav.site.name"></a></h1>
             <img ng-if="site.image_header" ng-src="nav.site.image_header" class="deployment-logo" />
         </header>
 
         <!-- todo: wire up show/hide -->
-        <span class="mode-context-trigger">
+        <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
                 <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
-            <span class="label hidden">Show more/less</span>
+            <span class="label hidden" translate>app.show_more_less</span>
         </span>
 
         <div class="mode-context-body">
