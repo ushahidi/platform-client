@@ -7,10 +7,5 @@ function (
     $rootScope,
     $routeParams
 ) {
-
-    // Change layout class
-    $rootScope.setLayout('layout-a');
-
     $scope.surveyId = $routeParams.id;
-
 }];
