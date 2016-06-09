@@ -2,11 +2,28 @@ var rootPath = '../../../../';
 
 describe('Notify', function () {
 
-    var Notify, $rootScope;
+    var Notify, $rootScope,
+    mockSliderService = {
+        openUrl: function () {},
+        openTemplate: function () {},
+        close: function () {}
+    },
+    mockModalService = {
+        openUrl: function () {},
+        openTemplate: function () {},
+        close: function () {}
+    };
 
     beforeEach(function () {
         var testApp = angular.module('testApp');
-        testApp.service('Notify', require(rootPath + 'app/common/notifications/notify.service.js'));
+        testApp.service('Notify', require(rootPath + 'app/common/notifications/notify.service.js'))
+        .service('SliderService', function () {
+            return mockSliderService;
+        })
+        .service('ModalService', function () {
+            return mockModalService;
+        })
+        ;
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
     });
@@ -18,42 +35,118 @@ describe('Notify', function () {
         Notify = _Notify_;
     }));
 
-    describe('showSingleAlert', function () {
+    describe('error', function () {
         beforeEach(function () {
-            spyOn($rootScope, '$emit').and.callThrough();
-            Notify.showSingleAlert('Test message');
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
+            Notify.error('Test message');
+            $rootScope.$digest();
         });
 
-        it('calls $rootScope.$on with the passed in alertMessage', function () {
-            expect($rootScope.$emit).toHaveBeenCalled();
-            var alertMessage = $rootScope.$emit.calls.mostRecent().args;
-            expect(alertMessage[1]).toEqual(['Test message']);
+        it('Calls SliderService.openTemplate with error message', function () {
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith('<p>Test message</p>', 'warning', 'error');
         });
     });
 
-    describe('showAlerts', function () {
+    describe('errors', function () {
         beforeEach(function () {
-            spyOn($rootScope, '$emit').and.callThrough();
-            Notify.showAlerts(['Test message 1', 'Test message 2']);
+            spyOn(mockSliderService, 'openUrl').and.callThrough();
+            Notify.errors(['Test message 1', 'Test message 2']);
+            $rootScope.$digest();
         });
 
-        it('calls $rootScope.$on with the combined alert messages', function () {
-            expect($rootScope.$emit).toHaveBeenCalled();
-            var alertMessage = $rootScope.$emit.calls.mostRecent().args;
-            expect(alertMessage[1]).toEqual(['Test message 1', 'Test message 2']);
+        it('Calls SliderService.openUrl with error template + scope', function () {
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: ['Test message 1', 'Test message 2']}));
         });
     });
 
-    describe('showNotificationSlider', function () {
+    describe('notify', function () {
         beforeEach(function () {
-            spyOn($rootScope, '$emit').and.callThrough();
-            Notify.showNotificationSlider('Test message');
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
+            Notify.notify('Test message');
+            $rootScope.$digest();
         });
 
         it('calls $rootScope.$on with the combined alert messages', function () {
-            expect($rootScope.$emit).toHaveBeenCalled();
-            var notificationMessage = $rootScope.$emit.calls.mostRecent().args;
-            expect(notificationMessage[1]).toEqual('Test message');
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith('<p>Test message</p>');
+        });
+    });
+
+    describe('apiErrors', function () {
+        beforeEach(function () {
+            spyOn(mockSliderService, 'openUrl').and.callThrough();
+            Notify.apiErrors({
+                data: {
+                    errors: [
+                        { message: 'Error 1' },
+                        { message: 'Error 2' }
+                    ]
+                }
+            });
+            $rootScope.$digest();
+        });
+
+        it('Calls SliderService.openTemplate with error message', function () {
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: ['Error 1', 'Error 2']}));
+        });
+    });
+
+    describe('success', function () {
+        beforeEach(function () {
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
+            Notify.success('Test message');
+            $rootScope.$digest();
+        });
+
+        it('Calls SliderService.openTemplate with message', function () {
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith('<p>Test message</p>', 'thumb-up', 'confirmation');
+        });
+    });
+
+    describe('confirm', function () {
+        beforeEach(function () {
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
+            Notify.confirm('Test message');
+            $rootScope.$digest();
+        });
+
+        it('Calls SliderService.openTemplate with message', function () {
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'question-mark', false, jasmine.any(Object));
+        });
+    });
+
+    describe('confirmModal', function () {
+        beforeEach(function () {
+            spyOn(mockModalService, 'openTemplate').and.callThrough();
+            Notify.confirmModal('Test message');
+            $rootScope.$digest();
+        });
+
+        it('Calls ModalService.openTemplate with error message', function () {
+            expect(mockModalService.openTemplate).toHaveBeenCalled();
+        });
+    });
+
+    describe('confirmDelete', function () {
+        beforeEach(function () {
+            spyOn(mockModalService, 'openTemplate').and.callThrough();
+            Notify.confirmDelete('Test message');
+            $rootScope.$digest();
+        });
+
+        it('Calls ModalService.openTemplate with error message', function () {
+            expect(mockModalService.openTemplate).toHaveBeenCalled();
+        });
+    });
+
+    describe('limit', function () {
+        beforeEach(function () {
+            spyOn(mockSliderService, 'openUrl').and.callThrough();
+            Notify.limit('Test message');
+            $rootScope.$digest();
+        });
+
+        it('Calls SliderService.openUrl with error message', function () {
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/limit.html', 'warning', 'error', jasmine.objectContaining({ message: 'Test message'}));
         });
     });
 

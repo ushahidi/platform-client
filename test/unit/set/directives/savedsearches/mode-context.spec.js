@@ -38,10 +38,10 @@ describe('collections mode context directive', function () {
     }));
 
     it('should save a notification', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
         $scope.saveNotification({id: 'pass'});
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
 });

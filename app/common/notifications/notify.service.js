@@ -18,20 +18,20 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function notify(message, translateValues) {
         $translate(message, translateValues).then(function (message) {
-            SliderService.openTemplate(message);
+            SliderService.openTemplate('<p>' + message + '</p>');
         });
     }
 
     function error(errorText, translateValues) {
         $translate(errorText, translateValues).then(function (errorText) {
-            SliderService.openTemplate(errorText, 'warning', 'error');
+            SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error');
         });
     }
 
     function errors(errorTexts) {
         var scope = getScope();
 
-        $q.all(_.map(errorTexts, $translate), function (errors) {
+        $q.all(_.map(errorTexts, $translate)).then(function (errors) {
             scope.errors = errors;
             SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
         });
@@ -50,7 +50,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function success(successText, translateValues) {
         $translate(successText, translateValues).then(function (successText) {
-            SliderService.openTemplate(successText, 'thumb-up', 'confirmation');
+            SliderService.openTemplate('<p>' + successText + '</p>', 'thumb-up', 'confirmation');
         });
     }
 

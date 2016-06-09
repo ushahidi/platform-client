@@ -64,40 +64,40 @@ describe('setting users controller', function () {
     });
 
     it('should delete users upon request', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
         $scope.toggleUser({id: 1});
 
         $scope.deleteUsers();
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should fail to delete the user itself', function () {
-        spyOn(Notify, 'showSingleAlert');
+        spyOn(Notify, 'error');
         $scope.toggleUser({id: 1});
         Session.setSessionData({'userId': 1});
         $scope.deleteUsers();
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showSingleAlert).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
     });
 
     it('should change the roles of selected users', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
         $scope.toggleUser({id: 'pass'});
 
         $scope.changeRole('admin');
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should fail to change the roles of selected users and return an error', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'apiErrors');
 
         // Cause UserEndpoint to return fail
         $scope.toggleUser({id: 'fail'});
@@ -106,7 +106,7 @@ describe('setting users controller', function () {
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 
     it('should set items per page and call getUsersForPagination', function () {
