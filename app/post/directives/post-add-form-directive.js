@@ -28,13 +28,10 @@ function (
                 $scope.post.form  = { id: $scope.selectedSurvey };
 
                 PostEndpoint.update($scope.post).$promise.then(function (response) {
-                    $translate('notify.post.save_success', {name: $scope.post.title})
-                    .then(function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.path('/posts/' + $scope.post.id + '/edit');
-                    });
+                    Notify.notify('notify.post.save_success', {name: $scope.post.title});
+                    $location.path('/posts/' + $scope.post.id + '/edit');
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
 

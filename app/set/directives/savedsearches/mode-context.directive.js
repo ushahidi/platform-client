@@ -67,19 +67,16 @@ function SavedSearchModeContextController(
     }
 
     function deleteSavedSearch() {
-        $translate('notify.savedsearch.delete_savedsearch_confirm')
-            .then(function (message) {
-                Notify.showConfirm(message).then(function () {
-                    SavedSearchEndpoint.delete({
-                        id: $scope.savedSearch.id
-                    }).$promise.then(function () {
-                        $location.url('/');
-                        $rootScope.$broadcast('savedSearch:update');
-                    }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse);
-                    });
-                });
+        Notify.confirm('notify.savedsearch.delete_savedsearch_confirm').then(function () {
+            SavedSearchEndpoint.delete({
+                id: $scope.savedSearch.id
+            }).$promise.then(function () {
+                $location.url('/');
+                $rootScope.$broadcast('savedSearch:update');
+            }, function (errorResponse) {
+                Notify.apiErrors(errorResponse);
             });
+        });
     }
 
     function saveNotification(savedSearch) {
@@ -89,24 +86,15 @@ function SavedSearchModeContextController(
             // No need to show the link after subscription
             $scope.showNotificationLink = false;
             $scope.notification = notification;
-            $translate('notify.notification.add', {set: savedSearch.name})
-                .then(function (message) {
-                    Notify.showNotificationSlider(message);
-                });
+            Notify.notify('notify.notification.add', {set: savedSearch.name});
         });
     }
 
     function removeNotification() {
-        $translate('notify.notification.delete_confirm')
-        .then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                NotificationEndpoint.delete($scope.notification).$promise.then(function (notification) {
-                    $scope.showNotificationLink = true;
-                    $translate('notify.notification.destroy_notification_success', {name: notification.name})
-                    .then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-                });
+        Notify.confirm('notify.notification.delete_confirm').then(function () {
+            NotificationEndpoint.delete($scope.notification).$promise.then(function (notification) {
+                $scope.showNotificationLink = true;
+                Notify.notify('notify.notification.destroy_notification_success', {name: notification.name});
             });
         });
     }

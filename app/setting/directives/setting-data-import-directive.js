@@ -22,9 +22,7 @@ function (
             });
             $scope.importCSV = function () {
                 if (!$scope.fileContainer.file) {
-                    $translate('notify.data_import.file_missing').then(function (message) {
-                        Notify.showApiErrors(message);
-                    });
+                    Notify.error('notify.data_import.file_missing');
                     return;
                 }
                 var formData = new FormData();
@@ -33,13 +31,10 @@ function (
 
                 DataImportEndpoint.upload(formData)
                 .then(function (csv) {
-                    $translate('notify.data_import.csv_upload', {name: $scope.fileContainer.file.name}).then(
-                    function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.url('/settings/data-mapper/' + $scope.formId + '/' + csv.id);
-                    });
+                    Notify.notify('notify.data_import.csv_upload', {name: $scope.fileContainer.file.name});
+                    $location.url('/settings/data-mapper/' + $scope.formId + '/' + csv.id);
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
         }

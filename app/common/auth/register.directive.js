@@ -53,7 +53,7 @@ function RegisterController(
         $scope.failed = false;
         $scope.processing = false;
 
-        Notify.showNotificationSlider($translate.instant('notify.register.success'));
+        Notify.notify('notify.register.success');
         $scope.$parent.closeModal();
     }
 
@@ -77,7 +77,7 @@ function RegisterController(
             }
         });
 
-        Notify.showApiErrors(errorResponse);
+        Notify.apiErrors(errorResponse);
     }
 
     function cancel() {

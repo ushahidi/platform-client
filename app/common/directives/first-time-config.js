@@ -114,8 +114,7 @@ function (
                         updateSiteHeader();
                     });
                 }, function (errorResponse) {
-                    var errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-                    Notify.showAlerts(errors);
+                    Notify.apiErrors(errorResponse);
                 });
             };
         }

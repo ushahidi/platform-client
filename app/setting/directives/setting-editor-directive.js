@@ -121,15 +121,13 @@ function (
                     ]).then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
-                        $translate('notify.general_settings.save_success').then(function (message) {
-                            Notify.showNotificationSlider(message);
-                        });
+                        Notify.notify('notify.general_settings.save_success');
                     }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse);
+                        Notify.apiErrors(errorResponse);
                         $scope.saving_config = false;
                     });
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                     $scope.saving_config = false;
                 });
             };

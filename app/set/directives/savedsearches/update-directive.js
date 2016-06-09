@@ -40,7 +40,7 @@ function (
                 .then(function (savedSearch) {
                     $rootScope.$broadcast('event:savedSearch:update');
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
 

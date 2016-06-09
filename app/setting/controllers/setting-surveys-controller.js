@@ -56,17 +56,12 @@ function (
     };
 
     $scope.deleteForm = function (form) {
-        $translate('notify.form.delete_form_confirm')
-        .then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                FormEndpoint.delete({
-                    id: form.id
-                }).$promise.then(function () {
-                    $translate('notify.form.destroy_form_success', { name: form.name }).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-                    $scope.refreshForms();
-                });
+        Notify.confirm('notify.form.delete_form_confirm').then(function () {
+            FormEndpoint.delete({
+                id: form.id
+            }).$promise.then(function () {
+                Notify.notify('notify.form.destroy_form_success', { name: form.name });
+                $scope.refreshForms();
             });
         });
     };
@@ -89,9 +84,7 @@ function (
                 .then(function (stage) {
                     $scope.isNewStageOpen = false;
                     $scope.newStage = {};
-                    $translate('notify.form.save_success', {name: form.name}).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
+                    Notify.notify('notify.form.save_success', { name: form.name });
                     $location.url('/settings/forms/' + form.id);
                 });
         }, function (errorResponse) {
@@ -101,15 +94,13 @@ function (
                 // Ultimately this should check individual status codes
                 // for the moment just check for the message we expect
                 if (value.title === 'limit::admin') {
-                    $translate('limit.post_type_limit_reached').then(function (message) {
-                        Notify.showLimitSlider(message);
-                    });
+                    Notify.limit('limit.post_type_limit_reached');
                 } else {
                     validationErrors.push(value);
                 }
             });
 
-            Notify.showApiErrors(validationErrors);
+            Notify.apiErrors(validationErrors);
             $scope.processing = false;
         });
     };

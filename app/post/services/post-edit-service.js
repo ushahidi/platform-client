@@ -38,7 +38,7 @@ function (
                 }, valid);
 
                 if (errors.length) {
-                    Notify.showAlerts(errors);
+                    Notify.errors(errors);
                     return valid;
                 }
 

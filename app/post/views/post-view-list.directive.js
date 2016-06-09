@@ -99,31 +99,24 @@ function PostListController(
     }
 
     function deletePosts() {
-        $translate('notify.post.bulk_destroy_confirm', {
-            count: $scope.selectedPosts.length
-        }).then(function (message) {
-            Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
+        Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
+            var handleDeleteErrors = function (errorResponse) {
+                Notify.apiErrors(errorResponse);
+            },
+            handleDeleteSuccess = function () {
+                Notify.notify('notify.post.destroy_success_bulk');
+            };
 
-                var handleDeleteErrors = function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                },
-                handleDeleteSuccess = function () {
-                    $translate('notify.post.destroy_success_bulk').then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-                };
-
-                // ask server to delete selected posts
-                // and refetch posts from server
-                var deletePostsPromises = _.map(
-                    $scope.selectedPosts,
-                    function (postId) {
-                        $scope.selectedPosts = _.without($scope.selectedPosts, postId);
-                        return PostEndpoint.delete({ id: postId }).$promise;
-                    });
-                $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
-                .finally(getPostsForPagination);
-            });
+            // ask server to delete selected posts
+            // and refetch posts from server
+            var deletePostsPromises = _.map(
+                $scope.selectedPosts,
+                function (postId) {
+                    $scope.selectedPosts = _.without($scope.selectedPosts, postId);
+                    return PostEndpoint.delete({ id: postId }).$promise;
+                });
+            $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
+            .finally(getPostsForPagination);
         });
     }
 
@@ -140,40 +133,38 @@ function PostListController(
     }
 
     function exportPosts() {
-        $translate('notify.post.export').then(function (message) {
-            Notify.showConfirm(message).then(function (message) {
-                var filters = {},
-                    format = 'csv'; //@todo handle more formats
+        Notify.confirm('notify.post.export').then(function (message) {
+            var filters = {},
+                format = 'csv'; //@todo handle more formats
 
-                // Prepare filters for export
-                angular.extend(filters, $scope.filters, {format: format});
+            // Prepare filters for export
+            angular.extend(filters, $scope.filters, {format: format});
 
-                var site = ConfigEndpoint.get({ id: 'site' }).$promise,
-                    postExport = PostEndpoint.export(filters);
+            var site = ConfigEndpoint.get({ id: 'site' }).$promise,
+                postExport = PostEndpoint.export(filters);
 
-                // Save export data to file
-                $q.all([site, postExport]).then(function (response) {
-                    var filename = response[0].name + '.' + format,
-                        data = response[1].data;
+            // Save export data to file
+            $q.all([site, postExport]).then(function (response) {
+                var filename = response[0].name + '.' + format,
+                    data = response[1].data;
 
-                    // Create anchor link
-                    var anchor = angular.element('<a/>');
+                // Create anchor link
+                var anchor = angular.element('<a/>');
 
-                    // ...and attach it.
-                    angular.element(document.body).append(anchor);
+                // ...and attach it.
+                angular.element(document.body).append(anchor);
 
-                    // Set attributes
-                    anchor.attr({
-                        href: 'data:attachment/' + format + ';charset=utf-8,' + encodeURIComponent(data),
-                        download: filename
-                    });
-
-                    // Show file download dialog
-                    anchor[0].click();
-
-                    // ... and finally remove the link
-                    anchor.remove();
+                // Set attributes
+                anchor.attr({
+                    href: 'data:attachment/' + format + ';charset=utf-8,' + encodeURIComponent(data),
+                    download: filename
                 });
+
+                // Show file download dialog
+                anchor[0].click();
+
+                // ... and finally remove the link
+                anchor.remove();
             });
         });
     }

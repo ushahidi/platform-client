@@ -93,14 +93,11 @@ function CollectionListingController(
         });
         $q.all(calls)
             .then(function () {
-                $translate('notify.collection.add_to_collection', {collection: collection})
-                .then(function (message) {
-                    // Update the posts sets
-                    $scope.addToPostsSet(String(collectionId));
-                    Notify.showNotificationSlider(message);
-                });
+                // Update the posts sets
+                $scope.addToPostsSet(String(collectionId));
+                Notify.notify('notify.collection.add_to_collection', {collection: collection});
             }, function (errorResponse) {
-                Notify.showApiErrors(errorResponse);
+                Notify.apiErrors(errorResponse);
             });
     }
 
@@ -111,13 +108,10 @@ function CollectionListingController(
         CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
         .$promise
         .then(function () {
-            $translate('notify.collection.removed_from_collection', {collection: collection})
-            .then(function (message) {
-                $scope.post.sets = _.without($scope.post.sets, String(collectionId));
-                Notify.showNotificationSlider(message);
-            });
+            $scope.post.sets = _.without($scope.post.sets, String(collectionId));
+            Notify.notify('notify.collection.removed_from_collection', {collection: collection});
         }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
+            Notify.apiErrors(errorResponse);
         });
     }
 
