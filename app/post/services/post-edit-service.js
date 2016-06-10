@@ -1,12 +1,12 @@
 module.exports = [
     '_',
     'Util',
-    '$filter',
+    '$translate',
     'Notify',
 function (
     _,
     Util,
-    $filter,
+    $translate,
     Notify
 ) {
     var PostEditService = {
@@ -31,14 +31,14 @@ function (
                 valid = _.reduce(requiredStages, function (isValid, stage) {
                     // if this stage isn't complete, add to errors
                     if (_.indexOf(post.completed_stages, stage.id) === -1) {
-                        errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
+                        errors.push($translate.instant('post.modify.incomplete_step', { stage: stage.label }));
                         return false;
                     }
                     return isValid;
                 }, valid);
 
                 if (errors.length) {
-                    Notify.errors(errors);
+                    Notify.errorsPretranslated(errors);
                     return valid;
                 }
 

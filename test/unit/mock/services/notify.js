@@ -14,6 +14,13 @@ module.exports = [function () {
                 }
             };
         },
+        errorsPretranslated: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
         error: function (message) {
             return {
                 then: function (successCallback) {

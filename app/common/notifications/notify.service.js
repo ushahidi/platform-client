@@ -8,6 +8,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         notify: notify,
         error: error,
         errors: errors,
+        errorsPretranslated: errorsPretranslated,
         apiErrors: apiErrors,
         success: success,
         confirm: confirm,
@@ -26,6 +27,12 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         $translate(errorText, translateValues).then(function (errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error');
         });
+    }
+
+    function errorsPretranslated(errorTexts) {
+        var scope = getScope();
+        scope.errors = errorTexts;
+        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
     }
 
     function errors(errorTexts) {
