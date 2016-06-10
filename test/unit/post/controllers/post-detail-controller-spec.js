@@ -167,7 +167,7 @@ describe('Post detail controller', function () {
     });
 
     it('should fail to publish a post to a given role when a required stage is not completed', function () {
-        spyOn(Notify, 'errors');
+        spyOn(Notify, 'errorsPretranslated');
 
         $scope.post.id = 'pass';
         $scope.stages = [{
@@ -176,7 +176,7 @@ describe('Post detail controller', function () {
         $scope.post.completed_stages = [];
 
         $scope.publishPostTo($scope.post);
-        expect(Notify.errors).toHaveBeenCalled();
+        expect(Notify.errorsPretranslated).toHaveBeenCalled();
     });
 
     /* @todo test in post actions

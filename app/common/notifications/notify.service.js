@@ -38,7 +38,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function errors(errorTexts) {
         var scope = getScope();
 
-        $q.all(_.map(errorTexts, $translate).$promise).then(function (errors) {
+        $q.all(_.map(errorTexts, $translate)).then(function (errors) {
             scope.errors = errors;
             SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
         });
