@@ -50,7 +50,8 @@
         "name" : "Name",
         "key" : "Key",
         "default_value" : "Default value",
-        "fields" : "Fields"
+        "fields" : "Fields",
+        "return_to_all_posts" : "Return to all posts"
     },
     "toolbar": {
         "searchbar" : {
