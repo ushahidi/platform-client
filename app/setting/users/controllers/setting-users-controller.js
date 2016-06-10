@@ -37,7 +37,7 @@ function (
     });
 
     RoleEndpoint.query().$promise.then(function (roles) {
-        $scope.roles = roles;
+        $scope.roles = _.indexBy(roles, 'name');
     });
 
     $scope.filters = {
@@ -142,7 +142,8 @@ function (
     $scope.getUsersForPagination = function () {
         var filters = _.extend({
                             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-                            limit: $scope.itemsPerPage
+                            limit: $scope.itemsPerPage,
+                            orderby: 'realname'
                         }, $scope.filters);
         UserEndpoint.queryFresh(filters).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
