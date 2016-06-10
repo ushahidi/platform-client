@@ -8,6 +8,7 @@ module.exports = [
     'Notify',
     '_',
     'RoleEndpoint',
+    'Session',
 function (
     $scope,
     $rootScope,
@@ -17,7 +18,8 @@ function (
     UserEndpoint,
     Notify,
     _,
-    RoleEndpoint
+    RoleEndpoint,
+    Session
 ) {
 
     // Redirect to home if not authorized
@@ -71,6 +73,31 @@ function (
 
             $scope.saving = false;
         });
+    };
+
+    var handleResponseErrors = function (errorResponse) {
+        Notify.apiErrors(errorResponse);
+    };
+
+    var checkAndNotifyAboutManipulateOwnUser = function (translationKey) {
+        var currentUserId = Session.getSessionDataEntry('userId');
+        if (_.contains($scope.selectedUsers, currentUserId)) {
+            Notify.error(translationKey);
+            return true;
+        }
+        return false;
+    };
+
+    $scope.deleteUser = function (user) {
+        if (checkAndNotifyAboutManipulateOwnUser('user.cannot_delete_yourself')) {
+            return;
+        }
+        Notify.confirmDelete('notify.user.destroy_confirm').then(function () {
+            UserEndpoint.delete({ id: user.id }).$promise.then(function () {
+                Notify.notify('notify.user.destroy_success');
+            }, handleResponseErrors);
+            $location.url('/settings/users');
+        }, function () {});
     };
 
     $scope.cancel = function () {

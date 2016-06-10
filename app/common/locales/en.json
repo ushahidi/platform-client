@@ -875,7 +875,7 @@
             "stage_save_success" : "Updated {{stage}}",
             "export" : "This will export filtered posts. Are you sure you want to continue?"
         },
-        "tag" : {
+        "category" : {
             "save_success" : "Saved category {{name}}",
             "destroy_confirm" : "Are you sure you want to delete this category?",
             "destroy_success" : "Category deleted",

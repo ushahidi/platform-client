@@ -48,12 +48,26 @@ function (
         $scope.saving = true;
         // @todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {
-            Notify.notify('notify.tag.save_success', {name: tag.tag});
+            Notify.notify('notify.category.save_success', {name: tag.tag});
             $location.path('/settings/categories');
         }, function (errorResponse) { // error
             Notify.apiErrors(errorResponse);
             $scope.saving = false;
         });
+    };
+
+    var handleResponseErrors = function (errorResponse) {
+        Notify.apiErrors(errorResponse);
+    };
+
+    $scope.deleteCategory = function (category) {
+
+        Notify.confirmDelete('notify.category.destroy_confirm').then(function () {
+            TagEndpoint.delete({ id: category.id }).$promise.then(function () {
+                Notify.notify('notify.category.destroy_success');
+            }, handleResponseErrors);
+            $location.url('/settings/categories');
+        }, function () {});
     };
 
     $scope.cancel = function () {
