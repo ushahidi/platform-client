@@ -53,14 +53,14 @@ describe('setting categories create controller', function () {
     });
 
     it('should save a tag and update the path', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
         $scope.saveCategory({id: 'pass'});
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should show an error on save failure', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'apiErrors');
         $scope.saveCategory({id: 'fail'});
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 });

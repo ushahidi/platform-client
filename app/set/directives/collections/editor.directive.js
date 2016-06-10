@@ -124,22 +124,19 @@ function CollectionEditorController(
             $scope.continueFlow(collection);
 
         }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
+            Notify.apiErrors(errorResponse);
         });
     }
 
     function deleteCollection() {
-        $translate('notify.collection.delete_collection_confirm')
-        .then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                CollectionEndpoint.delete({
-                    collectionId: $scope.collection.id
-                }).$promise.then(function () {
-                    $location.url('/');
-                    $rootScope.$broadcast('collection:update');
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
+        Notify.confirmDelete('notify.collection.delete_collection_confirm').then(function () {
+            CollectionEndpoint.delete({
+                collectionId: $scope.collection.id
+            }).$promise.then(function () {
+                $location.url('/');
+                $rootScope.$broadcast('collection:update');
+            }, function (errorResponse) {
+                Notify.apiErrors(errorResponse);
             });
         });
     }

@@ -79,10 +79,10 @@ function (
                         // We found a file so change the state of parent form
                         formCtrl[$scope.name].$setDirty();
                     }, function (error) {
-                        Notify.showApiErrors(error);
+                        Notify.apiErrors(error);
                     });
                 }, function (error) {
-                    Notify.showApiErrors(error);
+                    Notify.apiErrors(error);
                 });
             };
 

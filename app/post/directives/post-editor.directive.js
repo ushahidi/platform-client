@@ -30,7 +30,8 @@ PostEditorController.$inject = [
     'FormAttributeEndpoint',
     'UserEndpoint',
     'Notify',
-    '_'
+    '_',
+    'PostActionsService'
   ];
 
 function PostEditorController(
@@ -47,7 +48,8 @@ function PostEditorController(
     FormAttributeEndpoint,
     UserEndpoint,
     Notify,
-    _
+    _,
+    PostActionsService
   ) {
     // Setup initial stages container
 
@@ -160,22 +162,8 @@ function PostEditorController(
     }
 
     function deletePost(post) {
-        $translate('notify.post.destroy_confirm').then(function (message) {
-            Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
-                PostEndpoint.delete({ id: post.id }).$promise.then(function () {
-                    $translate(
-                        'notify.post.destroy_success',
-                        {
-                            name: post.title
-                        }
-                    ).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.path('/');
-                    });
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
-            });
+        PostActionsService.delete(post).then(function () {
+            $location.path('/');
         });
     }
 
@@ -202,23 +190,11 @@ function PostEditorController(
             if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                 $scope.saving_post = false;
                 $scope.post.id = response.id;
-                $translate(
-                    success_message,
-                    {
-                        name: $scope.post.title
-                    }).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.path('/posts/' + response.id);
-                    });
+                Notify.notify(success_message, { name: $scope.post.title });
+                $location.path('/posts/' + response.id);
             } else {
-                $translate(
-                    success_message,
-                    {
-                        name: $scope.post.title
-                    }).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.path('/');
-                    });
+                Notify.notify(success_message, { name: $scope.post.title });
+                $location.path('/');
             }
         }, function (errorResponse) { // errors
             var validationErrors = [];
@@ -227,15 +203,13 @@ function PostEditorController(
                 // Ultimately this should check individual status codes
                 // for the moment just check for the message we expect
                 if (value.title === 'limit::posts') {
-                    $translate('limit.post_limit_reached').then(function (message) {
-                        Notify.showLimitSlider(message);
-                    });
+                    Notify.limit('limit.post_limit_reached');
                 } else {
                     validationErrors.push(value);
                 }
             });
 
-            Notify.showApiErrors(validationErrors);
+            Notify.apiErrors(validationErrors);
 
             $scope.saving_post = false;
         });

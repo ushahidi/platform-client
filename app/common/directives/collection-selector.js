@@ -59,13 +59,10 @@ function (
 
                 CollectionEndpoint.addPost({'collectionId': collectionId, 'id': $scope.post.id})
                     .$promise.then(function () {
-                        $translate('notify.collection.add_to_collection', {collection: collection})
-                        .then(function (message) {
-                            $scope.post.sets.push(String(collectionId));
-                            Notify.showNotificationSlider(message);
-                        });
+                        $scope.post.sets.push(String(collectionId));
+                        Notify.notify('notify.collection.add_to_collection', {collection: collection});
                     }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse);
+                        Notify.apiErrors(errorResponse);
                     });
             };
 
@@ -75,13 +72,10 @@ function (
                 CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
                 .$promise
                 .then(function () {
-                    $translate('notify.collection.removed_from_collection', {collection: collection})
-                    .then(function (message) {
-                        $scope.post.sets = _.without($scope.post.sets, String(collectionId));
-                        Notify.showNotificationSlider(message);
-                    });
+                    $scope.post.sets = _.without($scope.post.sets, String(collectionId));
+                    Notify.notify('notify.collection.removed_from_collection', {collection: collection});
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
             /*
@@ -90,7 +84,7 @@ function (
                 .$promise
                 .then(function (result) {
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
 
@@ -117,7 +111,7 @@ function (
                     // TODO: add caching for collections to reduce requests.
                     $rootScope.$broadcast('event:collection:update');
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
 

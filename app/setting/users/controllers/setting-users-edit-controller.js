@@ -48,9 +48,7 @@ function (
         $scope.saving = true;
         UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
-                $translate('notify.user.edit_success', {name: user.realname}).then(function (message) {
-                    Notify.showNotificationSlider(message);
-                });
+                Notify.notify('notify.user.edit_success', {name: user.realname});
                 $scope.saving = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
@@ -63,15 +61,13 @@ function (
                 // Ultimately this should check individual status codes
                 // for the moment just check for the message we expect
                 if (value.title === 'limit::admin') {
-                    $translate('limit.admin_limit_reached').then(function (message) {
-                        Notify.showLimitSlider(message);
-                    });
+                    Notify.limit('limit.admin_limit_reached');
                 } else {
                     validationErrors.push(value);
                 }
             });
 
-            Notify.showApiErrors(validationErrors);
+            Notify.apiErrors(validationErrors);
 
             $scope.saving = false;
         });

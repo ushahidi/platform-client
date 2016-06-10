@@ -217,13 +217,10 @@ function (
 
         PostEndpoint.update($scope.post).$promise
             .then(function () {
-                $translate('notify.post.stage_save_success', {stage: stage.label})
-                    .then(function (message) {
-                        Notify.showNotificationSlider(message);
-                        stage.completed = !stage.completed;
-                    });
+                Notify.notify('notify.post.stage_save_success', {stage: stage.label});
+                stage.completed = !stage.completed;
             }, function (errorResponse) {
-                Notify.showApiErrors(errorResponse);
+                Notify.apiErrors(errorResponse);
             });
     };
 
@@ -240,7 +237,7 @@ function (
         });
 
         if (errors.length) {
-            Notify.showAlerts(errors);
+            Notify.errors(errors); // todo WTF
             return;
         }
 
@@ -252,12 +249,9 @@ function (
             var message = post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
             var role = message === 'draft' ? 'draft' : (_.isEmpty(post.published_to) ? 'everyone' : post.published_to.join(', '));
 
-            $translate(message, {role: role})
-            .then(function (message) {
-                Notify.showNotificationSlider(message);
-            });
+            Notify.notify(message, {role: role});
         }, function (errorResponse) {
-            Notify.showApiErrors(errorResponse);
+            Notify.apiErrors(errorResponse);
         });
     };
 

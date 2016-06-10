@@ -36,11 +36,7 @@ module.exports = [
                     var update = UserEndpoint.update({ id: 'me' }, userPayload);
 
                     update.$promise.then(function (user) {
-                        $translate(
-                            'user_profile.update_success'
-                        ).then(function (message) {
-                            Notify.showNotificationSlider(message);
-                        });
+                        Notify.notify('user_profile.update_success');
 
                         $scope.state.success = true;
                         $scope.state.processing = false;
@@ -53,7 +49,7 @@ module.exports = [
 
                         $scope.$emit('event:close');
                     }, function (errorResponse) { // error
-                        Notify.showApiErrors(errorResponse);
+                        Notify.apiErrors(errorResponse);
                         $scope.state.processing = false;
                     });
                 };

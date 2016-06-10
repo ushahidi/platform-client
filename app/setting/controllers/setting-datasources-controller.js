@@ -64,15 +64,13 @@ function (
             $scope.settings.id = 'data-provider';
             ConfigEndpoint.saveCache($scope.settings).$promise.then(function (result) {
                 $scope.saving = false;
-                $translate('notify.datasource.save_success').then(function (message) {
-                    Notify.showNotificationSlider(message);
-                });
+                Notify.notify('notify.datasource.save_success');
 
                 // Track saved provider
                 addSavedProvider(provider);
 
             }, function (errorResponse) { // error
-                Notify.showApiErrors(errorResponse);
+                Notify.apiErrors(errorResponse);
             });
 
             // No errors found; disable this.

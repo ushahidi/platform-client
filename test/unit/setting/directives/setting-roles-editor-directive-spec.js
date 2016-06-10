@@ -47,11 +47,11 @@ describe('setting roles editor directive', function () {
     }));
 
     it('should to save a role', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.saveRole({id: 'pass', name: 'admin'});
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
 });

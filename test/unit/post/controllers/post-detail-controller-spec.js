@@ -151,23 +151,23 @@ describe('Post detail controller', function () {
     });
 
     it('should publish a post to a given role', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.post.id = 'pass';
         $scope.publishPostTo($scope.post);
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should fail to publish a post to a given role', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'apiErrors');
 
         $scope.post.id = 'fail';
         $scope.publishPostTo($scope.post);
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 
     it('should fail to publish a post to a given role when a required stage is not completed', function () {
-        spyOn(Notify, 'showAlerts');
+        spyOn(Notify, 'errors');
 
         $scope.post.id = 'pass';
         $scope.stages = [{
@@ -176,32 +176,32 @@ describe('Post detail controller', function () {
         $scope.post.completed_stages = [];
 
         $scope.publishPostTo($scope.post);
-        expect(Notify.showAlerts).toHaveBeenCalled();
+        expect(Notify.errors).toHaveBeenCalled();
     });
 
     /* @todo test in post actions
     it('should delete a post', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.post.id = 'pass';
         $scope.deletePost();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should fail to delete a post', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'apiErrors');
 
         $scope.post.id = 'fail';
         $scope.deletePost();
 
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
      */
 
     it('should toggle stage completion and attempt to update post', function () {
-        spyOn(Notify, 'showNotificationSlider');
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'notify');
+        spyOn(Notify, 'apiErrors');
 
         $scope.post.id = 'pass';
         $scope.post.completed_stages = [];
@@ -212,10 +212,10 @@ describe('Post detail controller', function () {
         $scope.toggleCompletedStage({id: 1});
         expect($scope.post.completed_stages.length).toEqual(0);
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
 
         $scope.post.id = 'fail';
         $scope.toggleCompletedStage({id: 1});
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 });

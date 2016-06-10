@@ -90,7 +90,7 @@ describe('user profile directive', function () {
                 };
 
             beforeEach(function () {
-                spyOn(Notify, 'showApiErrors').and.callThrough();
+                spyOn(Notify, 'apiErrors').and.callThrough();
             });
 
             describe('change values of user', function () {
@@ -103,9 +103,9 @@ describe('user profile directive', function () {
                         isolateScope.saveUser(isolateScope.user);
                     });
 
-                    it('should call Notify.showApiErrors with the server response', function () {
-                        expect(Notify.showApiErrors).toHaveBeenCalled();
-                        var alertMessages = Notify.showApiErrors.calls.mostRecent().args[0];
+                    it('should call Notify.apiErrors with the server response', function () {
+                        expect(Notify.apiErrors).toHaveBeenCalled();
+                        var alertMessages = Notify.apiErrors.calls.mostRecent().args[0];
                         expect(alertMessages).toEqual(errorResponse);
                     });
                 });

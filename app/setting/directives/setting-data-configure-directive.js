@@ -36,13 +36,10 @@ function (
             $scope.postMode = 'bulk_data_import';
 
             $scope.cancelImport = function () {
-                $translate('notify.data_import.csv_import_cancel')
-                .then(function (message) {
-                    Notify.showNotificationSlider(message);
+                Notify.notify('notify.data_import.csv_import_cancel');
 
-                    $scope.deleteDataImport($scope.csv);
-                    $location.url('/settings/data-import/');
-                });
+                $scope.deleteDataImport($scope.csv);
+                $location.url('/settings/data-import/');
             };
 
             $scope.deleteDataImport = function () {
@@ -53,18 +50,15 @@ function (
                 DataImportEndpoint.import({id: $scope.csv.id, action: 'import'})
                 .$promise
                 .then(function (response) {
-                    $translate('notify.data_import.csv_mappings_set', {
+                    Notify.notify('notify.data_import.csv_mappings_set', {
                         processed: response.processed,
                         errors: response.errors
-                    }).then(
-                        function (message) {
-                            Notify.showNotificationSlider(message);
+                    });
 
-                            $scope.deleteDataImport($scope.csv);
-                            $location.url('/views/list');
-                        });
+                    $scope.deleteDataImport($scope.csv);
+                    $location.url('/views/list');
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
 
@@ -81,7 +75,7 @@ function (
                 .then(function (csv) {
                     $scope.triggerImport(csv);
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
         }
