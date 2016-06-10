@@ -52,7 +52,7 @@ describe('setting data mapper directive', function () {
     });
 
     it('should detect duplicate field assignments', function () {
-        spyOn(Notify, 'errors');
+        spyOn(Notify, 'error');
 
         var csv = {
             maps_to: [
@@ -62,11 +62,11 @@ describe('setting data mapper directive', function () {
         };
         $scope.progressToConfigure(csv);
 
-        expect(Notify.errors).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
     });
 
     it('should detect missing field assignments', function () {
-        spyOn(Notify, 'errors');
+        spyOn(Notify, 'error');
 
         var csv = {
             maps_to: [
@@ -82,7 +82,7 @@ describe('setting data mapper directive', function () {
 
         $scope.progressToConfigure(csv);
 
-        expect(Notify.errors).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
     });
 
     it('should cancel the import', function () {
