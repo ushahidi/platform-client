@@ -250,7 +250,8 @@
         "apply_filters" : "Apply",
         "save_to_set" : "Save to Set",
         "search" : "Search",
-        "date_range" : "Date range"
+        "date_range" : "Date range",
+        "who_its_visible_to": "Who it's visible to"
     },
     "graph" : {
         "all_posts": "Nothing; Show all posts",
@@ -326,6 +327,7 @@
         "notifications" : "Notifications",
         "new_collection" : "New Collection",
         "notifications" : "Notifications",
+        "only_author" : "Only the author",
         "only_you" : "Only you",
         "people" : "People",
         "permissions" : "Permissions",

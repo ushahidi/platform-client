@@ -13,10 +13,11 @@ function VisibleToSelectDirective() {
     };
 }
 
-VisibleToSelectController.$inject = ['$scope', 'RoleEndpoint'];
-function VisibleToSelectController($scope, RoleEndpoint) {
+VisibleToSelectController.$inject = ['$scope', 'RoleEndpoint', '$rootScope'];
+function VisibleToSelectController($scope, RoleEndpoint, $rootScope) {
     $scope.roles = [];
     $scope.visible_to = '';
+    $scope.hasPermission = $rootScope.hasPermission;
 
     activate();
 
@@ -31,7 +32,9 @@ function VisibleToSelectController($scope, RoleEndpoint) {
     function updateStateFromModels() {
         if ($scope.statusModel === 'draft') {
             $scope.visible_to = 'draft';
-        }  else if ($scope.statusModel === 'published' && !$scope.publishedToModel) {
+        } else if ($scope.statusModel === 'all') {
+            $scope.visible_to = 'everyone';
+        } else if ($scope.statusModel === 'published' && !$scope.publishedToModel) {
             $scope.visible_to = 'everyone';
         } else {
             $scope.visible_to = $scope.publishedToModel;
@@ -40,7 +43,7 @@ function VisibleToSelectController($scope, RoleEndpoint) {
 
     function updateModelsFromState() {
         if ($scope.visible_to === 'everyone') {
-            $scope.statusModel = 'published';
+            $scope.statusModel = 'all';
             $scope.publishedToModel = '';
         } else if ($scope.visible_to === 'draft') {
             $scope.statusModel = 'draft';
