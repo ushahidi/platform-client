@@ -109,7 +109,7 @@ function PostEditorController(
                     } else if (attr.input === 'number') {
                         $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
-                        $scope.post.values[attr.key] = new Date(attr.default);
+                        $scope.post.values[attr.key] = [new Date(attr.default)];
                     } else {
                         $scope.post.values[attr.key] = [attr.default];
                     }
