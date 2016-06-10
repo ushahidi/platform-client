@@ -53,6 +53,19 @@
         <div class="tasks-tabs">
 
           <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id == visibleStage"
+            class="postcard-field"
+            >
+
+            <post-media-value
+              ng-if="form_attributes[key].type === 'media'"
+              label="{{form_attributes[key].label}}"
+              media-id="value"></post-media-value>
+          </div>
+
+          <div
             ng-if="post.content"
             ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
             class="postcard-field">
@@ -76,11 +89,6 @@
             class="postcard-field"
             >
 
-            <post-media-value
-              ng-if="form_attributes[key].type === 'media'"
-              label="{{form_attributes[key].label}}"
-              media-id="value"></post-media-value>
-              
             <post-value
               key="key"
               value="value"
