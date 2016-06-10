@@ -88,7 +88,7 @@
                                </svg>
                                <span class="label hidden">Move up</span>
                            </button>
-                           <button type="button" class="button-beta" ng-disabled="isLastTask(task)"ng-click="moveTaskDown(task)">
+                           <button type="button" class="button-beta" ng-disabled="isLastTask(task)" ng-click="moveTaskDown(task)">
                                <svg class="iconic">
                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                                </svg>
@@ -174,7 +174,7 @@
 
                                 <div class="listing-item-primary">
                                     <h2 class="listing-item-title">
-                                      <a ng-click="openAttributeEditModal(attribute)">
+                                      <a ng-click="openAttributeEditModal(task, attribute)">
                                         {{attribute.label}}
                                       </a>
                                     </h2>

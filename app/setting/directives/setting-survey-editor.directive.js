@@ -74,8 +74,6 @@ function SurveyEditorController(
 
     function activate() {
 
-
-
         RoleEndpoint.query().$promise.then(function (roles) {
             $scope.roles = roles;
         });
@@ -275,9 +273,10 @@ function SurveyEditorController(
         ModalService.openTemplate('<survey-attribute-create></survey-attribute-create>', 'survey.add_field', '', $scope, true, true);
     }
 
-    function openAttributeEditModal(attribute) {
+    function openAttributeEditModal(task, attribute) {
         // If creating a new attribute we need to close
         // the type picker first
+        $scope.activeTask = task;
         if (!attribute.form_stage_id) {
             ModalService.close();
         }
