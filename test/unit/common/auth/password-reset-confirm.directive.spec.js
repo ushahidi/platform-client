@@ -44,7 +44,7 @@ describe('common password reset confirm controller', function () {
         Session = _Session_;
         $scope = _$rootScope_.$new();
 
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
         spyOn(mockPasswordReset, 'resetConfirm').and.callThrough();
 
         $scope.token = 'aed43kjdd';
@@ -61,18 +61,18 @@ describe('common password reset confirm controller', function () {
         directiveScope.submit();
 
         expect(mockPasswordReset.resetConfirm).toHaveBeenCalledWith('pass', 'abc123');
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should fail in resetting the password', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'apiErrors');
 
         directiveScope.token = 'fail';
         directiveScope.password = 'abc123';
         directiveScope.submit();
 
         expect(mockPasswordReset.resetConfirm).toHaveBeenCalledWith('fail', 'abc123');
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 
 });

@@ -6,7 +6,6 @@ angular.module('ushahidi.common', [
     'ushahidi.common.modal',
     'ushahidi.common.custom-on-change',
     'ushahidi.common.file-upload',
-    'ushahidi.common.notification-slider',
     'ushahidi.common.sticky-sidebar'
 ])
 
@@ -21,6 +20,11 @@ angular.module('ushahidi.common', [
 .directive('passwordResetConfirm', require('./auth/password-reset-confirm.directive.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
+
+// Notifications
+.service('Notify', require('./notifications/notify.service.js'))
+.service('SliderService', require('./notifications/slider.service.js'))
+.directive('ushSlider', require('./notifications/slider.directive.js'))
 
 // API Endpoint wrappers
 .service('ConfigEndpoint', require('./services/endpoints/config.js'))
@@ -40,7 +44,6 @@ angular.module('ushahidi.common', [
 .service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
 .service('DataRetriever', require('./services/data-retriever.js'))
-.service('Notify', require('./services/notify.js'))
 .service('multiTranslate', require('./services/multi-translate.js'))
 .service('GlobalFilter', require('./services/global-filter.js'))
 .service('Maps', require('./services/maps.js'))
@@ -53,7 +56,6 @@ angular.module('ushahidi.common', [
 // Controllers
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
-.controller('notifier', require('./controllers/notifier.js'))
 .controller('intercom', require('./controllers/intercom.js'))
 
 // Global directives
@@ -103,5 +105,4 @@ require('./directives/offcanvas.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
 require('./directives/file-upload.js');
-require('./directives/notification-slider.js');
 require('./directives/sticky-sidebar.js');

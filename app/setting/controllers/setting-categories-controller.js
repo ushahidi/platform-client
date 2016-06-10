@@ -38,24 +38,14 @@ function (
     $scope.refreshView();
 
     $scope.deleteCategories = function () {
-        $translate('notify.tag.bulk_destroy_confirm', {
-            count: $scope.selectedCategories.length
-        }).then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                var calls = [];
-                angular.forEach($scope.selectedCategories, function (tagId) {
-                    calls.push(TagEndpoint.delete({ id: tagId }).$promise);
-                });
-                $q.all(calls).then(function () {
-                    $translate(
-                        'notify.tag.bulk_destroy_success',
-                        {
-                            count: $scope.selectedCategories.length
-                        }).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-                    $scope.refreshView();
-                });
+        Notify.confirm('notify.tag.bulk_destroy_confirm', { count: $scope.selectedCategories.length }).then(function () {
+            var calls = [];
+            angular.forEach($scope.selectedCategories, function (tagId) {
+                calls.push(TagEndpoint.delete({ id: tagId }).$promise);
+            });
+            $q.all(calls).then(function () {
+                Notify.notify('notify.tag.bulk_destroy_success', { count: $scope.selectedCategories.length });
+                $scope.refreshView();
             });
         });
     };

@@ -87,12 +87,9 @@ function (
                     // Update listing with new messages
                     getMessagesForPagination();
 
-                    $translate('notify.message.sent_to', {contact: $scope.contact.contact})
-                        .then(function (message) {
-                            Notify.showNotificationSlider(message);
-                        });
+                    Notify.notify('notify.message.sent_to', {contact: $scope.contact.contact});
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
 

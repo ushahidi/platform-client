@@ -52,24 +52,24 @@ describe('setting users create controller', function () {
     });
 
     it('should save users upon request', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.saveUser({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
         expect($scope.userSavedUser).toBe(true);
     });
 
     it('should fail to save a user', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'apiErrors');
 
         $scope.saveUser('fail');
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
         expect($scope.processing).toBe(false);
     });
 

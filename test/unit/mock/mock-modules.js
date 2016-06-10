@@ -1,56 +1,5 @@
 angular.module('ushahidi.mock', [])
-.provider('$translate', function () {
-    var store                 = {};
-    this.get                  = function () {
-        return false;
-    };
-    this.preferredLanguage    = function () {
-        return false;
-    };
-    this.storage              = function () {
-        return false;
-    };
-    this.translations         = function () {
-        return {};
-    };
-
-    this.$get = ['$q', function ($q) {
-        var $translate = function (key) {
-            return ({
-                then: function (successCallback) {
-                    successCallback();
-                }
-            });
-        };
-
-        $translate.addPair    = function (key, val) {
-            store[key] = val;
-        };
-        $translate.instant = function () {
-            return false;
-        };
-        $translate.isPostCompilingEnabled = function () {
-            return false;
-        };
-        $translate.preferredLanguage = function () {
-            return false;
-        };
-        $translate.statefulFilter = function () {
-            return false;
-        };
-        $translate.storage    = function () {
-            return false;
-        };
-        $translate.storageKey = function () {
-            return true;
-        };
-        $translate.use        = function () {
-            return false;
-        };
-
-        return $translate;
-    }];
-})
+.provider('$translate', require('./services/translate.js'))
 .service('leafletData', require('./services/third_party/leaflet-data.js'))
 .service('d3', require('./services/third_party/d3.js'))
 .service('moment', require('./services/third_party/moment.js'))
@@ -81,6 +30,7 @@ angular.module('ushahidi.mock', [])
 .service('PostFilters', require('./services/post-filters.js'))
 .service('Maps', require('./services/maps.js'))
 .service('ModalService', require('./services/modal.service.js'))
+.service('PostActionsService', require('./services/post-actions-service.js'))
 .service('PostEditService', require('./services/post-edit-service.js'))
 .service('Notify', require('./services/notify.js'))
 

@@ -134,7 +134,7 @@ function SurveyEditorController(
     }
 
     function handleResponseErrors(errorResponse) {
-        Notify.showApiErrors(errorResponse);
+        Notify.apiErrors(errorResponse);
     }
 
     // START -- Reorder tasks
@@ -313,30 +313,25 @@ function SurveyEditorController(
             return;
         }
 
-        $translate('notify.form.delete_attribute_confirm')
-        .then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                FormAttributeEndpoint.delete({
-                    formId: $scope.survey.id,
-                    id: attribute.id
-                }).$promise.then(function (attribute) {
-                    // Remove attribute from scope, binding should take care of the rest
-                    var index = _.findIndex($scope.activeTask.attributes, function (item) {
-                        return item.id === attribute.id;
-                    });
-
-                    $scope.activeTask.attributes.splice(index, 1);
-
-                    FormStageEndpoint.invalidateCache();
-
-                    $translate('notify.form.destroy_attribute_success', {name: attribute.label}).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-
-                    // Attribute is only available in modal so
-                    // close the modal
-                    ModalService.close();
+        Notify.confirmDelete('notify.form.delete_attribute_confirm').then(function () {
+            FormAttributeEndpoint.delete({
+                formId: $scope.survey.id,
+                id: attribute.id
+            }).$promise.then(function (attribute) {
+                // Remove attribute from scope, binding should take care of the rest
+                var index = _.findIndex($scope.activeTask.attributes, function (item) {
+                    return item.id === attribute.id;
                 });
+
+                $scope.activeTask.attributes.splice(index, 1);
+
+                FormStageEndpoint.invalidateCache();
+
+                Notify.notify('notify.form.destroy_attribute_success', {name: attribute.label});
+
+                // Attribute is only available in modal so
+                // close the modal
+                ModalService.close();
             });
         });
     }
@@ -350,23 +345,18 @@ function SurveyEditorController(
             return;
         }
 
-        $translate('notify.form.delete_stage_confirm')
-        .then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                FormStageEndpoint.delete({
-                    formId: $scope.survey.id,
-                    id: task.id
-                }).$promise.then(function () {
-                    // Remove stage from scope, binding should take care of the rest
-                    $translate('notify.form.destroy_stage_success', {name: task.label}).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
+        Notify.confirm('notify.form.delete_stage_confirm').then(function () {
+            FormStageEndpoint.delete({
+                formId: $scope.survey.id,
+                id: task.id
+            }).$promise.then(function () {
+                // Remove stage from scope, binding should take care of the rest
+                Notify.notify('notify.form.destroy_stage_success', {name: task.label});
 
-                    $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
-                        return item.id !== task.id;
-                    });
-
+                $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
+                    return item.id !== task.id;
                 });
+
             });
         });
     }
@@ -381,18 +371,14 @@ function SurveyEditorController(
             $location.url('/settings/surveys');
             return;
         }
-        $translate('notify.form.delete_form_confirm')
-        .then(function (message) {
-            Notify.showConfirm(message).then(function () {
-                FormEndpoint.delete({
-                    id: $scope.survey.id
-                }).$promise.then(function () {
-                    $translate('notify.form.destroy_form_success', { name: $scope.survey.name }).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-                    $location.url('/settings/surveys');
-                }, handleResponseErrors);
-            });
+
+        Notify.confirmDelete('notify.form.delete_form_confirm').then(function () {
+            FormEndpoint.delete({
+                id: $scope.survey.id
+            }).$promise.then(function () {
+                Notify.notify('notify.form.destroy_form_success', { name: $scope.survey.name });
+                $location.url('/settings/surveys');
+            }, handleResponseErrors);
         });
     }
 
@@ -462,9 +448,7 @@ function SurveyEditorController(
                 });
             });
 
-            $translate('notify.form.edit_form_success', { name: $scope.survey.name }).then(function (message) {
-                Notify.showNotificationSlider(message);
-            });
+            Notify.notify('notify.form.edit_form_success', { name: $scope.survey.name });
         }, handleResponseErrors);
     }
 

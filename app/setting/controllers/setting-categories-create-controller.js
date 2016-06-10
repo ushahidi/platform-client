@@ -48,17 +48,11 @@ function (
 
         TagEndpoint.saveCache(category).$promise.then(function (response) {
             if (response.id) {
-                $translate(
-                    'notify.tag.save_success',
-                    {
-                        name: category.tag
-                    }).then(function (message) {
-                    Notify.showNotificationSlider(message);
-                });
+                Notify.notify('notify.tag.save_success', { name: category.tag });
                 addAnother ? $route.reload() : $location.path(whereToNext);
             }
         }, function (errorResponse) { // error
-            Notify.showApiErrors(errorResponse);
+            Notify.apiErrors(errorResponse);
             $scope.processing = false;
         });
     };

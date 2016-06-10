@@ -21,13 +21,10 @@ function (
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
             $scope.cancelImport = function () {
-                $translate('notify.data_import.csv_import_cancel')
-                .then(function (message) {
-                    Notify.showNotificationSlider(message);
+                Notify.notify('notify.data_import.csv_import_cancel');
 
-                    $scope.deleteDataImport($scope.csv);
-                    $location.url('/settings/data-import/');
-                });
+                $scope.deleteDataImport($scope.csv);
+                $location.url('/settings/data-import/');
             };
 
             $scope.deleteDataImport = function () {
@@ -53,9 +50,7 @@ function (
             $scope.progressToConfigure = function (csv) {
 
                 if (_.every(csv.maps_to, _.isEmpty)) {
-                    $translate('notify.data_import.no_mappings').then(function (message) {
-                        Notify.showAlerts([message]);
-                    });
+                    Notify.error('notify.data_import.no_mappings');
                     return;
                 }
 
@@ -76,21 +71,14 @@ function (
 
                 // third, warn the user which keys have been duplicated
                 if (duplicateVars.length > 0) {
-
-                    $translate('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')}).then(
-                    function (message) {
-                        Notify.showAlerts([message]);
-                    });
+                    Notify.errors('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')});
                     return;
                 }
 
                 //Check required fields are set
                 var missing = $scope.checkRequiredFields(csv.maps_to);
                 if (!_.isEmpty(missing)) {
-                    $translate('notify.data_import.required_fields', {required: missing.join(', ')})
-                    .then(function (message) {
-                        Notify.showAlerts([message]);
-                    });
+                    Notify.errors('notify.data_import.required_fields', {required: missing.join(', ')});
                     return;
                 }
 

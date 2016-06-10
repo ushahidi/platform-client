@@ -3,15 +3,19 @@ module.exports = ModalService;
 ModalService.$inject = ['$rootScope', '$q', '$templateRequest'];
 function ModalService($rootScope, $q, $templateRequest) {
     var deferredOpen = $q.defer(),
-        deferredClose = $q.defer();
+        deferredClose = $q.defer(),
+        isOpen = false;
 
     return {
         open: openUrl,
         openUrl: openUrl,
         openTemplate: openTemplate,
         close: close,
+        getState: getState,
+        // Methods only to be called form ModalContainer
         onOpen: onOpen,
-        onClose: onClose
+        onClose: onClose,
+        setState: setState
     };
 
     function openUrl(templateUrl, title, icon, scope, closeOnOverlayClick, showCloseButton) {
@@ -35,6 +39,10 @@ function ModalService($rootScope, $q, $templateRequest) {
         });
     }
 
+    function getState() {
+        return isOpen;
+    }
+
     function onOpen(callback, scope) {
         var handler = $rootScope.$on('modal:open', callback);
         if (scope) {
@@ -49,5 +57,9 @@ function ModalService($rootScope, $q, $templateRequest) {
             scope.$on('$destroy', handler);
         }
         deferredClose.resolve();
+    }
+
+    function setState(open) {
+        isOpen = open;
     }
 }

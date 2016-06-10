@@ -45,7 +45,7 @@ function PasswordResetConfirmController(
     function resetSuccess() {
         $scope.processing = false;
 
-        Notify.showNotificationSlider($translate.instant('notify.passwordreset.success'));
+        Notify.notify('notify.passwordreset.success');
         Authentication.openLogin();
     }
 
@@ -53,7 +53,7 @@ function PasswordResetConfirmController(
         $scope.failed = true;
         $scope.processing = false;
 
-        Notify.showApiErrors(errorResponse);
+        Notify.apiErrors(errorResponse);
     }
 
     function submit() {

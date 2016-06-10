@@ -42,23 +42,23 @@ describe('user-profile notification directive', function () {
     }));
 
     it('should delete notification upon request', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         isolateScope.deleteNotification({id: 'pass'});
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should fail to delete a notification', function () {
-        spyOn(Notify, 'showSingleAlert');
+        spyOn(Notify, 'error');
 
         isolateScope.deleteNotification({id: 'fail'});
 
-        expect(Notify.showSingleAlert).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
     });
 
     it('should save contacts', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         isolateScope.contacts = [
             {
@@ -82,6 +82,6 @@ describe('user-profile notification directive', function () {
         isolateScope.saveContacts();
         $rootScope.$apply();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 });

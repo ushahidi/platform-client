@@ -1,0 +1,15 @@
+<div class="message" ng-class="{'active': classVisible}">
+    <div class="message-image" ng-class="iconClass" ng-if="icon">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ icon }}"></use>
+        </svg>
+    </div>
+
+    <div class="message-body">
+		<slider-content></slider-content>
+
+        <button class="button-flat message-trigger" ng-show="showCloseButton" ng-click="closeButtonClicked()" translate="message.button.dismiss">
+            Dismiss
+        </button>
+    </div>
+</div>

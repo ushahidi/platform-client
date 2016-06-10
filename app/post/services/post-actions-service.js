@@ -17,22 +17,13 @@ function (
         delete: function (post) {
             var deferred = $q.defer();
 
-            $translate('notify.post.destroy_confirm').then(function (message) {
-                Notify.showConfirmModal(message, false, 'Delete', 'delete').then(function () {
-                    PostEndpoint.delete({ id: post.id }).$promise.then(function () {
-                        $translate(
-                            'notify.post.destroy_success',
-                            {
-                                name: post.title
-                            }
-                        ).then(function (message) {
-                            Notify.showNotificationSlider(message);
-                            deferred.resolve();
-                        });
-                    }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse);
-                        deferred.reject(errorResponse);
-                    });
+            Notify.confirmDelete('notify.post.destroy_confirm').then(function () {
+                PostEndpoint.delete({ id: post.id }).$promise.then(function () {
+                    Notify.notify('notify.post.destroy_success', { name: post.title });
+                    deferred.resolve();
+                }, function (errorResponse) {
+                    Notify.apiErrors(errorResponse);
+                    deferred.reject(errorResponse);
                 });
             });
 

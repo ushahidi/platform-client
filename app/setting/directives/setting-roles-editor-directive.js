@@ -44,18 +44,16 @@ function (
                 role.name = role.name ? role.name : role.display_name;
 
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
-                    $translate('notify.role.save_success', {role: role.display_name}).then(function (message) {
-                        Notify.showNotificationSlider(message);
-                        $location.path($scope.whereToNext);
-                    });
+                    Notify.notify('notify.role.save_success', {role: role.display_name});
+                    $location.path($scope.whereToNext);
                 }, function (errorResponse) { // error
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
                 $scope.saving = false;
             };
 
             var handleResponseErrors = function (errorResponse) {
-                Notify.showApiErrors(errorResponse);
+                Notify.apiErrors(errorResponse);
             };
 
             $scope.checkIfLastAdmin = function () {
@@ -71,25 +69,19 @@ function (
 
             $scope.deleteRole = function (role) {
                 if (role.name === 'admin' && $scope.checkIfLastAdmin()) {
-                    $translate('notify.role.last_admin')
-                    .then(function (message) {
-                        Notify.showSingleAlert(message);
-                    });
+                    Notify.error('notify.role.last_admin');
                     return;
                 }
-                $translate('notify.role.delete_question', {
+
+                Notify.confirmDelete('notify.role.delete_question', {
                     role: role.display_name
-                }).then(function (message) {
-                    Notify.showConfirm(message).then(function () {
-                        RoleEndpoint.delete({ id: role.id }).$promise.then(function () {
-                            $translate('notify.role.destroy_success', {
-                                role: role.display_name
-                            }).then(function (message) {
-                                Notify.showNotificationSlider(message);
-                            });
-                            $location.path($scope.whereToNext);
-                        }, handleResponseErrors);
-                    }, function () {});
+                }).then(function () {
+                    RoleEndpoint.delete({ id: role.id }).$promise.then(function () {
+                        Notify.notify('notify.role.destroy_success', {
+                            role: role.display_name
+                        });
+                        $location.path($scope.whereToNext);
+                    }, handleResponseErrors);
                 });
             };
         }

@@ -61,7 +61,7 @@ function (
                     $scope.$parent.closeModal();
                     $rootScope.$broadcast('event:savedSearch:update');
                 }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
+                    Notify.apiErrors(errorResponse);
                 });
             };
 

@@ -87,13 +87,13 @@ describe('post view list directive', function () {
     });
 
     it('should delete selected posts', function () {
-        spyOn(Notify, 'showConfirmModal').and.callThrough();
+        spyOn(Notify, 'confirmDelete').and.callThrough();
         isolateScope.posts[0].id = 'pass';
         isolateScope.selectedPosts.push = 'pass';
 
         isolateScope.deletePosts();
 
         $rootScope.$digest();
-        expect(Notify.showConfirmModal).toHaveBeenCalled();
+        expect(Notify.confirmDelete).toHaveBeenCalled();
     });
 });

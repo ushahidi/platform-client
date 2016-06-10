@@ -25,12 +25,6 @@ module.exports = [
             scope: {},
             templateUrl: 'templates/users/notifications.html',
             link: function ($scope, elem) {
-                var showErrorMessage = function (errorMessage) {
-                    $translate(errorMessage)
-                        .then(function (message) {
-                            Notify.showSingleAlert(message);
-                        });
-                };
 
                 var loadNotifications = function () {
                     NotificationEndpoint.query({user: 'me'}).$promise.then(function (notifications) {
@@ -107,40 +101,27 @@ module.exports = [
                 loadNotifications();
 
                 $scope.deleteNotification = function (notification) {
-                    $translate('notify.notification.delete_confirm').then(function (message) {
-                        Notify.showConfirmAlert(message).then(function () {
-                            NotificationEndpoint.delete({id: notification.id}).$promise.then(function () {
-                                $translate(
-                                    'notify.notification.destroy_success',
-                                    {name: notification.name}
-                                ).then(function (message) {
-                                    Notify.showNotificationSlider(message);
-                                });
+                    Notify.confirmDelete('notify.notification.delete_confirm').then(function () {
+                        NotificationEndpoint.delete({id: notification.id}).$promise.then(function () {
+                            Notify.notify('notify.notification.destroy_success', {name: notification.name});
 
-                                // Reload notifications
-                                loadNotifications();
-                            }, function () {
-                                showErrorMessage('notification.error_message');
-                            });
+                            // Reload notifications
+                            loadNotifications();
+                        }, function () {
+                            Notify.error('notification.error_message');
                         });
                     });
                 };
 
                 $scope.deleteContact = function (contact) {
-                    $translate('notify.contact.delete_confirm').then(function (message) {
-                        Notify.showConfirmAlert(message).then(function () {
-                            ContactEndpoint.delete({id: contact.id}).$promise.then(function () {
-                                $translate(
-                                    'notify.contact.destroy_success'
-                                ).then(function (message) {
-                                    Notify.showNotificationSlider(message);
-                                });
+                    Notify.confirmDelete('notify.contact.delete_confirm').then(function () {
+                        ContactEndpoint.delete({id: contact.id}).$promise.then(function () {
+                            Notify.notify('notify.contact.destroy_success');
 
-                                // Reload Contacts
-                                loadContacts();
-                            }, function () {
-                                showErrorMessage('contact.error_message');
-                            });
+                            // Reload Contacts
+                            loadContacts();
+                        }, function () {
+                            Notify.error('contact.error_message');
                         });
                     });
                 };
@@ -202,15 +183,11 @@ module.exports = [
                     });
 
                     $q.all(promises).then(function () {
-                        $translate(
-                            'notify.contact.save_success'
-                        ).then(function (message) {
-                            Notify.showNotificationSlider(message);
-                        });
+                        Notify.notify('notify.contact.save_success');
 
                         $scope.$emit('event:close');
                     }, function () {
-                        showErrorMessage('contact.error_message');
+                        Notify.error('contact.error_message');
                     });
 
                     $scope.saving = false;

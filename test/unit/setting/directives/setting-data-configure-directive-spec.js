@@ -46,7 +46,7 @@ describe('setting data configure directive', function () {
     }));
 
     it('should attempt to import a csv', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.csv = {
             id: 'pass'
@@ -54,11 +54,11 @@ describe('setting data configure directive', function () {
 
         $scope.triggerImport();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should import the mappings', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.post.values = {
             'test': 'test'
@@ -66,12 +66,12 @@ describe('setting data configure directive', function () {
 
         $scope.submitMappings({id: 'pass', maps_to: ['test']});
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should cancel the import', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
         $scope.cancelImport();
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 });

@@ -12,13 +12,53 @@
   z-index: 199;
 }
 .leaflet-control-layers-toggle {
-	background-image: url(../img/layers.png);
-	}
+    background-image: url(../img/layers.png);
+    }
 .leaflet-retina .leaflet-control-layers-toggle {
-	background-image: url(../img/layers-2x.png);
-	}
+    background-image: url(../img/layers-2x.png);
+    }
 input.leaflet-control-layers-selector {
-	display: inline;
-	float: none;
+    display: inline;
+    float: none;
+}
+
+.leaflet-control-locate {
+    .fa-map-marker {
+        background: url(../img/icons/location.svg) no-repeat center center;
+        background-size: 12px;
+        width: 26px;
+        height: 26px;
+        display: inline-block;
+    }
+    .fa-spinner {
+        background: url(../img/icons/loop-circular.svg) no-repeat center center;
+        background-size: 12px;
+        width: 26px;
+        height: 26px;
+        display: inline-block;
+        animation: locate-spin 2s infinite linear;
+    }
+}
+
+
+@-webkit-keyframes locate-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes locate-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
 }
 

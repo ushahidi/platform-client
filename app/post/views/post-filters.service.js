@@ -58,7 +58,7 @@ function PostFiltersService(_, FormEndpoint) {
             q: '',
             created_after: '',
             created_before: '',
-            status: 'published',
+            status: 'all',
             published_to: '',
             center_point: '',
             within_km: '1',
@@ -93,10 +93,6 @@ function PostFiltersService(_, FormEndpoint) {
             query.within_km = filters.within_km || 10;
         } else {
             delete query.within_km;
-        }
-
-        if (query.status === 'published' && !query.published_to) {
-            delete query.status;
         }
 
         return query;

@@ -85,25 +85,25 @@ describe('post editor directive', function () {
 
     describe('test directive functions', function () {
         it('should save a post', function () {
-            spyOn(Notify, 'showNotificationSlider');
+            spyOn(Notify, 'notify');
 
             isolateScope.post.id = 'pass';
             isolateScope.savePost();
 
             $rootScope.$apply();
 
-            expect(Notify.showNotificationSlider).toHaveBeenCalled();
+            expect(Notify.notify).toHaveBeenCalled();
         });
 
         it('should fail to save a post', function () {
-            spyOn(Notify, 'showApiErrors');
+            spyOn(Notify, 'apiErrors');
 
             isolateScope.post.id = 'fail';
             isolateScope.savePost();
 
             $rootScope.$apply();
 
-            expect(Notify.showApiErrors).toHaveBeenCalled();
+            expect(Notify.apiErrors).toHaveBeenCalled();
         });
     });
 });

@@ -1,48 +1,48 @@
 module.exports = [function () {
     return {
-        showNotificationSlider: function (message) {
+        notify: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showAlerts: function (message) {
+        errors: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showSingleAlert: function (message) {
+        error: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showApiErrors: function (message) {
+        apiErrors: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showConfirm: function (message) {
+        confirm: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showConfirmAlert: function (message) {
+        confirmDelete: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showConfirmModal: function (message, callbackEvent, buttonText, action) {
+        confirmModal: function (message, callbackEvent, buttonText, action) {
             return {
                 then: function (successCallback) {
                     successCallback();

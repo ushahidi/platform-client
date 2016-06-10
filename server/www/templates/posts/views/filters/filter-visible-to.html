@@ -1,5 +1,5 @@
 <fieldset overflow-toggle has-overflow="roles.length">
-    <legend translate>Who it's visible to</legend>
+    <legend translate="global_filter.who_its_visible_to">Who it's visible to</legend>
 
     <div class="form-field radio">
         <label>
@@ -14,7 +14,9 @@
     </div>
     <div class="form-field radio" ng-class="{ overflow : (roles.length > 0) }">
         <label>
-            <input type="radio" name="visible_to" ng-model="visible_to" value="draft"> <span translate="nav.only_you">Only you</span>
+            <input type="radio" name="visible_to" ng-model="visible_to" value="draft">
+            <span translate="nav.only_you" ng-hide="hasPermission('Manage Posts')">Only you</span>
+            <span translate="nav.only_author" ng-show="hasPermission('Manage Posts')">Only the author (draft)</span>
         </label>
     </div>
     <span class="form-field-toggle">
