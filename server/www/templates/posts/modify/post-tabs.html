@@ -18,7 +18,6 @@
         <!-- Handle stage completion -->
         <div class="form-field switch"
             ng-repeat="stage in stages"
-            ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
             ng-show="visibleStage === stage.id"
         >
             <label translate="post.mark_complete">Mark completed</label>
@@ -27,9 +26,9 @@
                     class="tgl"
                     id="switchT"
                     type="checkbox"
-                    ng-disabled="! (isStageValid(stage.id) || stageIsComplete(stage.id))"
-                    ng-checked="stageIsComplete(stage.id)"
-                    ng-click="toggleStageCompletion(stage.id)">
+                    ng-disabled="! (isStageValid(visibleStage) || stageIsComplete(visibleStage))"
+                    ng-checked="stageIsComplete(visibleStage)"
+                    ng-click="toggleStageCompletion(visibleStage)">
                 <label class="tgl-btn" for="switchT"></label>
             </div>
         </div>
