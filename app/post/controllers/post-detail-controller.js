@@ -237,7 +237,7 @@ function (
         });
 
         if (errors.length) {
-            Notify.errors(errors); // todo WTF
+            Notify.errorsPretranslated(errors); // todo WTF
             return;
         }
 
