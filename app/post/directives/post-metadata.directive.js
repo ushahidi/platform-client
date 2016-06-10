@@ -32,7 +32,7 @@ function PostMetadataDirective(
 
             function activate() {
                 $scope.visibleTo = visibleTo($scope.post);
-                $scope.post.source = formatSource($scope.post.source);
+                $scope.source = formatSource($scope.post.source);
                 $scope.post.user = loadUser($scope.post.user);
                 $scope.post.contact = loadContact($scope.post.contact);
 

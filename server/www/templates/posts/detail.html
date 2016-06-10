@@ -45,16 +45,25 @@
               <a ng-click="setVisibleStage(stage.id)">
                 {{stage.label}}
               </a>
-              <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
+              <span class="status" ng-class="{'completed': stageIsComplete(visibleStage)}">
               </span>
             </li>
           </ul>
         </nav>
         <div class="tasks-tabs">
-          <post-media-value
-            ng-if="form_attributes[key].type === 'media'"
-            label="{{form_attributes[key].label}}"
-            media-id="value"></post-media-value>
+
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id == visibleStage"
+            class="postcard-field"
+            >
+
+            <post-media-value
+              ng-if="form_attributes[key].type === 'media'"
+              label="{{form_attributes[key].label}}"
+              media-id="value"></post-media-value>
+          </div>
 
           <div
             ng-if="post.content"
