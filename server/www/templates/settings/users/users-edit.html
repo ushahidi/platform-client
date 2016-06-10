@@ -38,41 +38,72 @@
             </div>
             <!-- end toolbar -->
 
-            <form>
+            <form name="form">
                 <div class="form-sheet">
                     <div class="form-field title" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
                         <label class="hidden" translate>user.full_name</label>
-                        <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="user.realname" required>
+                        <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-maxlength="150" ng-model="user.realname" name="full_name" required>
+                        <div ng-repeat="(error, value) in form.full_name.$error"
+                            ng-show="form.full_name.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="{{'user.valid.full_name.' + error}}" translate-default="{{error}}"></span>
+                        </div>
                     </div>
 
                     <div class="form-field form-field-adapt" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
                         <label class="hidden" translate>user.email</label>
-                        <input type="text" placeholder="{{'user_create.email' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="user.email" required>
+                        <input type="email" placeholder="{{'user_create.email' | translate}}" ng-maxlength="150" ng-model="user.email" name="email" required>
+                        <div ng-repeat="(error, value) in form.email.$error"
+                            ng-show="form.email.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></span>
+                        </div>
                     </div>
 
                     <div class="form-field" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
                         <label class="hidden" translate>user.password</label>
 
-                        <a ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
+                        <a class="button button-flat" ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
 
-                        <input type="password" ng-show="passwordShown" ng-minlength="7" ng-maxlength="72" ng-model="user.password" required>
+                        <input type="password" ng-show="passwordShown" placeholder="{{'user.password' | translate}}"  ng-minlength="7" ng-maxlength="72" ng-model="user.password" name="password" ng-required="!user.id">
+                        <div ng-repeat="(error, value) in form.password.$error"
+                            ng-show="form.password.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="{{'user.valid.password.' + error}}" translate-default="{{error}}"></span>
+                        </div>
                     </div>
 
-                    <fieldset class="custom-fieldset init">
-                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu">
-                            <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
-                            </svg>
-                            <span translate>user.role</span>
+                    <fieldset class="custom-fieldset init" dropdown>
+                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                            <span class="legend-label" translate>
+                                user.role
+                            </span>
+                            <span class="legend-label" ng-show="user.role">
+                                {{ roles[user.role].display_name }}
+                            </span>
                             <svg class="iconic chevron">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
                             </svg>
                         </legend>
-
-                        <div class="dropdown-menu init">
-                            <div class="form-field checkbox" ng-repeat="role in roles">
-                                <input type="checkbox" id="{{role.name}}">
-                                <label for="{{role.name}}">{{role.display_name}}</label>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field radio" ng-repeat="role in roles">
+                                <input type="radio" id="role{{role.id}}" name="role"
+                                    ng-model="user.role"
+                                    ng-value="role.name"
+                                    required
+                                >
+                                <label for="role{{role.id}}">
+                                    {{role.display_name}}
+                                </label>
                             </div>
                         </div>
                     </fieldset>

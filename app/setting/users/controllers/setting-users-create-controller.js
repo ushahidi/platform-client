@@ -31,7 +31,7 @@ function (
     });
 
     $scope.passwordShown = true;
-    $scope.user = {};
+    $scope.user = { role: 'user' }; // @todo don't hardcode default role
     $scope.processing = false;
 
     $scope.saveUser = function (user, addAnother) {
@@ -73,6 +73,6 @@ function (
     };
 
     RoleEndpoint.query().$promise.then(function (roles) {
-        $scope.roles = roles;
+        $scope.roles = _.indexBy(roles, 'name');
     });
 }];

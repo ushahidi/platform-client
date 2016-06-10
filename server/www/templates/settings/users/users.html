@@ -60,7 +60,7 @@
                         </div>
 
                         <h2 class="listing-item-title"><a ng-href="/settings/users/{{user.id}}">{{user.realname}}</a></h2>
-                        <p class="listing-item-secondary">{{ user.role }}</p>
+                        <p class="listing-item-secondary">{{ roles[user.role].display_name }}</p>
                     </div>
                 </div>
                 <listing-toolbar entities="users" selected-set="selectedUsers">
