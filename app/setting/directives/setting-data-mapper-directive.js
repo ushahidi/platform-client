@@ -3,17 +3,19 @@ module.exports = [
     '$location',
     'FormEndpoint',
     'DataImportEndpoint',
-    'DataRetriever',
+//    'DataRetriever',
     'Notify',
     '_',
+    '$q',
 function (
     $translate,
     $location,
     FormEndpoint,
     DataImportEndpoint,
-    DataRetriever,
+//    DataRetriever,
     Notify,
-    _
+    _,
+    $q
 ) {
     return {
         restrict: 'A',
@@ -93,14 +95,41 @@ function (
                 }
 
                 csv.fixed = {
-                    'form': $scope.form.id
+                    'form': $scope.form.id,
+                    'status' : 'published'
                 };
 
-                // Pass data to configure stage via DataRetriever service
-                DataRetriever.setImportData(csv);
-                $location.url('/settings/data-configure/');
+                // Update and import as this is the final step for now.
+                updateAndImport(csv);
 
+                // @todo Configure additional fields
+                // Pass data to configure stage via DataRetriever service
+                //DataRetriever.setImportData(csv);
+                //$location.url('/settings/data-configure/');
             };
+
+            function updateAndImport(csv) {
+                DataImportEndpoint.update(csv).$promise
+                    .then(function () {
+                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise
+                            .then(function (response) {
+                                var processed = response.processed,
+                                    errors = response.errors;
+
+                                $translate('notify.data_import.csv_mappings_set', {processed: processed, errors: errors})
+                                    .then(function (message) {
+                                        Notify.showNotificationSlider(message);
+
+                                        // Go to posts list
+                                        $location.url('/views/list/');
+                                    });
+                            }, function (errorResponse) {
+                                Notify.showApiErrors(errorResponse);
+                            });
+                    }, function (errorResponse) {
+                        Notify.showApiErrors(errorResponse);
+                    });
+            }
         }
     };
 }];
