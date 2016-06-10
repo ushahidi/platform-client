@@ -31,6 +31,8 @@ angular.module('ushahidi.posts', [])
 .directive('filterVisibleTo', require('./views/filters/filter-visible-to.directive.js'))
 .directive('filterLocation', require('./views/filters/filter-location.directive.js'))
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
+// Export
+.directive('postExport', require('./export/post-export-directive.js'))
 
 .service('PostFilters', require('./views/post-filters.service.js'))
 
