@@ -71,14 +71,14 @@ function (
 
                 // third, warn the user which keys have been duplicated
                 if (duplicateVars.length > 0) {
-                    Notify.errors('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')});
+                    Notify.error('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')});
                     return;
                 }
 
                 //Check required fields are set
                 var missing = $scope.checkRequiredFields(csv.maps_to);
                 if (!_.isEmpty(missing)) {
-                    Notify.errors('notify.data_import.required_fields', {required: missing.join(', ')});
+                    Notify.error('notify.data_import.required_fields', {required: missing.join(', ')});
                     return;
                 }
 
@@ -104,13 +104,10 @@ function (
                                 var processed = response.processed,
                                     errors = response.errors;
 
-                                $translate('notify.data_import.csv_mappings_set', {processed: processed, errors: errors})
-                                    .then(function (message) {
-                                        Notify.showNotificationSlider(message);
+                                Notify.success('notify.data_import.csv_mappings_set', {processed: processed, errors: errors});
 
-                                        // Go to posts list
-                                        $location.url('/views/list/');
-                                    });
+                                // Go to posts list
+                                $location.url('/views/list/');
                             }, function (errorResponse) {
                                 Notify.showApiErrors(errorResponse);
                             });
