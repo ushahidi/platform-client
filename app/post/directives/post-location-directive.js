@@ -127,9 +127,12 @@ function (
                     $scope.updateLatLon(lat, lon);
                 }
 
-                Leaflet.control.locate({
-                    follow: true
-                }).addTo(map);
+                // Add locate control, but only on https
+                if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
+                    Leaflet.control.locate({
+                        follow: true
+                    }).addTo(map);
+                }
 
                 // treate locationfound same as map click
                 map.on('locationfound', onMapClick);
