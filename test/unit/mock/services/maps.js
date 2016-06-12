@@ -8,6 +8,9 @@ module.exports = [function () {
                 },
                 getMaxZoom: function () {
                     return 0;
+                },
+                init: function () {
+
                 }
             };
         },
