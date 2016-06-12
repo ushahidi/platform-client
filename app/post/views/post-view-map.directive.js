@@ -20,7 +20,7 @@ function (
         Maps.getAngularScopeParams().then(function (params) {
             angular.extend($scope, params);
         });
-        
+
         Maps.getMap().init();
 
         // load geojson posts into the map obeying the global filter settings

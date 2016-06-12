@@ -83,7 +83,7 @@ function (
         getInitialScope: function () {
             return {
                 defaults: {
-	                zoomControlPosition: 'bottomright',
+                    zoomControlPosition: 'bottomright',
                     scrollWheelZoom: false
                 },
                 center: { // Default to centered on Nairobi
