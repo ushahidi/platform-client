@@ -21,6 +21,8 @@ function (
             angular.extend($scope, params);
         });
 
+        Maps.getMap().init();
+
         // load geojson posts into the map obeying the global filter settings
         var map = Maps.getMap('map');
         var reloadMapPosts = function (query) {

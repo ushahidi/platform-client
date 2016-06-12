@@ -83,6 +83,7 @@ function (
         getInitialScope: function () {
             return {
                 defaults: {
+                    zoomControlPosition: 'bottomright',
                     scrollWheelZoom: false
                 },
                 center: { // Default to centered on Nairobi
@@ -148,7 +149,6 @@ function (
             // Disable 'Leaflet prefix on attributions'
             this.map().then(function (map) {
                 map.attributionControl.setPrefix(false);
-                map.zoomControl.setPosition('bottomleft');
             });
 
             return this;
