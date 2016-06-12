@@ -109,10 +109,10 @@ function (
                                 // Go to posts list
                                 $location.url('/views/list/');
                             }, function (errorResponse) {
-                                Notify.showApiErrors(errorResponse);
+                                Notify.apiErrors(errorResponse);
                             });
                     }, function (errorResponse) {
-                        Notify.showApiErrors(errorResponse);
+                        Notify.apiErrors(errorResponse);
                     });
             }
         }
