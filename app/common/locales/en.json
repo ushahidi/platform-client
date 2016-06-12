@@ -730,7 +730,7 @@
         "organize_your_imported_data" : "Assign CSV columns to post fields",
         "assign_csv_message" : "Assign CSV columns to post fields",
         "csv_instructions" : "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",
-        "csv_instructions_required_fields" : "Fields marked with a <span class=\"required\"></span> are required and must be assigned a value.",
+        "csv_instructions_required_fields" : "Fields marked with a [*] are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
         "dont_import" : "Don't import",
