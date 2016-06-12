@@ -59,7 +59,11 @@ function (
     });
 
     PostEndpoint.export = function (filters) {
-        var config =  {params: filters};
+        var config =  {
+            params: filters,
+            paramSerializer: '$httpParamSerializerJQLike'
+        };
+
         return $http.get(Util.apiUrl('/posts/export'), config);
     };
 
