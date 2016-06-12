@@ -48,7 +48,7 @@ function PostExportController(
             // Save export data to file
             $q.all([site, postExport]).then(function (response) {
 
-                var filename = response[0].name + '.' + format,
+                var filename = response[0].name + '-' + (new Date()).toISOString().substring(0, 10) + '.' + format,
                     data = response[1].data;
 
                 // Create anchor link
