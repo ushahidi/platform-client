@@ -18,15 +18,19 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     };
 
     function notify(message, translateValues) {
-        $translate(message, translateValues).then(function (message) {
+        function showSlider(message) {
             SliderService.openTemplate('<p>' + message + '</p>');
-        });
+        }
+
+        $translate(message, translateValues).then(showSlider, showSlider);
     }
 
     function error(errorText, translateValues) {
-        $translate(errorText, translateValues).then(function (errorText) {
+        function showSlider(errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error');
-        });
+        }
+
+        $translate(errorText, translateValues).then(showSlider, showSlider);
     }
 
     function errorsPretranslated(errorTexts) {
@@ -38,7 +42,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function errors(errorTexts) {
         var scope = getScope();
 
-        $q.all(_.map(errorTexts, $translate)).then(function (errors) {
+        $translate(errorTexts).then(function (errors) {
             scope.errors = errors;
             SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
         });
@@ -56,9 +60,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     }
 
     function success(successText, translateValues) {
-        $translate(successText, translateValues).then(function (successText) {
+        function showSlider(successText) {
             SliderService.openTemplate('<p>' + successText + '</p>', 'thumb-up', 'confirmation');
-        });
+        };
+
+        $translate(successText, translateValues).then(showSlider, showSlider);
     }
 
     function confirm(confirmText, translateValues) {
@@ -74,7 +80,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             ModalService.close();
         };
 
-        $translate(confirmText, translateValues).then(function (confirmText) {
+        function showSlider(confirmText) {
             scope.confirmText = confirmText;
             SliderService.openTemplate(
                 '<p>{{ confirmText }}</p>' +
@@ -83,7 +89,9 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>' +
                 '</div>',
             false, false, scope, false, false);
-        });
+        }
+
+        $translate(confirmText, translateValues).then(showSlider, showSlider);
 
         return deferred.promise;
     }
@@ -101,14 +109,16 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             ModalService.close();
         };
 
-        $translate(confirmText, translateValues).then(function (confirmText) {
+        function showSlider(confirmText) {
             scope.confirmText = confirmText;
             ModalService.openTemplate(
                 '<div class="form-field">' +
                 '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
                 '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>' +
                 '</div>', confirmText, false, scope, false, false);
-        });
+        }
+
+        $translate(confirmText, translateValues).then(showSlider, showSlider);
 
         return deferred.promise;
     }
@@ -118,7 +128,9 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         var scope = getScope();
 
-        $translate(confirmText, translateValues).then(function (confirmText) {
+        $translate(confirmText, translateValues).then(show, show);
+
+        function show(confirmText) {
             scope.confirmText = confirmText;
             // If modal is already open?
             if (ModalService.getState()) {
@@ -160,7 +172,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 '    </button>' +
                 '</div>', confirmText, false, scope, false, false);
             }
-        });
+        }
 
         return deferred.promise;
     }
@@ -168,10 +180,12 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function limit(message, translateValues) {
         var scope = getScope();
 
-        $translate(message, translateValues).then(function (message) {
+        $translate(message, translateValues).then(showSlider, showSlider);
+
+        function showSlider(message) {
             scope.message = message;
             SliderService.openUrl('templates/common/notifications/limit.html', 'warning', 'error', scope);
-        });
+        }
     }
 
     function getScope() {
