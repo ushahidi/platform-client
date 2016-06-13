@@ -36,7 +36,7 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "add_category" : "Add Category",
-        "plan" : "Plan",
+        "plans" : "Plans",
         "delete" : "Delete",
         "description" : "Description",
         "color" : "Color",
@@ -664,7 +664,7 @@
             "roles_desc" : "Create and manage the type of permissions your users have on your deployment.",
             "categories" : "Categories",
             "categories_desc" : "Create and manage the categories people can put posts into for improved organization.",
-            "plan" : "Plan",
+            "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
         "data_sources": {
