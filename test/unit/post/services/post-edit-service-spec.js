@@ -82,7 +82,7 @@ describe('Post Edit Service', function () {
 
 
             // Test invalid
-            form['values_' + attributes[5].key] = {$invalid: true};
+            form['values_' + attributes[5].id] = {$invalid: true};
             result = PostEditService.isStageValid(1, form, stages, attributes);
             expect(result).toBe(false);
 
@@ -93,7 +93,7 @@ describe('Post Edit Service', function () {
             form.tags = {$invalid: false};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
-            form['values_' + attributes[5].key] = {$invalid: false};
+            form['values_' + attributes[5].id] = {$invalid: false};
 
             var result = PostEditService.isStageValid(1, form, stages, attributes);
 
@@ -109,7 +109,7 @@ describe('Post Edit Service', function () {
             attributes[5].input = 'checkbox';
             attributes[5].options = ['op1', 'op2'];
             attributes[5].required = true;
-            form['values_' + attributes[5].key + '_op2'] = {$invalid: false};
+            form['values_' + attributes[5].id + '_op2'] = {$invalid: false};
 
             var result = PostEditService.isStageValid(1, form, stages, attributes);
             expect(result).toBe(true);
