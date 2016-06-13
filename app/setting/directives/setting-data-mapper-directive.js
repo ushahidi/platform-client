@@ -83,8 +83,7 @@ function (
                 }
 
                 csv.fixed = {
-                    'form': $scope.form.id,
-                    'status' : 'published'
+                    'form': $scope.form.id
                 };
 
                 // Update and import as this is the final step for now.
