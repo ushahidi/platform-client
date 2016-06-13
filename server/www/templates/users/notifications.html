@@ -24,7 +24,7 @@
 
       <!-- Edit existing contact -->
       <div class="listing-item-body">
-        
+
         <div class="form-field switch">
           <label translate>notification.send_to_address</label>
           <div class="toggle-switch">
@@ -199,7 +199,7 @@
     <button type="button" class="button-alpha"
             ng-disabled="!canAdd() && !canUpdate()"
             ng-click="saveContacts()">
-      <i class="fa fa-cog fa-spin" ng-show="saving"></i>
+      <div class="loading" ng-show="saving"><div class="line"></div><div class="line"></div><div class="line"></div></div>
       <span translate>user_profile.button.save</span>
     </button>
 

@@ -3,7 +3,7 @@
         <div class="input-inline">
             <input name="{{name}}" type="text" placeholder="Enter a location.." ng-model="searchLocationTerm" ng-disabled="processing">
             <button class="btn btn-info" type="submit" ng-disabled="processing">
-                <i class="fa fa-cog fa-spin" ng-show="processing"></i>
+                <div class="loading" ng-show="processing"><div class="line"></div><div class="line"></div><div class="line"></div></div>
                 <span translate>location.search<span>
             </button>
 
