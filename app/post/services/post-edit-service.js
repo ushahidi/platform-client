@@ -67,7 +67,11 @@ function (
                     return false;
                 }
 
-                if (form.title.$invalid || form.content.$invalid) {
+                if (form.title.$invalid) {
+                    return false;
+                }
+
+                if (!form.content || form.content.$invalid) {
                     return false;
                 }
 
@@ -84,13 +88,13 @@ function (
                 if (attr.input === 'checkbox') {
                     var checkboxValidity = false;
                     _.each(attr.options, function (option) {
-                        if (!_.isUndefined(form['values_' + attr.key + '_' + option]) && !form['values_' + attr.key + '_' + option].$invalid) {
+                        if (!_.isUndefined(form['values_' + attr.id + '_' + option]) && !form['values_' + attr.id + '_' + option].$invalid) {
                             checkboxValidity = isValid;
                         }
                     });
                     return checkboxValidity;
                 } else {
-                    if (_.isUndefined(form['values_' + attr.key]) || form['values_' + attr.key].$invalid) {
+                    if (_.isUndefined(form['values_' + attr.id]) || form['values_' + attr.id].$invalid) {
                         return false;
                     }
                     return isValid;
