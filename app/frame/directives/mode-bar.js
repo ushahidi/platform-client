@@ -29,6 +29,7 @@ function (
             $scope.showMore = showMore;
             $scope.viewCollectionListing = viewCollectionListing;
             $scope.viewAccountSettings = viewAccountSettings;
+            $scope.viewSupportLinks = viewSupportLinks;
             $scope.login = Authentication.openLogin;
             $scope.logout = Authentication.logout;
             $scope.register = Registration.openRegister;
@@ -47,6 +48,11 @@ function (
             // Show account settings
             function viewAccountSettings() {
                 ModalService.openTemplate('<account-settings></account-settings>', '', false, false, true, true);
+            }
+
+            // Show support links
+            function viewSupportLinks() {
+                ModalService.openUrl('templates/common/support-links.html', '', false, false, true, true);
             }
 
             // Show collection listing
