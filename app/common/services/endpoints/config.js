@@ -12,7 +12,7 @@ function (
     var cache;
 
     if (!(cache = CacheFactory.get('configCache'))) {
-        cache = new CacheFactory('configCache');
+        cache = new CacheFactory('configCache', { storageMode : 'memory' });
     }
 
     var ConfigEndpoint = $resource(Util.apiUrl('/config/:id'), {
