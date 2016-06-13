@@ -19,13 +19,23 @@ describe('Notify', function () {
     };
 
     beforeEach(function () {
-        var testApp = angular.module('testApp');
+        var testApp = angular.module('testApp', [
+            'pascalprecht.translate'
+        ]);
         testApp.service('Notify', require(rootPath + 'app/common/notifications/notify.service.js'))
         .service('SliderService', function () {
             return mockSliderService;
         })
         .service('ModalService', function () {
             return mockModalService;
+        })
+        // Inject some dummy translations
+        .config(function ($translateProvider) {
+            $translateProvider
+            .translations('en', {
+                'dummy_error': 'Some error'
+            })
+            .preferredLanguage('en');
         })
         ;
 
@@ -54,12 +64,19 @@ describe('Notify', function () {
     describe('errors', function () {
         beforeEach(function () {
             spyOn(mockSliderService, 'openUrl').and.callThrough();
-            Notify.errors(['Test message 1', 'Test message 2']);
-            $rootScope.$digest();
         });
 
         it('Calls SliderService.openUrl with error template + scope', function () {
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: ['Test message 1', 'Test message 2']}));
+            Notify.errors(['Test message 1', 'Test message 2']);
+            $rootScope.$digest();
+
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'Test message 1': 'Test message 1', 'Test message 2': 'Test message 2'}}));
+        });
+
+        it('To translate messages if possible', function () {
+            Notify.errors(['dummy_error', 'Test message 2']);
+            $rootScope.$digest();
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'dummy_error': 'Some error', 'Test message 2': 'Test message 2'}}));
         });
     });
 
