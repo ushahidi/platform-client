@@ -48,7 +48,7 @@ describe('post view timeline directive', function () {
     it('should load initial values', function () {
         expect(isolateScope.filters).toEqual({});
         expect(isolateScope.isLoading).toBe(false);
-        expect(isolateScope.groupBy.value).toBe('tags');
+        expect(isolateScope.groupBy.value).toBe('');
         expect(isolateScope.timelineAttribute).toBe('created');
         expect(isolateScope.groupByOptions['']).toBe('graph.all_posts');
     });
