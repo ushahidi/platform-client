@@ -31,11 +31,13 @@ function PostExportController(
     $q,
     PostFilters
 ) {
-
+    $scope.loading = false;
     $scope.exportPosts = exportPosts;
 
     function exportPosts() {
         Notify.confirm('notify.post.export').then(function (message) {
+            $scope.loading = true;
+
             var format = 'csv',  //@todo handle more formats
                 // Prepare filters for export
                 query = angular.extend({}, PostFilters.getQueryParams($scope.filters), {
@@ -68,6 +70,7 @@ function PostExportController(
 
                 // ... and finally remove the link
                 anchor.remove();
+                $scope.loading = false;
             });
         });
     }

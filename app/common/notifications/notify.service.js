@@ -73,11 +73,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         var scope = getScope();
         scope.cancel = function () {
             deferred.reject();
-            ModalService.close();
+            SliderService.close();
         };
         scope.confirm = function () {
             deferred.resolve();
-            ModalService.close();
+            SliderService.close();
         };
 
         function showSlider(confirmText) {
