@@ -1,0 +1,5 @@
+---
+platform_client_version: develop
+DEPLOYMENTS_DOMAIN: ushahididev.com
+gaKey: "{{secret_gaKey}}"
+intercomAppId: "{{secret_intercomAppId}}"
