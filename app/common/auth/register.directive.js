@@ -53,8 +53,8 @@ function RegisterController(
         $scope.failed = false;
         $scope.processing = false;
 
-        Notify.notify('notify.register.success');
-        $scope.$parent.closeModal();
+        Notify.success('notify.register.success');
+        Authentication.openLogin();
     }
 
     function registerFailed(errorResponse) {
