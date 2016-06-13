@@ -5,8 +5,8 @@ ActivityController.$inject = ['$scope', '$translate', 'moment', 'ViewHelper'];
 function ActivityController($scope, $translate, moment, ViewHelper) {
     // Initial values
     $scope.isActivityAvailable = false;
-    $scope.currentInterval = 'week';
-    $scope.editableInterval = 'week';
+    $scope.currentInterval = 'all';
+    $scope.editableInterval = 'all';
     $scope.filters = {
         created_after: null,
         created_before: null

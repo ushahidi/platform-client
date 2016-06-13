@@ -33,7 +33,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, Po
     };
 
     $scope.groupBy = {
-        value: 'tags'
+        value: ''
     };
 
     $scope.options = {
