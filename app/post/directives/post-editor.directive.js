@@ -101,6 +101,7 @@ function PostEditorController(
 
             // Initialize values on post (helps avoid madness in the template)
             attributes.map(function (attr) {
+                // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
                     if (attr.input === 'location') {
                         $scope.post.values[attr.key] = [null];
@@ -109,7 +110,7 @@ function PostEditorController(
                     } else if (attr.input === 'number') {
                         $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
-                        $scope.post.values[attr.key] = [new Date(attr.default)];
+                        $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
                     } else {
                         $scope.post.values[attr.key] = [attr.default];
                     }
