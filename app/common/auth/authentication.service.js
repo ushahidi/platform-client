@@ -33,7 +33,8 @@ function (
             realname: userData.realname,
             email: userData.email,
             role: userData.role,
-            permissions: userData.permissions
+            permissions: userData.permissions,
+            gravatar: userData.gravatar
         });
 
         loginStatus = true;
