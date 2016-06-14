@@ -4,24 +4,25 @@
  * and selection of appropriate sub directive
  */
 
-module.exports = [
-function (
-) {
-    var controller = [
-        '$scope',
+module.exports = ['$timeout',
+function ($timeout) {
+    var link =
         function (
-            $scope
+            $scope, $elem, $attrs, formControl
         ) {
-            // Used for displaying search result preview
-            // Not currently used but working
-            /*
-            $scope.showQueryResults = false;
+            $scope.searchResultsVisible = false;
+            $scope.form = formControl;
 
-            $scope.setSearchResultsActive = function () {
-                $scope.showQueryResults = true;
+            $scope.showSearchResults = function () {
+                $scope.searchResultsVisible = true;
             };
-            */
-        }];
+
+            $scope.hideSearchResults = function () {
+                $timeout(function () {
+                    $scope.searchResultsVisible = false;
+                }, 100);
+            };
+        };
     return {
         restrict: 'E',
         replace: true,
@@ -30,6 +31,7 @@ function (
             model: '=',
             placeholderEntity: '='
         },
-        controller: controller
+        link: link,
+        require: '?^form'
     };
 }];
