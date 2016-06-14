@@ -62,7 +62,7 @@ function (
             if (feature.detail.media) {
                 // @todo needs to retrieve scaled down version of image
                 description = '<img src=' + feature.detail.media.original_file_url +
-                    ' class="postcard-image" style="width: 400px; height: 300px"/>';
+                    ' class="postcard-image"/>';
             } else {
                 description = '<p>' + $filter('truncate')(description, 150, '...', true) + '</p>';
             }
