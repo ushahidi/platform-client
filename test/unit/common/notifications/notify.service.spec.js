@@ -181,7 +181,7 @@ describe('Notify', function () {
         });
 
         it('Calls SliderService.openUrl with error message', function () {
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/limit.html', 'warning', 'error', jasmine.objectContaining({ message: 'Test message'}));
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/limit.html', 'warning', 'error', jasmine.objectContaining({ message: 'Test message'}), true, false);
         });
     });
 
