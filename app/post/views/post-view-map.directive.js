@@ -7,12 +7,14 @@ function (
         'Maps',
         '_',
         'PostFilters',
+        'PostViewService',
     function (
         $scope,
         PostEndpoint,
         Maps,
         _,
-        PostFilters
+        PostFilters,
+        PostViewService
     ) {
         // Set initial map params
         angular.extend($scope, Maps.getInitialScope());
@@ -30,6 +32,10 @@ function (
 
             $scope.isLoading = true;
             return PostEndpoint.geojson(query).$promise.then(function (posts) {
+                if (posts.features.length === 0) {
+                    PostViewService.showNoPostsSlider();
+                    return;
+                }
                 map.reloadPosts(posts);
                 $scope.isLoading = false;
             });

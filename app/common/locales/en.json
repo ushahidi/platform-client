@@ -384,6 +384,8 @@
     "post": {
         "add_to_form" : "Add to {{form}}",
         "posts" : "Posts",
+        "there_are_no_posts" : "There are no posts",
+        "in_this_deployment" : " in this deployment, yet.",
         "by" : "by",
         "everyone" : "Everyone",
         "just_you" : "Just you",
