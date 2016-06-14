@@ -184,7 +184,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         function showSlider(message) {
             scope.message = message;
-            SliderService.openUrl('templates/common/notifications/limit.html', 'warning', 'error', scope);
+            SliderService.openUrl('templates/common/notifications/limit.html', 'warning', 'error', scope, true, false);
         }
     }
 

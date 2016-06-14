@@ -21,7 +21,7 @@
     </div>
 
     <main role="main">
-        <div class="toolbar">
+        <div class="toolbar" ng-show="isActivityAvailable" >
             <form role="search" class="searchbar" name="searchForm" ng-submit="saveFilters()">
 
                 <div class="searchbar-options">
@@ -97,8 +97,8 @@
         </div>
 
     	<!-- unavailable view -->
-        <!-- <post-view-unavailable ng-hide="isActivityAvailable" view="'nav.activity' | translate"></post-view-unavailable>
-        <img ng-hide="isActivityAvailable" src="/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" /> -->
+        <post-view-unavailable ng-hide="isActivityAvailable" view="'nav.activity' | translate"></post-view-unavailable>
+        <!-- <img ng-hide="isActivityAvailable" src="/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" /> -->
 
         <div ng-show="isActivityAvailable" class="main-col">
             <div class="listing card init">

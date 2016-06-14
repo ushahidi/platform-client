@@ -23,7 +23,8 @@ SurveyEditorController.$inject = [
     'RoleEndpoint',
     '_',
     'Notify',
-    'ModalService'
+    'ModalService',
+    'Features'
 ];
 function SurveyEditorController(
     $scope,
@@ -36,7 +37,8 @@ function SurveyEditorController(
     RoleEndpoint,
     _,
     Notify,
-    ModalService
+    ModalService,
+    Features
 ) {
 
     $scope.canReorderTask = canReorderTask;
@@ -95,6 +97,15 @@ function SurveyEditorController(
         }
 
         loadAvailableForms();
+
+        if (!$scope.surveyId) {
+            $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
+                if (Features.getLimit('forms') <= data[1].length) {
+                    Notify.limit('limit.post_type_limit_reached');
+                    $location.path('settings/surveys');
+                }
+            });
+        }
     }
 
     function loadAvailableForms() {

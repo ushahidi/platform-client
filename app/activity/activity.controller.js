@@ -1,8 +1,8 @@
 module.exports = ActivityController;
 
-ActivityController.$inject = ['$scope', '$translate', 'moment', 'ViewHelper'];
+ActivityController.$inject = ['$scope', '$translate', 'moment', 'Features'];
 
-function ActivityController($scope, $translate, moment, ViewHelper) {
+function ActivityController($scope, $translate, moment, Features) {
     // Initial values
     $scope.isActivityAvailable = false;
     $scope.currentInterval = 'all';
@@ -26,7 +26,10 @@ function ActivityController($scope, $translate, moment, ViewHelper) {
         $translate('nav.activity').then(function (title) {
             $scope.$emit('setPageTitle', title);
         });
-        $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
+
+        Features.loadFeatures().then(function () {
+            $scope.isActivityAvailable = Features.isViewEnabled('activity');
+        });
 
         update();
     }

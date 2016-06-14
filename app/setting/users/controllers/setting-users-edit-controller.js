@@ -57,20 +57,24 @@ function (
             }
             $location.path('/settings/users');
         }, function (errorResponse) { // error
-            var validationErrors = [];
+            var validationErrors = [],
+                limitError = false;
             // @todo refactor limit handling
             _.each(errorResponse.data.errors, function (value, key) {
                 // Ultimately this should check individual status codes
                 // for the moment just check for the message we expect
                 if (value.title === 'limit::admin') {
-                    Notify.limit('limit.admin_limit_reached');
+                    limitError = 'limit.admin_limit_reached';
                 } else {
                     validationErrors.push(value);
                 }
             });
 
-            Notify.apiErrors(validationErrors);
-
+            if (limitError) {
+                Notify.limit(limitError);
+            } else {
+                Notify.apiErrors(validationErrors);
+            }
             $scope.saving = false;
         });
     };

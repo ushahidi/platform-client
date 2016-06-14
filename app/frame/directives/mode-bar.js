@@ -1,12 +1,12 @@
 module.exports = [
-    'ViewHelper',
+    'Features',
     'Authentication',
     'Registration',
     'ModalService',
     '$rootScope',
     'ModalService',
 function (
-    ViewHelper,
+    Features,
     Authentication,
     Registration,
     ModalService,
@@ -23,7 +23,7 @@ function (
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
             $scope.moreActive = false;
-            $scope.isActivityAvailable = ViewHelper.isViewAvailable('activity');
+            $scope.isActivityAvailable = false;
 
             $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
             $scope.showMore = showMore;
@@ -43,6 +43,10 @@ function (
                 $rootScope.$on('event:collection:close', handleCollectionClose);
                 $rootScope.$on('event:savedsearch:show', handleSavedSearchShow);
                 $rootScope.$on('event:savedsearch:close', handleSavedSearchClose);
+
+                Features.loadFeatures().then(function () {
+                    $scope.isActivityAvailable = Features.isViewEnabled('activity');
+                });
             }
 
             // Show account settings
