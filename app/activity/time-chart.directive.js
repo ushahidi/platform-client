@@ -98,7 +98,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, Po
 
         $scope.isLoading = true;
         PostEndpoint.stats(postQuery).$promise.then(function (results) {
-            if (!results.totals.length || results.totals[0].values.length < 3) {
+            if (!results.totals.length || _.chain(results.totals).pluck('values').pluck('length').max().value() < 3) {
                 // Don't render a time chart with less than 3 points
                 $scope.data = [{
                     values: []
