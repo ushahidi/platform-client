@@ -16,14 +16,15 @@ function (
         PostFilters,
         PostViewService
     ) {
+        $scope.mapReady = false;
+
         // Set initial map params
         angular.extend($scope, Maps.getInitialScope());
         // Load map params, including config from server (async)
         Maps.getAngularScopeParams().then(function (params) {
             angular.extend($scope, params);
+            $scope.mapReady = true;
         });
-
-        Maps.getMap().init();
 
         // load geojson posts into the map obeying the global filter settings
         var map = Maps.getMap('map');
@@ -52,6 +53,10 @@ function (
 
         // Initial load
         reloadMapPosts();
+
+        $scope.$on('$destroy', function () {
+            Maps.destroyMap('map');
+        });
     }];
 
     return {

@@ -80,6 +80,11 @@ function (
             }
             return this.maps[name];
         },
+        destroyMap: function (name) {
+            if (this.maps[name]) {
+                delete this.maps[name];
+            }
+        },
         getInitialScope: function () {
             return {
                 defaults: {
