@@ -14,6 +14,9 @@ module.exports = [function () {
                 }
             };
         },
+        destroyMap: function () {
+
+        },
         getInitialScope: function () {
             return {
                 layers : {
