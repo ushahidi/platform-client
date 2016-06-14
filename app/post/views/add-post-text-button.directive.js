@@ -5,7 +5,6 @@ function AddPostButtonDirective() {
     return {
         restrict: 'E',
         scope: true,
-        replace: true,
         controller: AddPostButtonController,
         templateUrl: 'templates/posts/views/add-post-text-button.html'
     };

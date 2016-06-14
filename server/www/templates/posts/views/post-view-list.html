@@ -34,12 +34,8 @@
         </div>
 
         <!-- todo: check style -->
-        <div class="list-item" ng-if="posts.length == 0 && ! hasFilters()">
+        <div class="list-item" ng-if="posts.length == 0 && !hasFilters()">
             <h4 translate>post.no_posts_yet</h5>
-            <br />
-            <a class="button button-alpha" ng-href="/posts/create" translate>
-                post.add_first_post
-            </a>
         </div>
 
     </div> <!-- /.listing.timeline -->

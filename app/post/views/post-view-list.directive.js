@@ -80,9 +80,8 @@ function PostListController(
 
         $scope.isLoading = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-            if (postsResponse.count === 0) {
+            if (postsResponse.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();
-                return;
             }
             $scope.posts = postsResponse.results;
             var now = moment(),
