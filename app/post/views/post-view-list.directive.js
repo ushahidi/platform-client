@@ -20,6 +20,7 @@ PostListController.$inject = [
     '$translate',
     'PostEndpoint',
     'Notify',
+    'PostViewService',
     '_',
     'ConfigEndpoint',
     'moment',
@@ -31,6 +32,7 @@ function PostListController(
     $translate,
     PostEndpoint,
     Notify,
+    PostViewService,
     _,
     ConfigEndpoint,
     moment,
@@ -78,6 +80,10 @@ function PostListController(
 
         $scope.isLoading = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+            if (postsResponse.count === 0) {
+                PostViewService.showNoPostsSlider();
+                return;
+            }
             $scope.posts = postsResponse.results;
             var now = moment(),
                 yesterday = moment().subtract(1, 'days');

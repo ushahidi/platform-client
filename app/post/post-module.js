@@ -22,6 +22,7 @@ angular.module('ushahidi.posts', [])
 .directive('postViewList', require('./views/post-view-list.directive.js'))
 .directive('postViewMap', require('./views/post-view-map.directive.js'))
 .directive('addPostButton', require('./views/add-post-button.directive.js'))
+.directive('addPostTextButton', require('./views/add-post-text-button.directive.js'))
 .directive('filterPosts', require('./views/filters/filter-posts.directive.js'))
 .directive('modeContextFormFilter', require('./views/mode-context-form-filter.directive.js'))
 .directive('postToolbar', require('./views/post-toolbar.directive.js'))
@@ -43,6 +44,7 @@ angular.module('ushahidi.posts', [])
 
 .service('PostEditService', require('./services/post-edit-service.js'))
 .service('PostActionsService', require('./services/post-actions-service.js'))
+.service('PostViewService', require('./services/post-view.service.js'))
 
 .config(require('./post-routes.js'))
 
