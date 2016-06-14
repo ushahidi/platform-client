@@ -41,8 +41,12 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
-                        name: 'test post',
-                        id: 1
+                        features: [
+                            {
+                                'type': 'Feature',
+                                'properties': {}
+                            }
+                        ]
                     });
                 }
             }};
