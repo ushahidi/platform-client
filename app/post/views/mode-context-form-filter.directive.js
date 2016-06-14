@@ -22,7 +22,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _) {
     function activate() {
         // Load forms
         $scope.forms = FormEndpoint.query();
-        var postCountRequest = PostEndpoint.stats({ group_by: 'form' });
+        var postCountRequest = PostEndpoint.stats({ group_by: 'form', status: 'all' });
 
         $q.all([$scope.forms.$promise, postCountRequest.$promise]).then(function (responses) {
             if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
@@ -38,7 +38,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _) {
             // Grab the count for form=null
             var unknownValue = _.findWhere(values, { id: null });
             if (unknownValue) {
-                $scope.unknown_post_count = unknownValue.value;
+                $scope.unknown_post_count = unknownValue.total;
             }
         });
     }
