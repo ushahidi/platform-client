@@ -55,21 +55,50 @@ function (
     var geojsonLayerOptions = {
         onEachFeature: function (feature, layer) {
             var description = feature.properties.description || '',
-                title = feature.properties.title || feature.properties.id;
+                title = feature.properties.title || feature.properties.id,
+                visibility = '',
+                metadata;
+
+            if (feature.detail.media) {
+                // @todo needs to retrieve scaled down version of image
+                description = '<img src=' + feature.detail.media.original_file_url +
+                    ' class="postcard-image" style="width: 400px; height: 300px"/>';
+            } else {
+                description = '<p>' + $filter('truncate')(description, 150, '...', true) + '</p>';
+            }
+
+            if (feature.detail.visibleTo === 'everyone') {
+                visibility = '<span class="metadata-visibility public tooltip">' +
+                    '<svg class="iconic">' +
+                  '<use xlink:href="/img/iconic-sprite.svg#globe"></use>' +
+                    '</svg>' +
+                '<span class="bug">This post is visible to the public</span>' +
+                '</span>';
+            }
+
+            metadata = '<span class="tooltip">' +
+                feature.detail.displayTime +
+                '<span class="bug"> ' + feature.detail.displayTimeFull + '</span></span>';
 
             layer.bindPopup(
                 '<article class="postcard">' +
                     '<div class="post-band" style="background-color: #A51A1A;"></div>' +
                     '<div class="postcard-body">' +
-                        '<h1 class="postcard-title"><a href="/posts/' + feature.properties.id + '">' + title + '</a></h1>' +
-                        '<div class="postcard-field">' +
-                        '<p>' + $filter('truncate')(description, 150, '...', true) + '</p>' +
-                        '</div>' +
+                    '<h1 class="postcard-title"><a href="/posts/' + feature.properties.id + '">' + title + '</a></h1>' +
+                    '<div class="metadata">' +
+                    metadata +
+                    visibility +
+                    '<div>' +
+
+                '<div class="postcard-field">' +
+                    description +
                     '</div>' +
-                '</article>'
+                    '</div>' +
+                    '</article>'
             );
         }
     };
+
 
     var Maps = {
         maps: {},
