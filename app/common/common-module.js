@@ -38,6 +38,12 @@ angular.module('ushahidi.common', [
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
 .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
 .service('MessageEndpoint', require('./services/endpoints/message.js'))
+.service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
+.service('CollectionEndpoint', require('./services/endpoints/collection.js'))
+.service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'))
+.service('CollectionEndpoint', require('./services/endpoints/collection.js'))
+.service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'))
+.service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
