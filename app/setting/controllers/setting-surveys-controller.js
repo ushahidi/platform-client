@@ -8,7 +8,6 @@ module.exports = [
     'FormStageEndpoint',
     'Notify',
     '_',
-    'Features',
 function (
     $scope,
     $rootScope,
@@ -18,8 +17,7 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     Notify,
-    _,
-    Features
+    _
 ) {
 
     // Change layout class
@@ -28,10 +26,6 @@ function (
     if ($rootScope.hasManageSettingsPermission() === false) {
         return $location.path('/');
     }
-
-    Features.loadFeatures().then(function () {
-        $scope.formQuota = Features.getLimit('forms');
-    });
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
