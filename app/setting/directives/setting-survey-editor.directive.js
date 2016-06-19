@@ -101,10 +101,9 @@ function SurveyEditorController(
         if (!$scope.surveyId) {
             $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
-                if (forms_limit === true) { // when limit is TRUE , it means no limit
-                    forms_limit = Number.MAX_SAFE_INTEGER
-                }
-                if (forms_limit <= data[1].length) {
+                // When limit is TRUE , it means no limit
+                // @todo run check before render
+                if (forms_limit !== true && forms_limit <= data[1].length) {
                     Notify.limit('limit.post_type_limit_reached');
                     $location.path('settings/surveys');
                 }
