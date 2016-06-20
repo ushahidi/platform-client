@@ -29,7 +29,8 @@ require('./post/post-module.js');
 require('./activity/activity-module.js');
 require('./setting/setting-module.js');
 require('./plans/plans-module.js');
-require('./set/set-module.js');
+require('./collections/collections.module.js');
+require('./savedsearches/savedsearches.module.js');
 require('./user-profile/user-profile-module.js');
 
 // Make sure we have a window.ushahidi object
@@ -81,7 +82,8 @@ angular.module('app',
         'ushahidi.posts',
         'ushahidi.tools',
         'ushahidi.plans',
-        'ushahidi.sets',
+        'ushahidi.collections',
+        'ushahidi.savedsearches',
         'ushahidi.activity',
         'ushahidi.user-profile'
     ])
