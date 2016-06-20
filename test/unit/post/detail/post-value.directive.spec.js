@@ -18,7 +18,7 @@ describe('post value directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postValue', require(ROOT_PATH + 'app/post/directives/post-value-directive'))
+        testApp.directive('postValue', require(ROOT_PATH + 'app/post/detail/post-value.directive'))
         .value('$filter', function () {
             return function () {};
         });

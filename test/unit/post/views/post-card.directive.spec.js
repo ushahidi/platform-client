@@ -18,7 +18,7 @@ describe('post card directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postCard', require(ROOT_PATH + 'app/post/directives/post-card-directive'))
+        testApp.directive('postCard', require(ROOT_PATH + 'app/post/views/post-card.directive'))
         .value('$filter', function () {
             return function () {};
         });

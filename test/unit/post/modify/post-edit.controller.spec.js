@@ -38,13 +38,11 @@ describe('Post edit controller', function () {
     };
 
     beforeEach(function () {
+        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
         var testApp = angular.module('testApp', [
-            'pascalprecht.translate',
-            'ngResource',
-            'angular-cache',
-            'leaflet-directive'
+            'ushahidi.mock'
         ])
-       .controller('postEditController', require(ROOT_PATH + 'app/post/controllers/post-edit-controller.js'));
+       .controller('postEditController', require(ROOT_PATH + 'app/post/modify/post-edit.controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

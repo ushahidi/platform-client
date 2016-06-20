@@ -36,12 +36,9 @@ describe('Post detail controller', function () {
 
         var testApp = angular.module('testApp', [
             'pascalprecht.translate',
-            'ushahidi.mock',
-            'ngResource',
-            'angular-cache',
-            'leaflet-directive'
+            'ushahidi.mock'
         ])
-       .controller('postDetailController', require(ROOT_PATH + 'app/post/controllers/post-detail-controller.js'))
+       .controller('postDetailController', require(ROOT_PATH + 'app/post/detail/post-detail.controller.js'))
        ;
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);

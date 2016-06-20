@@ -1,6 +1,6 @@
 var ROOT_PATH = '../../../../';
 
-describe('post choose form directive', function () {
+describe('post location directive', function () {
 
     var $rootScope,
         $scope,
@@ -19,7 +19,7 @@ describe('post choose form directive', function () {
             'pascalprecht.translate'
         ]);
 
-        testApp.directive('postChooseForm', require(ROOT_PATH + 'app/post/directives/post-choose-form-directive'));
+        testApp.directive('postLocation', require(ROOT_PATH + 'app/post/modify/post-location.directive'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -32,32 +32,14 @@ describe('post choose form directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
-        $rootScope.hasPermission = function () {};
-
         GlobalFilter = _GlobalFilter_;
         Notify = _Notify_;
 
         $scope.post = {};
-        element = '<post-choose-form post="post" active-form="activeForm"></post-choose-form>';
+        element = '<post-location attribute="attribute" key="key"></post-location>';
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
 
     }));
-
-    describe('test directive functions', function () {
-        it('should load the forms', function () {
-            expect(isolateScope.availableForms.length).toEqual(1);
-        });
-
-        it('should check if filters are not disabled', function () {
-            expect(isolateScope.filterNotDisabled({disabled: true})).toBe(false);
-        });
-
-        it('should set the form', function () {
-            isolateScope.chooseForm({id: 1});
-
-            expect($scope.post.form.id).toEqual(1);
-        });
-    });
 });

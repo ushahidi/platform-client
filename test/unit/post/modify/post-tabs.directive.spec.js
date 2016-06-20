@@ -17,7 +17,7 @@ describe('post vertical tabs directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postTabs', require(ROOT_PATH + 'app/post/directives/post-tabs.directive'))
+        testApp.directive('postTabs', require(ROOT_PATH + 'app/post/modify/post-tabs.directive'))
         .value('$filter', function () {
             return function () {};
         })

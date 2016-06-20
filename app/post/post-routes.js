@@ -10,11 +10,11 @@ function (
         templateUrl: 'templates/posts/views/main.html'
     })
     .when('/posts/create/:id', {
-        controller: require('./controllers/post-create-controller.js'),
+        controller: require('./modify/post-create.controller.js'),
         templateUrl: 'templates/posts/modify/main.html'
     })
     .when('/posts/:id', {
-        controller: require('./controllers/post-detail-controller.js'),
+        controller: require('./detail/post-detail.controller.js'),
         templateUrl: 'templates/posts/detail.html',
         resolve: {
             post: ['$route', 'PostEndpoint', function ($route, PostEndpoint) {
@@ -23,7 +23,7 @@ function (
         }
     })
     .when('/posts/:id/edit', {
-        controller: require('./controllers/post-edit-controller.js'),
+        controller: require('./modify/post-edit.controller.js'),
         templateUrl: 'templates/posts/modify/main.html'
     });
 }];

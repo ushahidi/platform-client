@@ -1,12 +1,11 @@
 var ROOT_PATH = '../../../../';
 
-describe('post preview media directive', function () {
+describe('post media value directive', function () {
 
     var $rootScope,
         $scope,
         isolateScope,
         MediaEndpoint,
-        FormAttributeEndpoint,
         element;
 
     beforeEach(function () {
@@ -18,7 +17,7 @@ describe('post preview media directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postPreviewMedia', require(ROOT_PATH + 'app/post/directives/post-preview-media-directive'))
+        testApp.directive('postMediaValue', require(ROOT_PATH + 'app/post/detail/post-media-value.directive'))
         .value('$filter', function () {
             return function () {};
         });
@@ -34,24 +33,14 @@ describe('post preview media directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
-        $scope.post = {
-            form: {
-                id: 1
-            },
-            values: {
-                media_test: 7
-            }
-        };
-
-        element = '<post-preview-media post="post"></post-preview-media>';
+        element = '<post-media-value media-id="5"></post-media-value>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
     }));
 
-    it('should load media properties', inject(function (_MediaEndpoint_, _FormAttributeEndpoint_) {
+    it('should load media properties', inject(function (_MediaEndpoint_) {
         MediaEndpoint = _MediaEndpoint_;
-        FormAttributeEndpoint = _FormAttributeEndpoint_;
 
         expect(isolateScope.media.caption).toEqual('test caption');
         expect(isolateScope.media.original_file_url).toEqual('http://localhost/test.png');

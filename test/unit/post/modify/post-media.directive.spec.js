@@ -20,7 +20,7 @@ describe('post media directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postMedia', require(ROOT_PATH + 'app/post/directives/post-media-directive'))
+        testApp.directive('postMedia', require(ROOT_PATH + 'app/post/modify/post-media.directive'))
         .value('$filter', function () {
             return function () {};
         });

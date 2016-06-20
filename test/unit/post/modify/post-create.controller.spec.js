@@ -7,24 +7,17 @@ describe('Post create controller', function () {
        FormEndpoint;
 
     beforeEach(function () {
+        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
         fixture.setBase('mocked_backend/api/v3');
 
-
         var testApp = angular.module('testApp', [
-            'pascalprecht.translate',
-            'ushahidi.mock',
-            'ngResource',
-            'angular-cache',
-            'leaflet-directive'
+            'ushahidi.mock'
         ])
         .value('PostEntity', function () {
             return fixture.load('posts/120.json');
         })
-        .controller('postCreateController', require(ROOT_PATH + 'app/post/controllers/post-create-controller.js'))
-        .service('Maps', require(ROOT_PATH + 'app/common/services/maps.js'))
-        .factory('Leaflet', function () {
-            return window.L;
-        });
+        .controller('postCreateController', require(ROOT_PATH + 'app/post/modify/post-create.controller.js'))
+        ;
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
