@@ -15,7 +15,7 @@ describe('Post Edit Service', function () {
         var testApp = angular.module('testApp', [
             'ushahidi.mock'
         ]);
-        testApp.service('PostEditService', require(rootPath + 'app/post/services/post-edit-service.js'))
+        testApp.service('PostEditService', require(rootPath + 'app/post/modify/post-edit.service.js'))
         .value('$filter', function () {
             return function () {};
         });

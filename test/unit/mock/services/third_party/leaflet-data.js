@@ -14,6 +14,17 @@ module.exports = [function () {
                     });
                 }
             };
+        },
+        getGeoJSON : function () {
+            return {
+                then: function (successCallback, failCallback) {
+                    successCallback({
+                        getBounds: function () {
+                            return [];
+                        }
+                    });
+                }
+            };
         }
     };
 }];

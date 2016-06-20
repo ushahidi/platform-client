@@ -18,7 +18,7 @@ describe('post relation directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postRelation', require(ROOT_PATH + 'app/post/directives/post-relation-directive'))
+        testApp.directive('postRelation', require(ROOT_PATH + 'app/post/modify/post-relation.directive'))
         .value('$filter', function () {
             return function () {};
         });

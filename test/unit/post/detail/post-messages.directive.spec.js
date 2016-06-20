@@ -28,7 +28,7 @@ describe('Post messages directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('postMessages', require(ROOT_PATH + 'app/post/directives/post-messages-directive.js'))
+        testApp.directive('postMessages', require(ROOT_PATH + 'app/post/detail/post-messages.directive.js'))
         .service('ModalService', function () {
             this.close = function () {};
         })
