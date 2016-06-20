@@ -39,7 +39,6 @@ angular.module('ushahidi.posts', [])
 
 .directive('postViewUnavailable', require('./views/post-view-unavailable.directive.js'))
 
-.service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('PostEntity', require('./services/entities/post-entity.js'))
 
 .service('PostEditService', require('./services/post-edit-service.js'))

@@ -17,6 +17,4 @@ angular.module('ushahidi.tools', [])
 .directive('customRoles', require('./directives/setting-roles-directive.js'))
 .directive('customRolesEditor', require('./directives/setting-roles-editor-directive.js'))
 
-.service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
-
 .config(require('./setting-routes.js'));
