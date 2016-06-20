@@ -32,6 +32,8 @@ describe('Post detail controller', function () {
     }
 
     beforeEach(function () {
+        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+
         var testApp = angular.module('testApp', [
             'pascalprecht.translate',
             'ushahidi.mock',
@@ -40,18 +42,7 @@ describe('Post detail controller', function () {
             'leaflet-directive'
         ])
        .controller('postDetailController', require(ROOT_PATH + 'app/post/controllers/post-detail-controller.js'))
-       .service('UserEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/user-endpoint.js'))
-       .service('RoleEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/role.js'))
-       .service('ConfigEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/config.js'))
-       .service('CollectionEndpoint', require(ROOT_PATH + 'app/set/services/endpoints/collection.js'))
-       .service('TagEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/tag.js'))
-       .service('FormAttributeEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-attributes.js'))
-       .service('FormStageEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-stages.js'))
-       .service('FormEndpoint', require(ROOT_PATH + 'app/common/services/endpoints/form-stages.js'))
-       .service('Maps', require(ROOT_PATH + 'app/common/services/maps.js'))
-       .factory('Leaflet', function () {
-           return window.L;
-       });
+       ;
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

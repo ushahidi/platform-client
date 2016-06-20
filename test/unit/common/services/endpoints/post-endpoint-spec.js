@@ -13,7 +13,7 @@ describe('PostEndpoint', function () {
         var testApp = angular.module('testApp', [
         'ngResource'
         ])
-        .service('PostEndpoint', require(rootPath + 'app/post/services/endpoints/post-endpoint.js'));
+        .service('PostEndpoint', require(rootPath + 'app/common/services/endpoints/post-endpoint.js'));
 
         require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
 
