@@ -73,7 +73,7 @@ function (
             if (limitError) {
                 Notify.limit(limitError);
             } else {
-                Notify.apiErrors(validationErrors);
+                Notify.errors(_.pluck(validationErrors, 'message'));
             }
             $scope.saving = false;
         });
