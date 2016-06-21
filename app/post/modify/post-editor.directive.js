@@ -210,7 +210,7 @@ function PostEditorController(
                 }
             });
 
-            Notify.apiErrors(validationErrors);
+            Notify.errors(_.pluck(validationErrors, 'message'));
 
             $scope.saving_post = false;
         });

@@ -69,13 +69,13 @@ describe('setting users edit controller', function () {
     });
 
     it('should fail to save a user', function () {
-        spyOn(Notify, 'apiErrors');
+        spyOn(Notify, 'errors');
 
         $scope.saveUser('fail');
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.apiErrors).toHaveBeenCalled();
+        expect(Notify.errors).toHaveBeenCalled();
     });
 
 });
