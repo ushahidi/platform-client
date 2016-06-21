@@ -6,6 +6,11 @@ module.exports = [
     'leafletData',
     '_',
     '$filter',
+    'PostEndpoint',
+    'FormAttributeEndpoint',
+    'MediaEndpoint',
+    '$compile',
+    '$rootScope',
 function (
     $q,
     ConfigEndpoint,
@@ -13,7 +18,12 @@ function (
     L,
     LData,
     _,
-    $filter
+    $filter,
+    PostEndpoint,
+    FormAttributeEndpoint,
+    MediaEndpoint,
+    $compile,
+    $rootScope
 ) {
 
     var layers = {
@@ -54,51 +64,53 @@ function (
 
     var geojsonLayerOptions = {
         onEachFeature: function (feature, layer) {
-            var description = feature.properties.description || '',
-                title = feature.properties.title || feature.properties.id,
-                visibility = '',
-                metadata;
+            layer.on('click', function () {
+                var that = this;
 
-            if (feature.detail.media) {
-                // @todo needs to retrieve scaled down version of image
-                description = '<img src=' + feature.detail.media.original_file_url +
-                    ' class="postcard-image"/>';
-            } else {
-                description = '<p>' + $filter('truncate')(description, 150, '...', true) + '</p>';
-            }
+                getPostDetails(feature).then(function (details) {
+                    var scope = $rootScope.$new();
 
-            if (feature.detail.visibleTo === 'everyone') {
-                visibility = '<span class="metadata-visibility public tooltip">' +
-                    '<svg class="iconic">' +
-                  '<use xlink:href="/img/iconic-sprite.svg#globe"></use>' +
-                    '</svg>' +
-                '<span class="bug">This post is visible to the public</span>' +
-                '</span>';
-            }
+                    details.content = $filter('truncate')(details.content, 150, '...', true);
+                    scope.post = details;
 
-            metadata = '<span class="tooltip">' +
-                feature.detail.displayTime +
-                '<span class="bug"> ' + feature.detail.displayTimeFull + '</span></span>';
+                    var e = $compile('<post-card post="post"></post-card>')(scope);
 
-            layer.bindPopup(
-                '<article class="postcard">' +
-                    '<div class="post-band" style="background-color: #A51A1A;"></div>' +
-                    '<div class="postcard-body">' +
-                    '<h1 class="postcard-title"><a href="/posts/' + feature.properties.id + '">' + title + '</a></h1>' +
-                    '<div class="metadata">' +
-                    metadata +
-                    visibility +
-                    '<div>' +
-
-                '<div class="postcard-field">' +
-                    description +
-                    '</div>' +
-                    '</div>' +
-                    '</article>'
-            );
+                    that.bindPopup(e[0]).openPopup();
+                });
+            });
         }
     };
 
+    var getPostDetails = function (feature) {
+        var attributes = [], deferred = $q.defer(), mediaId;
+
+        PostEndpoint.get({id: feature.properties.id}).$promise.then(function (post) {
+            // Grab form attributes
+            FormAttributeEndpoint.get({formId: post.form.id}).$promise.then(function (response) {
+                angular.forEach(response.results, function (attr) {
+                    this[attr.key] = attr;
+                }, attributes);
+
+                // ...and look for a media attribute
+                _.each(post.values, function (value, key) {
+                    if (attributes[key].type === 'media') {
+                        mediaId = value[0];
+                    }
+                });
+
+                if (mediaId) {
+                    MediaEndpoint.get({id: mediaId}).$promise.then(function (media) {
+                        post.media = media;
+                        deferred.resolve(post);
+                    });
+                } else {
+                    deferred.resolve(post);
+                }
+            });
+        });
+
+        return deferred.promise;
+    };
 
     var Maps = {
         maps: {},
