@@ -41,9 +41,9 @@ angular.module('ushahidi.common', [
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
 .service('CollectionEndpoint', require('./services/endpoints/collection.js'))
 .service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'))
-.service('CollectionEndpoint', require('./services/endpoints/collection.js'))
-.service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'))
 .service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
+.service('ContactEndpoint', require('./services/endpoints/contact.js'))
+.service('NotificationEndpoint', require('./services/endpoints/notification.js'))
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
