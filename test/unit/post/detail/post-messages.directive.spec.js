@@ -75,9 +75,10 @@ describe('Post messages directive', function () {
     });
 
     it('should send a message', function () {
+        isolateScope.message = {};
         spyOn(MessageEndpoint, 'save').and.callThrough();
 
-        isolateScope.reply_text = 'reply message';
+        isolateScope.message.reply_text = 'reply message';
         isolateScope.form = {
             $setPristine: function () {}
         };

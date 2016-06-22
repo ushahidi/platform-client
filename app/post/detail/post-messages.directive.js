@@ -73,7 +73,7 @@ function (
                 ModalService.close();
 
                 var reply = {
-                    message: $scope.reply_text,
+                    message: $scope.message.reply_text,
                     direction: 'outgoing',
                     contact_id: $scope.post.contact.id,
                     parent_id: $scope.messages[$scope.messages.length - 1].id
@@ -82,8 +82,6 @@ function (
                 var request = MessageEndpoint.save(reply);
 
                 request.$promise.then(function (response) {
-                    $scope.reply_text = '';
-
                     // Update listing with new messages
                     getMessagesForPagination();
 
@@ -94,6 +92,7 @@ function (
             };
 
             $scope.reply = function () {
+                $scope.message = {};
                 $translate('post.messages.send').then(function (title) {
                     ModalService.openUrl('templates/posts/post-messages-reply.html', title, false, $scope, true, true);
                 });
