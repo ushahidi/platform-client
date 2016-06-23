@@ -1,7 +1,8 @@
 module.exports = LoginController;
 
-LoginController.$inject = ['Authentication','$location'];
-function LoginController(Authentication, $location) {
+LoginController.$inject = ['Authentication','$location', 'Features'];
+function LoginController(Authentication, $location, Features) {
     Authentication.openLogin();
-    $location.url('/');
+    var path = Features.isFeatureEnabled('private') ? '/private' : '/';
+    $location.url(path);
 }

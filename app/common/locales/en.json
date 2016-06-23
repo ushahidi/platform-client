@@ -61,7 +61,9 @@
         "key" : "Key",
         "default_value" : "Default value",
         "fields" : "Fields",
-        "return_to_all_posts" : "Return to all posts"
+        "return_to_all_posts" : "Return to all posts",
+        "this_deplyment_is_private" : "This deployment is private",
+        "private_deployment" : "Private Deployment"
     },
     "toolbar": {
         "searchbar" : {

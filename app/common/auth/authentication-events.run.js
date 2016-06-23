@@ -54,7 +54,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
     };
 
     $rootScope.$on('event:authentication:login:succeeded', function () {
-        doLogin(Session.getSessionDataEntry('loginPath') || '/');
+        var path = Session.getSessionDataEntry('loginPath')  === '/private' ? '/' : Session.getSessionDataEntry('loginPath') ;
+        doLogin(path || '/');
     });
 
     $rootScope.$on('event:authentication:logout:succeeded', function () {
