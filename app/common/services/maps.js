@@ -73,7 +73,7 @@ function (
                     // details.content = $filter('truncate')(details.content, 150, '...', true);
                     scope.post = details;
 
-                    var el = $compile('<post-card post="post"></post-card>')(scope);
+                    var el = $compile('<post-card post="post" short-content="true"></post-card>')(scope);
 
                     that.bindPopup(el[0], {
                         'minWidth': '300',
