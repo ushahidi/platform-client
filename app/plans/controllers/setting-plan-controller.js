@@ -11,7 +11,7 @@ function (
     CONST,
     ConfigEndpoint
 ) {
-
+    $rootScope.setLayout('layout-c');
     $translate('nav.plan_settings').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
