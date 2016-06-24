@@ -17,6 +17,7 @@ SurveyEditorController.$inject = [
     '$q',
     '$location',
     '$translate',
+    'uuid',
     'FormEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
@@ -31,6 +32,7 @@ function SurveyEditorController(
     $q,
     $location,
     $translate,
+    uuid,
     FormEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
@@ -54,7 +56,7 @@ function SurveyEditorController(
     $scope.openAttributeModal = openAttributeModal;
     $scope.openAttributeEditModal = openAttributeEditModal;
     $scope.addNewAttribute = addNewAttribute;
-    $scope.labelChanged = labelChanged;
+    $scope.getUniqueKey = getUniqueKey;
 
     $scope.moveAttributeUp = moveAttributeUp;
     $scope.moveAttributeDown = moveAttributeDown;
@@ -184,13 +186,6 @@ function SurveyEditorController(
     function canReorderTask(task) {
         //Only the Post task can not be reordered
         return task.label !== 'Post';
-    }
-
-    // Update key based on label
-    function labelChanged(attribute) {
-        if (!attribute.id) {
-            attribute.key = attribute.label.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-_]+/g, '').toLowerCase();
-        }
     }
 
     function moveTaskUp(task) {
@@ -438,6 +433,10 @@ function SurveyEditorController(
             // Third save the survey task attributes
             saveAttributes();
         }, handleResponseErrors);
+    }
+
+    function getUniqueKey() {
+        return uuid.v4();
     }
 
     function saveAttributes() {
