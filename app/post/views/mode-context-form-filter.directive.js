@@ -10,12 +10,13 @@ function ModeContextFormFilterDirective() {
     };
 }
 
-ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_'];
-function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _) {
+ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_', '$rootScope'];
+function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootScope) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
     $scope.hide = hide;
     $scope.unknown_post_count = 0;
+    $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
 
     activate();
 

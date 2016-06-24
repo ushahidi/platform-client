@@ -35,8 +35,8 @@
             <li><a translate="post.show_only_form" translate-values="{ form: form.name }" ng-click="showOnly(form.id)">Show only </a></li>
             <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
             <div class="divider"></div>
-            <li>
-                <a ng-href="/settings/forms/{{ form.id }}">
+            <li ng-show="hasManageSettingsPermission()">
+                <a ng-href="/settings/surveys/{{ form.id }}">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
                     </svg>
