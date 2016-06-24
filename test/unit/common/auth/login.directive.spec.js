@@ -35,6 +35,17 @@ describe('login directive', function () {
             return {
                 openReset: function () {}
             };
+        })
+        .service('ConfigEndpoint', function () {
+            return {
+                get: function (params) {
+                    return {
+                        $promise : function (cb) {
+                            cb({});
+                        }
+                    };
+                }
+            };
         });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);

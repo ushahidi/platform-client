@@ -4,13 +4,15 @@ describe('global event handlers', function () {
 
     var mockedSessionData,
         mockedAuthenticationData,
+        mockedAuthenticationService,
         $rootScope,
         $location;
 
     beforeEach(function () {
 
-        var testApp = angular.module('testApp', []),
-        mockedSessionService =
+        var testApp = angular.module('testApp', []);
+
+        var mockedSessionService =
         {
             getSessionData: function () {
                 return mockedSessionData;
@@ -21,7 +23,8 @@ describe('global event handlers', function () {
             setSessionDataEntry: function (key, value) {
                 mockedSessionData[key] = value;
             }
-        },
+        };
+
         mockedAuthenticationService =
         {
             getLoginStatus: function () {
@@ -29,8 +32,13 @@ describe('global event handlers', function () {
             },
             logout : function () {
                 // Just a stub
+            },
+            openLogin: function () {
+
             }
         };
+
+        spyOn(mockedAuthenticationService, 'openLogin');
 
         testApp.service('Session', function () {
             return mockedSessionService;
@@ -141,8 +149,8 @@ describe('global event handlers', function () {
                     expect($rootScope.loggedin).toBe(false);
                 });
 
-                it('should change the path to "/login"', function () {
-                    expect($location.path()).toEqual('/login');
+                it('should call openLogin', function () {
+                    expect(mockedAuthenticationService.openLogin).toHaveBeenCalled();
                 });
             });
         });
