@@ -69,7 +69,6 @@ function (
             }
 
             $scope.sendMessage = function () {
-
                 ModalService.close();
 
                 var reply = {
@@ -93,9 +92,7 @@ function (
 
             $scope.reply = function () {
                 $scope.message = {};
-                $translate('post.messages.send').then(function (title) {
-                    ModalService.openUrl('templates/posts/post-messages-reply.html', title, false, $scope, true, true);
-                });
+                ModalService.openUrl('templates/posts/post-messages-reply.html', 'post.messages.send', false, $scope, true, true);
             };
 
             function formatDate(date) {
