@@ -108,6 +108,7 @@ function (
         },
 
         openLogin: function () {
+
             ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
         }
     };

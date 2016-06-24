@@ -6,10 +6,6 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
         .when('/', {
             redirectTo: '/views/map'
         })
-        .when('/private', {
-            controller: require('./auth/private.controller.js'),
-            templateUrl: 'templates/auth/private.html'
-        })
         .when('/login', {
             controller: require('./auth/login.controller.js'),
             template: ''

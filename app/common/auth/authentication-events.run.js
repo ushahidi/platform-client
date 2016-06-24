@@ -54,8 +54,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
     };
 
     $rootScope.$on('event:authentication:login:succeeded', function () {
-        var path = Session.getSessionDataEntry('loginPath')  === '/private' ? '/' : Session.getSessionDataEntry('loginPath') ;
-        doLogin(path || '/');
+        doLogin(Session.getSessionDataEntry('loginPath') || '/');
     });
 
     $rootScope.$on('event:authentication:logout:succeeded', function () {
@@ -72,7 +71,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
             Session.setSessionDataEntry('loginPath', $location.url());
         }
         Authentication.logout(true);
-        doLogout('/login');
+        doLogout();
+        Authentication.openLogin();
     });
 
     $rootScope.$on('event:forbidden', function () {
@@ -84,7 +84,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
             if ($location.url() !== '/login') {
                 Session.setSessionDataEntry('loginPath', $location.url());
             }
-            $location.url('/login');
+            Authentication.openLogin();
         }
     });
 }
