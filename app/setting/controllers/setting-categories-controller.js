@@ -38,13 +38,13 @@ function (
     $scope.refreshView();
 
     $scope.deleteCategories = function () {
-        Notify.confirm('notify.tag.bulk_destroy_confirm', { count: $scope.selectedCategories.length }).then(function () {
+        Notify.confirm('notify.category.bulk_destroy_confirm', { count: $scope.selectedCategories.length }).then(function () {
             var calls = [];
             angular.forEach($scope.selectedCategories, function (tagId) {
                 calls.push(TagEndpoint.delete({ id: tagId }).$promise);
             });
             $q.all(calls).then(function () {
-                Notify.notify('notify.tag.bulk_destroy_success', { count: $scope.selectedCategories.length });
+                Notify.notify('notify.category.bulk_destroy_success', { count: $scope.selectedCategories.length });
                 $scope.refreshView();
             });
         });
