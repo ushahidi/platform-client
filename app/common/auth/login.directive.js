@@ -13,13 +13,15 @@ LoginController.$inject = [
     '$scope',
     'Authentication',
     'PasswordReset',
-    '$location'
+    '$location',
+    'ConfigEndpoint'
 ];
 function LoginController(
     $scope,
     Authentication,
     PasswordReset,
-    $location
+    $location,
+    ConfigEndpoint
 ) {
     $scope.email = '';
     $scope.password = '';
@@ -28,6 +30,7 @@ function LoginController(
     $scope.loginSubmit = loginSubmit;
     $scope.cancel = cancel;
     $scope.forgotPassword = forgotPassword;
+    $scope.showCancel = false;
 
     activate();
 
@@ -36,6 +39,10 @@ function LoginController(
         if (Authentication.getLoginStatus()) {
             $scope.$parent.closeModal();
         }
+
+        ConfigEndpoint.get({id: 'site'}, function (site) {
+            $scope.showCancel = !site.private;
+        });
     }
 
     function clearLoginForm() {

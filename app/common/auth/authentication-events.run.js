@@ -71,7 +71,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
             Session.setSessionDataEntry('loginPath', $location.url());
         }
         Authentication.logout(true);
-        doLogout('/login');
+        doLogout();
+        Authentication.openLogin();
     });
 
     $rootScope.$on('event:forbidden', function () {
@@ -83,7 +84,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
             if ($location.url() !== '/login') {
                 Session.setSessionDataEntry('loginPath', $location.url());
             }
-            $location.url('/login');
+            Authentication.openLogin();
         }
     });
 }

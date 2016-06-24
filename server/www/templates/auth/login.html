@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-field">
-            <button type="button" class="button-link" ng-click="cancel()" translate="app.cancel">Cancel</button>
+            <button type="button" class="button-link" ng-click="cancel()" ng-show="showCancel" translate="app.cancel">Cancel</button>
             <button type="submit" class="button-alpha" ng-disabled="loginForm.$invalid || processing" translate="nav.login">Login</button>
         </div>
     </div>
