@@ -8,7 +8,8 @@ function PostCardDirective() {
         scope: {
             post:  '=',
             canSelect: '=',
-            selectedPosts: '='
+            selectedPosts: '=',
+            shortContent: '@'
         },
         templateUrl: 'templates/posts/card.html',
         link: function ($scope) {

@@ -12,7 +12,8 @@
         <!-- <img src="http://lorempixel.com/400/300/" class="postcard-image"> -->
 
         <div class="postcard-field">
-            <p>{{ post.content }}</p>
+            <p ng-if="!shortContent">{{ post.content }}</p>
+            <p ng-if="shortContent">{{ post.content | limitTo:150 }}{{ post.content.length > 150 ? ' ...' : ''}}</p>
         </div>
     </div> <!-- /postcard-body -->
 

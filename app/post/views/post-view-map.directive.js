@@ -33,9 +33,6 @@ function (
 
             $scope.isLoading = true;
             return PostEndpoint.geojson(query).$promise.then(function (posts) {
-                if ((!posts.features || posts.features.length === 0) && !PostFilters.hasFilters($scope.filters)) {
-                    PostViewService.showNoPostsSlider();
-                }
                 map.reloadPosts(posts);
                 $scope.isLoading = false;
             });

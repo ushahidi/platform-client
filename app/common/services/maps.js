@@ -6,6 +6,11 @@ module.exports = [
     'leafletData',
     '_',
     '$filter',
+    'PostEndpoint',
+    'FormAttributeEndpoint',
+    'MediaEndpoint',
+    '$compile',
+    '$rootScope',
 function (
     $q,
     ConfigEndpoint,
@@ -13,7 +18,12 @@ function (
     L,
     LData,
     _,
-    $filter
+    $filter,
+    PostEndpoint,
+    FormAttributeEndpoint,
+    MediaEndpoint,
+    $compile,
+    $rootScope
 ) {
 
     var layers = {
@@ -54,21 +64,29 @@ function (
 
     var geojsonLayerOptions = {
         onEachFeature: function (feature, layer) {
-            var description = feature.properties.description || '',
-                title = feature.properties.title || feature.properties.id;
+            layer.on('click', function () {
+                var that = this;
 
-            layer.bindPopup(
-                '<article class="postcard">' +
-                    '<div class="post-band" style="background-color: #A51A1A;"></div>' +
-                    '<div class="postcard-body">' +
-                        '<h1 class="postcard-title"><a href="/posts/' + feature.properties.id + '">' + title + '</a></h1>' +
-                        '<div class="postcard-field">' +
-                        '<p>' + $filter('truncate')(description, 150, '...', true) + '</p>' +
-                        '</div>' +
-                    '</div>' +
-                '</article>'
-            );
+                getPostDetails(feature).then(function (details) {
+                    var scope = $rootScope.$new();
+
+                    // details.content = $filter('truncate')(details.content, 150, '...', true);
+                    scope.post = details;
+
+                    var el = $compile('<post-card post="post" short-content="true"></post-card>')(scope);
+
+                    that.bindPopup(el[0], {
+                        'minWidth': '300',
+                        'maxWidth': '300',
+                        'className': 'pl-popup'
+                    }).openPopup();
+                });
+            });
         }
+    };
+
+    var getPostDetails = function (feature) {
+        return PostEndpoint.get({id: feature.properties.id}).$promise;
     };
 
     var Maps = {
