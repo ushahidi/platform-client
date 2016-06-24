@@ -70,46 +70,23 @@ function (
                 getPostDetails(feature).then(function (details) {
                     var scope = $rootScope.$new();
 
-                    details.content = $filter('truncate')(details.content, 150, '...', true);
+                    // details.content = $filter('truncate')(details.content, 150, '...', true);
                     scope.post = details;
 
-                    var e = $compile('<post-card post="post"></post-card>')(scope);
+                    var el = $compile('<post-card post="post"></post-card>')(scope);
 
-                    that.bindPopup(e[0]).openPopup();
+                    that.bindPopup(el[0], {
+                        'minWidth': '300',
+                        'maxWidth': '300',
+                        'className': 'pl-popup'
+                    }).openPopup();
                 });
             });
         }
     };
 
     var getPostDetails = function (feature) {
-        var attributes = [], deferred = $q.defer(), mediaId;
-
-        PostEndpoint.get({id: feature.properties.id}).$promise.then(function (post) {
-            // Grab form attributes
-            FormAttributeEndpoint.get({formId: post.form.id}).$promise.then(function (response) {
-                angular.forEach(response.results, function (attr) {
-                    this[attr.key] = attr;
-                }, attributes);
-
-                // ...and look for a media attribute
-                _.each(post.values, function (value, key) {
-                    if (attributes[key].type === 'media') {
-                        mediaId = value[0];
-                    }
-                });
-
-                if (mediaId) {
-                    MediaEndpoint.get({id: mediaId}).$promise.then(function (media) {
-                        post.media = media;
-                        deferred.resolve(post);
-                    });
-                } else {
-                    deferred.resolve(post);
-                }
-            });
-        });
-
-        return deferred.promise;
+        return PostEndpoint.get({id: feature.properties.id}).$promise;
     };
 
     var Maps = {
