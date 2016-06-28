@@ -1,9 +1,11 @@
 module.exports = [
     '$rootScope',
     '$location',
+    'PostFilters',
 function (
     $rootScope,
-    $location
+    $location,
+    PostFilters
 ) {
     $rootScope.switchRtl = function () {
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
@@ -20,4 +22,11 @@ function (
     $rootScope.toggleModalVisible = function (state) {
         $rootScope.modalVisible = (typeof state !== 'undefined') ? state : !$rootScope.modalVisible;
     };
+
+    // Clear filters when navigating to home
+    $rootScope.$on('$locationChangeSuccess', function () {
+        if ($location.path() === '/') {
+            PostFilters.clearFilters();
+        }
+    });
 }];
