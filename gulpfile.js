@@ -330,16 +330,17 @@ gulp.task('bump', function () {
  */
 gulp.task('tar', ['build'], function () {
     var version = gutil.env['version-suffix'] || require('./package.json').version;
+    var dest_dir = gutil.env['dest-dir'] || 'build'
 
     return gulp.src('server/www/**')
         .pipe(rename(function (path) {
             // Prefix path
-            path.dirname = 'platform-client/' + path.dirname;
+            path.dirname = 'ushahidi-platform-client-bundle-' + version + '/' + path.dirname;
         }))
-        .pipe(tar('platform-client-' + version + '.tar'))
+        .pipe(tar('ushahidi-platform-client-bundle-' + version + '.tar'))
         .pipe(gzip())
-        .pipe(gulp.dest('build'))
-        .pipe(notify('Created tarball build/<%= file.relative %>'));
+        .pipe(gulp.dest(dest_dir))
+        .pipe(notify('Created tarball dest_dir/<%= file.relative %>'));
 });
 
 /**
