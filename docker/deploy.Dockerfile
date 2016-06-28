@@ -8,11 +8,7 @@ RUN apt-get update && apt-get install git -y
 WORKDIR /opt
 
 # ==> Copy ansible scripts into container
-<<<<<<< HEAD
-COPY . /opt
-=======
 COPY ./ansible /opt
->>>>>>> master
 
 # ==> Get latest deployment code from github
 RUN ["ansible-galaxy", "install", "-r", "roles.yml"]

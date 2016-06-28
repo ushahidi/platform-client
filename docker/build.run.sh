@@ -44,8 +44,6 @@ bundle() {
   check_vols_out
   local version=${GITHUB_VERSION:-${CI_BRANCH:-v0.0.0}}
   gulp release --version-suffix=${version} --dest-dir=/vols/out
-#  mkdir /tmp/ushahidi-platform-client-bundle-${version}; rsync -ar ./server/www/ /tmp/ushahidi-platform-client-bundle-${version}/
-#  tar -C /tmp -cz -f /vols/out/ushahidi-platform-client-bundle-${version}.tgz ushahidi-platform-client-bundle-${version}
 }
 
 watch() {
