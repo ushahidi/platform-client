@@ -1,13 +1,7 @@
-<main class="page-content user-profile" role="main">
-
-    <div class="main-col">
-        <h1 class="inline">{{title}}</h1>
-
-        <div class="divider white"></div>
-
+<div>
         <p class="alert confirmation" ng-show="state.success" translate>user_profile.update_success</p>
-
         <form name="form">
+          <div class="form-field">
             <label class="input-label"
                 ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty, 'success': form.full_name.$valid }"
                 for="full_name" translate>user.full_name</label>
@@ -21,8 +15,10 @@
             <p ng-repeat="(error, value) in form.full_name.$error"
                 ng-show="form.full_name.$dirty"
                 class="alert error"
-                translate="{{'user.valid.full_name.' + error}}"></p>
+               translate="{{'user.valid.full_name.' + error}}"></p>
+          </div>
 
+          <div class="form-field">
             <label class="input-label"
                 ng-class="{ 'error': form.email.$invalid && form.email.$dirty, 'success': form.email.$valid }"
                 for="email" translate>user.email</label>
@@ -36,7 +32,8 @@
             <p ng-repeat="(error, value) in form.email.$error"
                 ng-show="form.email.$dirty"
                 class="alert error"
-                translate="{{'user.valid.email.' + error}}"></p>
+               translate="{{'user.valid.email.' + error}}"></p>
+            </div>
 
             <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
 
@@ -57,14 +54,17 @@
                     translate="{{'user.valid.password.' + error}}"></p>
             </div>
 
-            <div class="save-button">
-                <button type="submit" class="save btn" ng-click="saveUser(user)" ng-disabled="form.$invalid || state.processing">
-                    <i class="fa fa-cog fa-spin ng-hide" ng-show="state.processing"></i>
-                    <span translate>user_profile.save</span>
-                </button>
+            <div class="form-field">
+              <button type="button" class="button-link" ng-click="cancel()" translate>
+                user_profile.button.cancel
+              </button>
+
+              <button type="submit" class="button button-alpha"
+                      ng-click="saveUser(user)" ng-disabled="form.$invalid || state.processing">
+                <div class="loading" ng-show="saving"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+                <span translate>user_profile.button.save</span>
+              </button>
+
             </div>
-
         </form>
-
-    </div>
-</main>
+</div>

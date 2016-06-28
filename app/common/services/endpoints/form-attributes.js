@@ -39,9 +39,9 @@ function (
         }
     });
 
-    FormAttributeEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return FormAttributeEndpoint.get(id);
+    FormAttributeEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/forms/' + params.formId + '/attributes/' + params.id));
+        return FormAttributeEndpoint.get(params);
     };
 
     FormAttributeEndpoint.queryFresh = function (params) {

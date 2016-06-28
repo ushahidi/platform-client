@@ -1,0 +1,25 @@
+<div>
+  <h3 class="modal-title">
+    {{user.realname || user.email}} <em translate>user_profile.title</em>
+  </h3>
+
+  <nav class="tabs-menu init">
+    <ul>
+      <li ng-class="{'active': general}">
+        <a ng-click="showGeneral()" translate>
+          user_profile.nav.general
+        </a>
+      </li>
+      <li ng-class="{'active': notifications}">
+        <a ng-click="showNotifications()" translate>
+          user_profile.nav.notifications
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="modal-body">
+    <user-profile ng-show="general"></user-profile>
+    <notifications ng-show="notifications"></notifications>
+  </div>
+</div>

@@ -2,6 +2,13 @@
  * nvd3 Charts Overrides
  */
 
+// Revert root svg styling
+svg {
+    display: inline;
+    width: auto;
+    height: auto;
+}
+
  // draws a circle around the data point on a time series line
  // this helps clearly indicate non-continuous data to the user
 .nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {

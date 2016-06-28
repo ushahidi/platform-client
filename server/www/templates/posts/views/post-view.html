@@ -1,0 +1,22 @@
+<div>
+    <post-toolbar></post-toolbar>
+    <ng-transclude></ng-transclude>
+
+    <!-- todo: toolbox -->
+
+    <div ng-switch="currentView">
+        <!-- Each of the views in sequence, which are shown or hidden by tabs -->
+
+        <!-- map view -->
+        <post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>
+
+        <!-- list view -->
+        <post-view-list ng-switch-when="list" is-loading="isLoading" filters="filters"></post-view-list>
+
+        <!-- unavailable view -->
+        <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>
+
+        <!-- default view -->
+        <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>
+    </div>
+</div>

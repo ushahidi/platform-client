@@ -8,10 +8,10 @@ var gulp         = require('gulp'),
     notify       = require('gulp-notify'),
     source       = require('vinyl-source-stream'),
     browserify   = require('browserify'),
-    watchify    = require('watchify'),
+    watchify     = require('watchify'),
     envify       = require('envify/custom'),
     fs           = require('fs'),
-    karma        = require('karma').server,
+    KarmaServer  = require('karma').Server,
     buffer       = require('vinyl-buffer'),
     uglify       = require('gulp-uglify'),
     sourcemaps   = require('gulp-sourcemaps'),
@@ -149,12 +149,31 @@ gulp.task('css', [], function () {
 });
 
 /**
+ * Task: `svg-iconic-sprite`
+ * Move Iconic Sprite from pattern library into server/www/img
+ */
+gulp.task('svg-iconic-sprite', [], function () {
+    return gulp.src(['node_modules/platform-pattern-library/assets/img/iconic-sprite.svg'])
+        .pipe(gulp.dest(options.www + '/img'));
+});
+
+/**
+ * Task: `svg-icons`
+ * Move svg icons from pattern library into server/www/img
+ */
+gulp.task('svg-icons', [], function () {
+    return gulp.src(['node_modules/platform-pattern-library/assets/img/icons/**/*'])
+        .pipe(gulp.dest(options.www + '/img/icons'));
+});
+
+/**
  * Copy icon files for leaflet from node_modules into server/www/css/images
  */
 gulp.task('copy-leaflet-icons', [], function () {
     return gulp.src(['node_modules/leaflet/dist/images/*'])
         .pipe(gulp.dest(options.www + '/img'));
 });
+
 
 gulp.task('rename', [
     'copy-leaflet-icons'
@@ -236,14 +255,14 @@ function bundleBrowserify(stream) {
  * Task: `build`
  * Builds sass, fonts and js
  */
-gulp.task('build', ['sass', 'css', 'font', 'browserify']);
+gulp.task('build', ['sass', 'css', 'font', 'svg-iconic-sprite', 'svg-icons', 'browserify']);
 
 /**
  * Task: `watch`
  * Rebuilds styles and runs live reloading.
  */
 gulp.task('watch', ['watchify'], function () {
-    livereload.listen();
+    livereload.listen(35732);
     gulp.watch('sass/**/*.scss', ['sass']);
     gulp.watch('server/www/**/*.html', ['html']);
 });
@@ -268,11 +287,12 @@ gulp.task('node-server', [], require('./server/server'));
  */
 gulp.task('test', function (done) {
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
-    karma.start({
+    var server = new KarmaServer({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
         singleRun: true
     }, done);
+    server.start();
 });
 
 /**
@@ -290,20 +310,35 @@ gulp.task('send-stats-to-coveralls', function () {
  */
 gulp.task('tdd', function (done) {
     var browsers = options.useChromeForKarma ? ['Chrome'] : ['PhantomJS'];
-    karma.start({
+    var server = new KarmaServer({
         configFile: __dirname + '/test/karma.conf.js',
         browsers: browsers,
+        reporters: ['progress', 'notify'],
         autoWatch: true,
         singleRun: false
     }, done);
+    server.start();
 });
 
 /**
  * Run JSCS tests
  */
 gulp.task('jscs', function () {
-    return gulp.src(['app/**/*.js', 'test/**/*.js'])
-        .pipe(jscs());
+    return gulp.src(['app/**/*.js', 'test/**/*.js', 'gulpfile.js'])
+        .pipe(jscs())
+        .pipe(jscs.reporter())
+        .pipe(jscs.reporter('fail'));
+});
+gulp.task('jscsfix', ['jscsfix-app', 'jscsfix-test'], function () {});
+gulp.task('jscsfix-app', function () {
+    return gulp.src(['app/**/*.js'])
+        .pipe(jscs({ fix : true }))
+        .pipe(gulp.dest('app/'));
+});
+gulp.task('jscsfix-test', function () {
+    return gulp.src(['test/**/*.js'])
+        .pipe(jscs({ fix : true }))
+        .pipe(gulp.dest('test/'));
 });
 
 /**

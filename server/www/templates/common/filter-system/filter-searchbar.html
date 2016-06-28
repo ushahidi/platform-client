@@ -1,0 +1,28 @@
+<div class="searchbar-input" dropdown auto-close="outsideClick">
+    <!-- Search input -->
+    <div class="form-field search">
+        <label class="hidden" translate="toolbar.searchbar.search_entity">Search</label>
+        <div class="input-with-icon">
+            <input name="q" type="search" autocomplete="off"
+            placeholder="{{ 'toolbar.searchbar.search_entity' | translate:{ entity: placeholderText } }}"
+            ng-model="model" ng-blur="hideSearchResults()" ng-focus="showSearchResults()" ng-keyup="showSearchResults()">
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Search result display : currently unusued -->
+    <div class="searchbar-results dropdown-menu" ng-class="{active: (searchResultsVisible && form.q.$viewValue.length > 0) }">
+        <div class="form-field">
+            <button type="submit" class="button-plain">
+                <span class="button-label">
+                    <span translate-values="{ entity: entityType }" translate>
+                        toolbar.searchbar.search_all_entities_for
+                    </span>
+                    "<em>{{ form.q.$viewValue }}</em>"
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -41,8 +41,12 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
-                        name: 'test post',
-                        id: 1
+                        features: [
+                            {
+                                'type': 'Feature',
+                                'properties': {}
+                            }
+                        ]
                     });
                 }
             }};
@@ -70,10 +74,10 @@ module.exports = [function () {
                 }
             }};
         },
-        saveCache: function (post) {
+        savecache: function (post) {
             return {$promise: {
-                then: function (successCallback, failCallback) {
-                    post.id === 'pass' ? successCallback({id: 1, allowed_privileges: ['read']}) : failCallback('error');
+                then: function (successcallback, failcallback) {
+                    post.id === 'pass' ? successcallback({id: 1, allowed_privileges: ['read']}) : failcallback('error');
                 }
             }};
         },

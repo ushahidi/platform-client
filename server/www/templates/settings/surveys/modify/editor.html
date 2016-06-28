@@ -1,0 +1,253 @@
+<div>
+    <!-- mode-context needs to be in each template -->
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/surveys" translate>app.surveys</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.edit_survey</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="button-group">
+                <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                <button class="button-alpha" type="button" ng-click="saveSurvey()" type="submit" ng-disabled="form.$invalid" translate>
+                    <div class="loading" ng-show="saving">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    <span ng-hide="saving" translate>app.save</span>
+                </button>
+            </div>
+        </div>
+        <!-- end toolbar -->
+
+        <div class="main-col">
+
+            <div class="form-sheet">
+                <div class="form-field title">
+                    <label class="hidden" translate>survey.survey_name</label>
+                    <input type="text" placeholder="Survey name" ng-model="survey.name">
+                </div>
+
+                <div class="form-field form-field-adapt">
+                    <label translate>app.description</label>
+                    <textarea name="description" data-min-rows='1' rows='1' ng-model="survey.description"></textarea>
+                </div>
+                <!-- Uncomment to add color picker
+                      Require color field to be added to form entity
+                <color-picker color-container="survey"></color-picker>
+                -->
+                <fieldset class="custom-fieldset init" dropdown auto-close="outsideClick">
+                    <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                        <span class="legend-label" translate>
+                            app.roles
+                        </span>
+                        <svg class="iconic chevron">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                        </svg>
+                    </legend>
+                    <div class="dropdown-menu init" dropdown-menu>
+                        <div class="form-field checkbox" ng-repeat="role in roles">
+                            <input type="checkbox" id="collection1">
+                            <input type="checkbox" id="{{role.id}}"
+                                checklist-model="survey.role"
+                                checklist-value="role.name"
+                            >
+                            <label for="{{role.id}}">
+                                {{role.display_name}}
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="listing card init">
+                <h3 class="listing-heading" translate="survey.tasks">Tasks</h3>
+
+                <div class="listing-item" ng-repeat="task in survey.tasks" dropdown auto-close="disabled">
+                    <div class="listing-item-select" ng-if="canReorderTask(task)">
+                        <div class="buttons-updown">
+                           <button type="button" class="button-beta" ng-disabled="isFirstTask(task)" ng-click="moveTaskUp(task)">
+                               <svg class="iconic">
+                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-top"></use>
+                               </svg>
+                               <span class="label hidden">Move up</span>
+                           </button>
+                           <button type="button" class="button-beta" ng-disabled="isLastTask(task)" ng-click="moveTaskDown(task)">
+                               <svg class="iconic">
+                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                               </svg>
+                               <span class="label hidden">Move down</span>
+                           </button>
+                       </div>
+                    </div>
+
+                    <div class="listing-item-secondary">
+                        <button type="button" class="button-beta button-flat listing-item-toggle" dropdown-toggle>
+                            <svg class="iconic">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                            <span class="button-label" translate="app.configure">Configure</span>
+                        </button>
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title">
+                            {{task.label}}
+                        </h2>
+                    </div>
+
+                    <div class="listing-item-body" dropdown-menu>
+
+                        <div class="form-field switch">
+                           <label translate="survey.require_task">Require this task be completed before a post can be visible to the public</label>
+                           <div class="toggle-switch">
+                              <input class="tgl" id="switch1" type="checkbox" ng-model="task.required">
+                              <label class="tgl-btn" for="switch1" ng-click="toggleTaskRequired(task)"></label>
+                           </div>
+                        </div>
+
+                        <div class="listing init">
+                            <h3 class="listing-heading" translate="app.name">Name</h3>
+
+                            <div class="listing-item">
+                                <div class="listing-item-primary">
+                                    <div class="form-field">
+                                        <label class="hidden" translate="app.name">Name</label>
+                                        <input type="text" placeholder="Task name" ng-change="changeTaskLabel(task)" ng-model="task.label" ng-disabled="task.label === 'Post'">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="listing init">
+                            <h3 class="listing-heading" translate="app.fields">Fields</h3>
+
+                            <!-- Start Default Post fields -->
+                            <div class="listing-item" ng-show="task.label === 'Post'">
+                                <div class="listing-item-primary">
+                                    <h2 class="listing-item-title">
+                                        <a href="" translate="survey.title">Title</a>
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <div class="listing-item" ng-show="task.label === 'Post'">
+                                <div class="listing-item-primary">
+                                    <h2 class="listing-item-title">
+                                        <a href="" translate="survey.description">Description</a>
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <div class="listing-item" ng-repeat="attribute in task.attributes track by $index">
+                                <div class="listing-item-select">
+                                    <div class="buttons-updown">
+                                       <button type="button" class="button-beta" ng-disabled="isFirstAttribute(task, attribute)" ng-click="moveAttributeUp(task, attribute)">
+                                           <svg class="iconic">
+                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-top"></use>
+                                           </svg>
+                                           <span class="label hidden">Move up</span>
+                                       </button>
+                                       <button type="button" class="button-beta" ng-disabled="isLastAttribute(task, attribute)" ng-click="moveAttributeDown(task, attribute)">
+                                           <svg class="iconic">
+                                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                                           </svg>
+                                           <span class="label hidden">Move down</span>
+                                       </button>
+                                   </div>
+                                </div>
+
+                                <div class="listing-item-primary">
+                                    <h2 class="listing-item-title">
+                                      <a ng-click="openAttributeEditModal(task, attribute)">
+                                        {{attribute.label}}
+                                      </a>
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <div class="listing-item">
+                                <div class="listing-item-primary">
+                                    <h2 class="listing-item-title">
+                                        <a ng-click="openAttributeModal(task)" class="button button-beta" data-modal="add-field">
+                                            <svg class="iconic">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                                            </svg>
+                                           <span translate="survey.add_field">Add field</span>
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <div class="listing init" ng-if="task.label !== 'Post'">
+                                <h3 class="listing-heading" translate="survey.task.delete.delete_this">Delete this task</h3>
+
+                            <div class="listing-item">
+                                <div class="listing-item-primary">
+                                    <h2 class="listing-item-title">
+                                        <button class="button-destructive" ng-click="deleteTask(task)">
+                                            <svg class="iconic">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                                            </svg>
+                                            <span class="button-label" translate="survey.task.delete.delete">Delete task</span>
+                                        </button>
+                                    </h2>
+                                    <p translate="survey.task.delete.desc"><strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.</p>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="listing-item">
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title">
+                            <a ng-click="openTaskModal()" class="button button-flat" data-modal="add-task">
+                                <svg class="iconic">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                                </svg>
+                               <span translate="survey.add_task">Add task</span>
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-sheet">
+                <div class="form-sheet-summary">
+                    <h3 class="form-sheet-title" translate>survey.delete.delete_this</h3>
+                </div>
+
+                <div class="form-field">
+                    <p translate>survey.delete.desc</p>
+
+                    <button class="button-destructive" ng-click="deleteSurvey()">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                        </svg>
+                        <span class="button-label" translate>survey.delete.delete</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>

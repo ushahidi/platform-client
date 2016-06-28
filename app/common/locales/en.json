@@ -1,50 +1,125 @@
 {
     "app": {
         "powered_by_ushahidi" : "Powered by Ushahidi.",
-        "support" : "Support",
-        "documentation": "Documentation",
-        "report_a_bug": "Report a bug",
-        "forbidden": "Sorry, you're not allowed to do that."
+        "support" : "Ushahidi Support",
+        "by" : "by",
+        "can_see_this" : "can see this",
+        "collections" : "Collections",
+        "create_new" : "Create new",
+        "created_by" : "Created by {{author}}",
+        "documentation": {
+            "title" : "Documentation",
+            "description" : "Learn how to set up, configure, and manage your Ushahidi deployment."
+        },
+        "report_a_bug": {
+            "title" : "Report a bug",
+            "description" : "Tell us when something doesn't work the way you expected."
+        },
+        "features" : {
+            "title" : "Features",
+            "description" : "See what Ushahidi can do and how it works."
+        },
+        "forbidden": "Sorry, you're not allowed to do that.",
+        "get_notifications" : "Get notifications",
+        "turn_off_notifications" : "Turn off notifications",
+        "more" : "More",
+        "cancel" : "Cancel",
+        "save" : "Save",
+        "save_and_close" : "Save &amp; close",
+        "add_and_close" : "Add &amp; close",
+        "update_and_close" : "Update &amp; close",
+        "saving" : "Saving",
+        "settings": "Settings",
+        "share": "Share",
+        "general" : "General",
+        "surveys" : "Surveys",
+        "edit_survey" : "Edit Survey",
+        "data_sources" : "Data Sources",
+        "import" : "Import",
+        "users" : "Users",
+        "edit_user" : "Edit User",
+        "add_user" : "Add User",
+        "edit" : "Edit",
+        "roles" : "Roles",
+        "edit_role" : "Edit Role",
+        "add_role" : "Add Role",
+        "categories" : "Categories",
+        "edit_category" : "Edit Category",
+        "add_category" : "Add Category",
+        "plans" : "Plans",
+        "delete" : "Delete",
+        "description" : "Description",
+        "color" : "Color",
+        "search_users" : "Search users",
+        "fields" : "Fields",
+        "apply_filters" : "Apply filters",
+        "show_more_less" : "Show more/less",
+        "filters" : "Filters",
+        "configure" : "Configure",
+        "post" : "Post",
+        "name" : "Name",
+        "key" : "Key",
+        "default_value" : "Default value",
+        "fields" : "Fields",
+        "return_to_all_posts" : "Return to all posts",
+        "this_deplyment_is_private" : "This deployment is private",
+        "private_deployment" : "Private Deployment"
+    },
+    "toolbar": {
+        "searchbar" : {
+            "search_entity" : "Search {{entity}}",
+            "search_all_entities_for" : "Search all {{entity}} for "
+        }
+    },
+    "color_picker": {
+        "hex_value" : "Hex Value",
+        "red" : "Red",
+        "gold" : "Gold",
+        "blue" : "Blue",
+        "green" : "Green"
     },
     "feature_limits": {
         "view_unavailable" : "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
     },
     "limit": {
         "plan_limit" : "Ushahidi Plan Limit",
-        "post_limit_reached" : "You have reached the limit of published Posts for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
-        "admin_limit_reached" : "You have reached the limit of admin users for your plan. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
-        "post_type_limit_reached" : "You have reached the post types limit. To get more simply <a href=\"/settings/plan\">upgrade your plan</a>.",
+        "post_limit_reached" : "You have reached the limit of published Posts for your plan.",
+        "admin_limit_reached" : "You have reached the limit of admin users for your plan.",
+        "post_type_limit_reached" : "You have reached the surveys limit for your plan.",
         "upgrade" : "Upgrade"
     },
     "activity": {
+        "activity_over_time": "Activity over time",
+        "activity_by_volume": "Activity by volume",
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
         "by" : "By",
+        "context_body": "A summary of how people are interacting with {{site}}."
     },
     "form": {
         "add_field" : "Add field",
         "add_field_instructions": "Add instructions to this field",
         "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
         "add_field_instructions_placeholder": "Instructions for field",
-        "add_post_type": "Add Post Type",
-        "add_step": "Add Step",
+        "add_post_type": "Add Survey",
+        "add_step": "Add Task",
         "added_form_stage_attribute": "Saved field",
-        "field_allowed_relation_post_type": "Allowed post types",
-        "choose_order_message": "Choose and order the fields that you would like to include in this post type",
-        "created_form_stage": "Saved step",
-        "currently_disabled": "This post type is currently disabled.",
+        "field_allowed_relation_post_type": "Allowed surveys",
+        "choose_order_message": "Choose and order the fields that you would like to include in this survey",
+        "created_form_stage": "Saved task",
+        "currently_disabled": "This survey is currently disabled.",
         "custom_structure": "Custom Structure",
         "default_date_placeholder": "Default date",
         "default_default_placeholder": "Default value",
         "default_location_placeholder": "Nairobi, Kenya",
-        "delete_post_type": "Delete this post type",
-        "delete": "Delete",
-        "deleted_form": "Deleted Post Type",
-        "deleted_form_stage": "Deleted Post Type Step",
+        "delete_post_type": "Delete this survey",
+        "deleted_form": "Deleted Survey",
+        "deleted_form_stage": "Deleted Task",
         "deleted_form_stage_attribute": "Deleted field",
         "editable_by": "Editable By",
-        "edit_post_step": "Edit Step: {{step}}",
-        "edit_post_type": "Edit Post Type: {{form}}",
+        "edit_post_step": "Edit Task: {{step}}",
+        "edit_post_type": "Edit Survey: {{form}}",
+        "edit_post_types": "Edit Surveys",
         "field_add_option": "Add",
         "field_default": "Field Default",
         "field_key": "Field Key",
@@ -62,21 +137,73 @@
         "permission_public": "Public",
         "permission_admin": "Admin",
         "permission_self": "Only Me",
-        "post_type_settings": "Post Type Settings",
-        "post_step_settings": "Post Step Settings",
+        "post_type_settings": "Survey Settings",
+        "post_step_settings": "Task Settings",
         "priority_changed": "Changed priority",
         "save_and_close": "Save & Close",
-        "save_post_type": "Save Post Type",
-        "save_post_step": "Save Post Step",
-        "saved_form": "Post Type saved.",
+        "save_post_type": "Save Survey",
+        "save_post_step": "Save Task",
+        "saved_form": "Survey saved.",
         "step_delete": "Delete",
-        "step_name": "Step Name",
+        "step_name": "Task Name",
         "step_rename": "Rename",
-        "step_required": "This step is required",
-        "structure_step" : "Structure",
+        "step_required": "This task is required",
+        "post_step" : "Post",
         "type" : "type",
         "visible_to": "Visible To"
     },
+
+    "survey": {
+        "title" : "Title",
+        "field_allowed_relation_survey": "Allowed surveys",
+        "description" : "Description",
+        "text_desc" : "A sentence or less",
+        "textarea_desc" : "Multiple sentences or paragraphs<",
+        "decimal_desc" : "A number with decimal places",
+        "integer_desc" : "A while number",
+        "location_desc" : "A geographic location chosen via a map",
+        "date_desc" : "A date with year, month, day",
+        "datetime_desc" : "A date with time in hours and minutes",
+        "select_desc" : "A drop down list of items",
+        "radio_desc" : "Allows the user to choose only one of a predefined set of options.",
+        "checkbox_desc" : "Allows the user to choose one or more of a predefined set of options.",
+        "relation_desc" : "Create a relation between different surveys",
+        "upload_desc" : "Allows image(s) to be uploaded to the post",
+        "tasks" : "Tasks",
+        "add_task" : "Add task",
+        "add_field" : "Add field",
+        "edit_field" : "Edit field",
+        "task_name" : "Task name",
+        "require_field" : "Require this field be completed",
+        "name_this_task" : "Name this task...",
+        "require_task" : "Require this task be completed before a post can be visible to the public",
+        "delete" : {
+            "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
+            "delete" : "Delete survey",
+            "delete_this" : "Delete this survey",
+            "delete_this_field" : "Delete this field",
+            "delete_field" : "Delete field",
+            "desc_field" : "<strong>If you delete this field</strong>, all of the data that was collected within it will also be deleted. Proceed with caution."
+        },
+        "name": "Survey name",
+        "color" : {
+            "color" : "Color",
+            "hex" : "Hex value",
+            "red" : "Red",
+            "gold" : "Gold",
+            "blue" : "Blue",
+            "green" : "Green"
+        },
+        "who" : "Who can see this?",
+        "task" : {
+            "delete" : {
+                "desc" : "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
+                "delete" : "Delete task",
+                "delete_this" : "Delete this task"
+            }
+        }
+    },
+
     "global_filter": {
         "filter" : "Filter",
         "categories" : {
@@ -84,7 +211,7 @@
             "all_categories" : "All Categories"
         },
         "post_types" : {
-            "post_types" : "Post Types",
+            "post_types" : "Surveys",
             "all_types" : "All Types",
             "unstructured" : "Unstructured"
         },
@@ -95,8 +222,8 @@
             "published" : "Published"
         },
         "post_stages" : {
-            "post_stages" : "Current Step",
-            "all_stages" : "All Steps"
+            "post_stages" : "Current Task",
+            "all_stages" : "All Tasks"
         },
         "collections" : {
             "collections" : "Collections",
@@ -109,11 +236,13 @@
             "created_before": "End date",
             "center_point": "Location",
             "tags": "Category",
-            "form": "Post Type",
-            "current_stage": "Current Step",
+            "form": "Survey",
+            "current_stage": "Current Task",
             "set": "Collection",
             "status": "Status",
-            "location_value": "Within {{km}} km of {{value}}"
+            "location_value": "Within {{km}} km of {{value}}",
+            "visible_to": "Visible to",
+            "user": "User"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -135,27 +264,54 @@
         "apply_filters" : "Apply",
         "save_to_set" : "Save to Set",
         "search" : "Search",
-        "date_range" : "Date Range"
+        "date_range" : "Date range",
+        "who_its_visible_to": "Who it's visible to"
     },
     "graph" : {
-        "group_by_placeholder" : "Graph",
-        "none" : "None",
-        "post_count" : "Post count",
-        "cumulative_post_count" : "Total post count",
-        "new_post_count" : "New posts",
-        "post_date": "Post created date",
-        "cumulative": "Show cumulative totals",
+        "all_posts": "Nothing; Show all posts",
+        "all": "All time",
+        "compare": "Compare...",
+        "compare_all": "Compare...",
+        "compare_status": "Compare status",
+        "compare_tags": "Compare categories",
+        "compare_form": "Compare surveys",
+        "compare_": "Compare ",
         "created": "Created time",
-        "updated": "Updated time",
-        "select_one": "Select one"
+        "cumulative": "Show cumulative totals",
+        "cumulative_post_count" : "Total post count",
+        "custom": "Custom date range",
+        "custom_display": "{{start || 'Beginning'}} to {{end || 'Now'}}",
+        "group_by_placeholder" : "Graph",
+        "new_post_count" : "New posts",
+        "none" : "None",
+        "no_data": "No activity to show",
+        "post_count" : "Post count",
+        "post_date": "Post created date",
+        "select_one": "Select one",
+        "week": "This week",
+        "month": "This month",
+        "updated": "Updated time"
+    },
+    "message" : {
+        "button" : {
+            "dismiss" : "Dismiss",
+            "default" : "Ok",
+            "cancel" : "Cancel"
+        }
+    },
+    "modal" : {
+        "button" : {
+            "close" : "Close"
+        }
     },
     "nav" : {
         "about" : "About",
         "activity" : "Activity",
         "add_post" : "Add Post",
         "account_settings" : "Account Settings",
+        "alerts": "Alerts",
         "all" : "All",
-        "author_tagline" : "By ",
+        "author_tagline" : "By {{author}}",
         "appearance" : "Appearance",
         "back" : "Back",
         "category" : "Category",
@@ -165,70 +321,87 @@
         "comments" : "Comments",
         "data_sources" : "Data Sources",
         "data_import" : "Data Import",
+        "deselect" : "Deselect",
         "edit_profile" : "Edit Profile",
-        "edit_post_type": "Edit Post Type",
+        "edit_post_type": "Edit Survey",
+        "everyone" : "Everyone",
+        "export": "Export",
         "forbidden" : "Access Denied",
-        "general" : "General",
         "dashboard" : "Dashboard",
         "delete" : "Delete",
         "edit" : "Edit",
         "filters" : "Filters",
-        "forgottenyourpassword" : "Forgotten your password?",
+        "forgotyourpassword" : "Forgot your password?",
         "resetpassword" : "Reset password",
         "resetmypassword" : "Reset my password",
         "forms" : "Forms",
         "help" : "Help",
         "home" : "Home",
         "login" : "Log in",
+        "logout" : "Log out",
         "registration" : "Sign up",
         "register" : "Sign up",
-        "logout" : "Logout",
         "map_settings" : "Map Settings",
+        "more" : "More",
         "notifications" : "Notifications",
         "new_collection" : "New Collection",
         "notifications" : "Notifications",
+        "only_author" : "Only the author",
+        "only_you" : "Only you",
         "people" : "People",
         "permissions" : "Permissions",
         "plan_settings" : "Plan",
         "please_wait_loading" : "Please wait. Loading...",
         "plugins" : "Plugins",
         "posts" : "Posts",
-        "posts_and_entities" : "Post Types",
+        "posts_and_entities" : "Surveys",
         "profile": "My Profile",
         "role" : "Role",
         "roles" : "Roles",
         "saved_searches" : "Saved Searches",
         "search" : "Search",
-        "select_all" : "Select All",
+        "select_all" : "Select all",
+        "selected_items" : "{{selectedItems}} selected",
         "settings" : "Settings",
+        "survey_settings": "Survey settings",
         "tags" : "Categories",
+        "today" : "Today",
         "general" : "General Settings",
         "type" : "Type",
+        "unknown" : "Unknown",
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
         "role" : "Role",
         "roles" : "Roles",
         "views" : "Views",
-        "workspace" : "Workspace"
+        "more" : "More",
+        "yesterday" : "Yesterday"
     },
-    "view_tabs" : {
-        "view" : "View",
+    "views" : {
         "map" : "Map",
-        "list" : "List",
-        "chart" : "Bar Chart",
-        "timeline" : "Timeline"
+        "list" : "Timeline",
+        "activity" : "Activity"
     },
     "post": {
+        "add_to_form" : "Add to {{form}}",
         "posts" : "Posts",
+        "there_are_no_posts" : "There are no posts",
+        "in_this_deployment" : " in this deployment, yet.",
         "by" : "by",
+        "everyone" : "Everyone",
+        "just_you" : "Just you",
+        "specific_roles" : "Specific roles...",
+        "can_see_this" : "can see this",
         "add_post_type" : "Add {{form_name}}",
         "edit_post_type" : "Edit {{form_name}}",
-        "publish_for_you" : "Just you",
-        "publish_for_everyone" : "Everyone",
+        "messages" : "Message Thread",
+        "post" : "Post",
+        "message" : "Message",
+        "message_thread" : "Message Thread",
         "all_posts" : "All Posts",
         "no_search_results" : "Your search didn't match any posts",
-        "no_posts_yet" : "This are no posts yet!",
+        "no_posts_yet" : "There are no posts yet!",
         "add_first_post": "Add the first post",
         "create_post" : "Create Post",
         "create" : "Create",
@@ -242,42 +415,55 @@
         "per_page" : "{{count}} posts",
         "post_details" : "Post Details",
         "post" : "Post",
-        "steps" : "This post's steps",
+        "steps" : "This post's tasks",
         "mark_complete" : "Mark as Complete",
         "complete" : "Complete",
         "type_details" : "{{type}} Details",
         "edit_post" : "Edit Post",
         "history" : "History",
+        "hide_form" : "Hide {{form}}",
+        "hide_unknown_form" : "Hide Unknown",
         "publish" : "Publish to...",
+        "publish_for_you" : "You",
+        "publish_for_everyone" : "Everyone",
         "published" : "Published",
         "unpublished" : "Unpublished",
         "published_by" : "Published by",
-        "who_can_see_this" : "Who can see this",
         "can_see_this_post" : "can see this post",
         "location" : "Location",
         "categories" : "Categories",
         "status" : "Status",
         "type": "Type",
         "view" : "View",
-        "step" : "Step",
+        "step" : "Task",
         "update" : "Update",
         "options" : "Options",
         "complete_draft" : "Complete (Draft)",
         "complete_published" : "Complete (Published)",
         "structure" : "Structure",
+        "source" : "via {{source}}",
+        "visible_to_public": "This post is visible to the public",
+        "visible_to_you": "This post is visible to just you and admins",
+        "visible_to_roles": "This post is visible to {{roles}}",
+        "show_only_form" : "Show only {{form}}",
+        "show_only_unknown_form" : "Show only Unknown",
+        "delete_post" : "Delete post",
+        "delete_this_post" : "Delete this post",
+        "delete_post_desc" : "<strong>If you delete this post</strong>, all of its comments will also be deleted. Proceed with caution.",
         "post_actions" : {
             "edit" : "Edit",
-            "delete" : "Delete"
+            "delete" : "Delete",
+            "export" : "Export"
         },
         "modify" : {
-            "intro" : "Select post type:",
+            "intro" : "Select survey:",
             "create_type" : "Create {{type}}",
             "edit_type" : "Edit {{type}}: {{title}}",
             "add_a_post" : "Add a post",
+            "add_to_survey" : "Add to this survey",
             "edit_post" : "Edit {{title}}",
             "change_type" : "Change type",
-            "incomplete_step" : "To publish a post all required steps must be marked as complete. The required step {{stage}} has not yet been marked complete",
-            "save" : "Save",
+            "incomplete_step" : "To publish a post all required tasks must be marked as complete. The required task {{stage}} has not yet been marked complete",
             "save_post" : "Save Post",
             "publish" : "Publish to...",
             "publish_to" : "Publish to {{role}}",
@@ -315,6 +501,16 @@
                 "delete" : "delete"
             }
         },
+        "messages" : {
+            "by_sms" : "By SMS",
+            "by_email" : "By Email",
+            "by_twitter" : "By Twitter",
+            "reply" : "Reply to Message thread",
+            "send" : "Send New Message",
+            "save" : "Save",
+            "title" : "Conversation with author",
+            "associated_messages": "View messages associated with this post"
+        },
         "valid" : {
             "title" : {
                 "required" : "A title is required",
@@ -339,6 +535,20 @@
             "author_email" : {
                 "email": "Invalid email"
             }
+        },
+        "media" : {
+            "current_url" : "Current image",
+            "add_caption" : "Add caption",
+            "upload" : "Upload"
+        },
+        "unstructured" : {
+            "add_survey" : {
+                "info" : "<strong>This post hasn't yet been assigned to a survey within your deployment.</strong> That's because it was submitted via {{source}}, which doesn't provide a way for the author to add their post to a specific survey.",
+                "choose" : "Which survey would you like to add this post to?",
+                "title" : "Add this post to a survey",
+                "save_and_edit" : "Add to survey &amp; edit"
+            },
+            "survey_title" : "Unknown Survey"
         }
     },
     "role": {
@@ -350,36 +560,63 @@
         "save_add_another" : "Save & Add Another",
         "permissions" : "Permissions",
         "delete" : "Delete",
+        "delete_role" : "Delete this role",
+        "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
+        "everyone" : "Everyone",
+        "just_you" : "Just you"
+    },
+    "saved_search": {
+        "visible_to_public" : "This Saved Search is visible to the public",
+        "visible_to_you": "This Saved Search is visible to just you and admins",
+        "visible_to_roles": "This Saved Search is visible to {{roles}}",
+        "featured": "Featured",
+        "featured_tooltip": "Featured searches appear to all users in <br>the \"Saved Searches\" menu"
+    },
+    "collection": {
+        "visible_to_public" : "This Collection is visible to the public",
+        "visible_to_you": "This Collection is visible to just you and admins",
+        "visible_to_roles": "This Collection is visible to {{roles}}"
     },
     "set": {
+        "by" : "by",
+        "clear_search" : "Clear Search",
         "create_collection" : "Create Collection",
+        "create_new" : " Create New",
         "create_savedsearch": "Create Saved Search",
         "description" : "Description",
         "delete_collection" : "Delete this collection",
         "delete_savedsearch" : "Delete this Saved Search",
-        "default_view" : "Default view",
-        "edit_collection_settings" : "Collection Settings",
-        "edit_search_settings" : "Saved Search Settings",
+        "default_viewing_mode" : "Default viewing mode",
+        "edit_collection_settings" : "Edit Collection",
+        "edit_search_settings" : "Edit Saved Search",
+        "featured" : "Featured",
         "featured_collection" : "This collection is featured",
-        "featured_savedsearch" : "This saved search is featured",
+        "featured_collection_tooltip" : "Featured Collections appear to all users in <br>the \"Collections\" menu",
+        "find_a_collection" : "Find a collection...",
+        "find_a_saved_search" : "Find a saved search...",
         "add_to_collection" : "Add to Collection",
         "empty_list_collections" : "No collections",
         "empty_list_savedsearches" : "No saved searches",
-        "name_collection" : "Collection name",
+        "collection_name" : "Collection name",
+        "name_your_collection" : "Name your collection...",
         "name_savedsearch" : "Saved Search name",
         "visible_to_collection" : "Who can see this Collection",
         "visible_to_savedsearch" : "Who can see this Saved Search",
-        "default_view" : "Default view",
+        "reset_savedsearch" : "Reset Search",
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
         "set_settings" : "Collection Settings",
-        "add_notification" : "Add Notification"
+        "add_notification" : "Add Notification",
+        "remove" : "remove"
     },
-    "tag": {
+    "category": {
         "add_tag" : "Add Category",
-        "save" : "Save Category",
         "save_add_another" : "Save & Add Another",
+        "delete_category" : "Delete category",
+        "delete_this_category" : "Delete this category",
+        "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be asociated with any posts. Proceed with caution.",
+        "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
         "saved_tag": "Category saved.",
@@ -414,6 +651,7 @@
         "appearance_settings" : "Appearance Settings",
         "map_settings" : "Map Settings",
         "site_settings" : "Site Settings",
+        "settings" : "Settings",
         "tools" : "Tools"
     },
     "map_settings" : {
@@ -422,13 +660,51 @@
     },
     "settings": {
         "appearance" : "Appearance Settings",
-        "appearance_header_image" : "Custom Background Image",
-        "appearance_header_image_instructions" : "Image needs to be >1000px wide.",
-        "customize_your_new_deployment" : "Customize your new deployment",
         "continue" : "Continue",
         "current_header" : "Current background image",
+        "customize_your_new_deployment" : "Customize your new deployment",
+        "settings_list": {
+            "general" : "General",
+            "general_desc" : "Change your deployment's name, description, logo, and other details.",
+            "surveys" : "Surveys",
+            "surveys_desc" : "Create and configure the surveys your deployment collects.",
+            "data_sources" : "Data Sources",
+            "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
+            "import" : "Import",
+            "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "users" : "Users",
+            "users_desc" : "Create and manage the people that contribute to your deployment.",
+            "roles" : "Roles",
+            "roles_desc" : "Create and manage the type of permissions your users have on your deployment.",
+            "categories" : "Categories",
+            "categories_desc" : "Create and manage the categories people can put posts into for improved organization.",
+            "plans" : "Plans",
+            "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+        },
+        "data_sources": {
+            "data_sources": "Data Sources",
+            "enable_provider_message" : "Accept survey submissions from this source",
+            "hint_turn_on_off": "You can configure options for data sources, and then turn sources on and off.",
+            "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
+            "provider_options": "Options",
+            "configure": "Configure",
+            "options": "Options",
+            "saving_changes": "Saving",
+            "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
+
+        },
+        "deployment_delete_this" : "Delete this deployment",
+        "deployment_delete" : "Delete deployment",
+        "deployment_delete_info" : "<strong>If you delete this deployment</strong>, all of its data will also be deleted. Proceed with caution.",
+        "deployment_name" : "Deployment name",
+        "deployment_logo" : "Deployment logo",
+        "map_default_baselayer": "Default base layer",
+        "map_clustering": "Combine nearby posts",
+        "map_default_latitude": "Default latitude",
+        "map_default_longitude": "Default longitude",
+        "map_default_zoom_level": "Default zoom level",
+        "map_default_location": "Default location",
         "site" : "Site Settings",
-        "site_name" : "Site name",
         "site_email" : "Contact email address",
         "site_email_note" : "Use caution, as this will be visible to anyone on your site.",
         "site_description" : "Describe your site",
@@ -437,33 +713,14 @@
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
         "select_image" : "Select image",
-        "save" : "Save",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",
         "features" : {
             "features" : "Features",
             "please_select_features" : "Please select the features you would like to enable."
         },
-        "map_default_baselayer": "Default base layer",
-        "map_clustering": "Combine nearby posts",
-        "map_default_latitude": "Default latitude",
-        "map_default_longitude": "Default longitude",
-        "map_default_zoom_level": "Default zoom level",
-        "map_default_location": "Default location",
-        "data_sources": {
-            "data_sources": "Data Sources",
-            "hint_turn_on_off": "You can configure options for data sources, and then turn sources on and off.",
-            "hint_plugin_needs_configuring": "You need to configure this data source before you can enable it.",
-            "provider_options": "Options",
-            "configure": "Configure data settings",
-            "options": "Options",
-            "save_changes": "Save Changes",
-            "saving_changes": "Saving",
-            "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
-
-        },
         "generic_field_error": "Invalid entry, please try again.",
-        "skip" : "Skip this step",
+        "skip" : "Skip this task",
         "add_first_post": "Add Your First Post",
         "add_first_post_subtitle": "A deployment is nothing until it has some content in it.",
         "invite_people": "Or invite people to help you create posts.",
@@ -475,13 +732,18 @@
         }
     },
     "data_import" :{
+        "next" : "Next",
+        "configure_posts": "Configure Posts",
+        "configure_explanation": "Through this interface you can set values for the survey fields that were not mapped to entries in the CSV. These values will be the same for all imported posts.",
         "import" : "Import",
-        "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific post type",
-        "import_explanation_file_size" : " - The size for a single file is limited to 10 MB",
-        "import_explanation_format_location_1" : " - Geographic locations should be included as separate latitude and longitude columns in your CSV",
-        "import_explanation_required_fields" : " - All required post type fields must have an associated value set in the CSV. For example, if the field title is required then the field must be mapped to a CSV column where all rows of that column have a value set",
+        "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific survey",
+        "import_explanation_file_size" : "The size for a single file is limited to 10 MB",
+        "import_explanation_format_location_1" : "Geographic locations should be included as separate latitude and longitude columns in your CSV",
+        "import_explanation_required_fields" : "All required survey fields must have an associated value set in the CSV. For example, if the field title is required then the field must be mapped to a CSV column where all rows of that column have a value set",
+        "configure_posts" : "Configure Posts",
+        "configure_all_imported_posts" : "Configure all imported posts",
         "csv" : "CSV",
-        "post_type" : "Import to which post type?",
+        "post_type" : "Import to which survey?",
         "file_csv" : "CSV file",
         "import_csv" : "Import CSV",
         "choose_file" : "Choose file",
@@ -489,13 +751,13 @@
         "organize_your_imported_data" : "Assign CSV columns to post fields",
         "assign_csv_message" : "Assign CSV columns to post fields",
         "csv_instructions" : "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",
-        "csv_instructions_required_fields" : " - Fields marked with a * are required and must be assigned a value.",
+        "csv_instructions_required_fields" : "Fields marked with a [*] are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
-        "dont_import" : "Don\'t import",
+        "dont_import" : "Don't import",
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
-        "select_post_type" : "Select Post Type"
+        "select_post_type" : "Select Survey"
     },
     "user": {
         "add_user" : "Add User",
@@ -508,7 +770,9 @@
         "cannot_delete_yourself" : "You cannot delete your own user",
         "cannot_change_your_own_role" : "You cannot change your own role",
         "confirm_password" : "Confirm Password",
+        "delete_user" : "Delete user",
         "delete_this_user" : "Delete this user",
+        "delete_user_desc" : "<strong>If you delete this user</strong>, posts created by this user will no longer have author information. This cannot be undone. Proceed with caution.",
         "edit_profile" : "Edit Profile",
         "save_profile" : "Save Profile",
         "cancel" : "Cancel",
@@ -548,10 +812,17 @@
         }
     },
     "user_profile" : {
-        "title" : "Edit profile",
-        "save" : "Save changes",
+        "title" : "account settings",
         "update_password" : "Update password",
-        "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected."
+        "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected.",
+        "button" : {
+            "save" : "Save &amp; close",
+            "cancel" : "Cancel"
+        },
+        "nav" : {
+            "general": "General",
+            "notifications" : "Notifications"
+        }
     },
     "user_create" :  {
         "full_name": "Display Name",
@@ -561,6 +832,9 @@
     "notify": {
         "contact" : {
             "save_success" : "Contact saved",
+            "delete_confirm" : "Do you want to remove your account?",
+            "error_message" : "An error occurred while trying to remove your account",
+            "destroy_success" : "Account removed successfully"
         },
         "default" : {
             "save_success" : "Saved resource",
@@ -577,7 +851,7 @@
         "data_import" : {
             "csv_upload" : "File {{name}} successfully uploaded",
             "csv_mappings_set" : "CSV imported. {{processed}} records imported, {{errors}} records failed.",
-            "duplicate_fields" : "Columns must be mapped to unique post type fields. The following fields have more than 1 mapping: {{duplicates}}",
+            "duplicate_fields" : "Columns must be mapped to unique survey fields. The following fields have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled"
@@ -590,7 +864,6 @@
         },
         "generic" : {
             "okay" : "Ok",
-            "cancel": "Cancel",
             "alerts": "Alerts",
             "confirm": "Confirmation"
         },
@@ -620,9 +893,10 @@
             "destroy_success" : "Post deleted",
             "destroy_error" : "Unable to delete post, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
-            "stage_save_success" : "Updated {{stage}}"
+            "stage_save_success" : "Updated {{stage}}",
+            "export" : "This will export filtered posts. Are you sure you want to continue?"
         },
-        "tag" : {
+        "category" : {
             "save_success" : "Saved category {{name}}",
             "destroy_confirm" : "Are you sure you want to delete this category?",
             "destroy_success" : "Category deleted",
@@ -637,7 +911,7 @@
             "last_admin" : "You can not delete the only admin role"
         },
         "datasource" : {
-            "save_success" : "Saved Data Source {{name}}",
+            "save_success" : "Saved Data Source {{name}}"
         },
         "user" : {
             "save_success" : "User {{name}} saved",
@@ -651,15 +925,15 @@
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
         },
         "form" : {
-            "save_success" : "Post Type {{name}} saved",
-            "save_stage_success" : "Post Type step {{name}} saved",
+            "save_success" : "Survey {{name}} saved",
+            "save_stage_success" : "Survey task {{name}} saved",
             "save_attribute_success" : "Field {{name}} added",
-            "edit_form_success" : "Post Type {{name}} updated",
-            "edit_stage_success" : "Post Type step {{name}} updated",
-            "delete_form_confirm" : "Are you sure you want to delete this post type?",
-            "destroy_form_success" : "Post type {{name}} deleted",
-            "delete_stage_confirm" : "Are you sure you want to delete this step?",
-            "destroy_stage_success" : "Post type step {{name}} deleted",
+            "edit_form_success" : "Survey {{name}} updated",
+            "edit_stage_success" : "Survey task {{name}} updated",
+            "delete_form_confirm" : "Are you sure you want to delete this survey?",
+            "destroy_form_success" : "Survey {{name}} deleted",
+            "delete_stage_confirm" : "Are you sure you want to delete this task?",
+            "destroy_stage_success" : "Survey task {{name}} deleted",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?",
             "destroy_attribute_success" : "Field {{name}} deleted"
         },
@@ -680,7 +954,10 @@
         "notification" : {
             "add" : "You will now be notified when new posts are added to {{set}}",
             "delete_confirm" : "Are you sure you want to remove this notification?",
-            "destroy_notification_success" : "Notification {{name}} deleted",
+            "destroy_success" : "<strong>You will no longer receive notifications about</strong> {{name}}."
+        },
+        "message" : {
+            "sent_to" : "Message sent to {{contact}}"
         }
     },
     "empty": {
@@ -703,13 +980,14 @@
         "title": "Notifications",
         "contacts_heading": "How you get notifications",
         "notifications_heading": "What you get notified about",
-        "error_message": "The notification could not be deleted at this time"
+        "error_message": "The notification could not be deleted at this time",
+        "send_to_address" : "Send notifications to this address",
+        "button" : {
+            "delete" : "Delete notification"
+        }
     },
     "contact": {
         "edit": "Edit",
-        "add_new_contact": "Add New Contact",
-        "save": "Save contact",
-        "saving": "Saving",
         "save_changes": "Save changes",
         "saving_changes": "Saving changes",
         "cancel_edit": "Cancel",
@@ -721,6 +999,10 @@
         "type" : {
             "phone": "Phone",
             "email": "Email"
+        },
+        "button" : {
+            "add" : "Add account",
+            "delete" : "Remove account"
         },
         "valid": {
             "email" : {

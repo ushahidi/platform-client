@@ -15,7 +15,7 @@ describe('setting users edit controller', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingUsersEditController', require(ROOT_PATH + 'app/setting/controllers/setting-users-edit-controller.js'));
+        testApp.controller('settingUsersEditController', require(ROOT_PATH + 'app/setting/users/controllers/setting-users-edit-controller.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
@@ -30,6 +30,10 @@ describe('setting users edit controller', function () {
         $scope = _$rootScope_.$new();
 
         $rootScope.goBack = function () {};
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 
@@ -54,25 +58,24 @@ describe('setting users edit controller', function () {
     });
 
     it('should save users upon request', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.saveUser({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
         expect($scope.userSavedUser).toBe(true);
     });
 
     it('should fail to save a user', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'errors');
 
         $scope.saveUser('fail');
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.showApiErrors).toHaveBeenCalled();
-        expect($scope.processing).toBe(false);
+        expect(Notify.errors).toHaveBeenCalled();
     });
 
 });

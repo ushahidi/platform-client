@@ -4,7 +4,13 @@
  */
 angular.module('ushahidi.common.modal', [])
 
-.directive('modal', function () {
+.directive('modal', [
+    '$translate',
+    '$rootScope',
+function (
+    $translate,
+    $rootScope
+) {
     return {
         restrict: 'E',
         transclude: true,
@@ -12,17 +18,20 @@ angular.module('ushahidi.common.modal', [])
 
         scope: {
             title: '@?',
+            icon: '=?',
             visible: '=?',
             closeOnOverlayClick: '=?',
             showCloseButton: '=?'
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
-            var classChangePromise = null;
+            $scope.iconPath = $scope.icon ? '../../img/iconic-sprite.svg#' + $scope.icon : '';
 
-            $scope.classDetached = true;
+            var classChangePromise = null;
+            $scope.iconPath = '../../img/iconic-sprite.svg#' + $scope.icon;
             $scope.classVisible = false;
             $scope.modalOffset = 0;
+            $scope.title = $translate.instant($scope.title);
 
             // If closeOnOverlayClick isn't passed, default to true
             if (typeof $scope.closeOnOverlayClick === 'undefined') {
@@ -38,13 +47,15 @@ angular.module('ushahidi.common.modal', [])
                 if (state === true) {
                     if (!$scope.classVisible) {
                         // Animate in.
-                        $scope.classDetached = false;
                         $scope.classVisible = true;
+                        $rootScope.toggleModalVisible();
 
                         // Set offset based on window position
                         // @todo move offset to a config param
                         var windowYpos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
                         $scope.modalOffset = (windowYpos + 40) + 'px';
+                        // @todo set max height
+                        // $('.modal-body').css('max-height', $(window).height() * 0.66);
 
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);
@@ -54,6 +65,7 @@ angular.module('ushahidi.common.modal', [])
                     if ($scope.classVisible) {
                         // Animate out.
                         $scope.classVisible = false;
+                        $rootScope.toggleModalVisible();
 
                         if (classChangePromise) {
                             $timeout.cancel(classChangePromise);
@@ -81,6 +93,4 @@ angular.module('ushahidi.common.modal', [])
             });
         }]
     };
-})
-
-;
+}]);

@@ -135,9 +135,9 @@ describe('forms interaction', function () {
                         expect(cards.isDisplayed()).toBe(true);
                     });
 
-                    it(' and should show 11 cards', function () {
+                    it('and should show 12 cards', function () {
                         var cards = element.all(by.css('.selection-card'));
-                        expect(cards.count()).toEqual(11);
+                        expect(cards.count()).toEqual(12);
                     });
 
                     describe('when the user chooses a field type', function () {

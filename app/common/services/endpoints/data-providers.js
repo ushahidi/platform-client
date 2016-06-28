@@ -42,9 +42,9 @@ function (
         }
     });
 
-    DataProviderEndpoint.getFresh = function (id) {
-        cache.remove(Util.apiUrl(id));
-        return DataProviderEndpoint.get(id);
+    DataProviderEndpoint.getFresh = function (params) {
+        cache.remove(Util.apiUrl('/dataproviders/' + params.id));
+        return DataProviderEndpoint.get(params);
     };
 
     DataProviderEndpoint.queryFresh = function () {

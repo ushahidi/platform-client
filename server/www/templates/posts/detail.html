@@ -1,111 +1,119 @@
-<main class="page-content layout-c">
-   <div class="main-col">
-        <article role="article">
-            <header class="page-header">
-                <h1 class="page-title">
-                    {{post.title}}
-                </h1>
-                <div class="page-permissions">
-                    <p ng-show="post.allowed_privileges.indexOf('update') == -1">
-                        <span class="icon-left fa-globe" translate>
-                            {{publishedFor()}}
-                        </span>
-                    </p>
-                    <div ng-show="post.allowed_privileges.indexOf('update') !== -1" class="form-field select">
-                        <role-selector
-                            toggle-role-func="publishPostTo(updatedPost)"
-                            post="post" ></role-selector>
-                    </div>
-                </div>
-                <div class="actions-toggle">
+<div class="mode-context init" dropdown>
 
-                    <div id="options" class="actions-content init active">
-                        <a ng-show="post.allowed_privileges.indexOf('update') !== -1" class="button-secondary" ng-href="/posts/{{post.id}}/edit">
-                            <span class="icon-left fa-pencil" translate>post.post_actions.edit</span>
-                        </a>
-                    <!--    <button type="button" class="button-secondary">
-                            <span class="icon-left fa-share">Share</span>
-                        </button>
-                    -->
-                        <collection-selector
-                            post="post"
-                            ng-if="post.allowed_privileges.indexOf('update') !== -1"
-                            ng-show="editableCollections.length > 0 || post.allowed_privilleges.indexOf('update') != 1"
-                            >
-                        </collection-selector>
-                    </div>
-                </div>
-            </header>
-            <div class="vertical-tabs">
-                <nav class="vertical-tabs-menu init">
-                    <ul>
-                        <li
-                            ng-repeat="stage in stages"
-                            ng-class="{'active': visibleStage == stage.id}"  >
-                            <a ng-click="setVisibleStage(stage.id)">
-                                <span class="icon-left" ng-class="{'fa-{{stage.icon}}': stage.icon}">
-                                    {{stage.label}}
-                                </span>
-                            </a>
-                            <span class="status" ng-class="{'completed': stageIsComplete(stage.id)}">
-                            </span>
-                        </li>
-                        <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank.-->
-                    </ul>
-                </nav>
-                <div class="vertical-tabs-content">
-                    <div class="post-author">
-                       <div class="user-avatar" ng-show="post.user">
-                          <img class="circular" src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ post.user.realname }}">
-                       </div>
-                       <p>
-                          <strong class="icon-left fa-circle">
-                              {{form_name || "Unstructured"}}
-                          </strong> posted at {{post.updated || post.created | date:'shortTime'}}<strong> {{post.updated || post.created | date:'mediumDate'}}</strong> <br> <span ng-if="post.user.realname != null"><translate>post.by</translate> <a href="/settings/users/{{post.user.id}}">{{post.user.realname}}</a></span>
-                      </p>
-                    </div>
-                    <div
-                        ng-if="post.content"
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
-                        class="post-field">
-                        <p sd-model-to-html="post.content"></p>
-                    </div>
-                    <div
-                        ng-if="!!post.tags.length"
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
-                        class="form-field"
-                    >
-                        <legend class="input-label" for="tags" ng-class="{ 'error': form.tags.$invalid && form.tags.$dirty }" translate>post.modify.form.categories</legend>
-                        <div class="form-field checkbox" ng-repeat="category in post.tags">
-                            <label>
-                                <i class="fa fa-{{category.icon}}" style="color:{{category.color}}"></i> {{category.tag}}
-                            </label>
-                        </div>
-                    </div>
-                    <div
-                        ng-repeat="(key,value) in post.values"
-                        ng-if="form_attributes[key] && showType(form_attributes[key].type)"
-                        ng-show="form_attributes[key].form_stage_id == visibleStage"
-                        class="post-field"
-                    >
-                      <post-value
-                          key="key"
-                          value="value"
-                          attribute="form_attributes[key]"
-                        ></post-value>
-                    </div>
-                    <div
-                        ng-if="mapDataLoaded"
-                        ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
-                        class="post-field"
-                        >
-                        <h4 ng-if="mapDataLoaded" translate>post.location</h4>
-                        <div ng-if="mapDataLoaded">
-                            <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
-                          </div>
-                    </div>
-                </div>
+  <header class="mode-context-header">
+    <ol class="breadcrumbs" ng-controller="navigation as nav">
+      <li><a href="/" ng-bind="nav.site.name"></a></li>
+    </ol>
+
+    <h1 class="mode-context-title">{{form_name || 'post.unstructured.survey_title' | translate}}</h1>
+  </header>
+
+  <span class="mode-context-trigger" dropdown-toggle>
+    <svg class="iconic">
+      <use xlink:href="../img/iconic-sprite.svg#chevron-bottom"></use>
+    </svg>
+    <span class="label hidden" translate>app.show_more_less</span>
+  </span>
+
+  <div class="mode-context-body" ng-if="post.form">
+    <p>{{ form_description }}</p>
+
+    <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}">
+      <svg class="iconic">
+        <use xlink:href="../img/iconic-sprite.svg#plus"></use>
+      </svg>
+      <span class="button-label" translate>post.modify.add_to_survey</span>
+    </a>
+  </div>
+</div>
+
+<main role="main">
+  <div class="main-col">
+    <article class="postcard" role="article">
+      <div class="postcard-body">
+        <h1 class="postcard-title">
+          {{post.title}}
+        </h1>
+
+        <post-metadata post="post"></post-metadata>
+
+        <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
+          <ul>
+            <li
+              ng-repeat="stage in stages"
+              ng-class="{'active': visibleStage == stage.id}"  >
+              <a ng-click="setVisibleStage(stage.id)">
+                {{stage.label}}
+              </a>
+              <span class="status" ng-class="{'completed': stageIsComplete(visibleStage)}">
+              </span>
+            </li>
+          </ul>
+        </nav>
+        <div class="tasks-tabs">
+
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id == visibleStage"
+            class="postcard-field"
+            >
+
+            <post-media-value
+              ng-if="form_attributes[key].type === 'media'"
+              label="{{form_attributes[key].label}}"
+              media-id="value"></post-media-value>
+          </div>
+
+          <div
+            ng-if="post.content"
+            ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+            class="postcard-field">
+            <p sd-model-to-html="post.content"></p>
+          </div>
+          <div
+            ng-if="!!post.tags.length"
+            ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+            class="postcard-field"
+            >
+            <h2 class="form-label" translate>post.modify.form.categories</h2>
+            <p ng-repeat="category in post.tags">
+              {{category.tag}}
+            </p>
+          </div>
+
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id == visibleStage"
+            class="postcard-field"
+            >
+
+            <post-value
+              key="key"
+              value="value"
+              attribute="form_attributes[key]"
+              ng-if="form_attributes[key].type !== 'media'">
+            </post-value>
+          </div>
+          <div
+            ng-if="mapDataLoaded"
+            ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
+            class="postcard-field"
+            >
+            <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
+            <div ng-if="mapDataLoaded">
+              <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
             </div>
-       </article>
-    </div>
+          </div>
+        </div>
+      </div>
+
+      <post-actions post="post"></post-actions>
+
+    </article>
+
+    <post-add-form post="post" ng-if="!post.form && post.allowed_privileges.indexOf('update') !== -1"></post-add-form>
+    <post-messages post="post" ng-if="post.contact.id"></post-messages>
+  </div>
 </main>

@@ -13,10 +13,22 @@ notifications:
 addons:
   sauce_connect: true
 language: node_js
-node_js:
-- 0.10
-- 0.12
-- iojs-v1.2
+matrix:
+  include:
+  # Run everything with v5 (match production)
+  # Skip e2e test during mustang build
+  #- node_js: 5
+  #  env: TEST_SUITE=e2e
+  - node_js: 5
+    env: TEST_SUITE=lint
+  - node_js: 5
+    env: TEST_SUITE=unit
+  # Run unit test with 0.12 and current stable too
+  - node_js: 0.12
+    env: TEST_SUITE=unit
+  - node_js: stable
+    env: TEST_SUITE=unit
+  fast_finish: true
 cache:
   directories:
   - node_modules
@@ -24,17 +36,9 @@ install:
 - npm install -g gulp
 - npm install
 before_script:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- sleep 3
-- gulp build --mock-backend
-- gulp node-server &
-- sleep 3
+- test/pre_test.sh
 script:
-- gulp test
-- npm run protractor
-- gulp jscs
-- npm run jshint
+- test/test.sh
 after_script:
 - gulp send-stats-to-coveralls
 before_deploy:

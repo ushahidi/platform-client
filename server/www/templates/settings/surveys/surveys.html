@@ -1,0 +1,56 @@
+<div>
+    <!-- mode-context needs to be in each template -->
+    <layout-class layout="a"></layout-class>
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.surveys</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+
+        <!-- TODO: what is the surveys equivalent to rolesEnabled -->
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="fab">
+                <a ng-href="/settings/surveys/create" type="button" class="button button-alpha button-fab">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    <span class="hidden" translate>form.add_post_type</span>
+                </a>
+            </div>
+        </div>
+        <!-- end toolbar -->
+
+        <div class="main-col">
+
+            <div class="listing card">
+
+                <div class="listing-item" ng-show="forms.length" ng-repeat="form in forms">
+                    <span class="post-band" style="background-color:#A51A1A;"></span>
+
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title"><a href="/settings/surveys/{{form.id}}">{{form.name}}</a></h2>
+                        <p class="listing-item-secondary">{{form.description}}</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>

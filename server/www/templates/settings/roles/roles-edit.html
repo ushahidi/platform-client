@@ -1,76 +1,91 @@
-<main custom-roles-editor class="page-content" role="main">
-    <div class="page-header">
-        <ul class="breadcrumb">
-            <li>
-                <a ng-href="/settings" translate>nav.settings</a>
-            </li>
-            <li>
-                <a ng-href="/settings/roles" translate>nav.roles</a>
-            </li>
-            <li>
-                {{title}}
-            </li>
-        </ul>
-        <div class="page-header-body">
-            <h1 class="page-title">
-                <span class="icon-left fa-pencil">
-                    {{title}}
-                </span>
-            </hi>
-        </div>
-        <div class="page-header-actions">
-            <button ng-click="saveRole(role, false)" ng-disabled="form.$invalid || processing" translate>
-                role.save
-            </button>
-            <button class="save save-add" ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
-                role.save_add_another
-            </button>
+<div>
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/roles" translate>app.roles</a></li>
+            </ol>
+            <h1 class="mode-context-title" ng-show="role.id" translate>app.edit_role</h1>
+            <h1 class="mode-context-title" ng-show="!role.id" translate>app.add_role</h1>
+        </header>
 
-        </div>
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
     </div>
 
-    <div class="main-col">
-        <form>
-            <div class="form-field title">
-                <label translate>role.name</label>
-                <input id="name" type="text" class="form-control"
-                    ng-minlength="3"
-                    ng-maxlength="150"
-                    ng-model="role.display_name"
-                    required>
-            <div>
+    <main role="main">
 
-            <div class="form-field">
-                <label translate>role.description</label>
-                <input id="description" type="text" class="form-control"
-                    ng-maxlength="150"
-                    ng-model="role.description">
+        <div custom-roles-editor class="main-col">
+
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                    <button class="button-alpha" type="button" ng-click="saveRole(role)" type="submit" ng-disabled="form.$invalid" translate>
+                        <div class="loading" ng-show="saving">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span ng-hide="saving" translate>app.save</span>
+                    </button>
+                </div>
             </div>
+            <!-- end toolbar -->
 
-            <fieldset>
-                <legend translate>role.permissions</legend>
+            <form>
+                <div class="form-sheet">
+                   <div class="form-field title">
+                       <label class="hidden" translate>role.name</label>
+                       <input type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
+                   </div>
 
-                <div class="alert" ng-hide="permissions.length">
-                    <p ng-hide="permissions.length"><em translate>empty.permission</em></p>
+                    <div class="form-field form-field-adapt">
+                        <label translate>role.description</label>
+                        <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="role.description"></textarea>
+                    </div>
+
+                   <fieldset>
+                       <legend translate>role.permissions</legend>
+
+                       <div class="alert" ng-hide="permissions.length">
+                           <p ng-hide="permissions.length"><em translate>empty.permission</em></p>
+                       </div>
+
+                       <div class="form-field checkbox" ng-repeat="permission in permissions">
+                           <label for="{{permission.id}}">
+                               <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="role.permissions" checklist-value="permission.name">
+                               {{permission.name}}
+                           </label>
+                       </div>
+                   </fieldset>
                 </div>
 
-                <div ng-repeat="permission in permissions">
-                    <label class="checkbox-label" for="{{permission.id}}">
-                        <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="role.permissions" checklist-value="permission.name">
-                        {{permission.name}}
-                    </label>
-                </div>
-            </fieldset>
+                <div class="form-sheet" ng-show="role.id">
+                   <div class="form-sheet-summary">
+                       <h3 class="form-sheet-title" translate>role.delete_role</h3>
+                   </div>
 
-            <div class="save-button clearfix">
-                <button ng-click="saveRole(role, false)" ng-disabled="form.$invalid || processing" translate>
-                    role.save
-                </button>
-                <button class="save save-add" ng-show="!role.id" ng-click="saveRole(role, true)" ng-disabled="form.$invalid || processing" translate>
-                    role.save_add_another
-                </button>
-            </div>
-            
-        </form>
-    </div>
-</main>
+                   <div class="form-field">
+                       <p translate>role.delete_role_desc</p>
+
+                       <button class="button-destructive" ng-click="deleteRole(role)">
+                           <svg class="iconic">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                           </svg>
+                           <span class="button-label" translate>role.delete_role</span>
+                       </button>
+                   </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </main>
+</div>

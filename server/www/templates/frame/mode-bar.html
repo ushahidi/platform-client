@@ -1,0 +1,121 @@
+<div class="mode-bar" ng-class="{ active : moreActive }">
+    <!-- mode bar -->
+    <!-- PL JS -->
+    <nav>
+        <!-- main menu -->
+        <ul class="deployment-menu">
+            <li class="persist" ng-class="{ active: activeMode === 'map' }">
+                <a ng-href="{{baseUrl + 'map' }}" class="view-map">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#map-marker"></use>
+                    </svg>
+                    <translate>views.map</translate>
+                </a>
+            </li>
+
+            <li class="persist" ng-class="{ active: activeMode === 'list' }">
+                <a ng-href="{{baseUrl + 'list' }}" class="view-list">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#list-rich"></use>
+                    </svg>
+                    <translate>views.list</translate>
+                </a>
+            </li>
+
+            <li class="persist" ng-if="isActivityAvailable || hasManageSettingsPermission()" ng-class="{ active: activeMode === 'activity' }" data-message="customize">
+                <a href="/activity">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pulse"></use>
+                    </svg>
+                    <translate>views.activity</translate>
+                </a>
+            </li>
+
+            <li class="tuck" ng-class="{ active: activeMode === 'settings' }" data-message="customize" ng-show="hasManageSettingsPermission()">
+                <a href="/settings">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
+                    </svg>
+                    <translate>nav.settings</translate>
+                </a>
+            </li>
+
+            <li class="more-menu-trigger persist" ng-class="{ active : moreActive }">
+                <a ng-click="showMore($event)">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
+                    </svg>
+                    <translate>nav.more</translate>
+                </a>
+            </li>
+        </ul>
+        <!-- main menu -->
+
+        <ul class="account-menu">
+        <!-- user account menu -->
+
+            <li>
+                <a href="" ng-click="viewSupportLinks()">
+                    <ng-include src="'templates/frame/ushahidi-logo.html'"></ng-include>
+                    <span class="label" translate>app.support</span>
+                </a>
+            </li>
+
+            <li ng-show="currentUser">
+                <a ng-click="logout()" data-modal="login">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#account-logout"></use>
+                    </svg>
+                    <span class="label" translate="nav.logout">Log out</span>
+                </a>
+            </li>
+
+            <li ng-show="currentUser">
+                <a ng-click="viewAccountSettings()">
+                    <img class="avatar" src="http://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
+                    <span class="label">{{currentUser.realname || currentUser.email}}</span>
+                </a>
+            </li>
+
+            <li ng-hide="currentUser" ng-show="canRegister()">
+                <a ng-click="register()" data-modal="signup">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#person"></use>
+                    </svg>
+                    <translate translate="nav.register">Sign up</translate>
+                </a>
+            </li>
+
+            <li ng-hide="currentUser">
+                <a ng-click="login()" data-modal="login">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#account-login"></use>
+                    </svg>
+                    <translate translate="nav.login">Log in</translate>
+                </a>
+            </li>
+
+            <li>
+                <a ng-click="viewCollectionListing()">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+                    </svg>
+                    <span class="label" translate>nav.collections</span>
+                </a>
+            </li>
+
+            <li ng-if="todo">
+                <a>
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                    </svg>
+                    <span class="label"><translate>nav.alerts</translate> <span class="badge">2</span></span>
+                </a>
+            </li>
+        <!-- user account menu -->
+        </ul>
+
+    </nav>
+    <!-- PL JS -->
+    <!-- mode bar -->
+</div>

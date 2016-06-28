@@ -1,0 +1,51 @@
+<div>
+    <modal visible="collectionListingVisible" title="{{'app.collections' |translate}}" icon="'grid-three-up'">
+        <div class="modal-body" style="max-height: 337.26px;">
+            <div class="form-field search">
+                <label class="hidden" translate>set.find_a_collection</label>
+                <div class="input-with-icon">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+                    </svg>
+                    <form ng-submit="searchCollections(collectionQuery)">
+                        <input name="collectionQuery" ng-model="collectionQuery" type="search" placeholder="{{ 'set.find_a_collection' | translate}}">
+                    </form>
+                </div>
+            </div>
+            <div class="listing init">
+
+                <div class="listing-item" ng-repeat="collection in collections">
+                    <div class="listing-item-select" ng-if="isToggleMode">
+                        <input
+                            type="checkbox"
+                            ng-checked="postInCollection(collection)"
+                            ng-click="toggleCollection(collection)">
+                    </div>
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title">
+                            <a ng-click="collectionClickHandler(collection)">
+                                {{collection.name}}
+                            </a>
+                        </h2>
+                        <p class="listing-item-secondary" ng-if="collection.user_id">
+                            <span translate>
+                                app.by
+                            </span>
+                            <a ng-href="/users/{{collection.user_id}}">
+                                {{collection.user_id}}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-field">
+            <button type="button" class="button-beta" ng-click="createNewCollection()">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                </svg>
+                <span class="button-label" translate>app.create_new</span>
+            </button>
+        </div>
+    </modal>
+</div>

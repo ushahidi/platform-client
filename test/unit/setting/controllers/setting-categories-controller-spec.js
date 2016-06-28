@@ -24,6 +24,10 @@ describe('setting categories controller', function () {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 
@@ -37,21 +41,12 @@ describe('setting categories controller', function () {
     });
 
     it('should retrieve the categories', function () {
-        expect($scope.tags.length).toEqual(1);
-    });
-
-    it('should toggle selected categories', function () {
-        $scope.toggleTag({id: 1});
-        expect($scope.selectedTags.indexOf(1)).not.toBeLessThan(0);
-
-        $scope.toggleTag({id: 1});
-        expect($scope.selectedTags.indexOf(1)).toBeLessThan(0);
+        expect($scope.categories.length).toEqual(1);
     });
 
     it('should delete tags upon request', function () {
-        $scope.toggleTag({id: 1});
-        $scope.deleteTags();
-
+        $scope.selectedCategories = [{id: 1}];
+        $scope.deleteCategories();
     });
 
 });

@@ -1,56 +1,91 @@
-<main mapper-csv class="page-content" role="main">
-     <div class="page-header">
-        <ul class="breadcrumb">
-           <li translate>
-              nav.settings
-           </li>
-           <li>
-              <a href="/settings/data-import" translate>data_import.import</a>
-           </li>
-        </ul>
-        <h1 translate>data_import.import_csv</h1>
-     </div>
-     <div class="main-col">
-        <ol class="progress">
-           <li><span class="complete" translate>data_import.choose_file</span></li>
-           <li class="active" translate>data_import.organize_data</li>
-           <!-- <li class="disabled">Configure posts</li> -->
-        </ol>
-        <h2 translate>data_import.organize_your_imported_data</h2>
-        <form class="segment" ng-submit="submitMappings(csv)">
-           <fieldset class="form-field">
-              <legend translate>data_import.assign_csv_message</legend>
-              <p class="small" translate translate-values="{form_name: form.name}">data_import.csv_instructions</p>
-            <p class="small"><em translate>data_import.csv_instructions_required_fields</em></p>
-              <table>
-                 <thead>
-                    <tr>
-                       <th translate> data_import.csv_column_name</th>
-                       <th translate translate-values="{form_name: form.name}"> data_import.post_type_title</th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                    <tr ng-repeat="column in csv.columns track by $index">
-                       <td>{{column}}</td>
-                       <td>
-                          <div class="custom-select init">
-                             <select 
-                                ng-model="csv.maps_to[$index]" 
-                                ng-options="attribute.key as attribute.label for attribute in form.attributes"> 
-                                <option selected="true" value="" translate>
-                                    data_import.dont_import
-                                </option>
-                             </select>
-                          </div>
-                       </td>
-                    </tr>
-                 </tbody>
-              </table>
-           </fieldset>
-           <div class="actions-inline actions-right">
-              <button class="button-link" ng-click="cancelImport()"translate>data_import.cancel_import</button>
-              <button type="submit" id="submit" translate>data_import.finish_import</button>
-           </div>
-        </form>
-     </div><!--end main col-->
-  </main>
+<div>
+     <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.import</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+
+    <main role="main">
+
+        <div mapper-csv class="main-col">
+
+            <ol class="progress">
+               <li translate>data_import.choose_file</li>
+               <li class="active" translate>data_import.organize_data</li>
+               <!--
+               <li class="disabled" translate>data_import.configure_posts</li>
+               -->
+            </ol>
+
+            <div class="form-sheet">
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate>data_import.organize_your_imported_data</h2>
+                </div>
+
+                <form ng-submit="submitMappings(csv)">
+                    <fieldset class="form-field">
+                        <legend translate>data_import.assign_csv_message</legend>
+                        <p translate translate-values="{form_name: form.name}">data_import.csv_instructions</p>
+                        <ul>
+                            <li translate>data_import.csv_instructions_required_fields</li>
+                        </ul>
+
+                        <table>
+
+                           <thead>
+                              <tr>
+                                 <th translate> data_import.csv_column_name</th>
+                                 <th translate translate-values="{form_name: form.name}"> data_import.post_type_title</th>
+                              </tr>
+                           </thead>
+
+                           <tbody>
+                              <tr ng-repeat="column in csv.columns track by $index">
+                                 <td>{{column}}</td>
+                                 <td>
+                                    <div class="custom-select init">
+                                       <select
+                                          ng-model="csv.maps_to[$index]"
+                                          ng-options="attribute.key as attribute.label for attribute in form.attributes">
+                                          <option selected="true" value="" translate>
+                                              data_import.dont_import
+                                          </option>
+                                       </select>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+
+                        </table>
+                    </fieldset>
+
+                    <div class="form-field">
+                      <button type="button" class="button-link" ng-click="cancelImport()" translate>data_import.cancel_import</button>
+                      <!--
+                        <button class="button-alpha" type="submit" id="submit" ng-click="progressToConfigure(csv)" translate>data_import.next</button>
+                        -->
+                      <button class="button-alpha" type="submit" id="submit" ng-click="progressToConfigure(csv)" translate>data_import.finish_import</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+</div>

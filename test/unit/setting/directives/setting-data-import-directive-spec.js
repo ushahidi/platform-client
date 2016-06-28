@@ -41,7 +41,7 @@ describe('setting data import directive', function () {
     }));
 
     it('should attempt to import a csv', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
 
         $scope.fileContainer = {
             file: {
@@ -53,15 +53,15 @@ describe('setting data import directive', function () {
 
         $scope.importCSV();
 
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should require that a file is uploaded', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'error');
         $scope.fileContainer = {
             file: undefined
         };
         $scope.importCSV();
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
     });
 });

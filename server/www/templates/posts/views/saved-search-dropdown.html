@@ -1,0 +1,23 @@
+<div class="dropdown-menu" data-toggle-target="search-saved" ng-show="$parent.searchSavedToggle" ng-class="{ 'active': $parent.searchSavedToggle }" data-toggle-animate> {{savedSearchToggle}}
+    <div class="form-field search" ng-show="todo">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+        </svg>
+        <label translate="set.find_a_saved_search">Find a saved search</label>
+        <input type="search" ng-model="savedSearchQuery" placeholder="{{ 'set.find_a_saved_search' | translate }}">
+    </div>
+    <dl class="dropdown-menu-body">
+        <dt class="list-item" ng-repeat-start="search in searches"><a ng-href="savedsearches/{{ search.id }}" ng-bind="search.name"></a></dt>
+        <dd ng-repeat-end ng-show="search.user.id" translate="nav.author_tagline" translate-values="{ author: search.user.realname }"></dd>
+
+        <dt ng-show="! searches.length" translate="set.empty_list_savedsearch"></dt>
+    </dl>
+    <div class="form-field" ng-show="todo">
+        <button type="button" class="button-beta">
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+            </svg>
+            <span class="button-label" translate="app.create_new">Create new</span>
+        </button>
+    </div>
+</div>

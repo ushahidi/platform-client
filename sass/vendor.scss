@@ -10,10 +10,8 @@
 @import "leaflet/dist/leaflet";
 @import "leaflet.markercluster/dist/MarkerCluster";
 @import "leaflet.markercluster/dist/MarkerCluster.Default";
-@import "angular-bootstrap-colorpicker/css/colorpicker";
+@import "leaflet.locatecontrol/src/L.Control.Locate";
 @import "nvd3/build/nv.d3";
-@import "dc/dc";
-@import "angular-datepicker/dist/index";
 
 // Custom overrides
 @import "overrides/leaflet";
@@ -21,3 +19,4 @@
 @import "overrides/modal";
 @import "overrides/charts";
 @import "overrides/doorbell";
+@import "overrides/intercom";

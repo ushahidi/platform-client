@@ -1,0 +1,19 @@
+<button type="button" class="button-alpha button-dropdown init" ng-click="toggleButton()"  ng-class="{ 'active': buttonToggle }">
+    <svg class="iconic">
+        <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+        <foreignObject>
+            <img class="icon" src="../../img/icons/png/plus-2x.png">
+        </foreignObject>
+    </svg>
+    <span class="button-label" translate="nav.add_post">Add post</span>
+</button>
+
+<ul class="dropdown-menu init" ng-show="buttonToggle" ng-class="{ 'active': buttonToggle }">
+      <li ng-repeat="form in forms">
+          <a ng-click="createPost(form.id)">
+              <span class="post-band">
+              </span>
+              {{form.name}}
+          </a>
+      </li>
+</ul>

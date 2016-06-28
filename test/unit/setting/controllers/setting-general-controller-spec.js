@@ -28,12 +28,16 @@ describe('setting general controller', function () {
         $controller = _$controller_;
         Notify = _Notify_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
-
+        $rootScope.setLayout = function () {};
         $controller('settingGeneralController', {
             $scope: $scope,
             $rootScope: $rootScope

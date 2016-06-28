@@ -1,0 +1,76 @@
+<div>
+    <nav class="tabs-menu init" data-tabs="tabs-tasks" data-tabs-hash="" ng-show="stages.length > 1">
+        <ul>
+            <li ng-class="{'active': visibleStage == stage.id}" ng-repeat="stage in stages">
+                <a ng-click="setVisibleStage(stage.id)">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#file"></use>
+                    </svg>
+                    {{stage.label}}
+                </a>
+            </li>
+            <li></li> <!-- This prevents vertical tabs layout from breaking. leave this blank. -->
+        </ul>
+    </nav>
+    <!--// END IF -->
+
+    <div class="tabs-tasks active tabs-target">
+        <!-- Handle stage completion -->
+        <div class="form-field switch"
+            ng-repeat="stage in stages"
+            ng-show="visibleStage === stage.id"
+        >
+            <label translate="post.mark_complete">Mark completed</label>
+            <div class="toggle-switch">
+                <input
+                    class="tgl"
+                    id="switchT"
+                    type="checkbox"
+                    ng-disabled="! (isStageValid(visibleStage) || stageIsComplete(visibleStage))"
+                    ng-checked="stageIsComplete(visibleStage)"
+                    ng-click="toggleStageCompletion(visibleStage)">
+                <label class="tgl-btn" for="switchT"></label>
+            </div>
+        </div>
+        <!-- END stage completion -->
+        <!-- Post stage default fields -->
+        <div class="form-field form-field-adapt init" ng-show="isFirstStage(visibleStage)"
+            ng-class="{
+              'error': form.content.$invalid && form.content.$dirty,
+              'success': !form.content.$invalid && form.content.$dirty
+            }"
+            adaptive-form>
+            <label translate="post.modify.form.description">
+                Description
+            </label>
+            <textarea id="content" name="content" data-min-rows="1" rows="1" class="adapt-field" style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                ng-model="post.content" required adaptive-input msd-elastic>
+            </textarea>
+
+            <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="{{'post.valid.content.' + error}}"></span>
+            </div>
+        </div>
+
+        <fieldset id="categories" ng-show="isFirstStage(visibleStage)">
+            <legend translate="post.modify.form.categories">Categories</legend>
+            <div class="form-field checkbox" ng-repeat="category in categories">
+                <label for="cat1">
+                    <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
+                    <span>{{category.tag}}</span>
+                </label>
+            </div>
+        </fieldset>
+        <!-- End post stage default fields -->
+        <post-value-edit
+                ng-repeat="attribute in attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+                ng-show="attribute.form_stage_id == visibleStage"
+                post="post"
+                form="form"
+                attribute="attribute"
+        ></post-value-edit>
+    </div>
+</div>

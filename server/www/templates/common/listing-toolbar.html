@@ -1,0 +1,11 @@
+<div class="listing-toolbar">
+    <div class="listing-toolbar-summary">
+        <strong translate="nav.selected_items" translate-values="{ selectedItems : selectedSet.length }"></strong>
+        <button class="button-link" ng-click="deselectAll()" translate="nav.deselect">Deselect</button>
+        <button class="button-link" ng-click="selectAll()" translate="nav.select_all">Select all</button>
+    </div>
+
+    <div class="listing-toolbar-actions">
+        <ng-transclude></ng-transclude> 
+    </div>
+</div>

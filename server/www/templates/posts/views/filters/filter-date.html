@@ -1,0 +1,25 @@
+<fieldset>
+    <legend>Date range</legend>
+
+    <div class="form-field date">
+        <label class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
+        <div class="input-with-icon">
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+            </svg>
+            <input type="date" pick-a-date="createdAfter" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="createdAfterModel" />
+        </div>
+        <span class="date-joiner">to</span>
+    </div>
+
+    <div class="form-field date">
+        <label class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
+        <div class="input-with-icon">
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+            </svg>
+        </div>
+        <input type="date" pick-a-date="createdBefore" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="createdBeforeModel">
+    </div>
+
+</fieldset>

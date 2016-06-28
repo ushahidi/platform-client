@@ -1,0 +1,64 @@
+<form name="form" ng-submit="registerSubmit()">
+    <div class="modal-body">
+        <div class="alert error register-failed" role="alert" ng-show="failed">
+            <p translate>notify.register.failed</p>
+        </div>
+        <div class="form-field" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty, 'success': form.full_name.$valid }">
+            <label class="input-label"
+                for="full_name" translate>user.full_name</label>
+            <input id="full_name" name="full_name" type="text"
+                ng-disabled="state.processing"
+                placeholder="{{ 'user_create.full_name'|translate }}"
+                ng-maxlength="150"
+                ng-model="realname"
+                required>
+            <div ng-repeat="(error, value) in form.full_name.$error"
+                ng-show="form.full_name.$dirty"
+                class="alert error">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="{{'user.valid.full_name.' + error}}" translate-default="{{error}}"></span>
+            </div>
+        </div>
+        <div class="form-field" ng-class="{ 'success': !form.email.$invalid && form.email.$dirty, 'error' : form.email.$invalid && form.email.$dirty}">
+            <label for="email" class="input-label" translate>user.email</label>
+            <input type="email" id="email" name="email"
+                ng-model="email"
+                ng-disabled="processing"
+                ng-maxlength="150"
+                required>
+            <div ng-repeat="(error, value) in form.email.$error"
+                ng-show="form.email.$dirty"
+                class="alert error">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></span>
+            </div>
+        </div>
+        <div class="form-field" ng-class="{ 'success': !form.password.$invalid && form.password.$dirty, 'error' : form.password.$invalid && form.password.$dirty}">
+            <label class="input-label" for="password" translate>user.password</label>
+            <input id="password" type="password" name="password"
+                ng-minlength="7"
+                ng-maxlength="72"
+                ng-model="password"
+                ng-disabled="processing"
+                required>
+            <div ng-repeat="(error, value) in form.password.$error"
+                ng-show="form.password.$dirty"
+                class="alert error">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="{{'user.valid.password.' + error}}" translate-default="{{error}}"></span>
+            </div>
+
+        </div>
+
+        <div class="form-field">
+            <button type="button" class="button-link" ng-click="cancel()" translate="app.cancel">Cancel</button>
+            <button type="submit" class="button-alpha" ng-disabled="form.$invalid || processing" translate="nav.register">Sign up</button>
+        </div>
+    </div>
+</form>

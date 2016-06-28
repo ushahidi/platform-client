@@ -5,13 +5,25 @@ module.exports = [
     'Leaflet',
     'leafletData',
     '_',
+    '$filter',
+    'PostEndpoint',
+    'FormAttributeEndpoint',
+    'MediaEndpoint',
+    '$compile',
+    '$rootScope',
 function (
     $q,
     ConfigEndpoint,
     Util,
     L,
     LData,
-    _
+    _,
+    $filter,
+    PostEndpoint,
+    FormAttributeEndpoint,
+    MediaEndpoint,
+    $compile,
+    $rootScope
 ) {
 
     var layers = {
@@ -52,15 +64,29 @@ function (
 
     var geojsonLayerOptions = {
         onEachFeature: function (feature, layer) {
-            var description = feature.properties.description || '',
-                title = feature.properties.title || feature.properties.id;
-            layer.bindPopup(
-                '<strong><a href="/posts/' + feature.properties.id + '">' +
-                title +
-                '</a></strong>' +
-                '<p>' + description + '</p>'
-            );
+            layer.on('click', function () {
+                var that = this;
+
+                getPostDetails(feature).then(function (details) {
+                    var scope = $rootScope.$new();
+
+                    // details.content = $filter('truncate')(details.content, 150, '...', true);
+                    scope.post = details;
+
+                    var el = $compile('<post-card post="post" short-content="true"></post-card>')(scope);
+
+                    that.bindPopup(el[0], {
+                        'minWidth': '300',
+                        'maxWidth': '300',
+                        'className': 'pl-popup'
+                    }).openPopup();
+                });
+            });
         }
+    };
+
+    var getPostDetails = function (feature) {
+        return PostEndpoint.get({id: feature.properties.id}).$promise;
     };
 
     var Maps = {
@@ -72,9 +98,15 @@ function (
             }
             return this.maps[name];
         },
+        destroyMap: function (name) {
+            if (this.maps[name]) {
+                delete this.maps[name];
+            }
+        },
         getInitialScope: function () {
             return {
                 defaults: {
+                    zoomControlPosition: 'bottomright',
                     scrollWheelZoom: false
                 },
                 center: { // Default to centered on Nairobi

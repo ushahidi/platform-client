@@ -1,0 +1,28 @@
+<fieldset overflow-toggle has-overflow="roles.length">
+    <legend translate="global_filter.who_its_visible_to">Who it's visible to</legend>
+
+    <div class="form-field radio">
+        <label>
+            <input type="radio" name="visible_to" ng-model="visible_to" value="everyone"> <span translate="nav.everyone">Everyone</span>
+        </label>
+    </div>
+
+    <div class="form-field radio" ng-repeat="role in roles" ng-class="{ overflow : ($index > 0) }">
+        <label>
+            <input type="radio" name="visible_to" ng-model="$parent.visible_to" value="{{ role.name }}"> {{ ::role.display_name }}
+        </label>
+    </div>
+    <div class="form-field radio" ng-class="{ overflow : (roles.length > 0) }">
+        <label>
+            <input type="radio" name="visible_to" ng-model="visible_to" value="draft">
+            <span translate="nav.only_you" ng-hide="hasPermission('Manage Posts')">Only you</span>
+            <span translate="nav.only_author" ng-show="hasPermission('Manage Posts')">Only the author (draft)</span>
+        </label>
+    </div>
+    <span class="form-field-toggle">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span translate="nav.more">More</span>
+    </span>
+</fieldset>

@@ -1,34 +1,62 @@
 module.exports = [function () {
     return {
-        showNotificationSlider: function (message) {
+        notify: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showAlerts: function (message) {
+        limit: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showSingleAlert: function (message) {
+        errors: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showApiErrors: function (message) {
+        errorsPretranslated: function (message) {
             return {
                 then: function (successCallback) {
                     successCallback();
                 }
             };
         },
-        showConfirm: function (message) {
+        error: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
+        apiErrors: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
+        confirm: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
+        confirmDelete: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
+        confirmModal: function (message, callbackEvent, buttonText, action) {
             return {
                 then: function (successCallback) {
                     successCallback();

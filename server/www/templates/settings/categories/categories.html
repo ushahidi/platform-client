@@ -1,0 +1,68 @@
+<div>
+	<layout-class layout="b"></layout-class>
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.categories</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+    <main role="main">
+
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="fab">
+                <a ng-href="/settings/categories/create" type="button" class="button button-alpha button-fab">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    <span class="hidden" translate>category.add_category</span>
+                </a>
+            </div>
+        </div>
+        <!-- end toolbar -->
+
+        <div class="main-col">
+
+            <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
+                <div class="alert" ng-hide="categories.length">
+                    <p ng-hide="categories.length"><em translate>empty.category</em></p>
+                </div>
+
+                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
+
+                    <div class="listing-item-select">
+                        <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title"><a ng-href="/settings/categories/{{category.id}}">{{category.tag}}</a></h2>
+                        <p class="listing-item-secondary">{{category.description}}</p>
+                    </div>
+
+                </div>
+                <listing-toolbar entities="categories" selected-set="selectedCategories">
+                    <button type="button" class="button-destructive" ng-disabled="!selectedCategories.length" ng-click="deleteCategories()">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                        </svg>
+                        <span class="button-label hidden">nav.delete</span>
+                    </button>
+                </listing-toolbar>
+           </div>
+
+           <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+
+        </div>
+
+    </main>
+</div>

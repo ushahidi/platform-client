@@ -26,11 +26,16 @@ describe('setting datasources controller', function () {
         $controller = _$controller_;
         Notify = _Notify_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 
     beforeEach(function () {
         spyOn($scope, '$emit').and.callThrough();
+        $rootScope.setLayout = function () {};
 
         $controller('settingDataSourcesController', {
             $scope: $scope,
@@ -56,9 +61,9 @@ describe('setting datasources controller', function () {
     });
 
     it('should save provider settings successfully', function () {
-        spyOn(Notify, 'showNotificationSlider');
+        spyOn(Notify, 'notify');
         $scope.saveProviderSettings('pass');
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should open the providers accordion group to show errors when form is invalid', function () {
@@ -69,9 +74,9 @@ describe('setting datasources controller', function () {
     });
 
     it('should show an error on save failure', function () {
-        spyOn(Notify, 'showApiErrors');
+        spyOn(Notify, 'apiErrors');
         $scope.saveProviderSettings('fail');
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 
 });

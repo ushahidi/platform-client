@@ -1,0 +1,82 @@
+<div>
+    <layout-class layout="c"></layout-class>
+    <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.settings</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+    <main role="main">
+
+        <div class="main-col">
+
+            <div class="listing card init" ng-show="hasManageSettingsPermission()">
+               <div class="listing-item" ng-show="hasPermission('Manage Settings')">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/general" translate>settings.settings_list.general</a></h2>
+                       <p class="listing-item-secondary" translate>settings.settings_list.general_desc</p>
+                   </div>
+               </div>
+
+               <div class="listing-item" ng-show="hasPermission('Manage Settings')">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/surveys" translate>settings.settings_list.surveys</a></h2>
+                       <p class="listing-item-secondary" translate>settings.settings_list.surveys_desc</p>
+                   </div>
+               </div>
+
+               <div class="listing-item" ng-show="hasPermission('Manage Settings')">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/datasources" translate>settings.settings_list.data_sources</a></h2>
+                       <p class="listing-item-secondary" translate>settings.settings_list.data_sources_desc</p>
+                   </div>
+               </div>
+
+               <div class="listing-item" ng-show="hasPermission('Bulk Data Import')">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/data-import" translate>settings.settings_list.import</a></h2>
+                       <p class="listing-item-secondary" translate>settings.settings_list.import_desc</p>
+                   </div>
+               </div>
+
+               <div class="listing-item" ng-show="hasPermission('Manage Users')">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/users" translate>settings.settings_list.users</a></h2>
+                       <p class="listing-item-secondary" translate>settings.settings_list.users_desc</p>
+                   </div>
+               </div>
+
+               <div class="listing-item" ng-show="isAdmin()">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/roles" translate>settings.settings_list.roles</a></h2>
+                       <p class="listing-item-secondary" translate>settings.settings_list.roles_desc</p>
+                   </div>
+               </div>
+
+               <div class="listing-item" ng-show="hasPermission('Manage Settings')">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/categories" translate>settings.settings_list.categories</a></h2>
+                       <p class="listing-item-secondary" translate>settings.settings_list.categories_desc</p>
+                   </div>
+               </div>
+
+               <div class="listing-item" ng-show="planIsAvailable">
+                   <div class="listing-item-primary">
+                       <h2 class="listing-item-title"><a href="/settings/plan" translate>settings.settings_list.plans</a></h2>
+                       <p class="listing-item-secondary"  translate-values="{ current_plan: tierNames[tier] }" translate>settings.settings_list.plan_desc</p>
+                   </div>
+               </div>
+           </div>
+        </div>
+    </main>
+</div>

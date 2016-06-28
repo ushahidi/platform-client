@@ -1,0 +1,30 @@
+<div class="metadata">
+    <!-- todo: cleanup / combine this line into a single translation string -->
+    <span ng-show="post.user" class="metadata-author"><img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">{{ post.user.realname }}</span>
+    <span ng-show="post.contact" class="metadata-author">{{ post.contact.contact }}</span>
+
+    <span title="{{ displayTimeFull }}">{{ displayTime }}</span>
+
+    <span translate-values="{ source : source }" translate="post.source"></span>
+
+    <span class="metadata-visibility public tooltip" ng-show="visibleTo == 'everyone'">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#globe"></use>
+        </svg>
+        <span class="bug" translate="post.visible_to_public">This post is visible to the public</span>
+    </span>
+
+    <span class="metadata-visibility tooltip" ng-show="visibleTo == 'draft'">
+        <svg class="iconic">
+          <use xlink:href="../../img/iconic-sprite.svg#lock-locked"></use>
+        </svg>
+        <span class="bug"  translate="post.visible_to_you">This post is only visible to you</span>
+    </span>
+
+    <span class="metadata-visibility tooltip" ng-show="visibleTo != 'everyone' && visibleTo != 'draft'">
+        <svg class="iconic">
+          <use xlink:href="../../img/iconic-sprite.svg#lock-locked"></use>
+        </svg>
+        <span class="bug" translate="post.visible_to_roles" translate-values="{ roles : visibleTo }">This post is only visible to Editors</span>
+    </span>
+</div>

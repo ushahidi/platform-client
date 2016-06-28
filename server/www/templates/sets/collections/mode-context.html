@@ -1,0 +1,114 @@
+<div class="mode-context init" dropdown>
+    <header class="mode-context-header">
+        <ol class="breadcrumbs" ng-controller="navigation as nav">
+            <li><a href="/">{{ nav.site.name }}</a></li>
+        </ol>
+        <h1 class="mode-context-title">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#grid-three-up"></use>
+            </svg>
+            {{collection.name}}
+        </h1>
+    </header>
+
+    <span class="mode-context-trigger" dropdown-toggle>
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span class="label hidden" translate>app.show_more_less</span>
+    </span>
+    <div class="mode-context-body">
+        <!--// IF: Saved Search has description //-->
+        <p ng-if="collection.description">{{collection.description}}</p>
+        <!--// END IF //-->
+
+        <div class="metadata">
+            <span ng-if="collection.user">
+                <span translate='app.created_by' translate-values="{ author : collection.user.realname }">Created by</span>
+            </span>
+            <span class="metadata-visibility public tooltip">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#globe"></use>
+                </svg>
+                <span class="bug" translate="collection.visible_to_public">This Collection is visible to the public</span>
+            </span>
+
+            <!--// IF: User has permission to edit the Saved Search //-->
+            <div class="form-field" ng-if="canEdit" dropdown>
+                <button type="button" data-modal="edit-collection" ng-click="editCollection()">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pencil"></use>
+                    </svg>
+                    <span class="button-label" translate>app.edit</span>
+                </button>
+
+                <button type="button" data-toggle="dropdown-menu" class="init" dropdown-toggle>
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
+                    </svg>
+                    <span class="button-label hidden" translate>app.more</span>
+                </button>
+                <ul class="dropdown-menu init" dropdown-menu>
+                    <li ng-if="showNotificationLink">
+                        <a ng-click="saveNotification(collection)">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                            </svg>
+                            <span class="label" ng-click="saveNotification(collection)" translate="app.get_notifications">Get notifications</span>
+                        </a>
+                    </li>
+                    <li ng-if="!showNotificationLink">
+                        <a ng-click="removeNotification(collection)">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                            </svg>
+                            <span class="label" translate="app.turn_off_notifications">Turn off notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="deleteCollection()">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                            </svg>
+                            <span class="label" translate="app.delete"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--// END IF //-->
+
+            <!--// IF: User does not have permission to edit the Saved Search //-->
+            <div class="form-field" ng-if="!canEdit && $root.loggedin">
+                <!-- // IF: User is not yet getting notifications about this Saved Search //-->
+                <button type="button" ng-if="showNotificationLink" ng-click="saveNotification(collection)">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                    </svg>
+                    <span class="button-label" translate="app.get_notifications">Get notifications</span>
+                </button>
+
+                <!--// ELSE //-->
+
+                <button type="button" ng-if="!showNotificationLink" class="button-flat">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#bell"></use>
+                    </svg>
+                    <span class="button-label" translate="app.turn_off_notifications">Turn off notifications</span>
+                </button>
+                <!--// END IF //-->
+            </div>
+            <!--// END IF //-->
+        </div>
+        <div class="form-field">
+            <a ng-href="/views/{{collection.view}}" type="button" class="button-link">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#arrow-left"></use>
+                </svg>
+                <span class="button-label" translate="app.return_to_all_posts">Return to all posts</span>
+            </a>
+        </div>
+
+        <post-active-filters></post-active-filters>
+
+    </div>
+</div>

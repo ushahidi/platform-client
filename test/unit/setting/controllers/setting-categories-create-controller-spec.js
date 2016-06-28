@@ -29,6 +29,10 @@ describe('setting categories create controller', function () {
         $controller = _$controller_;
         Notify = _Notify_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 
@@ -49,14 +53,14 @@ describe('setting categories create controller', function () {
     });
 
     it('should save a tag and update the path', function () {
-        spyOn(Notify, 'showNotificationSlider');
-        $scope.saveTag({id: 'pass'});
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        spyOn(Notify, 'notify');
+        $scope.saveCategory({id: 'pass'});
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should show an error on save failure', function () {
-        spyOn(Notify, 'showApiErrors');
-        $scope.saveTag({id: 'fail'});
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        spyOn(Notify, 'apiErrors');
+        $scope.saveCategory({id: 'fail'});
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 });

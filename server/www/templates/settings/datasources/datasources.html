@@ -1,0 +1,134 @@
+<div>
+    <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+            <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.data_sources</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+
+        <div class="main-col">
+
+            <div class="alert">
+                <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
+            </div>
+
+            <div class="listing card" ng-repeat="provider in providers.results | orderBy:'name'">
+
+                <!-- TODO: fix active class toggle -->
+                <div class="listing-item active" is-open="panelVisible[provider.id]"  dropdown auto-close="disabled" ng-if="available_providers[provider.id]">
+
+                    <div class="listing-item-secondary">
+                        <button type="button" class="button-beta button-flat listing-item-toggle" dropdown-toggle>
+                            <svg class="iconic">
+                              <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                            <span class="button-label" translate>settings.data_sources.configure</span>
+                        </button>
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title">
+                            {{provider.name}}
+                            <span class="status-indicator" ng-class="{ 'green' : available_providers[provider.id] && settings.providers[provider.id] }"></span>
+                        </h2>
+                    </div>
+
+                    <div class="listing-item-body" dropdown-menu>
+
+                        <div class="alert error" ng-if="forms[provider.id].$invalid">
+                            <p translate>settings.data_sources.hint_plugin_needs_configuring</p>
+                        </div>
+
+                        <div class="alert" ng-if="!available_providers[provider.id]">
+                            <p translate translate-values="{value: '{{provider.name}}'}">
+                                settings.data_sources.unavailable
+                            </p>
+                        </div>
+
+                        <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" ng-if="available_providers[provider.id]">
+
+                            <div class="form-field switch" ng-if="forms[provider.id].$valid">
+                                <label translate>settings.data_sources.enable_provider_message</label>
+                                <div class="toggle-switch">
+                                    <input class="tgl" id="{{provider.id}}_enable" type="checkbox" ng-model="settings.providers[provider.id]" ng-change="saveProviderSettings(provider.id)">
+                                    <label class="tgl-btn" for="{{provider.id}}_enable"></label>
+                               </div>
+                            </div>
+
+                            <div ng-repeat="(option_key, option) in provider.options track by option_key" ng-class="{ error : formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid, 'form-field' : option.input !== 'radio', 'required' : option.rules.indexOf('required') > -1 }">
+
+                                <div class="" ng-if="option.input == 'read-only-text'">
+                                    <label ng-if="option.label" class="input-label">{{option.label}}</label>
+                                    <p ng-bind-html="option.description"></p>
+                                </div>
+
+                                <div class="form-field" ng-if="option.input == 'text'">
+                                    <label ng-if="option.label">
+                                        {{option.label}}
+                                    </label>
+
+                                    <p ng-if="option.description">
+                                        {{option.description}}
+                                    </p>
+
+                                    <input ng-if="option.rules.indexOf('number') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="number" ng-pattern="/^\d+$/" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                                    <input ng-if="option.rules.indexOf('email') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                                    <input ng-if="option.rules.indexOf('password') > -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="password" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                                    <input ng-if="option.rules.indexOf('number') == -1 && option.rules.indexOf('email') == -1 && option.rules.indexOf('password') == -1" id="{{provider.id}}_{{option_key}}" name="{{option_key}}" type="{{option.input}}" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving" ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}">
+                                </div>
+
+                                <fieldset ng-if="option.input == 'radio'">
+                                    <label ng-if="option.label">
+                                        {{option.label}}
+                                    </label>
+
+                                    <p ng-if="option.description">
+                                        {{option.description}}
+                                    </p>
+
+                                    <div class="form-field radio" ng-repeat="radio_option in option.options track by $index">
+                                        <label for="{{provider.id}}_{{option_key}}_{{$index}}">
+                                            <input id="{{provider.id}}_{{option_key}}_{{$index}}" type="{{option.input}}" name="{{option_key}}" ng-value="radio_option" ng-model="settings[provider.id][option_key]" ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving">{{radio_option}}
+                                        </label>
+                                    </div>
+                                </fieldset>
+
+                                <div class="alert error" ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid">
+                                    <p translate>settings.generic_field_error</p>
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="button-alpha">
+                                <div class="loading" ng-show="saving">
+                                    <div class="line"></div>
+                                    <div class="line"></div>
+                                    <div class="line"></div>
+                                </div>
+                                <span ng-hide="saving" translate>app.save</span>
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>

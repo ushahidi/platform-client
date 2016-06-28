@@ -6,40 +6,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/fonts/Lato/css/fonts.css" rel="stylesheet" type="text/css">
         <!-- @todo minify CSS -->
-        <link rel="stylesheet" href="/css/style.css" ng-href="{{rtlEnabled ? '/css/rtl-style.css' : '/css/style.css'}}">
         <link rel="stylesheet" href="/css/vendor.css">
+        <link rel="stylesheet" href="/css/style.css" ng-href="{{rtlEnabled ? '/css/rtl-style.css' : '/css/style.css'}}">
         <script src="/config.js"></script>
 
         <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
-        <meta name="description" content="{{pageDescription}}">
-        <meta name="keywords" content="{{pageKeywords}}">
-        <meta name="robots" content="{{pageRobots}}">
+        <meta name="description" ng-attr-content="{{pageDescription}}">
+        <meta name="keywords" ng-attr-content="{{pageKeywords}}">
+        <meta name="robots" ng-attr-content="{{pageRobots}}">
         <base href="/">
     </head>
 
-    <body ng-class="{ rtl : rtlEnabled }" class="has-dynamic-header" canvas>
+    <!-- TODO: set layouts per view directive -->
+    <body ng-class="{ rtl : rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }}" canvas>
         <div id="bootstrap-loading">
-            <header class="header header-full overlay" role="banner">
-                <div class="container">
-                    <div class="color-overlay">
-                        <div class="parallax">
-                            <h1 class="beta"><i class="fa fa-refresh fa-4 fa-spin"></i></h1>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <!-- loading the document -->
+            <div class="loading">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <!-- end loading the document -->
         </div>
 
         <div id="bootstrap-error" class="hidden">
-            <header class="header header-full overlay" role="banner">
-                <div class="container">
-                    <div class="color-overlay">
-                        <div class="parallax">
-                            <h1 class="beta"><img style="max-width: 50px; margin: auto;" src="img/ushahidi-logo.svg" alt="Ushahidi Logo"></h1>
-                        </div>
-                    </div>
-                </div>
-            </header>
             <div class="wrapper">
                 <main class="page-content">
                     <div class="alert error">
@@ -50,67 +40,19 @@
         </div>
 
         <div id="bootstrap-app" class="hidden">
-            <header class="header header-full overlay" ng-class="{ 'header-full' : isHome, 'header-compact': !isHome }" role="banner" ng-controller="navigation">
-                <div class="container">
-                    <div class="hero-image" ng-if="site.image_header">
-                         <img ng-src="{{site.image_header}}" alt="" />
-                    </div>
 
-                    <div class="color-overlay">
-                        <div class="parallax">
-                            <div class="nav-icon" off-canvas-toggle>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <a ng-href="/">
-                                <h1 class="beta" ng-bind="site.name"></h1>
-                            </a>
-                            <p class="header-description" ng-bind="site.description"></p>
+            <mode-bar current-user="currentUser"></mode-bar>
 
-                            <div class="create-admin">
-                              <a class="button button-primary" ng-href="/posts/create"
-                                 ng-show="canCreatePost()">
-                                    <span class="icon-left fa-plus" translate>nav.add_post</span>
-                                </a>
+            <collection-listing></collection-listing>
+            <collection-editor></collection-editor>
 
-                                <ng-include src="'templates/partials/user-menu.html'"></ng-include>
-                            </div>
-                        </div>
-                    </div>
+            <ng-view></ng-view>
 
-                </div>
-            </header>
-
-            <!-- Keep .canvas separate from ng-view otherwise offcanvas behaviour breaks on view change -->
-            <div class="wrapper">
-                <ng-include src="'templates/partials/main-menu.html'"></ng-include>
-
-                <ng-view></ng-view>
-            </div>
-
-            <div class="wrapper">
-                <ng-include src="'templates/partials/notification-system.html'"></ng-include>
-            </div>
-
-            <footer role="contentinfo" ng-controller="navigation">
-                <div class="wrapper">
-                    <div class="footer-container">
-                        <h2 ng-bind="site.name"></h2>
-                        <p ng-bind="site.description"></p>
-                        <ul class="footer-nav">
-                            <li><a ng-href="/" translate>nav.home</a></li>
-                            <!-- <li><a ng-href="/about" translate>nav.about</a></li> -->
-                            <li><a ng-href="/activity" translate>nav.activity</a></li>
-                            <li><a href="http://docs.ushahidi.com" translate>app.documentation</a></li>
-                            <li><a href="https://github.com/ushahidi/platform/issues/new" translate>app.report_a_bug</a></li>
-                            <li><a ng-href="/tools/settings" ng-show="hasManageSettingsPermission()" translate>nav.settings</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
-
+            <!-- TODO: fix and uncomment
             <first-time-config></first-time-config>
+            -->
+            <ush-slider></ush-slider>
+            <ush-modal-container></ush-modal-container>
         </div>
 
         <script src="/js/bundle.js"></script>
@@ -174,7 +116,7 @@
             })();
         </script>
         <ng-include src="'templates/partials/intercom-system.html'"></ng-include>
-        
+
         <script>
             if (window.ushahidi && window.ushahidi.gaEnabled) {
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

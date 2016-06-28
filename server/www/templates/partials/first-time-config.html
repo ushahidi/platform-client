@@ -39,7 +39,7 @@
         <div class="divider white"></div>
 
         <button class="save" ng-click="updateConfig()" ng-disabled="form.$invalid || isUnchanged(site) || saving_config">
-            <i class="fa fa-cog fa-spin" ng-show="saving_config"></i>
+            <div class="loading" ng-show="saving_config"><div class="line"></div><div class="line"></div><div class="line"></div></div>
             <span translate>settings.continue</span>
         </button>
         <a class="cta" ng-click="skip()" ng-show="hasName" translate>settings.skip</a>

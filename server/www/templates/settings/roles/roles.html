@@ -1,42 +1,55 @@
-<main custom-roles class="page-content" role="main">
-    <div class="page-header">
-        <ul class="breadcrumb">
-          <li>
-              <a ng-href="/settings" translate>nav.settings</a>
-          </li>
-          <li translate>nav.roles</li>
-        </ul>
-        <div class="page-header-body">
-            <h1 class="page-title" translate>tool.manage_roles</h1>
-        </div>
-        <div ng-show="rolesEnabled" class="page-header-actions">
-            <a ng-href="/settings/roles/create" class="button-secondary">
-                <span class="icon-left fa-plus" translate>role.add_role</span>
-            </a>
-        </div>
+<div>
+    <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.roles</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
     </div>
 
-    <div class="main-col" ng-show="!rolesEnabled">
-        <div class="alert" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom roles'}">
-        </div>
-    </div>
+    <main role="main">
 
-    <div class="main-col" ng-show="rolesEnabled">
-        <div class="divider white"></div>
-
-        <div class="alert" ng-hide="roles.length">
-            <p ng-hide="roles.length"><em translate>empty.role</em></p>
-        </div>
-
-        <div ng-show="roles.length">
-            <div class="settings-listing" ng-repeat="role in roles | orderBy:'role'">
-                <h3 class="settings-listing-title">
-                    <a ng-href="/settings/roles/{{role.id}}">{{role.display_name}}</a>
-               </h3>
-               <div class="actions">
-                  <button type="button" ng-click="deleteRole(role)" class="button-destructive alt"></button>
-               </div>
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="fab" ng-show="rolesEnabled">
+                <a ng-href="/settings/roles/create" type="button" class="button button-alpha button-fab">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    <span class="hidden" translate>role.add_role</span>
+                </a>
             </div>
         </div>
-    </div>
-</main>
+        <!-- end toolbar -->
+
+        <div custom-roles class="main-col">
+
+            <div class="alert" ng-show="!rolesEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom roles'}"></div>
+
+            <div class="alert" ng-hide="roles.length">
+                <p ng-hide="roles.length"><em translate>empty.role</em></p>
+            </div>
+
+            <div class="listing card" ng-show="roles.length" ng-show="rolesEnabled">
+                <div class="listing-item" ng-repeat="role in roles | orderBy:'role'">
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title"><a ng-href="/settings/roles/{{role.id}}">{{role.display_name}}</a></h2>
+                    </div>
+                </div>
+            </div>
+
+            <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></pagination>
+
+        </div>
+    </main>
+</div>

@@ -2,53 +2,44 @@ module.exports = [
     '$scope',
     '$translate',
     '$routeParams',
-    '_',
-    'GlobalFilter',
+    'PostFilters',
     'collection',
-    'NotificationEndpoint',
-    'Notify',
+    'UserEndpoint',
+    '_',
     function (
         $scope,
         $translate,
         $routeParams,
-        _,
-        GlobalFilter,
+        PostFilters,
         collection,
-        NotificationEndpoint,
-        Notify
+        UserEndpoint,
+        _
     ) {
         // Set view based on route or set view
         $scope.currentView = function () {
             return $routeParams.view || collection.view;
         };
 
+        $scope.$emit('event:collection:show', collection);
+        $scope.$on('$destroy', function () {
+            $scope.$emit('event:collection:close');
+        });
+
         // Add set to the scope
         $scope.collection = collection;
-
+        $scope.getCollectionUser = function () {
+            return $scope.collection.user ? UserEndpoint.get({id: $scope.collection.user.id}) : undefined;
+        };
+        $scope.collection.user = $scope.getCollectionUser();
         // Set the page title
         $translate('post.posts').then(function (title) {
             $scope.title = title;
             $scope.$emit('setPageTitle', title);
         });
 
-        // Check if we can edit
-        $scope.canEdit = function () {
-            return _.contains(collection.allowed_privileges, 'update');
-        };
-
-        // @todo: Integrate the modal state controller into a globally accessible
-        // directive which binds the same logic but does not effect markup
-        // This is related to the same functionality in the common controller
-        // navigation.js
-        $scope.isOpen = {};
-        $scope.isOpen.data = false;
-        $scope.setIsOpen = function () {
-            $scope.isOpen.data = !$scope.isOpen.data;
-        };
-
         // Extend filters, always adding the current collection id
         var extendFilters = function (filters) {
-            filters = _.extend({ set : [] }, filters);
+            filters = angular.copy(filters, { set : [] });
             filters.set.push(collection.id);
             return filters;
         };
@@ -56,34 +47,13 @@ module.exports = [
         // whenever the GlobalFilter post query changes,
         // update the current list of posts
         $scope.$watch(function () {
-            return JSON.stringify(GlobalFilter.getPostQuery());
+            return PostFilters.getFilters();
         }, function (newValue, oldValue) {
-            $scope.filters = extendFilters(GlobalFilter.getPostQuery());
-        });
+            $scope.filters = extendFilters(newValue);
+        }, true);
 
         // Reset GlobalFilter + add set filter
-        GlobalFilter.clearSelected();
-        $scope.filters = extendFilters({});
-
-        // Show Add Notification link
-        $scope.showNotificationLink = false;
-
-        NotificationEndpoint.query({set: collection.id, ignore403: true, user: 'me'}, function (notifications) {
-            // show link if subscription does not exist
-            $scope.showNotificationLink = notifications.length === 0;
-        });
-
-        $scope.saveNotification = function (collection) {
-            var notification = {set: collection.id};
-
-            NotificationEndpoint.save(notification).$promise.then(function (notification) {
-                // No need to show the link after subscription
-                $scope.showNotificationLink = false;
-                $translate('notify.notification.add', {set: collection.name})
-                    .then(function (message) {
-                        Notify.showNotificationSlider(message);
-                    });
-            });
-        };
+        PostFilters.clearFilters();
+        $scope.filters = extendFilters(PostFilters.getFilters());
     }
 ];

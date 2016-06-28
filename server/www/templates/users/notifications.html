@@ -1,0 +1,208 @@
+<div class="account-tab">
+  <div class="listing">
+
+    <h3 class="listing-heading" ng-if="contacts.length !== 0" translate>notification.contacts_heading</h3>
+
+    <div class="listing-item"
+         ng-repeat="contact in contacts"
+         ng-class="{'active': contact.active}">
+      <div class="listing-item-secondary">
+        <button type="button" class="button-link" ng-click="toggleActive(contact)">
+          <svg class="iconic">
+            <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+          </svg>
+          <span class="button-label" translate>contact.configure</span>
+        </button>
+      </div>
+
+      <div class="listing-item-primary">
+        <h2 class="listing-item-title">
+          {{contact.contact}}
+          <span class="status-indicator" ng-class="{green: contact.can_notify}"></span>
+        </h2>
+      </div>
+
+      <!-- Edit existing contact -->
+      <div class="listing-item-body">
+
+        <div class="form-field switch">
+          <label translate>notification.send_to_address</label>
+          <div class="toggle-switch">
+            <input class="tgl"
+                   id="{{contact.id || false}}"
+                   type="checkbox"
+                   ng-model="contact.can_notify">
+            <label class="tgl-btn" for="{{contact.id || false}}"></label>
+          </div>
+        </div>
+
+        <form name="editContactForm">
+
+          <div class="form-field">
+            <label ng-if="contact.type === 'email'"
+                   class="input-label"
+                   ng-class="{ 'error': editContactForm.contact.$invalid && editContactForm.contact.$dirty, 'success': editContactForm.contact.$valid }"
+                   for="contact" translate>contact.edit_email_address</label>
+            <label ng-if="contact.type === 'phone'"
+                   class="input-label"
+                   for="contact" translate>contact.edit_phone_number</label>
+            <p ng-repeat="(error, value) in editContactForm.contact.$error"
+               ng-if="contact.type === 'email'"
+               ng-show="editContactForm.contact.$dirty"
+               class="alert error"
+               translate="{{'contact.valid.email.' + error}}"></p>
+            <p ng-repeat="(error, value) in editContactForm.contact.$error"
+               ng-if="contact.type === 'phone'"
+               ng-show="editContactForm.contact.$dirty"
+               class="alert error"
+               translate="{{'contact.valid.phone.' + error}}"></p>
+
+            <input name="contact"
+                   id="contact"
+                   ng-if="contact.type === 'email'"
+                   type="email"
+                   ng-class="{ 'error': editContactForm.contact.$invalid && editContactForm.contact.$dirty }"
+                   ng-maxlength="150"
+                   ng-model="contact.contact"
+                   required>
+            <input name="contact"
+                   id="contact"
+                   ng-if="contact.type === 'phone'"
+                   type="text"
+                   ng-class="{ 'error': editContactForm.contact.$invalid && editContactForm.contact.$dirty }"
+                   ng-maxlength="25"
+                   ng-model="contact.contact"
+                   ng-pattern="/^\d+$/"
+                   required>
+          </div>
+        </form>
+
+        <div class="form-field" ng-if="!contact.isLoginEmail">
+          <button class="button-destructive" ng-click="deleteContact(contact)" translate>contact.button.delete</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Add contact-->
+
+    <div class="listing-item"
+         ng-class="{'active': contact.active}"
+         ng-if="canAddContact">
+      <div class="listing-item-primary">
+        <h2 class="listing-item-title">
+          <a class="button button-flat"
+             ng-click="toggleActive(contact)"
+             translate>
+            <svg class="iconic">
+              <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+            </svg>
+            contact.button.add
+          </a>
+        </h2>
+      </div>
+
+      <div class="listing-item-body">
+        <form name="addContactForm">
+          <div class="form-field">
+            <label class="radio-label" for="email">
+              <input ng-model="contact.type"
+                     name="email" value="email" id="email" type="radio"
+                     checked="checked">
+              {{'contact.type.email' | translate}}
+            </label>
+          </div>
+
+          <div class="form-field">
+            <label class="radio-label" for="phone">
+              <input ng-model="contact.type"
+                     name="phone" value="phone" id="phone" type="radio">
+              {{'contact.type.phone' | translate}}
+            </label>
+          </div>
+
+          <div class="form-field">
+            <label ng-if="contact.type === 'email'"
+                   class="input-label"
+                   ng-class="{ 'error': addContactForm.contact.$invalid && addContactForm.contact.$dirty, 'success': addContactForm.contact.$valid }"
+                   for="contact" translate>contact.add_email_address</label>
+            <label ng-if="contact.type === 'phone'"
+                   class="input-label"
+                   for="contact" translate>contact.add_phone_number</label>
+
+            <p ng-repeat="(error, value) in addContactForm.contact.$error"
+               ng-if="contact.type === 'email'"
+               ng-show="addContactForm.contact.$dirty"
+               class="alert error"
+               translate="{{'contact.valid.email.' + error}}"></p>
+            <p ng-repeat="(error, value) in addContactForm.contact.$error"
+               ng-if="contact.type === 'phone'"
+               ng-show="addContactForm.contact.$dirty"
+               class="alert error"
+               translate="{{'contact.valid.phone.' + error}}"></p>
+            <input name="contact"
+                   id="contact"
+                   ng-if="contact.type === 'email'"
+                   type="email"
+                   placeholder="{{'contact.add_email_address' | translate}}"
+                   ng-class="{ 'error': addContactForm.contact.$invalid && addContactForm.contact.$dirty }"
+                   ng-maxlength="150"
+                   ng-model="contact.contact"
+                   required>
+            <input name="contact"
+                   id="contact"
+                   ng-if="contact.type === 'phone'"
+                   type="text"
+                   placeholder="{{'contact.add_phone_number' | translate}}"
+                   ng-class="{ 'error': addContactForm.contact.$invalid && addContactForm.contact.$dirty }"
+                   ng-maxlength="25"
+                   ng-model="contact.contact"
+                   ng-pattern="/^\d+$/"
+                   required>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+
+  <div class="listing" ng-if="notifications.length !== 0">
+    <h3 class="listing-heading" translate>notification.notifications_heading</h3>
+
+    <div ng-repeat="notification in notifications"
+         class="listing-item">
+      <div class="listing-item-secondary">
+        <button type="button" class="button-link" ng-click="deleteNotification(notification)">
+          <svg class="iconic">
+            <use xlink:href="../../img/iconic-sprite.svg#circle-x"></use>
+          </svg>
+          <span class="button-label" translate>notification.button.delete</span>
+        </button>
+      </div>
+
+      <div class="listing-item-primary">
+        <div class="listing-item-image">
+          <svg class="iconic">
+            <use xlink:href="../../img/iconic-sprite.svg#star"></use>
+          </svg>
+        </div>
+
+        <h2 class="listing-item-title">{{notification.name}}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-field">
+    <button type="button" class="button-link" ng-click="cancel()" translate>user_profile.button.cancel</button>
+    <button type="button" class="button-alpha"
+            ng-disabled="!canAdd() && !canUpdate()"
+            ng-click="saveContacts()">
+      <div class="loading" ng-show="saving"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+      <span translate>user_profile.button.save</span>
+    </button>
+
+  </div>
+</div>
+

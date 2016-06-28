@@ -24,10 +24,15 @@ describe('setting data mapper controller', function () {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 
     beforeEach(function () {
+        $rootScope.setLayout = function () {};
         $controller('settingDataMapperController', {
             $scope: $scope,
             initialData: {form: 1, csv: 1},

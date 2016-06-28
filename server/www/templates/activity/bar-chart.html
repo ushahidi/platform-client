@@ -1,0 +1,21 @@
+<div class="graph-view">
+    <fieldset class="custom-fieldset init" dropdown is-open="compareIsOpen">
+        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+            <span class="legend-label" translate="graph.compare" ng-show="compareIsOpen">Compare...</span>
+            <span class="legend-label" translate="graph.compare_{{groupBy.value || 'all'}}" ng-hide="compareIsOpen">Compare...</span>
+            <svg class="iconic chevron">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        </legend>
+
+        <div class="dropdown-menu init" dropdown-menu>
+            <div class="form-field radio" ng-repeat="(key, value) in groupByOptions">
+                <label>
+                    <input type="radio" ng-value="key" ng-model="groupBy.value" ng-change="reload()"> {{::value | translate}}
+                </label>
+            </div>
+        </div>
+    </fieldset>
+
+    <nvd3 options='options' data='data'></nvd3>
+</div>

@@ -1,0 +1,40 @@
+<div>
+
+    <div class="form-field" ng-if="mapSettingsReady">
+        <label class="input-label" translate>settings.map_default_location</label>
+        <leaflet defaults="defaults" tiles="baselayer" markers="markers" center="center" height="300px" width="100%"></leaflet>
+    </div>
+
+    <div class="form-field">
+        <label translate>settings.map_default_baselayer</label>
+        <select id="map-settings-base-layer" class="form-control" ng-model="map.default_view.baselayer" ng-change="updateMapPreview()" ng-options="index as layer.name for (index, layer) in layers.baselayers">
+        </select>
+    </div>
+
+    <div class="form-field">
+       <label class="input-label"
+            ng-class="{'error': map.latitude.$valid}"
+            for="map-settings-latitude" translate>settings.map_default_latitude</label>
+        <input name="latitude" id="map-settings-latitude" type="number" step="any" ng-min="-90" ng-max="90" required
+            ng-class="{'error': map.latitude.$valid}"
+            ng-model="map.default_view.lat" ng-pattern="patternFloat" ng-change="updateMapPreview()" />
+    </div>
+
+    <div class="form-field">
+        <label class="input-label"
+            ng-class="{'error': map.latitude.$valid}"
+            for="map-settings-longitude" translate>settings.map_default_longitude</label>
+        <input name="longitude" id="map-settings-longitude" type="number" step="any" ng-min="-180" ng-max="180" required
+            ng-class="{'error': map.longitude.$valid}"
+            ng-model="map.default_view.lon" ng-pattern="patternFloat" ng-change="updateMapPreview()" />
+    </div>
+
+    <div class="form-field">
+        <label class="input-label" for="map-settings-zoom" translate>settings.map_default_zoom_level</label>
+        <input id="map-settings-zoom" type="number" ng-min="minZoom" ng-max="maxZoom" required class="form-control" ng-model="map.default_view.zoom" ng-pattern="onlyNumbers" ng-change="updateMapPreview()" />
+    </div>
+    <div class="form-field checkbox">
+        <input type="checkbox" ng-model="map.clustering" id="map-settings-clustering">
+        <label for="map-settings-clustering" translate>settings.map_clustering</label>
+    </div>
+</div>

@@ -1,45 +1,60 @@
-<main importer-csv class="page-content" role="main">
-    <div class="page-header">
-        <ul class="breadcrumb">
-            <li translate>
-                nav.settings
-            </li>
-        </ul>
-        <h1 translate>data_import.import</h1>
-    </div>
+<div>
+    <!-- mode-context needs to be in each template -->
+    <mode-context-settings settings-view="'import'"></mode-context-settings>
 
-    <div class="main-col" ng-show="!csvEnabled">
-        <div class="alert" translate="feature_limits.view_unavailable" translate-values="{value: 'Bulk data import'}">
-        </div>
-    </div>
+    <main role="main">
 
-    <div class="main-col" ng-show="csvEnabled">
-        <form class="dk-bg" name="upload">
-            <h2 translate>data_import.csv</h2>
-            <p><em translate>data_import.import_explanation_csv</em></p>
-            <p><em translate>data_import.import_explanation_file_size</em></p>
-            <p><em translate>data_import.import_explanation_required_fields</em></p>
-            <p><em translate>data_import.import_explanation_format_location_1</em></p>
-            <div class="divider padded"></div>
-            <div class="form-field">
-                <label translate>data_import.post_type</label>
-                <div class="custom-select init">
-                    <select ng-model="formId" required>
-                        <option value="" selected="selected" translate>data_import.select_post_type</option>
-                        <option value="{{form.id}}" ng-repeat="form in forms">
-                            {{form.name}}
-                        </option>
-                    </select>
+        <div class="main-col" importer-csv>
+
+            <ol class="progress">
+               <li class="active" translate>data_import.choose_file</li>
+               <li class="disabled" translate>data_import.organize_data</li>
+               <!--
+               <li class="disabled" translate>data_import.configure_posts</li>
+               -->
+            </ol>
+
+            <div class="alert" translate="feature_limits.view_unavailable" translate-values="{value: 'Bulk data import'}" ng-show="!csvEnabled">
+            </div>
+
+            <form name="upload" ng-show="csvEnabled">
+
+                <div class="form-sheet">
+                    <div class="form-sheet-summary">
+                        <h2 class="form-sheet-title" translate>data_import.csv</h2>
+                        <p translate>data_import.import_explanation_csv</p>
+                        <ul>
+                            <li translate>data_import.import_explanation_file_size</li>
+                            <li translate>data_import.import_explanation_required_fields</li>
+                            <li translate>data_import.import_explanation_format_location_1</li>
+                        </ul>
+                    </div>
+
+                    <div class="form-field select">
+                        <label translate>data_import.post_type</label>
+                       <div class="custom-select">
+                           <select ng-model="formId" required>
+                               <option value="" selected="selected" translate>data_import.select_post_type</option>
+                               <option value="{{form.id}}" ng-repeat="form in forms">
+                                   {{form.name}}
+                               </option>
+                           </select>
+                       </div>
+                    </div>
+
+                    <div class="form-field">
+                       <label translate>data_import.file_csv</label>
+                       <file-upload file-container="fileContainer" required>
+                       </file-upload>
+                    </div>
+
+                    <div class="form-field">
+                        <button class="button-alpha" type="submit" ng-disabled="upload.$invalid" ng-click="importCSV()" translate>data_import.import_csv</button>
+                    </div>
                 </div>
-            </div>
-            <div class="form-field">
-                <label translate>data_import.file_csv</label>
-                <file-upload file-container="fileContainer" required>
-                </file-upload>
-            </div>
-            <div class="form-field">
-                <button ng-disabled="upload.$invalid" ng-click="importCSV()" type="submit" translate>data_import.import_csv</button>
-            </div>
-        </form>
-    </div>
-</main>
+
+            </form>
+        </div>
+
+    </main>
+</div>

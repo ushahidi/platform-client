@@ -1,6 +1,8 @@
 module.exports = [
     '$q',
     '$scope',
+    '$rootScope',
+    '$location',
     '$translate',
     'ConfigEndpoint',
     'DataProviderEndpoint',
@@ -10,6 +12,8 @@ module.exports = [
 function (
     $q,
     $scope,
+    $rootScope,
+    $location,
     $translate,
     ConfigEndpoint,
     DataProviderEndpoint,
@@ -17,6 +21,16 @@ function (
     _,
     Features
 ) {
+
+    // Redirect to home if not authorized
+    if ($rootScope.hasManageSettingsPermission() === false) {
+        return $location.path('/');
+    }
+
+    // Change layout class
+    $rootScope.setLayout('layout-c');
+    // Change mode
+    $scope.$emit('event:mode:change', 'settings');
 
     // Displays a loading indicator when busy querying endpoints.
     $scope.saving = false;
@@ -50,15 +64,13 @@ function (
             $scope.settings.id = 'data-provider';
             ConfigEndpoint.saveCache($scope.settings).$promise.then(function (result) {
                 $scope.saving = false;
-                $translate('notify.datasource.save_success').then(function (message) {
-                    Notify.showNotificationSlider(message);
-                });
+                Notify.notify('notify.datasource.save_success');
 
                 // Track saved provider
                 addSavedProvider(provider);
 
             }, function (errorResponse) { // error
-                Notify.showApiErrors(errorResponse);
+                Notify.apiErrors(errorResponse);
             });
 
             // No errors found; disable this.

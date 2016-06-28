@@ -1,0 +1,134 @@
+<div>
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/users" translate>app.users</a></li>
+            </ol>
+            <h1 class="mode-context-title" ng-show="user.id" translate>app.edit_user</h1>
+            <h1 class="mode-context-title" ng-show="!user.id" translate>app.add_user</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+
+        <div custom-users-editor class="main-col">
+
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                    <button class="button-alpha" type="button" ng-click="saveUser(user)" type="submit" ng-disabled="form.$invalid" translate>
+                        <div class="loading" ng-show="saving">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span ng-hide="saving" translate>app.save</span>
+                    </button>
+                </div>
+            </div>
+            <!-- end toolbar -->
+
+            <form name="form">
+                <div class="form-sheet">
+                    <div class="form-field title" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
+                        <label class="hidden" translate>user.full_name</label>
+                        <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-maxlength="150" ng-model="user.realname" name="full_name" required>
+                        <div ng-repeat="(error, value) in form.full_name.$error"
+                            ng-show="form.full_name.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="{{'user.valid.full_name.' + error}}" translate-default="{{error}}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-field form-field-adapt" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
+                        <label class="hidden" translate>user.email</label>
+                        <input type="email" placeholder="{{'user_create.email' | translate}}" ng-maxlength="150" ng-model="user.email" name="email" required>
+                        <div ng-repeat="(error, value) in form.email.$error"
+                            ng-show="form.email.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-field" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
+                        <label class="hidden" translate>user.password</label>
+
+                        <a class="button button-flat" ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
+
+                        <input type="password" ng-show="passwordShown" placeholder="{{'user.password' | translate}}"  ng-minlength="7" ng-maxlength="72" ng-model="user.password" name="password" ng-required="!user.id">
+                        <div ng-repeat="(error, value) in form.password.$error"
+                            ng-show="form.password.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="{{'user.valid.password.' + error}}" translate-default="{{error}}"></span>
+                        </div>
+                    </div>
+
+                    <fieldset class="custom-fieldset init" dropdown>
+                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                            <span class="legend-label" translate>
+                                user.role
+                            </span>
+                            <span class="legend-label" ng-show="user.role">
+                                {{ roles[user.role].display_name }}
+                            </span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </legend>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field radio" ng-repeat="role in roles">
+                                <input type="radio" id="role{{role.id}}" name="role"
+                                    ng-model="user.role"
+                                    ng-value="role.name"
+                                    required
+                                >
+                                <label for="role{{role.id}}">
+                                    {{role.display_name}}
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+
+                <div class="form-sheet" ng-show="user.id">
+                   <div class="form-sheet-summary">
+                       <h3 class="form-sheet-title" translate>user.delete_user</h3>
+                   </div>
+
+                   <div class="form-field">
+                       <p translate>user.delete_user_desc</p>
+
+                       <button class="button-destructive" ng-click="deleteUser(user)">
+                           <svg class="iconic">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                           </svg>
+                           <span class="button-label" translate>user.delete_user</span>
+                       </button>
+                   </div>
+                </div>
+            </form>
+
+        </div>
+
+    </main>
+</div>

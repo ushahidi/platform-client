@@ -1,0 +1,59 @@
+ <fieldset dropdown auto-close="outsideClick" class="custom-fieldset init">
+    <legend data-toggle="dropdown-menu" class="dropdown-trigger init" dropdown-toggle>
+      <span>
+        <span class="custom-fieldset-value">
+            {{canSeeThis()}}
+        </span>
+        <span translate="post.can_see_this">
+          can see this
+        </span>
+      </span>
+      <svg class="iconic chevron">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom">
+      </svg>
+    </legend>
+    <div class="dropdown-menu init" dropdown-menu>
+        <div class="form-fieldgroup">
+            <div class="form-field radio">
+                <input
+                    name="{{post.id}}_draft"
+                    id="{{post.id}}_draft"
+                    value="draft"
+                    type="radio"
+                    ng-checked="post.status==='draft'"
+                    ng-click="toggleRole('draft')">
+                <label for="{{post.id}}_draft" translate="post.just_you">Just you</label>
+            </div>
+
+            <div class="form-field radio">
+                <input
+                    name="{{post.id}}_everyone"
+                    id="{{post.id}}_everyone"
+                    value=""
+                    type="radio"
+                    ng-checked="post.status==='published' && post.published_to.length === 0"
+                    ng-click="toggleRole('')">
+                <label for="{{post.id}}_everyone" translate="post.everyone">Everyone</label>
+            </div>
+            <div class="form-field radio" dropdown>
+                <input
+                    dropdown-toggle
+                    auto-close="disabled"
+                    ng-checked="post.published_to.length"
+                    type="radio">
+                <label for="{{post.id}}_everyone" translate="post.specific_roles">Specific roles...</label>
+                <div class="form-fieldgroup" dropdown-menu>
+                    <div class="form-field checkbox" ng-repeat="role in roles">
+                        <input
+                            id="{{role.id}}"
+                            type="checkbox"
+                            checklist-model="post.published_to"
+                            checklist-value="role.name"
+                            ng-click="toggleRole(role.name)">
+                        <label for="{{role.id}}">{{role.display_name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

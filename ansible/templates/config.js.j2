@@ -1,0 +1,20 @@
+// Configure your Ushahidi deployment
+//
+// Uncomment lines below to configure your deployment
+// window.ushahidi = {
+// 	backendUrl : "https://ushahidi-platform-api-release.herokuapp.com"
+// };
+
+// Cloud API routing
+// Assuming we have a hostname like zombies.ushahidi.io
+// The API will be zombies.api.ushahidi.io
+var deploymentsDomain = '{{DEPLOYMENTS_DOMAIN}}';
+var apiDomain = '{{DEPLOYMENTS_API_DOMAIN}}';
+window.ushahidi = {
+	backendUrl : location.protocol + "//" + location.hostname.replace(deploymentsDomain, apiDomain) + (location.port ? ":" + location.port : ""),
+	gaEnabled : true,
+	gaKey : '{{ gaKey }}',
+	doorbellEnabled : false,
+	intercomAppId: "{{ intercomAppId }}"
+};
+

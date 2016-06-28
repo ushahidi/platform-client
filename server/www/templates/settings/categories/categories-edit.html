@@ -1,0 +1,98 @@
+<div>
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/categories" translate>app.categories</a></li>
+            </ol>
+            <h1 class="mode-context-title" ng-show="category.id" translate>app.edit_category</h1>
+            <h1 class="mode-context-title" ng-show="!category.id" translate>app.add_category</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+    <main role="main">
+
+        <div custom-categorys-editor class="main-col">
+
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                    <button class="button-alpha" type="button" ng-click="saveCategory(category)" type="submit" ng-disabled="form.$invalid" translate>
+                        <div class="loading" ng-show="saving">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span ng-hide="saving" translate>app.save</span>
+                    </button>
+                </div>
+            </div>
+            <!-- end toolbar -->
+
+            <form>
+                <div class="form-sheet">
+                   <div class="form-field title">
+                       <label class="hidden" translate>category.editor.name</label>
+                       <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.tag" required>
+                   </div>
+
+                    <div class="form-field form-field-adapt">
+                        <label translate>category.editor.description</label>
+                        <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
+                    </div>
+
+                    <color-picker color-container="category"></color-picker>
+
+                    <fieldset class="custom-fieldset init" dropdown auto-close="outsideClick">
+                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                            <span class="legend-label" translate>
+                                app.roles
+                            </span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </legend>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field checkbox" ng-repeat="role in roles">
+                                <input type="checkbox" id="{{role.id}}"
+                                    checklist-model="category.role"
+                                    checklist-value="role.name"
+                                >
+                                <label for="{{role.id}}">
+                                    {{role.display_name}}
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="form-sheet" ng-show="category.id">
+                   <div class="form-sheet-summary">
+                       <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
+                   </div>
+
+                   <div class="form-field">
+                       <p translate>category.delete_category_desc</p>
+
+                       <button class="button-destructive" ng-click="deleteCategory(category)">
+                           <svg class="iconic">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                           </svg>
+                           <span class="button-label" translate>category.delete_category</span>
+                       </button>
+                   </div>
+
+                </div>
+            </form>
+
+        </div>
+    </main>
+</div>

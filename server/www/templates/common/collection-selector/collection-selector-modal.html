@@ -1,0 +1,54 @@
+<modal visible="showCollectionModal" title="{{title}}" icon="{{icon}}">
+    <!-- TODO: make title settable by directive -->
+    <!-- TODO: make icon settable by directive -->
+    <div class="form-field search">
+        <label class="hidden">Find a Collection</label>
+        <div class="input-with-icon">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#magnifying-glass"></use>
+            </svg>
+            <input type="search" placeholder="Find a Collection...">
+        </div>
+    </div>
+
+    <div class="listing init">
+        <div class="listing-item" ng-repeat="collection in editableCollection">
+            <div class="listing-item-select">
+                <input type="checkbox" ng-checked="postInCollection(collection)" ng-disabled="postInCollection(collection)" ng-click="toggleCollection(collection)">
+            </div>
+            <div class="listing-item-secondary" ng-show="postInCollection(collection)" ng-click="toggleCollection(collection)">
+                <button type="button" class="button-link" data-message="remove-collection">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#circle-x"></use>
+                    </svg>
+                    <span class="button-label" translate>set.remove</span>
+                </button>
+            </div>
+            <div class="listing-item-primary">
+                <h2 class="listing-item-title">
+                    <!-- TODO: setup collection route -->
+                    <a href="collections/{{collection.id}}">
+                        {{collection.name}}
+                    </a>
+                </h2>
+                <!-- TODO: make sure to return user -->
+                <p ng-show ="collection.user_id" class="listing-item-secondary">
+                    <!-- TODO: check this span is ok to add -->
+                    <span translate>set.by</span>
+                    <a href="/users/{{collection.user_id}}">
+                        {{collection.user.realname}}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-field">
+        <button type="button" class="button-beta">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+            </svg>
+            <span class="button-label" translate>set.create_new</span>
+        </button>
+    </div>
+</modal>

@@ -1,0 +1,26 @@
+<form name="usersFiltersForm" role="search" class="searchbar" dropdown is-open="filtersMenuOpen" auto-close="outsideClick" ng-submit="applyFilters()" ng-model-options="{ updateOn : 'submit' }">
+    <!-- Include search bar -->
+    <filter-searchbar model="filters.q"></filter-searchbar>
+
+    <!-- Toggle Filters show/hide -->
+    <div class="searchbar-options">
+        <a href="#" id="toggleUserSearchFilters" class="button searchbar-options-filter init" data-toggle="search-filters" dropdown-toggle>
+            <span class="button-label" translate>app.filters</span>
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        </a>
+    </div>
+
+    <!-- Filters menu -->
+    <div class="dropdown-menu init" data-toggle-target="search-filters" dropdown-menu>
+        <div class="dropdown-menu-body">
+            <filter-role model="filters.role"></filter-role>
+        </div>
+
+        <div class="form-field">
+            <button type="button" class="button-link" ng-click="cancel()" translate>app.cancel</button>
+            <button type="submit" class="button-alpha" ng-disabled="applyEnabled"  translate>app.apply_filters</button>
+        </div>
+    </div>
+</form>

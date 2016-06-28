@@ -1,0 +1,59 @@
+<div>
+    <modal visible="collectionEditorVisible" title="{{'app.collections' |translate}}" icon="'grid-three-up'">
+        <div class="modal-body" style="max-height: 337.26px;">
+            <div class="form-field title">
+                <label translate>set.collection_name</label>
+                <input type="text" ng-model="cpyCollection.name" placeholder="{{'set.name_your_collection'|translate}}">
+            </div>
+
+            <div class="form-field">
+                <label translate>
+                    set.description
+                </label>
+                <textarea ng-model="cpyCollection.description"></textarea>
+            </div>
+
+            <div class="form-field switch" ng-if="featuredEnabled()">
+                <label>
+                    <span translate>
+                        set.featured
+                    </span>
+                    <span class="tooltip">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#question-mark"></use>
+                        </svg>
+                        <span class="bug" translate>set.featured_collection_tooltip</span>
+                    </span>
+                </label>
+                <div class="toggle-switch">
+                    <input class="tgl" id="switch1" type="checkbox" ng-model="cpyCollection.featured">
+                    <label class="tgl-btn" for="switch1"></label>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label translate>set.default_viewing_mode</label>
+                <div class="custom-select">
+                    <select ng-options="view.name as view.display_name for view in views" ng-model="cpyCollection.view">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-field select">
+                <label>
+                    <div class="custom-select">
+                        <select ng-options="role.name as role.display_name for role in roles" ng-model="cpyCollection.visible_to[0]">
+                            <option value="" translate>post.modify.everyone</option>
+                        </select>
+                    </div>
+                    <span translate>app.can_see_this</span>
+                </label>
+            </div>
+
+            <div class="form-field">
+                <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>
+                <button type="button" class="button-alpha modal-trigger" ng-click="saveCollection(cpyCollection)" translate>app.save_and_close</button>
+            </div>
+        </div>
+    </modal>
+</div>

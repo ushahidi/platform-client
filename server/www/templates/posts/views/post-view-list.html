@@ -1,0 +1,45 @@
+<div class="main-col">
+
+    <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
+
+        <!-- todo: group by dates -->
+        <h2 class="listing-heading-section" ng-repeat-start="(timeAgo, posts) in groupedPosts">
+            {{ timeAgo }}
+        </h2>
+
+        <post-card ng-repeat-end
+            ng-repeat="post in posts"
+            can-select="userHasBulkActionPermissions()"
+            post="post"
+            selected-posts="selectedPosts"
+        >
+        </post-card>
+
+        <listing-toolbar
+            entities="posts"
+            selected-set="selectedPosts"
+            >
+                <button type="button" class="button-destructive" ng-click="deletePosts()">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                    </svg>
+                    <span class="button-label hidden">nav.delete</span>
+                </button>
+                <collection-toggle-button selected-posts="selectedPosts" posts="posts"></collection-toggle-button>
+        </listing-toolbar>
+
+        <!-- todo: check style -->
+        <div class="list-item" ng-if="posts.length == 0 && hasFilters()">
+            <h4 translate>post.no_search_results</h5>
+        </div>
+
+        <!-- todo: check style -->
+        <div class="list-item" ng-if="posts.length == 0 && !hasFilters()">
+            <h4 translate>post.no_posts_yet</h5>
+        </div>
+
+    </div> <!-- /.listing.timeline -->
+
+    <uib-pagination ng-model="currentPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
+
+</div>

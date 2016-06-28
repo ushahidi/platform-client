@@ -1,16 +1,22 @@
 require('nvd3/src/core');
+require('nvd3/src/dom');
 require('nvd3/src/interactiveLayer');
 require('nvd3/src/tooltip');
 require('nvd3/src/utils');
 // Models
 // Uncomment as needed
 require('nvd3/src/models/axis');
+// require('nvd3/src/models/boxPlot');
+// require('nvd3/src/models/boxPlotChart');
 // require('nvd3/src/models/bullet');
 // require('nvd3/src/models/bulletChart');
+// require('nvd3/src/models/candlestickBar');
 // require('nvd3/src/models/cumulativeLineChart');
 // require('nvd3/src/models/discreteBar');
 // require('nvd3/src/models/discreteBarChart');
 // require('nvd3/src/models/distribution');
+// require('nvd3/src/models/forceDirectedGraph');
+// require('nvd3/src/models/furiousLegend');
 // require('nvd3/src/models/historicalBar');
 // require('nvd3/src/models/historicalBarChart');
 require('nvd3/src/models/legend');
@@ -33,3 +39,5 @@ require('nvd3/src/models/scatter');
 // require('nvd3/src/models/sparklinePlus');
 // require('nvd3/src/models/stackedArea');
 // require('nvd3/src/models/stackedAreaChart');
+// require('nvd3/src/models/sunburst');
+// require('nvd3/src/models/sunburstChart');

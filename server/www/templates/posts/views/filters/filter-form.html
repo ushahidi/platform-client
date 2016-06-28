@@ -1,0 +1,20 @@
+<fieldset overflow-toggle has-overflow="forms.length > 1" ng-model-options="{ updateOn: 'default' }">
+    <legend translate="app.surveys">Surveys</legend>
+
+    <div class="form-field checkbox" ng-repeat="(index, form) in forms" ng-class="{ overflow : ($index > 1) }">
+        <label>
+            <input checklist-value="form.id" checklist-model="selectedForms" type="checkbox" name="selectedForms" > {{ ::form.name }}
+        </label>
+    </div>
+    <div class="form-field checkbox" ng-class="{ overflow : (forms.length > 2) }">
+        <label>
+            <input checklist-value="'none'" checklist-model="selectedForms" type="checkbox" name="selectedForms" > <span translate="nav.unknown">Unknown</span>
+        </label>
+    </div>
+    <span class="form-field-toggle">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span translate="nav.more">More</span>
+    </span>
+</fieldset>

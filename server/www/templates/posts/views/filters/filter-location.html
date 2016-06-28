@@ -1,0 +1,24 @@
+<fieldset>
+    <legend translate="global_filter.location">Location</legend>
+
+    <div class="form-field">
+        <div class="input-with-icon">
+            <input type="text" style="padding-left: 24px;"" placeholder="{{ 'global_filter.location_placeholder' | translate }}" ng-model="locationSearchText">
+            <svg class="iconic" style="left: 8px;">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#location"></use>
+            </svg>
+        </div>
+    </div>
+
+    <div class="form-field">
+        <select ng-model="withinKmModel" convert-to-number>
+            <option value="1" translate>global_filter.option_1</option>
+            <option value="10" translate>global_filter.option_2</option>
+            <option value="50" translate>global_filter.option_3</option>
+            <option value="100" translate>global_filter.option_4</option>
+            <option value="500" translate>global_filter.option_5</option>
+        </select>
+    </div>
+
+</fieldset>
+

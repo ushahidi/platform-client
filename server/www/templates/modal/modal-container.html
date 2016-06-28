@@ -1,0 +1,22 @@
+<div ng-show="classVisible" class="modal" style="display: block;">
+    <div class="modal-window" ng-style="{ top : modalOffset }">
+        <button class="button-beta button-flat modal-trigger modal-trigger-close" ng-show="showCloseButton" ng-click="closeButtonClicked()">
+            <svg class="iconic">
+                <!-- TODO: fix icon to be settable -->
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#x"></use>
+            </svg>
+            <span class="hidden" translate>modal.button.close</span>
+        </button>
+        <h3 class="modal-title" ng-if="title">
+            <svg class="iconic" ng-if="icon">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ icon }}"></use>
+            </svg>
+            <span class="label">
+                {{ title | translate }}
+            </span>
+        </h3>
+        <modal-content></modal-content>
+        <ush-slider inside-modal="true"></ush-slider>
+    </div>
+    <div class="modal-overlay" ng-click="closeButtonClicked('overlay')"></div>
+</div>

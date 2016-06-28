@@ -1,0 +1,126 @@
+<div>
+    <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.general</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+
+        <form id="site" name="form" ng-submit="updateConfig()">
+
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                    <button type="button" ng-click="updateConfig()" class="button-alpha" type="submit" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>
+                        <div class="loading" ng-show="saving">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span ng-hide="saving" translate>app.save</span>
+                    </button>
+                </div>
+            </div>
+            <!-- end toolbar -->
+
+            <div class="main-col">
+
+                <div class="form-sheet">
+                    <div class="form-field title">
+                        <label class="hidden" for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.deployment_name</label>
+                        <input id="name" name="name" type="text" placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
+
+                         <div class="alert error" ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" >
+                            <svg class="iconic">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            {{'settings.valid.name.' + error  | translate}}
+                        </div>
+                    </div>
+
+                    <div class="form-field form-field-adapt">
+                        <label for="site-settings-description" translate>settings.site_description</label>
+
+                        <textarea id="site-settings-description" name="description" type="text" ng-model="site.description" placeholder="{{'settings.site_description_placeholder' | translate}}" data-min-rows='1' rows='1'></textarea>
+                    </div>
+
+                    <div class="form-field">
+                         <label translate>settings.deployment_logo</label>
+                         <figure ng-show="site.image_header">
+                            <img src="{{ site.image_header }}" class="postcard-image deployment-logo" />
+                            <button class="button-flat" ng-click="clearHeader()">Delete logo</button>
+                         </figure>
+
+                         <file-upload file-container="fileContainer">
+                         </file-upload>
+                    </div>
+
+                    <div class="form-field">
+                        <label translate>settings.site_email</label>
+                        <p class="small" translate>settings.site_email_note</p>
+                        <input id="site-settings-email" type="email" placeholder="name@domain.com" value="brandon@ushahidi.com" ng-model="site.email">
+                    </div>
+
+                    <div class="form-field">
+                         <label translate>settings.site_language</label>
+                         <div class="custom-select">
+                            <select ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages" ng-change="changeLanguage(site.language)"></select>
+                         </div>
+                    </div>
+
+                    <div class="form-field">
+                         <label translate>settings.site_timezone</label>
+                         <div class="custom-select">
+                            <select ng-model="site.timezone" ng-options="timezone for timezone in timezones | orderBy | unique"></select>
+                         </div>
+                    </div>
+
+                    <div class="form-field checkbox" ng-show="isPrivateEnabled">
+                         <input id="private" ng-model="site.private" type="checkbox">
+                         <label for="private" translate>settings.site_private</label>
+                    </div>
+
+                    <settings-map map="map"></settings-map>
+                </div>
+
+                <div class="form-sheet" ng-show="todo">
+
+                    {# TODO: not yet implemented #}
+
+                    <div class="form-sheet-summary">
+                        <h3 class="form-sheet-title" translate>settings.deployment_delete_this</h3>
+                    </div>
+
+                    <div class="form-field">
+                        <p translate>settings.deployment_delete_info</p>
+
+                        <button class="button-destructive">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                            </svg>
+                            <span class="button-label" translate>settings.deployment_delete</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+    </main>
+
+</div>

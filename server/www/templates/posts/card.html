@@ -1,0 +1,21 @@
+<article class="postcard">
+    <div class="post-band" todo-style="background-color: #A51A1A;"></div>
+    <div class="listing-item-select" ng-if="canSelect">
+        <input type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+    </div>
+    <div class="postcard-body">
+        <h1 class="postcard-title"><a ng-href="/posts/{{post.id}}">{{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}</a></h1>
+
+        <post-metadata post="post" hide-date-this-week="true"></post-metadata>
+
+        <post-preview-media post="post"></post-preview-media>
+        <!-- <img src="http://lorempixel.com/400/300/" class="postcard-image"> -->
+
+        <div class="postcard-field">
+            <p ng-if="!shortContent">{{ post.content }}</p>
+            <p ng-if="shortContent">{{ post.content | limitTo:150 }}{{ post.content.length > 150 ? ' ...' : ''}}</p>
+        </div>
+    </div> <!-- /postcard-body -->
+
+    <post-actions post="post"></post-actions>
+</article>

@@ -30,40 +30,39 @@ describe('setting categories edit controller', function () {
         $controller = _$controller_;
         Notify = _Notify_;
         $scope = _$rootScope_.$new();
+
+        $rootScope.hasManageSettingsPermission = function () {
+            return true;
+        };
     }));
 
 
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
-        spyOn($rootScope, 'goBack').and.callThrough();
 
-        var mockRouteParams = {
+        var category = {
             id: 1
         };
 
         $controller('settingCategoriesEditController', {
             $scope: $scope,
             $rootScope: $rootScope,
-            $routeParams: mockRouteParams
+            category: category
         });
 
         $rootScope.$digest();
         $rootScope.$apply();
     });
 
-    it('should retrieve load and set title', function () {
-        expect($scope.$emit).toHaveBeenCalled();
-    });
-
     it('should save a tag and update the path', function () {
-        spyOn(Notify, 'showNotificationSlider');
-        $scope.saveTag({id: 'pass'});
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
+        spyOn(Notify, 'notify');
+        $scope.saveCategory({id: 'pass'});
+        expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should show an error on save failure', function () {
-        spyOn(Notify, 'showApiErrors');
-        $scope.saveTag({id: 'fail'});
-        expect(Notify.showApiErrors).toHaveBeenCalled();
+        spyOn(Notify, 'apiErrors');
+        $scope.saveCategory({id: 'fail'});
+        expect(Notify.apiErrors).toHaveBeenCalled();
     });
 });

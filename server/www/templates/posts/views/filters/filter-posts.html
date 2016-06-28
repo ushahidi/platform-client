@@ -1,0 +1,43 @@
+<form name="postFiltersForm" role="search" class="searchbar" dropdown auto-close="outsideClick" ng-submit="applyFilters()" ng-model-options="{ updateOn : 'submit' }">
+    <!-- Include search bar -->
+    <filter-searchbar model="filters.q"></filter-searchbar>
+
+    <!-- Toggle Filters show/hide -->
+    <div class="searchbar-options">
+        <a class="button" data-toggle="search-saved" ng-click="toggleSaved()" ng-class="{ 'active': searchSavedToggle }">
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#star"></use>
+            </svg>
+            <span class="button-label hidden" translate>app.saved</span>
+        </a>
+
+        <a id="togglePostSearchFilters" class="button searchbar-options-filter" data-toggle="search-filters" ng-click="toggleFilters()" ng-class="{ 'active': searchFiltersToggle }">
+            <span class="button-label" translate>app.filters</span>
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        </a>
+    </div>
+
+    <saved-search-listing></saved-search-listing>
+
+    <!-- Filters menu -->
+    <div class="dropdown-menu" data-toggle-target="search-filters" ng-show="searchFiltersToggle" ng-class="{ 'active': searchFiltersToggle }" data-toggle-animate>
+        <div class="dropdown-menu-body">
+            <filter-form ng-model="filters.form"></filter-form>
+
+            <filter-category ng-model="filters.tags"></filter-category>
+
+            <filter-visible-to status-model="filters.status" published-to-model="filters.published_to"></filter-visible-to>
+
+            <filter-date created-after-model="filters.created_after" created-before-model="filters.created_before"></filter-date>
+
+            <filter-location center-point-model="filters.center_point" within-km-model="filters.within_km"></filter-location>
+        </div>
+
+        <div class="form-field">
+            <button type="button" class="button-link" ng-click="cancel()" translate>app.cancel</button>
+            <button type="submit" class="button-alpha" translate>app.apply_filters</button>
+        </div>
+    </div>
+</form>

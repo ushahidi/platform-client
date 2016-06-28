@@ -1,13 +1,39 @@
-<nav class="pagination">
+<nav class="pagination" ng-show="pages.length > 1">
     <ul>
-        <li ng-if="boundaryLinks" ng-class="{disabled: noPrevious()}" ng-click="selectPage(1, $event)">{{getText('first')}}</li>
-        <li ng-if="directionLinks" ng-class="{disabled: noPrevious()}" class="prev" ng-click="selectPage(page - 1, $event)"></li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" ng-click="selectPage(1, $event)">
+            <a ng-click="selectPage(1, $event)">{{::getText('first')}}</a>
+        </li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="prev">
+            <a ng-click="selectPage(page - 1, $event)">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-left"></use>
+                </svg>
+                <span class="hidden">Previous</span>
+            </a>
+        </li>
         <li>
         	<ul class="page-numbers">
-        		<li class="pg-number" ng-repeat="page in pages track by $index" ng-click="selectPage(page.number, $event)" ng-class="{active: page.active}">{{page.text}}</li>
+        		<li class="pg-number" ng-repeat="page in pages track by $index" ng-class="{active: page.active}">
+                    <a ng-if="!page.active" ng-click="selectPage(page.number, $event)">
+                        {{page.text}}
+                    </a>
+                    <span ng-if="page.active">
+                        {{page.text}}
+                    </span>
+                </li>
         	</ul>
         </li>
-        <li ng-if="directionLinks" ng-class="{disabled: noNext()}" class="next" ng-click="selectPage(page + 1, $event)"></li>
-        <li ng-if="boundaryLinks" ng-class="{disabled: noNext()}" ng-click="selectPage(totalPages, $event)">{{getText('last')}}</li>
+        <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="next" >
+            <a ng-click="selectPage(page + 1, $event)">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-right"></use>
+                </svg>
+                <span class="hidden">Next</span>
+            </a>
+        </li>
+        <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}">
+            <a ng-click="selectPage(totalPages, $event)">{{::getText('last')}}</a>
+        </li>
     </ul>
 </nav>
+

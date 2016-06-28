@@ -1,0 +1,15 @@
+<fieldset ng-show="categories.length" overflow-toggle has-overflow="categories.length > 2" ng-model-options="{ updateOn: 'default' }">
+    <legend translate="nav.categories">Categories</legend>
+
+    <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }">
+        <label>
+            <input checklist-value="category.id" checklist-model="selectedCategories" type="checkbox" name="selectedCategories"> {{ ::category.tag }}
+        </label>
+    </div>
+    <span class="form-field-toggle">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span translate="nav.more">More</span>
+    </span>
+</fieldset>

@@ -3,7 +3,7 @@
         <div class="page-header-body">
             <h1 class="page-title" translate translate-values="{ type: activeForm.name }" ng-if="! post.id">post.modify.add_a_post</h1>
             <h1 class="page-title" translate translate-values="{ title: post.title }" ng-if="!! post.id">post.modify.edit_post</h1>
-            <a ng-href="/settings/forms" class="cta edit" ng-if="hasPermission('Manage Posts')">Edit Post Types</a>
+            <a ng-href="/settings/surveys" class="cta edit" ng-if="hasPermission('Manage Posts')" translate="form.edit_post_types">Edit Surveys</a>
         </div>
     </div>
 

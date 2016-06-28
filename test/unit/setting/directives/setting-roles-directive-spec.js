@@ -32,7 +32,7 @@ describe('setting roles directive', function () {
     beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        $rootScope.setLayout = function () {};
         Notify = _Notify_;
 
         element = '<div roles></div>';
@@ -40,33 +40,9 @@ describe('setting roles directive', function () {
         $scope.$digest();
     }));
 
-    it('should check if the role to be deleted is the last admin', function () {
-        $scope.roles.push({
-            name: 'admin',
-            id: 2
-        });
-        var result = $scope.checkIfLastAdmin();
-        expect(result).toBe(true);
-    });
-
-    it('should delete a given role', function () {
-        spyOn(Notify, 'showNotificationSlider');
-
-        $scope.deleteRole({id: 'pass', name: 'test'});
-
-        expect(Notify.showNotificationSlider).toHaveBeenCalled();
-    });
-
-    it('should not delete the last admin', function () {
-        spyOn(Notify, 'showSingleAlert');
-        $scope.roles.push({
-            name: 'admin',
-            id: 2
-        });
-
-        $scope.deleteRole({id: 2, name: 'admin'});
-
-        expect(Notify.showSingleAlert).toHaveBeenCalled();
+    it('shuld refresh the view', function () {
+        $scope.refreshView();
+        expect($scope.roles.length).toEqual(1);
     });
 
 });

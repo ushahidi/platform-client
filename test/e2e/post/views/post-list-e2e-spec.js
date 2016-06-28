@@ -4,7 +4,7 @@ describe('post detail interaction', function () {
         postLink = '.post-text a',
         postSelectSelector = '.select-post input',
         postCheckedSelectSelector = '.select-post input:checked',
-        deleteButtonSelector = '.bulk-actions button',
+        bulkActionButtonSelector = '.bulk-actions button',
         openCreateCollectionButton = '.form-field.bar a',
         createCollectionButton = '.form-field.bar button',
         postCollectionsButtonSelector = '.actions-content .dropdown-trigger.init.dropdown-toggle',
@@ -50,7 +50,7 @@ describe('post detail interaction', function () {
 
         describe('checking bulk edit actions', function () {
             it('the delete button should initially be disabled', function () {
-                var deleteButton = element(by.css(deleteButtonSelector));
+                var deleteButton = element.all(by.css(bulkActionButtonSelector)).get(1);
                 expect(deleteButton.isEnabled()).toEqual(false);
             });
 
@@ -61,13 +61,13 @@ describe('post detail interaction', function () {
                 });
 
                 it('should enable the delete button', function () {
-                    var deleteButton = element(by.css(deleteButtonSelector));
+                    var deleteButton = element.all(by.css(bulkActionButtonSelector)).get(1);
                     expect(deleteButton.isEnabled()).toEqual(true);
                 });
 
                 describe('when clicking the delete button', function () {
                     beforeEach(function () {
-                        var deleteButton = element(by.css(deleteButtonSelector));
+                        var deleteButton = element.all(by.css(bulkActionButtonSelector)).get(1);
                         deleteButton.click();
                         browser.sleep(200);
                     });
@@ -114,13 +114,13 @@ describe('post detail interaction', function () {
                 });
 
                 it('should enable the delete button', function () {
-                    var deleteButton = element(by.css(deleteButtonSelector));
+                    var deleteButton = element.all(by.css(bulkActionButtonSelector)).get(1);
                     expect(deleteButton.isEnabled()).toEqual(true);
                 });
 
                 describe('when clicking delete', function () {
                     beforeEach(function () {
-                        var deleteButton = element(by.css(deleteButtonSelector));
+                        var deleteButton = element.all(by.css(bulkActionButtonSelector)).get(1);
                         deleteButton.click();
                         browser.sleep(200);
                     });
@@ -253,7 +253,7 @@ describe('post detail interaction', function () {
                 });
 
                 it('should not be possible to see the delete button', function () {
-                    var deleteButton = element(by.css(deleteButtonSelector));
+                    var deleteButton = element(by.css(bulkActionButtonSelector)).get(1);
                     expect(deleteButton.toEqual(null));
                 });
             });

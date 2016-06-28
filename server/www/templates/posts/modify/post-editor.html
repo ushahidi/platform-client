@@ -1,0 +1,99 @@
+<form name="postForm" ng-submit="savePost()" novalidate>
+  <div class="mode-context init" dropdown>
+    <header class="mode-context-header">
+        <ol class="breadcrumbs">
+            <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+        </ol>
+
+        <h1 class="mode-context-title">{{post.form.name}}</h1>
+    </header>
+
+    <span class="mode-context-trigger" dropdown-toggle>
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span class="label hidden" translate="app.show_more_less">Show more/less</span>
+    </span>
+
+    <div class="mode-context-body">
+        <p>{{post.form.description}}</p>
+    </div>
+  </div>
+
+  <main role="main">
+      <div class="toolbar">
+          <div class="button-group">
+              <button type="button" class="button-flat" ng-click="cancel()" translate="app.cancel">Cancel</button>
+              <button type="submit" class="button-alpha" translate="app.save">Save</button>
+          </div>
+      </div>
+
+     <div class="main-col">
+
+          <div class="form-sheet">
+              <div class="form-field title form-field-adapt init"
+              adaptive-form
+              ng-class="{
+                'error': form.title.$invalid && form.title.$dirty,
+                'success': !form.title.$invalid && form.title.$dirty
+              }">
+                  <label translate="post.modify.form.title">Title</label>
+                  <input id="title"
+                      name="title" type="text" ng-model="post.title" required ng-minlength=2 ng-maxlength=150 adaptive-input>
+
+                  <div
+                      class="alert error"
+                      ng-show="form.title.$dirty"
+                      ng-repeat="(error, value) in form.title.$error"
+                      >
+                      <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                      </svg>
+                      <span translate="{{'post.valid.title.' + error}}"></span>
+                  </div>
+              </div>
+
+              <!-- IF: Editing an existing post -->
+              <post-metadata post="post" ng-if="post.id"></post-metadata>
+              <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
+              <div class="postcard-metadata">
+                  <strong>This post will need to be moderated</strong> before it's visible to the public.
+              </div>
+              END: IF -->
+
+              <!-- IF: User has permission to manage who it's visible to -->
+              <publish-selector ng-show="allowedChangeStatus()" post="post" ></publish-selector>
+              <!-- END: IF -->
+
+             <!-- IF: User has permission to see other 'Tasks' -->
+
+             <post-tabs
+                 form="postForm"
+                 post="post"
+                 stages="stages"
+                 attributes="attributes"
+                 visible-stage="visibleStage">
+              </post-tabs>
+         </div>
+
+          <div class="form-sheet" ng-if="post.id">
+              <div class="form-sheet-summary">
+                  <h3 class="form-sheet-title" translate="post.delete_post">Delete this post</h3>
+              </div>
+
+              <div class="form-field">
+                  <p translate="post.delete_post_desc"><strong>If you delete this post</strong>, all of its comments and messages will also be deleted. Proceed with caution.</p>
+
+                  <button class="button-destructive" ng-click="deletePost(post)">
+                      <svg class="iconic">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                      </svg>
+                      <span class="button-label" translate="post.delete_post">Delete post</span>
+                  </button>
+              </div>
+          </div>
+
+      </div> <!-- END main column -->
+
+  </main>
+</form>

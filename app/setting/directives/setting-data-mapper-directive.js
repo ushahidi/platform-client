@@ -3,50 +3,32 @@ module.exports = [
     '$location',
     'FormEndpoint',
     'DataImportEndpoint',
+//    'DataRetriever',
     'Notify',
     '_',
+    '$q',
 function (
     $translate,
     $location,
     FormEndpoint,
     DataImportEndpoint,
+//    DataRetriever,
     Notify,
-    _
+    _,
+    $q
 ) {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
             $scope.cancelImport = function () {
-                $translate('notify.data_import.csv_import_cancel')
-                .then(function (message) {
-                    Notify.showNotificationSlider(message);
+                Notify.notify('notify.data_import.csv_import_cancel');
 
-                    $scope.deleteDataImport($scope.csv);
-                    $location.url('/settings/data-import/');
-                });
+                $scope.deleteDataImport($scope.csv);
+                $location.url('/settings/data-import/');
             };
 
             $scope.deleteDataImport = function () {
                 DataImportEndpoint.delete($scope.csv);
-            };
-
-            $scope.triggerImport = function () {
-                DataImportEndpoint.import({id: $scope.csv.id, action: 'import'})
-                .$promise
-                .then(function (response) {
-                    $translate('notify.data_import.csv_mappings_set', {
-                        processed: response.processed,
-                        errors: response.errors
-                    }).then(
-                        function (message) {
-                            Notify.showNotificationSlider(message);
-
-                            $scope.deleteDataImport($scope.csv);
-                            $location.url('/views/list');
-                        });
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
             };
 
             // Check for missing required fields and return the missing fields
@@ -65,12 +47,10 @@ function (
                 return missing;
             };
 
-            $scope.submitMappings = function (csv) {
+            $scope.progressToConfigure = function (csv) {
 
                 if (_.every(csv.maps_to, _.isEmpty)) {
-                    $translate('notify.data_import.no_mappings').then(function (message) {
-                        Notify.showAlerts([message]);
-                    });
+                    Notify.error('notify.data_import.no_mappings');
                     return;
                 }
 
@@ -91,21 +71,14 @@ function (
 
                 // third, warn the user which keys have been duplicated
                 if (duplicateVars.length > 0) {
-
-                    $translate('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')}).then(
-                    function (message) {
-                        Notify.showAlerts([message]);
-                    });
+                    Notify.error('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')});
                     return;
                 }
 
                 //Check required fields are set
                 var missing = $scope.checkRequiredFields(csv.maps_to);
                 if (!_.isEmpty(missing)) {
-                    $translate('notify.data_import.required_fields', {required: missing.join(', ')})
-                    .then(function (message) {
-                        Notify.showAlerts([message]);
-                    });
+                    Notify.error('notify.data_import.required_fields', {required: missing.join(', ')});
                     return;
                 }
 
@@ -113,14 +86,34 @@ function (
                     'form': $scope.form.id
                 };
 
-                DataImportEndpoint.update(csv)
-                .$promise
-                .then(function (csv) {
-                    $scope.triggerImport(csv);
-                }, function (errorResponse) {
-                    Notify.showApiErrors(errorResponse);
-                });
+                // Update and import as this is the final step for now.
+                updateAndImport(csv);
+
+                // @todo Configure additional fields
+                // Pass data to configure stage via DataRetriever service
+                //DataRetriever.setImportData(csv);
+                //$location.url('/settings/data-configure/');
             };
+
+            function updateAndImport(csv) {
+                DataImportEndpoint.update(csv).$promise
+                    .then(function () {
+                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise
+                            .then(function (response) {
+                                var processed = response.processed,
+                                    errors = response.errors;
+
+                                Notify.success('notify.data_import.csv_mappings_set', {processed: processed, errors: errors});
+
+                                // Go to posts list
+                                $location.url('/views/list/');
+                            }, function (errorResponse) {
+                                Notify.apiErrors(errorResponse);
+                            });
+                    }, function (errorResponse) {
+                        Notify.apiErrors(errorResponse);
+                    });
+            }
         }
     };
 }];

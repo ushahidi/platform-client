@@ -1,0 +1,162 @@
+<div
+    class="form-field init"
+    adaptive-form
+    ng-class="{
+      'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+      'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+      'required': attribute.required,
+      'form-field-adapt': isText(attribute) || isTextarea(attribute),
+      'date' : isDate(attribute) || isDateTime(attribute)
+    }">
+
+    <!-- Attribute Label -->
+    <label for="values[{{attribute.key}}][0]">
+        {{attribute.label}}
+    </label>
+    <!-- type: checkbox -->
+    <div
+        class="form-field checkbox"
+        ng-if="isCheckbox(attribute)"
+        ng-repeat="option in attribute.options"
+        >
+        <input
+            type="checkbox"
+            checklist-model="post.values[attribute.key]"
+            ng-required="attribute.required"
+            id="values[{{attribute.key}}][{{key}}]"
+            name="values_{{attribute.id}}_{{option}}"
+            checklist-value="option"
+            value="option">
+        <label>
+            {{option}}
+        </label>
+    </div>
+
+    <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
+        <div ng-if="!isCheckbox(attribute)" ng-switch="attribute.input" ng-class="{ 'input-inline' : canRemoveValue(attribute, key) }">
+            <!-- Standard fields -->
+            <!-- type: date -->
+            <div ng-switch-when="date" >
+                <!-- Date icon -->
+                <div class="input-with-icon">
+                  <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+                  </svg>
+                  <input
+                      type="date"
+                      pick-a-date="date"
+                      pick-a-date-options="dateFormat"
+
+                      name="values_{{attribute.id}}"
+                      ng-model="post.values[attribute.key][key]"
+
+                  />
+                </div>
+            </div>
+            <!-- type: datetime -->
+            <div ng-switch-when="datetime" class="input-with-icon">
+                <post-datetime model="post.values[attribute.key][key]"></post-datetime>
+            </div>
+           <!-- type: select -->
+            <select
+                ng-switch-when="select"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.id}}"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required">
+                <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
+            </select>
+            <!-- type: radio -->
+            <div class="input-group" ng-switch-when="radio">
+                <label class="radio-label" ng-repeat="opt in attribute.options">{{opt}}
+                    <input
+                        name="values_{{attribute.id}}"
+                        type="radio"
+                        ng-model="post.values[attribute.key][key]"
+                        ng-required="attribute.required"
+                        value="{{opt}}"
+                      >
+                </label>
+            </div>
+            <!-- type: number -->
+            <input
+                ng-switch-when="number"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.id}}"
+                type="number"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                >
+            <!-- type: text -->
+            <input
+                ng-switch-when="text"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.id}}"
+                type="text"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                adaptive-input
+                >
+            <!-- type: textarea -->
+            <textarea
+                ng-switch-when="textarea"
+                data-min-rows="1"
+                rows="1"
+                class="adapt-field"
+                style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.id}}"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                adaptive-input
+                msd-elastic>
+            </textarea>
+
+            <!-- Non standard fields -->
+            <!-- type: relation -->
+            <post-relation
+                attribute="attribute"
+                key="key"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.id}}"
+                model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                ng-switch-when="relation"></post-relation>
+            <!-- type: location -->
+            <post-location
+                attribute="attribute"
+                key="key"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.id}}"
+                model="post.values[attribute.key][key]"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+                ng-switch-when="location"></post-location>
+            <!-- type: upload -->
+            <post-media
+                ng-switch-when="upload"
+                name="values_{{attribute.id}}"
+                media-id="post.values[attribute.key][key]"
+                ng-model="post.values[attribute.key][key]"
+                ng-required="attribute.required"
+            ></post-media>
+            <!-- Add additional values of specific fields
+            <button
+                type="button"
+                class="button-secondary icon-only alt trash"
+                ng-if="canRemoveValue(attribute, key)"
+                ng-click="removeValue(attribute, key)"></button>
+              -->
+        </div>
+    </div>
+    <div class="alert error" ng-show="form['values_' + attribute.id].$dirty" ng-repeat="(error, value) in form['values_' + attribute.key].$error">
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+        </svg>
+        <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
+    </div>
+
+<!-- Add additional values of specific fields
+        <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
+-->
+</div>

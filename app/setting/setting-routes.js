@@ -6,19 +6,20 @@ function (
     /* todo: these routes should only exist when the user is admin! */
     $routeProvider
     .when('/settings', {
-        redirectTo: '/settings/general'
+        controller: require('./controllers/setting-controller.js'),
+        templateUrl: 'templates/settings/settings.html'
     })
     .when('/settings/general', {
         controller: require('./controllers/setting-general-controller.js'),
-        templateUrl: 'templates/settings/settings.html'
-    })
-    .when('/settings/map-settings', {
-        controller: require('./controllers/setting-map-settings.js'),
-        templateUrl: 'templates/settings/map-settings.html'
+        templateUrl: 'templates/settings/general/settings-general.html'
     })
     .when('/settings/data-import', {
         controller: require('./controllers/setting-data-import-controller.js'),
         templateUrl: 'templates/settings/data-import/data-import.html'
+    })
+    .when('/settings/data-configure', {
+        controller: require('./controllers/setting-data-configure-controller.js'),
+        templateUrl: 'templates/settings/data-import/data-configure.html'
     })
     .when('/settings/data-mapper/:formId/:id', {
         controller: require('./controllers/setting-data-mapper-controller.js'),
@@ -32,45 +33,46 @@ function (
             }]
         }
     })
-    .when('/settings/plugins', {
-        controller: require('./controllers/setting-plugins-controller.js'),
-        templateUrl: 'templates/settings/todo.html'
+    .when('/settings/surveys', {
+        controller: require('./controllers/setting-surveys-controller.js'),
+        templateUrl: 'templates/settings/surveys/surveys.html'
     })
-    .when('/settings/forms', {
-        controller: require('./controllers/setting-forms-controller.js'),
-        templateUrl: 'templates/settings/forms/forms.html'
+    .when('/settings/surveys/create', {
+        controller: require('./controllers/setting-surveys-edit-controller.js'),
+        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
     })
-    .when('/settings/forms/:id', {
-        controller: require('./controllers/setting-forms-edit-controller.js'),
-        templateUrl: 'templates/settings/forms/form-edit.html'
+    .when('/settings/surveys/:id', {
+        controller: require('./controllers/setting-surveys-edit-controller.js'),
+        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
     })
     .when('/settings/categories', {
         controller: require('./controllers/setting-categories-controller.js'),
-        templateUrl: 'templates/settings/categories.html'
+        templateUrl: 'templates/settings/categories/categories.html'
     })
     .when('/settings/categories/create', {
         controller: require('./controllers/setting-categories-create-controller.js'),
-        templateUrl: 'templates/settings/categories-edit.html'
+        templateUrl: 'templates/settings/categories/categories-edit.html'
     })
     .when('/settings/categories/:id', {
         controller: require('./controllers/setting-categories-edit-controller.js'),
-        templateUrl: 'templates/settings/categories-edit.html'
-    })
-    .when('/settings/views', {
-        controller: require('./controllers/setting-views-controller.js'),
-        templateUrl: 'templates/settings/todo.html'
+        templateUrl: 'templates/settings/categories/categories-edit.html',
+        resolve: {
+            category: ['$route', 'TagEndpoint', function ($route, TagEndpoint) {
+                return TagEndpoint.getFresh({id: $route.current.params.id});
+            }]
+        }
     })
     .when('/settings/users', {
-        controller: require('./controllers/setting-users-controller.js'),
-        templateUrl: 'templates/settings/users.html'
+        controller: require('./users/controllers/setting-users-controller.js'),
+        templateUrl: 'templates/settings/users/users.html'
     })
     .when('/settings/users/create', {
-        controller: require('./controllers/setting-users-create-controller.js'),
-        templateUrl: 'templates/settings/users-edit.html'
+        controller: require('./users/controllers/setting-users-create-controller.js'),
+        templateUrl: 'templates/settings/users/users-edit.html'
     })
     .when('/settings/users/:id', {
-        controller: require('./controllers/setting-users-edit-controller.js'),
-        templateUrl: 'templates/settings/users-edit.html'
+        controller: require('./users/controllers/setting-users-edit-controller.js'),
+        templateUrl: 'templates/settings/users/users-edit.html'
     })
     .when('/settings/roles', {
         controller: require('./controllers/setting-roles-controller.js'),
@@ -86,7 +88,7 @@ function (
     })
     .when('/settings/datasources', {
         controller: require('./controllers/setting-datasources-controller.js'),
-        templateUrl: 'templates/settings/datasources.html'
+        templateUrl: 'templates/settings/datasources/datasources.html'
     })
     ;
 

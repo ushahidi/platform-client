@@ -1,0 +1,24 @@
+<div class="fab" data-message="add-post">
+    <button type="button" class="button-alpha button-fab" data-toggle="fab-options" ng-click="toggleFab()"  ng-class="{ 'active': fabToggle }" ng-disabled="disabled">
+        <svg class="iconic">
+            <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+            <foreignObject>
+                <img class="icon" src="../../img/icons/png/plus-2x.png">
+            </foreignObject>
+        </svg>
+        <span class="hidden">Add</span>
+    </button>
+
+    <ul class="fab-options" ng-show="fabToggle" ng-class="{ 'active': fabToggle }" ng-style="fabOptionsStyle" data-toggle-animate="flex">
+        <li ng-repeat="form in forms">
+            <a ng-href="/posts/create/{{form.id}}">
+                <span class="fab-action-type" style="background-color:#959595;">
+                    <svg class="iconic">
+                        <use xlink:href="../../img/iconic-sprite.svg#file"></use>
+                    </svg>
+                </span>
+                <span class="bug">{{form.name}}</span>
+            </a>
+        </li>
+    </ul>
+</div>

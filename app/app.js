@@ -7,10 +7,10 @@ require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
-require('angular-ui-bootstrap/ui-bootstrap-tpls');
-require('angular-datepicker');
-require('moment-timezone');
+require('angular-ui-bootstrap');
+require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
+require('angular-elastic');
 require('angular-filter');
 require('angular-local-storage');
 require('checklist-model/checklist-model');
@@ -18,12 +18,12 @@ require('selection-model/dist/selection-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown/src/ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
-window.dc = require('dc'); // Required for charting used in activity page
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 
 // Load ushahidi modules
+require('./frame/frame-module.js');
 require('./common/common-module.js');
 require('./post/post-module.js');
 require('./activity/activity-module.js');
@@ -36,7 +36,7 @@ require('./user-profile/user-profile-module.js');
 window.ushahidi = window.ushahidi || {};
 
 // this 'environment variable' will be set within the gulpfile
-var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || process.env.BACKEND_URL || 'http://ushahidi-backend',
+var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || process.env.BACKEND_URL || 'http://ushahidi-backend').replace(/\/$/, ''),
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || process.env.INTERCOM_APP_ID || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
@@ -62,12 +62,13 @@ var backendUrl = window.ushahidi.backendUrl = window.ushahidi.backendUrl || proc
 angular.module('app',
     [
         'checklist-model',
+        'monospaced.elastic',
         'ngRoute',
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
-        'datePicker',
+        'angular-datepicker',
         'leaflet-directive',
         'angular.filter',
         'showdown',
@@ -75,6 +76,7 @@ angular.module('app',
         'nvd3',
         'selectionModel',
         'angular-cache',
+        'ushahidi.frame',
         'ushahidi.common',
         'ushahidi.posts',
         'ushahidi.tools',
@@ -105,14 +107,14 @@ angular.module('app',
     .factory('d3', function () {
         return window.d3;
     })
-    .factory('dc', function () {
-        return window.dc;
-    })
     .factory('URI', function () {
         return require('URIjs/src/URI.js');
     })
     .factory('Leaflet', function () {
         return window.L;
+    })
+    .factory('moment', function () {
+        return require('moment');
     })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
