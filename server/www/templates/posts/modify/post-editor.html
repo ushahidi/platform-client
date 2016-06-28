@@ -31,11 +31,12 @@
      <div class="main-col">
 
           <div class="form-sheet">
+              <div class="post-band" style="background-color: {{form.color}}"></div>
               <div class="form-field title form-field-adapt init"
               adaptive-form
               ng-class="{
-                'error': form.title.$invalid && form.title.$dirty,
-                'success': !form.title.$invalid && form.title.$dirty
+                'error': postForm.title.$invalid && postForm.title.$dirty,
+                'success': !postForm.title.$invalid && postForm.title.$dirty
               }">
                   <label translate="post.modify.form.title">Title</label>
                   <input id="title"
