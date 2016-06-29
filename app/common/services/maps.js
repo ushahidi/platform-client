@@ -64,9 +64,12 @@ function (
 
     // Icon configuration
     function pointIcon(feature, size, className) {
+        // Test string to make sure that it does not contain injection
+        var color = (/[a-zA-Z0-9]/.test(feature.properties.color)) ? feature.properties.color : null;
+
         return L.divIcon({
             className: 'custom-map-marker ' + className,
-            html: '<svg class="iconic" style="fill:#' + feature.properties.color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#map-marker"></use></svg><span class="iconic-bg" style="background-color:#' + feature.properties.color + ';""></span>',
+            html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""></span>',
             iconSize: size,
             iconAnchor: size,
             popupAnchor: [-16, -32]
