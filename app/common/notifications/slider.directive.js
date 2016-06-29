@@ -72,7 +72,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
 
             // If closeOnNavigate isn't passed, default to false
             if (typeof closeOnNavigate === 'undefined') {
-                $scope.closeOnNavigate = true;
+                $scope.closeOnNavigate = false;
             } else {
                 $scope.closeOnNavigate = closeOnNavigate;
             }
