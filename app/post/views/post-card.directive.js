@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = [];
-function PostCardDirective() {
+PostCardDirective.$inject = ['FormEndpoint'];
+function PostCardDirective(FormEndpoint) {
     return {
         restrict: 'E',
         replace: true,
@@ -16,19 +16,17 @@ function PostCardDirective() {
             activate();
 
             function activate() {
-                // Don't need this yet since forms don't have colors yet.
-                // loadForm($scope.post.form);
+                loadForm($scope.post.form);
             }
 
-            /* function loadForm(form) {
+            function loadForm(form) {
                 // Replace form with full object
                 if (form) {
                     FormEndpoint.get({id: form.id}, function (form) {
                         $scope.post.form = form;
                     });
                 }
-            } */
+            }
         }
     };
 }
-

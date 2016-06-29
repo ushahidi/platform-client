@@ -1,7 +1,7 @@
 <form class="survey-filter">
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
         <div class="survey-filter-label">
-            <span class="post-band" todo-style="background-color:#A51A1A;"></span>
+            <span class="post-band" style="background-color: {{form.color}};"></span>
             <label class="checked">
                 <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" >
                 {{ ::form.name }}
@@ -47,7 +47,7 @@
     </div>
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf('none') !== -1) }"  dropdown>
         <div class="survey-filter-label">
-            <span class="post-band" todo-style="background-color:#A51A1A;"></span>
+            <span class="post-band" style="background-color: {{form.color}};"></span>
             <label class="checked">
                 <input type="checkbox" checklist-value="'none'" checklist-model="filters.form" >
                 <span translate="nav.unknown">Unknown</span>
