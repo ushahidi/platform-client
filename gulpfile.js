@@ -365,7 +365,7 @@ gulp.task('bump', function () {
  */
 gulp.task('tar', ['build'], function () {
     var version = gutil.env['version-suffix'] || require('./package.json').version;
-    var dest_dir = gutil.env['dest-dir'] || 'build'
+    var dest_dir = gutil.env['dest-dir'] || 'build';
 
     return gulp.src('server/www/**')
         .pipe(rename(function (path) {
