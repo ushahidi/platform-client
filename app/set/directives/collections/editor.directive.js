@@ -36,13 +36,11 @@ function CollectionEditorController(
     RoleEndpoint
 ) {
     $scope.collectioneditorVisible = false;
-    $scope.redirectToCollectionListing = false;
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.views = ViewHelper.views();
 
     $scope.setBasicCollection = setBasicCollection;
     $scope.featuredEnabled = featuredEnabled;
-    $scope.continueFlow = continueFlow;
     $scope.cancel = cancel;
     $scope.saveCollection = saveCollection;
     $scope.deleteCollection = deleteCollection;
@@ -77,7 +75,6 @@ function CollectionEditorController(
             // This is a stop-gap until we have a data layer to maintain
             // state
             $scope.posts = posts;
-            $scope.redirectToCollectionListing = true;
         }
         $scope.collectionEditorVisible = true;
     });
@@ -92,10 +89,6 @@ function CollectionEditorController(
 
     function featuredEnabled() {
         return $rootScope.hasPermission('Manage Posts');
-    }
-
-    function continueFlow(collection) {
-        $scope.redirectToCollectionListing ? $rootScope.$emit('collectionToggle:show:afterCreate', $scope.posts, collection) : $location.path('/collections/' + collection.id);
     }
 
     function cancel() {
@@ -120,9 +113,7 @@ function CollectionEditorController(
             $scope.collection = _.clone(collection);
             $scope.collectionEditorVisible = false;
             $rootScope.$broadcast('collection:update');
-            $scope.setBasicCollection();
-            $scope.continueFlow(collection);
-
+            Notify.notify('notify.collection.created_collection', {collection: collection.name});
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
         });

@@ -187,21 +187,4 @@ function CollectionListingController(
         $scope.isToggleMode = true;
         $scope.loadCollections();
     });
-
-    // Show listing modal Collection Toggle mode
-    // This occurs post creation of a new collection
-    // The event expects the post(s) which should be added to the collection
-    // and the newly created collection
-    $rootScope.$on('collectionToggle:show:afterCreate', function (event, posts, collection) {
-        // Get posts back so that collection listing modal does not have to maintain state
-        $scope.posts = posts;
-        // Add posts to the newly created collection
-        $scope.addToCollection(collection);
-        // Show the modal
-        $scope.collectionListingVisible = true;
-        // Set the modal to toggle modal
-        $scope.isToggleMode = true;
-        // Refresh the collections to ensure the list is up todate
-        $scope.loadCollections();
-    });
 }
