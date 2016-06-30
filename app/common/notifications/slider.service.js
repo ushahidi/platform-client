@@ -14,18 +14,18 @@ function SliderService($rootScope, $q, $templateRequest) {
         onClose: onClose
     };
 
-    function openUrl(templateUrl, icon, iconClass, scope, closeOnTimeout, showCloseButton) {
+    function openUrl(templateUrl, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate) {
         deferredOpen.promise.then(function () {
             // Load template
             $templateRequest(templateUrl).then(function (template) {
-                $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton);
+                $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate);
             });
         });
     }
 
-    function openTemplate(template, icon, iconClass, scope, closeOnTimeout, showCloseButton) {
+    function openTemplate(template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate) {
         deferredOpen.promise.then(function () {
-            $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton);
+            $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate);
         });
     }
 

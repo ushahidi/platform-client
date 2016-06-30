@@ -19,6 +19,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         $scope.icon = false;
         $scope.iconClass = {};
         $scope.showCloseButton = true;
+        $scope.closeOnNavigate = false;
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
 
@@ -31,11 +32,14 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         // Run clean up on scope destroy (probably never happens)
         $scope.$on('$destroy', cleanUp);
 
+        // Close slider on navigation if feature enabled
+        $scope.$on('$locationChangeStart', navigateClose);
+
         // Bind to modal service open/close events
         SliderService.onOpen(open, $scope);
         SliderService.onClose(close, $scope);
 
-        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton) {
+        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate) {
             // If we're inside a modal, modal must be open
             if ((typeof $scope.insideModal !== 'undefined') !== ModalService.getState()) {
                 // Ignore, the other slider can open
@@ -64,6 +68,13 @@ function Slider($timeout, $compile, SliderService, ModalService) {
                 $scope.showCloseButton = true;
             } else {
                 $scope.showCloseButton = showCloseButton;
+            }
+
+            // If closeOnNavigate isn't passed, default to false
+            if (typeof closeOnNavigate === 'undefined') {
+                $scope.closeOnNavigate = false;
+            } else {
+                $scope.closeOnNavigate = closeOnNavigate;
             }
 
             // Default closeOnTimeout to true
@@ -96,6 +107,12 @@ function Slider($timeout, $compile, SliderService, ModalService) {
                 $timeout.cancel(closeTimeout);
             }
             sliderContent.html('');
+        }
+
+        function navigateClose() {
+            if ($scope.closeOnNavigate) {
+                close();
+            }
         }
 
         function closeButtonClicked(context) {
