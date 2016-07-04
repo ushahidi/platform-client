@@ -12,6 +12,8 @@ module.exports = [
                 $scope,
                 $translate
             ) {
+                // Set default color
+                $scope.color = '#eee';
                 // Update local color when inbound color is changed
                 $scope.$watch('colorContainer.color', function () {
                     if ($scope.colorContainer.color) {
