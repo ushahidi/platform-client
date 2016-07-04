@@ -4,6 +4,7 @@ CategorySelectDirective.$inject = ['TagEndpoint'];
 function CategorySelectDirective(TagEndpoint) {
     return {
         restrict: 'E',
+        replace: true,
         scope: {},
         require: 'ngModel',
         link: CategorySelectLink,

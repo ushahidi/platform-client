@@ -4,6 +4,7 @@ LocationFilterDirective.$inject = ['Geocoding', '$q'];
 function LocationFilterDirective(Geocoding, $q) {
     return {
         restrict: 'E',
+        replace: true,
         scope: {
             centerPointModel: '=',
             withinKmModel: '='
