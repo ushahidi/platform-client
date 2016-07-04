@@ -53,6 +53,9 @@ function (
 
             };
 
+            $scope.toggleRolesView = function () {
+                $scope.showRoles = true;
+            };
         }];
     return {
         restrict: 'E',
