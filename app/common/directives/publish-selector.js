@@ -22,6 +22,7 @@ function (
             RoleEndpoint,
             _
         ) {
+            $scope.showRoles = !!$scope.post.published_to.length;
 
             $scope.canSeeThis = function () {
                 if ($scope.post.published_to && $scope.post.published_to.length) {
@@ -44,13 +45,14 @@ function (
             $scope.toggleRole = function (role) {
                 if (role === 'draft' || role === '') {
                     $scope.post.published_to = [];
+                    $scope.showRoles = false;
                 } else if ($scope.checkIfAllSelected()) {
                     // All check boxes selected, therefore publish to everyone
                     $scope.post.published_to = [];
+                    $scope.showRoles = false;
                 }
 
                 $scope.post.status = role === 'draft' ? role : 'published';
-
             };
 
             $scope.toggleRolesView = function () {
