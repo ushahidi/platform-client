@@ -191,6 +191,7 @@ function (
             // Disable 'Leaflet prefix on attributions'
             this.map().then(function (map) {
                 map.attributionControl.setPrefix(false);
+                map.setMaxBounds([[-90,-360],[90,360]]);
             });
 
             return this;
