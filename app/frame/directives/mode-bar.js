@@ -4,13 +4,14 @@ module.exports = [
     'Registration',
     'ModalService',
     '$rootScope',
-    'ModalService',
+    'ConfigEndpoint',
 function (
     Features,
     Authentication,
     Registration,
     ModalService,
-    $rootScope
+    $rootScope,
+    ConfigEndpoint
 ) {
     return {
         restrict: 'E',
@@ -24,6 +25,7 @@ function (
             $scope.activeMode = 'map';
             $scope.moreActive = false;
             $scope.isActivityAvailable = false;
+            $scope.canRegister = false;
 
             $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
             $scope.showMore = showMore;
@@ -46,6 +48,10 @@ function (
 
                 Features.loadFeatures().then(function () {
                     $scope.isActivityAvailable = Features.isViewEnabled('activity');
+                });
+
+                ConfigEndpoint.get({id: 'site'}, function (site) {
+                    $scope.canRegister = !site.private;
                 });
             }
 

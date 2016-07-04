@@ -33,16 +33,4 @@ function NavigationController(Authentication, ConfigEndpoint, BootstrapConfig, $
     // function canCreatePost() {
     //     return $rootScope.loggedin || !vm.site.private;
     // };
-
-    // Move to mode bar (or associated service)
-    // function canRegister() {
-    //     return !vm.site.private;
-    // };
-
-    // Move to mode bar (or associated service)
-    // function logoutClick(e) {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     Authentication.logout();
-    // };
 }

@@ -77,7 +77,7 @@
                 </a>
             </li>
 
-            <li ng-hide="currentUser" ng-show="canRegister()">
+            <li ng-show="!currentUser && canRegister">
                 <a ng-click="register()" data-modal="signup">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#person"></use>
