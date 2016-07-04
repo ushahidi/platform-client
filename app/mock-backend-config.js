@@ -18,7 +18,8 @@ angular.module('e2e-mocks', ['ngMockE2E'])
             'config/site': require('../mocked_backend/api/v3/config/site.json'),
             'config/map': require('../mocked_backend/api/v3/config/map.json'),
             'config/features': require('../mocked_backend/api/v3/config/features.json'),
-            'config': require('../mocked_backend/api/v3/config.json')
+            'config': require('../mocked_backend/api/v3/config.json'),
+            'tags': require('../mocked_backend/api/v3/tags.json')
         },
 
         getResultForResource = function (resourceName, offset, limit) {
