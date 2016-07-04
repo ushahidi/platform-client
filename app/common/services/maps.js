@@ -65,7 +65,7 @@ function (
     // Icon configuration
     function pointIcon(feature, size, className) {
         // Test string to make sure that it does not contain injection
-        var color = (/[a-zA-Z0-9]/.test(feature.properties['marker-color'])) ? feature.properties['marker-color'] : null;
+        var color = (/^[a-zA-Z0-9#]+$/.test(feature.properties['marker-color'])) ? feature.properties['marker-color'] : '#959595';
 
         return L.divIcon({
             className: 'custom-map-marker ' + className,
