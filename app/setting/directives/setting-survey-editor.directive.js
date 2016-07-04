@@ -84,6 +84,7 @@ function SurveyEditorController(
             // When creating new survey
             // pre-fill object with default tasks and attributes
             $scope.survey = {
+                color: null,
                 tasks: [
                     {
                         label: 'Post',
