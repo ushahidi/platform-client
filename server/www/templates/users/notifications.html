@@ -88,7 +88,7 @@
 
     <div class="listing-item"
          ng-class="{'active': contact.active}"
-         ng-if="canAddContact">
+         >
       <div class="listing-item-primary">
         <h2 class="listing-item-title">
           <a class="button button-flat"
@@ -105,7 +105,7 @@
       <div class="listing-item-body">
         <form name="addContactForm">
           <div class="form-field">
-            <label class="radio-label" for="email">
+            <label class="radio-label">
               <input ng-model="contact.type"
                      name="email" value="email" id="email" type="radio"
                      checked="checked">
@@ -114,7 +114,7 @@
           </div>
 
           <div class="form-field">
-            <label class="radio-label" for="phone">
+            <label class="radio-label">
               <input ng-model="contact.type"
                      name="phone" value="phone" id="phone" type="radio">
               {{'contact.type.phone' | translate}}
