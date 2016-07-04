@@ -48,7 +48,7 @@ function (
 
         TagEndpoint.saveCache(category).$promise.then(function (response) {
             if (response.id) {
-                Notify.notify('notify.tag.save_success', { name: category.tag });
+                Notify.notify('notify.category.save_success', { name: category.tag });
                 addAnother ? $route.reload() : $location.path(whereToNext);
             }
         }, function (errorResponse) { // error
