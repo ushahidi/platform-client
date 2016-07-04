@@ -288,7 +288,8 @@ function SurveyEditorController(
             ModalService.close();
         }
         $scope.editAttribute = attribute;
-        ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', 'survey.edit_field', '', $scope, true, true);
+        var title = attribute.id ? 'survey.edit_field' : 'survey.add_field';
+        ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 
     function addNewAttribute(attribute) {

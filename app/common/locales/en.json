@@ -33,6 +33,7 @@
         "share": "Share",
         "general" : "General",
         "surveys" : "Surveys",
+        "add_survey" : "Add Survey",
         "edit_survey" : "Edit Survey",
         "data_sources" : "Data Sources",
         "import" : "Import",
