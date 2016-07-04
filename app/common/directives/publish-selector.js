@@ -26,7 +26,9 @@ function (
 
             $scope.canSeeThis = function () {
                 if ($scope.post.published_to && $scope.post.published_to.length) {
-                    return $scope.post.published_to.join(', ');
+                    return _.map($scope.post.published_to, function (role) {
+                        return $scope.roles[role].display_name;
+                    }).join(', ');
                 } else if ($scope.post.status === 'draft') {
                     return $translate.instant('post.just_you');
                 } else {
@@ -35,7 +37,7 @@ function (
             };
 
             RoleEndpoint.query().$promise.then(function (roles) {
-                $scope.roles = roles;
+                $scope.roles = _.indexBy(roles, 'name');
             });
 
             $scope.checkIfAllSelected = function () {
