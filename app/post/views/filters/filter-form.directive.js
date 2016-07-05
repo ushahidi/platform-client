@@ -4,6 +4,7 @@ FormSelectDirective.$inject = ['FormEndpoint'];
 function FormSelectDirective(FormEndpoint) {
     return {
         restrict: 'E',
+        replace: true,
         scope: {},
         require: 'ngModel',
         link: FormSelectLink,

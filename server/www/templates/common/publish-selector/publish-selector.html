@@ -13,10 +13,10 @@
       </svg>
     </legend>
     <div class="dropdown-menu init" dropdown-menu>
-        <div class="form-fieldgroup">
+        <div class="form-fieldgroup" dropdown>
             <div class="form-field radio">
                 <input
-                    name="{{post.id}}_draft"
+                    name="{{post.id}}"
                     id="{{post.id}}_draft"
                     value="draft"
                     type="radio"
@@ -27,7 +27,7 @@
 
             <div class="form-field radio">
                 <input
-                    name="{{post.id}}_everyone"
+                    name="{{post.id}}"
                     id="{{post.id}}_everyone"
                     value=""
                     type="radio"
@@ -35,14 +35,16 @@
                     ng-click="toggleRole('')">
                 <label for="{{post.id}}_everyone" translate="post.everyone">Everyone</label>
             </div>
-            <div class="form-field radio" dropdown>
-                <input
-                    dropdown-toggle
-                    auto-close="disabled"
-                    ng-checked="post.published_to.length"
-                    type="radio">
-                <label for="{{post.id}}_everyone" translate="post.specific_roles">Specific roles...</label>
-                <div class="form-fieldgroup" dropdown-menu>
+            <div class="form-field radio">
+              <input
+                  name="{{post.id}}"
+                  id="{{post.id}}_roles"
+                  auto-close="disabled"
+                  ng-checked="post.published_to.length"
+                  value="roles"
+                  type="radio" ng-click="toggleRolesView()">
+                <label for="{{post.id}}_roles" translate="post.specific_roles">Specific roles...</label>
+                <div class="form-fieldgroup" dropdown-menu ng-show="showRoles">
                     <div class="form-field checkbox" ng-repeat="role in roles">
                         <input
                             id="{{role.id}}"

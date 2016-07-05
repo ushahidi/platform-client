@@ -4,6 +4,7 @@ VisibleToSelectDirective.$inject = [];
 function VisibleToSelectDirective() {
     return {
         restrict: 'E',
+        replace: true,
         scope: {
             statusModel: '=',
             publishedToModel: '='

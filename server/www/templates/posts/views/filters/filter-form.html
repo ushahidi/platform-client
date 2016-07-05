@@ -6,7 +6,7 @@
             <input checklist-value="form.id" checklist-model="selectedForms" type="checkbox" name="selectedForms" > {{ ::form.name }}
         </label>
     </div>
-    <div class="form-field checkbox" ng-class="{ overflow : (forms.length > 2) }">
+    <div class="form-field checkbox" ng-class="{ overflow : (forms.length > 1) }">
         <label>
             <input checklist-value="'none'" checklist-model="selectedForms" type="checkbox" name="selectedForms" > <span translate="nav.unknown">Unknown</span>
         </label>

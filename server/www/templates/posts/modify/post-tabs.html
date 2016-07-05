@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <fieldset id="categories" ng-show="isFirstStage(visibleStage)">
+        <fieldset id="categories" ng-show="isFirstStage(visibleStage) && categories.length">
             <legend translate="post.modify.form.categories">Categories</legend>
             <div class="form-field checkbox" ng-repeat="category in categories">
                 <label for="cat1">
