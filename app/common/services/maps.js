@@ -11,6 +11,7 @@ module.exports = [
     'MediaEndpoint',
     '$compile',
     '$rootScope',
+    'CONST',
 function (
     $q,
     ConfigEndpoint,
@@ -23,27 +24,29 @@ function (
     FormAttributeEndpoint,
     MediaEndpoint,
     $compile,
-    $rootScope
+    $rootScope,
+    CONST
 ) {
-
     var layers = {
         baselayers : {
-            MapQuest: {
-                name: 'Map',
-                url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png',
+            satellite: {
+                name: 'Satellite',
+                url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                 type: 'xyz',
                 layerOptions: {
-                    subdomains: '1234',
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
+                    apikey: CONST.MAPBOX_API_KEY,
+                    mapid: 'mapbox.satellite',
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a>'
                 }
             },
-            MapQuestAerial: {
-                name: 'Satellite',
-                url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png',
+            streets: {
+                name: 'Streets',
+                url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                 type: 'xyz',
                 layerOptions: {
-                    subdomains: '1234',
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
+                    apikey: CONST.MAPBOX_API_KEY,
+                    mapid: 'mapbox.streets',
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a>'
                 }
             },
             hOSM: {
@@ -51,11 +54,12 @@ function (
                 url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
                 type: 'xyz',
                 layerOptions: {
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
+                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, Tiles <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
                 }
             }
         }
     };
+
     // Copy layersOptions to options to allow for differing formats
     // use by leaflet directive tiles vs layers
     angular.forEach(layers.baselayers, function (layer) {
@@ -172,6 +176,13 @@ function (
         },
         reloadMapConfig: function () {
             return ConfigEndpoint.get({ id: 'map' }).$promise.then(_.bind(function (config) {
+                // Handle legacy layers
+                if (config.default_view.baselayer === 'MapQuest') {
+                    config.default_view.baselayer = 'streets';
+                }
+                if (config.default_view.baselayer === 'MapQuestAerial') {
+                    config.default_view.baselayer = 'satellite';
+                }
                 this.config = config;
                 return this.config;
             }, this));
