@@ -1,7 +1,0 @@
----
-platform_client_version: develop
-platform_client_multisite_domain: ushahididev.com
-platform_client_ga_key: "{{secret_gaKey}}"
-platform_client_tx_username: "{{ secret_tx_username }}"
-platform_client_tx_password: "{{ secret_tx_password }}"
-platform_client_intercom_appid: "{{ secret_intercomAppId }}"
