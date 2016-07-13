@@ -60,7 +60,7 @@ function PostMetadataDirective(
 
             function loadContact(contact) {
                 if (!$scope.post.user && contact && contact.id) {
-                    return ContactEndpoint.get({ id: $scope.post.contact.id });
+                    return ContactEndpoint.get({ id: $scope.post.contact.id, ignore403: true });
                 }
             }
 
