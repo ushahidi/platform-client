@@ -83,6 +83,7 @@ angular.module('ushahidi.common', [
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
+.directive('focus', require('./directives/focus.js'))
 
 // Event actions
 .constant('EVENT', {

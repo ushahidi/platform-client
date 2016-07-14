@@ -58,7 +58,7 @@ function PostFiltersService(_, FormEndpoint) {
             q: '',
             created_after: '',
             created_before: '',
-            status: 'all',
+            status: [],
             published_to: '',
             center_point: '',
             within_km: '1',

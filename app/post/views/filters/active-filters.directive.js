@@ -48,17 +48,6 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             var activeFilters = angular.copy(filters);
             rawFilters = angular.copy(filters);
 
-            // Transform status + published_to into visible to value
-            // @todo move to service
-            if (activeFilters.status) {
-                if (activeFilters.status === 'draft') {
-                    activeFilters.visible_to = 'draft';
-                } else if (activeFilters.status === 'published' && activeFilters.published_to) {
-                    activeFilters.visible_to = activeFilters.published_to;
-                }
-                // Otherwise visible_to = 'everyone' which is default
-                delete activeFilters.status;
-            }
             if (activeFilters.published_to) {
                 delete activeFilters.published_to;
             }
@@ -113,17 +102,15 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             created_after : function (value) {
                 return $filter('date', 'longdate')(value);
             },
-            visible_to : function (value) {
-                if (value === 'everyone') {
-                    return $translate.instant('nav.everyone');
-                } else if (value === 'draft') {
-                    return $translate.instant('nav.only_you');
-                } else {
-                    return roles[value] ? roles[value].display_name : value;
+            status : function (value) {
+                if (value === 'published') {
+                    return $translate.instant('nav.published');
+                } else if (value === 'under_review') {
+                    return $translate.instant('nav.under_review');
+                } else if (value === 'archived') {
+                    return $translate.instant('nav.archive');
                 }
             }
         };
     }
 }
-
-

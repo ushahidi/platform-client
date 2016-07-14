@@ -31,7 +31,8 @@ PostEditorController.$inject = [
     'UserEndpoint',
     'Notify',
     '_',
-    'PostActionsService'
+    'PostActionsService',
+    '$rootScope'
   ];
 
 function PostEditorController(
@@ -49,8 +50,10 @@ function PostEditorController(
     UserEndpoint,
     Notify,
     _,
-    PostActionsService
+    PostActionsService,
+    $rootScope
   ) {
+    $rootScope.setLayout('layout-a');
     // Setup initial stages container
 
     $scope.everyone = $filter('translate')('post.modify.everyone');
@@ -62,7 +65,6 @@ function PostEditorController(
     $scope.setVisibleStage = setVisibleStage;
     $scope.fetchAttributes = fetchAttributes;
     $scope.fetchStages = fetchStages;
-    $scope.allowedChangeStatus = allowedChangeStatus;
 
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
@@ -150,11 +152,6 @@ function PostEditorController(
                 $scope.setVisibleStage(incompleteStages[0].id);
             }
         });
-    }
-
-    // TODO: this function should be moved to a general service handling permissions
-    function allowedChangeStatus() {
-        return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
     }
 
     function canSavePost() {

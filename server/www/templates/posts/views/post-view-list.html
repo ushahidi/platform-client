@@ -18,14 +18,64 @@
         <listing-toolbar
             entities="posts"
             selected-set="selectedPosts"
-            >
+          >
+          <!-- status bulk actions -->
+                <span dropdown>
+                  <button class="button-beta init" data-toggle="toggle-content" dropdown-toggle>
+                    <span class="button-label" translate="app.mark_as">Mark as</span>
+                    <svg class="iconic">
+                      <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                    </svg>
+                  </button>
+                  <ul class="dropdown-menu toggle-content init" dropdown-menu>
+                    <li>
+                      <a href="">
+                        <svg class="iconic">
+                          <use xlink:href="../../img/iconic-sprite.svg#globe"></use>
+                        </svg>
+                        <span class="label">Published</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="">
+                        <svg class="iconic">
+                          <use xlink:href="../../img/iconic-sprite.svg#lock-locked"></use>
+                        </svg>
+                        <span class="label">Under Review</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="">
+                        <svg class="iconic">
+                          <use xlink:href="../../img/iconic-sprite.svg#box"></use>
+                        </svg>
+                        <span class="label">Archive</span>
+                      </a>
+                    </li>
+                    <!--
+                        <div class="divider"></div>
+                    <li>
+                      <a href="">
+                        Spam
+                      </a>
+                    </li>
+                    <li>
+                      <a href="">
+                        Duplicates
+                      </a>
+                    </li>
+                    -->
+                  </ul>
+                </span>
+
+                <collection-toggle-button selected-posts="selectedPosts" posts="posts"></collection-toggle-button>
                 <button type="button" class="button-destructive" ng-click="deletePosts()">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
                     </svg>
                     <span class="button-label hidden">nav.delete</span>
                 </button>
-                <collection-toggle-button selected-posts="selectedPosts" posts="posts"></collection-toggle-button>
+
         </listing-toolbar>
 
         <!-- todo: check style -->

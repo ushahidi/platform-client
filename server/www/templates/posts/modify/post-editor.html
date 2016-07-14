@@ -55,7 +55,11 @@
               </div>
 
               <!-- IF: Editing an existing post -->
+
+              <!--
               <post-metadata post="post" ng-if="post.id"></post-metadata>
+              -->
+
               <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
               <div class="postcard-metadata">
                   <strong>This post will need to be moderated</strong> before it's visible to the public.
@@ -63,10 +67,13 @@
               END: IF -->
 
               <!-- IF: User has permission to manage who it's visible to -->
+              <!--
               <publish-selector ng-show="allowedChangeStatus()" post="post" ></publish-selector>
+              -->
               <!-- END: IF -->
 
              <!-- IF: User has permission to see other 'Tasks' -->
+
 
              <post-tabs
                  form="postForm"
@@ -75,6 +82,7 @@
                  attributes="attributes"
                  visible-stage="visibleStage">
               </post-tabs>
+
          </div>
 
           <div class="form-sheet" ng-if="post.id">
@@ -93,6 +101,8 @@
                   </button>
               </div>
           </div>
+          
+          <post-toolbox post="post"></post-toolbox>
 
       </div> <!-- END main column -->
 
