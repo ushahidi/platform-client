@@ -22,3 +22,7 @@ test:
   build:
     image: test
     dockerfile_path: docker/test.Dockerfile
+  volumes:
+    - .:/vols/src
+  environment:
+    - TEST_SUITE=unit
