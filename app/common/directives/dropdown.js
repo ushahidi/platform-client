@@ -281,6 +281,29 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
     };
 })
 
+.directive('isFloating', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            scope.$watch(function () {
+                // Get positioned element that contains dropdown
+                return element[0].offsetParent !== null;
+            }, function (value) {
+                if (value) {
+                    // Offset is offset of positioned element + dropdown offset
+                    var offset = element[0].offsetParent.offsetLeft + element[0].parentElement.offsetLeft;
+
+                    var css = {
+                        left: offset + 'px'
+                    };
+
+                    element.css(css);
+                }
+            });
+        }
+    };
+})
+
 .directive('keyboardNav', function () {
     return {
         restrict: 'A',
