@@ -17,7 +17,6 @@ function PostToolboxDirective(
         },
         templateUrl: 'templates/posts/modify/post-toolbox.html',
         link: function ($scope) {
-            $scope.post.status = 'under_review';
             $scope.showEditAuthorButton = true;
             $scope.showEditAuthorForm = false;
 
