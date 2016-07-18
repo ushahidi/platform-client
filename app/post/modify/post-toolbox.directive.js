@@ -3,12 +3,14 @@ module.exports = PostToolboxDirective;
 PostToolboxDirective.$inject = [
     'PostStatusService',
     'PostMetadataService',
-    'moment'
+    'moment',
+    '$rootScope'
 ];
 function PostToolboxDirective(
     PostStatusService,
     PostMetadataService,
-    moment
+    moment,
+    $rootScope
 ) {
     return {
         restrict: 'E',
@@ -29,7 +31,6 @@ function PostToolboxDirective(
 
             $scope.changeStatus = function (status) {
                 $scope.post.status = status;
-                $scope.showStatusDropdown = false;
             };
 
             $scope.editAuthor = function () {
@@ -40,6 +41,14 @@ function PostToolboxDirective(
             // TODO: this function should be moved to a general service handling permissions
             $scope.allowedChangeStatus = function () {
                 return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
+            };
+
+            $scope.allowedChangeOwner = function () {
+                return $rootScope.hasPermission('Manage Posts');
+            };
+
+            $scope.allowedChangeTimestamp = function () {
+                return $rootScope.hasPermission('Manage Posts');
             };
 
             function formatDates() {
