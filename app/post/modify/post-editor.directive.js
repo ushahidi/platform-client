@@ -170,6 +170,10 @@ function PostEditorController(
         });
     }
 
+    function allowedChangeStatus() {
+        return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
+    }
+
     function savePost() {
         if (!$scope.canSavePost()) {
             return;
@@ -188,7 +192,7 @@ function PostEditorController(
         }
 
         request.$promise.then(function (response) {
-            var success_message = $scope.allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
+            var success_message = allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
             if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                 $scope.saving_post = false;
