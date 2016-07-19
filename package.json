@@ -64,7 +64,7 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "phantomjs-prebuilt": "^2.1.7",
     "pre-commit": "^1.1.2",
-    "protractor": "^3.3.0",
+    "protractor": "^4.0.0",
     "serve-static": "^1.10.0",
     "transifex": "^1.4.3",
     "underscore.string": "^3.3.4",
