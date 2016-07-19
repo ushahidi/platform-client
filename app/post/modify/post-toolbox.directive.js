@@ -19,9 +19,6 @@ function PostToolboxDirective(
         },
         templateUrl: 'templates/posts/modify/post-toolbox.html',
         link: function ($scope) {
-            $scope.showEditAuthorButton = true;
-            $scope.showEditAuthorForm = false;
-
             $scope.source = PostMetadataService.formatSource($scope.post.source);
             $scope.post.user = PostMetadataService.loadUser($scope.post);
 
@@ -31,11 +28,6 @@ function PostToolboxDirective(
 
             $scope.changeStatus = function (status) {
                 $scope.post.status = status;
-            };
-
-            $scope.editAuthor = function () {
-                $scope.showEditAuthorButton = false;
-                $scope.showEditAuthorForm = true;
             };
 
             // TODO: this function should be moved to a general service handling permissions
@@ -49,6 +41,29 @@ function PostToolboxDirective(
 
             $scope.allowedChangeTimestamp = function () {
                 return $rootScope.hasPermission('Manage Posts');
+            };
+
+            $scope.editAuthor = function () {
+                $scope.showEditAuthorButton = false;
+                $scope.showEditAuthorForm = true;
+            };
+
+            $scope.showUserRealname = function () {
+                return !$scope.showEditAuthorForm && !$scope.post.author_realname && $scope.post.user;
+            };
+
+            $scope.showAuthorRealname = function () {
+                return !$scope.showEditAuthorForm && $scope.post.author_realname;
+            };
+
+            $scope.loadAuthorFormDefaults = function () {
+                if ($scope.post.author_realname || $scope.post.user) {
+                    $scope.showEditAuthorButton = true;
+                    $scope.showEditAuthorForm = false;
+                } else {
+                    $scope.showEditAuthorButton = false;
+                    $scope.showEditAuthorForm = true;
+                }
             };
 
             function formatDates() {

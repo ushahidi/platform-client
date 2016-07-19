@@ -44,10 +44,10 @@
   <!-- END: IF -->
 
   <!--// IF: User has permission to change the author & post timestamp //-->
-  <div class="tool" dropdown auto-close="disabled" ng-if="post.user && allowedChangeOwner()">
+  <div class="tool" dropdown auto-close="disabled" ng-if="allowedChangeOwner()">
     <h6 class="tool-heading" translate="post.author">Author</h6>
 
-    <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+    <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle ng-click="loadAuthorFormDefaults()">
       <svg class="iconic">
         <use xlink:href="../../../img/iconic-sprite.svg#chevron-bottom"></use>
       </svg>
@@ -56,16 +56,20 @@
 
     <div class="toggle-content init" dropdown-menu>
       <div class="listing-item">
-        <div class="listing-item-primary" ng-if="!showEditAuthorForm">
+        <div class="listing-item-primary" ng-if="showUserRealname()">
           <div class="listing-item-image">
             <img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
           </div>
           <h2 class="listing-item-title">{{ post.user.realname }}</h2>
           <p class="listing-item-secondary"></p>
         </div>
+        <div class="listing-item-primary" ng-if="showAuthorRealname()">
+          <h2 class="listing-item-title">{{ post.author_realname }}</h2>
+          <p class="listing-item-secondary"></p>
+        </div>
         <div class="listing-item-primary" ng-if="showEditAuthorForm">
           <div class="form-field form-field-adapt init">
-            <input type="text" class="adapt-field" ng-model="post.user.realname" focus="showEditAuthorForm">
+            <input type="text" class="adapt-field" ng-model="post.author_realname" focus="showEditAuthorForm">
           </div>
         </div>
       </div>
