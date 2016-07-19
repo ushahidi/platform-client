@@ -52,7 +52,7 @@
       </li>
       -->
     </ul>
-    <div class="divider" ng-show="post.allowed_privileges.indexOf('change_status') !== -1"></div>
+    <div class="divider" ng-show="post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 "></div>
     <ul>
       <li ng-repeat="status in statuses"
           ng-show="post.allowed_privileges.indexOf('change_status') !== -1">
