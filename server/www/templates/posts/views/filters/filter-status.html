@@ -7,7 +7,7 @@
         <svg class="iconic" ng-if="status == 'published'">
           <use xlink:href="../../../img/iconic-sprite.svg#globe"></use>
         </svg>
-        <svg class="iconic" ng-if="status == 'under_review'">
+        <svg class="iconic" ng-if="status == 'draft'">
           <use xlink:href="../../../img/iconic-sprite.svg#lock-locked"></use>
         </svg>
         <svg class="iconic" ng-if="status == 'archived'">
@@ -15,9 +15,9 @@
         </svg>
 
         <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="status" name="selectedStatuses">
-        <span translate="nav.published" ng-if="status == 'published'">Published</span>
-        <span translate="nav.under_review" ng-if="status == 'under_review'">Under review</span>
-        <span translate="nav.archive" ng-if="status == 'archived'">Archive</span>
+        <span translate="post.published" ng-if="status == 'published'">Published</span>
+        <span translate="post.draft" ng-if="status == 'draft'">Under review</span>
+        <span translate="post.archived" ng-if="status == 'archived'">Archive</span>
         
         </label>
     </div>

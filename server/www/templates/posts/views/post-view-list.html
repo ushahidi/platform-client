@@ -32,12 +32,12 @@
                 <a ng-click="changeStatus(status)">
                   <svg class="iconic">
                     <use xlink:href="../../img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-                    <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="status=='under_review'"></use>
+                    <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
                     <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
                   </svg>
-                  <span class="label" translate="nav.published" ng-if="status == 'published'">Published</span>
-                  <span class="label" translate="nav.under_review" ng-if="status == 'under_review'">Under review</span>
-                  <span class="label" translate="nav.archive" ng-if="status == 'archived'">Archive</span>
+                  <span class="label" translate="post.published" ng-if="status == 'published'">Published</span>
+                  <span class="label" translate="post.draft" ng-if="status == 'draft'">Under review</span>
+                  <span class="label" translate="post.archived" ng-if="status == 'archived'">Archive</span>
                 </a>
               </li>
               <!--

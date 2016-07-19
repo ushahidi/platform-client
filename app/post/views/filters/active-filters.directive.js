@@ -104,11 +104,11 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             },
             status : function (value) {
                 if (value === 'published') {
-                    return $translate.instant('nav.published');
-                } else if (value === 'under_review') {
-                    return $translate.instant('nav.under_review');
+                    return $translate.instant('post.published');
+                } else if (value === 'draft') {
+                    return $translate.instant('post.draft');
                 } else if (value === 'archived') {
-                    return $translate.instant('nav.archive');
+                    return $translate.instant('post.archived');
                 }
             }
         };

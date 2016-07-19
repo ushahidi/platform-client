@@ -1,4 +1,4 @@
-<div class="toolbox">
+<div class="toolbox" ng-if="post.id">
   <!-- IF: User has permission to manage post status -->
   <div class="tool" ng-if="allowedChangeStatus()" dropdown>
     <fieldset class="custom-fieldset init">
@@ -7,12 +7,12 @@
           <span class="custom-fieldset-value">
             <svg class="iconic">
             <use xlink:href="../../../img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-            <use xlink:href="../../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='under_review'"></use>
+            <use xlink:href="../../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
             <use xlink:href="../../../img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
             </svg>
-            <span translate="nav.published" ng-if="post.status == 'published'">Published</span>
-            <span translate="nav.under_review" ng-if="post.status == 'under_review'">Under review</span>
-            <span translate="nav.archive" ng-if="post.status == 'archived'">Archive</span>
+            <span translate="post.published" ng-if="post.status == 'published'">Published</span>
+            <span translate="post.draft" ng-if="post.status == 'draft'">Under review</span>
+            <span translate="post.archived" ng-if="post.status == 'archived'">Archived</span>
 
           </span>
         </span>
@@ -29,13 +29,13 @@
           <label for="{{status}}">
           <svg class="iconic">
             <use xlink:href="../../../img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-            <use xlink:href="../../../img/iconic-sprite.svg#lock-locked" ng-if="status=='under_review'"></use>
+            <use xlink:href="../../../img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
             <use xlink:href="../../../img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
           </svg>
           <input type="radio" name="status" id="{{status}}" />
-          <span translate="nav.published" ng-if="status == 'published'">Published</span>
-            <span translate="nav.under_review" ng-if="status == 'under_review'">Under review</span>
-            <span translate="nav.archive" ng-if="status == 'archived'">Archive</span>
+          <span translate="post.published" ng-if="status == 'published'">Published</span>
+            <span translate="post.draft" ng-if="status == 'draft'">Under review</span>
+            <span translate="post.archived" ng-if="status == 'archived'">Archived</span>
         </label>
       </div>
       </div>

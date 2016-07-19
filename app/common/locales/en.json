@@ -379,10 +379,7 @@
         "roles" : "Roles",
         "views" : "Views",
         "more" : "More",
-        "yesterday" : "Yesterday",
-        "published" : "Published",
-        "under_review" : "Under Review",
-        "archive" : "Archive"
+        "yesterday" : "Yesterday"
     },
     "views" : {
         "map" : "Map",
@@ -413,7 +410,8 @@
         "create" : "Create",
         "change" : "Change",
         "posted_by" : "Posted by",
-        "draft" : "Draft",
+        "draft" : "Under review",
+        "archived" : "Archived",
         "edited_by" : "Edited by",
         "export" : "Export",
         "select_all" : "Select All",

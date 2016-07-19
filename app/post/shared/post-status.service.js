@@ -5,7 +5,7 @@ function (
 ) {
     var PostStatusService = {
         getStatuses: function () {
-            return ['published', 'under_review', 'archived'];
+            return ['published', 'draft', 'archived'];
         }
     };
 
