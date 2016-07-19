@@ -1,7 +1,7 @@
 module.exports = StatusSelectDirective;
 
-StatusSelectDirective.$inject = ['PostStatusService'];
-function StatusSelectDirective(PostStatusService) {
+StatusSelectDirective.$inject = ['PostStatusService', '$rootScope'];
+function StatusSelectDirective(PostStatusService, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -14,6 +14,7 @@ function StatusSelectDirective(PostStatusService) {
     function StatusSelectLink(scope, element, attrs, ngModel) {
         scope.statuses = PostStatusService.getStatuses();
         scope.selectedStatuses = [];
+        scope.hasPermission = $rootScope.hasPermission;
 
         activate();
 

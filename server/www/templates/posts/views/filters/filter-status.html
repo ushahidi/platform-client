@@ -1,4 +1,4 @@
-<fieldset overflow-toggle has-overflow="statuses.length > 2" ng-model-options="{ updateOn: 'default' }">
+<fieldset overflow-toggle has-overflow="statuses.length > 2" ng-model-options="{ updateOn: 'default' }" ng-show="hasPermission('Manage Posts')">
     <legend translate="global_filter.status">Status</legend>
 
     <div class="form-field checkbox icon-input" ng-repeat="(index, status) in statuses" ng-class="{ overflow: ($index > 1) }">
