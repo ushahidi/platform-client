@@ -53,9 +53,8 @@ function PostEditorController(
     PostActionsService,
     $rootScope
   ) {
-    $rootScope.setLayout('layout-a');
-    // Setup initial stages container
 
+    // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
     $scope.isEdit = !!$scope.post.id;
     $scope.validationErrors = [];
