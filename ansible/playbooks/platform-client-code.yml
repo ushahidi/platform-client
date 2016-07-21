@@ -1,9 +1,0 @@
----
-- name: deploy platform-client code
-  hosts: platform-client
-
-  roles:
-    - platform-client-code
-
-  vars:
-    DEPLOYMENTS_API_DOMAIN: "api.{{DEPLOYMENTS_DOMAIN}}"
