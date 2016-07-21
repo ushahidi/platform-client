@@ -33,13 +33,12 @@ function (
         ) {
             var markers = {},
                 mapName = $scope.id + '-map';
+            $scope.mapReady = false;
 
             angular.extend($scope, Maps.getInitialScope());
 
             // Try to use value from settings
-            var config = Maps.getAngularScopeParams();
-
-            config.then(function (params) {
+            Maps.getAngularScopeParams().then(function (params) {
                 // Save initial center for reset
                 $scope.initialCenter = params.center;
 
@@ -49,6 +48,8 @@ function (
                 }
                 // Then save params into scope
                 angular.extend($scope, params);
+
+                $scope.mapReady = true;
             });
 
             // init markers with current model value

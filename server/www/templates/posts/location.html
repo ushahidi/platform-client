@@ -9,7 +9,7 @@
 
             <button class="button-secondary alt" type="button" ng-click="clear()" ng-disabled="processing" translate>location.clear</button>
         </div>
-        <leaflet id="{{id}}-map" markers="markers" layers="layers" center="center" height="265px" width="100%"></leaflet>
+        <leaflet ng-if="mapReady" id="{{id}}-map" markers="markers" layers="layers" center="center" height="265px" width="100%"></leaflet>
         <p translate>location.click_map</p>
     </div>
 </form>
