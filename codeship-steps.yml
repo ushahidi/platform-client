@@ -18,4 +18,4 @@
   - name: "Deploy Production"
     service: deploy
     tag: production
-    command: "ansible-playbook -vv -i hosts/rackspace_production platform-client-update.yml -e=\"PLATFORM_CLIENT_VERSION=$CI_COMMIT_ID\""
+    command: "ansible-playbook -vv -i hosts/rackspace_prod platform-client-update.yml -e=\"PLATFORM_CLIENT_VERSION=$CI_COMMIT_ID\""
