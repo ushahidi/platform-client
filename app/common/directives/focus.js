@@ -1,3 +1,8 @@
+/**
+ * Focus directive.
+ * Use this to set focus on input fields that may otherwise not have focus when they become available.
+ */
+
 module.exports = Focus;
 
 Focus.$inject = [
