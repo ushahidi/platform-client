@@ -31,7 +31,7 @@ function (
         baselayers : {
             satellite: {
                 name: 'Satellite',
-                url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                 type: 'xyz',
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
@@ -41,7 +41,7 @@ function (
             },
             streets: {
                 name: 'Streets',
-                url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                 type: 'xyz',
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
