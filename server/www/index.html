@@ -128,5 +128,13 @@
                 ga('send', 'pageview');
             }
         </script>
+        <script>
+            if (window.ushahidi && window.ushahidi.ravenUrl) {
+                (function(d, t) {
+                    var g = d.createElement(t);g.id = 'ravenScript';g.type = 'text/javascript';g.async = true;g.src = 'https://cdn.ravenjs.com/3.2.1/angular/raven.min.js';(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
+                }(document, 'script'));
+                Raven.config(window.ushahidi.ravenUrl).install();
+            }
+        </script>
     </body>
 </html>
