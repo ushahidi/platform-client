@@ -58,9 +58,11 @@
           ng-show="post.allowed_privileges.indexOf('change_status') !== -1">
         <a ng-click="updateStatus(status)">
           <svg class="iconic">
+            <use xlink:href="../../../img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
             <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
             <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
           </svg>
+          <span class="label" ng-if="status=='published'" translate="post.post_actions.publish">Publish</span>
           <span class="label" ng-if="status=='draft'" translate="post.post_actions.put_under_review">Put under </span>
           <span class="label" ng-if="status=='archived'" translate="post.post_actions.archive">Archive</span>
         </a>

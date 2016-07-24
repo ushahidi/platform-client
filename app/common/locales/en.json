@@ -459,7 +459,8 @@
             "delete" : "Delete",
             "export" : "Export",
             "put_under_review" : "Put under review",
-            "archive" : "Archive"
+            "archive" : "Archive",
+            "publish" : "Publish"
         },
         "created_at" : "<strong>Created</strong> at",
         "updated_at" : "<strong>Last updated</strong> at",
