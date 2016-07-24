@@ -1,13 +1,13 @@
 module.exports = PostToolboxDirective;
 
 PostToolboxDirective.$inject = [
-    'PostStatusService',
+    'PostActionsService',
     'PostMetadataService',
     'moment',
     '$rootScope'
 ];
 function PostToolboxDirective(
-    PostStatusService,
+    PostActionsService,
     PostMetadataService,
     moment,
     $rootScope
@@ -22,8 +22,8 @@ function PostToolboxDirective(
             $scope.source = PostMetadataService.formatSource($scope.post.source);
             $scope.post.user = PostMetadataService.loadUser($scope.post);
 
-            $scope.statuses = PostStatusService.getStatuses();
 
+            $scope.statuses = PostActionsService.getStatuses();
             formatDates();
 
             $scope.changeStatus = function (status) {

@@ -25,7 +25,7 @@ PostListController.$inject = [
     'ConfigEndpoint',
     'moment',
     'PostFilters',
-    'PostStatusService'
+    'PostActionsService'
 ];
 function PostListController(
     $scope,
@@ -38,7 +38,7 @@ function PostListController(
     ConfigEndpoint,
     moment,
     PostFilters,
-    PostStatusService
+    PostActionsService
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -52,7 +52,7 @@ function PostListController(
     $scope.itemsPerPageChanged = itemsPerPageChanged;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
     $scope.pageChanged = getPostsForPagination;
-    $scope.statuses = PostStatusService.getStatuses();
+    $scope.statuses = PostActionsService.getStatuses();
     $scope.changeStatus = changeStatus;
 
     activate();
