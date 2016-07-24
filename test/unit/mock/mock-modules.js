@@ -33,6 +33,7 @@ angular.module('ushahidi.mock', [])
 .service('PostActionsService', require('./services/post-actions-service.js'))
 .service('PostEditService', require('./services/post-edit-service.js'))
 .service('PostViewService', require('./services/post-view-service.js'))
+.service('PostMetadataService', require('./services/post-metadata-service.js'))
 .service('Notify', require('./services/notify.js'))
 
 .controller('navigation', require('./controllers/navigation.controller.mock.js'))

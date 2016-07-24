@@ -1,8 +1,12 @@
-module.exports = [
+module.exports = PostMetadataService;
+
+PostMetadataService.$inject = [
     'Util',
     'UserEndpoint',
-    'ContactEndpoint',
-function (
+    'ContactEndpoint'
+];
+
+function PostMetadataService(
     Util,
     UserEndpoint,
     ContactEndpoint
@@ -32,4 +36,4 @@ function (
     };
 
     return Util.bindAllFunctionsToSelf(PostMetadataService);
-}];
+}

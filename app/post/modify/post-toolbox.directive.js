@@ -18,61 +18,74 @@ function PostToolboxDirective(
             post:  '='
         },
         templateUrl: 'templates/posts/modify/post-toolbox.html',
-        link: function ($scope) {
+        link: PostToolboxLink
+    };
+
+    function PostToolboxLink($scope) {
+        $scope.changeStatus = changeStatus;
+        $scope.allowedChangeStatus = allowedChangeStatus;
+        $scope.allowedChangeOwner = allowedChangeOwner;
+        $scope.allowedChangeTimestamp = allowedChangeTimestamp;
+        $scope.editAuthor = editAuthor;
+        $scope.showUserRealname = showUserRealname;
+        $scope.showAuthorRealname = showAuthorRealname;
+        $scope.loadAuthorFormDefaults = loadAuthorFormDefaults;
+
+        activate();
+
+        function activate() {
             $scope.source = PostMetadataService.formatSource($scope.post.source);
             $scope.post.user = PostMetadataService.loadUser($scope.post);
-
-
             $scope.statuses = PostActionsService.getStatuses();
             formatDates();
+        }
 
-            $scope.changeStatus = function (status) {
-                $scope.post.status = status;
-            };
+        function changeStatus(status) {
+            $scope.post.status = status;
+        }
 
-            // TODO: this function should be moved to a general service handling permissions
-            $scope.allowedChangeStatus = function () {
-                return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
-            };
+        // TODO: this function should be moved to a general service handling permissions
+        function allowedChangeStatus() {
+            return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
+        }
 
-            $scope.allowedChangeOwner = function () {
-                return $rootScope.hasPermission('Manage Posts');
-            };
+        function allowedChangeOwner() {
+            return $rootScope.hasPermission('Manage Posts');
+        }
 
-            $scope.allowedChangeTimestamp = function () {
-                return $rootScope.hasPermission('Manage Posts');
-            };
+        function allowedChangeTimestamp() {
+            return $rootScope.hasPermission('Manage Posts');
+        }
 
-            $scope.editAuthor = function () {
+        function editAuthor() {
+            $scope.showEditAuthorButton = false;
+            $scope.showEditAuthorForm = true;
+        }
+
+        function showUserRealname() {
+            return !$scope.showEditAuthorForm && !$scope.post.author_realname && $scope.post.user;
+        }
+
+        function showAuthorRealname() {
+            return !$scope.showEditAuthorForm && $scope.post.author_realname;
+        }
+
+        function loadAuthorFormDefaults() {
+            if ($scope.post.author_realname || $scope.post.user) {
+                $scope.showEditAuthorButton = true;
+                $scope.showEditAuthorForm = false;
+            } else {
                 $scope.showEditAuthorButton = false;
                 $scope.showEditAuthorForm = true;
-            };
-
-            $scope.showUserRealname = function () {
-                return !$scope.showEditAuthorForm && !$scope.post.author_realname && $scope.post.user;
-            };
-
-            $scope.showAuthorRealname = function () {
-                return !$scope.showEditAuthorForm && $scope.post.author_realname;
-            };
-
-            $scope.loadAuthorFormDefaults = function () {
-                if ($scope.post.author_realname || $scope.post.user) {
-                    $scope.showEditAuthorButton = true;
-                    $scope.showEditAuthorForm = false;
-                } else {
-                    $scope.showEditAuthorButton = false;
-                    $scope.showEditAuthorForm = true;
-                }
-            };
-
-            function formatDates() {
-                $scope.displayCreated = moment($scope.post.created).format('LT MMMM D, YYYY');
-
-                if ($scope.post.updated) {
-                    $scope.displayUpdated = moment($scope.post.updated).format('LT MMMM D, YYYY');
-                }
             }
         }
-    };
+
+        function formatDates() {
+            $scope.displayCreated = moment($scope.post.created).format('LT MMMM D, YYYY');
+
+            if ($scope.post.updated) {
+                $scope.displayUpdated = moment($scope.post.updated).format('LT MMMM D, YYYY');
+            }
+        }
+    }
 }

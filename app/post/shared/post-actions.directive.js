@@ -1,19 +1,16 @@
-module.exports = [
-    '$rootScope',
-    '$translate',
+module.exports = PostActionsDirective;
+
+PostActionsDirective.$inject = [
     'PostEndpoint',
     'Notify',
     '$location',
-    'PostActionsService',
-    'PostStatusService',
-function (
-    $rootScope,
-    $translate,
+    'PostActionsService'
+];
+function PostActionsDirective(
     PostEndpoint,
     Notify,
     $location,
-    PostActionsService,
-    PostStatusService
+    PostActionsService
 ) {
     return {
         restrict: 'E',
@@ -22,34 +19,39 @@ function (
             post: '='
         },
         templateUrl: 'templates/posts/post-actions.html',
-        link: function ($scope) {
-            $scope.showDropDown = false;
-
-            $scope.statuses = PostStatusService.getStatuses();
-
-            $scope.toggleDropDown = function () {
-                $scope.showDropDown = !$scope.showDropDown;
-            };
-
-            $scope.delete = function (post) {
-                PostActionsService.delete(post).then(function () {
-                    $location.path('/views/list');
-                });
-            };
-
-            $scope.edit = function (post) {
-                $location.path('/posts/' + post.id + '/edit');
-            };
-
-            $scope.updateStatus = function (status) {
-                $scope.post.status = status;
-
-                PostEndpoint.update($scope.post).$promise.then(function () {
-                    Notify.notify('notify.post.save_success', { name: $scope.post.title });
-                }, function (errorResponse) {
-                    Notify.apiErrors(errorResponse);
-                });
-            };
-        }
+        link: PostActionsLink
     };
-}];
+
+    function PostActionsLink($scope) {
+        $scope.deletePost = deletePost;
+        $scope.updateStatus = updateStatus;
+        $scope.edit = edit;
+
+        activate();
+
+        function activate() {
+            $scope.statuses = PostActionsService.getStatuses();
+        }
+
+        function deletePost() {
+            PostActionsService.delete($scope.post).then(function () {
+                $location.path('/views/list');
+            });
+        }
+
+        function edit(post) {
+            $location.path('/posts/' + post.id + '/edit');
+        }
+
+        function updateStatus(status) {
+            $scope.post.status = status;
+
+            PostEndpoint.update($scope.post).$promise.then(function () {
+                Notify.notify('notify.post.save_success', { name: $scope.post.title });
+            }, function (errorResponse) {
+                Notify.apiErrors(errorResponse);
+            });
+        }
+    }
+}
+
