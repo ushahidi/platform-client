@@ -16,7 +16,9 @@ module.exports = ['moment', '_', function (moment, _) {
             $scope.dateChosen = null;
 
             // If no ngModel, skip the rest
-            if (!ngModel) return;
+            if (!ngModel) {
+                return;
+            }
 
             // Update models on render
             ngModel.$render = render;
