@@ -2,23 +2,44 @@ module.exports = ['moment', '_', function (moment, _) {
     return {
         restrict: 'E',
         replace: true,
-        scope: {
-            model: '='
-        },
+        scope: {},
+        require: 'ngModel',
         templateUrl: 'templates/posts/post-datetime.html',
-        link: function ($scope) {
+        link: function ($scope, element, attrs, ngModel) {
             // Split date time in time and date fields
             $scope.timeFormat = { format: 'HH:i' };
             $scope.dateFormat = { format: 'yyyy-mm-dd' };
+            $scope.model = null;
+            $scope.date = null;
+            $scope.time = null;
+            $scope.timeChosen = null;
+            $scope.dateChosen = null;
 
-            // If datetime is already set
-            // set input values appropriately
-            if ($scope.model) {
-                $scope.date = moment($scope.model).toDate();
-                $scope.time = moment($scope.model).toDate();
+            // If no ngModel, skip the rest
+            if (!ngModel) return;
+
+            // Update models on render
+            ngModel.$render = render;
+            // Watch time and date
+            $scope.$watch('date', updateDate, true);
+            $scope.$watch('time', updateTime, true);
+
+            // Render ngModel viewValue into scope
+            function render() {
+                $scope.model = ngModel.$viewValue;
+
+                // If datetime is already set
+                // set input values appropriately
+                if (ngModel.$viewValue) {
+                    $scope.date = moment(ngModel.$viewValue).toDate();
+                    $scope.time = moment(ngModel.$viewValue).toDate();
+                } else {
+                    clearDatetimeValues();
+                }
             }
 
-            $scope.$watch('date', function (newValue, oldValue) {
+            // Update model + viewValue from date
+            function updateDate(newValue, oldValue) {
                 if (newValue !== oldValue) {
                     // If date is set update model
                     if ($scope.date) {
@@ -40,10 +61,13 @@ module.exports = ['moment', '_', function (moment, _) {
                         // If date is cleared clear current values
                         clearDatetimeValues();
                     }
+                    // Copy model to view value
+                    ngModel.$setViewValue($scope.model);
                 }
-            }, true);
+            }
 
-            $scope.$watch('time', function (newValue, oldValue) {
+            // Update model + viewValue from time
+            function updateTime(newValue, oldValue) {
                 if (newValue !== oldValue) {
                     // If time is set update model
                     if ($scope.time) {
@@ -63,9 +87,12 @@ module.exports = ['moment', '_', function (moment, _) {
                         // If time is cleared clear current values
                         clearDatetimeValues();
                     }
+                    // Copy model to view value
+                    ngModel.$setViewValue($scope.model);
                 }
-            }, true);
+            }
 
+            // Clear all values
             function clearDatetimeValues() {
                 $scope.model = null;
                 $scope.date = null;
