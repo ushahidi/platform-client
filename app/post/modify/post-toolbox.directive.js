@@ -49,12 +49,14 @@ function PostToolboxDirective(
             return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
         }
 
+        // FIXME: Enable after allowing change of author in API
         function allowedChangeOwner() {
-            return $rootScope.hasPermission('Manage Posts');
+            return false;
         }
 
+        // FIXME: Enable after allowing change of post timestamp in API
         function allowedChangeTimestamp() {
-            return $rootScope.hasPermission('Manage Posts');
+            return false;
         }
 
         function editAuthor() {

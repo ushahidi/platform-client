@@ -100,8 +100,13 @@
     </div>
 
   </div>
+  <!-- FIXME: Remove after post timestamp dropdown is enabled -->
+  <div class="tool">
+      <ul>
+          <li><span translate="post.created_at"></span> {{displayCreated}} <span translate-values="{ source : source }" translate="post.source"></span></li>
+          <li ng-if="post.updated"><span translate="post.updated_at"></span> {{displayUpdated}}</li>
+      </ul>
+  </div>
+
   <!-- END: IF -->
 </div>
-
-
-
