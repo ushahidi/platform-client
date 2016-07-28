@@ -54,12 +54,14 @@ describe('post toolbox directive', function () {
         expect(isolateScope.post.status).toEqual('published');
     });
 
+    // FIXME: Changing post author is disabled for now
     it('should check whether the user can change owner', function () {
-        expect(isolateScope.allowedChangeOwner()).toBe(true);
+        expect(isolateScope.allowedChangeOwner()).toBe(false);
     });
 
+    // FIXME: Changing post timestamp is disabled for now
     it('should check whether the user can change timestamp', function () {
-        expect(isolateScope.allowedChangeTimestamp()).toBe(true);
+        expect(isolateScope.allowedChangeTimestamp()).toBe(false);
     });
 
     it('should allow the user to edit the author', function () {
