@@ -3,7 +3,6 @@ angular.module('ushahidi.posts', [])
 // Shared directives + services
 .directive('postActions', require('./shared/post-actions.directive.js'))
 .directive('postMetadata', require('./shared/post-metadata.directive.js'))
-.service('PostStatusService', require('./shared/post-status.service.js'))
 .service('PostMetadataService', require('./shared/post-metadata.service.js'))
 
 // Detail Screen
