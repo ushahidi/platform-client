@@ -37,9 +37,6 @@ describe('post toolbox directive', function () {
 
     beforeEach(inject(function (_$rootScope_, $compile) {
         $rootScope = _$rootScope_;
-        $rootScope.hasPermission = function () {
-            return true;
-        };
         $scope = _$rootScope_.$new();
         $scope.post = fixture.load('posts/120.json');
         element = '<post-toolbox post="post"></post-toolbox>';
