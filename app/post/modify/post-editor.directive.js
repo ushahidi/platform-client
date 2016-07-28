@@ -31,8 +31,7 @@ PostEditorController.$inject = [
     'UserEndpoint',
     'Notify',
     '_',
-    'PostActionsService',
-    '$rootScope'
+    'PostActionsService'
   ];
 
 function PostEditorController(
@@ -50,8 +49,7 @@ function PostEditorController(
     UserEndpoint,
     Notify,
     _,
-    PostActionsService,
-    $rootScope
+    PostActionsService
   ) {
 
     // Setup initial stages container
