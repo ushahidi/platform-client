@@ -32,6 +32,9 @@ require('./plans/plans-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
 
+// Stub ngRaven module incase its not configured
+angular.module('ngRaven', []);
+
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
 
@@ -76,6 +79,7 @@ angular.module('app',
         'nvd3',
         'selectionModel',
         'angular-cache',
+        'ngRaven',
         'ushahidi.frame',
         'ushahidi.common',
         'ushahidi.posts',
@@ -94,7 +98,8 @@ angular.module('app',
         OAUTH_CLIENT_ID     : 'ushahidiui',
         OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
-        CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders')
+        CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders'),
+        MAPBOX_API_KEY      : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw' // Default OSS mapbox api key
     })
 
     .config(['$compileProvider', function ($compileProvider) {

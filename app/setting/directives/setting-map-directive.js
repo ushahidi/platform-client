@@ -32,7 +32,7 @@ function (
             function activate() {
                 // Set initial map params
                 angular.extend($scope, Maps.getInitialScope());
-                $scope.baselayer = $scope.layers.baselayers.MapQuest;
+                $scope.baselayer = $scope.layers.baselayers.streets;
                 $scope.markers = {
                     dragger: {
                         lat: $scope.center.lat,

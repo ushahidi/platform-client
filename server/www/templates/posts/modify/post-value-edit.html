@@ -49,13 +49,18 @@
 
                       name="values_{{attribute.id}}"
                       ng-model="post.values[attribute.key][key]"
-
+                      ng-required="attribute.required"
                   />
                 </div>
             </div>
             <!-- type: datetime -->
             <div ng-switch-when="datetime" class="input-with-icon">
-                <post-datetime model="post.values[attribute.key][key]"></post-datetime>
+                <post-datetime
+                    id="values[{{attribute.key}}][{{key}}]"
+                    name="values_{{attribute.id}}"
+                    ng-model="post.values[attribute.key][key]"
+                    ng-required="attribute.required"
+                ></post-datetime>
             </div>
            <!-- type: select -->
             <select

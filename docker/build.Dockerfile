@@ -13,6 +13,8 @@ WORKDIR /var/app
 COPY package.json /var/app
 RUN npm install
 
-COPY docker/test.run.sh /test.run.sh
+COPY docker/build.run.sh /build.run.sh
 
-ENTRYPOINT [ "/bin/bash", "/test.run.sh" ]
+VOLUME /var/app/server/www
+
+ENTRYPOINT [ "/bin/bash", "/build.run.sh" ]

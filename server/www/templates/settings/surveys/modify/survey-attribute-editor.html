@@ -1,4 +1,4 @@
-<div>
+<div class="modal-body">
   <div class="form-field">
       <label translate="app.name">Name</label>
       <input type="text" ng-model="editAttribute.label">
@@ -18,7 +18,12 @@
       <label translate>form.field_options</label>
       <div class="input-inline" ng-repeat="(key, option) in editAttribute.options track by $index">
           <input type="text" placeholder="{{ 'form.field_option_placeholder'|translate }}" ng-model="editAttribute.options[key]">
-          <button type="button" class="button-secondary alt trash" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)"></button>
+          <button type="button" class="button-flat button-beta" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)">
+            <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+            </svg>
+            <span class="button-label hidden">Remove</span>
+          </button>
       </div>
       <button type="button" class="button-secondary alt" ng-click="addOption(editAttribute)"><i class="fa fa-plus"></i> <span translate>form.field_add_option</span></button>
    </div>

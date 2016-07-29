@@ -30,6 +30,9 @@ function (
                 if (_.isArray(data.values)) {
                     data.values = _.object(data.values);
                 }
+                if (!_.isArray(data.published_to)) {
+                    data.published_to = [];
+                }
                 return data;
             }
         },

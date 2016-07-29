@@ -122,8 +122,14 @@ function PostEditorController(
                     // Date picker requires date object
                     // ensure that dates are preserved in UTC
                     if ($scope.post.values[attr.key][0]) {
-                        $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).utc();
+                        $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).toDate();
                     }
+                } else if (attr.input === 'number') {
+                    // Number input requires a number
+                    if ($scope.post.values[attr.key][0]) {
+                        $scope.post.values[attr.key][0] = parseFloat($scope.post.values[attr.key][0]);
+                    }
+
                 }
             });
             $scope.attributes = attributes;
