@@ -69,11 +69,6 @@ module.exports = [
                                     isLoginEmail: true
                                 });
                             });
-
-                            // Cannot add additional contacts until the email address is added
-                            $scope.canAddContact = false;
-                        } else {
-                            $scope.canAddContact = true;
                         }
 
                         $scope.contacts = contacts;
