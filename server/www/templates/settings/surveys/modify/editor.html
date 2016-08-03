@@ -217,7 +217,7 @@
               </div>
 
               <div class="form-field" ng-show="survey.tasks.length === 1">
-                  <p translate="survey.task_info"> --fix You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.</p>
+                  <p translate="survey.task_info">You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.</p>
                   <a ng-click="openTaskModal()" class="button button-flat" data-modal="add-task">
                       <svg class="iconic">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
@@ -252,8 +252,8 @@
                   </div>
 
                   <div class="form-field">
-                      <label translate="surevy.task_description">
-                          Task description -fix
+                      <label translate="survey.task_description">
+                          Task description
                       </label>
                       <textarea name="description" data-min-rows="1" rows="1" ng-model="task.descritpion"></textarea>
                   </div>
@@ -267,15 +267,15 @@
                   </div>
 
                   <div class="form-field switch">
-                      <label translate="survey.show_task"> --fix Show this task to everyone when the post is published</label>
+                      <label translate="survey.show_task">Show this task to everyone when the post is published</label>
                       <div class="toggle-switch">
-                          <input class="tgl" id="custom-show" type="checkbox" ng-model="task.show">
-                          <label class="tgl-btn" for="custom-show"  ng-click="toggleTaskShow(task)"></label>
+                          <input class="tgl" id="custom-show" type="checkbox" ng-model="task.is_public">
+                          <label class="tgl-btn" for="custom-show"  ng-click="toggleTaskPublic(task)"></label>
                       </div>
                   </div>
 
                   <div class="listing init">
-                      <h3 class="listing-heading" translate="survey.task_fields">-- fix Task fields</h3>
+                      <h3 class="listing-heading" translate="survey.task_fields">Task fields</h3>
 
                       <div class="listing-body">
                         <div class="listing-item" ng-repeat="attribute in task.attributes track by $index">

@@ -70,6 +70,7 @@ function SurveyEditorController(
 
     $scope.toggleTaskRequired = toggleTaskRequired;
     $scope.toggleAttributeRequired = toggleAttributeRequired;
+    $scope.toggleTaskPublic = toggleTaskPublic;
 
     $scope.changeTaskLabel = changeTaskLabel;
 
@@ -100,7 +101,8 @@ function SurveyEditorController(
                         priority: 0,
                         required: true,
                         type: 'post',
-                        attributes: []
+                        attributes: [],
+                        is_public: true
                     }
                 ]
             };
@@ -386,14 +388,13 @@ function SurveyEditorController(
 
     function deleteTask(task) {
 
-        // Update active task
-        $scope.resetSelectedTask();
 
         // If we haven't saved the task yet then we can just drop it
-        if (!task.id) {
+        if (!task.id || _.isString(task.id)) {
             $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
                 return item.label !== task.label;
             });
+            $scope.resetSelectedTask();
             return;
         }
 
@@ -408,6 +409,7 @@ function SurveyEditorController(
                 $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
                     return item.id !== task.id;
                 });
+                $scope.resetSelectedTask();
 
             });
         });
@@ -510,6 +512,10 @@ function SurveyEditorController(
 
     function toggleTaskRequired(task) {
         task.required = !task.required;
+    }
+
+    function toggleTaskPublic(task) {
+        task.is_public = !task.is_public;
     }
 
     function toggleAttributeRequired(attribute) {
