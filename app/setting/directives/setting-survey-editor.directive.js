@@ -41,6 +41,8 @@ function SurveyEditorController(
     Features
 ) {
 
+    $scope.currentInterimId = 0;
+
     $scope.canReorderTask = canReorderTask;
     $scope.moveTaskUp = moveTaskUp;
     $scope.moveTaskDown = moveTaskDown;
@@ -71,6 +73,13 @@ function SurveyEditorController(
 
     $scope.changeTaskLabel = changeTaskLabel;
 
+    $scope.isSelectedTask = isSelectedTask;
+    $scope.setSelectedTask = setSelectedTask;
+    $scope.resetSelectedTask = resetSelectedTask;
+
+    $scope.getInterimId = getInterimId;
+    $scope.removeInterimIds = removeInterimIds;
+
     activate();
 
     function activate() {
@@ -90,10 +99,13 @@ function SurveyEditorController(
                         label: 'Post',
                         priority: 0,
                         required: true,
+                        type: 'post',
                         attributes: []
                     }
                 ]
             };
+
+            $scope.survey.tasks[0].id = $scope.getInterimId();
         }
 
         loadAvailableForms();
@@ -109,6 +121,30 @@ function SurveyEditorController(
                 }
             });
         }
+    }
+
+    function getInterimId() {
+        var id = 'interim_id_' + $scope.currentInterimId;
+        $scope.currentInterimId++;
+        return id;
+    }
+
+    function removeInterimIds() {
+        _.each($scope.survey.tasks, function (task) {
+            task.id = !_.isString(task.id) ? task.id : undefined;
+        });
+    }
+
+    function isSelectedTask(task) {
+        return $scope.selectedTask ? task.id === $scope.selectedTask.id : false;
+    }
+
+    function setSelectedTask(task) {
+        $scope.selectedTask = task;
+    }
+
+    function resetSelectedTask() {
+        $scope.selectedTask = $scope.survey.tasks.length > 1 ? $scope.survey.tasks[1] : undefined;
     }
 
     function loadAvailableForms() {
@@ -138,6 +174,9 @@ function SurveyEditorController(
             });
             //survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
             $scope.survey = survey;
+
+            //Set Active task
+            $scope.resetSelectedTask();
         });
     }
 
@@ -271,7 +310,9 @@ function SurveyEditorController(
         ModalService.close();
         // Set task priority
         task.priority = getNewTaskPriority();
+        task.id = $scope.getInterimId();
         $scope.survey.tasks.push(task);
+        $scope.setSelectedTask(task);
     }
 
     function openAttributeModal(task) {
@@ -344,6 +385,10 @@ function SurveyEditorController(
     }
 
     function deleteTask(task) {
+
+        // Update active task
+        $scope.resetSelectedTask();
+
         // If we haven't saved the task yet then we can just drop it
         if (!task.id) {
             $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
@@ -405,6 +450,10 @@ function SurveyEditorController(
 
     function saveTasks(tasks) {
         var calls = [];
+
+        //Save tasks
+        // Remove interim ids
+        $scope.removeInterimIds();
 
         _.each($scope.survey.tasks, function (task) {
             task.form_id = $scope.survey.id;
@@ -477,7 +526,4 @@ function SurveyEditorController(
     $scope.addOption = function (attribute) {
         attribute.options.push('');
     };
-
-
-
 }
