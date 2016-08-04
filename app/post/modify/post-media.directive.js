@@ -33,6 +33,9 @@ function (
                 });
             }
 
+            $scope.mediaExists = function () {
+                return $scope.mediaId ? true : false;
+            };
             // Track file changes
             $scope.canUpload = false;
 

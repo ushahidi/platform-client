@@ -5,7 +5,8 @@ angular.module('ushahidi.common.file-upload', [])
         restrict: 'E',
         templateUrl: 'templates/file-upload/file-upload.html',
         scope: {
-            fileContainer: '='
+            fileContainer: '=',
+            replace: '='
         },
 
         controller: [

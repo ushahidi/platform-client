@@ -1,18 +1,27 @@
-
 <form ng-submit="uploadFile()">
-    <div class="form-field">
-      <a ng-href="{{media.original_file_url}}" ng-if="media.original_file_url" target="_blank" translate>post.media.current_url</a>
+    <div class="form-field file">
 
-      <file-upload file-container="fileContainer"
-                   custom-on-change="onChange">
-      </file-upload>
-      <figure>
-        <p class="small" translate>post.media.add_caption</p>
-        <input
-          type="text"
-          placeholder="{{ 'post.media.add_caption' | translate }}"
-          ng-model="media.caption">
-      </figure>
-      <button ng-disabled="!canUpload" type="submit" translate>post.media.upload</button>
+        <!-- the image file -->
+        <figure ng-if="media.original_file_url" >
+            <img src="{{media.original_file_url}}" />
+        </figure>
+
+        <!-- `file-upload.html` directive contains action buttons for both add and edit -->
+        <file-upload file-container="fileContainer"
+            custom-on-change="onChange"
+            replace="mediaExists()">
+        </file-upload>
+
+        <!-- caption displays on post edit (aka if an image file exists) -->
+        <figure ng-if="media.original_file_url" >
+            <input
+            type="text"
+            placeholder="{{ 'post.media.add_caption' | translate }}"
+            ng-model="media.caption">
+        </figure>
+
+        <!-- upload button displays on add post (aka when no image file exists) -->
+        <button ng-disabled="!canUpload" type="submit" ng-if="!media.original_file_url"translate>post.media.upload</button>
+
     </div>
 </form>
