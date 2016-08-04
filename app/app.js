@@ -13,8 +13,7 @@ require('angular-sanitize');
 require('angular-elastic');
 require('angular-filter');
 require('angular-local-storage');
-require('checklist-model/checklist-model');
-require('selection-model/dist/selection-model');
+require('checklist-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown/src/ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
@@ -77,7 +76,6 @@ angular.module('app',
         'showdown',
         'ngGeolocation',
         'nvd3',
-        'selectionModel',
         'angular-cache',
         'ngRaven',
         'ushahidi.frame',

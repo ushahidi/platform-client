@@ -2,17 +2,15 @@ module.exports = PostMetadataDirective;
 
 PostMetadataDirective.$inject = [
     '$translate',
-    'UserEndpoint',
-    'ContactEndpoint',
     '_',
-    'moment'
+    'moment',
+    'PostMetadataService'
 ];
 function PostMetadataDirective(
     $translate,
-    UserEndpoint,
-    ContactEndpoint,
     _,
-    moment
+    moment,
+    PostMetadataService
 ) {
     return {
         restrict: 'E',
@@ -23,6 +21,7 @@ function PostMetadataDirective(
         },
         templateUrl: 'templates/posts/post-metadata.html',
         link: function ($scope) {
+            //console.log($scope.post);
             $scope.visibleTo = '';
             $scope.displayTime = '';
             $scope.displayTimeFull = '';
@@ -32,36 +31,11 @@ function PostMetadataDirective(
 
             function activate() {
                 $scope.visibleTo = visibleTo($scope.post);
-                $scope.source = formatSource($scope.post.source);
-                $scope.post.user = loadUser($scope.post.user);
-                $scope.post.contact = loadContact($scope.post.contact);
+                $scope.source = PostMetadataService.formatSource($scope.post.source);
+                $scope.post.user = PostMetadataService.loadUser($scope.post);
+                $scope.post.contact = PostMetadataService.loadContact($scope.post);
 
                 formatDates();
-            }
-
-            // Format source (fixme!)
-            function formatSource(source) {
-                if (source === 'sms') {
-                    return 'SMS';
-                } else if (source) {
-                    // Uppercase first character
-                    return source.charAt(0).toUpperCase() + source.slice(1);
-                } else {
-                    return 'Web';
-                }
-            }
-
-            // Load the post author
-            function loadUser(user) {
-                if (user && user.id) {
-                    return UserEndpoint.get({id: $scope.post.user.id});
-                }
-            }
-
-            function loadContact(contact) {
-                if (!$scope.post.user && contact && contact.id) {
-                    return ContactEndpoint.get({ id: $scope.post.contact.id, ignore403: true });
-                }
             }
 
             function formatDates() {

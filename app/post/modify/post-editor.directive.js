@@ -51,8 +51,8 @@ function PostEditorController(
     _,
     PostActionsService
   ) {
-    // Setup initial stages container
 
+    // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
     $scope.isEdit = !!$scope.post.id;
     $scope.validationErrors = [];
@@ -62,7 +62,6 @@ function PostEditorController(
     $scope.setVisibleStage = setVisibleStage;
     $scope.fetchAttributes = fetchAttributes;
     $scope.fetchStages = fetchStages;
-    $scope.allowedChangeStatus = allowedChangeStatus;
 
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
@@ -158,11 +157,6 @@ function PostEditorController(
         });
     }
 
-    // TODO: this function should be moved to a general service handling permissions
-    function allowedChangeStatus() {
-        return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
-    }
-
     function canSavePost() {
         return PostEditService.canSavePost($scope.post, $scope.postForm, $scope.stages, $scope.attributes);
     }
@@ -177,6 +171,10 @@ function PostEditorController(
         PostActionsService.delete(post).then(function () {
             $location.path('/');
         });
+    }
+
+    function allowedChangeStatus() {
+        return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
     }
 
     function savePost() {
@@ -197,7 +195,7 @@ function PostEditorController(
         }
 
         request.$promise.then(function (response) {
-            var success_message = $scope.allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
+            var success_message = allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
             if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                 $scope.saving_post = false;

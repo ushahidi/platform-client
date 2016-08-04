@@ -3,6 +3,7 @@ angular.module('ushahidi.posts', [])
 // Shared directives + services
 .directive('postActions', require('./shared/post-actions.directive.js'))
 .directive('postMetadata', require('./shared/post-metadata.directive.js'))
+.service('PostMetadataService', require('./shared/post-metadata.service.js'))
 
 // Detail Screen
 .directive('postMessages', require('./detail/post-messages.directive.js'))
@@ -23,6 +24,7 @@ angular.module('ushahidi.posts', [])
 .directive('postEditor', require('./modify/post-editor.directive.js'))
 .directive('postValueEdit', require('./modify/post-value-edit.directive.js'))
 .directive('postTabs', require('./modify/post-tabs.directive.js'))
+.directive('postToolbox', require('./modify/post-toolbox.directive.js'))
 
 // Timeline and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
@@ -41,6 +43,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterDate', require('./views/filters/filter-date.directive.js'))
 .directive('filterForm', require('./views/filters/filter-form.directive.js'))
 .directive('filterVisibleTo', require('./views/filters/filter-visible-to.directive.js'))
+.directive('filterStatus', require('./views/filters/filter-status.directive.js'))
 .directive('filterLocation', require('./views/filters/filter-location.directive.js'))
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
 .directive('postExport', require('./views/post-export.directive.js'))

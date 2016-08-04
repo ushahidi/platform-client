@@ -24,7 +24,8 @@ PostListController.$inject = [
     '_',
     'ConfigEndpoint',
     'moment',
-    'PostFilters'
+    'PostFilters',
+    'PostActionsService'
 ];
 function PostListController(
     $scope,
@@ -36,7 +37,8 @@ function PostListController(
     _,
     ConfigEndpoint,
     moment,
-    PostFilters
+    PostFilters,
+    PostActionsService
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -50,6 +52,8 @@ function PostListController(
     $scope.itemsPerPageChanged = itemsPerPageChanged;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
     $scope.pageChanged = getPostsForPagination;
+    $scope.statuses = PostActionsService.getStatuses();
+    $scope.changeStatus = changeStatus;
 
     activate();
 
@@ -124,6 +128,27 @@ function PostListController(
         });
     }
 
+    function changeStatus(status) {
+        var selectedPosts = _.filter($scope.posts, function (post) {
+            return _.contains($scope.selectedPosts, post.id);
+        });
+
+        var count = $scope.selectedPosts.length;
+
+        var updateStatusPromises = _.map(selectedPosts, function (post) {
+            post.status = status;
+            $scope.selectedPosts = _.without($scope.selectedPosts, post.id);
+            return PostEndpoint.update(post).$promise;
+        });
+
+        $q.all(updateStatusPromises).then(function () {
+            Notify.notify('notify.post.update_status_success_bulk', {count: count});
+        }, function (errorResponse) {
+            Notify.apiErrors(errorResponse);
+        })
+        .finally(getPostsForPagination);
+    }
+
     function itemsPerPageChanged(count) {
         $scope.itemsPerPage = count;
         getPostsForPagination();
@@ -139,4 +164,6 @@ function PostListController(
     function hasFilters() {
         return PostFilters.hasFilters($scope.filters);
     }
+
+    $scope.open = true;
 }
