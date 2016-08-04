@@ -23,7 +23,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
 
         function activate() {
             $scope.$watch(function () {
-                return PostFilters.getQueryParams(PostFilters.getFilters());
+                return PostFilters.getActiveFilters(PostFilters.getFilters());
             }, handleFiltersUpdate, true);
 
             TagEndpoint.query().$promise.then(function (results) {
@@ -48,13 +48,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             var activeFilters = angular.copy(filters);
             rawFilters = angular.copy(filters);
 
-            if (activeFilters.published_to) {
-                delete activeFilters.published_to;
-            }
-
             // Remove form filter as its shown by the mode-context-form-filter already
             delete activeFilters.form;
-
+            // Remove within_km as its shown with the center_point value
             delete activeFilters.within_km;
 
             $scope.activeFilters = _.mapObject(activeFilters, makeArray);
@@ -103,13 +99,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
                 return $filter('date', 'longdate')(value);
             },
             status : function (value) {
-                if (value === 'published') {
-                    return $translate.instant('post.published');
-                } else if (value === 'draft') {
-                    return $translate.instant('post.draft');
-                } else if (value === 'archived') {
-                    return $translate.instant('post.archived');
-                }
+                return $translate.instant('post.' + value);
             }
         };
     }
