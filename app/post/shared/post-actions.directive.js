@@ -25,7 +25,6 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
-        $scope.edit = edit;
 
         activate();
 
@@ -37,10 +36,6 @@ function PostActionsDirective(
             PostActionsService.delete($scope.post).then(function () {
                 $location.path('/views/list');
             });
-        }
-
-        function edit(post) {
-            $location.path('/posts/' + post.id + '/edit');
         }
 
         function updateStatus(status) {

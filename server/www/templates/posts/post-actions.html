@@ -1,12 +1,12 @@
 <div class="postcard-actions" dropdown>
-  <button class="button-gamma button-flat hide-until-small"
-          ng-click="edit(post)"
+  <a class="button button-gamma button-flat hide-until-small"
+          ng-href="/posts/{{post.id}}/edit"
           ng-show="post.allowed_privileges.indexOf('update') !== -1">
     <svg class="iconic">
       <use xlink:href="../../img/iconic-sprite.svg#pencil"></use>
     </svg>
     <span class="hidden" translate="nav.edit">Edit</span>
-  </button>
+  </a>
 
   <!--
   <button class="button-gamma button-flat init" ng-class="{'active' : showDropDown}"
@@ -21,7 +21,7 @@
 
   <div class="dropdown-menu init" dropdown-menu>
     <ul>
-      <li class="hide-when-small">
+      <li class="hide-when-small" ng-show="post.allowed_privileges.indexOf('update') !== -1">
         <a ng-href="/posts/{{post.id}}/edit">
           <svg class="iconic">
             <use xlink:href="../../img/iconic-sprite.svg#pencil"></use>
