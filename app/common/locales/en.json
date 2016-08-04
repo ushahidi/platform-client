@@ -5,6 +5,7 @@
         "by" : "by",
         "can_see_this" : "can see this",
         "collections" : "Collections",
+        "create_collection" : "Create collection",
         "create_new" : "Create new",
         "created_by" : "Created by {{author}}",
         "documentation": {
@@ -15,6 +16,7 @@
             "title" : "Report a bug",
             "description" : "Tell us when something doesn't work the way you expected."
         },
+        "edit_collection" : "Edit collection",
         "features" : {
             "title" : "Features",
             "description" : "See what Ushahidi can do and how it works."
@@ -346,8 +348,6 @@
         "register" : "Sign up",
         "map_settings" : "Map Settings",
         "more" : "More",
-        "notifications" : "Notifications",
-        "new_collection" : "New Collection",
         "notifications" : "Notifications",
         "only_author" : "Only the author",
         "only_you" : "Only you",
