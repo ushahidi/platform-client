@@ -24,6 +24,9 @@ module.exports = [function () {
         setFilters: function () {},
         clearFilters: function () {},
         clearFilter: function () {},
-        hasFilters: function () {}
+        hasFilters: function () {},
+        getActiveFilters: function (filters) {
+            return filters;
+        }
     };
 }];
