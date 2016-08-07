@@ -36,7 +36,7 @@ build() {
   npm install
   gulp transifex-download
   gulp build
-  cp ./server/rewrite.htaccess ./server/www/
+  cp ./server/rewrite.htaccess ./server/deploy/
 }
 
 # Bundle the build into a tarball
