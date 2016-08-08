@@ -61,7 +61,7 @@
                     <!-- END: IF -->
                   </div>
                   <!-- END: IF -->
-
+                  <post-metadata post="post" ng-if="post.id"></post-metadata>
                   <!--// IF: User has permission to change the author & post timestamp //-->
                   <div class="tool">
                       <h6 class="tool-heading">Author</h6>
@@ -176,7 +176,7 @@
               </fieldset>
 
               <!-- IF: Editing an existing post -->
-              <post-metadata post="post" ng-if="post.id"></post-metadata>
+
               <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
               <div class="postcard-metadata">
                   <strong>This post will need to be moderated</strong> before it's visible to the public.
