@@ -36,19 +36,12 @@
         <header class="postcard-header">
           <h1 class="postcard-title">
             {{post.title}}
-          </h1>
-          <!-- This element needs attention
-          <div class="metadata">
-              <a href=""><img src="https://api.adorable.io/avatars/40/daudi@adorable.io.png" class="avatar"></a>
-              <a href="" class="metadata-author">Jess Shorland</a>, 45 mins, via web
-          </div>
+          </h1>          
           <post-metadata post="post"></post-metadata>
-        -->
-
         </header>
 
         <post-actions post="post"></post-actions>
-        
+
         <div
           ng-repeat="(key,value) in post.values"
           ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
