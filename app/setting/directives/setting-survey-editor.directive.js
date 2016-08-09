@@ -18,6 +18,7 @@ SurveyEditorController.$inject = [
     '$location',
     '$translate',
     'FormEndpoint',
+    'FormRoleEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'RoleEndpoint',
@@ -32,6 +33,7 @@ function SurveyEditorController(
     $location,
     $translate,
     FormEndpoint,
+    FormRoleEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
     RoleEndpoint,
@@ -70,21 +72,32 @@ function SurveyEditorController(
     $scope.toggleAttributeRequired = toggleAttributeRequired;
 
     $scope.changeTaskLabel = changeTaskLabel;
+    
+    $scope.showPermissions = false;
+    $scope.roles_allowed = [];
 
     activate();
 
     function activate() {
 
-        RoleEndpoint.query().$promise.then(function (roles) {
-            $scope.roles = roles;
-        });
         if ($scope.surveyId) {
             loadFormData();
         } else {
             // When creating new survey
             // pre-fill object with default tasks and attributes
+            
+	        RoleEndpoint.query().$promise.then(function (roles) {
+	            _.each(roles, function (role) {
+	                role.is_admin = role.name == 'admin'; 
+	                role.is_allowed = role.name == 'admin';
+	            });
+
+	            $scope.roles = roles;
+	        });
             $scope.survey = {
                 color: null,
+                require_approval: true,
+                all_roles: true,
                 tasks: [
                     {
                         label: 'Post',
@@ -94,6 +107,8 @@ function SurveyEditorController(
                     }
                 ]
             };
+            
+            $scope.roles_allowed = [];
         }
 
         loadAvailableForms();
@@ -124,7 +139,9 @@ function SurveyEditorController(
         $q.all([
             FormEndpoint.get({ id: $scope.surveyId }).$promise,
             FormStageEndpoint.query({ formId: $scope.surveyId }).$promise,
-            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise
+            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise,
+            FormRoleEndpoint.query({ formId: $scope.surveyId }).$promise,
+            RoleEndpoint.query().$promise
         ]).then(function (results) {
             var survey = results[0];
             survey.tasks = _.sortBy(results[1], 'priority');
@@ -138,6 +155,17 @@ function SurveyEditorController(
             });
             //survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
             $scope.survey = survey;
+            var roles_allowed = results[3];
+            var roles = results[4];
+            
+            $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
+
+            _.each(roles, function (role) {
+                role.is_allowed = _.contains($scope.roles_allowed, role.id) || role.name == 'admin';
+                role.is_admin = role.name == 'admin';
+            });
+
+            $scope.roles = roles;
         });
     }
 
@@ -391,6 +419,14 @@ function SurveyEditorController(
 
     function saveSurvey() {
         // Saving a survey is a 3 step process
+        
+        // convert survey.all_roles values to Boolean
+        if ($scope.survey.all_roles == 'true') {
+	       $scope.survey.all_roles = true;
+        }
+        else {
+	       $scope.survey.all_roles = false;
+        }
 
         // First save the actual survey
         FormEndpoint
@@ -400,6 +436,7 @@ function SurveyEditorController(
             $scope.survey.id = survey.id;
             // Second save the survey tasks
             saveTasks();
+            saveRoles();
         }, handleResponseErrors);
     }
 
@@ -459,6 +496,15 @@ function SurveyEditorController(
         }, handleResponseErrors);
     }
 
+    function saveRoles() {
+        FormRoleEndpoint
+        .saveCache(_.extend({ roles: $scope.roles_allowed }, {formId: $scope.survey.id}))
+        .$promise
+        .then(function (roles) {
+			return true;
+        }, handleResponseErrors);
+    }
+
     function toggleTaskRequired(task) {
         task.required = !task.required;
     }
@@ -466,6 +512,20 @@ function SurveyEditorController(
     function toggleAttributeRequired(attribute) {
         attribute.required = !attribute.required;
     }
+
+    function toggleRequireApproval(survey) {
+	    survey.require_approval = !survey.require_approval;
+    }
+
+    // Roles functions
+    $scope.updateRoles = function (role) {
+	    if (_.contains($scope.roles_allowed, role)) {
+			$scope.roles_allowed = _.without($scope.roles_allowed, role);
+	    }
+	    else {
+		    $scope.roles_allowed.push(role);
+	    }
+    };
 
     // Options functions
     $scope.hasOptions = function (attribute) {

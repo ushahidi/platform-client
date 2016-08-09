@@ -72,6 +72,67 @@
                         </div>
                     </div>
                 </fieldset>
+					<div class="toolbox">
+
+                    <!--// Require review //-->
+                    <div class="tool">
+                        <div class="form-field switch">
+                            <label>Require posts be reviewed before they're published</label>
+                            <div class="toggle-switch">
+                                <input class="tgl" id="post-review" type="checkbox" ng-model="survey.require_approval">
+                                <label class="tgl-btn" for="post-review" ng-click="toggleRequireApproval(survey)"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool">
+                        <h6 class="tool-heading">Survey permissions</h6>
+
+                        <span class="tool-trigger init" ng-class="{true:'active', false:''}[showPermissions]" ng-click="showPermissions=!showPermissions" data-toggle="toggle-content">
+                            <svg class="iconic">
+                                <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                            <span class="label hidden">Show/hide</span>
+                        </span>
+
+                        <fieldset class="toggle-content init" ng-class="{true:'active', false:''}[showPermissions]">
+                            <legend class="hidden">Survey permissions</legend>
+
+                            <!--// Who can add //-->
+                            <fieldset>
+                                <legend>Who can add to this survey</legend>
+
+                                <div class="form-field radio icon-input" ng-class="{true:'checked', false:''}[survey.all_roles]">
+                                    <label for="survey-add_everyone">
+                                        <svg class="iconic">
+                                            <use xlink:href="../../img/iconic-sprite.svg#globe"></use>
+                                        </svg>
+                                        <input name="survey-add" id="survey-add_everyone" value="true" checked="" type="radio" ng-model="survey.all_roles">
+                                        <span class="label">Everyone</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-field radio icon-input" ng-class="{true:'', false:'checked'}[survey.all_roles]">
+                                    <label for="survey-add_roles">
+                                        <svg class="iconic">
+                                            <use xlink:href="../../img/iconic-sprite.svg#people"></use>
+                                        </svg>
+                                        <input class="init" name="survey-add" id="survey-add_roles" value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.all_roles">
+                                        Specific roles...
+                                    </label>
+
+                                    <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.all_roles]">
+	                                    
+                                        <div class="form-field checkbox" ng-repeat="role in roles">
+                                            <input id="survey-add_roles-members_{{role.id}}" value="{{role.id}}" type="checkbox" ng-checked="role.is_allowed" ng-disabled="role.is_admin" ng-model="roles_allowed" ng-click="updateRoles(role.id)">
+                                            <label for="survey-add_roles-members_{{role.id}}">{{role.display_name}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                    </div>
+
+                </div>                
             </div>
 
             <div class="listing card init">
