@@ -23,7 +23,6 @@ PostVerticalTabsController.$inject = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'PostEditService',
-    'TagEndpoint',
     '_'
 ];
 function PostVerticalTabsController(
@@ -32,7 +31,6 @@ function PostVerticalTabsController(
     FormStageEndpoint,
     FormAttributeEndpoint,
     PostEditService,
-    TagEndpoint,
     _
 ) {
     $scope.setVisibleStage = setVisibleStage;
@@ -45,9 +43,6 @@ function PostVerticalTabsController(
 
     function activate() {
         $scope.setVisibleStage($scope.visibleStage);
-        TagEndpoint.query().$promise.then(function (results) {
-            $scope.categories = results;
-        });
     }
 
     function setVisibleStage(stageId) {

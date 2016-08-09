@@ -30,6 +30,7 @@ PostEditorController.$inject = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'UserEndpoint',
+    'TagEndpoint',
     'Notify',
     '_',
     'PostActionsService'
@@ -49,6 +50,7 @@ function PostEditorController(
     FormStageEndpoint,
     FormAttributeEndpoint,
     UserEndpoint,
+    TagEndpoint,
     Notify,
     _,
     PostActionsService
@@ -75,6 +77,9 @@ function PostEditorController(
     activate();
 
     function activate() {
+        TagEndpoint.query().$promise.then(function (results) {
+            $scope.categories = results;
+        });
         // Set bulk data import mode params
         if ($scope.postMode === 'bulk_data_import') {
             if (_.contains($scope.attributesToIgnore, 'title')) {

@@ -82,22 +82,21 @@
           </p>
         </div>
 
-        <div
+        <post-value
           ng-repeat="(key,value) in post.values"
           ng-if="isPostValue(key) && showType(form_attributes[key].type)"
-          >
-          <post-value
-            key="key"
-            value="value"
-            attribute="form_attributes[key]"
-            ng-if="form_attributes[key].type !== 'media'">
-          </post-value>
-        </div>
+          key="key"
+          value="value"
+          attribute="form_attributes[key]"
+          type="'post'"
+          ng-if="form_attributes[key].type !== 'media'">
+        </post-value>
         <div
             ng-if="mapDataLoaded"
             class="postcard-field"
             >
             <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
+            <p></p>
             <div ng-if="mapDataLoaded">
               <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
             </div>
@@ -126,7 +125,7 @@
             ng-repeat="(key,value) in post.values"
             ng-if="!isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
             ng-show="form_attributes[key].form_stage_id === visibleTask"
-            class="postcard-field"
+            class="listing-item-primary"
             >
 
             <post-media-value
@@ -143,6 +142,7 @@
               key="key"
               value="value"
               attribute="form_attributes[key]"
+              type="'standard'"
               ng-if="form_attributes[key].type !== 'media'">
             </post-value>
           </div>

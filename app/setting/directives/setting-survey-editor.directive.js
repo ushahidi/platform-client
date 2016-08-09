@@ -99,7 +99,7 @@ function SurveyEditorController(
                     {
                         label: 'Post',
                         priority: 0,
-                        required: true,
+                        required: false,
                         type: 'post',
                         attributes: [],
                         is_public: true
