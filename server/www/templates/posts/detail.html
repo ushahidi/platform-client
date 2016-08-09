@@ -93,6 +93,15 @@
             ng-if="form_attributes[key].type !== 'media'">
           </post-value>
         </div>
+        <div
+            ng-if="mapDataLoaded"
+            class="postcard-field"
+            >
+            <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
+            <div ng-if="mapDataLoaded">
+              <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
+            </div>
+        </div>
       </div>
     </article>
 

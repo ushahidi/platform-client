@@ -81,7 +81,7 @@ function (
         $scope.post_task_id = undefined;
 
         $q.all([
-            FormEndpoint.query({formId: $scope.post.form.id}),
+            FormEndpoint.get({id: $scope.post.form.id}),
             FormStageEndpoint.query({formId:  $scope.post.form.id}).$promise,
             FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise
         ]).then(function (results) {
