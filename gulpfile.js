@@ -136,8 +136,8 @@ gulp.task('sass', ['rename'], function () {
  */
 gulp.task('css', [], function () {
     return gulp.src([
-            options.compressedCSS ? 'node_modules/platform-pattern-library/assets/css/*.min.css' : 'node_modules/platform-pattern-library/assets/css/*.css',
-            'node_modules/platform-pattern-library/assets/css/*.css.map'
+            options.compressedCSS ? 'node_modules/ushahidi-platform-pattern-library/assets/css/*.min.css' : 'node_modules/ushahidi-platform-pattern-library/assets/css/*.css',
+            'node_modules/ushahidi-platform-pattern-library/assets/css/*.css.map'
             ])
         .pipe(rename(function (path) {
             // If using compressedCSS, string the .min from filenames
@@ -153,7 +153,7 @@ gulp.task('css', [], function () {
  * Move Iconic Sprite from pattern library into server/www/img
  */
 gulp.task('svg-iconic-sprite', [], function () {
-    return gulp.src(['node_modules/platform-pattern-library/assets/img/iconic-sprite.svg'])
+    return gulp.src(['node_modules/ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg'])
         .pipe(gulp.dest(options.www + '/img'));
 });
 
@@ -162,7 +162,7 @@ gulp.task('svg-iconic-sprite', [], function () {
  * Move svg icons from pattern library into server/www/img
  */
 gulp.task('svg-icons', [], function () {
-    return gulp.src(['node_modules/platform-pattern-library/assets/img/icons/**/*'])
+    return gulp.src(['node_modules/ushahidi-platform-pattern-library/assets/img/icons/**/*'])
         .pipe(gulp.dest(options.www + '/img/icons'));
 });
 
@@ -184,7 +184,7 @@ gulp.task('rename', [
  * Copies font files to public directory.
  */
 gulp.task('font', function () {
-    return gulp.src(['node_modules/platform-pattern-library/assets/fonts/**'])
+    return gulp.src(['node_modules/ushahidi-platform-pattern-library/assets/fonts/**'])
         .pipe(gulp.dest(options.www + '/fonts'))
         .pipe(livereload())
         ;

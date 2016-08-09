@@ -5,6 +5,7 @@
         "by" : "by",
         "can_see_this" : "can see this",
         "collections" : "Collections",
+        "create_collection" : "Create collection",
         "create_new" : "Create new",
         "created_by" : "Created by {{author}}",
         "documentation": {
@@ -15,6 +16,7 @@
             "title" : "Report a bug",
             "description" : "Tell us when something doesn't work the way you expected."
         },
+        "edit_collection" : "Edit collection",
         "features" : {
             "title" : "Features",
             "description" : "See what Ushahidi can do and how it works."
@@ -65,7 +67,8 @@
         "tasks" : "Tasks",
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
-        "private_deployment" : "Private Deployment"
+        "private_deployment" : "Private Deployment",
+        "mark_as" : "Mark as"
     },
     "toolbar": {
         "searchbar" : {
@@ -272,7 +275,8 @@
         "save_to_set" : "Save to Set",
         "search" : "Search",
         "date_range" : "Date range",
-        "who_its_visible_to": "Who it's visible to"
+        "who_its_visible_to": "Who it's visible to",
+        "status" : "Status"
     },
     "graph" : {
         "all_posts": "Nothing; Show all posts",
@@ -351,8 +355,6 @@
         "map_settings" : "Map Settings",
         "more" : "More",
         "notifications" : "Notifications",
-        "new_collection" : "New Collection",
-        "notifications" : "Notifications",
         "only_author" : "Only the author",
         "only_you" : "Only you",
         "people" : "People",
@@ -415,7 +417,8 @@
         "create" : "Create",
         "change" : "Change",
         "posted_by" : "Posted by",
-        "draft" : "Draft",
+        "draft" : "Under review",
+        "archived" : "Archived",
         "edited_by" : "Edited by",
         "export" : "Export",
         "select_all" : "Select All",
@@ -461,8 +464,19 @@
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete",
-            "export" : "Export"
+            "export" : "Export",
+            "put_under_review" : "Put under review",
+            "archive" : "Archive",
+            "publish" : "Publish"
         },
+        "created_at" : "<strong>Created</strong> at",
+        "updated_at" : "<strong>Last updated</strong> at",
+        "author" : "Author",
+        "post_date" : "Post date",
+        "change_author" : "Change author",
+        "status_published" : "This post is published",
+        "status_review" : "This post is under review",
+        "status_archived" : "This post is archived",
         "modify" : {
             "intro" : "Select survey:",
             "create_type" : "Create {{type}}",
@@ -902,7 +916,8 @@
             "destroy_error" : "Unable to delete post, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
             "stage_save_success" : "Updated {{stage}}",
-            "export" : "This will export filtered posts. Are you sure you want to continue?"
+            "export" : "This will export filtered posts. Are you sure you want to continue?",
+            "update_status_success_bulk" : "Status updated for {{count}} posts"
         },
         "category" : {
             "save_success" : "Saved category {{name}}",

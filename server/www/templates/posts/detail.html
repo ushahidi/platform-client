@@ -32,11 +32,24 @@
     <article class="postcard" role="article">
       <div class="post-band" style="background-color: {{form_color}};"></div>
 
+      <div class="listing-item-select">
+        <span class="status-indicator empty tooltip">
+          <svg class="iconic">
+            <use xlink:href="../../img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+            <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+            <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+          </svg>
+          <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
+          <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>
+          <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span>
+
+        </span>
+      </div>
       <div class="postcard-body">
         <header class="postcard-header">
           <h1 class="postcard-title">
             {{post.title}}
-          </h1>          
+          </h1>
           <post-metadata post="post"></post-metadata>
         </header>
 
@@ -85,6 +98,7 @@
 
     <div class="listing card init">
         <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
+
         <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
           <ul>
             <li

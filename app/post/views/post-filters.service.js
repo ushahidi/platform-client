@@ -17,7 +17,8 @@ function PostFiltersService(_, FormEndpoint) {
         setFilters: setFilters,
         clearFilters: clearFilters,
         clearFilter: clearFilter,
-        hasFilters: hasFilters
+        hasFilters: hasFilters,
+        getActiveFilters: getActiveFilters
     };
 
     function activate() {
@@ -58,7 +59,7 @@ function PostFiltersService(_, FormEndpoint) {
             q: '',
             created_after: '',
             created_before: '',
-            status: 'all',
+            status: ['published', 'draft'],
             published_to: '',
             center_point: '',
             within_km: '1',
@@ -98,10 +99,9 @@ function PostFiltersService(_, FormEndpoint) {
         return query;
     }
 
-    function hasFilters(filters) {
+    function getActiveFilters(filters) {
         var defaults = getDefaults();
-
-        var diff = _.omit(
+        return _.omit(
             filters,
             function (value, key, object) {
                 // Ignore difference in within_km
@@ -121,7 +121,10 @@ function PostFiltersService(_, FormEndpoint) {
                 return (_.isEmpty(value) && !_.isDate(value));
             }
         );
-        return !_.isEmpty(diff);
+    }
+
+    function hasFilters(filters) {
+        return !_.isEmpty(getActiveFilters(filters));
     }
 }
 

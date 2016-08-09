@@ -30,43 +30,9 @@ describe('view helper', function () {
         ViewHelper = _ViewHelper_;
     }));
 
-    describe('some existing view names', function () {
-        var existingViews;
-
-        beforeEach(function () {
-            existingViews = [
-                {
-                    name: 'map',
-                    display_name: 'Map'
-                }
-            ];
-        });
-
-        describe('returned view', function () {
-
-            var returnedView;
-
-            describe('with an existing view name', function () {
-
-                beforeEach(function () {
-                    returnedView = ViewHelper.getView('map', existingViews);
-                });
-
-                it('should return the display_name for the view name', function () {
-                    expect(returnedView).toEqual('Map');
-                });
-            });
-
-            describe('with an non existing view name', function () {
-                beforeEach(function () {
-                    returnedView = ViewHelper.getView('foo', existingViews);
-                });
-
-                it('should return the value of the input view', function () {
-                    expect(returnedView).toEqual('foo');
-                });
-            });
-
-        });
+    it('should return view and display name for map and list', function () {
+        var views = ViewHelper.views();
+        expect(_.pluck(views, 'name')).toEqual(['map', 'list']);
+        expect(_.pluck(views, 'display_name')).toEqual(['Map', 'Timeline']);
     });
 });

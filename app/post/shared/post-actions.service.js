@@ -28,6 +28,9 @@ function (
             });
 
             return deferred.promise;
+        },
+        getStatuses: function () {
+            return ['published', 'draft', 'archived'];
         }
     };
 

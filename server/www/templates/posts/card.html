@@ -1,12 +1,27 @@
 <article class="postcard">
     <div class="post-band" style="background-color: {{post.form.color}};"></div>
-    <div class="listing-item-select" ng-if="canSelect">
-        <input type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+    <div class="listing-item-select">
+        <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+        <!-- status indicator -->
+        <span class="status-indicator tooltip" ng-class="{ empty: post.status!='draft', yellow: post.status=='draft'}">
+            <svg class="iconic">
+                <use xlink:href="../../img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+                <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+                <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+            </svg>
+            <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
+            <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>
+            <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span>
+        </span>
     </div>
     <div class="postcard-body">
+      <header class="postcard-header">
         <h1 class="postcard-title"><a ng-href="/posts/{{post.id}}">{{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}</a></h1>
 
         <post-metadata post="post" hide-date-this-week="true"></post-metadata>
+        </header>
+
+        <post-actions post="post"></post-actions>
 
         <post-preview-media post="post"></post-preview-media>
         <!-- <img src="http://lorempixel.com/400/300/" class="postcard-image"> -->
@@ -16,6 +31,4 @@
             <p ng-if="shortContent">{{ post.content | limitTo:150 }}{{ post.content.length > 150 ? ' ...' : ''}}</p>
         </div>
     </div> <!-- /postcard-body -->
-
-    <post-actions post="post"></post-actions>
 </article>
