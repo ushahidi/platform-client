@@ -41,7 +41,7 @@
           </svg>
           <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
           <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>
-          <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span> 
+          <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span>
 
         </span>
       </div>
@@ -61,7 +61,7 @@
             ng-if="form_attributes[key].type === 'media'"
             label="{{form_attributes[key].label}}"
             media-id="value"></post-media-value>
-        
+
         <div
           ng-repeat="(key,value) in post.values"
           ng-if="form_attributes[key] && showType(form_attributes[key].type)"

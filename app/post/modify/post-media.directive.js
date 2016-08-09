@@ -27,26 +27,18 @@ function (
             // Initialize media object
             $scope.media = {};
 
-            if ($scope.mediaId) {
-                MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
-                    $scope.media = media;
-                });
-            }
+            $scope.getMedia = function () {
+                if ($scope.mediaId) {
+                    MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
+                        $scope.media = media;
+                    });
+                }
+            };
+
+            $scope.getMedia();
 
             $scope.mediaExists = function () {
                 return $scope.mediaId ? true : false;
-            };
-            // Track file changes
-            $scope.canUpload = false;
-
-            $scope.onChange = function () {
-                $scope.$apply(function () {
-                    if ($scope.fileContainer.file) {
-                        $scope.canUpload = true;
-                    } else {
-                        $scope.canUpload = false;
-                    }
-                });
             };
 
             $scope.uploadFile = function () {
@@ -56,7 +48,7 @@ function (
                 }
 
                 // Delete current file
-                var promise = deleteMedia($scope.mediaId);
+                var promise = clearCurrentMedia($scope.mediaId);
 
                 // ...then upload new file
                 promise.then(function () {
@@ -78,6 +70,7 @@ function (
                         }
                     ).then(function (response) {
                         $scope.mediaId = response.data.id;
+                        $scope.getMedia();
 
                         // We found a file so change the state of parent form
                         formCtrl[$scope.name].$setDirty();
@@ -89,7 +82,7 @@ function (
                 });
             };
 
-            var deleteMedia = function (mediaId) {
+            var clearCurrentMedia = function (mediaId) {
                 // Delete previous media first
                 if (mediaId) {
                     return MediaEndpoint.delete({id: mediaId}).$promise;
@@ -97,6 +90,17 @@ function (
 
                 // Return a promise anyway if there is no media to delete
                 return $q.when();
+            };
+
+            $scope.deleteMedia = function (mediaId) {
+                if (mediaId) {
+                    MediaEndpoint.delete({id: mediaId}).$promise.then(function (result) {
+                        $scope.mediaId = undefined;
+                        $scope.media = {};
+                    }, function (error) {
+                        Notify.apiErrors(error);
+                    });
+                }
             };
         }
     };
