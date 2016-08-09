@@ -396,6 +396,7 @@
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
         "by" : "by",
+        "task_completed" : "Task completed",
         "everyone" : "Everyone",
         "just_you" : "Just you",
         "specific_roles" : "Specific roles...",
