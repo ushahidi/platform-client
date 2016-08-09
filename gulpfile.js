@@ -20,7 +20,11 @@ var gulp         = require('gulp'),
     gzip         = require('gulp-gzip'),
     jscs         = require('gulp-jscs'),
     dotenv       = require('dotenv'),
-    Transifex    = require('transifex');
+    async        = require('async'),
+    Transifex    = require('transifex'),
+    CacheBuster  = require('gulp-cachebust');
+
+var cachebust = new CacheBuster();
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
@@ -57,7 +61,8 @@ var options = {
     intercomAppId       : gutil.env['intercom-app-id'] || process.env.INTERCOM_APP_ID,
     uglifyJs            : gutil.env['uglify-js'] || getBooleanOption(process.env.UGLIFY_JS, defaultOptions.uglifyJs),
     compressedCSS       : gutil.env['compressed-css'] || getBooleanOption(process.env.COMPRESSED_CSS, defaultOptions.compressedCSS),
-    www                 : 'server/www'
+    www                 : 'server/www',
+    deploy              : 'server/deploy'
 };
 
 // Helpers
@@ -367,7 +372,7 @@ gulp.task('tar', ['build'], function () {
     var version = gutil.env['version-suffix'] || require('./package.json').version;
     var dest_dir = gutil.env['dest-dir'] || 'build';
 
-    return gulp.src('server/www/**')
+    return gulp.src('server/deploy/**')
         .pipe(rename(function (path) {
             // Prefix path
             path.dirname = 'ushahidi-platform-client-bundle-' + version + '/' + path.dirname;
@@ -381,7 +386,7 @@ gulp.task('tar', ['build'], function () {
 /**
  * Task `release` - Build release
  */
-gulp.task('release', ['transifex-download'], function () {
+gulp.task('release', ['deploy'], function () {
     // Enable uglifyjs
     options.uglifyJs = true;
 
@@ -398,7 +403,7 @@ gulp.task('heroku:dev', ['build'], function () {});
  * Task: `transifex-download`
  * Download translations from www.transifex.com
  */
-gulp.task('transifex-download', function () {
+gulp.task('transifex-download', function (done) {
     var project_slug = 'ushahidi-v3',
         locales_dir = options.www + '/locales/',
         mode = 'default',
@@ -458,21 +463,6 @@ gulp.task('transifex-download', function () {
                 return false;
             });
 
-            // Download translations
-            data.forEach(function (language) {
-                transifex.translationInstanceMethod(project_slug, resource, language.code, { mode: mode }, function (err, data) {
-                    if (err) {
-                        throw err;
-                    }
-
-                    fs.writeFileSync(locales_dir +
-                                     // Replace underscore with hyphen
-                                     language.code.replace('_', '-') +
-                                     '.json', data);
-                });
-            });
-
-
             // Replace language code underscores with hyphens
             var languages = data.map(function (language) {
                 language.code = language.code.replace('_', '-');
@@ -481,6 +471,29 @@ gulp.task('transifex-download', function () {
 
             // Save translated language list
             fs.writeFileSync(locales_dir + 'languages.json', JSON.stringify({languages: languages}));
+
+            // Download translations
+            async.eachLimit(data, 2, function(language, cb) {
+                transifex.translationInstanceMethod(project_slug, resource, language.code, { mode: mode }, function (err, data) {
+                    if (err) {
+                        return cb(err);
+                    }
+                    try {
+                        fs.writeFileSync(locales_dir +
+                                     // Replace underscore with hyphen
+                                     language.code.replace('_', '-') +
+                                     '.json', data);
+                    } catch(err) {
+                        return cb(err);
+                    }
+                    cb();
+                });
+            }, function(err) {
+                if (err) {
+                    return done(err);
+                }
+                return done();
+            });
 
         });
     });
@@ -492,3 +505,76 @@ gulp.task('transifex-download', function () {
  * Default task optimized for development
  */
 gulp.task('default', helpers.createDefaultTaskDependencies());
+
+
+// Copy images to deploy destination folder, renamed to cachebusting names
+/* This is commented out because we can't really resolve and rewrite all the
+ * references. It would be nice to be able to do at some point
+ *
+gulp.task('deploy-img-root', [ 'svg-iconic-sprite'], function() {
+   return gulp.src(options.www + "/img/*")
+        .pipe(cachebust.resources())
+        .pipe(gulp.dest(options.deploy + '/img'));
+});
+
+gulp.task('deploy-img-icons', [ 'svg-icons' ], function() {
+   return gulp.src(options.www + "/img/icons/*")
+        .pipe(cachebust.resources())
+        .pipe(gulp.dest(options.deploy + '/img/icons'));
+});
+
+gulp.task('deploy-img-png', [ 'svg-icons' ], function() {
+   return gulp.src(options.www + "/img/icons/png/*")
+        .pipe(cachebust.resources())
+        .pipe(gulp.dest(options.deploy + '/img/icons/png'));
+});
+*/
+
+// So we just copy the images, because there are references to them that
+// the cachebuster library can't just find and substitute
+gulp.task('deploy-img', function() {
+   return gulp.src(options.www + "/img/**")
+        .pipe(gulp.dest(options.deploy + '/img'));
+});
+
+// Replace references to cachebusted images in the css, then save them as
+// cachebusted deploy resources themselves
+gulp.task('deploy-css', [ 'sass', 'css', 'deploy-img' ], function() {
+    return gulp.src(options.www + "/css/*.css")
+        .pipe(cachebust.references())
+        .pipe(cachebust.resources())
+        .pipe(gulp.dest(options.deploy + '/css'));
+});
+
+// Copy the fonts to deploy destination folder (no cachebusting)
+gulp.task('deploy-fonts', [ 'font' ], function() {
+   return gulp.src(options.www + "/fonts/**")
+        .pipe(gulp.dest(options.deploy + '/fonts'));
+});
+
+// Copy the js to deploy destination folder, cachebusting the filenames
+gulp.task('deploy-js', [ 'browserify' ], function() {
+   return gulp.src(options.www + "/js/*.js")
+        .pipe(cachebust.resources())
+        .pipe(gulp.dest(options.deploy + '/js'));
+});
+
+// Copy the translation locales
+gulp.task('deploy-locales', [ 'transifex-download' ], function() {
+    return gulp.src(options.www + "/locales/*")
+        .pipe(gulp.dest(options.deploy + '/locales'));
+});
+
+// Copy the templates to the deploy destination folder, replace references to cachebusted assets
+gulp.task('deploy-tmpl', [ 'deploy-img' ], function() {
+   return gulp.src(options.www + "/templates/**")
+        .pipe(cachebust.references())
+        .pipe(gulp.dest(options.deploy + '/templates'));
+});
+
+// Copy static files to deploy destination folder, replace references to cachebusted assets
+gulp.task('deploy', [ 'deploy-css', 'deploy-fonts', 'deploy-js', 'deploy-locales', 'deploy-tmpl' ], function() {
+    return gulp.src([options.www + "/index.html", options.www + "/config.js"])
+        .pipe(cachebust.references())
+        .pipe(gulp.dest(options.deploy));
+});
