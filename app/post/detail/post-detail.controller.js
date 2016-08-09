@@ -77,6 +77,7 @@ function (
     // Load the post form
     if ($scope.post.form && $scope.post.form.id) {
         $scope.form_attributes = [];
+
         $scope.post_task_id = undefined;
 
         $q.all([
@@ -109,6 +110,7 @@ function (
 
             angular.forEach(attributes, function (attr) {
                 this[attr.key] = attr;
+
             }, $scope.form_attributes);
 
             // Make the first task visible
@@ -117,7 +119,6 @@ function (
                 tasks[1].hasFileIcon = true;
             }
 
-            // Associate post values with tasks
             _.each(tasks, function (task) {
 
                 //Set post task id
@@ -130,9 +131,33 @@ function (
                 }
             });
 
+            // Backwards compatibility to pre-mustang survey types
+            // TODO: update old forms to have post task automatically added
+            if (!$scope.post_task_id) {
+                $scope.post_task_id = tasks[0].id;
+            }
             $scope.tasks = tasks;
+            $scope.removeEmptyTasks();
         });
     }
+
+    $scope.removeEmptyTasks = function () {
+        var tasks_with_attributes = [];
+        _.each($scope.post.values, function (value, key) {
+            if ($scope.form_attributes[key]) {
+                tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
+            }
+        });
+        tasks_with_attributes = _.uniq(tasks_with_attributes);
+
+        $scope.tasks = _.filter($scope.tasks, function (task) {
+            return _.contains(tasks_with_attributes, task.id);
+        });
+    };
+
+    $scope.showTasks = function () {
+        return $scope.tasks.length > 1;
+    };
 
     $scope.isPostValue = function (key) {
         return $scope.form_attributes[key].form_stage_id === $scope.post_task_id;
