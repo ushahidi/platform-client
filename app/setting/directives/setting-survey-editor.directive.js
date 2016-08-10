@@ -97,7 +97,7 @@ function SurveyEditorController(
             $scope.survey = {
                 color: null,
                 require_approval: true,
-                all_roles: true,
+                everyone_can_create: true,
                 tasks: [
                     {
                         label: 'Post',
@@ -420,12 +420,12 @@ function SurveyEditorController(
     function saveSurvey() {
         // Saving a survey is a 3 step process
         
-        // convert survey.all_roles values to Boolean
-        if ($scope.survey.all_roles == 'true') {
-	       $scope.survey.all_roles = true;
+        // convert survey.everyone_can_create values to Boolean
+        if ($scope.survey.everyone_can_create == 'true') {
+	       $scope.survey.everyone_can_create = true;
         }
         else {
-	       $scope.survey.all_roles = false;
+	       $scope.survey.everyone_can_create = false;
         }
 
         // First save the actual survey

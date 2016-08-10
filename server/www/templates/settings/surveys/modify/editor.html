@@ -102,26 +102,26 @@
                             <fieldset>
                                 <legend>Who can add to this survey</legend>
 
-                                <div class="form-field radio icon-input" ng-class="{true:'checked', false:''}[survey.all_roles]">
+                                <div class="form-field radio icon-input" ng-class="{true:'checked', false:''}[survey.everyone_can_create]">
                                     <label for="survey-add_everyone">
                                         <svg class="iconic">
                                             <use xlink:href="../../img/iconic-sprite.svg#globe"></use>
                                         </svg>
-                                        <input name="survey-add" id="survey-add_everyone" value="true" checked="" type="radio" ng-model="survey.all_roles">
+                                        <input name="survey-add" id="survey-add_everyone" value="true" checked="" type="radio" ng-model="survey.everyone_can_create">
                                         <span class="label">Everyone</span>
                                     </label>
                                 </div>
 
-                                <div class="form-field radio icon-input" ng-class="{true:'', false:'checked'}[survey.all_roles]">
+                                <div class="form-field radio icon-input" ng-class="{true:'', false:'checked'}[survey.everyone_can_create]">
                                     <label for="survey-add_roles">
                                         <svg class="iconic">
                                             <use xlink:href="../../img/iconic-sprite.svg#people"></use>
                                         </svg>
-                                        <input class="init" name="survey-add" id="survey-add_roles" value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.all_roles">
+                                        <input class="init" name="survey-add" id="survey-add_roles" value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.everyone_can_create">
                                         Specific roles...
                                     </label>
 
-                                    <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.all_roles]">
+                                    <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.everyone_can_create]">
 	                                    
                                         <div class="form-field checkbox" ng-repeat="role in roles">
                                             <input id="survey-add_roles-members_{{role.id}}" value="{{role.id}}" type="checkbox" ng-checked="role.is_allowed" ng-disabled="role.is_admin" ng-model="roles_allowed" ng-click="updateRoles(role.id)">
