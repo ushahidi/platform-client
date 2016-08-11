@@ -164,7 +164,7 @@
         "text_desc" : "A sentence or less",
         "textarea_desc" : "Multiple sentences or paragraphs<",
         "decimal_desc" : "A number with decimal places",
-        "integer_desc" : "A while number",
+        "integer_desc" : "A whole number",
         "location_desc" : "A geographic location chosen via a map",
         "date_desc" : "A date with year, month, day",
         "datetime_desc" : "A date with time in hours and minutes",
