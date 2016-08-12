@@ -41,43 +41,39 @@
           </svg>
           <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
           <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>
-          <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span> 
+          <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span>
 
         </span>
       </div>
-
       <div class="postcard-body">
         <header class="postcard-header">
           <h1 class="postcard-title">
             {{post.title}}
           </h1>
-
-        <post-metadata post="post"></post-metadata>
+          <post-metadata post="post"></post-metadata>
         </header>
 
         <post-actions post="post"></post-actions>
 
-        <post-media-value
+        <div
+          ng-repeat="(key,value) in post.values"
+          ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+          class="postcard-field"
+          >
+
+          <post-media-value
             ng-if="form_attributes[key].type === 'media'"
             label="{{form_attributes[key].label}}"
             media-id="value"></post-media-value>
-        
-        <div
-          ng-repeat="(key,value) in post.values"
-          ng-if="form_attributes[key] && showType(form_attributes[key].type)"
-          ng-show="form_attributes[key].form_stage_id == visibleStage"
-          class="postcard-field">
         </div>
-
         <div
           ng-if="post.content"
-          ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
           class="postcard-field">
           <p sd-model-to-html="post.content"></p>
         </div>
+
         <div
           ng-if="!!post.tags.length"
-          ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
           class="postcard-field"
           >
           <h2 class="form-label" translate>post.modify.form.categories</h2>
@@ -86,50 +82,72 @@
           </p>
         </div>
 
-        <div
+        <post-value
           ng-repeat="(key,value) in post.values"
-          ng-if="form_attributes[key] && showType(form_attributes[key].type)"
-          ng-show="form_attributes[key].form_stage_id == visibleStage"
-          class="postcard-field"
-          >
-
-          <post-value
-            key="key"
-            value="value"
-            attribute="form_attributes[key]"
-            ng-if="form_attributes[key].type !== 'media'">
-          </post-value>
-        </div>
+          ng-if="isPostValue(key) && showType(form_attributes[key].type)"
+          key="key"
+          value="value"
+          attribute="form_attributes[key]"
+          type="'post'"
+          ng-if="form_attributes[key].type !== 'media'">
+        </post-value>
         <div
-          ng-if="mapDataLoaded"
-          ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
-          class="postcard-field"
-          >
-          <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
-          <div ng-if="mapDataLoaded">
-            <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
-          </div>
+            ng-if="mapDataLoaded"
+            class="postcard-field"
+            >
+            <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
+            <p></p>
+            <div ng-if="mapDataLoaded">
+              <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
+            </div>
         </div>
       </div>
     </article>
 
-    <div class="listing card">
-      <h3 class="listing-heading" translate="post.steps">Tasks</h3>
+    <div class="listing card init" ng-show="tasks.length">
+        <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
+
         <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
           <ul>
             <li
-              ng-repeat="stage in stages"
-              ng-class="{'active': visibleStage == stage.id}"  >
-              <a ng-click="setVisibleStage(stage.id)">
-                {{stage.label}}
+              ng-repeat="task in tasks"
+              ng-class="{'active': visibleTask == task.id}"  >
+              <a ng-click="activateTaskTab(task.id)">
+                {{task.label}}
               </a>
-              <span class="status" ng-class="{'completed': stageIsComplete(visibleStage)}">
+              <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
               </span>
             </li>
           </ul>
         </nav>
-        </div>
+        <div class="listing-item tasks-tabs tabs-target active">
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="!isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
+            class="listing-item-primary"
+            >
 
+            <post-media-value
+              ng-if="form_attributes[key].type === 'media'"
+              label="{{form_attributes[key].label}}"
+              media-id="value"></post-media-value>
+          </div>
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="!isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
+            >
+            <post-value
+              key="key"
+              value="value"
+              attribute="form_attributes[key]"
+              type="'standard'"
+              ng-if="form_attributes[key].type !== 'media'">
+            </post-value>
+          </div>
+        </div>
+    </div>
 
     <post-add-form post="post" ng-if="!post.form && post.allowed_privileges.indexOf('update') !== -1"></post-add-form>
     <post-messages post="post" ng-if="post.contact.id"></post-messages>

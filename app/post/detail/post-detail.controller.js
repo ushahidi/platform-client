@@ -55,10 +55,6 @@ function (
         return 'post.publish_for_everyone';
     };
 
-    $scope.setVisibleStage = function (stageId) {
-        $scope.visibleStage = stageId;
-    };
-
     $scope.stageIsComplete = function (stageId) {
         return _.includes($scope.post.completed_stages, stageId);
     };
@@ -82,56 +78,91 @@ function (
     if ($scope.post.form && $scope.post.form.id) {
         $scope.form_attributes = [];
 
-        FormEndpoint.get({id: $scope.post.form.id}, function (form) {
-            $scope.form_name = form.name;
-            $scope.form_description = form.description;
-            $scope.form_color = form.color;
+        $scope.post_task_id = undefined;
+
+        $q.all([
+            FormEndpoint.get({id: $scope.post.form.id}),
+            FormStageEndpoint.query({formId:  $scope.post.form.id}).$promise,
+            FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise
+        ]).then(function (results) {
+            $scope.form_name = results[0].name;
+            $scope.form_description = results[0].description;
+            $scope.form_color = results[0].color;
 
             // Set page title to '{form.name} Details' if a post title isn't provided.
             if (!$scope.post.title) {
-                $translate('post.type_details', { type: form.name }).then(function (title) {
+                $translate('post.type_details', { type: results[0].name }).then(function (title) {
                     $scope.$emit('setPageTitle', title);
                 });
             }
-        });
+            var tasks = _.sortBy(results[1], 'priority');
+            var attrs = _.chain(results[2])
+                .sortBy('priority')
+                .value();
 
-        FormStageEndpoint.get({formId: $scope.post.form.id}, function (stages) {
-            $scope.stages = stages.results;
-
-            // Convert ids to strings
-            _.forEach($scope.stages, function (stage) {
-                stage.id = stage.id.toString();
-            });
-
-            // Make the first stage visible
-            if (!_.isEmpty($scope.stages)) {
-                $scope.visibleStage = $scope.stages[0].id;
-                $scope.stages[0].hasFileIcon = true;
-            }
-
-            // Get completed stages
-            _.forEach($scope.stages, function (stage) {
-                if (_.indexOf($scope.post.completed_stages, stage.id) !== -1) {
-                    stage.completed = true;
+            var attributes = [];
+            _.each(attrs, function (attr) {
+                if (!_.contains($scope.attributesToIgnore, attr.key)) {
+                    attributes.push(attr);
                 }
             });
-        });
+            attributes = (attributes.length) ? attributes : attrs;
 
-        FormAttributeEndpoint.query({formId: $scope.post.form.id}, function (attributes) {
             angular.forEach(attributes, function (attr) {
                 this[attr.key] = attr;
+
             }, $scope.form_attributes);
+
+            // Make the first task visible
+            if (!_.isEmpty(tasks)) {
+                $scope.visibleTask = tasks[1].id;
+                tasks[1].hasFileIcon = true;
+            }
+
+            _.each(tasks, function (task) {
+
+                // Set post task id
+                // NOTE: This assumes that there is only one Post task per Post
+                if (task.type === 'post') {
+                    $scope.post_task = task;
+                } else {
+                    // Mark completed tasks
+                    if (_.indexOf($scope.post.completed_stages, task.id) !== -1) {
+                        task.completed = true;
+                    }
+                }
+            });
+
+            // Remove post task from tasks
+            tasks = _.filter(tasks, function (task) {
+                return task.type !== 'post';
+            });
+
+            $scope.tasks = tasks;
+            $scope.removeEmptyTasks();
         });
-    } else {
-        $scope.visibleStage = 'post';
     }
 
-    $scope.isFirstStage = function (stageId) {
-        if (!_.isEmpty($scope.stages)) {
-            return stageId === $scope.stages[0].id;
-        }
+    $scope.removeEmptyTasks = function () {
+        var tasks_with_attributes = [];
+        _.each($scope.post.values, function (value, key) {
+            if ($scope.form_attributes[key]) {
+                tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
+            }
+        });
+        tasks_with_attributes = _.uniq(tasks_with_attributes);
 
-        return false;
+        $scope.tasks = _.filter($scope.tasks, function (task) {
+            return _.contains(tasks_with_attributes, task.id);
+        });
+    };
+
+    $scope.showTasks = function () {
+        return $scope.tasks.length > 1;
+    };
+
+    $scope.isPostValue = function (key) {
+        return $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
 
     // Replace tags with full tag object
@@ -150,9 +181,8 @@ function (
         return true;
     };
 
-
-    $scope.activateStageTab = function (selectedStage) {
-        $scope.visibleStage = selectedStage.id;
+    $scope.activateTaskTab = function (selectedTaskId) {
+        $scope.visibleTask = selectedTaskId;
     };
 
     // Set initial map params
@@ -206,32 +236,32 @@ function (
         }
     });
 
-    $scope.toggleCompletedStage = function (stage) {
+    $scope.toggleCompletedTask = function (task) {
         // @todo how to validate this before saving
-        if (_.includes($scope.post.completed_stages, stage.id)) {
-            $scope.post.completed_stages = _.without($scope.post.completed_stages, stage.id);
+        if (_.includes($scope.post.completed_stages, task.id)) {
+            $scope.post.completed_stages = _.without($scope.post.completed_stages, task.id);
         } else {
-            $scope.post.completed_stages.push(stage.id);
+            $scope.post.completed_stages.push(task.id);
         }
 
         PostEndpoint.update($scope.post).$promise
             .then(function () {
-                Notify.notify('notify.post.stage_save_success', {stage: stage.label});
-                stage.completed = !stage.completed;
+                Notify.notify('notify.post.stage_save_success', {stage: task.label});
+                task.completed = !task.completed;
             }, function (errorResponse) {
                 Notify.apiErrors(errorResponse);
             });
     };
 
     $scope.publishPostTo = function (updatedPost) {
-        // first check if stages required have been marked complete
-        var requiredStages = _.where($scope.stages, {required: true}),
+        // first check if tasks required have been marked complete
+        var requiredTasks = _.where($scope.tasks, {required: true}),
             errors = [];
 
-        _.each(requiredStages, function (stage) {
+        _.each(requiredTasks, function (task) {
             // if this stage isn't complete, add to errors
-            if (_.indexOf($scope.post.completed_stages, stage.id) === -1) {
-                errors.push($filter('translate')('post.modify.incomplete_step', { stage: stage.label }));
+            if (_.indexOf($scope.post.completed_stages, task.id) === -1) {
+                errors.push($filter('translate')('post.modify.incomplete_step', { stage: task.label }));
             }
         });
 
