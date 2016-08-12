@@ -1,12 +1,17 @@
-
 <!-- default input is hidden -->
 <input id="appearance-header-image" name="file" type="file" custom-on-change='uploadFile' ng-required="{{ required }}"/>
 
 <!-- "Add" and "Replace" buttons -->
-<label for="appearance-header-image" class="button button-gamma"``>
+<label for="appearance-header-image" class="button button-gamma" ng-show="!media.id">
     <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
     </svg>
-    <span class="button-label" ng-show="!media.id">Add photo</span>
-    <span class="button-label" ng-show="media.id">Replace photo</span>
+    <span class="button-label" >Add photo</span>
+</label>
+
+<label for="appearance-header-image" class="button button-gamma" ng-show="media.id">
+    <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#image"></use>
+    </svg>
+    <span class="button-label" >Replace photo</span>
 </label>

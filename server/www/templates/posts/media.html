@@ -6,27 +6,33 @@
             <img src="{{media.original_file_url}}" />
         </figure>
 
-        <!-- delete button displays only on post edit -->
-        <button class="button-destructive" ng-show="mediaId" ng-click="deleteMedia(mediaId)">
-            <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
-            </svg>
-            <span class="hidden">Delete photo</span>
-        </button>
+        <div class="form-field">
 
-        <!-- `file-upload.html` directive contains action buttons for both add and edit -->
-        <file-upload file-container="fileContainer"
-            media="media"
-            custom-on-change="uploadFile">
-        </file-upload>
+            <!-- delete button displays only on post edit -->
+            <button class="button-destructive" ng-show="mediaId" ng-click="deleteMedia(mediaId)">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                </svg>
+                <span class="hidden">Delete photo</span>
+            </button>
 
-        <!-- caption displays on post edit (aka if an image file exists) -->
-        <figure ng-if="media.original_file_url" >
-            <input
-            type="text"
-            placeholder="{{ 'post.media.add_caption' | translate }}"
-            ng-model="media.caption">
-        </figure>
+            <!-- `file-upload.html` directive contains action buttons for both add and edit -->
+            <file-upload file-container="fileContainer"
+                media="media"
+                custom-on-change="uploadFile">
+            </file-upload>
+
+        </div>
+
+        <div class="form-field">
+            <!-- caption displays on post edit (aka if an image file exists) -->
+            <figure ng-if="media.original_file_url" >
+                <input
+                type="text"
+                placeholder="{{ 'post.media.add_caption' | translate }}"
+                ng-model="media.caption">
+            </figure>
+        </div>
 
     </div>
 </form>

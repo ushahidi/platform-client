@@ -41,6 +41,14 @@ function (
                 return $scope.mediaId ? true : false;
             };
 
+            $scope.updateCaption = function () {
+                MediaEndpoint.update({id: $scope.media}).$promise.then(function (result) {
+                    Notify.notify('notify.post.caption_updated');
+                }, function (error) {
+                    Notify.apiErrors(error);
+                });
+            };
+
             $scope.uploadFile = function () {
                 //@todo Allow editing of caption for existing image
                 if (!$scope.fileContainer.file) {

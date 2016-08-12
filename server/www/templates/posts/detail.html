@@ -74,7 +74,9 @@
           ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
           class="postcard-field">
           <p sd-model-to-html="post.content"></p>
+          <post-preview-media post="post"></post-preview-media>
         </div>
+
         <div
           ng-if="!!post.tags.length"
           ng-show="visibleStage == stages[0].id || visibleStage == 'post'"
