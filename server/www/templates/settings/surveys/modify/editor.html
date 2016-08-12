@@ -263,8 +263,8 @@
                   <div class="form-field switch">
                      <label translate="survey.require_task">Require this task be completed before a post can be visible to the public</label>
                      <div class="toggle-switch">
-                        <input class="tgl" id="switch1" type="checkbox" ng-model="task.required">
-                        <label class="tgl-btn" for="switch1" ng-click="toggleTaskRequired(task)"></label>
+                        <input class="tgl" ng-attr-id="{{'require-switch-' + task.label}}" type="checkbox" ng-model="task.required">
+                        <label class="tgl-btn" ng-attr-for="{{'require-switch-' + task.label}}"></label>
                      </div>
                   </div>
                   <!--

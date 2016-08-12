@@ -121,21 +121,23 @@ function (
 
             _.each(tasks, function (task) {
 
-                //Set post task id
+                // Set post task id
+                // NOTE: This assumes that there is only one Post task per Post
                 if (task.type === 'post') {
-                    $scope.post_task_id = task.id;
-                }
-                // Mark completed tasks
-                if (_.indexOf($scope.post.completed_stages, task.id) !== -1) {
-                    task.completed = true;
+                    $scope.post_task = task;
+                } else {
+                    // Mark completed tasks
+                    if (_.indexOf($scope.post.completed_stages, task.id) !== -1) {
+                        task.completed = true;
+                    }
                 }
             });
 
-            // Backwards compatibility to pre-mustang survey types
-            // TODO: update old forms to have post task automatically added
-            if (!$scope.post_task_id) {
-                $scope.post_task_id = tasks[0].id;
-            }
+            // Remove post task from tasks
+            tasks = _.filter(tasks, function (task) {
+                return task.type !== 'post';
+            });
+
             $scope.tasks = tasks;
             $scope.removeEmptyTasks();
         });
@@ -160,7 +162,7 @@ function (
     };
 
     $scope.isPostValue = function (key) {
-        return $scope.form_attributes[key].form_stage_id === $scope.post_task_id;
+        return $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
 
     // Replace tags with full tag object

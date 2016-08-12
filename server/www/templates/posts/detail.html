@@ -104,13 +104,13 @@
       </div>
     </article>
 
-    <div class="listing card init" ng-show="tasks.length > 1">
+    <div class="listing card init" ng-show="tasks.length">
         <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
 
         <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
           <ul>
             <li
-              ng-repeat="task in tasks | limitTo: 1 - tasks.length"
+              ng-repeat="task in tasks"
               ng-class="{'active': visibleTask == task.id}"  >
               <a ng-click="activateTaskTab(task.id)">
                 {{task.label}}

@@ -4,24 +4,17 @@
      <input type="text" placeholder="{{ 'survey.name_this_task' | translate }}" ng-model="newTask.label">
   </div>
   <div class="form-field">
-      <label translate="survey.task_description">
+      <label for="task_description" translate="survey.task_description">
           Task description
       </label>
-      <textarea name="description" data-min-rows="1" rows="1" ng-model="newTask.descritpion"></textarea>
+      <textarea id="task_description" name="description" data-min-rows="1" rows="1" ng-model="newTask.descritpion"></textarea>
   </div>
   <div class="form-field switch">
      <label translate="survey.require_task">Require this task be completed before a post can be visible to the public</label>
      <div class="toggle-switch">
-        <input class="tgl" id="switchnewtask" type="checkbox" ng-model="newTask.required">
-        <label class="tgl-btn" for="switchnewtask"></label>
+        <input class="tgl" id="require-toggle" type="checkbox" ng-model="newTask.required">
+        <label class="tgl-btn" for="require-toggle"></label>
      </div>
-  </div>
-  <div class="form-field switch">
-      <label translate="survey.show_task">Show this task to everyone when the post is published</label>
-      <div class="toggle-switch">
-          <input class="tgl" id="custom-show" type="checkbox" ng-model="newTask.is_public">
-          <label class="tgl-btn" for="custom-show"></label>
-      </div>
   </div>
   <div class="form-field">
       <button type="button" class="button-link modal-trigger" ng-click="closeModal()" translate="app.cancel">Cancel</button>
