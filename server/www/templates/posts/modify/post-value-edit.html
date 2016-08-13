@@ -30,6 +30,15 @@
         <label>
             {{option}}
         </label>
+
+        <div ng-if="$last">
+          <div class="alert error" ng-show="attribute.required && post.values[attribute.key].length === 0 && taskIsMarkedCompleted()">
+              <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+              </svg>
+              <span translate="{{'post.valid.values.required'}}" translate-values="{ label : attribute.label }"></span>
+          </div>
+        </div>
     </div>
 
     <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
