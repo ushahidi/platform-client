@@ -102,6 +102,8 @@
                 ng-required="attribute.required"
                 adaptive-input
                 >
+
+
             <!-- type: textarea -->
             <textarea
                 ng-switch-when="textarea"
@@ -145,23 +147,12 @@
                 ng-model="post.values[attribute.key][key]"
                 ng-required="attribute.required"
             ></post-media>
-            <!-- Add additional values of specific fields
-            <button
-                type="button"
-                class="button-secondary icon-only alt trash"
-                ng-if="canRemoveValue(attribute, key)"
-                ng-click="removeValue(attribute, key)"></button>
-              -->
         </div>
     </div>
-    <div class="alert error" ng-show="form['values_' + attribute.id].$dirty" ng-repeat="(error, value) in form['values_' + attribute.key].$error">
+    <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
         </svg>
         <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
     </div>
-
-<!-- Add additional values of specific fields
-        <button type="button" class="plus" ng-if="canAddValue(attribute)" ng-click="addValue(attribute)">Add</button>
--->
 </div>

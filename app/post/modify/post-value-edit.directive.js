@@ -37,10 +37,16 @@ function PostValueEditController(
     $scope.addValue = addValue;
     $scope.removeValue = removeValue;
 
+    $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
+
     activate();
 
     function activate() {
 
+    }
+
+    function taskIsMarkedCompleted() {
+        return _.contains($scope.post.completed_stages, $scope.attribute.form_stage_id);
     }
 
     function isDate(attr) {
