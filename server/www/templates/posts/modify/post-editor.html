@@ -83,6 +83,7 @@
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
+                  post-field=true
                   form="postForm"
                   attribute="attribute"
               ></post-value-edit>
