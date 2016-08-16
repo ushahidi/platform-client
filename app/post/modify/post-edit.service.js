@@ -65,7 +65,6 @@ function (
                           }
                       });
                       isPostValid = checkboxValidity;
-                      form['values_' + attribute.id].$dirty = !checkboxValidity;
                   } else {
 
                       if (_.isUndefined(form['values_' + attribute.id]) || form['values_' + attribute.id].$invalid) {
