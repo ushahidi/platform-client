@@ -159,7 +159,7 @@ function PostEditorController(
             // If number of completed stages matches number of tasks - not including Post,
             // assume they're all complete, and just show the first task
             if (post.completed_stages.length === tasks.length - 1) {
-                $scope.setVisibleStage(tasks[0].id);
+                $scope.setVisibleStage(tasks[1].id);
             } else {
                 // Get incomplete stages
                 var incompleteStages = _.filter(tasks, function (task) {
@@ -174,7 +174,7 @@ function PostEditorController(
     }
 
     function canSavePost() {
-        return PostEditService.canSavePost($scope.post, $scope.postForm, $scope.stages, $scope.attributes);
+        return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
     }
 
     function cancel() {
@@ -195,6 +195,7 @@ function PostEditorController(
 
     function savePost() {
         if (!$scope.canSavePost()) {
+            Notify.error('post.valid.validation_fail');
             return;
         }
 

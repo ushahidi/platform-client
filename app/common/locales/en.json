@@ -534,6 +534,7 @@
             "associated_messages": "View messages associated with this post"
         },
         "valid" : {
+            "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
             "title" : {
                 "required" : "A title is required",
                 "minlength" : "Title is too short",

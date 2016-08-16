@@ -34,8 +34,6 @@ function PostVerticalTabsController(
     _
 ) {
     $scope.setVisibleStage = setVisibleStage;
-    $scope.isStageValid = isStageValid;
-    $scope.isFirstStage = isFirstStage;
     $scope.stageIsComplete = stageIsComplete;
     $scope.toggleStageCompletion = toggleStageCompletion;
 
@@ -49,14 +47,6 @@ function PostVerticalTabsController(
         $scope.visibleStage = stageId;
     }
 
-    function isFirstStage(stageId) {
-        return PostEditService.isFirstStage($scope.stages, stageId);
-    }
-
-    function isStageValid(stageId) {
-        return PostEditService.isStageValid(stageId, $scope.form, $scope.stages, $scope.attributes);
-    }
-
     function stageIsComplete(stageId) {
         return _.includes($scope.post.completed_stages, stageId);
     }
@@ -67,7 +57,7 @@ function PostVerticalTabsController(
         if (_.includes($scope.post.completed_stages, stageId)) {
             $scope.post.completed_stages = _.without($scope.post.completed_stages, stageId);
 
-        } else if ($scope.isStageValid(stageId)) {
+        } else {
             $scope.post.completed_stages.push(stageId);
         }
     }
