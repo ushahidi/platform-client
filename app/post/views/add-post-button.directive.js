@@ -77,42 +77,21 @@ function AddPostButtonController(
         .then(function(forms) {
             if (!$rootScope.isAdmin()) {
                 _.each(forms, function(form, index) {
-                    // if all_roles == FALSE, check to see if the user has access to post to this form
-                    if (!form.all_roles) {
+                    // if everyone_can_create == FALSE, check to see if the user role has access
+                    // to add a post to this form
+                    if (!form.everyone_can_create) {
                         // Remove the form from the list if the user is not logged in
                         if ($rootScope.currentUser === null) {
                             delete forms[index];
-                            if (index === forms.length -1) {
-                                allowed_forms.resolve(_.compact(forms));
-                            }
                         }
                         else {
-                            // look up role by role name to get the role id
-                            RoleEndpoint.query({ name: $rootScope.currentUser.role })
-                            .$promise
-                            .then(function(role) {
-                                if (role.length === 1 && role[0].id) {
-                                    FormRoleEndpoint.query({ formId: form.id })
-                                    .$promise
-                                    .then(function(roles) {
-                                        var roles_allowed = _.pluck(roles, 'role_id');
-                                        if (!_.contains(roles_allowed, role[0].id)) {
-                                            delete forms[index];
-                                        }
-                                        if (index === forms.length -1) {
-                                            allowed_forms.resolve(_.compact(forms));
-                                        }
-                                    });
-                                } else {
-                                    delete forms[index];
-                                    if (index === forms.length -1) {
-                                        allowed_forms.resolve(_.compact(forms));
-                                    }
-                                }
-                            });
+                            if (!_.contains(form.can_add, $rootScope.currentUser.role)) {
+                                delete forms[index];
+                            }
                         }
                     }
                 });
+                allowed_forms.resolve(_.compact(forms));
             }
             else {
                 allowed_forms.resolve(forms);
