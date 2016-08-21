@@ -65,6 +65,7 @@
     "phantomjs-prebuilt": "^2.1.7",
     "pre-commit": "^1.1.2",
     "protractor": "^4.0.0",
+    "run-sequence": "^1.2.2",
     "serve-static": "^1.10.0",
     "transifex": "^1.4.3",
     "underscore.string": "^3.3.4",

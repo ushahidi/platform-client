@@ -17,6 +17,14 @@
       "description" : "A deployment of ushahidi/platform to use",
       "value" : "https://ushahidi-platform-api-master.herokuapp.com",
       "required" : true
+    },
+    "TX_USERNAME": {
+      "description" : "Your username in transifex in order to download translation files (optional)",
+      "required": false
+    },
+    "TX_PASSWORD": {
+      "description": "Your password in transifex (optional)",
+      "required": false
     }
   }
 }
