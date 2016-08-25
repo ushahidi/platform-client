@@ -167,7 +167,7 @@ function PostEditorController(
                 });
 
                 // Return lowest priority incomplete task - not including post
-                incompleteStages.length ? $scope.setVisibleStage(incompleteStages[1].id) : '';
+                incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
             $scope.tasks = tasks;
         });
