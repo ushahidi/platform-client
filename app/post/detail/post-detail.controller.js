@@ -114,7 +114,7 @@ function (
             }, $scope.form_attributes);
 
             // Make the first task visible
-            if (!_.isEmpty(tasks)) {
+            if (!_.isEmpty(tasks) && tasks.length > 1) {
                 $scope.visibleTask = tasks[1].id;
                 tasks[1].hasFileIcon = true;
             }

@@ -158,7 +158,7 @@ function PostEditorController(
 
             // If number of completed stages matches number of tasks - not including Post,
             // assume they're all complete, and just show the first task
-            if (post.completed_stages.length === tasks.length - 1) {
+            if (post.completed_stages.length === tasks.length - 1 && tasks.length > 1) {
                 $scope.setVisibleStage(tasks[1].id);
             } else {
                 // Get incomplete stages
@@ -167,7 +167,7 @@ function PostEditorController(
                 });
 
                 // Return lowest priority incomplete task - not including post
-                $scope.setVisibleStage(incompleteStages[1].id);
+                incompleteStages.length ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
             $scope.tasks = tasks;
         });
