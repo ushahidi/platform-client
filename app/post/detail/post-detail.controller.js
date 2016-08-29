@@ -43,6 +43,12 @@ function (
     $scope.post = post;
     $scope.hasPermission = $rootScope.hasPermission;
 
+    // Ensure completed_stages are dealt with as ints
+    // This should be changed on the API
+    post.completed_stages = post.completed_stages.map(function (stageId) {
+        return parseInt(stageId);
+    });
+
     $scope.mapDataLoaded = false;
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
