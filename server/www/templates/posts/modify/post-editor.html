@@ -65,9 +65,9 @@
                   <label translate="post.modify.form.description">
                       Description
                   </label>
-                  <textarea id="content" name="content" data-min-rows="1" rows="1" class="adapt-field" style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                    <textarea id="content" name="content" data-min-rows="1" rows="1"
                       ng-model="post.content" required adaptive-input msd-elastic>
-                  </textarea>
+                    </textarea>
 
                   <div class="alert error" ng-show="postForm.content.$dirty" ng-repeat="(error, value) in postForm.content.$error">
                       <svg class="iconic">
