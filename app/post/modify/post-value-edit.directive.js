@@ -25,6 +25,10 @@ function PostValueEditController(
     $scope,
     _
 ) {
+    var fieldSetAttributes = [
+        'checkbox',
+        'radio'
+    ];
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
     $scope.isText = isText;
@@ -40,6 +44,8 @@ function PostValueEditController(
 
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
+    $scope.isFieldSetStructure = isFieldSetStructure;
+
     activate();
 
     function activate() {
@@ -52,6 +58,12 @@ function PostValueEditController(
         return !_.isUndefined($scope.postField) ? true : _.contains($scope.post.completed_stages, $scope.attribute.form_stage_id);
     }
 
+    function isFieldSetStructure(attr) {
+        if (_.contains(fieldSetAttributes, attr.input)) {
+            return true;
+        }
+        return false;
+    }
     function isDate(attr) {
         return attr.input === 'date';
     }
