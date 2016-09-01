@@ -32,7 +32,7 @@ function (
         },
         update: {
             method: 'PUT'
-        },
+        }
     });
 
     FormRoleEndpoint.getFresh = function (params) {

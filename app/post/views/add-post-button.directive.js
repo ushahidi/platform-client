@@ -42,7 +42,7 @@ function AddPostButtonController(
     function activate() {
         // Load forms
         allowedForms()
-            .then(function(forms) {
+            .then(function (forms) {
                 $scope.forms = forms;
                 if (forms.length > 0) {
                     $scope.disabled = false;
@@ -74,11 +74,11 @@ function AddPostButtonController(
 
         FormEndpoint.query()
         .$promise
-        .then(function(forms) {
+        .then(function (forms) {
             if ($rootScope.hasPermission('Manage Posts')) {
                 allowed_forms.resolve(forms);
             } else {
-                allowed_forms.resolve(_.filter(forms, function(form) {
+                allowed_forms.resolve(_.filter(forms, function (form) {
                     // if everyone_can_create, include the form
                     if (!form.everyone_can_create) {
                         return true;

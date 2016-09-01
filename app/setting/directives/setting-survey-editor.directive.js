@@ -489,10 +489,6 @@ function SurveyEditorController(
         attribute.required = !attribute.required;
     }
 
-    function toggleRequireApproval(survey) {
-        survey.require_approval = !survey.require_approval;
-    }
-
     // Options functions
     $scope.hasOptions = function (attribute) {
         return _.contains(['checkbox', 'radio', 'select'], attribute.input);
