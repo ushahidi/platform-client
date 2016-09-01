@@ -72,9 +72,9 @@ function SurveyEditorController(
     $scope.toggleAttributeRequired = toggleAttributeRequired;
 
     $scope.changeTaskLabel = changeTaskLabel;
-    
-    $scope.showPermissions = false;
+
     $scope.roles_allowed = [];
+    $scope.roles = [];
 
     activate();
 
@@ -85,15 +85,6 @@ function SurveyEditorController(
         } else {
             // When creating new survey
             // pre-fill object with default tasks and attributes
-            
-	        RoleEndpoint.query().$promise.then(function (roles) {
-	            _.each(roles, function (role) {
-	                role.is_admin = role.name == 'admin'; 
-	                role.is_allowed = role.name == 'admin';
-	            });
-
-	            $scope.roles = roles;
-	        });
             $scope.survey = {
                 color: null,
                 require_approval: true,
@@ -107,8 +98,6 @@ function SurveyEditorController(
                     }
                 ]
             };
-            
-            $scope.roles_allowed = [];
         }
 
         loadAvailableForms();
@@ -155,16 +144,11 @@ function SurveyEditorController(
             });
             //survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
             $scope.survey = survey;
+
             var roles_allowed = results[3];
             var roles = results[4];
-            
+
             $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
-
-            _.each(roles, function (role) {
-                role.is_allowed = _.contains($scope.roles_allowed, role.id) || role.name == 'admin';
-                role.is_admin = role.name == 'admin';
-            });
-
             $scope.roles = roles;
         });
     }
@@ -419,14 +403,6 @@ function SurveyEditorController(
 
     function saveSurvey() {
         // Saving a survey is a 3 step process
-        
-        // convert survey.everyone_can_create values to Boolean
-        if ($scope.survey.everyone_can_create == 'true') {
-	       $scope.survey.everyone_can_create = true;
-        }
-        else {
-	       $scope.survey.everyone_can_create = false;
-        }
 
         // First save the actual survey
         FormEndpoint
@@ -498,10 +474,10 @@ function SurveyEditorController(
 
     function saveRoles() {
         FormRoleEndpoint
-        .saveCache(_.extend({ roles: $scope.roles_allowed }, {formId: $scope.survey.id}))
+        .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
         .$promise
         .then(function (roles) {
-			return true;
+            return true;
         }, handleResponseErrors);
     }
 
@@ -514,18 +490,8 @@ function SurveyEditorController(
     }
 
     function toggleRequireApproval(survey) {
-	    survey.require_approval = !survey.require_approval;
+        survey.require_approval = !survey.require_approval;
     }
-
-    // Roles functions
-    $scope.updateRoles = function (role) {
-	    if (_.contains($scope.roles_allowed, role)) {
-			$scope.roles_allowed = _.without($scope.roles_allowed, role);
-	    }
-	    else {
-		    $scope.roles_allowed.push(role);
-	    }
-    };
 
     // Options functions
     $scope.hasOptions = function (attribute) {
