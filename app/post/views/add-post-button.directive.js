@@ -48,7 +48,7 @@ function AddPostButtonController(
                     $scope.disabled = false;
                 }
             });
-        
+
         $rootScope.$on('post:list:selected', handlePostSelected);
     }
 
@@ -68,36 +68,38 @@ function AddPostButtonController(
     function handlePostSelected(event, selectedPosts) {
         $scope.disabled = selectedPosts.length > 0;
     }
-    
+
     function allowedForms() {
         var allowed_forms = $q.defer();
-        
+
         FormEndpoint.query()
         .$promise
         .then(function(forms) {
-            if (!$rootScope.isAdmin()) {
-                _.each(forms, function(form, index) {
-                    // if everyone_can_create == FALSE, check to see if the user role has access
-                    // to add a post to this form
-                    if (!form.everyone_can_create) {
-                        // Remove the form from the list if the user is not logged in
-                        if ($rootScope.currentUser === null) {
-                            delete forms[index];
-                        }
-                        else {
-                            if (!_.contains(form.can_add, $rootScope.currentUser.role)) {
-                                delete forms[index];
-                            }
-                        }
-                    }
-                });
-                allowed_forms.resolve(_.compact(forms));
-            }
-            else {
+            if ($rootScope.hasPermission('Manage Posts')) {
                 allowed_forms.resolve(forms);
+            } else {
+                allowed_forms.resolve(_.filter(forms, function(form) {
+                    // if everyone_can_create, include the form
+                    if (!form.everyone_can_create) {
+                        return true;
+                    }
+                    // Otherwise, continue to check if the user has access
+
+                    // If we're not logged in, we have no role so we definitely don't have access
+                    if ($rootScope.currentUser === null) {
+                        return false;
+                    }
+
+                    // Finally, if we are logged in, check if our role is in the list
+                    if (_.contains(form.can_create, $rootScope.currentUser.role)) {
+                        return true;
+                    }
+
+                    return false;
+                }));
             }
         });
-        
-        return allowed_forms.promise;   
+
+        return allowed_forms.promise;
     }
 }
