@@ -2,26 +2,11 @@ var ROOT_PATH = '../../../../';
 
 describe('Post detail controller', function () {
     var $scope,
+       $rootScope,
        $controller,
        PostEndpoint,
        Notify,
        FormEndpoint;
-
-    var mockFormEndpoint = {
-        get: function (parameters, success, error) {
-            return success({name: 'test form'});
-        }
-    };
-
-    var mockFormStageEndpoint = {
-        get: function (parameters, success, error) {
-            return success({
-                results: [
-                    {id: 1}
-                ]
-            });
-        }
-    };
 
     function moment() {
         return {
@@ -52,6 +37,7 @@ describe('Post detail controller', function () {
                                 _PostEndpoint_,
                                 _FormEndpoint_
                                ) {
+        $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
         $controller = _$controller_;
@@ -62,8 +48,6 @@ describe('Post detail controller', function () {
     beforeEach(function () {
         $controller('postDetailController', {
             $scope: $scope,
-            FormEndpoint: mockFormEndpoint,
-            FormStageEndpoint: mockFormStageEndpoint,
             post: {
                 tags: [],
                 form: {
@@ -81,51 +65,19 @@ describe('Post detail controller', function () {
                 setLayout: function () {}
             }
         });
-    });
-
-    it('should set form name correctly', function () {
-        expect($scope.form_name).toEqual('test form');
-    });
-
-    it('should set form stages', function () {
-        expect($scope.stages.length).toEqual(1);
-    });
-    /*
-    it('should set form attributees', function () {
-        expect($scope.form_attributes.length).toEqual(1);
-    });
-    */
-    it('should add a completed stage to a post', function () {
-        var stage = {id: '4', label: 'Structure'};
-        spyOn(PostEndpoint, 'update').and.callThrough();
-
-        expect($scope.post.completed_stages).toEqual(['1', '2', '3']);
-
-        $scope.toggleCompletedStage(stage);
-        expect($scope.post.completed_stages).toContain(stage.id);
-        expect(PostEndpoint.update).toHaveBeenCalledWith($scope.post);
-    });
-
-    it('should remove a completed stage from a post', function () {
-        var stage = {id: '3', completed: 'true'};
-        spyOn(PostEndpoint, 'update').and.callThrough();
-
-        expect($scope.post.completed_stages).toEqual(['1', '2', '3']);
-
-        $scope.toggleCompletedStage(stage);
-        expect($scope.post.completed_stages).toEqual(['1', '2']);
-        expect(PostEndpoint.update).toHaveBeenCalledWith($scope.post);
+        $rootScope.$digest();
+        $rootScope.$apply();
     });
 
     it('should activate a stage', function () {
         var selectedStage = {id: '1', active: false};
-        $scope.activateStageTab(selectedStage);
-        expect($scope.visibleStage).toEqual(selectedStage.id);
+        $scope.activateTaskTab(selectedStage);
+        expect($scope.visibleTask.id).toEqual(selectedStage.id);
     });
 
     it('should set visible stage to 3', function () {
-        $scope.setVisibleStage(3);
-        expect($scope.visibleStage).toEqual(3);
+        $scope.activateTaskTab({id: 3});
+        expect($scope.visibleTask.id).toEqual(3);
     });
 
     it('should show the current published state as draft', function () {
@@ -158,7 +110,7 @@ describe('Post detail controller', function () {
         spyOn(Notify, 'errorsPretranslated');
 
         $scope.post.id = 'pass';
-        $scope.stages = [{
+        $scope.tasks = [{
             required: true
         }];
         $scope.post.completed_stages = [];
@@ -187,23 +139,5 @@ describe('Post detail controller', function () {
     });
      */
 
-    it('should toggle stage completion and attempt to update post', function () {
-        spyOn(Notify, 'notify');
-        spyOn(Notify, 'apiErrors');
 
-        $scope.post.id = 'pass';
-        $scope.post.completed_stages = [];
-
-        $scope.toggleCompletedStage({id: 1});
-        expect($scope.post.completed_stages.length).toEqual(1);
-
-        $scope.toggleCompletedStage({id: 1});
-        expect($scope.post.completed_stages.length).toEqual(0);
-
-        expect(Notify.notify).toHaveBeenCalled();
-
-        $scope.post.id = 'fail';
-        $scope.toggleCompletedStage({id: 1});
-        expect(Notify.apiErrors).toHaveBeenCalled();
-    });
 });
