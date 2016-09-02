@@ -44,6 +44,9 @@ function SurveyEditorController(
 ) {
 
     $scope.currentInterimId = 0;
+    $scope.survey = {
+        color: null
+    };
 
     $scope.canReorderTask = canReorderTask;
     $scope.moveTaskUp = moveTaskUp;
