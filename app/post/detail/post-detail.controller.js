@@ -43,6 +43,7 @@ function (
 ) {
     $rootScope.setLayout('layout-c');
     $scope.post = post;
+    $scope.post_task = {};
     $scope.hasPermission = $rootScope.hasPermission;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
 
@@ -80,8 +81,6 @@ function (
     // Load the post form
     if ($scope.post.form && $scope.post.form.id) {
         $scope.form_attributes = [];
-
-        $scope.post_task_id = undefined;
 
         $q.all([
             FormEndpoint.get({id: $scope.post.form.id}),
@@ -166,7 +165,8 @@ function (
     };
 
     $scope.isPostValue = function (key) {
-        return $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
+        return $scope.form_attributes[key] && $scope.post_task &&
+            $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
 
     // Replace tags with full tag object
