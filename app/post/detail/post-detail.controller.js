@@ -120,9 +120,8 @@ function (
             }
 
             _.each(tasks, function (task) {
-
                 // Set post task id
-                // NOTE: This assumes that there is only one Post task per Post
+                // NOTE: This assumes that there is only one Post Task per Post
                 if (task.type === 'post') {
                     $scope.post_task = task;
                 } else {
@@ -139,22 +138,21 @@ function (
             });
 
             $scope.tasks = tasks;
-            $scope.removeEmptyTasks();
+
+            // Figure out which tasks have values
+            $scope.tasks_with_attributes = [];
+            _.each($scope.post.values, function (value, key) {
+                if ($scope.form_attributes[key]) {
+                    $scope.tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
+                }
+            });
+            $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
+
         });
     }
 
-    $scope.removeEmptyTasks = function () {
-        var tasks_with_attributes = [];
-        _.each($scope.post.values, function (value, key) {
-            if ($scope.form_attributes[key]) {
-                tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
-            }
-        });
-        tasks_with_attributes = _.uniq(tasks_with_attributes);
-
-        $scope.tasks = _.filter($scope.tasks, function (task) {
-            return _.contains(tasks_with_attributes, task.id);
-        });
+    $scope.taskHasValues = function (task) {
+        return _.contains($scope.tasks_with_attributes, task.id);
     };
 
     $scope.showTasks = function () {
