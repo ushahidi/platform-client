@@ -80,7 +80,7 @@ function AddPostButtonController(
             } else {
                 allowed_forms.resolve(_.filter(forms, function (form) {
                     // if everyone_can_create, include the form
-                    if (!form.everyone_can_create) {
+                    if (form.everyone_can_create) {
                         return true;
                     }
                     // Otherwise, continue to check if the user has access
