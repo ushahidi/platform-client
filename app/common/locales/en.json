@@ -483,6 +483,7 @@
         "status_archived" : "This post is archived",
         "modify" : {
             "intro" : "Select survey:",
+            "no_task_values": "There are currently no saved values for this task.",
             "create_type" : "Create {{type}}",
             "edit_type" : "Edit {{type}}: {{title}}",
             "add_a_post" : "Add a post",
