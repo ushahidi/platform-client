@@ -234,23 +234,6 @@ function (
         }
     });
 
-    $scope.toggleCompletedTask = function (task) {
-        // @todo how to validate this before saving
-        if (_.includes($scope.post.completed_stages, task.id)) {
-            $scope.post.completed_stages = _.without($scope.post.completed_stages, task.id);
-        } else {
-            $scope.post.completed_stages.push(task.id);
-        }
-
-        PostEndpoint.update($scope.post).$promise
-            .then(function () {
-                Notify.notify('notify.post.stage_save_success', {stage: task.label});
-                task.completed = !task.completed;
-            }, function (errorResponse) {
-                Notify.apiErrors(errorResponse);
-            });
-    };
-
     $scope.publishPostTo = function (updatedPost) {
         // first check if tasks required have been marked complete
         var requiredTasks = _.where($scope.tasks, {required: true}),
