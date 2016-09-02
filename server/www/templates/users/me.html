@@ -54,17 +54,19 @@
                     translate="{{'user.valid.password.' + error}}"></p>
             </div>
 
-            <div class="form-field">
-              <button type="button" class="button-link" ng-click="cancel()" translate>
-                user_profile.button.cancel
-              </button>
+            <div class="modal-actions">
+                <div class="form-field">
+                  <button type="button" class="button-link" ng-click="cancel()" translate>
+                    user_profile.button.cancel
+                  </button>
 
-              <button type="submit" class="button button-alpha"
-                      ng-click="saveUser(user)" ng-disabled="form.$invalid || state.processing">
-                <div class="loading" ng-show="saving"><div class="line"></div><div class="line"></div><div class="line"></div></div>
-                <span translate>user_profile.button.save</span>
-              </button>
+                  <button type="submit" class="button button-alpha"
+                          ng-click="saveUser(user)" ng-disabled="form.$invalid || state.processing">
+                    <div class="loading" ng-show="saving"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+                    <span translate>user_profile.button.save</span>
+                  </button>
 
+                </div>
             </div>
         </form>
 </div>

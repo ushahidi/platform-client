@@ -31,6 +31,7 @@ angular.module('ushahidi.common', [
 .service('UserEndpoint', require('./services/endpoints/user-endpoint.js'))
 .service('FormEndpoint', require('./services/endpoints/form.js'))
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
+.service('FormRoleEndpoint', require('./services/endpoints/form-roles.js'))
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
 .service('RoleEndpoint', require('./services/endpoints/role.js'))
@@ -83,6 +84,7 @@ angular.module('ushahidi.common', [
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
+.directive('focus', require('./directives/focus.js'))
 
 // Event actions
 .constant('EVENT', {

@@ -5,6 +5,7 @@
         "by" : "by",
         "can_see_this" : "can see this",
         "collections" : "Collections",
+        "create_collection" : "Create collection",
         "create_new" : "Create new",
         "created_by" : "Created by {{author}}",
         "documentation": {
@@ -15,6 +16,7 @@
             "title" : "Report a bug",
             "description" : "Tell us when something doesn't work the way you expected."
         },
+        "edit_collection" : "Edit collection",
         "features" : {
             "title" : "Features",
             "description" : "See what Ushahidi can do and how it works."
@@ -31,6 +33,7 @@
         "saving" : "Saving",
         "settings": "Settings",
         "share": "Share",
+        "specific_roles" : "Specific roles...",
         "general" : "General",
         "surveys" : "Surveys",
         "add_survey" : "Add Survey",
@@ -62,9 +65,11 @@
         "key" : "Key",
         "default_value" : "Default value",
         "fields" : "Fields",
+        "tasks" : "Tasks",
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
-        "private_deployment" : "Private Deployment"
+        "private_deployment" : "Private Deployment",
+        "mark_as" : "Mark as"
     },
     "toolbar": {
         "searchbar" : {
@@ -158,10 +163,15 @@
         "title" : "Title",
         "field_allowed_relation_survey": "Allowed surveys",
         "description" : "Description",
+        "task_description" : "Task description",
+        "post_fields" : "Post fields",
+        "task_fields" : "Task fields",
+        "show_task" : "Show this task to everyone when the post is published",
+        "task_info" : "You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.",
         "text_desc" : "A sentence or less",
         "textarea_desc" : "Multiple sentences or paragraphs<",
         "decimal_desc" : "A number with decimal places",
-        "integer_desc" : "A while number",
+        "integer_desc" : "A whole number",
         "location_desc" : "A geographic location chosen via a map",
         "date_desc" : "A date with year, month, day",
         "datetime_desc" : "A date with time in hours and minutes",
@@ -177,7 +187,10 @@
         "task_name" : "Task name",
         "require_field" : "Require this field be completed",
         "name_this_task" : "Name this task...",
+        "require_review" : "Require posts be reviewed before they're published",
         "require_task" : "Require this task be completed before a post can be visible to the public",
+        "survey_permissions": "Survey permissions",
+        "who_can_add": "Who can add to this survey",
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
             "delete" : "Delete survey",
@@ -266,7 +279,8 @@
         "save_to_set" : "Save to Set",
         "search" : "Search",
         "date_range" : "Date range",
-        "who_its_visible_to": "Who it's visible to"
+        "who_its_visible_to": "Who it's visible to",
+        "status" : "Status"
     },
     "graph" : {
         "all_posts": "Nothing; Show all posts",
@@ -345,8 +359,6 @@
         "map_settings" : "Map Settings",
         "more" : "More",
         "notifications" : "Notifications",
-        "new_collection" : "New Collection",
-        "notifications" : "Notifications",
         "only_author" : "Only the author",
         "only_you" : "Only you",
         "people" : "People",
@@ -390,6 +402,7 @@
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
         "by" : "by",
+        "task_completed" : "Task completed",
         "everyone" : "Everyone",
         "just_you" : "Just you",
         "specific_roles" : "Specific roles...",
@@ -408,7 +421,8 @@
         "create" : "Create",
         "change" : "Change",
         "posted_by" : "Posted by",
-        "draft" : "Draft",
+        "draft" : "Under review",
+        "archived" : "Archived",
         "edited_by" : "Edited by",
         "export" : "Export",
         "select_all" : "Select All",
@@ -454,8 +468,19 @@
         "post_actions" : {
             "edit" : "Edit",
             "delete" : "Delete",
-            "export" : "Export"
+            "export" : "Export",
+            "put_under_review" : "Put under review",
+            "archive" : "Archive",
+            "publish" : "Publish"
         },
+        "created_at" : "<strong>Created</strong> at",
+        "updated_at" : "<strong>Last updated</strong> at",
+        "author" : "Author",
+        "post_date" : "Post date",
+        "change_author" : "Change author",
+        "status_published" : "This post is published",
+        "status_review" : "This post is under review",
+        "status_archived" : "This post is archived",
         "modify" : {
             "intro" : "Select survey:",
             "create_type" : "Create {{type}}",
@@ -513,6 +538,7 @@
             "associated_messages": "View messages associated with this post"
         },
         "valid" : {
+            "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
             "title" : {
                 "required" : "A title is required",
                 "minlength" : "Title is too short",
@@ -895,7 +921,8 @@
             "destroy_error" : "Unable to delete post, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
             "stage_save_success" : "Updated {{stage}}",
-            "export" : "This will export filtered posts. Are you sure you want to continue?"
+            "export" : "This will export filtered posts. Are you sure you want to continue?",
+            "update_status_success_bulk" : "Status updated for {{count}} posts"
         },
         "category" : {
             "save_success" : "Saved category {{name}}",

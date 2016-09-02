@@ -13,7 +13,8 @@ function (
             // Init an empty saved search
             $scope.newTask = {
                 required : false,
-                attributes: []
+                attributes: [],
+                type: 'task'
             };
 
             $scope.closeModal = function () {

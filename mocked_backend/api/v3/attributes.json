@@ -134,7 +134,7 @@
             "instructions": null,
             "input": "text",
             "type": "varchar",
-            "required": true,
+            "required": false,
             "default": null,
             "priority": 5,
             "options": [

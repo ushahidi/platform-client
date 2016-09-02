@@ -46,7 +46,6 @@ describe('post editor directive', function () {
     beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
         Notify = _Notify_;
 
         $scope.post = fixture.load('posts/120.json');
@@ -74,12 +73,8 @@ describe('post editor directive', function () {
             expect($scope.post.form.name).toEqual('test form');
         });
 
-        it('should load the associated form attributes', function () {
-            expect(isolateScope.attributes.length).toEqual(3);
-        });
-
         it('should load the associated form stages', function () {
-            expect(isolateScope.stages.length).toEqual(2);
+            expect(isolateScope.tasks.length).toEqual(2);
         });
     });
 

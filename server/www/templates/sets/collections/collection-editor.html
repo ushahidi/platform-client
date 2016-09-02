@@ -1,5 +1,5 @@
 <div>
-    <modal visible="collectionEditorVisible" title="{{'app.collections' |translate}}" icon="'grid-three-up'">
+    <modal visible="collectionEditorVisible" title="{{cpyCollection.id ? 'app.edit_collection' : 'app.create_collection' | translate}}" icon="'grid-three-up'">
         <div class="modal-body" style="max-height: 337.26px;">
             <div class="form-field title">
                 <label translate>set.collection_name</label>
@@ -50,9 +50,11 @@
                 </label>
             </div>
 
-            <div class="form-field">
-                <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>
-                <button type="button" class="button-alpha modal-trigger" ng-click="saveCollection(cpyCollection)" translate>app.save_and_close</button>
+            <div class="modal-actions">
+                <div class="form-field">
+                    <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>
+                    <button type="button" class="button-alpha modal-trigger" ng-click="saveCollection(cpyCollection)" translate>app.save_and_close</button>
+                </div>
             </div>
         </div>
     </modal>
