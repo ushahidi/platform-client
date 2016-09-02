@@ -6,6 +6,7 @@ angular.module('ushahidi.mock', [])
 
 .service('PostEndpoint', require('./services/post.js'))
 .service('FormEndpoint', require('./services/form.js'))
+.service('FormRoleEndpoint', require('./services/form-role.js'))
 .service('FormStageEndpoint', require('./services/form-stages.js'))
 .service('FormAttributeEndpoint', require('./services/form-attributes.js'))
 .service('TagEndpoint', require('./services/tag.js'))

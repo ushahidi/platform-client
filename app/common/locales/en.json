@@ -33,6 +33,7 @@
         "saving" : "Saving",
         "settings": "Settings",
         "share": "Share",
+        "specific_roles" : "Specific roles...",
         "general" : "General",
         "surveys" : "Surveys",
         "add_survey" : "Add Survey",
@@ -186,7 +187,10 @@
         "task_name" : "Task name",
         "require_field" : "Require this field be completed",
         "name_this_task" : "Name this task...",
+        "require_review" : "Require posts be reviewed before they're published",
         "require_task" : "Require this task be completed before a post can be visible to the public",
+        "survey_permissions": "Survey permissions",
+        "who_can_add": "Who can add to this survey",
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
             "delete" : "Delete survey",

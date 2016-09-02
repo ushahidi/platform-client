@@ -18,6 +18,7 @@ SurveyEditorController.$inject = [
     '$location',
     '$translate',
     'FormEndpoint',
+    'FormRoleEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'RoleEndpoint',
@@ -32,6 +33,7 @@ function SurveyEditorController(
     $location,
     $translate,
     FormEndpoint,
+    FormRoleEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
     RoleEndpoint,
@@ -81,13 +83,13 @@ function SurveyEditorController(
     $scope.getInterimId = getInterimId;
     $scope.removeInterimIds = removeInterimIds;
 
+    $scope.roles_allowed = [];
+    $scope.roles = [];
+
     activate();
 
     function activate() {
 
-        RoleEndpoint.query().$promise.then(function (roles) {
-            $scope.roles = roles;
-        });
         if ($scope.surveyId) {
             loadFormData();
         } else {
@@ -95,6 +97,8 @@ function SurveyEditorController(
             // pre-fill object with default tasks and attributes
             $scope.survey = {
                 color: null,
+                require_approval: true,
+                everyone_can_create: true,
                 tasks: [
                     {
                         label: 'Post',
@@ -162,7 +166,9 @@ function SurveyEditorController(
         $q.all([
             FormEndpoint.get({ id: $scope.surveyId }).$promise,
             FormStageEndpoint.query({ formId: $scope.surveyId }).$promise,
-            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise
+            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise,
+            FormRoleEndpoint.query({ formId: $scope.surveyId }).$promise,
+            RoleEndpoint.query().$promise
         ]).then(function (results) {
             var survey = results[0];
             survey.tasks = _.sortBy(results[1], 'priority');
@@ -179,6 +185,12 @@ function SurveyEditorController(
 
             //Set Active task
             $scope.resetSelectedTask();
+
+            var roles_allowed = results[3];
+            var roles = results[4];
+
+            $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
+            $scope.roles = roles;
         });
     }
 
@@ -447,6 +459,7 @@ function SurveyEditorController(
             $scope.survey.id = survey.id;
             // Second save the survey tasks
             saveTasks();
+            saveRoles();
         }, handleResponseErrors);
     }
 
@@ -507,6 +520,15 @@ function SurveyEditorController(
             });
 
             Notify.notify('notify.form.edit_form_success', { name: $scope.survey.name });
+        }, handleResponseErrors);
+    }
+
+    function saveRoles() {
+        FormRoleEndpoint
+        .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
+        .$promise
+        .then(function (roles) {
+            return true;
         }, handleResponseErrors);
     }
 
