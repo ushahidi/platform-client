@@ -18,6 +18,7 @@ module.exports = [
     '_',
     'Notify',
     'moment',
+    'PostSurveyService',
 function (
     $scope,
     $rootScope,
@@ -37,11 +38,13 @@ function (
     leafletData,
     _,
     Notify,
-    moment
+    moment,
+    PostSurveyService
 ) {
     $rootScope.setLayout('layout-c');
     $scope.post = post;
     $scope.hasPermission = $rootScope.hasPermission;
+    $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
 
     $scope.mapDataLoaded = false;
     $scope.publishedFor = function () {
@@ -85,6 +88,7 @@ function (
             FormStageEndpoint.query({formId:  $scope.post.form.id}).$promise,
             FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise
         ]).then(function (results) {
+            $scope.form = results[0];
             $scope.form_name = results[0].name;
             $scope.form_description = results[0].description;
             $scope.form_color = results[0].color;

@@ -15,7 +15,7 @@
             </svg>
         </span>
         <ul class="dropdown-menu init" dropdown-menu>
-            <li>
+            <li ng-show="canAddToSurvey(form)">
                 <a ng-href="posts/create/{{ ::form.id }}">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>

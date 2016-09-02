@@ -10,13 +10,14 @@ function ModeContextFormFilterDirective() {
     };
 }
 
-ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_', '$rootScope'];
-function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootScope) {
+ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService'];
+function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootScope, PostSurveyService) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
     $scope.hide = hide;
     $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
+    $scope.canAddToSurvey = PostSurveyService.canCreatePostInSurvey;
 
     activate();
 

@@ -12,19 +12,15 @@ function AddPostButtonDirective() {
 
 AddPostButtonController.$inject = [
     '$scope',
-    '$rootScope',
-    'FormEndpoint',
+    'PostSurveyService',
     'SliderService',
-    '$location',
-    '$q'
+    '$location'
 ];
 function AddPostButtonController(
     $scope,
-    $rootScope,
-    FormEndpoint,
+    PostSurveyService,
     SliderService,
-    $location,
-    $q
+    $location
 ) {
     $scope.forms = [];
     $scope.buttonToggle = false;
@@ -37,7 +33,7 @@ function AddPostButtonController(
 
     function activate() {
         // Load forms
-        allowedForms()
+        PostSurveyService.allowedSurveys()
             .then(function (forms) {
                 $scope.forms = forms;
                 if (forms.length > 0) {
@@ -62,39 +58,5 @@ function AddPostButtonController(
                 $scope.buttonOptionsStyle = { opacity: 0, display: 'none' };
             }
         }
-    }
-
-    function allowedForms() {
-        var allowed_forms = $q.defer();
-
-        FormEndpoint.query()
-        .$promise
-        .then(function (forms) {
-            if ($rootScope.hasPermission('Manage Posts')) {
-                allowed_forms.resolve(forms);
-            } else {
-                allowed_forms.resolve(_.filter(forms, function (form) {
-                    // if everyone_can_create, include the form
-                    if (form.everyone_can_create) {
-                        return true;
-                    }
-                    // Otherwise, continue to check if the user has access
-
-                    // If we're not logged in, we have no role so we definitely don't have access
-                    if ($rootScope.currentUser === null) {
-                        return false;
-                    }
-
-                    // Finally, if we are logged in, check if our role is in the list
-                    if (_.contains(form.can_create, $rootScope.currentUser.role)) {
-                        return true;
-                    }
-
-                    return false;
-                }));
-            }
-        });
-
-        return allowed_forms.promise;
     }
 }

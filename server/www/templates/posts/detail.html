@@ -5,7 +5,7 @@
       <li><a href="/" ng-bind="nav.site.name"></a></li>
     </ol>
 
-    <h1 class="mode-context-title">{{form_name || 'post.unstructured.survey_title' | translate}}</h1>
+    <h1 class="mode-context-title">{{form.name || 'post.unstructured.survey_title' | translate}}</h1>
   </header>
 
   <span class="mode-context-trigger" dropdown-toggle>
@@ -16,9 +16,9 @@
   </span>
 
   <div class="mode-context-body" ng-if="post.form">
-    <p>{{ form_description }}</p>
+    <p>{{ form.description }}</p>
 
-    <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}">
+    <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}" ng-show="canCreatePostInSurvey(form)">
       <svg class="iconic">
         <use xlink:href="../img/iconic-sprite.svg#plus"></use>
       </svg>
@@ -30,7 +30,7 @@
 <main role="main">
   <div class="main-col">
     <article class="postcard" role="article">
-      <div class="post-band" style="background-color: {{form_color}};"></div>
+      <div class="post-band" style="background-color: {{form.color}};"></div>
 
       <div class="listing-item-select">
         <span class="status-indicator empty tooltip">
