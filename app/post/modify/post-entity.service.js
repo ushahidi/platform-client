@@ -9,7 +9,6 @@ function (
             title: '',
             content: '',
             locale: CONST.DEFAULT_LOCALE,
-            status: 'draft',
             values: {},
             completed_stages: [],
             published_to: []
