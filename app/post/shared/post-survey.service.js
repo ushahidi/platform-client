@@ -21,6 +21,11 @@ function PostSurveyService(
     };
 
     function canCreatePostInSurvey(form) {
+        // If the form isn't loaded yet, we definitely can't add to it
+        if (!form) {
+            return false;
+        }
+
         if ($rootScope.hasPermission('Manage Posts')) {
             return true;
         }
