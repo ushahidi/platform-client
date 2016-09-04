@@ -57,21 +57,21 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
 
         var accessToken = Session.getSessionDataEntry('accessToken');
 
-        // if we already have an accessToken,
-        // we will set it straight ahead
-        // and resolve the promise for the config hash
         if (accessToken !== undefined && accessToken !== null) {
+            // if we already have an accessToken,
+            // we will set it straight ahead
+            // and resolve the promise for the config hash
             config.headers.Authorization = 'Bearer ' + accessToken;
             deferred.resolve(config);
 
-        // otherwise, we will ask the backend
-        // via the client credentials oauth flow
-        // for an anonymous accessToken
-        // (for some resources, of course,
-        // this authorization level is not enough
-        // and a 403 or 401 will be thrown
-        // which results in showing the login page)
         } else {
+            // otherwise, we will ask the backend
+            // via the client credentials oauth flow
+            // for an anonymous accessToken
+            // (for some resources, of course,
+            // this authorization level is not enough
+            // and a 403 or 401 will be thrown
+            // which results in showing the login page)
             getClientCredsToken(config).then(deferred.resolve, deferred.reject);
         }
         return deferred.promise;

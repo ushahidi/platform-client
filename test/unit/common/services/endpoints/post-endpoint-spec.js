@@ -30,10 +30,10 @@ describe('PostEndpoint', function () {
     beforeEach(function () {
         mockPostResponse = {
             results: [{
-            'id': '1',
-            'type': 'report',
-            'title': 'Test post'
-        }]};
+                'id': '1',
+                'type': 'report',
+                'title': 'Test post'
+            }]};
     });
 
     it('should call the correct url and return the correct data', function () {

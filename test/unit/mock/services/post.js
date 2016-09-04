@@ -4,14 +4,14 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({results: [{
-                        name: 'test post',
-                        allowed_privileges: [
-                            'update',
-                            'delete',
-                            'change_status'
-                        ],
-                        id: 1
-                    }]});
+                            name: 'test post',
+                            allowed_privileges: [
+                                'update',
+                                'delete',
+                                'change_status'
+                            ],
+                            id: 1
+                        }]});
                 }
             }};
         },
@@ -86,12 +86,12 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     post.id === 'pass' ? successCallback({id: 1, allowed_privileges: ['read']}) : failCallback(
                       {
-                          data: {
-                              errors: [
-                                  'error'
-                              ]
-                          }
-                      });
+                        data: {
+                            errors: [
+                                'error'
+                            ]
+                        }
+                    });
                 }
             }};
         }
