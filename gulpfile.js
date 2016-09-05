@@ -21,13 +21,25 @@ var gulp         = require('gulp'),
     jscs         = require('gulp-jscs'),
     dotenv       = require('dotenv'),
     Transifex    = require('transifex'),
-    runSeq       = require('run-sequence');
+    runSeq       = require('run-sequence'),
+    exec         = require('child_process').exec;
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
 // load user defined options
 if (fs.existsSync('.gulpconfig.json')) {
     gutil.log('.gulpconfig.json is deprecated. Please use .env');
+}
+
+// determine location of the pattern library
+var patternLibrary = 'node_modules/ushahidi-platform-pattern-library';
+const altPatternLibrary = 'vendor/platform-pattern-library';
+var buildPatternLibrary = false;
+if (fs.existsSync(altPatternLibrary + '/package.json')) {
+    // the vendor folder overrides the stock pattern library
+    gutil.log('Using your custom pattern library at ' + altPatternLibrary);
+    patternLibrary = altPatternLibrary;
+    buildPatternLibrary = true;
 }
 
 var defaultOptions = {
@@ -106,6 +118,25 @@ function errorHandler(error) {
 }
 
 /**
+ * Task: `build-pl`
+ * Builds the bundled pattern library (if necessary)
+ */
+gulp.task('build-pl', function (done) {
+    if (buildPatternLibrary) {
+        exec('{ cd ' + patternLibrary + ' && npm install ;} 2>&1', function (error, stdout) {
+            if (error) {
+                console.error(stdout);
+                done(error);
+            } else {
+                done();
+            }
+        });
+    } else {
+        done();
+    }
+});
+
+/**
  * Task: `sass`
  * Converts SASS files to CSS
  */
@@ -137,8 +168,9 @@ gulp.task('sass', ['rename'], function () {
  */
 gulp.task('css', [], function () {
     return gulp.src([
-            options.compressedCSS ? 'node_modules/ushahidi-platform-pattern-library/assets/css/*.min.css' : 'node_modules/ushahidi-platform-pattern-library/assets/css/*.css',
-            'node_modules/ushahidi-platform-pattern-library/assets/css/*.css.map'
+            ( options.compressedCSS ? patternLibrary + '/assets/css/*.min.css'
+                                    : patternLibrary + '/assets/css/*.css' ),
+            patternLibrary + '/assets/css/*.css.map'
             ])
         .pipe(rename(function (path) {
             // If using compressedCSS, string the .min from filenames
@@ -154,7 +186,7 @@ gulp.task('css', [], function () {
  * Move Iconic Sprite from pattern library into server/www/img
  */
 gulp.task('svg-iconic-sprite', [], function () {
-    return gulp.src(['node_modules/ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg'])
+    return gulp.src([ patternLibrary + '/assets/img/iconic-sprite.svg' ])
         .pipe(gulp.dest(options.www + '/img'));
 });
 
@@ -163,7 +195,7 @@ gulp.task('svg-iconic-sprite', [], function () {
  * Move svg icons from pattern library into server/www/img
  */
 gulp.task('svg-icons', [], function () {
-    return gulp.src(['node_modules/ushahidi-platform-pattern-library/assets/img/icons/**/*'])
+    return gulp.src([ patternLibrary + '/assets/img/icons/**/*' ])
         .pipe(gulp.dest(options.www + '/img/icons'));
 });
 
@@ -185,7 +217,7 @@ gulp.task('rename', [
  * Copies font files to public directory.
  */
 gulp.task('font', function () {
-    return gulp.src(['node_modules/ushahidi-platform-pattern-library/assets/fonts/**'])
+    return gulp.src([ patternLibrary + '/assets/fonts/**' ])
         .pipe(gulp.dest(options.www + '/fonts'))
         .pipe(livereload())
         ;

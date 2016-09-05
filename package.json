@@ -11,6 +11,7 @@
   "license": "AGPL-3.0",
   "homepage": "https://github.com/ushahidi/platform-client",
   "scripts": {
+    "postinstall": "gulp build-pl",
     "build": "gulp build",
     "watch": "gulp",
     "start": "gulp node-server",
