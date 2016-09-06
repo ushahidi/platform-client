@@ -325,7 +325,7 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
                     case (38): // Up
                         dropdownCtrl.selectedOption = (dropdownCtrl.selectedOption === 0 ? 0 : dropdownCtrl.selectedOption - 1);
                         break;
-                    }
+                }
                     elems[dropdownCtrl.selectedOption].focus();
                 }
             });

@@ -4,9 +4,9 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
-                        original_file_url: 'http://localhost/test.png',
-                        caption: 'test caption'
-                    }]});
+                            original_file_url: 'http://localhost/test.png',
+                            caption: 'test caption'
+                        }]});
                 }
             }};
         },

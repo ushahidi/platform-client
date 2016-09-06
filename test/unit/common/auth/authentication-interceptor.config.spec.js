@@ -116,12 +116,12 @@ describe('authentication interceptor', function () {
                         $httpBackend.expectPOST(CONST.BACKEND_URL + '/oauth/token',
                             payload
                     ).respond(200, {
-                        'access_token': 'someOtherFooBarToken'
-                    });
+                            'access_token': 'someOtherFooBarToken'
+                        });
 
                         $httpBackend.expectGET(CONST.API_URL + '/test-endpoint',
                             {'Accept': 'application/json, text/plain, */*',
-                             'Authorization': 'Bearer someOtherFooBarToken'}
+                            'Authorization': 'Bearer someOtherFooBarToken'}
                         ).respond(200);
 
                         $http.get(CONST.API_URL + '/test-endpoint');
@@ -211,7 +211,7 @@ describe('authentication interceptor', function () {
                     // Then use that to load the original user
                     $httpBackend.expectGET(CONST.API_URL + '/some-url',
                         {'Accept': 'application/json, text/plain, */*',
-                         'Authorization': 'Bearer anotherNewToken'}
+                        'Authorization': 'Bearer anotherNewToken'}
                     ).respond(200);
 
                     $httpBackend.flush();

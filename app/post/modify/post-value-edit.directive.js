@@ -8,7 +8,8 @@ function PostValueEdit() {
         scope: {
             form: '=',
             post: '=',
-            attribute: '='
+            attribute: '=',
+            postField: '='
         },
         controller: PostValueEditController,
         templateUrl: 'templates/posts/modify/post-value-edit.html'
@@ -24,6 +25,10 @@ function PostValueEditController(
     $scope,
     _
 ) {
+    var fieldSetAttributes = [
+        'checkbox',
+        'radio'
+    ];
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
     $scope.isText = isText;
@@ -37,12 +42,28 @@ function PostValueEditController(
     $scope.addValue = addValue;
     $scope.removeValue = removeValue;
 
+    $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
+
+    $scope.isFieldSetStructure = isFieldSetStructure;
+
     activate();
 
     function activate() {
 
     }
 
+    function taskIsMarkedCompleted() {
+        // If we are dealing with a Post Field we want to always show errors for required post fields
+        // Otherwise we only want to show errors for required fields of Tasks marked as completed
+        return !_.isUndefined($scope.postField) ? true : _.contains($scope.post.completed_stages, $scope.attribute.form_stage_id);
+    }
+
+    function isFieldSetStructure(attr) {
+        if (_.contains(fieldSetAttributes, attr.input)) {
+            return true;
+        }
+        return false;
+    }
     function isDate(attr) {
         return attr.input === 'date';
     }

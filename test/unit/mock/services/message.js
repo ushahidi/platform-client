@@ -16,11 +16,11 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback) {
                     successCallback({'results': [{
-                        message: 'test message',
-                        direction: 'incoming',
-                        id: 9,
-                        parent_id: null
-                    }]});
+                            message: 'test message',
+                            direction: 'incoming',
+                            id: 9,
+                            parent_id: null
+                        }]});
                 }
             }};
         },

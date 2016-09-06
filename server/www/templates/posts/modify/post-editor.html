@@ -45,7 +45,7 @@
 
                   <div
                       class="alert error"
-                      ng-show="form.title.$dirty"
+                      ng-show="postForm.title.$dirty"
                       ng-repeat="(error, value) in postForm.title.$error"
                       >
                       <svg class="iconic">
@@ -54,18 +54,75 @@
                       <span translate="{{'post.valid.title.' + error}}"></span>
                   </div>
               </div>
+
+              <!-- Post stage default fields -->
+              <div class="form-field form-field-adapt init"
+                  ng-class="{
+                    'error': postForm.content.$invalid && postForm.content.$dirty,
+                    'success': !postForm.content.$invalid && postForm.content.$dirty
+                  }"
+                  adaptive-form>
+                  <label translate="post.modify.form.description">
+                      Description
+                  </label>
+                    <textarea id="content" name="content" data-min-rows="1" rows="1"
+                      ng-model="post.content" required adaptive-input msd-elastic>
+                    </textarea>
+
+                  <div class="alert error" ng-show="postForm.content.$dirty" ng-repeat="(error, value) in postForm.content.$error">
+                      <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                      </svg>
+                      <span translate="{{'post.valid.content.' + error}}"></span>
+                  </div>
+              </div>
+
+              <!-- End post stage default fields -->
+
+              <!-- Start Post custom fields -->
+              <post-value-edit
+                  ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+                  post="post"
+                  post-field=true
+                  form="postForm"
+                  attribute="attribute"
+              ></post-value-edit>
+              <!-- End Post custom fields -->
+
+              <fieldset id="categories" ng-show="categories.length">
+                  <legend translate="post.modify.form.categories">Categories</legend>
+                  <div class="form-field checkbox" ng-repeat="category in categories">
+                      <label for="cat1">
+                          <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
+                          <span>{{category.tag}}</span>
+                      </label>
+                  </div>
+              </fieldset>
+
+              <!-- IF: Editing an existing post -->
+
+              <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
+              <div class="postcard-metadata">
+                  <strong>This post will need to be moderated</strong> before it's visible to the public.
+              </div>
+              END: IF -->
+
+
+
+             <!-- IF: User has permission to see other 'Tasks' -->
+
               <post-toolbox post="post"></post-toolbox>
 
-             <post-tabs
-                 form="postForm"
-                 post="post"
-                 stages="stages"
-                 attributes="attributes"
-                 visible-stage="visibleStage">
-              </post-tabs>
 
          </div>
-
+         <post-tabs
+             ng-show="tasks.length > 1"
+             form="postForm"
+             post="post"
+             stages="tasks"
+             attributes="attributes"
+             visible-stage="visibleStage">
+          </post-tabs>
           <div class="form-sheet" ng-if="post.id">
               <div class="form-sheet-summary">
                   <h3 class="form-sheet-title" translate="post.delete_post">Delete this post</h3>

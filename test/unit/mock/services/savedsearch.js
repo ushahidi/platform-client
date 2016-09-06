@@ -4,9 +4,9 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
-                        name: 'test savedsearch',
-                        id: 1
-                    }]});
+                            name: 'test savedsearch',
+                            id: 1
+                        }]});
                 }
             }};
         },

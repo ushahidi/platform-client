@@ -12,15 +12,13 @@ function AddPostButtonDirective() {
 
 AddPostButtonController.$inject = [
     '$scope',
-    '$rootScope',
-    'FormEndpoint',
+    'PostSurveyService',
     'SliderService',
     '$location'
 ];
 function AddPostButtonController(
     $scope,
-    $rootScope,
-    FormEndpoint,
+    PostSurveyService,
     SliderService,
     $location
 ) {
@@ -35,7 +33,13 @@ function AddPostButtonController(
 
     function activate() {
         // Load forms
-        $scope.forms = FormEndpoint.query();
+        PostSurveyService.allowedSurveys()
+            .then(function (forms) {
+                $scope.forms = forms;
+                if (forms.length > 0) {
+                    $scope.disabled = false;
+                }
+            });
     }
 
     function createPost(path) {

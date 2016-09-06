@@ -20,7 +20,8 @@ var gulp         = require('gulp'),
     gzip         = require('gulp-gzip'),
     jscs         = require('gulp-jscs'),
     dotenv       = require('dotenv'),
-    Transifex    = require('transifex');
+    Transifex    = require('transifex'),
+    runSeq       = require('run-sequence');
 
 // Grab env vars from .env file
 dotenv.load({silent: true});
@@ -392,7 +393,13 @@ gulp.task('release', ['transifex-download'], function () {
 /**
  * Task `heroku:dev` - builds app for heroku
  */
-gulp.task('heroku:dev', ['build'], function () {});
+gulp.task('heroku:dev', ['build'], function (done) {
+    if (process.env.TX_USERNAME && process.env.TX_PASSWORD) {
+        runSeq('transifex-download', done);
+    } else {
+        done();
+    }
+});
 
 /**
  * Task: `transifex-download`

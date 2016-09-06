@@ -4,6 +4,7 @@ angular.module('ushahidi.posts', [])
 .directive('postActions', require('./shared/post-actions.directive.js'))
 .directive('postMetadata', require('./shared/post-metadata.directive.js'))
 .service('PostMetadataService', require('./shared/post-metadata.service.js'))
+.service('PostSurveyService', require('./shared/post-survey.service.js'))
 
 // Detail Screen
 .directive('postMessages', require('./detail/post-messages.directive.js'))

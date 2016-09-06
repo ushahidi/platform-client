@@ -18,6 +18,7 @@ function PostEditor() {
 
 PostEditorController.$inject = [
     '$scope',
+    '$q',
     '$filter',
     '$location',
     '$translate',
@@ -29,6 +30,7 @@ PostEditorController.$inject = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'UserEndpoint',
+    'TagEndpoint',
     'Notify',
     '_',
     'PostActionsService'
@@ -36,6 +38,7 @@ PostEditorController.$inject = [
 
 function PostEditorController(
     $scope,
+    $q,
     $filter,
     $location,
     $translate,
@@ -47,6 +50,7 @@ function PostEditorController(
     FormStageEndpoint,
     FormAttributeEndpoint,
     UserEndpoint,
+    TagEndpoint,
     Notify,
     _,
     PostActionsService
@@ -60,8 +64,10 @@ function PostEditorController(
     $scope.enableTitle = true;
 
     $scope.setVisibleStage = setVisibleStage;
-    $scope.fetchAttributes = fetchAttributes;
-    $scope.fetchStages = fetchStages;
+    $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
+
+    $scope.allowedChangeStatus = allowedChangeStatus;
+
 
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
@@ -71,6 +77,9 @@ function PostEditorController(
     activate();
 
     function activate() {
+        TagEndpoint.query().$promise.then(function (results) {
+            $scope.categories = results;
+        });
         // Set bulk data import mode params
         if ($scope.postMode === 'bulk_data_import') {
             if (_.contains($scope.attributesToIgnore, 'title')) {
@@ -79,16 +88,25 @@ function PostEditorController(
         }
 
         $scope.post.form = $scope.form;
-        $scope.fetchAttributes($scope.post.form.id);
-        $scope.fetchStages($scope.post.form.id);
+        $scope.fetchAttributesAndTasks($scope.post.form.id);
+        //$scope.fetchStages($scope.post.form.id);
     }
 
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
     }
 
-    function fetchAttributes(formId) {
-        FormAttributeEndpoint.query({formId: formId}).$promise.then(function (attrs) {
+    function fetchAttributesAndTasks(formId) {
+        $q.all([
+            FormStageEndpoint.query({ formId: formId }).$promise,
+            FormAttributeEndpoint.query({ formId: formId }).$promise
+        ]).then(function (results) {
+            var post = $scope.post;
+            var tasks = _.sortBy(results[0], 'priority');
+            var attrs = _.chain(results[1])
+                .sortBy('priority')
+                .value();
+
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
@@ -109,9 +127,7 @@ function PostEditorController(
                         } else {
                             $scope.post.values[attr.key] = [null];
                         }
-                    } else if (attr.input === 'checkbox') {
-                        $scope.post.values[attr.key] = [];
-                    } else if (attr.input === 'number') {
+                    }  else if (attr.input === 'number') {
                         $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
                         $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
@@ -129,36 +145,34 @@ function PostEditorController(
                     if ($scope.post.values[attr.key][0]) {
                         $scope.post.values[attr.key][0] = parseFloat($scope.post.values[attr.key][0]);
                     }
-
                 }
             });
-            $scope.attributes = attributes;
-        });
-    }
 
-    function fetchStages(formId) {
-        FormStageEndpoint.query({ formId: formId }).$promise.then(function (stages) {
-            var post = $scope.post;
-            $scope.stages = stages;
+            _.each(tasks, function (task) {
+                task.attributes = _.filter(attributes, function (attribute) {
+                    return attribute.form_stage_id === task.id;
+                });
+            });
 
-            // If number of completed stages matches number of stages,
-            // assume they're all complete, and just show the first stage
-            if (post.completed_stages.length === stages.length) {
-                $scope.setVisibleStage(stages[0].id);
+            // If number of completed stages matches number of tasks - not including Post,
+            // assume they're all complete, and just show the first task
+            if (post.completed_stages.length === tasks.length - 1 && tasks.length > 1) {
+                $scope.setVisibleStage(tasks[1].id);
             } else {
                 // Get incomplete stages
-                var incompleteStages = _.filter(stages, function (stage) {
-                    return !_.contains(post.completed_stages, stage.id);
+                var incompleteStages = _.filter(tasks, function (task) {
+                    return !_.contains(post.completed_stages, task.id);
                 });
 
-                // Return lowest priority incomplete stage
-                $scope.setVisibleStage(incompleteStages[0].id);
+                // Return lowest priority incomplete task - not including post
+                incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
+            $scope.tasks = tasks;
         });
     }
 
     function canSavePost() {
-        return PostEditService.canSavePost($scope.post, $scope.postForm, $scope.stages, $scope.attributes);
+        return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
     }
 
     function cancel() {
@@ -179,6 +193,7 @@ function PostEditorController(
 
     function savePost() {
         if (!$scope.canSavePost()) {
+            Notify.error('post.valid.validation_fail');
             return;
         }
 
@@ -195,7 +210,7 @@ function PostEditorController(
         }
 
         request.$promise.then(function (response) {
-            var success_message = allowedChangeStatus() ? 'notify.post.save_success' : 'notify.post.save_success_review';
+            var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
             if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                 $scope.saving_post = false;

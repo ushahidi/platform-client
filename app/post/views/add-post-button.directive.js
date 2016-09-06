@@ -14,26 +14,33 @@ function AddPostButtonDirective() {
 AddPostButtonController.$inject = [
     '$scope',
     '$rootScope',
-    'FormEndpoint',
+    'PostSurveyService',
     '$location'
 ];
 function AddPostButtonController(
     $scope,
     $rootScope,
-    FormEndpoint,
+    PostSurveyService,
     $location
 ) {
     $scope.forms = [];
     $scope.fabToggle = false;
     $scope.fabOptionsStyle = { opacity: 0, display: 'none' };
     $scope.toggleFab = toggleFab;
-    $scope.disabled = false;
+    $scope.disabled = true;
 
     activate();
 
     function activate() {
         // Load forms
-        $scope.forms = FormEndpoint.query();
+        PostSurveyService.allowedSurveys()
+            .then(function (forms) {
+                $scope.forms = forms;
+                if (forms.length > 0) {
+                    $scope.disabled = false;
+                }
+            });
+
         $rootScope.$on('post:list:selected', handlePostSelected);
     }
 

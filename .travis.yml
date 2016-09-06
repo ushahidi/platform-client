@@ -10,8 +10,8 @@ notifications:
     notify: true
   slack:
     secure: MG3wEGLelQgasOVa5SyNbIfGWpvsmKZPF9moTrbLSrDgMptMxThSIDfVuAHvpBGsOw9o+izbTD26sbt1OQE9A9ipJfxUxZ+/LmYvaG0rSWvYEX9dIw9qp84pFyqwuO7nZlReeM7Ye9A2hYTBCZjqUsg8pwUlUUv065X3Qhp2IbY=
-addons:
-  sauce_connect: true
+#addons:
+#  sauce_connect: true
 language: node_js
 matrix:
   include:

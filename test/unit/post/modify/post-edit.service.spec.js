@@ -3,7 +3,7 @@ var rootPath = '../../../../';
 describe('Post Edit Service', function () {
 
     var PostEditService,
-        stages,
+        tasks,
         attributes,
         form,
         post,
@@ -30,27 +30,26 @@ describe('Post Edit Service', function () {
         PostEditService = _PostEditService_;
 
         post = fixture.load('posts/120.json');
-        var stageData = fixture.load('stages.json');
-        stages = stageData.results;
+        var taskData = fixture.load('tasks.json');
+        tasks = taskData.results;
         var attributeData = fixture.load('attributes.json');
         attributes = attributeData.results;
+
+        _.each(tasks, function (task) {
+            task.attributes = [];
+            _.each(attributes, function (attribute) {
+                if (attribute.form_stage_id === task.id) {
+                    task.attributes.push(attribute);
+                }
+            });
+        });
 
     }));
 
     describe('test service functions', function () {
-        it('should return true if the given stage is the first stage', function () {
-            var result = PostEditService.isFirstStage(stages, 1);
-            expect(result).toBe(true);
-        });
-
-        it('should return 0 if the given stage is not the first stage', function () {
-            var result = PostEditService.isFirstStage(2);
-            expect(result).toEqual(false);
-        });
-
-        it('should return invalid if it is the first stage and any of the following are invalid: title, content, tags or form', function () {
+        it('should return invalid if any of the following are invalid: title, content, tags or form', function () {
             form = undefined;
-            var result = PostEditService.isStageValid(1, form, stages, attributes);
+            var result = PostEditService.validatePost(post, form, tasks);
 
             expect(result).toBe(false);
 
@@ -58,44 +57,59 @@ describe('Post Edit Service', function () {
             form.tags = {$invalid: false};
             form.title = {$invalid: true};
             form.content = {$invalid: true};
-            result = PostEditService.isStageValid(1, form, stages, attributes);
+            result = PostEditService.validatePost(post, form, tasks);
 
             expect(result).toBe(false);
 
             form.tags = {$invalid: true};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
-            result = PostEditService.isStageValid(1, form, stages, attributes);
+            result = PostEditService.validatePost(post, form, tasks);
+
+            expect(result).toBe(false);
+
+            form.tags = {$invalid: true};
+            form.title = {$invalid: true};
+            form.content = {$invalid: false};
+            result = PostEditService.validatePost(post, form, tasks);
 
             expect(result).toBe(false);
         });
 
-        it('should return invalid when a required stage is undefined or the value is invalid', function () {
+        it('should return invalid a post required field is not defined and when a post required field is invalid', function () {
             form = {};
             form.tags = {$invalid: false};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
+            var tasks_copy = [];
+            tasks_copy.push(tasks[0]);
+
+            tasks_copy[0].attributes[0].required = true;
 
             // Test undefined
-            var result = PostEditService.isStageValid(1, form, stages, attributes);
+            var result = PostEditService.validatePost(post, form, tasks_copy);
             expect(result).toBe(false);
 
-
             // Test invalid
-            form['values_' + attributes[5].id] = {$invalid: true};
-            result = PostEditService.isStageValid(1, form, stages, attributes);
+            form['values_' + tasks_copy[0].attributes[0].id] = {$invalid: true};
+            result = PostEditService.validatePost(post, form, tasks_copy);
             expect(result).toBe(false);
 
         });
 
-        it('should return valid when a required stage has a defined and valid value', function () {
+        it('should return valid when the post task required attribute has a defined and valid value', function () {
             form = {};
             form.tags = {$invalid: false};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
-            form['values_' + attributes[5].id] = {$invalid: false};
 
-            var result = PostEditService.isStageValid(1, form, stages, attributes);
+            var tasks_copy = [];
+            tasks_copy.push(tasks[0]);
+            tasks_copy[0].attributes[0].required = true;
+
+            form['values_' + tasks_copy[0].attributes[0].id] = {$invalid: false};
+
+            var result = PostEditService.validatePost(post, form, tasks_copy);
 
             expect(result).toBe(true);
         });
@@ -105,44 +119,16 @@ describe('Post Edit Service', function () {
             form.tags = {$invalid: false};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
+            var tasks_copy = [];
+            tasks_copy.push(tasks[0]);
+            tasks_copy[0].attributes[0].required = true;
+            tasks_copy[0].attributes[0].type = 'checkbox';
+            tasks_copy[0].attributes[0].options = ['op1', 'op2'];
 
-            attributes[5].input = 'checkbox';
-            attributes[5].options = ['op1', 'op2'];
-            attributes[5].required = true;
-            form['values_' + attributes[5].id + '_op2'] = {$invalid: false};
+            form['values_' + tasks_copy[0].attributes[0].id] = {$invalid: false};
 
-            var result = PostEditService.isStageValid(1, form, stages, attributes);
+            var result = PostEditService.validatePost(post, form, tasks_copy);
             expect(result).toBe(true);
-        });
-
-        it('should return valid when the post is in draft', function () {
-            post.status = 'draft';
-            expect(PostEditService.canSavePost(post, form, stages, attributes)).toBe(true);
-        });
-
-        it('should return invalid when the post is in published and required stages are completed', function () {
-            post.status = 'published';
-            stages[1].required = true;
-            post.completed_stages = [];
-            expect(PostEditService.canSavePost(post, form, stages, attributes)).toBe(false);
-        });
-
-        it('should return invalid when the post is in published and completed stage is invalid', function () {
-            post.status = 'published';
-            stages[1].required = true;
-            post.completed_stages = [2];
-            spyOn(PostEditService, 'isStageValid').and.returnValue(false);
-
-            expect(PostEditService.canSavePost(post, form, stages, attributes)).toBe(false);
-        });
-
-        it('should return valid when status is published and required stages are complete and valid', function () {
-            post.status = 'published';
-            stages[1].required = true;
-            post.completed_stages = [2];
-            spyOn(PostEditService, 'isStageValid').and.returnValue(true);
-
-            expect(PostEditService.canSavePost(post, form, stages, attributes)).toBe(true);
         });
 
         it('should clean the given post values removing null entries', function () {
@@ -157,5 +143,6 @@ describe('Post Edit Service', function () {
             var result = PostEditService.cleanPostValues(post);
             expect(result.length).toEqual(cleanPost.length);
         });
+
     });
 });

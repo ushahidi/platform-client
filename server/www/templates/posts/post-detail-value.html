@@ -1,14 +1,13 @@
-<div class="postcard-field">
+<div ng-class="{'postcard-field': !standardTask, 'listing-item-primary': standardTask}">
     <h2 class="form-label">
         {{attribute.label}}
     </h2>
 
-    <ul class="list-unstyled">
-        <li ng-repeat="entry in value" ng-if="attribute.type === 'relation'">
-            <a ng-href="/posts/{{entry.id}}">{{entry.title}}</a>
-        </li>
-        <li ng-repeat="entry in value" ng-if="attribute.type !== 'relation'">
-            <p>{{entry}}</p>
-        </li>
-    </ul>
+    <div ng-repeat="entry in value" ng-if="attribute.type === 'relation'">
+        <a ng-href="/posts/{{entry.id}}">{{entry.title}}</a>
+    </div>
+    <div ng-repeat="entry in value" ng-if="attribute.type !== 'relation'">
+        <p>{{entry}}</p>
+    </div>
+
 </div>

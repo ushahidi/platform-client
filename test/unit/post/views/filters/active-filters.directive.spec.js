@@ -70,7 +70,7 @@ describe('post active filters directive', function () {
 
                 } else if (transformer === 'center_point') {
                     result = directiveScope.transformFilterValue('test', transformer);
-                   // should be tested via e2e tests
+                    // should be tested via e2e tests
                 } else {
                     result = directiveScope.transformFilterValue('test', transformer);
                     expect(result).toEqual('test');

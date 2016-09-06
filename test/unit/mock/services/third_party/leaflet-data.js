@@ -10,6 +10,13 @@ module.exports = [function () {
                         },
                         getMaxZoom: function () {
                             return 0;
+                        },
+                        getZoom: function () {
+                            return 0;
+                        },
+                        fitBounds: function () {},
+                        attributionControl: {
+                            setPrefix: function () {}
                         }
                     });
                 }
