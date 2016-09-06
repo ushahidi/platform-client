@@ -19,7 +19,7 @@ module.exports = function (config) {
             'test/unit/**/*.js',
 
             //include template files for directive testing
-            'server/www/templates/**/*.html',
+            'app/**/*.html',
 
             {
                 pattern: 'mocked_backend/**/*.json'
@@ -68,11 +68,12 @@ module.exports = function (config) {
             'app/common/locales/**/*.json': ['commonjs'],
             'test/unit/**/*.js': ['commonjs'],
             'mocked_backend/**/*.json': ['json_fixtures'],
-            'server/www/templates/**/*.html': ['ng-html2js']
+            'app/**/*.html': ['ng-html2js']
         },
 
         ngHtml2JsPreprocessor: {
-            stripPrefix: 'server/www/',
+            stripPrefix: 'app/',
+            prependPrefix: 'templates/',
             moduleName: 'client-templates'
         },
 
