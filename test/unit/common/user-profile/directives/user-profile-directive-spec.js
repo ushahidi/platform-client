@@ -14,7 +14,7 @@ describe('user profile directive', function () {
         var testApp = angular.module('testApp', [
         'ushahidi.mock'
         ])
-        .directive('userProfile', require(ROOT_PATH + 'app/common/user-profile/directives/user-profile.js'))
+        .directive('userProfile', require(ROOT_PATH + 'app/common/user-profile/user-profile.directive.js'))
         .value('$filter', function () {
             return function () {};
         });

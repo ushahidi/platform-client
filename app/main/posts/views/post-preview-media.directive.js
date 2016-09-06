@@ -13,7 +13,7 @@ function (
         scope: {
             post: '='
         },
-        templateUrl: 'templates/posts/post-preview-media.html',
+        templateUrl: 'templates/main/posts/views/post-preview-media.html',
         link: function ($scope) {
 
             if (!$scope.post.form) {

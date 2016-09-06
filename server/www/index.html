@@ -115,7 +115,7 @@
               existing_script.parentNode.insertBefore(script_tag, existing_script);
             })();
         </script>
-        <ng-include src="'templates/partials/intercom-system.html'"></ng-include>
+        <div ng-controller="intercom"></div>
 
         <script>
             if (window.ushahidi && window.ushahidi.gaEnabled) {

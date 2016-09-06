@@ -8,7 +8,7 @@ function StatusSelectDirective(PostActionsService, $rootScope) {
         scope: {},
         require: 'ngModel',
         link: StatusSelectLink,
-        templateUrl: 'templates/posts/views/filters/filter-status.html'
+        templateUrl: 'templates/main/posts/views/filters/filter-status.html'
     };
 
     function StatusSelectLink(scope, element, attrs, ngModel) {

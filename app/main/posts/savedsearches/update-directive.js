@@ -15,7 +15,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/sets/savedsearches/savedsearch-update.html',
+        templateUrl: 'templates/main/posts/savedsearches/savedsearch-update.html',
         link: function ($scope, $element, $attrs) {
             if (!$scope.savedSearch) {
                 throw {

@@ -19,7 +19,7 @@ function (
         scope: {
             currentUser: '='
         },
-        templateUrl: 'templates/frame/mode-bar.html',
+        templateUrl: 'templates/common/directives/mode-bar/mode-bar.html',
         link: function ($scope, $element, $attrs) {
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
@@ -62,7 +62,7 @@ function (
 
             // Show support links
             function viewSupportLinks() {
-                ModalService.openUrl('templates/common/support-links.html', '', false, false, true, true);
+                ModalService.openUrl('templates/common/directives/mode-bar/support-links.html', '', false, false, true, true);
             }
 
             // Show collection listing

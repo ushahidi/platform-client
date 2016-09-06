@@ -25,7 +25,7 @@ function (
         scope: {
             post: '='
         },
-        templateUrl: 'templates/posts/post-messages.html',
+        templateUrl: 'templates/main/posts/detail/post-messages.html',
         link: function ($scope) {
 
             // Pagination
@@ -92,7 +92,7 @@ function (
 
             $scope.reply = function () {
                 $scope.message = {};
-                ModalService.openUrl('templates/posts/post-messages-reply.html', 'post.messages.send', false, $scope, true, true);
+                ModalService.openUrl('templates/main/posts/detail/post-messages-reply.html', 'post.messages.send', false, $scope, true, true);
             };
 
             function formatDate(date) {

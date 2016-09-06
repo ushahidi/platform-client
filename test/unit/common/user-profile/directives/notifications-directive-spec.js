@@ -16,7 +16,7 @@ describe('user-profile notification directive', function () {
         'ushahidi.mock'
         ]);
 
-        testApp.directive('notifications', require(ROOT_PATH + 'app/common/user-profile/directives/notifications.js'))
+        testApp.directive('notifications', require(ROOT_PATH + 'app/common/user-profile/notifications.directive.js'))
         .value('$filter', function () {
             return function () {};
         });

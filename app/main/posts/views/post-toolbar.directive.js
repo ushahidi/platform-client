@@ -5,7 +5,7 @@ function PostToolbarDirective() {
     return {
         restrict: 'E',
         controller: PostToolbarController,
-        templateUrl: 'templates/posts/views/post-toolbar.html'
+        templateUrl: 'templates/main/posts/views/post-toolbar.html'
     };
 }
 

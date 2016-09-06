@@ -3,7 +3,7 @@ angular.module('ushahidi.common.file-upload', [])
 .directive('fileUpload', function () {
     return {
         restrict: 'E',
-        templateUrl: 'templates/file-upload/file-upload.html',
+        templateUrl: 'templates/common/directives/file-upload.html',
         scope: {
             fileContainer: '='
         },

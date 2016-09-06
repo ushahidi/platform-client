@@ -7,7 +7,7 @@ function CollectionEditor() {
         scope: {
         },
         controller: CollectionEditorController,
-        templateUrl: 'templates/sets/collections/collection-editor.html'
+        templateUrl: 'templates/main/posts/collections/collection-editor.html'
     };
 }
 

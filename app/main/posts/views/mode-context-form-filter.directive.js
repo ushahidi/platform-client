@@ -6,7 +6,7 @@ function ModeContextFormFilterDirective() {
         restrict: 'E',
         scope: true,
         controller: ModeContextFormFilter,
-        templateUrl: 'templates/posts/views/mode-context-form-filter.html'
+        templateUrl: 'templates/main/posts/views/mode-context-form-filter.html'
     };
 }
 

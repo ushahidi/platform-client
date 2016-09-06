@@ -7,7 +7,7 @@ function AddPostButtonDirective() {
         scope: true,
         replace: true,
         controller: AddPostButtonController,
-        templateUrl: 'templates/posts/views/add-post-button.html'
+        templateUrl: 'templates/main/posts/views/add-post-button.html'
     };
 }
 

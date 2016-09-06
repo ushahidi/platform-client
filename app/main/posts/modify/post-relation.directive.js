@@ -16,7 +16,7 @@ function (
             required: '=',
             attribute: '='
         },
-        templateUrl: 'templates/posts/relation.html',
+        templateUrl: 'templates/main/posts/modify/relation.html',
         link: function ($scope) {
             $scope.$watch(function () {
                 return $scope.model;

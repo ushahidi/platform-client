@@ -12,7 +12,7 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
         })
         .when('/forbidden', {
             controller: require('./auth/forbidden.controller.js'),
-            templateUrl: 'templates/auth/forbidden.html'
+            templateUrl: 'templates/common/auth/forbidden.html'
         })
         .when('/register', {
             controller: require('./auth/register.controller.js'),
