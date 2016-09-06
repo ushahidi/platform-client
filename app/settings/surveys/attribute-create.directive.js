@@ -11,7 +11,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/settings/surveys/attribute-create.html',
+        template: require('./attribute-create.html'),
         link: function ($scope, $element, $attrs) {
 
             // Init an empty saved search

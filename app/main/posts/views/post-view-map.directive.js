@@ -63,6 +63,6 @@ function (
             isLoading: '='
         },
         controller: controller,
-        templateUrl: 'templates/main/posts/views/post-view-map.html'
+        template: require('./post-view-map.html')
     };
 }];

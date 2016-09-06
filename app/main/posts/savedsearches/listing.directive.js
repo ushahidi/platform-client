@@ -6,7 +6,7 @@ function SavedSearchListing() {
         restrict: 'E',
         scope: true,
         controller: SavedSearchListingController,
-        templateUrl: 'templates/main/posts/savedsearches/saved-search-dropdown.html'
+        template: require('./saved-search-dropdown.html')
     };
 }
 

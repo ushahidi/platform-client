@@ -40,7 +40,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/settings/users/filter-users.html',
+        template: require('./filter-users.html'),
         scope: {
             filters: '='
         },

@@ -30,6 +30,6 @@ function (
             currentView: '='
         },
         controller: controller,
-        templateUrl: 'templates/main/posts/views/post-view.html'
+        template: require('./post-view.html')
     };
 }];

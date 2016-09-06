@@ -14,7 +14,7 @@ function (
     return {
         restrict: 'E',
         transclude: true,
-        templateUrl: 'templates/common/directives/modal.html',
+        template: require('./modal.html'),
 
         scope: {
             title: '@?',

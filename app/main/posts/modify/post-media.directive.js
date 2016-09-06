@@ -19,7 +19,7 @@ function (
             mediaId: '=',
             name: '@'
         },
-        templateUrl: 'templates/main/posts/modify/media.html',
+        template: require('./media.html'),
         link: function ($scope, element, attr, formCtrl) {
             // Initialize file container
             $scope.fileContainer = {file: null};

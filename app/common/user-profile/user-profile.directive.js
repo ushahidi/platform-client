@@ -13,7 +13,7 @@ module.exports = [
             restrict: 'E',
             replace: true,
             scope: {},
-            templateUrl: 'templates/common/user-profile/user-profile.html',
+            template: require('./user-profile.html'),
             link: function ($scope) {
                 $scope.state = {
                     success: false,

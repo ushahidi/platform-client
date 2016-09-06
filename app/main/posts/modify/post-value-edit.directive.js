@@ -12,7 +12,7 @@ function PostValueEdit() {
             postField: '='
         },
         controller: PostValueEditController,
-        templateUrl: 'templates/main/posts/modify/post-value-edit.html'
+        template: require('./post-value-edit.html')
     };
 }
 

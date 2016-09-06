@@ -17,7 +17,7 @@ function PostToolboxDirective(
         scope: {
             post:  '='
         },
-        templateUrl: 'templates/main/posts/modify/post-toolbox.html',
+        template: require('./post-toolbox.html'),
         link: PostToolboxLink
     };
 

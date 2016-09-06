@@ -5,7 +5,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
     return {
         restrict: 'E',
         scope: true,
-        templateUrl: 'templates/main/posts/views/filters/active-filters.html',
+        template: require('./active-filters.html'),
         link: ActiveFiltersLink
     };
 

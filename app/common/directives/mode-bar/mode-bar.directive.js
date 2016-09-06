@@ -19,7 +19,7 @@ function (
         scope: {
             currentUser: '='
         },
-        templateUrl: 'templates/common/directives/mode-bar/mode-bar.html',
+        template: require('./mode-bar.html'),
         link: function ($scope, $element, $attrs) {
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
