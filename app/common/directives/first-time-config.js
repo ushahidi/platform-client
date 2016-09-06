@@ -23,7 +23,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/partials/first-time-config.html',
+        templateUrl: 'templates/common/directives/first-time-config.html',
         scope: true,
         link: function ($scope, $element, $attrs) {
             $scope.modalOpen = false;

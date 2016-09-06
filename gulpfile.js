@@ -256,7 +256,7 @@ function bundleBrowserify(stream) {
  * Task: `build`
  * Builds sass, fonts and js
  */
-gulp.task('build', ['sass', 'css', 'font', 'svg-iconic-sprite', 'svg-icons', 'browserify']);
+gulp.task('build', ['sass', 'css', 'font', 'svg-iconic-sprite', 'svg-icons', 'browserify', 'html']);
 
 /**
  * Task: `watch`
@@ -272,7 +272,9 @@ gulp.task('watch', ['watchify'], function () {
  * Html task just trigger livereload when html changes
  */
 gulp.task('html', [], function () {
-    return gulp.src(['server/www/**/*.html'])
+    return gulp.src(['app/**/*.html'])
+        .pipe(gulp.dest(options.www + '/templates'))
+        .pipe(notify('HTML compiled'))
         .pipe(livereload())
         ;
 });

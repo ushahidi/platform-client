@@ -19,7 +19,7 @@ function PostMetadataDirective(
             // Should we hide the date for posts this week?
             hideDateThisWeek: '@?'
         },
-        templateUrl: 'templates/posts/post-metadata.html',
+        templateUrl: 'templates/main/posts/common/post-metadata.html',
         link: function ($scope) {
             //console.log($scope.post);
             $scope.visibleTo = '';

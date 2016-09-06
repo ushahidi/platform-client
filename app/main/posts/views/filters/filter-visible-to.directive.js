@@ -10,7 +10,7 @@ function VisibleToSelectDirective() {
             publishedToModel: '='
         },
         controller: VisibleToSelectController,
-        templateUrl: 'templates/posts/views/filters/filter-visible-to.html'
+        templateUrl: 'templates/main/posts/views/filters/filter-visible-to.html'
     };
 }
 

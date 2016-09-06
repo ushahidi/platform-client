@@ -7,7 +7,7 @@ function (
     $routeProvider
     .when('/activity', {
         controller: require('./activity.controller.js'),
-        templateUrl: 'templates/activity/activity.html'
+        templateUrl: 'templates/main/activity/activity.html'
     });
 
 }];

@@ -30,6 +30,6 @@ function (
             currentView: '='
         },
         controller: controller,
-        templateUrl: 'templates/posts/views/post-view.html'
+        templateUrl: 'templates/main/posts/views/post-view.html'
     };
 }];

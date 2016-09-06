@@ -7,7 +7,7 @@ function ActivityBarChart() {
             filters: '='
         },
         controller: ActivityBarChartController,
-        templateUrl: 'templates/activity/bar-chart.html'
+        templateUrl: 'templates/main/activity/bar-chart.html'
     };
 }
 

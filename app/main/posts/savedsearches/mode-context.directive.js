@@ -6,7 +6,7 @@ function SavedSearchModeContext() {
     return {
         restrict: 'E',
         controller: SavedSearchModeContextController,
-        templateUrl: 'templates/sets/savedsearches/mode-context.html'
+        templateUrl: 'templates/main/posts/savedsearches/mode-context.html'
     };
 }
 

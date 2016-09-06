@@ -8,7 +8,7 @@ function CategorySelectDirective(TagEndpoint) {
         scope: {},
         require: 'ngModel',
         link: CategorySelectLink,
-        templateUrl: 'templates/posts/views/filters/filter-category.html'
+        templateUrl: 'templates/main/posts/views/filters/filter-category.html'
     };
 
     function CategorySelectLink(scope, element, attrs, ngModel) {

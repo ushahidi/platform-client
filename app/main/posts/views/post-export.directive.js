@@ -9,7 +9,7 @@ function PostExportDirective() {
             filters: '='
         },
         controller: PostExportController,
-        templateUrl: 'templates/posts/export/post-export.html'
+        templateUrl: 'templates/main/posts/views/post-export.html'
     };
 }
 

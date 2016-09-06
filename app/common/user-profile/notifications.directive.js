@@ -23,7 +23,7 @@ module.exports = [
             restrict: 'E',
             replace: true,
             scope: {},
-            templateUrl: 'templates/users/notifications.html',
+            templateUrl: 'templates/common/user-profile/notifications.html',
             link: function ($scope, elem) {
 
                 var loadNotifications = function () {

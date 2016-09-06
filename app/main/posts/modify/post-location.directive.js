@@ -21,7 +21,7 @@ function (
             model: '=',
             required: '='
         },
-        templateUrl: 'templates/posts/location.html',
+        templateUrl: 'templates/main/posts/modify/location.html',
         controller: [
             '$window',
             '$scope',
