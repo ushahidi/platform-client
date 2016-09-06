@@ -9,7 +9,7 @@ function FilterPostsDirective() {
         },
         replace: true,
         controller: FilterPostsController,
-        templateUrl: 'templates/main/posts/views/filters/filter-posts.html'
+        template: require('./filter-posts.html')
     };
 }
 

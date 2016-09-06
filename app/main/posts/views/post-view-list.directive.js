@@ -10,7 +10,7 @@ function PostListDirective() {
             isLoading: '='
         },
         controller: PostListController,
-        templateUrl: 'templates/main/posts/views/post-view-list.html'
+        template: require('./post-view-list.html')
     };
 }
 

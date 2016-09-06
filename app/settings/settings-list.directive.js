@@ -22,7 +22,7 @@ function (
         replace: true,
         scope: {
         },
-        templateUrl: 'templates/settings/settings-list.html',
+        template: require('./settings-list.html'),
         link: function ($scope, $element, $attrs) {
             $scope.isAdmin = $rootScope.isAdmin;
             $scope.hasPermission = $rootScope.hasPermission;

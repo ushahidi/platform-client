@@ -32,7 +32,7 @@ function (
             formId: '@',
             formTemplate: '@'
         },
-        templateUrl: 'templates/settings/site/settings-editor.html',
+        template: require('./settings-editor.html'),
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
             $scope.map = {};

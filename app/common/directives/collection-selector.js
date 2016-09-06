@@ -119,7 +119,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/common/collection-selector/collection-selector.html',
+        template: require('./collection-selector.html'),
         scope: {
             posts: '='
         },

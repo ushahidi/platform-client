@@ -18,7 +18,7 @@ function PostActionsDirective(
         scope: {
             post: '='
         },
-        templateUrl: 'templates/main/posts/common/post-actions.html',
+        template: require('./post-actions.html'),
         link: PostActionsLink
     };
 

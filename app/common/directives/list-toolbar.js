@@ -36,7 +36,7 @@ function (
         }];
     return {
         restrict: 'E',
-        templateUrl: 'templates/common/directives/list-toolbar.html',
+        template: require('./list-toolbar.html'),
         replace: true,
         transclude: true,
         scope: {

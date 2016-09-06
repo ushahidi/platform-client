@@ -7,7 +7,7 @@ Slider.$inject = ['$timeout', '$compile', 'SliderService', 'ModalService'];
 function Slider($timeout, $compile, SliderService, ModalService) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/common/notifications/slider.html',
+        template: require('./slider.html'),
         scope: {
             insideModal: '@?'
         },

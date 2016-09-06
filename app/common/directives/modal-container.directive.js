@@ -8,7 +8,7 @@ ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService'];
 function ModalContainer($timeout, $rootScope, $compile, ModalService) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/common/directives/modal-container.html',
+        template: require('./modal-container.html'),
 
         scope: true,
 

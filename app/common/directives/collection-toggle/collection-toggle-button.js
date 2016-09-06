@@ -22,6 +22,6 @@ function (
                 $rootScope.$emit('collectionToggle:show', selectedPostObjects);
             };
         },
-        templateUrl: 'templates/common/directives/collection-toggle/collection-toggle-button.html'
+        template: require('./collection-toggle-button.html')
     };
 }];

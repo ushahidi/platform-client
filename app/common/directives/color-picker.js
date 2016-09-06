@@ -29,7 +29,7 @@ module.exports = [
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'templates/common/directives/color-picker.html',
+            template: require('./color-picker.html'),
             scope: {
                 colorContainer: '='
             },

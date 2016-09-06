@@ -15,6 +15,6 @@ function (
                 $rootScope.$emit('collectionToggle:show', [$scope.post]);
             };
         },
-        templateUrl: 'templates/common/directives/collection-toggle/collection-toggle-link.html'
+        template: require('./collection-toggle-link.html')
     };
 }];

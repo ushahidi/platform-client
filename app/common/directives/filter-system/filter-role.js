@@ -25,7 +25,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/common/directives/filter-system/filter-role.html',
+        template: require('./filter-role.html'),
         scope: {
             model: '='
         },

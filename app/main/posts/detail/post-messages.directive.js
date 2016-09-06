@@ -25,7 +25,7 @@ function (
         scope: {
             post: '='
         },
-        templateUrl: 'templates/main/posts/detail/post-messages.html',
+        template: require('./post-messages.html'),
         link: function ($scope) {
 
             // Pagination

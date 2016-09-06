@@ -11,7 +11,7 @@ function LocationFilterDirective(Geocoding, $q) {
         },
         require: '^form',
         link: LocationFilterLink,
-        templateUrl: 'templates/main/posts/views/filters/filter-location.html'
+        template: require('./filter-location.html')
     };
 
     //LocationFilterLink.$inject = ['Geocoding'];

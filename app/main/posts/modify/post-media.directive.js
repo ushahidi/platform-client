@@ -22,7 +22,7 @@ function (
             media: '=',
             name: '@'
         },
-        templateUrl: 'templates/main/posts/modify/media.html',
+        template: require('./media.html'),
         link: function ($scope, element, attr, formCtrl) {
             $scope.showAdd = function () {
                 return (!$scope.media.id && !$scope.media.changed);

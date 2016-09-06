@@ -8,7 +8,7 @@ module.exports = ['PostEndpoint', function (PostEndpoint) {
             attribute: '=',
             type: '='
         },
-        templateUrl: 'templates/main/posts/detail/post-value.html',
+        template: require('./post-value.html'),
         link: function ($scope) {
             // Depending on whether we are dealing with a post task or a standard task
             // the css class is swapped. This Boolean manages that distinction.

@@ -4,7 +4,7 @@ module.exports = ['moment', '_', function (moment, _) {
         replace: true,
         scope: {},
         require: 'ngModel',
-        templateUrl: 'templates/main/posts/modify/post-datetime-value.html',
+        template: require('./post-datetime-value.html'),
         link: function ($scope, element, attrs, ngModel) {
             // Split date time in time and date fields
             $scope.timeFormat = { format: 'HH:i' };
