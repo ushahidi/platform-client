@@ -6,7 +6,8 @@ angular.module('ushahidi.common', [
     'ushahidi.common.modal',
     'ushahidi.common.custom-on-change',
     'ushahidi.common.file-upload',
-    'ushahidi.common.sticky-sidebar'
+    'ushahidi.common.sticky-sidebar',
+    'ushahidi.user-profile'
 ])
 
 // Authentication
@@ -85,6 +86,7 @@ angular.module('ushahidi.common', [
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
 .directive('focus', require('./directives/focus.js'))
+.directive('modeBar', require('./directives/mode-bar.directive.js'))
 
 // Event actions
 .constant('EVENT', {
@@ -114,3 +116,4 @@ require('./directives/modal.js');
 require('./directives/custom-on-change.js');
 require('./directives/file-upload.js');
 require('./directives/sticky-sidebar.js');
+require('./user-profile/user-profile-module.js');
