@@ -26,7 +26,7 @@ require('./frame/frame-module.js');
 require('./common/common-module.js');
 require('./post/post-module.js');
 require('./activity/activity-module.js');
-require('./setting/setting-module.js');
+require('./settings/settings.module.js');
 require('./plans/plans-module.js');
 require('./set/set-module.js');
 require('./user-profile/user-profile-module.js');
@@ -81,7 +81,7 @@ angular.module('app',
         'ushahidi.frame',
         'ushahidi.common',
         'ushahidi.posts',
-        'ushahidi.tools',
+        'ushahidi.settings',
         'ushahidi.plans',
         'ushahidi.sets',
         'ushahidi.activity',
