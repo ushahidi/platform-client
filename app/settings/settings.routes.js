@@ -90,6 +90,10 @@ function (
         controller: require('./datasources/datasources.controller.js'),
         templateUrl: 'templates/settings/datasources/datasources.html'
     })
+    .when('/settings/plan', {
+        controller: require('./plans/plans.controller.js'),
+        templateUrl: 'templates/settings/plan/plan.html'
+    })
     ;
 
 }];

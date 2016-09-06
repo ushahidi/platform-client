@@ -12,12 +12,9 @@ module.exports = function (config) {
             'node_modules/underscore/underscore.js',
             'node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js',
             'node_modules/leaflet/dist/leaflet.js',
-            'app/activity/**/*.js',
             'app/common/**/*.js',
-            'app/post/**/*.js',
-            'app/set/**/*.js',
+            'app/main/**/*.js',
             'app/settings/**/*.js',
-            'app/user-profile/**/*.js',
             'app/common/locales/**/*.json',
             'test/unit/**/*.js',
 
