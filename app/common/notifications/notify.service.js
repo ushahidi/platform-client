@@ -14,7 +14,8 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirm: confirm,
         confirmModal: confirmModal,
         confirmDelete: confirmDelete,
-        limit: limit
+        limit: limit,
+        importComplete: importComplete
     };
 
     function notify(message, translateValues) {
@@ -185,6 +186,18 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         function showSlider(message) {
             scope.message = message;
             SliderService.openUrl('templates/common/notifications/limit.html', 'warning', 'error', scope, true, false);
+        }
+    }
+
+    function importComplete(translateValues) {
+        var scope = getScope();
+
+        scope = _.extend(scope, translateValues);
+
+        showSlider();
+
+        function showSlider() {
+            SliderService.openUrl('templates/common/notifications/import-complete.html', 'thumb-up', 'confirmation', scope, false, false);
         }
     }
 

@@ -1,4 +1,5 @@
 module.exports = [
+    '$rootScope',
     '$translate',
     '$location',
     'FormEndpoint',
@@ -8,6 +9,7 @@ module.exports = [
     '_',
     '$q',
 function (
+    $rootScope,
     $translate,
     $location,
     FormEndpoint,
@@ -103,16 +105,24 @@ function (
                                 var processed = response.processed,
                                     errors = response.errors;
 
-                                Notify.success('notify.data_import.csv_mappings_set', {processed: processed, errors: errors});
+                                Notify.importComplete(
+                                {
+                                    processed: processed,
+                                    errors: errors,
+                                    form_name: $scope.form.name,
+                                    filename: csv.filename
+                                });
 
-                                // Go to posts list
-                                $location.url('/views/list/');
+                                $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename});
+
                             }, function (errorResponse) {
                                 Notify.apiErrors(errorResponse);
                             });
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
                     });
+                // Go to after import page
+                $location.url('/settings/data-after-import');
             }
         }
     };

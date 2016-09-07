@@ -1,4 +1,5 @@
 angular.module('ushahidi.settings', [])
+.directive('afterImportCsv', require('./data-import/data-after-import.directive.js'))
 .directive('importerCsv', require('./data-import/data-import.directive.js'))
 .directive('mapperCsv', require('./data-import/data-mapper.directive.js'))
 .directive('configureCsv', require('./data-import/data-configure.directive.js'))

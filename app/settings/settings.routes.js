@@ -17,6 +17,10 @@ function (
         controller: require('./data-import/data-import.controller.js'),
         templateUrl: 'templates/settings/data-import/data-import.html'
     })
+    .when('/settings/data-after-import', {
+        controller: require('./data-import/data-after-import.controller.js'),
+        templateUrl: 'templates/settings/data-import/after-import.html'
+    })
     .when('/settings/data-configure', {
         controller: require('./data-import/data-configure.controller.js'),
         templateUrl: 'templates/settings/data-import/data-configure.html'

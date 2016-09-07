@@ -760,6 +760,13 @@
         }
     },
     "data_import" :{
+        "see_imported_posts" : "See imported posts",
+        "import_another_csv" : "Import another CSV file",
+        "import_complete" : "Your import is complete",
+        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/settings/survey/{{form_id}}\">{{form_name}}</a> survey.",
+        "import_another" : "Import another CSV file",
+        "nearly_complete" : "Your import is nearly complete",
+        "finish_info" : "The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.",
         "next" : "Next",
         "configure_posts": "Configure Posts",
         "configure_explanation": "Through this interface you can set values for the survey fields that were not mapped to entries in the CSV. These values will be the same for all imported posts.",
@@ -877,8 +884,10 @@
             "bulk_destroy_cancelled" : "Delete cancelled"
         },
         "data_import" : {
+            "see_imported_posts" : "See imported posts",
             "csv_upload" : "File {{name}} successfully uploaded",
-            "csv_mappings_set" : "CSV imported. {{processed}} records imported, {{errors}} records failed.",
+            "csv_import_processed_errors" : "<strong>Your CSV import</strong> is complete. {{processed}} records imported, {{errors}} records failed.",
+            "csv_import_success_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.",
             "duplicate_fields" : "Columns must be mapped to unique survey fields. The following fields have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
