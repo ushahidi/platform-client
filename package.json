@@ -101,7 +101,7 @@
     "moment-timezone": "^0.5.4",
     "ng-showdown": "rjmackay/ng-showdown#patch-1",
     "ngGeolocation": "rjmackay/ngGeolocation",
-    "nvd3": "^1.8.3",
+    "nvd3": "^1.8.4",
     "ushahidi-platform-pattern-library": "3.5.0",
     "selection-model": "jtrussell/angular-selection-model.git",
     "underscore": "^1.7.0"
