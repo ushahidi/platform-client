@@ -1,11 +1,9 @@
 angular.module('ushahidi.common', [
     'ushahidi.common.adaptive-input',
     'ushahidi.common.dropdown',
-    'ushahidi.common.offcanvas',
     'ushahidi.common.modal',
     'ushahidi.common.custom-on-change',
     'ushahidi.common.file-upload',
-    'ushahidi.common.sticky-sidebar',
     'ushahidi.user-profile'
 ])
 
@@ -51,8 +49,6 @@ angular.module('ushahidi.common', [
 .service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
 .service('DataRetriever', require('./services/data-retriever.js'))
-.service('multiTranslate', require('./services/multi-translate.js'))
-.service('GlobalFilter', require('./services/global-filter.js'))
 .service('Maps', require('./services/maps.js'))
 .service('Geocoding', require('./services/geocoding.js'))
 .service('Languages', require('./services/languages.js'))
@@ -109,9 +105,7 @@ angular.module('ushahidi.common', [
 // Load submodules
 require('./directives/adaptive-input.js');
 require('./directives/dropdown.js');
-require('./directives/offcanvas.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
 require('./directives/file-upload.js');
-require('./directives/sticky-sidebar.js');
 require('./user-profile/user-profile-module.js');
