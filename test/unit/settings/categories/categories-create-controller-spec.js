@@ -16,8 +16,7 @@ describe('setting categories create controller', function () {
 
         testApp.controller('settingCategoriesCreateController', require(ROOT_PATH + 'app/settings/categories/create.controller.js'))
 
-
-        .service('multiTranslate', require(ROOT_PATH + 'app/common/services/multi-translate.js'));
+        ;
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

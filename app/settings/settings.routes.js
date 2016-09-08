@@ -11,7 +11,7 @@ function (
     })
     .when('/settings/general', {
         controller: require('./site/site.controller.js'),
-        templateUrl: 'templates/settings/general/settings-general.html'
+        templateUrl: 'templates/settings/site/settings-general.html'
     })
     .when('/settings/data-import', {
         controller: require('./data-import/data-import.controller.js'),
@@ -39,11 +39,11 @@ function (
     })
     .when('/settings/surveys/create', {
         controller: require('./surveys/edit.controller.js'),
-        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
+        templateUrl: 'templates/settings/surveys/survey-edit.html'
     })
     .when('/settings/surveys/:id', {
         controller: require('./surveys/edit.controller.js'),
-        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
+        templateUrl: 'templates/settings/surveys/survey-edit.html'
     })
     .when('/settings/categories', {
         controller: require('./categories/categories.controller.js'),
@@ -89,6 +89,10 @@ function (
     .when('/settings/datasources', {
         controller: require('./datasources/datasources.controller.js'),
         templateUrl: 'templates/settings/datasources/datasources.html'
+    })
+    .when('/settings/plan', {
+        controller: require('./plans/plans.controller.js'),
+        templateUrl: 'templates/settings/plan/plan.html'
     })
     ;
 

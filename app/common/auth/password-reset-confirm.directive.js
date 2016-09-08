@@ -6,7 +6,7 @@ function PasswordResetConfirmDirective() {
         restrict: 'E',
         scope: true,
         controller: PasswordResetConfirmController,
-        templateUrl: 'templates/auth/password-reset-confirm.html'
+        templateUrl: 'templates/common/auth/password-reset-confirm.html'
     };
 }
 PasswordResetConfirmController.$inject = [

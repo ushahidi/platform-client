@@ -3,7 +3,6 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
-    'multiTranslate',
     'RoleEndpoint',
     'TagEndpoint',
     'Notify',
@@ -15,7 +14,6 @@ function (
     $rootScope,
     $translate,
     $location,
-    multiTranslate,
     RoleEndpoint,
     TagEndpoint,
     Notify,
@@ -37,7 +35,6 @@ function (
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
 
-    $scope.types = multiTranslate(['tag.types.category', 'tag.types.status']);
     RoleEndpoint.query().$promise.then(function (roles) {
         $scope.roles = roles;
     });

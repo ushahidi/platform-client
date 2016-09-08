@@ -1,12 +1,9 @@
 angular.module('ushahidi.common', [
     'ushahidi.common.adaptive-input',
     'ushahidi.common.dropdown',
-    'ushahidi.common.accordion',
-    'ushahidi.common.offcanvas',
     'ushahidi.common.modal',
     'ushahidi.common.custom-on-change',
-    'ushahidi.common.file-upload',
-    'ushahidi.common.sticky-sidebar'
+    'ushahidi.user-profile'
 ])
 
 // Authentication
@@ -50,9 +47,6 @@ angular.module('ushahidi.common', [
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
 .service('Util', require('./services/util.js'))
-.service('DataRetriever', require('./services/data-retriever.js'))
-.service('multiTranslate', require('./services/multi-translate.js'))
-.service('GlobalFilter', require('./services/global-filter.js'))
 .service('Maps', require('./services/maps.js'))
 .service('Geocoding', require('./services/geocoding.js'))
 .service('Languages', require('./services/languages.js'))
@@ -85,6 +79,8 @@ angular.module('ushahidi.common', [
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
 .directive('focus', require('./directives/focus.js'))
+.directive('modeBar', require('./directives/mode-bar/mode-bar.directive.js'))
+.directive('fileUpload', require('./directives/file-upload.directive.js'))
 
 // Event actions
 .constant('EVENT', {
@@ -108,9 +104,6 @@ angular.module('ushahidi.common', [
 // Load submodules
 require('./directives/adaptive-input.js');
 require('./directives/dropdown.js');
-require('./directives/accordion.js');
-require('./directives/offcanvas.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
-require('./directives/file-upload.js');
-require('./directives/sticky-sidebar.js');
+require('./user-profile/user-profile-module.js');

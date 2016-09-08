@@ -2,6 +2,7 @@ angular.module('ushahidi.settings', [])
 .directive('importerCsv', require('./data-import/data-import.directive.js'))
 .directive('mapperCsv', require('./data-import/data-mapper.directive.js'))
 .directive('configureCsv', require('./data-import/data-configure.directive.js'))
+.service('DataRetriever', require('./data-import/data-retriever.service.js'))
 
 .directive('surveyEditor', require('./surveys/survey-editor.directive.js'))
 .directive('surveyTaskCreate', require('./surveys/task-create.directive.js'))

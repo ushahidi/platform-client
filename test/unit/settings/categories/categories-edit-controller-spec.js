@@ -17,7 +17,6 @@ describe('setting categories edit controller', function () {
         testApp.controller('settingCategoriesEditController', require(ROOT_PATH + 'app/settings/categories/edit.controller.js'))
 
 
-        .service('multiTranslate', require(ROOT_PATH + 'app/common/services/multi-translate.js'))
         .run(require(ROOT_PATH + 'app/common/global/event-handlers.js'));
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
