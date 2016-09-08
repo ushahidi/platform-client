@@ -1,6 +1,6 @@
-angular.module('ushahidi.common.file-upload', [])
+module.exports = FileUpload;
 
-.directive('fileUpload', function () {
+function FileUpload() {
     return {
         restrict: 'E',
         templateUrl: 'templates/common/directives/file-upload.html',
@@ -19,4 +19,4 @@ angular.module('ushahidi.common.file-upload', [])
                 };
             }]
     };
-});
+}

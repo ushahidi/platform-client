@@ -3,7 +3,6 @@ angular.module('ushahidi.common', [
     'ushahidi.common.dropdown',
     'ushahidi.common.modal',
     'ushahidi.common.custom-on-change',
-    'ushahidi.common.file-upload',
     'ushahidi.user-profile'
 ])
 
@@ -81,6 +80,7 @@ angular.module('ushahidi.common', [
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
 .directive('focus', require('./directives/focus.js'))
 .directive('modeBar', require('./directives/mode-bar/mode-bar.directive.js'))
+.directive('fileUpload', require('./directives/file-upload.directive.js'))
 
 // Event actions
 .constant('EVENT', {
@@ -106,5 +106,4 @@ require('./directives/adaptive-input.js');
 require('./directives/dropdown.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
-require('./directives/file-upload.js');
 require('./user-profile/user-profile-module.js');
