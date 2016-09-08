@@ -17,3 +17,5 @@ vault.txt
 *.swp
 *.svg
 server/www/img/icons/
+vendor/*
+
