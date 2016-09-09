@@ -274,7 +274,6 @@ gulp.task('watch', ['watchify'], function () {
 gulp.task('html', [], function () {
     return gulp.src(['app/**/*.html'])
         .pipe(gulp.dest(options.www + '/templates'))
-        .pipe(notify('HTML compiled'))
         .pipe(livereload())
         ;
 });
