@@ -93,7 +93,7 @@ angular.module('ushahidi.common', [
 })
 
 .config(require('./configs/locale-config.js'))
-.config(require('./configs/ui-bootstrap-template-decorators.js'))
+.run(require('./configs/ui-bootstrap-template-decorators.js'))
 .config(require('./configs/cache-config.js'))
 
 .config(require('./common-routes.js'))

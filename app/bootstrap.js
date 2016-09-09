@@ -1,3 +1,4 @@
+require('./app');
 require('angular-lazy-bootstarp/src/bootstrap.js');
 
 // Load site config THEN bootstrap the app

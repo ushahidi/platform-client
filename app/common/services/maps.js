@@ -213,14 +213,15 @@ function (
             return this;
         },
         map: function () {
+            var self = this;
             var deferred = $q.defer();
 
-            if (this.leaflet_map) {
-                deferred.resolve(this.leaflet_map);
+            if (self.leaflet_map) {
+                deferred.resolve(self.leaflet_map);
             } else {
-                LData.getMap(this.map_name).then(function (map) {
-                    this.leaflet_map = map;
-                    deferred.resolve(this.leaflet_map);
+                LData.getMap(self.map_name).then(function (map) {
+                    self.leaflet_map = map;
+                    deferred.resolve(self.leaflet_map);
                 });
             }
 
