@@ -1,12 +1,7 @@
 module.exports = [
-    '$provide',
+    '$templateCache',
 function (
-    $provide
+    $templateCache
 ) {
-    $provide.decorator('uibPaginationDirective', ['$delegate', function ($delegate) {
-        //we now get an array of all the pagination directives,
-        //and use the first one
-        $delegate[0].templateUrl = 'templates/common/configs/uib-pagination.html';
-        return $delegate;
-    }]);
+    $templateCache.put('uib/template/pagination/pagination.html', require('./uib-pagination.html'));
 }];

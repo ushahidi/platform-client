@@ -34,8 +34,6 @@ let paths = {
   ],
   entry: [
     'babel-polyfill',
-    'ushahidi-platform-pattern-library/assets/css/style.min.css',
-    path.join(__dirname, root, 'app.js'),
     path.join(__dirname, root, 'bootstrap.js')
   ],
   output: root,
