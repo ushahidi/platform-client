@@ -12,6 +12,10 @@ function (
 
     $rootScope.rtlEnabled = false;
 
+    $rootScope.switchRtl = function () {
+        $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
+    };
+
     ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
         var lang = site.language ? site.language : 'en-US';
         $translate.use(lang).then(function (langKey) {

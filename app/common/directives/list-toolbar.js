@@ -36,7 +36,7 @@ function (
         }];
     return {
         restrict: 'E',
-        templateUrl: 'templates/common/listing-toolbar.html',
+        templateUrl: 'templates/common/directives/list-toolbar.html',
         replace: true,
         transclude: true,
         scope: {

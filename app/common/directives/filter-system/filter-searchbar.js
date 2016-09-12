@@ -26,7 +26,7 @@ function ($timeout) {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/common/filter-system/filter-searchbar.html',
+        templateUrl: 'templates/common/directives/filter-system/filter-searchbar.html',
         scope: {
             model: '=',
             placeholderEntity: '='

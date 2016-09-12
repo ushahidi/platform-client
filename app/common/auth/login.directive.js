@@ -6,7 +6,7 @@ function Login() {
         restrict: 'E',
         scope: {},
         controller: LoginController,
-        templateUrl: 'templates/auth/login.html'
+        templateUrl: 'templates/common/auth/login.html'
     };
 }
 LoginController.$inject = [

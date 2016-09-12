@@ -8,7 +8,7 @@ function SurveyEditor() {
             surveyId: '='
         },
         controller: SurveyEditorController,
-        templateUrl: 'templates/settings/surveys/modify/editor.html'
+        templateUrl: 'templates/settings/surveys/survey-editor.html'
     };
 }
 
