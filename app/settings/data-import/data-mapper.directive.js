@@ -6,6 +6,7 @@ module.exports = [
     'DataImportEndpoint',
 //    'DataRetriever',
     'Notify',
+    'ImportNotify',
     '_',
     '$q',
 function (
@@ -16,6 +17,7 @@ function (
     DataImportEndpoint,
 //    DataRetriever,
     Notify,
+    ImportNotify,
     _,
     $q
 ) {
@@ -105,7 +107,7 @@ function (
                                 var processed = response.processed,
                                     errors = response.errors;
 
-                                Notify.importComplete(
+                                ImportNotify.importComplete(
                                 {
                                     processed: processed,
                                     errors: errors,
