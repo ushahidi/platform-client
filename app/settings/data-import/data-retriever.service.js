@@ -63,6 +63,11 @@ function (
                             'key': 'content',
                             'label': $translate.instant('post.modify.form.description'),
                             'priority': 1
+                        },
+                        {
+                            'key': 'tags',
+                            'label': $translate.instant('post.modify.form.categories'),
+                            'priority': 2
                         }
                     )
                     .sortBy('priority')
