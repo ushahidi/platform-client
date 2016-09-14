@@ -20,7 +20,7 @@
           <input type="text" placeholder="{{ 'form.field_option_placeholder'|translate }}" ng-model="editAttribute.options[key]">
           <button type="button" class="button-flat button-beta" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)">
             <svg class="iconic">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
             </svg>
             <span class="button-label hidden">Remove</span>
           </button>
@@ -57,7 +57,7 @@
 
            <button class="button-destructive" ng-click="deleteAttribute(editAttribute)">
                <svg class="iconic">
-                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                </svg>
                <span class="button-label" translate="survey.delete.delete_field">Delete field</span>
            </button>

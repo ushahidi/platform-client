@@ -15,7 +15,7 @@ function SurveyNotify(_, $q, $rootScope, $translate, SliderService, ModalService
             values.successText = successText;
             scope = _.extend(scope, values);
 
-            SliderService.openUrl('templates/settings/surveys/survey-success.html', 'thumb-up', 'confirmation', scope, false, false);
+            SliderService.openTemplate(require('./survey-success.html'), 'thumb-up', 'confirmation', scope, false, false);
         }
 
         $translate(successText, translateValues).then(showSlider, showSlider);

@@ -2,13 +2,15 @@ var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
+
 module.exports = {
-  //devtool: 'source-map',
+  devtool: 'source-map',
   entry: {},
   module: {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
-       { test: /\.html$/, loader: 'raw' },
+       { test: /\.html$/, loader: 'html?attrs[]=img:src&attrs[]=use:xlink:href&root='+imgPath },
        { test: /\.scss$/, loader: 'style!css!resolve-url!sass?sourceMap' },
        { test: /\.css$/, loader: 'style!css' },
        { test: /\.png/, loader: 'url?limit=10000' },

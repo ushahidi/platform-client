@@ -24,7 +24,7 @@
                   <!-- Date icon -->
                   <div class="input-with-icon">
                     <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
                     </svg>
                     <input
                         type="date"
@@ -122,7 +122,7 @@
       </div>
       <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
           <svg class="iconic">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
           </svg>
           <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
       </div>
@@ -171,7 +171,7 @@
     </div>
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
         </svg>
         <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
     </div>

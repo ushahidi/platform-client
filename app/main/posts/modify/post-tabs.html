@@ -7,7 +7,7 @@
             <li ng-class="{'active': visibleStage == stage.id}" ng-repeat="stage in stages | limitTo: 1 - stages.length">
                 <a ng-click="setVisibleStage(stage.id)">
                     <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#file"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#file"></use>
                     </svg>
                     {{stage.label}}
                 </a>
@@ -28,7 +28,7 @@
                 <input
                     class="tgl"
                     id="switchT"
-                    type="checkbox"                    
+                    type="checkbox"
                     ng-checked="stageIsComplete(visibleStage)"
                     ng-click="toggleStageCompletion(visibleStage)">
                 <label class="tgl-btn" for="switchT"></label>

@@ -10,7 +10,7 @@
 
   <span class="mode-context-trigger" dropdown-toggle>
     <svg class="iconic">
-      <use xlink:href="../img/iconic-sprite.svg#chevron-bottom"></use>
+      <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
     </svg>
     <span class="label hidden" translate>app.show_more_less</span>
   </span>
@@ -20,7 +20,7 @@
 
     <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}" ng-show="canCreatePostInSurvey(form)">
       <svg class="iconic">
-        <use xlink:href="../img/iconic-sprite.svg#plus"></use>
+        <use xlink:href="/img/iconic-sprite.svg#plus"></use>
       </svg>
       <span class="button-label" translate>post.modify.add_to_survey</span>
     </a>
@@ -35,9 +35,9 @@
       <div class="listing-item-select">
         <span class="status-indicator empty tooltip">
           <svg class="iconic">
-            <use xlink:href="../../img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-            <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
-            <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
           </svg>
           <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
           <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>

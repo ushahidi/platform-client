@@ -11,7 +11,7 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -46,7 +46,7 @@
 
                          <div class="alert error" ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" >
                             <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             {{'settings.valid.name.' + error  | translate}}
                         </div>
@@ -61,7 +61,7 @@
                     <div class="form-field">
                          <label translate>settings.deployment_logo</label>
                          <figure ng-show="site.image_header">
-                            <img src="{{ site.image_header }}" class="postcard-image deployment-logo" />
+                            <img ng-src="{{ site.image_header }}" class="postcard-image deployment-logo" />
                             <button class="button-flat" ng-click="clearHeader()">Delete logo</button>
                          </figure>
 
@@ -110,7 +110,7 @@
 
                         <button class="button-destructive">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                             </svg>
                             <span class="button-label" translate>settings.deployment_delete</span>
                         </button>
