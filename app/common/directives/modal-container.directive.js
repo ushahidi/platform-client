@@ -26,7 +26,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         $scope.closeButtonClicked = closeButtonClicked;
 
         var templateScope;
-        var iconPath = '/img/iconic-sprite.svg#';
+        var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
         // Modal content element
         var modalContent = $element.find('modal-content');
 
@@ -49,7 +49,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             $compile(modalContent)(templateScope);
 
             $scope.title = title;
-            $scope.icon = icon ? iconPath + icon : icon;
+            $scope.icon = icon ? iconPath + '#' + icon : icon;
 
             // If closeOnOverlayClick isn't passed, default to true
             if (typeof closeOnOverlayClick === 'undefined') {

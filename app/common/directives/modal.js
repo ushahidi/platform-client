@@ -28,7 +28,7 @@ function (
             $scope.iconPath = $scope.icon ? '/img/iconic-sprite.svg#' + $scope.icon : '';
 
             var classChangePromise = null;
-            $scope.iconPath = '/img/iconic-sprite.svg#' + $scope.icon;
+            $scope.iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg') + '#' + $scope.icon;
             $scope.classVisible = false;
             $scope.modalOffset = 0;
             $scope.title = $translate.instant($scope.title);

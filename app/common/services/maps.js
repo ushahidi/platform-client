@@ -72,10 +72,11 @@ function (
     function pointIcon(feature, size, className) {
         // Test string to make sure that it does not contain injection
         var color = (feature.properties['marker-color'] && /^[a-zA-Z0-9#]+$/.test(feature.properties['marker-color'])) ? feature.properties['marker-color'] : '#959595';
+        var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
         return L.divIcon({
             className: 'custom-map-marker ' + className,
-            html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""></span>',
+            html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""></span>',
             iconSize: size,
             iconAnchor: [size[0] / 2, size[1]],
             popupAnchor: [0, 0 - size[1]]
