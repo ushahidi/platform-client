@@ -26,7 +26,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         $scope.closeButtonClicked = closeButtonClicked;
 
         var templateScope;
-        var iconPath = '../../img/iconic-sprite.svg#';
+        var iconPath = '/img/iconic-sprite.svg#';
         // Modal content element
         var modalContent = $element.find('modal-content');
 

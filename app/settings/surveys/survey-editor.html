@@ -13,7 +13,7 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -70,7 +70,7 @@
 
                         <span class="tool-trigger init" data-toggle="toggle-content" dropdown-toggle>
                             <svg class="iconic">
-                                <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                                <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                             </svg>
                             <span class="label hidden">Show/hide</span>
                         </span>
@@ -85,7 +85,7 @@
                                 <div class="form-field radio icon-input" ng-class="{ 'checked': survey.everyone_can_create }">
                                     <label for="survey-add_everyone">
                                         <svg class="iconic">
-                                            <use xlink:href="../../img/iconic-sprite.svg#globe"></use>
+                                            <use xlink:href="/img/iconic-sprite.svg#globe"></use>
                                         </svg>
                                         <input name="survey-add" id="survey-add_everyone" ng-value="true" checked="" type="radio" ng-model="survey.everyone_can_create">
                                         <span class="label" translate="nav.everyone">Everyone</span>
@@ -95,7 +95,7 @@
                                 <div class="form-field radio icon-input"  ng-class="{ 'checked': !survey.everyone_can_create }">
                                     <label for="survey-add_roles">
                                         <svg class="iconic">
-                                            <use xlink:href="../../img/iconic-sprite.svg#people"></use>
+                                            <use xlink:href="/img/iconic-sprite.svg#people"></use>
                                         </svg>
                                         <input class="init" name="survey-add" id="survey-add_roles" ng-value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.everyone_can_create">
                                         <span translate="app.specific_roles">Specific roles...</span>
@@ -137,13 +137,13 @@
                               <div class="buttons-updown">
                                  <button type="button" class="button-beta" ng-disabled="isFirstAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeUp(survey.tasks[0], attribute)">
                                      <svg class="iconic">
-                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-top"></use>
+                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                                      </svg>
                                      <span class="label hidden">Move up</span>
                                  </button>
                                  <button type="button" class="button-beta" ng-disabled="isLastAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeDown(survey.tasks[0], attribute)">
                                      <svg class="iconic">
-                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                                      </svg>
                                      <span class="label hidden">Move down</span>
                                  </button>
@@ -164,7 +164,7 @@
                               <h2 class="listing-item-title">
                                   <a ng-click="openAttributeModal(survey.tasks[0])" class="button button-beta" data-modal="add-field">
                                       <svg class="iconic">
-                                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                                       </svg>
                                      <span translate="survey.add_field">Add field</span>
                                   </a>
@@ -183,7 +183,7 @@
                   <p translate="survey.task_info">You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.</p>
                   <a ng-click="openTaskModal()" class="button button-flat" data-modal="add-task">
                       <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                       </svg>
                      <span translate="survey.add_task">Add task</span>
                   </a>
@@ -200,7 +200,7 @@
                         <li class="tabs-menu-action">
                             <a ng-click="openTaskModal()" data-modal="add-task">
                                 <svg class="iconic">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                                 </svg>
                                 <span translate="survey.add_task">Add task</span>
                             </a>
@@ -246,13 +246,13 @@
                                 <div class="buttons-updown">
                                    <button type="button" class="button-beta" ng-disabled="isFirstAttribute(task, attribute)" ng-click="moveAttributeUp(task, attribute)">
                                        <svg class="iconic">
-                                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-top"></use>
+                                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                                        </svg>
                                        <span class="label hidden">Move up</span>
                                    </button>
                                    <button type="button" class="button-beta" ng-disabled="isLastAttribute(task, attribute)" ng-click="moveAttributeDown(task, attribute)">
                                        <svg class="iconic">
-                                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                                        </svg>
                                        <span class="label hidden">Move down</span>
                                    </button>
@@ -272,7 +272,7 @@
                                 <h2 class="listing-item-title">
                                     <a ng-click="openAttributeModal(task)" class="button button-beta" data-modal="add-field">
                                         <svg class="iconic">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                                         </svg>
                                        <span translate="survey.add_field">Add field</span>
                                     </a>
@@ -290,7 +290,7 @@
                               <h2 class="listing-item-title">
                                   <button class="button-destructive" ng-click="deleteTask(task)">
                                       <svg class="iconic">
-                                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                                       </svg>
                                       <span class="button-label" translate="survey.task.delete.delete">Delete task</span>
                                   </button>
@@ -312,7 +312,7 @@
 
                   <button class="button-destructive" ng-click="deleteSurvey()">
                       <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                       </svg>
                       <span class="button-label" translate>survey.delete.delete</span>
                   </button>

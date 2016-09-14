@@ -5,9 +5,9 @@
         <!-- status indicator -->
         <span class="status-indicator tooltip" ng-class="{ empty: post.status!='draft', yellow: post.status=='draft'}">
             <svg class="iconic">
-                <use xlink:href="../../img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-                <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
-                <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+                <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+                <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+                <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
             </svg>
             <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
             <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>

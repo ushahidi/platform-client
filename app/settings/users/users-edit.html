@@ -12,7 +12,7 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -47,7 +47,7 @@
                             ng-show="form.full_name.$dirty"
                             class="alert error">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             <span translate="{{'user.valid.full_name.' + error}}" translate-default="{{error}}"></span>
                         </div>
@@ -60,7 +60,7 @@
                             ng-show="form.email.$dirty"
                             class="alert error">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             <span translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></span>
                         </div>
@@ -76,7 +76,7 @@
                             ng-show="form.password.$dirty"
                             class="alert error">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#warning"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             <span translate="{{'user.valid.password.' + error}}" translate-default="{{error}}"></span>
                         </div>
@@ -91,7 +91,7 @@
                                 {{ roles[user.role].display_name }}
                             </span>
                             <svg class="iconic chevron">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                             </svg>
                         </legend>
                         <div class="dropdown-menu init" dropdown-menu>
@@ -120,7 +120,7 @@
 
                        <button class="button-destructive" ng-click="deleteUser(user)">
                            <svg class="iconic">
-                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                            </svg>
                            <span class="button-label" translate>user.delete_user</span>
                        </button>

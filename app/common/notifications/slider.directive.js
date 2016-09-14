@@ -25,7 +25,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
 
         var templateScope;
         var closeTimeout = null;
-        var iconPath = '../../img/iconic-sprite.svg#';
+        var iconPath = '/img/iconic-sprite.svg#';
         // content element
         var sliderContent = $element.find('slider-content');
 

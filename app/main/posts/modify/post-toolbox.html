@@ -6,9 +6,9 @@
         <span class="legend-label">
           <span class="custom-fieldset-value">
             <svg class="iconic">
-            <use xlink:href="../../../img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-            <use xlink:href="../../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
-            <use xlink:href="../../../img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
             </svg>
             <span translate="post.published" ng-if="post.status == 'published'">Published</span>
             <span translate="post.draft" ng-if="post.status == 'draft'">Under review</span>
@@ -17,7 +17,7 @@
           </span>
         </span>
         <svg class="iconic chevron">
-          <use xlink:href="../../../img/iconic-sprite.svg#chevron-bottom"></use>
+          <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
       </legend>
       <div class="dropdown-menu init" dropdown-menu>
@@ -28,9 +28,9 @@
              >
           <label for="{{status}}">
           <svg class="iconic">
-            <use xlink:href="../../../img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-            <use xlink:href="../../../img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
-            <use xlink:href="../../../img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
           </svg>
           <input type="radio" name="status" id="{{status}}" />
           <span translate="post.published" ng-if="status == 'published'">Published</span>
@@ -49,7 +49,7 @@
 
     <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle ng-click="loadAuthorFormDefaults()">
       <svg class="iconic">
-        <use xlink:href="../../../img/iconic-sprite.svg#chevron-bottom"></use>
+        <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
       </svg>
       <span class="label hidden">Show/hide</span>
     </span>
@@ -82,7 +82,7 @@
 
     <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
       <svg class="iconic">
-        <use xlink:href="../../../img/iconic-sprite.svg#chevron-bottom"></use>
+        <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
       </svg>
       <span class="label hidden">Show/hide</span>
     </span>
