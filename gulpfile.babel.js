@@ -33,7 +33,6 @@ let resolveToApp = (glob = '') => {
 // map of all paths
 let paths = {
   js: resolveToApp('**/*!(.spec.js).js'), // exclude spec files
-  // styl: resolveToApp('**/*.scss'), // stylesheets
   html: [
     resolveToApp('**/*.html'),
     resolveToApp('index.html')
