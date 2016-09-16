@@ -13,6 +13,8 @@ import gutil    from 'gulp-util';
 import serve    from 'browser-sync';
 import del      from 'del';
 import dotenv   from 'dotenv';
+import tar      from 'gulp-tar';
+import gzip     from 'gulp-gzip';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
@@ -53,13 +55,13 @@ gulp.task('dist', (cb) => {
 });
 
 // Copy config.js into dist
-gulp.task('dist-config', [], (cb) => {
+gulp.task('dist-config', (cb) => {
     return gulp.src(paths.config)
         .pipe(gulp.dest(paths.dest));
 });
 
 // Build webpack for production
-gulp.task('dist-webpack', [], (cb) => {
+gulp.task('dist-webpack', (cb) => {
   const config = require('./webpack.dist.config');
   config.entry.app = paths.entry;
 
@@ -137,6 +139,42 @@ gulp.task('clean', (cb) => {
     gutil.log("[clean]", paths);
     cb();
   })
+});
+
+/**
+ * Task `release` - Build release
+ */
+gulp.task('transifex-download', require('./gulp/transifex-download'));
+
+/**
+ * Task `heroku:dev` - builds app for heroku
+ */
+gulp.task('heroku:dev', ['dist']);
+
+/**
+ * Task `tar` - Build tarball for release
+ * Options
+ * `--version-suffix=<version>` - Specify version for output fil
+ */
+gulp.task('tar', () => {
+    var version = gutil.env['version-suffix'] || require('./package.json').version;
+    var dest_dir = gutil.env['dest-dir'] || 'build';
+
+    return gulp.src(path.join(paths.dest, '**'))
+        .pipe(rename(function (filePath) {
+            // Prefix path
+            filePath.dirname = path.join('ushahidi-platform-client-bundle-' + version, filePath.dirname);
+        }))
+        .pipe(tar('ushahidi-platform-client-bundle-' + version + '.tar'))
+        .pipe(gzip())
+        .pipe(gulp.dest(dest_dir));
+});
+
+/**
+ * Task `release` - Build release
+ */
+gulp.task('release', (done) => {
+    return sync('dist', 'tar', done);
 });
 
 gulp.task('default', ['watch']);
