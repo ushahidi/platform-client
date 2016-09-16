@@ -3,7 +3,8 @@ var path    = require('path');
 var config  = require('./webpack.config');
 
 config.output = {
-  filename: '[name].bundle.js',
+  filename: '[name].[chunkhash].bundle.js',
+  chunkFilename: "[name].[chunkhash].bundle.js",
   publicPath: '',
   path: path.resolve(__dirname, 'dist')
 };
