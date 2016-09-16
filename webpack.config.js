@@ -10,12 +10,14 @@ module.exports = {
   module: {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
-       { test: /\.html$/, loader: 'html?attrs[]=img:src&attrs[]=use:xlink:href&root='+imgPath },
+       { test: /\.html$/, loader: 'html?attrs[]=img:src&attrs[]=use:xlink:href&attrs[]=link:href&root='+imgPath },
        { test: /\.scss$/, loader: 'style!css!resolve-url!sass?sourceMap' },
        { test: /\.css$/, loader: 'style!css' },
        { test: /\.png/, loader: 'url?limit=10000' },
        { test: /\.svg/, loader: 'svg-url?limit=10000' },
-       { test: /\.json$/, loader: 'json' }
+       { test: /\.woff/, loader: 'url?limit=10000' },
+       { test: /\.ttf|\.eot/, loader: 'file' },
+       { test: /\.json$/, loader: 'json' },
     ]
   },
   plugins: [
