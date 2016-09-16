@@ -5,7 +5,3 @@
 // 	backendUrl : "https://ushahidi-platform-api-release.herokuapp.com",
 // 	mapboxApiKey: ""
 // };
-
-window.ushahidi = {
-	backendUrl: "http://ushv3.dev"
-}

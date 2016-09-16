@@ -11,6 +11,10 @@ config.output = {
 
 config.plugins = config.plugins.concat([
 
+  new webpack.DefinePlugin({
+    BACKEND_URL: JSON.stringify('http://backend.url.undefined')
+  }),
+
   // Reduces bundles total size
   new webpack.optimize.UglifyJsPlugin({
     mangle: {
