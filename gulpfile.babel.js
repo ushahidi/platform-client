@@ -43,11 +43,23 @@ let paths = {
   ],
   output: root,
   // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
+  config: resolveToApp('config.js'),
   dest: path.join(__dirname, 'dist')
 };
 
 // use webpack.config.js to build modules
-gulp.task('dist', ['clean'], (cb) => {
+gulp.task('dist', (cb) => {
+    return sync('clean', ['dist-webpack', 'dist-config', 'transifex-download'], cb);
+});
+
+// Copy config.js into dist
+gulp.task('dist-config', [], (cb) => {
+    return gulp.src(paths.config)
+        .pipe(gulp.dest(paths.dest));
+});
+
+// Build webpack for production
+gulp.task('dist-webpack', [], (cb) => {
   const config = require('./webpack.dist.config');
   config.entry.app = paths.entry;
 
