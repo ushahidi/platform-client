@@ -12,12 +12,18 @@ import lodash   from 'lodash';
 import gutil    from 'gulp-util';
 import serve    from 'browser-sync';
 import del      from 'del';
+import dotenv   from 'dotenv';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
 import historyApiFallback   from 'connect-history-api-fallback';
 
 let root = 'app';
+
+// Load .env file
+dotenv.config({silent: true});
+// Grab backend-url from gulp options
+process.env.BACKEND_URL = gutil.env['backend-url'] || process.env.BACKEND_URL;
 
 // helper method for resolving paths
 let resolveToApp = (glob = '') => {

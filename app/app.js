@@ -38,8 +38,8 @@ angular.module('ngRaven', []);
 window.ushahidi = window.ushahidi || {};
 
 // this 'environment variable' will be set within the gulpfile
-var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || process.env.BACKEND_URL || 'http://ushahidi-backend').replace(/\/$/, ''),
-    intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || process.env.INTERCOM_APP_ID || '',
+var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
+    intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
         'posts',
