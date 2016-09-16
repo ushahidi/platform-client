@@ -27,7 +27,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'app/index.html',
       inject: 'body',
-      hash: true
+      hash: false
     }),
 
     // Automatically move all modules defined outside of application directory and pattern library
