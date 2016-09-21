@@ -21,22 +21,6 @@ function (
         controller: require('./data-import/data-after-import.controller.js'),
         templateUrl: 'templates/settings/data-import/after-import.html'
     })
-    .when('/settings/data-configure', {
-        controller: require('./data-import/data-configure.controller.js'),
-        templateUrl: 'templates/settings/data-import/data-configure.html'
-    })
-    .when('/settings/data-mapper/:formId/:id', {
-        controller: require('./data-import/data-mapper.controller.js'),
-        templateUrl: 'templates/settings/data-import/data-mapper.html',
-        resolve: {
-            initialData: ['$route', 'DataRetriever', function ($route, DataRetriever) {
-                return DataRetriever.dataMapperInitialData(
-                    $route.current.params.formId,
-                    $route.current.params.id
-                );
-            }]
-        }
-    })
     .when('/settings/surveys', {
         controller: require('./surveys/surveys.controller.js'),
         templateUrl: 'templates/settings/surveys/surveys.html'

@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div class="form-field form-field-adapt" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
+                    <div class="form-field" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
                         <label class="hidden" translate>user.email</label>
                         <input type="email" placeholder="{{'user_create.email' | translate}}" ng-maxlength="150" ng-model="user.email" name="email" required>
                         <div ng-repeat="(error, value) in form.email.$error"

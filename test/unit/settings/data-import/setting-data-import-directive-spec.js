@@ -39,29 +39,4 @@ describe('setting data import directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
     }));
-
-    it('should attempt to import a csv', function () {
-        spyOn(Notify, 'notify');
-
-        $scope.fileContainer = {
-            file: {
-                name: 'test csv'
-            }
-        };
-
-        $scope.formId = 'pass';
-
-        $scope.importCSV();
-
-        expect(Notify.notify).toHaveBeenCalled();
-    });
-
-    it('should require that a file is uploaded', function () {
-        spyOn(Notify, 'error');
-        $scope.fileContainer = {
-            file: undefined
-        };
-        $scope.importCSV();
-        expect(Notify.error).toHaveBeenCalled();
-    });
 });

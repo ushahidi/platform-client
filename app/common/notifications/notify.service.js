@@ -27,7 +27,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function error(errorText, translateValues) {
         function showSlider(errorText) {
-            SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error');
+            SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error', null, false);
         }
 
         $translate(errorText, translateValues).then(showSlider, showSlider);
@@ -36,7 +36,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function errorsPretranslated(errorTexts) {
         var scope = getScope();
         scope.errors = errorTexts;
-        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
+        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope, false);
     }
 
     function errors(errorTexts, translateValues) {
@@ -44,7 +44,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         $translate(errorTexts, translateValues).then(function (errors) {
             scope.errors = errors;
-            SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
+            SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope, false);
         });
     }
 
@@ -56,7 +56,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             return;
         }
 
-        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope);
+        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope, false);
     }
 
     function success(successText, translateValues) {
