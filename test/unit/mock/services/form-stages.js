@@ -25,6 +25,12 @@ module.exports = [function () {
                 id: 1
             };
         },
+        get: function () {
+            return {
+                name: 'test form stages',
+                id: 1
+            };
+        },
         delete: function () {
             return {$promise: {
                 then: function (successCallback) {
