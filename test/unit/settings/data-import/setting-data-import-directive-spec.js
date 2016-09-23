@@ -40,10 +40,6 @@ describe('setting data import directive', function () {
         $scope.$digest();
     }));
 
-    afterEach(function () {
-        $rootScope.$apply();
-    });
-
     it('should attempt to import a csv', function () {
         spyOn(Notify, 'notify');
 
