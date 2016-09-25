@@ -77,12 +77,23 @@ Our gulp build
 Instead of having to type the flags every time, you can also use a `.gulpconfig.json` file to set the default options for running the client.
 
 ```
-NODE_SERVER:true,
-BACKEND_URL:"http://ushahidi-backend",
-UGLIFY_JS:true,
-MOCK_BACKEND:false,
-KARMA_CHROME:false,
-PORT:8080
+NODE_SERVER=true
+BACKEND_URL=http://ushahidi-backend
+UGLIFY_JS=true
+MOCK_BACKEND=false
+KARMA_CHROME=false
+PORT=8080
+```
+
+If you decide to use a `.gulconfig.json` for gulp's configuration, use the following.
+
+```
+{NODE_SERVER=true
+BACKEND_URL=http://ushahidi-backend
+UGLIFY_JS=true
+MOCK_BACKEND=false
+KARMA_CHROME=false
+PORT=8080}
 ```
 
 * `NODE_SERVER` - always run the `node-server` task
