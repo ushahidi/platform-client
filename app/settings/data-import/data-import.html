@@ -105,7 +105,7 @@
                                 </label>
                                 <fieldset data-fieldgroup-target="status-model-mark" ng-show="isStatusOption('mark_as')">
                                   <legend class="hidden">Post status</legend>
-                                    <div class="form-field radio icon-input" ng-class="{'checked' : isChecked('published')}">
+                                    <div class="form-field radio icon-input" ng-class="{'checked' : isStatusSelected('published')}">
                                       <label for="status-published" ng-click="setStatus('published')">
                                           <svg class="iconic">
                                               <use xlink:href="../../img/iconic-sprite.svg#globe"></use>
@@ -119,7 +119,7 @@
                                       <!--// END IF //-->
                                   </div>
 
-                                  <div class="form-field radio icon-input" ng-class="{'checked' : isChecked('draft')}">
+                                  <div class="form-field radio icon-input" ng-class="{'checked' : isStatusSelected('draft')}">
                                       <label for="status-review" ng-click="setStatus('draft')">
                                           <svg class="iconic">
                                               <use xlink:href="../../img/iconic-sprite.svg#lock-locked"></use>
@@ -129,7 +129,7 @@
                                       </label>
                                   </div>
 
-                                  <div class="form-field radio icon-input" ng-class="{'checked' : isChecked('archived')}">
+                                  <div class="form-field radio icon-input" ng-class="{'checked' : isStatusSelected('archived')}">
                                       <label for="status-archive" ng-click="setStatus('archived')">
                                           <svg class="iconic">
                                               <use xlink:href="../../img/iconic-sprite.svg#box"></use>

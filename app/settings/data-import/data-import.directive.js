@@ -32,7 +32,7 @@ function (
             $scope.setStatus = setStatus;
             $scope.setStatusOption = setStatusOption;
             $scope.isStatusOption = isStatusOption;
-            $scope.isChecked = isChecked;
+            $scope.isStatusSelected = isStatusSelected;
             $scope.setSelectedForm = setSelectedForm;
             $scope.isSelectedForm = isSelectedForm;
             $scope.cancelImport = cancelImport;
@@ -70,7 +70,7 @@ function (
                 return $scope.statusOption === option;
             }
 
-            function isChecked(status) {
+            function isStatusSelected(status) {
                 return $scope.selectedStatus === status;
             }
 
