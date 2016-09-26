@@ -265,7 +265,7 @@ gulp.task('build', ['sass', 'css', 'font', 'svg-iconic-sprite', 'svg-icons', 'br
 gulp.task('watch', ['watchify'], function () {
     livereload.listen(35732);
     gulp.watch('sass/**/*.scss', ['sass']);
-    gulp.watch('server/www/**/*.html', ['html']);
+    gulp.watch('app/**/*.html', ['html']);
 });
 
 /**
