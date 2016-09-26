@@ -15,7 +15,7 @@ require('angular-filter');
 require('angular-local-storage');
 require('checklist-model');
 require('ngGeolocation/ngGeolocation');
-require('ng-showdown/src/ng-showdown');
+require('ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
@@ -68,7 +68,7 @@ angular.module('app',
         'angular-datepicker',
         'leaflet-directive',
         'angular.filter',
-        'showdown',
+        'ng-showdown',
         'ngGeolocation',
         'nvd3',
         'angular-cache',
