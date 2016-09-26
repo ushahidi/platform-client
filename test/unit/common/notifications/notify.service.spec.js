@@ -57,7 +57,7 @@ describe('Notify', function () {
         });
 
         it('Calls SliderService.openTemplate with error message', function () {
-            expect(mockSliderService.openTemplate).toHaveBeenCalledWith('<p>Test message</p>', 'warning', 'error');
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith('<p>Test message</p>', 'warning', 'error', null, false);
         });
     });
 
@@ -70,13 +70,13 @@ describe('Notify', function () {
             Notify.errors(['Test message 1', 'Test message 2']);
             $rootScope.$digest();
 
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'Test message 1': 'Test message 1', 'Test message 2': 'Test message 2'}}));
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'Test message 1': 'Test message 1', 'Test message 2': 'Test message 2'}}), false);
         });
 
         it('To translate messages if possible', function () {
             Notify.errors(['dummy_error', 'Test message 2']);
             $rootScope.$digest();
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'dummy_error': 'Some error', 'Test message 2': 'Test message 2'}}));
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'dummy_error': 'Some error', 'Test message 2': 'Test message 2'}}), false);
         });
     });
 
@@ -107,7 +107,7 @@ describe('Notify', function () {
         });
 
         it('Calls SliderService.openTemplate with error message', function () {
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: ['Error 1', 'Error 2']}));
+            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: ['Error 1', 'Error 2']}), false);
         });
     });
 

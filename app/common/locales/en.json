@@ -539,6 +539,7 @@
             "associated_messages": "View messages associated with this post"
         },
         "valid" : {
+            "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
             "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
             "title" : {
                 "required" : "A title is required",
@@ -760,6 +761,14 @@
         }
     },
     "data_import" :{
+        "survey_field" : "Survey field",
+        "csv_column" : "CSV column",
+        "choose_which_column" : "Choose which CSV column should be assigned to each survey field",
+        "each_survey_field" : "Each of the survey's fields are listed below. Choose the column from your CSV file that you'd like to use to populate each of those fields.",
+        "status_explanation" : "Ushahidi recognizes one of three post statuses: Published, Under review, and Archived. So be sure that each entry in the column you select has one of those three values.",
+        "defined_column" : "Defined by a column in your CSV file...",
+        "imported_posts_status" : "Imported posts should have their status...",
+        "marked_as" : "Marked as...",
         "see_imported_posts" : "See imported posts",
         "import_another_csv" : "Import another CSV file",
         "import_complete" : "Your import is complete",
@@ -768,7 +777,7 @@
         "nearly_complete" : "Your import is nearly complete",
         "finish_info" : "The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.",
         "next" : "Next",
-        "configure_posts": "Configure Posts",
+        "configure_imported_posts": "Configure imported posts",
         "configure_explanation": "Through this interface you can set values for the survey fields that were not mapped to entries in the CSV. These values will be the same for all imported posts.",
         "import" : "Import",
         "import_explanation_csv" : "Import the data from a CSV spreadsheet into your deployment as posts belonging to a specific survey",
@@ -778,10 +787,10 @@
         "configure_posts" : "Configure Posts",
         "configure_all_imported_posts" : "Configure all imported posts",
         "csv" : "CSV",
-        "post_type" : "Import to which survey?",
         "file_csv" : "CSV file",
         "import_csv" : "Import CSV",
-        "choose_file" : "Choose file",
+        "import_to" : "Import to ",
+        "choose_csv_file" : "Choose CSV file",
         "organize_data" : "Organize data",
         "organize_your_imported_data" : "Assign CSV columns to post fields",
         "assign_csv_message" : "Assign CSV columns to post fields",
@@ -789,10 +798,10 @@
         "csv_instructions_required_fields" : "Fields marked with a [*] are required and must be assigned a value.",
         "csv_column_name" : "CSV column name",
         "post_type_title" : "{{form_name}} field name",
-        "dont_import" : "Don't import",
+        "leave_empty" : "Leave empty",
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
-        "select_post_type" : "Select Survey"
+        "which_survey" : "which survey?"
     },
     "user": {
         "add_user" : "Add User",
@@ -885,10 +894,12 @@
         },
         "data_import" : {
             "see_imported_posts" : "See imported posts",
+            "file_missing" : "Please choose a CSV file to upload.",
+            "form_missing" : "Please select a Survey.",
             "csv_upload" : "File {{name}} successfully uploaded",
             "csv_import_processed_errors" : "<strong>Your CSV import</strong> is complete. {{processed}} records imported, {{errors}} records failed.",
             "csv_import_success_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.",
-            "duplicate_fields" : "Columns must be mapped to unique survey fields. The following fields have more than 1 mapping: {{duplicates}}",
+            "duplicate_fields" : "Columns must be mapped to unique survey fields. The following columns have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled"

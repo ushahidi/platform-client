@@ -89,7 +89,12 @@ function PostEditorController(
 
         $scope.post.form = $scope.form;
         $scope.fetchAttributesAndTasks($scope.post.form.id);
-        //$scope.fetchStages($scope.post.form.id);
+
+        // If the post in marked as 'Published' but it is not in
+        // a valid state to be saved as 'Published' warn the user
+        if ($scope.post.status === 'published' && !canSavePost()) {
+            Notify.error('post.valid.invalid_state');
+        }
     }
 
     function setVisibleStage(stageId) {

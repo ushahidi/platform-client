@@ -49,9 +49,9 @@ describe('setting data import directive', function () {
             }
         };
 
-        $scope.formId = 'pass';
+        $scope.selectedForm = {id: 'pass'};
 
-        $scope.importCSV();
+        $scope.completeStepOne();
 
         expect(Notify.notify).toHaveBeenCalled();
     });
@@ -61,7 +61,57 @@ describe('setting data import directive', function () {
         $scope.fileContainer = {
             file: undefined
         };
-        $scope.importCSV();
+        $scope.completeStepOne();
+        expect(Notify.error).toHaveBeenCalled();
+    });
+
+    it('should detect that the csv mappings are empty', function () {
+        spyOn(Notify, 'error');
+        $scope.csv = {};
+        $scope.csv.maps_to = {};
+        $scope.completeStepTwo();
+
+        expect(Notify.error).toHaveBeenCalled();
+    });
+
+    it('should detect that the csv mappings contain duplicates', function () {
+        spyOn(Notify, 'error');
+        $scope.csv = {};
+        $scope.csv.maps_to = [];
+        $scope.csv.columns = [
+            'column A',
+            'column B'
+        ];
+        $scope.maps_to = {
+            'Field 1': 0,
+            'Field 2': 0
+        };
+        $scope.completeStepTwo();
+
+        expect(Notify.error).toHaveBeenCalled();
+    });
+
+    it('should detect that the csv mappings are missing required fields', function () {
+        spyOn(Notify, 'error');
+        $scope.csv = {};
+        $scope.csv.maps_to = [];
+        $scope.csv.columns = [
+            'column A',
+            'column B'
+        ];
+        $scope.maps_to = {
+            'field_1': 0,
+            'field_2': 1
+        };
+        $scope.required_fields = [
+            'field_3'
+        ];
+        $scope.required_fields_map = {
+            'field_3': 'Field 3'
+        };
+
+        $scope.completeStepTwo();
+
         expect(Notify.error).toHaveBeenCalled();
     });
 });

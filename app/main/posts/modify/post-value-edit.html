@@ -8,7 +8,6 @@
         'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
         'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
         'required': attribute.required,
-        'form-field-adapt': isText(attribute) || isTextarea(attribute),
         'date' : isDate(attribute) || isDateTime(attribute)
       }">
 
