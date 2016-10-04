@@ -1023,7 +1023,9 @@
         "get_current_position": "Get current position",
         "update_location": "Update location",
         "click_map": "Click the map to place a marker",
-        "clear":"Clear"
+        "clear":"Clear",
+        "placeholder":"Enter a location..",
+        "error":"Sorry we could not find a location matching your search"
     },
     "notification": {
         "title": "Notifications",
