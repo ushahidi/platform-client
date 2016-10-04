@@ -66,9 +66,13 @@ angular.module('ushahidi.posts', [])
 .directive('savedSearchListing', require('./savedsearches/listing.directive.js'))
 .directive('savedSearchModeContext', require('./savedsearches/mode-context.directive.js'))
 
+.service('CollectionsService', require('./collections/collections.service.js'))
 .directive('collectionModeContext', require('./collections/mode-context.directive.js'))
 .directive('collectionEditor', require('./collections/editor.directive.js'))
 .directive('collectionListing', require('./collections/listing.directive.js'))
+
+.directive('collectionToggleButton', require('./common/collection-toggle/collection-toggle-button.js'))
+.directive('collectionToggleLink', require('./common/collection-toggle/collection-toggle-link.js'))
 
 
 .config(require('./posts-routes.js'))

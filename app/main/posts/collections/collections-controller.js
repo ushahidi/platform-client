@@ -27,10 +27,11 @@ module.exports = [
 
         // Add set to the scope
         $scope.collection = collection;
-        $scope.getCollectionUser = function () {
+        $scope.collection.user = getCollectionUser();
+        function getCollectionUser() {
             return $scope.collection.user ? UserEndpoint.get({id: $scope.collection.user.id}) : undefined;
-        };
-        $scope.collection.user = $scope.getCollectionUser();
+        }
+
         // Set the page title
         $translate('post.posts').then(function (title) {
             $scope.title = title;

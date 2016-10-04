@@ -7,9 +7,11 @@ function CollectionListing() {
         restrict: 'E',
         replace: true,
         scope: {
+            'isToggleMode': '<toggleMode',
+            'posts': '='
         },
         controller: CollectionListingController,
-        templateUrl: 'templates/main/posts/collections/collection-listing.html'
+        templateUrl: 'templates/main/posts/collections/listing.html'
     };
 }
 
@@ -21,7 +23,8 @@ CollectionListingController.$inject = [
     '$q',
     'Notify',
     'CollectionEndpoint',
-    '_'
+    '_',
+    'CollectionsService'
 ];
 function CollectionListingController(
     $rootScope,
@@ -31,34 +34,29 @@ function CollectionListingController(
     $q,
     Notify,
     CollectionEndpoint,
-    _
+    _,
+    CollectionsService
 ) {
-    $scope.collectionListingVisible = false;
-    $scope.path = '/collections/';
-    $scope.isToggleMode = false;
+    var collectionsPath = '/collections/';
 
-    $scope.loadCollections = loadCollections;
     $scope.postInCollection = postInCollection;
     $scope.toggleCollection = toggleCollection;
     $scope.addToPostsSet = addToPostsSet;
-    $scope.addToCollection = addToCollection;
-    $scope.removeFromCollection = removeFromCollection;
     $scope.collectionClickHandler = collectionClickHandler;
-    $scope.goToCollection = goToCollection;
     $scope.createNewCollection = createNewCollection;
-    $scope.searchCollections = searchCollections;
+    $scope.searchCollections = loadCollections;
 
     activate();
 
     function activate() {
-
+        loadCollections();
     }
 
-    function loadCollections() {
+    function loadCollections(collectionQuery) {
         if ($scope.isToggleMode) {
-            $scope.collections = CollectionEndpoint.editableByMe();
+            $scope.collections = CollectionEndpoint.editableByMe({ q: collectionQuery });
         } else {
-            $scope.collections = CollectionEndpoint.query();
+            $scope.collections = CollectionEndpoint.query({ q: collectionQuery });
         }
     }
 
@@ -125,15 +123,15 @@ function CollectionListingController(
     // In Listing mode: a click will take the user to the collections page
     // In Toggle mode: a click will select a given collection
     function collectionClickHandler(collection) {
-        $scope.isToggleMode ? $scope.toggleCollection(collection.id) : $scope.goToCollection(collection);
+        $scope.isToggleMode ? toggleCollection(collection) : goToCollection(collection);
     }
 
     // This feature is only available in Lisiting mode
     // When a user clicks on a collection lisiting item
     // they will be directed to the collection page
     function goToCollection(collection) {
-        $scope.collectionListingVisible = false;
-        $location.path($scope.path + collection.id + '/' + collection.view);
+        $scope.$parent.closeModal();
+        $location.path(collectionsPath + collection.id + '/' + collection.view);
     }
 
     // Toggle a post as selected or not
@@ -144,12 +142,12 @@ function CollectionListingController(
         // For mass updates of many post the user is only permitted to add to collection
         if ($scope.posts.length === 1) {
             if (_.contains($scope.posts[0].sets, String(selectedCollection.id))) {
-                $scope.removeFromCollection(selectedCollection);
+                removeFromCollection(selectedCollection);
             } else {
-                $scope.addToCollection(selectedCollection);
+                addToCollection(selectedCollection);
             }
         } else {
-            $scope.addToCollection(selectedCollection);
+            addToCollection(selectedCollection);
         }
     }
 
@@ -158,39 +156,7 @@ function CollectionListingController(
     // In the toggleMode we attach the post(s) to the event, collectionEditor will return this post(s)
     // after the creation, along with the newly created collection
     function createNewCollection() {
-        $scope.collectionListingVisible = false;
-        $scope.isToggleMode ? $rootScope.$emit('collectionCreate:show', $scope.posts) : $rootScope.$emit('collectionEditor:show');
+        $scope.$parent.closeModal();
+        CollectionsService.createCollection($scope.posts);
     }
-
-    // Search and filter collection list by query term
-    function searchCollections(collectionQuery) {
-        $scope.collections = CollectionEndpoint.editableByMe(
-            {
-                q: collectionQuery
-            }
-        );
-    }
-
-    // Update collection listing when collection are updated elsewhere
-    // in the app
-    $rootScope.$on('collection:update', function () {
-        $scope.loadCollections();
-    });
-
-    // Show listing modal
-    $rootScope.$on('collectionListing:show', function () {
-        $scope.collectionListingVisible = true;
-        $scope.isToggleMode = false;
-        $scope.loadCollections();
-    });
-
-    // Show listing modal in Collection Toggle mode
-    // This allows users to select collection to add a given post(s) to
-    // This is called with a post array of 1 or more entries
-    $rootScope.$on('collectionToggle:show', function (event, posts) {
-        $scope.posts = posts;
-        $scope.collectionListingVisible = true;
-        $scope.isToggleMode = true;
-        $scope.loadCollections();
-    });
 }
