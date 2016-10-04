@@ -15,21 +15,16 @@ require('angular-filter');
 require('angular-local-storage');
 require('checklist-model');
 require('ngGeolocation/ngGeolocation');
-require('ng-showdown/src/ng-showdown');
+require('ng-showdown');
 window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 
 // Load ushahidi modules
-require('./frame/frame-module.js');
 require('./common/common-module.js');
-require('./post/post-module.js');
-require('./activity/activity-module.js');
+require('./main/main-module.js');
 require('./settings/settings.module.js');
-require('./plans/plans-module.js');
-require('./set/set-module.js');
-require('./user-profile/user-profile-module.js');
 
 // Stub ngRaven module incase its not configured
 angular.module('ngRaven', []);
@@ -73,19 +68,14 @@ angular.module('app',
         'angular-datepicker',
         'leaflet-directive',
         'angular.filter',
-        'showdown',
+        'ng-showdown',
         'ngGeolocation',
         'nvd3',
         'angular-cache',
         'ngRaven',
-        'ushahidi.frame',
         'ushahidi.common',
-        'ushahidi.posts',
-        'ushahidi.settings',
-        'ushahidi.plans',
-        'ushahidi.sets',
-        'ushahidi.activity',
-        'ushahidi.user-profile'
+        'ushahidi.main',
+        'ushahidi.settings'
     ])
 
     .constant('CONST', {

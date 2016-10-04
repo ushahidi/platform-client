@@ -11,27 +11,15 @@ function (
     })
     .when('/settings/general', {
         controller: require('./site/site.controller.js'),
-        templateUrl: 'templates/settings/general/settings-general.html'
+        templateUrl: 'templates/settings/site/settings-general.html'
     })
     .when('/settings/data-import', {
         controller: require('./data-import/data-import.controller.js'),
         templateUrl: 'templates/settings/data-import/data-import.html'
     })
-    .when('/settings/data-configure', {
-        controller: require('./data-import/data-configure.controller.js'),
-        templateUrl: 'templates/settings/data-import/data-configure.html'
-    })
-    .when('/settings/data-mapper/:formId/:id', {
-        controller: require('./data-import/data-mapper.controller.js'),
-        templateUrl: 'templates/settings/data-import/data-mapper.html',
-        resolve: {
-            initialData: ['$route', 'DataRetriever', function ($route, DataRetriever) {
-                return DataRetriever.dataMapperInitialData(
-                    $route.current.params.formId,
-                    $route.current.params.id
-                );
-            }]
-        }
+    .when('/settings/data-after-import', {
+        controller: require('./data-import/data-after-import.controller.js'),
+        templateUrl: 'templates/settings/data-import/after-import.html'
     })
     .when('/settings/surveys', {
         controller: require('./surveys/surveys.controller.js'),
@@ -39,11 +27,11 @@ function (
     })
     .when('/settings/surveys/create', {
         controller: require('./surveys/edit.controller.js'),
-        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
+        templateUrl: 'templates/settings/surveys/survey-edit.html'
     })
     .when('/settings/surveys/:id', {
         controller: require('./surveys/edit.controller.js'),
-        templateUrl: 'templates/settings/surveys/modify/survey-edit.html'
+        templateUrl: 'templates/settings/surveys/survey-edit.html'
     })
     .when('/settings/categories', {
         controller: require('./categories/categories.controller.js'),
@@ -89,6 +77,10 @@ function (
     .when('/settings/datasources', {
         controller: require('./datasources/datasources.controller.js'),
         templateUrl: 'templates/settings/datasources/datasources.html'
+    })
+    .when('/settings/plan', {
+        controller: require('./plans/plans.controller.js'),
+        templateUrl: 'templates/settings/plan/plan.html'
     })
     ;
 

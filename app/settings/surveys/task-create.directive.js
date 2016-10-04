@@ -7,7 +7,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/settings/surveys/modify/survey-task-create.html',
+        templateUrl: 'templates/settings/surveys/task-create.html',
         link: function ($scope, $element, $attrs) {
 
             // Init an empty saved search

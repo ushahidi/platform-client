@@ -1,0 +1,12 @@
+<p translate-values="{processed: processed, errors: errors}"translate="notify.data_import.csv_import_processed_errors">
+  <strong>Your CSV import</strong> is complete. {{processed}} records imported, {{errors}} records failed.
+</p>
+<p translate-values="{from_name: form_name, filename: filename}" translate="notify.data_import.csv_import_success_info">
+  The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.
+</p>
+<div class="form-field">
+    <a class="button button-beta button-flat" ng-click="close()" href="/views/list" translate="notify.data_import.see_imported_posts">See imported posts</a>
+    <button class="button-flat message-trigger" ng-click="close()" translate="message.button.dismiss">
+        Dismiss
+    </button>
+</div>
