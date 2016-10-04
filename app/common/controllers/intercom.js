@@ -16,7 +16,9 @@ function (
     var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
 
     $rootScope.$on('event:authentication:login:succeeded', function () {
-        $scope.startIntercom();
+        if (!$rootScope.globalEmbed) {
+            $scope.startIntercom();
+        }
     });
 
     $scope.startIntercom = function () {

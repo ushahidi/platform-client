@@ -102,7 +102,7 @@
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
-    "ushahidi-platform-pattern-library": "3.5.1",
+    "ushahidi-platform-pattern-library": "ushahidi/platform-pattern-library.git#f-embeds",
     "selection-model": "jtrussell/angular-selection-model.git",
     "underscore": "^1.7.0"
   },
