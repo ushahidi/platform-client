@@ -12,5 +12,7 @@ EmbedControlController.$inject = ['$scope', '$element', '$attrs', '$rootScope', 
 function EmbedControlController($scope, $element, $attrs, $rootScope, _) {
     if ($rootScope.globalEmbed && !$attrs.embedOnly) {
         $element.addClass('hidden');
+    } else if (!$rootScope.globalEmbed && $attrs.embedOnly) {
+        $element.addClass('hidden');
     }
 }
