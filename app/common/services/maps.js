@@ -115,6 +115,9 @@ function (
     var Maps = {
         maps: {},
         config: undefined,
+        getZoomControlPosition: function () {
+            return $rootScope.globalEmbed ? 'bottomleft' : 'bottomright';
+        },
         getMap: function (name) {
             if (!this.maps[name]) {
                 this.maps[name] = Object.create(Map).init(name);
@@ -129,7 +132,7 @@ function (
         getInitialScope: function () {
             return {
                 defaults: {
-                    zoomControlPosition: 'bottomright',
+                    zoomControlPosition: this.getZoomControlPosition(),
                     scrollWheelZoom: false
                 },
                 center: { // Default to centered on Nairobi
