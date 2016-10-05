@@ -2,10 +2,12 @@ module.exports = [
     '$rootScope',
     '$location',
     '$window',
+    'Util',
 function (
     $rootScope,
     $location,
-    $window
+    $window,
+    Util
 ) {
     // Setup PL layout and switching function
     $rootScope.globalLayout = 'layout-a';
@@ -13,10 +15,7 @@ function (
         $rootScope.globalLayout = layout;
     };
     // Set embed mode
-    // TODO move this to util
-    var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
-    $rootScope.embedUrl = pattern.exec($window.ushahidi.apiUrl);
-    $rootScope.embedUrl = $rootScope.embedUrl[0].replace('api.', '');
+    $rootScope.embedUrl = Util.deploymentUrl();
     $rootScope.globalEmbed = ($window.self !== $window.top) ? true : false;
     if ($rootScope.globalEmbed) {
         $rootScope.setLayout('layout-embed');
