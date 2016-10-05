@@ -3,7 +3,7 @@
 
         <!-- the image file -->
         <figure ng-if="media.original_file_url" >
-            <img src="{{media.original_file_url}}" />
+            <img ng-src="{{ media.original_file_url }}" />
         </figure>
 
         <div class="form-field">
@@ -26,7 +26,7 @@
 
         <div class="form-field">
             <!-- caption displays on post edit (aka if an image file exists) -->
-            <figure ng-if="media.original_file_url" >
+            <figure ng-show="media.original_file_url" >
                 <input
                 type="text"
                 placeholder="{{ 'post.media.add_caption' | translate }}"

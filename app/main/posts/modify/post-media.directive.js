@@ -27,30 +27,31 @@ function (
             // Initialize media object
             $scope.media = {};
 
-            $scope.getMedia = function () {
+            $scope.uploadFile = uploadFile;
+            $scope.deleteMedia = deleteMedia;
+
+            activate();
+
+            function activate() {
+                getMedia();
+            }
+
+            function getMedia() {
                 if ($scope.mediaId) {
                     MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                         $scope.media = media;
                     });
                 }
-            };
+            }
 
-            $scope.getMedia();
-
-            $scope.mediaExists = function () {
-                return $scope.mediaId ? true : false;
-            };
-
-            $scope.updateCaption = function () {
-                MediaEndpoint.update({id: $scope.media}).$promise.then(function (result) {
-                    Notify.notify('notify.post.caption_updated');
-                }, function (error) {
+            // Never called
+            function updateCaption() {
+                return MediaEndpoint.update({id: $scope.mediaId, caption: $scope.media.caption }).$promise.then(function (result) {}, function (error) {
                     Notify.apiErrors(error);
                 });
-            };
+            }
 
-            $scope.uploadFile = function () {
-                //@todo Allow editing of caption for existing image
+            function uploadFile() {
                 if (!$scope.fileContainer.file) {
                     return;
                 }
@@ -88,9 +89,9 @@ function (
                 }, function (error) {
                     Notify.apiErrors(error);
                 });
-            };
+            }
 
-            var clearCurrentMedia = function (mediaId) {
+            function clearCurrentMedia(mediaId) {
                 // Delete previous media first
                 if (mediaId) {
                     return MediaEndpoint.delete({id: mediaId}).$promise;
@@ -98,9 +99,9 @@ function (
 
                 // Return a promise anyway if there is no media to delete
                 return $q.when();
-            };
+            }
 
-            $scope.deleteMedia = function (mediaId) {
+            function deleteMedia(mediaId) {
                 if (mediaId) {
                     MediaEndpoint.delete({id: mediaId}).$promise.then(function (result) {
                         $scope.mediaId = undefined;
@@ -109,7 +110,7 @@ function (
                         Notify.apiErrors(error);
                     });
                 }
-            };
+            }
         }
     };
 }];
