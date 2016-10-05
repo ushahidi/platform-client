@@ -13,10 +13,10 @@ function (
         $rootScope.globalLayout = layout;
     };
     // Set embed mode
-    // TODO move this to Util
+    // TODO move this to util
     var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
     $rootScope.embedUrl = pattern.exec($window.ushahidi.apiUrl);
-    $rootScope.embedUrl = $rootScope.embedUrl[1].replace('api.', '');
+    $rootScope.embedUrl = $rootScope.embedUrl[0].replace('api.', '');
     $rootScope.globalEmbed = ($window.self !== $window.top) ? true : false;
     if ($rootScope.globalEmbed) {
         $rootScope.setLayout('layout-embed');
