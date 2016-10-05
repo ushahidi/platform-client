@@ -113,7 +113,7 @@ function CollectionListingController(
         $q.all(calls)
         .then(function () {
             _.each($scope.posts, function (post) {
-                post.sets = _.without($scope.post.sets, String(collectionId));
+                post.sets = _.without(post.sets, String(collectionId));
             });
             Notify.notify('notify.collection.removed_from_collection', {collection: collection});
         }, function (errorResponse) {
