@@ -41,7 +41,7 @@ module.exports = function (config) {
 
         frameworks: ['jasmine', 'commonjs', 'fixture'],
 
-        browsers: ['Chrome', 'Firefox', 'PhantomJS'],
+        browsers: ['PhantomJS'],
 
         reporters: ['progress', 'coverage'],
 
