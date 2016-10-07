@@ -19,6 +19,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
 import historyApiFallback   from 'connect-history-api-fallback';
+import karma     from 'karma';
 
 let root = 'app';
 
@@ -139,6 +140,41 @@ gulp.task('clean', (cb) => {
     gutil.log("[clean]", paths);
     cb();
   })
+});
+
+
+/**
+ * Run test once and exit
+ */
+gulp.task('test', (done) => {
+    var server = new karma.Server({
+        configFile: __dirname + '/test/karma.conf.js',
+        singleRun: true
+    }, done);
+    server.start();
+});
+
+/**
+ * Send coverage stats to coveralls.io
+ */
+gulp.task('send-stats-to-coveralls', () => {
+    var coveralls = require('gulp-coveralls');
+    gulp.src('test/coverage/**/lcov.info')
+    .pipe(coveralls());
+
+});
+
+/**
+ * Watch for file changes and re-run tests on each change
+ */
+gulp.task('tdd', (done) => {
+    var server = new karma.Server({
+        configFile: __dirname + '/test/karma.conf.js',
+        reporters: ['progress', 'notify'],
+        autoWatch: true,
+        singleRun: false
+    }, done);
+    server.start();
 });
 
 /**
