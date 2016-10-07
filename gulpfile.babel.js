@@ -25,7 +25,7 @@ import jscs      from 'gulp-jscs';
 let root = 'app';
 
 // Load .env file
-dotenv.config();
+dotenv.config({silent: true});
 // Grab backend-url from gulp options
 process.env.BACKEND_URL = gutil.env['backend-url'] || process.env.BACKEND_URL;
 
