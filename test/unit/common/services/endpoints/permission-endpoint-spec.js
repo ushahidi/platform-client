@@ -13,15 +13,15 @@ describe('PermissionEndpoint', function () {
         'ngResource',
         'angular-cache'
         ])
-        .service('PermissionEndpoint', require(rootPath + 'app/common/services/endpoints/permission.js'))
-        .config(require(rootPath + 'app/common/configs/cache-config.js'));
+        .service('PermissionEndpoint', require('app/common/services/endpoints/permission.js'))
+        .config(require('app/common/configs/cache-config.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        require('test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _PermissionEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _PermissionEndpoint_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         BACKEND_URL = _CONST_.BACKEND_URL;

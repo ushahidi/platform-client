@@ -26,8 +26,8 @@ describe('login directive', function () {
         var testApp = angular.module('testApp', [
         'pascalprecht.translate'
         ])
-        // .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
-        .directive('loginForm', require(ROOT_PATH + 'app/common/auth/login.directive.js'))
+        // .config(require('app/common/configs/locale-config.js'))
+        .directive('loginForm', require('app/common/auth/login.directive.js'))
         .service('Authentication', function () {
             return mockAuthenticationService;
         })
@@ -48,14 +48,14 @@ describe('login directive', function () {
             };
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         $scope = _$rootScope_.$new();
@@ -67,7 +67,7 @@ describe('login directive', function () {
     }));
 
     describe('when logged in', function () {
-        beforeEach(inject(function () {
+        beforeEach(angular.mock.inject(function () {
             mockAuthenticationService.loginStatus = true;
 
             var element = '<login-form></login-form>';
@@ -82,7 +82,7 @@ describe('login directive', function () {
     });
 
     describe('when logged out', function () {
-        beforeEach(inject(function () {
+        beforeEach(angular.mock.inject(function () {
             spyOn(mockAuthenticationService, 'getLoginStatus').and.callThrough();
 
             var element = '<login-form></login-form>';

@@ -10,7 +10,7 @@ describe('view helper', function () {
         'ngResource',
         'pascalprecht.translate'
         ])
-        .service('ViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
+        .service('ViewHelper', require('app/common/services/view-helper.js'))
         .service('ConfigEndpoint', function () {
             return {
                 get : function () {}
@@ -19,14 +19,14 @@ describe('view helper', function () {
         .factory('BootstrapConfig', function () {
             return { map: {}, site: {}, features: {} };
         })
-        .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'));
+        .config(require('app/common/configs/locale-config.js'));
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_ViewHelper_) {
+    beforeEach(angular.mock.inject(function (_ViewHelper_) {
         ViewHelper = _ViewHelper_;
     }));
 

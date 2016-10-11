@@ -37,8 +37,8 @@ describe('global event handlers', function () {
         .service('Authentication', function () {
             return mockedAuthenticationService;
         })
-        .run(require(rootPath + 'app/common/global/event-handlers.js'));
+        .run(require('app/common/global/event-handlers.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        require('test/unit/simple-test-app-config.js')(testApp);
     });
 });

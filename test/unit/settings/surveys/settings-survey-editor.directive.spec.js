@@ -14,13 +14,13 @@ describe('setting survey editor directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+        require('test/unit/mock/mock-modules.js');
 
         var testApp = angular.module('testApp', [
             'ushahidi.mock'
         ]);
 
-        testApp.directive('surveyEditor', require(ROOT_PATH + 'app/settings/surveys/survey-editor.directive'))
+        testApp.directive('surveyEditor', require('app/settings/surveys/survey-editor.directive'))
         .service('FormEndpoint', function () {
             return mockFormEndpoint;
         })
@@ -28,14 +28,12 @@ describe('setting survey editor directive', function () {
             return mockFeatures;
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
-
-    beforeEach(inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $compile = _$compile_;

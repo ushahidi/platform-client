@@ -8,20 +8,20 @@ describe('setting data import controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+        require('test/unit/mock/mock-modules.js');
 
         var testApp = angular.module('testApp', [
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingDataImportController', require(ROOT_PATH + 'app/settings/data-import/data-import.controller.js'));
+        testApp.controller('settingDataImportController', require('app/settings/data-import/data-import.controller.js'));
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;

@@ -22,7 +22,7 @@ describe('Notify', function () {
         var testApp = angular.module('testApp', [
             'pascalprecht.translate'
         ]);
-        testApp.service('Notify', require(rootPath + 'app/common/notifications/notify.service.js'))
+        testApp.service('Notify', require('app/common/notifications/notify.service.js'))
         .service('SliderService', function () {
             return mockSliderService;
         })
@@ -39,12 +39,12 @@ describe('Notify', function () {
         })
         ;
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        require('test/unit/simple-test-app-config.js')(testApp);
     });
 
     beforeEach(angular.mock.module('testApp'));
 
-    beforeEach(inject(function (_$rootScope_, _Notify_, _$window_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _Notify_, _$window_) {
         $rootScope = _$rootScope_;
         Notify = _Notify_;
     }));

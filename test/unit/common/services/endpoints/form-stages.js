@@ -13,15 +13,15 @@ describe('FormStageEndpoint', function () {
         'ngResource',
         'angular-cache'
         ])
-        .service('FormStageEndpoint', require(rootPath + 'app/common/services/endpoints/form-stages.js'))
-        .config(require(rootPath + 'app/common/configs/cache-config.js'));
+        .service('FormStageEndpoint', require('app/common/services/endpoints/form-stages.js'))
+        .config(require('app/common/configs/cache-config.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        require('test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _FormStageEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _FormStageEndpoint_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         BACKEND_URL = _CONST_.BACKEND_URL;

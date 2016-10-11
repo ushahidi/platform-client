@@ -9,20 +9,20 @@ describe('setting roles controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+        require('test/unit/mock/mock-modules.js');
 
         var testApp = angular.module('testApp', [
         'ushahidi.mock'
         ]);
 
-        testApp.controller('settingRolesController', require(ROOT_PATH + 'app/settings/roles/roles.controller.js'));
+        testApp.controller('settingRolesController', require('app/settings/roles/roles.controller.js'));
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$q_, _$rootScope_, _$controller_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$q_, _$rootScope_, _$controller_, _Notify_) {
         $rootScope = _$rootScope_;
         $q = _$q_;
         $controller = _$controller_;

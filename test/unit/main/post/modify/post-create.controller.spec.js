@@ -7,7 +7,7 @@ describe('Post create controller', function () {
        FormEndpoint;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+        require('test/unit/mock/mock-modules.js');
         fixture.setBase('mocked_backend/api/v3');
 
         var testApp = angular.module('testApp', [
@@ -16,15 +16,15 @@ describe('Post create controller', function () {
         .value('PostEntity', function () {
             return fixture.load('posts/120.json');
         })
-        .controller('postCreateController', require(ROOT_PATH + 'app/main/posts/modify/post-create.controller.js'))
+        .controller('postCreateController', require('app/main/posts/modify/post-create.controller.js'))
         ;
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_,
+    beforeEach(angular.mock.inject(function (_$rootScope_,
                                 _$controller_,
                                 _PostEndpoint_,
                                 _FormEndpoint_

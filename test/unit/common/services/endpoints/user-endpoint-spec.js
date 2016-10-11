@@ -13,15 +13,15 @@ describe('UserEndpoint', function () {
         'ngResource',
         'angular-cache'
         ])
-        .service('UserEndpoint', require(rootPath + 'app/common/services/endpoints/user-endpoint.js'))
-        .config(require(rootPath + 'app/common/configs/cache-config.js'));
+        .service('UserEndpoint', require('app/common/services/endpoints/user-endpoint.js'))
+        .config(require('app/common/configs/cache-config.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        require('test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _UserEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _UserEndpoint_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         BACKEND_URL = _CONST_.BACKEND_URL;

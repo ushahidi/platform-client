@@ -19,7 +19,7 @@ module.exports = function (appModule) {
 
     appModule
         .factory('_', function ($window) {
-            return $window._;
+            return require('underscore/underscore');
         })
         .constant('CONST', {
             'BACKEND_URL'         : backendUrl,
@@ -29,5 +29,5 @@ module.exports = function (appModule) {
             'CLAIMED_ANONYMOUS_SCOPES' : claimedAnonymousScopes,
             'CLAIMED_USER_SCOPES' : claimedAnonymousScopes.concat('dataproviders')
         })
-        .service('Util', require(rootPath + 'app/common/services/util.js'));
+        .service('Util', require('app/common/services/util.js'));
 };

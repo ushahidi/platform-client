@@ -57,7 +57,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-notify-reporter": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.0",
-    "karma-sourcemap-loader": "^0.3.4",
+    "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.5.1",
     "lodash": "^4.11.1",
     "ng-annotate-loader": "0.0.10",

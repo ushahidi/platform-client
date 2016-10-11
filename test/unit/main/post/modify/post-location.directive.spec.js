@@ -13,21 +13,21 @@ describe('post location directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+        require('test/unit/mock/mock-modules.js');
 
         var testApp = angular.module('testApp', [
             'ushahidi.mock',
             'pascalprecht.translate'
         ]);
 
-        testApp.directive('postLocation', require(ROOT_PATH + 'app/main/posts/modify/post-location.directive'));
+        testApp.directive('postLocation', require('app/main/posts/modify/post-location.directive'));
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
+
 
     beforeEach(function () {
         angular.mock.module(function ($provide) {
@@ -58,7 +58,7 @@ describe('post location directive', function () {
         });
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _GlobalFilter_, _Geocoding_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _GlobalFilter_, _Geocoding_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 

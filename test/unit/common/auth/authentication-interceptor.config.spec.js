@@ -43,14 +43,14 @@ describe('authentication interceptor', function () {
         .service('Authentication', function () {
             return mockAuthentication;
         })
-        .config(require(rootPath + 'app/common/auth/authentication-interceptor.config.js'));
+        .config(require('app/common/auth/authentication-interceptor.config.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        require('test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$http_, _$rootScope_, _CONST_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$http_, _$rootScope_, _CONST_) {
         $httpBackend = _$httpBackend_;
         $http = _$http_;
         $rootScope = _$rootScope_;

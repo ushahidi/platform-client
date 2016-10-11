@@ -19,18 +19,18 @@ describe('posts views controller', function () {
         ]);
 
         testApp
-        .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
-        .controller('postViewsController', require(ROOT_PATH + 'app/main/posts/views/post-views.controller.js'))
+        .config(require('app/common/configs/locale-config.js'))
+        .controller('postViewsController', require('app/main/posts/views/post-views.controller.js'))
         .service('PostFilters', function () {
             return mockPostFilters;
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();

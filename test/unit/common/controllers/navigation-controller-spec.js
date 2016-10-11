@@ -13,15 +13,15 @@ describe('navigation controller', function () {
         'ushahidi.mock',
         'pascalprecht.translate'
         ])
-        // .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
-        .controller('navigationController', require(ROOT_PATH + 'app/common/controllers/navigation.js'));
+        // .config(require('app/common/configs/locale-config.js'))
+        .controller('navigationController', require('app/common/controllers/navigation.js'));
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
