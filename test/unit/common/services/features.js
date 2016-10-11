@@ -5,16 +5,14 @@ describe('Features', function () {
     var Features, $rootScope;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ])
-        .service('Features', require(rootPath + 'app/common/services/features.js'));
+        var testApp = makeTestApp()
+        .service('Features', require('app/common/services/features.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _Features_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _Features_) {
         $rootScope = _$rootScope_;
         Features = _Features_;
         Features.loadFeatures();

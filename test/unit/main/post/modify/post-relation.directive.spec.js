@@ -12,25 +12,20 @@ describe('post relation directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('postRelation', require(ROOT_PATH + 'app/main/posts/modify/post-relation.directive'))
+        testApp.directive('postRelation', require('app/main/posts/modify/post-relation.directive'))
         .value('$filter', function () {
             return function () {};
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _GlobalFilter_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _GlobalFilter_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 

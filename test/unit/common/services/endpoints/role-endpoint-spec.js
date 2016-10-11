@@ -1,5 +1,9 @@
 var rootPath = '../../../../../';
 
+require('angular-resource');
+require('angular-cache');
+
+
 describe('RoleEndpoint', function () {
 
     var $rootScope,
@@ -9,19 +13,19 @@ describe('RoleEndpoint', function () {
 
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ngResource',
-        'angular-cache'
-        ])
-        .service('RoleEndpoint', require(rootPath + 'app/common/services/endpoints/role.js'))
-        .config(require(rootPath + 'app/common/configs/cache-config.js'));
+        var testApp = makeTestApp();
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        testApp.requires.push('ngResource', 'angular-cache');
+        testApp
+        .service('RoleEndpoint', require('app/common/services/endpoints/role.js'))
+        .config(require('app/common/configs/cache-config.js'));
+
+
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _RoleEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _RoleEndpoint_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         BACKEND_URL = _CONST_.BACKEND_URL;

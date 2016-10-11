@@ -11,27 +11,22 @@ describe('post view directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('postView', require(ROOT_PATH + 'app/main/posts/views/post-view.directive'))
-        .service('ViewHelper', require(ROOT_PATH + 'app/common/services/view-helper.js'))
+        testApp.directive('postView', require('app/main/posts/views/post-view.directive'))
+        .service('ViewHelper', require('app/common/services/view-helper.js'))
         .value('$filter', function () {
             return function () {};
         })
         .value('PostEntity', {});
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
@@ -51,7 +46,7 @@ describe('post view directive', function () {
 
 
     it('should set current view to map when unset', function () {
-        inject(function (_$rootScope_, $compile, _Notify_) {
+        angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
             $rootScope = _$rootScope_;
             $scope = _$rootScope_.$new();
 

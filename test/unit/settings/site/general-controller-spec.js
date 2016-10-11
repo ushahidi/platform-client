@@ -9,20 +9,15 @@ describe('setting general controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.controller('settingGeneralController', require(ROOT_PATH + 'app/settings/site/site.controller.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.controller('settingGeneralController', require('app/settings/site/site.controller.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$q_, _$rootScope_, _$controller_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$q_, _$rootScope_, _$controller_, _Notify_) {
         $rootScope = _$rootScope_;
         $q = _$q_;
         $controller = _$controller_;

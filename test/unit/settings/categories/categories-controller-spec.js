@@ -7,20 +7,15 @@ describe('setting categories controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.controller('settingCategoriesController', require(ROOT_PATH + 'app/settings/categories/categories.controller.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.controller('settingCategoriesController', require('app/settings/categories/categories.controller.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();

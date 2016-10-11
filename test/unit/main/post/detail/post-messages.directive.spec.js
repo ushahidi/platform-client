@@ -22,13 +22,10 @@ describe('Post messages directive', function () {
     };
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('postMessages', require(ROOT_PATH + 'app/main/posts/detail/post-messages.directive.js'))
+        testApp.directive('postMessages', require('app/main/posts/detail/post-messages.directive.js'))
         .service('ModalService', function () {
             this.close = function () {};
         })
@@ -37,14 +34,12 @@ describe('Post messages directive', function () {
             return function () {};
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _MessageEndpoint_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _MessageEndpoint_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $scope.post = {

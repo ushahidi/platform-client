@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../../';
-
 describe('Post Filters Service', function () {
 
     var $rootScope,
@@ -10,21 +8,14 @@ describe('Post Filters Service', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+        var testApp = makeTestApp();
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock',
-            'pascalprecht.translate'
-        ]);
-
-        testApp.service('PostFiltersService', require(ROOT_PATH + 'app/main/posts/views/post-filters.service.js'))
+        testApp.service('PostFiltersService', require('app/main/posts/views/post-filters.service.js'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';
             };
         });
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

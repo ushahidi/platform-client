@@ -8,23 +8,18 @@ describe('setting categories edit controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.controller('settingCategoriesEditController', require(ROOT_PATH + 'app/settings/categories/edit.controller.js'))
+        testApp.controller('settingCategoriesEditController', require('app/settings/categories/edit.controller.js'))
 
 
-        .run(require(ROOT_PATH + 'app/common/global/event-handlers.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        .run(require('app/common/global/event-handlers.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;

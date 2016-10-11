@@ -12,28 +12,22 @@ describe('post active filters directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock',
-            'pascalprecht.translate'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('postActiveFilters', require(ROOT_PATH + 'app/main/posts/views/filters/active-filters.directive'))
+        testApp.directive('postActiveFilters', require('app/main/posts/views/filters/active-filters.directive'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';
             };
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 

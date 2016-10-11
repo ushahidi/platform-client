@@ -7,19 +7,13 @@ describe('page-metadata controller', function () {
         $scope;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock',
-        'pascalprecht.translate'
-        ])
-        // .config(require(ROOT_PATH + 'app/common/configs/locale-config.js'))
-        .controller('pageMetadataController', require(ROOT_PATH + 'app/common/controllers/page-metadata.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        var testApp = makeTestApp()
+        .controller('pageMetadataController', require('app/common/controllers/page-metadata.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();

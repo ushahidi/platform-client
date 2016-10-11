@@ -5,7 +5,6 @@ describe('post location directive', function () {
     var $rootScope,
         $scope,
         isolateScope,
-        GlobalFilter,
         Notify,
         element,
         Geocoding;
@@ -13,21 +12,15 @@ describe('post location directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock',
-            'pascalprecht.translate'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('postLocation', require(ROOT_PATH + 'app/main/posts/modify/post-location.directive'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.directive('postLocation', require('app/main/posts/modify/post-location.directive'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
+
 
     beforeEach(function () {
         angular.mock.module(function ($provide) {
@@ -58,11 +51,10 @@ describe('post location directive', function () {
         });
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _GlobalFilter_, _Geocoding_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _Geocoding_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
-        GlobalFilter = _GlobalFilter_;
         Notify = _Notify_;
         Geocoding = _Geocoding_;
 

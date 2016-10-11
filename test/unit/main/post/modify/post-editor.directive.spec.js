@@ -11,13 +11,10 @@ describe('post editor directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('postEditor', require(ROOT_PATH + 'app/main/posts/modify/post-editor.directive'))
+        testApp.directive('postEditor', require('app/main/posts/modify/post-editor.directive'))
         .value('$filter', function () {
             return function () {};
         })
@@ -36,14 +33,12 @@ describe('post editor directive', function () {
             };
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         Notify = _Notify_;

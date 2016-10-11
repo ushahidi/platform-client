@@ -20,25 +20,20 @@ describe('common password reset controller', function () {
         };
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('passwordReset', require(ROOT_PATH + 'app/common/auth/password-reset.directive.js'))
+        testApp.directive('passwordReset', require('app/common/auth/password-reset.directive.js'))
         .service('PasswordReset', function () {
             return mockPasswordReset;
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, _Notify_, _Session_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _Session_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         Notify = _Notify_;

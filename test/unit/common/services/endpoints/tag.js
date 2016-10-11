@@ -1,5 +1,8 @@
 var rootPath = '../../../../../';
 
+require('angular-resource');
+require('angular-cache');
+
 describe('TagEndpoint', function () {
 
     var $rootScope,
@@ -9,19 +12,19 @@ describe('TagEndpoint', function () {
 
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ngResource',
-        'angular-cache'
-        ])
-        .service('TagEndpoint', require(rootPath + 'app/common/services/endpoints/tag.js'))
-        .config(require(rootPath + 'app/common/configs/cache-config.js'));
+        var testApp = makeTestApp();
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        testApp.requires.push('ngResource', 'angular-cache');
+        testApp
+        .service('TagEndpoint', require('app/common/services/endpoints/tag.js'))
+        .config(require('app/common/configs/cache-config.js'));
+
+
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _TagEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _TagEndpoint_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         BACKEND_URL = _CONST_.BACKEND_URL;

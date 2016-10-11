@@ -8,20 +8,15 @@ describe('setting datasources controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.controller('settingDataSourcesController', require(ROOT_PATH + 'app/settings/datasources/datasources.controller.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.controller('settingDataSourcesController', require('app/settings/datasources/datasources.controller.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;

@@ -5,14 +5,14 @@ describe('Util', function () {
     var Util, CONST;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp');
+        var testApp = makeTestApp();
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+
     });
 
     beforeEach(angular.mock.module('testApp'));
 
-    beforeEach(inject(function (_Util_, _CONST_) {
+    beforeEach(angular.mock.inject(function (_Util_, _CONST_) {
         Util = _Util_;
         CONST = _CONST_;
     }));

@@ -38,18 +38,13 @@ describe('Post edit controller', function () {
     };
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ])
-       .controller('postEditController', require(ROOT_PATH + 'app/main/posts/modify/post-edit.controller.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        var testApp = makeTestApp()
+       .controller('postEditController', require('app/main/posts/modify/post-edit.controller.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $scope = _$rootScope_.$new();
         $controller = _$controller_;
 

@@ -4,42 +4,16 @@ module.exports = function (config) {
         basePath : '../',
 
         files : [
-            'node_modules/angular/angular.js',
-            'node_modules/angular-translate/dist/angular-translate.js',
-            'node_modules/angular-resource/angular-resource.js',
-            'node_modules/angular-mocks/angular-mocks.js',
-            'node_modules/angular-cache/dist/angular-cache.js',
-            'node_modules/underscore/underscore.js',
-            'node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js',
-            'node_modules/leaflet/dist/leaflet.js',
-            'app/common/**/*.js',
-            'app/main/**/*.js',
-            'app/settings/**/*.js',
-            'app/common/locales/**/*.json',
-            'test/unit/**/*.js',
-
-            //include template files for directive testing
-            'app/**/*.html',
+            'test/unit/spec.bundle.js',
 
             {
                 pattern: 'mocked_backend/**/*.json'
             }
         ],
 
-        // we don't want to include the sub module manifest files
-        // (like for user-profile or post),
-        // because we want to compose our own test specific module definitions
-        // and its dependencies
-        // (especially when it comes to external libraries which we often want to
-        // replace with mocks, like for angular-xeditable)
-        exclude: [
-            'app/**/*-module.js',
-            'app/common/wrapper/nvd3-wrapper.js'
-        ],
-
         autoWatch : true,
 
-        frameworks: ['jasmine', 'commonjs', 'fixture'],
+        frameworks: ['jasmine', 'fixture'],
 
         browsers: ['PhantomJS'],
 
@@ -51,30 +25,35 @@ module.exports = function (config) {
 
         plugins : [
             'karma-jasmine',
-            'karma-commonjs',
             'karma-coverage',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-fixture',
-            'karma-html2js-preprocessor',
-            'karma-ng-html2js-preprocessor',
             'karma-json-fixtures-preprocessor',
             'karma-phantomjs-launcher',
-            'karma-notify-reporter'
+            'karma-notify-reporter',
+            'karma-webpack',
+            'karma-sourcemap-loader',
         ],
 
         preprocessors: {
-            'app/**/*.js': ['commonjs', 'coverage'],
-            'app/common/locales/**/*.json': ['commonjs'],
-            'test/unit/**/*.js': ['commonjs'],
+            // 'app/**/*.js': ['webpack', 'coverage'],
+            // 'app/common/locales/**/*.json': ['webpack'],
+            'test/unit/spec.bundle.js': ['webpack', 'sourcemap'/*, 'coverage'*/],
             'mocked_backend/**/*.json': ['json_fixtures'],
-            'app/**/*.html': ['ng-html2js']
+            // 'app/**/*.html': ['ng-html2js']
         },
 
-        ngHtml2JsPreprocessor: {
-            stripPrefix: 'app/',
-            prependPrefix: 'templates/',
-            moduleName: 'client-templates'
+        // ngHtml2JsPreprocessor: {
+        //     stripPrefix: 'app/',
+        //     prependPrefix: 'templates/',
+        //     moduleName: 'client-templates'
+        // },
+
+        webpack: require('../webpack.test.config'),
+
+        webpackServer: {
+          noInfo: true // prevent console spamming when running in Karma!
         },
 
         coverageReporter: {

@@ -16,7 +16,7 @@ module.exports = function () {
     this.$get = ['$q', function ($q) {
         var $translate = function (key) {
             var dfd = $q.defer();
-            dfd.resolve(key);
+            dfd.resolve(store[key] || key);
             return dfd.promise;
         };
 
@@ -43,6 +43,9 @@ module.exports = function () {
         };
         $translate.use        = function () {
             return false;
+        };
+        $translate.instant = function (key) {
+            return store[key] || key;
         };
 
         return $translate;

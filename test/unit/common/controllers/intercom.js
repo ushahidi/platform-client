@@ -17,19 +17,14 @@ describe('intercom controller', function () {
     };
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock',
-        'pascalprecht.translate'
-        ])
+        var testApp = makeTestApp()
         .value('$window', mockWindow)
-        .controller('intercomController', require(ROOT_PATH + 'app/common/controllers/intercom.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        .controller('intercomController', require('app/common/controllers/intercom.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
 

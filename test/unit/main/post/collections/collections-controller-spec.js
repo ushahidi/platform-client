@@ -9,20 +9,15 @@ describe('set collections controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.controller('collectionsController', require(ROOT_PATH + 'app/main/posts/collections/collections-controller.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.controller('collectionsController', require('app/main/posts/collections/collections-controller.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_, _Notify_, _Session_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_, _Session_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;

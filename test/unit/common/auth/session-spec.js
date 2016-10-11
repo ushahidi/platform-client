@@ -19,7 +19,7 @@ describe('Session', function () {
             gravatar: undefined
         };
 
-        var testApp = angular.module('testApp');
+        var testApp = makeTestApp();
 
         mockedLocalStorageHash = {};
         testApp.service('localStorageService', function () {
@@ -38,9 +38,9 @@ describe('Session', function () {
                 }
             };
         })
-        .service('Session', require(rootPath + 'app/common/auth/session.service.js'));
+        .service('Session', require('app/common/auth/session.service.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+
 
     });
 
@@ -51,7 +51,7 @@ describe('Session', function () {
 
         describe('without values stored in localStorage', function () {
 
-            beforeEach(inject(function (_Session_) {
+            beforeEach(angular.mock.inject(function (_Session_) {
                 Session = _Session_;
             }));
 
@@ -73,7 +73,7 @@ describe('Session', function () {
                 };
             });
 
-            beforeEach(inject(function (_Session_) {
+            beforeEach(angular.mock.inject(function (_Session_) {
                 Session = _Session_;
             }));
 
@@ -104,7 +104,7 @@ describe('Session', function () {
 
         describe('without values stored in localStorage', function () {
 
-            beforeEach(inject(function (_Session_) {
+            beforeEach(angular.mock.inject(function (_Session_) {
                 Session = _Session_;
             }));
 
@@ -129,7 +129,7 @@ describe('Session', function () {
 
         describe('without values stored in localStorage', function () {
 
-            beforeEach(inject(function (_Session_) {
+            beforeEach(angular.mock.inject(function (_Session_) {
                 Session = _Session_;
             }));
 
@@ -162,7 +162,7 @@ describe('Session', function () {
                 mockedLocalStorageHash.email = 'mike@ush.com';
             });
 
-            beforeEach(inject(function (_Session_) {
+            beforeEach(angular.mock.inject(function (_Session_) {
                 Session = _Session_;
             }));
 
@@ -194,7 +194,7 @@ describe('Session', function () {
                 mockedLocalStorageHash.email = 'mike@ush.com';
             });
 
-            beforeEach(inject(function (_Session_) {
+            beforeEach(angular.mock.inject(function (_Session_) {
                 Session = _Session_;
             }));
 

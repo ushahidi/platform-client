@@ -12,20 +12,16 @@ describe('Post Edit Service', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
-        testApp.service('PostEditService', require(ROOT_PATH + 'app/main/posts/modify/post-edit.service.js'))
+        var testApp = makeTestApp();
+        testApp.service('PostEditService', require('app/main/posts/modify/post-edit.service.js'))
         .value('$filter', function () {
             return function () {};
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config.js')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _PostEditService_, _$window_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _PostEditService_, _$window_) {
         $rootScope = _$rootScope_;
         PostEditService = _PostEditService_;
 

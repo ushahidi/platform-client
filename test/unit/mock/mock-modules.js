@@ -41,5 +41,9 @@ angular.module('ushahidi.mock', [])
 .service('ImportNotify', require('./services/importnotify.js'))
 .service('PostSurveyService', require('./services/post-survey-service.js'))
 
+.value('translateFilter', function (value) {
+	return value;
+})
+
 .controller('navigation', require('./controllers/navigation.controller.mock.js'))
 ;

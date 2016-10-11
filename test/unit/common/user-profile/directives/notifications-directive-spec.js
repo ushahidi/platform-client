@@ -10,26 +10,21 @@ describe('user-profile notification directive', function () {
         $compile;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('notifications', require(ROOT_PATH + 'app/common/user-profile/notifications.directive.js'))
+        testApp.directive('notifications', require('app/common/user-profile/notifications.directive.js'))
         .value('$filter', function () {
             return function () {};
         });
 
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, _Notify_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         Notify = _Notify_;

@@ -17,21 +17,15 @@ describe('Post detail controller', function () {
     }
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'pascalprecht.translate',
-            'ushahidi.mock'
-        ])
-       .controller('postDetailController', require(ROOT_PATH + 'app/main/posts/detail/post-detail.controller.js'))
+        var testApp = makeTestApp()
+       .controller('postDetailController', require('app/main/posts/detail/post-detail.controller.js'))
        ;
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_,
+    beforeEach(angular.mock.inject(function (_$rootScope_,
                                 _$controller_,
                                 _Notify_,
                                 _PostEndpoint_,

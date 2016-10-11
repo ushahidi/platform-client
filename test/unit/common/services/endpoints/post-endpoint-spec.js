@@ -1,5 +1,9 @@
 var rootPath = '../../../../../';
 
+require('angular-resource');
+require('angular-cache');
+
+
 describe('PostEndpoint', function () {
 
     var $rootScope,
@@ -10,17 +14,18 @@ describe('PostEndpoint', function () {
 
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ngResource'
-        ])
-        .service('PostEndpoint', require(rootPath + 'app/common/services/endpoints/post-endpoint.js'));
+        var testApp = makeTestApp();
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+        testApp.requires.push('ngResource', 'angular-cache');
+        testApp
+        .service('PostEndpoint', require('app/common/services/endpoints/post-endpoint.js'));
+
+
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _PostEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _PostEndpoint_) {
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         BACKEND_URL = _CONST_.BACKEND_URL;

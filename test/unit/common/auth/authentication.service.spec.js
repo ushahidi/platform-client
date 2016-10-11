@@ -12,11 +12,9 @@ describe('Authentication', function () {
         mockedUserDataResponse;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock',
-            'ngResource',
-            'angular-cache'
-        ]);
+        var testApp = makeTestApp();
+
+        testApp.requires.push('ngResource', 'angular-cache');
 
         mockedSessionData = {};
         testApp.service('Session', function () {
@@ -35,15 +33,15 @@ describe('Authentication', function () {
                 }
             };
         })
-        .service('Authentication', require(rootPath + 'app/common/auth/authentication.service.js'));
+        .service('Authentication', require('app/common/auth/authentication.service.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+
 
         angular.mock.module('testApp');
 
     });
 
-    beforeEach(inject(function (_$httpBackend_, _$rootScope_, _CONST_, _Authentication_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _Authentication_) {
         $httpBackend = _$httpBackend_;
         $rootScope = _$rootScope_;
         BACKEND_URL = _CONST_.BACKEND_URL;

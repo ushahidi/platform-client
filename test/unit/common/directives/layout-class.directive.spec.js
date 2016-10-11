@@ -10,22 +10,17 @@ describe('layout class directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('layoutClass', require(ROOT_PATH + 'app/common/directives/layout-class.directive'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.directive('layoutClass', require('app/common/directives/layout-class.directive'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, _Notify_, _GlobalFilter_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _GlobalFilter_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         $scope = _$rootScope_.$new();
