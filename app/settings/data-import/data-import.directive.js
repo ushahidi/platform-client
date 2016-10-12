@@ -308,7 +308,8 @@ function (
                 // First we invert the mappings so they are in terms of csv column
                 // indices
                 map = _.invert(map);
-
+                // Remove empty values
+                map = _.omit(map, '');
                 // Then we set null values for unmapped columns
                 var keys = _.keys(map);
                 _.each($scope.csv.columns, function (column, index) {
@@ -321,7 +322,11 @@ function (
             function checkForDuplicates() {
                 // Check to make sure the user hasn't double mapped a key
                 // First, collect the counts for all keys
-                return _.chain($scope.maps_to)
+                // Remove empty fields
+                var map = _.omit($scope.maps_to, function (value, key, object) {
+                    return value === '';
+                });
+                return _.chain(map)
                             .map(function (item) {
                                 return $scope.csv.columns[item];
                             })
