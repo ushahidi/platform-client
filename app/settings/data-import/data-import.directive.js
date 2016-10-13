@@ -305,7 +305,7 @@ function (
                                         filename: csv.filename
                                     });
 
-                                    $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename});
+                                    $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename, collectionId: collection.id});
                                 });
                             }, function (errorResponse) {
                                 Notify.apiErrors(errorResponse);
