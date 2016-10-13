@@ -8,11 +8,16 @@ function EmbedOnlyDirective() {
     };
 }
 
-EmbedOnlyController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '_'];
-function EmbedOnlyController($scope, $element, $attrs, $rootScope, _) {
-    if ($rootScope.globalEmbed && !$attrs.embedOnly) {
+EmbedOnlyController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '_', '$window'];
+function EmbedOnlyController($scope, $element, $attrs, $rootScope, _, $window) {
+
+    var globalEmbed = ($window.self !== $window.top) ? true : false;
+    if (globalEmbed) {
+        $rootScope.setLayout('layout-embed');
+    }
+    if (globalEmbed && !$attrs.embedOnly) {
         $element.addClass('hidden');
-    } else if (!$rootScope.globalEmbed && $attrs.embedOnly) {
+    } else if (!globalEmbed && $attrs.embedOnly) {
         $element.addClass('hidden');
     }
 }
