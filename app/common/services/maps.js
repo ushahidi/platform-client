@@ -11,6 +11,7 @@ module.exports = [
     'MediaEndpoint',
     '$compile',
     '$rootScope',
+    '$window',
     'CONST',
 function (
     $q,
@@ -25,6 +26,7 @@ function (
     MediaEndpoint,
     $compile,
     $rootScope,
+    $window,
     CONST
 ) {
     var layers = {
@@ -116,7 +118,7 @@ function (
         maps: {},
         config: undefined,
         getZoomControlPosition: function () {
-            return $rootScope.globalEmbed ? 'bottomleft' : 'bottomright';
+            return $window.self !== $window.top ? 'bottomleft' : 'bottomright';
         },
         getMap: function (name) {
             if (!this.maps[name]) {
