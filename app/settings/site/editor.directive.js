@@ -34,6 +34,7 @@ function (
         },
         templateUrl: 'templates/settings/site/settings-editor.html',
         link: function ($scope, $element, $attrs) {
+            $scope.embedUrl = Util.deploymentUrl();
             $scope.saving_config = false;
             $scope.map = {};
 
