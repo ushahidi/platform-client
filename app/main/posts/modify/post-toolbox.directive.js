@@ -55,8 +55,9 @@ function PostToolboxDirective(
         }
 
         // FIXME: Enable after allowing change of post timestamp in API
+        // Currently no specific privilege beyond the write update/add posts is required
         function allowedChangeTimestamp() {
-            return false;
+            return true;
         }
 
         function editAuthor() {

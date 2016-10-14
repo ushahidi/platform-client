@@ -84,10 +84,8 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             scope.confirmText = confirmText;
             SliderService.openTemplate(
                 '<p>{{ confirmText }}</p>' +
-                '<div class="form-field">' +
                 '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
-                '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>' +
-                '</div>',
+                '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>',
             false, false, scope, false, false);
         }
 
@@ -145,13 +143,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 // Open in slider
                 SliderService.openTemplate(
                     '<p>{{ confirmText }}</p>' +
-                    '<div class="form-field">' +
                     '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
                     '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
                     '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use></svg>' +
                     '    <span translate="app.delete">Delete</span>' +
-                    '    </button>' +
-                    '</div>',
+                    '    </button>',
                 false, false, scope, false, false);
             } else {
                 scope.cancel = function () {

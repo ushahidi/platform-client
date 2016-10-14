@@ -4,7 +4,7 @@
     <nav>
         <!-- main menu -->
         <ul class="deployment-menu">
-            <li class="persist" ng-class="{ active: activeMode === 'map' }">
+            <li ng-class="{ active: activeMode === 'map' }">
                 <a ng-href="{{baseUrl + 'map' }}" class="view-map">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#map-marker"></use>
@@ -13,7 +13,7 @@
                 </a>
             </li>
 
-            <li class="persist" ng-class="{ active: activeMode === 'list' }">
+            <li ng-class="{ active: activeMode === 'list' }">
                 <a ng-href="{{baseUrl + 'list' }}" class="view-list">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#list-rich"></use>
@@ -22,7 +22,7 @@
                 </a>
             </li>
 
-            <li class="persist" ng-if="isActivityAvailable || hasManageSettingsPermission()" ng-class="{ active: activeMode === 'activity' }" data-message="customize">
+            <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ng-class="{ active: activeMode === 'activity' }" data-message="customize">
                 <a href="/activity">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#pulse"></use>
@@ -31,22 +31,23 @@
                 </a>
             </li>
 
-            <li class="tuck" ng-class="{ active: activeMode === 'settings' }" data-message="customize" ng-show="hasManageSettingsPermission()">
-                <a href="/settings">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
-                    </svg>
-                    <translate>nav.settings</translate>
-                </a>
-            </li>
-
-            <li class="more-menu-trigger persist" ng-class="{ active : moreActive }">
-                <a ng-click="showMore($event)">
+            <li>
+                <a class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
                     <svg class="iconic">
                         <use xlink:href="../../img/iconic-sprite.svg#ellipses"></use>
                     </svg>
                     <translate>nav.more</translate>
                 </a>
+                <ul>
+                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{ active: activeMode === 'settings' }">
+                        <a href="/settings">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#cog"></use>
+                            </svg>
+                            <translate>nav.settings</translate>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
         <!-- main menu -->

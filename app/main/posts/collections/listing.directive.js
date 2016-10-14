@@ -104,11 +104,17 @@ function CollectionListingController(
     // Remove post(s) from a given collection
     function removeFromCollection(selectedCollection) {
         var collectionId = selectedCollection.id, collection = selectedCollection.name;
-
-        CollectionEndpoint.removePost({'collectionId': collectionId, 'id': $scope.post.id})
-        .$promise
+        var calls = [];
+        _.each($scope.posts, function (post) {
+            calls.push(
+                CollectionEndpoint.removePost({'collectionId': collectionId, 'id': post.id})
+            );
+        });
+        $q.all(calls)
         .then(function () {
-            $scope.post.sets = _.without($scope.post.sets, String(collectionId));
+            _.each($scope.posts, function (post) {
+                post.sets = _.without(post.sets, String(collectionId));
+            });
             Notify.notify('notify.collection.removed_from_collection', {collection: collection});
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);

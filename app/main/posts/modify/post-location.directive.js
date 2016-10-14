@@ -4,12 +4,14 @@ module.exports = [
     'Geocoding',
     'Maps',
     '_',
+    'Notify',
 function (
     $http,
     leafletData,
     Geocoding,
     Maps,
-    _
+    _,
+    Notify
 ) {
 
     return {
@@ -102,8 +104,9 @@ function (
                         $scope.processing = false;
 
                         if (!coordinates) {
+                            Notify.error('location.error');
                             return;
-                        } // @todo - handle lookup error
+                        }
 
                         _.each([
                             'updateLatLon', 'updateMarkerPosition', 'centerMapTo'
