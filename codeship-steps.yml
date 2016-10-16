@@ -16,7 +16,7 @@
   - name: "Deploy staging"
     service: deploy
     tag: develop
-    command: "ansible-playbook -vv -i hosts/rackspace_staging platform-client-update.yml -e=\"PLATFORM_CLIENT_VERSION=$CI_COMMIT_ID\""
+    command: ansible-playbook -vv -i hosts/rackspace_staging platform-client-update-rsync.yml -e PLATFORM_CLIENT_DEPLOY_SRC="/vols/last_build"
   - name: "Deploy Production"
     service: deploy
     tag: production
