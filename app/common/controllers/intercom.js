@@ -14,10 +14,9 @@ function (
     $window
 ) {
     var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
+
     $rootScope.$on('event:authentication:login:succeeded', function () {
-        if ($window.self === $window.top) {
-            $scope.startIntercom();
-        }
+        $scope.startIntercom();
     });
 
     $scope.startIntercom = function () {

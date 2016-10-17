@@ -11,7 +11,6 @@ module.exports = [
     'MediaEndpoint',
     '$compile',
     '$rootScope',
-    '$window',
     'CONST',
 function (
     $q,
@@ -26,7 +25,6 @@ function (
     MediaEndpoint,
     $compile,
     $rootScope,
-    $window,
     CONST
 ) {
     var layers = {
@@ -117,9 +115,6 @@ function (
     var Maps = {
         maps: {},
         config: undefined,
-        getZoomControlPosition: function () {
-            return $window.self !== $window.top ? 'bottomleft' : 'bottomright';
-        },
         getMap: function (name) {
             if (!this.maps[name]) {
                 this.maps[name] = Object.create(Map).init(name);
@@ -134,7 +129,7 @@ function (
         getInitialScope: function () {
             return {
                 defaults: {
-                    zoomControlPosition: this.getZoomControlPosition(),
+                    zoomControlPosition: 'bottomright',
                     scrollWheelZoom: false
                 },
                 center: { // Default to centered on Nairobi
