@@ -104,7 +104,7 @@
     "nvd3": "^1.8.4",
     "selection-model": "jtrussell/angular-selection-model.git",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "^3.5.2-pre.2"
+    "ushahidi-platform-pattern-library": "^3.6.0"
   },
   "engines": {
     "node": ">=0.10"
