@@ -230,7 +230,7 @@ describe('post detail interaction', function () {
         });
     });
 });
-  /*
+/*
     describe('as a non-user', function () {
         beforeEach(function () {
             browser.get('/views/list');

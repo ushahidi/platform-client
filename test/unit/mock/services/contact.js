@@ -4,9 +4,9 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
-                        contact: 'test@ushahidi.com',
-                        id: 1
-                    }]});
+                            contact: 'test@ushahidi.com',
+                            id: 1
+                        }]});
                 }
             }};
         },

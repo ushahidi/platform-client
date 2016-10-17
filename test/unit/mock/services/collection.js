@@ -4,9 +4,9 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
-                        name: 'test collection',
-                        id: 1
-                    }]});
+                            name: 'test collection',
+                            id: 1
+                        }]});
                 }
             }};
         },
@@ -14,9 +14,9 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
-                        name: 'test collection',
-                        id: 1
-                    }]});
+                            name: 'test collection',
+                            id: 1
+                        }]});
                 }
             }};
         },
@@ -24,9 +24,9 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({'results': [{
-                        name: 'test collection',
-                        id: 1
-                    }]});
+                            name: 'test collection',
+                            id: 1
+                        }]});
                 }
             }};
         },

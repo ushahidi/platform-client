@@ -1,0 +1,159 @@
+<div class="mode-context init" dropdown>
+
+  <header class="mode-context-header">
+    <ol class="breadcrumbs" ng-controller="navigation as nav">
+      <li><a href="/" ng-bind="nav.site.name"></a></li>
+    </ol>
+
+    <h1 class="mode-context-title">{{form.name || 'post.unstructured.survey_title' | translate}}</h1>
+  </header>
+
+  <span class="mode-context-trigger" dropdown-toggle>
+    <svg class="iconic">
+      <use xlink:href="../img/iconic-sprite.svg#chevron-bottom"></use>
+    </svg>
+    <span class="label hidden" translate>app.show_more_less</span>
+  </span>
+
+  <div class="mode-context-body" ng-if="post.form">
+    <p>{{ form.description }}</p>
+
+    <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}" ng-show="canCreatePostInSurvey(form)">
+      <svg class="iconic">
+        <use xlink:href="../img/iconic-sprite.svg#plus"></use>
+      </svg>
+      <span class="button-label" translate>post.modify.add_to_survey</span>
+    </a>
+  </div>
+</div>
+
+<main role="main">
+  <div class="full-col">
+    <article class="postcard" role="article">
+      <div class="post-band" style="background-color: {{form.color}};"></div>
+
+      <div class="listing-item-select">
+        <span class="status-indicator empty tooltip">
+          <svg class="iconic">
+            <use xlink:href="../../img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+            <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+            <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+          </svg>
+          <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
+          <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>
+          <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span>
+
+        </span>
+      </div>
+      <div class="postcard-body">
+        <header class="postcard-header">
+          <h1 class="postcard-title">
+            {{post.title}}
+          </h1>
+          <post-metadata post="post"></post-metadata>
+        </header>
+
+        <post-actions post="post"></post-actions>
+
+        <div
+          ng-repeat="(key,value) in post.values"
+          ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+          class="postcard-field"
+          >
+
+          <post-media-value
+            ng-if="form_attributes[key].type === 'media'"
+            label="{{form_attributes[key].label}}"
+            media-id="value"></post-media-value>
+        </div>
+        <div
+          ng-if="post.content"
+          class="postcard-field">
+          <p markdown-to-html="post.content"></p>
+        </div>
+
+        <div
+          ng-if="!!post.tags.length"
+          class="postcard-field"
+          >
+          <h2 class="form-label" translate>post.modify.form.categories</h2>
+          <p ng-repeat="category in post.tags">
+            {{category.tag}}
+          </p>
+        </div>
+
+        <post-value
+          ng-repeat="(key,value) in post.values"
+          ng-if="isPostValue(key) && showType(form_attributes[key].type)"
+          key="key"
+          value="value"
+          attribute="form_attributes[key]"
+          type="'post'"
+          ng-if="form_attributes[key].type !== 'media'">
+        </post-value>
+        <div
+            ng-if="mapDataLoaded"
+            class="postcard-field"
+            >
+            <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
+            <p></p>
+            <div ng-if="mapDataLoaded">
+              <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
+            </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="listing card init" ng-show="tasks.length">
+        <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
+
+        <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
+          <ul>
+            <li
+              ng-repeat="task in tasks"
+              ng-class="{'active': visibleTask == task.id}"  >
+              <a ng-click="activateTaskTab(task.id)">
+                {{task.label}}
+              </a>
+              <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
+              </span>
+            </li>
+          </ul>
+        </nav>
+        <div class="listing-item tasks-tabs tabs-target active">
+          <div class="alert"
+              ng-repeat="task in tasks"
+              ng-if="!taskHasValues(task)"
+              ng-show="task.id === visibleTask">
+                <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
+          </div>
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key].type === 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
+            class="listing-item-primary"
+            >
+
+            <post-media-value
+              label="{{form_attributes[key].label}}"
+              media-id="value"></post-media-value>
+          </div>
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key].type !== 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
+            >
+            <post-value
+              key="key"
+              value="value"
+              attribute="form_attributes[key]"
+              type="'standard'">
+            </post-value>
+          </div>
+        </div>
+    </div>
+
+    <post-add-form post="post" ng-if="!post.form && post.allowed_privileges.indexOf('update') !== -1"></post-add-form>
+    <post-messages post="post" ng-if="post.contact.id"></post-messages>
+  </div>
+</main>

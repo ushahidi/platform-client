@@ -12,17 +12,14 @@ module.exports = function (config) {
             'node_modules/underscore/underscore.js',
             'node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js',
             'node_modules/leaflet/dist/leaflet.js',
-            'app/activity/**/*.js',
             'app/common/**/*.js',
-            'app/post/**/*.js',
-            'app/set/**/*.js',
-            'app/setting/**/*.js',
-            'app/user-profile/**/*.js',
+            'app/main/**/*.js',
+            'app/settings/**/*.js',
             'app/common/locales/**/*.json',
             'test/unit/**/*.js',
 
             //include template files for directive testing
-            'server/www/templates/**/*.html',
+            'app/**/*.html',
 
             {
                 pattern: 'mocked_backend/**/*.json'
@@ -71,11 +68,12 @@ module.exports = function (config) {
             'app/common/locales/**/*.json': ['commonjs'],
             'test/unit/**/*.js': ['commonjs'],
             'mocked_backend/**/*.json': ['json_fixtures'],
-            'server/www/templates/**/*.html': ['ng-html2js']
+            'app/**/*.html': ['ng-html2js']
         },
 
         ngHtml2JsPreprocessor: {
-            stripPrefix: 'server/www/',
+            stripPrefix: 'app/',
+            prependPrefix: 'templates/',
             moduleName: 'client-templates'
         },
 

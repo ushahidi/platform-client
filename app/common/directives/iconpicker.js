@@ -10,7 +10,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/iconpicker/iconpicker.html',
+        templateUrl: 'templates/common/directives/iconpicker.html',
         replace: true,
         scope: {
             model: '=?ngModel',

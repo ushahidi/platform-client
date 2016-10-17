@@ -11,14 +11,14 @@ function (
         .then(function (response) {
             return response.data.languages;
         }, function () {
-            // fallback to en-US pulled from https://www.transifex.com/api/2/languages
+            // fallback to en pulled from https://www.transifex.com/api/2/languages
             // Language codes have _ replaced with -
             return [
                 {
                     'rtl': false,
                     'pluralequation': 'language.pluralequation',
-                    'code': 'en-US',
-                    'name': 'English (United States)',
+                    'code': 'en',
+                    'name': 'English',
                     'nplurals': 2
                 }
             ];

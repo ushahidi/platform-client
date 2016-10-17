@@ -1,0 +1,15 @@
+<form ng-submit="searchLocation()">
+    <div class="input-location">
+        <div class="input-inline">
+            <input name="{{name}}" type="text" placeholder="{{'location.placeholder' | translate}}" ng-model="searchLocationTerm" ng-disabled="processing">
+            <button class="btn btn-info" type="submit" ng-disabled="processing">
+                <div class="loading" ng-show="processing"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+                <span translate>location.search<span>
+            </button>
+
+            <button class="button-secondary alt" type="button" ng-click="clear()" ng-disabled="processing" translate>location.clear</button>
+        </div>
+        <leaflet ng-if="mapReady" id="{{id}}-map" markers="markers" layers="layers" center="center" height="265px" width="100%"></leaflet>
+        <p translate>location.click_map</p>
+    </div>
+</form>

@@ -169,8 +169,8 @@ describe('forms interaction', function () {
                         describe('when the user saves a field', function () {
                             beforeEach(function () {
                                 var saveClose = element.all(by.css('.settings-listing form button')).filter(function (elem) {
-                                      return elem.isDisplayed();
-                                  });
+                                    return elem.isDisplayed();
+                                });
                                 saveClose.click();
                             });
 
@@ -213,8 +213,8 @@ describe('forms interaction', function () {
 
                     it('should remove the field from the stage tab', function () {
                         var fields = element.all(by.css('.settings-listing h3>a')).filter(function (elem) {
-                              return elem.getText() === 'Person Status';
-                          }).count();
+                            return elem.getText() === 'Person Status';
+                        }).count();
 
                         expect(fields).toEqual(0);
                     });

@@ -5,10 +5,6 @@ function (
     $rootScope,
     $location
 ) {
-    $rootScope.switchRtl = function () {
-        $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
-    };
-
     // Setup PL layout and switching function
     $rootScope.globalLayout = 'layout-a';
     $rootScope.setLayout = function (layout) {
