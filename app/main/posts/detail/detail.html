@@ -65,11 +65,13 @@
             ng-if="form_attributes[key].type === 'media'"
             label="{{form_attributes[key].label}}"
             media-id="value"></post-media-value>
+
         </div>
         <div
           ng-if="post.content"
           class="postcard-field">
           <p markdown-to-html="post.content"></p>
+          <post-preview-media post="post"></post-preview-media>
         </div>
 
         <div

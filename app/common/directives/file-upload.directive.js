@@ -5,7 +5,8 @@ function FileUpload() {
         restrict: 'E',
         templateUrl: 'templates/common/directives/file-upload.html',
         scope: {
-            fileContainer: '='
+            fileContainer: '=',
+            media: '='
         },
 
         controller: [
@@ -17,6 +18,7 @@ function FileUpload() {
                 $scope.uploadFile = function ($event) {
                     $scope.fileContainer.file = $event.target.files[0];
                 };
+
             }]
     };
 }

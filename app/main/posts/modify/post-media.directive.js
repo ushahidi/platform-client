@@ -27,33 +27,37 @@ function (
             // Initialize media object
             $scope.media = {};
 
-            if ($scope.mediaId) {
-                MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
-                    $scope.media = media;
+            $scope.uploadFile = uploadFile;
+            $scope.deleteMedia = deleteMedia;
+
+            activate();
+
+            function activate() {
+                getMedia();
+            }
+
+            function getMedia() {
+                if ($scope.mediaId) {
+                    MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
+                        $scope.media = media;
+                    });
+                }
+            }
+
+            // Never called
+            function updateCaption() {
+                return MediaEndpoint.update({id: $scope.mediaId, caption: $scope.media.caption }).$promise.then(function (result) {}, function (error) {
+                    Notify.apiErrors(error);
                 });
             }
 
-            // Track file changes
-            $scope.canUpload = false;
-
-            $scope.onChange = function () {
-                $scope.$apply(function () {
-                    if ($scope.fileContainer.file) {
-                        $scope.canUpload = true;
-                    } else {
-                        $scope.canUpload = false;
-                    }
-                });
-            };
-
-            $scope.uploadFile = function () {
-                //@todo Allow editing of caption for existing image
+            function uploadFile() {
                 if (!$scope.fileContainer.file) {
                     return;
                 }
 
                 // Delete current file
-                var promise = deleteMedia($scope.mediaId);
+                var promise = clearCurrentMedia($scope.mediaId);
 
                 // ...then upload new file
                 promise.then(function () {
@@ -75,6 +79,7 @@ function (
                         }
                     ).then(function (response) {
                         $scope.mediaId = response.data.id;
+                        $scope.getMedia();
 
                         // We found a file so change the state of parent form
                         formCtrl[$scope.name].$setDirty();
@@ -84,9 +89,9 @@ function (
                 }, function (error) {
                     Notify.apiErrors(error);
                 });
-            };
+            }
 
-            var deleteMedia = function (mediaId) {
+            function clearCurrentMedia(mediaId) {
                 // Delete previous media first
                 if (mediaId) {
                     return MediaEndpoint.delete({id: mediaId}).$promise;
@@ -94,7 +99,18 @@ function (
 
                 // Return a promise anyway if there is no media to delete
                 return $q.when();
-            };
+            }
+
+            function deleteMedia(mediaId) {
+                if (mediaId) {
+                    MediaEndpoint.delete({id: mediaId}).$promise.then(function (result) {
+                        $scope.mediaId = undefined;
+                        $scope.media = {};
+                    }, function (error) {
+                        Notify.apiErrors(error);
+                    });
+                }
+            }
         }
     };
 }];
