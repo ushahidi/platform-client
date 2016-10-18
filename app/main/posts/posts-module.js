@@ -16,6 +16,7 @@ angular.module('ushahidi.posts', [])
 // Create / Edit Screens
 .service('PostEntity', require('./modify/post-entity.service.js'))
 .service('PostEditService', require('./modify/post-edit.service.js'))
+.service('MediaEditService', require('./modify/media-edit.service.js'))
 .directive('postMedia', require('./modify/post-media.directive.js'))
 .directive('postDatetime', require('./modify/post-datetime-value.directive.js'))
 .directive('postLocation', require('./modify/post-location.directive.js'))
