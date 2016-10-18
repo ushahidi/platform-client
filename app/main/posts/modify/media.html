@@ -1,18 +1,30 @@
 
 <form ng-submit="uploadFile()">
-    <div class="form-field">
-      <a ng-href="{{media.original_file_url}}" ng-if="media.original_file_url" target="_blank" translate>post.media.current_url</a>
-
-      <file-upload file-container="fileContainer"
+    <div class="form-field file">
+      <file-upload id="file-upload" file-container="fileContainer"
                    custom-on-change="onChange">
       </file-upload>
-      <figure>
-        <p class="small" translate>post.media.add_caption</p>
-        <input
-          type="text"
-          placeholder="{{ 'post.media.add_caption' | translate }}"
-          ng-model="media.caption">
-      </figure>
-      <button ng-disabled="!canUpload" type="submit" translate>post.media.upload</button>
+      <label for="file-upload" class="button button-gamma" ng-show="!media.id">
+          <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+          </svg>
+          <span class="button-label">Add photo</span>
+      </label>
+
+      <div ng-show="media.id">
+        <a ng-href="{{media.original_file_url}}" ng-if="media.original_file_url" target="_blank" translate>post.media.current_url</a>
+
+        <file-upload file-container="fileContainer"
+                     custom-on-change="onChange">
+        </file-upload>
+        <figure>
+          <p class="small" translate>post.media.add_caption</p>
+          <input
+            type="text"
+            placeholder="{{ 'post.media.add_caption' | translate }}"
+            ng-model="media.caption">
+        </figure>
+        <button ng-disabled="!canUpload" type="submit" translate>post.media.upload</button>
+      </div>
     </div>
 </form>
