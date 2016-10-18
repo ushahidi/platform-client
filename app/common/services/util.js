@@ -13,6 +13,11 @@ function (
         apiUrl: function (relative_url) {
             return CONST.API_URL + relative_url;
         },
+        deploymentUrl: function (relative_url) {
+            var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
+            var deploymentUrl = pattern.exec(this.apiUrl(relative_url));
+            return deploymentUrl[0].replace('api.', '');
+        },
         transformResponse: function (response, omitKeys) {
             omitKeys = (omitKeys || []).concat(['allowed_methods']);
             return _.omit(angular.fromJson(response), omitKeys);

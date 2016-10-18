@@ -13,5 +13,7 @@ function LayoutClassDirective() {
 
 LayoutClassController.$inject = ['$scope', '$rootScope'];
 function LayoutClassController($scope, $rootScope) {
-    $rootScope.setLayout('layout-' + $scope.layout);
+    if ($rootScope.globalLayout !== 'layout-embed') {
+        $rootScope.setLayout('layout-' + $scope.layout);
+    }
 }
