@@ -57,8 +57,8 @@ function PostFiltersService(_, FormEndpoint) {
     function getDefaults() {
         return {
             q: '',
-            created_after: '',
-            created_before: '',
+            date_after: '',
+            date_before: '',
             status: ['published', 'draft'],
             published_to: '',
             center_point: '',
