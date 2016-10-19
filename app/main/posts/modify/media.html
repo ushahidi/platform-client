@@ -1,10 +1,10 @@
 
 <form>
     <div class="form-field file">
-      <file-upload id="file-input" container="media">
+      <file-upload id="{{name}}" container="media">
       </file-upload>
 
-      <label for="file-input" class="button button-gamma" ng-show="showAdd()">
+      <label for="{{name}}" class="button button-gamma" ng-show="showAdd()">
           <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
           </svg>
@@ -24,7 +24,7 @@
               </button>
 
               <input id="photo" type="file">
-              <label for="file-input" class="button button-gamma">
+              <label for="{{name}}" class="button button-gamma">
                   <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#image"></use>
                   </svg>
