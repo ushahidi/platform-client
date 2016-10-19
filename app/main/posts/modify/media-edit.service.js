@@ -29,15 +29,15 @@ function (
                         post.values[key][0] = null;
                     // Check if a new file was uploaded
                     }else if (media.file) {
-                        calls.push(MediaEditService.uploadFile(media).then(function (media) {
-                            post.values[key][0] = media.id;
+                        calls.push(this.uploadFile(media).then(function (media) {
+                            post.values[key][0] = media ? media.id : null;
                         }));
                     // Otherwise update the media as it has changed
                     } else {
                         // Remove irrelevant fields
                         delete media.changed;
-                        calls.push(MediaEditService.update(media).then(function (media) {
-                            post.values[key][0] = media.id;
+                        calls.push(this.update(media).then(function (media) {
+                            post.values[key][0] = media ? media.id : null;
                         }));
                     }
                 }
@@ -63,7 +63,10 @@ function (
             MediaEndpoint.update(media).$promise.then(function (media) {
                 deferred.resolve(media);
             }, function (error) {
-                deferred.reject(error);
+                Notify.apiErrors(error);
+                // We warn the user about image errors but
+                // we continue to save the post
+                deferred.resolve({});
             });
             return deferred.promise;
         },
@@ -92,11 +95,15 @@ function (
                     deferred.resolve(media);
                 }, function (error) {
                     Notify.apiErrors(error);
-                    deferred.reject(error);
+                    // We warn the user about image errors but
+                    // we continue to save the post
+                    deferred.resolve({});
                 });
             }, function (error) {
                 Notify.apiErrors(error);
-                deferred.reject(error);
+                // We warn the user about image errors but
+                // we continue to save the post
+                deferred.resolve({});
             });
 
             return deferred.promise;
