@@ -24,7 +24,6 @@ function (
         },
         templateUrl: 'templates/main/posts/modify/media.html',
         link: function ($scope, element, attr, formCtrl) {
-
             $scope.showAdd = function () {
                 return (!$scope.media.id && !$scope.media.changed);
             };
