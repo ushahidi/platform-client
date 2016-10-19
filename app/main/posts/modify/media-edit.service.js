@@ -70,10 +70,7 @@ function (
         uploadFile: function (media) {
             var deferred = $q.defer();
             // Delete current file
-            var promise = this.deleteMedia(media.id);
-
-            // ...then upload new file
-            promise.then(function () {
+            this.deleteMedia(media.id).then(function () {
                 var formData = new FormData();
 
                 formData.append('file', media.file);
