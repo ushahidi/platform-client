@@ -248,6 +248,8 @@
             "q": "Keyword",
             "created_after": "Start date",
             "created_before": "End date",
+            "date_after": "Start date",
+            "date_before": "End date",
             "center_point": "Location",
             "tags": "Category",
             "form": "Survey",

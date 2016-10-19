@@ -98,6 +98,12 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             created_after : function (value) {
                 return $filter('date', 'longdate')(value);
             },
+            date_before : function (value) {
+                return $filter('date', 'longdate')(value);
+            },
+            date_after : function (value) {
+                return $filter('date', 'longdate')(value);
+            },
             status : function (value) {
                 return $translate.instant('post.' + value);
             }
