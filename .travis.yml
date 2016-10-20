@@ -23,9 +23,6 @@ matrix:
     env: TEST_SUITE=lint
   - node_js: 5
     env: TEST_SUITE=unit
-  # Run unit test with 0.12 and current stable too
-  - node_js: 0.12
-    env: TEST_SUITE=unit
   - node_js: stable
     env: TEST_SUITE=unit
   fast_finish: true

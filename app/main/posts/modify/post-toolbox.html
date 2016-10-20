@@ -89,23 +89,13 @@
 
     <div class="toggle-content init" dropdown-menu>
       <fieldset>
-            <post-datetime ng-model="post.post_date"></post-datetime>
-            <div class="metadata">
-              <ul>
+        <post-datetime ng-model="post.post_date"></post-datetime>
+        <ul class="metadata">
             <li><span translate="post.created_at"></span> {{displayCreated}} <span translate-values="{ source : source }" translate="post.source"></span></li>
             <li ng-if="post.updated"><span translate="post.updated_at"></span> {{displayUpdated}}</li>
-          </ul>
-        </div>
+        </ul>
       </fieldset>
     </div>
-
-  </div>
-  <!-- FIXME: Remove after post timestamp dropdown is enabled -->
-  <div class="metadata">
-      <ul>
-          <li><span translate="post.created_at"></span> {{displayCreated}} <span translate-values="{ source : source }" translate="post.source"></span></li>
-          <li ng-if="post.updated"><span translate="post.updated_at"></span> {{displayUpdated}}</li>
-      </ul>
   </div>
 
   <!-- END: IF -->

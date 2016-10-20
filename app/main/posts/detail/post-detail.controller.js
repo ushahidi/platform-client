@@ -268,17 +268,4 @@ function (
             Notify.apiErrors(errorResponse);
         });
     };
-
-    function formatDate() {
-        var created = moment($scope.post.update || $scope.post.created),
-            now = moment();
-
-        if (now.isSame(created, 'day')) {
-            $scope.displayTime = created.fromNow();
-        } else {
-            $scope.displayTime = created.format('LLL');
-        }
-    }
-
-    formatDate();
 }];
