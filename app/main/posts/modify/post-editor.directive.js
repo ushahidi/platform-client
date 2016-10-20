@@ -127,7 +127,7 @@ function PostEditorController(
                     if ($scope.post.values[attr.key]) {
                         media = $scope.post.values[attr.key][0];
                     }
-                    $scope.medias[attr.key] = media;
+                    $scope.medias[attr.key] = {};
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
