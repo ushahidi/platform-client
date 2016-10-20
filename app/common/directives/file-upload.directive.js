@@ -4,10 +4,10 @@ function FileUpload() {
     return {
         restrict: 'E',
         templateUrl: 'templates/common/directives/file-upload.html',
+        replace: true,
         scope: {
-            fileContainer: '='
+            container: '='
         },
-
         controller: [
             '$scope', '$attrs',
             function (
@@ -15,7 +15,16 @@ function FileUpload() {
             ) {
                 $scope.required = typeof $attrs.required !== 'undefined';
                 $scope.uploadFile = function ($event) {
-                    $scope.fileContainer.file = $event.target.files[0];
+                    $scope.container.file = $event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var dataURL = reader.result;
+                        $scope.container.dataURI = dataURL;
+                        $scope.container.changed = true;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL($event.target.files[0]);
+
                 };
             }]
     };
