@@ -979,6 +979,7 @@
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
         },
         "form" : {
+            "add_to_survey" : "Add to survey",
             "save_success" : "Survey {{name}} saved",
             "save_stage_success" : "Survey task {{name}} saved",
             "save_attribute_success" : "Field {{name}} added",

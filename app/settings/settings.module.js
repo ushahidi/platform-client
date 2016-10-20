@@ -7,6 +7,7 @@ angular.module('ushahidi.settings', [])
 .directive('surveyTaskCreate', require('./surveys/task-create.directive.js'))
 .directive('surveyAttributeCreate', require('./surveys/attribute-create.directive.js'))
 .directive('surveyAttributeEditor', require('./surveys/attribute-editor.directive.js'))
+.service('SurveyNotify', require('./surveys/survey.notify.service.js'))
 
 .directive('settingsList', require('./settings-list.directive.js'))
 .directive('settingsMap', require('./site/map.directive.js'))
