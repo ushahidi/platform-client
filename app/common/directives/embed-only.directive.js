@@ -11,8 +11,9 @@ function EmbedOnlyDirective() {
 EmbedOnlyController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '_', '$window'];
 function EmbedOnlyController($scope, $element, $attrs, $rootScope, _, $window) {
     var globalEmbed = ($window.self !== $window.top) ? true : false;
-    if (globalEmbed) {
-        $rootScope.setLayout('layout-embed');
+    if (globalEmbed && $rootScope.globalLayout.indexOf('layout-embed') < 0) {
+        // If layout-embed is not set append it to the global layout class
+        $rootScope.setLayout($rootScope.globalLayout + ' layout-embed');
     }
     if (globalEmbed && ($attrs.embedOnly === 'false')) {
         $element.addClass('hidden');
