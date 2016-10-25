@@ -14,6 +14,8 @@ notifications:
 #  sauce_connect: true
 language: node_js
 matrix:
+  allow_failures:
+  - node_js: stable
   include:
   # Run everything with v5 (match production)
   # Skip e2e test during mustang build
@@ -22,6 +24,8 @@ matrix:
   - node_js: 5
     env: TEST_SUITE=lint
   - node_js: 5
+    env: TEST_SUITE=unit
+  - node_js: 6
     env: TEST_SUITE=unit
   - node_js: stable
     env: TEST_SUITE=unit
