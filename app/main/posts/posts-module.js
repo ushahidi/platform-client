@@ -38,6 +38,8 @@ angular.module('ushahidi.posts', [])
 .directive('addPostButton', require('./views/add-post-button.directive.js'))
 .directive('addPostTextButton', require('./views/add-post-text-button.directive.js'))
 .directive('modeContextFormFilter', require('./views/mode-context-form-filter.directive.js'))
+.directive('filterBySurvey', require('./views/filter-by-survey.directive.js'))
+.directive('filterBySurveyDropdown', require('./views/filter-by-survey-dropdown.directive.js'))
 .directive('postToolbar', require('./views/post-toolbar.directive.js'))
 // Filters
 .directive('filterPosts', require('./views/filters/filter-posts.directive.js'))

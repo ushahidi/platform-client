@@ -59,6 +59,7 @@
         "apply_filters" : "Apply filters",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
+        "filter_by_survey" : "Filter by survey",
         "configure" : "Configure",
         "post" : "Post",
         "name" : "Name",

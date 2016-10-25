@@ -10,8 +10,8 @@ function ModeContextFormFilterDirective() {
     };
 }
 
-ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService'];
-function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootScope, PostSurveyService) {
+ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', '$timeout'];
+function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootScope, PostSurveyService, $timeout) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
     $scope.hide = hide;
