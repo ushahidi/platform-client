@@ -29,14 +29,14 @@ function (
                         post.values[key][0] = null;
                     // Check if a new file was uploaded
                     }else if (media.file) {
-                        calls.push(this.uploadFile(media).then(function (media) {
+                        calls.push(MediaEditService.uploadFile(media).then(function (media) {
                             post.values[key][0] = media ? media.id : null;
                         }));
                     // Otherwise update the media as it has changed
                     } else {
                         // Remove irrelevant fields
                         delete media.changed;
-                        calls.push(this.update(media).then(function (media) {
+                        calls.push(MediaEditService.update(media).then(function (media) {
                             post.values[key][0] = media ? media.id : null;
                         }));
                     }
