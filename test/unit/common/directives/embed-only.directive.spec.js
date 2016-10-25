@@ -42,6 +42,5 @@ describe('embed only directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
 
-        expect($rootScope.setLayout).toHaveBeenCalledWith('layout-a layout-embed');
     });
 });

@@ -22,9 +22,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     activate();
 
     function activate() {
-        $rootScope.$on('filters:open:dropdown', function () {
-            externalOpenDropDown();
-        });
         // Load forms
         $scope.forms = FormEndpoint.query();
         var postCountRequest = PostEndpoint.stats({ group_by: 'form', status: 'all' });
@@ -45,13 +42,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
             if (unknownValue) {
                 $scope.unknown_post_count = unknownValue.total;
             }
-        });
-    }
-
-    function externalOpenDropDown() {
-        var element = angular.element(document.getElementsByClassName('mode-context-trigger')[0]);
-        $timeout(function () {
-            element.triggerHandler('click');
         });
     }
 
