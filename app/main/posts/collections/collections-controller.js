@@ -40,6 +40,10 @@ module.exports = [
         // Extend filters, always adding the current collection id
         var extendFilters = function (filters) {
             filters = angular.copy(filters, { set : [] });
+
+            // If collection was imported we want to show archived posts by default
+            collection.source === 'import' ? filters.status.push('archived') : null;
+
             filters.set.push(collection.id);
             return filters;
         };
