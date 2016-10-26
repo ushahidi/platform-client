@@ -49,7 +49,7 @@ function (
 
             $scope.deleteMedia = function (mediaId) {
                 // Mark for deletion
-                Notify.confirmDelete('notify.notification.delete_confirm').then(function () {
+                Notify.confirmDelete('notify.post.delete_image_confirm').then(function () {
                     MediaEditService.deleteMedia(mediaId).then(function () {
                         $scope.media = {};
                         $scope.media.changed = true;
