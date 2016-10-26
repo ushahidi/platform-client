@@ -272,6 +272,7 @@ function (
                 collection.name = 'Imported ' + now;
                 collection.view = 'list';
                 collection.visible_to = ['admin'];
+                collection.source = 'import';
                 var calls = [];
                 CollectionEndpoint.save(collection).$promise.then(function (collection) {
                     _.each(post_ids, function (id) {
