@@ -39,11 +39,11 @@ module.exports = [
 
         // Extend filters, always adding the current collection id
         var extendFilters = function (filters) {
-            filters = angular.copy(filters, { set : [] });
+            filters = angular.copy(filters, { set : []});
             filters.set.push(collection.id);
-
             //Ensure that ALL posts are visible under collections
-            filters.status.push('archived');
+            // Set default collection status filters
+            filters.status = ['published', 'draft', 'archived'];
             return filters;
         };
 
