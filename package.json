@@ -17,8 +17,9 @@
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
-    "eshint": "eshint .",
-    "test": "karma start"
+    "jshint": "jshint .",
+    "jscs": "gulp jscs",
+    "jscs-fix": "gulp jscsfix"
   },
   "pre-commit": [],
   "devDependencies": {
@@ -42,6 +43,7 @@
     "fs-walk": "0.0.1",
     "gulp": "^3.9.0",
     "gulp-gzip": "^1.4.0",
+    "gulp-jscs": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-tar": "^1.9.0",
     "gulp-template": "^3.0.0",
@@ -49,6 +51,8 @@
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.22.0",
     "jasmine-core": "^2.5.2",
+    "jscs": "^3.0.4",
+    "jshint": "^2.8.0",
     "json-loader": "^0.5.4",
     "karma": "^1.3.0",
     "karma-chrome-launcher": "^0.2.0",
