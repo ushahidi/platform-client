@@ -19,7 +19,7 @@ function ShareMenuController(
     Util
 ) {
     $scope.loading = false;
-    $scope.shareUrl = Util.deploymentUrl();
+    $scope.shareUrl = Util.currentUrl();
     $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
 
     activate();
