@@ -3,9 +3,8 @@ var dotenv       = require('dotenv'),
     Transifex    = require('transifex'),
     gutil		 = require('gulp-util');
 
-module.exports = function () {
+module.exports = function (locales_dir) {
     var project_slug = 'ushahidi-v3',
-        locales_dir = './dist/locales/',
         mode = 'default',
         resource = 'client-en',
         // Get languages that are at least 90% translated

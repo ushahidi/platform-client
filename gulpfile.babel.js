@@ -179,7 +179,9 @@ gulp.task('jscsfix-test', () => {
 /**
  * Task `release` - Build release
  */
-gulp.task('transifex-download', require('./gulp/transifex-download'));
+gulp.task('transifex-download', function () {
+    require('./gulp/transifex-download')(paths.dest + '/locales/');
+});
 
 /**
  * Task `heroku:dev` - builds app for heroku
