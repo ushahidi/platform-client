@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('posts views controller', function () {
 
     var $rootScope,
@@ -13,13 +11,14 @@ describe('posts views controller', function () {
             }
         };
 
-    beforeEach(function () {
+    beforeEach(function (done) {
+        require('test/unit/mock/mock-modules.js');
+
         var testApp = angular.module('testApp', [
-            'pascalprecht.translate'
+            'ushahidi.mock'
         ]);
 
         testApp
-        .config(require('app/common/configs/locale-config.js'))
         .controller('postViewsController', require('app/main/posts/views/post-views.controller.js'))
         .service('PostFilters', function () {
             return mockPostFilters;
@@ -27,34 +26,33 @@ describe('posts views controller', function () {
 
         require('test/unit/simple-test-app-config')(testApp);
 
-        angular.mock.module('testApp');
-    });
+        angular.mock.module('testApp')
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
-        $rootScope = _$rootScope_;
-        $controller = _$controller_;
-        $scope = _$rootScope_.$new();
-    }));
-
-
-    beforeEach(function () {
         var mockRouteParams = {
             view : 'list'
         };
 
         spyOn(mockPostFilters, 'getFilters').and.callThrough();
 
-        $controller('postViewsController', {
-            $scope: $scope,
-            $routeParams: mockRouteParams
-        });
+        inject((_$rootScope_, _$controller_) => {
+            $rootScope = _$rootScope_;
+            $controller = _$controller_;
+            $scope = _$rootScope_.$new();
 
-        $rootScope.$digest();
-        $rootScope.$apply();
+            $controller('postViewsController', {
+                $scope: $scope,
+                $routeParams: mockRouteParams
+            });
+
+            $rootScope.$digest();
+            $rootScope.$apply();
+
+            done();
+        });
     });
 
     it('should have the right title', function () {
-        expect($scope.title).toBe('Posts');
+        expect($scope.title).toBe('post.posts');
     });
 
     it('should set the current view', function () {

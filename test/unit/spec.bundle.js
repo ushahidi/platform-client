@@ -8,10 +8,14 @@
  * run our tests, Webpack, likewise, compiles and bundles those tests here.
 */
 
-require('angular');
+require("babel-polyfill");
+
+//require('angular');
+import angular from 'angular';
 
 // Built by the core Angular team for mocking dependencies
-require('angular-mocks');
+//require('angular-mocks');
+import mocks from 'angular-mocks';
 
 // Load mocks services
 // require('test/unit/mock/mock-modules.js');
@@ -27,4 +31,6 @@ var context = require.context('test/unit/', true, /spec\.js$/);
 // Get all files, for each file, call the context function
 // that will require the file and load it here. Context will
 // loop and require those spec files here.
-context.keys().forEach(context);
+// context.keys().forEach(context);
+
+require('test/unit/main/post/views/post-views.controller.spec.js');
