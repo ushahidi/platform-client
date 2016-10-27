@@ -6,6 +6,7 @@
         "can_see_this" : "can see this",
         "collections" : "Collections",
         "create_collection" : "Create collection",
+        "export_to_csv" : "Export to CSV",
         "create_new" : "Create new",
         "created_by" : "Created by {{author}}",
         "documentation": {

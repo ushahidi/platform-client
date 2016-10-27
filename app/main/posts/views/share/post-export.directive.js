@@ -4,12 +4,11 @@ PostExportDirective.$inject = [];
 function PostExportDirective() {
     return {
         restrict: 'E',
-        replace: true,
         scope: {
             filters: '='
         },
         controller: PostExportController,
-        templateUrl: 'templates/main/posts/views/post-export.html'
+        templateUrl: 'templates/main/posts/views/share/post-export.html'
     };
 }
 
