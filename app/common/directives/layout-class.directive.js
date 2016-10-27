@@ -11,11 +11,11 @@ function LayoutClassDirective() {
     };
 }
 
-LayoutClassController.$inject = ['$scope', '$rootScope', '$window'];
-function LayoutClassController($scope, $rootScope, $window) {
+LayoutClassController.$inject = ['$scope', '$rootScope', '$window', 'Util'];
+function LayoutClassController($scope, $rootScope, $window, Util) {
     var isEmbed = ($window.self !== $window.top) ? true : false;
     // In the case of map we omit the layout-a class
-    var isMap = $window.location.href.includes('map');
+    var isMap = (Util.currentUrl()) ? Util.currentUrl().indexOf('map') > 0 : false;
 
     if (!isEmbed) {
         $rootScope.setLayout('layout-' + $scope.layout);
