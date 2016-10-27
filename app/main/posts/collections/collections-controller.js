@@ -42,13 +42,6 @@ module.exports = [
             //filters = angular.copy(filters, { set : []});
             filters.set = [];
             filters.set.push(collection.id);
-            //Ensure that ALL posts are visible under collections
-            // Set default collection status filters
-            if (_.has(filters, 'status')) {
-                !_.contains(filters.status, 'archived') ? filters.status.push('archived') : null;
-            } else {
-                filters.status = ['archived'];
-            }
 
             return filters;
         };
@@ -62,7 +55,11 @@ module.exports = [
         }, true);
 
         // Reset GlobalFilter + add set filter
+        // Ensure that ALL posts are visible under collections
+        // Set default collection status filters
         PostFilters.clearFilters();
+        PostFilters.setFilters({ status: ['archived', 'draft', 'published'] });
         $scope.filters = extendFilters(PostFilters.getFilters());
+
     }
 ];
