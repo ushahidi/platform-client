@@ -41,6 +41,9 @@ module.exports = [
         var extendFilters = function (filters) {
             filters = angular.copy(filters, { set : [] });
             filters.set.push(collection.id);
+
+            //Ensure that ALL posts are visible under collections
+            filters.status.push('archived');
             return filters;
         };
 
