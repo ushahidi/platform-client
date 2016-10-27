@@ -25,7 +25,6 @@ function PostToolboxDirective(
         $scope.changeStatus = changeStatus;
         $scope.allowedChangeStatus = allowedChangeStatus;
         $scope.allowedChangeOwner = allowedChangeOwner;
-        $scope.allowedChangeTimestamp = allowedChangeTimestamp;
         $scope.editAuthor = editAuthor;
         $scope.showUserRealname = showUserRealname;
         $scope.showAuthorRealname = showAuthorRealname;
@@ -51,11 +50,6 @@ function PostToolboxDirective(
 
         // FIXME: Enable after allowing change of author in API
         function allowedChangeOwner() {
-            return false;
-        }
-
-        // FIXME: Enable after allowing change of post timestamp in API
-        function allowedChangeTimestamp() {
             return false;
         }
 

@@ -10,6 +10,8 @@ module.exports = [
     'Notify',
     'ImportNotify',
     'Features',
+    'CollectionEndpoint',
+    'moment',
     '_',
 function (
     $translate,
@@ -23,6 +25,8 @@ function (
     Notify,
     ImportNotify,
     Features,
+    CollectionEndpoint,
+    moment,
     _
 ) {
     return {
@@ -259,24 +263,50 @@ function (
                 return csvIsValid;
             }
 
+            function createPostCollection(post_ids) {
+                var deferred = $q.defer();
+
+                var now = moment().format('h:mm a MMM Do YYYY');
+
+                var collection = {};
+                collection.name = 'Imported ' + now;
+                collection.view = 'list';
+                collection.visible_to = ['admin'];
+                var calls = [];
+                CollectionEndpoint.save(collection).$promise.then(function (collection) {
+                    _.each(post_ids, function (id) {
+                        calls.push(
+                            CollectionEndpoint.addPost({'collectionId': collection.id, 'id': id})
+                        );
+                    });
+                    $q.all(calls).then(function () {
+                        deferred.resolve(collection);
+                    });
+                });
+                return deferred.promise;
+            }
+
             function updateAndImport(csv) {
                 DataImportEndpoint.update(csv).$promise
                     .then(function () {
                         DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise
                             .then(function (response) {
                                 var processed = response.processed,
-                                    errors = response.errors;
+                                    errors = response.errors,
+                                    post_ids = response.created_ids;
 
-                                ImportNotify.importComplete(
-                                {
-                                    processed: processed,
-                                    errors: errors,
-                                    form_name: $scope.selectedForm.name,
-                                    filename: csv.filename
+                                createPostCollection(post_ids).then(function (collection) {
+                                    ImportNotify.importComplete(
+                                    {
+                                        processed: processed,
+                                        errors: errors,
+                                        collectionId: collection.id,
+                                        form_name: $scope.selectedForm.name,
+                                        filename: csv.filename
+                                    });
+
+                                    $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename, collectionId: collection.id});
                                 });
-
-                                $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename});
-
                             }, function (errorResponse) {
                                 Notify.apiErrors(errorResponse);
                             });
@@ -308,7 +338,8 @@ function (
                 // First we invert the mappings so they are in terms of csv column
                 // indices
                 map = _.invert(map);
-
+                // Remove empty values
+                map = _.omit(map, '');
                 // Then we set null values for unmapped columns
                 var keys = _.keys(map);
                 _.each($scope.csv.columns, function (column, index) {
@@ -321,7 +352,11 @@ function (
             function checkForDuplicates() {
                 // Check to make sure the user hasn't double mapped a key
                 // First, collect the counts for all keys
-                return _.chain($scope.maps_to)
+                // Remove empty fields
+                var map = _.omit($scope.maps_to, function (value, key, object) {
+                    return value === '';
+                });
+                return _.chain(map)
                             .map(function (item) {
                                 return $scope.csv.columns[item];
                             })

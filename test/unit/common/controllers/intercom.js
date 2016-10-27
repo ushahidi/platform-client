@@ -11,7 +11,9 @@ describe('intercom controller', function () {
         ushahidi: {
             intercomAppId: 'test',
             apiUrl: 'test'
-        }
+        },
+        self: 'top',
+        top: 'top'
     };
 
     beforeEach(function () {
@@ -25,6 +27,7 @@ describe('intercom controller', function () {
     beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
+
         $scope = _$rootScope_.$new();
     }));
 
