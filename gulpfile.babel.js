@@ -3,7 +3,7 @@
 import gulp     from 'gulp';
 import webpack  from 'webpack';
 import path     from 'path';
-import sync     from 'run-sequence';
+import runSeq   from 'run-sequence';
 import rename   from 'gulp-rename';
 import gutil    from 'gulp-util';
 import serve    from 'browser-sync';
@@ -49,7 +49,7 @@ let paths = {
 
 // use webpack.config.js to build modules
 gulp.task('dist', (cb) => {
-    return sync('clean', ['dist-webpack', 'dist-config', 'transifex-download'], cb);
+    return runSeq('clean', ['dist-webpack', 'dist-config', 'transifex-download'], cb);
 });
 
 // Copy config.js into dist
@@ -186,7 +186,25 @@ gulp.task('transifex-download', function () {
 /**
  * Task `heroku:dev` - builds app for heroku
  */
-gulp.task('heroku:dev', ['dist']);
+gulp.task('heroku:dev', ['dist'], function (done) {
+    if (process.env.TX_USERNAME && process.env.TX_PASSWORD) {
+        runSeq('transifex-download', done);
+    } else {
+        done();
+    }
+});
+
+/**
+ * Task `serve:static` - Serve dist build (for heroku)
+ */
+gulp.task('serve:static', function() {
+    serve.init({
+        server: {
+            baseDir: paths.dest
+        },
+        port: process.env.PORT || 3000
+    });
+});
 
 /**
  * Task `tar` - Build tarball for release
@@ -211,7 +229,7 @@ gulp.task('tar', () => {
  * Task `release` - Build release
  */
 gulp.task('release', (done) => {
-    return sync('dist', 'tar', done);
+    return runSeq('dist', 'tar', done);
 });
 
 gulp.task('default', ['watch']);
