@@ -43,7 +43,12 @@ module.exports = [
             filters.set.push(collection.id);
             //Ensure that ALL posts are visible under collections
             // Set default collection status filters
-            filters.status = ['published', 'draft', 'archived'];
+            if (_.has(filters, 'status')) {
+                filters.status.push('archived');
+            } else {
+                filters.status = ['archived'];
+            }
+
             return filters;
         };
 
