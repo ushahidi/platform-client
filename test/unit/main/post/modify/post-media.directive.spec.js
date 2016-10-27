@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post media directive', function () {
 
     var $rootScope,

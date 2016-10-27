@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('embed only directive', function () {
 
     var $rootScope,

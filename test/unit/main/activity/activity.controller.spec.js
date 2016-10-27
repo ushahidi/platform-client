@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('activity activity controller', function () {
 
     var $rootScope,

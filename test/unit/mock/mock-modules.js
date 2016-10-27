@@ -42,7 +42,7 @@ angular.module('ushahidi.mock', [])
 .service('PostSurveyService', require('./services/post-survey-service.js'))
 
 .value('translateFilter', function (value) {
-	return value;
+    return value;
 })
 
 .controller('navigation', require('./controllers/navigation.controller.mock.js'))

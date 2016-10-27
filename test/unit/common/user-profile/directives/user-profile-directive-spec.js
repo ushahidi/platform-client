@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('user profile directive', function () {
 
     var $rootScope,
@@ -11,7 +9,7 @@ describe('user profile directive', function () {
         element;
 
     beforeEach(function () {
-        var testApp = makeTestApp()
+        makeTestApp()
         .directive('userProfile', require('app/common/user-profile/user-profile.directive.js'))
         .value('$filter', function () {
             return function () {};

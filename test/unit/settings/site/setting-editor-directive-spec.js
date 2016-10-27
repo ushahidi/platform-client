@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting editor directive', function () {
 
     var $rootScope,

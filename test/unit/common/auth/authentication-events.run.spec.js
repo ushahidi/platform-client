@@ -1,5 +1,3 @@
-var rootPath = '../../../../';
-
 describe('global event handlers', function () {
 
     var mockedSessionData,

@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting categories edit controller', function () {
 
     var $rootScope,

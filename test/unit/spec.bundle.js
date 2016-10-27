@@ -8,15 +8,12 @@
  * run our tests, Webpack, likewise, compiles and bundles those tests here.
 */
 
-require("babel-polyfill");
+require('babel-polyfill');
 
-//require('angular');
-import angular from 'angular';
+require('angular');
 
 // Built by the core Angular team for mocking dependencies
-//require('angular-mocks');
-import mocks from 'angular-mocks';
-
+require('angular-mocks');
 
 global._ = require('underscore');
 
@@ -33,7 +30,6 @@ global.makeTestApp = require('test/unit/make-test-app');
 // all files ending with `.spec.js` or `-spec.js` and trace its path.
 // By passing in true, we permit this process to occur recursively.
 
-//var context = require.context('test/unit/', true, /spec\.js$/);
 var context = require.context('test/unit/', true, /spec\.js$/);
 
 // Get all files, for each file, call the context function

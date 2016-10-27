@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting map directive', function () {
 
     var $rootScope,

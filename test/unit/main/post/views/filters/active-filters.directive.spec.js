@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../../';
-
 describe('post active filters directive', function () {
 
     var $rootScope,

@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting data import directive', function () {
 
     var $rootScope,

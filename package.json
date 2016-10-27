@@ -46,7 +46,6 @@
     "gulp-jscs": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-tar": "^1.9.0",
-    "gulp-template": "^3.0.0",
     "gulp-util": "^3.0.7",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.22.0",
@@ -64,7 +63,6 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
-    "lodash": "^4.11.1",
     "ng-annotate-loader": "0.0.10",
     "node-libs-browser": "^0.5.0",
     "node-sass": "^3.9.3",
@@ -82,8 +80,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.9.5",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.6.0",
-    "yargs": "^3.9.0"
+    "webpack-hot-middleware": "^2.6.0"
   },
   "dependencies": {
     "URIjs": "^1.14.1",

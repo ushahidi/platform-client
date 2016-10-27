@@ -1,5 +1,3 @@
-var rootPath = '../../../../';
-
 describe('Session', function () {
 
     var mockedLocalStorageHash,

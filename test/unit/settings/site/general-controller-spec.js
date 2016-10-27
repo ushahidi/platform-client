@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting general controller', function () {
 
     var $rootScope,

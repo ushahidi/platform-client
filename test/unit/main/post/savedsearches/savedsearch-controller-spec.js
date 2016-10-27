@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('set savedsearches controller', function () {
 
     var $rootScope,

@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('Post Actions Service', function () {
 
     var PostActionsService,

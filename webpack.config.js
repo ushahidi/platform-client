@@ -1,11 +1,11 @@
 var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
 
-var extractCss = new ExtractTextPlugin("[name].[chunkhash].bundle.css");
+var extractCss = new ExtractTextPlugin('[name].[chunkhash].bundle.css');
 
 module.exports = {
   devtool: 'source-map',
@@ -41,9 +41,9 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module, count) {
-        return module.resource
-            && module.resource.indexOf(path.resolve(__dirname, 'app')) === -1
-            && module.resource.indexOf('ushahidi-platform-pattern-library') === -1;
+        return module.resource &&
+            module.resource.indexOf(path.resolve(__dirname, 'app')) === -1 &&
+            module.resource.indexOf('ushahidi-platform-pattern-library') === -1;
       }
     })
   ]

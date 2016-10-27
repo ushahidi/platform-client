@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('login directive', function () {
 
     var $rootScope,
@@ -23,7 +21,7 @@ describe('login directive', function () {
             }
         };
 
-        var testApp = makeTestApp()
+        makeTestApp()
         .directive('loginForm', require('app/common/auth/login.directive.js'))
         .service('Authentication', function () {
             return mockAuthenticationService;

@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('post view timeline directive', function () {
 
     var $rootScope,

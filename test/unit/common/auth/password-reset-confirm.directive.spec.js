@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('common password reset confirm controller', function () {
 
     var $rootScope,

@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('Post messages directive', function () {
     var $rootScope,
         $scope,

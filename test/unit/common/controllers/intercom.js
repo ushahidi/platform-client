@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('intercom controller', function () {
 
     var $rootScope,
@@ -17,7 +15,7 @@ describe('intercom controller', function () {
     };
 
     beforeEach(function () {
-        var testApp = makeTestApp()
+        makeTestApp()
         .value('$window', mockWindow)
         .controller('intercomController', require('app/common/controllers/intercom.js'));
 

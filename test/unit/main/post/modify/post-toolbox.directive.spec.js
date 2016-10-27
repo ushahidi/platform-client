@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post toolbox directive', function () {
 
     var $rootScope,

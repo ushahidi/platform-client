@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post view list directive', function () {
 
     var $rootScope,

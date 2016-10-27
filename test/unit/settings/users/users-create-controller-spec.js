@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting users create controller', function () {
 
     var $rootScope,

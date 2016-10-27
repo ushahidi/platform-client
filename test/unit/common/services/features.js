@@ -1,11 +1,9 @@
-var rootPath = '../../../../';
-
 describe('Features', function () {
 
     var Features, $rootScope;
 
     beforeEach(function () {
-        var testApp = makeTestApp()
+        makeTestApp()
         .service('Features', require('app/common/services/features.js'));
 
 

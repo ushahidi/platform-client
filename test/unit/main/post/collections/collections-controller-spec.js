@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('set collections controller', function () {
 
     var $rootScope,

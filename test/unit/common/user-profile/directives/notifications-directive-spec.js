@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('user-profile notification directive', function () {
 
     var $rootScope,

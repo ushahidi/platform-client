@@ -1,5 +1,3 @@
-var rootPath = '../../../../../';
-
 require('angular-resource');
 require('angular-cache');
 

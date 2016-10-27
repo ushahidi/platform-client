@@ -1,5 +1,3 @@
-var rootPath = '../../../../';
-
 var NotifyFactory = require('app/common/notifications/notify.service.js');
 require('angular-translate');
 

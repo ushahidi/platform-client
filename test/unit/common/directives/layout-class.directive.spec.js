@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('layout class directive', function () {
 
     var $rootScope,

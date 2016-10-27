@@ -1,13 +1,9 @@
-var rootPath = '../../../../';
-
 describe('Util', function () {
 
     var Util, CONST;
 
     beforeEach(function () {
-        var testApp = makeTestApp();
-
-
+        makeTestApp();
     });
 
     beforeEach(angular.mock.module('testApp'));

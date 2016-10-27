@@ -1,11 +1,9 @@
-var ROOT_PATH = '../../../../';
-
 describe('view helper', function () {
 
     var ViewHelper;
 
     beforeEach(function () {
-        var testApp = makeTestApp()
+        makeTestApp()
         .service('ViewHelper', require('app/common/services/view-helper.js'))
         .service('ConfigEndpoint', function () {
             return {

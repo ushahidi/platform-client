@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post card directive', function () {
 
     var $rootScope,

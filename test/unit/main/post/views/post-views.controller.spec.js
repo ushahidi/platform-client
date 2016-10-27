@@ -20,7 +20,7 @@ describe('posts views controller', function () {
             return mockPostFilters;
         });
 
-        angular.mock.module('testApp')
+        angular.mock.module('testApp');
 
         var mockRouteParams = {
             view : 'list'

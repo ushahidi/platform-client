@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('Post create controller', function () {
     var $scope,
        $controller,
@@ -9,7 +7,7 @@ describe('Post create controller', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        var testApp = makeTestApp()
+        makeTestApp()
         .value('PostEntity', function () {
             return fixture.load('posts/120.json');
         })

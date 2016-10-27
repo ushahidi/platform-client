@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post vertical tabs directive', function () {
 
     var $rootScope,

@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting roles controller', function () {
 
     var $rootScope,

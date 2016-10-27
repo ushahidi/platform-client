@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting datasources controller', function () {
 
     var $rootScope,

@@ -1,5 +1,3 @@
-var rootPath = '../../../../';
-
 describe('Authentication', function () {
 
     var $rootScope,

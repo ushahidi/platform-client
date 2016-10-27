@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('page-metadata controller', function () {
 
     var $rootScope,
@@ -7,7 +5,7 @@ describe('page-metadata controller', function () {
         $scope;
 
     beforeEach(function () {
-        var testApp = makeTestApp()
+        makeTestApp()
         .controller('pageMetadataController', require('app/common/controllers/page-metadata.js'));
 
         angular.mock.module('testApp');

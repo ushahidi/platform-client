@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post value directive', function () {
 
     var $rootScope,

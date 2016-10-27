@@ -1,5 +1,3 @@
-var rootPath = '../../../../';
-
 describe('authentication interceptor', function () {
 
     var $httpBackend,

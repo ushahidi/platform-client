@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting roles editor directive', function () {
 
     var $rootScope,

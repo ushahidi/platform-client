@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post relation directive', function () {
 
     var $rootScope,

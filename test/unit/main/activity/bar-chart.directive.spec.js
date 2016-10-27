@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('post view chart directive', function () {
 
     var $rootScope,

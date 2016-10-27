@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('navigation controller', function () {
 
     var $rootScope,
@@ -9,7 +7,7 @@ describe('navigation controller', function () {
         navigationController;
 
     beforeEach(function () {
-        var testApp = makeTestApp()
+        makeTestApp()
         .controller('navigationController', require('app/common/controllers/navigation.js'));
 
         angular.mock.module('testApp');

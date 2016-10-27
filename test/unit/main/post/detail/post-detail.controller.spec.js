@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('Post detail controller', function () {
     var $scope,
        $rootScope,
@@ -18,7 +16,7 @@ describe('Post detail controller', function () {
 
     beforeEach(function () {
 
-        var testApp = makeTestApp()
+        makeTestApp()
        .controller('postDetailController', require('app/main/posts/detail/post-detail.controller.js'))
        ;
 

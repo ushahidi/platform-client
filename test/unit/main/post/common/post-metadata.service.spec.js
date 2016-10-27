@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('Post Metadata Service', function () {
 
     var PostMetadataService,

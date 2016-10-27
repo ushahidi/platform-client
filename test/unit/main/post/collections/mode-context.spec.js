@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('collections mode context directive', function () {
 
     var $rootScope,

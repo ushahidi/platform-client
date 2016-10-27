@@ -33,27 +33,18 @@ module.exports = function (config) {
             'karma-phantomjs-launcher',
             'karma-notify-reporter',
             'karma-webpack',
-            'karma-sourcemap-loader',
+            'karma-sourcemap-loader'
         ],
 
         preprocessors: {
-            // 'app/**/*.js': ['webpack', 'coverage'],
-            // 'app/common/locales/**/*.json': ['webpack'],
             'test/unit/spec.bundle.js': ['webpack', 'sourcemap'/*, 'coverage'*/],
-            'mocked_backend/**/*.json': ['json_fixtures'],
-            // 'app/**/*.html': ['ng-html2js']
+            'mocked_backend/**/*.json': ['json_fixtures']
         },
-
-        // ngHtml2JsPreprocessor: {
-        //     stripPrefix: 'app/',
-        //     prependPrefix: 'templates/',
-        //     moduleName: 'client-templates'
-        // },
 
         webpack: require('../webpack.test.config'),
 
         webpackServer: {
-          noInfo: true // prevent console spamming when running in Karma!
+            noInfo: true // prevent console spamming when running in Karma!
         },
 
         coverageReporter: {

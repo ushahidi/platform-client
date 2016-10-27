@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('Post edit controller', function () {
     var $scope,
        $controller;
@@ -38,8 +36,8 @@ describe('Post edit controller', function () {
     };
 
     beforeEach(function () {
-        var testApp = makeTestApp()
-       .controller('postEditController', require('app/main/posts/modify/post-edit.controller.js'));
+        makeTestApp()
+        .controller('postEditController', require('app/main/posts/modify/post-edit.controller.js'));
 
         angular.mock.module('testApp');
     });
