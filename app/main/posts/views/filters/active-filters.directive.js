@@ -48,6 +48,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             var activeFilters = angular.copy(filters);
             rawFilters = angular.copy(filters);
 
+            // Remove set filter as it is only relevant to collections and should be immutable in that view
+            delete activeFilters.set;
             // Remove form filter as its shown by the mode-context-form-filter already
             delete activeFilters.form;
             // Remove within_km as its shown with the center_point value
