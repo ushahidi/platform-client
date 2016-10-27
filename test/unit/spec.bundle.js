@@ -17,6 +17,9 @@ import angular from 'angular';
 //require('angular-mocks');
 import mocks from 'angular-mocks';
 
+
+global._ = require('underscore');
+
 // Load mocks services
 require('test/unit/mock/mock-modules.js');
 

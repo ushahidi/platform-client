@@ -26,6 +26,6 @@ describe('view helper', function () {
     it('should return view and display name for map and list', function () {
         var views = ViewHelper.views();
         expect(_.pluck(views, 'name')).toEqual(['map', 'list']);
-        expect(_.pluck(views, 'display_name')).toEqual(['Map', 'Timeline']);
+        expect(_.pluck(views, 'display_name')).toEqual(['views.map', 'views.list']);
     });
 });

@@ -1,5 +1,8 @@
 var rootPath = '../../../../../';
 
+require('angular-resource');
+require('angular-cache');
+
 describe('UserEndpoint', function () {
 
     var $rootScope,
@@ -15,8 +18,6 @@ describe('UserEndpoint', function () {
         testApp
         .service('UserEndpoint', require('app/common/services/endpoints/user-endpoint.js'))
         .config(require('app/common/configs/cache-config.js'));
-
-
 
         angular.mock.module('testApp');
     });

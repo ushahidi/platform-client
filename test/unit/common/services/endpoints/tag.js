@@ -1,5 +1,8 @@
 var rootPath = '../../../../../';
 
+require('angular-resource');
+require('angular-cache');
+
 describe('TagEndpoint', function () {
 
     var $rootScope,

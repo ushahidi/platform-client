@@ -5,7 +5,6 @@ describe('post location directive', function () {
     var $rootScope,
         $scope,
         isolateScope,
-        GlobalFilter,
         Notify,
         element,
         Geocoding;
@@ -52,11 +51,10 @@ describe('post location directive', function () {
         });
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _GlobalFilter_, _Geocoding_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _Geocoding_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
-        GlobalFilter = _GlobalFilter_;
         Notify = _Notify_;
         Geocoding = _Geocoding_;
 

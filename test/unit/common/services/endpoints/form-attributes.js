@@ -1,5 +1,9 @@
 var rootPath = '../../../../../';
 
+require('angular-resource');
+require('angular-cache');
+
+
 describe('FormAttributeEndpoint', function () {
 
     var $rootScope,
