@@ -7,7 +7,8 @@ function PostShareDirective() {
         replace: true,
         scope: {
             filters: '=',
-            button: '=?'
+            button: '=?',
+            postId: '=?'
         },
         controller: PostShareController,
         templateUrl: 'templates/main/posts/views/share/post-share.html'
