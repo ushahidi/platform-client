@@ -37,7 +37,7 @@ module.exports = function (config) {
         ],
 
         preprocessors: {
-            'test/unit/spec.bundle.js': ['webpack', 'sourcemap'/*, 'coverage'*/],
+            'test/unit/spec.bundle.js': ['webpack', 'sourcemap'],
             'mocked_backend/**/*.json': ['json_fixtures']
         },
 
