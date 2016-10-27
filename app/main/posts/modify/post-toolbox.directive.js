@@ -77,10 +77,10 @@ function PostToolboxDirective(
         }
 
         function formatDates() {
-            $scope.displayCreated = moment($scope.post.created).format('LT MMMM D, YYYY');
+            $scope.displayCreated = moment($scope.post.created).format('LLL');
 
             if ($scope.post.updated) {
-                $scope.displayUpdated = moment($scope.post.updated).format('LT MMMM D, YYYY');
+                $scope.displayUpdated = moment($scope.post.updated).format('LLL');
             }
         }
     }

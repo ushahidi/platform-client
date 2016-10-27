@@ -1,18 +1,47 @@
 
-<form ng-submit="uploadFile()">
-    <div class="form-field">
-      <a ng-href="{{media.original_file_url}}" ng-if="media.original_file_url" target="_blank" translate>post.media.current_url</a>
-
-      <file-upload file-container="fileContainer"
-                   custom-on-change="onChange">
+<form>
+    <div class="form-field file">
+      <file-upload id="{{name}}" container="media">
       </file-upload>
-      <figure>
-        <p class="small" translate>post.media.add_caption</p>
-        <input
-          type="text"
-          placeholder="{{ 'post.media.add_caption' | translate }}"
-          ng-model="media.caption">
+
+      <label for="{{name}}" class="button button-gamma" ng-show="showAdd()">
+          <svg class="iconic">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+          </svg>
+          <span class="button-label">Add photo</span>
+      </label>
+
+      <figure ng-show="showReplace()">
+          <img ng-src="{{media.original_file_url}}" ng-show="media.id && !media.dataURI">
+          <img ng-src="{{media.dataURI}}" ng-show="media.dataURI">
+
+          <div class="form-field">
+              <button class="button-destructive" ng-click="deleteMedia(media.id)" ng-show="showDelete()">
+                  <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                  </svg>
+                  <span class="hidden">Delete photo</span>
+              </button>
+
+              <input id="photo" type="file">
+              <label for="{{name}}" class="button button-gamma">
+                  <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#image"></use>
+                  </svg>
+                  <span class="button-label">Replace image</span>
+              </label>
+          </div>
       </figure>
-      <button ng-disabled="!canUpload" type="submit" translate>post.media.upload</button>
+
+      <div>
+        <figure>
+          <p class="small" translate>post.media.add_caption</p>
+          <input
+            ng-change="media.changed=true"
+            type="text"
+            placeholder="{{ 'post.media.add_caption' | translate }}"
+            ng-model="media.caption">
+        </figure>
+      </div>
     </div>
 </form>

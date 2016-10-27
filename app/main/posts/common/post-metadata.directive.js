@@ -39,17 +39,17 @@ function PostMetadataDirective(
             }
 
             function formatDates() {
-                var created = moment($scope.post.created),
+                var postDate = moment($scope.post.post_date),
                     now = moment();
 
-                if (now.isSame(created, 'day')) {
-                    $scope.displayTime = created.fromNow();
-                } else if (now.isSame(created, 'week') && $scope.hideDateThisWeek) {
-                    $scope.displayTime = created.format('LT');
+                if (now.isSame(postDate, 'day')) {
+                    $scope.displayTime = postDate.fromNow();
+                } else if (now.isSame(postDate, 'week') && $scope.hideDateThisWeek) {
+                    $scope.displayTime = postDate.format('LT');
                 } else {
-                    $scope.displayTime = created.format('LL');
+                    $scope.displayTime = postDate.format('LL');
                 }
-                $scope.displayTimeFull = created.format('LLL');
+                $scope.displayTimeFull = postDate.format('LLL');
             }
 
             function visibleTo(post) {

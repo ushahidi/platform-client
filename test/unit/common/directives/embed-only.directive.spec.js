@@ -31,6 +31,7 @@ describe('embed only directive', function () {
         $compile = _$compile_;
         $window = _$window_;
         $scope = _$rootScope_.$new();
+        $rootScope.globalLayout = 'layout-a';
         $window.self = 'frame';
         $rootScope.setLayout = function () {};
         spyOn($rootScope, 'setLayout').and.callThrough();
@@ -41,6 +42,5 @@ describe('embed only directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
 
-        expect($rootScope.setLayout).toHaveBeenCalledWith('layout-embed');
     });
 });

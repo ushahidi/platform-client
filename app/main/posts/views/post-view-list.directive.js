@@ -92,13 +92,13 @@ function PostListController(
                 yesterday = moment().subtract(1, 'days');
 
             $scope.groupedPosts = _.groupBy(postsResponse.results, function (post) {
-                var created = moment(post.created);
-                if (now.isSame(created, 'd')) {
+                var postDate = moment(post.post_date);
+                if (now.isSame(postDate, 'd')) {
                     return $translate.instant('nav.today');
-                } else if (yesterday.isSame(created, 'd')) {
+                } else if (yesterday.isSame(postDate, 'd')) {
                     return $translate.instant('nav.yesterday');
                 } else {
-                    return created.fromNow();
+                    return postDate.fromNow();
                 }
             });
             $scope.totalItems = postsResponse.total_count;

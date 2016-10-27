@@ -5,8 +5,8 @@ function DateSelectDirective() {
     return {
         restrict: 'E',
         scope: {
-            createdBeforeModel: '=',
-            createdAfterModel: '='
+            dateBeforeModel: '=',
+            dateAfterModel: '='
         },
         controller: DateSelectController,
         template: require('./filter-date.html')
