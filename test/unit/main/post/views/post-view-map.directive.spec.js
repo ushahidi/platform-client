@@ -11,19 +11,14 @@ describe('post view map directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('postViewMap', require('app/main/posts/views/post-view-map.directive'))
         .value('$filter', function () {
             return function () {};
         })
         .value('PostEntity', {});
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

@@ -17,16 +17,10 @@ describe('Post detail controller', function () {
     }
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'pascalprecht.translate',
-            'ushahidi.mock'
-        ])
+        var testApp = makeTestApp()
        .controller('postDetailController', require('app/main/posts/detail/post-detail.controller.js'))
        ;
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

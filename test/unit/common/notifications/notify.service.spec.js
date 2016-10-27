@@ -19,9 +19,8 @@ describe('Notify', function () {
     };
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-            'pascalprecht.translate'
-        ]);
+        var testApp = makeTestApp();
+
         testApp.service('Notify', require('app/common/notifications/notify.service.js'))
         .service('SliderService', function () {
             return mockSliderService;
@@ -39,7 +38,7 @@ describe('Notify', function () {
         })
         ;
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
     });
 
     beforeEach(angular.mock.module('testApp'));

@@ -20,18 +20,13 @@ describe('common password reset controller', function () {
         };
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('passwordReset', require('app/common/auth/password-reset.directive.js'))
         .service('PasswordReset', function () {
             return mockPasswordReset;
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

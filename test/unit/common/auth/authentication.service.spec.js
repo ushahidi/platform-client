@@ -12,11 +12,9 @@ describe('Authentication', function () {
         mockedUserDataResponse;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock',
-            'ngResource',
-            'angular-cache'
-        ]);
+        var testApp = makeTestApp();
+
+        testApp.requires.push('ngResource', 'angular-cache');
 
         mockedSessionData = {};
         testApp.service('Session', function () {
@@ -37,7 +35,7 @@ describe('Authentication', function () {
         })
         .service('Authentication', require('app/common/auth/authentication.service.js'));
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
 
         angular.mock.module('testApp');
 

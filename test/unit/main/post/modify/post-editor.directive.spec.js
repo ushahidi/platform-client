@@ -11,11 +11,8 @@ describe('post editor directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('postEditor', require('app/main/posts/modify/post-editor.directive'))
         .value('$filter', function () {
@@ -35,8 +32,6 @@ describe('post editor directive', function () {
                 }
             };
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

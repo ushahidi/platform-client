@@ -10,7 +10,7 @@ describe('global event handlers', function () {
 
     beforeEach(function () {
 
-        var testApp = angular.module('testApp', []);
+        var testApp = makeTestApp();
 
         var mockedSessionService =
         {
@@ -48,7 +48,7 @@ describe('global event handlers', function () {
         })
         .run(require('app/common/auth/authentication-events.run.js'));
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
     });
 
     describe('rootScope', function () {

@@ -12,12 +12,8 @@ describe('post active filters directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock',
-            'pascalprecht.translate'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('postActiveFilters', require('app/main/posts/views/filters/active-filters.directive'))
         .value('$filter', function () {
@@ -25,8 +21,6 @@ describe('post active filters directive', function () {
                 return 'Feb 17, 2016';
             };
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

@@ -9,14 +9,8 @@ describe('navigation controller', function () {
         navigationController;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock',
-        'pascalprecht.translate'
-        ])
-        // .config(require('app/common/configs/locale-config.js'))
+        var testApp = makeTestApp()
         .controller('navigationController', require('app/common/controllers/navigation.js'));
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

@@ -5,12 +5,10 @@ describe('Features', function () {
     var Features, $rootScope;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ])
+        var testApp = makeTestApp()
         .service('Features', require('app/common/services/features.js'));
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
         angular.mock.module('testApp');
     });
 

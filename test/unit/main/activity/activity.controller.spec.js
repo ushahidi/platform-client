@@ -9,11 +9,8 @@ describe('activity activity controller', function () {
         $controller;
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ])
+        var testApp = makeTestApp()
         .service('ViewHelper', function () {
             return {
                 isViewAvailable: function (view) {
@@ -23,8 +20,6 @@ describe('activity activity controller', function () {
         });
 
         testApp.controller('activityController', require('app/main/activity/activity.controller.js'));
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

@@ -5,9 +5,9 @@ describe('Util', function () {
     var Util, CONST;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp');
+        var testApp = makeTestApp();
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
     });
 
     beforeEach(angular.mock.module('testApp'));

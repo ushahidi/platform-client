@@ -1,6 +1,5 @@
-var rootPath = '../../';
-
-module.exports = function (appModule) {
+module.exports = function () {
+    let appModule = angular.module('testApp', ['ushahidi.mock']);
     // for the test app, we will mock the backend, so this url is actually never really used
     var backendUrl = 'http://backend',
     claimedAnonymousScopes = [
@@ -30,4 +29,6 @@ module.exports = function (appModule) {
             'CLAIMED_USER_SCOPES' : claimedAnonymousScopes.concat('dataproviders')
         })
         .service('Util', require('app/common/services/util.js'));
+
+    return appModule;
 };

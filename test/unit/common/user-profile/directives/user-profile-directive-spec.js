@@ -11,15 +11,11 @@ describe('user profile directive', function () {
         element;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ])
+        var testApp = makeTestApp()
         .directive('userProfile', require('app/common/user-profile/user-profile.directive.js'))
         .value('$filter', function () {
             return function () {};
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

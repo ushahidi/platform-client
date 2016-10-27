@@ -8,17 +8,12 @@ describe('setting categories create controller', function () {
         $controller;
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.controller('settingCategoriesCreateController', require('app/settings/categories/create.controller.js'))
 
         ;
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

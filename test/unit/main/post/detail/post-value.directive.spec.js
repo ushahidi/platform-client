@@ -12,18 +12,13 @@ describe('post value directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('postValue', require('app/main/posts/detail/post-value.directive'))
         .value('$filter', function () {
             return function () {};
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

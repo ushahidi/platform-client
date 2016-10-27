@@ -9,15 +9,10 @@ describe('setting general controller', function () {
         $controller;
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.controller('settingGeneralController', require('app/settings/site/site.controller.js'));
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

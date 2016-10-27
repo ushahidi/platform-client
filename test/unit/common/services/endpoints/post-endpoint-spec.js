@@ -10,12 +10,13 @@ describe('PostEndpoint', function () {
 
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ngResource'
-        ])
+        var testApp = makeTestApp();
+
+        testApp.requires.push('ngResource', 'angular-cache');
+        testApp
         .service('PostEndpoint', require('app/common/services/endpoints/post-endpoint.js'));
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
 
         angular.mock.module('testApp');
     });

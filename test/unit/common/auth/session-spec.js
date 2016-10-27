@@ -19,7 +19,7 @@ describe('Session', function () {
             gravatar: undefined
         };
 
-        var testApp = angular.module('testApp');
+        var testApp = makeTestApp();
 
         mockedLocalStorageHash = {};
         testApp.service('localStorageService', function () {
@@ -40,7 +40,7 @@ describe('Session', function () {
         })
         .service('Session', require('app/common/auth/session.service.js'));
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
 
     });
 

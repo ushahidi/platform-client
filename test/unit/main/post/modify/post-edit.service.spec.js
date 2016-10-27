@@ -12,15 +12,11 @@ describe('Post Edit Service', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
         testApp.service('PostEditService', require('app/main/posts/modify/post-edit.service.js'))
         .value('$filter', function () {
             return function () {};
         });
-
-        require('test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });

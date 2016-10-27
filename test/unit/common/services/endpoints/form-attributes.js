@@ -9,14 +9,14 @@ describe('FormAttributeEndpoint', function () {
 
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ngResource',
-        'angular-cache'
-        ])
+        var testApp = makeTestApp();
+
+        testApp.requires.push('ngResource', 'angular-cache');
+        testApp
         .service('FormAttributeEndpoint', require('app/common/services/endpoints/form-attributes.js'))
         .config(require('app/common/configs/cache-config.js'));
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
 
         angular.mock.module('testApp');
     });

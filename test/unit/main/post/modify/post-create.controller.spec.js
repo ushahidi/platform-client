@@ -7,19 +7,14 @@ describe('Post create controller', function () {
        FormEndpoint;
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
         fixture.setBase('mocked_backend/api/v3');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ])
+        var testApp = makeTestApp()
         .value('PostEntity', function () {
             return fixture.load('posts/120.json');
         })
         .controller('postCreateController', require('app/main/posts/modify/post-create.controller.js'))
         ;
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

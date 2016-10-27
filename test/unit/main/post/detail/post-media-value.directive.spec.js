@@ -11,18 +11,13 @@ describe('post media value directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('postMediaValue', require('app/main/posts/detail/post-media-value.directive'))
         .value('$filter', function () {
             return function () {};
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

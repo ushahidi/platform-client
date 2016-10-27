@@ -11,7 +11,8 @@ describe('authentication interceptor', function () {
         mockAuthentication;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [], function ($httpProvider) {
+        var testApp = makeTestApp()
+        .config(function ($httpProvider) {
             $httpProviderIt = $httpProvider;
         });
 
@@ -45,7 +46,7 @@ describe('authentication interceptor', function () {
         })
         .config(require('app/common/auth/authentication-interceptor.config.js'));
 
-        require('test/unit/simple-test-app-config.js')(testApp);
+
 
         angular.mock.module('testApp');
     });

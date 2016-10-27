@@ -7,14 +7,8 @@ describe('page-metadata controller', function () {
         $scope;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock',
-        'pascalprecht.translate'
-        ])
-        // .config(require('app/common/configs/locale-config.js'))
+        var testApp = makeTestApp()
         .controller('pageMetadataController', require('app/common/controllers/page-metadata.js'));
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

@@ -23,10 +23,7 @@ describe('login directive', function () {
             }
         };
 
-        var testApp = angular.module('testApp', [
-        'pascalprecht.translate'
-        ])
-        // .config(require('app/common/configs/locale-config.js'))
+        var testApp = makeTestApp()
         .directive('loginForm', require('app/common/auth/login.directive.js'))
         .service('Authentication', function () {
             return mockAuthenticationService;
@@ -47,8 +44,6 @@ describe('login directive', function () {
                 }
             };
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

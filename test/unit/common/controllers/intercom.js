@@ -15,14 +15,9 @@ describe('intercom controller', function () {
     };
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock',
-        'pascalprecht.translate'
-        ])
+        var testApp = makeTestApp()
         .value('$window', mockWindow)
         .controller('intercomController', require('app/common/controllers/intercom.js'));
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

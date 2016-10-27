@@ -5,11 +5,7 @@ describe('view helper', function () {
     var ViewHelper;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock',
-        'ngResource',
-        'pascalprecht.translate'
-        ])
+        var testApp = makeTestApp()
         .service('ViewHelper', require('app/common/services/view-helper.js'))
         .service('ConfigEndpoint', function () {
             return {
@@ -18,10 +14,7 @@ describe('view helper', function () {
         })
         .factory('BootstrapConfig', function () {
             return { map: {}, site: {}, features: {} };
-        })
-        .config(require('app/common/configs/locale-config.js'));
-
-        require('test/unit/simple-test-app-config')(testApp);
+        });
 
         angular.mock.module('testApp');
     });

@@ -12,19 +12,13 @@ describe('posts views controller', function () {
         };
 
     beforeEach(function (done) {
-        require('test/unit/mock/mock-modules.js');
-
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp
         .controller('postViewsController', require('app/main/posts/views/post-views.controller.js'))
         .service('PostFilters', function () {
             return mockPostFilters;
         });
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp')
 

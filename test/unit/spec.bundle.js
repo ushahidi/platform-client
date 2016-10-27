@@ -18,7 +18,10 @@ import angular from 'angular';
 import mocks from 'angular-mocks';
 
 // Load mocks services
-// require('test/unit/mock/mock-modules.js');
+require('test/unit/mock/mock-modules.js');
+
+// Create testApp
+global.makeTestApp = require('test/unit/make-test-app');
 
 // We use the context method on `require` which Webpack created
 // in order to signify which files we actually want to require or import.
@@ -26,11 +29,11 @@ import mocks from 'angular-mocks';
 // Using that regex, we scan within `test/unit` and target
 // all files ending with `.spec.js` or `-spec.js` and trace its path.
 // By passing in true, we permit this process to occur recursively.
+
+//var context = require.context('test/unit/', true, /spec\.js$/);
 var context = require.context('test/unit/', true, /spec\.js$/);
 
 // Get all files, for each file, call the context function
 // that will require the file and load it here. Context will
 // loop and require those spec files here.
-// context.keys().forEach(context);
-
-require('test/unit/main/post/views/post-views.controller.spec.js');
+context.keys().forEach(context);

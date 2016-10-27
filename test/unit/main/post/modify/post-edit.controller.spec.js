@@ -38,13 +38,8 @@ describe('Post edit controller', function () {
     };
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ])
+        var testApp = makeTestApp()
        .controller('postEditController', require('app/main/posts/modify/post-edit.controller.js'));
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

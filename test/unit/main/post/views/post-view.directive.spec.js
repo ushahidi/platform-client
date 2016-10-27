@@ -11,11 +11,8 @@ describe('post view directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('postView', require('app/main/posts/views/post-view.directive'))
         .service('ViewHelper', require('app/common/services/view-helper.js'))
@@ -23,8 +20,6 @@ describe('post view directive', function () {
             return function () {};
         })
         .value('PostEntity', {});
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });

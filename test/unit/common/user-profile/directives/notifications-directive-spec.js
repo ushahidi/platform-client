@@ -10,19 +10,14 @@ describe('user-profile notification directive', function () {
         $compile;
 
     beforeEach(function () {
-        require('test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
         testApp.directive('notifications', require('app/common/user-profile/notifications.directive.js'))
         .value('$filter', function () {
             return function () {};
         });
 
-
-        require('test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
