@@ -25,6 +25,7 @@ module.exports = function (locales_dir) {
 
     if (!config.username || !config.password) {
         gutil.log(gutil.colors.yellow('Missing transifex username and password'));
+        return;
     }
 
     var transifex = new Transifex({

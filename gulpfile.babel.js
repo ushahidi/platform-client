@@ -186,13 +186,7 @@ gulp.task('transifex-download', function () {
 /**
  * Task `heroku:dev` - builds app for heroku
  */
-gulp.task('heroku:dev', ['dist'], function (done) {
-    if (process.env.TX_USERNAME && process.env.TX_PASSWORD) {
-        runSeq('transifex-download', done);
-    } else {
-        done();
-    }
-});
+gulp.task('heroku:dev', ['dist'], function (done) {});
 
 /**
  * Task `serve:static` - Serve dist build (for heroku)
