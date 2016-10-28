@@ -24,6 +24,7 @@ function ShareMenuController(
 ) {
     $scope.loading = false;
     $scope.shareUrl = Util.currentUrl();
+    $scope.isExportable = isExportable;
 
     activate();
 
@@ -36,5 +37,12 @@ function ShareMenuController(
             $scope.shareUrl = $window.location.origin + '/posts/' + $scope.postId;
         }
         $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
+    }
+    // Check if current view is exportable based on URI
+    function isExportable() {
+        if ($window.location.href.indexOf('post') > 0) {
+            return false;
+        }
+        return true;
     }
 }
