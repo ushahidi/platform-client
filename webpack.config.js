@@ -26,6 +26,9 @@ module.exports = {
   plugins: [
     extractCss,
 
+    // Skip locales
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
     // Injects bundles in your index.html instead of wiring all manually.
     // It also adds hash to all injected assets so we don't have problems
     // with cache purging during deployment.

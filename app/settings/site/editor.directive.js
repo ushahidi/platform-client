@@ -49,15 +49,17 @@ function (
             $scope.userSavedSettings = false;
 
             $scope.timezones = [];
-            var timezones = require('moment-timezone/data/packed/latest.json');
 
-            if (timezones.zones) {
-                angular.forEach(timezones.zones, function (timezone) {
-                    timezone = timezone.split('|');
-                    $scope.timezones.push(timezone[0]);
-                });
-            }
-            $scope.timezones.push('UTC');
+            require.ensure(['moment-timezone/data/packed/latest.json'], function (require) {
+                var timezones = require('moment-timezone/data/packed/latest.json');
+                if (timezones.zones) {
+                    angular.forEach(timezones.zones, function (timezone) {
+                        timezone = timezone.split('|');
+                        $scope.timezones.push(timezone[0]);
+                    });
+                }
+                $scope.timezones.push('UTC');
+            }, 'timezones');
 
             Languages.then(function (languages) {
                 $scope.languages = languages;
