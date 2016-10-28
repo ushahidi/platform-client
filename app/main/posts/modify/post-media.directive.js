@@ -1,12 +1,14 @@
 module.exports = [
     '$http',
     'MediaEndpoint',
+    'MediaEditService',
     'Util',
     'Notify',
     '$q',
 function (
     $http,
     MediaEndpoint,
+    MediaEditService,
     Util,
     Notify,
     $q
@@ -17,83 +19,43 @@ function (
         require: '^^form',
         scope: {
             mediaId: '=',
+            media: '=',
             name: '@'
         },
         templateUrl: 'templates/main/posts/modify/media.html',
         link: function ($scope, element, attr, formCtrl) {
-            // Initialize file container
-            $scope.fileContainer = {file: null};
+            $scope.showAdd = function () {
+                return (!$scope.media.id && !$scope.media.changed);
+            };
 
-            // Initialize media object
-            $scope.media = {};
+            $scope.showReplace = function () {
+                return $scope.media.dataURI || $scope.media.id;
+            };
+
+            $scope.showDelete = function () {
+                return $scope.media.id;
+            };
 
             if ($scope.mediaId) {
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                     $scope.media = media;
+                    // Set initial media state
+                    $scope.media.changed = false;
                 });
+            } else {
+                // Initialize media object
+                $scope.media = {file: null, caption: null, dataURI: null, changed: false};
             }
 
-            // Track file changes
-            $scope.canUpload = false;
-
-            $scope.onChange = function () {
-                $scope.$apply(function () {
-                    if ($scope.fileContainer.file) {
-                        $scope.canUpload = true;
-                    } else {
-                        $scope.canUpload = false;
-                    }
-                });
-            };
-
-            $scope.uploadFile = function () {
-                //@todo Allow editing of caption for existing image
-                if (!$scope.fileContainer.file) {
-                    return;
-                }
-
-                // Delete current file
-                var promise = deleteMedia($scope.mediaId);
-
-                // ...then upload new file
-                promise.then(function () {
-                    var formData = new FormData();
-
-                    formData.append('file', $scope.fileContainer.file);
-
-                    if ($scope.media.caption) {
-                        formData.append('caption', $scope.media.caption);
-                    }
-
-                    $http.post(
-                        Util.apiUrl('/media'),
-                        formData,
-                        {
-                            headers: {
-                                'Content-Type': undefined
-                            }
-                        }
-                    ).then(function (response) {
-                        $scope.mediaId = response.data.id;
-
-                        // We found a file so change the state of parent form
-                        formCtrl[$scope.name].$setDirty();
-                    }, function (error) {
-                        Notify.apiErrors(error);
+            $scope.deleteMedia = function (mediaId) {
+                // Mark for deletion
+                Notify.confirmDelete('notify.post.delete_image_confirm').then(function () {
+                    MediaEditService.deleteMedia(mediaId).then(function () {
+                        $scope.media = {};
+                        $scope.media.changed = true;
+                        $scope.media.deleted = true;
                     });
-                }, function (error) {
-                    Notify.apiErrors(error);
                 });
-            };
-
-            var deleteMedia = function (mediaId) {
-                // Delete previous media first
-                if (mediaId) {
-                    return MediaEndpoint.delete({id: mediaId}).$promise;
-                }
-
-                // Return a promise anyway if there is no media to delete
-                return $q.when();
             };
         }
     };

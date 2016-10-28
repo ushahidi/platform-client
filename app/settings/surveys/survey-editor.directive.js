@@ -24,6 +24,7 @@ SurveyEditorController.$inject = [
     'RoleEndpoint',
     '_',
     'Notify',
+    'SurveyNotify',
     'ModalService',
     'Features'
 ];
@@ -39,6 +40,7 @@ function SurveyEditorController(
     RoleEndpoint,
     _,
     Notify,
+    SurveyNotify,
     ModalService,
     Features
 ) {
@@ -522,7 +524,7 @@ function SurveyEditorController(
                 });
             });
 
-            Notify.notify('notify.form.edit_form_success', { name: $scope.survey.name });
+            SurveyNotify.success('notify.form.edit_form_success', { name: $scope.survey.name }, { formId: $scope.survey.id});
         }, handleResponseErrors);
     }
 

@@ -1,20 +1,22 @@
 - name: "Test"
   service: test
   command: gulp test
+
+- name: "Build client"
+  service: build
+  command: build
+  tag: '^(v[0-9]\.[0-9]+.[0-9]+(-[a-zA-Z0-9\.]+)?)|(develop)|(production)$'
+
 - type: parallel
   steps:
-  - name: "Bundle"
-    type: serial
+  - name: "Release bundle"
+    service: release
+    command: release
     tag: '^v[0-9]\.[0-9]+.[0-9]+(-[a-zA-Z0-9\.]+)?$'
-    steps:
-      - service: build
-        command: build
-      - service: release
-        command: release
-  - name: "Deploy"
+  - name: "Deploy staging"
     service: deploy
     tag: develop
-    command: "ansible-playbook -vv -i hosts/rackspace_staging platform-client-update.yml -e=\"PLATFORM_CLIENT_VERSION=$CI_COMMIT_ID\""
+    command: ansible-playbook -vv -i hosts/rackspace_staging platform-client-update-rsync.yml -e PLATFORM_CLIENT_DEPLOY_SRC="/vols/last_build"
   - name: "Deploy Production"
     service: deploy
     tag: production
