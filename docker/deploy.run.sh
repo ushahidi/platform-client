@@ -7,7 +7,7 @@ if [ -n "${PRIVATE_SSH_KEY}" ]; then
 fi
 
 # ==> Copy ansible scripts into container
-git clone git@github.com:ushahidi/platform-cloud-ansible.git /opt --depth=5
+git clone git@github.com:ushahidi/platform-cloud-ansible.git /opt -b platform-1445 --depth=5
 
 if [ -n "${ANSIBLE_VAULT_PASSWORD}" ]; then
   /bin/echo -e "$ANSIBLE_VAULT_PASSWORD" > /opt/vpass
@@ -23,5 +23,20 @@ EOM
 # ==> Get latest deployment code from github
 ansible-galaxy install -r roles.yml
 
-exec $*
+# Perform variable substitution on parameters
+#   i.e. if we get a parameter myvar="$CI_BRANCH" we substitute $CI_BRANCH for
+#        its actual value in the environment, and get i.e. myvar="master"
+args=()
+for p in $@; do
+    args+=(`printf '%s\n' $p | envsubst`)
+done
 
+echo All your vars:
+echo ------
+set
+echo ------
+
+# Execute parameter passed in arguments
+echo executing: "${args[@]}"
+
+exec "${args[@]}"
