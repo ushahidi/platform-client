@@ -57,8 +57,8 @@ function PostFiltersService(_, FormEndpoint) {
     function getDefaults() {
         return {
             q: '',
-            created_after: '',
-            created_before: '',
+            date_after: '',
+            date_before: '',
             status: ['published', 'draft'],
             published_to: '',
             center_point: '',
@@ -113,7 +113,7 @@ function PostFiltersService(_, FormEndpoint) {
                     return true;
                 }
                 // Is an array with all the same elements? (order doesn't matter)
-                if (_.isArray(defaults[key]) && _.difference(defaults[key], value).length === 0) {
+                if (_.isArray(defaults[key]) && _.difference(value, defaults[key]).length === 0) {
                     return true;
                 }
                 // Is value empty? ..and not a date object

@@ -84,5 +84,6 @@ describe('post active filters directive', function () {
 
             expect(PostFilters.clearFilter).toHaveBeenCalled();
         });
+
     });
 });

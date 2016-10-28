@@ -114,6 +114,7 @@
                   ng-switch-when="upload"
                   name="values_{{attribute.id}}"
                   media-id="post.values[attribute.key][key]"
+                  media="medias[attribute.key]"
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
               ></post-media>

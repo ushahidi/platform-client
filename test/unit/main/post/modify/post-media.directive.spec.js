@@ -5,9 +5,6 @@ describe('post media directive', function () {
     var $rootScope,
         $scope,
         isolateScope,
-        MediaEndpoint,
-        $httpBackend,
-        CONST,
         formCtrl,
         element;
 
@@ -35,42 +32,17 @@ describe('post media directive', function () {
     beforeEach(inject(function (_$rootScope_, $compile) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
-        element = '<form name="form"><post-media name="media-test" media-id="5"></post-media></form>';
+        $scope.media = 5;
+        element = '<form name="form"><post-media name="media-test" media="mediaVal" media-id="5"></post-media></form>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.children().isolateScope();
         formCtrl = element.controller('form');
     }));
 
-    it('should load media properties', inject(function (_MediaEndpoint_) {
-        MediaEndpoint = _MediaEndpoint_;
+    it('should load media properties', function () {
 
         expect(isolateScope.media.caption).toEqual('test caption');
         expect(isolateScope.media.original_file_url).toEqual('http://localhost/test.png');
-    }));
-
-    it('should upload a file and return an id', inject(function (_$httpBackend_, _CONST_) {
-        $httpBackend = _$httpBackend_;
-        CONST = _CONST_;
-
-        formCtrl[isolateScope.name] = {
-            $setDirty: jasmine.createSpy('$setDirty')
-        };
-
-        $httpBackend.whenPOST(CONST.API_URL + '/media')
-           .respond({id: 7});
-
-        isolateScope.fileContainer.file = {
-            name: 'file.png',
-            type: 'image/jpeg'
-        };
-
-        isolateScope.uploadFile();
-
-        $httpBackend.flush();
-
-        expect(isolateScope.mediaId).toEqual(7);
-        expect(formCtrl[isolateScope.name].$setDirty).toHaveBeenCalled();
-    }));
+    });
 });

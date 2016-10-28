@@ -84,12 +84,11 @@
 
         <post-value
           ng-repeat="(key,value) in post.values"
-          ng-if="isPostValue(key) && showType(form_attributes[key].type)"
+          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type)"
           key="key"
           value="value"
           attribute="form_attributes[key]"
-          type="'post'"
-          ng-if="form_attributes[key].type !== 'media'">
+          type="'post'">
         </post-value>
         <div
             ng-if="mapDataLoaded"
@@ -155,5 +154,6 @@
 
     <post-add-form post="post" ng-if="!post.form && post.allowed_privileges.indexOf('update') !== -1"></post-add-form>
     <post-messages post="post" ng-if="post.contact.id"></post-messages>
+    <ush-logo></ush-logo>
   </div>
 </main>

@@ -38,7 +38,7 @@ describe('PostEndpoint', function () {
 
     it('should call the correct url and return the correct data', function () {
         var successCallback = jasmine.createSpy('success');
-        $httpBackend.expectGET(BACKEND_URL + '/api/v2/posts?order=desc&orderby=created').respond(mockPostResponse);
+        $httpBackend.expectGET(BACKEND_URL + '/api/v2/posts?order=desc&orderby=post_date').respond(mockPostResponse);
 
         PostEndpoint.query().$promise.then(successCallback);
 

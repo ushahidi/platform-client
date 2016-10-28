@@ -16,6 +16,7 @@ angular.module('ushahidi.posts', [])
 // Create / Edit Screens
 .service('PostEntity', require('./modify/post-entity.service.js'))
 .service('PostEditService', require('./modify/post-edit.service.js'))
+.service('MediaEditService', require('./modify/media-edit.service.js'))
 .directive('postMedia', require('./modify/post-media.directive.js'))
 .directive('postDatetime', require('./modify/post-datetime-value.directive.js'))
 .directive('postLocation', require('./modify/post-location.directive.js'))
@@ -37,6 +38,8 @@ angular.module('ushahidi.posts', [])
 .directive('addPostButton', require('./views/add-post-button.directive.js'))
 .directive('addPostTextButton', require('./views/add-post-text-button.directive.js'))
 .directive('modeContextFormFilter', require('./views/mode-context-form-filter.directive.js'))
+.directive('filterBySurvey', require('./views/filter-by-survey.directive.js'))
+.directive('filterBySurveyDropdown', require('./views/filter-by-survey-dropdown.directive.js'))
 .directive('postToolbar', require('./views/post-toolbar.directive.js'))
 // Filters
 .directive('filterPosts', require('./views/filters/filter-posts.directive.js'))
@@ -47,8 +50,12 @@ angular.module('ushahidi.posts', [])
 .directive('filterStatus', require('./views/filters/filter-status.directive.js'))
 .directive('filterLocation', require('./views/filters/filter-location.directive.js'))
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
-.directive('postExport', require('./views/post-export.directive.js'))
 .service('PostFilters', require('./views/post-filters.service.js'))
+
+// Share
+.directive('postShare', require('./views/share/post-share.directive.js'))
+.directive('shareMenu', require('./views/share/share-menu.directive.js'))
+.directive('postExport', require('./views/share/post-export.directive.js'))
 // @todo move elsewhere? Used in post-view and activity
 .directive('postViewUnavailable', require('./views/post-view-unavailable.directive.js'))
 
