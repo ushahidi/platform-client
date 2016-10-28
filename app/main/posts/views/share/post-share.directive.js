@@ -17,15 +17,18 @@ function PostShareDirective() {
 
 PostShareController.$inject = [
     '$scope',
+    '$window',
     'ModalService'
 ];
 function PostShareController(
     $scope,
+    $window,
     ModalService
 ) {
     $scope.loading = false;
     $scope.openShareMenu = openShareMenu;
     $scope.isButton = isButton;
+    $scope.isAdd = isAdd;
 
     activate();
 
@@ -34,6 +37,13 @@ function PostShareController(
 
     function isButton() {
         return $scope.button;
+    }
+
+    function isAdd() {
+        if ($window.location.href.indexOf('post') > 0) {
+            return true;
+        }
+        return false;
     }
 
     function openShareMenu() {
