@@ -31,11 +31,6 @@ for p in $@; do
     args+=(`printf '%s\n' $p | envsubst`)
 done
 
-echo All your vars:
-echo ------
-set
-echo ------
-
 # Execute parameter passed in arguments
 echo executing: "${args[@]}"
 

@@ -30,3 +30,6 @@
         -e BRANCH_NAME="$CI_BRANCH"
         -e DEPLOYMENTS_API_DOMAIN="api.ushahididev.com"
         -e PLATFORM_CLIENT_DEPLOY_SRC="/vols/last_build"
+        -e PLATFORM_CLIENT_REPO="$CI_REPO_NAME"
+        -e PLATFORM_CLIENT_VERSION="$CI_COMMIT_ID"
+        -e COMMIT_STATUS_CONTEXT="continuous-deployment/${CI_NAME}"
