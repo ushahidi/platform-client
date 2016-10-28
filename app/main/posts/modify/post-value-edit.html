@@ -8,8 +8,7 @@
         'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
         'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
         'required': attribute.required,
-        'date' : isDate(attribute) || isDateTime(attribute),
-        'location' : attribute.input === 'location'
+        'date' : isDate(attribute) || isDateTime(attribute)
       }">
 
       <!-- Attribute Label -->

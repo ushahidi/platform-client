@@ -71,7 +71,7 @@ describe('post location directive', function () {
         element = '<post-location attribute="attribute" key="key" model="model"></post-location>';
         element = $compile(element)($scope);
         $scope.$digest();
-        isolateScope = element.isolateScope();
+        isolateScope = element.children().scope();
 
     }));
 
@@ -94,6 +94,11 @@ describe('post location directive', function () {
         });
 
         it('should clear search location term for successful searches', function () {
+
+            isolateScope.$apply(function () {
+                isolateScope.searchLocationTerm = 'Ipsum';
+            });
+
             spyOn(Geocoding, 'search').and.callFake(function (kupi) {
                 return {
                     then: function (callback) {
@@ -101,12 +106,8 @@ describe('post location directive', function () {
                     }
                 };
             });
-            isolateScope.$apply(function () {
-                isolateScope.searchLocationTerm = 'Ipsum';
-            });
 
             isolateScope.searchLocation();
-
             expect(isolateScope.searchLocationTerm).toEqual('');
         });
 

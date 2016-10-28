@@ -115,7 +115,6 @@ function (
                         });
 
                         $scope.searchLocationTerm = '';
-
                     });
                 },
 
