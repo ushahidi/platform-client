@@ -7,7 +7,7 @@ if [ -n "${PRIVATE_SSH_KEY}" ]; then
 fi
 
 # ==> Copy ansible scripts into container
-git clone git@github.com:ushahidi/platform-cloud-ansible.git /opt -b platform-1445 --depth=5
+git clone git@github.com:ushahidi/platform-cloud-ansible.git /opt --depth=5
 
 if [ -n "${ANSIBLE_VAULT_PASSWORD}" ]; then
   /bin/echo -e "$ANSIBLE_VAULT_PASSWORD" > /opt/vpass
