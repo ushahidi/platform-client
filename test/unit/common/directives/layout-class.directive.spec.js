@@ -39,7 +39,7 @@ describe('layout class directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
 
-        expect($rootScope.setLayout).toHaveBeenCalledWith('layout-b');
+        expect($rootScope.setLayout).toHaveBeenCalledWith('layout-embed layout-b');
     });
 
     it('should set the layout to "c"', function () {
@@ -47,6 +47,6 @@ describe('layout class directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
 
-        expect($rootScope.setLayout).toHaveBeenCalledWith('layout-c');
+        expect($rootScope.setLayout).toHaveBeenCalledWith('layout-embed layout-c');
     });
 });

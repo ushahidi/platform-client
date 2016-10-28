@@ -39,8 +39,10 @@ module.exports = [
 
         // Extend filters, always adding the current collection id
         var extendFilters = function (filters) {
-            filters = angular.copy(filters, { set : [] });
+            //filters = angular.copy(filters, { set : []});
+            filters.set = [];
             filters.set.push(collection.id);
+
             return filters;
         };
 
@@ -53,7 +55,11 @@ module.exports = [
         }, true);
 
         // Reset GlobalFilter + add set filter
+        // Ensure that ALL posts are visible under collections
+        // Set default collection status filters
         PostFilters.clearFilters();
+        PostFilters.setFilters({ status: ['archived', 'draft', 'published'] });
         $scope.filters = extendFilters(PostFilters.getFilters());
+
     }
 ];

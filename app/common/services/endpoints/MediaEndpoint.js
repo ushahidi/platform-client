@@ -19,7 +19,7 @@ function (
             }
         },
         update: {
-            method: 'POST'
+            method: 'PUT'
         }
     });
 

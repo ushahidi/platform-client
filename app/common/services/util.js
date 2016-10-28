@@ -1,12 +1,17 @@
 module.exports = [
     '_',
     'CONST',
+    '$window',
 function (
     _,
-    CONST
+    CONST,
+    $window
 ) {
 
     var Util = {
+        currentUrl: function () {
+            return $window.location.href;
+        },
         url: function (relative_url) {
             return CONST.BACKEND_URL + relative_url;
         },
