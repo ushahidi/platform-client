@@ -1,17 +1,27 @@
 module.exports = [
     '_',
     'CONST',
+    '$window',
 function (
     _,
-    CONST
+    CONST,
+    $window
 ) {
 
     var Util = {
+        currentUrl: function () {
+            return $window.location.href;
+        },
         url: function (relative_url) {
             return CONST.BACKEND_URL + relative_url;
         },
         apiUrl: function (relative_url) {
             return CONST.API_URL + relative_url;
+        },
+        deploymentUrl: function (relative_url) {
+            var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
+            var deploymentUrl = pattern.exec(this.apiUrl(relative_url));
+            return deploymentUrl[0].replace('api.', '');
         },
         transformResponse: function (response, omitKeys) {
             omitKeys = (omitKeys || []).concat(['allowed_methods']);

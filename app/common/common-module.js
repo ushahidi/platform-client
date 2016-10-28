@@ -74,6 +74,8 @@ angular.module('ushahidi.common', [
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
 .directive('modalBody', require('./directives/modal-body.directive.js'))
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
+.directive('embedOnly', require('./directives/embed-only.directive.js'))
+.directive('ushLogo', require('./directives/ush-logo.directive.js'))
 
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
