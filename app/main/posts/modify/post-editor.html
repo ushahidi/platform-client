@@ -23,15 +23,10 @@
 
   <main role="main">
       <div class="toolbar">
-          <div class="button-group" ng-show="post.id">
+          <div class="button-group">
               <button type="button" class="button-flat" ng-click="cancel()" translate="app.cancel">Cancel</button>
               <button type="submit" class="button-alpha" translate="app.save">Save</button>
           </div>
-          <div class="button-group" ng-show="!post.id">
-              <post-share button="true" ng-show="!post.id"></post-share>
-              <button type="submit" class="button-alpha" translate="app.submit">Submit</button>
-          </div>
-
       </div>
 
      <div class="main-col">
@@ -90,7 +85,6 @@
                   post="post"
                   post-field=true
                   form="postForm"
-                  medias="medias"
                   attribute="attribute"
               ></post-value-edit>
               <!-- End Post custom fields -->
@@ -129,18 +123,6 @@
              attributes="attributes"
              visible-stage="visibleStage">
           </post-tabs>
-          <!-- <div class="form-sheet">
-            <div class="form-sheet-actions">
-                  <div class="form-field" ng-show="!post.id">
-                      <a href="timeline.html" type="submit" class="button button-alpha" translate="app.submit">Submit</a>
-                      <a href="post-add.html" class="button button-gamma button-flat" translate"app.submit_antoher">Submit &amp; add another</a>
-                  </div>
-                  <div class="form-field" ng-show="post.id">
-                      <a href="timeline.html" type="submit" class="button button-alpha" translate="app.save">Save</a>
-                      <a href="post-add.html" class="button button-gamma button-flat" ng-click="cancel()" translate"app.cancel">Cancel</a>
-                  </div>
-            </div>
-          </div> -->
           <div class="form-sheet" ng-if="post.id">
               <div class="form-sheet-summary">
                   <h3 class="form-sheet-title" translate="post.delete_post">Delete this post</h3>
@@ -158,7 +140,7 @@
               </div>
           </div>
 
-          <ush-logo></ush-logo>
+
       </div> <!-- END main column -->
 
   </main>

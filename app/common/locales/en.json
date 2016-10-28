@@ -3,12 +3,9 @@
         "powered_by_ushahidi" : "Powered by Ushahidi.",
         "support" : "Ushahidi Support",
         "by" : "by",
-        "submit" : "Submit",
-        "submit_another" : "Submit & Add Another",
         "can_see_this" : "can see this",
         "collections" : "Collections",
         "create_collection" : "Create collection",
-        "export_to_csv" : "Export to CSV",
         "create_new" : "Create new",
         "created_by" : "Created by {{author}}",
         "documentation": {
@@ -62,7 +59,6 @@
         "apply_filters" : "Apply filters",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
-        "filter_by_survey" : "Filter by survey",
         "configure" : "Configure",
         "post" : "Post",
         "name" : "Name",
@@ -252,8 +248,6 @@
             "q": "Keyword",
             "created_after": "Start date",
             "created_before": "End date",
-            "date_after": "Start date",
-            "date_before": "End date",
             "center_point": "Location",
             "tags": "Category",
             "form": "Survey",
@@ -698,9 +692,6 @@
         "continue" : "Continue",
         "current_header" : "Current background image",
         "customize_your_new_deployment" : "Customize your new deployment",
-        "embed" : "Embed",
-        "embed_info" : "To embed your map on another site use the code snippet below.",
-        "embed_code" : "&lt;iframe width=\"500\" height=\"400\" src=\"{{url}}\"&gt;&lt;/iframe&gt;",
         "settings_list": {
             "general" : "General",
             "general_desc" : "Change your deployment's name, description, logo, and other details.",
@@ -932,7 +923,6 @@
             "success" : "Registration complete! You can now log in.."
         },
         "post" : {
-            "delete_image_confirm" : "Are you sure you want to remove this image?",
             "save_success" : "Post {{name}} saved",
             "save_success_review" : "Post {{name}} saved. Your post will be reviewed by a moderator before publishing.",
             "save_error" : "Unable to save post, please try again",
@@ -984,7 +974,6 @@
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
         },
         "form" : {
-            "add_to_survey" : "Add to survey",
             "save_success" : "Survey {{name}} saved",
             "save_stage_success" : "Survey task {{name}} saved",
             "save_attribute_success" : "Field {{name}} added",

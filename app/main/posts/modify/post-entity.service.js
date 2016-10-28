@@ -11,8 +11,7 @@ function (
             locale: CONST.DEFAULT_LOCALE,
             values: {},
             completed_stages: [],
-            published_to: [],
-            post_date: new Date()
+            published_to: []
         }, data);
     };
 }];

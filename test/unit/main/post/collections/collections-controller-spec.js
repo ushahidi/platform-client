@@ -32,6 +32,7 @@ describe('set collections controller', function () {
         $rootScope.goBack = function () {};
     }));
 
+
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
 

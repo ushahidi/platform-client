@@ -15,7 +15,6 @@ function NavigationController(Authentication, ConfigEndpoint, BootstrapConfig, $
     $rootScope.$on('event:update:header', reloadSiteConfig);
 
     function activate() {
-
         Features.loadFeatures().then(function () {
             vm.activityIsAvailable = Features.isViewEnabled('activity');
             vm.planIsAvailable = Features.isViewEnabled('plan');

@@ -33,8 +33,7 @@ PostEditorController.$inject = [
     'TagEndpoint',
     'Notify',
     '_',
-    'PostActionsService',
-    'MediaEditService'
+    'PostActionsService'
   ];
 
 function PostEditorController(
@@ -54,8 +53,7 @@ function PostEditorController(
     TagEndpoint,
     Notify,
     _,
-    PostActionsService,
-    MediaEditService
+    PostActionsService
   ) {
 
     // Setup initial stages container
@@ -92,7 +90,6 @@ function PostEditorController(
                 Notify.error('post.valid.invalid_state');
             }
         });
-        $scope.medias = {};
     }
 
     function setVisibleStage(stageId) {
@@ -121,14 +118,6 @@ function PostEditorController(
 
             // Initialize values on post (helps avoid madness in the template)
             attributes.map(function (attr) {
-                // Create associated media entity
-                if (attr.input === 'upload') {
-                    var media = {};
-                    if ($scope.post.values[attr.key]) {
-                        media = $scope.post.values[attr.key][0];
-                    }
-                    $scope.medias[attr.key] = {};
-                }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
                     if (attr.input === 'location') {
@@ -202,61 +191,52 @@ function PostEditorController(
         return $scope.post.allowed_privileges && $scope.post.allowed_privileges.indexOf('change_status') !== -1;
     }
 
-    function resolveMedia() {
-        return MediaEditService.saveMedia($scope.medias, $scope.post);
-    }
-
     function savePost() {
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
             return;
         }
 
-        // Create/update any associated media objects
-        // Media creation must be completed before we can progress with saving
-        resolveMedia().then(function () {
+        $scope.saving_post = true;
 
-            $scope.saving_post = true;
+        // Avoid messing with original object
+        // Clean up post values object
+        var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+        var request;
+        if (post.id) {
+            request = PostEndpoint.update(post);
+        } else {
+            request = PostEndpoint.save(post);
+        }
 
-            // Avoid messing with original object
-            // Clean up post values object
-            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            var request;
-            if (post.id) {
-                request = PostEndpoint.update(post);
-            } else {
-                request = PostEndpoint.save(post);
-            }
+        request.$promise.then(function (response) {
+            var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
-            request.$promise.then(function (response) {
-                var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-
-                if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
-                    $scope.saving_post = false;
-                    $scope.post.id = response.id;
-                    Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/posts/' + response.id);
-                } else {
-                    Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/');
-                }
-            }, function (errorResponse) { // errors
-                var validationErrors = [];
-                // @todo refactor limit handling
-                _.each(errorResponse.data.errors, function (value, key) {
-                    // Ultimately this should check individual status codes
-                    // for the moment just check for the message we expect
-                    if (value.title === 'limit::posts') {
-                        Notify.limit('limit.post_limit_reached');
-                    } else {
-                        validationErrors.push(value);
-                    }
-                });
-
-                Notify.errors(_.pluck(validationErrors, 'message'));
-
+            if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                 $scope.saving_post = false;
+                $scope.post.id = response.id;
+                Notify.notify(success_message, { name: $scope.post.title });
+                $location.path('/posts/' + response.id);
+            } else {
+                Notify.notify(success_message, { name: $scope.post.title });
+                $location.path('/');
+            }
+        }, function (errorResponse) { // errors
+            var validationErrors = [];
+            // @todo refactor limit handling
+            _.each(errorResponse.data.errors, function (value, key) {
+                // Ultimately this should check individual status codes
+                // for the moment just check for the message we expect
+                if (value.title === 'limit::posts') {
+                    Notify.limit('limit.post_limit_reached');
+                } else {
+                    validationErrors.push(value);
+                }
             });
+
+            Notify.errors(_.pluck(validationErrors, 'message'));
+
+            $scope.saving_post = false;
         });
     }
 }

@@ -9,8 +9,7 @@ function PostValueEdit() {
             form: '=',
             post: '=',
             attribute: '=',
-            postField: '=',
-            medias: '='
+            postField: '='
         },
         controller: PostValueEditController,
         templateUrl: 'templates/main/posts/modify/post-value-edit.html'
@@ -50,6 +49,7 @@ function PostValueEditController(
     activate();
 
     function activate() {
+
     }
 
     function taskIsMarkedCompleted() {

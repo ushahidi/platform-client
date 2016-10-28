@@ -25,6 +25,7 @@ function PostToolboxDirective(
         $scope.changeStatus = changeStatus;
         $scope.allowedChangeStatus = allowedChangeStatus;
         $scope.allowedChangeOwner = allowedChangeOwner;
+        $scope.allowedChangeTimestamp = allowedChangeTimestamp;
         $scope.editAuthor = editAuthor;
         $scope.showUserRealname = showUserRealname;
         $scope.showAuthorRealname = showAuthorRealname;
@@ -53,6 +54,11 @@ function PostToolboxDirective(
             return false;
         }
 
+        // FIXME: Enable after allowing change of post timestamp in API
+        function allowedChangeTimestamp() {
+            return false;
+        }
+
         function editAuthor() {
             $scope.showEditAuthorButton = false;
             $scope.showEditAuthorForm = true;
@@ -77,10 +83,10 @@ function PostToolboxDirective(
         }
 
         function formatDates() {
-            $scope.displayCreated = moment($scope.post.created).format('LLL');
+            $scope.displayCreated = moment($scope.post.created).format('LT MMMM D, YYYY');
 
             if ($scope.post.updated) {
-                $scope.displayUpdated = moment($scope.post.updated).format('LLL');
+                $scope.displayUpdated = moment($scope.post.updated).format('LT MMMM D, YYYY');
             }
         }
     }

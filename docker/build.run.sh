@@ -20,15 +20,15 @@ check_vols_out() {
 
 # Sync from source code to the build directory, exclude any folders and file
 # that are result of the build process
-sync() {
+function sync {
   check_vols_src
-  _sync_excludes() {
+  {
     echo "- .git"
     echo "- .bin"
     echo "- node_modules"
     echo "- tmp"
-  }
-  rsync -ar --exclude-from=<(_sync_excludes) --delete-during /vols/src/ ./
+  } > /tmp/rsync_exclude
+  rsync -ar --exclude-from=/tmp/rsync_exclude --delete-during /vols/src/ ./
 }
 
 # Build the client
@@ -36,23 +36,13 @@ build() {
   npm install
   gulp transifex-download
   gulp build
-}
-
-# export the build files to a shared folder
-export_build() {
-  # copy the raw build as a deployable 
-  check_vols_out
-  if [ ! -d /vols/out/last_build ]; then
-    mkdir /vols/out/last_build
-  fi
-  rsync -ar --delete-during ./server/www/ /vols/out/last_build/
+  cp ./server/rewrite.htaccess ./server/www/
 }
 
 # Bundle the build into a tarball
 bundle() {
   check_vols_out
   local version=${GITHUB_VERSION:-${CI_BRANCH:-v0.0.0}}
-  cp ./server/rewrite.htaccess ./server/www/
   gulp release --version-suffix=${version} --dest-dir=/vols/out
 }
 
@@ -64,7 +54,6 @@ case "$1" in
   *)
     sync
     build
-    export_build
     bundle
     ;;
 esac

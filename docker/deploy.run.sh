@@ -17,7 +17,7 @@ fi
 cat >> /opt/ansible.cfg << EOM
 
 [ssh_connection]
-control_path=/dev/shm/ansible-ssh-%%h-%%p-%%r
+ssh_args=
 EOM
 
 # ==> Get latest deployment code from github
