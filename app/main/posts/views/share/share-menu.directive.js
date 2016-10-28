@@ -12,19 +12,29 @@ function ShareMenuDirective() {
 
 ShareMenuController.$inject = [
     '$scope',
-    'Util'
+    '$routeParams',
+    'Util',
+    '$window'
 ];
 function ShareMenuController(
     $scope,
-    Util
+    $routeParams,
+    Util,
+    $window
 ) {
     $scope.loading = false;
     $scope.shareUrl = Util.currentUrl();
-    $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
 
     activate();
 
     function activate() {
-
+        // If we are in a post action menu
+        // Then we have to change the url to ensure that when
+        // selected from either the map or timeline view for
+        // an individual post that the URL is correct
+        if ($scope.postId) {
+            $scope.shareUrl = $window.location.origin + '/posts/' + $scope.postId;
+        }
+        $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
     }
 }

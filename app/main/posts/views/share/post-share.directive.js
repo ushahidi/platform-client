@@ -6,7 +6,9 @@ function PostShareDirective() {
         restrict: 'E',
         replace: true,
         scope: {
-            filters: '='
+            filters: '=',
+            button: '=?',
+            postId: '=?'
         },
         controller: PostShareController,
         templateUrl: 'templates/main/posts/views/share/post-share.html'
@@ -23,11 +25,15 @@ function PostShareController(
 ) {
     $scope.loading = false;
     $scope.openShareMenu = openShareMenu;
+    $scope.isButton = isButton;
 
     activate();
 
     function activate() {
+    }
 
+    function isButton() {
+        return $scope.button;
     }
 
     function openShareMenu() {
