@@ -101,6 +101,10 @@ angular.module('ushahidi.common', [
 .run(require('./global/event-handlers.js'))
 // Use language settings from config
 .run(require('./global/language-settings.js'))
+
+.run(['$templateCache', function ($templateCache) {
+    $templateCache.put('common/directives/mode-bar/ushahidi-logo.html', require('./directives/mode-bar/ushahidi-logo.html'));
+}])
 ;
 
 // Load submodules
