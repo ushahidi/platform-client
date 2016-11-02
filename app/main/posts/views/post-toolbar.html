@@ -8,16 +8,11 @@
 
     <filter-by-survey></filter-by-survey>
 
-    <div class="button-group hide-until-medium">
-      <!-- share button
-      <button type="button">
-        <svg class="iconic">
-          <use xlink:href="../../img/iconic-sprite.svg#share"></use>
-        </svg>
-        <span class="button-label">Share</span>
-      </button>
-      -->
-        <post-share filters="filters" button="true"></post-share>
+    <div class="button-group hide-until-medium" embed-only="true">
+      <post-share filters="filters" button="true"></post-share>
+    </div>
+    <div class="button-group" embed-only="false">
+      <post-share filters="filters" button="true"></post-share>
     </div>
     <!-- toolbar -->
 </div>
