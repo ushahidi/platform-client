@@ -6,7 +6,7 @@ config.output = {
   filename: '[name].[chunkhash].bundle.js',
   chunkFilename: '[name].[chunkhash].bundle.js',
   publicPath: '',
-  path: path.resolve(__dirname, 'dist')
+  path: path.resolve(__dirname, 'dist') // Overwritten by gulp
 };
 
 config.plugins = config.plugins.concat([

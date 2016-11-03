@@ -3,7 +3,7 @@ var dotenv       = require('dotenv'),
     Transifex    = require('transifex'),
     gutil		 = require('gulp-util');
 
-module.exports = function (locales_dir) {
+module.exports = function (locales_dir, done) {
     var project_slug = 'ushahidi-v3',
         mode = 'default',
         resource = 'client-en',
@@ -25,6 +25,7 @@ module.exports = function (locales_dir) {
 
     if (!config.username || !config.password) {
         gutil.log(gutil.colors.yellow('Missing transifex username and password'));
+        done();
         return;
     }
 
@@ -86,7 +87,7 @@ module.exports = function (locales_dir) {
 
             // Save translated language list
             fs.writeFileSync(locales_dir + 'languages.json', JSON.stringify({languages: languages}));
-
+            done();
         });
     });
 };

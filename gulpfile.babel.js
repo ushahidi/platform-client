@@ -48,20 +48,21 @@ let paths = {
 };
 
 // use webpack.config.js to build modules
-gulp.task('dist', (cb) => {
-    return runSeq('clean', ['dist-webpack', 'dist-config', 'transifex-download'], cb);
+gulp.task('dist', (done) => {
+    runSeq('clean', ['dist:webpack', 'dist:config', 'transifex-download'], done);
 });
 
 // Copy config.js into dist
-gulp.task('dist-config', (cb) => {
+gulp.task('dist:config', () => {
     return gulp.src(paths.config)
         .pipe(gulp.dest(paths.dest));
 });
 
 // Build webpack for production
-gulp.task('dist-webpack', (cb) => {
+gulp.task('dist:webpack', (done) => {
   const config = require('./webpack.dist.config');
   config.entry.app = paths.entry;
+  config.output.path = paths.dest;
 
   webpack(config, (err, stats) => {
     if(err)  {
@@ -74,7 +75,7 @@ gulp.task('dist-webpack', (cb) => {
       errorDetails: true
     }));
 
-    cb();
+    done();
   });
 });
 
@@ -113,10 +114,10 @@ gulp.task('dev', () => {
 gulp.task('serve', ['dev']);
 gulp.task('watch', ['dev']);
 
-gulp.task('clean', (cb) => {
+gulp.task('clean', (done) => {
   del([paths.dest]).then(function (paths) {
     gutil.log('[clean]', paths);
-    cb();
+    done();
   });
 });
 
@@ -164,13 +165,13 @@ gulp.task('jscs', () => {
         .pipe(jscs.reporter())
         .pipe(jscs.reporter('fail'));
 });
-gulp.task('jscsfix', ['jscsfix-app', 'jscsfix-test'], () => {});
-gulp.task('jscsfix-app', () => {
+gulp.task('jscsfix', ['jscsfix:app', 'jscsfix:test'], () => {});
+gulp.task('jscsfix:app', () => {
     return gulp.src(['app/**/*.js'])
         .pipe(jscs({ fix : true }))
         .pipe(gulp.dest('app/'));
 });
-gulp.task('jscsfix-test', () => {
+gulp.task('jscsfix:test', () => {
     return gulp.src(['test/**/*.js'])
         .pipe(jscs({ fix : true }))
         .pipe(gulp.dest('test/'));
@@ -179,14 +180,14 @@ gulp.task('jscsfix-test', () => {
 /**
  * Task `release` - Build release
  */
-gulp.task('transifex-download', function () {
-    require('./gulp/transifex-download')(paths.dest + '/locales/');
+gulp.task('transifex-download', function (done) {
+    require('./gulp/transifex-download')(paths.dest + '/locales/', done);
 });
 
 /**
  * Task `heroku:dev` - builds app for heroku
  */
-gulp.task('heroku:dev', ['dist'], function (done) {});
+gulp.task('heroku:dev', ['dist']);
 
 /**
  * Task `serve:static` - Serve dist build (for heroku)
