@@ -40,7 +40,7 @@ build() {
 
 # export the build files to a shared folder
 export_build() {
-  # copy the raw build as a deployable 
+  # copy the raw build as a deployable
   check_vols_out
   if [ ! -d /vols/out/last_build ]; then
     mkdir /vols/out/last_build
@@ -53,7 +53,7 @@ bundle() {
   check_vols_out
   local version=${GITHUB_VERSION:-${CI_BRANCH:-v0.0.0}}
   cp ./server/rewrite.htaccess ./server/www/
-  gulp release --version-suffix=${version} --dest-dir=/vols/out
+  gulp release --version-suffix=${version} --dest-dir=/vols/out/release
 }
 
 watch() {
