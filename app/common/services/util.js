@@ -27,6 +27,14 @@ function (
             omitKeys = (omitKeys || []).concat(['allowed_methods']);
             return _.omit(angular.fromJson(response), omitKeys);
         },
+        // Generates a simple UUID for use on html tags when a unique ID is required
+        // Usually applicable where you want to be able to select an element by its ID
+        simpluUUID: function () {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        },
         bindAllFunctionsToSelf: function (object) { // bind all functions on self to use self as their 'this' context
             var functions = _.functions(object);
             if (functions.length) {

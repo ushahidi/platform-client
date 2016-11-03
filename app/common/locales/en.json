@@ -184,6 +184,7 @@
         "checkbox_desc" : "Allows the user to choose one or more of a predefined set of options.",
         "relation_desc" : "Create a relation between different surveys",
         "upload_desc" : "Allows image(s) to be uploaded to the post",
+        "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "tasks" : "Tasks",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -572,9 +573,18 @@
             }
         },
         "media" : {
+            "enter_a" : "Enter a",
+            "youtube" : " Youtbe",
             "current_url" : "Current image",
             "add_caption" : "Add caption",
             "upload" : "Upload"
+        },
+        "video" : {
+            "enter_a" : "Enter a",
+            "youtube" : " Youtube",
+            "or" : " or ",
+            "vimeo" : " Vimeo",
+            "video_url" : " video URL"
         },
         "unstructured" : {
             "add_survey" : {
