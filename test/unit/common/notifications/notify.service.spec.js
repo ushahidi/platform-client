@@ -65,20 +65,20 @@ describe('Notify', function () {
 
     describe('errors', function () {
         beforeEach(function () {
-            spyOn(mockSliderService, 'openUrl').and.callThrough();
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
         });
 
-        it('Calls SliderService.openUrl with error template + scope', function () {
+        it('Calls SliderService.openTemplate with error template + scope', function () {
             Notify.errors(['Test message 1', 'Test message 2']);
             $rootScope.$digest();
 
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'Test message 1': 'Test message 1', 'Test message 2': 'Test message 2'}}), false);
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'warning', 'error', jasmine.objectContaining({ errors: {'Test message 1': 'Test message 1', 'Test message 2': 'Test message 2'}}), false);
         });
 
         it('To translate messages if possible', function () {
             Notify.errors(['dummy_error', 'Test message 2']);
             $rootScope.$digest();
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: {'dummy_error': 'Some error', 'Test message 2': 'Test message 2'}}), false);
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'warning', 'error', jasmine.objectContaining({ errors: {'dummy_error': 'Some error', 'Test message 2': 'Test message 2'}}), false);
         });
     });
 
@@ -96,7 +96,7 @@ describe('Notify', function () {
 
     describe('apiErrors', function () {
         beforeEach(function () {
-            spyOn(mockSliderService, 'openUrl').and.callThrough();
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
             Notify.apiErrors({
                 data: {
                     errors: [
@@ -109,7 +109,7 @@ describe('Notify', function () {
         });
 
         it('Calls SliderService.openTemplate with error message', function () {
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/api-errors.html', 'warning', 'error', jasmine.objectContaining({ errors: ['Error 1', 'Error 2']}), false);
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'warning', 'error', jasmine.objectContaining({ errors: ['Error 1', 'Error 2']}), false);
         });
     });
 
@@ -177,13 +177,13 @@ describe('Notify', function () {
 
     describe('limit', function () {
         beforeEach(function () {
-            spyOn(mockSliderService, 'openUrl').and.callThrough();
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
             Notify.limit('Test message');
             $rootScope.$digest();
         });
 
-        it('Calls SliderService.openUrl with error message', function () {
-            expect(mockSliderService.openUrl).toHaveBeenCalledWith('templates/common/notifications/limit.html', 'warning', 'error', jasmine.objectContaining({ message: 'Test message'}), true, false);
+        it('Calls SliderService.openTemplate with error message', function () {
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'warning', 'error', jasmine.objectContaining({ message: 'Test message'}), true, false);
         });
     });
 
