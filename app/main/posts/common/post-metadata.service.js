@@ -30,7 +30,7 @@ function PostMetadataService(
         },
         loadContact: function (post) {
             if (!post.user && post.contact && post.contact.id) {
-                return ContactEndpoint.get({ id: post.contact.id });
+                return ContactEndpoint.get({ id: post.contact.id, ignore403: true });
             }
         }
     };
