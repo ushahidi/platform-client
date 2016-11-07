@@ -7,8 +7,7 @@ function ModalService($rootScope, $q, $templateRequest) {
         isOpen = false;
 
     return {
-        open: openUrl,
-        openUrl: openUrl,
+        open: openTemplate,
         openTemplate: openTemplate,
         close: close,
         getState: getState,
@@ -17,15 +16,6 @@ function ModalService($rootScope, $q, $templateRequest) {
         onClose: onClose,
         setState: setState
     };
-
-    function openUrl(templateUrl, title, icon, scope, closeOnOverlayClick, showCloseButton) {
-        deferredOpen.promise.then(function () {
-            // Load template
-            $templateRequest(templateUrl).then(function (template) {
-                $rootScope.$emit('modal:open', template, title, icon, scope, closeOnOverlayClick, showCloseButton);
-            });
-        });
-    }
 
     function openTemplate(template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
         deferredOpen.promise.then(function () {
