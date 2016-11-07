@@ -17,6 +17,7 @@ import colorsSupported      from 'supports-color';
 import historyApiFallback   from 'connect-history-api-fallback';
 import karma     from 'karma';
 import jscs      from 'gulp-jscs';
+import fs        from 'fs';
 
 let root = 'app';
 
@@ -181,6 +182,16 @@ gulp.task('jscsfix:test', () => {
  * Task `release` - Build release
  */
 gulp.task('transifex-download', function (done) {
+    // Make sure we have dest dir
+    try {
+        fs.mkdirSync(paths.dest);
+    }
+    catch (err) {
+        if (err.code !== 'EEXIST') {
+            throw err;
+        }
+    }
+
     require('./gulp/transifex-download')(paths.dest + '/locales/', done);
 });
 
