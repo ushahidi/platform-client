@@ -1,15 +1,88 @@
-var dotenv       = require('dotenv'),
+let dotenv       = require('dotenv'),
     fs           = require('fs'),
     Transifex    = require('transifex'),
     gutil		 = require('gulp-util');
 
-module.exports = function (locales_dir, done) {
-    var project_slug = 'ushahidi-v3',
-        mode = 'default',
-        resource = 'client-en',
-        // Get languages that are at least 90% translated
-        completion_threshold = 70,
-        config = {};
+let project_slug = 'ushahidi-v3',
+    mode = 'default',
+    resource = 'client-en',
+    // Get languages that are at least 90% translated
+    completion_threshold = 70;
+
+function getCompletedLanguages(transifex) {
+    return new Promise((resolve, reject) => {
+        // Get language info
+        transifex.languageSetMethods((err, languages) => {
+            if (err) {
+                reject();
+                throw err;
+            }
+
+            // Get language stats
+            transifex.statisticsMethods(project_slug, resource, (err, stats) => {
+                if (err) {
+                    reject();
+                    throw err;
+                }
+
+                // Only download languages that have been translated past the completion threshold
+                languages = languages.filter((language) => {
+                    if (stats[language.code] !== undefined && parseInt(stats[language.code].completed) >= completion_threshold) {
+                        return true;
+                    }
+
+                    return false;
+                });
+
+                resolve(languages);
+            });
+        });
+    });
+}
+
+// Download translations
+function downloadTranslations (transifex, languages, locales_dir) {
+    let promises = languages.map(function (language) {
+        return new Promise((resolve, reject) => {
+            transifex.translationInstanceMethod(project_slug, resource, language.code, { mode: mode }, function (err, data) {
+                if (err) {
+                    // Not sure if we should just reject() here
+                    throw err;
+                }
+
+                fs.writeFile(locales_dir + language.code.replace('_', '-') + '.json', data, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    resolve();
+                });
+            });
+        });
+    });
+
+    return Promise.all(promises);
+}
+
+// Save translated language list
+function saveTranslationList(languages, locales_dir) {
+    // Replace language code underscores with hyphens
+    languages = languages.map((language) => {
+        language.code = language.code.replace('_', '-');
+        return language;
+    });
+
+    return new Promise((resolve, reject) => {
+        fs.writeFile(locales_dir + 'languages.json', JSON.stringify({languages: languages}), (err) => {
+            if (err) {
+                throw err;
+            }
+            resolve();
+        });
+    });
+}
+
+module.exports = (locales_dir, done) => {
+    let config = {};
 
     // Try to load user's ~/.transifexrc config
     // see http://docs.transifex.com/client/config/
@@ -23,10 +96,21 @@ module.exports = function (locales_dir, done) {
     config.username = config.username || process.env.TX_USERNAME;
     config.password = config.password || process.env.TX_PASSWORD;
 
+    // Check if we have username/password
     if (!config.username || !config.password) {
-        gutil.log(gutil.colors.yellow('Missing transifex username and password'));
+        gutil.log(['transifex'], gutil.colors.yellow('Missing transifex username and password'));
         done();
         return;
+    }
+
+    // Create locales dir
+    try {
+        fs.mkdirSync(locales_dir);
+    }
+    catch (err) {
+        if (err.code !== 'EEXIST') {
+            throw err;
+        }
     }
 
     var transifex = new Transifex({
@@ -34,59 +118,12 @@ module.exports = function (locales_dir, done) {
         credential: config.username + ':' + config.password
     });
 
-    // Get language info
-    transifex.languageSetMethods(function (err, data) {
-        if (err) {
-            throw err;
-        }
-
-        try {
-            fs.mkdirSync(locales_dir);
-        }
-        catch (err) {
-            if (err.code !== 'EEXIST') {
-                throw err;
-            }
-        }
-
-        // Get language stats
-        transifex.statisticsMethods(project_slug, resource, function (err, stats) {
-            if (err) {
-                throw err;
-            }
-
-            // Only download languages that have been translated past the completion threshold
-            data = data.filter(function (language) {
-                if (stats[language.code] !== undefined && parseInt(stats[language.code].completed) >= completion_threshold) {
-                    return true;
-                }
-
-                return false;
-            });
-
-            // Download translations
-            data.forEach(function (language) {
-                transifex.translationInstanceMethod(project_slug, resource, language.code, { mode: mode }, function (err, data) {
-                    if (err) {
-                        throw err;
-                    }
-
-                    fs.writeFileSync(locales_dir +
-                                     // Replace underscore with hyphen
-                                     language.code.replace('_', '-') +
-                                     '.json', data);
-                });
-            });
-
-
-            // Replace language code underscores with hyphens
-            var languages = data.map(function (language) {
-                language.code = language.code.replace('_', '-');
-                return language;
-            });
-
-            // Save translated language list
-            fs.writeFileSync(locales_dir + 'languages.json', JSON.stringify({languages: languages}));
+    getCompletedLanguages(transifex)
+    .then((languages) => {
+        Promise.all([
+            downloadTranslations(transifex, languages, locales_dir),
+            saveTranslationList(languages, locales_dir)
+        ]).then(() => {
             done();
         });
     });
