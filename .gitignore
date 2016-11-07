@@ -18,3 +18,4 @@ vault.txt
 *.swp
 *.svg
 server/www/img/icons/
+server/www/
