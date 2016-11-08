@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route) {
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
 
@@ -23,6 +23,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
         if (redirect) {
             $location.url(redirect);
         }
+        $route.reload();
     }
 
     function doLogout(redirect) {
@@ -31,6 +32,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
         if (redirect) {
             $location.url(redirect);
         }
+        $route.reload();
     }
 
     // todo: move to service
@@ -54,11 +56,11 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
     };
 
     $rootScope.$on('event:authentication:login:succeeded', function () {
-        doLogin(Session.getSessionDataEntry('loginPath') || '/');
+        doLogin(Session.getSessionDataEntry('loginPath'));
     });
 
     $rootScope.$on('event:authentication:logout:succeeded', function () {
-        doLogout('/');
+        doLogout();
     });
 
     // Don't think this is needed. We should already be logged out before this event
@@ -83,6 +85,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _)
             // We're logged out, redirect to login
             if ($location.url() !== '/login') {
                 Session.setSessionDataEntry('loginPath', $location.url());
+                // We're logged in hit forbidden page
+                $location.url('/forbidden');
             }
             Authentication.openLogin();
         }
