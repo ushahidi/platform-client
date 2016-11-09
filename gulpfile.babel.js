@@ -82,6 +82,11 @@ gulp.task('dist:webpack', (done) => {
 
 gulp.task('build', ['dist']);
 
+/**
+ * Task `heroku:dev` - builds app for heroku
+ */
+gulp.task('heroku:dev', ['dist']);
+
 gulp.task('dev', () => {
   const config = require('./webpack.dev.config');
   config.entry.app = [
@@ -195,10 +200,6 @@ gulp.task('transifex-download', function (done) {
     require('./gulp/transifex-download')(paths.dest + '/locales/', done);
 });
 
-/**
- * Task `heroku:dev` - builds app for heroku
- */
-gulp.task('heroku:dev', ['dist']);
 
 /**
  * Task `serve:static` - Serve dist build (for heroku)

@@ -29,6 +29,10 @@ module.exports = {
     // Skip locales
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
+    new webpack.DefinePlugin({
+        BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined')
+    }),
+
     // Injects bundles in your index.html instead of wiring all manually.
     // It also adds hash to all injected assets so we don't have problems
     // with cache purging during deployment.
