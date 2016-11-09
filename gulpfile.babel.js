@@ -209,7 +209,9 @@ gulp.task('serve:static', function() {
         server: {
             baseDir: paths.dest
         },
-        port: process.env.PORT || 3000
+        port: process.env.PORT || 3000,
+        ui: false,
+        codeSync: false,
     });
 });
 
