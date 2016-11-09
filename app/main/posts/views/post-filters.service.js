@@ -5,6 +5,8 @@ function PostFiltersService(_, FormEndpoint) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
+    var filterMode = 'all';
+    var entityId = null;
 
     // @todo take this out of the service
     // but ensure it happens at the right times
@@ -18,7 +20,9 @@ function PostFiltersService(_, FormEndpoint) {
         clearFilters: clearFilters,
         clearFilter: clearFilter,
         hasFilters: hasFilters,
-        getActiveFilters: getActiveFilters
+        getActiveFilters: getActiveFilters,
+        setMode: setMode,
+        getMode: getMode
     };
 
     function activate() {
@@ -65,7 +69,7 @@ function PostFiltersService(_, FormEndpoint) {
             q: '',
             date_after: '',
             date_before: '',
-            status: ['published', 'draft'],
+            status: filterMode === 'collection' ? ['published', 'draft', 'archived'] : ['published', 'draft'],
             published_to: '',
             center_point: '',
             within_km: '1',
@@ -102,6 +106,10 @@ function PostFiltersService(_, FormEndpoint) {
             delete query.within_km;
         }
 
+        if (filterMode === 'collection') {
+            query.set = [entityId].concat(query.set);
+        }
+
         return query;
     }
 
@@ -133,6 +141,19 @@ function PostFiltersService(_, FormEndpoint) {
 
     function hasFilters(filters) {
         return !_.isEmpty(getActiveFilters(filters));
+    }
+
+    function setMode(newMode, id) {
+        // If mode changes, reset filters
+        if (newMode !== filterMode) {
+            filterMode = newMode;
+            clearFilters();
+        }
+        entityId = id;
+    }
+
+    function getMode() {
+        return filterMode;
     }
 }
 
