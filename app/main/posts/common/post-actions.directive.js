@@ -4,12 +4,14 @@ PostActionsDirective.$inject = [
     'PostEndpoint',
     'Notify',
     '$location',
+    '$route',
     'PostActionsService'
 ];
 function PostActionsDirective(
     PostEndpoint,
     Notify,
     $location,
+    $route,
     PostActionsService
 ) {
     return {
@@ -34,7 +36,15 @@ function PostActionsDirective(
 
         function deletePost() {
             PostActionsService.delete($scope.post).then(function () {
-                $location.path('/views/list');
+                // If we're not already on some top level view
+                if ($location.path().indexOf('views') === -1 &&
+                    $location.path().indexOf('collections') === -1 &&
+                    $location.path().indexOf('savedsearches') === -1) {
+                    // Redirect to list
+                    $location.path('/views/list');
+                } else {
+                    $route.reload();
+                }
             });
         }
 

@@ -4,7 +4,10 @@ describe('global event handlers', function () {
         mockedAuthenticationData,
         mockedAuthenticationService,
         $rootScope,
-        $location;
+        $location,
+        mockRoute = {
+            reload: jasmine.createSpy()
+        };
 
     beforeEach(function () {
 
@@ -44,7 +47,10 @@ describe('global event handlers', function () {
         .service('Authentication', function () {
             return mockedAuthenticationService;
         })
-        .run(require('app/common/auth/authentication-events.run.js'));
+        .run(require('app/common/auth/authentication-events.run.js'))
+        .service('$route', function () {
+            return mockRoute;
+        });
 
 
     });
@@ -90,8 +96,8 @@ describe('global event handlers', function () {
                             expect($rootScope.loggedin).toBe(true);
                         });
 
-                        it('should change the path to "/"', function () {
-                            expect($location.path()).toEqual('/');
+                        it('should reload the route', function () {
+                            expect(mockRoute.reload).toHaveBeenCalled();
                         });
                     });
 
@@ -127,8 +133,8 @@ describe('global event handlers', function () {
                             expect($rootScope.loggedin).toBe(false);
                         });
 
-                        it('should change the path to "/"', function () {
-                            expect($location.path()).toEqual('/');
+                        it('should reload the route', function () {
+                            expect(mockRoute.reload).toHaveBeenCalled();
                         });
                     });
                 });
