@@ -3,7 +3,7 @@
       <label translate="app.name">Name</label>
       <input type="text" ng-model="editAttribute.label">
    </div>
-   <div class="form-field" ng-if="editAttribute.input !== 'upload'">
+   <div class="form-field" ng-if="editAttribute.input !== 'upload' && editAttribute.type !== 'title' && editAttribute.type !== 'description'">
       <label translate="app.default_value">Default value</label>
       <div ng-switch="editAttribute.input">
           <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
@@ -40,14 +40,14 @@
         </ul>
     </div>
 
-   <div class="form-field switch">
+   <div class="form-field switch" ng-show="editAttribute.type !== 'title' && editAttribute.type !== 'description'">
       <label translate="survey.require_field">Require this field be completed</label>
       <div class="toggle-switch">
          <input class="tgl" id="switchnewattribute" type="checkbox" ng-model="editAttribute.required">
          <label class="tgl-btn" for="switchnewattribute"></label>
       </div>
    </div>
-   <div class="form-sheet" ng-show="editAttribute.form_stage_id">
+   <div class="form-sheet" ng-show="editAttribute.form_stage_id" ng-show="editAttribute.type !== 'title' && editAttribute.type !== 'description'">
        <div class="form-sheet-summary">
            <h3 class="form-sheet-title" translate="survey.delete.delete_this_field">Delete this field</h3>
        </div>

@@ -76,6 +76,9 @@ function PostEditorController(
     $scope.savePost = savePost;
     $scope.cancel = cancel;
 
+    $scope.postTitleLabel = 'Title';
+    $scope.postDescriptionLabel = 'Description';
+
     activate();
 
     function activate() {
@@ -113,11 +116,17 @@ function PostEditorController(
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
-                if (!_.contains($scope.attributesToIgnore, attr.key)) {
+                if (attr.type === 'title' || attr.type === 'description') {
+                    if (attr.type === 'title') {
+                        $scope.postTitleLabel = attr.label;
+                    }
+                    if (attr.type === 'description') {
+                        $scope.postDescriptionLabel = attr.label;
+                    }
+                } else if (!_.contains($scope.attributesToIgnore, attr.key)) {
                     attributes.push(attr);
                 }
             });
-            attributes = (attributes.length) ? attributes : attrs;
 
             // Initialize values on post (helps avoid madness in the template)
             attributes.map(function (attr) {
