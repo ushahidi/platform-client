@@ -192,7 +192,8 @@ function (
                 this.config = config;
                 return this.config;
             }, this));
-        }
+        },
+        pointToLayer: geojsonLayerOptions.pointToLayer
     };
 
     var Map = {
