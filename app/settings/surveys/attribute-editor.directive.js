@@ -12,6 +12,10 @@ function (
             $scope.closeModal = function () {
                 ModalService.close();
             };
+
+            $scope.canDisplay = function () {
+                return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
+            };
         }
     };
 }];

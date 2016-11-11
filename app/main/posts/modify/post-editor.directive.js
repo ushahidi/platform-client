@@ -123,7 +123,7 @@ function PostEditorController(
                     if (attr.type === 'description') {
                         $scope.postDescriptionLabel = attr.label;
                     }
-                } else if (!_.contains($scope.attributesToIgnore, attr.key)) {
+                } else {
                     attributes.push(attr);
                 }
             });
