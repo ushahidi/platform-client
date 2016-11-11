@@ -5,9 +5,11 @@ function CollectionEditor() {
     return {
         restrict: 'E',
         scope: {
+            collection: '<',
+            posts: '='
         },
         controller: CollectionEditorController,
-        templateUrl: 'templates/main/posts/collections/collection-editor.html'
+        templateUrl: 'templates/main/posts/collections/editor.html'
     };
 }
 
@@ -21,7 +23,8 @@ CollectionEditorController.$inject = [
     '_',
     'Notify',
     'ViewHelper',
-    'RoleEndpoint'
+    'RoleEndpoint',
+    'CollectionsService'
 ];
 function CollectionEditorController(
     $scope,
@@ -33,23 +36,23 @@ function CollectionEditorController(
     _,
     Notify,
     ViewHelper,
-    RoleEndpoint
+    RoleEndpoint,
+    CollectionsService
 ) {
-    $scope.collectioneditorVisible = false;
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.views = ViewHelper.views();
 
-    $scope.setBasicCollection = setBasicCollection;
     $scope.featuredEnabled = featuredEnabled;
     $scope.cancel = cancel;
     $scope.saveCollection = saveCollection;
-    $scope.deleteCollection = deleteCollection;
 
     activate();
 
     function activate() {
         if (!$scope.collection) {
-            $scope.setBasicCollection();
+            setBasicCollection();
+        } else {
+            $scope.cpyCollection = angular.copy($scope.collection);
         }
 
         RoleEndpoint.query().$promise.then(function (roles) {
@@ -57,34 +60,11 @@ function CollectionEditorController(
         });
     }
 
-    $rootScope.$on('collectionEditor:show', function (event, collection) {
-        // Set inbound collection
-        // if no collection is provided then we are creating
-        // a collection
-        $scope.collection = collection;
-        $scope.cpyCollection = _.clone($scope.collection);
-        $scope.collectionEditorVisible = true;
-    });
-
-    $rootScope.$on('collectionCreate:show', function (event, posts) {
-        // Set inbound posts
-        // if posts are provided then we need to pass flow
-        // back to collection listing once creation is complete
-        if (posts) {
-            // Posts will be passed back to collection listing
-            // This is a stop-gap until we have a data layer to maintain
-            // state
-            $scope.posts = posts;
-        }
-        $scope.collectionEditorVisible = true;
-    });
-
     // Set default view for Collection to be Map
     function setBasicCollection() {
-        $scope.collection = {};
-        $scope.collection.view = 'map';
-        $scope.collection.visible_to = [];
-        $scope.cpyCollection = _.clone($scope.collection);
+        $scope.cpyCollection = {};
+        $scope.cpyCollection.view = 'map';
+        $scope.cpyCollection.visible_to = [];
     }
 
     function featuredEnabled() {
@@ -92,7 +72,7 @@ function CollectionEditorController(
     }
 
     function cancel() {
-        $scope.collectionEditorVisible = false;
+        $scope.$parent.closeModal();
     }
 
     function saveCollection(collection) {
@@ -108,27 +88,20 @@ function CollectionEditorController(
         // Save the collection
         persist(collection)
         .$promise
-        .then(function (collection) {
+        .then(function (savedCollection) {
+            $scope.collection = angular.copy(savedCollection);
             // and close the modal
-            $scope.collection = _.clone(collection);
-            $scope.collectionEditorVisible = false;
-            $rootScope.$broadcast('collection:update');
-            Notify.notify('notify.collection.created_collection', {collection: collection.name});
+            $scope.$parent.closeModal();
+            // If we were adding posts, show the add to collection dialog again
+            if ($scope.posts) {
+                CollectionsService.showAddToCollection($scope.posts);
+            } else {
+                // Broadcast the updated collection
+                $rootScope.$broadcast('collection:update', savedCollection);
+            }
+            Notify.notify(collection.id ? 'notify.collection.updated_collection' : 'notify.collection.created_collection', { collection: savedCollection.name });
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
-        });
-    }
-
-    function deleteCollection() {
-        Notify.confirmDelete('notify.collection.delete_collection_confirm').then(function () {
-            CollectionEndpoint.delete({
-                collectionId: $scope.collection.id
-            }).$promise.then(function () {
-                $location.url('/');
-                $rootScope.$broadcast('collection:update');
-            }, function (errorResponse) {
-                Notify.apiErrors(errorResponse);
-            });
         });
     }
 }

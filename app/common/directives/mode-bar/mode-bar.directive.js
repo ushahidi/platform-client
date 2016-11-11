@@ -5,13 +5,15 @@ module.exports = [
     'ModalService',
     '$rootScope',
     'ConfigEndpoint',
+    'CollectionsService',
 function (
     Features,
     Authentication,
     Registration,
     ModalService,
     $rootScope,
-    ConfigEndpoint
+    ConfigEndpoint,
+    CollectionsService
 ) {
     return {
         restrict: 'E',
@@ -29,7 +31,7 @@ function (
 
             $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
             $scope.showMore = showMore;
-            $scope.viewCollectionListing = viewCollectionListing;
+            $scope.viewCollectionListing = CollectionsService.showCollectionList;
             $scope.viewAccountSettings = viewAccountSettings;
             $scope.viewSupportLinks = viewSupportLinks;
             $scope.login = Authentication.openLogin;
@@ -63,11 +65,6 @@ function (
             // Show support links
             function viewSupportLinks() {
                 ModalService.openUrl('templates/common/directives/mode-bar/support-links.html', '', false, false, true, true);
-            }
-
-            // Show collection listing
-            function viewCollectionListing() {
-                $rootScope.$emit('collectionListing:show');
             }
 
             // Add 'click' handler to toggle trigger
