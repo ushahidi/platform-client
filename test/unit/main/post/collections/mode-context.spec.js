@@ -16,7 +16,11 @@ describe('collections mode context directive', function () {
             'ushahidi.mock'
         ]);
 
-        testApp.directive('collectionsModeContext', require(ROOT_PATH + 'app/main/posts/collections/mode-context.directive'));
+        testApp
+        .directive('collectionsModeContext', require(ROOT_PATH + 'app/main/posts/collections/mode-context.directive'))
+        .service('CollectionsService', function () {
+            return {};
+        });
 
         require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 

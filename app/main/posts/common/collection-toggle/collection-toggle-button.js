@@ -1,9 +1,11 @@
 module.exports = [
     '$rootScope',
     '_',
+    'CollectionsService',
 function (
     $rootScope,
-    _
+    _,
+    CollectionsService
 ) {
     return {
         restrict: 'E',
@@ -19,9 +21,9 @@ function (
                     return _.contains($scope.selectedPosts, post.id);
                 });
 
-                $rootScope.$emit('collectionToggle:show', selectedPostObjects);
+                CollectionsService.showAddToCollection(selectedPostObjects);
             };
         },
-        templateUrl: 'templates/common/directives/collection-toggle/collection-toggle-button.html'
+        templateUrl: 'templates/main/posts/common/collection-toggle/collection-toggle-button.html'
     };
 }];

@@ -24,7 +24,7 @@
 
         <ul class="metadata">
             <li>
-                <span class="status-indicator public tooltip" ng-if="!collection.visible_to">
+                <span class="status-indicator public tooltip" ng-if="!collection.visible_to || collection.visible_to.length == 0">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#globe"></use>
                     </svg>
@@ -119,7 +119,7 @@
         </div>
 
         <mode-context-form-filter></mode-context-form-filter>
-        
+
         <post-active-filters></post-active-filters>
 
     </div>
