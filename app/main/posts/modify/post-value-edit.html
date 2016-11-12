@@ -119,13 +119,13 @@
                   ng-required="attribute.required"
               ></post-media>
               <!-- type: upload -->
-              <post-video
+              <post-video-input
                   ng-switch-when="video"
                   name="values_{{attribute.id}}"
                   video-url="post.values[attribute.key][key]"
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
-              ></post-video>
+              ></post-video-input>
           </div>
       </div>
       <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">

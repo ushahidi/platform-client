@@ -16,13 +16,15 @@ function PostVideo() {
 PostVideoController.$inject = [
     '$scope',
     '$sce',
-    'Util'
+    'Util',
+    'Notify'
 ];
 
 function PostVideoController(
     $scope,
     $sce,
-    Util
+    Util,
+    Notify
 ) {
     $scope.constructIframe = constructIframe;
     // $scope.getVideoThumbnail = getVideoThumbnail;
@@ -60,15 +62,23 @@ function PostVideoController(
         //   - //player.vimeo.com/video/25451551
         if (url) {
             var match = url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
-
-            if (match[3].indexOf('youtu') > -1) {
-                $scope.videoUrl = 'https://www.youtube.com/embed/' + match[6];
-            } else if (match[3].indexOf('vimeo') > -1) {
-                $scope.videoUrl = 'https://player.vimeo.com/video/' + match[6];
+            $scope.videoUrl = undefined;
+            if (match) {
+                if (match[3].indexOf('youtu') > -1) {
+                    $scope.videoUrl = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + match[6]);
+                } else if (match[3].indexOf('vimeo') > -1) {
+                    $scope.videoUrl = $sce.trustAsResourceUrl('https://player.vimeo.com/video/' + match[6]);
+                } else {
+                    urlError(url);
+                }
             } else {
-                $scope.videoUrl = undefined;
+                urlError(url);
             }
         }
+    }
+
+    function urlError(url) {
+        Notify.error('notify.video.incorrect_url', {url: url});
     }
 
     // Originates from PL

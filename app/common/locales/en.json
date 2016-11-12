@@ -574,12 +574,13 @@
         },
         "media" : {
             "enter_a" : "Enter a",
-            "youtube" : " Youtbe",
+            "youtube" : " Youtube",
             "current_url" : "Current image",
             "add_caption" : "Add caption",
             "upload" : "Upload"
         },
         "video" : {
+            "input_desc" : "<span>Enter a</span><span id=\"wordmark-youtube\" class=\"wordmark-replace\" style=\"background-image: url(/img/youtube.png);\"><span> Youtube</span></span><span> or </span><span id=\"wordmark-vimeo\" class=\"wordmark-replace\" style=\"background-image: url(/img/vimeo.png);\"><span> Vimeo</span></span><span> video URL</span>",
             "enter_a" : "Enter a",
             "youtube" : " Youtube",
             "or" : " or ",
@@ -992,6 +993,9 @@
             "bulk_destroy_success" : "Users deleted",
             "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
+        },
+        "video" : {
+            "incorrect_url" : "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format.",
         },
         "form" : {
             "add_to_survey" : "Add to survey",

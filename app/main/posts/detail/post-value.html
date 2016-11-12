@@ -1,13 +1,19 @@
 <div ng-class="{'postcard-field': !standardTask, 'listing-item-primary': standardTask}">
-    <h2 class="form-label">
-        {{attribute.label}}
-    </h2>
+    <div ng-if="attribute.type !== 'video'">
+      <h2 class="form-label">
+          {{attribute.label}}
+      </h2>
 
-    <div ng-repeat="entry in value" ng-if="attribute.type === 'relation'">
-        <a ng-href="/posts/{{entry.id}}">{{entry.title}}</a>
-    </div>
-    <div ng-repeat="entry in value" ng-if="attribute.type !== 'relation'">
-        <p>{{entry}}</p>
+      <div ng-repeat="entry in value" ng-if="attribute.type === 'relation'">
+          <a ng-href="/posts/{{entry.id}}">{{entry.title}}</a>
+      </div>
+      <div ng-repeat="entry in value" ng-if="attribute.type !== 'relation'">
+          <p>{{entry}}</p>
+      </div>
     </div>
 
+    <post-video-view
+      ng-if="attribute.type === 'video'"
+      label="{{attribute.label}}"
+      video-url="value"></post-video-view>
 </div>
