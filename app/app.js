@@ -1,6 +1,5 @@
 require('angular');
 require('angular-route');
-require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
@@ -68,7 +67,6 @@ angular.module('app',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
         'angular-datepicker',
-        'leaflet-directive',
         'angular.filter',
         'ng-showdown',
         'ngGeolocation',
