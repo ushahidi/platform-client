@@ -73,6 +73,7 @@ angular.module('ushahidi.posts', [])
 
 .config(require('./posts-routes.js'))
 
-.run(['$window', function ($window) {
-    $window.L.Icon.Default.imagePath = '/img';
-}]);
+.run(['Leaflet', function (L) {
+    L.Icon.Default.imagePath = '/img';
+}])
+;

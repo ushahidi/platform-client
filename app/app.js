@@ -1,8 +1,5 @@
 require('angular');
 require('angular-route');
-require('leaflet');
-require('leaflet.markercluster');
-require('leaflet.locatecontrol/src/L.Control.Locate');
 require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
@@ -109,7 +106,11 @@ angular.module('app',
         return require('URIjs/src/URI.js');
     })
     .factory('Leaflet', function () {
-        return window.L;
+        var L = require('leaflet');
+        // Load leaflet plugins here too
+        require('imports?L=leaflet!leaflet.markercluster');
+        require('imports?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
+        return L;
     })
     .factory('moment', function () {
         return require('moment');
