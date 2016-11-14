@@ -70,7 +70,8 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             {
                 layers: [L.tileLayer(defaultLayer.url, defaultLayer.layerOptions)],
                 center: [config.default_view.lat, config.default_view.lon],
-                zoom: config.default_view.zoom
+                zoom: config.default_view.zoom,
+                clustering: config.clustering
             });
         });
     }

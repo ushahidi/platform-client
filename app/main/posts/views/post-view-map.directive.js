@@ -56,14 +56,19 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 onEachFeature: onEachFeature
             });
 
-            markers = L.markerClusterGroup();
-            // This has to be done individually.
-            // Using clusterLayer.addLayers() breaks the clustering.
-            // Need to investigate as this should have been fixing in v1.0.0
-            angular.forEach(geojson.getLayers(), function (layer) {
-                markers.addLayer(layer);
-            });
+            if (map.options.clustering) {
+                markers = L.markerClusterGroup();
+                // This has to be done individually.
+                // Using clusterLayer.addLayers() breaks the clustering.
+                // Need to investigate as this should have been fixing in v1.0.0
+                angular.forEach(geojson.getLayers(), function (layer) {
+                    markers.addLayer(layer);
+                });
+            } else {
+                markers = geojson;
+            }
             markers.addTo(map);
+
             // Focus map on data points but..
             // Avoid zooming further than 15 (particularly when we just have a single point)
             map.fitBounds(geojson.getBounds());
