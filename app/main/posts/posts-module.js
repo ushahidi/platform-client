@@ -11,6 +11,7 @@ angular.module('ushahidi.posts', [])
 .directive('postAddForm', require('./detail/post-add-form.directive.js'))
 .directive('postValue', require('./detail/post-value.directive.js'))
 .directive('postMediaValue', require('./detail/post-media-value.directive.js'))
+.directive('postDetailMap', require('./detail/map.directive.js'))
 .service('PostActionsService', require('./common/post-actions.service.js'))
 
 // Create / Edit Screens

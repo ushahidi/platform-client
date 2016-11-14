@@ -90,16 +90,7 @@
           attribute="form_attributes[key]"
           type="'post'">
         </post-value>
-        <div
-            ng-if="mapDataLoaded"
-            class="postcard-field"
-            >
-            <h2 ng-if="mapDataLoaded" class="form-label" translate>post.location</h2>
-            <p></p>
-            <div ng-if="mapDataLoaded">
-              <leaflet id="post-map" class="map" defaults="defaults" geojson="geojson" center="center" layers="layers"></leaflet>
-            </div>
-        </div>
+        <post-detail-map post-id="post.id"></post-detail-map>
       </div>
     </article>
 

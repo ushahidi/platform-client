@@ -20,16 +20,22 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         function activate() {
             // Start loading data
-            var config = Maps.getMapConfig();
             var posts = loadPosts();
+            var createMap = Maps.createMap(element[0].querySelector('#map'))
+            .then(function (data) {
+                map = data;
+            });
 
             // When data is loaded
             $q.all({
-                config: config,
+                map: createMap,
                 posts: posts
             })
-            // Create the map
-            .then(createMap)
+            .then(function (data) {
+                addPostsToMap(data.posts);
+                return data;
+            })
+            .then(watchFilters)
             ;
 
             // Cleanup leaflet map
@@ -38,29 +44,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     map.remove();
                 }
             });
-        }
-
-        function createMap(data) {
-            var config = data.config;
-            var posts = data.posts;
-
-            map = L.map(element[0].querySelector('#map'), config);
-
-            map.attributionControl.setPrefix(false);
-            map.zoomControl.setPosition('bottomleft');
-            map.setMaxBounds([[-90,-360],[90,360]]);
-            map.on('popupopen', function (e) {
-                var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
-                px.y -= e.popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-                map.panTo(map.unproject(px), {animate: true}); // pan to new center
-            });
-
-            // Add a layer control
-            // L.control.layers(Maps.getBaseLayers(), {}).addTo(map);
-
-            // Todo ideally these would be chained promises in activate()
-            addPostsToMap(posts);
-            watchFilters();
         }
 
         function addPostsToMap(posts) {

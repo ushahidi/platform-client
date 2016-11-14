@@ -14,7 +14,6 @@ module.exports = [
     'FormStageEndpoint',
     'FormEndpoint',
     'Maps',
-    'leafletData',
     '_',
     'Notify',
     'moment',
@@ -35,7 +34,6 @@ function (
     FormStageEndpoint,
     FormEndpoint,
     Maps,
-    leafletData,
     _,
     Notify,
     moment,
@@ -186,58 +184,6 @@ function (
     $scope.activateTaskTab = function (selectedTaskId) {
         $scope.visibleTask = selectedTaskId;
     };
-
-    // Set initial map params
-    angular.extend($scope, Maps.getInitialScope());
-    // Load map params, including config from server (async)
-    var config = Maps.getAngularScopeParams();
-    config.then(function (params) {
-        angular.extend($scope, params);
-    });
-
-    // Load geojson
-    var geojson = PostEndpoint.geojson({id: post.id});
-    // Load geojson and pass to map
-    geojson.$promise.then(function (data) {
-        $scope.geojson = {
-            data: data,
-            /*onEachFeature: function (feature, layer) {
-                var key = feature.properties.attribute_key;
-
-                layer.bindPopup(
-                    key
-                );
-            },*/
-            pointToLayer: Maps.pointToLayer
-        };
-    });
-
-    // Show map once data loaded
-    $q.all({
-        config: config,
-        geojson: geojson.$promise
-    }).then(function (data) {
-        if (data.geojson.features.length) {
-            $scope.mapDataLoaded = true;
-        }
-    });
-
-    $q.all({
-        map: leafletData.getMap('post-map'),
-        geojson: leafletData.getGeoJSON('post-map')
-    })
-    // Set map options, add layers, and set bounds
-    .then(function (data) {
-        // Disable 'Leaflet prefix on attributions'
-        data.map.attributionControl.setPrefix(false);
-
-        // Center map on geojson
-        data.map.fitBounds(data.geojson.getBounds());
-        // Avoid zooming further than 15 (particularly when we just have a single point)
-        if (data.map.getZoom() > 15) {
-            data.map.setZoom(15);
-        }
-    });
 
     $scope.publishPostTo = function (updatedPost) {
         // first check if tasks required have been marked complete
