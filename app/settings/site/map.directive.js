@@ -18,7 +18,7 @@ function (
         scope: {
             map: '='
         },
-        template: require('./settings-map.html'),
+        template: require('./map.html'),
         link: function ($scope, $element, $attrs) {
             $scope.patternDigitsOnly = /^[0-9]+$/;
             $scope.patternFloat = /[-+]?(\d*[.])?\d+/;
