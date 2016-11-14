@@ -7,7 +7,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             satellite: {
                 name: 'Satellite',
                 url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                type: 'xyz',
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
                     mapid: 'mapbox.satellite',
@@ -17,7 +16,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             streets: {
                 name: 'Streets',
                 url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                type: 'xyz',
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
                     mapid: 'mapbox.streets',
@@ -27,7 +25,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             hOSM: {
                 name: 'Humanitarian',
                 url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-                type: 'xyz',
                 layerOptions: {
                     attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, Tiles <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
                 }
@@ -37,13 +34,15 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
     return {
         createMap: createMap,
-        getMapConfig: getMapConfig,
+        getLeafletConfig: getLeafletConfig,
         getBaseLayers: getBaseLayers,
-        pointToLayer: pointToLayer
+        pointToLayer: pointToLayer,
+        getConfig: getConfig,
+        getLayer: getLayer
     };
 
     function createMap(element) {
-        return getMapConfig().then(function (config) {
+        return getLeafletConfig().then(function (config) {
             var map = L.map(element, config);
 
             map.attributionControl.setPrefix(false);
@@ -56,13 +55,13 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             });
 
             // Add a layer control
-            // L.control.layers(Maps.getBaseLayers(), {}).addTo(map);
+            // L.control.layers(getBaseLayersForControl(), {}).addTo(map);
 
             return map;
         });
     }
 
-    function getMapConfig() {
+    function getLeafletConfig() {
         return getConfig().then(function (config) {
             var defaultLayer = layers.baselayers[config.default_view.baselayer];
 
@@ -77,6 +76,11 @@ function Maps(ConfigEndpoint, L, _, CONST) {
     }
 
     function getBaseLayers() {
+        return layers.baselayers;
+    }
+
+    /* jshint ignore:start */
+    function getBaseLayersForControl() {
         return _.chain(layers.baselayers)
         .values()
         .indexBy('name')
@@ -85,9 +89,15 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         })
         .value();
     }
+    /* jshint ignore:end */
 
-    function getConfig() {
-        return ConfigEndpoint.get({ id: 'map' }).$promise.then(function (config) {
+    function getLayer(layerKey) {
+        var layer = layers.baselayers[layerKey];
+        return L.tileLayer(layer.url, layer.layerOptions);
+    }
+
+    function getConfig(fresh) {
+        return ConfigEndpoint[fresh ? 'getFresh' : 'get']({ id: 'map' }).$promise.then(function (config) {
             // Handle legacy layers
             if (config.default_view.baselayer === 'MapQuest') {
                 config.default_view.baselayer = 'streets';
