@@ -115,6 +115,12 @@ function (
                     type: 'media',
                     input: 'upload',
                     description: $translate.instant('survey.upload_desc')
+                },
+                {
+                    label: 'Embed video',
+                    type: 'varchar',
+                    input: 'video',
+                    description: $translate.instant('survey.video_desc')
                 }
             ];
         }

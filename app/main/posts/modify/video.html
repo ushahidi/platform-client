@@ -1,0 +1,14 @@
+
+<form>
+  <div class="form-field video_embed">
+    <label>{{label}}</label>
+    <p translate="post.video.input_desc"></p>
+    <input type="url" ng-model="videoUrl" ng-change="constructIframe(videoUrl)" placeholder="https://youtu.be/123456">
+
+    <div id="{{previewId}}" class="form-field-preview" ng-show="videoUrl">
+      <div class="video_embed-fluid">
+        <iframe frameborder="0" ng-src="{{video}}" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</form>
