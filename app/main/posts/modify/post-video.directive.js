@@ -29,10 +29,9 @@ function PostVideoController(
     $scope.constructIframe = constructIframe;
     // $scope.getVideoThumbnail = getVideoThumbnail;
     activate();
-
     function activate() {
         // Here we make a statement of trust of the URL based on having previously constructed it
-        $scope.videoUrl = $sce.trustAsResourceUrl($scope.videoUrl);
+        $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
         $scope.previewId = $scope.videoId ? $scope.videoId : Util.simpluUUID();
     }
 
@@ -69,10 +68,12 @@ function PostVideoController(
             if (match) {
                 if (match[3].indexOf('youtu') > -1) {
                     // Here we make a statement of trust of the URL based on having pulled out just the id
-                    $scope.videoUrl = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + match[6]);
+                    $scope.videoUrl = 'https://www.youtube.com/embed/' + match[6];
+                    $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
                 } else if (match[3].indexOf('vimeo') > -1) {
                     // Here we make a statement of trust of the URL based on having pulled out just the id
-                    $scope.videoUrl = $sce.trustAsResourceUrl('https://player.vimeo.com/video/' + match[6]);
+                    $scope.videoUrl = 'https://player.vimeo.com/video/' + match[6];
+                    $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
                 } else {
                     urlError(url);
                 }
@@ -88,7 +89,7 @@ function PostVideoController(
 
     // Originates from PL
     function createVideo() {
-        return '<iframe src="' + $scope.videoUrl + '" frameborder="0" allowfullscreen>';
+        return '<iframe src="' + $scope.video + '" frameborder="0" allowfullscreen>';
     }
 
     // // Originates from PL

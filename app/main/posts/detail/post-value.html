@@ -1,5 +1,5 @@
 <div ng-class="{'postcard-field': !standardTask, 'listing-item-primary': standardTask}">
-    <div ng-if="attribute.type !== 'video'">
+    <div ng-if="attribute.input !== 'video'">
       <h2 class="form-label">
           {{attribute.label}}
       </h2>
@@ -13,7 +13,7 @@
     </div>
 
     <post-video-view
-      ng-if="attribute.type === 'video'"
+      ng-if="attribute.input === 'video'"
       label="{{attribute.label}}"
       video-url="value"></post-video-view>
 </div>

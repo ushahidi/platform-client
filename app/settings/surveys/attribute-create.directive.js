@@ -118,7 +118,7 @@ function (
                 },
                 {
                     label: 'Embed video',
-                    type: 'video',
+                    type: 'varchar',
                     input: 'video',
                     description: $translate.instant('survey.video_desc')
                 }
