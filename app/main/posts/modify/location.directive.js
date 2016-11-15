@@ -122,7 +122,10 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
 
         function clear() {
             $scope.model = null;
-            marker.remove();
+            if (marker) {
+                map.removeLayer(marker);
+                marker = null;
+            }
         }
     }
 }

@@ -1,3 +1,8 @@
+var L = require('leaflet');
+// Load leaflet plugins here too
+require('imports?L=leaflet!leaflet.markercluster');
+require('imports?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
+
 describe('post location directive', function () {
 
     var $rootScope,
@@ -5,67 +10,67 @@ describe('post location directive', function () {
         isolateScope,
         Notify,
         element,
-        Geocoding;
+        Geocoding,
+        Maps,
+        map,
+        marker;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
+        Maps = {
+            createMap: function () {}
+        };
 
         var testApp = makeTestApp();
 
-        testApp.directive('postLocation', require('app/main/posts/modify/post-location.directive'));
+        testApp.directive('postLocation', require('app/main/posts/modify/location.directive'))
+        .service('Leaflet', () => {
+            return L;
+        })
+        .service('Maps', () => {
+            return Maps;
+        })
+        .value('Geocoding', {
+            search: function (searchLocationTerm) {}
+        })
+        ;
 
         angular.mock.module('testApp');
     });
 
-
-
-    beforeEach(function () {
-        angular.mock.module(function ($provide) {
-
-            $provide.value('Geocoding', {
-                search: function (searchLocationTerm) {}
-            });
-
-            $provide.value('leafletData', {
-                getMap: function (mapName) {
-                    return {
-                        then: function (callback) {
-                            return angular.element();
-                        }
-                    };
-                }
-            });
-
-            $provide.value('Leaflet', {
-                control: {
-                    locate: function (opts) {
-                        return {
-                            addTo: function (m) {}
-                        };
-                    }
-                }
-            });
-        });
-    });
-
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _Geocoding_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _Geocoding_, _Maps_, $q) {
         $rootScope = _$rootScope_;
-        $scope = _$rootScope_.$new();
-
         Notify = _Notify_;
         Geocoding = _Geocoding_;
 
-        $scope.post = {};
-        $scope.model = {};
-        element = '<post-location attribute="attribute" key="key" model="model"></post-location>';
+        map = L.map(document.createElement('div'));
+        marker = L.marker([7,7]);
+        spyOn(Maps, 'createMap').and.returnValue($q.when(map));
+        spyOn(map, 'setView').and.callThrough();
+        spyOn(L, 'marker').and.returnValue(marker);
+        spyOn(marker, 'setLatLng').and.callThrough();
+        spyOn(marker, 'addTo').and.callThrough();
+
+        $scope = _$rootScope_.$new();
+        $scope.model = {
+            lat: 3,
+            lon: 4
+        };
+
+        element = '<post-location attribute="attribute" key="key" model="model" id="1"></post-location>';
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
-
     }));
 
     describe('test directive functions', function () {
+        it('should init map', function () {
+            expect(Maps.createMap).toHaveBeenCalled();
+            expect(L.marker).toHaveBeenCalled();
+            expect(marker.addTo).toHaveBeenCalledWith(map);
+        });
+
         it('should not clear search location term for failed searches', function () {
             isolateScope.$apply(function () {
                 isolateScope.searchLocationTerm = 'Lorem';
@@ -101,11 +106,7 @@ describe('post location directive', function () {
             expect(isolateScope.searchLocationTerm).toEqual('');
         });
 
-        it('should call updateLatLon, updateMarkerPosition and centerMapTo on successful search', function () {
-            spyOn(isolateScope, 'updateLatLon');
-            spyOn(isolateScope, 'updateMarkerPosition');
-            spyOn(isolateScope, 'centerMapTo');
-
+        it('should call update model, marker position and map center', function () {
             spyOn(Geocoding, 'search').and.callFake(function (kupi) {
                 return {
                     then: function (callback) {
@@ -116,28 +117,22 @@ describe('post location directive', function () {
 
             isolateScope.searchLocation();
 
-            expect(isolateScope.updateLatLon).toHaveBeenCalledWith(1, 2);
-            expect(isolateScope.updateMarkerPosition).toHaveBeenCalledWith(1, 2);
-            expect(isolateScope.centerMapTo).toHaveBeenCalledWith(1, 2);
+            expect(isolateScope.model.lat).toEqual(1);
+            expect(isolateScope.model.lon).toEqual(2);
+            expect(marker.setLatLng).toHaveBeenCalledWith([1, 2]);
+            expect(map.setView).toHaveBeenCalledWith([1, 2], 8);
         });
 
-        it('should clear scope model, center and markers when Clear button is pressed', function () {
+        it('should clear scope model, and remove the marker', function () {
 
             isolateScope.$apply(function () {
                 isolateScope.model = { lat: 100, lng: 200 };
-                isolateScope.initialCenter = { lat: 100, lng: 200 };
-                isolateScope.center = { lat: 20, lng: 30 };
-
-                isolateScope.markers = {
-                    m1 : { lat: 40, lng: 50 }
-                };
             });
 
             isolateScope.clear();
 
             expect(isolateScope.model).toBeNull();
-            expect(isolateScope.center).toEqual(isolateScope.initialCenter);
-            expect(isolateScope.markers).toEqual({});
+            expect(marker.remove).toBeCalled;
         });
     });
 
