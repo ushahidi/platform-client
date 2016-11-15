@@ -31,7 +31,7 @@ function PostVideoController(
     activate();
 
     function activate() {
-        // Is this dody? I dunno it seems dodgy
+        // Here we make a statement of trust of the URL based on having previously constructed it
         $scope.videoUrl = $sce.trustAsResourceUrl($scope.videoUrl);
         $scope.previewId = $scope.videoId ? $scope.videoId : Util.simpluUUID();
     }
@@ -61,12 +61,17 @@ function PostVideoController(
         // - Also supports relative URLs:
         //   - //player.vimeo.com/video/25451551
         if (url) {
+            // NOTE: It is very important to pay special attention to the santization needs of this regex if it is changed.
+            // It is important that it does not allow subdomains other than player or www in order to ensure that a malicious user
+            // can not exploit this field to insert malicious content in an iframe
             var match = url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
             $scope.videoUrl = undefined;
             if (match) {
                 if (match[3].indexOf('youtu') > -1) {
+                    // Here we make a statement of trust of the URL based on having pulled out just the id
                     $scope.videoUrl = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + match[6]);
                 } else if (match[3].indexOf('vimeo') > -1) {
+                    // Here we make a statement of trust of the URL based on having pulled out just the id
                     $scope.videoUrl = $sce.trustAsResourceUrl('https://player.vimeo.com/video/' + match[6]);
                 } else {
                     urlError(url);
