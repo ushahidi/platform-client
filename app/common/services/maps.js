@@ -118,7 +118,7 @@ function (
         maps: {},
         config: undefined,
         getZoomControlPosition: function () {
-            return $window.self !== $window.top ? 'bottomleft' : 'bottomright';
+            return 'bottomleft';
         },
         getMap: function (name) {
             if (!this.maps[name]) {

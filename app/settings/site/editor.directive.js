@@ -48,17 +48,6 @@ function (
             $scope.site = ConfigEndpoint.get({ id: 'site' });
             $scope.userSavedSettings = false;
 
-            $scope.timezones = [];
-            var timezones = require('moment-timezone/data/packed/latest.json');
-
-            if (timezones.zones) {
-                angular.forEach(timezones.zones, function (timezone) {
-                    timezone = timezone.split('|');
-                    $scope.timezones.push(timezone[0]);
-                });
-            }
-            $scope.timezones.push('UTC');
-
             Languages.then(function (languages) {
                 $scope.languages = languages;
             });

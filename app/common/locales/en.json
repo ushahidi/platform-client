@@ -10,6 +10,7 @@
         "create_collection" : "Create collection",
         "export_to_csv" : "Export to CSV",
         "create_new" : "Create new",
+        "create_new_survey" : "Create new survey",
         "created_by" : "Created by {{author}}",
         "documentation": {
             "title" : "Documentation",
@@ -1014,6 +1015,7 @@
         "collection" : {
             "delete_collection_confirm" : "Are you sure you want to delete this collection?",
             "created_collection" : "Collection {{collection}} created successfully",
+            "updated_collection" : "Collection {{collection}} saved",
             "add_to_collection" : "Post has been added to {{collection}}",
             "removed_from_collection" : "Post has been removed from {{collection}}",
             "bulk_add_to_collection" : "{{count}} posts have been added to {{collection}}"

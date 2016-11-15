@@ -37,9 +37,15 @@ function PostFiltersService(_, FormEndpoint) {
     }
 
     function setFilters(newState) {
+        // Replace 'all' with full list of statuses
+        // Gives less confusing active display, and works around API bug
+        if (newState.status === 'all') {
+            newState.status = ['published', 'draft', 'archived'];
+        }
+
         // Replace filterState with defaults + newState
         // Including defaults ensures all values are always defined
-        return angular.merge(filterState, getDefaults(), newState);
+        return angular.extend(filterState, getDefaults(), newState);
     }
 
     function clearFilters() {
@@ -113,7 +119,9 @@ function PostFiltersService(_, FormEndpoint) {
                     return true;
                 }
                 // Is an array with all the same elements? (order doesn't matter)
-                if (_.isArray(defaults[key]) && _.difference(value, defaults[key]).length === 0) {
+                if (_.isArray(defaults[key]) &&
+                    _.difference(value, defaults[key]).length === 0 &&
+                    _.difference(defaults[key], value).length === 0) {
                     return true;
                 }
                 // Is value empty? ..and not a date object

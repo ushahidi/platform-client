@@ -5,15 +5,16 @@ module.exports = [
     'ConfigEndpoint',
     '$q',
     '$window',
+    '$location',
 function (
     $scope,
     $rootScope,
     UserEndpoint,
     ConfigEndpoint,
     $q,
-    $window
+    $window,
+    $location
 ) {
-    var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
     $rootScope.$on('event:authentication:login:succeeded', function () {
         if ($window.self === $window.top) {
             $scope.startIntercom();
@@ -28,19 +29,23 @@ function (
             ]).then(function (results) {
                 var site = results[0];
                 var user = results[1];
-                var domain = pattern.exec($window.ushahidi.apiUrl);
-                domain = domain[1].replace('api.', '');
+                var domain = $location.host();
 
                 $window.Intercom('boot', {
                     app_id: $window.ushahidi.intercomAppId,
                     email: user.email,
                     created_at: user.created,
                     user_id: domain + '_' + user.id,
-                    'company': site.name,
-                    'deployment_url': $window.ushahidi.apiUrl,
+                    'deployment_url': domain,
                     'realname' : user.realname,
                     'last_login': user.last_login,
-                    'role': user.role
+                    'role': user.role,
+                    company: {
+                        name: site.name,
+                        id: domain,
+                        created_at: 0, // Faking this because we don't have this data
+                        plan: site.tier
+                    }
                 });
             });
         }

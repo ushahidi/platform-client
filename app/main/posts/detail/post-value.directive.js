@@ -1,4 +1,4 @@
-module.exports = ['PostEndpoint', function (PostEndpoint) {
+module.exports = ['PostEndpoint', 'moment', function (PostEndpoint, moment) {
     return {
         restrict: 'E',
         replace: true,
@@ -17,6 +17,23 @@ module.exports = ['PostEndpoint', function (PostEndpoint) {
                 $scope.value = $scope.value.map(function (entry) {
                     return PostEndpoint.get({ id : entry });
                 });
+            }
+            if ($scope.attribute.type === 'datetime') {
+                if ($scope.attribute.input === 'date') {
+                    $scope.value = $scope.value.map(function (entry) {
+                        return moment(entry).format('LL');
+                    });
+                }
+                if ($scope.attribute.input === 'datetime') {
+                    $scope.value = $scope.value.map(function (entry) {
+                        return moment(entry).format('LLL');
+                    });
+                }
+                if ($scope.attribute.input === 'time') {
+                    $scope.value = $scope.value.map(function (entry) {
+                        return moment(entry).format('LT');
+                    });
+                }
             }
         }
     };

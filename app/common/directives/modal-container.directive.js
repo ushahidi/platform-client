@@ -35,12 +35,26 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
         ModalService.onClose(closeModal, $scope);
 
         //var classChangePromise = null;
+        function makeTemplateScope(scope) {
+            // If no scope was passed, create a child of our directive scope
+            if (!scope) {
+                // @todo should this just be $rootScope.$new() ??
+                return $scope.$new();
+            }
+
+            // If scope isn't actually a scope yet, make it into one
+            if (scope.constructor !== $rootScope.constructor) {
+                return angular.extend($rootScope.$new(), scope);
+            }
+
+            return scope.$new();
+        }
 
         function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
             // Clean up any previous modal content
             cleanUpModal();
             // Create new scope and keep it to destroy when done with the modal
-            templateScope = scope ? scope.$new() : $scope.$new();
+            templateScope = makeTemplateScope(scope);
 
             // Inject closeModal function onto template scope
             templateScope.closeModal = closeModal;
