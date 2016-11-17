@@ -3,11 +3,13 @@ describe('setting map directive', function () {
 
     var $rootScope,
         $scope,
+        $timeout,
         isolateScope,
         element,
         Leaflet,
         Maps,
         map,
+        mapboxLayer,
         marker;
 
     beforeEach(function () {
@@ -27,9 +29,10 @@ describe('setting map directive', function () {
 
 
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Maps_, _Leaflet_, $q) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Maps_, _Leaflet_, $q, _$timeout_) {
         $rootScope = _$rootScope_;
         Leaflet = _Leaflet_;
+        $timeout = _$timeout_;
         $scope = _$rootScope_.$new();
         $scope.map = {};
 
@@ -47,6 +50,11 @@ describe('setting map directive', function () {
             },
             clustering: false
         }));
+        mapboxLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}', {
+            mapid: 'streets',
+            apikey: 'junk123'
+        });
+        spyOn(Maps, 'getLayer').and.returnValue(mapboxLayer);
         map = L.map(document.createElement('div'), {
             center: [0,1],
             zoom: 5,
@@ -54,6 +62,7 @@ describe('setting map directive', function () {
         });
         marker = L.marker([7,7]);
         spyOn(map, 'setView').and.callThrough();
+        spyOn(map, 'addLayer').and.callThrough();
         spyOn(L, 'marker').and.returnValue(marker);
         spyOn(marker, 'setLatLng').and.callThrough();
         spyOn(marker, 'addTo').and.callThrough();
@@ -83,12 +92,22 @@ describe('setting map directive', function () {
 
     it('should update config when zoom changes', function () {
         map.setZoom(7);
+        $scope.$digest();
         expect(isolateScope.config.default_view.zoom).toEqual(7);
+    });
+
+    it('should update map layer when changed', function () {
+        isolateScope.config.default_view.baselayer = 'streets';
+        isolateScope.updateMapPreviewLayer();
+
+        expect(Maps.getLayer).toHaveBeenCalledWith('streets');
+        expect(map.addLayer).toHaveBeenCalledWith(mapboxLayer);
     });
 
     it('should update map when zoom changes', function () {
         isolateScope.config.default_view.zoom = 9;
         isolateScope.updateMapPreview();
+
         expect(map.setView).toHaveBeenCalledWith([3, 4], 9);
     });
 
@@ -96,10 +115,29 @@ describe('setting map directive', function () {
         isolateScope.config.default_view.lat = 48;
         isolateScope.config.default_view.lon = 36;
         isolateScope.updateMapPreview();
+
         expect(marker.setLatLng).toHaveBeenCalledWith([48, 36]);
     });
 
+    it('should save position when map clicked', function () {
+        map.fireEvent('click', {
+            latlng: L.latLng([10,12])
+        });
+
+        $scope.$digest();
+
+        expect(isolateScope.config.default_view.lat).toBe(10);
+        expect(isolateScope.config.default_view.lon).toBe(12);
+    });
+
     it('should save position when marker dragged', function () {
+        marker._latlng = L.latLng([32, 24]);
+        marker.fireEvent('dragend', {});
+
+        $scope.$digest();
+
+        expect(isolateScope.config.default_view.lat).toBe(32);
+        expect(isolateScope.config.default_view.lon).toBe(24);
     });
 
 });

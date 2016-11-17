@@ -85,7 +85,7 @@ function (
 
             // Update our map defaults when the marker is dragged to a new spot.
             function handleDragEnd(e) {
-                $scope.$apply(function () {
+                $scope.$evalAsync(function () {
                     var latLng = e.target.getLatLng().wrap();
                     $scope.config.default_view.lat = latLng.lat;
                     $scope.config.default_view.lon = latLng.lng;
@@ -95,7 +95,7 @@ function (
             }
 
             function handleClick(e) {
-                $scope.$apply(function () {
+                $scope.$evalAsync(function () {
                     var latLng = e.latlng.wrap();
                     $scope.config.default_view.lat = latLng.lat;
                     $scope.config.default_view.lon = latLng.lng;
@@ -106,7 +106,7 @@ function (
 
             // Update our default zoom level when the preview map's is changed.
             function handleMoveEnd(e) {
-                $scope.$apply(function () {
+                $scope.$evalAsync(function () {
                     $scope.config.default_view.zoom = map.getZoom();
                 });
             }
