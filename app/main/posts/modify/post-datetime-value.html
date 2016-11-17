@@ -5,10 +5,9 @@
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#calendar"></use>
       </svg>
       <input
-        type="date"
-        pick-a-date="date"
-        pick-a-date-options="dateFormat"
-        ng-model="dateChosen"
+        type="text"
+        pick-a-date="model"
+        pick-a-date-options="dateOptions"
         />
     </div>
   </div>
@@ -18,11 +17,9 @@
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#clock"></use>
       </svg>
       <input
-        type="date"
-        pick-a-time="time"
-        pick-a-time-options="timeFormat"
-        ng-model="timeChosen"
-        ng-disabled="!dateChosen"
+        type="text"
+        pick-a-time="model"
+        pick-a-time-options="timeOptions"
         />
     </div>
   </div>

@@ -21,7 +21,7 @@ You need to deploy the [Platform API](http://github.com/ushahidi/platform) first
 First you'll need nodejs or io.js installed,
 npm takes care of the rest of our dependencies.
 
-* nodejs v0.10 or v0.12 or io.js v1.2
+* nodejs v6
 
 ### Install, build and run a local dev server
 

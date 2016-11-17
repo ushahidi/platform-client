@@ -89,7 +89,7 @@
 
     <div class="toggle-content init" dropdown-menu>
       <fieldset>
-        <post-datetime ng-model="post.post_date" ng-if="fixed"></post-datetime>
+        <post-datetime ng-model="post.post_date"></post-datetime>
         <ul class="metadata">
             <li><span translate="post.created_at"></span> {{displayCreated}} <span translate-values="{ source : source }" translate="post.source"></span></li>
             <li ng-if="post.updated"><span translate="post.updated_at"></span> {{displayUpdated}}</li>

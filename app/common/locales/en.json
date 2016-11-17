@@ -10,6 +10,7 @@
         "create_collection" : "Create collection",
         "export_to_csv" : "Export to CSV",
         "create_new" : "Create new",
+        "create_new_survey" : "Create new survey",
         "created_by" : "Created by {{author}}",
         "documentation": {
             "title" : "Documentation",
@@ -184,6 +185,7 @@
         "checkbox_desc" : "Allows the user to choose one or more of a predefined set of options.",
         "relation_desc" : "Create a relation between different surveys",
         "upload_desc" : "Allows image(s) to be uploaded to the post",
+        "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "tasks" : "Tasks",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -572,9 +574,19 @@
             }
         },
         "media" : {
+            "enter_a" : "Enter a",
+            "youtube" : " Youtube",
             "current_url" : "Current image",
             "add_caption" : "Add caption",
             "upload" : "Upload"
+        },
+        "video" : {
+            "input_desc" : "<span>Enter a</span><span id=\"wordmark-youtube\" class=\"wordmark-replace\" style=\"background-image: url(/img/youtube.png);\"><span> Youtube</span></span><span> or </span><span id=\"wordmark-vimeo\" class=\"wordmark-replace\" style=\"background-image: url(/img/vimeo.png);\"><span> Vimeo</span></span><span> video URL</span>",
+            "enter_a" : "Enter a",
+            "youtube" : " Youtube",
+            "or" : " or ",
+            "vimeo" : " Vimeo",
+            "video_url" : " video URL"
         },
         "unstructured" : {
             "add_survey" : {
@@ -983,6 +995,9 @@
             "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
         },
+        "video" : {
+            "incorrect_url" : "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format.",
+        },
         "form" : {
             "add_to_survey" : "Add to survey",
             "save_success" : "Survey {{name}} saved",
@@ -1000,6 +1015,7 @@
         "collection" : {
             "delete_collection_confirm" : "Are you sure you want to delete this collection?",
             "created_collection" : "Collection {{collection}} created successfully",
+            "updated_collection" : "Collection {{collection}} saved",
             "add_to_collection" : "Post has been added to {{collection}}",
             "removed_from_collection" : "Post has been removed from {{collection}}",
             "bulk_add_to_collection" : "{{count}} posts have been added to {{collection}}"

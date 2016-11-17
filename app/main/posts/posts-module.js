@@ -11,6 +11,7 @@ angular.module('ushahidi.posts', [])
 .directive('postAddForm', require('./detail/post-add-form.directive.js'))
 .directive('postValue', require('./detail/post-value.directive.js'))
 .directive('postMediaValue', require('./detail/post-media-value.directive.js'))
+.directive('postVideoView', require('./detail/post-video-value.directive.js'))
 .service('PostActionsService', require('./common/post-actions.service.js'))
 
 // Create / Edit Screens
@@ -18,6 +19,7 @@ angular.module('ushahidi.posts', [])
 .service('PostEditService', require('./modify/post-edit.service.js'))
 .service('MediaEditService', require('./modify/media-edit.service.js'))
 .directive('postMedia', require('./modify/post-media.directive.js'))
+.directive('postVideoInput', require('./modify/post-video.directive.js'))
 .directive('postDatetime', require('./modify/post-datetime-value.directive.js'))
 .directive('postLocation', require('./modify/post-location.directive.js'))
 .directive('postRelation', require('./modify/post-relation.directive.js'))
@@ -66,9 +68,13 @@ angular.module('ushahidi.posts', [])
 .directive('savedSearchListing', require('./savedsearches/listing.directive.js'))
 .directive('savedSearchModeContext', require('./savedsearches/mode-context.directive.js'))
 
+.service('CollectionsService', require('./collections/collections.service.js'))
 .directive('collectionModeContext', require('./collections/mode-context.directive.js'))
 .directive('collectionEditor', require('./collections/editor.directive.js'))
 .directive('collectionListing', require('./collections/listing.directive.js'))
+
+.directive('collectionToggleButton', require('./common/collection-toggle/collection-toggle-button.js'))
+.directive('collectionToggleLink', require('./common/collection-toggle/collection-toggle-link.js'))
 
 
 .config(require('./posts-routes.js'))
