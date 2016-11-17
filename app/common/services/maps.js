@@ -38,7 +38,8 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         getBaseLayers: getBaseLayers,
         pointToLayer: pointToLayer,
         getConfig: getConfig,
-        getLayer: getLayer
+        getLayer: getLayer,
+        pointIcon: pointIcon
     };
 
     function createMap(element) {
@@ -120,14 +121,15 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
     function pointToLayer(feature, latlng) {
         return L.marker(latlng, {
-            icon: pointIcon(feature, [32, 32])
+            icon: pointIcon(feature.properties['marker-color'])
         });
     }
 
     // Icon configuration
-    function pointIcon(feature, size, className) {
+    function pointIcon(color, size, className) {
         // Test string to make sure that it does not contain injection
-        var color = (feature.properties['marker-color'] && /^[a-zA-Z0-9#]+$/.test(feature.properties['marker-color'])) ? feature.properties['marker-color'] : '#959595';
+        color = (color && /^[a-zA-Z0-9#]+$/.test(color)) ? color : '#959595';
+        size = size || [32, 32];
         var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
         return L.divIcon({

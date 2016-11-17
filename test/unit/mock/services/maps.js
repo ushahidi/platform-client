@@ -55,6 +55,12 @@ module.exports = ['$q', function ($q) {
                     }
                 }
             };
+        },
+        getLayer: () => {
+            return {};
+        },
+        pointIcon: () => {
+            return {};
         }
     };
 }];

@@ -19,7 +19,8 @@ describe('post location directive', function () {
         fixture.setBase('mocked_backend/api/v3');
 
         Maps = {
-            createMap: function () {}
+            createMap: function () {},
+            pointIcon: function () {}
         };
 
         var testApp = makeTestApp();
