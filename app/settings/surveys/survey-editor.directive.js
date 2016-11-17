@@ -88,6 +88,8 @@ function SurveyEditorController(
     $scope.getInterimId = getInterimId;
     $scope.removeInterimIds = removeInterimIds;
 
+    $scope.allowedToggleOrder = allowedToggleOrder;
+
     $scope.roles_allowed = [];
     $scope.roles = [];
 
@@ -110,7 +112,30 @@ function SurveyEditorController(
                         priority: 0,
                         required: false,
                         type: 'post',
-                        attributes: [],
+                        attributes: [
+                            {
+                                cardinality: 0,
+                                input: 'text',
+                                label: 'Title',
+                                priority: 1,
+                                required: true,
+                                type: 'title',
+                                options: [],
+                                config: {},
+                                form_stage_id: getInterimId()
+                            },
+                            {
+                                cardinality: 0,
+                                input: 'text',
+                                label: 'Description',
+                                priority: 2,
+                                required: true,
+                                type: 'description',
+                                options: [],
+                                config: {},
+                                form_stage_id: getInterimId()
+                            }
+                        ],
                         is_public: true
                     }
                 ]
@@ -132,6 +157,10 @@ function SurveyEditorController(
                 }
             });
         }
+    }
+
+    function allowedToggleOrder(attribute) {
+        return attribute.type !== 'title' && attribute.type !== 'description';
     }
 
     function getInterimId() {
