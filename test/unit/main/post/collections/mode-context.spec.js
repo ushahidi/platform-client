@@ -11,7 +11,11 @@ describe('collections mode context directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('collectionsModeContext', require('app/main/posts/collections/mode-context.directive'));
+        testApp
+        .directive('collectionsModeContext', require('app/main/posts/collections/mode-context.directive'))
+        .service('CollectionsService', function () {
+            return {};
+        });
 
         angular.mock.module('testApp');
     });

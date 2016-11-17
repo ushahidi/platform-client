@@ -82,13 +82,6 @@
                          </div>
                     </div>
 
-                    <div class="form-field">
-                         <label translate>settings.site_timezone</label>
-                         <div class="custom-select">
-                            <select ng-model="site.timezone" ng-options="timezone for timezone in timezones | orderBy | unique"></select>
-                         </div>
-                    </div>
-
                     <div class="form-field checkbox" ng-show="isPrivateEnabled">
                          <input id="private" ng-model="site.private" type="checkbox">
                          <label for="private" translate>settings.site_private</label>

@@ -18,7 +18,8 @@ CollectionModeContextController.$inject = [
     'NotificationEndpoint',
     'CollectionEndpoint',
     'Notify',
-    '_'
+    '_',
+    'CollectionsService'
 ];
 function CollectionModeContextController(
     $scope,
@@ -28,7 +29,8 @@ function CollectionModeContextController(
     NotificationEndpoint,
     CollectionEndpoint,
     Notify,
-    _
+    _,
+    CollectionsService
 ) {
     $scope.editCollection = editCollection;
     $scope.deleteCollection = deleteCollection;
@@ -59,20 +61,11 @@ function CollectionModeContextController(
     }
 
     function editCollection() {
-        $rootScope.$emit('collectionEditor:show', $scope.collection);
+        CollectionsService.editCollection($scope.collection);
     }
 
     function deleteCollection() {
-        Notify.confirm('notify.collection.delete_collection_confirm').then(function () {
-            CollectionEndpoint.delete({
-                collectionId: $scope.collection.id
-            }).$promise.then(function () {
-                $location.url('/');
-                $rootScope.$broadcast('collection:update');
-            }, function (errorResponse) {
-                Notify.apiErrors(errorResponse);
-            });
-        });
+        CollectionsService.deleteCollection($scope.collection);
     }
 
     function saveNotification(collection) {

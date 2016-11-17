@@ -9,7 +9,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
 
     function activate() {
         if (Authentication.getLoginStatus()) {
-            doLogin();
+            doLogin(false, true);
         }
     }
 
@@ -17,13 +17,13 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
         $rootScope.currentUser = Session.getSessionData();
     }
 
-    function doLogin(redirect) {
+    function doLogin(redirect, noReload) {
         loadSessionData();
         $rootScope.loggedin = true;
         if (redirect) {
             $location.url(redirect);
         }
-        $route.reload();
+        noReload || $route.reload();
     }
 
     function doLogout(redirect) {

@@ -75,4 +75,13 @@
             <li><a translate="post.hide_unknown_form" ng-click="hide('none')">Hide Unknown</a></li>
         </ul>
     </div>
+
+    <div class="form-field" ng-show="hasManageSettingsPermission()">
+        <a ng-href="/settings/surveys/create" class="button button-link">
+            <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#plus"></use>
+            </svg>
+            <span class="button-label" translate="app.create_new_survey">Create new survey</span>
+        </a>
+    </div>
 </form>
