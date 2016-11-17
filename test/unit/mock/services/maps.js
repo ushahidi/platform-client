@@ -1,59 +1,11 @@
-module.exports = [function () {
+module.exports = ['$q', function ($q) {
     return {
-        getMap: function () {
-            return {
-                reloadPosts: function (posts) {},
-                getMinZoom: function () {
-                    return 0;
-                },
-                getMaxZoom: function () {
-                    return 0;
-                },
-                init: function () {
-
-                }
-            };
-        },
-        destroyMap: function () {
-
-        },
-        getInitialScope: function () {
-            return {
-                layers : {
-                    baselayers : {
-                        mapQuest : {
-                            name: 'Map',
-                            url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png',
-                            type: 'xyz',
-                            layerOptions: {
-                                subdomains: '1234',
-                                attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="http://info.mapquest.com/terms-of-use/">MapQuest</a>'
-                            }
-                        }
-                    }
-                },
-                center: {
-                    lat: 0,
-                    lon: 0,
-                    zoom: 3
-                }
-            };
-        },
-        getAngularScopeParams : function () {
-            return {
-                then: function (successCallback) {
-                    successCallback({
-                        centre: {
-                            lat: -1.3048035,
-                            lng: 36.8473969,
-                            zoom: 3
-                        },
-                        layers: {
-                            baselayers: {}
+        createMap: function () {
+            return $q.when({
+                        options: {
+                            clustering: false
                         }
                     });
-                }
-            };
         },
         getConfig: function () {
             return {
@@ -74,6 +26,41 @@ module.exports = [function () {
                     });
                 }
             };
+        },
+        getBaseLayers: function () {
+            return {
+                satellite: {
+                    name: 'Satellite',
+                    url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                    layerOptions: {
+                        apikey: 'abc123',
+                        mapid: 'mapbox.satellite',
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a>'
+                    }
+                },
+                streets: {
+                    name: 'Streets',
+                    url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                    layerOptions: {
+                        apikey: 'abc123',
+                        mapid: 'mapbox.streets',
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a>'
+                    }
+                },
+                hOSM: {
+                    name: 'Humanitarian',
+                    url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+                    layerOptions: {
+                        attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, Tiles <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
+                    }
+                }
+            };
+        },
+        getLayer: () => {
+            return {};
+        },
+        pointIcon: () => {
+            return {};
         }
     };
 }];

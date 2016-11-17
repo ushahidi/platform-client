@@ -65,18 +65,29 @@
 
         </listing-toolbar>
 
-        <!-- todo: check style -->
-        <div class="list-item" ng-if="posts.length == 0 && hasFilters()">
+        <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading">
             <h4 translate>post.no_search_results</h5>
         </div>
 
-        <!-- todo: check style -->
-        <div class="list-item" ng-if="posts.length == 0 && !hasFilters()">
+        <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading">
             <h4 translate>post.no_posts_yet</h5>
         </div>
 
-    </div> <!-- /.listing.timeline -->
+        <div class="listing-item" ng-if="posts.length > 0 || isLoading">
+            <div class="listing-item-primary">
+                <button ng-disabled="isLoading" ng-hide="isLoading" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                </button>
+                <button type="button" class="button-gamma button-flat" ng-show="isLoading">
+                    <div class="loading">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    <span class="button-label" translate="app.loading">Loading</span>
+                </button>
+            </div>
+        </div>
 
-    <uib-pagination ng-model="currentPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
+    </div> <!-- /.listing.timeline -->
 
 </div>

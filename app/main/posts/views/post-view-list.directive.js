@@ -43,17 +43,18 @@ function PostListController(
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
     $scope.itemsPerPageOptions = [10, 20, 50];
-    $scope.itemsPerPage = $scope.itemsPerPageOptions[0];
+    $scope.itemsPerPage = $scope.itemsPerPageOptions[1];
     // until we have the correct total_count value from backend request:
     $scope.totalItems = $scope.itemsPerPage;
+    $scope.posts = [];
+    $scope.groupedPosts = {};
 
     $scope.deletePosts = deletePosts;
     $scope.hasFilters = hasFilters;
-    $scope.itemsPerPageChanged = itemsPerPageChanged;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
-    $scope.pageChanged = getPostsForPagination;
     $scope.statuses = PostActionsService.getStatuses();
     $scope.changeStatus = changeStatus;
+    $scope.loadMore = loadMore;
 
     activate();
 
@@ -62,20 +63,30 @@ function PostListController(
         return $scope.filters;
     }, function (newValue, oldValue) {
         if (newValue !== oldValue) {
-            getPostsForPagination();
+            resetPosts();
+            getPosts();
         }
     }, true);
 
     function activate() {
         // Initial load
-        getPostsForPagination();
+        resetPosts();
+        getPosts();
 
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
     }
 
-    function getPostsForPagination(query) {
+    function resetPosts() {
+        $scope.posts = [];
+        $scope.groupedPosts = {};
+        $scope.totalItems = $scope.itemsPerPage;
+        $scope.currentPage = 1;
+        $scope.selectedPosts = [];
+    }
+
+    function getPosts(query) {
         query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
@@ -84,37 +95,46 @@ function PostListController(
 
         $scope.isLoading = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-            if (postsResponse.count === 0 && !PostFilters.hasFilters($scope.filters)) {
-                PostViewService.showNoPostsSlider();
-            }
-            $scope.posts = postsResponse.results;
-            var now = moment(),
-                yesterday = moment().subtract(1, 'days');
+            // Add posts to full set of posts
+            // @todo figure out if we can store these more efficiently
+            Array.prototype.push.apply($scope.posts, postsResponse.results);
 
-            $scope.groupedPosts = _.groupBy(postsResponse.results, function (post) {
-                var postDate = moment(post.post_date);
-                if (now.isSame(postDate, 'd')) {
-                    return $translate.instant('nav.today');
-                } else if (yesterday.isSame(postDate, 'd')) {
-                    return $translate.instant('nav.yesterday');
+            // Merge grouped posts into existing groups
+            angular.forEach(groupPosts(postsResponse.results), function (posts, group) {
+                if (angular.isArray($scope.groupedPosts[group])) {
+                    Array.prototype.push.apply($scope.groupedPosts[group], posts);
                 } else {
-                    return postDate.fromNow();
+                    $scope.groupedPosts[group] = posts;
                 }
             });
+
             $scope.totalItems = postsResponse.total_count;
             $scope.isLoading = false;
+
+            if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
+                PostViewService.showNoPostsSlider();
+            }
+        });
+    }
+
+    function groupPosts(posts) {
+        var now = moment(),
+            yesterday = moment().subtract(1, 'days');
+
+        return _.groupBy(posts, function (post) {
+            var postDate = moment(post.post_date);
+            if (now.isSame(postDate, 'd')) {
+                return $translate.instant('nav.today');
+            } else if (yesterday.isSame(postDate, 'd')) {
+                return $translate.instant('nav.yesterday');
+            } else {
+                return postDate.fromNow();
+            }
         });
     }
 
     function deletePosts() {
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
-            var handleDeleteErrors = function (errorResponse) {
-                Notify.apiErrors(errorResponse);
-            },
-            handleDeleteSuccess = function () {
-                Notify.notify('notify.post.destroy_success_bulk');
-            };
-
             // ask server to delete selected posts
             // and refetch posts from server
             var deletePostsPromises = _.map(
@@ -124,7 +144,24 @@ function PostListController(
                     return PostEndpoint.delete({ id: postId }).$promise;
                 });
             $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
-            .finally(getPostsForPagination);
+            ;
+
+            function handleDeleteErrors(errorResponse) {
+                Notify.apiErrors(errorResponse);
+            }
+            function handleDeleteSuccess(deleted) {
+                Notify.notify('notify.post.destroy_success_bulk');
+                // Remove deleted posts from state
+                var deletedIds = _.pluck(deleted, 'id');
+                angular.forEach($scope.groupedPosts, function (posts, group) {
+                    $scope.groupedPosts[group] = _.reject(posts, function (post) {
+                        return _.contains(deletedIds, post.id);
+                    });
+                });
+                $scope.posts = _.reject($scope.posts, function (post) {
+                    return _.contains(deletedIds, post.id);
+                });
+            }
         });
     }
 
@@ -137,7 +174,7 @@ function PostListController(
 
         var updateStatusPromises = _.map(selectedPosts, function (post) {
             post.status = status;
-            $scope.selectedPosts = _.without($scope.selectedPosts, post.id);
+            // $scope.selectedPosts = _.without($scope.selectedPosts, post.id);
             return PostEndpoint.update(post).$promise;
         });
 
@@ -146,12 +183,7 @@ function PostListController(
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
         })
-        .finally(getPostsForPagination);
-    }
-
-    function itemsPerPageChanged(count) {
-        $scope.itemsPerPage = count;
-        getPostsForPagination();
+        ;
     }
 
     // @todo reconsider: show this for ALL logged in users??
@@ -165,5 +197,9 @@ function PostListController(
         return PostFilters.hasFilters($scope.filters);
     }
 
-    $scope.open = true;
+    function loadMore() {
+        // Increment page
+        $scope.currentPage++;
+        getPosts();
+    }
 }
