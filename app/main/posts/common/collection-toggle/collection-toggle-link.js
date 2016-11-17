@@ -1,7 +1,9 @@
 module.exports = [
     '$rootScope',
+    'CollectionsService',
 function (
-    $rootScope
+    $rootScope,
+    CollectionsService
 ) {
     return {
         restrict: 'E',
@@ -12,7 +14,7 @@ function (
         link: function ($scope, $element, $attrs, ngModel) {
             $scope.toggleCollection = function () {
                 // Collection toggle expects an array of posts
-                $rootScope.$emit('collectionToggle:show', [$scope.post]);
+                CollectionsService.showAddToCollection([$scope.post]);
             };
         },
         template: require('./collection-toggle-link.html')

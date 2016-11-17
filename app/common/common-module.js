@@ -62,10 +62,6 @@ angular.module('ushahidi.common', [
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 
-.directive('collectionSelector', require('./directives/collection-selector.js'))
-.directive('collectionToggleButton', require('./directives/collection-toggle/collection-toggle-button.js'))
-.directive('collectionToggleLink', require('./directives/collection-toggle/collection-toggle-link.js'))
-
 .directive('listingToolbar', require('./directives/list-toolbar.js'))
 .directive('iconPicker', require('./directives/iconpicker.js'))
 
