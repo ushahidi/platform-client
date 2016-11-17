@@ -18,24 +18,49 @@ describe('post view list directive', function () {
             return function () {};
         })
         .value('PostEntity', {})
-        .value('moment', function () {
+        .value('moment', require('moment'))
+        .service('PostEndpoint', function () {
             return {
-                subtract : function () {
-                    return this;
-                },
-                fromNow : function () {
-                    return '';
-                },
-                isSame : function () {
-                    return true;
+                query: function (params) {
+                    var data;
+                    if (params.offset === 20) {
+                        data = {
+                            results : [
+                                { id: 1, post_date: '2016-01-03'},
+                                { id: 2, post_date: '2016-02-03'},
+                                { id: 3, post_date: '2016-03-03'}
+                            ]
+                        };
+                    } else {
+                        data = {
+                            results : [
+                                { id: 10, post_date: '2016-03-03', 'allowed_privileges': ['update']},
+                                { id: 11, post_date: '2016-03-04'}
+                            ]
+                        };
+                    }
+
+                    return {
+                        '$promise' : {
+                            then: function (cb) {
+                                cb(data);
+                            }
+                        }
+                    };
                 }
             };
         });
 
+        // Mock current date
+        jasmine.clock().mockDate(new Date(2016, 9, 4));
+
         angular.mock.module('testApp');
     });
 
-
+    afterEach(function () {
+        // Restore clock, otherwise test timing breaks
+        jasmine.clock().mockDate();
+    });
 
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_) {
         $rootScope = _$rootScope_;
@@ -54,11 +79,6 @@ describe('post view list directive', function () {
 
     it('should load initial values', function () {
         expect(isolateScope.currentPage).toEqual(1);
-    });
-
-    it('should update the number of items per page', function () {
-        isolateScope.itemsPerPageChanged(1);
-        expect(isolateScope.itemsPerPage).toEqual(1);
     });
 
     it('should check if the user has bulk action permissions', function () {
@@ -88,5 +108,19 @@ describe('post view list directive', function () {
 
         $rootScope.$digest();
         expect(Notify.confirmDelete).toHaveBeenCalled();
+    });
+
+    it('should append new posts to groups', function () {
+        expect(isolateScope.groupedPosts['7 months ago'].length).toEqual(2);
+        expect(isolateScope.groupedPosts['8 months ago']).toBeUndefined();
+        expect(isolateScope.groupedPosts['9 months ago']).toBeUndefined();
+        expect(isolateScope.posts.length).toEqual(2);
+
+        isolateScope.loadMore();
+
+        expect(isolateScope.groupedPosts['7 months ago'].length).toEqual(3);
+        expect(isolateScope.groupedPosts['8 months ago'].length).toEqual(1);
+        expect(isolateScope.groupedPosts['9 months ago'].length).toEqual(1);
+        expect(isolateScope.posts.length).toEqual(5);
     });
 });

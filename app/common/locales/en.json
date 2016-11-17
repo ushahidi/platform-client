@@ -28,6 +28,8 @@
         "forbidden": "Sorry, you're not allowed to do that.",
         "get_notifications" : "Get notifications",
         "turn_off_notifications" : "Turn off notifications",
+        "load_more": "Load more",
+        "loading": "Loading",
         "more" : "More",
         "cancel" : "Cancel",
         "save" : "Save",
