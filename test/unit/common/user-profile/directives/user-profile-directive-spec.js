@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('user profile directive', function () {
 
     var $rootScope,
@@ -11,22 +9,18 @@ describe('user profile directive', function () {
         element;
 
     beforeEach(function () {
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ])
-        .directive('userProfile', require(ROOT_PATH + 'app/common/user-profile/user-profile.directive.js'))
+        makeTestApp()
+        .directive('userProfile', require('app/common/user-profile/user-profile.directive.js'))
         .value('$filter', function () {
             return function () {};
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, _UserEndpoint_, _Notify_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _UserEndpoint_, _Notify_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         UserEndpoint = _UserEndpoint_;

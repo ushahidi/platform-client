@@ -7,7 +7,7 @@ function ActivityTimeChart() {
             filters: '='
         },
         controller: ActivityTimeChartController,
-        templateUrl: 'templates/main/activity/time-chart.html'
+        template: require('./time-chart.html')
     };
 }
 

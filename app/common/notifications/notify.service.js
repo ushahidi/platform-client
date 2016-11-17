@@ -1,6 +1,7 @@
 module.exports = Notify;
 
 var scope;
+var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
 Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
 function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
@@ -36,7 +37,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function errorsPretranslated(errorTexts) {
         var scope = getScope();
         scope.errors = errorTexts;
-        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope, false);
+        SliderService.openTemplate(require('./api-errors.html'), 'warning', 'error', scope, false);
     }
 
     function errors(errorTexts, translateValues) {
@@ -44,7 +45,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         $translate(errorTexts, translateValues).then(function (errors) {
             scope.errors = errors;
-            SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope, false);
+            SliderService.openTemplate(require('./api-errors.html'), 'warning', 'error', scope, false);
         });
     }
 
@@ -56,7 +57,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             return;
         }
 
-        SliderService.openUrl('templates/common/notifications/api-errors.html', 'warning', 'error', scope, false);
+        SliderService.openTemplate(require('./api-errors.html'), 'warning', 'error', scope, false);
     }
 
     function success(successText, translateValues) {
@@ -145,7 +146,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                     '<p>{{ confirmText }}</p>' +
                     '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
                     '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
-                    '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use></svg>' +
+                    '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
                     '    <span translate="app.delete">Delete</span>' +
                     '    </button>',
                 false, false, scope, false, false);
@@ -163,7 +164,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 '<div class="form-field">' +
                 '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
                 '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
-                '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use></svg>' +
+                '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
                 '    <span translate="app.delete">Delete</span>' +
                 '    </button>' +
                 '</div>', confirmText, false, scope, false, false);
@@ -180,7 +181,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         function showSlider(message) {
             scope.message = message;
-            SliderService.openUrl('templates/common/notifications/limit.html', 'warning', 'error', scope, true, false);
+            SliderService.openTemplate(require('./limit.html'), 'warning', 'error', scope, true, false);
         }
     }
 

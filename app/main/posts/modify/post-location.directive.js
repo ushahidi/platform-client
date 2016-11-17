@@ -23,7 +23,7 @@ function (
             model: '=',
             required: '='
         },
-        templateUrl: 'templates/main/posts/modify/location.html',
+        template: require('./location.html'),
         controller: [
             '$window',
             '$scope',

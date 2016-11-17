@@ -8,7 +8,7 @@ function FormSelectDirective(FormEndpoint) {
         scope: {},
         require: 'ngModel',
         link: FormSelectLink,
-        templateUrl: 'templates/main/posts/views/filters/filter-form.html'
+        template: require('./filter-form.html')
     };
 
     function FormSelectLink(scope, element, attrs, ngModel) {

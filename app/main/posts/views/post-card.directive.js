@@ -11,7 +11,7 @@ function PostCardDirective(FormEndpoint) {
             selectedPosts: '=',
             shortContent: '@'
         },
-        templateUrl: 'templates/main/posts/views/card.html',
+        template: require('./card.html'),
         link: function ($scope) {
             activate();
 

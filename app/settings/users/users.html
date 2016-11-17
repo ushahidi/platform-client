@@ -11,7 +11,7 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -23,7 +23,7 @@
             <div class="fab">
                 <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
                     <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
                     <span class="hidden" translate>user.add_user</span>
                 </a>
@@ -34,7 +34,7 @@
             <div class="button-group" ng-show="todo">
                 <button type="button">
                     <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#external-link"></use>
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#external-link"></use>
                     </svg>
                     <span class="button-label" translate>nav.export</span>
                 </button>
@@ -56,7 +56,7 @@
 
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <img class="avatar" src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
+                            <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
                         </div>
 
                         <h2 class="listing-item-title"><a ng-href="/settings/users/{{user.id}}">{{user.realname}}</a></h2>
@@ -70,7 +70,7 @@
                                 user.change_role
                             </span>
                             <svg class="iconic chevron">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                             </svg>
                         </legend>
                         <div class="dropdown-menu init" dropdown-menu>
@@ -84,7 +84,7 @@
                     </fieldset>
                     <button type="button" class="button-destructive" ng-disabled="!selectedUsers.length" ng-click="deleteUsers()">
                         <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                         </svg>
                         <span class="button-label hidden">nav.delete</span>
                     </button>

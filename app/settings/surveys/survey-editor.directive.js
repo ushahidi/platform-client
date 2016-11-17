@@ -8,7 +8,7 @@ function SurveyEditor() {
             surveyId: '='
         },
         controller: SurveyEditorController,
-        templateUrl: 'templates/settings/surveys/survey-editor.html'
+        template: require('./survey-editor.html')
     };
 }
 

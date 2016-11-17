@@ -6,7 +6,7 @@ function ShareMenuDirective() {
         restrict: 'E',
         replace: true,
         controller: ShareMenuController,
-        templateUrl: 'templates/main/posts/views/share/share-menu.html'
+        template: require('./share-menu.html')
     };
 }
 

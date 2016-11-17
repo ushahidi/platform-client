@@ -9,7 +9,7 @@ function DateSelectDirective() {
             dateAfterModel: '='
         },
         controller: DateSelectController,
-        templateUrl: 'templates/main/posts/views/filters/filter-date.html'
+        template: require('./filter-date.html')
     };
 }
 

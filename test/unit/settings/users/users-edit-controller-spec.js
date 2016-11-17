@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting users edit controller', function () {
 
     var $rootScope,
@@ -9,20 +7,15 @@ describe('setting users edit controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.controller('settingUsersEditController', require(ROOT_PATH + 'app/settings/users/edit.controller.js'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.controller('settingUsersEditController', require('app/settings/users/edit.controller.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_, _Notify_, _Session_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_, _Session_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;

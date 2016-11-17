@@ -26,7 +26,7 @@ function ($timeout) {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/common/directives/filter-system/filter-searchbar.html',
+        template: require('./filter-searchbar.html'),
         scope: {
             model: '=',
             placeholderEntity: '='

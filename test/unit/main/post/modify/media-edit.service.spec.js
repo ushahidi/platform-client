@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('Media Edit Service', function () {
 
     var MediaEditService,
@@ -10,15 +8,11 @@ describe('Media Edit Service', function () {
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
-        testApp.service('MediaEditService', require(ROOT_PATH + 'app/main/posts/modify/media-edit.service.js'))
+        var testApp = makeTestApp();
+        testApp.service('MediaEditService', require('app/main/posts/modify/media-edit.service.js'))
         .value('$filter', function () {
             return function () {};
         });
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config.js')(testApp);
 
         angular.mock.module('testApp');
     });

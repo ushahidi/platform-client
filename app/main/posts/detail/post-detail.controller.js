@@ -201,13 +201,14 @@ function (
     geojson.$promise.then(function (data) {
         $scope.geojson = {
             data: data,
-            onEachFeature: function (feature, layer) {
+            /*onEachFeature: function (feature, layer) {
                 var key = feature.properties.attribute_key;
 
                 layer.bindPopup(
                     key
                 );
-            }
+            },*/
+            pointToLayer: Maps.pointToLayer
         };
     });
 

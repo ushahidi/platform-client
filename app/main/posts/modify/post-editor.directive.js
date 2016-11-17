@@ -11,7 +11,7 @@ function PostEditor() {
             form: '=',
             postMode: '='
         },
-        templateUrl: 'templates/main/posts/modify/post-editor.html',
+        template: require('./post-editor.html'),
         controller: PostEditorController
     };
 }

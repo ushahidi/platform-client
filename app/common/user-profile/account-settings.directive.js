@@ -12,7 +12,7 @@ function (
         replace: true,
         scope: {
         },
-        templateUrl: 'templates/common/user-profile/account_settings.html',
+        template: require('./account_settings.html'),
         link: function (scope) {
             scope.user = UserEndpoint.getFresh({id: 'me'});
 

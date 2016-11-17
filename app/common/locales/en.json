@@ -996,7 +996,7 @@
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
         },
         "video" : {
-            "incorrect_url" : "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format.",
+            "incorrect_url" : "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
         },
         "form" : {
             "add_to_survey" : "Add to survey",

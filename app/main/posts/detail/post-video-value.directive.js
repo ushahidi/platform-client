@@ -9,7 +9,7 @@ function PostVideoValue() {
             videoUrl: '=',
             label: '@'
         },
-        templateUrl: 'templates/main/posts/detail/post-video-value.html',
+        template: require('./post-video-value.html'),
         controller: PostVideoValueController
     };
 }
