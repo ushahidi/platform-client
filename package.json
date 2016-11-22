@@ -103,6 +103,7 @@
     "nvd3": "^1.8.4",
     "selection-model": "jtrussell/angular-selection-model.git",
     "underscore": "^1.7.0",
+    "leaflet-routing-machine": "^3.2.4",
     "ushahidi-platform-pattern-library": "3.6.2"
   },
   "engines": {

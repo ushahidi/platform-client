@@ -230,6 +230,8 @@ function (
             this.clearOldMarkers()
                 .then(_.partial(this.setGeojsonLayer, posts))
                 .then(this.addNewMarkers)
+                .then(this.addNewRegions)
+                .then(this.addNewRoutes)
                 ;
         },
         setGeojsonLayer: function (posts) {
@@ -292,6 +294,34 @@ function (
                     }
                 });
             }, this));
+        },
+        addNewRegions: function () {
+            this.map().then(function (map) {
+                var CircleRegion = null;
+                CircleRegion = L.circle([25, 125], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 2,
+                    radius: 5000
+                }).addTo(map);
+            });
+        },
+        addNewRoutes: function () {
+            this.map().then(function (map) {
+                var routingCtrl = null;
+                routingCtrl = L.Routing.control({
+                    waypoints: [
+                    // Where can I get points?
+                        L.latLng(25.05, 121.53),
+                        L.latLng(25.05, 121.61)
+                        //L.latLng(25.05, 121.53)
+                    ],
+                    createMarker: function () {
+                        return null;
+                    }
+                }).addTo(map);
+                routingCtrl.hide();
+            });
         }
     };
 
