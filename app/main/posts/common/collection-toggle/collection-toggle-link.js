@@ -17,6 +17,6 @@ function (
                 CollectionsService.showAddToCollection([$scope.post]);
             };
         },
-        templateUrl: 'templates/main/posts/common/collection-toggle/collection-toggle-link.html'
+        template: require('./collection-toggle-link.html')
     };
 }];

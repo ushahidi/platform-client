@@ -11,7 +11,7 @@ function CollectionListing() {
             'posts': '='
         },
         controller: CollectionListingController,
-        templateUrl: 'templates/main/posts/collections/listing.html'
+        template: require('./listing.html')
     };
 }
 

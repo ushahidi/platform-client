@@ -6,7 +6,7 @@ function RegisterDirective() {
         restrict: 'E',
         scope: {},
         controller: RegisterController,
-        templateUrl: 'templates/common/auth/register.html'
+        template: require('./register.html')
     };
 }
 RegisterController.$inject = [

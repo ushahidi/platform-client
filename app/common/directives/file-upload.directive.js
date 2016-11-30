@@ -3,7 +3,7 @@ module.exports = FileUpload;
 function FileUpload() {
     return {
         restrict: 'E',
-        templateUrl: 'templates/common/directives/file-upload.html',
+        template: require('./file-upload.html'),
         replace: true,
         scope: {
             container: '='

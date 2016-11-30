@@ -21,7 +21,7 @@ function (
         scope: {
             currentUser: '='
         },
-        templateUrl: 'templates/common/directives/mode-bar/mode-bar.html',
+        template: require('./mode-bar.html'),
         link: function ($scope, $element, $attrs) {
             $scope.baseUrl = 'views/';
             $scope.activeMode = 'map';
@@ -64,7 +64,7 @@ function (
 
             // Show support links
             function viewSupportLinks() {
-                ModalService.openUrl('templates/common/directives/mode-bar/support-links.html', '', false, false, true, true);
+                ModalService.openTemplate(require('./support-links.html'), '', false, false, true, true);
             }
 
             // Add 'click' handler to toggle trigger

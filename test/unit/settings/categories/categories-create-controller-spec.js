@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('setting categories create controller', function () {
 
     var $rootScope,
@@ -8,22 +6,17 @@ describe('setting categories create controller', function () {
         $controller;
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.controller('settingCategoriesCreateController', require(ROOT_PATH + 'app/settings/categories/create.controller.js'))
+        testApp.controller('settingCategoriesCreateController', require('app/settings/categories/create.controller.js'))
 
         ;
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, _$controller_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;

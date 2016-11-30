@@ -16,7 +16,7 @@ function ImportNotify(_, $q, $rootScope, $translate, SliderService, ModalService
         showSlider();
 
         function showSlider() {
-            SliderService.openUrl('templates/settings/data-import/import-complete.html', 'thumb-up', 'confirmation', scope, false, false);
+            SliderService.openTemplate(require('./import-complete.html'), 'thumb-up', 'confirmation', scope, false, false);
         }
     }
 

@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('embed only directive', function () {
 
     var $rootScope,
@@ -11,20 +9,12 @@ describe('embed only directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
+        var testApp = makeTestApp();
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
-
-        testApp.directive('embedOnly', require(ROOT_PATH + 'app/common/directives/embed-only.directive'));
-
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
+        testApp.directive('embedOnly', require('app/common/directives/embed-only.directive'));
 
         angular.mock.module('testApp');
     });
-
-    beforeEach(angular.mock.module('client-templates'));
 
     beforeEach(inject(function (_$rootScope_, _$compile_, _Notify_, _GlobalFilter_, _$window_) {
         $rootScope = _$rootScope_;

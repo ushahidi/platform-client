@@ -1,9 +1,9 @@
 <div class="fab" data-message="add-post">
     <button type="button" class="button-alpha button-fab" data-toggle="fab-options" ng-click="toggleFab()"  ng-class="{ 'active': fabToggle }" ng-disabled="disabled">
         <svg class="iconic">
-            <use xlink:href="../../img/iconic-sprite.svg#plus"></use>
+            <use xlink:href="/img/iconic-sprite.svg#plus"></use>
             <foreignObject>
-                <img class="icon" src="../../img/icons/png/plus-2x.png">
+                <img class="icon" src="/img/icons/png/plus-2x.png">
             </foreignObject>
         </svg>
         <span class="hidden">Add</span>
@@ -14,7 +14,7 @@
             <a ng-href="/posts/create/{{form.id}}">
                 <span class="fab-action-type" style="background-color: {{form.color}};">
                     <svg class="iconic">
-                        <use xlink:href="../../img/iconic-sprite.svg#file"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#file"></use>
                     </svg>
                 </span>
                 <span class="bug">{{form.name}}</span>

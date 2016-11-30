@@ -9,7 +9,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/main/posts/savedsearches/savedsearch-create.html',
+        template: require('./savedsearch-create.html'),
         link: function ($scope, $element, $attrs) {
 
             // Init an empty saved search

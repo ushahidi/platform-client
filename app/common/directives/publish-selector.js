@@ -63,7 +63,7 @@ function (
         }];
     return {
         restrict: 'E',
-        templateUrl: 'templates/common/directives/publish-selector/publish-selector.html',
+        template: require('./publish-selector.html'),
         scope: {
             post: '='
         },

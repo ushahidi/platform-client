@@ -17,7 +17,7 @@ function (
         scope: {
             post: '='
         },
-        templateUrl: 'templates/main/posts/detail/add-form.html',
+        template: require('./add-form.html'),
         link: function ($scope) {
             $translate('post.unstructured.add_survey.info', {source: $scope.post.source})
             .then(function (message) {

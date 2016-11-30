@@ -2,10 +2,10 @@
   <strong>Your CSV import</strong> is complete. {{processed}} records imported, {{errors}} records failed.
 </p>
 <p translate-values="{from_name: form_name, filename: filename}" translate="notify.data_import.csv_import_success_info">
-  The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.
+  The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a ng-href="/views/list">{{form_name}}</a> survey.
 </p>
 <a class="button button-alpha" ng-click="close()" ng-href="/collections/{{collectionId}}" translate="notify.data_import.see_imported_posts">See imported posts</a>
-<a ng-click="close()" href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another_csv">Import another CSV file</a>
+<a ng-click="close()" ng-href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another_csv">Import another CSV file</a>
 <button class="button-flat message-trigger" ng-click="close()" translate="message.button.dismiss">
     Dismiss
 </button>

@@ -8,7 +8,7 @@ function PostVideo() {
         scope: {
             videoUrl: '='
         },
-        templateUrl: 'templates/main/posts/modify/video.html',
+        template: require('./video.html'),
         controller: PostVideoController
     };
 }

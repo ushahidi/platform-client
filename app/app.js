@@ -1,9 +1,5 @@
 require('angular');
 require('angular-route');
-require('leaflet');
-require('leaflet.markercluster');
-require('leaflet.locatecontrol/src/L.Control.Locate');
-require('angular-leaflet-directive');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
@@ -26,6 +22,11 @@ require('./common/common-module.js');
 require('./main/main-module.js');
 require('./settings/settings.module.js');
 
+// Load platform-pattern-library CSS
+require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
+require('ushahidi-platform-pattern-library/assets/css/style.min.css');
+require('../sass/vendor.scss');
+
 // Stub ngRaven module incase its not configured
 angular.module('ngRaven', []);
 
@@ -33,8 +34,8 @@ angular.module('ngRaven', []);
 window.ushahidi = window.ushahidi || {};
 
 // this 'environment variable' will be set within the gulpfile
-var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || process.env.BACKEND_URL || 'http://ushahidi-backend').replace(/\/$/, ''),
-    intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || process.env.INTERCOM_APP_ID || '',
+var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
+    intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
         'posts',
@@ -66,7 +67,6 @@ angular.module('app',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
         'angular-datepicker',
-        'leaflet-directive',
         'angular.filter',
         'ng-showdown',
         'ngGeolocation',
@@ -104,7 +104,11 @@ angular.module('app',
         return require('URIjs/src/URI.js');
     })
     .factory('Leaflet', function () {
-        return window.L;
+        var L = require('leaflet');
+        // Load leaflet plugins here too
+        require('imports?L=leaflet!leaflet.markercluster');
+        require('imports?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
+        return L;
     })
     .factory('moment', function () {
         return require('moment');

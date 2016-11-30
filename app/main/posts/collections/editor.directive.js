@@ -9,7 +9,7 @@ function CollectionEditor() {
             posts: '='
         },
         controller: CollectionEditorController,
-        templateUrl: 'templates/main/posts/collections/editor.html'
+        template: require('./editor.html')
     };
 }
 

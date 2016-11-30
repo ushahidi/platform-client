@@ -15,6 +15,4 @@ RUN npm install
 
 COPY docker/build.run.sh /build.run.sh
 
-VOLUME /var/app/server/www
-
 ENTRYPOINT [ "/bin/bash", "/build.run.sh" ]

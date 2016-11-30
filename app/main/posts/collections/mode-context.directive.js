@@ -6,7 +6,7 @@ function CollectionModeContext() {
     return {
         restrict: 'E',
         controller: CollectionModeContextController,
-        templateUrl: 'templates/main/posts/collections/mode-context.html'
+        template: require('./mode-context.html')
     };
 }
 

@@ -7,11 +7,11 @@
 //
 // these files are imported via the 'node-modules include path' in gulpfile.js
 //
-@import "leaflet/dist/leaflet";
-@import "leaflet.markercluster/dist/MarkerCluster";
-@import "leaflet.markercluster/dist/MarkerCluster.Default";
-@import "leaflet.locatecontrol/src/L.Control.Locate";
-@import "nvd3/build/nv.d3";
+@import "~leaflet/dist/leaflet";
+@import "~leaflet.markercluster/dist/MarkerCluster";
+@import "~leaflet.markercluster/dist/MarkerCluster.Default";
+@import "~leaflet.locatecontrol/src/L.Control.Locate";
+@import "~nvd3/build/nv.d3";
 
 // Custom overrides
 @import "overrides/leaflet";

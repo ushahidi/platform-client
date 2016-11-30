@@ -3,11 +3,13 @@ module.exports = [
     '$translate',
     'ConfigEndpoint',
     'Languages',
+    'moment',
 function (
     $rootScope,
     $translate,
     ConfigEndpoint,
-    Languages
+    Languages,
+    moment
 ) {
 
     $rootScope.rtlEnabled = false;
@@ -17,7 +19,8 @@ function (
     };
 
     ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
-        var lang = site.language ? site.language : 'en-US';
+        var lang = site.language ? site.language : 'en';
+
         $translate.use(lang).then(function (langKey) {
             if (langKey) {
                 $translate.preferredLanguage(lang);
@@ -31,5 +34,11 @@ function (
                 });
             }
         });
+
+        if (lang !== 'en') {
+            require(['moment/locale/' + lang + '.js'], function () {
+                moment.locale(lang);
+            });
+        }
     });
 }];

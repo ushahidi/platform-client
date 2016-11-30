@@ -9,7 +9,7 @@ function FilterBySurveryDirective() {
         },
         replace: true,
         controller: FilterBySurveryController,
-        templateUrl: 'templates/main/posts/views/filter-by-survey.html'
+        template: require('./filter-by-survey.html')
     };
 }
 

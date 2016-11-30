@@ -34,7 +34,7 @@ sync() {
 # Build the client
 build() {
   npm install
-  gulp transifex-download
+  # gulp transifex-download
   gulp build
 }
 
@@ -53,7 +53,7 @@ bundle() {
   check_vols_out
   local version=${GITHUB_VERSION:-${CI_BRANCH:-v0.0.0}}
   cp ./server/rewrite.htaccess ./server/www/
-  gulp release --version-suffix=${version} --dest-dir=/vols/out/release
+  gulp tar --version-suffix=${version} --dest-dir=/vols/out/release
 }
 
 watch() {

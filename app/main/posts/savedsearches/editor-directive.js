@@ -22,7 +22,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/main/posts/savedsearches/savedsearch-editor.html',
+        template: require('./savedsearch-editor.html'),
         scope: {
             savedSearch: '='
         },
