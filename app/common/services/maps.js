@@ -135,7 +135,7 @@ function (
             return {
                 defaults: {
                     zoomControlPosition: this.getZoomControlPosition(),
-                    scrollWheelZoom: false
+                    scrollWheelZoom: true
                 },
                 center: { // Default to centered on Nairobi
                     lat: -1.2833,
@@ -231,7 +231,8 @@ function (
                 .then(_.partial(this.setGeojsonLayer, posts))
                 .then(this.addNewMarkers)
                 //.then(this.addNewRegions)
-                .then(this.addNewRoutes)
+                //.then(this.addNewRoutes)
+                .then(this.addLocateBottom)
                 ;
         },
         setGeojsonLayer: function (posts) {
@@ -298,15 +299,43 @@ function (
         /*addNewRegions: function () {
             this.map().then(function (map) {
                 var CircleRegion = null;
-                CircleRegion = L.circle([25, 125], {
-                    color: 'red',
-                    fillColor: '#f03',
-                    fillOpacity: 2,
-                    radius: 5000
-                }).addTo(map);
+                CircleRegion = L.circle(
+                    [25, 121.5],
+                    10000,
+                    {
+                        color: 'red',
+                        fillColor: '#f03',
+                        fillOpacity: 0.5
+                    }
+                ).addTo(map);
             });
         },*/
-        addNewRoutes: function () {
+        addLocateBottom: function () {
+            this.map().then(function (map) {
+                var userlocate = L.control.locate({
+                    strings: {
+                        title: 'Show me where I am (addLocateBottom).'
+                    },
+                    position: 'bottomleft',
+                    keepCurrentZoomLevel: true,
+                    //flyTo: true,
+                    circleStyle: {
+                        color: '#FF0000',
+                        fillColor: '#FF0000'
+                    },
+                    markerStyle: {
+                        color: '#FF0000',
+                        fillColor: '#FF0000'
+                    }
+                }).addTo(map);
+                userlocate.start();
+                //userlocate.stop();
+                userlocate = L.control.locate({
+                    keepCurrentZoomLevel: true
+                });
+            });
+        }
+        /*addNewRoutes: function () {
             this.map().then(function (map) {
                 var routingCtrl = null;
                 routingCtrl = L.Routing.control({
@@ -319,7 +348,7 @@ function (
                 }).addTo(map);
                 routingCtrl.hide();
             });
-        }
+        }*/
     };
 
     Util.bindAllFunctionsToSelf(Map);
