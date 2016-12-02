@@ -50,28 +50,7 @@
                     </div>
 
                     <color-picker color-container="category"></color-picker>
-
-                    <fieldset class="custom-fieldset init" dropdown auto-close="outsideClick">
-                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
-                            <span class="legend-label" translate>
-                                app.roles
-                            </span>
-                            <svg class="iconic chevron">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                            </svg>
-                        </legend>
-                        <div class="dropdown-menu init" dropdown-menu>
-                            <div class="form-field checkbox" ng-repeat="role in roles">
-                                <input type="checkbox" id="{{role.id}}"
-                                    checklist-model="category.role"
-                                    checklist-value="role.name"
-                                >
-                                <label for="{{role.id}}">
-                                    {{role.display_name}}
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
+                    <role-selector model="category" title="'Who can see and add to this category'"></role-selector>
                 </div>
 
                 <div class="form-sheet" ng-show="category.id">
