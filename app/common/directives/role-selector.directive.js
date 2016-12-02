@@ -16,7 +16,17 @@ function RoleSelectorDirective() {
 RoleSelectorController.$inject = ['$scope', 'RoleEndpoint'];
 
 function RoleSelectorController($scope, RoleEndpoint) {
+    $scope.addAllRoles = addAllRoles;
+
+    // getting available roles from api
     RoleEndpoint.query().$promise.then(function (roles) {
         $scope.roles = roles;
     });
+
+    // adding all available roles to model if user clicks 'Everyone'
+    function addAllRoles() {
+        $scope.model.role = $scope.roles.map(function (role) {
+            return role.name;
+        });
+    }
 }
