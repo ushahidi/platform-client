@@ -16,8 +16,8 @@ function RoleSelectorDirective() {
 RoleSelectorController.$inject = ['$scope', 'RoleEndpoint'];
 
 function RoleSelectorController($scope, RoleEndpoint) {
-    $scope.addAllRoles = addAllRoles;
-    $scope.extractRoleNames = extractRoleNames;
+    $scope.setEveryone = setEveryone;
+    $scope.everyone = ($scope.model.role === []) ? true : false;
 
     activate();
     function activate() {
@@ -28,14 +28,7 @@ function RoleSelectorController($scope, RoleEndpoint) {
     }
 
     // adding all available roles to model if user clicks 'Everyone'
-    function addAllRoles() {
-        $scope.model.role = extractRoleNames();
-    }
-
-    //extracting role-names
-    function extractRoleNames() {
-        return $scope.roles.map(function (role) {
-            return role.name;
-        });
+    function setEveryone() {
+        $scope.model.role = [];
     }
 }
