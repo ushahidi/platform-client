@@ -28,8 +28,7 @@ describe('role-selector directive', function () {
         $scope.$digest();
         isolateScope = element.isolateScope();
 
-        spyOn(isolateScope, 'addAllRoles').and.callThrough();
-        spyOn(isolateScope, 'extractRoleNames').and.callThrough();
+        spyOn(isolateScope, 'setEveryone').and.callThrough();
     }));
 
     it('should add the role-selector-template', function () {
@@ -45,7 +44,7 @@ describe('role-selector directive', function () {
         var change = new Event('click');
         var elementToClick = element[0].querySelector('#add_everyone');
         elementToClick.dispatchEvent(change);
-        expect(isolateScope.addAllRoles).toHaveBeenCalled();
-        expect(isolateScope.model.role).toEqual(isolateScope.extractRoleNames());
+        expect(isolateScope.setEveryone).toHaveBeenCalled();
+        expect(isolateScope.model.role).toEqual([]);
     });
 });
