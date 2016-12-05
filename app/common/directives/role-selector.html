@@ -4,7 +4,6 @@
         <div 
             class="form-field radio icon-input" 
             ng-class="{ 'checked': model.everyone_can_create }"
-            ng-click="addAllRoles()"    
         >
             <label for="add_everyone">
                 <svg class="iconic">
@@ -12,11 +11,12 @@
                 </svg>
                 <input 
                     name="add"
-                    id="add_everyone" 
+                    id="add_everyone"
                     ng-value="true" 
                     checked="" 
                     type="radio"
                     ng-model="model.everyone_can_create"
+                    ng-click="addAllRoles()"
                 >
                 <span class="label" translate="nav.everyone">Everyone</span>
             </label>
