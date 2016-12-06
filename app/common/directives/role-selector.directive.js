@@ -17,7 +17,7 @@ RoleSelectorController.$inject = ['$scope', 'RoleEndpoint'];
 
 function RoleSelectorController($scope, RoleEndpoint) {
     $scope.setEveryone = setEveryone;
-    $scope.everyone = ($scope.model.role === []) ? true : false;
+
 
     activate();
     function activate() {
@@ -25,6 +25,9 @@ function RoleSelectorController($scope, RoleEndpoint) {
         RoleEndpoint.query().$promise.then(function (roles) {
             $scope.roles = roles;
         });
+
+        // helper-variable to render yellow checkbox
+        $scope.everyone = ($scope.model.role === []) ? true : false;
     }
 
     // adding all available roles to model if user clicks 'Everyone'
