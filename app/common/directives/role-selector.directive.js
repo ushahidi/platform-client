@@ -13,9 +13,9 @@ function RoleSelectorDirective() {
         template: require('./role-selector.html')
     };
 }
-RoleSelectorController.$inject = ['$scope', 'RoleEndpoint'];
+RoleSelectorController.$inject = ['$scope', 'RoleEndpoint', '$translate'];
 
-function RoleSelectorController($scope, RoleEndpoint) {
+function RoleSelectorController($scope, RoleEndpoint, $translate) {
     $scope.setEveryone = setEveryone;
 
 
@@ -28,6 +28,10 @@ function RoleSelectorController($scope, RoleEndpoint) {
 
         // helper-variable to render yellow checkbox
         $scope.everyone = ($scope.model.role === []) ? true : false;
+
+        //translating title
+        $scope.title = $translate.instant($scope.title);
+
     }
 
     // adding all available roles to model if user clicks 'Everyone'
