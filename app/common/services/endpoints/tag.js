@@ -41,7 +41,9 @@ function (
 
     TagEndpoint.getFresh = function (params) {
         cache.remove(Util.apiUrl('/tags/' + params.id));
-        return TagEndpoint.get(params);
+        return TagEndpoint.get(params).$promise.then(function (result) {
+            return result;
+        });
     };
 
     TagEndpoint.queryFresh = function () {
