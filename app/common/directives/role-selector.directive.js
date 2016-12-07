@@ -18,8 +18,8 @@ RoleSelectorController.$inject = ['$scope', 'RoleEndpoint', '$translate'];
 function RoleSelectorController($scope, RoleEndpoint, $translate) {
     $scope.setEveryone = setEveryone;
 
-
     activate();
+
     function activate() {
         // getting available roles from api
         RoleEndpoint.query().$promise.then(function (roles) {
@@ -27,7 +27,7 @@ function RoleSelectorController($scope, RoleEndpoint, $translate) {
         });
 
         // helper-variable to render yellow checkbox
-        $scope.everyone = ($scope.model.role === []) ? true : false;
+        $scope.everyone = ($scope.model === []) ? true : false;
 
         //translating title
         $scope.title = $translate.instant($scope.title);
@@ -36,6 +36,6 @@ function RoleSelectorController($scope, RoleEndpoint, $translate) {
 
     // adding all available roles to model if user clicks 'Everyone'
     function setEveryone() {
-        $scope.model.role = [];
+        $scope.model = [];
     }
 }
