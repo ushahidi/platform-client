@@ -3,7 +3,7 @@
         <legend>{{title}}</legend>
         <div 
             class="form-field radio icon-input" 
-            ng-class="{ 'checked': everyone }"
+            ng-class="{ 'checked': !model.role.length }"
         >
             <label for="add_everyone">
                 <svg class="iconic">
@@ -24,7 +24,7 @@
 
         <div 
             class="form-field radio icon-input"
-            ng-class="{ 'checked': !everyone }"
+            ng-class="{ 'checked': model.role.length }"
         >
             <label for="add_roles">
                 <svg class="iconic">
@@ -52,7 +52,7 @@
                     <label>
                     <input 
                         type="checkbox" 
-                        checklist-model="model" 
+                        checklist-model="model.role" 
                         checklist-value="role.name"
                     >
                     {{role.display_name}}

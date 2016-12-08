@@ -26,9 +26,6 @@ function RoleSelectorController($scope, RoleEndpoint, $translate) {
             $scope.roles = roles;
         });
 
-        // helper-variable to render yellow checkbox
-        $scope.everyone = ($scope.model === []) ? true : false;
-
         //translating title
         $scope.title = $translate.instant($scope.title);
 
@@ -36,6 +33,6 @@ function RoleSelectorController($scope, RoleEndpoint, $translate) {
 
     // adding all available roles to model if user clicks 'Everyone'
     function setEveryone() {
-        $scope.model = [];
+        $scope.model.role = [];
     }
 }
