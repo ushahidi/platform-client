@@ -15,7 +15,7 @@ function (
             // Init an empty saved search
             $scope.savedSearch = {
                 view : 'map',
-                visibile_to : []
+                role : []
             };
 
             // Compare current filters to default filters
