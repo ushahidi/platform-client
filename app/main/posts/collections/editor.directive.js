@@ -64,7 +64,7 @@ function CollectionEditorController(
     function setBasicCollection() {
         $scope.cpyCollection = {};
         $scope.cpyCollection.view = 'map';
-        $scope.cpyCollection.visible_to = [];
+        $scope.cpyCollection.role = [];
     }
 
     function featuredEnabled() {
@@ -78,9 +78,6 @@ function CollectionEditorController(
     function saveCollection(collection) {
         // Are we creating or updating?
         var persist = collection.id ? CollectionEndpoint.update : CollectionEndpoint.save;
-
-        // Strip out any null values from visible_to
-        collection.visible_to = _.without(_.values(collection.visible_to), null);
 
         // Collection endpoint uses collectionId so make sure thats set
         collection.collectionId = collection.id;
