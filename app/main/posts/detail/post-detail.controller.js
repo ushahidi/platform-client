@@ -44,8 +44,9 @@ function (
     $scope.post_task = {};
     $scope.hasPermission = $rootScope.hasPermission;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
-
     $scope.mapDataLoaded = false;
+    $scope.form_attributes = [];
+
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
@@ -75,11 +76,8 @@ function (
     if ($scope.post.user && $scope.post.user.id) {
         $scope.post.user = UserEndpoint.get({id: $scope.post.user.id});
     }
-
     // Load the post form
     if ($scope.post.form && $scope.post.form.id) {
-        $scope.form_attributes = [];
-
         $q.all([
             FormEndpoint.get({id: $scope.post.form.id}),
             FormStageEndpoint.query({formId:  $scope.post.form.id}).$promise,
