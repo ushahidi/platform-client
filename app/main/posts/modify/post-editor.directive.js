@@ -95,6 +95,7 @@ function PostEditorController(
                 Notify.error('post.valid.invalid_state');
             }
         });
+
         $scope.medias = {};
     }
 
@@ -144,7 +145,6 @@ function PostEditorController(
                         // Prepopulate location fields from message location
                         if ($scope.post.values.message_location) {
                             $scope.post.values[attr.key] = angular.copy($scope.post.values.message_location);
-                            delete $scope.post.values.message_location;
                         } else {
                             $scope.post.values[attr.key] = [null];
                         }
@@ -230,6 +230,9 @@ function PostEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
+            if ('message_location' in $scope.post.values) {
+                $scope.post.values.message_location = [];
+            }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             var request;
             if (post.id) {

@@ -69,10 +69,6 @@ describe('post editor directive', function () {
         it('should load the associated form stages', function () {
             expect(isolateScope.tasks.length).toEqual(2);
         });
-        it('should load form-attributes', function () {
-            // number 9 below comes from the mockdata for post and form-attributes
-            expect(Object.keys($scope.post.values).length).toEqual(9);
-        });
     });
     describe('test directive functions', function () {
         it('should save a post', function () {
@@ -93,7 +89,6 @@ describe('post editor directive', function () {
             isolateScope.savePost();
 
             $rootScope.$apply();
-
             expect(Notify.errors).toHaveBeenCalled();
         });
     });
