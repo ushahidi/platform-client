@@ -144,6 +144,7 @@ function PostEditorController(
                         // Prepopulate location fields from message location
                         if ($scope.post.values.message_location) {
                             $scope.post.values[attr.key] = angular.copy($scope.post.values.message_location);
+                            delete $scope.post.values.message_location;
                         } else {
                             $scope.post.values[attr.key] = [null];
                         }
