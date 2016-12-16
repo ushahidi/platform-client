@@ -21,13 +21,11 @@ window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
-require('leaflet-routing-machine');
 
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
 require('./settings/settings.module.js');
-require('./region/region-module.js');
 
 // Stub ngRaven module incase its not configured
 angular.module('ngRaven', []);
@@ -78,8 +76,7 @@ angular.module('app',
         'ngRaven',
         'ushahidi.common',
         'ushahidi.main',
-        'ushahidi.settings',
-        'ushahidi.region'
+        'ushahidi.settings'
     ])
 
     .constant('CONST', {
