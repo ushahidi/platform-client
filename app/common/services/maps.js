@@ -208,6 +208,28 @@ function (
             this.map().then(function (map) {
                 map.attributionControl.setPrefix(false);
                 map.setMaxBounds([[-90,-360],[90,360]]);
+                //Add User Location Button
+                var userlocate = L.control.locate({
+                    strings: {
+                        title: 'Show me where I am.'
+                    },
+                    position: 'bottomleft',
+                    keepCurrentZoomLevel: true,
+                    //flyTo: true,
+                    circleStyle: {
+                        color: '#3d3737',
+                        fillColor: '#3d3737'
+                    },
+                    markerStyle: {
+                        color: '#3d3737',
+                        fillColor: '#3d3737'
+                    }
+                }).addTo(map);
+                //userlocate.start();
+                //userlocate.stop();
+                userlocate = L.control.locate({
+                    keepCurrentZoomLevel: true //keep the same zoom level
+                });
             });
 
             return this;
@@ -230,9 +252,6 @@ function (
             this.clearOldMarkers()
                 .then(_.partial(this.setGeojsonLayer, posts))
                 .then(this.addNewMarkers)
-                //.then(this.addNewRegions)
-                //.then(this.addNewRoutes)
-                .then(this.addLocateBottom)
                 ;
         },
         setGeojsonLayer: function (posts) {
@@ -295,60 +314,7 @@ function (
                     }
                 });
             }, this));
-        },
-        /*addNewRegions: function () {
-            this.map().then(function (map) {
-                var CircleRegion = null;
-                CircleRegion = L.circle(
-                    [25, 121.5],
-                    10000,
-                    {
-                        color: 'red',
-                        fillColor: '#f03',
-                        fillOpacity: 0.5
-                    }
-                ).addTo(map);
-            });
-        },*/
-        addLocateBottom: function () {
-            this.map().then(function (map) {
-                var userlocate = L.control.locate({
-                    strings: {
-                        title: 'Show me where I am (addLocateBottom).'
-                    },
-                    position: 'bottomleft',
-                    keepCurrentZoomLevel: true,
-                    //flyTo: true,
-                    circleStyle: {
-                        color: '#FF0000',
-                        fillColor: '#FF0000'
-                    },
-                    markerStyle: {
-                        color: '#FF0000',
-                        fillColor: '#FF0000'
-                    }
-                }).addTo(map);
-                userlocate.start();
-                //userlocate.stop();
-                userlocate = L.control.locate({
-                    keepCurrentZoomLevel: true
-                });
-            });
         }
-        /*addNewRoutes: function () {
-            this.map().then(function (map) {
-                var routingCtrl = null;
-                routingCtrl = L.Routing.control({
-                    waypoints: [
-                    // Where can I get points?
-                        L.latLng(25.05, 121.53),
-                        L.latLng(25.05, 121.61)
-                        //L.latLng(25.05, 121.53)
-                    ]
-                }).addTo(map);
-                routingCtrl.hide();
-            });
-        }*/
     };
 
     Util.bindAllFunctionsToSelf(Map);
