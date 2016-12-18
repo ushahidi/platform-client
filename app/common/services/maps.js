@@ -135,7 +135,7 @@ function (
             return {
                 defaults: {
                     zoomControlPosition: this.getZoomControlPosition(),
-                    scrollWheelZoom: true
+                    scrollWheelZoom: false
                 },
                 center: { // Default to centered on Nairobi
                     lat: -1.2833,
