@@ -95,6 +95,7 @@ function PostEditorController(
                 Notify.error('post.valid.invalid_state');
             }
         });
+
         $scope.medias = {};
     }
 
@@ -229,6 +230,9 @@ function PostEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
+            if ('message_location' in $scope.post.values) {
+                $scope.post.values.message_location = [];
+            }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             var request;
             if (post.id) {
