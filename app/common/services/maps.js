@@ -214,21 +214,24 @@ function (
                         title: 'Show me where I am.'
                     },
                     position: 'bottomleft',
-                    keepCurrentZoomLevel: true,
+                    //keepCurrentZoomLevel: true,
                     //flyTo: true,
                     circleStyle: {
-                        color: '#3d3737',
-                        fillColor: '#3d3737'
+                        color: '#FF0000',
+                        fillColor: '#FF0000'
                     },
                     markerStyle: {
-                        color: '#3d3737',
-                        fillColor: '#3d3737'
+                        color: '#FF0000',
+                        fillColor: '#FF0000'
+                    },
+                    locateOptions: {
+                        maxZoom: 12
                     }
                 }).addTo(map);
                 //userlocate.start();
                 //userlocate.stop();
                 userlocate = L.control.locate({
-                    keepCurrentZoomLevel: true //keep the same zoom level
+                    keepCurrentZoomLevel: false //keep the same zoom level
                 });
             });
 
