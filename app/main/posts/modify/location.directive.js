@@ -23,6 +23,9 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         $scope.searchLocationTerm = '';
         $scope.searchLocation = searchLocation;
         $scope.clear = clear;
+        $scope.showDropdown = false;
+        $scope.showSearchResults = showSearchResults;
+        $scope.hideSearchResults = hideSearchResults;
 
         activate();
 
@@ -53,6 +56,13 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
 
                 // @todo: Should we watch the model and update map?
             });
+        }
+        function showSearchResults() {
+            $scope.showDropdown = true;
+        }
+
+        function hideSearchResults() {
+            $scope.showDropdown = false;
         }
 
         function onMapClick(e) {
