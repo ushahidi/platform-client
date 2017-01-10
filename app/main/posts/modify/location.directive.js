@@ -49,7 +49,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
                 map.on('locationfound', onMapClick);
                 // Add locate control, but only on https
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
-                    L.control.locate({
+                    $scope.currentPositionControl = L.control.locate({
                         follow: true
                     }).addTo(map);
                 }
