@@ -1,7 +1,7 @@
 module.exports = PostLocationDirective;
 
-PostLocationDirective.$inject = ['$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window'];
-function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
+PostLocationDirective.$inject = ['$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window', '$timeout'];
+function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $timeout) {
     return {
         restrict: 'E',
         replace: true,
@@ -61,7 +61,9 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         }
 
         function hideSearchResults() {
-            $scope.showDropdown = false;
+            $timeout(function () {
+                $scope.showDropdown = false;
+            }, 2000);
         }
 
         function onMapClick(e) {
@@ -117,6 +119,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
             updateModelLatLon(location.lat, location.lon);
             updateMarkerPosition(location.lat, location.lon);
             centerMapTo(location.lat, location.lon);
+            $scope.hideSearchResults();
         }
 
         function clear() {

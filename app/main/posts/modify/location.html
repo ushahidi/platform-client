@@ -3,8 +3,14 @@
 
     <div id="{{id}}-map" class="post-location-map" style="height: 265px; width: 100%;"></div>
 
-    <form role="search" class="searchbar" ng-class="{'active' : showDropdown}" data-message="search" >
-        <div class="searchbar-input" style="z-index: 6000 " >   
+    <form 
+        role="search" 
+        class="searchbar" 
+        ng-class="{'active' : showDropdown}" 
+        data-message="search"
+        auto-close="outsideClick"
+    >
+        <div class="searchbar-input">   
             <div class="form-field">
                 <input name="{{name}}" 
                     type="search" 
@@ -13,6 +19,7 @@
                     ng-model="searchLocationTerm" 
                     ng-focus="showSearchResults()" 
                     ng-keyup="showSearchResults()"
+                    ng-blur="hideSearchResults()"
                     ng-disabled="processing" 
                 />
             </div>
@@ -51,7 +58,6 @@
             </div>
         </div>
     </form>
-
     <p translate>location.click_map</p>
 
 </div>
