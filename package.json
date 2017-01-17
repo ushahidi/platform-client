@@ -94,7 +94,7 @@
     "angular-cache": "^4.6.0",
     "angular-datepicker": "alongubkin/angular-datepicker.git",
     "angular-elastic": "^2.5.1",
-    "angular-filter": "^0.5.4",
+    "angular-filter": "^0.5.15",
     "angular-lazy-bootstarp": "rajeshsegu/angular-lazy-bootstrap",
     "angular-local-storage": "^0.5.0",
     "angular-nvd3": "^1.0.9",
