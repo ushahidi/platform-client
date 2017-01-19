@@ -23,6 +23,8 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
         $scope.searchLocationTerm = '';
         $scope.searchLocation = searchLocation;
         $scope.clear = clear;
+
+        // for dropdown
         $scope.showDropdown = false;
         $scope.showSearchResults = showSearchResults;
         $scope.hideSearchResults = hideSearchResults;
@@ -56,15 +58,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
                 // @todo: Should we watch the model and update map?
             });
         }
-        function showSearchResults() {
-            $scope.showDropdown = true;
-        }
 
-        function hideSearchResults() {
-            $timeout(function () {
-                $scope.showDropdown = false;
-            }, 2000);
-        }
 
         function onMapClick(e) {
             var wrappedLatLng = e.latlng.wrap(),
@@ -103,6 +97,23 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
             map.setView([lat, lon], zoom);
         }
 
+        function clear() {
+            $scope.model = null;
+            if (marker) {
+                map.removeLayer(marker);
+                marker = null;
+            }
+        }
+
+        // for dropdown
+        function showSearchResults() {
+            $scope.showDropdown = true;
+        }
+
+        function hideSearchResults() {
+            $scope.showDropdown = false;
+        }
+
         function searchLocation() {
             $scope.processing = true;
             Geocoding.searchAllInfo($scope.searchLocationTerm).then(function (results) {
@@ -115,6 +126,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
                 $scope.searchLocationTerm = '';
             });
         }
+
         function chooseLocation(location) {
             updateModelLatLon(location.lat, location.lon);
             updateMarkerPosition(location.lat, location.lon);
@@ -122,12 +134,5 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
             $scope.hideSearchResults();
         }
 
-        function clear() {
-            $scope.model = null;
-            if (marker) {
-                map.removeLayer(marker);
-                marker = null;
-            }
-        }
     }
 }
