@@ -107,7 +107,7 @@
     "checklist-model": "~0.10.0",
     "d3": "^3.5.17",
     "leaflet": "~1.0.1",
-    "leaflet.locatecontrol": "^0.56.0",
+    "leaflet.locatecontrol": "^0.60.0",
     "leaflet.markercluster": "1.0.0",
     "moment": "^2.13.0",
     "moment-timezone": "^0.5.4",
