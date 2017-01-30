@@ -29,6 +29,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
         $scope.showSearchResults = showSearchResults;
         $scope.hideSearchResults = hideSearchResults;
         $scope.chooseLocation = chooseLocation;
+        $scope.chooseCurrentLocation = chooseCurrentLocation;
         $scope.searchResults = [];
 
         activate();
@@ -134,5 +135,8 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
             $scope.hideSearchResults();
         }
 
+        function chooseCurrentLocation() {
+            $scope.currentPositionControl.start();
+        }
     }
 }
