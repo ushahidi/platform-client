@@ -1,31 +1,26 @@
  
 <div class="location-wrapper">
-
-    <div id="{{id}}-map" class="post-location-map" style="height: 265px; width: 100%;"></div>
-
+    <div id="map" class="map" style="height: 265px; width: 100%;"></div>
     <form 
         role="search" 
         class="searchbar" 
         ng-class="{'active' : showDropdown}" 
-        data-message="search"
-        auto-close="outsideClick"
+        data-message="search"  
     >
-        <div class="searchbar-input">   
+        <div class="searchbar-input"> 
             <div class="form-field">
                 <input name="{{name}}" 
                     type="search" 
                     maxlength="250" 
                     placeholder="{{'location.placeholder' | translate}}" 
                     ng-model="searchLocationTerm" 
+                    ng-disabled="processing" 
                     ng-focus="showSearchResults()" 
                     ng-keyup="showSearchResults()"
-                    ng-blur="hideSearchResults()"
-                    ng-disabled="processing" 
                 />
             </div>
-
-            <div class="searchbar-results dropdown-menu" ng-class="{'active': showDropdown}" >
-                <div class="form-field" >
+            <div class="searchbar-results dropdown-menu" ng-class="{'active': showDropdown}">
+                <div class="form-field">
                     <button class="button-plain" ng-click="searchLocation()" ng-disabled="processing">
                         <svg class="iconic">
                             <use 
@@ -35,7 +30,6 @@
                         </svg>
                         <span class="button-label" translate>location.search</span>
                     </button>
-
                     <button class="button-beta button-plain" ng-click="chooseCurrentLocation()">
                         <svg class="iconic">
                             <use 
@@ -46,7 +40,6 @@
                         <span class="button-label" translate>location.use_current_location</span>
                     </button>
                 </div>
-               
              <div class="tool">
                     <h6 class="tool-heading" translate>location.search_results</h6>
                     <dl class="dropdown-menu-body" ng-repeat="result in searchResults">
@@ -59,5 +52,4 @@
         </div>
     </form>
     <p translate>location.click_map</p>
-
 </div>

@@ -35,7 +35,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
         activate();
 
         function activate() {
-            Maps.createMap(element[0].querySelector('.post-location-map'))
+            Maps.createMap(element[0].querySelector('.map'))
             .then(function (data) {
                 map = data;
 
@@ -137,6 +137,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
 
         function chooseCurrentLocation() {
             $scope.currentPositionControl.start();
+            $scope.hideSearchResults();
         }
     }
 }
