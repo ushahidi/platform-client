@@ -9,13 +9,13 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/main/posts/savedsearches/savedsearch-create.html',
+        template: require('./savedsearch-create.html'),
         link: function ($scope, $element, $attrs) {
 
             // Init an empty saved search
             $scope.savedSearch = {
                 view : 'map',
-                visibile_to : []
+                role : []
             };
 
             // Compare current filters to default filters
@@ -26,7 +26,6 @@ function (
             $scope.saveSearch = function () {
                 // Copy the current filters into our search..
                 $scope.savedSearch.filter = $scope.filters;
-
                 ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
             };
 

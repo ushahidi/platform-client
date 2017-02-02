@@ -315,17 +315,17 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
                     var elems = angular.element(element).find('a');
 
                     switch (e.keyCode) {
-                    case (40): // Down
-                        if (!angular.isNumber(dropdownCtrl.selectedOption)) {
-                            dropdownCtrl.selectedOption = 0;
-                        } else {
-                            dropdownCtrl.selectedOption = (dropdownCtrl.selectedOption === elems.length - 1 ? dropdownCtrl.selectedOption : dropdownCtrl.selectedOption + 1);
-                        }
-                        break;
-                    case (38): // Up
-                        dropdownCtrl.selectedOption = (dropdownCtrl.selectedOption === 0 ? 0 : dropdownCtrl.selectedOption - 1);
-                        break;
-                }
+                        case (40): // Down
+                            if (!angular.isNumber(dropdownCtrl.selectedOption)) {
+                                dropdownCtrl.selectedOption = 0;
+                            } else {
+                                dropdownCtrl.selectedOption = (dropdownCtrl.selectedOption === elems.length - 1 ? dropdownCtrl.selectedOption : dropdownCtrl.selectedOption + 1);
+                            }
+                            break;
+                        case (38): // Up
+                            dropdownCtrl.selectedOption = (dropdownCtrl.selectedOption === 0 ? 0 : dropdownCtrl.selectedOption - 1);
+                            break;
+                    }
                     elems[dropdownCtrl.selectedOption].focus();
                 }
             });

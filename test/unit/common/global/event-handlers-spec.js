@@ -1,5 +1,3 @@
-var rootPath = '../../../../';
-
 describe('global event handlers', function () {
 
     var mockedSessionData,
@@ -8,7 +6,7 @@ describe('global event handlers', function () {
 
     beforeEach(function () {
 
-        var testApp = angular.module('testApp', []),
+        var testApp = makeTestApp(),
         mockedSessionService =
         {
             getSessionData: function () {
@@ -37,8 +35,8 @@ describe('global event handlers', function () {
         .service('Authentication', function () {
             return mockedAuthenticationService;
         })
-        .run(require(rootPath + 'app/common/global/event-handlers.js'));
+        .run(require('app/common/global/event-handlers.js'));
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+
     });
 });

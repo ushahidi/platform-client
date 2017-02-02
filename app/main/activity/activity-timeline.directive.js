@@ -95,6 +95,6 @@ function (
         scope: {
         },
         controller: controller,
-        templateUrl: 'templates/main/activity/activity-timeline.html'
+        template: require('./activity-timeline.html')
     };
 }];

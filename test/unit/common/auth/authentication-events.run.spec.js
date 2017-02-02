@@ -1,5 +1,3 @@
-var rootPath = '../../../../';
-
 describe('global event handlers', function () {
 
     var mockedSessionData,
@@ -13,7 +11,7 @@ describe('global event handlers', function () {
 
     beforeEach(function () {
 
-        var testApp = angular.module('testApp', []);
+        var testApp = makeTestApp();
 
         var mockedSessionService =
         {
@@ -49,12 +47,12 @@ describe('global event handlers', function () {
         .service('Authentication', function () {
             return mockedAuthenticationService;
         })
-        .run(require(rootPath + 'app/common/auth/authentication-events.run.js'))
+        .run(require('app/common/auth/authentication-events.run.js'))
         .service('$route', function () {
             return mockRoute;
         });
 
-        require(rootPath + 'test/unit/simple-test-app-config.js')(testApp);
+
     });
 
     describe('rootScope', function () {
@@ -73,7 +71,7 @@ describe('global event handlers', function () {
                 angular.mock.module('testApp');
             });
 
-            beforeEach(inject(function (_$rootScope_, _$location_) {
+            beforeEach(angular.mock.inject(function (_$rootScope_, _$location_) {
                 $rootScope = _$rootScope_;
                 $location = _$location_;
             }));
@@ -179,7 +177,7 @@ describe('global event handlers', function () {
                 angular.mock.module('testApp');
             });
 
-            beforeEach(inject(function (_$rootScope_, _$location_) {
+            beforeEach(angular.mock.inject(function (_$rootScope_, _$location_) {
                 $rootScope = _$rootScope_;
                 $location = _$location_;
             }));
@@ -204,7 +202,7 @@ describe('global event handlers', function () {
                 angular.mock.module('testApp');
             });
 
-            beforeEach(inject(function (_$rootScope_, _$location_) {
+            beforeEach(angular.mock.inject(function (_$rootScope_, _$location_) {
                 $rootScope = _$rootScope_;
                 $location = _$location_;
             }));

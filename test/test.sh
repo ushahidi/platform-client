@@ -15,5 +15,5 @@ if [ "${TEST_SUITE}" = "lint" ]; then
 fi
 
 if [ "${TEST_SUITE}" = "unit" ]; then
-    gulp test
+    NODE_ENV=test gulp test
 fi

@@ -6,7 +6,7 @@ module.exports = ['MediaEndpoint', '_', function (MediaEndpoint, _) {
             mediaId: '=',
             label: '@'
         },
-        templateUrl: 'templates/main/posts/detail/post-media-value.html',
+        template: require('./post-media-value.html'),
         link: function ($scope) {
             if (!_.isNull($scope.mediaId)) {
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {

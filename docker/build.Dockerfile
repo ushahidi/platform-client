@@ -1,4 +1,4 @@
-FROM node:5.11.1
+FROM node:6.9.1
 
 RUN apt-get update && apt-get install -y rsync && \
     apt-get clean && \
@@ -14,7 +14,5 @@ COPY package.json /var/app
 RUN npm install
 
 COPY docker/build.run.sh /build.run.sh
-
-VOLUME /var/app/server/www
 
 ENTRYPOINT [ "/bin/bash", "/build.run.sh" ]

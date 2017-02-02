@@ -1,6 +1,6 @@
 angular.module('ushahidi.mock', [])
 .provider('$translate', require('./services/translate.js'))
-.service('leafletData', require('./services/third_party/leaflet-data.js'))
+.service('Leaflet', require('./services/third_party/leaflet.js'))
 .service('d3', require('./services/third_party/d3.js'))
 .service('moment', require('./services/third_party/moment.js'))
 
@@ -40,6 +40,10 @@ angular.module('ushahidi.mock', [])
 .service('SurveyNotify', require('./services/survey-notify.js'))
 .service('ImportNotify', require('./services/importnotify.js'))
 .service('PostSurveyService', require('./services/post-survey-service.js'))
+
+.value('translateFilter', function (value) {
+    return value;
+})
 
 .controller('navigation', require('./controllers/navigation.controller.mock.js'))
 ;

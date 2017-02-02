@@ -23,16 +23,16 @@
             <button class="button-beta init" data-toggle="toggle-content" dropdown-toggle>
               <span class="button-label" translate="app.mark_as">Mark as</span>
               <svg class="iconic">
-                <use xlink:href="../../img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
               </svg>
             </button>
             <ul class="dropdown-menu toggle-content init" dropdown-menu unpositioned="true">
               <li ng-repeat="status in statuses">
                 <a ng-click="changeStatus(status)">
                   <svg class="iconic">
-                    <use xlink:href="../../img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-                    <use xlink:href="../../img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
-                    <use xlink:href="../../img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
+                    <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
+                    <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+                    <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
                   </svg>
                   <span class="label" translate="post.published" ng-if="status == 'published'">Published</span>
                   <span class="label" translate="post.draft" ng-if="status == 'draft'">Under review</span>
@@ -58,25 +58,36 @@
           <collection-toggle-button selected-posts="selectedPosts" posts="posts"></collection-toggle-button>
           <button type="button" class="button-destructive" ng-click="deletePosts()">
             <svg class="iconic">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#trash"></use>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
             </svg>
             <span class="button-label hidden">nav.delete</span>
           </button>
 
         </listing-toolbar>
 
-        <!-- todo: check style -->
-        <div class="list-item" ng-if="posts.length == 0 && hasFilters()">
+        <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading">
             <h4 translate>post.no_search_results</h5>
         </div>
 
-        <!-- todo: check style -->
-        <div class="list-item" ng-if="posts.length == 0 && !hasFilters()">
+        <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading">
             <h4 translate>post.no_posts_yet</h5>
         </div>
 
-    </div> <!-- /.listing.timeline -->
+        <div class="listing-item" ng-if="posts.length > 0 || isLoading">
+            <div class="listing-item-primary">
+                <button ng-disabled="isLoading" ng-hide="isLoading" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                </button>
+                <button type="button" class="button-gamma button-flat" ng-show="isLoading">
+                    <div class="loading">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                    <span class="button-label" translate="app.loading">Loading</span>
+                </button>
+            </div>
+        </div>
 
-    <uib-pagination ng-model="currentPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></pagination>
+    </div> <!-- /.listing.timeline -->
 
 </div>

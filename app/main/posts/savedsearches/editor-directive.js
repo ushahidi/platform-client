@@ -22,7 +22,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/main/posts/savedsearches/savedsearch-editor.html',
+        template: require('./savedsearch-editor.html'),
         scope: {
             savedSearch: '='
         },
@@ -39,20 +39,12 @@ function (
 
             $scope.isAdmin = $rootScope.isAdmin;
 
-            RoleEndpoint.query().$promise.then(function (roles) {
-                $scope.roles = roles;
-            });
-
             $scope.views = ViewHelper.views();
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 
             $scope.save = function (savedSearch) {
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
-
-                // Strip out any null values from visible_to
-                savedSearch.visible_to = _.without(_.values(savedSearch.visible_to), null);
-
                 persist(savedSearch)
                 .$promise
                 .then(function (savedSearch) {

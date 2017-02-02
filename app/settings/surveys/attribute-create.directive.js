@@ -11,7 +11,7 @@ function (
 ) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/settings/surveys/attribute-create.html',
+        template: require('./attribute-create.html'),
         link: function ($scope, $element, $attrs) {
 
             // Init an empty saved search
@@ -115,6 +115,12 @@ function (
                     type: 'media',
                     input: 'upload',
                     description: $translate.instant('survey.upload_desc')
+                },
+                {
+                    label: 'Embed video',
+                    type: 'varchar',
+                    input: 'video',
+                    description: $translate.instant('survey.video_desc')
                 }
             ];
         }

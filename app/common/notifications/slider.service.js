@@ -6,22 +6,12 @@ function SliderService($rootScope, $q, $templateRequest) {
         deferredClose = $q.defer();
 
     return {
-        open: openUrl,
-        openUrl: openUrl,
+        open: openTemplate,
         openTemplate: openTemplate,
         close: close,
         onOpen: onOpen,
         onClose: onClose
     };
-
-    function openUrl(templateUrl, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate) {
-        deferredOpen.promise.then(function () {
-            // Load template
-            $templateRequest(templateUrl).then(function (template) {
-                $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate);
-            });
-        });
-    }
 
     function openTemplate(template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate) {
         deferredOpen.promise.then(function () {

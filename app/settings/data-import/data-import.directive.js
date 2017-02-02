@@ -165,19 +165,24 @@ function (
                     }, [])
                     .value();
 
+                var titleAttr = _.find(attributes, { type: 'title' });
+                var descAttr = _.find(attributes, { type: 'description' });
+
                 attributes = _.chain(attributes)
                     .reject({type : 'point'})
+                    .reject({type : 'title'})
+                    .reject({type : 'description'})
                     .concat(points)
                     // Add in the Post specific mappable fields
                     .push({
                             'key': 'title',
-                            'label': $translate.instant('post.modify.form.title'),
+                            'label': titleAttr.label || $translate.instant('post.modify.form.title'),
                             'priority': 0,
                             'required': true
                         },
                         {
                             'key': 'content',
-                            'label': $translate.instant('post.modify.form.description'),
+                            'label': descAttr.label || $translate.instant('post.modify.form.description'),
                             'priority': 1,
                             'required': true
                         },

@@ -72,13 +72,13 @@ angular.module('ushahidi.common', [
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
 .directive('embedOnly', require('./directives/embed-only.directive.js'))
 .directive('ushLogo', require('./directives/ush-logo.directive.js'))
-
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
 .directive('focus', require('./directives/focus.js'))
 .directive('modeBar', require('./directives/mode-bar/mode-bar.directive.js'))
 .directive('fileUpload', require('./directives/file-upload.directive.js'))
+.directive('roleSelector', require('./directives/role-selector.directive.js'))
 
 // Event actions
 .constant('EVENT', {
@@ -89,7 +89,7 @@ angular.module('ushahidi.common', [
 })
 
 .config(require('./configs/locale-config.js'))
-.config(require('./configs/ui-bootstrap-template-decorators.js'))
+.run(require('./configs/ui-bootstrap-template-decorators.js'))
 .config(require('./configs/cache-config.js'))
 
 .config(require('./common-routes.js'))
@@ -97,6 +97,10 @@ angular.module('ushahidi.common', [
 .run(require('./global/event-handlers.js'))
 // Use language settings from config
 .run(require('./global/language-settings.js'))
+
+.run(['$templateCache', function ($templateCache) {
+    $templateCache.put('common/directives/mode-bar/ushahidi-logo.html', require('./directives/mode-bar/ushahidi-logo.html'));
+}])
 ;
 
 // Load submodules

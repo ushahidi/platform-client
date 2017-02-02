@@ -8,7 +8,7 @@ function PostExportDirective() {
             filters: '='
         },
         controller: PostExportController,
-        templateUrl: 'templates/main/posts/views/share/post-export.html'
+        template: require('./post-export.html')
     };
 }
 

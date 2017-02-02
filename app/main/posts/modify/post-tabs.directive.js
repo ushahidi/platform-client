@@ -13,7 +13,7 @@ function PostVerticalTabs() {
             visibleStage: '='
         },
         controller: PostVerticalTabsController,
-        templateUrl: 'templates/main/posts/modify/post-tabs.html'
+        template: require('./post-tabs.html')
     };
 }
 

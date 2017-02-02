@@ -11,6 +11,8 @@ angular.module('ushahidi.posts', [])
 .directive('postAddForm', require('./detail/post-add-form.directive.js'))
 .directive('postValue', require('./detail/post-value.directive.js'))
 .directive('postMediaValue', require('./detail/post-media-value.directive.js'))
+.directive('postVideoView', require('./detail/post-video-value.directive.js'))
+.directive('postDetailMap', require('./detail/map.directive.js'))
 .service('PostActionsService', require('./common/post-actions.service.js'))
 
 // Create / Edit Screens
@@ -18,8 +20,9 @@ angular.module('ushahidi.posts', [])
 .service('PostEditService', require('./modify/post-edit.service.js'))
 .service('MediaEditService', require('./modify/media-edit.service.js'))
 .directive('postMedia', require('./modify/post-media.directive.js'))
+.directive('postVideoInput', require('./modify/post-video.directive.js'))
 .directive('postDatetime', require('./modify/post-datetime-value.directive.js'))
-.directive('postLocation', require('./modify/post-location.directive.js'))
+.directive('postLocation', require('./modify/location.directive.js'))
 .directive('postRelation', require('./modify/post-relation.directive.js'))
 
 // Post editing workflows
@@ -77,6 +80,7 @@ angular.module('ushahidi.posts', [])
 
 .config(require('./posts-routes.js'))
 
-.run(['$window', function ($window) {
-    $window.L.Icon.Default.imagePath = '/img';
-}]);
+.run(['Leaflet', function (L) {
+    L.Icon.Default.imagePath = '/img';
+}])
+;

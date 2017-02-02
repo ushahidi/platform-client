@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../../';
-
 describe('post actions directive', function () {
 
     var $rootScope,
@@ -16,26 +14,21 @@ describe('post actions directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-            'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('postActions', require(ROOT_PATH + 'app/main/posts/common/post-actions.directive'))
+        testApp.directive('postActions', require('app/main/posts/common/post-actions.directive'))
         .value('$filter', function () {
             return function () {};
         })
         .value('$route', mockRoute);
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, $compile, _PostEndpoint_, _PostActionsService_, _$location_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _PostEndpoint_, _PostActionsService_, _$location_) {
         $rootScope = _$rootScope_;
         PostEndpoint = _PostEndpoint_;
         PostActionsService = _PostActionsService_;

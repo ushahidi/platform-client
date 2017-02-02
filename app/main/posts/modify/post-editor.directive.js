@@ -11,7 +11,7 @@ function PostEditor() {
             form: '=',
             postMode: '='
         },
-        templateUrl: 'templates/main/posts/modify/post-editor.html',
+        template: require('./post-editor.html'),
         controller: PostEditorController
     };
 }
@@ -76,6 +76,9 @@ function PostEditorController(
     $scope.savePost = savePost;
     $scope.cancel = cancel;
 
+    $scope.postTitleLabel = 'Title';
+    $scope.postDescriptionLabel = 'Description';
+
     activate();
 
     function activate() {
@@ -92,6 +95,7 @@ function PostEditorController(
                 Notify.error('post.valid.invalid_state');
             }
         });
+
         $scope.medias = {};
     }
 
@@ -113,11 +117,17 @@ function PostEditorController(
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
-                if (!_.contains($scope.attributesToIgnore, attr.key)) {
+                if (attr.type === 'title' || attr.type === 'description') {
+                    if (attr.type === 'title') {
+                        $scope.postTitleLabel = attr.label;
+                    }
+                    if (attr.type === 'description') {
+                        $scope.postDescriptionLabel = attr.label;
+                    }
+                } else {
                     attributes.push(attr);
                 }
             });
-            attributes = (attributes.length) ? attributes : attrs;
 
             // Initialize values on post (helps avoid madness in the template)
             attributes.map(function (attr) {
@@ -220,6 +230,9 @@ function PostEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
+            if ('message_location' in $scope.post.values) {
+                $scope.post.values.message_location = [];
+            }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             var request;
             if (post.id) {

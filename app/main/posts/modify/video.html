@@ -1,0 +1,21 @@
+
+<form>
+  <div class="form-field video_embed">
+    <label>{{label}}</label>
+    <p>
+      <span translate="post.video.enter_a">Enter a</span>
+
+      <img src="/img/youtube.png" class="wordmark-replace">
+      <span translate="post.video.or"> or </span>
+      <img src="/img/vimeo.png" class="wordmark-replace">
+      <span translate="post.video.video_url"> video URL</span>
+    </p>
+    <input type="text" ng-model="videoUrl" ng-change="constructIframe(videoUrl)" placeholder="https://youtu.be/123456">
+
+    <div id="{{previewId}}" class="form-field-preview" ng-show="videoUrl">
+      <div class="video_embed-fluid">
+        <iframe frameborder="0" ng-src="{{video}}" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</form>

@@ -11,7 +11,7 @@ function PostShareDirective() {
             postId: '=?'
         },
         controller: PostShareController,
-        templateUrl: 'templates/main/posts/views/share/post-share.html'
+        template: require('./post-share.html')
     };
 }
 

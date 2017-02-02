@@ -1,5 +1,3 @@
-var ROOT_PATH = '../../../../';
-
 describe('common password reset confirm controller', function () {
 
     var $rootScope,
@@ -19,25 +17,20 @@ describe('common password reset confirm controller', function () {
         };
 
     beforeEach(function () {
-        require(ROOT_PATH + 'test/unit/mock/mock-modules.js');
 
-        var testApp = angular.module('testApp', [
-        'ushahidi.mock'
-        ]);
+        var testApp = makeTestApp();
 
-        testApp.directive('passwordResetConfirm', require(ROOT_PATH + 'app/common/auth/password-reset-confirm.directive.js'))
+        testApp.directive('passwordResetConfirm', require('app/common/auth/password-reset-confirm.directive.js'))
         .service('PasswordReset', function () {
             return mockPasswordReset;
         });
 
-        require(ROOT_PATH + 'test/unit/simple-test-app-config')(testApp);
-
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.module('client-templates'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, _Notify_, _Session_) {
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _Session_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         Notify = _Notify_;

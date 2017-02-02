@@ -28,6 +28,8 @@
         "forbidden": "Sorry, you're not allowed to do that.",
         "get_notifications" : "Get notifications",
         "turn_off_notifications" : "Turn off notifications",
+        "load_more": "Load more",
+        "loading": "Loading",
         "more" : "More",
         "cancel" : "Cancel",
         "save" : "Save",
@@ -185,6 +187,7 @@
         "checkbox_desc" : "Allows the user to choose one or more of a predefined set of options.",
         "relation_desc" : "Create a relation between different surveys",
         "upload_desc" : "Allows image(s) to be uploaded to the post",
+        "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "tasks" : "Tasks",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -573,9 +576,17 @@
             }
         },
         "media" : {
+            "enter_a" : "Enter a",
+            "youtube" : " Youtube",
             "current_url" : "Current image",
             "add_caption" : "Add caption",
             "upload" : "Upload"
+        },
+        "video" : {
+            "enter_a" : "Enter a",
+            "or" : " or ",
+            "vimeo" : " Vimeo",
+            "video_url" : " video URL"
         },
         "unstructured" : {
             "add_survey" : {
@@ -983,6 +994,9 @@
             "bulk_destroy_success" : "Users deleted",
             "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
             "bulk_role_change_success" : "User roles changed to {{role_name}}"
+        },
+        "video" : {
+            "incorrect_url" : "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
         },
         "form" : {
             "add_to_survey" : "Add to survey",

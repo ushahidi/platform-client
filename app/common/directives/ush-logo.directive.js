@@ -6,7 +6,7 @@ function UshLogoDirective() {
         restrict: 'E',
         controller: UshLogoController,
         replace: true,
-        templateUrl: 'templates/common/directives/ush-logo.html'
+        template: require('./ush-logo.html')
     };
 }
 
