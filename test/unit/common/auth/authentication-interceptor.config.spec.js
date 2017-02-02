@@ -158,7 +158,7 @@ describe('authentication interceptor', function () {
                 beforeEach(function () {
                     mockAuthentication.loginStatus = true;
                     $httpBackend.whenGET(CONST.BACKEND_URL + '/some-url').respond(401);
-                    $http.get(CONST.BACKEND_URL + '/some-url');
+                    $http.get(CONST.BACKEND_URL + '/some-url').then((resp) => {}, (resp) => {});
                     $httpBackend.flush();
                     broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
                 });
