@@ -1,7 +1,7 @@
 module.exports = PostLocationDirective;
 
-PostLocationDirective.$inject = ['$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window', '$timeout'];
-function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $timeout) {
+PostLocationDirective.$inject = ['$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window'];
+function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
     return {
         restrict: 'E',
         replace: true,
