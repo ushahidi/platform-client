@@ -16,7 +16,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
     };
 
     function PostLocationLink($scope, element, attrs) {
-        var map, marker,
+        var currentPositionControl, map, marker,
             zoom = 8;
 
         $scope.processing = false;
@@ -52,7 +52,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
                 map.on('locationfound', onMapClick);
                 // Add locate control, but only on https
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
-                    $scope.currentPositionControl = L.control.locate({
+                    currentPositionControl = L.control.locate({
                         follow: true
                     }).addTo(map);
                 }
@@ -136,7 +136,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window, $t
         }
 
         function chooseCurrentLocation() {
-            $scope.currentPositionControl.start();
+            currentPositionControl.start();
             $scope.hideSearchResults();
         }
     }
