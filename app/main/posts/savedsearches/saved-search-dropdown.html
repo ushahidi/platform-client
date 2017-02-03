@@ -10,7 +10,7 @@
         <dt class="list-item" ng-repeat-start="search in searches"><a ng-href="savedsearches/{{ search.id }}" ng-bind="search.name"></a></dt>
         <dd ng-repeat-end ng-show="search.user.id" translate="nav.author_tagline" translate-values="{ author: search.user.realname }"></dd>
 
-        <dt ng-show="! searches.length" translate="set.empty_list_savedsearch"></dt>
+        <dt ng-show="! searches.length" translate="set.empty_list_savedsearches"></dt>
     </dl>
     <div class="form-field" ng-show="todo">
         <button type="button" class="button-beta">
