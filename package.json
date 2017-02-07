@@ -74,7 +74,7 @@
     "node-sass": "^3.9.3",
     "phantomjs-prebuilt": "^2.1.7",
     "pre-commit": "^1.1.2",
-    "protractor": "^4.0.0",
+    "protractor": "^5.1.1",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^1.6.0",
     "run-sequence": "^1.1.0",
