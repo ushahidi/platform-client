@@ -65,7 +65,8 @@ describe('post location directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
-
+        spyOn(isolateScope, 'chooseCurrentLocation').and.callThrough();
+        spyOn(currentPositionControl, 'start').and.callThrough();
     }));
 
     describe('test directive functions', function () {
@@ -135,9 +136,6 @@ describe('post location directive', function () {
             expect(marker.remove).toBeCalled;
         });
         it('should start checking for current location', function () {
-            spyOn(isolateScope, 'chooseCurrentLocation').and.callThrough();
-            spyOn(currentPositionControl, 'start').and.callThrough();
-
             var elementToClick = element[0].querySelector('.button-beta');
             elementToClick.dispatchEvent(new Event('click'));
             isolateScope.chooseCurrentLocation();
