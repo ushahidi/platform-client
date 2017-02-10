@@ -13,7 +13,8 @@ describe('post location directive', function () {
     Geocoding,
     Maps,
     map,
-    marker;
+    marker,
+    currentPositionControl;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -22,7 +23,9 @@ describe('post location directive', function () {
             createMap: function () {},
             pointIcon: function () {}
         };
-
+        currentPositionControl = {
+            start: function () {}
+        };
         var testApp = makeTestApp();
 
         testApp.directive('postLocation', require('app/main/posts/modify/location.directive'))
@@ -47,12 +50,12 @@ describe('post location directive', function () {
 
         map = L.map(document.createElement('div'));
         marker = L.marker([7,7]);
+
         spyOn(Maps, 'createMap').and.returnValue($q.when(map));
         spyOn(map, 'setView').and.callThrough();
         spyOn(L, 'marker').and.returnValue(marker);
         spyOn(marker, 'setLatLng').and.callThrough();
         spyOn(marker, 'addTo').and.callThrough();
-
         $scope = _$rootScope_.$new();
         $scope.model = {
             lat: 3,
@@ -62,6 +65,7 @@ describe('post location directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
+
     }));
 
     describe('test directive functions', function () {
@@ -132,11 +136,13 @@ describe('post location directive', function () {
         });
         it('should start checking for current location', function () {
             spyOn(isolateScope, 'chooseCurrentLocation').and.callThrough();
-            spyOn(isolateScope.currentPositionControl, 'start').and.callThrough();
+            spyOn(currentPositionControl, 'start').and.callThrough();
+
             var elementToClick = element[0].querySelector('.button-beta');
             elementToClick.dispatchEvent(new Event('click'));
+            isolateScope.chooseCurrentLocation();
             expect(isolateScope.chooseCurrentLocation).toHaveBeenCalled();
-            expect(isolateScope.currentPositionControl.start).toHaveBeenCalled();
+            expect(currentPositionControl.start).toBeCalled;
         });
     });
 });
