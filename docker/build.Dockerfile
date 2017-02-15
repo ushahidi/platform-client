@@ -1,4 +1,4 @@
-FROM node:5.11.1
+FROM node:6.9.1
 
 RUN apt-get update && apt-get install -y rsync && \
     apt-get clean && \

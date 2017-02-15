@@ -6,14 +6,15 @@ require('imports?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
 describe('post location directive', function () {
 
     var $rootScope,
-        $scope,
-        isolateScope,
-        Notify,
-        element,
-        Geocoding,
-        Maps,
-        map,
-        marker;
+    $scope,
+    isolateScope,
+    Notify,
+    element,
+    Geocoding,
+    Maps,
+    map,
+    marker,
+    currentPositionControl;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -22,7 +23,9 @@ describe('post location directive', function () {
             createMap: function () {},
             pointIcon: function () {}
         };
-
+        currentPositionControl = {
+            start: function () {}
+        };
         var testApp = makeTestApp();
 
         testApp.directive('postLocation', require('app/main/posts/modify/location.directive'))
@@ -33,7 +36,7 @@ describe('post location directive', function () {
             return Maps;
         })
         .value('Geocoding', {
-            search: function (searchLocationTerm) {}
+            searchAllInfo: function (searchLocationTerm) {}
         })
         ;
 
@@ -47,22 +50,23 @@ describe('post location directive', function () {
 
         map = L.map(document.createElement('div'));
         marker = L.marker([7,7]);
+
         spyOn(Maps, 'createMap').and.returnValue($q.when(map));
         spyOn(map, 'setView').and.callThrough();
         spyOn(L, 'marker').and.returnValue(marker);
         spyOn(marker, 'setLatLng').and.callThrough();
         spyOn(marker, 'addTo').and.callThrough();
-
         $scope = _$rootScope_.$new();
         $scope.model = {
             lat: 3,
             lon: 4
         };
-
         element = '<post-location attribute="attribute" key="key" model="model" id="1"></post-location>';
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
+        spyOn(isolateScope, 'chooseCurrentLocation').and.callThrough();
+        spyOn(currentPositionControl, 'start').and.callThrough();
     }));
 
     describe('test directive functions', function () {
@@ -71,13 +75,12 @@ describe('post location directive', function () {
             expect(L.marker).toHaveBeenCalled();
             expect(marker.addTo).toHaveBeenCalledWith(map);
         });
-
         it('should not clear search location term for failed searches', function () {
             isolateScope.$apply(function () {
                 isolateScope.searchLocationTerm = 'Lorem';
             });
 
-            spyOn(Geocoding, 'search').and.callFake(function (kupi) {
+            spyOn(Geocoding, 'searchAllInfo').and.callFake(function (kupi) {
                 return {
                     then: function (callback) {
                         callback(false);
@@ -88,17 +91,15 @@ describe('post location directive', function () {
             isolateScope.searchLocation();
             expect(isolateScope.searchLocationTerm).toEqual('Lorem');
         });
-
         it('should clear search location term for successful searches', function () {
-
             isolateScope.$apply(function () {
                 isolateScope.searchLocationTerm = 'Ipsum';
             });
 
-            spyOn(Geocoding, 'search').and.callFake(function (kupi) {
+            spyOn(Geocoding, 'searchAllInfo').and.callFake(function (kupi) {
                 return {
                     then: function (callback) {
-                        callback([1,2]);
+                        callback({lat: 1,lon: 2});
                     }
                 };
             });
@@ -106,26 +107,25 @@ describe('post location directive', function () {
             isolateScope.searchLocation();
             expect(isolateScope.searchLocationTerm).toEqual('');
         });
-
         it('should call update model, marker position and map center', function () {
-            spyOn(Geocoding, 'search').and.callFake(function (kupi) {
-                return {
-                    then: function (callback) {
-                        callback([1, 2]);
-                    }
-                };
+            var newLocation = {
+                display_name: 'Lorem',
+                lat: 1,
+                lon: 2
+            };
+            spyOn(isolateScope, 'chooseLocation').and.callThrough();
+            isolateScope.$apply(function () {
+                isolateScope.searchResults = [newLocation];
             });
-
-            isolateScope.searchLocation();
-
+            var elementToClick = element[0].querySelector('.list-item');
+            elementToClick.dispatchEvent(new Event('click'));
+            expect(isolateScope.chooseLocation).toHaveBeenCalledWith(newLocation);
             expect(isolateScope.model.lat).toEqual(1);
             expect(isolateScope.model.lon).toEqual(2);
             expect(marker.setLatLng).toHaveBeenCalledWith([1, 2]);
             expect(map.setView).toHaveBeenCalledWith([1, 2], 8);
         });
-
         it('should clear scope model, and remove the marker', function () {
-
             isolateScope.$apply(function () {
                 isolateScope.model = { lat: 100, lng: 200 };
             });
@@ -135,6 +135,12 @@ describe('post location directive', function () {
             expect(isolateScope.model).toBeNull();
             expect(marker.remove).toBeCalled;
         });
+        it('should start checking for current location', function () {
+            var elementToClick = element[0].querySelector('.button-beta');
+            elementToClick.dispatchEvent(new Event('click'));
+            isolateScope.chooseCurrentLocation();
+            expect(isolateScope.chooseCurrentLocation).toHaveBeenCalled();
+            expect(currentPositionControl.start).toBeCalled;
+        });
     });
-
 });

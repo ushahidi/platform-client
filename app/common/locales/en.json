@@ -1048,11 +1048,10 @@
     },
     "location": {
         "search": "Search",
-        "get_current_position": "Get current position",
-        "update_location": "Update location",
-        "click_map": "Click the map to place a marker",
-        "clear":"Clear",
-        "placeholder":"Enter a location..",
+        "use_current_location": "Use your current location",
+        "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
+        "placeholder":"Find a location..",
+        "search_results": "Search results",
         "error":"Sorry we could not find a location matching your search"
     },
     "notification": {

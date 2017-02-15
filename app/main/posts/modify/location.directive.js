@@ -16,7 +16,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
     };
 
     function PostLocationLink($scope, element, attrs) {
-        var map, marker,
+        var currentPositionControl, map, marker,
             zoom = 8;
 
         $scope.processing = false;
@@ -24,10 +24,18 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         $scope.searchLocation = searchLocation;
         $scope.clear = clear;
 
+        // for dropdown
+        $scope.showDropdown = false;
+        $scope.showSearchResults = showSearchResults;
+        $scope.hideSearchResults = hideSearchResults;
+        $scope.chooseLocation = chooseLocation;
+        $scope.chooseCurrentLocation = chooseCurrentLocation;
+        $scope.searchResults = [];
+
         activate();
 
         function activate() {
-            Maps.createMap(element[0].querySelector('.post-location-map'))
+            Maps.createMap(element[0].querySelector('.map'))
             .then(function (data) {
                 map = data;
 
@@ -39,21 +47,19 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
                     updateMarkerPosition($scope.model.lat, $scope.model.lon);
                     centerMapTo($scope.model.lat, $scope.model.lon);
                 }
-
                 map.on('click', onMapClick);
                 // treate locationfound same as map click
                 map.on('locationfound', onMapClick);
-
                 // Add locate control, but only on https
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
-                    L.control.locate({
+                    currentPositionControl = L.control.locate({
                         follow: true
                     }).addTo(map);
                 }
-
                 // @todo: Should we watch the model and update map?
             });
         }
+
 
         function onMapClick(e) {
             var wrappedLatLng = e.latlng.wrap(),
@@ -92,31 +98,46 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
             map.setView([lat, lon], zoom);
         }
 
-        function searchLocation() {
-            $scope.processing = true;
-
-            Geocoding.search($scope.searchLocationTerm).then(function (coordinates) {
-                $scope.processing = false;
-
-                if (!coordinates) {
-                    Notify.error('location.error');
-                    return;
-                }
-
-                updateModelLatLon(coordinates[0], coordinates[1]);
-                updateMarkerPosition(coordinates[0], coordinates[1]);
-                centerMapTo(coordinates[0], coordinates[1]);
-
-                $scope.searchLocationTerm = '';
-            });
-        }
-
         function clear() {
             $scope.model = null;
             if (marker) {
                 map.removeLayer(marker);
                 marker = null;
             }
+        }
+
+        // for dropdown
+        function showSearchResults() {
+            $scope.showDropdown = true;
+        }
+
+        function hideSearchResults() {
+            $scope.showDropdown = false;
+        }
+
+        function searchLocation() {
+            $scope.processing = true;
+            Geocoding.searchAllInfo($scope.searchLocationTerm).then(function (results) {
+                $scope.processing = false;
+                if (!results) {
+                    Notify.error('location.error');
+                    return;
+                }
+                $scope.searchResults = results;
+                $scope.searchLocationTerm = '';
+            });
+        }
+
+        function chooseLocation(location) {
+            updateModelLatLon(location.lat, location.lon);
+            updateMarkerPosition(location.lat, location.lon);
+            centerMapTo(location.lat, location.lon);
+            $scope.hideSearchResults();
+        }
+
+        function chooseCurrentLocation() {
+            currentPositionControl.start();
+            $scope.hideSearchResults();
         }
     }
 }
