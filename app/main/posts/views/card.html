@@ -1,5 +1,5 @@
 <article class="postcard">
-    <div class="post-band" style="background-color: {{post.form.color}};"></div>
+    <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
     <div class="listing-item-select">
         <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
         <!-- status indicator -->
