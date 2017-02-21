@@ -30,7 +30,7 @@
 <main role="main">
   <div class="full-col">
     <article class="postcard" role="article">
-      <div class="post-band" style="background-color: {{form.color}};"></div>
+      <div class="post-band"  ng-style="{ background-color: form.color}"></div>
 
       <div class="listing-item-select">
         <span class="status-indicator tooltip" ng-class="{ empty: post.status!='draft', yellow: post.status=='draft'}">
