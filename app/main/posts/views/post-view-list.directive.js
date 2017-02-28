@@ -72,7 +72,6 @@ function PostListController(
         // Initial load
         resetPosts();
         getPosts();
-
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
@@ -88,6 +87,7 @@ function PostListController(
 
     function getPosts(query) {
         query = query || PostFilters.getQueryParams($scope.filters);
+
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
@@ -97,10 +97,20 @@ function PostListController(
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             // Add posts to full set of posts
             // @todo figure out if we can store these more efficiently
-            Array.prototype.push.apply($scope.posts, postsResponse.results);
-
+            var results = [];
+            if ($scope.filters.unmapped) {
+                postsResponse.results.forEach(function (post) {
+                    if (!post.values.hasOwnProperty('message_location') && !post.values.hasOwnProperty('location_default')) {
+                        results.push(post);
+                        Array.prototype.push.apply($scope.posts, results);
+                    }
+                });
+            } else {
+                results = postsResponse.results;
+                Array.prototype.push.apply($scope.posts, results);
+            }
             // Merge grouped posts into existing groups
-            angular.forEach(groupPosts(postsResponse.results), function (posts, group) {
+            angular.forEach(groupPosts(results), function (posts, group) {
                 if (angular.isArray($scope.groupedPosts[group])) {
                     Array.prototype.push.apply($scope.groupedPosts[group], posts);
                 } else {
@@ -108,7 +118,7 @@ function PostListController(
                 }
             });
 
-            $scope.totalItems = postsResponse.total_count;
+            $scope.totalItems = results.total_count;
             $scope.isLoading = false;
 
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
