@@ -65,6 +65,7 @@ function PostFiltersService(_, FormEndpoint) {
             q: '',
             date_after: '',
             date_before: '',
+            unmapped: ['unmapped','mapped'],
             status: ['published', 'draft'],
             published_to: '',
             center_point: '',

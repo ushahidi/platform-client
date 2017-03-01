@@ -52,6 +52,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterVisibleTo', require('./views/filters/filter-visible-to.directive.js'))
 .directive('filterStatus', require('./views/filters/filter-status.directive.js'))
 .directive('filterLocation', require('./views/filters/filter-location.directive.js'))
+.directive('filterUnmapped', require('./views/filters/filter-unmapped.directive.js'))
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
 .service('PostFilters', require('./views/post-filters.service.js'))
 

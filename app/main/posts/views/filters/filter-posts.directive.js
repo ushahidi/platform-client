@@ -13,14 +13,15 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout'];
-function FilterPostsController($scope, $timeout) {
+FilterPostsController.$inject = ['$scope', '$timeout', '$location'];
+function FilterPostsController($scope, $timeout, $location) {
     $scope.searchSavedToggle = false;
     $scope.searchFiltersToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
     $scope.toggleSaved = toggleSaved;
     $scope.toggleFilters = toggleFilters;
+    $scope.location = $location;
 
     activate();
 

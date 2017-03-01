@@ -266,7 +266,8 @@
             "status": "Status",
             "location_value": "Within {{km}} km of {{value}}",
             "visible_to": "Visible to",
-            "user": "User"
+            "user": "User",
+            "unmapped": "Unmapped posts"
         },
         "more" : "More",
         "keyword" : "Keyword",

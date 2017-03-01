@@ -66,7 +66,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     }
 
     function goToUnmapped() {
-        $scope.PostFilters.setFilters({unmapped: true});
+        $scope.PostFilters.setFilters({unmapped: ['unmapped']});
         $location.path('/views/list');
     }
     function hide(formId) {
