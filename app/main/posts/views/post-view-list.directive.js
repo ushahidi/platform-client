@@ -101,19 +101,23 @@ function PostListController(
             // TODO/question: feels like this logic should belong somewhere else in the application? But where?
             // returning posts based on filter
             var results = [];
-            if ($scope.filters.unmapped.includes('unmapped') && !$scope.filters.unmapped.includes('mapped')) {
-                postsResponse.results.forEach(function (post) {
-                    if (!post.values.hasOwnProperty('message_location') && !post.values.hasOwnProperty('location_default')) {
-                        results.push(post);
-                    }
-                });
-            } else if (!$scope.filters.unmapped.includes('unmapped') && $scope.filters.unmapped.includes('mapped')) {
-                postsResponse.results.forEach(function (post) {
-                    if (post.values.hasOwnProperty('message_location') || post.values.hasOwnProperty('location_default')) {
-                        results.push(post);
-                    }
-                });
-            } else if ($scope.filters.unmapped.includes('unmapped') && $scope.filters.unmapped.includes('mapped')) {
+            if ($scope.filters.unmapped) {
+                if ($scope.filters.unmapped.includes('unmapped') && !$scope.filters.unmapped.includes('mapped')) {
+                    postsResponse.results.forEach(function (post) {
+                        if (!post.values.hasOwnProperty('message_location') && !post.values.hasOwnProperty('location_default')) {
+                            results.push(post);
+                        }
+                    });
+                } else if (!$scope.filters.unmapped.includes('unmapped') && $scope.filters.unmapped.includes('mapped')) {
+                    postsResponse.results.forEach(function (post) {
+                        if (post.values.hasOwnProperty('message_location') || post.values.hasOwnProperty('location_default')) {
+                            results.push(post);
+                        }
+                    });
+                } else if ($scope.filters.unmapped.includes('unmapped') && $scope.filters.unmapped.includes('mapped')) {
+                    results = postsResponse.results;
+                }
+            } else {
                 results = postsResponse.results;
             }
 

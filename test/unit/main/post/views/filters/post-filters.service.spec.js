@@ -76,7 +76,8 @@ describe('Post Filters Service', function () {
                 tags: [1,3,4],
                 form: ['none'],
                 set: [],
-                user: false
+                user: false,
+                unmapped: ['unmapped', 'mapped']
             });
         });
 
