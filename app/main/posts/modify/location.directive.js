@@ -123,6 +123,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         }
 
         function chooseLocation(location) {
+            $scope.searchLocationTerm = '';
             updateModelLatLon(location.lat, location.lon);
             updateMarkerPosition(location.lat, location.lon);
             centerMapTo(location.lat, location.lon);
