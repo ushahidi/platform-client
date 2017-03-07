@@ -17,6 +17,7 @@
                     ng-disabled="processing" 
                     ng-focus="showSearchResults()" 
                     ng-keyup="showSearchResults()"
+                    ng-keydown="searchLocation()"
                 />
             </div>
             <div class="searchbar-results dropdown-menu" ng-class="{'active': showDropdown}">

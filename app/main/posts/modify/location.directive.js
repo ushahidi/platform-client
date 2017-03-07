@@ -117,15 +117,8 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         }
 
         function searchLocation() {
-            $scope.processing = true;
             Geocoding.searchAllInfo($scope.searchLocationTerm).then(function (results) {
-                $scope.processing = false;
-                if (!results) {
-                    Notify.error('location.error');
-                    return;
-                }
                 $scope.searchResults = results;
-                $scope.searchLocationTerm = '';
             });
         }
 
