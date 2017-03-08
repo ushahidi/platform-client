@@ -31,7 +31,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         $scope.chooseLocation = chooseLocation;
         $scope.chooseCurrentLocation = chooseCurrentLocation;
         $scope.searchResults = [];
-
+        $scope.showCurrentPositionControl = false;
         activate();
 
         function activate() {
@@ -48,10 +48,11 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
                     centerMapTo($scope.model.lat, $scope.model.lon);
                 }
                 map.on('click', onMapClick);
-                // treate locationfound same as map click
+                // treat locationfound same as map click
                 map.on('locationfound', onMapClick);
                 // Add locate control, but only on https
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
+                    $scope.showCurrentPositionControl = true;
                     currentPositionControl = L.control.locate({
                         follow: true
                     }).addTo(map);
@@ -116,19 +117,13 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         }
 
         function searchLocation() {
-            $scope.processing = true;
             Geocoding.searchAllInfo($scope.searchLocationTerm).then(function (results) {
-                $scope.processing = false;
-                if (!results) {
-                    Notify.error('location.error');
-                    return;
-                }
                 $scope.searchResults = results;
-                $scope.searchLocationTerm = '';
             });
         }
 
         function chooseLocation(location) {
+            $scope.searchLocationTerm = '';
             updateModelLatLon(location.lat, location.lon);
             updateMarkerPosition(location.lat, location.lon);
             centerMapTo(location.lat, location.lon);
