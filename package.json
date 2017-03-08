@@ -98,7 +98,7 @@
     "angular-lazy-bootstarp": "rajeshsegu/angular-lazy-bootstrap",
     "angular-local-storage": "^0.5.0",
     "angular-nvd3": "^1.0.9",
-    "angular-resource": "^1.5.6",
+    "angular-resource": "^1.6.3",
     "angular-route": "^1.5.6",
     "angular-sanitize": "^1.5.6",
     "angular-translate": "^2.11.0",
