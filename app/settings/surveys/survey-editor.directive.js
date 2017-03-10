@@ -397,19 +397,19 @@ function SurveyEditorController(
     }
 
     function deleteAttribute(attribute) {
-        // If we have not yet saved this attribute
-        // we can drop it immediately
-        if (!attribute.id) {
-            $scope.activeTask.attributes = _.filter($scope.activeTask.attributes, function (item) {
-                return item.label !== attribute.label;
-            });
-            // Attribute delete is currently only available in modal
-            // so close the modal
-            ModalService.close();
-            return;
-        }
-
         Notify.confirmDelete('notify.form.delete_attribute_confirm').then(function () {
+            // If we have not yet saved this attribute
+            // we can drop it immediately
+            if (!attribute.id) {
+                $scope.activeTask.attributes = _.filter($scope.activeTask.attributes, function (item) {
+                    return item.label !== attribute.label;
+                });
+                // Attribute delete is currently only available in modal
+                // so close the modal
+                ModalService.close();
+                return;
+            }
+
             FormAttributeEndpoint.delete({
                 formId: $scope.survey.id,
                 id: attribute.id
@@ -434,17 +434,16 @@ function SurveyEditorController(
 
     function deleteTask(task) {
 
+        Notify.confirmDelete('notify.form.delete_stage_confirm').then(function () {
+            // If we haven't saved the task yet then we can just drop it
+            if (!task.id || _.isString(task.id)) {
+                $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
+                    return item.label !== task.label;
+                });
+                $scope.resetSelectedTask();
+                return;
+            }
 
-        // If we haven't saved the task yet then we can just drop it
-        if (!task.id || _.isString(task.id)) {
-            $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
-                return item.label !== task.label;
-            });
-            $scope.resetSelectedTask();
-            return;
-        }
-
-        Notify.confirm('notify.form.delete_stage_confirm').then(function () {
             FormStageEndpoint.delete({
                 formId: $scope.survey.id,
                 id: task.id
@@ -465,14 +464,15 @@ function SurveyEditorController(
     //Start - modify Survey
 
     function deleteSurvey() {
-        // If we haven't saved the survey
-        // just go back to the surveys views
-        if (!$scope.survey.id) {
-            $location.url('/settings/surveys');
-            return;
-        }
-
         Notify.confirmDelete('notify.form.delete_form_confirm').then(function () {
+
+            // If we haven't saved the survey
+            // just go back to the surveys views
+            if (!$scope.survey.id) {
+                $location.url('/settings/surveys');
+                return;
+            }
+
             FormEndpoint.delete({
                 id: $scope.survey.id
             }).$promise.then(function () {

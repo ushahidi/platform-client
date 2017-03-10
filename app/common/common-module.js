@@ -72,13 +72,13 @@ angular.module('ushahidi.common', [
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
 .directive('embedOnly', require('./directives/embed-only.directive.js'))
 .directive('ushLogo', require('./directives/ush-logo.directive.js'))
-
 .directive('filterSearchbar', require('./directives/filter-system/filter-searchbar.js'))
 .directive('filterRole', require('./directives/filter-system/filter-role.js'))
 .directive('overflowToggle', require('./directives/filter-system/overflow-toggle.js'))
 .directive('focus', require('./directives/focus.js'))
 .directive('modeBar', require('./directives/mode-bar/mode-bar.directive.js'))
 .directive('fileUpload', require('./directives/file-upload.directive.js'))
+.directive('roleSelector', require('./directives/role-selector.directive.js'))
 
 // Event actions
 .constant('EVENT', {

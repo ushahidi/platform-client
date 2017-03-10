@@ -923,7 +923,8 @@
             "duplicate_fields" : "Columns must be mapped to unique survey fields. The following columns have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
-            "csv_import_cancel" : "CSV import cancelled"
+            "csv_import_cancel" : "CSV import cancelled",
+            "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"
         },
         "general_settings" : {
             "save_success" : "General settings saved"
@@ -1047,11 +1048,10 @@
     },
     "location": {
         "search": "Search",
-        "get_current_position": "Get current position",
-        "update_location": "Update location",
-        "click_map": "Click the map to place a marker",
-        "clear":"Clear",
-        "placeholder":"Enter a location..",
+        "use_current_location": "Use your current location",
+        "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
+        "placeholder":"Find a location..",
+        "search_results": "Search results",
         "error":"Sorry we could not find a location matching your search"
     },
     "notification": {

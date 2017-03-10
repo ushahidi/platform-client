@@ -70,7 +70,6 @@ describe('post editor directive', function () {
             expect(isolateScope.tasks.length).toEqual(2);
         });
     });
-
     describe('test directive functions', function () {
         it('should save a post', function () {
             spyOn(Notify, 'notify');
@@ -90,7 +89,6 @@ describe('post editor directive', function () {
             isolateScope.savePost();
 
             $rootScope.$apply();
-
             expect(Notify.errors).toHaveBeenCalled();
         });
     });

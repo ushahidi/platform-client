@@ -51,7 +51,7 @@ function LocationFilterDirective(Geocoding, $q) {
             } else { // perform a geocoding lookup on the location
                 $scope.geocoding = true;
 
-                Geocoding.search(location).then(function (coordinates) {
+                Geocoding.searchCoordinates(location).then(function (coordinates) {
                     if (!coordinates) {
                         defer.reject();
                         return;

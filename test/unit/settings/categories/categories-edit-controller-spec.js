@@ -32,14 +32,10 @@ describe('setting categories edit controller', function () {
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
-        var category = {
-            id: 1
-        };
-
         $controller('settingCategoriesEditController', {
             $scope: $scope,
             $rootScope: $rootScope,
-            category: category
+            $routeParams: {id: 1}
         });
 
         $rootScope.$digest();

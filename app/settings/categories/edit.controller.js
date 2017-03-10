@@ -8,7 +8,7 @@ module.exports = [
     'Notify',
     '_',
     'Util',
-    'category',
+    '$routeParams',
 function (
     $scope,
     $rootScope,
@@ -19,15 +19,18 @@ function (
     Notify,
     _,
     Util,
-    category
+    $routeParams
 ) {
 
     // Redirect to home if not authorized
     if ($rootScope.hasManageSettingsPermission() === false) {
         return $location.path('/');
     }
+    $scope.category = {};
+    TagEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (result) {
+        $scope.category = result;
+    });
 
-    $scope.category = category;
     $translate('tag.edit_tag').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);

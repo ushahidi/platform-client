@@ -4,7 +4,6 @@ module.exports = [
     '$location',
     '$translate',
     '$route',
-    'RoleEndpoint',
     'TagEndpoint',
     'Notify',
     '_',
@@ -14,7 +13,6 @@ function (
     $location,
     $translate,
     $route,
-    RoleEndpoint,
     TagEndpoint,
     Notify,
     _
@@ -31,10 +29,6 @@ function (
     });
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
-
-    RoleEndpoint.query().$promise.then(function (roles) {
-        $scope.roles = roles;
-    });
 
     $scope.category = { type: 'category', icon: 'tag', color: ''};
     $scope.processing = false;

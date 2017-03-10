@@ -24,17 +24,17 @@
 
         <ul class="metadata">
             <li>
-                <span class="status-indicator public tooltip" ng-if="!collection.visible_to || collection.visible_to.length == 0">
+                <span class="status-indicator public tooltip" ng-if="!collection.role || collection.role.length == 0">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
                     <span class="bug" translate="collection.visible_to_public">This Collection is visible to the public</span>
                 </span>
-                <span class="status-indicator yellow tooltip" ng-if="collection.visible_to.length > 0">
+                <span class="status-indicator yellow tooltip" ng-if="collection.role.length > 0">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
-                    <span class="bug" translate="collection.visible_to_roles" translate-values="{ roles: collection.visible_to.join(', ') }">This Collection is visible to ...</span>
+                    <span class="bug" translate="collection.visible_to_roles" translate-values="{ roles: collection.role.join(', ') }">This Collection is visible to ...</span>
                 </span>
             </li>
             <li>
