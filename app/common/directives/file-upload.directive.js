@@ -6,7 +6,8 @@ function FileUpload() {
         template: require('./file-upload.html'),
         replace: true,
         scope: {
-            container: '='
+            container: '=',
+            model: '='
         },
         controller: [
             '$scope', '$attrs',
@@ -21,9 +22,12 @@ function FileUpload() {
                         var dataURL = reader.result;
                         $scope.container.dataURI = dataURL;
                         $scope.container.changed = true;
+                        $scope.container.deleted = false;
+                        $scope.model = 'changed';
                         $scope.$apply();
                     };
                     reader.readAsDataURL($event.target.files[0]);
+
 
                 };
             }]
