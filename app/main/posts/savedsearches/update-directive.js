@@ -32,9 +32,6 @@ function (
                 // Copy the current filters into our search..
                 $scope.savedSearch.filter = PostFilters.getQueryParams($scope.filters);
 
-                // Strip out any null values from visible_to
-                $scope.savedSearch.visible_to = _.without(_.values($scope.savedSearch.visible_to), null);
-
                 SavedSearchEndpoint.update($scope.savedSearch)
                 .$promise
                 .then(function (savedSearch) {

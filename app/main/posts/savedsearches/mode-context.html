@@ -24,17 +24,17 @@
 
         <ul class="metadata">
             <li>
-                <span class="status-indicator public tooltip" ng-if="!savedSearch.visible_to">
+                <span class="status-indicator public tooltip" ng-if="!savedSearch.role">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
                     <span class="bug" translate="saved_search.visible_to_public">This saved search is visible to the public</span>
                 </span>
-                <span class="status-indicator yellow tooltip" ng-if="savedSearch.visible_to.length > 0">
+                <span class="status-indicator yellow tooltip" ng-if="savedSearch.role">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
-                    <span class="bug" translate="saved_search.visible_to_roles" translate-values="{ roles: savedSearch.visible_to.join(', ') }">This saved search is visible to ...</span>
+                    <span class="bug" translate="saved_search.visible_to_roles" translate-values="{ roles: savedSearch.role.join(', ') }">This saved search is visible to ...</span>
                 </span>
             </li>
             <li>

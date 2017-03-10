@@ -90,10 +90,11 @@ function (
             }
 
             function cancelImport() {
-                Notify.notify('notify.data_import.csv_import_cancel');
-
-                deleteDataImport($scope.csv);
-                $location.url('/settings/data-import/');
+                Notify.confirm('notify.data_import.csv_import_cancel_confirm').then(function () {
+                    Notify.notify('notify.data_import.csv_import_cancel');
+                    deleteDataImport($scope.csv);
+                    $location.url('/settings/data-import/');
+                });
             }
 
             function deleteDataImport() {

@@ -36,17 +36,8 @@
             </select>
         </div>
     </div>
-
-    <div class="form-field select">
-        <label>
-            <div class="custom-select">
-                <select ng-options="role.name as role.display_name for role in roles" ng-model="cpyCollection.visible_to[0]">
-                    <option value="" translate>post.modify.everyone</option>
-                </select>
-            </div>
-            <span translate>app.can_see_this</span>
-        </label>
-    </div>
+    <!-- Who can see -->
+    <role-selector model="cpyCollection" title="'Who can see this?'"></role-selector>
 
     <div class="modal-actions">
         <div class="form-field">
