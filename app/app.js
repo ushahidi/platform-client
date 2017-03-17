@@ -51,6 +51,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
         'config',
         'messages',
         'notifications',
+        'webhooks',
         'contacts',
         'roles',
         'permissions',

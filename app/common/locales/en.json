@@ -53,6 +53,9 @@
         "roles" : "Roles",
         "edit_role" : "Edit Role",
         "add_role" : "Add Role",
+        "webhooks" : "Webhooks",
+        "edit_webhook" : "Edit Webhook",
+        "add_webhook" : "Add Webhook",
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "add_category" : "Add Category",
@@ -731,6 +734,8 @@
             "roles_desc" : "Create and manage the type of permissions your users have on your deployment.",
             "categories" : "Categories",
             "categories_desc" : "Create and manage the categories people can put posts into for improved organization.",
+            "webhhoks" : "Webhooks",
+            "webhooks_desc" : "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
@@ -984,6 +989,11 @@
             "destroy_success" : "Role {{role}} deleted.",
             "save_success" : "Role {{role}} saved.",
             "last_admin" : "You can not delete the only admin role"
+        },
+        "webhook" : {
+            "delete_question" : "Are you sure you want to delete the webhook {{webhook}}?",
+            "destroy_success" : "Webhook {{webhook}} deleted.",
+            "save_success" : "Webhook {{webhook}} saved."
         },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}"
