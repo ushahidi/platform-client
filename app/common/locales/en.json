@@ -191,6 +191,7 @@
         "relation_desc" : "Create a relation between different surveys",
         "upload_desc" : "Allows image(s) to be uploaded to the post",
         "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
+        "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -384,6 +385,8 @@
         "profile": "My Profile",
         "role" : "Role",
         "roles" : "Roles",
+        "webhook" : "Webhook",
+        "webhooks" : "Webhooks",
         "saved_searches" : "Saved Searches",
         "search" : "Search",
         "select_all" : "Select all",
@@ -398,8 +401,6 @@
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
-        "role" : "Role",
-        "roles" : "Roles",
         "views" : "Views",
         "more" : "More",
         "yesterday" : "Yesterday"
@@ -617,6 +618,20 @@
         "delete_role_desc" : "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
         "everyone" : "Everyone",
         "just_you" : "Just you"
+    },
+    "webhook": {
+        "add_webhook" : "Add Role",
+        "edit_webhook" : "Edit Role",
+        "name" : "Name",
+        "shared_secret" : "Shared Secret",
+        "url" : "API URL",
+        "entity_type" : "Entity Type",
+        "event_type" : "Event Type",
+        "save" : "Save Role",
+        "save_add_another" : "Save & Add Another",
+        "delete" : "Delete",
+        "delete_webhook" : "Delete this webhook",
+        "delete_webhook_desc" : "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution."
     },
     "saved_search": {
         "visible_to_public" : "This Saved Search is visible to the public",
@@ -1056,6 +1071,7 @@
         "user" : "No users found.",
         "category" : "No categories found.",
         "role" : "No roles found.",
+        "webhook" : "No webhooks found.",
         "permission" : "No permissions found.",
         "form": "No forms found."
     },
