@@ -42,28 +42,36 @@
                 <div class="form-sheet">
                    <div class="form-field title">
                        <label class="hidden" translate>webhook.name</label>
-                       <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.display_name" required>
+                       <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
                    </div>
 
-                    <div class="form-field">
-                        <label translate>webhook.description</label>
-                        <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="webhook.description"></textarea>
-                    </div>
+                   <div class="form-field">
+                       <label translate>webhook.editor.shared_secret</label>
+                       <textarea name="description" data-min-rows='1' rows='1' ng-model="webhook.shared_secret" required></textarea>
+                   </div>
 
-                   <fieldset>
-                       <legend translate>webhook.permissions</legend>
+                   <div class="form-field">
+                       <label translate>webhook.editor.url</label>
+                       <input type="text" placeholder="{{'webhook.url' | translate}}" ng-model="webhook.url" required>
+                   </div>
 
-                       <div class="alert" ng-hide="permissions.length">
-                           <p ng-hide="permissions.length"><em translate>empty.permission</em></p>
-                       </div>
+                   <div class="form-field">
+                       <label translate>webhook.editor.event_type</label>
+                       <div class="custom-select">
+                         <select ng-model="webhook.event_type" required>
+                             <option ng-repeat="type in event_types" value="{{type}}">{{type}}</option>
+                         </select>
+                      </div>
+                   </div>
 
-                       <div class="form-field checkbox" ng-repeat="permission in permissions">
-                           <label for="{{permission.id}}">
-                               <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="webhook.permissions" checklist-value="permission.name">
-                               {{permission.name}}
-                           </label>
-                       </div>
-                   </fieldset>
+                   <div class="form-field">
+                       <label translate>webhook.editor.entity_type</label>
+                       <div class="custom-select">
+                         <select ng-model="webhook.entity_type" required>
+                             <option ng-repeat="type in entity_types" value="{{type}}">{{type}}</option>
+                         </select>
+                      </div>
+                   </div>
                 </div>
 
                 <div ng-if="!webhook.protected" class="form-sheet" ng-show="webhook.id">

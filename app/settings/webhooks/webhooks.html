@@ -43,7 +43,7 @@
             <div class="listing card" ng-show="webhooks.length" ng-show="webhooksEnabled">
                 <div class="listing-item" ng-repeat="webhook in webhooks | orderBy:'webhook'">
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a ng-href="/settings/webhooks/{{webhook.id}}">{{webhook.display_name}}</a></h2>
+                        <h2 class="listing-item-title"><a ng-href="/settings/webhooks/{{webhook.id}}">{{webhook.name}}</a></h2>
                     </div>
                 </div>
             </div>
