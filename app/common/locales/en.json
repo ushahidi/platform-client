@@ -53,9 +53,12 @@
         "roles" : "Roles",
         "edit_role" : "Edit Role",
         "add_role" : "Add Role",
-        "categories" : "Categories",
-        "edit_category" : "Edit Category",
-        "add_category" : "Add Category",
+        "categories" : "Labels",
+        "edit_category" : "Edit Label",
+        "add_category" : "Add Label",
+        "labels": "Labels",
+        "edit_label": "Edit Label",
+        "add_label": "Add Label",
         "plans" : "Plans",
         "delete" : "Delete",
         "description" : "Description",
@@ -229,8 +232,8 @@
     "global_filter": {
         "filter" : "Filter",
         "categories" : {
-            "categories" : "Categories",
-            "all_categories" : "All Categories"
+            "categories" : "Labels",
+            "all_categories" : "All Labels"
         },
         "post_types" : {
             "post_types" : "Surveys",
@@ -259,7 +262,7 @@
             "date_after": "Start date",
             "date_before": "End date",
             "center_point": "Location",
-            "tags": "Category",
+            "tags": "Labels",
             "form": "Survey",
             "current_stage": "Current Task",
             "set": "Collection",
@@ -298,7 +301,7 @@
         "compare": "Compare...",
         "compare_all": "Compare...",
         "compare_status": "Compare status",
-        "compare_tags": "Compare categories",
+        "compare_tags": "Compare labels",
         "compare_form": "Compare surveys",
         "compare_": "Compare ",
         "created": "Created time",
@@ -339,8 +342,8 @@
         "author_tagline" : "By {{author}}",
         "appearance" : "Appearance",
         "back" : "Back",
-        "category" : "Category",
-        "categories" : "Categories",
+        "category" : "Label",
+        "categories" : "Labels",
         "clear" : "Clear",
         "collections" : "Collections",
         "comments" : "Comments",
@@ -387,7 +390,7 @@
         "selected_items" : "{{selectedItems}} selected",
         "settings" : "Settings",
         "survey_settings": "Survey settings",
-        "tags" : "Categories",
+        "tags" : "Labels",
         "today" : "Today",
         "general" : "General Settings",
         "type" : "Type",
@@ -456,7 +459,7 @@
         "published_by" : "Published by",
         "can_see_this_post" : "can see this post",
         "location" : "Location",
-        "categories" : "Categories",
+        "categories" : "Labels",
         "status" : "Status",
         "type": "Type",
         "view" : "View",
@@ -512,7 +515,7 @@
             "author_realname" : "Name",
             "author_email" : "Email",
             "form" : {
-                "categories" : "Categories",
+                "categories" : "Labels",
                 "description" : "Description",
                 "location" : "Location",
                 "title" : "Title",
@@ -527,7 +530,7 @@
             "private" : "private",
             "public" : "public",
             "read_more" : "&nbsp;... Read&nbsp;More",
-            "tags" : "Categories",
+            "tags" : "Labels",
             "post_actions" : {
                 "post_actions" : "Post Actions",
                 "select" : "select",
@@ -560,7 +563,7 @@
                 "required" : "Description cannot be empty"
             },
             "tags" : {
-                "required" : "Categories are required"
+                "required" : "Labels are required"
             },
             "values" : {
                 "required" : "\"{{label}}\" is required",
@@ -661,37 +664,37 @@
         "remove" : "remove"
     },
     "category": {
-        "add_tag" : "Add Category",
+        "add_tag" : "Add Label",
         "save_add_another" : "Save & Add Another",
-        "delete_category" : "Delete category",
-        "delete_this_category" : "Delete this category",
-        "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be asociated with any posts. Proceed with caution.",
+        "delete_category" : "Delete label",
+        "delete_this_category" : "Delete this label",
+        "delete_category_desc" : "<strong>If you delete this label</strong>, it will no longer be asociated with any posts. Proceed with caution.",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
-        "create_tag" : "Create Category",
-        "saved_tag": "Category saved.",
-        "deleted_tags": "Categories deleted.",
-        "manage_tags" : "Manage Categories",
-        "edit_tag" : "Edit Category",
+        "create_tag" : "Create Label",
+        "saved_tag": "Label saved.",
+        "deleted_tags": "Labels deleted.",
+        "manage_tags" : "Manage Labels",
+        "edit_tag" : "Edit Label",
         "editor" : {
-            "name" : "Category Name",
-            "slug" : "Category Link",
-            "slug_help" : "If left blank, will be automatically generated from category name.",
+            "name" : "Label Name",
+            "slug" : "Label Link",
+            "slug_help" : "If left blank, will be automatically generated from label name.",
             "description" : "Description",
             "type" : "Type",
             "color" : "Icon Color",
             "icon" : "Icon Name",
-            "roles_help" : "Only selected roles will be able to view this category."
+            "roles_help" : "Only selected roles will be able to view this label."
         },
         "types": {
-            "category" : "Category",
+            "category" : "Label",
             "status" : "Status"
         },
         "delete" : "Delete"
     },
     "tool": {
         "manage_forms" :  "Manage Forms",
-        "manage_tags" : "Manage Categories",
+        "manage_tags" : "Manage Labels",
         "manage_users" : "Manage Users",
         "manage_roles" : "Manage Roles",
         "manage_views" : "Manage Views",
@@ -729,8 +732,8 @@
             "users_desc" : "Create and manage the people that contribute to your deployment.",
             "roles" : "Roles",
             "roles_desc" : "Create and manage the type of permissions your users have on your deployment.",
-            "categories" : "Categories",
-            "categories_desc" : "Create and manage the categories people can put posts into for improved organization.",
+            "categories" : "Labels",
+            "categories_desc" : "Create and manage the labels people can put posts into for improved organization.",
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
@@ -972,12 +975,12 @@
             "update_status_success_bulk" : "Status updated for {{count}} posts"
         },
         "category" : {
-            "save_success" : "Saved category {{name}}",
-            "destroy_confirm" : "Are you sure you want to delete this category?",
-            "destroy_success" : "Category deleted",
-            "destroy_error" : "Unable to delete category, please try again",
-            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
-            "bulk_destroy_success" : "{{count}} categories deleted"
+            "save_success" : "Saved label {{name}}",
+            "destroy_confirm" : "Are you sure you want to delete this label?",
+            "destroy_success" : "Label deleted",
+            "destroy_error" : "Unable to delete label, please try again",
+            "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} labels?",
+            "bulk_destroy_success" : "{{count}} labels deleted"
         },
         "role" : {
             "delete_question" : "Are you sure you want to delete the role {{role}}?",
@@ -1044,7 +1047,7 @@
         "default" : "No records found.",
         "post" : "No posts found.",
         "user" : "No users found.",
-        "category" : "No categories found.",
+        "category" : "No labels found.",
         "role" : "No roles found.",
         "permission" : "No permissions found.",
         "form": "No forms found."
