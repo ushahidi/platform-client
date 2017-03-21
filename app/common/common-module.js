@@ -79,6 +79,7 @@ angular.module('ushahidi.common', [
 .directive('modeBar', require('./directives/mode-bar/mode-bar.directive.js'))
 .directive('fileUpload', require('./directives/file-upload.directive.js'))
 .directive('roleSelector', require('./directives/role-selector.directive.js'))
+.directive('languageSwitch', require('./directives/language-switch.directive.js'))
 
 // Event actions
 .constant('EVENT', {

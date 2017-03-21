@@ -41,6 +41,9 @@ function (
         cache.remove(Util.apiUrl('/config/' + params.id));
         return ConfigEndpoint.get(params);
     };
+    ConfigEndpoint.saveLanguageToCache = function (language) {
+        //do the language-cache-magic
+    };
 
     /**
      * saveCache is responsible for both creation and update of an entity
