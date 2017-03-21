@@ -267,7 +267,10 @@
             "location_value": "Within {{km}} km of {{value}}",
             "visible_to": "Visible to",
             "user": "User",
-            "unmapped": "Unmapped posts"
+            "has_location": "Post-locations",
+            "all_posts": "Show all posts",
+            "unmapped": "Show unmapped posts",
+            "mapped": "Show posts with a location"
         },
         "more" : "More",
         "keyword" : "Keyword",
