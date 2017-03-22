@@ -25,7 +25,7 @@ function LanguageSwitchController($rootScope, $scope, $translate, Languages, Con
     }
 
     function changeLanguage(code) {
-        ConfigEndpoint.saveLanguageToCache(code);
+        ConfigEndpoint.setLanguageCache(code);
         $translate.use(code).then(function (code) {
             Languages.then(function (languages) {
                 angular.forEach(languages, function (language) {

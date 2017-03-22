@@ -10,7 +10,6 @@ function (
     CacheFactory
 ) {
     var cache;
-
     if (!(cache = CacheFactory.get('configCache'))) {
         cache = new CacheFactory('configCache', { storageMode : 'memory' });
     }
@@ -41,8 +40,12 @@ function (
         cache.remove(Util.apiUrl('/config/' + params.id));
         return ConfigEndpoint.get(params);
     };
-    ConfigEndpoint.saveLanguageToCache = function (language) {
-        //do the language-cache-magic
+    ConfigEndpoint.setLanguageCache = function (language) {
+        cache.put('language', {language: language});
+    };
+
+    ConfigEndpoint.getLanguageCache = function () {
+        return cache.get('language');
     };
 
     /**
