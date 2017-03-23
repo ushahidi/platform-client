@@ -9,6 +9,10 @@ function (
         restrict: 'E',
         template: require('./attribute-editor.html'),
         link: function ($scope, $element, $attrs) {
+
+            $scope.defaultValueToggle = false;
+            $scope.descriptionToggle = false;
+
             $scope.closeModal = function () {
                 ModalService.close();
             };
