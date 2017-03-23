@@ -712,6 +712,7 @@
         "manage_tags" : "Manage Categories",
         "manage_users" : "Manage Users",
         "manage_roles" : "Manage Roles",
+        "manage_webhooks" : "Manage Webhooks",
         "manage_views" : "Manage Views",
         "manage_map_settings" : "Manage Map Settings",
         "manage_appearance_settings" : "Manage Appearance Settings",
@@ -749,7 +750,7 @@
             "roles_desc" : "Create and manage the type of permissions your users have on your deployment.",
             "categories" : "Categories",
             "categories_desc" : "Create and manage the categories people can put posts into for improved organization.",
-            "webhhoks" : "Webhooks",
+            "webhooks" : "Webhooks",
             "webhooks_desc" : "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."

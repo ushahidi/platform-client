@@ -18,6 +18,10 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.whereToNext = 'settings/webhooks';
 
+            // TODO: This should be set in the settings config table and retrieved from the API
+            $scope.event_types = ['create'];
+            $scope.entity_types = ['post'];
+
             WebhookEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (webhook) {
                 $scope.webhook = webhook;
 

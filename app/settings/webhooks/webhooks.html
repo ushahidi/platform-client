@@ -17,7 +17,7 @@
         </span>
     </div>
 
-    <main webhook="main">
+    <main role="main">
 
         <!-- toolbar -->
         <div class="toolbar">
@@ -36,20 +36,21 @@
 
             <div class="alert" ng-show="!webhooksEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom webhooks'}"></div>
 
-            <div class="alert" ng-hide="webhooks.length">
-                <p ng-hide="webhooks.length"><em translate>empty.webhook</em></p>
+            <div ng-show="webhooksEnabled">
+              <div class="alert" ng-hide="webhooks.length">
+                  <p ng-hide="webhooks.length"><em translate>empty.webhook</em></p>
+              </div>
+
+              <div class="listing card" ng-show="webhooks.length">
+                  <div class="listing-item" ng-repeat="webhook in webhooks | orderBy:'webhook'">
+                      <div class="listing-item-primary">
+                          <h2 class="listing-item-title"><a ng-href="/settings/webhooks/{{webhook.id}}">{{webhook.name}}</a></h2>
+                      </div>
+                  </div>
+              </div>
+
+              <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></uib-pagination>
             </div>
-
-            <div class="listing card" ng-show="webhooks.length" ng-show="webhooksEnabled">
-                <div class="listing-item" ng-repeat="webhook in webhooks | orderBy:'webhook'">
-                    <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a ng-href="/settings/webhooks/{{webhook.id}}">{{webhook.name}}</a></h2>
-                    </div>
-                </div>
-            </div>
-
-            <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></uib-pagination>
-
         </div>
     </main>
 </div>
