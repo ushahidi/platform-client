@@ -75,23 +75,7 @@ describe('post location directive', function () {
             expect(L.marker).toHaveBeenCalled();
             expect(marker.addTo).toHaveBeenCalledWith(map);
         });
-        it('should not clear search location term for failed searches', function () {
-            isolateScope.$apply(function () {
-                isolateScope.searchLocationTerm = 'Lorem';
-            });
-
-            spyOn(Geocoding, 'searchAllInfo').and.callFake(function (kupi) {
-                return {
-                    then: function (callback) {
-                        callback(false);
-                    }
-                };
-            });
-
-            isolateScope.searchLocation();
-            expect(isolateScope.searchLocationTerm).toEqual('Lorem');
-        });
-        it('should clear search location term for successful searches', function () {
+        it('should clear search location term when choosing a location', function () {
             isolateScope.$apply(function () {
                 isolateScope.searchLocationTerm = 'Ipsum';
             });
@@ -104,7 +88,7 @@ describe('post location directive', function () {
                 };
             });
 
-            isolateScope.searchLocation();
+            isolateScope.chooseLocation({lat: 1,lon: 2});
             expect(isolateScope.searchLocationTerm).toEqual('');
         });
         it('should call update model, marker position and map center', function () {

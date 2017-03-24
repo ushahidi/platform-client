@@ -584,7 +584,10 @@
             "youtube" : " Youtube",
             "current_url" : "Current image",
             "add_caption" : "Add caption",
-            "upload" : "Upload"
+            "upload" : "Upload",
+            "add_photo": "Add photo",
+            "delete_photo": "Delete photo",
+            "replace_image": "Replace image"
         },
         "video" : {
             "enter_a" : "Enter a",

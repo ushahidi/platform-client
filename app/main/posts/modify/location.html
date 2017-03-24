@@ -17,6 +17,7 @@
                     ng-disabled="processing" 
                     ng-focus="showSearchResults()" 
                     ng-keyup="showSearchResults()"
+                    ng-keydown="searchLocation()"
                 />
             </div>
             <div class="searchbar-results dropdown-menu" ng-class="{'active': showDropdown}">
@@ -30,7 +31,7 @@
                         </svg>
                         <span class="button-label" translate>location.search</span>
                     </button>
-                    <button class="button-beta button-plain" ng-click="chooseCurrentLocation()">
+                    <button class="button-beta button-plain" ng-click="chooseCurrentLocation()" ng-if="showCurrentPositionControl" >
                         <svg class="iconic">
                             <use 
                                 xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -42,9 +43,14 @@
                 </div>
              <div class="tool">
                     <h6 class="tool-heading" translate>location.search_results</h6>
-                    <dl class="dropdown-menu-body" ng-repeat="result in searchResults">
+                    <dl class="dropdown-menu-body" ng-repeat="result in searchResults" ng-if="searchResults.length > 0">
                         <dt class="list-item" ng-click="chooseLocation(result)">
                             <em>{{result.display_name}}</em>
+                        </dt>
+                    </dl>
+                    <dl class="dropdown-menu-body" ng-if="!searchResults">
+                        <dt class="list-item">
+                            No matching locations.
                         </dt>
                     </dl>
                 </div>
