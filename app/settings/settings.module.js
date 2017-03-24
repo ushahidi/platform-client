@@ -18,4 +18,7 @@ angular.module('ushahidi.settings', [])
 .directive('customRoles', require('./roles/roles.directive.js'))
 .directive('customRolesEditor', require('./roles/editor.directive.js'))
 
+.directive('customWebhooks', require('./webhooks/webhooks.directive.js'))
+.directive('customWebhooksEditor', require('./webhooks/editor.directive.js'))
+
 .config(require('./settings.routes.js'));

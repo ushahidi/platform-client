@@ -32,6 +32,7 @@ angular.module('ushahidi.common', [
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
 .service('RoleEndpoint', require('./services/endpoints/role.js'))
+.service('WebhookEndpoint', require('./services/endpoints/webhooks.js'))
 .service('PermissionEndpoint', require('./services/endpoints/permission.js'))
 .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
 .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
