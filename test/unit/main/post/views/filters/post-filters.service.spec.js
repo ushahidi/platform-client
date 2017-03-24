@@ -69,6 +69,7 @@ describe('Post Filters Service', function () {
                 date_after: '',
                 date_before: '',
                 status: ['archived', 'draft'],
+                has_location: 'all',
                 published_to: '',
                 center_point: '',
                 within_km: '1',
@@ -76,8 +77,7 @@ describe('Post Filters Service', function () {
                 tags: [1,3,4],
                 form: ['none'],
                 set: [],
-                user: false,
-                unmapped: ['unmapped', 'mapped']
+                user: false
             });
         });
 

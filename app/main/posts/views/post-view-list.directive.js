@@ -87,43 +87,17 @@ function PostListController(
 
     function getPosts(query) {
         query = query || PostFilters.getQueryParams($scope.filters);
-
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
-
         $scope.isLoading = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             // Add posts to full set of posts
             // @todo figure out if we can store these more efficiently
-
-            // TODO/question: feels like this logic should belong somewhere else in the application? But where?
-            // returning posts based on filter
-            var results = [];
-            if ($scope.filters.unmapped) {
-                if ($scope.filters.unmapped.includes('unmapped') && !$scope.filters.unmapped.includes('mapped')) {
-                    postsResponse.results.forEach(function (post) {
-                        if (!post.values.hasOwnProperty('message_location') && !post.values.hasOwnProperty('location_default')) {
-                            results.push(post);
-                        }
-                    });
-                } else if (!$scope.filters.unmapped.includes('unmapped') && $scope.filters.unmapped.includes('mapped')) {
-                    postsResponse.results.forEach(function (post) {
-                        if (post.values.hasOwnProperty('message_location') || post.values.hasOwnProperty('location_default')) {
-                            results.push(post);
-                        }
-                    });
-                } else if ($scope.filters.unmapped.includes('unmapped') && $scope.filters.unmapped.includes('mapped')) {
-                    results = postsResponse.results;
-                }
-            } else {
-                results = postsResponse.results;
-            }
-
-            Array.prototype.push.apply($scope.posts, results);
+            Array.prototype.push.apply($scope.posts, postsResponse.results);
             // Merge grouped posts into existing groups
-            angular.forEach(groupPosts(results), function (posts, group) {
+            angular.forEach(groupPosts(postsResponse.results), function (posts, group) {
                 if (angular.isArray($scope.groupedPosts[group])) {
                     Array.prototype.push.apply($scope.groupedPosts[group], posts);
                 } else {
@@ -131,7 +105,7 @@ function PostListController(
                 }
             });
 
-            $scope.totalItems = results.total_count;
+            $scope.totalItems = postsResponse.total_count;
             $scope.isLoading = false;
 
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {

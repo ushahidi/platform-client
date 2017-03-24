@@ -65,10 +65,10 @@ function PostFiltersService(_, FormEndpoint) {
             q: '',
             date_after: '',
             date_before: '',
-            unmapped: ['unmapped','mapped'],
             status: ['published', 'draft'],
             published_to: '',
             center_point: '',
+            has_location: 'all',
             within_km: '1',
             current_stage: [],
             tags: [],
@@ -102,7 +102,6 @@ function PostFiltersService(_, FormEndpoint) {
         } else {
             delete query.within_km;
         }
-
         return query;
     }
 

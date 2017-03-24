@@ -76,7 +76,7 @@
         </ul>
     </div>    
 </form>
-<div class="tool" ng-show="unmapped > 0 && location.path() === '/views/map'">
+<div class="tool" ng-show="unmapped > 0 && currentView === 'map'">
 <p>There are 
     <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.</p>
 </div>

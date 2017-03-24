@@ -18,7 +18,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
     $scope.canAddToSurvey = PostSurveyService.canCreatePostInSurvey;
-    $scope.PostFilters = PostFilters;
     $scope.unmapped = 0;
     $scope.location = $location;
     $scope.goToUnmapped = goToUnmapped;
@@ -29,8 +28,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
         // Load forms
         $scope.forms = FormEndpoint.query();
         var postCountRequest = PostEndpoint.stats({ group_by: 'form', status: 'all' });
-        // todo: can I limit this to only returning 'unmapped'?
-        // todo: How about the requests? Do I need to check auth first before searching for draft?
         var unmappedRequest = PostEndpoint.geojson({status: ['published', 'draft']});
         $q.all([$scope.forms.$promise, postCountRequest.$promise, unmappedRequest.$promise]).then(function (responses) {
             if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
@@ -66,7 +63,10 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     }
 
     function goToUnmapped() {
-        $scope.PostFilters.setFilters({unmapped: ['unmapped']});
+        var filters = PostFilters.getDefaults();
+        filters.form.push('none');
+        filters.has_location = 'unmapped';
+        PostFilters.setFilters(filters);
         $location.path('/views/list');
     }
     function hide(formId) {
