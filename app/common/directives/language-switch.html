@@ -1,6 +1,11 @@
- <div class="form-field">
-     <label translate>settings.site_language</label>
-     <div class="custom-select">
-        <select ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages" ng-change="changeLanguage(site.language)"></select>
-     </div>
-</div>
+	<div class="form-field select">
+	    <div class="custom-select">
+	        <select 
+                ng-model="site.language" 
+                ng-options="lang.code as lang.name for lang in languages"
+                ng-change="changeLanguage(site.language)"
+            >
+                <option value="">Select language</option>
+            </select>
+	    </div>
+	</div>

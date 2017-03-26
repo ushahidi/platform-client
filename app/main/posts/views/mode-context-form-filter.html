@@ -75,7 +75,7 @@
             <li><a translate="post.hide_unknown_form" ng-click="hide('none')">Hide Unknown</a></li>
         </ul>
     </div>
-
+    
     <div class="form-field" ng-show="hasManageSettingsPermission()">
         <a ng-href="/settings/surveys/create" class="button button-link">
             <svg class="iconic">
@@ -85,3 +85,19 @@
         </a>
     </div>
 </form>
+
+ <div class="tool">
+            <h6 class="tool-heading">Language</h6>
+            <span class="tool-trigger init" ng-class="{'active': showLanguage}" ng-click="languageToggle()">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                </svg>
+                <span class="label hidden">Show/hide</span>
+            </span>
+            <div
+                class="toggle-content"
+                ng-class="{'active': showLanguage}"
+                >
+            <language-switch></language-switch>
+            </div>
+    </div>
