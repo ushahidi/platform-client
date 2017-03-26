@@ -12,10 +12,11 @@ function LanguageSwitchDirective() {
         template: require('./language-switch.html')
     };
 }
-LanguageSwitchController.$inject = ['$rootScope','$scope', '$translate', 'Languages', 'ConfigEndpoint'];
-function LanguageSwitchController($rootScope, $scope, $translate, Languages, ConfigEndpoint) {
+LanguageSwitchController.$inject = ['$scope', 'Languages', 'TranslationService'];
+function LanguageSwitchController($scope, Languages, TranslationService) {
     $scope.changeLanguage = changeLanguage;
-
+    $scope.$on('event:authentication:login:succeeded', TranslationService.setStartLanguage);
+    $scope.$on('event:authentication:logout:succeeded', TranslationService.setStartLanguage);
     activate();
 
     function activate() {
@@ -25,16 +26,8 @@ function LanguageSwitchController($rootScope, $scope, $translate, Languages, Con
     }
 
     function changeLanguage(code) {
-        ConfigEndpoint.setLanguageCache(code);
-        $translate.use(code).then(function (code) {
-            Languages.then(function (languages) {
-                angular.forEach(languages, function (language) {
-                    if (language.code === code) {
-                        $rootScope.rtlEnabled = language.rtl;
-                    }
-                });
-            });
-        });
+        TranslationService.setLanguage(code);
+        TranslationService.translate(code);
     }
 }
 
