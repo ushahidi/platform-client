@@ -74,9 +74,9 @@ function (
 
             // Append to the correct form
             angular.foreach($scope.forms, function (form) {
-              if (form.id === $scope.currentForm.id) {
-                  form.attributes = attributes;
-              }
+                if (form.id === $scope.currentForm.id) {
+                    form.attributes = attributes;
+                }
             });
         });
     };
