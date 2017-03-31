@@ -9,6 +9,7 @@ function (
         restrict: 'E',
         template: require('./attribute-editor.html'),
         link: function ($scope, $element, $attrs) {
+            $scope.displayFieldDescription = true;
             $scope.closeModal = function () {
                 ModalService.close();
             };
@@ -18,7 +19,7 @@ function (
             };
 
             $scope.canDisplay = function () {
-                return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
+                return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags';
             };
         }
     };

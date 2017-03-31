@@ -22,6 +22,7 @@ SurveyEditorController.$inject = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'RoleEndpoint',
+    'TagEndpoint',
     '_',
     'Notify',
     'SurveyNotify',
@@ -38,6 +39,7 @@ function SurveyEditorController(
     FormStageEndpoint,
     FormAttributeEndpoint,
     RoleEndpoint,
+    TagEndpoint,
     _,
     Notify,
     SurveyNotify,
@@ -145,6 +147,7 @@ function SurveyEditorController(
         }
 
         loadAvailableForms();
+        loadAvailableCategories();
 
         if (!$scope.surveyId) {
             $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
@@ -191,6 +194,15 @@ function SurveyEditorController(
         // Get available forms for relation field
         FormEndpoint.query().$promise.then(function (forms) {
             $scope.availableForms = forms;
+        });
+    }
+    function loadAvailableCategories() {
+        var params = {};
+        if ($scope.surveyId) {
+            params.formId = $scope.surveyId;
+        }
+        TagEndpoint.queryFresh(params).$promise.then(function (tags) {
+            $scope.availableCategories = tags;
         });
     }
 
@@ -483,6 +495,9 @@ function SurveyEditorController(
     }
 
     function saveSurvey() {
+        if (!$scope.surveyId) {
+            $scope.survey.tags = extractTags();
+        }
         // Saving a survey is a 3 step process
 
         // First save the actual survey
@@ -532,9 +547,24 @@ function SurveyEditorController(
         }, handleResponseErrors);
     }
 
+    function extractTags() {
+        var tags = [];
+        $scope.survey.tasks.forEach(function (task) {
+            task.attributes.forEach(function (attribute) {
+                if (attribute.input === 'tags') {
+                    attribute.options.forEach(function (tag) {
+                        if (tags.indexOf(tag) < 0) {
+                            tags.push(tag);
+                        }
+                    });
+                }
+            });
+        });
+        return tags;
+    }
+
     function saveAttributes() {
         var calls = [];
-
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
                 attribute.form_stage_id = task.id;

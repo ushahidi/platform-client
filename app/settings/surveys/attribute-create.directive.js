@@ -127,6 +127,12 @@ function (
                     type: 'markdown',
                     input: 'markdown',
                     description: $translate.instant('survey.markdown_desc')
+                },
+                {
+                    label: 'Categories',
+                    type: 'varchar',
+                    input: 'tags',
+                    description: $translate.instant('survey.category_desc')
                 }
             ];
         }
