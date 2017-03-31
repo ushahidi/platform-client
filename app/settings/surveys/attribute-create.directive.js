@@ -131,6 +131,7 @@ function (
                 {
                     label: 'Categories',
                     type: 'varchar',
+                    cardinality: 0,
                     input: 'tags',
                     description: $translate.instant('survey.category_desc')
                 }
