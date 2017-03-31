@@ -40,14 +40,11 @@ function (
     $scope.saving = false;
     $scope.settings = {};
     $scope.available_providers = [];
+    $scope.formEnabled = [];
     $scope.forms = {};
     $scope.formsSubmitted = {};
     $scope.panelVisible = {};
     $scope.selectedForm = {};
-
-    FormEndpoint.query().$promise.then(function (response) {
-        $scope.forms = response;
-    });
 
     // Translate and set page title.
     $translate('settings.data_sources.data_sources').then(function (title) {
@@ -59,56 +56,58 @@ function (
 
         $scope.currentForm = form;
 
-        if (form.attributes) {
+        if ($scope.currentForm.attributes) {
             return;
         }
-        // Get Attributes if not previously loaded
-        FormAttributeEndpoint.get({form_id: form.id}).$promise.then(function (result) {
-            // Ignore non-text fields
-            var attributes = [];
-            angular.foreach(result, function (attribute) {
-                if (attribute.type === 'text') {
-                    attributes.push(attribute);
-                }
-            });
 
-            // Append to the correct form
-            angular.foreach($scope.forms, function (form) {
-                if (form.id === $scope.currentForm.id) {
-                    form.attributes = attributes;
-                }
+        $scope.currentForm.attributes = [];
+
+        // Get Attributes if not previously loaded
+        FormAttributeEndpoint.query({formId: form.id}).$promise.then(function (results) {
+            // Ignore non-text fields
+            $scope.currentForm.attributes = _.filter(results, function (attribute) {
+                return _.contains(['text', 'markdown', 'description'], attribute.type);
             });
         });
     };
 
     $scope.setSelectedForm = function (form, provider_id) {
         $scope.settings[provider_id].form_id = form.id;
+        $scope.selectedForm[provider_id] = form.name;
+        $scope.getFormAttributes(form);
     };
 
     $scope.isSelectedForm = function (form_id, provider_id) {
-        if ($scope.settings[provider_id].form_id) {
-            return $scope.settings[provider_id].form_id === form_id;
+        if ($scope.settings[provider_id]) {
+            if ($scope.settings[provider_id].form_id) {
+                return $scope.settings[provider_id].form_id === form_id;
+            }
         }
         return false;
     };
 
     $scope.toggleFormAssociation = function (provider_id) {
-        $scope.setFormEnabled = !$scope.setFormEnabled;
-        if ($scope.settings[provider_id].form_id) {
-            $scope.settings[provider_id].form_id = undefined;
-            if ($scope.settings[provider_id].form_destination_field_uuid) {
+        if ($scope.formEnabled[provider_id]) {
+            if ($scope.settings[provider_id]) {
+                $scope.settings[provider_id].form_id = undefined;
                 $scope.settings[provider_id].form_destination_field_uuid = undefined;
             }
         }
+        $scope.formEnabled[provider_id] = !$scope.formEnabled[provider_id];
     };
 
+
     $scope.setAttributeUUID = function (attribute_key, provider_id) {
+
         $scope.settings[provider_id].form_destination_field_uuid = attribute_key;
+
     };
 
     $scope.isSelectedAttribute = function (attribute_key, provider_id) {
-        if ($scope.settings[provider_id].form_destination_field_uuid) {
-            return $scope.settings[provider_id].form_destination_field_uuid === attribute_key;
+        if ($scope.settings[provider_id]) {
+            if ($scope.settings[provider_id].form_destination_field_uuid) {
+                return $scope.settings[provider_id].form_destination_field_uuid === attribute_key;
+            }
         }
         return false;
     };
@@ -155,9 +154,31 @@ function (
         }
     };
 
-    $q.all([DataProviderEndpoint.queryFresh().$promise, ConfigEndpoint.get({ id: 'data-provider' }).$promise]).then(function (response) {
+    $q.all([
+      DataProviderEndpoint.queryFresh().$promise,
+      ConfigEndpoint.get({ id: 'data-provider' }).$promise,
+      FormEndpoint.query().$promise,
+      Features.loadFeatures()
+    ]).then(function (response) {
         $scope.providers = response[0];
         $scope.settings = response[1];
+        $scope.forms = response[2];
+        $scope.available_providers = response[3]['data-providers'];
+
+        // Enable form elements as appropriate
+        _.forEach($scope.settings, function (provider, name) {
+            if (provider.form_id) {
+                $scope.toggleFormAssociation(name);
+                var form = _.find($scope.forms, function (form) {
+                    return form.id === provider.form_id;
+                });
+                $scope.setSelectedForm(form, name);
+            }
+
+            if (provider.form_destination_field_uuid) {
+                $scope.setAttributeUUID(provider.form_destination_field_uuid, name);
+            }
+        });
 
         // Keep track of providers with saved settings
         $scope.savedProviders = {};
@@ -167,9 +188,5 @@ function (
                 addSavedProvider(provider.id);
             }
         });
-    });
-
-    Features.loadFeatures().then(function (features) {
-        $scope.available_providers = features['data-providers'];
     });
 }];

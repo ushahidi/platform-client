@@ -108,9 +108,12 @@ function (
             };
 
             $scope.generateApiKey = function () {
-                var persist = $scope.api_key ? ApiKeyEndpoint.update($scope.api_key) : ApiKeyEndpoint.save();
-                persist.$promise.then(function (result) {
-                    $scope.api_key = result;
+                Notify.confirmModal('notify.api_key.change_question').
+                then(function () {
+                    var persist = $scope.api_key ? ApiKeyEndpoint.update($scope.api_key) : ApiKeyEndpoint.save();
+                    persist.$promise.then(function (result) {
+                        $scope.api_key = result;
+                    });
                 });
             };
 

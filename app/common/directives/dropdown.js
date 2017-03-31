@@ -20,10 +20,6 @@ angular.module('ushahidi.common.dropdown', ['ui.bootstrap.position'])
             $document.bind('keydown', keybindFilter);
         }
 
-        if (openScope && openScope !== dropdownScope) {
-            openScope.isOpen = false;
-        }
-
         openScope = dropdownScope;
     };
 

@@ -758,6 +758,8 @@
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
         "data_sources": {
+            "associate_with_form" : "Import to survey",
+            "associate_with_form_desc" : "All incoming data from {{provider}} will be used to create responses to the survey you choose",
             "data_sources": "Data Sources",
             "enable_provider_message" : "Accept survey submissions from this source",
             "hint_turn_on_off": "You can configure options for data sources, and then turn sources on and off.",
@@ -921,6 +923,9 @@
         "role": "Role"
     },
     "notify": {
+        "api_key" : {
+            "change_question" : "Are you sure you want to change the API Key?"
+        },
         "contact" : {
             "save_success" : "Contact saved",
             "delete_confirm" : "Do you want to remove your account?",
