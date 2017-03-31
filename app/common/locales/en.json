@@ -728,6 +728,8 @@
         "saved_map_settings": "Map Settings saved."
     },
     "settings": {
+        "api_key" : "API Key",
+        "api_key_desc" : "The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.",
         "appearance" : "Appearance Settings",
         "continue" : "Continue",
         "current_header" : "Current background image",

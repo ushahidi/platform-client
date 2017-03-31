@@ -108,9 +108,9 @@ function (
             };
 
             $scope.generateApiKey = function () {
-                var persist = $scope.api_key.id ? ApiKeyEndpoint.update : ApiKeyEndpoint.save;
-                persist($scope.api_key).$promise.then(function (result) {
-                    $scope.api_key = result.api_key;
+                var persist = $scope.api_key ? ApiKeyEndpoint.update($scope.api_key) : ApiKeyEndpoint.save();
+                persist.$promise.then(function (result) {
+                    $scope.api_key = result;
                 });
             };
 
