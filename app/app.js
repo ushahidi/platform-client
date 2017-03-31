@@ -38,6 +38,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
+        'apikeys',
         'posts',
         'media',
         'forms',

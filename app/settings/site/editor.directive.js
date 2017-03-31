@@ -5,6 +5,7 @@ module.exports = [
     '$location',
     '$rootScope',
     'ConfigEndpoint',
+    'ApiKeyEndpoint',
     '_',
     'Notify',
     'Maps',
@@ -18,6 +19,7 @@ function (
     $location,
     $rootScope,
     ConfigEndpoint,
+    ApiKeyEndpoint,
     _,
     Notify,
     Maps,
@@ -43,6 +45,11 @@ function (
 
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
+            });
+
+            // Get API Key
+            ApiKeyEndpoint.query().$promise.then(function (results) {
+                $scope.api_key = results[0];
             });
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
@@ -98,6 +105,13 @@ function (
                 }
 
                 return dfd.promise;
+            };
+
+            $scope.generateApiKey = function () {
+                var persist = $scope.api_key.id ? ApiKeyEndpoint.update : ApiKeyEndpoint.save;
+                persist($scope.api_key).$promise.then(function (result) {
+                    $scope.api_key = result.api_key;
+                });
             };
 
             $scope.updateConfig = function () {

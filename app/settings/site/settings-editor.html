@@ -87,6 +87,18 @@
                          <label for="private" translate>settings.site_private</label>
                     </div>
 
+                    <div class="form-field">
+                      <button type="button" class="button-beta" ng-click="generateApiKey()">
+                        <svg class="iconic">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../img/iconic-sprite.svg#plus"></use>
+                        </svg>
+                        <span class="button-label hidden-when-small">
+                          Generate API Key
+                        </span>
+                      </button>
+                      <span ng-show="api_key" class="bug">{{api_key.api_key}}</span>
+                    </div>
+
                     <settings-map config="map"></settings-map>
                 </div>
 

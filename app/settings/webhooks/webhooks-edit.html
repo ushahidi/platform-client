@@ -45,6 +45,11 @@
                        <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
                    </div>
 
+                   <div class="form-field" ng-show="webhook.webhool_uuid">
+                       <label class="hidden" translate>webhook.uuid</label>
+                       <input type="text" class="disabled" ng-maxlength="150" ng-model="webhook.webhook_uuid">
+                   </div>
+
                    <div class="form-field">
                        <label translate>webhook.shared_secret</label>
                        <textarea name="description" data-min-rows='1' rows='1' ng-model="webhook.shared_secret" required></textarea>
