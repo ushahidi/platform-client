@@ -1,0 +1,31 @@
+<div class="form-field inline" ng-class="{'hidden': !showInput}">
+    <label class="hidden">Category name</label>
+        <input
+            type="text"
+            placeholder="Category name..."
+            style="width: 240px;"
+            ng-model="categoryName"
+        />
+        <button
+            class="button-alpha button-flat"
+            ng-disabled="categoryName.length === 0"
+            ng-click="saveCategory($event);"
+        >
+            <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#check"></use>
+            </svg>
+        <span class="hidden">Add</span>
+        </button>
+        <button
+            class="button-beta button-flat"
+            ng-click="showInputToggle()"
+        >
+            <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#trash"></use>
+            </svg>
+            <span class="hidden">Delete</span>
+        </button>
+</div>
+<div class="form-field init" ng-click="showInputToggle()">
+    <a data-toggle="add-label">+ Add new category</a>
+</div> 
