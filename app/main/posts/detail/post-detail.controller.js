@@ -81,12 +81,14 @@ function (
         $q.all([
             FormEndpoint.get({id: $scope.post.form.id}),
             FormStageEndpoint.query({formId:  $scope.post.form.id}).$promise,
-            FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise
+            FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise,
+            TagEndpoint.query({formId: $scope.post.form.id}).$promise
         ]).then(function (results) {
             $scope.form = results[0];
             $scope.form_name = results[0].name;
             $scope.form_description = results[0].description;
             $scope.form_color = results[0].color;
+            $scope.tags = results[3];
 
             // Set page title to '{form.name} Details' if a post title isn't provided.
             if (!$scope.post.title) {
@@ -173,14 +175,10 @@ function (
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
 
-    // Replace tags with full tag object
-    $scope.post.tags = $scope.post.tags.map(function (tag) {
-        return TagEndpoint.get({id: tag.id, ignore403: true});
-    });
 
     $scope.getTagNames = function (tagIds) {
         var tags = [];
-        $scope.post.tags.forEach(function (tag) {
+        $scope.tags.forEach(function (tag) {
             if (tagIds.indexOf(tag.id.toString() > -1)) {
                 tags.push(tag.tag);
             }
