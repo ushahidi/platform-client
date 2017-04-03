@@ -46,7 +46,6 @@ function (
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
-
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
@@ -57,6 +56,7 @@ function (
 
         return 'post.publish_for_everyone';
     };
+
 
     $scope.stageIsComplete = function (stageId) {
         return _.includes($scope.post.completed_stages, stageId);
@@ -108,6 +108,11 @@ function (
             attributes = (attributes.length) ? attributes : attrs;
 
             angular.forEach(attributes, function (attr) {
+                // adding tag-labels instead of id
+                if (attr.input === 'tags') {
+                    $scope.post.values[attr.key] = $scope.getTagNames($scope.post.values[attr.key]);
+                }
+
                 this[attr.key] = attr;
 
             }, $scope.form_attributes);
@@ -141,8 +146,13 @@ function (
             // Figure out which tasks have values
             $scope.tasks_with_attributes = [];
             _.each($scope.post.values, function (value, key) {
+
                 if ($scope.form_attributes[key]) {
                     $scope.tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
+                }
+                if ($scope.form_attributes[key].input === 'tags') {
+                    // adding tag-labels instead of id
+                    $scope.post.values[key] = $scope.getTagNames($scope.post.values[key]);
                 }
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
@@ -167,6 +177,16 @@ function (
     $scope.post.tags = $scope.post.tags.map(function (tag) {
         return TagEndpoint.get({id: tag.id, ignore403: true});
     });
+
+    $scope.getTagNames = function (tagIds) {
+        var tags = [];
+        $scope.post.tags.forEach(function (tag) {
+            if (tagIds.indexOf(tag.id.toString() > -1)) {
+                tags.push(tag.tag);
+            }
+        });
+        return tags;
+    };
 
     $scope.showType = function (type) {
         if (type === 'point') {
