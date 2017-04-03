@@ -251,9 +251,8 @@ function PostEditorController(
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             if ($scope.tagKeys.length > 0) {
                 // adding neccessary tags to post.tags, needed for filtering
-                post.tags = [];
                 $scope.tagKeys.forEach(function (tagKey) {
-                    post.tags.concat(post.values[tagKey]);
+                    post.tags = post.tags.concat(post.values[tagKey]);
                 });
                 post.tags = _.uniq(post.tags);
             }

@@ -7,7 +7,8 @@ function AddLabelDirective() {
         restrict: 'E',
         scope: {
             formId: '=',
-            attribute: '='
+            attribute: '=',
+            postValue: '='
         },
         controller: AddLabelController,
         template: require('./add-category.html')
@@ -16,7 +17,6 @@ function AddLabelDirective() {
 AddLabelController.$inject = ['$scope', 'TagEndpoint', 'FormAttributeEndpoint'];
 
 function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint) {
-
     $scope.showInput = false;
     $scope.categoryName = '';
     $scope.category = {
@@ -40,6 +40,8 @@ function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint) {
             if (response.id) {
                 // adding new tag to render it in checklist
                 $scope.attribute.options.push(response);
+                $scope.postValue.push(response.id);
+
                 // copying original attribute to be able to extract option.ids
                 var attribute = angular.copy($scope.attribute);
                 attribute.options = attribute.options.map(function (option) {

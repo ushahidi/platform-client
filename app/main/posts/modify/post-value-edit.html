@@ -207,10 +207,13 @@
             >
                 {{option.tag}}
         </label>
-    </div> <add-category
+    </div> 
+    <add-category
       form-id="post.form.id"
       attribute="attribute"
+      post-value="post.values[attribute.key]"
     ></add-category>
+    </div>
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
