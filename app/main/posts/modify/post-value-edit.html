@@ -186,11 +186,27 @@
                 id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.id}}_{{option}}"
                 checklist-value="option"
-                value="option">
+                value="option"
+              >
                 {{option}}
           </label>
         </div>
       </div>
+     
+    <!-- type: categories -->
+      <div ng-switch-when="tags">
+        <div class=form-field checkbox" ng-repeat="option in attribute.options">
+        <label>
+          <input 
+               type="checkbox"
+                checklist-model="post.values[attribute.key]"
+                id="values[{{attribute.key}}][{{key}}]"
+                name="values_{{attribute.id}}_{{option}}"
+                checklist-value="option.id"
+                value="option.id"
+            >
+                {{option.tag}}
+        </label>
     </div>
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">

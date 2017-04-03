@@ -10,7 +10,8 @@ function PostValueEdit() {
             post: '=',
             attribute: '=',
             postField: '=',
-            medias: '='
+            medias: '=',
+            categories: '='
         },
         controller: PostValueEditController,
         template: require('./post-value-edit.html')
@@ -28,7 +29,8 @@ function PostValueEditController(
 ) {
     var fieldSetAttributes = [
         'checkbox',
-        'radio'
+        'radio',
+        'tags'
     ];
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
@@ -46,7 +48,6 @@ function PostValueEditController(
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
     $scope.isFieldSetStructure = isFieldSetStructure;
-
     activate();
 
     function activate() {
