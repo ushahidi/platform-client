@@ -5,7 +5,19 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback([{
                         name: 'test tag',
-                        id: 1
+                        id: 1,
+                        forms: [1]
+                    }]);
+                }
+            }};
+        },
+        queryFresh: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback([{
+                        name: 'test tag',
+                        id: 1,
+                        forms: [1]
                     }]);
                 }
             }};
@@ -15,7 +27,8 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback({
                         name: 'test tag',
-                        id: 1
+                        id: 1,
+                        forms: [1]
                     });
                 }
             }};
@@ -34,6 +47,5 @@ module.exports = [function () {
                 }
             }};
         }
-
     };
 }];
