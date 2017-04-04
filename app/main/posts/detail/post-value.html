@@ -8,7 +8,8 @@
           <a ng-href="/posts/{{entry.id}}">{{entry.title}}</a>
       </div>
       <div ng-repeat="entry in value" ng-if="attribute.type !== 'relation'">
-          <p>{{entry}}</p>
+          <p ng-if="attribute.type !== 'markdown'">{{entry}}</p>
+          <p ng-if="attribute.type === 'markdown'" markdown-to-html="entry"></p>
       </div>
     </div>
 

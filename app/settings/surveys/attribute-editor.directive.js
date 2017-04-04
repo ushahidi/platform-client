@@ -17,7 +17,7 @@ function (
                 ModalService.close();
             };
 
-            $scope.canDelete = function () {
+            $scope.onlyOptional = function () {
                 return $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
             };
 

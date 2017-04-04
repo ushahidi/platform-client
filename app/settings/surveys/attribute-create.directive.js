@@ -121,6 +121,12 @@ function (
                     type: 'varchar',
                     input: 'video',
                     description: $translate.instant('survey.video_desc')
+                },
+                {
+                    label: 'Markdown',
+                    type: 'markdown',
+                    input: 'markdown',
+                    description: $translate.instant('survey.markdown_desc')
                 }
             ];
         }

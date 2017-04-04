@@ -41,9 +41,9 @@
                </li>
             </ul>
         </div>
-
-       <div class="form-field switch">
-          <label translate="survey.required_field">Required</label>
+   </div>
+    <div class="form-field switch" ng-show="onlyOptional()">
+          <label translate="survey.require_field">Require this field be completed</label>
           <div class="toggle-switch">
              <input class="tgl" id="switchnewattribute" type="checkbox" ng-model="editAttribute.required">
              <label class="tgl-btn" for="switchnewattribute"></label>
@@ -74,7 +74,7 @@
           </div>
        </div>
    </div>
-   <div class="form-sheet" ng-show="editAttribute.form_stage_id" ng-show="canDelete()">
+   <div class="form-sheet" ng-show="editAttribute.form_stage_id" ng-show="onlyOptional()">
        <div class="form-sheet-summary">
            <h3 class="form-sheet-title" translate="survey.delete.delete_this_field">Delete this field</h3>
        </div>

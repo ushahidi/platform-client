@@ -53,6 +53,9 @@
         "roles" : "Roles",
         "edit_role" : "Edit Role",
         "add_role" : "Add Role",
+        "webhooks" : "Webhooks",
+        "edit_webhook" : "Edit Webhook",
+        "add_webhook" : "Add Webhook",
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "add_category" : "Add Category",
@@ -198,6 +201,7 @@
         "relation_desc" : "Create a relation between different surveys",
         "upload_desc" : "Allows image(s) to be uploaded to the post",
         "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
+        "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
         "show_field_description" : "Show field description",
         "add_task" : "Add task",
@@ -405,6 +409,8 @@
         "profile": "My Profile",
         "role" : "Role",
         "roles" : "Roles",
+        "webhook" : "Webhook",
+        "webhooks" : "Webhooks",
         "saved_searches" : "Saved Searches",
         "search" : "Search",
         "select_all" : "Select all",
@@ -419,8 +425,6 @@
         "unselect_all" : "Unselect All",
         "user" : "User",
         "users" : "Users",
-        "role" : "Role",
-        "roles" : "Roles",
         "views" : "Views",
         "more" : "More",
         "yesterday" : "Yesterday"
@@ -639,6 +643,20 @@
         "everyone" : "Everyone",
         "just_you" : "Just you"
     },
+    "webhook": {
+        "add_webhook" : "Add Role",
+        "edit_webhook" : "Edit Role",
+        "name" : "Name",
+        "shared_secret" : "Shared Secret",
+        "url" : "API URL",
+        "entity_type" : "Entity Type",
+        "event_type" : "Event Type",
+        "save" : "Save Role",
+        "save_add_another" : "Save & Add Another",
+        "delete" : "Delete",
+        "delete_webhook" : "Delete this webhook",
+        "delete_webhook_desc" : "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution."
+    },
     "saved_search": {
         "visible_to_public" : "This Saved Search is visible to the public",
         "visible_to_you": "This Saved Search is visible to just you and admins",
@@ -718,6 +736,7 @@
         "manage_tags" : "Manage Categories",
         "manage_users" : "Manage Users",
         "manage_roles" : "Manage Roles",
+        "manage_webhooks" : "Manage Webhooks",
         "manage_views" : "Manage Views",
         "manage_map_settings" : "Manage Map Settings",
         "manage_appearance_settings" : "Manage Appearance Settings",
@@ -755,6 +774,8 @@
             "roles_desc" : "Create and manage the type of permissions your users have on your deployment.",
             "categories" : "Categories",
             "categories_desc" : "Create and manage the categories people can put posts into for improved organization.",
+            "webhooks" : "Webhooks",
+            "webhooks_desc" : "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
@@ -1009,6 +1030,11 @@
             "save_success" : "Role {{role}} saved.",
             "last_admin" : "You can not delete the only admin role"
         },
+        "webhook" : {
+            "delete_question" : "Are you sure you want to delete the webhook {{webhook}}?",
+            "destroy_success" : "Webhook {{webhook}} deleted.",
+            "save_success" : "Webhook {{webhook}} saved."
+        },
         "datasource" : {
             "save_success" : "Saved Data Source {{name}}"
         },
@@ -1070,6 +1096,7 @@
         "user" : "No users found.",
         "category" : "No categories found.",
         "role" : "No roles found.",
+        "webhook" : "No webhooks found.",
         "permission" : "No permissions found.",
         "form": "No forms found."
     },

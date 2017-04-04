@@ -69,6 +69,18 @@ function (
         controller: require('./roles/roles.controller.js'),
         template: require('./roles/roles-edit.html')
     })
+    .when('/settings/webhooks', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks.html')
+    })
+    .when('/settings/webhooks/create', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks-edit.html')
+    })
+    .when('/settings/webhooks/:id', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks-edit.html')
+    })
     .when('/settings/datasources', {
         controller: require('./datasources/datasources.controller.js'),
         template: require('./datasources/datasources.html')
