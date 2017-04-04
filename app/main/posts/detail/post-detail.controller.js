@@ -174,8 +174,17 @@ function (
         return $scope.form_attributes[key] && $scope.post_task &&
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
-
-
+    $scope.formatTags = function (tags) {
+        var formatedTags = '';
+        tags.forEach(function (tag, index) {
+            if (index < tags.length - 1) {
+                formatedTags += tag + ', ';
+            } else {
+                formatedTags += tag;
+            }
+        });
+        return formatedTags;
+    };
     $scope.getTagNames = function (tagIds) {
         var tags = [];
         $scope.tags.forEach(function (tag) {

@@ -249,6 +249,7 @@ function PostEditorController(
                 $scope.post.values.message_location = [];
             }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+            post.tags = [];
             if ($scope.tagKeys.length > 0) {
                 // adding neccessary tags to post.tags, needed for filtering
                 $scope.tagKeys.forEach(function (tagKey) {

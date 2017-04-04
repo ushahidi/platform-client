@@ -71,8 +71,7 @@
                     <svg class="iconic" style="margin-right:4px;">
                         <use xlink:href="/img/iconic-sprite.svg#tag"></use>
                     </svg>
-                    <span ng-repeat="tag in post.values[key]">
-                      {{tag}}
+                    {{formatTags(post.values[key])}}
                     </span>
             </div>
         </div>
