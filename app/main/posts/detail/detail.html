@@ -94,18 +94,35 @@
     </article>
 
     <div class="listing card init" ng-show="tasks.length">
-      <h3 class="listing-heading">{{stage.label}}</h3>
-        <div class="listing-item">
+        <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
+
+        <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
+          <ul>
+            <li
+              ng-repeat="task in tasks"
+              ng-class="{'active': visibleTask == task.id}"  >
+              <a ng-click="activateTaskTab(task.id)">
+                {{task.label}}
+              </a>
+              <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
+              </span>
+            </li>
+          </ul>
+        </nav>
+        <div class="listing-item tasks-tabs tabs-target active">
           <div class="alert"
               ng-repeat="task in tasks"
-              ng-if="!taskHasValues(task)">
+              ng-if="!taskHasValues(task)"
+              ng-show="task.id === visibleTask">
                 <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
           </div>
           <div
             ng-repeat="(key,value) in post.values"
             ng-if="form_attributes[key].type === 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
             class="listing-item-primary"
             >
+
             <post-media-value
               label="{{form_attributes[key].label}}"
               media-id="value"></post-media-value>
@@ -113,6 +130,7 @@
           <div
             ng-repeat="(key,value) in post.values"
             ng-if="form_attributes[key].type !== 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
             >
             <post-value
               key="key"
