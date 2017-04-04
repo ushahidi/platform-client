@@ -625,6 +625,7 @@
     "webhook": {
         "add_webhook" : "Add Role",
         "edit_webhook" : "Edit Role",
+        "uuid" : "Webhook UUID",
         "name" : "Name",
         "shared_secret" : "Shared Secret",
         "url" : "API URL",

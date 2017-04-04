@@ -45,9 +45,9 @@
                        <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
                    </div>
 
-                   <div class="form-field" ng-show="webhook.webhool_uuid">
-                       <label class="hidden" translate>webhook.uuid</label>
-                       <input type="text" class="disabled" ng-maxlength="150" ng-model="webhook.webhook_uuid">
+                   <div class="form-field" ng-show="webhook.webhook_uuid">
+                       <label translate>webhook.uuid</label>
+                       <input type="text" class="disabled" disabled=true ng-maxlength="150" ng-model="webhook.webhook_uuid">
                    </div>
 
                    <div class="form-field">
