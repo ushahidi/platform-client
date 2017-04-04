@@ -203,6 +203,9 @@
         "require_task" : "Require this task be completed before a post can be visible to the public",
         "survey_permissions": "Survey permissions",
         "who_can_add": "Who can add to this survey",
+        "survey_field": "Survey field",
+        "choose_survey_field": "Choose what should be assigned to each survey field",
+        "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from your tweets that you'd like to use to populate each of those fields.",
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
             "delete" : "Delete survey",

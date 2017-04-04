@@ -52,29 +52,39 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    $scope.getFormAttributes = function (form) {
+    $scope.allowedTypeMapping = function (field_type, attribute_type) {
+        if (field_type === attribute_type) {
+            return true;
+        }
 
-        $scope.currentForm = form;
+        var allowed_text_types = ['text', 'varchar', 'title', 'description', 'markdown'];
+        if (field_type === 'text' && _.contains(allowed_text_types, attribute_type)) {
+            return true;
+        }
 
-        if ($scope.currentForm.attributes) {
+        return false;
+    };
+
+    $scope.getFormAttributes = function (form, provider_id) {
+
+        $scope.selectedForm[provider_id] = form;
+
+        if ($scope.selectedForm[provider_id].attributes) {
             return;
         }
 
-        $scope.currentForm.attributes = [];
+        $scope.selectedForm[provider_id].attributes = [];
 
         // Get Attributes if not previously loaded
         FormAttributeEndpoint.query({formId: form.id}).$promise.then(function (results) {
-            // Ignore non-text fields
-            $scope.currentForm.attributes = _.filter(results, function (attribute) {
-                return _.contains(['text', 'markdown', 'description'], attribute.type);
-            });
+            $scope.selectedForm[provider_id].attributes = results;
         });
     };
 
     $scope.setSelectedForm = function (form, provider_id) {
         $scope.settings[provider_id].form_id = form.id;
-        $scope.selectedForm[provider_id] = form.name;
-        $scope.getFormAttributes(form);
+        $scope.selectedForm[provider_id] = form;
+        $scope.getFormAttributes(form, provider_id);
     };
 
     $scope.isSelectedForm = function (form_id, provider_id) {
@@ -94,22 +104,6 @@ function (
             }
         }
         $scope.formEnabled[provider_id] = !$scope.formEnabled[provider_id];
-    };
-
-
-    $scope.setAttributeUUID = function (attribute_key, provider_id) {
-
-        $scope.settings[provider_id].form_destination_field_uuid = attribute_key;
-
-    };
-
-    $scope.isSelectedAttribute = function (attribute_key, provider_id) {
-        if ($scope.settings[provider_id]) {
-            if ($scope.settings[provider_id].form_destination_field_uuid) {
-                return $scope.settings[provider_id].form_destination_field_uuid === attribute_key;
-            }
-        }
-        return false;
     };
 
     $scope.saveProviderSettings = function (provider) {
@@ -173,10 +167,6 @@ function (
                     return form.id === provider.form_id;
                 });
                 $scope.setSelectedForm(form, name);
-            }
-
-            if (provider.form_destination_field_uuid) {
-                $scope.setAttributeUUID(provider.form_destination_field_uuid, name);
             }
         });
 
