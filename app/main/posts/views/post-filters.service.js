@@ -1,10 +1,11 @@
 module.exports = PostFiltersService;
 
-PostFiltersService.$inject = ['_', 'FormEndpoint'];
-function PostFiltersService(_, FormEndpoint) {
+PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint','$q'];
+function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
+    var tags = [];
 
     // @todo take this out of the service
     // but ensure it happens at the right times
@@ -22,11 +23,13 @@ function PostFiltersService(_, FormEndpoint) {
     };
 
     function activate() {
-        FormEndpoint.query().$promise.then(function (results) {
-            forms = results;
+        $q.all([FormEndpoint.query().$promise, TagEndpoint.query().$promise]).then(function (results) {
+            forms = results[0];
+            tags = results[1];
             filterState.form = filterState.form || [];
             if (filterState.form.length === 0) { // just in case of race conditions
                 Array.prototype.splice.apply(filterState.form, [0, 0].concat(_.pluck(forms, 'id')));
+                Array.prototype.splice.apply(filterState.tags, [0,0].concat(_.pluck(tags, 'id')));
             }
         });
     }
@@ -70,7 +73,7 @@ function PostFiltersService(_, FormEndpoint) {
             center_point: '',
             within_km: '1',
             current_stage: [],
-            tags: [],
+            tags: _.pluck(tags, 'id'),
             form: _.pluck(forms, 'id'),
             set: [],
             user: false
@@ -101,7 +104,6 @@ function PostFiltersService(_, FormEndpoint) {
         } else {
             delete query.within_km;
         }
-
         return query;
     }
 
