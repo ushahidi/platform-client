@@ -14,9 +14,9 @@ function AddLabelDirective() {
         template: require('./add-category.html')
     };
 }
-AddLabelController.$inject = ['$scope', 'TagEndpoint', 'FormAttributeEndpoint'];
+AddLabelController.$inject = ['$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify'];
 
-function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint) {
+function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint, Notify) {
     $scope.showInput = false;
     $scope.categoryName = '';
     $scope.category = {
@@ -41,7 +41,6 @@ function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint) {
                 // adding new tag to render it in checklist
                 $scope.attribute.options.push(response);
                 $scope.postValue.push(response.id);
-
                 // copying original attribute to be able to extract option.ids
                 var attribute = angular.copy($scope.attribute);
                 attribute.options = attribute.options.map(function (option) {
@@ -54,7 +53,11 @@ function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint) {
                         // resetting input-value
                         $scope.categoryName = '';
                     });
+                Notify.notify('category added', {response: response});
             }
-        });
+
+        }, function (errorResponse) {
+                    Notify.apiErrors(errorResponse);
+                });
     };
 }
