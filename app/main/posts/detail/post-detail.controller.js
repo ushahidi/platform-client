@@ -89,7 +89,6 @@ function (
             $scope.form_description = results[0].description;
             $scope.form_color = results[0].color;
             $scope.tags = results[3];
-
             // Set page title to '{form.name} Details' if a post title isn't provided.
             if (!$scope.post.title) {
                 $translate('post.type_details', { type: results[0].name }).then(function (title) {
@@ -110,11 +109,6 @@ function (
             attributes = (attributes.length) ? attributes : attrs;
 
             angular.forEach(attributes, function (attr) {
-                // adding tag-labels instead of id
-                if (attr.input === 'tags') {
-                    $scope.post.values[attr.key] = $scope.getTagNames($scope.post.values[attr.key]);
-                }
-
                 this[attr.key] = attr;
 
             }, $scope.form_attributes);
@@ -152,13 +146,8 @@ function (
                 if ($scope.form_attributes[key]) {
                     $scope.tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
                 }
-                if ($scope.form_attributes[key].input === 'tags') {
-                    // adding tag-labels instead of id
-                    $scope.post.values[key] = $scope.getTagNames($scope.post.values[key]);
-                }
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
-
         });
     }
 
@@ -175,26 +164,21 @@ function (
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
     $scope.formatTags = function (tags) {
-        var formatedTags = '';
+        // getting tag-names and formatting them for displaying
+        var formatedTags = ' ';
         tags.forEach(function (tag, index) {
-            if (index < tags.length - 1) {
-                formatedTags += tag + ', ';
-            } else {
-                formatedTags += tag;
+            var tagObj = _.where($scope.tags, {id: parseInt(tag)});
+            if (tagObj[0]) {
+                tag = tagObj[0].tag;
+                if (index < tags.length - 1) {
+                    formatedTags += tag + ', ';
+                } else {
+                    formatedTags += tag;
+                }
             }
         });
         return formatedTags;
     };
-    $scope.getTagNames = function (tagIds) {
-        var tags = [];
-        $scope.tags.forEach(function (tag) {
-            if (tagIds.indexOf(tag.id.toString() > -1)) {
-                tags.push(tag.tag);
-            }
-        });
-        return tags;
-    };
-
     $scope.showType = function (type) {
         if (type === 'point') {
             return false;
