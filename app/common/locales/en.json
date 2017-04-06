@@ -761,6 +761,11 @@
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
+        "webhooks": {
+            "use_webhook_for": "Use webhook for",
+            "enable_source_destination" : "Enable Source and Destination Fields",
+            "enable_source_destination_desc" : "This webhook will only be applied to Surveys of the selected type."
+        },
         "data_sources": {
             "associate_with_form" : "Import to survey",
             "associate_with_form_desc" : "All incoming data from {{provider}} will be used to create responses to the survey you choose",

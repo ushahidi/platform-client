@@ -100,7 +100,7 @@ function (
         if ($scope.formEnabled[provider_id]) {
             if ($scope.settings[provider_id]) {
                 $scope.settings[provider_id].form_id = undefined;
-                $scope.settings[provider_id].form_destination_field_uuid = undefined;
+                $scope.selectedForm[provider_id] = undefined;
             }
         }
         $scope.formEnabled[provider_id] = !$scope.formEnabled[provider_id];
