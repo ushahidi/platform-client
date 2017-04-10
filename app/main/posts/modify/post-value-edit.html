@@ -208,11 +208,11 @@
                 {{option.tag}}
         </label>
     </div> 
-    <add-category
-      form-id="post.form.id"
-      attribute="attribute"
-      post-value="post.values[attribute.key]"
-    ></add-category>
+      <add-category
+        form-id="post.form.id"
+        attribute="attribute"
+        post-value="post.values[attribute.key]"
+      ></add-category>
     </div>
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">

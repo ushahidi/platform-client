@@ -135,12 +135,12 @@ function PostEditorController(
                     }
                     $scope.medias[attr.key] = {};
                 }
-                // assingning tag-objects to attribute
+                // assingning tag-objects to attribute-options
                 if (attr.input === 'tags') {
                     var tags = [];
                     $scope.tagKeys.push(attr.key);
-                    attr.options.forEach(function (option) {
-                        categories.forEach(function (tag) {
+                    _.each(attr.options, function (option) {
+                        _.each(categories, function (tag) {
                             if (tag.id === option) {
                                 tags.push(tag);
                             }
@@ -249,10 +249,10 @@ function PostEditorController(
                 $scope.post.values.message_location = [];
             }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+            // adding neccessary tags to post.tags, needed for filtering
             post.tags = [];
             if ($scope.tagKeys.length > 0) {
-                // adding neccessary tags to post.tags, needed for filtering
-                $scope.tagKeys.forEach(function (tagKey) {
+                _.each($scope.tagKeys, function (tagKey) {
                     post.tags = post.tags.concat(post.values[tagKey]);
                 });
                 post.tags = _.uniq(post.tags);

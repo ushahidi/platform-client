@@ -163,14 +163,14 @@ function (
         return $scope.form_attributes[key] && $scope.post_task &&
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
-    $scope.formatTags = function (tags) {
+    $scope.formatTags = function (tagIds) {
         // getting tag-names and formatting them for displaying
         var formatedTags = ' ';
-        tags.forEach(function (tag, index) {
+        _.each(tagIds, function (tag, index) {
             var tagObj = _.where($scope.tags, {id: parseInt(tag)});
             if (tagObj[0]) {
                 tag = tagObj[0].tag;
-                if (index < tags.length - 1) {
+                if (index < tagIds.length - 1) {
                     formatedTags += tag + ', ';
                 } else {
                     formatedTags += tag;
