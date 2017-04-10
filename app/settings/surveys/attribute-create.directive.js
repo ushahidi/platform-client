@@ -133,7 +133,7 @@ function (
                     type: 'varchar',
                     cardinality: 0,
                     input: 'tags',
-                    description: $translate.instant('survey.category_desc')
+                    description: $translate.instant('settings.settings_list.categories_desc')
                 }
             ];
         }

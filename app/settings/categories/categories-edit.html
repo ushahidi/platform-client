@@ -4,10 +4,10 @@
             <ol class="breadcrumbs">
                 <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
                 <li><a href="/settings" translate>app.settings</a></li>
-                <li><a href="/settings/categories" translate>app.labels</a></li>
+                <li><a href="/settings/categories" translate>app.categories</a></li>
             </ol>
-            <h1 class="mode-context-title" ng-show="category.id" translate>app.edit_label</h1>
-            <h1 class="mode-context-title" ng-show="!category.id" translate>app.add_label</h1>
+            <h1 class="mode-context-title" ng-show="category.id" translate>app.edit_category</h1>
+            <h1 class="mode-context-title" ng-show="!category.id" translate>app.add_category</h1>
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
