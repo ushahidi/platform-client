@@ -197,6 +197,7 @@ function SurveyEditorController(
         });
     }
     function loadAvailableCategories() {
+        // Get available tags for selected for or all tags if new form
         var params = {};
         if ($scope.surveyId) {
             params.formId = $scope.surveyId;
@@ -549,10 +550,10 @@ function SurveyEditorController(
 
     function extractTags() {
         var tags = [];
-        $scope.survey.tasks.forEach(function (task) {
-            task.attributes.forEach(function (attribute) {
+        _.each($scope.survey.tasks, function (task) {
+            _.each(task.attributes, function (attribute) {
                 if (attribute.input === 'tags') {
-                    attribute.options.forEach(function (tag) {
+                    _.each(attribute.options, function (tag) {
                         if (tags.indexOf(tag) < 0) {
                             tags.push(tag);
                         }
