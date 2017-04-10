@@ -37,6 +37,14 @@ function (
     };
     $scope.refreshView();
 
+    $scope.deleteCategory = function (tag) {
+        Notify.confirm('notify.category.destroy_confirm').then(function () {
+            TagEndpoint.delete(tag).$promise.then(function () {
+                Notify.notify('notify.category.destroy_success');
+                $scope.refreshView();
+            });
+        });
+    };
     $scope.deleteCategories = function () {
         Notify.confirm('notify.category.bulk_destroy_confirm', { count: $scope.selectedCategories.length }).then(function () {
             var calls = [];
