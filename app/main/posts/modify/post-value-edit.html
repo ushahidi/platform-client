@@ -192,13 +192,17 @@
           </label>
         </div>
       </div>
-     
+
     <!-- type: categories -->
       <div ng-switch-when="tags">
-        <div class=form-field checkbox" ng-repeat="option in attribute.options">
+        <div 
+          class="form-field checkbox"
+          ng-repeat="option in attribute.options"
+          ng-if="option.parent_id === null"
+          >
         <label>
           <input 
-               type="checkbox"
+                type="checkbox"
                 checklist-model="post.values[attribute.key]"
                 id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.id}}_{{option}}"
@@ -207,7 +211,24 @@
             >
                 {{option.tag}}
         </label>
+        <div 
+          class="form-field checkbox"
+          ng-if="option.children"
+          ng-repeat="child in option.children"
+        >
+          <label>
+          <input 
+            type="checkbox"
+            checklist-model="post.values[attribute.key]"
+            id="values[{{attribute.key}}][{{key}}]"
+            name="values_{{attribute.id}}_{{child}}"
+            checklist-value="child.id"
+            value="child.id"
+          >
+            {{child.tag}}
+        </label>
     </div> 
+    </div>
       <add-category
         form-id="post.form.id"
         attribute="attribute"

@@ -69,8 +69,7 @@ function PostEditorController(
     $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
 
     $scope.allowedChangeStatus = allowedChangeStatus;
-
-
+    $scope.getTag = getTag;
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
@@ -109,7 +108,7 @@ function PostEditorController(
             var attrs = _.chain(results[1])
                 .sortBy('priority')
                 .value();
-            var categories = results[2];
+            $scope.categories = results[2];
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
@@ -139,12 +138,17 @@ function PostEditorController(
                 if (attr.input === 'tags') {
                     var tags = [];
                     $scope.tagKeys.push(attr.key);
-                    _.each(attr.options, function (option) {
-                        _.each(categories, function (tag) {
-                            if (tag.id === option) {
-                                tags.push(tag);
-                            }
-                        });
+                    _.each(attr.options, function (tag) {
+                        tag = $scope.getTag(tag);
+                        if (tag && tag.children) {
+                            var children = [];
+                            _.each(tag.children, function (child) {
+                                child = $scope.getTag(parseInt(child.id));
+                                children.push(child);
+                            });
+                            tag.children = children;
+                        }
+                        tags.push(tag);
                     });
                     attr.options = tags;
                 }
@@ -208,7 +212,15 @@ function PostEditorController(
         });
 
     }
-
+    function getTag(tagId) {
+        var tag;
+        _.each($scope.categories, function (category) {
+            if (category.id === tagId) {
+                tag = category;
+            }
+        });
+        return tag;
+    }
     function canSavePost() {
         return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
     }
