@@ -337,16 +337,6 @@
                 <label class="tgl-btn" for="task-required"></label>
             </div>
         </div>
-
-        <div ng-attr-id="{{ 'section-configure-' + task.id }}" class="section-1-details tabs-target">
-          <div class="form-field switch">
-            <label translate="survey.required">Required</label>
-            <p data-fieldgroup-target="require-review-message" ng-show="task.required" translate="survey.required_desc">Require this section be completed before a post can be visible to the public.</p>
-            <div class="toggle-switch">
-                <input class="tgl" id="task-required" type="checkbox" ng-model="task.required">
-                <label class="tgl-btn" for="task-required"></label>
-            </div>
-          </div>
           <div class="form-field switch checked">
               <label translate="survey.show_this_task_to">Show this task to everyone when published</label>
               <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
