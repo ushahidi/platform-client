@@ -516,9 +516,9 @@
         "author" : "Author",
         "post_date" : "Post date",
         "change_author" : "Change author",
-        "status_published" : "This post is published",
-        "status_review" : "This post is under review",
-        "status_archived" : "This post is archived",
+        "status_published" : "Published",
+        "status_review" : "Under review",
+        "status_archived" : "Archived",
         "modify" : {
             "intro" : "Select survey:",
             "no_task_values": "There are currently no saved values for this task.",

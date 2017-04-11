@@ -39,7 +39,14 @@
             <div class="listing card">
                 <div class="listing-item" ng-show="forms.length" ng-repeat="form in forms">
                     <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
-
+                    <div class="listing-item-secondary">
+                        <button class="button-beta button-flat" ng-click="deleteSurvey(form)">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                            </svg>
+                            <span class="hidden">Delete</span>
+                        </button>
+                    </div>
                     <div class="listing-item-primary">
                         <h2 class="listing-item-title"><a href="/settings/surveys/{{form.id}}">{{form.name}}</a></h2>
                         <p class="listing-item-secondary">{{form.description}}</p>
