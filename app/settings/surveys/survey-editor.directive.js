@@ -93,6 +93,8 @@ function SurveyEditorController(
     $scope.roles_allowed = [];
     $scope.roles = [];
 
+    $scope.onlyOptional = onlyOptional;
+
     activate();
 
     function activate() {
@@ -118,6 +120,7 @@ function SurveyEditorController(
                         priority: 0,
                         required: false,
                         type: 'post',
+                        show_when_published: 1,
                         attributes: [
                             {
                                 cardinality: 0,
@@ -163,6 +166,12 @@ function SurveyEditorController(
                 }
             });
         }
+    }
+
+
+
+    function onlyOptional(editAttribute) {
+        return editAttribute.type !== 'title' && editAttribute.type !== 'description';
     }
 
     function switchTab(section, tab) {
@@ -358,7 +367,7 @@ function SurveyEditorController(
 
     // Start Modify Tasks
     function openTaskModal() {
-        ModalService.openTemplate('<survey-task-create></survey-task-create>', 'survey.add_section', '', $scope, true, true);
+        ModalService.openTemplate('<survey-task-create></survey-task-create>', 'survey.add_task', '', $scope, true, true);
     }
 
     function getNewTaskPriority() {
