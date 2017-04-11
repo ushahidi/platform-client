@@ -8,9 +8,10 @@
           task description
       </label>
       <textarea id="task_description" placeholder="{{ 'survey.describe_this_task' | translate }}" name="description" data-min-rows="1" rows="1" ng-model="newTask.description"></textarea>
+
   </div>
   <div class="form-field switch">
-     <label translate="survey.require_task">Require this task be completed before a post can be visible to the public</label>
+     <label translate="survey.require_section">Require this section be completed before a post can be visible to the public</label>
      <div class="toggle-switch">
         <input class="tgl" id="require-toggle" type="checkbox" ng-model="newTask.required">
         <label class="tgl-btn" for="require-toggle"></label>

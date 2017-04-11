@@ -169,7 +169,6 @@ function SurveyEditorController(
     }
 
 
-
     function onlyOptional(editAttribute) {
         return editAttribute.type !== 'title' && editAttribute.type !== 'description';
     }
@@ -367,7 +366,7 @@ function SurveyEditorController(
 
     // Start Modify Tasks
     function openTaskModal() {
-        ModalService.openTemplate('<survey-task-create></survey-task-create>', 'survey.add_task', '', $scope, true, true);
+        ModalService.openTemplate('<survey-task-create></survey-task-create>', 'survey.add_section', '', $scope, true, true);
     }
 
     function getNewTaskPriority() {
