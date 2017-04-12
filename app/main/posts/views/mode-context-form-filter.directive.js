@@ -14,6 +14,8 @@ ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', 'TagE
 function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, $q, _, $rootScope, PostSurveyService, $timeout) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
+    $scope.selectParent = selectParent;
+    $scope.selectChild = selectChild;
     $scope.hide = hide;
     $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
@@ -31,14 +33,33 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             }
             var values = responses[1].totals[0].values;
             var tags = responses[2];
+            // adding children to tags
+            _.each(tags, function (tag) {
+                    //adding tag.id to filters
+                    $scope.filters.tags.push(tag.id);
+                    if (tag.children) {
+                        var children = [];
+                        _.each(tag.children, function (child) {
+                            _.each(tags, function (tag) {
+                                if (tag.id === parseInt(child.id)) {
+                                    children.push(tag);
+                                }
+                            });
+                        });
+                        tag.children = children;
+                    }
+                });
             angular.forEach($scope.forms, function (form) {
                 var value = _.findWhere(values, { id: form.id });
                 form.post_count = value ? value.total : 0;
             });
+
             $scope.forms.forEach(function (form, index) {
                 // assigning whole tag-object to forms
                 $scope.forms[index].tags = _.filter(tags, function (tag) {
-                    return _.contains(form.tags, tag.id.toString());
+                    if (tag.parent_id === null) {
+                        return _.contains(form.tags, tag.id.toString());
+                    }
                 });
             });
             // Grab the count for form=null
@@ -47,6 +68,24 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                 $scope.unknown_post_count = unknownValue.total;
             }
         });
+    }
+    function selectParent(parent) {
+        if (_.contains($scope.filters.tags, parent.id)) {
+            _.each(parent.children, function (child) {
+                $scope.filters.tags.push(child.id);
+            });
+        } else {
+            _.each(parent.children, function (child) {
+                $scope.filters.tags = _.filter ($scope.filters.tags, function (id) {
+                    return id !== child.id;
+                });
+            });
+        }
+    }
+    function selectChild(child) {
+        if (!_.contains($scope.filters.tags, child.parent.id) && _.contains($scope.filters.tags, child.id)) {
+            $scope.filters.tags.push(child.parent.id);
+        }
     }
 
     function showOnly(formId) {
