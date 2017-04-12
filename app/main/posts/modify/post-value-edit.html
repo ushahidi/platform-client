@@ -208,6 +208,7 @@
                 name="values_{{attribute.id}}_{{option}}"
                 checklist-value="option.id"
                 value="option.id"
+                ng-click="selectParent(option, attribute.key)"
             >
                 {{option.tag}}
         </label>
@@ -224,6 +225,7 @@
             name="values_{{attribute.id}}_{{child}}"
             checklist-value="child.id"
             value="child.id"
+            ng-click="selectChild(child, attribute.key)"
           >
             {{child.tag}}
         </label>
