@@ -4,7 +4,7 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback([{
-                        name: 'test tag',
+                        tag: 'test tag',
                         id: 1,
                         forms: [1]
                     }]);
@@ -15,7 +15,7 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback([{
-                        name: 'test tag',
+                        tag: 'test tag',
                         id: 1,
                         forms: [1]
                     }]);
@@ -26,7 +26,7 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
-                        name: 'test tag',
+                        tag: 'test tag',
                         id: 1,
                         forms: [1]
                     });

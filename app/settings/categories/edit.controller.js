@@ -51,7 +51,7 @@ function (
         $scope.category = tag;
         // adding parent-object to tag
         if ($scope.category.parent) {
-            $scope.category.parent = addParent($scope.category.parent.id);
+            $scope.category.parent = $scope.addParent($scope.category.parent.id);
         }
         //extract form-ids and make them integers
         $scope.category.forms = $scope.category.forms.map(function (form) {
@@ -72,9 +72,9 @@ function (
         $scope.surveys = forms;
     });
 
-    function addParent(id) {
+    $scope.addParent = function (id) {
         return TagEndpoint.getFresh({id: id});
-    }
+    };
 
     $scope.getParentName = function () {
         var parentName = 'Nothing';
