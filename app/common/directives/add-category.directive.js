@@ -14,9 +14,9 @@ function AddLabelDirective() {
         template: require('./add-category.html')
     };
 }
-AddLabelController.$inject = ['$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify'];
+AddLabelController.$inject = ['$rootScope','$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify'];
 
-function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint, Notify) {
+function AddLabelController($rootScope, $scope, TagEndpoint, FormAttributeEndpoint, Notify) {
     $scope.showInput = false;
     $scope.categoryName = '';
     $scope.category = {
@@ -26,6 +26,12 @@ function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint, Notify) 
         parent_id: null,
         forms: [$scope.formId]
     };
+
+    activate();
+
+    function activate() {
+        $scope.userCanAddCategory = $rootScope.hasPermission('Manage Settings');
+    }
 
     $scope.showInputToggle = function () {
         $scope.categoryName = '';
@@ -57,7 +63,7 @@ function AddLabelController($scope, TagEndpoint, FormAttributeEndpoint, Notify) 
             }
 
         }, function (errorResponse) {
-                    Notify.apiErrors(errorResponse);
-                });
+            Notify.apiErrors(errorResponse);
+        });
     };
 }
