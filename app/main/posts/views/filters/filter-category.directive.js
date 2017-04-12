@@ -1,7 +1,7 @@
 module.exports = CategorySelectDirective;
 
-CategorySelectDirective.$inject = ['TagEndpoint'];
-function CategorySelectDirective(TagEndpoint) {
+CategorySelectDirective.$inject = ['TagEndpoint', '_'];
+function CategorySelectDirective(TagEndpoint, _) {
     return {
         restrict: 'E',
         replace: true,
@@ -23,7 +23,22 @@ function CategorySelectDirective(TagEndpoint) {
 
         function activate() {
             // Load categories
-            scope.categories = TagEndpoint.query();
+            TagEndpoint.query().$promise.then(function (result) {
+                scope.categories = result;
+                // adding children to tags
+                _.each(scope.categories, function (category) {
+                    if (category.children) {
+                        var children = [];
+                        _.each(category.children, function (child) {
+                            _.each(scope.categories, function (category) {
+                                if (category.id === parseInt(child.id)) {
+                                    children.push(category);
+                                }
+                            });
+                        });
+                    }
+                });
+            });
 
             scope.$watch('selectedCategories', saveValueToView, true);
             ngModel.$render = renderModelValue;
