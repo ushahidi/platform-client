@@ -4,6 +4,7 @@ module.exports = [
     '$location',
     '$routeParams',
     '$route',
+    '_',
     'WebhookEndpoint',
     'FormEndpoint',
     'FormAttributeEndpoint',
@@ -14,6 +15,7 @@ function (
     $location,
     $routeParams,
     $route,
+    _,
     WebhookEndpoint,
     FormEndpoint,
     FormAttributeEndpoint,
@@ -39,7 +41,11 @@ function (
 
                 if ($scope.webhook.form_id) {
                     $scope.toggleFormAssociation();
-                    $scope.setSelectedForm($scope.webhook.form_id);
+                    var form = _.find($scope.forms, function (form) {
+                        return form.id === $scope.webhook.form_id;
+                    });
+
+                    $scope.setSelectedForm(form);
                 }
 
                 $scope.title = $scope.webhook.id ? 'webhook.edit_webhook' : 'webhook.add_webhook';
@@ -81,7 +87,17 @@ function (
 
                 // Get Attributes if not previously loaded
                 FormAttributeEndpoint.query({formId: form.id}).$promise.then(function (results) {
-                    $scope.selectedForm.attributes = results;
+                    // Due to the oddness of title and description being both Post fields and Attributes
+                    // it is necessary to construct an index into the Post object that can be used with the
+                    // Laravel/Kohana function array_get/array_set
+                    _.each(results, function (attribute) {
+                        if (attribute.type === 'title' || attribute.type === 'description') {
+                            attribute.post_key = attribute.type === 'title' ? attribute.type : 'content';
+                        } else {
+                            attribute.post_key = 'values.' + attribute.key;
+                        }
+                        $scope.selectedForm.attributes.push(attribute);
+                    });
                 });
             };
 
@@ -96,8 +112,8 @@ function (
                     if ($scope.webhook.form_id) {
                         $scope.selectedForm = undefined;
                         $scope.webhook.form_id = undefined;
-                        $scope.webhook.source_field_uuid = undefined;
-                        $scope.webhook.destination_field_uuid = undefined;
+                        $scope.webhook.source_field_key = undefined;
+                        $scope.webhook.destination_field_key = undefined;
                     }
                 }
                 $scope.formEnabled = !$scope.formEnabled;

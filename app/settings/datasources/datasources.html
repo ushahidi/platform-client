@@ -140,7 +140,7 @@
                                                           <option
                                                             ng-repeat="attribute in selectedForm[provider.id].attributes"
                                                             ng-show="allowedTypeMapping(field_type, attribute.type)"
-                                                            value="{{attribute.key}}"
+                                                            value="{{attribute.post_key}}"
                                                             label="{{attribute.label}}"
                                                             ng-class="{'required' : attribute.required}">
                                                        </select>

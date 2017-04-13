@@ -81,7 +81,19 @@ function (
 
         // Get Attributes if not previously loaded
         FormAttributeEndpoint.query({formId: form.id}).$promise.then(function (results) {
-            $scope.selectedForm[provider_id].attributes = results;
+            $scope.selectedForm[provider_id].attributes = [];
+
+            // Due to the oddness of title and description being both Post fields and Attributes
+            // it is necessary to construct an index into the Post object that can be used with the
+            // Laravel/Kohana function array_get/array_set
+            _.each(results, function (attribute) {
+                if (attribute.type === 'title' || attribute.type === 'description') {
+                    attribute.post_key = attribute.type === 'title' ? attribute.type : 'content';
+                } else {
+                    attribute.post_key = 'values.' + attribute.key;
+                }
+                $scope.selectedForm[provider_id].attributes.push(attribute);
+            });
         });
     };
 

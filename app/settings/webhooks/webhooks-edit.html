@@ -45,11 +45,6 @@
                        <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
                    </div>
 
-                   <div class="form-field" ng-show="webhook.webhook_uuid">
-                       <label translate>webhook.uuid</label>
-                       <input type="text" class="disabled" disabled=true ng-maxlength="150" ng-model="webhook.webhook_uuid">
-                   </div>
-
                    <div class="form-field">
                        <label translate>webhook.shared_secret</label>
                        <textarea name="description" data-min-rows='1' rows='1' ng-model="webhook.shared_secret" required></textarea>
@@ -143,10 +138,10 @@
                                         </span>
                                       </td><td>
                                           <div class="custom-select">
-                                              <select ng-model="webhook.source_field_uuid">
+                                              <select ng-model="webhook.source_field_key">
                                                  <option
                                                    ng-repeat="attribute in selectedForm.attributes"
-                                                   value="{{attribute.key}}"
+                                                   value="{{attribute.post_key}}"
                                                    label="{{attribute.label}}"
                                                    ng-class="{'required' : attribute.required}">
                                               </select>
@@ -160,10 +155,10 @@
                                         </span>
                                       </td><td>
                                           <div class="custom-select">
-                                              <select ng-model="webhook.destination_field_uuid">
+                                              <select ng-model="webhook.destination_field_key">
                                                  <option
                                                    ng-repeat="attribute in selectedForm.attributes"
-                                                   value="{{attribute.key}}"
+                                                   value="{{attribute.post_key}}"
                                                    label="{{attribute.label}}"
                                                    ng-class="{'required' : attribute.required}">
                                               </select>
