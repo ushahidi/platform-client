@@ -4,6 +4,10 @@ ShareMenuDirective.$inject = [];
 function ShareMenuDirective() {
     return {
         restrict: 'E',
+        scope: {
+            surveyId: '=',
+            postId: '='
+        },
         replace: true,
         controller: ShareMenuController,
         template: require('./share-menu.html')
@@ -35,6 +39,10 @@ function ShareMenuController(
         // an individual post that the URL is correct
         if ($scope.postId) {
             $scope.shareUrl = $window.location.origin + '/posts/' + $scope.postId;
+        }
+
+        if ($scope.surveyId) {
+            $scope.shareUrl = $window.location.origin + '/posts/create/' + $scope.surveyId;
         }
         $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
     }

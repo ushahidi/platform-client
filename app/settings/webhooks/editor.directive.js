@@ -77,6 +77,7 @@ function (
                 Notify.apiErrors(errorResponse);
             };
 
+
             $scope.getFormAttributes = function (form) {
 
                 if ($scope.selectedForm.attributes) {

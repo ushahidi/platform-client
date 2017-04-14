@@ -1,12 +1,29 @@
-<div class="metadata">
-    <!-- todo: cleanup / combine this line into a single translation string -->
-    <span ng-show="post.user && !post.author_realname" class="metadata-author"><img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">{{ post.user.realname }}</span>
+<ul class="metadata">
+    <li>
+      <a class="status-indicator">
+        <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+        </svg>
+        <span class="label" translate="post.status_published" ng-if="post.status=='published'"></span>
+        <span class="label" translate="post.status_review" ng-if="post.status=='draft'"></span>
+        <span class="label" translate="post.status_archived" ng-if="post.status=='archived'"></span>
+      </a>
+    </li>
+    <li>
+      <img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
+      <strong class="label" ng-show="post.user && !post.author_realname">{{ post.user.realname }}</strong>
+      <strong class="label" ng-show="post.contact && !post.author_realname">{{ post.contact.contact}}</strong>
+      <strong class="label" ng-show="post.author_realname">{{ post.author_realname}}</strong>
 
-    <span ng-show="post.contact && !post.author_realname" class="metadata-author">{{ post.contact.contact }}</span>
+    </li>
+    <li class="tooltip">
+        <span class="label">{{timeago}}</span>
+        <span class="bug" title="{{ displayTimeFull }}">{{ displayTime }}</span>
 
-        <span ng-show="post.author_realname" class="metadata-author">{{ post.author_realname }}</span>
-
-    <span title="{{ displayTimeFull }}">{{ displayTime }}</span>
-
-    <span translate-values="{ source : source }" translate="post.source"></span>
-</div>
+    </li>
+    <li>
+      <span class="label" translate-values="{ source : source }" translate="post.source"></span>
+    </li>
+</ul>
