@@ -44,6 +44,7 @@ function (
     $scope.surveys = {};
     $scope.formsSubmitted = {};
     $scope.panelVisible = {};
+    $scope.forms = {};
     $scope.selectedForm = {};
 
     // Translate and set page title.
