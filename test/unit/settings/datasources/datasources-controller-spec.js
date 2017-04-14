@@ -55,6 +55,7 @@ describe('setting datasources controller', function () {
 
     it('should save provider settings successfully', function () {
         spyOn(Notify, 'notify');
+
         $scope.saveProviderSettings('pass');
         expect(Notify.notify).toHaveBeenCalled();
     });

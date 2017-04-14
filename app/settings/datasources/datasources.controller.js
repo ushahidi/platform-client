@@ -41,7 +41,7 @@ function (
     $scope.settings = {};
     $scope.available_providers = [];
     $scope.formEnabled = [];
-    $scope.forms = {};
+    $scope.surveys = {};
     $scope.formsSubmitted = {};
     $scope.panelVisible = {};
     $scope.selectedForm = {};
@@ -172,14 +172,14 @@ function (
     ]).then(function (response) {
         $scope.providers = response[0];
         $scope.settings = response[1];
-        $scope.forms = response[2];
+        $scope.surveys = response[2];
         $scope.available_providers = response[3]['data-providers'];
 
         // Enable form elements as appropriate
         _.forEach($scope.settings, function (provider, name) {
             if (provider.form_id) {
                 $scope.toggleFormAssociation(name);
-                var form = _.find($scope.forms, function (form) {
+                var form = _.find($scope.surveys, function (form) {
                     return form.id === provider.form_id;
                 });
                 $scope.setSelectedForm(form, name);
