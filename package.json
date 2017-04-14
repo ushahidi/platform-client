@@ -84,7 +84,7 @@
     "svg-url-loader": "^1.1.0",
     "transifex": "^1.4.4",
     "url-loader": "^0.5.7",
-    "webpack": "^1.9.5",
+    "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.6.0"
   },
