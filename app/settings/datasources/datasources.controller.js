@@ -134,7 +134,7 @@ function (
             $scope.saving = true;
 
             // Enable data provider when saved for the first time
-            if (!$scope.savedProviders[provider]) {
+            if (!(provider in $scope.savedProviders)) {
                 $scope.settings.providers[provider] = true;
             }
 
