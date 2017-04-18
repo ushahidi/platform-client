@@ -46,6 +46,7 @@ function (
     $scope.panelVisible = {};
     $scope.forms = {};
     $scope.selectedForm = {};
+    $scope.savedProviders = {};
 
     // Translate and set page title.
     $translate('settings.data_sources.data_sources').then(function (title) {
