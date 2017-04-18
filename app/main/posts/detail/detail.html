@@ -45,7 +45,7 @@
         </div>
         <div
           ng-repeat="(key,value) in post.values"
-          ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type) && form_attributes[key].input !== 'tags'"
+          ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
           class="postcard-field"
           >
 
