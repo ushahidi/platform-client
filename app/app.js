@@ -80,15 +80,15 @@ angular.module('app',
     ])
 
     .constant('CONST', {
-        BACKEND_URL         : backendUrl,
-        API_URL             : apiUrl,
-        INTERCOM_APP_ID     : intercomAppId,
-        DEFAULT_LOCALE      : 'en_US',
-        OAUTH_CLIENT_ID     : 'ushahidiui',
-        OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261',
+        BACKEND_URL              : backendUrl,
+        API_URL                  : apiUrl,
+        INTERCOM_APP_ID          : intercomAppId,
+        DEFAULT_LOCALE           : 'en_US',
+        OAUTH_CLIENT_ID          : 'ushahidiui',
+        OAUTH_CLIENT_SECRET      : '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
-        CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders'),
-        MAPBOX_API_KEY      : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw' // Default OSS mapbox api key
+        CLAIMED_USER_SCOPES      : claimedAnonymousScopes.concat('dataproviders'),
+        MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw' // Default OSS mapbox api key
     })
 
     .config(['$compileProvider', function ($compileProvider) {
