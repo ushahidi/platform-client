@@ -17,7 +17,7 @@ module.exports = {
        { test: /\.scss$/, loader: extractCss.extract('style', 'css!resolve-url!sass?sourceMap') },
        { test: /\.css$/, loader: extractCss.extract('style', 'css') },
        { test: /\.png/, loader: 'url?limit=10000' },
-       { test: /\.svg/, loader: 'svg-url?limit=10000' },
+       { test: /\.svg/, loader: 'svg-url?limit=1' },
        { test: /\.woff/, loader: 'url?limit=10000' },
        { test: /\.ttf|\.eot/, loader: 'file' },
        { test: /\.json$/, loader: 'json' },
