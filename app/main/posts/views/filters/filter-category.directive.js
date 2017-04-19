@@ -18,6 +18,8 @@ function CategorySelectDirective(TagEndpoint, _) {
 
         scope.categories = [];
         scope.selectedCategories = [];
+        scope.selectParent = selectParent;
+        scope.selectChild = selectChild;
 
         activate();
 
@@ -35,6 +37,7 @@ function CategorySelectDirective(TagEndpoint, _) {
                                     children.push(category);
                                 }
                             });
+                            category.children = children;
                         });
                     }
                 });
@@ -43,7 +46,25 @@ function CategorySelectDirective(TagEndpoint, _) {
             scope.$watch('selectedCategories', saveValueToView, true);
             ngModel.$render = renderModelValue;
         }
+        function selectParent(parent) {
+            if (_.contains(scope.selectedCategories, parent.id)) {
+                _.each(parent.children, function (child) {
+                    scope.selectedCategories.push(child.id);
+                });
+            } else {
+                _.each(parent.children, function (child) {
+                    scope.selectedCategories = _.filter (scope.selectedCategories, function (id) {
+                        return id !== child.id;
+                    });
+                });
+            }
+        }
 
+        function selectChild(child) {
+            if (!_.contains(scope.selectedCategories, child.parent.id) && _.contains(scope.selectedCategories, child.id)) {
+                scope.selectedCategories.push(child.parent.id);
+            }
+        }
         function renderModelValue() {
             // Update selectCategories w/o breaking references used by checklist-model
             Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
