@@ -1,8 +1,8 @@
-module.exports = AddLabelDirective;
+module.exports = AddCategoryDirective;
 
-AddLabelDirective.$inject = [];
+AddCategoryDirective.$inject = [];
 
-function AddLabelDirective() {
+function AddCategoryDirective() {
     return {
         restrict: 'E',
         scope: {
@@ -10,13 +10,13 @@ function AddLabelDirective() {
             attribute: '=',
             postValue: '='
         },
-        controller: AddLabelController,
+        controller: AddCategoryController,
         template: require('./add-category.html')
     };
 }
-AddLabelController.$inject = ['$rootScope','$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify'];
+AddCategoryController.$inject = ['$rootScope','$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify'];
 
-function AddLabelController($rootScope, $scope, TagEndpoint, FormAttributeEndpoint, Notify) {
+function AddCategoryController($rootScope, $scope, TagEndpoint, FormAttributeEndpoint, Notify) {
     $scope.showInput = false;
     $scope.categoryName = '';
     $scope.category = {

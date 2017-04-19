@@ -45,7 +45,7 @@
         </div>
         <div
           ng-repeat="(key,value) in post.values"
-          ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type) && form_attributes[key] !== 'tags'"
+          ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
           class="postcard-field"
           >
 
@@ -71,23 +71,13 @@
 
         <post-value
           ng-repeat="(key,value) in post.values"
-          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type) && form_attributes[key].input!=='tags'"
+          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type) && form_attributes[key].input !== 'tags'"
           key="key"
           value="value"
           attribute="form_attributes[key]"
           type="'post'">
         </post-value>
         <post-detail-map post-id="post.id"></post-detail-map>
-        <div class="postcard-field select" ng-if="!!post.tags.length">
-            <h2 class="form-label" translate="post.modify.form.categories">Categories</h2>
-            <div ng-repeat="category in post.tags">
-              <svg class="iconic" style="margin-right:4px;">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#tag"></use>
-              </svg>
-              {{category.tag}}
-            </div>
-        </div>
-      </div>
     </article>
 
     <div class="listing card init" ng-show="tasks.length">
