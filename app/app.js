@@ -27,8 +27,6 @@ require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
 require('../sass/vendor.scss');
 
-require('./manifest.json');
-
 // Stub ngRaven module incase its not configured
 angular.module('ngRaven', []);
 
