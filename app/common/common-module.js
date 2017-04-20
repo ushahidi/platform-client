@@ -54,7 +54,7 @@ angular.module('ushahidi.common', [
 .service('IconManager', require('./services/icon-manager.js'))
 .service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
 .service('ModalService', require('./services/modal.service.js'))
-
+.service('TranslationService', require('./services/translation.service.js'))
 // Controllers
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
@@ -81,6 +81,8 @@ angular.module('ushahidi.common', [
 .directive('fileUpload', require('./directives/file-upload.directive.js'))
 .directive('roleSelector', require('./directives/role-selector.directive.js'))
 .directive('addCategory', require('./directives/add-category.directive.js'))
+.directive('languageSwitch', require('./directives/language-switch.directive.js'))
+
 // Event actions
 .constant('EVENT', {
     ACTIONS : {

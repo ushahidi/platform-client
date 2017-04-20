@@ -36,6 +36,7 @@ window.ushahidi = window.ushahidi || {};
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
+    appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
         'posts',
@@ -80,15 +81,16 @@ angular.module('app',
     ])
 
     .constant('CONST', {
-        BACKEND_URL         : backendUrl,
-        API_URL             : apiUrl,
-        INTERCOM_APP_ID     : intercomAppId,
-        DEFAULT_LOCALE      : 'en_US',
-        OAUTH_CLIENT_ID     : 'ushahidiui',
-        OAUTH_CLIENT_SECRET : '35e7f0bca957836d05ca0492211b0ac707671261',
+        BACKEND_URL              : backendUrl,
+        API_URL                  : apiUrl,
+        INTERCOM_APP_ID          : intercomAppId,
+        APP_STORE_ID             : appStoreId,
+        DEFAULT_LOCALE           : 'en_US',
+        OAUTH_CLIENT_ID          : 'ushahidiui',
+        OAUTH_CLIENT_SECRET      : '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
-        CLAIMED_USER_SCOPES : claimedAnonymousScopes.concat('dataproviders'),
-        MAPBOX_API_KEY      : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw' // Default OSS mapbox api key
+        CLAIMED_USER_SCOPES      : claimedAnonymousScopes.concat('dataproviders'),
+        MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw' // Default OSS mapbox api key
     })
 
     .config(['$compileProvider', function ($compileProvider) {

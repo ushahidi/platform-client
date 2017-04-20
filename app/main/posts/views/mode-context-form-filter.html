@@ -120,9 +120,13 @@
             <li><a translate="post.show_only_unknown_form" ng-click="showOnly('none')">Show only Unknown</a></li>
             <li><a translate="post.hide_unknown_form" ng-click="hide('none')">Hide Unknown</a></li>
         </ul>
-    </div>
-
-    <div class="form-field" ng-show="hasManageSettingsPermission()">
+    </div>    
+</form>
+<div class="tool" ng-show="unmapped > 0 && currentView === 'map'">
+<p>There are 
+    <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.</p>
+</div>
+<div class="form-field" ng-show="hasManageSettingsPermission()">
         <a ng-href="/settings/surveys/create" class="button button-link">
             <svg class="iconic">
                 <use xlink:href="/img/iconic-sprite.svg#plus"></use>
@@ -131,3 +135,19 @@
         </a>
     </div>
 </form>
+
+ <div class="tool">
+            <h6 class="tool-heading">Language</h6>
+            <span class="tool-trigger init" ng-class="{'active': showLanguage}" ng-click="languageToggle()">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                </svg>
+                <span class="label hidden">Show/hide</span>
+            </span>
+            <div
+                class="toggle-content"
+                ng-class="{'active': showLanguage}"
+                >
+            <language-switch></language-switch>
+            </div>
+    </div>

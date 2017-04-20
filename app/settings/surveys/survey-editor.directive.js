@@ -5,7 +5,8 @@ function SurveyEditor() {
     return {
         restrict: 'E',
         scope: {
-            surveyId: '='
+            surveyId: '=',
+            actionType: '='
         },
         controller: SurveyEditorController,
         template: require('./survey-editor.html')
@@ -74,7 +75,6 @@ function SurveyEditorController(
 
     $scope.deleteAttribute = deleteAttribute;
 
-    $scope.deleteSurvey = deleteSurvey;
     $scope.saveSurvey = saveSurvey;
     $scope.cancel = cancel;
 
@@ -260,6 +260,33 @@ function SurveyEditorController(
             var roles_allowed = results[3];
 
             $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
+
+            // Remove source survey information
+            if ($scope.actionType === 'duplicate') {
+
+                $scope.survey.name = undefined;
+                $scope.survey.description = undefined;
+
+                delete $scope.survey.id;
+                delete $scope.survey.created;
+                delete $scope.survey.updated;
+                delete $scope.survey.url;
+                delete $scope.survey.can_create;
+
+                // Reset Task and Attribute IDs
+                _.each($scope.survey.tasks, function (task) {
+                    task.form_id = undefined;
+                    task.id = $scope.getInterimId();
+                    delete task.url;
+
+                    _.each(task.attributes, function (attribute) {
+                        attribute.form_stage_id = task.id;
+                        delete attribute.id;
+                        delete attribute.url;
+                        delete attribute.key;
+                    });
+                });
+            }
         });
     }
 
@@ -480,6 +507,12 @@ function SurveyEditorController(
         dup.label = undefined;
         dup.description = undefined;
         dup.id = getInterimId();
+        _.each(dup.attributes, function (attribute) {
+            delete attribute.id;
+            delete attribute.url;
+            delete attribute.key;
+            attribute.form_stage_id = dup.id;
+        });
         $scope.survey.tasks.push(dup);
         $scope.switchTab(dup.id, 'section-build');
     }
@@ -512,25 +545,6 @@ function SurveyEditorController(
     // END - modify task
 
     //Start - modify Survey
-
-    function deleteSurvey() {
-        Notify.confirmDelete('notify.form.delete_form_confirm').then(function () {
-
-            // If we haven't saved the survey
-            // just go back to the surveys views
-            if (!$scope.survey.id) {
-                $location.url('/settings/surveys');
-                return;
-            }
-
-            FormEndpoint.delete({
-                id: $scope.survey.id
-            }).$promise.then(function () {
-                Notify.notify('notify.form.destroy_form_success', { name: $scope.survey.name });
-                $location.url('/settings/surveys');
-            }, handleResponseErrors);
-        });
-    }
 
     function saveSurvey() {
         if (!$scope.surveyId) {
@@ -630,6 +644,7 @@ function SurveyEditorController(
         .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
         .$promise
         .then(function (roles) {
+            $location.path('settings/surveys/edit/' + $scope.survey.id);
             return true;
         }, handleResponseErrors);
     }
