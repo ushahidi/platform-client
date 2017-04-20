@@ -148,7 +148,9 @@ function PostEditorController(
                             });
                             tag.children = children;
                         }
-                        tags.push(tag);
+                        if (tag) {
+                            tags.push(tag);
+                        }
                     });
                     attr.options = tags;
                 }
