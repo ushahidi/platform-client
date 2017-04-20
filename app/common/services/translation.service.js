@@ -2,6 +2,7 @@ module.exports = [
     '$rootScope',
     '$q',
     '$translate',
+    '$document',
     'Languages',
     'Session',
     'Authentication',
@@ -11,6 +12,7 @@ function (
     $rootScope,
     $q,
     $translate,
+    $document,
     Languages,
     Session,
     Authentication,
@@ -30,6 +32,8 @@ function (
                 });
             }
         });
+        // Translating and setting page-title
+        $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
     };
 
     var setStartLanguage = function () {
