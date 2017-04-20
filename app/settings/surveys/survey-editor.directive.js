@@ -240,6 +240,13 @@ function SurveyEditorController(
             var attributes = _.chain(results[2])
                 .sortBy('priority')
                 .value();
+            _.each(attributes, function (attr) {
+                    if (attr.input === 'tags') {
+                        attr.options = _.map(attr.options, function (id) {
+                            return parseInt(id);
+                        });
+                    }
+                });
             _.each(survey.tasks, function (task) {
                 // Set initial menu tab
                 $scope.switchTab(task.id, 'section-build');
@@ -585,7 +592,7 @@ function SurveyEditorController(
                 if (attribute.input === 'tags') {
                     _.each(attribute.options, function (tag) {
                         if (tags.indexOf(tag) < 0) {
-                            tags.push(tag);
+                            tags.push(parseInt(tag));
                         }
                     });
                 }
