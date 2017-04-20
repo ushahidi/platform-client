@@ -88,3 +88,20 @@
             <span class="button-label" translate="app.create_new_survey">Create new survey</span>
         </a>
     </div>
+</form>
+
+ <div class="tool">
+            <h6 class="tool-heading">Language</h6>
+            <span class="tool-trigger init" ng-class="{'active': showLanguage}" ng-click="languageToggle()">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                </svg>
+                <span class="label hidden">Show/hide</span>
+            </span>
+            <div
+                class="toggle-content"
+                ng-class="{'active': showLanguage}"
+                >
+            <language-switch></language-switch>
+            </div>
+    </div>

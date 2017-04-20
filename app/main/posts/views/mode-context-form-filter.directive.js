@@ -18,6 +18,8 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
     $scope.canAddToSurvey = PostSurveyService.canCreatePostInSurvey;
+    $scope.showLanguage = false;
+    $scope.languageToggle = languageToggle;
     $scope.unmapped = 0;
     $scope.location = $location;
     $scope.goToUnmapped = goToUnmapped;
@@ -51,7 +53,9 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
             }
         });
     }
-
+    function languageToggle() {
+        $scope.showLanguage = !$scope.showLanguage;
+    }
     function showOnly(formId) {
         $scope.filters.form.splice(0, $scope.filters.form.length, formId);
     }
