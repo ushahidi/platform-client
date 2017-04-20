@@ -11,10 +11,12 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.defaultValueToggle = false;
             $scope.descriptionToggle = false;
-            if (!$scope.editAttribute.id) {
-                $scope.name = angular.copy($scope.editAttribute.label);
-                $scope.editAttribute.label = null;
-            }
+
+            $scope.editName = function () {
+                if (!$scope.editAttribute.id) {
+                    $scope.editAttribute.label = '';
+                }
+            };
             $scope.closeModal = function () {
                 ModalService.close();
             };
