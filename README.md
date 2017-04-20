@@ -85,6 +85,17 @@ KARMA_CHROME=false
 PORT=8080
 ```
 
+If you decide to use a `.gulconfig.json` for gulp's configuration, use the following.
+
+```
+{NODE_SERVER=true
+BACKEND_URL=http://ushahidi-backend
+UGLIFY_JS=true
+MOCK_BACKEND=false
+KARMA_CHROME=false
+PORT=8080}
+```
+
 * `NODE_SERVER` - always run the `node-server` task
 * `BACKEND_URL` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
 * `UGLIFY_JS` - uglify js during builds. Enabled by default
