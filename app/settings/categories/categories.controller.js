@@ -30,7 +30,7 @@ function (
 
 
     $scope.refreshView = function () {
-        TagEndpoint.query().$promise.then(function (tags) {
+        TagEndpoint.queryFresh().$promise.then(function (tags) {
             $scope.categories = tags;
         });
         $scope.selectedCategories = [];

@@ -59,7 +59,7 @@ function (
         });
     });
     // checking if label is a parent already
-    TagEndpoint.query({parent_id: $routeParams.id}).$promise.then(function (tag) {
+    TagEndpoint.queryFresh({parent_id: $routeParams.id}).$promise.then(function (tag) {
         if (tag.length === 0) {
             // getting available parents
             TagEndpoint.queryFresh({level: 'parent'}).$promise.then(function (tags) {
