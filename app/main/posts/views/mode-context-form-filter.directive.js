@@ -15,7 +15,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.forms = [];
     $scope.showOnly = showOnly;
     $scope.selectParent = selectParent;
-    $scope.selectChild = selectChild;
     $scope.hide = hide;
     $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
@@ -80,11 +79,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                     return id !== child.id;
                 });
             });
-        }
-    }
-    function selectChild(child) {
-        if (!_.contains($scope.filters.tags, child.parent.id) && _.contains($scope.filters.tags, child.id)) {
-            $scope.filters.tags.push(child.parent.id);
         }
     }
 

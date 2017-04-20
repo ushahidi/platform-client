@@ -63,12 +63,11 @@
                 ng-if="tag.parent_id === null"
                 ng-class="{'checked': filters.tags.indexOf(tag.id) > -1}"
             >
-                <label>
+                <label ng-click="selectParent(tag)">
                     <input
                         type="checkbox"
                         checklist-value="tag.id"
                         checklist-model="filters.tags"
-                        ng-click="selectParent(tag)"
                     />
                     {{tag.tag}}
                 </label>
@@ -76,13 +75,13 @@
                     <div 
                         class="form-field checkbox"
                         ng-repeat="child in tag.children"
+                        ng-if="filters.tags.indexOf(tag.id) > -1"
                     >
                         <label>
                             <input     
                                 type="checkbox"
                                 checklist-value="child.id"
                                 checklist-model="filters.tags"
-                                ng-click="selectChild(child)"
                             />
                             {{child.tag}}
                         </label>
