@@ -138,16 +138,20 @@ function PostEditorController(
                 if (attr.input === 'tags') {
                     var tags = [];
                     $scope.tagKeys.push(attr.key);
-                    _.each(attr.options, function (tag) {
-                        tag = $scope.getTag(tag);
+                    _.each(attr.options, function (tagId) {
+                        var tag = $scope.getTag(tagId);
                         if (tag && tag.children) {
                             var children = [];
                             _.each(tag.children, function (child) {
                                 child = $scope.getTag(parseInt(child.id));
-                                children.push(child);
+                                // protecting from undefined tags
+                                if (child) {
+                                    children.push(child);
+                                }
                             });
                             tag.children = children;
                         }
+                        // protecting from undefined tags
                         if (tag) {
                             tags.push(tag);
                         }

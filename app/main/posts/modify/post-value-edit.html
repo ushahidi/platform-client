@@ -183,7 +183,6 @@
                 type="checkbox"
                 checklist-model="post.values[attribute.key]"
                 ng-required="attribute.required"
-                id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.id}}_{{option}}"
                 checklist-value="option"
                 value="option"
@@ -204,7 +203,6 @@
           <input 
                 type="checkbox"
                 checklist-model="post.values[attribute.key]"
-                id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.id}}_{{option}}"
                 checklist-value="option.id"
                 value="option.id"
@@ -221,7 +219,6 @@
           <input 
             type="checkbox"
             checklist-model="post.values[attribute.key]"
-            id="values[{{attribute.key}}][{{key}}]"
             name="values_{{attribute.id}}_{{child}}"
             checklist-value="child.id"
             value="child.id"
@@ -231,6 +228,7 @@
         </label>
     </div> 
     </div>
+
       <add-category
         form-id="post.form.id"
         attribute="attribute"
