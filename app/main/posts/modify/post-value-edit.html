@@ -91,6 +91,20 @@
               </textarea>
 
               <!-- Non standard fields -->
+              <!-- type: textarea -->
+              <textarea
+                  ng-switch-when="markdown"
+                  data-min-rows="1"
+                  rows="1"
+                  class="adapt-field"
+                  style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                  id="values[{{attribute.key}}][{{key}}]"
+                  name="values_{{attribute.id}}"
+                  ng-model="post.values[attribute.key][key]"
+                  ng-required="attribute.required"
+                  adaptive-input
+                  msd-elastic>
+              </textarea>
               <!-- type: relation -->
               <post-relation
                   attribute="attribute"

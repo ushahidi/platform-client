@@ -40,7 +40,7 @@ function SavedSearchListingController($scope, $element, $attrs, $rootScope, User
                 if (_.isObject(search.user) && search.user.id !== _.result($rootScope.currentUser, 'userId')) {
                     // Load the user (if we haven't already)
                     if (!users[search.user.id]) {
-                        users[search.user.id] = UserEndpoint.get({id: search.user.id});
+                        users[search.user.id] = UserEndpoint.getFresh({id: search.user.id});
                     }
                     // Save user info onto the search itself
                     search.user = users[search.user.id];

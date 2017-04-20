@@ -52,12 +52,14 @@ angular.module('ushahidi.posts', [])
 .directive('filterVisibleTo', require('./views/filters/filter-visible-to.directive.js'))
 .directive('filterStatus', require('./views/filters/filter-status.directive.js'))
 .directive('filterLocation', require('./views/filters/filter-location.directive.js'))
+.directive('filterHasLocation', require('./views/filters/filter-has-location.directive.js'))
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
 .service('PostFilters', require('./views/post-filters.service.js'))
 
 // Share
 .directive('postShare', require('./views/share/post-share.directive.js'))
 .directive('shareMenu', require('./views/share/share-menu.directive.js'))
+.directive('shareMenuModal', require('./views/share/share-menu-modal.directive.js'))
 .directive('postExport', require('./views/share/post-export.directive.js'))
 // @todo move elsewhere? Used in post-view and activity
 .directive('postViewUnavailable', require('./views/post-view-unavailable.directive.js'))

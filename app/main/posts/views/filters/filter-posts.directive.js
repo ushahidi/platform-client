@@ -5,7 +5,8 @@ function FilterPostsDirective() {
     return {
         restrict: 'E',
         scope: {
-            filters: '='
+            filters: '=',
+            currentView: '='
         },
         replace: true,
         controller: FilterPostsController,
@@ -21,7 +22,6 @@ function FilterPostsController($scope, $timeout) {
     $scope.applyFilters = applyFilters;
     $scope.toggleSaved = toggleSaved;
     $scope.toggleFilters = toggleFilters;
-
     activate();
 
     function activate() {

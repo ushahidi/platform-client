@@ -1,0 +1,56 @@
+<div>
+    <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.webhooks</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="fab" ng-show="webhooksEnabled">
+                <a ng-href="/settings/webhooks/create" type="button" class="button button-alpha button-fab">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    <span class="hidden" translate>webhook.add_webhook</span>
+                </a>
+            </div>
+        </div>
+        <!-- end toolbar -->
+
+        <div custom-webhooks class="main-col">
+
+            <div class="alert" ng-show="!webhooksEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom webhooks'}"></div>
+
+            <div ng-show="webhooksEnabled">
+              <div class="alert" ng-hide="webhooks.length">
+                  <p ng-hide="webhooks.length"><em translate>empty.webhook</em></p>
+              </div>
+
+              <div class="listing card" ng-show="webhooks.length">
+                  <div class="listing-item" ng-repeat="webhook in webhooks | orderBy:'webhook'">
+                      <div class="listing-item-primary">
+                          <h2 class="listing-item-title"><a ng-href="/settings/webhooks/{{webhook.id}}">{{webhook.name}}</a></h2>
+                      </div>
+                  </div>
+              </div>
+
+              <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></uib-pagination>
+            </div>
+        </div>
+    </main>
+</div>

@@ -68,6 +68,7 @@ function PostFiltersService(_, FormEndpoint) {
             status: ['published', 'draft'],
             published_to: '',
             center_point: '',
+            has_location: 'all',
             within_km: '1',
             current_stage: [],
             tags: [],
@@ -101,7 +102,6 @@ function PostFiltersService(_, FormEndpoint) {
         } else {
             delete query.within_km;
         }
-
         return query;
     }
 
