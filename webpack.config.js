@@ -20,7 +20,8 @@ module.exports = {
        { test: /\.svg/, loader: 'svg-url?limit=1' },
        { test: /\.woff/, loader: 'url?limit=10000' },
        { test: /\.ttf|\.eot/, loader: 'file' },
-       { test: /\.json$/, loader: 'json' },
+       { test: /\.json$/, exclude:[/manifest.json$/],loader: 'json' },
+       { test: /manifest.json$/, loader: 'file-loader?name=manifest.json!web-app-manifest-loader' }
     ]
   },
   plugins: [
