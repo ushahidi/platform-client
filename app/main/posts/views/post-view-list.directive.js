@@ -158,6 +158,10 @@ function PostListController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
+
+                if (!$scope.posts.length) {
+                    getPosts();
+                }
             }
         });
     }
