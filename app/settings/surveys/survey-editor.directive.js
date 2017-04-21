@@ -52,7 +52,6 @@ function SurveyEditorController(
     $scope.survey = {
         color: null
     };
-
     $scope.canReorderTask = canReorderTask;
     $scope.moveTaskUp = moveTaskUp;
     $scope.moveTaskDown = moveTaskDown;
@@ -230,10 +229,10 @@ function SurveyEditorController(
         // If we're editing an existing survey,
         // load the survey info and all the fields.
         $q.all([
-            FormEndpoint.get({ id: $scope.surveyId }).$promise,
-            FormStageEndpoint.query({ formId: $scope.surveyId }).$promise,
-            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise,
-            FormRoleEndpoint.query({ formId: $scope.surveyId }).$promise
+            FormEndpoint.getFresh({ id: $scope.surveyId }).$promise,
+            FormStageEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
+            FormAttributeEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
+            FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise
         ]).then(function (results) {
             var survey = results[0];
             survey.tasks = _.sortBy(results[1], 'priority');
