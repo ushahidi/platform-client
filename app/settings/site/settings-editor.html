@@ -74,14 +74,10 @@
                         <p class="small" translate>settings.site_email_note</p>
                         <input id="site-settings-email" type="email" placeholder="name@domain.com" value="brandon@ushahidi.com" ng-model="site.email">
                     </div>
-
                     <div class="form-field">
-                         <label translate>settings.site_language</label>
-                         <div class="custom-select">
-                            <select ng-model="site.language" ng-options="lang.code as 'languages.' + lang.code  | translate for lang in languages" ng-change="changeLanguage(site.language)"></select>
-                         </div>
+                    <label translate>settings.site_language</label>
+                    <language-switch site="site"></language-switch>
                     </div>
-
                     <div class="form-field checkbox" ng-show="isPrivateEnabled">
                          <input id="private" ng-model="site.private" type="checkbox">
                          <label for="private" translate>settings.site_private</label>

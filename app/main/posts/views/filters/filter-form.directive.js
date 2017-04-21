@@ -28,7 +28,6 @@ function FormSelectDirective(FormEndpoint) {
             scope.$watch('selectedForms', saveValueToView, true);
             ngModel.$render = renderModelValue;
         }
-
         function renderModelValue() {
             // Update selectedForms w/o breaking references used by checklist-model
             Array.prototype.splice.apply(scope.selectedForms, [0, scope.selectedForms.length].concat(ngModel.$viewValue));

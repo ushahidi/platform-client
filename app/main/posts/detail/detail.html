@@ -31,30 +31,18 @@
   <div class="full-col">
     <article class="postcard" role="article">
       <div class="post-band"  ng-style="{backgroundColor: form.color}"></div>
-
-      <div class="listing-item-select">
-        <span class="status-indicator tooltip" ng-class="{ empty: post.status!='draft', yellow: post.status=='draft'}">
-          <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
-          </svg>
-          <span class="bug" translate="post.status_published" ng-if="post.status=='published'"></span>
-          <span class="bug" translate="post.status_review" ng-if="post.status=='draft'"></span>
-          <span class="bug" translate="post.status_archived" ng-if="post.status=='archived'"></span>
-
-        </span>
-      </div>
       <div class="postcard-body">
-        <header class="postcard-header">
-          <h1 class="postcard-title">
-            {{post.title}}
-          </h1>
+        <h1 class="form-sheet-title survey-title">
+          {{post.title}}
+        </h1>
+        <p>
+          {{form.description}}
+        </p>
+        <div class="postcard-header">
+
           <post-metadata post="post"></post-metadata>
-        </header>
-
-        <post-actions post="post"></post-actions>
-
+          <post-actions post="post"></post-actions>
+        </div>
         <div
           ng-repeat="(key,value) in post.values"
           ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
@@ -65,6 +53,15 @@
             ng-if="form_attributes[key].type === 'media'"
             label="{{form_attributes[key].label}}"
             media-id="value"></post-media-value>
+
+            <div ng-if="form_attributes[key].input === 'tags'">
+                <h2 class="form-label">{{form_attributes[key].label}}</h2>
+                    <svg class="iconic" style="margin-right:4px;">
+                        <use xlink:href="/img/iconic-sprite.svg#tag"></use>
+                    </svg>
+                    {{formatTags(post.values[key])}}
+                    </span>
+            </div>
         </div>
         <div
           ng-if="post.content"
@@ -72,25 +69,15 @@
           <p markdown-to-html="post.content"></p>
         </div>
 
-        <div
-          ng-if="!!post.tags.length"
-          class="postcard-field"
-          >
-          <h2 class="form-label" translate>post.modify.form.categories</h2>
-          <p ng-repeat="category in post.tags">
-            {{category.tag}}
-          </p>
-        </div>
         <post-value
           ng-repeat="(key,value) in post.values"
-          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type)"
+          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type) && form_attributes[key].input !== 'tags'"
           key="key"
           value="value"
           attribute="form_attributes[key]"
           type="'post'">
         </post-value>
         <post-detail-map post-id="post.id"></post-detail-map>
-      </div>
     </article>
 
     <div class="listing card init" ng-show="tasks.length">

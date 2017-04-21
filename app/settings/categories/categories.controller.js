@@ -30,18 +30,26 @@ function (
 
 
     $scope.refreshView = function () {
-        TagEndpoint.query().$promise.then(function (tags) {
+        TagEndpoint.queryFresh().$promise.then(function (tags) {
             $scope.categories = tags;
         });
         $scope.selectedCategories = [];
     };
     $scope.refreshView();
 
+    $scope.deleteCategory = function (tag) {
+        Notify.confirm('notify.category.destroy_confirm').then(function () {
+            TagEndpoint.delete(tag).$promise.then(function () {
+                Notify.notify('notify.category.destroy_success');
+                $scope.refreshView();
+            });
+        });
+    };
     $scope.deleteCategories = function () {
         Notify.confirm('notify.category.bulk_destroy_confirm', { count: $scope.selectedCategories.length }).then(function () {
             var calls = [];
-            angular.forEach($scope.selectedCategories, function (tagId) {
-                calls.push(TagEndpoint.delete({ id: tagId }).$promise);
+            angular.forEach($scope.selectedCategories, function (tag) {
+                calls.push(TagEndpoint.delete(tag).$promise);
             });
             $q.all(calls).then(function () {
                 Notify.notify('notify.category.bulk_destroy_success', { count: $scope.selectedCategories.length });
@@ -55,11 +63,11 @@ function (
     };
 
     $scope.toggleCategory = function (tag) {
-        var idx = $scope.selectedCategories.indexOf(tag.id);
+        var idx = $scope.selectedCategories.indexOf(tag);
         if (idx > -1) {
             $scope.selectedCategories.splice(idx, 1);
         } else {
-            $scope.selectedCategories.push(tag.id);
+            $scope.selectedCategories.push(tag);
         }
     };
 
