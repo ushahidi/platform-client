@@ -27,7 +27,7 @@
   ],
   "devDependencies": {
     "angular-mocks": "^1.5.6",
-    "babel-core": "^6.7.7",
+    "babel-core": "^6.21.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-istanbul": "^2.0.3",
     "babel-plugin-transform-runtime": "^6.7.5",
