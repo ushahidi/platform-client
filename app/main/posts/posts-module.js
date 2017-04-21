@@ -55,7 +55,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterHasLocation', require('./views/filters/filter-has-location.directive.js'))
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
 .service('PostFilters', require('./views/post-filters.service.js'))
-
+.directive('filterModal', require('./views/filters/filter-modal.directive.js'))
 // Share
 .directive('postShare', require('./views/share/post-share.directive.js'))
 .directive('shareMenu', require('./views/share/share-menu.directive.js'))
@@ -68,7 +68,7 @@ angular.module('ushahidi.posts', [])
 .directive('savedSearchEditor', require('./savedsearches/editor-directive.js'))
 .directive('savedSearchCreate', require('./savedsearches/create-directive.js'))
 .directive('savedSearchUpdate', require('./savedsearches/update-directive.js'))
-.directive('savedSearchListing', require('./savedsearches/listing.directive.js'))
+.directive('savedSearchModal', require('./savedsearches/saved-search-modal.directive.js'))
 .directive('savedSearchModeContext', require('./savedsearches/mode-context.directive.js'))
 
 .service('CollectionsService', require('./collections/collections.service.js'))

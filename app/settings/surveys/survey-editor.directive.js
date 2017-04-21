@@ -23,6 +23,7 @@ SurveyEditorController.$inject = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'RoleEndpoint',
+    'TagEndpoint',
     '_',
     'Notify',
     'SurveyNotify',
@@ -39,6 +40,7 @@ function SurveyEditorController(
     FormStageEndpoint,
     FormAttributeEndpoint,
     RoleEndpoint,
+    TagEndpoint,
     _,
     Notify,
     SurveyNotify,
@@ -154,6 +156,7 @@ function SurveyEditorController(
         }
 
         loadAvailableForms();
+        loadAvailableCategories();
 
         if (!$scope.surveyId) {
             $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
@@ -212,6 +215,16 @@ function SurveyEditorController(
             $scope.availableForms = forms;
         });
     }
+    function loadAvailableCategories() {
+        // Get available tags for selected for or all tags if new form
+        var params = {};
+        if ($scope.surveyId) {
+            params.formId = $scope.surveyId;
+        }
+        TagEndpoint.queryFresh(params).$promise.then(function (tags) {
+            $scope.availableCategories = tags;
+        });
+    }
 
     function loadFormData() {
         // If we're editing an existing survey,
@@ -227,6 +240,13 @@ function SurveyEditorController(
             var attributes = _.chain(results[2])
                 .sortBy('priority')
                 .value();
+            _.each(attributes, function (attr) {
+                    if (attr.input === 'tags') {
+                        attr.options = _.map(attr.options, function (id) {
+                            return parseInt(id);
+                        });
+                    }
+                });
             _.each(survey.tasks, function (task) {
                 // Set initial menu tab
                 $scope.switchTab(task.id, 'section-build');
@@ -527,6 +547,9 @@ function SurveyEditorController(
     //Start - modify Survey
 
     function saveSurvey() {
+        if (!$scope.surveyId) {
+            $scope.survey.tags = extractTags();
+        }
         // Saving a survey is a 3 step process
 
         // First save the actual survey
@@ -576,9 +599,24 @@ function SurveyEditorController(
         }, handleResponseErrors);
     }
 
+    function extractTags() {
+        var tags = [];
+        _.each($scope.survey.tasks, function (task) {
+            _.each(task.attributes, function (attribute) {
+                if (attribute.input === 'tags') {
+                    _.each(attribute.options, function (tag) {
+                        if (tags.indexOf(tag) < 0) {
+                            tags.push(parseInt(tag));
+                        }
+                    });
+                }
+            });
+        });
+        return tags;
+    }
+
     function saveAttributes() {
         var calls = [];
-
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
                 attribute.form_stage_id = task.id;

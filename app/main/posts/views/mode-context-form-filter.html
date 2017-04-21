@@ -1,6 +1,7 @@
 <form class="survey-filter">
 
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
+        <div class="survey-filter-parent">
         <div class="survey-filter-label">
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
             <label class="checked">
@@ -8,7 +9,7 @@
                 {{ ::form.name }}
             </label>
         </div>
-        <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
+         <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
             <!-- todo! show count -->
             {{ form.post_count }}
             <svg class="iconic">
@@ -45,7 +46,52 @@
                 </a>
             </li>
         </ul>
+        </div>
+
+        <fieldset
+            class="survey-filter-children"
+            dropdown
+            ng-if="form.tags.length > 0 && form.post_count > 0"
+            >
+            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle>{{form.tags.length}} categories
+            </legend>
+
+        <div class="form-fieldgroup init" dropdown-menu>
+            <div 
+                class="form-field checkbox"
+                ng-repeat="tag in form.tags"
+                ng-if="tag.parent_id === null"
+                ng-class="{'checked': filters.tags.indexOf(tag.id) > -1}"
+            >
+                <label ng-click="selectParent(tag)">
+                    <input
+                        type="checkbox"
+                        checklist-value="tag.id"
+                        checklist-model="filters.tags"
+                    />
+                    {{tag.tag}}
+                </label>
+                <div class="form-fieldgroup" ng-class="{'active': filters.tags.indexOf(tag.id) > -1}">
+                    <div 
+                        class="form-field checkbox"
+                        ng-repeat="child in tag.children"
+                        ng-if="filters.tags.indexOf(tag.id) > -1"
+                    >
+                        <label>
+                            <input     
+                                type="checkbox"
+                                checklist-value="child.id"
+                                checklist-model="filters.tags"
+                            />
+                            {{child.tag}}
+                        </label>
+                    </div>
+            </div>
+        </div>
+        </div>
+    </fieldset>
     </div>
+      
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf('none') !== -1) }"  dropdown>
         <div class="survey-filter-label">
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
