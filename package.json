@@ -109,7 +109,7 @@
     "d3": "^3.5.17",
     "leaflet": "~1.0.1",
     "leaflet.locatecontrol": "^0.56.0",
-    "leaflet.markercluster": "1.0.0",
+    "leaflet.markercluster": "1.0.1",
     "moment": "^2.13.0",
     "moment-timezone": "^0.5.4",
     "ng-showdown": "^1.1.0",
