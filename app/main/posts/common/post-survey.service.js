@@ -52,7 +52,7 @@ function PostSurveyService(
     function allowedSurveys() {
         var allowed_forms = $q.defer();
 
-        FormEndpoint.query()
+        FormEndpoint.queryFresh()
         .$promise
         .then(function (forms) {
             if ($rootScope.hasPermission('Manage Posts')) {

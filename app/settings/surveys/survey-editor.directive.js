@@ -158,7 +158,7 @@ function SurveyEditorController(
         loadAvailableCategories();
 
         if (!$scope.surveyId) {
-            $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
+            $q.all([Features.loadFeatures(), FormEndpoint.queryFresh().$promise]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
@@ -210,7 +210,7 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        FormEndpoint.query().$promise.then(function (forms) {
+        FormEndpoint.queryFresh().$promise.then(function (forms) {
             $scope.availableForms = forms;
         });
     }
