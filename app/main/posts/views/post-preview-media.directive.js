@@ -20,7 +20,7 @@ function (
                 return;
             }
 
-            FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise
+            FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise
                 .then(function (attributes) {
 
                     // Use image from the first media attribute
