@@ -71,7 +71,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
     "ng-annotate-loader": "0.0.10",
-    "node-libs-browser": "^0.5.0",
+    "node-libs-browser": "^1.1.0",
     "node-sass": "^3.9.3",
     "phantomjs-prebuilt": "^2.1.7",
     "pre-commit": "^1.1.2",
