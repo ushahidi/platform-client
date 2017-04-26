@@ -28,6 +28,7 @@ function (
     if ($rootScope.hasManageSettingsPermission() === false) {
         return $location.path('/');
     }
+
     var handleResponseErrors, checkAndNotifyAboutManipulateOwnUser;
     $rootScope.setLayout('layout-a');
     $translate('tool.manage_users').then(function (title) {
