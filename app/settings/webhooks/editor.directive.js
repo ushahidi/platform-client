@@ -21,7 +21,9 @@ function (
             // TODO: This should be set in the settings config table and retrieved from the API
             $scope.event_types = ['create'];
             $scope.entity_types = ['post'];
-
+            $scope.save = $translate.instant('app.save');
+            $scope.saving = $translate.instant('app.saving');
+            $scope.processing = false;
             WebhookEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (webhook) {
                 $scope.webhook = webhook;
 
@@ -33,12 +35,13 @@ function (
                 });
             });
 
+
             $scope.cancel = function () {
                 $location.path($scope.whereToNext);
             };
 
             $scope.saveWebhook = function (webhook) {
-                $scope.saving = true;
+                $scope.processing = true;
                 webhook.name = webhook.name ? webhook.name : webhook.display_name;
 
                 WebhookEndpoint.saveCache(webhook).$promise.then(function (result) {
@@ -47,10 +50,11 @@ function (
                 }, function (errorResponse) { // error
                     Notify.apiErrors(errorResponse);
                 });
-                $scope.saving = false;
+                $scope.processing = false;
             };
 
             var handleResponseErrors = function (errorResponse) {
+                $scope.processing = false;
                 Notify.apiErrors(errorResponse);
             };
 

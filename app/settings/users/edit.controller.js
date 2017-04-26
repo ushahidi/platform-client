@@ -33,6 +33,9 @@ function (
     });
 
     $scope.passwordShown = true;
+    $scope.save = $translate.instant('app.save');
+    $scope.saving = $translate.instant('app.saving');
+    $scope.saving_user = false;
 
     UserEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (user) {
         $scope.$emit('setPageTitle', $scope.title + ' - ' + user.realname);
@@ -44,14 +47,12 @@ function (
         $scope.passwordShown = true;
     };
 
-    $scope.saving = false;
-
     $scope.saveUser = function (user) {
-        $scope.saving = true;
+        $scope.saving_user = true;
         UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
                 Notify.notify('notify.user.edit_success', {name: user.realname});
-                $scope.saving = false;
+                $scope.saving_user = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
             }
@@ -75,7 +76,7 @@ function (
             } else {
                 Notify.errors(_.pluck(validationErrors, 'message'));
             }
-            $scope.saving = false;
+            $scope.saving_user = false;
         });
     };
 

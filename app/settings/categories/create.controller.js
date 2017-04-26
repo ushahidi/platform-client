@@ -33,6 +33,8 @@ function (
     $scope.$emit('event:mode:change', 'settings');
 
     $scope.category = { type: 'category', icon: 'tag', color: '', parent_id: null};
+    $scope.save = $translate.instant('app.save');
+    $scope.saving = $translate.instant('app.saving');
     $scope.processing = false;
 
     $scope.getParentName = function () {
