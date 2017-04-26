@@ -111,7 +111,7 @@
     "leaflet.locatecontrol": "^0.56.0",
     "leaflet.markercluster": "1.0.0",
     "moment": "^2.13.0",
-    "moment-timezone": "^0.5.4",
+    "moment-timezone": "^0.5.11",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
