@@ -10,10 +10,10 @@ function (
     CacheFactory
 ) {
     var cache;
-
     if (!(cache = CacheFactory.get('tagCache'))) {
         cache = new CacheFactory('tagCache');
     }
+
 
     var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {
         id: '@id'
@@ -44,9 +44,9 @@ function (
         return TagEndpoint.get(params);
     };
 
-    TagEndpoint.queryFresh = function () {
+    TagEndpoint.queryFresh = function (params) {
         cache.removeAll();
-        return TagEndpoint.query();
+        return TagEndpoint.query(params);
     };
 
     TagEndpoint.invalidateCache = function () {
@@ -66,8 +66,12 @@ function (
         return result;
     };
 
+
     $rootScope.$on('event:authentication:logout:succeeded', function () {
-        TagEndpoint.query();
+        TagEndpoint.queryFresh();
+    });
+    $rootScope.$on('event:authentication:login:succeeded', function () {
+        TagEndpoint.queryFresh();
     });
 
     return TagEndpoint;

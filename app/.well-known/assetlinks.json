@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.ushahidi.mobile",
+    "sha256_cert_fingerprints":
+    ["2E:ED:51:63:46:74:11:3C:4B:B5:2D:2B:FA:51:93:18:34:7E:AB:24:84:3E:97:C6:F2:1B:00:20:ED:23:8F:63"]
+  }
+}]

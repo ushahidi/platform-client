@@ -16,6 +16,8 @@
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
+        <div class="mode-context-body">
+        </div>
     </div>
     <main role="main">
 
@@ -36,45 +38,85 @@
                 </div>
             </div>
             <!-- end toolbar -->
-
-            <form>
-                <div class="form-sheet">
-                   <div class="form-field title">
-                       <label class="hidden" translate>category.editor.name</label>
-                       <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.tag" required>
-                   </div>
-
-                    <div class="form-field">
-                        <label translate>category.editor.description</label>
-                        <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
-                    </div>
-
-                    <color-picker color-container="category"></color-picker>
-
-                    <fieldset class="custom-fieldset init" dropdown auto-close="outsideClick">
-                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
-                            <span class="legend-label" translate>
-                                app.roles
-                            </span>
-                            <svg class="iconic chevron">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                            </svg>
-                        </legend>
-                        <div class="dropdown-menu init" dropdown-menu>
-                            <div class="form-field checkbox" ng-repeat="role in roles">
-                                <input type="checkbox" id="{{role.id}}"
-                                    checklist-model="category.role"
-                                    checklist-value="role.name"
-                                >
-                                <label for="{{role.id}}">
-                                    {{role.display_name}}
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
+            <!-- start edit -->
+            <div class="full-col">
+            <!-- Title -->
+              <div class="form-field title">
+              <label class="hidden" translate="category.editor.name"></label>
+              <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.tag" required>
+            </div>
+            <!-- Description -->
+            <div class="form-field">
+              <label translate>category.editor.description</label>
+              <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
+            </div>
+            <!-- Parent/child-relations -->
+            <fieldset 
+              class="custom-fieldset init" 
+              dropdown auto-close="outsideClick"
+            >
+              <legend 
+                class="dropdown-trigger init active"
+                data-toggle="dropdown-menu"
+                dropdown-toggle
+              >
+                <span class="legend-label">This label is a child to 
+                  <span class="custom-fieldset-value">{{getParentName()}}</span>
+                </span>
+                <svg class="iconic chevron">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                </svg>
+              </legend>
+                <div class="dropdown-menu init" dropdown-menu>
+                <div class="form-field radio">
+                    <label for="parent_label-nothing">
+                        <input 
+                          type="radio"
+                          name="parent_label"
+                          id="parent_label-nothing"
+                          value="null"
+                          ng-checked="!category.parent"
+                          ng-model="category.parent_id"
+                          />
+                        Nothing
+                    </label>
                 </div>
 
-                <div class="form-sheet" ng-show="category.id">
+                <div class="form-field radio" ng-repeat="parent in parents">
+                    <label for="parent_label-{{parent.id}}">
+                        <input 
+                          type="radio"
+                          name="parent_label"
+                          id="parent_label-{{parent.id}}"
+                          ng-checked="parent.id === category.parent.id"
+                          ng-value="parent.id"
+                          ng-model="category.parent_id"
+                        />
+                        {{parent.tag}}
+                    </label>
+                </div>
+                </div>
+            </fieldset>
+            </div>
+            <!-- Who can see and add -->
+            <role-selector model="category" title="'Who can see this label'"></role-selector>
+              <!-- Which surveys use the label -->
+              <fieldset>
+                <legend>Which surveys use this label?</legend>
+                <div class="form-field checkbox" ng-repeat="survey in surveys">
+                    <label for="accessible-to-{{survey.id}}">
+                      <input 
+                        type="checkbox"
+                        id="accessible-to-{{survey.id}}"
+                        value="survey.id"
+                        checklist-value="survey.id"
+                        checklist-model="category.forms"
+                      />
+                      {{survey.name}}
+                    </label>
+                </div> 
+            </fieldset>
+          <div class="form-sheet" ng-show="category.id">
                    <div class="form-sheet-summary">
                        <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
                    </div>
@@ -91,8 +133,6 @@
                    </div>
 
                 </div>
-            </form>
 
-        </div>
-    </main>
-</div>
+          
+               

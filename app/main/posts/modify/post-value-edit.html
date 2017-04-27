@@ -8,7 +8,8 @@
         'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
         'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
         'required': attribute.required,
-        'date' : isDate(attribute) || isDateTime(attribute)
+        'date' : isDate(attribute) || isDateTime(attribute),
+        'location' : attribute.input === 'location'
       }">
 
       <!-- Attribute Label -->
@@ -90,6 +91,20 @@
               </textarea>
 
               <!-- Non standard fields -->
+              <!-- type: textarea -->
+              <textarea
+                  ng-switch-when="markdown"
+                  data-min-rows="1"
+                  rows="1"
+                  class="adapt-field"
+                  style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                  id="values[{{attribute.key}}][{{key}}]"
+                  name="values_{{attribute.id}}"
+                  ng-model="post.values[attribute.key][key]"
+                  ng-required="attribute.required"
+                  adaptive-input
+                  msd-elastic>
+              </textarea>
               <!-- type: relation -->
               <post-relation
                   attribute="attribute"
@@ -168,14 +183,57 @@
                 type="checkbox"
                 checklist-model="post.values[attribute.key]"
                 ng-required="attribute.required"
-                id="values[{{attribute.key}}][{{key}}]"
                 name="values_{{attribute.id}}_{{option}}"
                 checklist-value="option"
-                value="option">
+                value="option"
+              >
                 {{option}}
           </label>
         </div>
       </div>
+
+    <!-- type: categories -->
+      <div ng-switch-when="tags">
+        <div 
+          class="form-field checkbox"
+          ng-repeat="option in attribute.options"
+          ng-if="option.parent_id === null"
+          >
+        <label>
+          <input 
+                type="checkbox"
+                checklist-model="post.values[attribute.key]"
+                name="values_{{attribute.id}}_{{option}}"
+                checklist-value="option.id"
+                value="option.id"
+                ng-click="selectParent(option, attribute.key)"
+            >
+                {{option.tag}}
+        </label>
+        <div 
+          class="form-field checkbox"
+          ng-if="option.children"
+          ng-repeat="child in option.children"
+        >
+          <label>
+          <input 
+            type="checkbox"
+            checklist-model="post.values[attribute.key]"
+            name="values_{{attribute.id}}_{{child}}"
+            checklist-value="child.id"
+            value="child.id"
+            ng-click="selectChild(child, attribute.key)"
+          >
+            {{child.tag}}
+        </label>
+    </div> 
+    </div>
+
+      <add-category
+        form-id="post.form.id"
+        attribute="attribute"
+        post-value="post.values[attribute.key]"
+      ></add-category>
     </div>
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">

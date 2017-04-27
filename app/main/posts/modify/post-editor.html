@@ -37,7 +37,7 @@
      <div class="main-col">
 
           <div class="form-sheet">
-              <div class="post-band" style="background-color: {{form.color}}"></div>
+              <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
               <div class="form-field title init required"
               adaptive-form
               ng-class="{
@@ -85,6 +85,7 @@
               <!-- End post stage default fields -->
 
               <!-- Start Post custom fields -->
+            
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
@@ -94,17 +95,6 @@
                   attribute="attribute"
               ></post-value-edit>
               <!-- End Post custom fields -->
-
-              <fieldset id="categories" ng-show="categories.length">
-                  <legend translate="post.modify.form.categories">Categories</legend>
-                  <div class="form-field checkbox" ng-repeat="category in categories">
-                      <label for="cat1">
-                          <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
-                          <span>{{category.tag}}</span>
-                      </label>
-                  </div>
-              </fieldset>
-
               <!-- IF: Editing an existing post -->
 
               <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to

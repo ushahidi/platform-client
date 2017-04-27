@@ -25,7 +25,7 @@ function PostMetadataService(
         },
         loadUser: function (post) {
             if (post.user && post.user.id) {
-                return UserEndpoint.get({id: post.user.id});
+                return UserEndpoint.getFresh({id: post.user.id});
             }
         },
         loadContact: function (post) {

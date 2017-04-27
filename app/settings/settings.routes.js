@@ -29,7 +29,7 @@ function (
         controller: require('./surveys/edit.controller.js'),
         template: require('./surveys/survey-edit.html')
     })
-    .when('/settings/surveys/:id', {
+    .when('/settings/surveys/:action/:id', {
         controller: require('./surveys/edit.controller.js'),
         template: require('./surveys/survey-edit.html')
     })
@@ -43,12 +43,7 @@ function (
     })
     .when('/settings/categories/:id', {
         controller: require('./categories/edit.controller.js'),
-        template: require('./categories/categories-edit.html'),
-        resolve: {
-            category: ['$route', 'TagEndpoint', function ($route, TagEndpoint) {
-                return TagEndpoint.getFresh({id: $route.current.params.id});
-            }]
-        }
+        template: require('./categories/categories-edit.html')
     })
     .when('/settings/users', {
         controller: require('./users/users.controller.js'),
@@ -73,6 +68,18 @@ function (
     .when('/settings/roles/:id', {
         controller: require('./roles/roles.controller.js'),
         template: require('./roles/roles-edit.html')
+    })
+    .when('/settings/webhooks', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks.html')
+    })
+    .when('/settings/webhooks/create', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks-edit.html')
+    })
+    .when('/settings/webhooks/:id', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks-edit.html')
     })
     .when('/settings/datasources', {
         controller: require('./datasources/datasources.controller.js'),

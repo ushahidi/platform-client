@@ -6,6 +6,8 @@ build:
     - .:/vols/src
     - ./tmp/out:/vols/out
   encrypted_env_file: deployment.env.encrypted
+  cached: true
+  default_cache_branch: develop
 release:
   build:
     image: release
@@ -13,6 +15,8 @@ release:
   volumes:
     - ./tmp/out/release:/release
   encrypted_env_file: deployment.env.encrypted
+  cached: true
+  default_cache_branch: master
 deploy:
   build:
     image: deploy
@@ -20,6 +24,8 @@ deploy:
   encrypted_env_file: deployment.env.encrypted
   volumes:
     - ./tmp/out/last_build:/vols/last_build
+  cached: true
+  default_cache_branch: master
 test:
   build:
     image: test
@@ -28,3 +34,6 @@ test:
     - .:/vols/src
   environment:
     - TEST_SUITE=unit
+  cached: true
+  default_cache_branch: develop
+

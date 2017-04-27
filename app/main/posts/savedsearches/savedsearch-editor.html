@@ -33,18 +33,8 @@
             </select>
         </div>
     </div>
-
-    <div class="form-field select">
-        <label class="input-label">
-            <div class="custom-select">
-                <select ng-options="role.name as role.display_name for role in roles" ng-model="cpySavedSearch.visible_to[0]">
-                    <option value="" translate>post.modify.everyone</option>
-                </select>
-            </div>
-            <span class="nodisplay">Who</span> <translate translate="app.can_see_this">can see this</translate>
-        </label>
-    </div>
-
+    <!-- Who can see? -->
+    <role-selector model="savedSearch" title="'Who can see this?'"></role-selector>
     <div class="modal-actions">
         <div class="form-field">
             <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>

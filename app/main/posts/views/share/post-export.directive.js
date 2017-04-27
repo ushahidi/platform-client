@@ -37,6 +37,10 @@ function PostExportController(
         Notify.confirm('notify.post.export').then(function (message) {
             $scope.loading = true;
 
+            if (!$scope.filters) {
+                $scope.filters = [];
+            }
+
             var format = 'csv',  //@todo handle more formats
                 // Prepare filters for export
                 query = angular.extend({}, PostFilters.getQueryParams($scope.filters), {

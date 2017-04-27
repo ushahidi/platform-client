@@ -9,16 +9,14 @@ function LocationFilterDirective(Geocoding, $q) {
             centerPointModel: '=',
             withinKmModel: '='
         },
-        require: '^form',
         link: LocationFilterLink,
         template: require('./filter-location.html')
     };
 
     //LocationFilterLink.$inject = ['Geocoding'];
-    function LocationFilterLink($scope, element, attrs, formCtrl) {
+    function LocationFilterLink($scope, element, attrs) {
         $scope.geocoding = false;
         $scope.locationSearchText = '';
-
         $scope.$watch('centerPointModel', updateStateFromModels);
         $scope.$watch('locationSearchText', updateModelsFromState);
 
@@ -51,7 +49,7 @@ function LocationFilterDirective(Geocoding, $q) {
             } else { // perform a geocoding lookup on the location
                 $scope.geocoding = true;
 
-                Geocoding.search(location).then(function (coordinates) {
+                Geocoding.searchCoordinates(location).then(function (coordinates) {
                     if (!coordinates) {
                         defer.reject();
                         return;

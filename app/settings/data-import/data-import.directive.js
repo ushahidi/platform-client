@@ -90,10 +90,11 @@ function (
             }
 
             function cancelImport() {
-                Notify.notify('notify.data_import.csv_import_cancel');
-
-                deleteDataImport($scope.csv);
-                $location.url('/settings/data-import/');
+                Notify.confirm('notify.data_import.csv_import_cancel_confirm').then(function () {
+                    Notify.notify('notify.data_import.csv_import_cancel');
+                    deleteDataImport($scope.csv);
+                    $location.url('/settings/data-import/');
+                });
             }
 
             function deleteDataImport() {
@@ -134,8 +135,8 @@ function (
             function loadStepTwo(results) {
                 // Retrieve tasks and attributes
                 $q.all([
-                    FormStageEndpoint.get({form_id: $scope.selectedForm.id}).$promise,
-                    FormAttributeEndpoint.get({form_id: $scope.selectedForm.id}).$promise
+                    FormStageEndpoint.getFresh({form_id: $scope.selectedForm.id}).$promise,
+                    FormAttributeEndpoint.getFresh({form_id: $scope.selectedForm.id}).$promise
                 ]).then(function (results) {
                     $scope.selectedForm.tasks = results[0].results;
                     $scope.selectedForm.attributes  = transformAttributes(results[1].results);
@@ -165,19 +166,27 @@ function (
                     }, [])
                     .value();
 
+                var titleAttr = _.find(attributes, { type: 'title' });
+                var descAttr = _.find(attributes, { type: 'description' });
+
+                var titleLabel = titleAttr ? titleAttr.label : $translate.instant('post.modify.form.title');
+                var descLabel = descAttr ? descAttr.label : $translate.instant('post.modify.form.description');
+
                 attributes = _.chain(attributes)
                     .reject({type : 'point'})
+                    .reject({type : 'title'})
+                    .reject({type : 'description'})
                     .concat(points)
                     // Add in the Post specific mappable fields
                     .push({
                             'key': 'title',
-                            'label': $translate.instant('post.modify.form.title'),
+                            'label': titleLabel,
                             'priority': 0,
                             'required': true
                         },
                         {
                             'key': 'content',
-                            'label': $translate.instant('post.modify.form.description'),
+                            'label': descLabel,
                             'priority': 1,
                             'required': true
                         },
