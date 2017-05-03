@@ -135,8 +135,8 @@ function (
             function loadStepTwo(results) {
                 // Retrieve tasks and attributes
                 $q.all([
-                    FormStageEndpoint.get({form_id: $scope.selectedForm.id}).$promise,
-                    FormAttributeEndpoint.get({form_id: $scope.selectedForm.id}).$promise
+                    FormStageEndpoint.getFresh({form_id: $scope.selectedForm.id}).$promise,
+                    FormAttributeEndpoint.getFresh({form_id: $scope.selectedForm.id}).$promise
                 ]).then(function (results) {
                     $scope.selectedForm.tasks = results[0].results;
                     $scope.selectedForm.attributes  = transformAttributes(results[1].results);

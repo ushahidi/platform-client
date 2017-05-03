@@ -99,8 +99,8 @@ function PostEditorController(
 
     function fetchAttributesAndTasks(formId) {
         return $q.all([
-            FormStageEndpoint.query({ formId: formId }).$promise,
-            FormAttributeEndpoint.query({ formId: formId }).$promise,
+            FormStageEndpoint.queryFresh({ formId: formId }).$promise,
+            FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
             TagEndpoint.queryFresh({formId: formId}).$promise
         ]).then(function (results) {
             var post = $scope.post;
@@ -268,12 +268,15 @@ function PostEditorController(
             }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             // adding neccessary tags to post.tags, needed for filtering
-            post.tags = [];
             if ($scope.tagKeys.length > 0) {
+                var tags = [];
                 _.each($scope.tagKeys, function (tagKey) {
-                    post.tags = post.tags.concat(post.values[tagKey]);
+                    tags = tags.concat(post.values[tagKey]);
                 });
-                post.tags = _.uniq(post.tags);
+                tags = _.uniq(tags);
+                if (tags[0] !== undefined) {
+                    post.tags = tags;
+                }
             }
             var request;
             if (post.id) {
