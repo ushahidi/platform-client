@@ -55,7 +55,8 @@ function PostListController(
     $scope.statuses = PostActionsService.getStatuses();
     $scope.changeStatus = changeStatus;
     $scope.loadMore = loadMore;
-
+    $scope.getPosts = getPosts;
+    $scope.resetPosts = resetPosts;
     activate();
 
     // whenever the filters changes, update the current list of posts
