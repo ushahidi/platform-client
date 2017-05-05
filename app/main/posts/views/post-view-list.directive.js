@@ -70,8 +70,7 @@ function PostListController(
 
     function activate() {
         // Initial load
-        resetPosts();
-        getPosts();
+        // when filters updates it fires the initial load, TODO: revisit!
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });

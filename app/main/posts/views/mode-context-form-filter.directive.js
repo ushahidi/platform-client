@@ -40,8 +40,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             var tags = responses[2];
             // adding children to tags
             _.each(tags, function (tag) {
-                    //adding tag.id to filters
-                    $scope.filters.tags.push(tag.id);
                     if (tag.children) {
                         var children = [];
                         _.each(tag.children, function (child) {
