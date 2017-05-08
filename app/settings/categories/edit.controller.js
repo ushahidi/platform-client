@@ -44,7 +44,9 @@ function (
         $scope.roles = roles;
     });
 
-    $scope.saving = false;
+    $scope.save = $translate.instant('app.save');
+    $scope.saving = $translate.instant('app.saving');
+    $scope.processing = false;
 
     // getting label to edit
     TagEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (tag) {
@@ -91,14 +93,14 @@ function (
     };
 
     $scope.saveCategory = function (tag) {
-        $scope.saving = true;
+        $scope.processing = true;
         //@todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {
             Notify.notify('notify.category.save_success', {name: tag.tag});
             $location.path('/settings/categories');
         }, function (errorResponse) { // error
             Notify.apiErrors(errorResponse);
-            $scope.saving = false;
+            $scope.processing = false;
         });
     };
 

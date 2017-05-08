@@ -86,7 +86,6 @@ function (
 
             $scope.updateConfig = function () {
                 $scope.saving_config = true;
-
                 uploadHeaderImage().then(function () {
                     $q.all([
                         ConfigEndpoint.saveCache($scope.site).$promise,
