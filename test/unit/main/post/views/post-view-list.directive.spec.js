@@ -72,8 +72,6 @@ describe('post view list directive', function () {
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
-        isolateScope.resetPosts();
-        isolateScope.getPosts();
     }));
 
     it('should load initial values', function () {

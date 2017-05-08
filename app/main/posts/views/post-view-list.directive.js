@@ -57,6 +57,7 @@ function PostListController(
     $scope.loadMore = loadMore;
     $scope.getPosts = getPosts;
     $scope.resetPosts = resetPosts;
+    $scope.clearPosts = false;
     activate();
 
     // whenever the filters changes, update the current list of posts
@@ -64,14 +65,15 @@ function PostListController(
         return $scope.filters;
     }, function (newValue, oldValue) {
         if (newValue !== oldValue) {
-            resetPosts();
+            $scope.clearPosts = true;
             getPosts();
         }
     }, true);
 
+
     function activate() {
         // Initial load
-        // when filters updates it fires the initial load, TODO: revisit!
+        getPosts();
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
@@ -93,9 +95,12 @@ function PostListController(
         });
         $scope.isLoading = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+            // Clear posts
+            $scope.clearPosts ? resetPosts() : null;
             // Add posts to full set of posts
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
+
             // Merge grouped posts into existing groups
             angular.forEach(groupPosts(postsResponse.results), function (posts, group) {
                 if (angular.isArray($scope.groupedPosts[group])) {
@@ -160,6 +165,7 @@ function PostListController(
                 });
 
                 if (!$scope.posts.length) {
+                    $scope.clearPosts = true;
                     getPosts();
                 }
             }
@@ -201,6 +207,7 @@ function PostListController(
     function loadMore() {
         // Increment page
         $scope.currentPage++;
+        $scope.clearPosts = false;
         getPosts();
     }
 }
