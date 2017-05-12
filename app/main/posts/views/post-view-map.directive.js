@@ -46,10 +46,13 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             });
         }
 
-        function addPostsToMap(posts) {
+        function clearData() {
             if (markers) {
                 map.removeLayer(markers);
             }
+        }
+
+        function addPostsToMap(posts) {
 
             var geojson = L.geoJson(posts, {
                 pointToLayer: Maps.pointToLayer,
@@ -85,6 +88,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 return $scope.filters;
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
+                    clearData();
                     reloadMapPosts();
                 }
             }, true);
@@ -94,12 +98,35 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             loadPosts().then(addPostsToMap);
         }
 
-        function loadPosts(query) {
+        function loadPosts(query, offset) {
             query = query || PostFilters.getQueryParams($scope.filters);
-
+            query.has_location = 'mapped';
+            offset = offset || 0;
+            var limit = 200,
+            conditions = _.extend(query, {
+                limit: limit,
+                offset: offset
+            });
             $scope.isLoading = true;
-            return PostEndpoint.geojson(query).$promise.then(function (posts) {
+            return PostEndpoint.geojson(conditions).$promise.then(function (posts) {
                 $scope.isLoading = false;
+
+                // Retrieve remaining posts
+                if (offset === 0 && posts.total > limit) {
+                    var evenChunks = Math.floor((posts.total - limit) / limit);
+                    var remainder = (posts.total - limit) % limit;
+
+                    while (evenChunks > 0) {
+                        evenChunks -= 1;
+                        offset += limit;
+                        loadPosts(query, offset).then(addPostsToMap);
+                    }
+
+                    if (remainder > 0) {
+                        offset += remainder;
+                        loadPosts(query, offset).then(addPostsToMap);
+                    }
+                }
                 return posts;
             });
         }

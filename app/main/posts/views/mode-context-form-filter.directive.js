@@ -31,7 +31,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         $scope.forms = FormEndpoint.queryFresh();
         $scope.tags = TagEndpoint.queryFresh();
         var postCountRequest = PostEndpoint.stats({ group_by: 'form', status: 'all' });
-        var unmappedRequest = PostEndpoint.geojson({status: ['published', 'draft']});
+        var unmappedRequest = [];//PostEndpoint.geojson({status: ['published', 'draft']});
         $q.all([$scope.forms.$promise, postCountRequest.$promise, $scope.tags.$promise, unmappedRequest.$promise]).then(function (responses) {
             if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
                 return;
