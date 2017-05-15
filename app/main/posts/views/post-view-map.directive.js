@@ -23,7 +23,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         function activate() {
             // Start loading data
-            //var posts = loadPosts();
+            var posts = loadPosts();
             var createMap = Maps.createMap(element[0].querySelector('#map'))
             .then(function (data) {
                 map = data;
@@ -31,11 +31,11 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
             // When data is loaded
             $q.all({
-                map: createMap
-                //posts: posts
+                map: createMap,
+                posts: posts
             })
             .then(function (data) {
-                //addPostsToMap(data.posts);
+                addPostsToMap(data.posts);
                 return data;
             })
             .then(watchFilters)
