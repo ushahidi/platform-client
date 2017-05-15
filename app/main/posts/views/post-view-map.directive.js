@@ -15,6 +15,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
     function PostViewMapLink($scope, element, attrs) {
         var map, markers;
+        var limit = 200;
+        var requestBlockSize = 5;
+        var numberOfChunks = 0;
 
         activate();
 
@@ -47,6 +50,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function clearData() {
+            $scope.isLoading = true;
             if (markers) {
                 map.removeLayer(markers);
             }
@@ -60,7 +64,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             });
 
             if (map.options.clustering) {
-                markers = L.markerClusterGroup();
+
+                markers = markers ? markers : L.markerClusterGroup();
                 // This has to be done individually.
                 // Using clusterLayer.addLayers() breaks the clustering.
                 // Need to investigate as this should have been fixing in v1.0.0
@@ -98,12 +103,12 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             loadPosts().then(addPostsToMap);
         }
 
-        function loadPosts(query, offset) {
+        function loadPosts(query, offset, currentBlock) {
             query = query || PostFilters.getQueryParams($scope.filters);
             query.has_location = 'mapped';
             offset = offset || 0;
-            var limit = 200,
-            conditions = _.extend(query, {
+            currentBlock = currentBlock || 1;
+            var conditions = _.extend(query, {
                 limit: limit,
                 offset: offset
             });
@@ -111,20 +116,21 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             return PostEndpoint.geojson(conditions).$promise.then(function (posts) {
                 $scope.isLoading = false;
 
-                // Retrieve remaining posts
+                // Set number of chunks
                 if (offset === 0 && posts.total > limit) {
-                    var evenChunks = Math.floor((posts.total - limit) / limit);
-                    var remainder = (posts.total - limit) % limit;
+                    numberOfChunks = Math.floor((posts.total - limit) / limit);
+                    numberOfChunks += ((posts.total - limit) % limit) > 0 ? 1 : 0;
+                }
 
-                    while (evenChunks > 0) {
-                        evenChunks -= 1;
+                // Retrieve blocks of chunks
+                // At the end of a block request the next block of chunks
+                if (numberOfChunks > 0 && currentBlock === 1) {
+                    var block = numberOfChunks > requestBlockSize ? requestBlockSize : numberOfChunks;
+                    numberOfChunks -= requestBlockSize;
+                    while (block > 0) {
+                        block -= 1;
                         offset += limit;
-                        loadPosts(query, offset).then(addPostsToMap);
-                    }
-
-                    if (remainder > 0) {
-                        offset += remainder;
-                        loadPosts(query, offset).then(addPostsToMap);
+                        loadPosts(query, offset, block).then(addPostsToMap);
                     }
                 }
                 return posts;
