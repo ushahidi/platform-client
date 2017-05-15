@@ -47,7 +47,7 @@ function SurveyEditorController(
     ModalService,
     Features
 ) {
-
+    $scope.saving = false;
     $scope.currentInterimId = 0;
     $scope.survey = {
         color: null
@@ -57,7 +57,6 @@ function SurveyEditorController(
     $scope.moveTaskDown = moveTaskDown;
     $scope.isFirstTask = isFirstTask;
     $scope.isLastTask = isLastTask;
-
     $scope.deleteTask = deleteTask;
     $scope.duplicateSection = duplicateSection;
     $scope.openTaskModal = openTaskModal;
@@ -73,7 +72,7 @@ function SurveyEditorController(
     $scope.isLastAttribute = isLastAttribute;
 
     $scope.deleteAttribute = deleteAttribute;
-
+    $scope.saving_survey = false;
     $scope.saveSurvey = saveSurvey;
     $scope.cancel = cancel;
 
@@ -105,6 +104,8 @@ function SurveyEditorController(
         $scope.switchTab('post', 'survey-build');
 
         $scope.loadRoleData();
+        $scope.save = $translate.instant('app.save');
+        $scope.saving = $translate.instant('app.saving');
 
         if ($scope.surveyId) {
             loadFormData();
@@ -302,6 +303,7 @@ function SurveyEditorController(
     }
 
     function handleResponseErrors(errorResponse) {
+        $scope.saving_survey = false;
         Notify.apiErrors(errorResponse);
     }
 
@@ -546,6 +548,7 @@ function SurveyEditorController(
     //Start - modify Survey
 
     function saveSurvey() {
+        $scope.saving_survey = true;
         if (!$scope.surveyId) {
             $scope.survey.tags = extractTags();
         }
@@ -561,6 +564,7 @@ function SurveyEditorController(
             saveTasks();
             saveRoles();
         }, handleResponseErrors);
+        $scope.saving_survey = false;
     }
 
     function saveTasks(tasks) {

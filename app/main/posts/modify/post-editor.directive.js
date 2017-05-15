@@ -77,6 +77,10 @@ function PostEditorController(
     $scope.postTitleLabel = 'Title';
     $scope.postDescriptionLabel = 'Description';
     $scope.tagKeys = [];
+    $scope.save = $translate.instant('app.save');
+    $scope.saving = $translate.instant('app.saving');
+    $scope.submit = $translate.instant('app.submit');
+    $scope.submitting = $translate.instant('app.submitting');
     activate();
 
     function activate() {
@@ -91,6 +95,8 @@ function PostEditorController(
         });
 
         $scope.medias = {};
+        $scope.savingText = $translate.instant('app.saving');
+        $scope.submittingText = $translate.instant('app.submitting');
     }
 
     function setVisibleStage(stageId) {
@@ -252,14 +258,15 @@ function PostEditorController(
     }
 
     function savePost() {
+        $scope.saving_post = true;
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
+            $scope.saving_post = false;
             return;
         }
         // Create/update any associated media objects
         // Media creation must be completed before we can progress with saving
         resolveMedia().then(function () {
-            $scope.saving_post = true;
 
             // Avoid messing with original object
             // Clean up post values object
@@ -308,9 +315,7 @@ function PostEditorController(
                         validationErrors.push(value);
                     }
                 });
-
                 Notify.errors(_.pluck(validationErrors, 'message'));
-
                 $scope.saving_post = false;
             });
         });
