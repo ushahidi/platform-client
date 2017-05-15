@@ -57,7 +57,9 @@ describe('post view map directive', function () {
         spyOn(PostEndpoint, 'get').and.callThrough();
 
         $scope = _$rootScope_.$new();
-        $scope.isLoading = true;
+        $scope.isLoading = {
+            state: true
+        };
         $scope.filters = {};
 
         element = '<post-view-map filters="filters" is-loading="isLoading"></post-view-map>';

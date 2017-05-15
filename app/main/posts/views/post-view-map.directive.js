@@ -23,7 +23,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         function activate() {
             // Start loading data
-            var posts = loadPosts();
+            //var posts = loadPosts();
             var createMap = Maps.createMap(element[0].querySelector('#map'))
             .then(function (data) {
                 map = data;
@@ -31,11 +31,11 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
             // When data is loaded
             $q.all({
-                map: createMap,
-                posts: posts
+                map: createMap
+                //posts: posts
             })
             .then(function (data) {
-                addPostsToMap(data.posts);
+                //addPostsToMap(data.posts);
                 return data;
             })
             .then(watchFilters)
@@ -50,9 +50,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function clearData() {
-            $scope.isLoading = true;
             if (markers) {
                 map.removeLayer(markers);
+                markers = undefined;
             }
         }
 
@@ -112,9 +112,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 limit: limit,
                 offset: offset
             });
-            $scope.isLoading = true;
+            $scope.isLoading.state = true;
             return PostEndpoint.geojson(conditions).$promise.then(function (posts) {
-                $scope.isLoading = false;
 
                 // Set number of chunks
                 if (offset === 0 && posts.total > limit) {
@@ -132,6 +131,10 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         offset += limit;
                         loadPosts(query, offset, block).then(addPostsToMap);
                     }
+                }
+
+                if (numberOfChunks <= 0) {
+                    $scope.isLoading.state = false;
                 }
                 return posts;
             });
