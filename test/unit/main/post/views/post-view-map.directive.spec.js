@@ -57,7 +57,9 @@ describe('post view map directive', function () {
         spyOn(PostEndpoint, 'get').and.callThrough();
 
         $scope = _$rootScope_.$new();
-        $scope.isLoading = true;
+        $scope.isLoading = {
+            state: true
+        };
         $scope.filters = {};
 
         element = '<post-view-map filters="filters" is-loading="isLoading"></post-view-map>';
@@ -108,7 +110,7 @@ describe('post view map directive', function () {
         });
 
         expect(L.geoJson).toHaveBeenCalled();
-        expect(L.geoJson.calls.count()).toEqual(2);
+        expect(L.geoJson.calls.count()).toEqual(3);
         expect(geojson.addTo).toHaveBeenCalledWith(map);
     });
 

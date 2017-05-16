@@ -46,7 +46,8 @@ function (
             method: 'GET',
             url: Util.apiUrl('/posts/:id/geojson'),
             isArray: false,
-            paramSerializer: '$httpParamSerializerJQLike'
+            paramSerializer: '$httpParamSerializerJQLike',
+            cancellable: true
         },
         stats: {
             method: 'GET',

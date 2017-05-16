@@ -93,7 +93,7 @@ function PostListController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
-        $scope.isLoading = true;
+        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             // Clear posts
             $scope.clearPosts ? resetPosts() : null;
@@ -111,7 +111,7 @@ function PostListController(
             });
 
             $scope.totalItems = postsResponse.total_count;
-            $scope.isLoading = false;
+            $scope.isLoading.state = false;
 
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();

@@ -66,7 +66,9 @@ describe('post view list directive', function () {
 
         Notify = _Notify_;
         PostFilters = _PostFilters_;
-        $scope.isLoading = true;
+        $scope.isLoading = {
+            state: true
+        };
         $scope.filters = {};
         element = '<post-view-list filters="filters" is-loading="isLoading"></post-view-list>';
         element = $compile(element)($scope);
