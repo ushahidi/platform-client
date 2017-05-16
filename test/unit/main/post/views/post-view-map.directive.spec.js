@@ -79,11 +79,6 @@ describe('post view map directive', function () {
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
-        isolateScope.$apply(function () {
-            isolateScope.filters = {
-                status : 'published'
-            };
-        });
 
         expect(PostEndpoint.geojson).toHaveBeenCalled();
         expect(L.geoJson).toHaveBeenCalled();
@@ -96,11 +91,6 @@ describe('post view map directive', function () {
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
-        isolateScope.$apply(function () {
-            isolateScope.filters = {
-                status : 'published'
-            };
-        });
 
         expect(PostEndpoint.geojson).toHaveBeenCalled();
         expect(L.geoJson).toHaveBeenCalled();
@@ -120,7 +110,7 @@ describe('post view map directive', function () {
         });
 
         expect(L.geoJson).toHaveBeenCalled();
-        expect(L.geoJson.calls.count()).toEqual(2);
+        expect(L.geoJson.calls.count()).toEqual(3);
         expect(geojson.addTo).toHaveBeenCalledWith(map);
     });
 
