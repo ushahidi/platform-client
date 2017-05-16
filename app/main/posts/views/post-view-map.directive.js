@@ -15,6 +15,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
     function PostViewMapLink($scope, element, attrs) {
         var map, markers;
+        var currentGeoJsonRequests = [];
         var limit = 200;
         var requestBlockSize = 5;
         var numberOfChunks = 0;
@@ -93,27 +94,42 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 return $scope.filters;
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
+                    cancelCurrentRequests();
                     clearData();
                     reloadMapPosts();
                 }
             }, true);
         }
 
+        function cancelCurrentRequests() {
+            _.each(currentGeoJsonRequests, function (request) {
+                request.$cancelRequest();
+            });
+            currentGeoJsonRequests = [];
+        }
+
         function reloadMapPosts() {
-            loadPosts().then(addPostsToMap);
+            var test = loadPosts();
+            test.then(addPostsToMap);
         }
 
         function loadPosts(query, offset, currentBlock) {
-            query = query || PostFilters.getQueryParams($scope.filters);
-            query.has_location = 'mapped';
             offset = offset || 0;
             currentBlock = currentBlock || 1;
+
+            query = query || PostFilters.getQueryParams($scope.filters);
+
             var conditions = _.extend(query, {
                 limit: limit,
-                offset: offset
+                offset: offset,
+                has_location: 'mapped'
             });
             $scope.isLoading.state = true;
-            return PostEndpoint.geojson(conditions).$promise.then(function (posts) {
+
+            var request = PostEndpoint.geojson(conditions);
+            currentGeoJsonRequests.push(request);
+
+            return request.$promise.then(function (posts) {
 
                 // Set number of chunks
                 if (offset === 0 && posts.total > limit) {

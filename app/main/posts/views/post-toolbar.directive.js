@@ -5,13 +5,15 @@ function PostToolbarDirective() {
     return {
         restrict: 'E',
         scope: {
-            isLoading: '='
+            isLoading: '=',
+            filters: '=',
+            currentView: '='
         },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')
     };
 }
 
-PostToolbarController.$inject = ['$scope'];
-function PostToolbarController($scope) {
+PostToolbarController.$inject = [];
+function PostToolbarController() {
 }
