@@ -28,6 +28,10 @@ function (
             $scope.canDisplay = function () {
                 return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags';
             };
+
+            $scope.canMakePrivate = function () {
+                return $scope.editAttribute.input !== 'tags';
+            };
         }
     };
 }];
