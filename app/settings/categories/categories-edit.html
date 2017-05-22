@@ -19,32 +19,28 @@
         <div class="mode-context-body">
         </div>
     </div>
-    <main role="main">
-
-        <div custom-categorys-editor class="main-col">
-
-            <!-- toolbar -->
-            <div class="toolbar">
-                <div class="button-group">
-                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-                    <button class="button-alpha" type="button" ng-click="saveCategory(category)" type="submit" ng-disabled="form.$invalid" ng-if="!processing">
-                    {{save}}</button>
-                    <button type="submit" class="button-alpha"  disabled ng-if="processing">{{saving}}
-                      <div class="loading">
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        <div class="line"></div>
-                      </div>
-                    </button>
-                </div>
+    <main custom-categorys-editor role="main">
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="button-group">
+                <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                <button class="button-alpha" type="button" ng-click="saveCategory(category)" type="submit" ng-disabled="form.$invalid" ng-if="!processing">
+                {{save}}</button>
+                <button type="submit" class="button-alpha"  disabled ng-if="processing">{{saving}}
+                  <div class="loading">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div>
+                </button>
             </div>
-            <!-- end toolbar -->
-            <!-- start edit -->
-
-            <div class="full-col">
-              <form name="form">
+        </div>
+        <!-- end toolbar -->
+        <!-- start edit -->
+        <div class="full-col">
+          <div class="form-sheet">
             <!-- Title -->
-              <div class="form-field title">
+            <div class="form-field title">
               <label class="hidden" translate="category.editor.name"></label>
               <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.tag" required>
             </div>
@@ -54,16 +50,16 @@
               <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
             </div>
             <!-- Parent/child-relations -->
-            <fieldset 
-              class="custom-fieldset init" 
+            <fieldset
+              class="custom-fieldset init"
               dropdown auto-close="outsideClick"
             >
-              <legend 
+              <legend
                 class="dropdown-trigger init active"
                 data-toggle="dropdown-menu"
                 dropdown-toggle
               >
-                <span class="legend-label">This label is a child to 
+                <span class="legend-label">This label is a child to
                   <span class="custom-fieldset-value">{{getParentName()}}</span>
                 </span>
                 <svg class="iconic chevron">
@@ -73,7 +69,7 @@
                 <div class="dropdown-menu init" dropdown-menu>
                 <div class="form-field radio">
                     <label for="parent_label-nothing">
-                        <input 
+                        <input
                           type="radio"
                           name="parent_label"
                           id="parent_label-nothing"
@@ -87,7 +83,7 @@
 
                 <div class="form-field radio" ng-repeat="parent in parents">
                     <label for="parent_label-{{parent.id}}">
-                        <input 
+                        <input
                           type="radio"
                           name="parent_label"
                           id="parent_label-{{parent.id}}"
@@ -100,43 +96,25 @@
                 </div>
                 </div>
             </fieldset>
-            </div>
             <!-- Who can see and add -->
             <role-selector model="category" title="'Who can see this label'"></role-selector>
-              <!-- Which surveys use the label -->
-              <fieldset>
-                <legend>Which surveys use this label?</legend>
-                <div class="form-field checkbox" ng-repeat="survey in surveys">
-                    <label for="accessible-to-{{survey.id}}">
-                      <input 
-                        type="checkbox"
-                        id="accessible-to-{{survey.id}}"
-                        value="survey.id"
-                        checklist-value="survey.id"
-                        checklist-model="category.forms"
-                      />
-                      {{survey.name}}
-                    </label>
-                </div> 
-            </fieldset>
-          </form>
-          <div class="form-sheet" ng-show="category.id">
-                   <div class="form-sheet-summary">
-                       <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
-                   </div>
-
-                   <div class="form-field">
-                       <p translate>category.delete_category_desc</p>
-
-                       <button class="button-destructive" ng-click="deleteCategory(category)">
-                           <svg class="iconic">
-                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                           </svg>
-                           <span class="button-label" translate>category.delete_category</span>
-                       </button>
-                   </div>
-
-                </div>
-
-          
-               
+            <!-- Which surveys use the label -->
+            <fieldset>
+              <legend>Which surveys use this label?</legend>
+              <div class="form-field checkbox" ng-repeat="survey in surveys">
+                  <label for="accessible-to-{{survey.id}}">
+                    <input
+                      type="checkbox"
+                      id="accessible-to-{{survey.id}}"
+                      value="survey.id"
+                      checklist-value="survey.id"
+                      checklist-model="category.forms"
+                    />
+                    {{survey.name}}
+                  </label>
+              </div>
+          </fieldset>
+      </div>
+    </div>
+  </main>
+</div>
