@@ -29,7 +29,7 @@ function (
         controller: require('./surveys/edit.controller.js'),
         template: require('./surveys/survey-edit.html')
     })
-    .when('/settings/surveys/:id', {
+    .when('/settings/surveys/:action/:id', {
         controller: require('./surveys/edit.controller.js'),
         template: require('./surveys/survey-edit.html')
     })

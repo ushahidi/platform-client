@@ -1,21 +1,21 @@
-module.exports = SavedSearchListing;
+module.exports = SavedSearchModal;
 
-SavedSearchListing.$inject = [];
-function SavedSearchListing() {
+SavedSearchModal.$inject = [];
+function SavedSearchModal() {
     return {
         restrict: 'E',
         scope: true,
-        controller: SavedSearchListingController,
-        template: require('./saved-search-dropdown.html')
+        controller: SavedSearchModalController,
+        template: require('./saved-search-modal.html')
     };
 }
 
-SavedSearchListingController.$inject = ['$scope', '$element', '$attrs', '$rootScope', 'UserEndpoint', 'SavedSearchEndpoint', '_'];
-function SavedSearchListingController($scope, $element, $attrs, $rootScope, UserEndpoint, SavedSearchEndpoint, _) {
+SavedSearchModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
+function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
     var users = [];
 
     $scope.searchSearches = searchSearches;
-
+    $scope.createNewSearch = createNewSearch;
     activate();
 
     // Reload searches on login / logout events
@@ -31,7 +31,6 @@ function SavedSearchListingController($scope, $element, $attrs, $rootScope, User
     function loadSavedSearches(query) {
         $scope.searches = [];
         query = query || {};
-
         SavedSearchEndpoint.query(query).$promise.then(function (searches) {
             $scope.searches = searches;
 
@@ -48,7 +47,10 @@ function SavedSearchListingController($scope, $element, $attrs, $rootScope, User
             });
         });
     }
-
+    function createNewSearch() {
+        // Copy the current filters into our search..
+        ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
+    }
     function searchSearches(query) {
         loadSavedSearches({
             q : query

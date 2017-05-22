@@ -9,10 +9,14 @@ function (
         restrict: 'E',
         template: require('./attribute-editor.html'),
         link: function ($scope, $element, $attrs) {
-
             $scope.defaultValueToggle = false;
             $scope.descriptionToggle = false;
 
+            $scope.editName = function () {
+                if (!$scope.editAttribute.id) {
+                    $scope.editAttribute.label = '';
+                }
+            };
             $scope.closeModal = function () {
                 ModalService.close();
             };
@@ -22,7 +26,7 @@ function (
             };
 
             $scope.canDisplay = function () {
-                return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
+                return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags';
             };
         }
     };

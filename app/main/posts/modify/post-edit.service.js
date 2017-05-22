@@ -48,10 +48,6 @@ function (
                 return false;
             }
 
-            if (form.tags && form.tags.$invalid) {
-                return false;
-            }
-
             // Validate required fields for each task that needs to be validated
             _.each(tasks_to_validate, function (task) {
                 var required_attributes = _.where(task.attributes, {required: true});

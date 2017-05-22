@@ -32,16 +32,17 @@ function (
 
     $scope.passwordShown = true;
     $scope.user = { role: 'user' }; // @todo don't hardcode default role
-    $scope.processing = false;
-
+    $scope.save = $translate.instant('app.save');
+    $scope.saving = $translate.instant('app.saving');
+    $scope.saving_user = false;
     $scope.saveUser = function (user, addAnother) {
-        $scope.processing = true;
+        $scope.saving_user = true;
         var whereToNext = '/settings/users';
 
         UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
                 Notify.notify('notify.user.save_success', {name: user.realname});
-                $scope.processing = false;
+                $scope.saving_user = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
                 addAnother ? $route.reload() : $location.path(whereToNext);
@@ -65,7 +66,7 @@ function (
             } else {
                 Notify.errors(_.pluck(validationErrors, 'message'));
             }
-            $scope.processing = false;
+            $scope.saving_user = false;
         });
     };
 

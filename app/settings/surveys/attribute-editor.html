@@ -1,7 +1,7 @@
-<div class="modal-body">
+ <div class="modal-body">
   <div class="form-field">
       <label translate="app.name">Name</label>
-      <input type="text" ng-model="editAttribute.label">
+      <input type="text" ng-model="editAttribute.label" ng-click="editName()">
    </div>
    <div class="form-field switch">
       <label translate="survey.show_field_description">Show field description</label>
@@ -15,7 +15,6 @@
       </div>
   </div>
    <div ng-if="canDisplay()">
-
        <div class="form-field" ng-if="hasOptions(editAttribute)">
           <label translate>form.field_options</label>
           <div class="input-inline" ng-repeat="(key, option) in editAttribute.options track by $index">
@@ -29,8 +28,23 @@
           </div>
           <button type="button" class="button-secondary alt" ng-click="addOption(editAttribute)"><i class="fa fa-plus"></i> <span translate>form.field_add_option</span></button>
        </div>
-
-       <div class="form-field" ng-if="editAttribute.input === 'relation'">
+   </div>
+   <!-- editing/adding categories -->
+    <div class="form-field" ng-if="editAttribute.input ==='tags'">
+      <label translate>Which labels should be available</label>
+        <div ng-repeat="category in availableCategories">
+            <label>
+              <input 
+                type="checkbox"
+                checklist-model="editAttribute.options"
+                checklist-value="category.id"
+              />
+              {{category.tag}}
+            </label>
+        </div>
+      </div>
+    <!-- End of editing/adding categories -->
+        <div class="form-field" ng-if="editAttribute.input === 'relation'">
             <label translate>survey.field_allowed_relation_survey</label>
             <ul name="visible-to">
                <li ng-repeat="relationForm in availableForms | filter : filterNotCurrentForm">
@@ -41,8 +55,7 @@
                </li>
             </ul>
         </div>
-   </div>
-    <div class="form-field switch" ng-show="onlyOptional()">
+        <div class="form-field switch" ng-show="onlyOptional() && editAttribute.input !== 'tags'">
           <label translate="survey.required">Require this field be completed</label>
           <div class="toggle-switch">
              <input class="tgl" id="switchnewattribute" type="checkbox" ng-model="editAttribute.required">

@@ -46,7 +46,6 @@ function (
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
-
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
@@ -57,6 +56,7 @@ function (
 
         return 'post.publish_for_everyone';
     };
+
 
     $scope.stageIsComplete = function (stageId) {
         return _.includes($scope.post.completed_stages, stageId);
@@ -75,15 +75,16 @@ function (
     // Load the post form
     if ($scope.post.form && $scope.post.form.id) {
         $q.all([
-            FormEndpoint.get({id: $scope.post.form.id}),
-            FormStageEndpoint.query({formId:  $scope.post.form.id}).$promise,
-            FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise
+            FormEndpoint.getFresh({id: $scope.post.form.id}),
+            FormStageEndpoint.queryFresh({formId:  $scope.post.form.id}).$promise,
+            FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
+            TagEndpoint.queryFresh({formId: $scope.post.form.id}).$promise
         ]).then(function (results) {
             $scope.form = results[0];
             $scope.form_name = results[0].name;
             $scope.form_description = results[0].description;
             $scope.form_color = results[0].color;
-
+            $scope.tags = results[3];
             // Set page title to '{form.name} Details' if a post title isn't provided.
             if (!$scope.post.title) {
                 $translate('post.type_details', { type: results[0].name }).then(function (title) {
@@ -137,12 +138,12 @@ function (
             // Figure out which tasks have values
             $scope.tasks_with_attributes = [];
             _.each($scope.post.values, function (value, key) {
+
                 if ($scope.form_attributes[key]) {
                     $scope.tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
                 }
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
-
         });
     }
 
@@ -158,12 +159,22 @@ function (
         return $scope.form_attributes[key] && $scope.post_task &&
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
-
-    // Replace tags with full tag object
-    $scope.post.tags = $scope.post.tags.map(function (tag) {
-        return TagEndpoint.get({id: tag.id, ignore403: true});
-    });
-
+    $scope.formatTags = function (tagIds) {
+        // getting tag-names and formatting them for displaying
+        var formatedTags = ' ';
+        _.each(tagIds, function (tag, index) {
+            var tagObj = _.where($scope.tags, {id: parseInt(tag)});
+            if (tagObj[0]) {
+                tag = tagObj[0].tag;
+                if (index < tagIds.length - 1) {
+                    formatedTags += tag + ', ';
+                } else {
+                    formatedTags += tag;
+                }
+            }
+        });
+        return formatedTags;
+    };
     $scope.showType = function (type) {
         if (type === 'point') {
             return false;

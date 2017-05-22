@@ -4,6 +4,11 @@ PostToolbarDirective.$inject = [];
 function PostToolbarDirective() {
     return {
         restrict: 'E',
+        scope: {
+            isLoading: '=',
+            filters: '=',
+            currentView: '='
+        },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')
     };
@@ -11,5 +16,4 @@ function PostToolbarDirective() {
 
 PostToolbarController.$inject = [];
 function PostToolbarController() {
-
 }
