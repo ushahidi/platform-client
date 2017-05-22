@@ -222,6 +222,14 @@ function SurveyEditorController(
             params.formId = $scope.surveyId;
         }
         TagEndpoint.queryFresh(params).$promise.then(function (tags) {
+            // adding children to parents
+            _.each(tags, function (tag) {
+                if (tag && tag.children) {
+                    tag.children = _.map(tag.children, function (child) {
+                        return _.findWhere(tags, {id: parseInt(child.id)});
+                    });
+                }
+            });
             $scope.availableCategories = tags;
         });
     }
