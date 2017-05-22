@@ -37,6 +37,9 @@ function (
         template: require('./settings-editor.html'),
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
+
+            $scope.save = $translate.instant('app.save');
+            $scope.saving = $translate.instant('app.saving');
             $scope.map = {};
             $scope.fileContainer = {
                 file : null
