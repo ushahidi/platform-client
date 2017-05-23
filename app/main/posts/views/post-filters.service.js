@@ -23,7 +23,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     };
 
     function activate() {
-        $q.all([FormEndpoint.queryFresh().$promise, TagEndpoint.queryFresh()]).then(function (results) {
+        $q.all([FormEndpoint.query().$promise, TagEndpoint.queryFresh()]).then(function (results) {
             forms = results[0];
             tags = results[1];
             filterState.form = filterState.form || [];

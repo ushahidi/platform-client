@@ -18,24 +18,6 @@ module.exports = [function () {
                 }
             }};
         },
-        queryFresh: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback([
-                        {
-                            name: 'test form stages',
-                            priority: 1,
-                            id: 1
-                        },
-                        {
-                            name: 'test form stages 2',
-                            priority: 2,
-                            id: 2
-                        }
-                    ]);
-                }
-            }};
-        },
         invalidateCache: function () {},
         getFresh: function () {
             return {

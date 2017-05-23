@@ -31,14 +31,10 @@ module.exports = [function () {
             }};
         },
         getFresh: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback({
-                        name: 'test form',
-                        id: 1
-                    });
-                }
-            }};
+            return {
+                name: 'test form',
+                id: 1
+            };
         },
         delete: function () {
             return {$promise: {
