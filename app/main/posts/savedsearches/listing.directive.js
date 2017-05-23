@@ -1,21 +1,21 @@
-module.exports = SavedSearchModal;
+module.exports = SavedSearchListing;
 
-SavedSearchModal.$inject = [];
-function SavedSearchModal() {
+SavedSearchListing.$inject = [];
+function SavedSearchListing() {
     return {
         restrict: 'E',
         scope: true,
-        controller: SavedSearchModalController,
-        template: require('./saved-search-modal.html')
+        controller: SavedSearchListingController,
+        template: require('./saved-search-dropdown.html')
     };
 }
 
-SavedSearchModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
-function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
+SavedSearchListingController.$inject = ['$scope', '$element', '$attrs', '$rootScope', 'UserEndpoint', 'SavedSearchEndpoint', '_'];
+function SavedSearchListingController($scope, $element, $attrs, $rootScope, UserEndpoint, SavedSearchEndpoint, _) {
     var users = [];
 
     $scope.searchSearches = searchSearches;
-    $scope.createNewSearch = createNewSearch;
+
     activate();
 
     // Reload searches on login / logout events
@@ -31,6 +31,7 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEn
     function loadSavedSearches(query) {
         $scope.searches = [];
         query = query || {};
+
         SavedSearchEndpoint.query(query).$promise.then(function (searches) {
             $scope.searches = searches;
 
@@ -39,7 +40,7 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEn
                 if (_.isObject(search.user) && search.user.id !== _.result($rootScope.currentUser, 'userId')) {
                     // Load the user (if we haven't already)
                     if (!users[search.user.id]) {
-                        users[search.user.id] = UserEndpoint.getFresh({id: search.user.id});
+                        users[search.user.id] = UserEndpoint.get({id: search.user.id});
                     }
                     // Save user info onto the search itself
                     search.user = users[search.user.id];
@@ -47,10 +48,7 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEn
             });
         });
     }
-    function createNewSearch() {
-        // Copy the current filters into our search..
-        ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
-    }
+
     function searchSearches(query) {
         loadSavedSearches({
             q : query

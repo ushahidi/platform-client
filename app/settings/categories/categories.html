@@ -46,14 +46,8 @@
 
                     <div class="listing-item-primary">
                         <h2 class="listing-item-title"><a ng-href="/settings/categories/{{category.id}}">{{category.tag}}</a></h2>
+                        <p class="listing-item-secondary">{{category.description}}</p>
                     </div>
-                    <div class="listing-item-secondary">
-                        <button class="button-beta button-flat" ng-click="deleteCategory(category)">
-                            <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                            </svg>
-                            <span class="hidden">Delete</span>
-                        </div>
 
                 </div>
                 <listing-toolbar entities="categories" selected-set="selectedCategories">

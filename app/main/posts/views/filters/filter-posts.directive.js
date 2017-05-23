@@ -5,8 +5,7 @@ function FilterPostsDirective() {
     return {
         restrict: 'E',
         scope: {
-            filters: '=',
-            currentView: '='
+            filters: '='
         },
         replace: true,
         controller: FilterPostsController,
@@ -14,13 +13,15 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService'];
-function FilterPostsController($scope, $timeout, ModalService) {
+FilterPostsController.$inject = ['$scope', '$timeout'];
+function FilterPostsController($scope, $timeout) {
     $scope.searchSavedToggle = false;
+    $scope.searchFiltersToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
-    $scope.openFilterModal = openFilterModal;
-    $scope.openSavedModal = openSavedModal;
+    $scope.toggleSaved = toggleSaved;
+    $scope.toggleFilters = toggleFilters;
+
     activate();
 
     function activate() {
@@ -32,21 +33,26 @@ function FilterPostsController($scope, $timeout, ModalService) {
         // Reset filters
         rollbackForm();
         // .. and close the dropdown
-        ModalService.close();
+        $scope.searchFiltersToggle = false;
     }
 
-    function openFilterModal() {
-        // Set active task so we know who this attribute will belong to
-        ModalService.openTemplate('<filter-modal></filter-modal>', 'app.filter_by', '/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px', $scope, true, true);
-    }
     function applyFilters(event) {
         // ngFormController automatically commits changes to the model ($scope.filters)
         // Just close the dropdown
-        ModalService.close();
+        $scope.searchFiltersToggle = false;
     }
 
-    function openSavedModal() {
-        ModalService.openTemplate('<saved-search-modal></saved-search-modal>', 'nav.saved_searches', '/img/iconic-sprite.svg#star', $scope, true, true);
+    function toggleSaved() {
+        $scope.searchSavedToggle = !$scope.searchSavedToggle;
+        $scope.searchFiltersToggle = false;
+    }
+
+    function toggleFilters() {
+        $scope.searchFiltersToggle = !$scope.searchFiltersToggle;
+        $scope.searchSavedToggle = false;
+
+        // Reset the form
+        rollbackForm();
     }
 
     function rollbackForm() {

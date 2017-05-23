@@ -94,6 +94,17 @@
                   attribute="attribute"
               ></post-value-edit>
               <!-- End Post custom fields -->
+
+              <fieldset id="categories" ng-show="categories.length">
+                  <legend translate="post.modify.form.categories">Categories</legend>
+                  <div class="form-field checkbox" ng-repeat="category in categories">
+                      <label for="cat1">
+                          <input type="checkbox" value="category.id" name="tags" checklist-model="post.tags" checklist-value="category.id">
+                          <span>{{category.tag}}</span>
+                      </label>
+                  </div>
+              </fieldset>
+
               <!-- IF: Editing an existing post -->
 
               <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to

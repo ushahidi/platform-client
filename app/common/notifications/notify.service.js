@@ -2,6 +2,7 @@ module.exports = Notify;
 
 var scope;
 var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
+
 Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
 function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     return {
@@ -111,7 +112,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
             scope.confirmText = confirmText;
             ModalService.openTemplate(
                 '<div class="form-field">' +
-                '<p><i translate>notify.default.proceed_warning</i></p>' +
                 '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
                 '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>' +
                 '</div>', confirmText, false, scope, false, false);
@@ -144,7 +144,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 // Open in slider
                 SliderService.openTemplate(
                     '<p>{{ confirmText }}</p>' +
-                    '<p><i translate>notify.default.proceed_warning</i></p>' +
                     '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
                     '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
                     '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
@@ -163,7 +162,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 // Otherwise confirm in modal
                 ModalService.openTemplate(
                 '<div class="form-field">' +
-                '<p><i translate>notify.default.proceed_warning</i></p>' +
                 '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
                 '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
                 '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +

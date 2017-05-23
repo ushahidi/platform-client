@@ -69,7 +69,6 @@ describe('Post Filters Service', function () {
                 date_after: '',
                 date_before: '',
                 status: ['archived', 'draft'],
-                has_location: 'all',
                 published_to: '',
                 center_point: '',
                 within_km: '1',

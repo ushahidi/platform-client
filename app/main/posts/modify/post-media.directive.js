@@ -24,6 +24,17 @@ function (
         },
         template: require('./media.html'),
         link: function ($scope, element, attr, formCtrl) {
+            $scope.showAdd = function () {
+                return (!$scope.media.id && !$scope.media.changed);
+            };
+
+            $scope.showReplace = function () {
+                return $scope.media.dataURI || $scope.media.id;
+            };
+
+            $scope.showDelete = function () {
+                return $scope.media.id;
+            };
 
             if ($scope.mediaId) {
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
@@ -36,18 +47,6 @@ function (
                 $scope.media = {file: null, caption: null, dataURI: null, changed: false};
             }
 
-            $scope.showAdd = function () {
-                return (!$scope.media.id && !$scope.media.changed || $scope.media.deleted);
-            };
-
-            $scope.showReplace = function () {
-                return $scope.media.dataURI || $scope.media.id;
-            };
-
-            $scope.showDelete = function () {
-                return $scope.media.id;
-            };
-
             $scope.deleteMedia = function (mediaId) {
                 // Mark for deletion
                 Notify.confirmDelete('notify.post.delete_image_confirm').then(function () {
@@ -55,7 +54,6 @@ function (
                         $scope.media = {};
                         $scope.media.changed = true;
                         $scope.media.deleted = true;
-                        $scope.mediaId = null;
                     });
                 });
             };

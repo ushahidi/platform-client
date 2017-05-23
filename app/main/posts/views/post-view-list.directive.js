@@ -72,6 +72,7 @@ function PostListController(
         // Initial load
         resetPosts();
         getPosts();
+
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
@@ -91,11 +92,13 @@ function PostListController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
+
         $scope.isLoading = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             // Add posts to full set of posts
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
+
             // Merge grouped posts into existing groups
             angular.forEach(groupPosts(postsResponse.results), function (posts, group) {
                 if (angular.isArray($scope.groupedPosts[group])) {
@@ -158,10 +161,6 @@ function PostListController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
-
-                if (!$scope.posts.length) {
-                    getPosts();
-                }
             }
         });
     }

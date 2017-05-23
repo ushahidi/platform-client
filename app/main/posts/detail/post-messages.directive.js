@@ -55,7 +55,7 @@ function (
                         $scope.messages = messages;
                         _.each(messages, function (message, index) {
                             if (message.user) {
-                                message.user = UserEndpoint.getFresh({id: message.user.id});
+                                message.user = UserEndpoint.get({id: message.user.id});
                             }
 
                             // Format update time for display

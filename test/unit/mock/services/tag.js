@@ -4,20 +4,8 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback([{
-                        tag: 'test tag',
-                        id: 1,
-                        forms: [1]
-                    }]);
-                }
-            }};
-        },
-        queryFresh: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback([{
-                        tag: 'test tag',
-                        id: 1,
-                        forms: [1]
+                        name: 'test tag',
+                        id: 1
                     }]);
                 }
             }};
@@ -26,9 +14,8 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
-                        tag: 'test tag',
-                        id: 1,
-                        forms: [1]
+                        name: 'test tag',
+                        id: 1
                     });
                 }
             }};
@@ -47,5 +34,6 @@ module.exports = [function () {
                 }
             }};
         }
+
     };
 }];

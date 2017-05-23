@@ -10,16 +10,6 @@ module.exports = [function () {
                 }
             }};
         },
-        queryFresh: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback([{
-                        name: 'test form',
-                        id: 1
-                    }]);
-                }
-            }};
-        },
         get: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {

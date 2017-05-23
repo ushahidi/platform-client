@@ -44,9 +44,9 @@ function (
         return TagEndpoint.get(params);
     };
 
-    TagEndpoint.queryFresh = function (params) {
+    TagEndpoint.queryFresh = function () {
         cache.removeAll();
-        return TagEndpoint.query(params);
+        return TagEndpoint.query();
     };
 
     TagEndpoint.invalidateCache = function () {

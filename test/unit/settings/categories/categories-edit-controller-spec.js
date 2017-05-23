@@ -53,21 +53,4 @@ describe('setting categories edit controller', function () {
         $scope.saveCategory({id: 'fail'});
         expect(Notify.apiErrors).toHaveBeenCalled();
     });
-    it('should return requested parent-tag', function () {
-        $scope.addParent(1).$promise.then(function (parent) {
-            expect(parent.id).toEqual(1);
-            expect(parent.tag).toEqual('test tag');
-        });
-    });
-    it('should return parent-name', function () {
-        $scope.parents = [{
-            id: 1,
-            tag: 'parent'
-        }];
-        var parent = $scope.getParentName();
-        expect(parent).toEqual('Nothing');
-        $scope.category.parent_id = 1;
-        parent = $scope.getParentName();
-        expect(parent).toEqual('parent');
-    });
 });

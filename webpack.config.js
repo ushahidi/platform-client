@@ -17,11 +17,10 @@ module.exports = {
        { test: /\.scss$/, loader: extractCss.extract('style', 'css!resolve-url!sass?sourceMap') },
        { test: /\.css$/, loader: extractCss.extract('style', 'css') },
        { test: /\.png/, loader: 'url?limit=10000' },
-       { test: /\.svg/, loader: 'svg-url?limit=1' },
+       { test: /\.svg/, loader: 'svg-url?limit=10000' },
        { test: /\.woff/, loader: 'url?limit=10000' },
        { test: /\.ttf|\.eot/, loader: 'file' },
-       { test: /\.json$/, exclude:[/manifest.json$/],loader: 'json' },
-       { test: /manifest.json$/, loader: 'file-loader?name=manifest.json!web-app-manifest-loader' }
+       { test: /\.json$/, loader: 'json' },
     ]
   },
   plugins: [

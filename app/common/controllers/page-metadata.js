@@ -1,14 +1,10 @@
 module.exports = [
     '$rootScope',
-    '$location',
-    '$window',
     '$scope',
     'Authentication',
     'ConfigEndpoint',
 function (
     $rootScope,
-    $location,
-    $window,
     $scope,
     Authentication,
     ConfigEndpoint
@@ -19,10 +15,6 @@ function (
     $scope.pageDescription = null;
     $scope.pageKeywords = null;
     $scope.pageRobots = null;
-
-    $scope.appStoreId = $window.ushahidi.appStoreId;
-
-    $scope.currentFullUrl = $location.absUrl();
 
     // Then update from server
     $scope.reloadSiteConfig = function () {

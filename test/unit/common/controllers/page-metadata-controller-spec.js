@@ -4,15 +4,8 @@ describe('page-metadata controller', function () {
         $controller,
         $scope;
 
-    var mockWindow = {
-        ushahidi: {
-            appStoreId: 'test'
-        }
-    };
-
     beforeEach(function () {
         makeTestApp()
-        .value('$window', mockWindow)
         .controller('pageMetadataController', require('app/common/controllers/page-metadata.js'));
 
         angular.mock.module('testApp');

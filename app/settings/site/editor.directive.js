@@ -36,6 +36,7 @@ function (
         link: function ($scope, $element, $attrs) {
             $scope.saving_config = false;
             $scope.map = {};
+
             $scope.fileContainer = {
                 file : null
             };
@@ -45,8 +46,23 @@ function (
             });
 
             $scope.site = ConfigEndpoint.get({ id: 'site' });
-
             $scope.userSavedSettings = false;
+
+            Languages.then(function (languages) {
+                $scope.languages = languages;
+            });
+
+            $scope.changeLanguage = function (code) {
+                $translate.use(code).then(function (code) {
+                    Languages.then(function (languages) {
+                        angular.forEach(languages, function (language) {
+                            if (language.code === code) {
+                                $rootScope.rtlEnabled = language.rtl;
+                            }
+                        });
+                    });
+                });
+            };
 
             $scope.clearHeader = function () {
                 $scope.site.image_header = null;

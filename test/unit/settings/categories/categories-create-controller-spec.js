@@ -55,15 +55,4 @@ describe('setting categories create controller', function () {
         $scope.saveCategory({id: 'fail'});
         expect(Notify.apiErrors).toHaveBeenCalled();
     });
-    it('should return parent-name', function () {
-        $scope.parents = [{
-            id: 1,
-            tag: 'parent'
-        }];
-        var parent = $scope.getParentName();
-        expect(parent).toEqual('Nothing');
-        $scope.category.parent_id = 1;
-        parent = $scope.getParentName();
-        expect(parent).toEqual('parent');
-    });
 });

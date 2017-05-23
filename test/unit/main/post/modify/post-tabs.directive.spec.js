@@ -41,4 +41,36 @@ describe('post vertical tabs directive', function () {
         $rootScope.$digest();
         isolateScope = element.isolateScope();
     }));
+
+    describe('test directive functions', function () {
+        it('should set the current visible stage', function () {
+            isolateScope.setVisibleStage(1);
+            expect(isolateScope.visibleStage).toEqual(1);
+        });
+
+        it('should check if a stage is complete', function () {
+            var result = isolateScope.stageIsComplete(1);
+            expect(result).toBe(false);
+
+            $scope.post.completed_stages = [1];
+            result = isolateScope.stageIsComplete(1);
+            expect(result).toBe(true);
+        });
+
+        it('should toggle stage completeion', function () {
+            isolateScope.form = {};
+            isolateScope.form.tags = {$invalid: false};
+            isolateScope.form.title = {$invalid: false};
+            isolateScope.form.content = {$invalid: false};
+            isolateScope.form['values_' + isolateScope.attributes[1].key] = {$invalid: false};
+
+            $scope.post.completed_stages = [];
+
+            isolateScope.toggleStageCompletion(1);
+            expect($scope.post.completed_stages[0]).toEqual(1);
+
+            isolateScope.toggleStageCompletion(1);
+            expect($scope.post.completed_stages.length).toEqual(0);
+        });
+    });
 });

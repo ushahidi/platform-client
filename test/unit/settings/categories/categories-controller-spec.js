@@ -17,6 +17,7 @@ describe('setting categories controller', function () {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
+
         $rootScope.hasManageSettingsPermission = function () {
             return true;
         };
@@ -27,6 +28,7 @@ describe('setting categories controller', function () {
         $controller('settingCategoriesController', {
             $scope: $scope
         });
+
         $rootScope.$digest();
         $rootScope.$apply();
     });
@@ -38,9 +40,6 @@ describe('setting categories controller', function () {
     it('should delete tags upon request', function () {
         $scope.selectedCategories = [{id: 1}];
         $scope.deleteCategories();
-    });
-    it('should delete tag upon request', function () {
-        $scope.deleteCategory({id: 1});
     });
 
 });
