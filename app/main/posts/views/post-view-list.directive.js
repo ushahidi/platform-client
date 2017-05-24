@@ -139,6 +139,7 @@ function PostListController(
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
+            $scope.isLoading.state = true;
             var deletePostsPromises = _.map(
                 $scope.selectedPosts,
                 function (postId) {
@@ -149,9 +150,11 @@ function PostListController(
             ;
 
             function handleDeleteErrors(errorResponse) {
+                $scope.isLoading.state = false;
                 Notify.apiErrors(errorResponse);
             }
             function handleDeleteSuccess(deleted) {
+                $scope.isLoading.state = false;
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
                 var deletedIds = _.pluck(deleted, 'id');
