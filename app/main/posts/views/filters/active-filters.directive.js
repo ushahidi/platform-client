@@ -32,6 +32,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             UserEndpoint.query().$promise.then(function (results) {
                 users = _.indexBy(results.results, 'id');
             });
+            TagEndpoint.query().$promise.then(function (results) {
+                tags = _.indexBy(results, 'id');
+            });
         }
 
         function makeArray(value) {
@@ -49,7 +52,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             // Remove form filter as its shown by the mode-context-form-filter already
             delete activeFilters.form;
             // Remove categories since its shown by the mode-context-form-filter already
-            delete activeFilters.tags;
+            if (filters.form && filters.form.length <= 1) {
+                delete activeFilters.tags;
+            }
             // Remove within_km as its shown with the center_point value
             delete activeFilters.within_km;
 
