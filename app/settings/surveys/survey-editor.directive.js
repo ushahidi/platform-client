@@ -217,11 +217,7 @@ function SurveyEditorController(
     }
     function loadAvailableCategories() {
         // Get available tags for selected for or all tags if new form
-        var params = {};
-        if ($scope.surveyId) {
-            params.formId = $scope.surveyId;
-        }
-        TagEndpoint.queryFresh(params).$promise.then(function (tags) {
+        TagEndpoint.query().$promise.then(function (tags) {
             $scope.availableCategories = tags;
         });
     }

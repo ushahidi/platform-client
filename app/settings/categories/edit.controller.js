@@ -70,10 +70,6 @@ function (
         }
     });
 
-    FormEndpoint.queryFresh().$promise.then(function (forms) {
-        $scope.surveys = forms;
-    });
-
     $scope.addParent = function (id) {
         return TagEndpoint.getFresh({id: id});
     };

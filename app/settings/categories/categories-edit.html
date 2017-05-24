@@ -101,22 +101,6 @@
               </fieldset>
               <!-- Who can see and add -->
               <role-selector model="category" title="'Who can see this label'"></role-selector>
-              <!-- Which surveys use the label -->
-              <fieldset>
-                <legend>Which surveys use this label?</legend>
-                <div class="form-field checkbox" ng-repeat="survey in surveys">
-                    <label for="accessible-to-{{survey.id}}">
-                      <input
-                        type="checkbox"
-                        id="accessible-to-{{survey.id}}"
-                        value="survey.id"
-                        checklist-value="survey.id"
-                        checklist-model="category.forms"
-                      />
-                      {{survey.name}}
-                    </label>
-                </div>
-              </fieldset>
             </div>
           </form>
           <div class="form-sheet" ng-show="category.id">

@@ -54,11 +54,6 @@ function (
         $scope.parents = tags;
     });
 
-    // getting available surveys
-    FormEndpoint.queryFresh().$promise.then(function (result) {
-        $scope.surveys = result;
-    });
-
     $scope.saveCategory = function (category, addAnother) {
         $scope.processing = true;
         var whereToNext = 'settings/categories';
