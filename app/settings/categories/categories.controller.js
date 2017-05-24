@@ -6,6 +6,7 @@ module.exports = [
     '$q',
     'TagEndpoint',
     'Notify',
+    '_',
 function (
     $scope,
     $translate,
@@ -13,7 +14,8 @@ function (
     $location,
     $q,
     TagEndpoint,
-    Notify
+    Notify,
+    _
 ) {
 
     // Redirect to home if not authorized
@@ -31,6 +33,13 @@ function (
 
     $scope.refreshView = function () {
         TagEndpoint.queryFresh().$promise.then(function (tags) {
+            _.each(tags, function (tag) {
+                if (tag && tag.children) {
+                    tag.children = _.map(tag.children, function (child) {
+                        return _.findWhere(tags, {id: parseInt(child.id)});
+                    });
+                }
+            });
             $scope.categories = tags;
         });
         $scope.selectedCategories = [];

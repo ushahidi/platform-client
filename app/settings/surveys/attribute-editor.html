@@ -32,7 +32,11 @@
    <!-- editing/adding categories -->
     <div class="form-field" ng-if="editAttribute.input ==='tags'">
       <label translate>Which labels should be available</label>
-        <div ng-repeat="category in availableCategories">
+        <div 
+          class="form-field checkbox"
+          ng-repeat="category in availableCategories"
+          ng-if="category.parent_id === null"
+        >
             <label>
               <input 
                 type="checkbox"
@@ -41,6 +45,20 @@
               />
               {{category.tag}}
             </label>
+            <div
+              class="form-field checkbox"
+              ng-if="category.children"
+              ng-repeat="child in category.children">
+                <label>
+                <input 
+                  type="checkbox" 
+                  checklist-model="editAttribute.options"
+                  checklist-value="child.id"
+                  ng-click="selectChild(child)"
+                />
+                {{child.tag}}
+                </label>
+              </div>
         </div>
       </div>
     <!-- End of editing/adding categories -->
