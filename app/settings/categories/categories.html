@@ -1,3 +1,4 @@
+
 <div>
 	<layout-class layout="b"></layout-class>
     <div class="mode-context init" dropdown>
@@ -38,7 +39,7 @@
                     <p ng-hide="categories.length"><em translate>empty.category</em></p>
                 </div>
 
-                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
+                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
 
                     <div class="listing-item-select">
                         <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
@@ -56,7 +57,7 @@
                             </button>
                     </div>
 
-                    <div id="category-{{category.id}}" class="  listing-item" ng-repeat="child in category.children | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
+                    <div id="category-{{category.id}}" class="  listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
 
                         <div class="listing-item-select">
                             <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">

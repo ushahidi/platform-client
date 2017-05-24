@@ -223,14 +223,14 @@ function SurveyEditorController(
         }
         TagEndpoint.queryFresh(params).$promise.then(function (tags) {
             // adding children to parents
-            _.each(tags, function (tag) {
+            $scope.availableCategories = _.map(_.where(tags, { parent_id: null }), function (tag) {
                 if (tag && tag.children) {
                     tag.children = _.map(tag.children, function (child) {
                         return _.findWhere(tags, {id: parseInt(child.id)});
                     });
                 }
+                return tag;
             });
-            $scope.availableCategories = tags;
         });
     }
 

@@ -33,14 +33,14 @@ function (
 
     $scope.refreshView = function () {
         TagEndpoint.queryFresh().$promise.then(function (tags) {
-            _.each(tags, function (tag) {
+            $scope.categories = _.map(_.where(tags, { parent_id: null }), function (tag) {
                 if (tag && tag.children) {
                     tag.children = _.map(tag.children, function (child) {
                         return _.findWhere(tags, {id: parseInt(child.id)});
                     });
                 }
+                return tag;
             });
-            $scope.categories = tags;
         });
         $scope.selectedCategories = [];
     };
