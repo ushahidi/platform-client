@@ -245,10 +245,8 @@ function SurveyEditorController(
                 .sortBy('priority')
                 .value();
             _.each(attributes, function (attr) {
-                    if (attr.input === 'tags') {
-                        attr.options = _.map(attr.options, function (id) {
-                            return parseInt(id);
-                        });
+                    if (attr.type === 'tags') {
+                        attr.options = _.map(attr.options, parseInt);
                     }
                 });
             _.each(survey.tasks, function (task) {
@@ -610,7 +608,7 @@ function SurveyEditorController(
         var tags = [];
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
-                if (attribute.input === 'tags') {
+                if (attribute.type === 'tags') {
                     _.each(attribute.options, function (tag) {
                         if (tags.indexOf(tag) < 0) {
                             tags.push(parseInt(tag));

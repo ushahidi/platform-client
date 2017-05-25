@@ -36,7 +36,7 @@ function (
             };
 
             $scope.canMakePrivate = function () {
-                return $scope.editAttribute.input !== 'tags';
+                return $scope.editAttribute.type !== 'tags';
             };
         }
     };
