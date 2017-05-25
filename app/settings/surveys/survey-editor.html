@@ -91,7 +91,7 @@
                  </div>
               </div>
               <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
-                  <button class="button-beta button-flat" ng-click="deleteAttribute(editAttribute)">
+                  <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, survey.tasks[0])">
                       <svg class="iconic">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                       </svg>
@@ -285,8 +285,9 @@
                          </button>
                      </div>
                   </div>
+
                   <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
-                      <button class="button-beta button-flat" ng-click="deleteAttribute(editAttribute)">
+                      <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, task)">
                           <svg class="iconic">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                           </svg>
