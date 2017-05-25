@@ -1,8 +1,8 @@
 This pull request makes the following changes:
 -
 
-Test these changes by:
--
+Testing checklist:
+- [ ]
 
 Fixes ushahidi/platform# .
 
