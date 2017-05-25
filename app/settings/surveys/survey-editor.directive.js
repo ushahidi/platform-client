@@ -423,8 +423,8 @@ function SurveyEditorController(
         return $scope.survey.tasks.length ? _.last($scope.survey.tasks).priority + 1 : 0;
     }
 
-    function getNewAttributePriority() {
-        return $scope.activeTask.attributes.length ? _.last($scope.activeTask.attributes).priority + 1 : 0;
+    function getNewAttributePriority(task) {
+        return task.attributes.length ? _.last(task.attributes).priority + 1 : 0;
     }
 
     function addNewTask(task) {
@@ -454,7 +454,7 @@ function SurveyEditorController(
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 
-    function addNewAttribute(attribute) {
+    function addNewAttribute(attribute, task) {
         ModalService.close();
         // Set active task as form_stage_id
         // If this task is new and has not been saved
@@ -463,18 +463,18 @@ function SurveyEditorController(
         // TODO refactor this
         if (!attribute.form_stage_id) {
             // Set attribute priority
-            attribute.priority = getNewAttributePriority();
-            attribute.form_stage_id = $scope.activeTask.id ? $scope.activeTask.id : $scope.activeTask.label;
-            $scope.activeTask.attributes.push(attribute);
+            attribute.priority = getNewAttributePriority(task);
+            attribute.form_stage_id = task.id ? task.id : task.label;
+            task.attributes.push(attribute);
         }
     }
 
-    function deleteAttribute(attribute) {
+    function deleteAttribute(attribute, task) {
         Notify.confirmDelete('notify.form.delete_attribute_confirm').then(function () {
             // If we have not yet saved this attribute
             // we can drop it immediately
             if (!attribute.id) {
-                $scope.activeTask.attributes = _.filter($scope.activeTask.attributes, function (item) {
+                task.attributes = _.filter(task.attributes, function (item) {
                     return item.label !== attribute.label;
                 });
                 // Attribute delete is currently only available in modal
@@ -488,11 +488,11 @@ function SurveyEditorController(
                 id: attribute.id
             }).$promise.then(function (attribute) {
                 // Remove attribute from scope, binding should take care of the rest
-                var index = _.findIndex($scope.activeTask.attributes, function (item) {
+                var index = _.findIndex(task.attributes, function (item) {
                     return item.id === attribute.id;
                 });
 
-                $scope.activeTask.attributes.splice(index, 1);
+                task.attributes.splice(index, 1);
 
                 FormStageEndpoint.invalidateCache();
 
