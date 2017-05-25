@@ -53,6 +53,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             });
 
             $scope.forms.forEach(function (form, index) {
+                var formTagIds = _.pluck(form.tags, 'id');
                 // assigning whole tag-object to forms
                 $scope.forms[index].tags = _.filter(_.map(tags, function (tag) {
                     // Remove children
@@ -61,10 +62,10 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                         tag.children = _.clone(tag.children);
 
                         // Grab the tags selected for this form
-                        if (_.contains(form.tags, tag.id.toString())) {
+                        if (_.contains(formTagIds, tag.id)) {
                             // Filter the children based on form.tags
                             tag.children = _.filter(tag.children, function (child) {
-                                return _.contains(form.tags, child.id.toString());
+                                return _.contains(formTagIds, child.id);
                             });
 
                             return tag;
