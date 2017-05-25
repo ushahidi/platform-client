@@ -212,6 +212,10 @@ gulp.task('serve:static', function() {
         port: process.env.PORT || 3000,
         ui: false,
         codeSync: false,
+        open: false,
+        middleware: [
+          historyApiFallback()
+        ]
     });
 });
 
