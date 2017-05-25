@@ -35,7 +35,7 @@ function (
                 });
             };
 
-            FormEndpoint.query().$promise.then(function (surveys) {
+            FormEndpoint.queryFresh().$promise.then(function (surveys) {
                 $scope.surveys = surveys;
 
                 if (surveys.length > 0) {

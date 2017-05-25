@@ -1,0 +1,33 @@
+<fieldset>
+         <legend translate="global_filter.filter_tabs.has_location"></legend>
+     <div class="form-field radio">
+        <label translate="global_filter.filter_tabs.all_posts">        </label>
+            <input 
+                ng-value='all'
+                ng-checked="hasLocation === 'all'"
+                ng-model="hasLocation"
+                type="radio" 
+                name="hasLocation"
+            > 
+        </div>
+    <div class="form-field radio">
+        <label translate="global_filter.filter_tabs.unmapped"></label>
+            <input
+                value='unmapped' 
+                ng-model="hasLocation"
+                type="radio"
+                name="hasLocation"
+                ng-checked="hasLocation === 'unmapped'"
+            > 
+    </div>
+    <div class="form-field radio">
+     <label translate="global_filter.filter_tabs.mapped"></label>
+            <input
+                value='mapped'
+                ng-model="hasLocation"
+                ng-checked= "hasLocation === 'mapped'"
+                type="radio"
+                name="hasLocation"
+            >
+        </div>
+</fieldset>

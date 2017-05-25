@@ -14,7 +14,8 @@ function (
             $scope.newTask = {
                 required : false,
                 attributes: [],
-                type: 'task'
+                type: 'task',
+                show_when_published: 1
             };
 
             $scope.closeModal = function () {

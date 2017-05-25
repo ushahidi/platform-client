@@ -3,14 +3,23 @@ module.exports = [
     'Util',
     '_',
     'CacheFactory',
+    '$rootScope',
+    'UserEndpoint',
+    'Authentication',
+    'Session',
+    '$q',
 function (
     $resource,
     Util,
     _,
-    CacheFactory
+    CacheFactory,
+    $rootScope,
+    UserEndpoint,
+    Authentication,
+    Session,
+    $q
 ) {
     var cache;
-
     if (!(cache = CacheFactory.get('configCache'))) {
         cache = new CacheFactory('configCache', { storageMode : 'memory' });
     }
@@ -41,7 +50,6 @@ function (
         cache.remove(Util.apiUrl('/config/' + params.id));
         return ConfigEndpoint.get(params);
     };
-
     /**
      * saveCache is responsible for both creation and update of an entity
      * the switch between update and save is determined based on the presence of

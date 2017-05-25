@@ -1,0 +1,101 @@
+<div>
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/webhooks" translate>app.webhooks</a></li>
+            </ol>
+            <h1 class="mode-context-title" ng-show="webhook.id" translate>app.edit_webhook</h1>
+            <h1 class="mode-context-title" ng-show="!webhook.id" translate>app.add_webhook</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+
+        <div custom-webhooks-editor class="main-col">
+
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+
+                    <button class="button-alpha" type="button" ng-click="saveWebhook(webhook)" type="submit" ng-disabled="form.$invalid" ng-if="!processing">{{save}}</button>
+                    <button type="submit" class="button-alpha"  disabled ng-if="processing">{{saving}}
+                    <div class="loading">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </button>
+                        
+                </div>
+            </div>
+            <!-- end toolbar -->
+
+            <form name="form">
+                <div class="form-sheet">
+                   <div class="form-field title">
+                       <label class="hidden" translate>webhook.name</label>
+                       <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
+                   </div>
+
+                   <div class="form-field">
+                       <label translate>webhook.shared_secret</label>
+                       <textarea name="description" data-min-rows='1' rows='1' ng-model="webhook.shared_secret" required></textarea>
+                   </div>
+
+                   <div class="form-field">
+                       <label translate>webhook.url</label>
+                       <input type="text" placeholder="{{'webhook.url' | translate}}" ng-model="webhook.url" required>
+                   </div>
+
+                   <div class="form-field">
+                       <label translate>webhook.event_type</label>
+                       <div class="custom-select">
+                         <select ng-model="webhook.event_type" required>
+                             <option ng-repeat="type in event_types" value="{{type}}">{{type}}</option>
+                         </select>
+                      </div>
+                   </div>
+
+                   <div class="form-field">
+                       <label translate>webhook.entity_type</label>
+                       <div class="custom-select">
+                         <select ng-model="webhook.entity_type" required>
+                             <option ng-repeat="type in entity_types" value="{{type}}">{{type}}</option>
+                         </select>
+                      </div>
+                   </div>
+                </div>
+
+                <div ng-if="!webhook.protected" class="form-sheet" ng-show="webhook.id">
+                   <div class="form-sheet-summary">
+                       <h3 class="form-sheet-title" translate>webhook.delete_webhook</h3>
+                   </div>
+
+                   <div class="form-field">
+                       <p translate>webhook.delete_webhook_desc</p>
+
+                       <button class="button-destructive" ng-click="deleteWebhook(webhook)">
+                           <svg class="iconic">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                           </svg>
+                           <span class="button-label" translate>webhook.delete_webhook</span>
+                       </button>
+                   </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </main>
+</div>

@@ -5,6 +5,7 @@ module.exports = [
     '$translate',
     '$route',
     'TagEndpoint',
+    'FormEndpoint',
     'Notify',
     '_',
 function (
@@ -14,6 +15,7 @@ function (
     $translate,
     $route,
     TagEndpoint,
+    FormEndpoint,
     Notify,
     _
 ) {
@@ -23,20 +25,43 @@ function (
         return $location.path('/');
     }
 
-    $translate('tag.add_tag').then(function (title) {
+    $translate('category.add_tag').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
 
-    $scope.category = { type: 'category', icon: 'tag', color: ''};
+    $scope.category = { type: 'category', icon: 'tag', color: '', parent_id: null};
+    $scope.save = $translate.instant('app.save');
+    $scope.saving = $translate.instant('app.saving');
     $scope.processing = false;
+
+    $scope.getParentName = function () {
+        var parentName = 'Nothing';
+        if ($scope.category.parent_id) {
+            $scope.parents.forEach(function (parent) {
+                if (parent.id === $scope.category.parent_id) {
+                    parentName = parent.tag;
+                }
+            });
+        }
+        return parentName;
+    };
+
+    // getting available parents
+    TagEndpoint.queryFresh({level: 'parent'}).$promise.then(function (tags) {
+        $scope.parents = tags;
+    });
+
+    // getting available surveys
+    FormEndpoint.queryFresh().$promise.then(function (result) {
+        $scope.surveys = result;
+    });
 
     $scope.saveCategory = function (category, addAnother) {
         $scope.processing = true;
         var whereToNext = 'settings/categories';
-
         TagEndpoint.saveCache(category).$promise.then(function (response) {
             if (response.id) {
                 Notify.notify('notify.category.save_success', { name: category.tag });
@@ -51,4 +76,5 @@ function (
     $scope.cancel = function () {
         $location.path('/settings/categories');
     };
+
 }];

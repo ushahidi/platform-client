@@ -36,9 +36,33 @@ function (
 
     // Get all the forms for display
     $scope.refreshForms = function () {
-        FormEndpoint.query().$promise.then(function (response) {
+        FormEndpoint.queryFresh().$promise.then(function (response) {
             $scope.forms = response;
         });
     };
+
+    $scope.deleteSurvey = function (survey) {
+        Notify.confirmDelete('notify.form.delete_form_confirm').then(function () {
+
+            // If we haven't saved the survey
+            // just go back to the surveys views
+            if (!survey.id) {
+                $location.url('/settings/surveys');
+                return;
+            }
+
+            FormEndpoint.delete({
+                id: survey.id
+            }).$promise.then(function () {
+                Notify.notify('notify.form.destroy_form_success', { name: survey.name });
+                $scope.refreshForms();
+            }, $scope.handleResponseErrors);
+        });
+    };
+
+    $scope.handleResponseErrors = function (errorResponse) {
+        Notify.apiErrors(errorResponse);
+    };
+
     $scope.refreshForms();
 }];
