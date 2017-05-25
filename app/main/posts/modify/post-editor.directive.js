@@ -152,9 +152,7 @@ function PostEditorController(
                                 .map(function (child) {
                                     return _.findWhere(attr.options, {id: child.id});
                                 })
-                                .filter(function (child) {
-                                    return child !== undefined;
-                                })
+                                .filter()
                                 .value();
                         }
                     });
