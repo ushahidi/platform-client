@@ -605,7 +605,7 @@ function SurveyEditorController(
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
                 // removing faulty category-ids
-                if (attribute.input === 'tags') {
+                if (attribute.type === 'tags') {
                     attribute.options = _.filter(attribute.options, function (option) {
                         return !isNaN(option);
                     });
