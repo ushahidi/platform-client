@@ -551,11 +551,7 @@ function SurveyEditorController(
 
     function saveSurvey() {
         $scope.saving_survey = true;
-        if (!$scope.surveyId) {
-            $scope.survey.tags = extractTags();
-        }
         // Saving a survey is a 3 step process
-
         // First save the actual survey
         FormEndpoint
         .saveCache($scope.survey)
@@ -604,26 +600,16 @@ function SurveyEditorController(
         }, handleResponseErrors);
     }
 
-    function extractTags() {
-        var tags = [];
-        _.each($scope.survey.tasks, function (task) {
-            _.each(task.attributes, function (attribute) {
-                if (attribute.type === 'tags') {
-                    _.each(attribute.options, function (tag) {
-                        if (tags.indexOf(tag) < 0) {
-                            tags.push(parseInt(tag));
-                        }
-                    });
-                }
-            });
-        });
-        return tags;
-    }
-
     function saveAttributes() {
         var calls = [];
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
+                // removing faulty category-ids
+                if (attribute.input === 'tags') {
+                    attribute.options = _.filter(attribute.options, function (option) {
+                        return !isNaN(option);
+                    });
+                }
                 attribute.form_stage_id = task.id;
                 calls.push(
                     FormAttributeEndpoint
