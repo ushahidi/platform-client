@@ -57,8 +57,8 @@ function (
     $scope.deleteCategories = function () {
         Notify.confirm('notify.category.bulk_destroy_confirm', { count: $scope.selectedCategories.length }).then(function () {
             var calls = [];
-            angular.forEach($scope.selectedCategories, function (tag) {
-                calls.push(TagEndpoint.delete(tag).$promise);
+            angular.forEach($scope.selectedCategories, function (tagId) {
+                calls.push(TagEndpoint.delete({id: tagId }).$promise);
             });
             $q.all(calls).then(function () {
                 Notify.notify('notify.category.bulk_destroy_success', { count: $scope.selectedCategories.length });
@@ -76,7 +76,7 @@ function (
         if (idx > -1) {
             $scope.selectedCategories.splice(idx, 1);
         } else {
-            $scope.selectedCategories.push(tag);
+            $scope.selectedCategories.push(tag.id);
         }
     };
 
