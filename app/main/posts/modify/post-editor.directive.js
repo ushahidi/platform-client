@@ -114,7 +114,7 @@ function PostEditorController(
             var attrs = _.chain(results[1])
                 .sortBy('priority')
                 .value();
-            $scope.categories = results[2];
+            var categories = results[2];
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
@@ -139,6 +139,25 @@ function PostEditorController(
                         media = $scope.post.values[attr.key][0];
                     }
                     $scope.medias[attr.key] = {};
+                }
+                if (attr.input === 'tags') {
+                    // adding category-objects attribute-options
+                    attr.options = _.map(attr.options, function (category) {
+                            return _.findWhere(categories, {id: category});
+                        });
+                    // adding category-objects to children
+                    _.each(attr.options, function (category) {
+                        if (category.children.length > 0) {
+                            category.children = _.chain(category.children)
+                                .map(function (child) {
+                                    return _.findWhere(attr.options, {id: child.id});
+                                })
+                                .filter(function (child) {
+                                    return child !== undefined;
+                                })
+                                .value();
+                        }
+                    });
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
