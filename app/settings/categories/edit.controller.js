@@ -55,10 +55,6 @@ function (
         if ($scope.category.parent) {
             $scope.category.parent = $scope.addParent($scope.category.parent.id);
         }
-        //extract form-ids and make them integers
-        $scope.category.forms = $scope.category.forms.map(function (form) {
-            return parseInt(form.id);
-        });
     });
     // checking if label is a parent already
     TagEndpoint.queryFresh({parent_id: $routeParams.id}).$promise.then(function (tag) {
@@ -68,10 +64,6 @@ function (
                 $scope.parents = tags;
             });
         }
-    });
-
-    FormEndpoint.queryFresh().$promise.then(function (forms) {
-        $scope.surveys = forms;
     });
 
     $scope.addParent = function (id) {

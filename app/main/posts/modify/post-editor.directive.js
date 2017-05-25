@@ -276,14 +276,13 @@ function PostEditorController(
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
-                var tags = [];
-                _.each($scope.tagKeys, function (tagKey) {
-                    tags = tags.concat(post.values[tagKey]);
-                });
-                tags = _.uniq(tags);
-                if (tags[0] !== undefined) {
-                    post.tags = tags;
-                }
+                post.tags = _.chain(post.values)
+                .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                .filter()             // Remove nulls                      [0,1,1,2]
+                .uniq()               // Remove duplicates                 [0,1,2]
+                .value();             // and output
             }
             var request;
             if (post.id) {

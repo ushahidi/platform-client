@@ -130,7 +130,7 @@ function (
                 },
                 {
                     label: 'Categories',
-                    type: 'varchar',
+                    type: 'tags',
                     cardinality: 0,
                     input: 'tags',
                     description: $translate.instant('settings.settings_list.categories_desc')

@@ -1,3 +1,4 @@
+
 <div>
 	<layout-class layout="b"></layout-class>
     <div class="mode-context init" dropdown>
@@ -38,7 +39,7 @@
                     <p ng-hide="categories.length"><em translate>empty.category</em></p>
                 </div>
 
-                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories | orderBy:'realname'" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
+                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
 
                     <div class="listing-item-select">
                         <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
@@ -53,9 +54,29 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                             </svg>
                             <span class="hidden">Delete</span>
+                            </button>
+                    </div>
+
+                    <div id="category-{{category.id}}" class="  listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
+
+                        <div class="listing-item-select">
+                            <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
                         </div>
 
+                        <div class="listing-item-primary">
+                            <h2 class="listing-item-title"><a ng-href="/settings/categories/{{child.id}}">{{child.tag}}</a></h2>
+                        </div>
+                        <div class="listing-item-secondary">
+                            <button class="button-beta button-flat" ng-click="deleteCategory(category)">
+                                <svg class="iconic">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                </svg>
+                                <span class="hidden">Delete</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
                 <listing-toolbar entities="categories" selected-set="selectedCategories">
                     <button type="button" class="button-destructive" ng-disabled="!selectedCategories.length" ng-click="deleteCategories()">
                         <svg class="iconic">
@@ -64,11 +85,10 @@
                         <span class="button-label hidden">nav.delete</span>
                     </button>
                 </listing-toolbar>
-           </div>
+            </div>
 
-           <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></uib-pagination>
+            <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></uib-pagination>
 
         </div>
-
     </main>
 </div>
