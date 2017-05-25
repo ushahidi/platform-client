@@ -42,7 +42,7 @@
                 <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)">
 
                     <div class="listing-item-select">
-                        <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
+                        <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)"></input>
                     </div>
 
                     <div class="listing-item-primary">
@@ -57,17 +57,17 @@
                             </button>
                     </div>
 
-                    <div id="category-{{category.id}}" class="  listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(category) }" ng-click="toggleCategory(category)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
+                    <div id="category-{{category.id}}" class="  listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(child) }" ng-click="toggleCategory(child)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
 
                         <div class="listing-item-select">
-                            <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)">
+                            <input type="checkbox" value="{{child.id}}" ng-checked="isToggled(child)">
                         </div>
 
                         <div class="listing-item-primary">
                             <h2 class="listing-item-title"><a ng-href="/settings/categories/{{child.id}}">{{child.tag}}</a></h2>
                         </div>
                         <div class="listing-item-secondary">
-                            <button class="button-beta button-flat" ng-click="deleteCategory(category)">
+                            <button class="button-beta button-flat" ng-click="deleteCategory(child)">
                                 <svg class="iconic">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                                 </svg>

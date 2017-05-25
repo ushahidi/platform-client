@@ -72,7 +72,7 @@ function (
     };
 
     $scope.toggleCategory = function (tag) {
-        var idx = $scope.selectedCategories.indexOf(tag);
+        var idx = $scope.selectedCategories.indexOf(tag.id);
         if (idx > -1) {
             $scope.selectedCategories.splice(idx, 1);
         } else {
