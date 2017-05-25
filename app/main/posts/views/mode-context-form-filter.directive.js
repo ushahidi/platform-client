@@ -39,7 +39,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             var values = responses[1].totals[0].values;
             var tags = responses[2];
             // adding children to tags
-            tags = _.each(_.where(tags, { parent_id: null }), function (tag) {
+            _.each(_.where(tags, { parent_id: null }), function (tag) {
                 if (tag && tag.children) {
                     tag.children = _.map(tag.children, function (child) {
                         return _.findWhere(tags, {id: parseInt(child.id)});
