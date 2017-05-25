@@ -107,7 +107,7 @@ function PostEditorController(
         return $q.all([
             FormStageEndpoint.queryFresh({ formId: formId }).$promise,
             FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
-            TagEndpoint.queryFresh({formId: formId}).$promise
+            TagEndpoint.queryFresh().$promise
         ]).then(function (results) {
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
@@ -139,30 +139,6 @@ function PostEditorController(
                         media = $scope.post.values[attr.key][0];
                     }
                     $scope.medias[attr.key] = {};
-                }
-                // assingning tag-objects to attribute-options
-                if (attr.input === 'tags') {
-                    var tags = [];
-                    $scope.tagKeys.push(attr.key);
-                    _.each(attr.options, function (tagId) {
-                        var tag = $scope.getTag(tagId);
-                        if (tag && tag.children) {
-                            var children = [];
-                            _.each(tag.children, function (child) {
-                                child = $scope.getTag(parseInt(child.id));
-                                // protecting from undefined tags
-                                if (child) {
-                                    children.push(child);
-                                }
-                            });
-                            tag.children = children;
-                        }
-                        // protecting from undefined tags
-                        if (tag) {
-                            tags.push(tag);
-                        }
-                    });
-                    attr.options = tags;
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
