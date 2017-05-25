@@ -39,14 +39,13 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             var values = responses[1].totals[0].values;
             var tags = responses[2];
             // adding children to tags
-            _.each(tags, function (tag) {
+            tags = _.each(_.where(tags, { parent_id: null }), function (tag) {
                 if (tag && tag.children) {
                     tag.children = _.map(tag.children, function (child) {
                         return _.findWhere(tags, {id: parseInt(child.id)});
                     });
                 }
             });
-            tags = _.where(tags, { parent_id: null });
 
             angular.forEach($scope.forms, function (form) {
                 var value = _.findWhere(values, { id: form.id });
@@ -55,11 +54,25 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
 
             $scope.forms.forEach(function (form, index) {
                 // assigning whole tag-object to forms
-                $scope.forms[index].tags = _.filter(tags, function (tag) {
+                $scope.forms[index].tags = _.filter(_.map(tags, function (tag) {
+                    // Remove children
                     if (tag.parent_id === null) {
-                        return _.contains(form.tags, tag.id.toString());
+                        tag = _.clone(tag);
+                        tag.children = _.clone(tag.children);
+
+                        // Grab the tags selected for this form
+                        if (_.contains(form.tags, tag.id.toString())) {
+                            // Filter the children based on form.tags
+                            tag.children = _.filter(tag.children, function (child) {
+                                return _.contains(form.tags, child.id.toString());
+                            });
+
+                            return tag;
+                        }
                     }
-                });
+
+                    return false;
+                }));
             });
             // Grab the count for form=null
             var unknownValue = _.findWhere(values, { id: null });
