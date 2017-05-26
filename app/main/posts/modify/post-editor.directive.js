@@ -142,9 +142,13 @@ function PostEditorController(
                 }
                 if (attr.input === 'tags') {
                     // adding category-objects attribute-options
-                    attr.options = _.map(attr.options, function (category) {
+                    attr.options = _.chain(attr.options)
+                        .map(function (category) {
                             return _.findWhere(categories, {id: category});
-                        });
+                        })
+                        .filter()
+                        .value();
+
                     // adding category-objects to children
                     _.each(attr.options, function (category) {
                         if (category.children.length > 0) {
