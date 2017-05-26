@@ -7,6 +7,7 @@
             ng-model="categoryName"
         />
         <button
+            type="button"
             class="button-alpha button-flat"
             ng-disabled="categoryName.length === 0"
             ng-click="saveCategory($event);"
@@ -17,6 +18,7 @@
         <span class="hidden">Add</span>
         </button>
         <button
+            type="button"
             class="button-beta button-flat"
             ng-click="showInputToggle()"
         >
@@ -28,4 +30,4 @@
 </div>
 <div class="form-field init" ng-click="showInputToggle()" ng-if="userCanAddCategory">
     <a data-toggle="add-label">+ Add new category</a>
-</div> 
+</div>
