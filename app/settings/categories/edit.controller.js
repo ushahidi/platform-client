@@ -61,7 +61,10 @@ function (
         if (tag.length === 0) {
             // getting available parents
             TagEndpoint.queryFresh({level: 'parent'}).$promise.then(function (tags) {
-                $scope.parents = tags;
+                // Remove current tag to avoid circular reference
+                $scope.parents = _.filter(tags, function (tag) {
+                    return tag.id !== $routeParams.id;
+                });
             });
         }
     });
