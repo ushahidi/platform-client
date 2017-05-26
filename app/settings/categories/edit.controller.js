@@ -87,6 +87,10 @@ function (
         return parentName;
     };
 
+    $scope.deselectParent = function () {
+        delete $scope.category.parent;
+    };
+
     $scope.saveCategory = function (tag) {
         $scope.processing = true;
         //@todo: change this to use original api allowing callback on save and delete cache
