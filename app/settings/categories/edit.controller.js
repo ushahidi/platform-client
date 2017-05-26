@@ -104,7 +104,7 @@ function (
     };
 
     $scope.deleteCategory = function (category) {
-        Notify.confirmDelete('notify.category.destroy_confirm').then(function () {
+        Notify.confirmDelete('notify.category.destroy_confirm', 'notify.category.destroy_confirm_desc').then(function () {
             TagEndpoint.delete({ id: category.id }).$promise.then(function () {
                 Notify.notify('notify.category.destroy_success');
             }, handleResponseErrors);
