@@ -189,11 +189,6 @@ function (
                             'label': descLabel,
                             'priority': 1,
                             'required': true
-                        },
-                        {
-                            'key': 'tags',
-                            'label': $translate.instant('post.modify.form.categories'),
-                            'priority': 2
                         }
                     )
                     .sortBy('priority')
