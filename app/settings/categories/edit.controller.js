@@ -63,7 +63,7 @@ function (
             TagEndpoint.queryFresh({level: 'parent'}).$promise.then(function (tags) {
                 // Remove current tag to avoid circular reference
                 $scope.parents = _.filter(tags, function (tag) {
-                    return tag.id !== $routeParams.id;
+                    return tag.id !== parseInt($routeParams.id);
                 });
             });
         }
