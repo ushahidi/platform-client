@@ -714,7 +714,7 @@
         "save_add_another" : "Save & Add Another",
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
-        "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be asociated with any posts. Proceed with caution.",
+        "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
@@ -1027,9 +1027,11 @@
         "category" : {
             "save_success" : "Saved category {{name}}",
             "destroy_confirm" : "Are you sure you want to delete this category?",
+            "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
             "destroy_success" : "Category deleted",
             "destroy_error" : "Unable to delete category, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
+            "bulk_destroy_confirm_desc" : "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
             "bulk_destroy_success" : "{{count}} categories deleted"
         },
         "role" : {
