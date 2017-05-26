@@ -122,15 +122,20 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         return deferred.promise;
     }
 
-    function confirmDelete(confirmText, translateValues) {
+    function confirmDelete(confirmText, confirmWarningText, translateValues) {
         var deferred = $q.defer();
-
         var scope = getScope();
+
+        if (typeof confirmWarningText === 'object') {
+            translateValues = confirmWarningText;
+            confirmWarningText = false;
+        }
 
         $translate(confirmText, translateValues).then(show, show);
 
         function show(confirmText) {
             scope.confirmText = confirmText;
+            scope.confirmWarningText = confirmWarningText || 'notify.default.proceed_warning';
             // If modal is already open?
             if (ModalService.getState()) {
                 scope.cancel = function () {
@@ -144,7 +149,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 // Open in slider
                 SliderService.openTemplate(
                     '<p>{{ confirmText }}</p>' +
-                    '<p><i translate>notify.default.proceed_warning</i></p>' +
+                    '<p><i translate="{{confirmWarningText}}"></i></p>' +
                     '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
                     '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
                     '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
@@ -163,7 +168,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 // Otherwise confirm in modal
                 ModalService.openTemplate(
                 '<div class="form-field">' +
-                '<p><i translate>notify.default.proceed_warning</i></p>' +
+                '<p><i translate="{{confirmWarningText}}"></i></p>' +
                 '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
                 '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
                 '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +

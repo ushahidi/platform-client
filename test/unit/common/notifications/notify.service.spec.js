@@ -163,6 +163,27 @@ describe('Notify', function () {
             expect(mockModalService.openTemplate).toHaveBeenCalled();
         });
 
+        it('Calls ModalService.openTemplate with error message + warning text', function () {
+            mockModalService.state = false;
+            Notify.confirmDelete('Test message', 'Warning message');
+            $rootScope.$digest();
+
+            expect(mockModalService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'Test message', false, jasmine.objectContaining({
+                confirmText: 'Test message',
+                confirmWarningText: 'Warning message'
+            }), false, false);
+        });
+
+        it('Handles vars as second argument', function () {
+            mockModalService.state = false;
+            Notify.confirmDelete('Test message', {'var': 1});
+            $rootScope.$digest();
+
+            expect(mockModalService.openTemplate).toHaveBeenCalledWith(jasmine.any(String), 'Test message', false, jasmine.objectContaining({
+                confirmText: 'Test message'
+            }), false, false);
+        });
+
         it('If modal is open, Calls SliderService.openTemplate with error message', function () {
             mockModalService.state = true;
 
