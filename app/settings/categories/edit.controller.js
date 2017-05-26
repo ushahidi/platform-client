@@ -47,6 +47,7 @@ function (
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
     $scope.processing = false;
+    $scope.isParent = false;
 
     // getting label to edit
     TagEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (tag) {
@@ -66,6 +67,8 @@ function (
                     return tag.id !== parseInt($routeParams.id);
                 });
             });
+        } else {
+            $scope.isParent = true;
         }
     });
 
