@@ -33,6 +33,7 @@ function (
 
     $scope.refreshView = function () {
         TagEndpoint.queryFresh().$promise.then(function (tags) {
+            $scope.allCategories = tags;
             $scope.categories = _.map(_.where(tags, { parent_id: null }), function (tag) {
                 if (tag && tag.children) {
                     tag.children = _.map(tag.children, function (child) {
