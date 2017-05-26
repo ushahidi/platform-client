@@ -246,7 +246,9 @@ function SurveyEditorController(
                 .value();
             _.each(attributes, function (attr) {
                     if (attr.type === 'tags') {
-                        attr.options = _.map(attr.options, parseInt);
+                        attr.options = _.map(attr.options, function (option) {
+                            return parseInt(option);
+                        });
                     }
                 });
             _.each(survey.tasks, function (task) {
