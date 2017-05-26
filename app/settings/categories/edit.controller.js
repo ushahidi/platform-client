@@ -70,6 +70,7 @@ function (
     });
 
     $scope.addParent = function (id) {
+        console.log(id);
         return TagEndpoint.getFresh({id: id});
     };
 
