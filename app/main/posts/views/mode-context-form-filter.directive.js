@@ -102,7 +102,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             // Deselect the children too
             _.each(parent.children, function (child) {
                 // Remove each child without replacing the tags array
-                var index = $scope.filters.tags.indexOf(child);
+                var index = $scope.filters.tags.indexOf(child.id);
                 if (index !== -1) {
                     $scope.filters.tags.splice(index, 1);
                 }
