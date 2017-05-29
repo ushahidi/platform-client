@@ -55,7 +55,8 @@
               <!-- Parent/child-relations -->
               <fieldset
                 class="custom-fieldset init"
-                dropdown auto-close="outsideClick"
+                dropdown
+                ng-show="!isParent"
               >
                 <legend
                   class="dropdown-trigger init active"
@@ -76,8 +77,8 @@
                             type="radio"
                             name="parent_label"
                             id="parent_label-nothing"
-                            value="null"
-                            ng-checked="!category.parent"
+                            ng-value="null"
+                            ng-checked="category.parent_id === null"
                             ng-model="category.parent_id"
                             />
                           Nothing
@@ -90,7 +91,7 @@
                             type="radio"
                             name="parent_label"
                             id="parent_label-{{parent.id}}"
-                            ng-checked="parent.id === category.parent.id"
+                            ng-checked="parent.id === category.parent_id"
                             ng-value="parent.id"
                             ng-model="category.parent_id"
                           />
@@ -123,5 +124,3 @@
         </div>
     </main>
 </div>
-
-

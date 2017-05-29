@@ -472,7 +472,7 @@ function SurveyEditorController(
     }
 
     function deleteAttribute(attribute, task) {
-        Notify.confirmDelete('notify.form.delete_attribute_confirm').then(function () {
+        Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
             // If we have not yet saved this attribute
             // we can drop it immediately
             if (!attribute.id) {
