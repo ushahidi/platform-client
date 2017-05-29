@@ -90,6 +90,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     function selectParent(parent, formId) {
         // If we've just selected the tag
         if (_.contains($scope.filters.tags, parent.id)) {
+            console.log('selected');
             // ... then select its children too
             _.each(parent.children, function (child) {
                 $scope.filters.tags.push(child.id);
@@ -102,7 +103,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             // Deselect the children too
             _.each(parent.children, function (child) {
                 // Remove each child without replacing the tags array
-                var index = $scope.filters.tags.indexOf(child);
+                var index = $scope.filters.tags.indexOf(child.id);
                 if (index !== -1) {
                     $scope.filters.tags.splice(index, 1);
                 }
