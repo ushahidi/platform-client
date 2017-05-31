@@ -69,23 +69,21 @@ function PostEditorController(
     $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
 
     $scope.allowedChangeStatus = allowedChangeStatus;
-
-
+    $scope.getTag = getTag;
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
     $scope.cancel = cancel;
-
     $scope.postTitleLabel = 'Title';
     $scope.postDescriptionLabel = 'Description';
-
+    $scope.tagKeys = [];
+    $scope.save = $translate.instant('app.save');
+    $scope.saving = $translate.instant('app.saving');
+    $scope.submit = $translate.instant('app.submit');
+    $scope.submitting = $translate.instant('app.submitting');
     activate();
 
     function activate() {
-        TagEndpoint.query().$promise.then(function (results) {
-            $scope.categories = results;
-        });
-
         $scope.post.form = $scope.form;
         $scope.fetchAttributesAndTasks($scope.post.form.id)
         .then(function () {
@@ -97,6 +95,8 @@ function PostEditorController(
         });
 
         $scope.medias = {};
+        $scope.savingText = $translate.instant('app.saving');
+        $scope.submittingText = $translate.instant('app.submitting');
     }
 
     function setVisibleStage(stageId) {
@@ -105,15 +105,16 @@ function PostEditorController(
 
     function fetchAttributesAndTasks(formId) {
         return $q.all([
-            FormStageEndpoint.query({ formId: formId }).$promise,
-            FormAttributeEndpoint.query({ formId: formId }).$promise
+            FormStageEndpoint.queryFresh({ formId: formId }).$promise,
+            FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
+            TagEndpoint.queryFresh().$promise
         ]).then(function (results) {
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
             var attrs = _.chain(results[1])
                 .sortBy('priority')
                 .value();
-
+            var categories = results[2];
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
@@ -138,6 +139,27 @@ function PostEditorController(
                         media = $scope.post.values[attr.key][0];
                     }
                     $scope.medias[attr.key] = {};
+                }
+                if (attr.input === 'tags') {
+                    // adding category-objects attribute-options
+                    attr.options = _.chain(attr.options)
+                        .map(function (category) {
+                            return _.findWhere(categories, {id: category});
+                        })
+                        .filter()
+                        .value();
+
+                    // adding category-objects to children
+                    _.each(attr.options, function (category) {
+                        if (category.children.length > 0) {
+                            category.children = _.chain(category.children)
+                                .map(function (child) {
+                                    return _.findWhere(attr.options, {id: child.id});
+                                })
+                                .filter()
+                                .value();
+                        }
+                    });
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
@@ -166,6 +188,13 @@ function PostEditorController(
                     if ($scope.post.values[attr.key][0]) {
                         $scope.post.values[attr.key][0] = parseFloat($scope.post.values[attr.key][0]);
                     }
+                } else if (attr.input === 'tags') {
+                    // tag.id needs to be a number
+                    if ($scope.post.values[attr.key]) {
+                        $scope.post.values[attr.key] = $scope.post.values[attr.key].map(function (id) {
+                            return parseInt(id);
+                        });
+                    }
                 }
             });
 
@@ -190,8 +219,17 @@ function PostEditorController(
             }
             $scope.tasks = tasks;
         });
-    }
 
+    }
+    function getTag(tagId) {
+        var tag;
+        _.each($scope.categories, function (category) {
+            if (category.id === tagId) {
+                tag = category;
+            }
+        });
+        return tag;
+    }
     function canSavePost() {
         return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
     }
@@ -217,16 +255,15 @@ function PostEditorController(
     }
 
     function savePost() {
+        $scope.saving_post = true;
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
+            $scope.saving_post = false;
             return;
         }
-
         // Create/update any associated media objects
         // Media creation must be completed before we can progress with saving
         resolveMedia().then(function () {
-
-            $scope.saving_post = true;
 
             // Avoid messing with original object
             // Clean up post values object
@@ -234,13 +271,22 @@ function PostEditorController(
                 $scope.post.values.message_location = [];
             }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+            // adding neccessary tags to post.tags, needed for filtering
+            if ($scope.tagKeys.length > 0) {
+                post.tags = _.chain(post.values)
+                .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                .filter()             // Remove nulls                      [0,1,1,2]
+                .uniq()               // Remove duplicates                 [0,1,2]
+                .value();             // and output
+            }
             var request;
             if (post.id) {
                 request = PostEndpoint.update(post);
             } else {
                 request = PostEndpoint.save(post);
             }
-
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
@@ -265,9 +311,7 @@ function PostEditorController(
                         validationErrors.push(value);
                     }
                 });
-
                 Notify.errors(_.pluck(validationErrors, 'message'));
-
                 $scope.saving_post = false;
             });
         });

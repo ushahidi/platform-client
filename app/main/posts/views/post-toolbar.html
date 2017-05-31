@@ -4,7 +4,7 @@
     <!-- floating action button -->
     <add-post-button></add-post-button>
 
-    <filter-posts filters="filters" embed-only="false"></filter-posts>
+    <filter-posts current-view="currentView" filters="filters" embed-only="false"></filter-posts>
 
     <filter-by-survey></filter-by-survey>
 
@@ -15,4 +15,9 @@
       <post-share filters="filters" button="true"></post-share>
     </div>
     <!-- toolbar -->
+    <div class="progress-bar" ng-show="isLoading.state">
+        <span>
+            Loading...
+        </span>
+    </div>
 </div>

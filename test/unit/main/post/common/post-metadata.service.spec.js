@@ -47,9 +47,9 @@ describe('Post Metadata Service', function () {
                 }
             };
 
-            spyOn(UserEndpoint, 'get').and.callThrough();
+            spyOn(UserEndpoint, 'getFresh').and.callThrough();
             PostMetadataService.loadUser(post);
-            expect(UserEndpoint.get).toHaveBeenCalled();
+            expect(UserEndpoint.getFresh).toHaveBeenCalled();
         });
         it('should load a contact', function () {
             post = {

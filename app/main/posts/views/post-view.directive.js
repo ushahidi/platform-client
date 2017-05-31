@@ -9,7 +9,9 @@ function (
             _
         ) {
             // Initial scope
-            $scope.isLoading = false;
+            $scope.isLoading = {
+                state: false
+            };
 
             // Set default view
             if (!$scope.currentView) {

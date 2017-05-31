@@ -65,19 +65,19 @@
 
         </listing-toolbar>
 
-        <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading">
+        <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
             <h4 translate>post.no_search_results</h5>
         </div>
 
-        <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading">
+        <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading.state">
             <h4 translate>post.no_posts_yet</h5>
         </div>
 
-        <div class="listing-item" ng-if="posts.length > 0 || isLoading">
+        <div class="listing-item" ng-if="posts.length > 0 || isLoading.state">
             <div class="listing-item-primary">
-                <button ng-disabled="isLoading" ng-hide="isLoading" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                <button ng-disabled="isLoading.state" ng-hide="isLoading.state" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
                 </button>
-                <button type="button" class="button-gamma button-flat" ng-show="isLoading">
+                <button type="button" class="button-gamma button-flat" ng-show="isLoading.state">
                     <div class="loading">
                         <div class="line"></div>
                         <div class="line"></div>
