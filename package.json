@@ -87,7 +87,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.9.5",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.6.0"
+    "webpack-hot-middleware": "^2.16.1"
   },
   "dependencies": {
     "URIjs": "^1.14.1",
