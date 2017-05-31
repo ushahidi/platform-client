@@ -41,28 +41,18 @@ describe('Post Edit Service', function () {
     }));
 
     describe('test service functions', function () {
-        it('should return invalid if any of the following are invalid: title, content, tags or form', function () {
+        it('should return invalid if any of the following are invalid: title, content or form', function () {
             form = undefined;
             var result = PostEditService.validatePost(post, form, tasks);
-
             expect(result).toBe(false);
 
             form = {};
-            form.tags = {$invalid: false};
             form.title = {$invalid: true};
             form.content = {$invalid: true};
             result = PostEditService.validatePost(post, form, tasks);
 
             expect(result).toBe(false);
 
-            form.tags = {$invalid: true};
-            form.title = {$invalid: false};
-            form.content = {$invalid: false};
-            result = PostEditService.validatePost(post, form, tasks);
-
-            expect(result).toBe(false);
-
-            form.tags = {$invalid: true};
             form.title = {$invalid: true};
             form.content = {$invalid: false};
             result = PostEditService.validatePost(post, form, tasks);

@@ -29,7 +29,7 @@ function (
         controller: require('./surveys/edit.controller.js'),
         template: require('./surveys/survey-edit.html')
     })
-    .when('/settings/surveys/:id', {
+    .when('/settings/surveys/:action/:id', {
         controller: require('./surveys/edit.controller.js'),
         template: require('./surveys/survey-edit.html')
     })
@@ -68,6 +68,18 @@ function (
     .when('/settings/roles/:id', {
         controller: require('./roles/roles.controller.js'),
         template: require('./roles/roles-edit.html')
+    })
+    .when('/settings/webhooks', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks.html')
+    })
+    .when('/settings/webhooks/create', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks-edit.html')
+    })
+    .when('/settings/webhooks/:id', {
+        controller: require('./webhooks/webhooks.controller.js'),
+        template: require('./webhooks/webhooks-edit.html')
     })
     .when('/settings/datasources', {
         controller: require('./datasources/datasources.controller.js'),

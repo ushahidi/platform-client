@@ -63,7 +63,7 @@ describe('setting users create controller', function () {
         $rootScope.$apply();
 
         expect(Notify.errors).toHaveBeenCalled();
-        expect($scope.processing).toBe(false);
+        expect($scope.saving_user).toBe(false);
     });
 
 });

@@ -25,6 +25,7 @@ function PostMetadataDirective(
             $scope.visibleTo = '';
             $scope.displayTime = '';
             $scope.displayTimeFull = '';
+            $scope.timeago = '';
             $scope.hideDateThisWeek = $scope.hideDateThisWeek || false;
 
             activate();
@@ -50,6 +51,8 @@ function PostMetadataDirective(
                     $scope.displayTime = postDate.format('LL');
                 }
                 $scope.displayTimeFull = postDate.format('LLL');
+
+                $scope.timeago = postDate.from(now);
             }
 
             function visibleTo(post) {

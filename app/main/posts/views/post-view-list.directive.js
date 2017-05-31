@@ -55,7 +55,9 @@ function PostListController(
     $scope.statuses = PostActionsService.getStatuses();
     $scope.changeStatus = changeStatus;
     $scope.loadMore = loadMore;
-
+    $scope.getPosts = getPosts;
+    $scope.resetPosts = resetPosts;
+    $scope.clearPosts = false;
     activate();
 
     // whenever the filters changes, update the current list of posts
@@ -63,16 +65,15 @@ function PostListController(
         return $scope.filters;
     }, function (newValue, oldValue) {
         if (newValue !== oldValue) {
-            resetPosts();
+            $scope.clearPosts = true;
             getPosts();
         }
     }, true);
 
+
     function activate() {
         // Initial load
-        resetPosts();
         getPosts();
-
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
@@ -92,9 +93,10 @@ function PostListController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
-
-        $scope.isLoading = true;
+        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+            // Clear posts
+            $scope.clearPosts ? resetPosts() : null;
             // Add posts to full set of posts
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
@@ -109,7 +111,7 @@ function PostListController(
             });
 
             $scope.totalItems = postsResponse.total_count;
-            $scope.isLoading = false;
+            $scope.isLoading.state = false;
 
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();
@@ -137,6 +139,7 @@ function PostListController(
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
+            $scope.isLoading.state = true;
             var deletePostsPromises = _.map(
                 $scope.selectedPosts,
                 function (postId) {
@@ -147,9 +150,11 @@ function PostListController(
             ;
 
             function handleDeleteErrors(errorResponse) {
+                $scope.isLoading.state = false;
                 Notify.apiErrors(errorResponse);
             }
             function handleDeleteSuccess(deleted) {
+                $scope.isLoading.state = false;
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
                 var deletedIds = _.pluck(deleted, 'id');
@@ -161,6 +166,11 @@ function PostListController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
+
+                if (!$scope.posts.length) {
+                    $scope.clearPosts = true;
+                    getPosts();
+                }
             }
         });
     }
@@ -200,6 +210,7 @@ function PostListController(
     function loadMore() {
         // Increment page
         $scope.currentPage++;
+        $scope.clearPosts = false;
         getPosts();
     }
 }
