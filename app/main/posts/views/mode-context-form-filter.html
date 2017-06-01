@@ -5,7 +5,7 @@
         <div class="survey-filter-label">
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
             <label class="checked">
-                <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" >
+                <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-change="changeForms()">
                 {{ ::form.name }}
             </label>
         </div>
@@ -52,47 +52,47 @@
             class="survey-filter-children"
             dropdown
             auto-close="outsideClick"
-            ng-if="form.tags.length > 0 && form.post_count > 0"
+            ng-show="form.tags.length > 0 && form.post_count > 0"
             >
-            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle>{{form.tags.length}} categories
+            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle ng-class="{ selected : filters.tags.length }">
+            {{form.tags.length}} categories
             </legend>
 
-        <div class="form-fieldgroup init" dropdown-menu>
-            <div 
-                class="form-field checkbox"
-                ng-repeat="tag in form.tags"
-                ng-if="tag.parent_id === null"
-                ng-class="{'checked': filters.tags.indexOf(tag.id) > -1}"
-            >
-                <label ng-click="selectParent(tag)">
-                    <input
-                        type="checkbox"
-                        checklist-value="tag.id"
-                        checklist-model="filters.tags"
-                    />
-                    {{tag.tag}}
-                </label>
-                <div class="form-fieldgroup" ng-class="{'active': filters.tags.indexOf(tag.id) > -1}">
-                    <div 
-                        class="form-field checkbox"
-                        ng-repeat="child in tag.children"
-                        ng-if="filters.tags.indexOf(tag.id) > -1"
-                    >
-                        <label>
-                            <input     
-                                type="checkbox"
-                                checklist-value="child.id"
-                                checklist-model="filters.tags"
-                            />
-                            {{child.tag}}
-                        </label>
+            <div class="form-fieldgroup init" dropdown-menu>
+                <div
+                    class="form-field checkbox"
+                    ng-repeat="tag in form.tags"
+                    ng-class="{'checked': filters.tags.indexOf(tag.id) > -1}"
+                >
+                    <label ng-click="selectParent(tag, form.id)">
+                        <input
+                            type="checkbox"
+                            checklist-value="tag.id"
+                            checklist-model="filters.tags"
+                        />
+                        {{tag.tag}}
+                    </label>
+                    <div class="form-fieldgroup" ng-class="{'active': filters.tags.indexOf(tag.id) > -1}">
+                        <div
+                            class="form-field checkbox"
+                            ng-repeat="child in tag.children"
+                            ng-show="filters.tags.indexOf(tag.id) > -1"
+                        >
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checklist-value="child.id"
+                                    checklist-model="filters.tags"
+                                />
+                                {{child.tag}}
+                            </label>
+                        </div>
                     </div>
+                </div>
             </div>
-        </div>
-        </div>
-    </fieldset>
+        </fieldset>
     </div>
-      
+
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf('none') !== -1) }"  dropdown>
         <div class="survey-filter-label">
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
@@ -121,10 +121,10 @@
             <li><a translate="post.show_only_unknown_form" ng-click="showOnly('none')">Show only Unknown</a></li>
             <li><a translate="post.hide_unknown_form" ng-click="hide('none')">Hide Unknown</a></li>
         </ul>
-    </div>    
+    </div>
 </form>
 <div class="tool" ng-show="unmapped > 0 && currentView === 'map'">
-<p>There are 
+<p>There are
     <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.</p>
 </div>
 <div class="form-field" ng-show="hasManageSettingsPermission()">

@@ -47,31 +47,28 @@ function (
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
     $scope.processing = false;
+    $scope.isParent = false;
 
     // getting label to edit
     TagEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (tag) {
         $scope.category = tag;
-        // adding parent-object to tag
+        // Normalize parent:
         if ($scope.category.parent) {
-            $scope.category.parent = $scope.addParent($scope.category.parent.id);
+            $scope.category.parent_id = $scope.category.parent.id;
+            delete $scope.category.parent;
         }
-        //extract form-ids and make them integers
-        $scope.category.forms = $scope.category.forms.map(function (form) {
-            return parseInt(form.id);
-        });
-    });
-    // checking if label is a parent already
-    TagEndpoint.queryFresh({parent_id: $routeParams.id}).$promise.then(function (tag) {
-        if (tag.length === 0) {
-            // getting available parents
-            TagEndpoint.queryFresh({level: 'parent'}).$promise.then(function (tags) {
-                $scope.parents = tags;
-            });
+
+        if ($scope.category.children && $scope.category.children.length > 0) {
+            $scope.isParent = true;
         }
     });
 
-    FormEndpoint.queryFresh().$promise.then(function (forms) {
-        $scope.surveys = forms;
+    // getting available parents
+    TagEndpoint.queryFresh({level: 'parent'}).$promise.then(function (tags) {
+        // Remove current tag to avoid circular reference
+        $scope.parents = _.filter(tags, function (tag) {
+            return tag.id !== parseInt($routeParams.id);
+        });
     });
 
     $scope.addParent = function (id) {
@@ -80,14 +77,9 @@ function (
 
     $scope.getParentName = function () {
         var parentName = 'Nothing';
-        if ($scope.category.parent_id) {
-            $scope.parents.forEach(function (parent) {
-                if (parent.id === $scope.category.parent_id) {
-                    parentName = parent.tag;
-                }
-            });
-        } else if ($scope.category.parent) {
-            parentName = $scope.category.parent.tag;
+        var parent = _.findWhere($scope.parents, { id: $scope.category.parent_id });
+        if (parent) {
+            parentName = parent.tag;
         }
         return parentName;
     };
@@ -109,7 +101,7 @@ function (
     };
 
     $scope.deleteCategory = function (category) {
-        Notify.confirmDelete('notify.category.destroy_confirm').then(function () {
+        Notify.confirmDelete('notify.category.destroy_confirm', 'notify.category.destroy_confirm_desc').then(function () {
             TagEndpoint.delete({ id: category.id }).$promise.then(function () {
                 Notify.notify('notify.category.destroy_success');
             }, handleResponseErrors);

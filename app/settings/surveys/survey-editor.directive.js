@@ -217,12 +217,16 @@ function SurveyEditorController(
     }
     function loadAvailableCategories() {
         // Get available tags for selected for or all tags if new form
-        var params = {};
-        if ($scope.surveyId) {
-            params.formId = $scope.surveyId;
-        }
-        TagEndpoint.queryFresh(params).$promise.then(function (tags) {
-            $scope.availableCategories = tags;
+        TagEndpoint.queryFresh().$promise.then(function (tags) {
+            // adding children to parents
+            $scope.availableCategories = _.map(_.where(tags, { parent_id: null }), function (tag) {
+                if (tag && tag.children) {
+                    tag.children = _.map(tag.children, function (child) {
+                        return _.findWhere(tags, {id: parseInt(child.id)});
+                    });
+                }
+                return tag;
+            });
         });
     }
 
@@ -241,9 +245,9 @@ function SurveyEditorController(
                 .sortBy('priority')
                 .value();
             _.each(attributes, function (attr) {
-                    if (attr.input === 'tags') {
-                        attr.options = _.map(attr.options, function (id) {
-                            return parseInt(id);
+                    if (attr.type === 'tags') {
+                        attr.options = _.map(attr.options, function (option) {
+                            return parseInt(option);
                         });
                     }
                 });
@@ -421,8 +425,8 @@ function SurveyEditorController(
         return $scope.survey.tasks.length ? _.last($scope.survey.tasks).priority + 1 : 0;
     }
 
-    function getNewAttributePriority() {
-        return $scope.activeTask.attributes.length ? _.last($scope.activeTask.attributes).priority + 1 : 0;
+    function getNewAttributePriority(task) {
+        return task.attributes.length ? _.last(task.attributes).priority + 1 : 0;
     }
 
     function addNewTask(task) {
@@ -452,7 +456,7 @@ function SurveyEditorController(
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 
-    function addNewAttribute(attribute) {
+    function addNewAttribute(attribute, task) {
         ModalService.close();
         // Set active task as form_stage_id
         // If this task is new and has not been saved
@@ -461,18 +465,18 @@ function SurveyEditorController(
         // TODO refactor this
         if (!attribute.form_stage_id) {
             // Set attribute priority
-            attribute.priority = getNewAttributePriority();
-            attribute.form_stage_id = $scope.activeTask.id ? $scope.activeTask.id : $scope.activeTask.label;
-            $scope.activeTask.attributes.push(attribute);
+            attribute.priority = getNewAttributePriority(task);
+            attribute.form_stage_id = task.id ? task.id : task.label;
+            task.attributes.push(attribute);
         }
     }
 
-    function deleteAttribute(attribute) {
-        Notify.confirmDelete('notify.form.delete_attribute_confirm').then(function () {
+    function deleteAttribute(attribute, task) {
+        Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
             // If we have not yet saved this attribute
             // we can drop it immediately
             if (!attribute.id) {
-                $scope.activeTask.attributes = _.filter($scope.activeTask.attributes, function (item) {
+                task.attributes = _.filter(task.attributes, function (item) {
                     return item.label !== attribute.label;
                 });
                 // Attribute delete is currently only available in modal
@@ -486,11 +490,11 @@ function SurveyEditorController(
                 id: attribute.id
             }).$promise.then(function (attribute) {
                 // Remove attribute from scope, binding should take care of the rest
-                var index = _.findIndex($scope.activeTask.attributes, function (item) {
+                var index = _.findIndex(task.attributes, function (item) {
                     return item.id === attribute.id;
                 });
 
-                $scope.activeTask.attributes.splice(index, 1);
+                task.attributes.splice(index, 1);
 
                 FormStageEndpoint.invalidateCache();
 
@@ -549,11 +553,7 @@ function SurveyEditorController(
 
     function saveSurvey() {
         $scope.saving_survey = true;
-        if (!$scope.surveyId) {
-            $scope.survey.tags = extractTags();
-        }
         // Saving a survey is a 3 step process
-
         // First save the actual survey
         FormEndpoint
         .saveCache($scope.survey)
@@ -602,26 +602,16 @@ function SurveyEditorController(
         }, handleResponseErrors);
     }
 
-    function extractTags() {
-        var tags = [];
-        _.each($scope.survey.tasks, function (task) {
-            _.each(task.attributes, function (attribute) {
-                if (attribute.input === 'tags') {
-                    _.each(attribute.options, function (tag) {
-                        if (tags.indexOf(tag) < 0) {
-                            tags.push(parseInt(tag));
-                        }
-                    });
-                }
-            });
-        });
-        return tags;
-    }
-
     function saveAttributes() {
         var calls = [];
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
+                // removing faulty category-ids
+                if (attribute.type === 'tags') {
+                    attribute.options = _.filter(attribute.options, function (option) {
+                        return !isNaN(option);
+                    });
+                }
                 attribute.form_stage_id = task.id;
                 calls.push(
                     FormAttributeEndpoint
