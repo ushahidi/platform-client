@@ -71,6 +71,21 @@ function saveTranslationList(languages, locales_dir) {
         return language;
     });
 
+    // Append English
+    languages.push({
+        rtl: false,
+        pluralequation: 'language.pluralequation',
+        code: 'en',
+        name: 'English',
+        nplurals: 2
+    });
+
+    languages.sort((a, b) => {
+        if (a.name < b.name) { return -1; }
+        if (a.name > b.name) { return 1; }
+        return 0;
+    });
+
     return new Promise((resolve, reject) => {
         fs.writeFile(locales_dir + 'languages.json', JSON.stringify({languages: languages}), (err) => {
             if (err) {
