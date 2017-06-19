@@ -1,6 +1,5 @@
-
 <div>
-	<layout-class layout="b"></layout-class>
+    <layout-class layout="b"></layout-class>
     <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
@@ -57,14 +56,14 @@
                         </button>
                     </div>
 
-                    <div id="category-{{child.id}}" class="listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(child) }" ng-click="toggleCategory(child)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
+                    <div id="category-{{child.id}}" class="listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(child) }" ng-click="toggleCategory(child)" ng-style="{'border': 'none'}" ng-if="category.children">
 
                         <div class="listing-item-select">
-                            <input type="checkbox" value="{{child.id}}" ng-checked="isToggled(child)">
+                            <input type="checkbox" value="{{child.id}}" ng-checked="isToggled(child)" ng-style="{'marginLeft': '50px'}">
                         </div>
 
                         <div class="listing-item-primary">
-                            <h2 class="listing-item-title"><a ng-href="/settings/categories/{{child.id}}">{{child.tag}}</a></h2>
+                            <h2 class="listing-item-title"><a ng-href="/settings/categories/{{child.id}}" ng-style="{'marginLeft': '50px'}">{{child.tag}}</a></h2>
                         </div>
                         <div class="listing-item-secondary">
                             <button class="button-beta button-flat" ng-click="deleteCategory(child)">
@@ -92,3 +91,4 @@
         </div>
     </main>
 </div>
+
