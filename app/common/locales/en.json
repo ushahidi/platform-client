@@ -191,7 +191,7 @@
         "show_task" : "Show this task to everyone when the post is published",
         "task_info" : "You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.",
         "text_desc" : "A sentence or less",
-        "textarea_desc" : "Multiple sentences or paragraphs<",
+        "textarea_desc" : "Multiple sentences or paragraphs",
         "decimal_desc" : "A number with decimal places",
         "integer_desc" : "A whole number",
         "location_desc" : "A geographic location chosen via a map",
