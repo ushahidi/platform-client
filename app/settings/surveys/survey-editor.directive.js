@@ -563,6 +563,11 @@ function SurveyEditorController(
             // Second save the survey tasks
             saveTasks();
             saveRoles();
+            // Set ID and reload data if new survey
+            if ($scope.surveyId !== survey.id) {
+                $scope.surveyId = survey.id;
+                loadFormData();
+            }
         }, handleResponseErrors);
         $scope.saving_survey = false;
     }
