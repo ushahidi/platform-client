@@ -88,6 +88,12 @@ function (
         $scope.processing = true;
         //@todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {
+            // If parent catgegory, apply the same permisions to each child category
+            if (tag.children && tag.children.length) {
+                _.each(tag.children, function (child) {
+                    TagEndpoint.saveCache({ id: child.id, role: tag.role });
+                });
+            }
             Notify.notify('notify.category.save_success', {name: tag.tag});
             $location.path('/settings/categories');
         }, function (errorResponse) { // error
