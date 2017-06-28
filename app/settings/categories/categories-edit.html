@@ -101,8 +101,8 @@
                 </div>
               </fieldset>
               <!-- Who can see and add -->
-              <role-selector model="category" title="'Who can see this category'" ng-show="isParent"></role-selector>
-              <div class="form-field" ng-show="!isParent">
+              <role-selector model="category" title="'Who can see this category'" ng-show="!category.parent_id"></role-selector>
+              <div class="form-field" ng-show="category.parent_id">
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people"></use>
                 </svg>
