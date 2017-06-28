@@ -55,6 +55,7 @@ function (
         // Normalize parent:
         if ($scope.category.parent) {
             $scope.category.parent_id = $scope.category.parent.id;
+            $scope.category.parent_id_original = $scope.category.parent.id;
             delete $scope.category.parent;
         }
         if (!$scope.category.parent_id) {
@@ -87,10 +88,16 @@ function (
         $scope.processing = true;
         //@todo: change this to use original api allowing callback on save and delete cache
         TagEndpoint.saveCache(tag).$promise.then(function (result) {
-            // If parent catgegory, apply the same permisions to each child category
+            // If parent catgegory, apply parent category permisions to child categories
             if (tag.children && tag.children.length) {
                 _.each(tag.children, function (child) {
                     TagEndpoint.saveCache({ id: child.id, role: tag.role });
+                });
+            }
+            // If child catgegory with new parent, apply new permissions to child category
+            if (result.parent && result.parent.id !== $scope.category.parent_id_original) {
+                TagEndpoint.getFresh({ id: result.parent.id }).$promise.then(function (parent) {
+                    TagEndpoint.saveCache({ id: result.id, role: parent.role });
                 });
             }
             Notify.notify('notify.category.save_success', {name: tag.tag});
