@@ -637,7 +637,7 @@ function SurveyEditorController(
         .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
         .$promise
         .then(function (roles) {
-            $location.path('settings/surveys/edit/' + $scope.survey.id);
+            $location.url('/settings/surveys');
             return true;
         }, handleResponseErrors);
     }
