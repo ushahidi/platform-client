@@ -101,7 +101,13 @@
                 </div>
               </fieldset>
               <!-- Who can see and add -->
-              <role-selector model="category" title="'Who can see this category'"></role-selector>
+              <role-selector model="category" title="'Who can see this category'" ng-show="isParent"></role-selector>
+              <div class="form-field" ng-show="!isParent">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people"></use>
+                </svg>
+                <span translate>category.child_permissions</span>
+              </div>
             </div>
           </form>
           <div class="form-sheet" ng-show="category.id">
