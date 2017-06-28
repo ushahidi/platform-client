@@ -715,6 +715,7 @@
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
         "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
+        "child_permissions" : "Permissions for this category are managed by the parent category.",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
