@@ -1,0 +1,46 @@
+<div class="form-field switch">
+    <label translate="category.show_categories"></label>
+    <div class="toggle-switch">
+        <input
+            id="categories"
+            class="tgl init"
+            ng-click="showCategories=!showCategories"
+            type="checkbox"
+        >
+        <label class="tgl-btn" for="categories"></label>
+    </div>
+</div>
+<div class="form-field">
+    <div ng-show="showCategories">
+        <div class="form-field checkbox">
+            <label>
+                <input
+                  type="checkbox"
+                  ng-checked="flattened.length === selected.length"
+                  ng-click="selectAll()"
+                />
+                <span translate="category.select_all"></span>
+            </label>
+        </div>
+        <div class="form-field checkbox" ng-repeat="category in available">
+            <label>
+                <input
+                  type="checkbox"
+                  ng-checked="selected.includes(category.id)"
+                  ng-click="selectParent(category)"
+                />
+                {{category.tag}}
+            </label>
+            <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
+                <label>
+                    <input
+                      type="checkbox"
+                      ng-checked="selected.includes(child.id)"
+                      ng-click="selectChild(child)"
+                    />
+                    {{child.tag}}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
