@@ -81,6 +81,7 @@ angular.module('ushahidi.common', [
 .directive('fileUpload', require('./directives/file-upload.directive.js'))
 .directive('roleSelector', require('./directives/role-selector.directive.js'))
 .directive('addCategory', require('./directives/add-category.directive.js'))
+.directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 
 // Event actions
