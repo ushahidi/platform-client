@@ -120,5 +120,10 @@
   },
   "engines": {
     "node": ">=4.0"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "ushahidi-platform-pattern-library"
+    ]
   }
 }
