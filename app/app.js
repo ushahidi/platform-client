@@ -109,8 +109,8 @@ angular.module('app',
     .factory('Leaflet', function () {
         var L = require('leaflet');
         // Load leaflet plugins here too
-        require('imports?L=leaflet!leaflet.markercluster');
-        require('imports?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
+        require('imports-loader?L=leaflet!leaflet.markercluster');
+        require('imports-loader?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
         return L;
     })
     .factory('moment', function () {
