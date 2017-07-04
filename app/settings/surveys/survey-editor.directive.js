@@ -5,7 +5,8 @@ function SurveyEditor() {
     return {
         restrict: 'E',
         scope: {
-            surveyId: '='
+            surveyId: '=',
+            actionType: '='
         },
         controller: SurveyEditorController,
         template: require('./survey-editor.html')
@@ -22,6 +23,7 @@ SurveyEditorController.$inject = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'RoleEndpoint',
+    'TagEndpoint',
     '_',
     'Notify',
     'SurveyNotify',
@@ -38,25 +40,25 @@ function SurveyEditorController(
     FormStageEndpoint,
     FormAttributeEndpoint,
     RoleEndpoint,
+    TagEndpoint,
     _,
     Notify,
     SurveyNotify,
     ModalService,
     Features
 ) {
-
+    $scope.saving = false;
     $scope.currentInterimId = 0;
     $scope.survey = {
         color: null
     };
-
     $scope.canReorderTask = canReorderTask;
     $scope.moveTaskUp = moveTaskUp;
     $scope.moveTaskDown = moveTaskDown;
     $scope.isFirstTask = isFirstTask;
     $scope.isLastTask = isLastTask;
-
     $scope.deleteTask = deleteTask;
+    $scope.duplicateSection = duplicateSection;
     $scope.openTaskModal = openTaskModal;
     $scope.addNewTask = addNewTask;
 
@@ -70,8 +72,7 @@ function SurveyEditorController(
     $scope.isLastAttribute = isLastAttribute;
 
     $scope.deleteAttribute = deleteAttribute;
-
-    $scope.deleteSurvey = deleteSurvey;
+    $scope.saving_survey = false;
     $scope.saveSurvey = saveSurvey;
     $scope.cancel = cancel;
 
@@ -81,21 +82,30 @@ function SurveyEditorController(
 
     $scope.changeTaskLabel = changeTaskLabel;
 
-    $scope.isSelectedTask = isSelectedTask;
-    $scope.setSelectedTask = setSelectedTask;
-    $scope.resetSelectedTask = resetSelectedTask;
-
     $scope.getInterimId = getInterimId;
     $scope.removeInterimIds = removeInterimIds;
 
     $scope.allowedToggleOrder = allowedToggleOrder;
 
+    $scope.switchTab = switchTab;
+
+    $scope.loadRoleData = loadRoleData;
     $scope.roles_allowed = [];
     $scope.roles = [];
+
+    $scope.onlyOptional = onlyOptional;
 
     activate();
 
     function activate() {
+        $scope.tab_history = {};
+
+        // Set initial menu tab
+        $scope.switchTab('post', 'survey-build');
+
+        $scope.loadRoleData();
+        $scope.save = $translate.instant('app.save');
+        $scope.saving = $translate.instant('app.saving');
 
         if ($scope.surveyId) {
             loadFormData();
@@ -112,6 +122,7 @@ function SurveyEditorController(
                         priority: 0,
                         required: false,
                         type: 'post',
+                        show_when_published: 1,
                         attributes: [
                             {
                                 cardinality: 0,
@@ -145,9 +156,10 @@ function SurveyEditorController(
         }
 
         loadAvailableForms();
+        loadAvailableCategories();
 
         if (!$scope.surveyId) {
-            $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
+            $q.all([Features.loadFeatures(), FormEndpoint.queryFresh().$promise]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
@@ -157,6 +169,28 @@ function SurveyEditorController(
                 }
             });
         }
+    }
+
+
+    function onlyOptional(editAttribute) {
+        return editAttribute.type !== 'title' && editAttribute.type !== 'description';
+    }
+
+    function switchTab(section, tab) {
+
+        // First unset last active tab
+        var old_tab = $scope.tab_history[section];
+        if (old_tab) {
+            var old_tab_li = old_tab + '-li';
+            angular.element(document.getElementById(old_tab)).removeClass('active');
+            angular.element(document.getElementById(old_tab_li)).removeClass('active');
+        }
+        // Set new active tab
+        tab = tab + '-' + section;
+        $scope.tab_history[section] = tab;
+        var tab_li = tab + '-li';
+        angular.element(document.getElementById(tab)).addClass('active');
+        angular.element(document.getElementById(tab_li)).addClass('active');
     }
 
     function allowedToggleOrder(attribute) {
@@ -175,22 +209,24 @@ function SurveyEditorController(
         });
     }
 
-    function isSelectedTask(task) {
-        return $scope.selectedTask ? task.id === $scope.selectedTask.id : false;
-    }
-
-    function setSelectedTask(task) {
-        $scope.selectedTask = task;
-    }
-
-    function resetSelectedTask() {
-        $scope.selectedTask = $scope.survey.tasks.length > 1 ? $scope.survey.tasks[1] : undefined;
-    }
-
     function loadAvailableForms() {
         // Get available forms for relation field
-        FormEndpoint.query().$promise.then(function (forms) {
+        FormEndpoint.queryFresh().$promise.then(function (forms) {
             $scope.availableForms = forms;
+        });
+    }
+    function loadAvailableCategories() {
+        // Get available tags for selected for or all tags if new form
+        TagEndpoint.queryFresh().$promise.then(function (tags) {
+            // adding children to parents
+            $scope.availableCategories = _.map(_.where(tags, { parent_id: null }), function (tag) {
+                if (tag && tag.children) {
+                    tag.children = _.map(tag.children, function (child) {
+                        return _.findWhere(tags, {id: parseInt(child.id)});
+                    });
+                }
+                return tag;
+            });
         });
     }
 
@@ -198,18 +234,26 @@ function SurveyEditorController(
         // If we're editing an existing survey,
         // load the survey info and all the fields.
         $q.all([
-            FormEndpoint.get({ id: $scope.surveyId }).$promise,
-            FormStageEndpoint.query({ formId: $scope.surveyId }).$promise,
-            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise,
-            FormRoleEndpoint.query({ formId: $scope.surveyId }).$promise,
-            RoleEndpoint.query().$promise
+            FormEndpoint.getFresh({ id: $scope.surveyId }).$promise,
+            FormStageEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
+            FormAttributeEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
+            FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise
         ]).then(function (results) {
             var survey = results[0];
             survey.tasks = _.sortBy(results[1], 'priority');
             var attributes = _.chain(results[2])
                 .sortBy('priority')
                 .value();
+            _.each(attributes, function (attr) {
+                    if (attr.type === 'tags') {
+                        attr.options = _.map(attr.options, function (option) {
+                            return parseInt(option);
+                        });
+                    }
+                });
             _.each(survey.tasks, function (task) {
+                // Set initial menu tab
+                $scope.switchTab(task.id, 'section-build');
                 task.attributes = _.filter(attributes, function (attribute) {
                     return attribute.form_stage_id === task.id;
                 });
@@ -217,14 +261,45 @@ function SurveyEditorController(
             //survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
             $scope.survey = survey;
 
-            //Set Active task
-            $scope.resetSelectedTask();
-
             var roles_allowed = results[3];
-            var roles = results[4];
 
             $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
-            $scope.roles = roles;
+
+            // Remove source survey information
+            if ($scope.actionType === 'duplicate') {
+
+                $scope.survey.name = undefined;
+                $scope.survey.description = undefined;
+
+                delete $scope.survey.id;
+                delete $scope.survey.created;
+                delete $scope.survey.updated;
+                delete $scope.survey.url;
+                delete $scope.survey.can_create;
+                delete $scope.survey.tags;
+
+                // Reset Task and Attribute IDs
+                _.each($scope.survey.tasks, function (task) {
+                    task.form_id = undefined;
+                    task.id = $scope.getInterimId();
+                    delete task.url;
+
+                    _.each(task.attributes, function (attribute) {
+                        attribute.form_stage_id = task.id;
+                        delete attribute.id;
+                        delete attribute.url;
+                        delete attribute.key;
+                    });
+                });
+            }
+        });
+    }
+
+    function loadRoleData() {
+        $q.all([
+            RoleEndpoint.query().$promise
+        ]).then(function (results) {
+            $scope.roles = results[0];
         });
     }
 
@@ -233,6 +308,7 @@ function SurveyEditorController(
     }
 
     function handleResponseErrors(errorResponse) {
+        $scope.saving_survey = false;
         Notify.apiErrors(errorResponse);
     }
 
@@ -350,8 +426,8 @@ function SurveyEditorController(
         return $scope.survey.tasks.length ? _.last($scope.survey.tasks).priority + 1 : 0;
     }
 
-    function getNewAttributePriority() {
-        return $scope.activeTask.attributes.length ? _.last($scope.activeTask.attributes).priority + 1 : 0;
+    function getNewAttributePriority(task) {
+        return task.attributes.length ? _.last(task.attributes).priority + 1 : 0;
     }
 
     function addNewTask(task) {
@@ -360,7 +436,7 @@ function SurveyEditorController(
         task.priority = getNewTaskPriority();
         task.id = $scope.getInterimId();
         $scope.survey.tasks.push(task);
-        $scope.setSelectedTask(task);
+        $scope.switchTab(task.id, 'section-build');
     }
 
     function openAttributeModal(task) {
@@ -381,7 +457,7 @@ function SurveyEditorController(
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 
-    function addNewAttribute(attribute) {
+    function addNewAttribute(attribute, task) {
         ModalService.close();
         // Set active task as form_stage_id
         // If this task is new and has not been saved
@@ -390,36 +466,36 @@ function SurveyEditorController(
         // TODO refactor this
         if (!attribute.form_stage_id) {
             // Set attribute priority
-            attribute.priority = getNewAttributePriority();
-            attribute.form_stage_id = $scope.activeTask.id ? $scope.activeTask.id : $scope.activeTask.label;
-            $scope.activeTask.attributes.push(attribute);
+            attribute.priority = getNewAttributePriority(task);
+            attribute.form_stage_id = task.id ? task.id : task.label;
+            task.attributes.push(attribute);
         }
     }
 
-    function deleteAttribute(attribute) {
-        // If we have not yet saved this attribute
-        // we can drop it immediately
-        if (!attribute.id) {
-            $scope.activeTask.attributes = _.filter($scope.activeTask.attributes, function (item) {
-                return item.label !== attribute.label;
-            });
-            // Attribute delete is currently only available in modal
-            // so close the modal
-            ModalService.close();
-            return;
-        }
+    function deleteAttribute(attribute, task) {
+        Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
+            // If we have not yet saved this attribute
+            // we can drop it immediately
+            if (!attribute.id) {
+                task.attributes = _.filter(task.attributes, function (item) {
+                    return item.label !== attribute.label;
+                });
+                // Attribute delete is currently only available in modal
+                // so close the modal
+                ModalService.close();
+                return;
+            }
 
-        Notify.confirmDelete('notify.form.delete_attribute_confirm').then(function () {
             FormAttributeEndpoint.delete({
                 formId: $scope.survey.id,
                 id: attribute.id
             }).$promise.then(function (attribute) {
                 // Remove attribute from scope, binding should take care of the rest
-                var index = _.findIndex($scope.activeTask.attributes, function (item) {
+                var index = _.findIndex(task.attributes, function (item) {
                     return item.id === attribute.id;
                 });
 
-                $scope.activeTask.attributes.splice(index, 1);
+                task.attributes.splice(index, 1);
 
                 FormStageEndpoint.invalidateCache();
 
@@ -432,19 +508,32 @@ function SurveyEditorController(
         });
     }
 
+    function duplicateSection(task) {
+        var dup = angular.copy(task);
+        dup.label = undefined;
+        dup.description = undefined;
+        dup.id = getInterimId();
+        _.each(dup.attributes, function (attribute) {
+            delete attribute.id;
+            delete attribute.url;
+            delete attribute.key;
+            attribute.form_stage_id = dup.id;
+        });
+        $scope.survey.tasks.push(dup);
+        $scope.switchTab(dup.id, 'section-build');
+    }
+
     function deleteTask(task) {
 
+        Notify.confirmDelete('notify.form.delete_stage_confirm').then(function () {
+            // If we haven't saved the task yet then we can just drop it
+            if (!task.id || _.isString(task.id)) {
+                $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
+                    return item.label !== task.label;
+                });
+                return;
+            }
 
-        // If we haven't saved the task yet then we can just drop it
-        if (!task.id || _.isString(task.id)) {
-            $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
-                return item.label !== task.label;
-            });
-            $scope.resetSelectedTask();
-            return;
-        }
-
-        Notify.confirm('notify.form.delete_stage_confirm').then(function () {
             FormStageEndpoint.delete({
                 formId: $scope.survey.id,
                 id: task.id
@@ -455,7 +544,6 @@ function SurveyEditorController(
                 $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
                     return item.id !== task.id;
                 });
-                $scope.resetSelectedTask();
 
             });
         });
@@ -464,27 +552,9 @@ function SurveyEditorController(
 
     //Start - modify Survey
 
-    function deleteSurvey() {
-        // If we haven't saved the survey
-        // just go back to the surveys views
-        if (!$scope.survey.id) {
-            $location.url('/settings/surveys');
-            return;
-        }
-
-        Notify.confirmDelete('notify.form.delete_form_confirm').then(function () {
-            FormEndpoint.delete({
-                id: $scope.survey.id
-            }).$promise.then(function () {
-                Notify.notify('notify.form.destroy_form_success', { name: $scope.survey.name });
-                $location.url('/settings/surveys');
-            }, handleResponseErrors);
-        });
-    }
-
     function saveSurvey() {
+        $scope.saving_survey = true;
         // Saving a survey is a 3 step process
-
         // First save the actual survey
         FormEndpoint
         .saveCache($scope.survey)
@@ -495,6 +565,7 @@ function SurveyEditorController(
             saveTasks();
             saveRoles();
         }, handleResponseErrors);
+        $scope.saving_survey = false;
     }
 
     function saveTasks(tasks) {
@@ -534,9 +605,14 @@ function SurveyEditorController(
 
     function saveAttributes() {
         var calls = [];
-
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
+                // removing faulty category-ids
+                if (attribute.type === 'tags') {
+                    attribute.options = _.filter(attribute.options, function (option) {
+                        return !isNaN(option);
+                    });
+                }
                 attribute.form_stage_id = task.id;
                 calls.push(
                     FormAttributeEndpoint
@@ -562,6 +638,7 @@ function SurveyEditorController(
         .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
         .$promise
         .then(function (roles) {
+            $location.path('settings/surveys/edit/' + $scope.survey.id);
             return true;
         }, handleResponseErrors);
     }

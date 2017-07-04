@@ -8,4 +8,5 @@ function (
     $routeParams
 ) {
     $scope.surveyId = $routeParams.id;
+    $scope.actionType = $routeParams.action;
 }];

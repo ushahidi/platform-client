@@ -1,12 +1,15 @@
 module.exports = [
+    // '$scope',
     '$rootScope',
     '$translate',
-    'ConfigEndpoint',
+    'TranslationService',
     'Languages',
     'moment',
 function (
+    // $scope,
     $rootScope,
     $translate,
+    TranslationService,
     ConfigEndpoint,
     Languages,
     moment
@@ -17,28 +20,16 @@ function (
     $rootScope.switchRtl = function () {
         $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
     };
-
-    ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
-        var lang = site.language ? site.language : 'en';
-
-        $translate.use(lang).then(function (langKey) {
-            if (langKey) {
-                $translate.preferredLanguage(lang);
-
-                Languages.then(function (languages) {
-                    angular.forEach(languages, function (language) {
-                        if (language.code === lang) {
-                            $rootScope.rtlEnabled = language.rtl;
-                        }
-                    });
-                });
-            }
+    TranslationService.getLanguage().then(function (language) {
+            translate(language);
         });
 
-        if (lang !== 'en') {
-            require(['moment/locale/' + lang + '.js'], function () {
-                moment.locale(lang);
+    function translate(language) {
+        TranslationService.translate(language);
+        if (language !== 'en') {
+            require(['moment/locale/' + language + '.js'], function () {
+                moment.locale(language);
             });
         }
-    });
+    }
 }];

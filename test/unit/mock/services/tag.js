@@ -4,8 +4,23 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback([{
-                        name: 'test tag',
+                        tag: 'test tag',
                         id: 1
+                    }]);
+                }
+            }};
+        },
+        queryFresh: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback([{
+                        tag: 'test tag',
+                        id: 1,
+                        parent_id: null
+                    },{
+                        tag: 'test child',
+                        id: 2,
+                        parent_id: 1
                     }]);
                 }
             }};
@@ -14,7 +29,7 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     successCallback({
-                        name: 'test tag',
+                        tag: 'test tag',
                         id: 1
                     });
                 }
@@ -34,6 +49,5 @@ module.exports = [function () {
                 }
             }};
         }
-
     };
 }];

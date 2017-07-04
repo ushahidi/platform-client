@@ -8,6 +8,7 @@ build:
   encrypted_env_file: deployment.env.encrypted
   cached: true
   default_cache_branch: develop
+
 release:
   build:
     image: release
@@ -17,15 +18,15 @@ release:
   encrypted_env_file: deployment.env.encrypted
   cached: true
   default_cache_branch: master
+
 deploy:
-  build:
-    image: deploy
-    dockerfile_path: docker/deploy.Dockerfile
+  image: ushahidi/engineering-deployer:latest
   encrypted_env_file: deployment.env.encrypted
+  environment:
+    AWS_DEFAULT_REGION: us-east-1
   volumes:
     - ./tmp/out/last_build:/vols/last_build
-  cached: true
-  default_cache_branch: master
+    
 test:
   build:
     image: test

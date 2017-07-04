@@ -24,7 +24,7 @@ function sync {
 }
 
 install() {
-  npm install
+  npm-install-silent.sh
 }
 
 sync

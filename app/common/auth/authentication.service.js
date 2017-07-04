@@ -26,7 +26,6 @@ function (
     // and assume that, if yes, we are still loggedin
     var loginStatus = !!Session.getSessionDataEntry('accessToken') && !!Session.getSessionDataEntry('userId'),
 
-
     setToLoginState = function (userData) {
         Session.setSessionDataEntries({
             userId: userData.id,
@@ -34,9 +33,9 @@ function (
             email: userData.email,
             role: userData.role,
             permissions: userData.permissions,
-            gravatar: userData.gravatar
+            gravatar: userData.gravatar,
+            language: userData.language
         });
-
         loginStatus = true;
     },
 

@@ -1,0 +1,15 @@
+<div class="modal-body">
+    <div class="hide-when-medium">
+        <filter-form ng-model="filters.form"></filter-form>
+        <filter-category ng-model="filters.tags"></filter-category>
+    </div>
+    <filter-status ng-model="filters.status"></filter-status>
+    <filter-date date-after-model="filters.date_after" date-before-model="filters.date_before"></filter-date>
+    <filter-location center-point-model="filters.center_point" within-km-model="filters.within_km"></filter-location>
+    <div class="modal-actions">
+        <div class="form-field">
+            <button type="button" class="button-link" ng-click="cancel()" translate>global_filter.clear_filters</button>
+            <button type="submit" class="button-alpha" translate ng-click="applyFilters()">app.apply_filters</button>
+        </div>
+    </div>
+</div>

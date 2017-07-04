@@ -19,7 +19,9 @@ function (
         restrict: 'A',
         link: function ($scope, $element, $attrs) {
             $scope.whereToNext = 'settings/roles';
-
+            $scope.save = $translate.instant('app.save');
+            $scope.saving = $translate.instant('app.saving');
+            $scope.saving_role = false;
             RoleEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (role) {
                 $scope.role = role;
 
@@ -40,7 +42,7 @@ function (
             };
 
             $scope.saveRole = function (role) {
-                $scope.saving = true;
+                $scope.saving_role = true;
                 role.name = role.name ? role.name : role.display_name;
 
                 RoleEndpoint.saveCache(role).$promise.then(function (result) {
@@ -49,7 +51,7 @@ function (
                 }, function (errorResponse) { // error
                     Notify.apiErrors(errorResponse);
                 });
-                $scope.saving = false;
+                $scope.saving_role = false;
             };
 
             var handleResponseErrors = function (errorResponse) {
