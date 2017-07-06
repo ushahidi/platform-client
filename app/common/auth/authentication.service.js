@@ -9,6 +9,7 @@ module.exports = [
     'UserEndpoint',
     '_',
     'ModalService',
+    'TermsOfService',
 function (
     $rootScope,
     $http,
@@ -19,7 +20,8 @@ function (
     RoleEndpoint,
     UserEndpoint,
     _,
-    ModalService
+    ModalService,
+    TermsOfService
 ) {
 
     // check whether we have initially an old access_token and userId
@@ -34,7 +36,8 @@ function (
             role: userData.role,
             permissions: userData.permissions,
             gravatar: userData.gravatar,
-            language: userData.language
+            language: userData.language,
+            tos: false
         });
         loginStatus = true;
     },
@@ -84,6 +87,7 @@ function (
                             setToLoginState(userDataResponse.data);
                             $rootScope.$broadcast('event:authentication:login:succeeded');
                             deferred.resolve();
+                            TermsOfService.tosCheck(Session.tos);
                         });
                     }, handleRequestError);
             };
