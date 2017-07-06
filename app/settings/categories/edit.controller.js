@@ -128,22 +128,20 @@ function (
         // Set processing to disable user actions
         $scope.processing = true;
         // Save category
-        TagEndpoint
-        .saveCache(category)
-        .$promise
+        $q.when(
+            TagEndpoint
+            .saveCache(category)
+            .$promise
+        )
         .then(function (result) {
-            var promises = [];
             // If parent category, apply parent category permisions to child categories
             if (result.children && result.children.length) {
-                _.each(result.children, function (child) {
-                    promises.push(updateChildPermissions(result, child));
-                });
+                return updateChildrenPermissions(result);
             }
             // If child category with new parent, apply new permissions to child category
             if (result.parent && result.parent.id !== $scope.category.parent_id_original) {
-                promises.push(updateWithParentPermissions(result));
+                return updateWithParentPermissions(result);
             }
-            return $q.all(promises);
         })
         .then(function () {
             // Display success message
@@ -158,10 +156,16 @@ function (
         .catch(handleResponseErrors);
     }
 
-    function updateChildPermissions(category, child) {
-        return TagEndpoint
-        .saveCache({ id: child.id, role: category.role })
-        .$promise;
+    function updateChildrenPermissions(category) {
+        var promises = [];
+        _.each(category.children, function (child) {
+            promises.push(
+              TagEndpoint
+              .saveCache({ id: child.id, role: category.role })
+              .$promise
+            );
+        });
+        return $q.all(promises);
     }
 
     function updateWithParentPermissions(category) {
