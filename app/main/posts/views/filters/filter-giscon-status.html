@@ -1,0 +1,59 @@
+<fieldset overflow-toggle has-overflow="true" ng-model-options="{ updateOn: 'default' }">
+    <legend translate="global_filter.status">Status</legend>
+
+    <div class="form-field checkbox icon-input">
+
+      <label>
+        <svg class="iconic">
+          <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+        </svg>
+
+        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'Pending'" name="selectedStatuses">
+        <span translate="giscon.pending">Pending</span>
+
+        </label>
+    </div>
+    <div class="form-field checkbox icon-input">
+
+      <label>
+        <svg class="iconic">
+          <use xlink:href="/img/iconic-sprite.svg#lock-unlocked"></use>
+        </svg>
+
+        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'Open'" name="selectedStatuses">
+        <span translate="giscon.open">Open</span>
+
+        </label>
+    </div>
+    <div class="form-field checkbox icon-input overflow">
+
+      <label>
+        <svg class="iconic">
+          <use xlink:href="/img/iconic-sprite.svg#loop"></use>
+        </svg>
+
+        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'In Progress'" name="selectedStatuses">
+        <span translate="giscon.inprogress">In Progress</span>
+
+        </label>
+    </div>
+    <div class="form-field checkbox icon-input overflow">
+
+      <label>
+        <svg class="iconic">
+          <use xlink:href="/img/iconic-sprite.svg#box"></use>
+        </svg>
+
+        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'Finished'" name="selectedStatuses">
+        <span translate="giscon.finished">Finished</span>
+
+        </label>
+    </div>
+
+    <span class="form-field-toggle">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span translate="nav.more">More</span>
+    </span>
+</fieldset>
