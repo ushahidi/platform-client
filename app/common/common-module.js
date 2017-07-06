@@ -11,10 +11,14 @@ angular.module('ushahidi.common', [
 .service('Registration', require('./auth/registration.service.js'))
 .service('Session', require('./auth/session.service.js'))
 .service('PasswordReset', require('./auth/password-reset.service.js'))
+//carolyn
+.service('TermsOfService', require('./auth/tos.service.js'))
 .directive('login', require('./auth/login.directive.js'))
 .directive('register', require('./auth/register.directive.js'))
 .directive('passwordReset', require('./auth/password-reset.directive.js'))
 .directive('passwordResetConfirm', require('./auth/password-reset-confirm.directive.js'))
+//carolyn
+.directive('termsOfService', require('./auth/tos.directive.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
 
