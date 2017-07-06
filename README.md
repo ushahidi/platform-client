@@ -1,5 +1,5 @@
-Ushahidi Platform Prototype
-===========================
+Ushahidi Platform Web Client
+============================
 
 [![Build Status](https://travis-ci.org/ushahidi/platform-client.svg?branch=master)](https://travis-ci.org/ushahidi/platform-client)
 [![Coverage Status](https://coveralls.io/repos/github/ushahidi/platform-client/badge.svg?branch=master)](https://coveralls.io/github/ushahidi/platform-client?branch=master)
@@ -129,8 +129,5 @@ Nginx users will have to manually configure rewriting in the site configuration 
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
-We would love your help, but the platform is in heavy development with a rapid rate
-of change. If you're keen to help build something awesome, and happy to get deep
-into the core workings... then yes! Read about [getting involved](https://wiki.ushahidi.com/display/WIKI/Ushahidi+v3.x+-+Getting+Involved) page.
-Most of our active development happens on the [Ushahidi Phabricator](https://phabricator.ushahidi.com/).
-If you haven't used Phabricator before, read [Phab Help](https://phabricator.ushahidi.com/w/help/phabricator/) after you sign up.
+Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://www.ushahidi.com/support/get-involved)..
+
