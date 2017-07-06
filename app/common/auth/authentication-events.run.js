@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService) {
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
 
@@ -61,6 +61,10 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
 
     $rootScope.$on('event:authentication:logout:succeeded', function () {
         doLogout();
+    });
+
+    $rootScope.$on('event:authentication:tos:agreement', function () {
+        TermsOfService.openTos();
     });
 
     // Don't think this is needed. We should already be logged out before this event
