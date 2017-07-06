@@ -10,7 +10,7 @@
                 class="tgl"
                 ng-attr-id="{{ 'toggle-complete-' + stage.id }}"
                 type="checkbox"
-                
+                ng-checked="stageIsComplete(stage.id)"
                 ng-click="toggleStageCompletion(stage.id)">
             <label class="tgl-btn" for="toggle-complete-{{stage.id}}" ng-attr-id="{{ 'toggle-complete-label-' + stage.id }}"></label>
         
