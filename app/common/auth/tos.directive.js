@@ -13,19 +13,31 @@ function TermsOfServiceDirective() {
 TosController.$inject = [
     '$scope',
     'Authentication',
-    'TermsOfService'
+    'TermsOfService',
+    'ModalService'
 ];
 function TosController(
     $scope,
     Authentication,
-    TermsOfService
+    TermsOfService,
+    ModalService
 ) {
 
-    //function submit(){
-    //var agreementDate = Date.now();
+    $scope.tosSubmit = function () {
+        var agreementDate = Date.now();
 
-    //TermsOfService.submitTos(agreementDate);
-    ////.then(close modal)
-    //}
+        TermsOfService.submitTos(agreementDate)
+        .then(tosSuccess, tosFailure);
+
+    };
+
+    function tosSuccess() {
+        ModalService.closeModal();
+        //continue authentication
+    }
+
+    function tosFailure() {
+
+    }
 
 }
