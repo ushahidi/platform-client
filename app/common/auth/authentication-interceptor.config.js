@@ -64,6 +64,10 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             config.headers.Authorization = 'Bearer ' + accessToken;
             deferred.resolve(config);
 
+            if (!Session.getSessionDataEntry('tos')) {
+                $rootScope.$broadcast('event:authentication:tos:agreement');
+            }
+
         } else {
             // otherwise, we will ask the backend
             // via the client credentials oauth flow
