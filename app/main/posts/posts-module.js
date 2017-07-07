@@ -22,7 +22,6 @@ angular.module('ushahidi.posts', [])
 .directive('postMedia', require('./modify/post-media.directive.js'))
 .directive('postVideoInput', require('./modify/post-video.directive.js'))
 .directive('postDatetime', require('./modify/post-datetime-value.directive.js'))
-.directive('postLocation', require('./modify/location.directive.js'))
 .directive('postRelation', require('./modify/post-relation.directive.js'))
 
 // Post editing workflows
