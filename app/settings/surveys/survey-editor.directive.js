@@ -563,16 +563,12 @@ function SurveyEditorController(
             if ($scope.survey.id !== survey.id) {
                 $scope.survey.id = survey.id;
             }
-            // Save tasks and return promises
-            return saveTasks();
+            // Save tasks and roles and return promises
+            return $q.all([saveTasks(), saveRoles()]);
         })
         .then(function () {
             // Save attributes and return promises
             return saveAttributes();
-        })
-        .then(function () {
-            // Save roles and return promise
-            return saveRoles();
         })
         .then(function () {
             // Display success message
