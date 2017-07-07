@@ -18,17 +18,15 @@ function StatusSelectDirective(PostActionsService, $rootScope) {
         activate();
 
         function activate() {
-            if (!ngModel.$viewValue) {
-                ngModel.$setViewValue([]);
-            }
-
             scope.$watch('selectedStatuses', saveValueToView, true);
             ngModel.$render = renderModelValue;
         }
 
         function renderModelValue() {
             // Update selectedStatuses w/o breaking references used by checklist-model
-            Array.prototype.splice.apply(scope.selectedStatuses, [0, scope.selectedStatuses.length].concat(ngModel.$viewValue));
+            if (ngModel.$viewValue) {
+                Array.prototype.splice.apply(scope.selectedStatuses, [0, scope.selectedStatuses.length].concat(ngModel.$viewValue));
+            }
         }
 
         function saveValueToView(selectedStatuses) {
