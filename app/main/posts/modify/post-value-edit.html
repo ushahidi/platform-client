@@ -116,17 +116,20 @@
                   name="values_{{attribute.id}}"
                   model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
-                  ng-switch-when="relation"></post-relation>
+                  ng-switch-when="relation"
+              ></post-relation>
               <!-- type: location -->
-              <post-location
+              <location-picker
                   attribute="attribute"
                   key="key"
                   id="values[{{attribute.key}}][{{key}}]"
                   name="values_{{attribute.id}}"
+                  default="attribute.default"
                   model="post.values[attribute.key][key]"
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
-                  ng-switch-when="location"></post-location>
+                  ng-switch-when="location"
+              ></location-picker>
               <!-- type: upload -->
               <post-media
                   ng-switch-when="upload"
