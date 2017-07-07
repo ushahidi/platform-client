@@ -27,6 +27,7 @@ function RegisterController(
     $scope.processing = false;
     $scope.realname = '';
     $scope.email = '';
+    $scope.phone = '';
     $scope.password = '';
 
     $scope.registerSubmit = registerSubmit;
