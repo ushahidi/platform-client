@@ -123,8 +123,15 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (_.isArray(defaults[key]) &&
                     _.difference(value, defaults[key]).length === 0 &&
                     _.difference(defaults[key], value).length === 0) {
+
                     return true;
                 }
+
+                // HACK: Make sure if we have `values` filters they're not just empty
+                if (key === 'values') {
+                    return _.flatten(_.values(value)).length === 0;
+                }
+
                 // Is value empty? ..and not a date object
                 // _.empty only works on arrays, object and strings.
                 return (_.isEmpty(value) && !_.isDate(value));
