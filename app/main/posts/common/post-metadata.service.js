@@ -3,13 +3,15 @@ module.exports = PostMetadataService;
 PostMetadataService.$inject = [
     'Util',
     'UserEndpoint',
-    'ContactEndpoint'
+    'ContactEndpoint',
+    'TagEndpoint'
 ];
 
 function PostMetadataService(
     Util,
     UserEndpoint,
-    ContactEndpoint
+    ContactEndpoint,
+    TagEndpoint
 ) {
     var PostMetadataService = {
         // Format source (fixme!)
@@ -22,6 +24,15 @@ function PostMetadataService(
             } else {
                 return 'Web';
             }
+        },
+        formatTags: function (selectedTags) {
+            // getting tag-names and formatting them for displaying
+            return TagEndpoint.query().$promise.then((fullTags) => {
+                return selectedTags.map((tag) => {
+                    let fullTag = fullTags.find(t => t.id === tag.id);
+                    return fullTag.tag;
+                }).join(', ');
+            });
         },
         loadUser: function (post) {
             if (post.user && post.user.id) {

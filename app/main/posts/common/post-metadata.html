@@ -1,7 +1,10 @@
 <ul class="metadata">
     <li>
+      {{ tags }}
+    </li>
+    <li>
       <a class="status-indicator">
-        <svg class="iconic">
+        <!-- <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
             <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
@@ -9,6 +12,11 @@
         <span class="label" translate="post.status_published" ng-if="post.status=='published'"></span>
         <span class="label" translate="post.status_review" ng-if="post.status=='draft'"></span>
         <span class="label" translate="post.status_archived" ng-if="post.status=='archived'"></span>
+        -->
+        <span class="label" translate="giscon.pending" ng-if="post.values[gisconStatusKey]=='Pending' || !post.values[gisconStatusKey]"></span>
+        <span class="label" translate="giscon.open" ng-if="post.values[gisconStatusKey]=='Open'"></span>
+        <span class="label" translate="giscon.inprogress" ng-if="post.values[gisconStatusKey]=='In Progress'"></span>
+        <span class="label" translate="giscon.finished" ng-if="post.values[gisconStatusKey]=='Finished'"></span>
       </a>
     </li>
     <li>
