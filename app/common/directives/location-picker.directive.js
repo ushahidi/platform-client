@@ -1,7 +1,8 @@
-module.exports = PostLocationDirective;
+module.exports = LocationPickerDirective;
 
-PostLocationDirective.$inject = ['$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window'];
-function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
+LocationPickerDirective.$inject = ['$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window'];
+
+function LocationPickerDirective($http, L, Geocoding, Maps, _, Notify, $window) {
     return {
         restrict: 'E',
         replace: true,
@@ -11,11 +12,11 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
             model: '=',
             required: '='
         },
-        template: require('./location.html'),
-        link: PostLocationLink
+        template: require('./location-picker.html'),
+        link: LocationPickerLink
     };
 
-    function PostLocationLink($scope, element, attrs) {
+    function LocationPickerLink($scope, element, attrs) {
         var currentPositionControl, map, marker,
             zoom = 8;
 
