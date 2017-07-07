@@ -47,6 +47,7 @@ angular.module('ushahidi.common', [
 .service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
 .service('ContactEndpoint', require('./services/endpoints/contact.js'))
 .service('NotificationEndpoint', require('./services/endpoints/notification.js'))
+.service('TermsOfServiceEndpoint', require('./services/endpoints/terms-of-service-endpoint.js'))
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))

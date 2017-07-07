@@ -37,7 +37,7 @@ function (
             permissions: userData.permissions,
             gravatar: userData.gravatar,
             language: userData.language,
-            tos: false
+            tos: null
         });
         loginStatus = true;
     },
@@ -87,7 +87,6 @@ function (
                             setToLoginState(userDataResponse.data);
                             $rootScope.$broadcast('event:authentication:login:succeeded');
                             deferred.resolve();
-                            TermsOfService.tosCheck(Session.tos);
                         });
                     }, handleRequestError);
             };

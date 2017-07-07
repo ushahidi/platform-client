@@ -20,15 +20,6 @@ function (
 
         openTos: function () {
             ModalService.openTemplate('<terms-of-service></terms-of-service>', ' ', false, false, false, false);
-        },
-
-        submitTos: function (date) {
-            var payload = {
-                date: date,
-                email: Session.email
-            };
-
-            return $http.post(Util.apiUrl(''), payload);
         }
 
     };
