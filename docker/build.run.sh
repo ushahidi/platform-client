@@ -33,7 +33,7 @@ sync() {
 
 # Build the client
 build() {
-  npm install
+  npm-install-silent.sh
   # gulp transifex-download
   gulp build
 }
