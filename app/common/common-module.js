@@ -67,6 +67,7 @@ angular.module('ushahidi.common', [
 .directive('iconPicker', require('./directives/iconpicker.js'))
 
 .directive('colorPicker', require('./directives/color-picker.js'))
+.directive('locationPicker', require('./directives/location-picker.directive.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
 .directive('modalBody', require('./directives/modal-body.directive.js'))
