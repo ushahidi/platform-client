@@ -95,13 +95,20 @@
        <div class="form-field switch" ng-if="canDisplay()">
             <label translate="app.default_value">Default value</label>
             <div class="toggle-switch">
-                <input class="tgl init" id="include-default-value-new" type="checkbox" data-fieldgroup-toggle="field-default-value-new" ng-click="defaultValueToggle=!defaultValueToggle">
+                <input class="tgl init" id="include-default-value-new" type="checkbox" data-fieldgroup-toggle="field-default-value-new" ng-click="toggleDefaultValue()" ng-checked="defaultValueToggle">
                 <label class="tgl-btn" for="include-default-value-new"></label>
             </div>
-
-            <div class="form-field" data-fieldgroup-target="field-default-value-new" ng-show="defaultValueToggle">
+            <div class="form-field" data-fieldgroup-target="field-default-value-new" ng-class="{'location': editAttribute.input === 'location'}" ng-if="defaultValueToggle">
               <div ng-switch="editAttribute.input">
-                  <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
+                  <location-picker
+                      attribute="editAttribute"
+                      key="key"
+                      id="values[{{editAttribute.key}}][{{key}}]"
+                      model="editAttribute.default"
+                      ng-model="editAttribute.default"
+                      ng-required="editAttribute.required"
+                      ng-switch-when="location"
+                  ></location-picker>
                   <input ng-switch-when="date" type="text" date-time="editAttribute.default" ng-model="editAttribute.default">
                   <input ng-switch-when="int" type="number" step="1" ng-model="editAttribute.default">
                   <input ng-switch-when="decimal" type="number" ng-model="editAttribute.default">
@@ -111,7 +118,7 @@
         </div>
    </div>
    <div class="form-field">
-      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
-      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
+      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute, activeTask); closeModal();" translate="app.add_and_close">Add &amp; close</button>
+      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute, activeTask); closeModal();" translate="app.update_and_close">Update &amp; close</button>
    </div>
 </div>
