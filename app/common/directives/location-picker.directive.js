@@ -9,6 +9,7 @@ function LocationPickerDirective($http, L, Geocoding, Maps, _, Notify, $window) 
         scope: {
             id: '@',
             name: '@',
+            default: '=',
             model: '=',
             required: '='
         },
@@ -39,6 +40,16 @@ function LocationPickerDirective($http, L, Geocoding, Maps, _, Notify, $window) 
             Maps.createMap(element[0].querySelector('.map'))
             .then(function (data) {
                 map = data;
+
+                // If default property provided, set model to default value
+                if ($scope.default) {
+                    $scope.model = $scope.default;
+                }
+
+                // If model was stringified for save, parse model into object
+                if (typeof $scope.model === 'string') {
+                    $scope.model = JSON.parse($scope.model);
+                }
 
                 // init marker with current model value
                 if ($scope.model &&
