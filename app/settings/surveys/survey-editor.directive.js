@@ -458,7 +458,6 @@ function SurveyEditorController(
     }
 
     function addNewAttribute(attribute, task) {
-        ModalService.close();
         // Set active task as form_stage_id
         // If this task is new and has not been saved
         // it won't have an id so in this instance we use its label
@@ -612,6 +611,10 @@ function SurveyEditorController(
                     attribute.options = _.filter(attribute.options, function (option) {
                         return !isNaN(option);
                     });
+                }
+                // If default location object, stringify before save
+                if (attribute.type === 'point' && attribute.default && typeof attribute.default === 'object') {
+                    attribute.default = JSON.stringify(attribute.default);
                 }
                 attribute.form_stage_id = task.id;
                 calls.push(
