@@ -75,8 +75,6 @@ describe('setting map directive', function () {
 
     it('should create a map', function () {
         expect(Maps.createMap).toHaveBeenCalled();
-        expect(L.marker).toHaveBeenCalled();
-        expect(marker.addTo).toHaveBeenCalledWith(map);
     });
 
     it('should set scope.config to map config', function () {
@@ -111,14 +109,6 @@ describe('setting map directive', function () {
         expect(map.setView).toHaveBeenCalledWith([3, 4], 9);
     });
 
-    it('should update marker when lat/lon changes', function () {
-        isolateScope.config.default_view.lat = 48;
-        isolateScope.config.default_view.lon = 36;
-        isolateScope.updateMapPreview();
-
-        expect(marker.setLatLng).toHaveBeenCalledWith([48, 36]);
-    });
-
     it('should save position when map clicked', function () {
         map.fireEvent('click', {
             latlng: L.latLng([10,12])
@@ -128,16 +118,6 @@ describe('setting map directive', function () {
 
         expect(isolateScope.config.default_view.lat).toBe(10);
         expect(isolateScope.config.default_view.lon).toBe(12);
-    });
-
-    it('should save position when marker dragged', function () {
-        marker._latlng = L.latLng([32, 24]);
-        marker.fireEvent('dragend', {});
-
-        $scope.$digest();
-
-        expect(isolateScope.config.default_view.lat).toBe(32);
-        expect(isolateScope.config.default_view.lon).toBe(24);
     });
 
 });
