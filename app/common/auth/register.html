@@ -5,7 +5,7 @@
         </div>
         <!-- TODO: Make this real css from PL -->
          <a class="modal-trigger-close" ng-click="login()" data-modal="login">
-            <translate >Already have an account? Log in</translate>
+            <translate translate="user.already_have_account">Already have an account? Log in</translate>
         </a>
         <div class="form-field" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty, 'success': form.full_name.$valid }">
             <label class="input-label"
@@ -55,7 +55,7 @@
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
-                <span translate="{{'user.valid.phone.' + error}}" translate-default="{{error}}"></span>
+                <span translate="{{'contact.valid.phone.' + error}}" translate-default="{{error}}"></span>
             </div>
         </div>
         <div class="form-field" ng-class="{ 'success': !form.password.$invalid && form.password.$dirty, 'error' : form.password.$invalid && form.password.$dirty}">

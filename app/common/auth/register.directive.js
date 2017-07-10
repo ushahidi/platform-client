@@ -48,7 +48,7 @@ function RegisterController(
         $scope.processing = true;
 
         Registration
-            .register($scope.realname, $scope.email, $scope.password)
+            .register($scope.realname, $scope.email, $scope.password, $scope.phone)
             .then(registerSuccess, registerFailed);
     }
 
