@@ -57,7 +57,7 @@
         "webhooks" : "Webhooks",
         "edit_webhook" : "Edit Webhook",
         "add_webhook" : "Add Webhook",
-        "categories" : "Domains",
+        "domains" : "Domains",
         "edit_category" : "Edit Domain",
         "add_category" : "Add Domain",
         "categories_count" : "{{count}} domains",
