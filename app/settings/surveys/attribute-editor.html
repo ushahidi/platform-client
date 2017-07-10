@@ -31,35 +31,12 @@
    </div>
    <!-- editing/adding categories -->
     <div class="form-field" ng-if="editAttribute.input ==='tags'">
-      <label translate>Which categories should be available</label>
-        <div
-          class="form-field checkbox"
-          ng-repeat="category in availableCategories"
-        >
-            <label>
-              <input
-                type="checkbox"
-                checklist-model="editAttribute.options"
-                checklist-value="category.id"
-              />
-              {{category.tag}}
-            </label>
-            <div
-              class="form-field checkbox"
-              ng-if="category.children"
-              ng-repeat="child in category.children">
-                <label>
-                <input
-                  type="checkbox"
-                  checklist-model="editAttribute.options"
-                  checklist-value="child.id"
-                  ng-click="selectChild(child)"
-                />
-                {{child.tag}}
-                </label>
-              </div>
-        </div>
-      </div>
+        <label translate>Which categories should be available</label>
+        <category-selector
+            available="availableCategories"
+            selected="editAttribute.options"
+        ></category-selector>
+    </div>
     <!-- End of editing/adding categories -->
         <div class="form-field" ng-if="editAttribute.input === 'relation'">
             <label translate>survey.field_allowed_relation_survey</label>
