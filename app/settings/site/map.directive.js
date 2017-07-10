@@ -16,7 +16,8 @@ function (
         },
         template: require('./map.html'),
         link: function ($scope, $element, $attrs) {
-            var map, marker;
+
+            var map;
 
             $scope.patternDigitsOnly = /^[0-9]+$/;
             $scope.patternFloat = /[-+]?(\d*[.])?\d+/;
@@ -38,17 +39,10 @@ function (
                     map = data.map;
                     angular.extend($scope.config, data.config);
 
-                    marker = L.marker(map.getCenter(), {
-                        draggable: true,
-                        icon: Maps.pointIcon()
-                    });
-                    marker.addTo(map);
-
                     // Get zoom limits from leaflet
                     getMapZoomLevels();
 
                     // Set up event handlers
-                    marker.on('dragend', handleDragEnd);
                     map.on('zoomend', handleMoveEnd);
                     map.on('click', handleClick);
                 });
@@ -78,20 +72,6 @@ function (
                     [$scope.config.default_view.lat, $scope.config.default_view.lon],
                     $scope.config.default_view.zoom
                 );
-
-                // Update our draggable marker to the default.
-                marker.setLatLng([$scope.config.default_view.lat, $scope.config.default_view.lon]);
-            }
-
-            // Update our map defaults when the marker is dragged to a new spot.
-            function handleDragEnd(e) {
-                $scope.$evalAsync(function () {
-                    var latLng = e.target.getLatLng().wrap();
-                    $scope.config.default_view.lat = latLng.lat;
-                    $scope.config.default_view.lon = latLng.lng;
-
-                    $scope.updateMapPreview();
-                });
             }
 
             function handleClick(e) {
