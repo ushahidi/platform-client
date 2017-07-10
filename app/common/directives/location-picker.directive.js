@@ -70,6 +70,12 @@ function LocationPickerDirective($http, L, Geocoding, Maps, _, Notify, $window) 
                     }).addTo(map);
                 }
                 // @todo: Should we watch the model and update map?
+
+                // Ensure map is fully loaded with modal and switch
+                setTimeout(function () {
+                    map.invalidateSize();
+                });
+
             });
         }
 
@@ -88,6 +94,12 @@ function LocationPickerDirective($http, L, Geocoding, Maps, _, Notify, $window) 
                 lat: lat,
                 lon: lon
             };
+
+            // Update parent scope when editing default location
+            if ($scope.$parent.editAttribute) {
+                $scope.$parent.editAttribute.default = $scope.model;
+            }
+
         }
 
         function updateMarkerPosition(lat, lon) {
