@@ -60,6 +60,7 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "add_category" : "Add Category",
+        "categories_count" : "{{count}} categories",
         "plans" : "Plans",
         "delete" : "Delete",
         "description" : "Description",
