@@ -1,6 +1,0 @@
-# Ushahidi Platform Client Docker containers
-
-nginx:
-  build: ./server/
-  ports:
-    - "80:80"

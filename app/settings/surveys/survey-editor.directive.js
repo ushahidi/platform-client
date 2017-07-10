@@ -276,6 +276,7 @@ function SurveyEditorController(
                 delete $scope.survey.updated;
                 delete $scope.survey.url;
                 delete $scope.survey.can_create;
+                delete $scope.survey.tags;
 
                 // Reset Task and Attribute IDs
                 _.each($scope.survey.tasks, function (task) {
