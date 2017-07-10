@@ -28,7 +28,7 @@ describe('post location directive', function () {
         };
         var testApp = makeTestApp();
 
-        testApp.directive('postLocation', require('app/main/posts/modify/location.directive'))
+        testApp.directive('locationPicker', require('app/common/directives/location-picker.directive'))
         .service('Leaflet', () => {
             return L;
         })
@@ -61,7 +61,7 @@ describe('post location directive', function () {
             lat: 3,
             lon: 4
         };
-        element = '<post-location attribute="attribute" key="key" model="model" id="1"></post-location>';
+        element = '<location-picker attribute="attribute" key="key" model="model" id="1"></location-picker>';
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
