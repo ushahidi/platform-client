@@ -376,7 +376,7 @@
         "appearance" : "Appearance",
         "back" : "Back",
         "category" : "Domain",
-        "categories" : "domains",
+        "categories" : "Domains",
         "clear" : "Clear",
         "collections" : "Collections",
         "comments" : "Comments",
@@ -548,7 +548,7 @@
             "author_realname" : "Name",
             "author_email" : "Email",
             "form" : {
-                "categories" : "domains",
+                "categories" : "Domains",
                 "description" : "Description",
                 "location" : "Location",
                 "title" : "Title",
@@ -563,7 +563,7 @@
             "private" : "private",
             "public" : "public",
             "read_more" : "&nbsp;... Read&nbsp;More",
-            "tags" : "domains",
+            "tags" : "Domains",
             "post_actions" : {
                 "post_actions" : "Post Actions",
                 "select" : "select",
