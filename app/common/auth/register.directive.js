@@ -33,6 +33,8 @@ function RegisterController(
     $scope.registerSubmit = registerSubmit;
     $scope.cancel = cancel;
 
+    $scope.login = Authentication.openLogin;
+
     activate();
 
     function activate() {

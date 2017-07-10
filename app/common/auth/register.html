@@ -3,6 +3,10 @@
         <div class="alert error register-failed" role="alert" ng-show="failed">
             <p translate>notify.register.failed</p>
         </div>
+        <!-- TODO: Make this real css from PL -->
+         <a class="modal-trigger-close" ng-click="login()" data-modal="login">
+            <translate >Already have an account? Log in</translate>
+        </a>
         <div class="form-field" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty, 'success': form.full_name.$valid }">
             <label class="input-label"
                 for="full_name" translate>user.full_name</label>
