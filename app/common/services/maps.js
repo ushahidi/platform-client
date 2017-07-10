@@ -69,8 +69,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             return angular.extend(defaultConfig(),
             {
                 layers: [L.tileLayer(defaultLayer.url, defaultLayer.layerOptions)],
-                center: [config.default_view.lat, config.default_view.lon],
-                zoom: config.default_view.zoom,
                 clustering: config.clustering
             });
         });
@@ -114,7 +112,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         return {
             scrollWheelZoom: false,
             center: [-1.2833, 36.8167], // Default to centered on Nairobi
-            zoom: 8,
+            zoom: 0,
             layers: [L.tileLayer(layers.baselayers.streets.url, layers.baselayers.streets.layerOptions)]
         };
     }
