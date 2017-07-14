@@ -19,7 +19,8 @@ function (
                 required: false,
                 options: [],
                 config: {},
-                priority: 0
+                priority: 0,
+                use_geolocation: true
             };
 
             $scope.createNewAttribute = function (type) {
