@@ -22,6 +22,7 @@ SurveyEditorController.$inject = [
     'FormRoleEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
+    'PostEndpoint',
     'RoleEndpoint',
     'TagEndpoint',
     '_',
@@ -39,6 +40,7 @@ function SurveyEditorController(
     FormRoleEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
+    PostEndpoint,
     RoleEndpoint,
     TagEndpoint,
     _,
@@ -92,6 +94,7 @@ function SurveyEditorController(
     $scope.loadRoleData = loadRoleData;
     $scope.roles_allowed = [];
     $scope.roles = [];
+    $scope.cachedLocationAttributes = [];
 
     $scope.onlyOptional = onlyOptional;
 
@@ -248,6 +251,13 @@ function SurveyEditorController(
                     if (attr.type === 'tags') {
                         attr.options = _.map(attr.options, function (option) {
                             return parseInt(option);
+                        });
+                    }
+                    // Cache initial use_geolocation values
+                    if (attr.type === 'point') {
+                        $scope.cachedLocationAttributes.push({
+                            id: attr.id,
+                            use_geolocation: attr.use_geolocation
                         });
                     }
                 });
@@ -618,6 +628,15 @@ function SurveyEditorController(
                     FormAttributeEndpoint
                     .saveCache(_.extend(attribute, {formId: $scope.survey.id})).$promise
                 );
+                // If use_geolocation updated, update posts with new use_geolocation value
+                if (attribute.type === 'point') {
+                    var updatePosts = !$scope.cachedLocationAttributes.filter(function (attr) {
+                        return attr.id === attribute.id && attr.use_geolocation === attribute.use_geolocation;
+                    }).length;
+                    if (updatePosts) {
+                        calls.push(savePostGeolocationSettings(attribute));
+                    }
+                }
             });
         });
 
@@ -641,6 +660,23 @@ function SurveyEditorController(
             $location.path('settings/surveys/edit/' + $scope.survey.id);
             return true;
         }, handleResponseErrors);
+    }
+
+    function savePostGeolocationSettings(attribute) {
+        var promises = [];
+        promises.push(
+            PostEndpoint
+            .query({ formId: $scope.survey.id })
+            .$promise
+            .then(function (result) {
+                _.each(result.results, function (post) {
+                    PostEndpoint
+                    .update({ id: post.id, use_geolocation: attribute.use_geolocation })
+                    .$promise;
+                });
+            })
+        );
+        return $q.all(promises);
     }
 
     function toggleTaskRequired(task) {
