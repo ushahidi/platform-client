@@ -92,6 +92,16 @@
              <label class="tgl-btn" for="switchprivateresponse"></label>
           </div>
        </div>
+       <div class="form-field switch" ng-if="editAttribute.type === 'point'">
+         <label translate="survey.use_geolocation">Use geolocation</label>
+         <p class="init active" translate="survey.use_geolocation_desc" ng-show="editAttribute.use_geolocation">
+             When turned on, responses will be geolocated in your deployment's "Map" view using data from this field.
+         </p>
+         <div class="toggle-switch">
+             <input class="tgl init" id="use-geolocation" type="checkbox" ng-click="editAttribute.use_geolocation=!editAttribute.use_geolocation" ng-checked="editAttribute.use_geolocation">
+             <label class="tgl-btn" for="use-geolocation"></label>
+         </div>
+       </div>
        <div class="form-field switch" ng-if="canDisplay()">
             <label translate="app.default_value">Default value</label>
             <div class="toggle-switch">
