@@ -78,9 +78,16 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             }
             markers.addTo(map);
 
-            if (posts.features.length > 0) {
+            // Fit bounds when posts exist
+            if (posts.features.length >= 10) {
                 map.fitBounds(geojson.getBounds());
+            } else if (posts.features.length > 0) {
+                // Limit max zoom when there are less than 10 posts
+                map.fitBounds(geojson.getBounds(), { maxZoom: 5 });
+            } else {
+                map.fitWorld();
             }
+
             // Focus map on data points but..
             // Avoid zooming further than 15 (particularly when we just have a single point)
             if (map.getZoom() > 15) {
