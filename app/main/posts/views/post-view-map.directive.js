@@ -36,6 +36,10 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 posts: posts
             })
             .then(function (data) {
+                // Filter out posts with use_geolocation set to false
+                data.posts.features = data.posts.features.filter(function (feature) {
+                    return feature.properties.use_geolocation !== false;
+                });
                 addPostsToMap(data.posts);
                 return data;
             })
