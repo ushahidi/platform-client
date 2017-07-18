@@ -66,6 +66,25 @@
                         </div>
                     </div>
 
+                    <div class="form-field" ng-class="{ 'error': form.phone.$invalid && form.phone.$dirty }">
+                        <label class="hidden" translate>user.phone</label>
+                        <input 
+                            type="text" 
+                            placeholder="{{'user_create.phone' | translate}}" 
+                            ng-maxlength="25" 
+                            ng-model="user.phone" 
+                            name="phone" 
+                            ng-pattern="/^\d+$/">
+                        <div ng-repeat="(error, value) in form.phone.$error"
+                            ng-show="form.phone.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="{{'user.valid.phone.' + error}}" translate-default="{{error}}"></span>
+                        </div>
+                    </div>
+
                     <div class="form-field" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
                         <label class="hidden" translate>user.password</label>
 

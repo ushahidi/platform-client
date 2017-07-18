@@ -35,6 +35,23 @@
                translate="{{'user.valid.email.' + error}}"></p>
             </div>
 
+            <div class="form-field">
+                <label class="input-label"
+                    ng-class="{ 'error': form.phone.$invalid && form.phone.$dirty, 'success': form.phone.$valid }"
+                    for="phone" translate>user.phone</label>
+                <input id="phone" name="phone" type="text"
+                    ng-class="{ 'error': form.phone.$invalid && form.phone.$dirty }"
+                    ng-disabled="state.processing"
+                    ng-maxlength="25"
+                    ng-pattern="/^\d+$/"
+                    ng-model="user.phone"
+                    >
+                <p ng-repeat="(error, value) in form.phone.$error"
+                    ng-show="form.phone.$dirty"
+                    class="alert error"
+                translate="{{'contact.valid.phone.' + error}}"></p>
+            </div>
+
             <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
 
             <div ng-if="state.changingPassword">

@@ -888,6 +888,7 @@
     },
     "user": {
         "add_user" : "Add User",
+        "already_have_account" : "Already have an account? Log in",
         "edit_user" : "Edit User",
         "update_password" : "Update Password",
         "change_role" : "Change Role",
@@ -904,6 +905,7 @@
         "save_profile" : "Save Profile",
         "cancel" : "Cancel",
         "email" : "Email Address",
+        "phone" : "Phone Number",
         "failed_attempts" : "Failed attempts: ",
         "full_name" : "Display Name",
         "never" : "Never",
@@ -954,6 +956,7 @@
     "user_create" :  {
         "full_name": "Display Name",
         "email": "Email Address",
+        "phone": "Phone Number",
         "role": "Role"
     },
     "notify": {
