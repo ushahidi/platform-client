@@ -44,7 +44,7 @@
   <!-- END: IF -->
 
   <!--// IF: User has permission to change the author & post timestamp //-->
-  <div class="tool" dropdown auto-close="disabled" ng-if="allowedChangeOwner()">
+  <div class="tool" dropdown auto-close="disabled">
     <h6 class="tool-heading" translate="post.author">Author</h6>
 
     <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle ng-click="loadAuthorFormDefaults()">
@@ -61,19 +61,19 @@
             <img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
           </div>
           <h2 class="listing-item-title">{{ post.user.realname }}</h2>
-          <p class="listing-item-secondary"></p>
+          <p class="listing-item-secondary">{{ post.user.email }}</p>
         </div>
         <div class="listing-item-primary" ng-if="showAuthorRealname()">
           <h2 class="listing-item-title">{{ post.author_realname }}</h2>
-          <p class="listing-item-secondary"></p>
+          <p class="listing-item-secondary">{{ post.author_email }}</p>
         </div>
-        <div class="listing-item-primary" ng-if="showEditAuthorForm">
+        <div class="listing-item-primary" ng-if="showEditAuthorForm && allowedChangeOwner()">
           <div class="form-field init">
             <input type="text" class="adapt-field" ng-model="post.author_realname" focus="showEditAuthorForm">
           </div>
         </div>
       </div>
-      <button type="button" class="button-gamma button-flat" data-modal="edit-author" ng-click="editAuthor()" ng-if="showEditAuthorButton" translate="post.change_author">Change author</button>
+      <button type="button" class="button-gamma button-flat" data-modal="edit-author" ng-click="editAuthor()" ng-if="showEditAuthorButton && allowedChangeOwner()" translate="post.change_author">Change author</button>
     </div>
   </div>
 
