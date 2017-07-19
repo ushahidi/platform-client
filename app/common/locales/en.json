@@ -302,7 +302,8 @@
             "all_posts": "Show all posts",
             "unmapped": "Show unmapped posts",
             "mapped": "Show posts with a location",
-            "gisconStatus": "Status"
+            "gisconStatus": "Status",
+            "giscon_status": "Status"
         },
         "more" : "More",
         "keyword" : "Keyword",
