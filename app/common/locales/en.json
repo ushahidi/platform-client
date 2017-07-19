@@ -1570,9 +1570,8 @@
         "zu-ZA": "Zulu (South Africa)"
     },
     "giscon": {
-        "pending" : "Pending",
-        "open" : "Open",
+        "new" : "New",
         "inprogress" : "In Progress",
-        "finished" : "Finished"
+        "resolved" : "Resolved"
     }
 }

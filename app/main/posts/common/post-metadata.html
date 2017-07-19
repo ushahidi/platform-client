@@ -13,10 +13,9 @@
         <span class="label" translate="post.status_review" ng-if="post.status=='draft'"></span>
         <span class="label" translate="post.status_archived" ng-if="post.status=='archived'"></span>
         -->
-        <span class="label" translate="giscon.pending" ng-if="post.values[gisconStatusKey]=='Pending' || !post.values[gisconStatusKey]"></span>
-        <span class="label" translate="giscon.open" ng-if="post.values[gisconStatusKey]=='Open'"></span>
+        <span class="label" translate="giscon.new" ng-if="post.values[gisconStatusKey]=='New' || !post.values[gisconStatusKey]"></span>
         <span class="label" translate="giscon.inprogress" ng-if="post.values[gisconStatusKey]=='In Progress'"></span>
-        <span class="label" translate="giscon.finished" ng-if="post.values[gisconStatusKey]=='Finished'"></span>
+        <span class="label" translate="giscon.resolved" ng-if="post.values[gisconStatusKey]=='Resolved'"></span>
       </a>
     </li>
     <li>

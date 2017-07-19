@@ -1,23 +1,15 @@
-<fieldset overflow-toggle has-overflow="true" ng-model-options="{ updateOn: 'default' }">
+<fieldset overflow-toggle has-overflow="false" ng-model-options="{ updateOn: 'default' }">
     <legend translate="global_filter.status">Status</legend>
 
     <div class="form-field checkbox icon-input">
 
       <label>
-        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'Pending'" name="selectedStatuses">
-        <span translate="giscon.pending">Pending</span>
+        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'New'" name="selectedStatuses">
+        <span translate="giscon.new">New</span>
 
         </label>
     </div>
     <div class="form-field checkbox icon-input">
-
-      <label>
-        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'Open'" name="selectedStatuses">
-        <span translate="giscon.open">Open</span>
-
-        </label>
-    </div>
-    <div class="form-field checkbox icon-input overflow">
 
       <label>
         <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'In Progress'" name="selectedStatuses">
@@ -25,11 +17,11 @@
 
         </label>
     </div>
-    <div class="form-field checkbox icon-input overflow">
+    <div class="form-field checkbox icon-input">
 
       <label>
-        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'Finished'" name="selectedStatuses">
-        <span translate="giscon.finished">Finished</span>
+        <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="'Resolved'" name="selectedStatuses">
+        <span translate="giscon.resolved">Resolved</span>
 
         </label>
     </div>
