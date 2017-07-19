@@ -8,11 +8,12 @@
         <div class="toggle-switch">
             <input
                 class="tgl"
-                id="switchT"
+                ng-attr-id="{{ 'toggle-complete-' + stage.id }}"
                 type="checkbox"
                 ng-checked="stageIsComplete(stage.id)"
                 ng-click="toggleStageCompletion(stage.id)">
-            <label class="tgl-btn" for="switchT"></label>
+            <label class="tgl-btn" for="toggle-complete-{{stage.id}}" ng-attr-id="{{ 'toggle-complete-label-' + stage.id }}"></label>
+        
         </div>
     </div>
     <post-value-edit

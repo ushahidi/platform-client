@@ -3,6 +3,10 @@
         <div class="alert error register-failed" role="alert" ng-show="failed">
             <p translate>notify.register.failed</p>
         </div>
+        <!-- TODO: Make this real css from PL -->
+         <a class="modal-trigger-close" ng-click="login()" data-modal="login">
+            <translate translate="user.already_have_account">Already have an account? Log in</translate>
+        </a>
         <div class="form-field" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty, 'success': form.full_name.$valid }">
             <label class="input-label"
                 for="full_name" translate>user.full_name</label>
@@ -35,6 +39,23 @@
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></span>
+            </div>
+        </div>
+        <div class="form-field" ng-class="{ 'success': !form.phone.$invalid && form.phone.$dirty, 'error' : form.phone.$invalid && form.phone.$dirty}">
+            <label for="phone" class="input-label" translate>user.phone</label>
+            <input type="text" id="phone" name="phone"
+                ng-model="phone"
+                ng-disabled="processing"
+                ng-pattern="/^\d+$/"
+                ng-maxlength="25"
+                >
+            <div ng-repeat="(error, value) in form.phone.$error"
+                ng-show="form.phone.$dirty"
+                class="alert error">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="{{'contact.valid.phone.' + error}}" translate-default="{{error}}"></span>
             </div>
         </div>
         <div class="form-field" ng-class="{ 'success': !form.password.$invalid && form.password.$dirty, 'error' : form.password.$invalid && form.password.$dirty}">

@@ -6,6 +6,11 @@
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
             <label class="checked">
                 <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-change="changeForms()">
+                <span ng-switch="form.name">
+                    <img markup-inline class="svg" src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-air.svg" alt="" ng-switch-when="Air">
+                    <img markup-inline class="svg" src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-land.svg" alt="" ng-switch-when="Land">
+                    <img markup-inline class="svg" src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-water.svg" alt="" ng-switch-when="Water">
+                </span>
                 {{ ::form.name }}
             </label>
         </div>
@@ -54,8 +59,7 @@
             auto-close="outsideClick"
             ng-show="form.tags.length > 0 && form.post_count > 0"
             >
-            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle ng-class="{ selected : filters.tags.length }">
-            {{form.tags.length}} categories
+            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle ng-class="{ selected : filters.tags.length }" translate="app.categories_count" translate-values="{ count: form.tags.length }">
             </legend>
 
             <div class="form-fieldgroup init" dropdown-menu>

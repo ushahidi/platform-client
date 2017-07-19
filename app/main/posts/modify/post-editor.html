@@ -99,7 +99,7 @@
               <!-- End post stage default fields -->
 
               <!-- Start Post custom fields -->
-            
+
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
@@ -126,13 +126,62 @@
 
          </div>
          <post-tabs
-             ng-show="tasks.length > 1"
+             ng-show="tasks.length > 1 && hasPermission('Manage Posts')"
              form="postForm"
              post="post"
              stages="tasks"
              attributes="attributes"
              visible-stage="visibleStage">
           </post-tabs>
+
+
+          <div class="form-sheet" ng-if="!post.id">
+              <header class="form-sheet-summary">
+                  <h1 class="form-sheet-title section-title" translate="post.author">Author</h1>
+              </header>
+              <div class="form-field"
+                ng-class="{
+                  'error': postForm.author_realname.$invalid && postForm.author_realname.$dirty,
+                  'success': !postForm.author_realname.$invalid && postForm.author_realname.$dirty
+                }">
+                  <label translate="post.modify.author_realname">Name</label>
+                  <input id="realname"
+                      name="realname" type="text" ng-model="post.author_realname" ng-minlength=2 ng-maxlength=150>
+
+                  <div
+                      class="alert error"
+                      ng-show="postForm.author_realname.$dirty"
+                      ng-repeat="(error, value) in postForm.author_realname.$error"
+                      >
+                      <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                      </svg>
+                      <span translate="{{'post.valid.author_realname.' + error}}"></span>
+                  </div>
+              </div>
+
+              <div class="form-field"
+                ng-class="{
+                  'error': postForm.author_email.$invalid && postForm.author_email.$dirty,
+                  'success': !postForm.author_email.$invalid && postForm.author_email.$dirty
+                }">
+                  <label translate="post.modify.author_email">Email</label>
+                  <input id="email"
+                      name="email" type="email" ng-model="post.author_email" ng-minlength=2 ng-maxlength=150>
+
+                  <div
+                      class="alert error"
+                      ng-show="postForm.author_email.$dirty"
+                      ng-repeat="(error, value) in postForm.author_email.$error"
+                      >
+                      <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                      </svg>
+                      <span translate="{{'post.valid.author_email.' + error}}"></span>
+                  </div>
+              </div>
+
+          </div>
           <!-- <div class="form-sheet">
             <div class="form-sheet-actions">
                   <div class="form-field" ng-show="!post.id">

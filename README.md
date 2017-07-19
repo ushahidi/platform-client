@@ -1,5 +1,5 @@
-Ushahidi Platform Prototype
-===========================
+Ushahidi Platform Web Client
+============================
 
 [![Build Status](https://travis-ci.org/ushahidi/platform-client.svg?branch=master)](https://travis-ci.org/ushahidi/platform-client)
 [![Coverage Status](https://coveralls.io/repos/github/ushahidi/platform-client/badge.svg?branch=master)](https://coveralls.io/github/ushahidi/platform-client?branch=master)
@@ -127,38 +127,7 @@ If you are running the client with a native web server like Apache or nginx, you
 
 Nginx users will have to manually configure rewriting in the site configuration file.
 
-### Optional: Run Docker
-
-*[Docker](https://www.docker.com/) is a very simple way to run applications in
-completely separate server environments. Our Docker application runs a local
-nginx server that serves the client as simply as possible, using the
-[official Docker nginx server](https://registry.hub.docker.com/_/nginx/).*
-
-To run the Docker container:
-
-1. docker build -t ushahidi-client-server server
-2. docker run --name=ushahidi-client -d -p 8080:80 ushahidi-client-server
-
-Or using fig
-
-1. `fig up`
-
-This should bring
-
-> **Note:** If you're on Linux you may have to add your user account (the user running docker commands)
-> to the `docker` group. This prevents any need to run commands with `sudo`
->
-> To check if `docker` group exist, issue `getent group | grep docker`. If the output of the command
-> is empty, issue `sudo groupadd docker`
->
-> Issue `sudo gpasswd -a ${USER} docker` to add the current logged in user to the `docker` group. Log out and then log back in to effect the changes.
-
-**Note:** The first build of the Docker server can take several minutes. Wait till you see `server is live @ http://<ip_address_or_localhost/` before attempting to view the site.
-
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
-We would love your help, but the platform is in heavy development with a rapid rate
-of change. If you're keen to help build something awesome, and happy to get deep
-into the core workings... then yes! Read about [getting involved](https://wiki.ushahidi.com/display/WIKI/Ushahidi+v3.x+-+Getting+Involved) page.
-Most of our active development happens on the [Ushahidi Phabricator](https://phabricator.ushahidi.com/).
-If you haven't used Phabricator before, read [Phab Help](https://phabricator.ushahidi.com/w/help/phabricator/) after you sign up.
+Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://www.ushahidi.com/support/get-involved)..
+

@@ -27,10 +27,13 @@ function RegisterController(
     $scope.processing = false;
     $scope.realname = '';
     $scope.email = '';
+    $scope.phone = '';
     $scope.password = '';
 
     $scope.registerSubmit = registerSubmit;
     $scope.cancel = cancel;
+
+    $scope.login = Authentication.openLogin;
 
     activate();
 
@@ -45,7 +48,7 @@ function RegisterController(
         $scope.processing = true;
 
         Registration
-            .register($scope.realname, $scope.email, $scope.password)
+            .register($scope.realname, $scope.email, $scope.password, $scope.phone)
             .then(registerSuccess, registerFailed);
     }
 

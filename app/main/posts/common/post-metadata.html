@@ -18,7 +18,7 @@
         <span class="label" translate="giscon.resolved" ng-if="post.values[gisconStatusKey]=='Resolved'"></span>
       </a>
     </li>
-    <li>
+    <li ng-show="post.author_realname || post.user.id">
       <img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
       <strong class="label" ng-show="post.user && !post.author_realname">{{ post.user.realname }}</strong>
       <strong class="label" ng-show="post.contact && !post.author_realname">{{ post.contact.contact}}</strong>
@@ -30,6 +30,16 @@
         <span class="bug" title="{{ displayTimeFull }}">{{ displayTime }}</span>
 
     </li>
+
+    <li ng-show="post.form.id">
+        <span ng-switch="post.form.name">
+            <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-air.svg" alt="" ng-switch-when="Air">
+            <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-land.svg" alt="" ng-switch-when="Land">
+            <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-water.svg" alt="" ng-switch-when="Water">
+        </span>
+        <span class="label">{{post.form.name}}</span>
+    </li>
+
     <li>
       <span class="label" translate-values="{ source : source }" translate="post.source"></span>
     </li>

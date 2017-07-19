@@ -57,6 +57,7 @@
         "webhooks" : "Webhooks",
         "edit_webhook" : "Edit Webhook",
         "add_webhook" : "Add Webhook",
+        "categories_count" : "{{count}} categories",
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "add_category" : "Add Category",
@@ -82,7 +83,13 @@
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
         "private_deployment" : "Private Deployment",
-        "mark_as" : "Mark as"
+        "mark_as" : "Mark as",
+        "who_can_see_this_category" : "Who can see this category?",
+        "this_category_is_child_to" : "This category is a child to <strong>{{parent}}</strong>",
+        "nothing" : "Nothing",
+        "who_can_see_this" : "Who can see this?",
+        "add" : "Add",
+        "add_new_category" : "+ Add new category"
     },
     "toolbar": {
         "searchbar" : {
@@ -191,7 +198,7 @@
         "show_task" : "Show this task to everyone when the post is published",
         "task_info" : "You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.",
         "text_desc" : "A sentence or less",
-        "textarea_desc" : "Multiple sentences or paragraphs<",
+        "textarea_desc" : "Multiple sentences or paragraphs",
         "decimal_desc" : "A number with decimal places",
         "integer_desc" : "A whole number",
         "location_desc" : "A geographic location chosen via a map",
@@ -883,6 +890,7 @@
     },
     "user": {
         "add_user" : "Add User",
+        "already_have_account" : "Already have an account? Log in",
         "edit_user" : "Edit User",
         "update_password" : "Update Password",
         "change_role" : "Change Role",
@@ -899,6 +907,7 @@
         "save_profile" : "Save Profile",
         "cancel" : "Cancel",
         "email" : "Email Address",
+        "phone" : "Phone Number",
         "failed_attempts" : "Failed attempts: ",
         "full_name" : "Display Name",
         "never" : "Never",
@@ -949,6 +958,7 @@
     "user_create" :  {
         "full_name": "Display Name",
         "email": "Email Address",
+        "phone": "Phone Number",
         "role": "Role"
     },
     "notify": {

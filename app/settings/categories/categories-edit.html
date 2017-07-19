@@ -63,9 +63,7 @@
                   data-toggle="dropdown-menu"
                   dropdown-toggle
                 >
-                  <span class="legend-label">This label is a child to
-                    <span class="custom-fieldset-value">{{getParentName()}}</span>
-                  </span>
+                  <span class="legend-label" translate="app.this_category_is_child_to" translate-values="{ parent: getParentName() }">This category is a child to</span>
                   <svg class="iconic chevron">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                   </svg>
@@ -81,7 +79,7 @@
                             ng-checked="category.parent_id === null"
                             ng-model="category.parent_id"
                             />
-                          Nothing
+                          <span translate="app.nothing">Nothing</span>
                       </label>
                   </div>
 
@@ -101,7 +99,7 @@
                 </div>
               </fieldset>
               <!-- Who can see and add -->
-              <role-selector model="category" title="'Who can see this label'"></role-selector>
+              <role-selector model="category" title="'app.who_can_see_this_category'"></role-selector>
             </div>
           </form>
           <div class="form-sheet" ng-show="category.id">

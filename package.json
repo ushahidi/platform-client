@@ -19,7 +19,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
     "jscs": "gulp jscs",
-    "jscs-fix": "gulp jscsfix"
+    "jscs-fix": "gulp jscsfix",
+    "postinstall": "cd node_modules/ushahidi-platform-pattern-library && npm install && gulp build"
   },
   "pre-commit": [
     "jshint",
@@ -43,7 +44,6 @@
     "dotenv": "^2.0.0",
     "eslint": "^3.4.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "web-app-manifest-loader": "0.1.1",
     "file-loader": "^0.9.0",
     "fs-walk": "0.0.1",
     "gulp": "^3.9.0",
@@ -70,6 +70,7 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
+    "markup-inline-loader": "^0.2.0",
     "ng-annotate-loader": "0.0.10",
     "node-libs-browser": "^0.5.0",
     "node-sass": "^3.9.3",
@@ -85,6 +86,7 @@
     "svg-url-loader": "^1.1.0",
     "transifex": "^1.4.4",
     "url-loader": "^0.5.7",
+    "web-app-manifest-loader": "0.1.1",
     "webpack": "^1.9.5",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.6.0"
@@ -116,7 +118,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.7.0-rc.1"
+    "ushahidi-platform-pattern-library": "ushahidi/platform-pattern-library-fix-our-environment#master"
   },
   "engines": {
     "node": ">=4.0"
