@@ -99,7 +99,7 @@
               <!-- End post stage default fields -->
 
               <!-- Start Post custom fields -->
-            
+
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
@@ -126,7 +126,7 @@
 
          </div>
          <post-tabs
-             ng-show="tasks.length > 1"
+             ng-show="tasks.length > 1 && hasPermission('Manage Posts')"
              form="postForm"
              post="post"
              stages="tasks"
