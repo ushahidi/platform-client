@@ -4,13 +4,15 @@ PostMetadataDirective.$inject = [
     '$translate',
     '_',
     'moment',
-    'PostMetadataService'
+    'PostMetadataService',
+    'GisconStatusKey'
 ];
 function PostMetadataDirective(
     $translate,
     _,
     moment,
-    PostMetadataService
+    PostMetadataService,
+    GisconStatusKey
 ) {
     return {
         restrict: 'E',
@@ -27,6 +29,7 @@ function PostMetadataDirective(
             $scope.displayTimeFull = '';
             $scope.timeago = '';
             $scope.hideDateThisWeek = $scope.hideDateThisWeek || false;
+            $scope.gisconStatusKey = GisconStatusKey;
 
             activate();
 
@@ -35,6 +38,9 @@ function PostMetadataDirective(
                 $scope.source = PostMetadataService.formatSource($scope.post.source);
                 $scope.post.user = PostMetadataService.loadUser($scope.post);
                 $scope.post.contact = PostMetadataService.loadContact($scope.post);
+                PostMetadataService.formatTags($scope.post.tags).then((tags) => {
+                    $scope.tags = tags;
+                });
 
                 formatDates();
 

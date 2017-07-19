@@ -308,7 +308,9 @@
             "has_location": "Post-locations",
             "all_posts": "Show all posts",
             "unmapped": "Show unmapped posts",
-            "mapped": "Show posts with a location"
+            "mapped": "Show posts with a location",
+            "gisconStatus": "Status",
+            "giscon_status": "Status"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -1577,5 +1579,10 @@
         "yo": "Yoruba",
         "zu": "Zulu",
         "zu-ZA": "Zulu (South Africa)"
+    },
+    "giscon": {
+        "new" : "New",
+        "inprogress" : "In Progress",
+        "resolved" : "Resolved"
     }
 }

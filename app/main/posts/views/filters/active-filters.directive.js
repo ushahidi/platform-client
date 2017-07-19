@@ -58,6 +58,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             // Remove within_km as its shown with the center_point value
             delete activeFilters.within_km;
 
+            // Just remove any survey field filters because displaying them is too hard
+            delete activeFilters.values;
+
             $scope.activeFilters = _.mapObject(activeFilters, makeArray);
         }
 

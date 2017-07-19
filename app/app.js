@@ -93,6 +93,9 @@ angular.module('app',
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw' // Default OSS mapbox api key
     })
 
+    // Attribute key for custom status attribute
+    .constant('GisconStatusKey', 'e919c3a3-6a48-423a-8254-75e92bf86b76')
+
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
     }])
