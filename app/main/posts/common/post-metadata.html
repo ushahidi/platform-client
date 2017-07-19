@@ -28,11 +28,11 @@
 
     <li>
       <span class="status-indicator">
-        <ng-repeat="statusKey in gisconStatusKey">
+        <span ng-repeat="statusKey in gisconStatusKey">
             <span class="label" translate="giscon.new" ng-if="post.values[statusKey]=='New'"></span>
             <span class="label" translate="giscon.inprogress" ng-if="post.values[statusKey]=='In Progress'"></span>
             <span class="label" translate="giscon.resolved" ng-if="post.values[statusKey]=='Resolved'"></span>
-        </ng-repeat>
+        </span>
       </span>
     </li>
 
