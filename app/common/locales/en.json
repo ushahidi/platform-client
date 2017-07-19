@@ -84,12 +84,12 @@
         "this_deplyment_is_private" : "This deployment is private",
         "private_deployment" : "Private Deployment",
         "mark_as" : "Mark as",
-        "who_can_see_this_category" : "Who can see this domain?",
-        "this_category_is_child_to" : "This domain is a child to <strong>{{parent}}</strong>",
+        "who_can_see_this_category" : "Who can see this category?",
+        "this_category_is_child_to" : "This category is a child to <strong>{{parent}}</strong>",
         "nothing" : "Nothing",
         "who_can_see_this" : "Who can see this?",
         "add" : "Add",
-        "add_new_category" : "+ Add new domain"
+        "add_new_category" : "+ Add new category"
     },
     "toolbar": {
         "searchbar" : {
