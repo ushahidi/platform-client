@@ -1,17 +1,5 @@
 <ul class="metadata">
-    <li>
-      <a class="status-indicator">
-        <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
-        </svg>
-        <span class="label" translate="post.status_published" ng-if="post.status=='published'"></span>
-        <span class="label" translate="post.status_review" ng-if="post.status=='draft'"></span>
-        <span class="label" translate="post.status_archived" ng-if="post.status=='archived'"></span>
-      </a>
-    </li>
-    <li>
+    <li ng-show="post.author_realname || post.user.id">
       <img src="http://www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
       <strong class="label" ng-show="post.user && !post.author_realname">{{ post.user.realname }}</strong>
       <strong class="label" ng-show="post.contact && !post.author_realname">{{ post.contact.contact}}</strong>
@@ -23,6 +11,16 @@
         <span class="bug" title="{{ displayTimeFull }}">{{ displayTime }}</span>
 
     </li>
+
+    <li ng-show="post.form.id">
+        <span ng-switch="post.form.name">
+            <img class="svg" src="/img/beatona-air.svg" alt="" style="display:inline; vertical-align: middle;" ng-switch-when="Air">
+            <img class="svg" src="/img/beatona-land.svg" alt="" style="display:inline; vertical-align: middle;" ng-switch-when="Land">
+            <img class="svg" src="/img/beatona-water.svg" alt="" style="display:inline; vertical-align: middle;" ng-switch-when="Water">
+        </span>
+        <span class="label">{{post.form.name}}</span>
+    </li>
+
     <li>
       <span class="label" translate-values="{ source : source }" translate="post.source"></span>
     </li>

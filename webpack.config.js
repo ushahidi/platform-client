@@ -12,15 +12,15 @@ module.exports = {
   entry: {},
   module: {
     loaders: [
-       { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
-       { test: /\.html$/, loader: 'html?attrs[]=img:src&attrs[]=use:xlink:href&attrs[]=link:href&root='+imgPath },
-       { test: /\.scss$/, loader: extractCss.extract('style', 'css!resolve-url!sass?sourceMap') },
-       { test: /\.css$/, loader: extractCss.extract('style', 'css') },
-       { test: /\.png/, loader: 'url?limit=10000' },
-       { test: /\.svg/, loader: 'svg-url?limit=1' },
-       { test: /\.woff/, loader: 'url?limit=10000' },
-       { test: /\.ttf|\.eot/, loader: 'file' },
-       { test: /\.json$/, exclude:[/manifest.json$/],loader: 'json' },
+       { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate-loader!babel-loader' },
+       { test: /\.html$/, loader: 'html-loader?attrs[]=img:src&attrs[]=use:xlink:href&attrs[]=link:href&root='+imgPath },
+       { test: /\.scss$/, loader: extractCss.extract('style-loader', 'css-loader!resolve-url-loader!sass-loader?sourceMap') },
+       { test: /\.css$/, loader: extractCss.extract('style-loader', 'css-loader') },
+       { test: /\.png/, loader: 'url-loader?limit=10000' },
+       { test: /\.svg/, loader: 'svg-url-loader?limit=1' },
+       { test: /\.woff/, loader: 'url-loader?limit=10000' },
+       { test: /\.ttf|\.eot/, loader: 'file-loader' },
+       { test: /\.json$/, exclude:[/manifest.json$/],loader: 'json-loader' },
        { test: /manifest.json$/, loader: 'file-loader?name=manifest.json!web-app-manifest-loader' }
     ]
   },

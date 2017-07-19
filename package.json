@@ -19,7 +19,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
     "jscs": "gulp jscs",
-    "jscs-fix": "gulp jscsfix"
+    "jscs-fix": "gulp jscsfix",
+    "postinstall": "cd node_modules/ushahidi-platform-pattern-library && npm install && gulp build"
   },
   "pre-commit": [
     "jshint",
@@ -116,7 +117,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.7.1-rc.4"
+    "ushahidi-platform-pattern-library": "ushahidi/platform-pattern-library-fix-our-environment#master"
   },
   "engines": {
     "node": ">=4.0"

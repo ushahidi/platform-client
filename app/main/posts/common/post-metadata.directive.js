@@ -37,6 +37,12 @@ function PostMetadataDirective(
                 $scope.post.contact = PostMetadataService.loadContact($scope.post);
 
                 formatDates();
+
+                // For reasons that make no sense, assigning this directly to $scope.post.form
+                // seems to end up with the entire form set. So doing this instead
+                PostMetadataService.loadForm($scope.post).$promise.then((form) => {
+                    $scope.post.form = form;
+                });
             }
 
             function formatDates() {
