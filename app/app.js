@@ -94,7 +94,10 @@ angular.module('app',
     })
 
     // Attribute key for custom status attribute
-    .constant('GisconStatusKey', 'e919c3a3-6a48-423a-8254-75e92bf86b76')
+    .constant('GisconStatusKey', [
+        'e919c3a3-6a48-423a-8254-75e92bf86b76',
+        '07e958bb-ecca-4876-983c-f0a901d261d8',
+        '90658ea3-43fe-4c85-a5d4-c035bd9ec025'])
 
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
