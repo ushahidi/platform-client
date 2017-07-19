@@ -4,13 +4,12 @@ FilterModal.$inject = ['ModalService'];
 function FilterModal(ModalService) {
     return {
         restrict: 'E',
-        controller: FilterModalController,
+        link: FilterModalLink,
         template: require('./filter-modal.html')
     };
 }
 
-FilterModalController.$inject = ['$scope', 'GisconStatusKey'];
-function FilterModalController($scope, GisconStatusKey) {
-    $scope.gisconStatusKey = GisconStatusKey;
+
+function FilterModalLink($scope, $element, $attrs) {
 }
 
