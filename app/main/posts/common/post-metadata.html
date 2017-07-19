@@ -14,9 +14,9 @@
 
     <li ng-show="post.form.id">
         <span ng-switch="post.form.name">
-            <img class="svg" src="/img/beatona-air.svg" alt="" style="display:inline; vertical-align: middle;" ng-switch-when="Air">
-            <img class="svg" src="/img/beatona-land.svg" alt="" style="display:inline; vertical-align: middle;" ng-switch-when="Land">
-            <img class="svg" src="/img/beatona-water.svg" alt="" style="display:inline; vertical-align: middle;" ng-switch-when="Water">
+            <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-air.svg" alt="" ng-switch-when="Air">
+            <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-land.svg" alt="" ng-switch-when="Land">
+            <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-water.svg" alt="" ng-switch-when="Water">
         </span>
         <span class="label">{{post.form.name}}</span>
     </li>

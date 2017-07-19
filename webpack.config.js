@@ -13,7 +13,7 @@ module.exports = {
   module: {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate-loader!babel-loader' },
-       { test: /\.html$/, loader: 'html-loader?attrs[]=img:src&attrs[]=use:xlink:href&attrs[]=link:href&root='+imgPath },
+       { test: /\.html$/, loader: 'html-loader?attrs[]=img:src&attrs[]=use:xlink:href&attrs[]=link:href&root='+imgPath+'!markup-inline-loader' },
        { test: /\.scss$/, loader: extractCss.extract('style-loader', 'css-loader!resolve-url-loader!sass-loader?sourceMap') },
        { test: /\.css$/, loader: extractCss.extract('style-loader', 'css-loader') },
        { test: /\.png/, loader: 'url-loader?limit=10000' },

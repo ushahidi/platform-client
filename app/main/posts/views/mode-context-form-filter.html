@@ -6,6 +6,11 @@
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
             <label class="checked">
                 <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-change="changeForms()">
+                <span ng-switch="form.name">
+                    <img markup-inline class="svg" src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-air.svg" alt="" ng-switch-when="Air">
+                    <img markup-inline class="svg" src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-land.svg" alt="" ng-switch-when="Land">
+                    <img markup-inline class="svg" src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-water.svg" alt="" ng-switch-when="Water">
+                </span>
                 {{ ::form.name }}
             </label>
         </div>
