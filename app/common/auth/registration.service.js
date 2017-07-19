@@ -16,11 +16,12 @@ function (
 
     return {
 
-        register: function (realname, email, password) {
+        register: function (realname, email, password, phone) {
             var payload = {
                 realname: realname,
                 email: email,
-                password: password
+                password: password,
+                phone: phone
             },
 
             deferred = $q.defer(),
