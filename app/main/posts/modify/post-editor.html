@@ -126,7 +126,7 @@
 
          </div>
          <post-tabs
-             ng-show="tasks.length > 1"
+             ng-show="tasks.length > 1 && hasPermission('Manage Posts')"
              form="postForm"
              post="post"
              stages="tasks"
