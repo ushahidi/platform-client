@@ -5,7 +5,8 @@ PostMetadataService.$inject = [
     'UserEndpoint',
     'ContactEndpoint',
     'FormEndpoint',
-    'TagEndpoint'
+    'TagEndpoint',
+    '$q'
 ];
 
 function PostMetadataService(
@@ -13,7 +14,8 @@ function PostMetadataService(
     UserEndpoint,
     ContactEndpoint,
     FormEndpoint,
-    TagEndpoint
+    TagEndpoint,
+    $q
 ) {
     var PostMetadataService = {
         // Format source (fixme!)
@@ -50,6 +52,7 @@ function PostMetadataService(
             if (post.form && post.form.id) {
                 return FormEndpoint.get({id: post.form.id});
             }
+            return { $promise : $q.reject() };
         }
     };
 
