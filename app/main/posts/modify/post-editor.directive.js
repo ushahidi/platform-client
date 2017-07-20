@@ -67,6 +67,7 @@ function PostEditorController(
     $scope.visibleStage = 1;
     $scope.enableTitle = true;
     $scope.hasPermission = $rootScope.hasPermission;
+    $scope.loggedin = $rootScope.loggedin;
 
     $scope.setVisibleStage = setVisibleStage;
     $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
