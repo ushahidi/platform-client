@@ -64,14 +64,6 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             config.headers.Authorization = 'Bearer ' + accessToken;
             deferred.resolve(config);
 
-            // if the user has not agreed to the most recent terms of service,
-            // or the user has user never agreed to the terms of service,
-            // and the user is logged in,
-            // emit the Terms Of Service event
-            if (Session.getSessionDataEntry('tos') > CONST.TOS_RELEASE_DATE || Session.getSessionDataEntry('tos') === null && Session.getSessionDataEntry('userId')) {
-                $rootScope.$broadcast('event:authentication:tos:agreement');
-            }
-
         } else {
             // otherwise, we will ask the backend
             // via the client credentials oauth flow

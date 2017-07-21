@@ -6,17 +6,12 @@ function (
     Util
 ) {
 
-    var TermsOfServiceEndpoint = $resource(Util.apiUrl('/termsofservice/:date/:id/:tosDate'), {
-        date: '@date',
-        id: '@id',
-        tosDate: '@tosDate'
+    var TermsOfServiceEndpoint = $resource(Util.apiUrl('/tos/:id'), {
+        id: '@id'
 
     }, {
         get: {
             method: 'GET'
-        },
-        save: {
-            method: 'POST'
         },
         delete: {
             method: 'DELETE'
