@@ -74,7 +74,7 @@ Our gulp build
 
 #### Set default options with .env
 
-Instead of having to type the flags every time, you can also use a `.gulpconfig.json` file to set the default options for running the client.
+Instead of having to type the flags every time, you can also use a `.env` file to set the default options for running the client.
 
 ```
 NODE_SERVER=true
@@ -83,6 +83,7 @@ UGLIFY_JS=true
 MOCK_BACKEND=false
 KARMA_CHROME=false
 PORT=8080
+APP_LANGUAGES=en,ar
 ```
 
 * `NODE_SERVER` - always run the `node-server` task
@@ -91,6 +92,7 @@ PORT=8080
 * `MOCK_BACKEND` - build the app with an mock backend.
 * `KARMA_CHROME` - Use chrome to run karma tests
 * `PORT` - set the port to run `node-server`
+* `APP_LANGUAGES` - sets the available languages. Defaults to showing all languages
 
 #### Optional: Mock Backend
 
