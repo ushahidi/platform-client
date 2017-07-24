@@ -80,6 +80,13 @@ function saveTranslationList(languages, locales_dir) {
         nplurals: 2
     });
 
+    if (process.env.APP_LANGUAGES) {
+        let appLanguages = process.env.APP_LANGUAGES.split(',');
+        languages = languages.filter((lang) => {
+            return appLanguages.includes(lang.code);
+        });
+    }
+
     languages.sort((a, b) => {
         if (a.name < b.name) { return -1; }
         if (a.name > b.name) { return 1; }
