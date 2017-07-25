@@ -134,19 +134,18 @@
              visible-stage="visibleStage">
           </post-tabs>
 
-
           <div class="form-sheet" ng-if="!post.id && !loggedin">
               <header class="form-sheet-summary">
-                  <h1 class="form-sheet-title section-title" translate="post.author">Author</h1>
+                  <h1 class="form-sheet-title section-title" translate="post.modify.contact_info">Author</h1>
               </header>
-              <div class="form-field"
+              <div class="form-field required"
                 ng-class="{
                   'error': postForm.author_realname.$invalid && postForm.author_realname.$dirty,
                   'success': !postForm.author_realname.$invalid && postForm.author_realname.$dirty
                 }">
                   <label translate="post.modify.author_realname">Name</label>
-                  <input id="realname"
-                      name="realname" type="text" ng-model="post.author_realname" ng-minlength=2 ng-maxlength=150>
+                  <input id="author_realname"
+                      name="author_realname" type="text" ng-model="post.author_realname" ng-maxlength=150>
 
                   <div
                       class="alert error"
@@ -156,18 +155,18 @@
                       <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                       </svg>
-                      <span translate="{{'post.valid.author_realname.' + error}}"></span>
+                      <span translate="{{'user.valid.full_name.' + error}}"></span>
                   </div>
               </div>
 
-              <div class="form-field"
+              <div class="form-field required"
                 ng-class="{
                   'error': postForm.author_email.$invalid && postForm.author_email.$dirty,
                   'success': !postForm.author_email.$invalid && postForm.author_email.$dirty
                 }">
                   <label translate="post.modify.author_email">Email</label>
-                  <input id="email"
-                      name="email" type="email" ng-model="post.author_email" ng-minlength=2 ng-maxlength=150>
+                  <input id="author_email"
+                      name="author_email" type="email" ng-model="post.author_email" ng-maxlength=150>
 
                   <div
                       class="alert error"
@@ -177,7 +176,7 @@
                       <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                       </svg>
-                      <span translate="{{'post.valid.author_email.' + error}}"></span>
+                      <span translate="{{'user.valid.email.' + error}}"></span>
                   </div>
               </div>
 
