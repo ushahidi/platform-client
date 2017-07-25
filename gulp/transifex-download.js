@@ -27,6 +27,11 @@ function getCompletedLanguages(transifex) {
 
                 // Only download languages that have been translated past the completion threshold
                 languages = languages.filter((language) => {
+                    // Don't download english, since its built in
+                    if (language.code === 'en') {
+                        return false;
+                    }
+
                     if (stats[language.code] !== undefined && parseInt(stats[language.code].completed) >= completion_threshold) {
                         return true;
                     }
