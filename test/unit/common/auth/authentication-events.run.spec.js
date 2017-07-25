@@ -3,6 +3,7 @@ describe('global event handlers', function () {
     var mockedSessionData,
         mockedAuthenticationData,
         mockedAuthenticationService,
+        mockTOS,
         $rootScope,
         $location,
         mockRoute = {
@@ -41,6 +42,12 @@ describe('global event handlers', function () {
 
         spyOn(mockedAuthenticationService, 'openLogin');
 
+        mockTOS = {
+            tosCheck: () => {}
+        };
+
+        spyOn(mockTOS, 'tosCheck');
+
         testApp.service('Session', function () {
             return mockedSessionService;
         })
@@ -48,9 +55,7 @@ describe('global event handlers', function () {
             return mockedAuthenticationService;
         })
         .service('TermsOfService', () => {
-            return {
-                tosCheck: () => {}
-            };
+            return mockTOS;
         })
         .service('TermsOfServiceEndpoint', () => {
             return {
@@ -116,6 +121,10 @@ describe('global event handlers', function () {
 
                         it('should reload the route', function () {
                             expect(mockRoute.reload).toHaveBeenCalled();
+                        });
+
+                        it('should check TOS', function () {
+                            expect(mockTOS.tosCheck).toHaveBeenCalled();
                         });
                     });
 
