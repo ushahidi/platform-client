@@ -47,6 +47,24 @@ describe('global event handlers', function () {
         .service('Authentication', function () {
             return mockedAuthenticationService;
         })
+        .service('TermsOfService', () => {
+            return {
+                tosCheck: () => {}
+            };
+        })
+        .service('TermsOfServiceEndpoint', () => {
+            return {
+                get: () => {
+                    return {
+                        $promise: {
+                            then: (cb) => {
+                                cb();
+                            }
+                        }
+                    };
+                }
+            };
+        })
         .run(require('app/common/auth/authentication-events.run.js'))
         .service('$route', function () {
             return mockRoute;
