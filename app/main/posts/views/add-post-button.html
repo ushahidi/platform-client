@@ -12,8 +12,11 @@
     <ul class="fab-options" ng-show="fabToggle" ng-class="{ 'active': fabToggle }" ng-style="fabOptionsStyle" data-toggle-animate="flex">
         <li ng-repeat="form in forms">
             <a ng-href="/posts/create/{{form.id}}">
-                <span class="fab-action-type" ng-style="{backgroundColor: form.color}">
-                    <svg class="iconic">
+                <span class="fab-action-type" ng-style="{backgroundColor: form.color}" ng-switch="form.name">
+                    <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-air.svg" alt="" ng-switch-when="Air">
+                    <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-land.svg" alt="" ng-switch-when="Land">
+                    <img class="svg" markup-inline src="../../../../node_modules/ushahidi-platform-pattern-library/assets/img/beatona-water.svg" alt="" ng-switch-when="Water">
+                    <svg class="iconic" ng-switch-default>
                         <use xlink:href="/img/iconic-sprite.svg#file"></use>
                     </svg>
                 </span>
