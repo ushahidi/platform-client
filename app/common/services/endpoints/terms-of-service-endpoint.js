@@ -6,8 +6,7 @@ function (
     Util
 ) {
 
-    var TermsOfServiceEndpoint = $resource(Util.apiUrl('/tos/:id'), {
-        id: '@id'
+    var TermsOfServiceEndpoint = $resource(Util.apiUrl('/tos/'), {
 
     }, {
         get: {

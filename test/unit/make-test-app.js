@@ -26,7 +26,8 @@ module.exports = function () {
             'OAUTH_CLIENT_ID'     : 'ushahidiui',
             'OAUTH_CLIENT_SECRET' : '35e7f0bca957836d05ca0492211b0ac707671261',
             'CLAIMED_ANONYMOUS_SCOPES' : claimedAnonymousScopes,
-            'CLAIMED_USER_SCOPES' : claimedAnonymousScopes.concat('dataproviders')
+            'CLAIMED_USER_SCOPES' : claimedAnonymousScopes.concat('dataproviders'),
+            'TOS_RELEASE_DATE'   : 1500588208
         })
         .service('Util', require('app/common/services/util.js'));
 
