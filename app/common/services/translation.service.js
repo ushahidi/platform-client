@@ -61,7 +61,7 @@ function (
     };
 
     var setLanguage = function (code) {
-        Session.setSessionDataEntry({language: code});
+        Session.setSessionDataEntry('language', code);
         if (Authentication.getLoginStatus()) {
             UserEndpoint.get({id: 'me'}).$promise.then(function (user) {
                 user.language = code;
