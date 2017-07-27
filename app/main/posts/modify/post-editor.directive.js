@@ -121,9 +121,11 @@ function PostEditorController(
                 if (attr.type === 'title' || attr.type === 'description') {
                     if (attr.type === 'title') {
                         $scope.postTitleLabel = attr.label;
+                        $scope.postTitleInstructions = attr.instructions;
                     }
                     if (attr.type === 'description') {
                         $scope.postDescriptionLabel = attr.label;
+                        $scope.postDescriptionInstructions = attr.instructions;
                     }
                 } else {
                     attributes.push(attr);
