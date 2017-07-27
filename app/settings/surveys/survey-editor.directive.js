@@ -553,94 +553,89 @@ function SurveyEditorController(
     //Start - modify Survey
 
     function saveSurvey() {
+        // Set saving to true to disable user actions
         $scope.saving_survey = true;
-        // Saving a survey is a 3 step process
-        // First save the actual survey
+        // Save the survey
         FormEndpoint
         .saveCache($scope.survey)
         .$promise
         .then(function (survey) {
-            $scope.survey.id = survey.id;
-            // Second save the survey tasks
-            saveTasks();
-            saveRoles();
-        }, handleResponseErrors);
-        $scope.saving_survey = false;
+            // If the survey is new, cache the new id
+            if ($scope.survey.id !== survey.id) {
+                $scope.survey.id = survey.id;
+            }
+            // Save tasks and roles and return promises
+            return $q.all([saveTasks(), saveRoles()]);
+        })
+        .then(function () {
+            // Save attributes and return promises
+            return saveAttributes();
+        })
+        .then(function () {
+            // Display success message
+            SurveyNotify.success(
+                'notify.form.edit_form_success',
+                { name: $scope.survey.name },
+                { formId: $scope.survey.id }
+            );
+            // Redirect to survey list
+            $location.url('settings/surveys');
+        })
+        // Catch and handle errors
+        .catch(handleResponseErrors);
     }
 
-    function saveTasks(tasks) {
-        var calls = [];
-
-        //Save tasks
-        // Remove interim ids
+    function saveTasks() {
+        var promises = [];
+        // Remove interim ids from tasks
         $scope.removeInterimIds();
-
         _.each($scope.survey.tasks, function (task) {
+            // Assign survey id to each task
             task.form_id = $scope.survey.id;
-            // Add each task to save loop
-            calls.push(
+            // Add each task to promise array
+            promises.push(
                 FormStageEndpoint
-                .saveCache(_.extend(task, {formId: $scope.survey.id})).$promise
+                .saveCache(_.extend(task, { formId: $scope.survey.id }))
+                .$promise
             );
         });
-
-        // TODO add notify and error states
-        $q.all(calls).then(function (tasks) {
-            // Update survey object with saved tasks
-            // We need to preserve the tasks attributes
-            // so we clone them and then reinstate them
-
-            // First we ensure they are ordered by priority
+        return $q.all(promises).then(function (tasks) {
+            // Ensure tasks are ordered by priority
             tasks = _.sortBy(tasks, 'priority');
-
-            // Next we associate them with the existing tasks
-            // to preserve associated attributes
+            // Associate tasks to preserve attributes
             _.each(tasks, function (task, index) {
                 _.extend($scope.survey.tasks[index], task);
             });
-            // Third save the survey task attributes
-            saveAttributes();
-        }, handleResponseErrors);
+        });
     }
 
     function saveAttributes() {
-        var calls = [];
+        var promises = [];
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
-                // removing faulty category-ids
+                // Remove faulty category ids from each attribute
                 if (attribute.type === 'tags') {
                     attribute.options = _.filter(attribute.options, function (option) {
                         return !isNaN(option);
                     });
                 }
+                // Assign stage id to each attribute
                 attribute.form_stage_id = task.id;
-                calls.push(
+                // Add each attribute to promise array
+                promises.push(
                     FormAttributeEndpoint
-                    .saveCache(_.extend(attribute, {formId: $scope.survey.id})).$promise
+                    .saveCache(_.extend(attribute, { formId: $scope.survey.id }))
+                    .$promise
                 );
             });
         });
-
-        $q.all(calls).then(function (attributes) {
-            // Update survey object with saved attributes
-            _.each($scope.survey.tasks, function (task) {
-                task.attributes = _.filter(attributes, function (attribute) {
-                    return attribute.form_stage_id === task.id;
-                });
-            });
-
-            SurveyNotify.success('notify.form.edit_form_success', { name: $scope.survey.name }, { formId: $scope.survey.id});
-        }, handleResponseErrors);
+        return $q.all(promises);
     }
 
     function saveRoles() {
-        FormRoleEndpoint
+        return FormRoleEndpoint
         .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
-        .$promise
-        .then(function (roles) {
-            $location.path('settings/surveys/edit/' + $scope.survey.id);
-            return true;
-        }, handleResponseErrors);
+        .$promise;
     }
 
     function toggleTaskRequired(task) {
