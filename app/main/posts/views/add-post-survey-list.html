@@ -2,9 +2,6 @@
     <li ng-repeat="form in forms">
         <a ng-click="handleClick(form)">
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
-            <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#file"></use>
-            </svg>
             {{form.name}}
         </a>
     </li>
