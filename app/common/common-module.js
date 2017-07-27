@@ -69,6 +69,7 @@ angular.module('ushahidi.common', [
 
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
+.directive('ushMainsheetContainer', require('./directives/mainsheet-container.directive.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
 .directive('modalBody', require('./directives/modal-body.directive.js'))
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
