@@ -1,7 +1,9 @@
 <div class="modal-body">
-    <filter-form ng-model="filters.form"></filter-form>
+    <div class="hide-when-medium">
+        <filter-form ng-model="filters.form"></filter-form>
+        <filter-category ng-model="filters.tags"></filter-category>
+    </div>
     <filter-status ng-model="filters.status"></filter-status>
-    <filter-category ng-model="filters.tags"></filter-category>
     <filter-date date-after-model="filters.date_after" date-before-model="filters.date_before"></filter-date>
     <filter-location center-point-model="filters.center_point" within-km-model="filters.within_km"></filter-location>
     <div class="modal-actions">

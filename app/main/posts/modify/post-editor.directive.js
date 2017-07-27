@@ -107,23 +107,25 @@ function PostEditorController(
         return $q.all([
             FormStageEndpoint.queryFresh({ formId: formId }).$promise,
             FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
-            TagEndpoint.queryFresh({formId: formId}).$promise
+            TagEndpoint.queryFresh().$promise
         ]).then(function (results) {
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
             var attrs = _.chain(results[1])
                 .sortBy('priority')
                 .value();
-            $scope.categories = results[2];
+            var categories = results[2];
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
                 if (attr.type === 'title' || attr.type === 'description') {
                     if (attr.type === 'title') {
                         $scope.postTitleLabel = attr.label;
+                        $scope.postTitleInstructions = attr.instructions;
                     }
                     if (attr.type === 'description') {
                         $scope.postDescriptionLabel = attr.label;
+                        $scope.postDescriptionInstructions = attr.instructions;
                     }
                 } else {
                     attributes.push(attr);
@@ -140,29 +142,26 @@ function PostEditorController(
                     }
                     $scope.medias[attr.key] = {};
                 }
-                // assingning tag-objects to attribute-options
                 if (attr.input === 'tags') {
-                    var tags = [];
-                    $scope.tagKeys.push(attr.key);
-                    _.each(attr.options, function (tagId) {
-                        var tag = $scope.getTag(tagId);
-                        if (tag && tag.children) {
-                            var children = [];
-                            _.each(tag.children, function (child) {
-                                child = $scope.getTag(parseInt(child.id));
-                                // protecting from undefined tags
-                                if (child) {
-                                    children.push(child);
-                                }
-                            });
-                            tag.children = children;
-                        }
-                        // protecting from undefined tags
-                        if (tag) {
-                            tags.push(tag);
+                    // adding category-objects attribute-options
+                    attr.options = _.chain(attr.options)
+                        .map(function (category) {
+                            return _.findWhere(categories, {id: category});
+                        })
+                        .filter()
+                        .value();
+
+                    // adding category-objects to children
+                    _.each(attr.options, function (category) {
+                        if (category.children.length > 0) {
+                            category.children = _.chain(category.children)
+                                .map(function (child) {
+                                    return _.findWhere(attr.options, {id: child.id});
+                                })
+                                .filter()
+                                .value();
                         }
                     });
-                    attr.options = tags;
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
@@ -276,14 +275,13 @@ function PostEditorController(
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
-                var tags = [];
-                _.each($scope.tagKeys, function (tagKey) {
-                    tags = tags.concat(post.values[tagKey]);
-                });
-                tags = _.uniq(tags);
-                if (tags[0] !== undefined) {
-                    post.tags = tags;
-                }
+                post.tags = _.chain(post.values)
+                .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                .filter()             // Remove nulls                      [0,1,1,2]
+                .uniq()               // Remove duplicates                 [0,1,2]
+                .value();             // and output
             }
             var request;
             if (post.id) {

@@ -6,6 +6,7 @@
         "submit" : "Submit",
         "submitting": "Submitting",
         "submit_another" : "Submit & Add Another",
+        "submit_response": "Submit a survey response",
         "can_see_this" : "can see this",
         "collections" : "Collections",
         "create_collection" : "Create collection",
@@ -60,6 +61,7 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "add_category" : "Add Category",
+        "categories_count" : "{{count}} categories",
         "plans" : "Plans",
         "delete" : "Delete",
         "description" : "Description",
@@ -82,7 +84,13 @@
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
         "private_deployment" : "Private Deployment",
-        "mark_as" : "Mark as"
+        "mark_as" : "Mark as",
+        "who_can_see_this_category" : "Who can see this category?",
+        "this_category_is_child_to" : "This category is a child to <strong>{{parent}}</strong>",
+        "nothing" : "Nothing",
+        "who_can_see_this" : "Who can see this?",
+        "add" : "Add",
+        "add_new_category" : "+ Add new category"
     },
     "toolbar": {
         "searchbar" : {
@@ -191,7 +199,7 @@
         "show_task" : "Show this task to everyone when the post is published",
         "task_info" : "You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.",
         "text_desc" : "A sentence or less",
-        "textarea_desc" : "Multiple sentences or paragraphs<",
+        "textarea_desc" : "Multiple sentences or paragraphs",
         "decimal_desc" : "A number with decimal places",
         "integer_desc" : "A whole number",
         "location_desc" : "A geographic location chosen via a map",
@@ -211,6 +219,7 @@
         "edit_field" : "Edit field",
         "build" : "Build",
         "configure" : "Configure",
+        "require_section" : "Require this task be completed before a post can be visible to the public",
         "hide_author_information" : "Hide author information",
         "hide_author_information_desc" : "Only people with permission to edit responses will be able to see who submitted them; and only when editing them.",
         "share" : "Share",
@@ -713,7 +722,7 @@
         "save_add_another" : "Save & Add Another",
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
-        "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be asociated with any posts. Proceed with caution.",
+        "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
@@ -1026,9 +1035,11 @@
         "category" : {
             "save_success" : "Saved category {{name}}",
             "destroy_confirm" : "Are you sure you want to delete this category?",
+            "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
             "destroy_success" : "Category deleted",
             "destroy_error" : "Unable to delete category, please try again",
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} categories?",
+            "bulk_destroy_confirm_desc" : "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
             "bulk_destroy_success" : "{{count}} categories deleted"
         },
         "role" : {
@@ -1071,6 +1082,7 @@
             "delete_stage_confirm" : "Are you sure you want to delete this task?",
             "destroy_stage_success" : "Survey task {{name}} deleted",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?",
+            "delete_attribute_confirm_desc" : "Deleting this field will remove its data from all existing posts. Please proceed with caution.",
             "destroy_attribute_success" : "Field {{name}} deleted"
         },
         "collection" : {

@@ -78,7 +78,7 @@ function (
             FormEndpoint.getFresh({id: $scope.post.form.id}),
             FormStageEndpoint.queryFresh({formId:  $scope.post.form.id}).$promise,
             FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
-            TagEndpoint.queryFresh({formId: $scope.post.form.id}).$promise
+            TagEndpoint.queryFresh().$promise
         ]).then(function (results) {
             $scope.form = results[0];
             $scope.form_name = results[0].name;

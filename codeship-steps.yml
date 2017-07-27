@@ -2,33 +2,43 @@
   service: test
   command: gulp test
 
+
 - name: "Build client"
   service: build
   command: build
-  #tag: '^(v[0-9]\.[0-9]+.[0-9]+(-[a-zA-Z0-9\.]+)?)|(develop)|(production)$'
+
 
 - type: parallel
   steps:
   - name: "Release bundle"
     service: release
     command: release
-    tag: '^v[0-9]\.[0-9]+.[0-9]+(-[a-zA-Z0-9\.]+)?$'
+    tag: '^v[0-9]\.[0-9]+.[0-9]+([\-a-zA-Z0-9\.]+)?$'
+
   - name: "Deploy staging"
     service: deploy
     tag: develop
     command: >
-      ansible-playbook -vv -i hosts/rackspace_staging platform-client-update-rsync.yml
+      ANSIBLE_GITHUB_REPO=platform-cloud-ansible
+      ANSIBLE_GITHUB_REPO_VERSION=master
+      ush-ansible-playbook.sh -vv -i hosts/rackspace_staging platform-client-update-rsync.yml
         -e PLATFORM_CLIENT_DEPLOY_SRC="/vols/last_build"
+
   - name: "Deploy Production"
     service: deploy
     tag: production
     command: >
-      ansible-playbook -vv -i hosts/rackspace_prod platform-client-update-rsync.yml
+      ANSIBLE_GITHUB_REPO=platform-cloud-ansible
+      ANSIBLE_GITHUB_REPO_VERSION=master
+      ush-ansible-playbook.sh -vv -i hosts/rackspace_prod platform-client-update-rsync.yml
         -e PLATFORM_CLIENT_DEPLOY_SRC="/vols/last_build"
+
   - name: "Deploy other branches"
     service: deploy
     command: >
-      ansible-playbook -vv -i hosts/rackspace_pr platform-client-branches-deploy.yml
+      ANSIBLE_GITHUB_REPO=platform-cloud-ansible
+      ANSIBLE_GITHUB_REPO_VERSION=master
+      ush-ansible-playbook.sh -vv -i hosts/rackspace_pr platform-client-branches-deploy.yml
         -e BRANCH_NAME="$CI_BRANCH"
         -e DEPLOYMENTS_API_DOMAIN="api.ushahididev.com"
         -e PLATFORM_CLIENT_DEPLOY_SRC="/vols/last_build"
