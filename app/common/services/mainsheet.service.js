@@ -51,6 +51,7 @@ function MainsheetService($rootScope, $q) {
     }
 
     function setState(open) {
+        $rootScope.$emit('mainsheet:statechange');
         isOpen = open;
     }
 }
