@@ -23,6 +23,7 @@ angular.module('ushahidi.mock', [])
 .service('DataImportEndpoint', require('./services/data-import.js'))
 .service('DataRetriever', require('./services/data-retriever.js'))
 .service('MediaEndpoint', require('./services/media.js'))
+.service('TermsOfServiceEndpoint', require('./services/tos.js'))
 
 .service('Features', require('./services/features.js'))
 .service('Authentication', require('./services/authentication.js'))

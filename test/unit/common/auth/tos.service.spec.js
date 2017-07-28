@@ -1,55 +1,51 @@
 describe('TermsOfService', function () {
 
-    var TermsOfService, $rootScope, TOS_RELEASE_DATE, Notify, data, $httpBackend, BACKEND_URL;
+    var TermsOfService,
+        $rootScope,
+        TOS_RELEASE_DATE,
+        Notify,
+        data,
+        $q,
+        $scope,
+        TermsOfServiceEndpoint,
+        BACKEND_URL;
 
     beforeEach(function () {
         makeTestApp()
-
-        .service('TermsOfServiceEndpoint', () => {
-            return {
-                get: () => {
-                    return {
-                        $promise: Promise.resolve(data)
-                    };
-                }
-            };
-        })
 
         .service('TermsOfService', require('app/common/auth/tos.service.js'));
 
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _TermsOfService_, _CONST_, _Notify_, _$httpBackend_) {
+    beforeEach(angular.mock.inject(function (_$q_, _$rootScope_, _TermsOfService_, _CONST_, _Notify_, _TermsOfServiceEndpoint_) {
         $rootScope = _$rootScope_;
         TermsOfService = _TermsOfService_;
         TOS_RELEASE_DATE = _CONST_.TOS_RELEASE_DATE;
         Notify = _Notify_;
-        $httpBackend = _$httpBackend_;
+        TermsOfServiceEndpoint = _TermsOfServiceEndpoint_;
+        $q = _$q_;
+        $scope = _$rootScope_.$new();
         BACKEND_URL = _CONST_.BACKEND_URL;
-
     }));
 
-    describe('new user', function () {
-        var mockTosEntryData;
+    beforeEach(function () {
+        $rootScope.$digest();
+        $rootScope.$apply();
+    });
 
-        beforeEach(function () {
-            mockTosEntryData = {results: []};
-            data = mockTosEntryData;
-        });
+    describe('new user', function () {
 
         it('should call the ToS authentication event when the result is empty (the user has not ever agreed to ToS)', function () {
-            var successCallback = jasmine.createSpy('success');
-            spyOn(Notify, 'confirm').and.callThrough();
+            var successCallback = jasmine.createSpy('success').and.callThrough();
+            spyOn(Notify, 'confirmTos').and.callThrough();
 
-            $httpBackend.expectGET(BACKEND_URL + '/api/v3/tos').respond(data);
-            TermsOfService.getTosEntry().then(successCallback);
-
-            // $httpBackend.flush();
+            TermsOfService.getTosEntry();
+            
             $rootScope.$digest();
 
 
-            expect(Notify.confirm).toHaveBeenCalled();
+            expect(Notify.confirmTos).toHaveBeenCalled();
 
             expect(successCallback).toHaveBeenCalled();
         });

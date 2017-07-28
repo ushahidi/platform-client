@@ -33,11 +33,12 @@ function (
 
         if (showTos) {
             Notify.confirmTos().then(function () {
-                deferred.resolve();
+                deferred.resolve('success');
             }, function () {
                 deferred.reject();
             });
         }
+
         return deferred.promise;
     };
 
@@ -47,7 +48,7 @@ function (
 
             return TermsOfServiceEndpoint.get()
             .$promise.then(function (tosEntry) {
-                console.log(tosEntry);
+
                 return tosCheck(tosEntry);
             });
         }
