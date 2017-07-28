@@ -7,7 +7,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     var forms = [];
     var filterMode = 'all';
     var entityId = null;
-    var tags = [];
 
     // @todo take this out of the service
     // but ensure it happens at the right times
