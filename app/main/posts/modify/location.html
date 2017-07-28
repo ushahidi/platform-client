@@ -46,6 +46,12 @@
                     <h6 class="tool-heading" translate>location.search_results</h6>
                     <dl ng-repeat="result in searchResults" ng-if="searchResults.length > 0">
                         <dt class="list-item" ng-click="chooseLocation(result)">
+                            <svg class="iconic">
+                                <use 
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                    xlink:href="/img/iconic-sprite.svg#map-marker">
+                                </use>
+                            </svg>
                             <em>{{result.display_name}}</em>
                         </dt>
                     </dl>
