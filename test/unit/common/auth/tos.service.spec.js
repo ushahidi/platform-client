@@ -4,7 +4,6 @@ describe('TermsOfService', function () {
         $rootScope,
         TOS_RELEASE_DATE,
         Notify,
-        data,
         $q,
         $scope,
         TermsOfServiceEndpoint,
@@ -41,7 +40,7 @@ describe('TermsOfService', function () {
             spyOn(Notify, 'confirmTos').and.callThrough();
 
             TermsOfService.getTosEntry();
-            
+
             $rootScope.$digest();
 
 
