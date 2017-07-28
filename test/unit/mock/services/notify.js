@@ -62,6 +62,13 @@ module.exports = [function () {
                     successCallback();
                 }
             };
+        },
+        confirmTos: function () {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
         }
     };
 }];

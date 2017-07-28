@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService', 'TermsOfServiceEndpoint'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService, TermsOfServiceEndpoint) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService',];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService) {
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
 
@@ -18,16 +18,15 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function doLogin(redirect, noReload) {
-        loadSessionData();
-        $rootScope.loggedin = true;
-        TermsOfServiceEndpoint.get()
-        .$promise.then(function (tosEntry) {
-            TermsOfService.tosCheck(tosEntry);
-            if (redirect) {
-                $location.url(redirect);
-            }
-            noReload || $route.reload();
-        });
+        TermsOfService.getTosEntry()
+            .then(function(){
+               loadSessionData();
+                $rootScope.loggedin = true;
+                if (redirect) {
+                    $location.url(redirect);
+                }
+                noReload || $route.reload(); 
+            }); 
     }
 
     function doLogout(redirect) {
@@ -66,14 +65,6 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     $rootScope.$on('event:authentication:logout:succeeded', function () {
         doLogout();
     });
-
-    $rootScope.$on('event:authentication:tos:agreement', function () {
-        TermsOfService.openTos();
-    });
-
-    // $rootScope.$on('event:authentication:tos:check', function () {
-    //     TermsOfService.tosCheck();
-    // });
 
     // Don't think this is needed. We should already be logged out before this event
     // $rootScope.$on('event:authentication:login:failed', function () {

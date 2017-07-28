@@ -36,7 +36,7 @@ function TosController(
             Session.setSessionDataEntry('tos', tosSessionData.agreement_date);
             //don't really need this if, but it's just a backup so that you can't access the site if tos is not set properly
             if (Session.getSessionDataEntry('tos')) {
-                $scope.$parent.closeModal();
+                $scope.$parent.confirm();
             }
         });
     };

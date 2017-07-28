@@ -6,6 +6,8 @@ module.exports = [
     'TermsOfServiceEndpoint',
     'CONST',
     '$rootScope',
+    '$q',
+    'Notify',
 
 function (
     $http,
@@ -14,27 +16,40 @@ function (
     Session,
     TermsOfServiceEndpoint,
     CONST,
-    $rootScope
+    $rootScope,
+    $q,
+    Notify
 ) {
+    var tosCheck = function (tosEntry) {
+        var deferred = $q.defer();
+        var showTos = false;
+        //if the tos agreement date is after the to the release date, then resolve
+        if(tosEntry.results.length && tosEntry.results[0].agreement_date >= CONST.TOS_RELEASE_DATE) {
+            deferred.resolve();
+        //Otherwise (the tos agreement is before the release date or the user has never signed)
+        //We need to show the ToS modal 
+        } else {
+            showTos = true;
+        }
+
+        if (showTos){
+            Notify.confirmTos().then(function(){
+                deferred.resolve();
+            }, function(){
+                deferred.reject();
+            });
+        }   
+        return deferred.promise;
+    };
 
     return {
 
-        tosCheck: function (tosEntry) {
-                if (tosEntry.results.length) {
-                    Session.setSessionDataEntry('tos', tosEntry.results[0].agreement_date);
-                    if (Session.getSessionDataEntry('tos') && Session.getSessionDataEntry('tos') < CONST.TOS_RELEASE_DATE) {
-                        $rootScope.$broadcast('event:authentication:tos:agreement');
-                    }
-                } else if (!tosEntry.results.length) {
-                    $rootScope.$broadcast('event:authentication:tos:agreement');
-
-                }
-            },
-
-        openTos: function () {
-            ModalService.openTemplate('<terms-of-service></terms-of-service>', ' ', false, false, false, false);
+        getTosEntry: function (){
+            return TermsOfServiceEndpoint.get()
+            .$promise.then(function (tosEntry) {
+                return tosCheck(tosEntry);
+            });
         }
-
     };
 
 }];
