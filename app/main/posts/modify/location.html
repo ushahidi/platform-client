@@ -1,42 +1,36 @@
  
 <div class="location-wrapper">
     <div id="{{id}}-map" class="map" style="height: 265px; width: 100%;"></div>
-    <form 
-        role="search" 
-        class="searchbar" 
-        data-message="search"
-        dropdown 
-        auto-close="outsideClick"  
-    >
-        <div 
-            class="searchbar-input init"
-            data-toggle="dropdown-menu"
-            dropdown-toggle
-            dropdownAppendToBody
-        > 
+    <form class="searchbar">
+        <div class="searchbar-input init" role="search"> 
             <div class="form-field">
                 <input name="{{name}}" 
                     type="search" 
                     maxlength="250" 
                     placeholder="{{'location.placeholder' | translate}}" 
                     ng-model="searchLocationTerm" 
-                    ng-disabled="processing" 
                     ng-focus="showSearchResults()" 
-                    ng-keyup="showSearchResults()"
-                    ng-keydown="searchLocation()"
-                    
+                    ng-keydown="handleActiveSearch($event)"
                 />
             </div>
-            <div class="searchbar-results dropdown-menu init" dropdown-menu>
+            <div id="searchbar-results" class="searchbar-results dropdown-menu init">
                 <div class="form-field">
-                    <button class="button-plain" ng-click="searchLocation()" ng-disabled="processing">
+                    <button type="button" class="button-primary" ng-if="!processing">
                         <svg class="iconic">
-                            <use 
-                                xmlns:xlink="http://www.w3.org/1999/xlink" 
-                                xlink:href="/img/iconic-sprite.svg#magnifying-glass">
-                            </use>
+                            <use
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xlink:href="/img/iconic-sprite.svg#magnifying-glass"
+                            ></use>
                         </svg>
-                        <span class="button-label" translate>location.search</span>
+                        <span class="button-label" translate="location.search">Search</span>
+                    </button>
+                    <button type="button" class="button-primary" ng-if="processing">
+                        <div class="loading" style="width: auto;">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span class="button-label" translate="app.searching">Searching</span>
                     </button>
                     <button class="button-beta button-plain" ng-click="chooseCurrentLocation()" ng-if="showCurrentPositionControl" >
                         <svg class="iconic">
