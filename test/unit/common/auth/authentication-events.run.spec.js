@@ -43,13 +43,13 @@ describe('global event handlers', function () {
         spyOn(mockedAuthenticationService, 'openLogin');
 
         mockTOS = {
-            getTosEntry: function () { 
+            getTosEntry: function () {
                 return {
                     then: (cb) => {
                         cb();
-                    }           
-                };  
-            };
+                    }
+                };
+            }
         };
 
         testApp.service('Session', function () {

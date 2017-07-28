@@ -127,13 +127,13 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         var deferred = $q.defer();
         var scope = getScope();
 
-            scope.confirm = function () {
-                deferred.resolve();
-                ModalService.close();
-            };
-            
-            ModalService.openTemplate('<terms-of-service></terms-of-service>', ' ', false, scope, false, false);
-        
+        scope.confirm = function () {
+            deferred.resolve();
+            ModalService.close();
+        };
+
+        ModalService.openTemplate('<terms-of-service></terms-of-service>', ' ', false, scope, false, false);
+
         return deferred.promise;
     }
 
