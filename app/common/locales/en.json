@@ -67,6 +67,7 @@
         "description" : "Description",
         "color" : "Color",
         "search_users" : "Search users",
+        "searching" : "Searching",
         "fields" : "Fields",
         "filter_by" :"Filter by...",
         "apply_filters" : "Apply filters",
