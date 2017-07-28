@@ -1,7 +1,7 @@
 module.exports = PostLocationDirective;
 
-PostLocationDirective.$inject = ['$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window'];
-function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
+PostLocationDirective.$inject = ['$document', '$http', 'Leaflet', 'Geocoding', 'Maps', '_', 'Notify', '$window'];
+function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, $window) {
     return {
         restrict: 'E',
         replace: true,
@@ -25,7 +25,6 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         $scope.clear = clear;
 
         // for dropdown
-        $scope.showDropdown = false;
         $scope.showSearchResults = showSearchResults;
         $scope.hideSearchResults = hideSearchResults;
         $scope.chooseLocation = chooseLocation;
@@ -35,6 +34,7 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
         activate();
 
         function activate() {
+
             Maps.createMap(element[0].querySelector('.map'))
             .then(function (data) {
                 map = data;
@@ -59,8 +59,16 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
                 }
                 // @todo: Should we watch the model and update map?
             });
+
+            $document.on('click', onDocumentClick);
+
         }
 
+        function onDocumentClick(event) {
+            if (!element[0].querySelector('.searchbar').contains(event.target)) {
+                $scope.hideSearchResults();
+            }
+        }
 
         function onMapClick(e) {
             var wrappedLatLng = e.latlng.wrap(),
@@ -109,11 +117,11 @@ function PostLocationDirective($http, L, Geocoding, Maps, _, Notify, $window) {
 
         // for dropdown
         function showSearchResults() {
-            $scope.showDropdown = true;
+            element[0].querySelector('#searchbar-results').classList.add('active');
         }
 
         function hideSearchResults() {
-            $scope.showDropdown = false;
+            element[0].querySelector('#searchbar-results').classList.remove('active');
         }
 
         function searchLocation() {
