@@ -29,24 +29,21 @@ describe('TermsOfService', function () {
     }));
 
     beforeEach(function () {
-        $rootScope.$digest();
-        $rootScope.$apply();
+        // $rootScope.$digest();
+        // $rootScope.$apply();
     });
 
     describe('new user', function () {
 
         it('should call the ToS authentication event when the result is empty (the user has not ever agreed to ToS)', function () {
-            var successCallback = jasmine.createSpy('success').and.callThrough();
             spyOn(Notify, 'confirmTos').and.callThrough();
+            spyOn(TermsOfServiceEndpoint, 'get').and.callThrough();
 
             TermsOfService.getTosEntry();
 
-            $rootScope.$digest();
-
-
+            expect(TermsOfServiceEndpoint.get).toHaveBeenCalled();
             expect(Notify.confirmTos).toHaveBeenCalled();
 
-            expect(successCallback).toHaveBeenCalled();
         });
     });
     // it('should call the ToS authentication event when the agreement date is less than (before) the version date', function () {
