@@ -22,6 +22,8 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         $scope.processing = false;
         $scope.searchLocationTerm = '';
         $scope.searchLocation = searchLocation;
+        $scope.searchTimeout;
+        $scope.handleActiveSearch = handleActiveSearch;
         $scope.clear = clear;
 
         // for dropdown
@@ -124,8 +126,26 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             element[0].querySelector('#searchbar-results').classList.remove('active');
         }
 
+        function handleActiveSearch(event) {
+            var letter = event.keyCode > 47 && event.keyCode < 58;
+            var number = event.keyCode > 64 && event.keyCode < 91;
+            if (letter || number) {
+                $scope.processing = true;
+                if ($scope.searchTimeout) {
+                    clearTimeout($scope.searchTimeout);
+                }
+                $scope.searchTimeout = setTimeout($scope.searchLocation, 250);
+            }
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                return false;
+            }
+        }
+
         function searchLocation() {
+            $scope.processing = true;
             Geocoding.searchAllInfo($scope.searchLocationTerm).then(function (results) {
+                $scope.processing = false;
                 $scope.searchResults = results;
             });
         }
