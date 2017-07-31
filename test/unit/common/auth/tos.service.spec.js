@@ -36,6 +36,7 @@ describe('TermsOfService', function () {
     describe('new user', function () {
 
         it('should call the ToS authentication event when the result is empty (the user has not ever agreed to ToS)', function () {
+
             spyOn(Notify, 'confirmTos').and.callThrough();
             spyOn(TermsOfServiceEndpoint, 'get').and.callThrough();
 
