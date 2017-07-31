@@ -7,10 +7,23 @@ describe('TermsOfService', function () {
         $q,
         $scope,
         TermsOfServiceEndpoint,
+        data,
         BACKEND_URL;
 
     beforeEach(function () {
         makeTestApp()
+
+        .service('TermsOfServiceEndpoint', function () {
+            return {
+                get: function () {
+                    return {$promise: {
+                        then: function (successCallback, failCallback) {
+                            successCallback(data);
+                        }
+                    }};
+                }
+            };
+        })
 
         .service('TermsOfService', require('app/common/auth/tos.service.js'));
 
@@ -28,38 +41,47 @@ describe('TermsOfService', function () {
         BACKEND_URL = _CONST_.BACKEND_URL;
     }));
 
-    beforeEach(function () {
-        // $rootScope.$digest();
-        // $rootScope.$apply();
+    it('should call the ToS authentication event when the result is empty (the user has not ever agreed to ToS)', function () {
+        data = {results: []};
+
+        spyOn(Notify, 'confirmTos').and.callThrough();
+        spyOn(TermsOfServiceEndpoint, 'get').and.callThrough();
+
+        TermsOfService.getTosEntry();
+
+        expect(TermsOfServiceEndpoint.get).toHaveBeenCalled();
+        expect(Notify.confirmTos).toHaveBeenCalled();
+
+        $rootScope.$digest();
     });
 
-    describe('new user', function () {
+    it('should call the ToS authentication event when the agreement date is less than (before) the version date', function () {
+        var inValidTosAgreementDate = (TOS_RELEASE_DATE - 1);
+        data = {results: [{'agreement_date': inValidTosAgreementDate}]};
 
-        it('should call the ToS authentication event when the result is empty (the user has not ever agreed to ToS)', function () {
+        spyOn(Notify, 'confirmTos').and.callThrough();
+        spyOn(TermsOfServiceEndpoint, 'get').and.callThrough();
 
-            spyOn(Notify, 'confirmTos').and.callThrough();
-            spyOn(TermsOfServiceEndpoint, 'get').and.callThrough();
+        TermsOfService.getTosEntry();
 
-            TermsOfService.getTosEntry();
+        expect(TermsOfServiceEndpoint.get).toHaveBeenCalled();
+        expect(Notify.confirmTos).toHaveBeenCalled();
 
-            expect(TermsOfServiceEndpoint.get).toHaveBeenCalled();
-            expect(Notify.confirmTos).toHaveBeenCalled();
-
-        });
+        $rootScope.$digest();
     });
-    // it('should call the ToS authentication event when the agreement date is less than (before) the version date', function () {
-    //     spyOn($rootScope, '$broadcast').and.callThrough();
-    //     var invalidTosAgreementDate = (TOS_RELEASE_DATE - 1);
-    //     TermsOfService.tosCheck({results: [{'agreement_date': invalidTosAgreementDate}]});
-    //     expect($rootScope.$broadcast).toHaveBeenCalled();
-    //     var broadcastArguments = $rootScope.$broadcast.calls.mostRecent().args;
-    //     expect(broadcastArguments[0]).toEqual('event:authentication:tos:agreement');
-    // });
 
-    // it('should NOT call the ToS authentication event when the agreement date is greater than (after) the version date', function () {
-    //     spyOn($rootScope, '$broadcast').and.callThrough();
-    //     var validTosAgreementDate = (TOS_RELEASE_DATE + 1);
-    //     TermsOfService.tosCheck({results: [{'agreement_date': validTosAgreementDate}]});
-    //     expect($rootScope.$broadcast).not.toHaveBeenCalled();
-    // });
+    it('should NOT call the ToS authentication event when the agreement date is greater than (after) the version date', function () {
+        var ValidTosAgreementDate = (TOS_RELEASE_DATE + 1);
+        data = {results: [{'agreement_date': ValidTosAgreementDate}]};
+
+        spyOn(Notify, 'confirmTos').and.callThrough();
+        spyOn(TermsOfServiceEndpoint, 'get').and.callThrough();
+
+        TermsOfService.getTosEntry();
+
+        expect(TermsOfServiceEndpoint.get).toHaveBeenCalled();
+        expect(Notify.confirmTos).not.toHaveBeenCalled();
+
+        $rootScope.$digest();
+    });
 });

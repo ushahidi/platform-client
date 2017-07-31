@@ -48,7 +48,6 @@ function (
 
             return TermsOfServiceEndpoint.get()
             .$promise.then(function (tosEntry) {
-
                 return tosCheck(tosEntry);
             });
         }
