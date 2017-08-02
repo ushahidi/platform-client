@@ -2,10 +2,14 @@ module.exports = [
     '$resource',
     'Util',
     'CacheFactory',
+    'TranslationService',
+    '$http',
 function (
     $resource,
     Util,
-    CacheFactory
+    CacheFactory,
+    TranslationService,
+    $http
 ) {
     var cache;
 
@@ -22,14 +26,40 @@ function (
             cache: cache,
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
+            },
+            interceptor: {
+                response: (response) => {
+                    return TranslationService.getLanguage().then((currentLanguage) => {
+                        return response.resource.map((resource) => {
+                            return getLocalized(resource, currentLanguage);
+                        });
+                    });
+                }
             }
         },
         get: {
             method: 'GET',
-            cache: cache
+            cache: cache,
+            interceptor: {
+                response: (response) => {
+                    return TranslationService.getLanguage().then((currentLanguage) => {
+                        return getLocalized(response.resource, currentLanguage);
+                    });
+                }
+            }
         },
         update: {
-            method: 'PUT'
+            method: 'PUT',
+            transformRequest: [
+                (data) => {
+                    if (data.translations && data.translations.en) {
+                        data.name = data.translations.en.name;
+                        data.description = data.translations.en.description;
+                    }
+                    return data;
+                },
+                $http.defaults.transformRequest[0]
+            ]
         },
         deleteEntity: {
             method: 'DELETE'
@@ -61,6 +91,33 @@ function (
         cache.removeAll();
         return FormEndpoint.deleteEntity(item);
     };
+
+    function getLocalized(resource, currentLanguage) {
+        // Ensure we have at least empty translations
+        resource.translations = angular.extend(
+            {},
+            {
+                en: {
+                    name: resource.name,
+                    description: resource.description
+                },
+                ar: {}
+            },
+            resource.translations
+        );
+
+        if (resource.translations) {
+            if (resource.translations[currentLanguage]) {
+                angular.forEach(resource.translations[currentLanguage], (value, key) => {
+                    // Replace original values with translations
+                    resource[key] = value;
+                });
+            }
+        }
+
+        return resource;
+    }
+
 
     return FormEndpoint;
 

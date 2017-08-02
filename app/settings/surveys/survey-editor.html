@@ -40,13 +40,19 @@
       <section class="form-sheet">
         <!-- TODO: get form colour here -->
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
-        <div class="form-field title survey-title">
+        <div class="form-field survey-title">
           <!--  TODO: add placeholder text-->
-            <label class="hidden" translate>survey.survey_name</label>
-            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
+            <label class="" translate>survey.survey_name</label>
+            <p class="" translate="languages.en">English</p>
+            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations.en.name" required>
+            <p class="" translate="languages.ar">Arabic</p>
+            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations.ar.name" required>
 
             <label class="hidden" translate>app.description</label>
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Reports about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
+            <p class="" translate="languages.en">English</p>
+            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations.en.description">Reports about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
+            <p class="" translate="languages.ar">Arabic</p>
+            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations.ar.description">Reports about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
         </div>
 
         <nav class="tabs-menu init" data-tabs="survey-details">
@@ -204,16 +210,27 @@
       </section>
       <!-- Task sections -->
       <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length">
-        <div class="form-field title section-title">
-            <label class="hidden" translate="survey.task_name">Section name</label>
-            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
+        <div class="form-field section-title">
+            <label class="" translate="survey.task_name">Section name</label>
+            <p class="" translate="languages.en">English</p>
+            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.translations.en.label">
+            <p class="" translate="languages.ar">Arabic</p>
+            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.translations.ar.label">
 
-            <label class="hidden" translate="survey.task_description">Section description</label>
+            <label class="" translate="survey.task_description">Section description</label>
+            <p class="" translate="languages.en">English</p>
             <textarea
               name="description"
               placeholder="{{ 'survey.describe_this_task' | translate }}"
               rows="1"
-              ng-model="task.description"
+              ng-model="task.translations.en.description"
+              ></textarea>
+            <p class="" translate="languages.ar">Arabic</p>
+            <textarea
+              name="description"
+              placeholder="{{ 'survey.describe_this_task' | translate }}"
+              rows="1"
+              ng-model="task.translations.ar.description"
               ></textarea>
 
             <!-- <p class="alert">

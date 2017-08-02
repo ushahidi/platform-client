@@ -1,7 +1,10 @@
  <div class="modal-body">
   <div class="form-field">
       <label translate="app.name">Name</label>
-      <input type="text" ng-model="editAttribute.label" ng-click="editName()">
+      <p class="" translate="languages.en">English</p>
+      <input type="text" ng-model="editAttribute.translations.en.label" ng-click="editName()">
+      <p class="" translate="languages.ar">Arabic</p>
+      <input type="text" ng-model="editAttribute.translations.ar.label" ng-click="editName()">
    </div>
    <div class="form-field switch">
       <label translate="survey.show_field_description">Show field description</label>
@@ -11,7 +14,10 @@
       </div>
 
       <div class="form-field" data-fieldgroup-target="field-description-new" ng-show="descriptionToggle">
-          <input type="text" placeholder="Explain this field..." ng-model="editAttribute.instructions">
+      <p class="" translate="languages.en">English</p>
+          <input type="text" placeholder="Explain this field..." ng-model="editAttribute.translations.en.instructions">
+      <p class="" translate="languages.ar">Arabic</p>
+          <input type="text" placeholder="Explain this field..." ng-model="editAttribute.translations.ar.instructions">
       </div>
   </div>
    <div ng-if="canDisplay()">
