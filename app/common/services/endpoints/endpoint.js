@@ -1,8 +1,11 @@
 class Endpoint {
-    constructor(id, url, params, methods, $resource, CacheFactory, $q) {
+    constructor(id, url, params, methods, $resource, CacheFactory, $q, $httpParamSerializer) {
+        this.url = url;
         this.initCache(CacheFactory, id);
+        this.initRequestCache(CacheFactory, id)
         this.initResource($resource, url, params, methods);
         this.$q = $q;
+        this.$httpParamSerializer;
     }
 
     initCache(CacheFactory, id) {
@@ -10,6 +13,13 @@ class Endpoint {
             this.cache = new CacheFactory(id);
         }
         return this.cache;
+    }
+
+    initRequestCache(CacheFactory, id) {
+        if (!(this.requestCache = CacheFactory.get(id + 'req'))) {
+            this.requestCache = new CacheFactory(id + 'req', { storageMode: 'memory' });
+        }
+        return this.requestCache;
     }
 
     initResource($resource, url, params, methods) {
@@ -26,7 +36,8 @@ class Endpoint {
                 },
                 transformResponse: function (data) {
                     return angular.fromJson(data).results;
-                }
+                },
+                cache: this.requestCache
             },
             save: {
                 method: 'POST'
@@ -35,7 +46,8 @@ class Endpoint {
                 method: 'PUT'
             },
             get: {
-                method: 'GET'
+                method: 'GET',
+                cache: this.requestCache
             },
             delete: {
                 method: 'DELETE'
@@ -61,6 +73,11 @@ class Endpoint {
             result.$promise.then((result) => {
                 this.cache.put(cacheId, result);
             }, () => {});
+        } else {
+            // Remove the cached request
+            this.requestCache.remove(buildUrl(this.url, params));
+            // Add $promise to our response, even when it comes from the cache
+            result.$promise = this.$q.when(result);
         }
 
         return result;
@@ -81,9 +98,10 @@ class Endpoint {
 
             result.$promise.then((result) => {
                 this.cache.put(cacheId, result);
-                this.requestCache.remove();
             }).catch(angular.noop);
         } else {
+            // Remove the cached request
+            this.requestCache.remove(buildUrl(this.url, params));
             // Add $promise to our response, even when it comes from the cache
             result.$promise = this.$q.when(result);
         }
@@ -149,6 +167,14 @@ function resolvePromiseWithResult(result) {
 
 function isPromiseLike(obj) {
   return obj && angular.isFunction(obj.then);
+}
+
+function buildUrl(url, params) {
+    let serializedParams = this.$httpParamSerializer(params);
+    if (serializedParams.length > 0) {
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + serializedParams;
+    }
+    return url;
 }
 
 export default Endpoint
