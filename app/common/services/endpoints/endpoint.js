@@ -13,11 +13,17 @@ class Endpoint {
     }
 
     initResource($resource, url, params, methods) {
-        let defaultParams = {};
+        let defaultParams = {
+            id: '@id'
+        };
         let defaultMethods = {
             query: {
                 method: 'GET',
                 isArray: true,
+                params: {
+                    order: 'asc',
+                    orderby: 'priority'
+                },
                 transformResponse: function (data) {
                     return angular.fromJson(data).results;
                 }
@@ -36,7 +42,10 @@ class Endpoint {
             }
         };
 
-        this.resource = $resource(url, params);
+        params = angular.extend(defaultParams, params);
+        methods = angular.extend(defaultMethods, methods);
+
+        this.resource = $resource(url, params, methods);
     }
 
     /**
@@ -51,14 +60,14 @@ class Endpoint {
 
             result.$promise.then((result) => {
                 this.cache.put(cacheId, result);
-            });
+            }, () => {});
         }
 
         return result;
     }
     // Legacy
     queryFresh(params, cb) {
-        this.query(params, cb, { fresh : true });
+        return this.query(params, cb, { fresh : true });
     }
 
     get(params, cb, options) {
@@ -72,47 +81,47 @@ class Endpoint {
 
             result.$promise.then((result) => {
                 this.cache.put(cacheId, result);
-            });
+                this.requestCache.remove();
+            }).catch(angular.noop);
         } else {
-            // @todo check is result is an existing in-progress request
             // Add $promise to our response, even when it comes from the cache
             result.$promise = this.$q.when(result);
         }
 
         // Run the callback
-        result.$promise.then(cb);
+        result.$promise.then(cb).catch(angular.noop);
 
         return result;
     }
     // Legacy
     getFresh(params, cb) {
-        this.get(params, cb, { fresh : true });
+        return this.get(params, cb, { fresh : true });
     }
 
     save(data, cb) {
-        let request = this.resource.save(params);
-        // @todo make keys shorter?? specify ids?
-        let cacheId = JSON.stringify(params);
+        let request = this.resource.save(data);
 
         request.$promise.then((result) => {
+            // @todo make keys shorter?? specify ids?
+            let cacheId = JSON.stringify({id: result.id});
             this.cache.put(cacheId, result);
-        });
+        }, () => {});
 
         return request;
     }
     // Legacy alias
     saveCache(data, cb) {
-        this.save(data, cb);
+        return this.save(data, cb);
     }
 
     update(params, data, cb) {
-        let request = this.resource.update(params);
+        let request = this.resource.update(params, data);
         // @todo make keys shorter?? specify ids?
         let cacheId = JSON.stringify(params);
 
         request.$promise.then((result) => {
-            this.cache.remove(cacheId, result);
-        });
+            this.cache.put(cacheId, result);
+        }, () => {});
 
         return request;
     }
@@ -123,8 +132,8 @@ class Endpoint {
         let cacheId = JSON.stringify(params);
 
         request.$promise.then((result) => {
-            this.cache.remove(cacheId, result);
-        });
+            this.cache.remove(cacheId);
+        }, () => {});
 
         return request;
     }
