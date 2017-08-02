@@ -43,14 +43,20 @@
           <form name="form">
             <div class="form-sheet">
               <!-- Title -->
-              <div class="form-field title">
-                <label class="hidden" translate="category.editor.name"></label>
-                <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.tag" required>
+              <div class="form-field">
+                <label class="" translate="category.editor.name"></label>
+                <p class="" translate="languages.en">English</p>
+                <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.translations.en.tag" required>
+                <p class="" translate="languages.ar">Arabic</p>
+                <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="category.translations.ar.tag" required>
               </div>
               <!-- Description -->
               <div class="form-field">
                 <label translate>category.editor.description</label>
-                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
+                <p class="" translate="languages.en"></p>
+                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.translations.en.description"></textarea>
+                <p class="" translate="languages.ar"></p>
+                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.translations.ar.description"></textarea>
               </div>
               <!-- Parent/child-relations -->
               <fieldset
