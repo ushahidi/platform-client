@@ -11,9 +11,6 @@ function (
     }, {
         get: {
             method: 'GET'
-        },
-        delete: {
-            method: 'DELETE'
         }
     });
 
