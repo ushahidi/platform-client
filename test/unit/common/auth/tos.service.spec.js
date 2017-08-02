@@ -41,7 +41,7 @@ describe('TermsOfService', function () {
         BACKEND_URL = _CONST_.BACKEND_URL;
     }));
 
-    it('should call the ToS authentication event when the result is empty (the user has not ever agreed to ToS)', function () {
+    it('should open the tos modal (call Notify.confirmTos) when the api result is empty (the user has not ever agreed to ToS)', function () {
         data = {results: []};
 
         spyOn(Notify, 'confirmTos').and.callThrough();
@@ -55,7 +55,7 @@ describe('TermsOfService', function () {
         $rootScope.$digest();
     });
 
-    it('should call the ToS authentication event when the agreement date is less than (before) the version date', function () {
+    it('should open the tos modal (call Notify.confirmTos) when the agreement date is less than (before) the version date', function () {
         var inValidTosAgreementDate = (TOS_RELEASE_DATE - 1);
         data = {results: [{'agreement_date': inValidTosAgreementDate}]};
 
@@ -70,7 +70,7 @@ describe('TermsOfService', function () {
         $rootScope.$digest();
     });
 
-    it('should NOT call the ToS authentication event when the agreement date is greater than (after) the version date', function () {
+    it('should NOT open the tos modal (not call Notify.confirmTos) when the agreement date is greater than (after) the version date', function () {
         var ValidTosAgreementDate = (TOS_RELEASE_DATE + 1);
         data = {results: [{'agreement_date': ValidTosAgreementDate}]};
 
