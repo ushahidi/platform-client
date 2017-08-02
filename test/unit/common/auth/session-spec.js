@@ -14,9 +14,7 @@ describe('Session', function () {
             permissions: undefined,
             accessToken: undefined,
             loginPath: undefined,
-            gravatar: undefined,
-            tos: undefined
-        };
+            gravatar: undefined        };
 
         var testApp = makeTestApp();
 
@@ -90,8 +88,7 @@ describe('Session', function () {
                     permissions: undefined,
                     accessToken: 'secrettoken',
                     loginPath: undefined,
-                    gravatar: undefined,
-                    tos: undefined
+                    gravatar: undefined
                 };
 
                 expect(returnedSessionData).toEqual(expectedSessionData);

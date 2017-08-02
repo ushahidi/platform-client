@@ -92,7 +92,7 @@ angular.module('app',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
         CLAIMED_USER_SCOPES      : claimedAnonymousScopes.concat('dataproviders'),
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
-        TOS_RELEASE_DATE         : 1500588208
+        TOS_RELEASE_DATE         : 1501596859
     })
 
     .config(['$compileProvider', function ($compileProvider) {

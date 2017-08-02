@@ -12,8 +12,7 @@ function (
         role: undefined,
         permissions: undefined,
         loginPath: undefined,
-        gravatar: undefined,
-        tos: undefined
+        gravatar: undefined
     };
 
     this.sessionData = angular.copy(this.clearedSessionData);

@@ -36,8 +36,7 @@ function (
             role: userData.role,
             permissions: userData.permissions,
             gravatar: userData.gravatar,
-            language: userData.language,
-            tos: null
+            language: userData.language
         });
         loginStatus = true;
     },
