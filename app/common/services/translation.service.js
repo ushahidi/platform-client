@@ -8,6 +8,7 @@ module.exports = [
     'Authentication',
     'UserEndpoint',
     'ConfigEndpoint',
+    '$route',
 function (
     $rootScope,
     $q,
@@ -17,7 +18,8 @@ function (
     Session,
     Authentication,
     UserEndpoint,
-    ConfigEndpoint
+    ConfigEndpoint,
+    $route
 ) {
     var translate = function (lang) {
         $translate.use(lang).then(function (langKey) {
@@ -34,6 +36,7 @@ function (
         });
         // Translating and setting page-title
         $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
+        $route.reload();
     };
 
     var setStartLanguage = function () {
