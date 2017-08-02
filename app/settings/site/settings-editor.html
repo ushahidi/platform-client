@@ -50,9 +50,12 @@
             <div class="main-col">
 
                 <div class="form-sheet">
-                    <div class="form-field title">
-                        <label class="hidden" for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.deployment_name</label>
+                    <div class="form-field">
+                        <label class="" for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.deployment_name</label>
+                        <p class="" translate="languages.en">English</p>
                         <input id="name" name="name" type="text" placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
+                        <p class="" translate="languages.ar">Arabic</p>
+                        <input id="name" name="name" type="text" placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.translations.ar.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
 
                          <div class="alert error" ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" >
                             <svg class="iconic">
@@ -65,7 +68,10 @@
                     <div class="form-field">
                         <label for="site-settings-description" translate>settings.site_description</label>
 
+                        <p class="" translate="languages.en">English</p>
                         <textarea id="site-settings-description" name="description" type="text" ng-model="site.description" placeholder="{{'settings.site_description_placeholder' | translate}}" data-min-rows='1' rows='1'></textarea>
+                        <p class="" translate="languages.ar">Arabic</p>
+                        <textarea id="site-settings-description" name="description" type="text" ng-model="site.translations.ar.description" placeholder="{{'settings.site_description_placeholder' | translate}}" data-min-rows='1' rows='1'></textarea>
                     </div>
 
                     <div class="form-field">

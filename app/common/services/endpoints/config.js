@@ -8,6 +8,8 @@ module.exports = [
     'Authentication',
     'Session',
     '$q',
+    '$injector',
+    '$http',
 function (
     $resource,
     Util,
@@ -17,7 +19,9 @@ function (
     UserEndpoint,
     Authentication,
     Session,
-    $q
+    $q,
+    $injector,
+    $http
 ) {
     var cache;
     if (!(cache = CacheFactory.get('configCache'))) {
@@ -32,13 +36,35 @@ function (
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data);
             },
-            cache: cache
+            cache: cache,
+            interceptor: {
+                response: (response) => {
+                    if (response.resource.id !== 'site') {
+                        return response.resource;
+                    }
+
+                    let TranslationService = $injector.get('TranslationService');
+                    return TranslationService.getLanguage(response).then((currentLanguage) => {
+                        return getLocalized(response.resource, currentLanguage);
+                    });
+                }
+            }
         },
         update: {
             method: 'PUT',
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data);
-            }
+            },
+            transformRequest: [
+                (data) => {
+                    if (data.id === 'site' && data.translations && data.translations.en) {
+                        data.name = data.translations.en.name;
+                        data.description = data.translations.en.description;
+                    }
+                    return data;
+                },
+                $http.defaults.transformRequest[0]
+            ]
         }
     });
 
@@ -66,6 +92,32 @@ function (
         cache.removeAll();
         return persist(item);
     };
+
+    function getLocalized(resource, currentLanguage) {
+        // Ensure we have at least empty translations
+        resource.translations = angular.extend(
+            {},
+            {
+                en: {
+                    name: resource.name,
+                    description: resource.description
+                },
+                ar: {}
+            },
+            resource.translations
+        );
+
+        if (resource.translations) {
+            if (resource.translations[currentLanguage]) {
+                angular.forEach(resource.translations[currentLanguage], (value, key) => {
+                    // Replace original values with translations
+                    resource[key] = value;
+                });
+            }
+        }
+
+        return resource;
+    }
 
     return ConfigEndpoint;
 }];
