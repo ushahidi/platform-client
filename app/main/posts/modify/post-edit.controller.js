@@ -31,6 +31,7 @@ function (
     ]).then(function (results) {
         console.log(results);
         var post = results[1];
+
         if (results[0].id) {
             Notify.error('post.already_locked');
             $location.url('/posts/' + post.id);
