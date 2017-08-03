@@ -30,13 +30,12 @@ function (
         PostEndpoint.get({ id: $routeParams.id }).$promise
     ]).then(function (results) {
         console.log(results);
-
+        var post = results[1];
         if (results[0].id) {
             Notify.error('post.already_locked');
             $location.url('/posts/' + post.id);
         }
 
-        var post = results[1];
         // Redirect to view if no edit permissions
         if (post.allowed_privileges.indexOf('update') === -1) {
             $location.url('/posts/' + post.id);
