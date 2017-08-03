@@ -6,6 +6,8 @@ module.exports = [
     '$routeParams',
     'FormEndpoint',
     'PostEndpoint',
+    'Notify',
+    '$q',
 function (
     $scope,
     $translate,
@@ -13,7 +15,9 @@ function (
     $controller,
     $routeParams,
     FormEndpoint,
-    PostEndpoint
+    PostEndpoint,
+    Notify,
+    $q
 ) {
 
     $translate('post.edit_post').then(function (title) {
@@ -21,7 +25,18 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    PostEndpoint.get({ id: $routeParams.id }).$promise.then(function (post) {
+    $q.all([
+        PostEndpoint.requestLock().$promise,
+        PostEndpoint.get({ id: $routeParams.id }).$promise
+    ]).then(function (results) {
+        console.log(results);
+
+        if (results[0].id) {
+            Notify.error('post.already_locked');
+            $location.url('/posts/' + post.id);
+        }
+
+        var post = results[1];
         // Redirect to view if no edit permissions
         if (post.allowed_privileges.indexOf('update') === -1) {
             $location.url('/posts/' + post.id);
