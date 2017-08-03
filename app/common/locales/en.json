@@ -187,6 +187,8 @@
     },
 
     "survey": {
+        "internal_use_task" : "Task is only for internal use",
+        "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "delete_task" : "Delete task",
         "duplicate_task" : "Duplicate task",
         "show_this_task_to" : "Show this task to everyone when published",
