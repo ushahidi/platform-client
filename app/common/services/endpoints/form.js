@@ -48,6 +48,19 @@ function (
                 }
             }
         },
+        save: {
+            method: 'POST',
+            transformRequest: [
+                (data) => {
+                    if (data.translations && data.translations.en) {
+                        data.name = data.translations.en.name;
+                        data.description = data.translations.en.description;
+                    }
+                    return data;
+                },
+                $http.defaults.transformRequest[0]
+            ]
+        },
         update: {
             method: 'PUT',
             transformRequest: [

@@ -39,6 +39,19 @@ function (
                 }
             }
         },
+        save: {
+            method: 'POST',
+            transformRequest: [
+                (data) => {
+                    if (data.translations && data.translations.en) {
+                        data.tag = data.translations.en.tag;
+                        data.description = data.translations.en.description;
+                    }
+                    return data;
+                },
+                $http.defaults.transformRequest[0]
+            ]
+        },
         update: {
             method: 'PUT',
             transformRequest: [
