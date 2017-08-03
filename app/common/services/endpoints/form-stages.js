@@ -111,13 +111,11 @@ function (
             resource.translations
         );
 
-        if (resource.translations) {
-            if (resource.translations[currentLanguage]) {
-                angular.forEach(resource.translations[currentLanguage], (value, key) => {
-                    // Replace original values with translations
-                    resource[key] = value;
-                });
-            }
+        if (resource.translations[currentLanguage]) {
+            angular.forEach(resource.translations[currentLanguage], (value, key) => {
+                // Replace original values with translations
+                resource[key] = value;
+            });
         }
 
         return resource;
