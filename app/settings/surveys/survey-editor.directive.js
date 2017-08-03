@@ -432,6 +432,12 @@ function SurveyEditorController(
 
     function addNewTask(task) {
         ModalService.close();
+        task.translations = {
+            en: {
+                label: task.label,
+                description: task.description
+            }
+        };
         // Set task priority
         task.priority = getNewTaskPriority();
         task.id = $scope.getInterimId();
@@ -452,6 +458,14 @@ function SurveyEditorController(
         if (!attribute.form_stage_id) {
             ModalService.close();
         }
+
+        if (!attribute.translations) {
+            attribute.translations = {
+                en: {},
+                ar: {}
+            };
+        }
+
         $scope.editAttribute = attribute;
         var title = attribute.id ? 'survey.edit_field' : 'survey.add_field';
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
@@ -459,6 +473,9 @@ function SurveyEditorController(
 
     function addNewAttribute(attribute, task) {
         ModalService.close();
+
+        attribute.label = attribute.translations.en.label;
+        attribute.instructions = attribute.translations.en.instructions;
         // Set active task as form_stage_id
         // If this task is new and has not been saved
         // it won't have an id so in this instance we use its label
