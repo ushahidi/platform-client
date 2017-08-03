@@ -1,7 +1,9 @@
 module.exports = [
     'CONST',
+    '$rootScope',
 function (
-    CONST
+    CONST,
+    $rootScope
 ) {
     return function (data) {
         return angular.extend({}, {
@@ -12,7 +14,9 @@ function (
             values: {},
             completed_stages: [],
             published_to: [],
-            post_date: new Date()
+            post_date: new Date(),
+            author_realname: $rootScope.currentUser ? $rootScope.currentUser.realname : '',
+            author_email: $rootScope.currentUser ? $rootScope.currentUser.email : ''
         }, data);
     };
 }];
