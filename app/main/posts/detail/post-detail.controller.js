@@ -104,7 +104,7 @@ function (
     if ($scope.post.form && $scope.post.form.id) {
         $q.all([
             FormEndpoint.getFresh({id: $scope.post.form.id}),
-            FormStageEndpoint.queryFresh({formId:  $scope.post.form.id}).$promise,
+            FormStageEndpoint.queryFresh({formId:  $scope.post.form.id, postStatus: $scope.post.status}).$promise,
             FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
             TagEndpoint.queryFresh().$promise
         ]).then(function (results) {

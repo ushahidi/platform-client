@@ -105,7 +105,7 @@ function PostEditorController(
 
     function fetchAttributesAndTasks(formId) {
         return $q.all([
-            FormStageEndpoint.queryFresh({ formId: formId }).$promise,
+            FormStageEndpoint.queryFresh({ formId: formId, postStatus: $scope.post.status }).$promise,
             FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
             TagEndpoint.queryFresh().$promise
         ]).then(function (results) {
