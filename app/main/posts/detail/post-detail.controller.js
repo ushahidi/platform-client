@@ -45,6 +45,7 @@ function (
     $scope.hasPermission = $rootScope.hasPermission;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.mapDataLoaded = false;
+    $scope.postLocked = false;
     $scope.form_attributes = [];
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {

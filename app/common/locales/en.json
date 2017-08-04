@@ -452,6 +452,10 @@
     },
     "post": {
         "add_to_form" : "Add to {{form}}",
+        "already_locked" : "This post is currently locked for editing by another user, the lock will expire automatically after the user finished editing or when 2 hours have passed.",
+        "break_lock" : "This post is currently locked for editing by another user. As an Administrator you can break this lock. Do you wish to do so?",
+        "lock_broken" : "The edit lock has been broken successfully.",
+        "failed_to_break_lock" : "It was not possible to break the lock, locks expire automatically 2 hours after they are first requested.",
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
