@@ -35,20 +35,10 @@ function (
         var post = results[1];
 
         if (!results[0].id) {
+            // Failed to get a lock
+            // Bounce user back to the detail page where they will if admin/manage post perm
+            // have the option to break the lock
             $location.url('/posts/' + post.id);
-            if ($rootScope.isAdmin) {
-                Notify.confirm('post.break_lock').then(function (result) {
-                    PostEndpoint.breakLock({id: post.id}).$promise.then(function (result) {
-                        Notify.success('post.lock_broken');
-                        $location.url('/posts/' + post.id + '/edit');
-                    }, function (error) {
-                        Notify.error('post.failed_to_break');
-                    });
-                }, function () {
-                });
-            } else {
-                Notify.error('post.already_locked');
-            }
         }
 
         // Redirect to view if no edit permissions

@@ -1,6 +1,7 @@
 module.exports = PostActionsDirective;
 
 PostActionsDirective.$inject = [
+    '$rootScope',
     'PostEndpoint',
     'Notify',
     '$location',
@@ -8,6 +9,7 @@ PostActionsDirective.$inject = [
     'PostActionsService'
 ];
 function PostActionsDirective(
+    $rootScope,
     PostEndpoint,
     Notify,
     $location,
@@ -36,10 +38,26 @@ function PostActionsDirective(
             checkPostLockStatus();
         }
 
+        // TODO move to service
         function checkPostLockStatus() {
             // Check if post is locked for editing
             PostEndpoint.checkLock({id: $scope.post.id}).$promise.then(function (result) {
                 $scope.postLocked = result.post_locked;
+                if ($scope.postLocked) {
+                    if ($rootScope.isAdmin || $scope.post.allowed_privileges.indexOf('update') !== -1) {
+                        Notify.confirm('post.break_lock').then(function (result) {
+                            PostEndpoint.breakLock({id: $scope.post.id}).$promise.then(function (result) {
+                                Notify.success('post.lock_broken');
+                                $location.url('/posts/' + $scope.post.id + '/edit');
+                            }, function (error) {
+                                Notify.error('post.failed_to_break');
+                            });
+                        }, function () {
+                        });
+                    } else {
+                        Notify.error('post.already_locked');
+                    }
+                }
             });
         }
 

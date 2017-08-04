@@ -58,7 +58,6 @@ function (
         return 'post.publish_for_everyone';
     };
 
-
     $scope.stageIsComplete = function (stageId) {
         return _.includes($scope.post.completed_stages, stageId);
     };
