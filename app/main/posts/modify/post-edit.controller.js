@@ -1,17 +1,23 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$location',
     '$controller',
     '$routeParams',
+    '$q',
+    'Notify',
     'FormEndpoint',
     'PostEndpoint',
 function (
     $scope,
+    $rootScope,
     $translate,
     $location,
     $controller,
     $routeParams,
+    $q,
+    Notify,
     FormEndpoint,
     PostEndpoint
 ) {
@@ -21,7 +27,30 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    PostEndpoint.get({ id: $routeParams.id }).$promise.then(function (post) {
+    $q.all([
+        PostEndpoint.requestLock({id: $routeParams.id}).$promise,
+        PostEndpoint.get({ id: $routeParams.id }).$promise
+    ]).then(function (results) {
+        console.log(results);
+        var post = results[1];
+
+        if (!results[0].id) {
+            $location.url('/posts/' + post.id);
+            if ($rootScope.isAdmin) {
+                Notify.confirm('post.break_lock').then(function (result) {
+                    PostEndpoint.breakLock({id: post.id}).$promise.then(function (result) {
+                        Notify.success('post.lock_broken');
+                        $location.url('/posts/' + post.id + '/edit');
+                    }, function (error) {
+                        Notify.error('post.failed_to_break');
+                    });
+                }, function () {
+                });
+            } else {
+                Notify.error('post.already_locked');
+            }
+        }
+
         // Redirect to view if no edit permissions
         if (post.allowed_privileges.indexOf('update') === -1) {
             $location.url('/posts/' + post.id);
