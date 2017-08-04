@@ -9,6 +9,8 @@ function AuthInterceptorConfig($provide, $httpProvider) {
 
 AuthInterceptor.$inject = ['$rootScope', '$injector', '$q', 'CONST', 'Session', '_'];
 function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
+    var ongoingRequest = null;
+
     return {
         request: request,
         responseError: responseError
@@ -72,7 +74,26 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             // this authorization level is not enough
             // and a 403 or 401 will be thrown
             // which results in showing the login page)
-            getClientCredsToken(config).then(deferred.resolve, deferred.reject);
+
+            // BUT only if there's no ongoing request in this interceptor
+            // (otherwise N simultaneous queries will produce N token requests)
+            if (!ongoingRequest) {
+                ongoingRequest = getClientCredsToken(config);
+                ongoingRequest.then(deferred.resolve, deferred.reject);
+                ongoingRequest.finally(function () {
+                    ongoingRequest = null;  // clean up
+                });
+            } else {
+                // In case another request is already ongoing, extract its
+                // authentication header once its resolved, and apply it to
+                // the request currently being intercepted
+                ongoingRequest.then(
+                    function (otherConfig) {
+                        config.headers.Authorization = otherConfig.headers.Authorization;
+                        deferred.resolve(config);
+                    }, deferred.reject
+                );
+            }
         }
         return deferred.promise;
     }
