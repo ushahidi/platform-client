@@ -1,5 +1,6 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$location',
     '$controller',
@@ -10,6 +11,7 @@ module.exports = [
     '$q',
 function (
     $scope,
+    $rootScope,
     $translate,
     $location,
     $controller,
@@ -26,15 +28,27 @@ function (
     });
 
     $q.all([
-        PostEndpoint.requestLock().$promise,
+        PostEndpoint.requestLock({id: $routeParams.id}).$promise,
         PostEndpoint.get({ id: $routeParams.id }).$promise
     ]).then(function (results) {
         console.log(results);
         var post = results[1];
 
-        if (results[0].id) {
-            Notify.error('post.already_locked');
+        if (!results[0].id) {
             $location.url('/posts/' + post.id);
+            if ($rootScope.isAdmin) {
+                Notify.confirm('post.break_lock').then(function (result) {
+                    PostEndpoint.breakLock({id: post.id}).$promise.then(function (result) {
+                        Notify.success('post.lock_broken');
+                        $location.url('/posts/' + post.id + '/edit');
+                    }, function (error) {
+                        Notify.error('post.failed_to_break');
+                    });
+                }, function () {
+                });
+            } else {
+                Notify.error('post.already_locked');
+            }
         }
 
         // Redirect to view if no edit permissions

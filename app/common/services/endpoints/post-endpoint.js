@@ -44,6 +44,10 @@ function (
             url: Util.apiUrl('/posts/:id/lock'),
             method: 'GET'
         },
+        breakLock: {
+            url: Util.apiUrl('/posts/:id/lock'),
+            method: 'PUT'
+        },
         update: {
             method: 'PUT'
         },
