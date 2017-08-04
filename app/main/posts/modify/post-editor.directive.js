@@ -237,9 +237,10 @@ function PostEditorController(
     }
 
     function cancel() {
-
-        var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
-        $location.path(path);
+        PostEndpoint.breakLock({id: $scope.post.id}).$promise.then(function (result) {
+            var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
+            $location.path(path);
+        });
     }
 
     function deletePost(post) {
