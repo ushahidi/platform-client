@@ -159,6 +159,8 @@ function (
         return $scope.form_attributes[key] && $scope.post_task &&
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
+
+    // TODO Move to Service
     $scope.formatTags = function (tagIds) {
         // getting tag-names and formatting them for displaying
         var formatedTags = ' ';
