@@ -457,6 +457,7 @@
     },
     "post": {
         "add_to_form" : "Add to {{form}}",
+        "someone_is_already_editing" : "Someone else is currently editing this post.",
         "already_locked" : "This post is currently locked for editing by another user, the lock will expire automatically after the user finished editing or when 2 hours have passed.",
         "break_lock" : "This post is currently locked for editing by another user. As an Administrator you can break this lock. Do you wish to do so?",
         "lock_broken" : "The edit lock has been broken successfully.",
