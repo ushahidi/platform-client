@@ -181,6 +181,8 @@
     },
 
     "survey": {
+        "internal_use_task" : "Task is only for internal use",
+        "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "delete_task" : "Delete task",
         "duplicate_task" : "Duplicate task",
         "show_this_task_to" : "Show this task to everyone when published",
@@ -451,6 +453,10 @@
     },
     "post": {
         "add_to_form" : "Add to {{form}}",
+        "already_locked" : "This post is currently locked for editing by another user, the lock will expire automatically after the user finished editing or when 2 hours have passed.",
+        "break_lock" : "This post is currently locked for editing by another user. As an Administrator you can break this lock. Do you wish to do so?",
+        "lock_broken" : "The edit lock has been broken successfully.",
+        "failed_to_break_lock" : "It was not possible to break the lock, locks expire automatically 2 hours after they are first requested.",
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",

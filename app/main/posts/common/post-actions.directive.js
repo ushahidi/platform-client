@@ -27,11 +27,20 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
+        $scope.postLocked = false;
 
         activate();
 
         function activate() {
             $scope.statuses = PostActionsService.getStatuses();
+            checkPostLockStatus();
+        }
+
+        function checkPostLockStatus() {
+            // Check if post is locked for editing
+            PostEndpoint.checkLock({id: $scope.post.id}).$promise.then(function (result) {
+                $scope.postLocked = result.post_locked;
+            });
         }
 
         function deletePost() {
