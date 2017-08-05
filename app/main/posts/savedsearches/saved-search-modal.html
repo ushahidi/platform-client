@@ -8,15 +8,15 @@
             type="search"
             ng-model="savedSearchQuery"
             placeholder="{{ 'set.find_a_saved_search' | translate }}" ng-keydown="searchSearches(savedSearchQuery)"
-        > 
+        >
     </div>
 </div>
 
 <div class="modal-body">
-    <div class="listing">   
+    <div class="listing">
         <div class="listing-item" ng-repeat="search in searches">
             <div class="listing-item-primary">
-                <h2 class="listing-item-title"><a href="savedsearches/{{search.id}}">{{search.name}}</a></h2>
+                <h2 class="listing-item-title"><a href="#" ng-click="goToSearch(search.id)">{{search.name}}</a></h2>
             </div>
         </div>
     </div>
