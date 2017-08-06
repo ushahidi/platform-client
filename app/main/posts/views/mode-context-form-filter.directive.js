@@ -96,7 +96,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             });
 
             // Also filter to just this form
-            $scope.filters.form.splice(0, $scope.filters.form.length, formId);
+            //$scope.filters.form.splice(0, $scope.filters.form.length, formId);
         // Or if we're deselecting the parent
         } else {
             // Deselect the children too

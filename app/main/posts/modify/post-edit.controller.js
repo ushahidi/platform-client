@@ -31,7 +31,6 @@ function (
         PostEndpoint.requestLock({id: $routeParams.id}).$promise,
         PostEndpoint.get({ id: $routeParams.id }).$promise
     ]).then(function (results) {
-        console.log(results);
         var post = results[1];
 
         if (!results[0].id) {
