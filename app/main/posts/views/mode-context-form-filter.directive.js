@@ -96,6 +96,8 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             });
 
             // Also filter to just this form
+            // PAY ATTENTION TO THIS
+            // TODO: probably need to undo this
             //$scope.filters.form.splice(0, $scope.filters.form.length, formId);
         // Or if we're deselecting the parent
         } else {
