@@ -1,0 +1,9 @@
+<div class="mainsheet init active" ng-show="showMainsheet" style="display: block; opacity: 1;">
+    <div class="mainsheet-window">
+        <h3 class="mainsheet-heading" ng-if="title">
+            {{ title | translate }}
+        </h3>
+        <mainsheet-content></mainsheet-content>
+    </div>
+    <div class="mainsheet-overlay" ng-click="closeMainsheet()"></div>
+</div>

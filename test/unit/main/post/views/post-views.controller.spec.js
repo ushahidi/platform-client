@@ -1,5 +1,4 @@
 describe('posts views controller', function () {
-
     var $rootScope,
         $scope,
         $controller,
@@ -8,12 +7,13 @@ describe('posts views controller', function () {
                 return {
                     q : 'dummy'
                 };
+            },
+            setMode: function () {
             }
         };
 
     beforeEach(function (done) {
         var testApp = makeTestApp();
-
         testApp
         .controller('postViewsController', require('app/main/posts/views/post-views.controller.js'))
         .service('PostFilters', function () {
