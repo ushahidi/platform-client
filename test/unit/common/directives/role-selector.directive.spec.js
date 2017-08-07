@@ -21,8 +21,9 @@ describe('role-selector directive', function () {
 
         $scope = _$rootScope_.$new();
         $scope.title = 'This is title';
+        $scope.name = 'test';
         $scope.model = {};
-        element = '<role-selector title="title" model="model"></role-selector>';
+        element = '<role-selector name="name" title="title" model="model"></role-selector>';
 
         element = $compile(element)($scope);
         $scope.$digest();
