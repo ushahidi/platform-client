@@ -1,19 +1,25 @@
 module.exports = [
     '$scope',
+    '$rootScope',
     '$translate',
     '$location',
     '$controller',
     '$routeParams',
     'FormEndpoint',
     'PostEndpoint',
+    'Notify',
+    '$q',
 function (
     $scope,
+    $rootScope,
     $translate,
     $location,
     $controller,
     $routeParams,
     FormEndpoint,
-    PostEndpoint
+    PostEndpoint,
+    Notify,
+    $q
 ) {
 
     $translate('post.edit_post').then(function (title) {
@@ -21,7 +27,19 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    PostEndpoint.get({ id: $routeParams.id }).$promise.then(function (post) {
+    $q.all([
+        PostEndpoint.requestLock({id: $routeParams.id}).$promise,
+        PostEndpoint.get({ id: $routeParams.id }).$promise
+    ]).then(function (results) {
+        var post = results[1];
+
+        if (!results[0].id) {
+            // Failed to get a lock
+            // Bounce user back to the detail page where they will if admin/manage post perm
+            // have the option to break the lock
+            $location.url('/posts/' + post.id);
+        }
+
         // Redirect to view if no edit permissions
         if (post.allowed_privileges.indexOf('update') === -1) {
             $location.url('/posts/' + post.id);
