@@ -31,7 +31,6 @@ function PostActionsDirective(
         $scope.updateStatus = updateStatus;
         $scope.openEditMode = openEditMode;
         $scope.postLocked = false;
-        $scope.isAdmin = $rootScope.isAdmin();
 
         activate();
 
