@@ -10,12 +10,13 @@ function SavedSearchModal() {
     };
 }
 
-SavedSearchModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
-function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
+SavedSearchModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '$location', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
+function SavedSearchModalController($scope, $element, $attrs, $rootScope, $location, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
     var users = [];
 
     $scope.searchSearches = searchSearches;
     $scope.createNewSearch = createNewSearch;
+    $scope.goToSearch = goToSearch;
     activate();
 
     // Reload searches on login / logout events
@@ -47,6 +48,7 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEn
             });
         });
     }
+
     function createNewSearch() {
         // Copy the current filters into our search..
         ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
@@ -56,4 +58,15 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, UserEn
             q : query
         });
     }
+
+    /**
+     * @param searchId: the saved search id, used to identify it in the url path.
+     * We are just closing the modal before we go to the new saved search the user selected in the frontend.
+     * See: https://waffle.io/ushahidi/platform/cards/598289fa17b93500a65be936
+     */
+    function goToSearch(searchId) {
+        ModalService.close();
+        $location.url('/savedsearches/' + searchId);
+    }
+
 }
