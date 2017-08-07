@@ -89,6 +89,7 @@
         "this_category_is_child_to" : "This category is a child to <strong>{{parent}}</strong>",
         "nothing" : "Nothing",
         "who_can_see_this" : "Who can see this?",
+        "who_can_edit_this" : "Who can edit this?",
         "add" : "Add",
         "add_new_category" : "+ Add new category"
     },
