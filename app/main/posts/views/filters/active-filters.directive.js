@@ -1,7 +1,7 @@
 module.exports = ActiveFilters;
 
-ActiveFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint'];
-function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint) {
+ActiveFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint', 'PostMetadataService'];
+function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint, PostMetadataService) {
     return {
         restrict: 'E',
         scope: true,
@@ -111,6 +111,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             },
             status : function (value) {
                 return $translate.instant('post.' + value);
+            },
+            source : function (value) {
+                return PostMetadataService.formatSource(value);
             }
         };
     }

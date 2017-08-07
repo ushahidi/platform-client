@@ -74,7 +74,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             tags: [],
             form: _.pluck(forms, 'id'),
             set: [],
-            user: false
+            user: false,
+            source: []
         };
     }
 
