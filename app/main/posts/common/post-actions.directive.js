@@ -41,10 +41,7 @@ function PostActionsDirective(
 
         // TODO move to service
         function checkPostLockStatus() {
-            // Check if post is locked for editing
-            PostEndpoint.checkLock({id: $scope.post.id}).$promise.then(function (result) {
-                $scope.postLocked = result.post_locked;
-            });
+            $scope.postLocked = $scope.post.is_locked;
         }
 
         function openEditMode() {
