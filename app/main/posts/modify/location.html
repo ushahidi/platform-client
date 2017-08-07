@@ -1,43 +1,20 @@
  
 <div class="location-wrapper">
     <div id="{{id}}-map" class="map" style="height: 265px; width: 100%;"></div>
-    <form 
-        role="search" 
-        class="searchbar" 
-        data-message="search"
-        dropdown 
-        auto-close="outsideClick"  
-    >
-        <div 
-            class="searchbar-input init"
-            data-toggle="dropdown-menu"
-            dropdown-toggle
-            dropdownAppendToBody
-        > 
+    <form class="searchbar">
+        <div class="searchbar-input init" role="search"> 
             <div class="form-field">
                 <input name="{{name}}" 
                     type="search" 
                     maxlength="250" 
                     placeholder="{{'location.placeholder' | translate}}" 
                     ng-model="searchLocationTerm" 
-                    ng-disabled="processing" 
                     ng-focus="showSearchResults()" 
-                    ng-keyup="showSearchResults()"
-                    ng-keydown="searchLocation()"
-                    
+                    ng-keydown="handleActiveSearch($event)"
                 />
             </div>
-            <div class="searchbar-results dropdown-menu init" dropdown-menu>
+            <div id="searchbar-results" class="searchbar-results dropdown-menu init">
                 <div class="form-field">
-                    <button class="button-plain" ng-click="searchLocation()" ng-disabled="processing">
-                        <svg class="iconic">
-                            <use 
-                                xmlns:xlink="http://www.w3.org/1999/xlink" 
-                                xlink:href="/img/iconic-sprite.svg#magnifying-glass">
-                            </use>
-                        </svg>
-                        <span class="button-label" translate>location.search</span>
-                    </button>
                     <button class="button-beta button-plain" ng-click="chooseCurrentLocation()" ng-if="showCurrentPositionControl" >
                         <svg class="iconic">
                             <use 
@@ -50,12 +27,27 @@
                 </div>
              <div class="tool">
                     <h6 class="tool-heading" translate>location.search_results</h6>
-                    <dl ng-repeat="result in searchResults" ng-if="searchResults.length > 0">
+                    <dl ng-repeat="result in searchResults" ng-if="!processing && searchResults.length > 0">
                         <dt class="list-item" ng-click="chooseLocation(result)">
+                            <svg class="iconic">
+                                <use 
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                    xlink:href="/img/iconic-sprite.svg#map-marker">
+                                </use>
+                            </svg>
                             <em>{{result.display_name}}</em>
                         </dt>
                     </dl>
-                    <dl class="dropdown-menu-body" ng-if="!searchResults">
+                    <dl class="dropdown-menu-body" ng-if="processing">
+                        <dt class="list-item">
+                            <div class="loading" style="width: auto;">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                            </div>
+                        </dt>
+                    </dl>
+                    <dl class="dropdown-menu-body" ng-if="!processing && !searchResults">
                         <dt class="list-item">
                             No matching locations.
                         </dt>
