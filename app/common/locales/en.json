@@ -309,7 +309,8 @@
             "has_location": "Post-locations",
             "all_posts": "Show all posts",
             "unmapped": "Show unmapped posts",
-            "mapped": "Show posts with a location"
+            "mapped": "Show posts with a location",
+            "source": "Source"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -333,7 +334,8 @@
         "search" : "Search",
         "date_range" : "Date range",
         "who_its_visible_to": "Who it's visible to",
-        "status" : "Status"
+        "status" : "Status",
+        "source" : "Source"
     },
     "graph" : {
         "all_posts": "Nothing; Show all posts",
