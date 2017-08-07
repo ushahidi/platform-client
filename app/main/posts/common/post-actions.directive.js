@@ -29,7 +29,9 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
+        $scope.openEditMode = openEditMode;
         $scope.postLocked = false;
+        $scope.isAdmin = $rootScope.isAdmin();
 
         activate();
 
@@ -44,6 +46,26 @@ function PostActionsDirective(
             PostEndpoint.checkLock({id: $scope.post.id}).$promise.then(function (result) {
                 $scope.postLocked = result.post_locked;
             });
+        }
+
+        function openEditMode() {
+            if ($scope.postLocked) {
+                if ($rootScope.isAdmin()) {
+                    Notify.confirm('post.break_lock').then(function (result) {
+                        PostEndpoint.breakLock({id: $scope.post.id}).$promise.then(function (result) {
+                            Notify.success('post.lock_broken');
+                            $location.url('/posts/' + $scope.post.id + '/edit');
+                        }, function (error) {
+                            Notify.error('post.failed_to_break');
+                        });
+                    }, function () {
+                    });
+                } else {
+                    Notify.error('post.already_locked');
+                }
+            } else {
+                $location.url('/posts/' + $scope.post.id + '/edit');
+            }
         }
 
         function deletePost() {
