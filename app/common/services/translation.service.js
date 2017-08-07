@@ -19,13 +19,13 @@ function (
     UserEndpoint,
     ConfigEndpoint
 ) {
-    var translate = function (language) {
-        $translate.use(language).then(function (langKey) {
+    var translate = function (lang) {
+        $translate.use(lang).then(function (langKey) {
             if (langKey) {
-                $translate.preferredLanguage(language);
+                $translate.preferredLanguage(langKey);
                 Languages.then(function (languages) {
                     angular.forEach(languages, function (language) {
-                        if (language.code === language) {
+                        if (language.code === langKey) {
                             $rootScope.rtlEnabled = language.rtl;
                         }
                     });
