@@ -52,8 +52,8 @@
           <span class="label" ng-if="status=='archived'" translate="post.post_actions.archive">Archive</span>
         </a>
       </li>
-      
-      <li>
+
+      <li ng-show="post.allowed_privileges.indexOf('delete') !== -1">
         <a ng-click="deletePost()">
           <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
