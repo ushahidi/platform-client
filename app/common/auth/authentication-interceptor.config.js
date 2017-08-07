@@ -44,6 +44,33 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
         return deferred.promise;
     }
 
+    function concurrentGetClientCredsToken(config) {
+        // concurrency-safe getClientCredsToken
+        // sends token request only if there's no ongoing request in this interceptor
+        // (otherwise N simultaneous queries will produce N token requests)
+        var deferred = $q.defer();
+
+        if (!ongoingRequest) {
+            ongoingRequest = getClientCredsToken(config);
+            ongoingRequest.then(deferred.resolve, deferred.reject);
+            ongoingRequest.finally(function () {
+                ongoingRequest = null;  // clean up
+            });
+        } else {
+            // In case another request is already ongoing, extract its
+            // authentication header once its resolved, and apply it to
+            // the request currently being intercepted
+            ongoingRequest.then(
+                function (otherConfig) {
+                    config.headers.Authorization = otherConfig.headers.Authorization;
+                    deferred.resolve(config);
+                }, deferred.reject
+            );
+        }
+
+        return deferred.promise;
+    }
+
     function request(config) {
         var deferred = $q.defer();
 
@@ -64,37 +91,16 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             // we will set it straight ahead
             // and resolve the promise for the config hash
             config.headers.Authorization = 'Bearer ' + accessToken;
-            deferred.resolve(config);
 
-        } else {
-            // otherwise, we will ask the backend
-            // via the client credentials oauth flow
-            // for an anonymous accessToken
-            // (for some resources, of course,
-            // this authorization level is not enough
-            // and a 403 or 401 will be thrown
-            // which results in showing the login page)
-
-            // BUT only if there's no ongoing request in this interceptor
-            // (otherwise N simultaneous queries will produce N token requests)
-            if (!ongoingRequest) {
-                ongoingRequest = getClientCredsToken(config);
-                ongoingRequest.then(deferred.resolve, deferred.reject);
-                ongoingRequest.finally(function () {
-                    ongoingRequest = null;  // clean up
-                });
-            } else {
-                // In case another request is already ongoing, extract its
-                // authentication header once its resolved, and apply it to
-                // the request currently being intercepted
-                ongoingRequest.then(
-                    function (otherConfig) {
-                        config.headers.Authorization = otherConfig.headers.Authorization;
-                        deferred.resolve(config);
-                    }, deferred.reject
-                );
-            }
         }
+        // else {
+        //     // We are going to attempt to send the request without
+        //     // any access token in it.
+        //     // If the operation fails because authentication/
+        //     // authorization is needed, we will handle in
+        //     // responseError() below
+        // }
+        deferred.resolve(config);
         return deferred.promise;
     }
 
@@ -104,7 +110,7 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
         // When a request is rejected there are
         // a few possible reasons. If its a 401
         // either our token expired, or we didn't have one.
-        if (rejection.status === 401) {
+        if (rejection.status === 401 || rejection.status === 400) {
             $injector.invoke(['Authentication', '$http', function (Authentication, $http) {
                 // Check if were were logged in
                 if (Authentication.getLoginStatus()) {
@@ -115,7 +121,11 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
                 } else {
                     // If we weren't logged in to start with
                     // we probably just need to get a new token
-                    getClientCredsToken(rejection.config).then(
+                    // (for some resources, of course,
+                    // this authorization level is not enough
+                    // and a 403 or 401 will be thrown
+                    // which results in showing the login page)
+                    concurrentGetClientCredsToken(rejection.config).then(
                         function (config) {
                             deferred.resolve($http(config));
                         },
