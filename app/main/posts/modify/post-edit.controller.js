@@ -68,5 +68,9 @@ function (
             $location.url('/posts/' + post.id);
         }
         $scope.post = post;
+
+        $scope.$on('$routeChangeStart', function (next, current) {
+            PostEndpoint.breakLock({id: $scope.post.id});
+        });
     });
 }];
