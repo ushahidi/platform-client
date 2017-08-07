@@ -12,7 +12,7 @@
   </button>
   <div class="dropdown-menu init" dropdown-menu>
     <ul>
-        <li ng-show="(post.allowed_privileges.indexOf('update') !== -1) && !postLocked" class="hide-when-small">
+        <li ng-show="post.allowed_privileges.indexOf('update') !== -1 && !postLocked" class="hide-when-small">
           <a ng-href="/posts/{{post.id}}/edit">
               <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
@@ -38,7 +38,7 @@
       -->
     </ul>
     <div class="divider" ng-show="post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 "></div>
-    <ul>
+    <ul ng-show="post.allowed_privileges.indexOf('update') !== -1 && !postLocked">
       <li ng-repeat="status in statuses"
           ng-show="post.allowed_privileges.indexOf('change_status') !== -1">
         <a ng-click="updateStatus(status)">
@@ -52,8 +52,8 @@
           <span class="label" ng-if="status=='archived'" translate="post.post_actions.archive">Archive</span>
         </a>
       </li>
-
-      <li ng-show="post.allowed_privileges.indexOf('update') !== -1 && !postlocked">
+      
+      <li>
         <a ng-click="deletePost()">
           <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
