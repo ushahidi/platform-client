@@ -43,7 +43,7 @@ describe('role-selector directive', function () {
 
     it('should add all roles when clicking on "everyone"', function () {
         var change = new Event('click');
-        var elementToClick = element[0].querySelector('#add_everyone');
+        var elementToClick = element[0].querySelector('#add_everyone-test');
         elementToClick.dispatchEvent(change);
         expect(isolateScope.setEveryone).toHaveBeenCalled();
         expect(isolateScope.model.role).toEqual([]);
