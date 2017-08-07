@@ -70,7 +70,7 @@ function (
         PostEndpoint.checkLock({id: $scope.post.id}).$promise.then(function (result) {
             $scope.postLocked = result.post_locked;
             if ($scope.postLocked) {
-                if ($rootScope.isAdmin() || $scope.post.allowed_privileges.indexOf('update') !== -1) {
+                if ($rootScope.isAdmin()) {
                     Notify.confirm('post.break_lock').then(function (result) {
                         PostEndpoint.breakLock({id: $scope.post.id}).$promise.then(function (result) {
                             Notify.success('post.lock_broken');
