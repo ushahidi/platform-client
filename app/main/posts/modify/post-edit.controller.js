@@ -33,6 +33,7 @@ function (
     ]).then(function (results) {
         console.log(results);
         var post = results[1];
+        $scope.lockId = results[0].id;
         if (!results[0].id) {
             // Failed to get a lock
             // Bounce user back to the detail page where they will if admin/manage post perm
