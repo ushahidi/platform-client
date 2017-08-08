@@ -9,7 +9,8 @@ function PostEditor() {
             post: '=',
             attributesToIgnore: '=',
             form: '=',
-            postMode: '='
+            postMode: '=',
+            lockId: '='
         },
         template: require('./post-editor.html'),
         controller: PostEditorController
@@ -57,7 +58,6 @@ function PostEditorController(
     PostActionsService,
     MediaEditService
   ) {
-
     // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
     $scope.isEdit = !!$scope.post.id;
@@ -237,7 +237,7 @@ function PostEditorController(
     }
 
     function cancel() {
-        PostEndpoint.breakLock({id: $scope.post.id}).$promise.then(function (result) {
+        PostEndpoint.breakLock({lock_id: $scope.lockId}).$promise.then(function (result) {
             var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
             $location.path(path);
         });
