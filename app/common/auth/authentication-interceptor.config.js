@@ -125,6 +125,14 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
                     // this authorization level is not enough
                     // and a 403 or 401 will be thrown
                     // which results in showing the login page)
+
+                    // If this request was ignorable, ie ok to fail
+                    // just continue.
+                    if (rejection.config.ignorable) {
+                        deferred.reject(rejection);
+                        return deferred.promise;
+                    }
+
                     concurrentGetClientCredsToken(rejection.config).then(
                         function (config) {
                             deferred.resolve($http(config));
