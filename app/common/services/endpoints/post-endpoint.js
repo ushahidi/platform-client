@@ -13,14 +13,16 @@ function (
 ) {
 
     var PostEndpoint = $resource(Util.apiUrl('/posts/:id/:extra'), {
-        id: '@id',
-        order: 'desc',
-        orderby: 'post_date'
+        id: '@id'
     }, {
         query: {
             method: 'GET',
             isArray: false,
-            paramSerializer: '$httpParamSerializerJQLike'
+            paramSerializer: '$httpParamSerializerJQLike',
+            params: {
+                order: 'desc',
+                orderby: 'post_date'
+            }
         },
         get: {
             method: 'GET',

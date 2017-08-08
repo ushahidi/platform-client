@@ -30,6 +30,7 @@ angular.module('ushahidi.posts', [])
 .directive('postValueEdit', require('./modify/post-value-edit.directive.js'))
 .directive('postTabs', require('./modify/post-tabs.directive.js'))
 .directive('postToolbox', require('./modify/post-toolbox.directive.js'))
+.directive('postTimelineToolbox', require('./views/post-timeline-toolbox.directive.js'))
 
 // Timeline and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
