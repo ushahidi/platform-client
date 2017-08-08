@@ -87,11 +87,12 @@ function PostEditorController(
         $scope.post.form = $scope.form;
         $scope.fetchAttributesAndTasks($scope.post.form.id)
         .then(function () {
-            // If the post in marked as 'Published' but it is not in
+            // Fix the validation it's awful
+            // If the post is marked as 'Published' but it is not in
             // a valid state to be saved as 'Published' warn the user
-            if ($scope.post.status === 'published' && !canSavePost()) {
-                Notify.error('post.valid.invalid_state');
-            }
+            // if ($scope.post.status === 'published' && !canSavePost()) {
+            //     Notify.error('post.valid.invalid_state');
+            // }
         });
 
         $scope.medias = {};
