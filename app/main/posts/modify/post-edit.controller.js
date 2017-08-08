@@ -32,7 +32,6 @@ function (
         PostEndpoint.get({ id: $routeParams.id }).$promise
     ]).then(function (results) {
         var post = results[1];
-
         if (!results[0].id) {
             // Failed to get a lock
             // Bounce user back to the detail page where they will if admin/manage post perm
@@ -64,12 +63,11 @@ function (
                 }
             });
         } else {
-            $location.url('/posts/' + post.id);
+            PostEndpoint.breakLock({id: post.id}).$promise.then(function (results) {
+                $location.url('/posts/' + post.id);
+                PostEndpoint.requestLock({id: post.id});
+            });
         }
         $scope.post = post;
-
-        $scope.$on('$routeChangeStart', function (next, current) {
-            PostEndpoint.breakLock({id: $scope.post.id});
-        });
     });
 }];

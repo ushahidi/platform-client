@@ -130,7 +130,7 @@
         </div>
     </div>
 
-    <post-add-form post="post" ng-if="!post.form && post.allowed_privileges.indexOf('update') !== -1"></post-add-form>
+    <post-add-form post="post" ng-if="!post.form && post.allowed_privileges.indexOf('update') !== -1 && !postLocked"></post-add-form>
     <post-messages post="post" ng-if="post.contact.id"></post-messages>
     <ush-logo></ush-logo>
   </div>
