@@ -1,0 +1,40 @@
+<div class="toolbox hide-until-small">
+  <!-- IF: User has permission to manage post status -->
+  <div class="tool" dropdown auto-close="disabled">
+      <h6 class="tool-heading" translate="app.sort_by">Sort By</h6>
+
+      <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+          <svg class="iconic">
+              <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+          </svg>
+          <span class="label hidden">Show/hide</span>
+      </span>
+
+      <div class="toggle-content init" dropdown-menu>
+          <fieldset>
+              <div class="custom-select">
+                  <select ng-model="orderBy" ng-change="change()">
+                      <option value="post_date" translate="post.post_date">Post Date</option>
+                      <option value="created" translate="app.date_created">Date created</option>
+                      <option value="updated" translate="app.date_updated">Date updated</option>
+                  </select>
+              </div>
+        </fieldset>
+
+          <fieldset>
+              <div class="form-field radio">
+                  <label>
+                    <input type="radio" id="asc" value="asc" name="order" ng-model="order" ng-change="change()">
+                    <span translate="app.oldest_first">Oldest first</span>
+                  </label>
+              </div>
+              <div class="form-field radio">
+                  <label>
+                    <input type="radio" id="desc" value="desc" name="order" ng-model="order" ng-change="change()">
+                    <span translate="app.newest_first">Newest first</span>
+                  </label>
+              </div>
+          </fieldset>
+      </div>
+  </div>
+</div>

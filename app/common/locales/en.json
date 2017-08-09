@@ -14,6 +14,8 @@
         "create_new" : "Create new",
         "create_new_survey" : "Create new survey",
         "created_by" : "Created by {{author}}",
+        "date_created": "Date created",
+        "date_updated": "Date updated",
         "documentation": {
             "title" : "Documentation",
             "description" : "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -92,7 +94,10 @@
         "who_can_see_this" : "Who can see this?",
         "who_can_edit_this" : "Who can edit this?",
         "add" : "Add",
-        "add_new_category" : "+ Add new category"
+        "add_new_category" : "+ Add new category",
+        "sort_by": "Sort By",
+        "newest_first": "Newest first",
+        "oldest_first": "Oldest first"
     },
     "toolbar": {
         "searchbar" : {
