@@ -13,4 +13,9 @@ function PostViewsController($scope, $translate, $routeParams, PostFilters) {
 
     PostFilters.setMode('all');
     $scope.filters = PostFilters.getFilters();
+
+    $scope.$emit('event:allposts:show');
+    $scope.$on('$destroy', function () {
+        $scope.$emit('event:allposts:close');
+    });
 }

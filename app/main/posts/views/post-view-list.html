@@ -65,6 +65,8 @@
 
         </listing-toolbar>
 
+        <post-timeline-toolbox order="order" order-by="orderBy" on-change="changeOrder(order, orderBy)"></post-timeline-toolbox>
+
         <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
             <h4 translate>post.no_search_results</h5>
         </div>
