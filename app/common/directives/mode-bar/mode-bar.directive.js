@@ -47,6 +47,7 @@ function (
                 $rootScope.$on('event:collection:close', handleCollectionClose);
                 $rootScope.$on('event:savedsearch:show', handleSavedSearchShow);
                 $rootScope.$on('event:savedsearch:close', handleSavedSearchClose);
+                $rootScope.$on('event:allposts:show', handleAllShow);
 
                 Features.loadFeatures().then(function () {
                     $scope.isActivityAvailable = Features.isViewEnabled('activity');
@@ -80,12 +81,16 @@ function (
                 $scope.activeMode = mode;
             }
 
+            function handleAllShow(ev, collection) {
+                $scope.baseUrl = 'views/';
+            }
+
             function handleCollectionShow(ev, collection) {
                 $scope.baseUrl = 'collections/' + collection.id + '/';
             }
 
             function handleCollectionClose(ev, savedsearch) {
-                $scope.baseUrl = 'views/';
+                //$scope.baseUrl = 'views/';
             }
 
             function handleSavedSearchShow(ev, savedsearch) {
@@ -93,7 +98,7 @@ function (
             }
 
             function handleSavedSearchClose(ev, savedsearch) {
-                $scope.baseUrl = 'views/';
+                //$scope.baseUrl = 'views/';
             }
         }
     };
