@@ -13,14 +13,16 @@ function (
 ) {
 
     var PostEndpoint = $resource(Util.apiUrl('/posts/:id/:extra'), {
-        id: '@id',
-        order: 'desc',
-        orderby: 'post_date'
+        id: '@id'
     }, {
         query: {
             method: 'GET',
             isArray: false,
-            paramSerializer: '$httpParamSerializerJQLike'
+            paramSerializer: '$httpParamSerializerJQLike',
+            params: {
+                order: 'desc',
+                orderby: 'post_date'
+            }
         },
         get: {
             method: 'GET',
@@ -35,6 +37,21 @@ function (
                 }
                 return data;
             }
+        },
+        requestLock: {
+            url: Util.apiUrl('/posts/:id/lock'),
+            method: 'POST'
+        },
+        checkLock: {
+            url: Util.apiUrl('/posts/:id/lock'),
+            method: 'GET'
+        },
+        breakLock: {
+            url: Util.apiUrl('/posts/:id/lock/:lock_id'),
+            params: {
+                lock_id: '@lock_id'
+            },
+            method: 'PUT'
         },
         update: {
             method: 'PUT'

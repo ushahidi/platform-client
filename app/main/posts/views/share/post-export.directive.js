@@ -43,7 +43,7 @@ function PostExportController(
 
             var format = 'csv',  //@todo handle more formats
                 // Prepare filters for export
-                query = angular.extend({}, PostFilters.getQueryParams($scope.filters), {
+                query = angular.extend({}, PostFilters.getQueryParams(PostFilters.getFilters()), {
                     format: format
                 }),
 

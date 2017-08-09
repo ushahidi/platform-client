@@ -5,6 +5,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
+    var filterMode = 'all';
+    var entityId = null;
 
     // @todo take this out of the service
     // but ensure it happens at the right times
@@ -18,7 +20,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         clearFilters: clearFilters,
         clearFilter: clearFilter,
         hasFilters: hasFilters,
-        getActiveFilters: getActiveFilters
+        getActiveFilters: getActiveFilters,
+        setMode: setMode,
+        getMode: getMode,
+        getModeId: getModeId
     };
 
     function activate() {
@@ -65,7 +70,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             q: '',
             date_after: '',
             date_before: '',
-            status: ['published', 'draft'],
+            status: filterMode === 'collection' ? ['published', 'draft', 'archived'] : ['published', 'draft'],
             published_to: '',
             center_point: '',
             has_location: 'all',
@@ -74,7 +79,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             tags: [],
             form: _.pluck(forms, 'id'),
             set: [],
-            user: false
+            user: false,
+            source: []
         };
     }
 
@@ -101,6 +107,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             query.within_km = filters.within_km || 10;
         } else {
             delete query.within_km;
+        }
+
+        if (filterMode === 'collection') {
+            query.set = [entityId].concat(query.set);
         }
         return query;
     }
@@ -133,6 +143,23 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     function hasFilters(filters) {
         return !_.isEmpty(getActiveFilters(filters));
+    }
+
+    function setMode(newMode, id) {
+        // If mode changes, reset filters
+        if (newMode !== filterMode) {
+            filterMode = newMode;
+            clearFilters();
+        }
+        entityId = id;
+    }
+
+    function getMode() {
+        return filterMode;
+    }
+
+    function getModeId() {
+        return entityId;
     }
 }
 

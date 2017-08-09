@@ -2,9 +2,17 @@
     <header class="form-sheet-summary">
         <h1 class="form-sheet-title section-title">{{stage.label}}</h1>
     </header>
+    <div ng-show="stage.task_is_internal_only" class="alert">
+        <p>This task is marked for internal use only. It is not seen by users when they create a post.</p>
+    </div>
+    <div>
+        <div ng-show="stage.show_when_published" class="alert">
+            <p>This task will be visible when Post is published</p>
+        </div>
+    </div>
     <!-- Handle stage completion -->
     <div class="form-field switch">
-        <label translate="post.task_completed">Task completed</label>
+        <label translate="post.task_completed" ng-class="{'required': stage.required}">Task completed</label>
         <div class="toggle-switch">
             <input
                 class="tgl"

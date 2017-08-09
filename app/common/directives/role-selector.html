@@ -5,13 +5,13 @@
             class="form-field radio icon-input"
             ng-class="{ 'checked': !model.role.length }"
         >
-            <label for="add_everyone">
+            <label for="add_everyone-{{name}}">
                 <svg class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#globe"></use>
                 </svg>
                 <input
                     name="add"
-                    id="add_everyone"
+                    ng-attr-id="{{'add_everyone-' + name}}"
                     ng-value="true"
                     checked=""
                     type="radio"
@@ -21,19 +21,20 @@
                 <span class="label" translate="nav.everyone">Everyone</span>
             </label>
         </div>
+        
 
         <div
             class="form-field radio icon-input"
             ng-class="{ 'checked': model.role.length }"
         >
-            <label for="add_roles">
+            <label for="add_roles-{{name}}">
                 <svg class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#people"></use>
                 </svg>
                 <input
                     class="init"
                     name="add"
-                    id="add_roles"
+                    ng-attr-id="{{'add_roles-' + name}}"
                     ng-value="false"
                     ng-modaldata-fieldgroup-toggle="add_roles"
                     type="radio"
@@ -49,8 +50,9 @@
             >
 
                 <div class="form-field checkbox" ng-repeat="role in roles">
-                    <label>
+                    <label for="role-name-{{name}}-{{role.name}}">
                     <input
+                        ng-attr-id="{{'role-name-' + name + '-' + role.name}}"
                         type="checkbox"
                         checklist-model="model.role"
                         checklist-value="role.name"

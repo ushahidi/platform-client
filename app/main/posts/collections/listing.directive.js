@@ -45,6 +45,7 @@ function CollectionListingController(
     $scope.collectionClickHandler = collectionClickHandler;
     $scope.createNewCollection = createNewCollection;
     $scope.searchCollections = loadCollections;
+    $scope.currentUser = $rootScope.currentUser;
 
     activate();
 
