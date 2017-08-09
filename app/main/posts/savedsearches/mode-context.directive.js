@@ -53,7 +53,7 @@ function SavedSearchModeContextController(
             if (notifications.length) {
                 $scope.notification = notifications[0];
             }
-        });
+        }, angular.noop);
     }
 
     // Check if we can edit
