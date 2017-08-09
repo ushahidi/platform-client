@@ -298,7 +298,7 @@ function PostEditorController(
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/posts/' + response.id);
+                    $location.path('/');
                 } else {
                     Notify.notify(success_message, { name: $scope.post.title });
                     $location.path('/');
