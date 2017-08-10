@@ -58,6 +58,7 @@ function PostListController(
     $scope.getPosts = getPosts;
     $scope.resetPosts = resetPosts;
     $scope.clearPosts = false;
+    $scope.clearSelectedPosts = clearSelectedPosts;
     activate();
 
     // whenever the filters changes, update the current list of posts
@@ -166,8 +167,7 @@ function PostListController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
-                // Clear selected posts
-                $scope.selectedPosts.splice(0);
+                clearSelectedPosts();
 
                 if (!$scope.posts.length) {
                     $scope.clearPosts = true;
@@ -192,8 +192,7 @@ function PostListController(
 
         $q.all(updateStatusPromises).then(function () {
             Notify.notify('notify.post.update_status_success_bulk', {count: count});
-            // Clear selected posts
-            $scope.selectedPosts.splice(0);
+            clearSelectedPosts();
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
         })
@@ -216,5 +215,10 @@ function PostListController(
         $scope.currentPage++;
         $scope.clearPosts = false;
         getPosts();
+    }
+
+    function clearSelectedPosts() {
+        // Clear selected posts
+        $scope.selectedPosts.splice(0);
     }
 }
