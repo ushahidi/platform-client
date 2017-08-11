@@ -2,16 +2,13 @@ describe('TermsOfService', function () {
 
     var TermsOfService,
         $rootScope,
-        TOS_RELEASE_DATE,
         Notify,
-        $q,
-        $scope,
         TermsOfServiceEndpoint,
-        data,
-        BACKEND_URL;
+        data;
 
     beforeEach(function () {
         makeTestApp()
+        .value('moment', require('moment'))
 
         .service('TermsOfServiceEndpoint', function () {
             return {
@@ -30,15 +27,11 @@ describe('TermsOfService', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$q_, _$rootScope_, _TermsOfService_, _CONST_, _Notify_, _TermsOfServiceEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _TermsOfService_, _Notify_, _TermsOfServiceEndpoint_) {
         $rootScope = _$rootScope_;
         TermsOfService = _TermsOfService_;
-        TOS_RELEASE_DATE = _CONST_.TOS_RELEASE_DATE;
         Notify = _Notify_;
         TermsOfServiceEndpoint = _TermsOfServiceEndpoint_;
-        $q = _$q_;
-        $scope = _$rootScope_.$new();
-        BACKEND_URL = _CONST_.BACKEND_URL;
     }));
 
     it('should open the tos modal (call Notify.confirmTos) when the api result is empty (the user has not ever agreed to ToS)', function () {
@@ -56,7 +49,7 @@ describe('TermsOfService', function () {
     });
 
     it('should open the tos modal (call Notify.confirmTos) when the agreement date is less than (before) the version date', function () {
-        var inValidTosAgreementDate = (TOS_RELEASE_DATE - 1);
+        var inValidTosAgreementDate = 1500588207;
         data = {results: [{'agreement_date': inValidTosAgreementDate}]};
 
         spyOn(Notify, 'confirmTos').and.callThrough();
@@ -71,7 +64,7 @@ describe('TermsOfService', function () {
     });
 
     it('should NOT open the tos modal (not call Notify.confirmTos) when the agreement date is greater than (after) the version date', function () {
-        var ValidTosAgreementDate = (TOS_RELEASE_DATE + 1);
+        var ValidTosAgreementDate = (1600688207);
         data = {results: [{'agreement_date': ValidTosAgreementDate}]};
 
         spyOn(Notify, 'confirmTos').and.callThrough();
