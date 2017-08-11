@@ -64,7 +64,7 @@ describe('TermsOfService', function () {
     });
 
     it('should NOT open the tos modal (not call Notify.confirmTos) when the agreement date is greater than (after) the version date', function () {
-        var ValidTosAgreementDate = (1600688207);
+        var ValidTosAgreementDate = 1600688207;
         data = {results: [{'agreement_date': ValidTosAgreementDate}]};
 
         spyOn(Notify, 'confirmTos').and.callThrough();

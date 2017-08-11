@@ -41,8 +41,6 @@ function (
         // If there is a result from the DB
         // Convert the timestamp to JS readable date
         if (tosEntry.results.length) {
-            // var timestamp = tosEntry.results[0].agreement_date;
-            // var jsTimestamp = timestamp * 1000;
             agreementDate = moment.utc(tosEntry.results[0].agreement_date * 1000).format();
         }
 
