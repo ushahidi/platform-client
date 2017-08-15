@@ -4,7 +4,6 @@ PostVerticalTabs.$inject = [];
 function PostVerticalTabs() {
     return {
         restrict: 'E',
-        replace: true,
         scope: {
             form: '=',
             post: '=',
@@ -12,8 +11,8 @@ function PostVerticalTabs() {
             attributes: '=',
             visibleStage: '='
         },
-        controller: PostVerticalTabsController,
-        template: require('./post-tabs.html')
+        template: require('./post-tabs.html'),
+        controller: PostVerticalTabsController
     };
 }
 
@@ -37,6 +36,7 @@ function PostVerticalTabsController(
     $scope.stageIsComplete = stageIsComplete;
     $scope.toggleStageCompletion = toggleStageCompletion;
 
+
     activate();
 
     function activate() {
@@ -48,11 +48,10 @@ function PostVerticalTabsController(
     }
 
     function stageIsComplete(stageId) {
-        return _.includes($scope.post.completed_stages, stageId);
+        return $scope.post.completed_stages.indexOf(stageId) > -1;
     }
 
     function toggleStageCompletion(stageId) {
-
         stageId = parseInt(stageId);
         if (_.includes($scope.post.completed_stages, stageId)) {
             $scope.post.completed_stages = _.without($scope.post.completed_stages, stageId);

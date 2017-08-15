@@ -12,6 +12,8 @@ module.exports = [function () {
         form: [],
         set: []
     };
+    var filterMode = 'all';
+
     return {
         filterState: filterState,
         getDefaults: function () {},
@@ -27,6 +29,11 @@ module.exports = [function () {
         hasFilters: function () {},
         getActiveFilters: function (filters) {
             return filters;
+        },
+        setMode: function () {
+        },
+        getMode: function () {
+            return filterMode;
         }
     };
 }];

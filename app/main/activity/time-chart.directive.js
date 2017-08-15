@@ -86,6 +86,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, Po
             getPostStats();
         }, true);
         $scope.$watch('showCumulative', updateAxisLabel);
+        PostFilters.setMode('activity');
     }
 
     function getPostStats(query) {

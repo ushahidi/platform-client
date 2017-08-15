@@ -6,6 +6,7 @@
         "submit" : "Submit",
         "submitting": "Submitting",
         "submit_another" : "Submit & Add Another",
+        "submit_response": "Submit a survey response",
         "can_see_this" : "can see this",
         "collections" : "Collections",
         "create_collection" : "Create collection",
@@ -13,6 +14,8 @@
         "create_new" : "Create new",
         "create_new_survey" : "Create new survey",
         "created_by" : "Created by {{author}}",
+        "date_created": "Date created",
+        "date_updated": "Date updated",
         "documentation": {
             "title" : "Documentation",
             "description" : "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -60,11 +63,13 @@
         "categories" : "Categories",
         "edit_category" : "Edit Category",
         "add_category" : "Add Category",
+        "categories_count" : "{{count}} categories",
         "plans" : "Plans",
         "delete" : "Delete",
         "description" : "Description",
         "color" : "Color",
         "search_users" : "Search users",
+        "searching" : "Searching",
         "fields" : "Fields",
         "filter_by" :"Filter by...",
         "apply_filters" : "Apply filters",
@@ -82,7 +87,16 @@
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
         "private_deployment" : "Private Deployment",
-        "mark_as" : "Mark as"
+        "mark_as" : "Mark as",
+        "who_can_see_this_category" : "Who can see this category?",
+        "this_category_is_child_to" : "This category is a child to <strong>{{parent}}</strong>",
+        "nothing" : "Nothing",
+        "who_can_see_this" : "Who can see this?",
+        "add" : "Add",
+        "add_new_category" : "+ Add new category",
+        "sort_by": "Sort By",
+        "newest_first": "Newest first",
+        "oldest_first": "Oldest first"
     },
     "toolbar": {
         "searchbar" : {

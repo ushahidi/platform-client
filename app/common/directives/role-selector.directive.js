@@ -25,10 +25,6 @@ function RoleSelectorController($scope, RoleEndpoint, $translate) {
         RoleEndpoint.query().$promise.then(function (roles) {
             $scope.roles = roles;
         });
-
-        //translating title
-        $scope.title = $translate.instant($scope.title);
-
     }
 
     // adding all available roles to model if user clicks 'Everyone'

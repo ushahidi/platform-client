@@ -15,5 +15,5 @@ function DateSelectDirective() {
 
 DateSelectController.$inject = ['$scope'];
 function DateSelectController($scope) {
-    $scope.options = { format : 'yyyy-mm-dd', klass: 'focused' };
+    $scope.options = { format : 'yyyy-mm-dd' };
 }
