@@ -26,6 +26,10 @@ function (
     return {
 
         getTosEntry: function () {
+            // If no TOS date definied, just skip
+            if (!CONST.TOS_RELEASE_DATE) {
+                return $q.resolve(true);
+            }
 
             return TermsOfServiceEndpoint.get()
             .$promise.then(function (tosEntry) {

@@ -9,7 +9,6 @@ module.exports = [
     'UserEndpoint',
     '_',
     'ModalService',
-    'TermsOfService',
 function (
     $rootScope,
     $http,
@@ -20,8 +19,7 @@ function (
     RoleEndpoint,
     UserEndpoint,
     _,
-    ModalService,
-    TermsOfService
+    ModalService
 ) {
 
     // check whether we have initially an old access_token and userId
