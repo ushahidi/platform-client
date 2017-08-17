@@ -34,7 +34,8 @@ PostEditorController.$inject = [
     'Notify',
     '_',
     'PostActionsService',
-    'MediaEditService'
+    'MediaEditService',
+    '$rootScope'
   ];
 
 function PostEditorController(
@@ -55,7 +56,8 @@ function PostEditorController(
     Notify,
     _,
     PostActionsService,
-    MediaEditService
+    MediaEditService,
+    $rootScope
   ) {
 
     // Setup initial stages container
@@ -64,6 +66,7 @@ function PostEditorController(
     $scope.validationErrors = [];
     $scope.visibleStage = 1;
     $scope.enableTitle = true;
+    $scope.hasPermission = $rootScope.hasPermission;
 
     $scope.setVisibleStage = setVisibleStage;
     $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
