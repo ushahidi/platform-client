@@ -88,7 +88,7 @@ function (
                     }, handleRequestError);
             };
 
-            $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, handleRequestError);
+            $http.post(Util.url('/oauth/token'), payload, {params: {ignore403: '@ignore403'}}).then(handleRequestSuccess, handleRequestError);
 
             return deferred.promise;
         },
