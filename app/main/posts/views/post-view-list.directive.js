@@ -48,6 +48,8 @@ function PostListController(
     $scope.totalItems = $scope.itemsPerPage;
     $scope.posts = [];
     $scope.groupedPosts = {};
+    $scope.order = 'desc';
+    $scope.orderBy = 'post_date';
 
     $scope.deletePosts = deletePosts;
     $scope.hasFilters = hasFilters;
@@ -59,6 +61,7 @@ function PostListController(
     $scope.resetPosts = resetPosts;
     $scope.clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
+    $scope.changeOrder = changeOrder;
     activate();
 
     // whenever the filters changes, update the current list of posts
@@ -88,11 +91,20 @@ function PostListController(
         $scope.selectedPosts = [];
     }
 
+    function changeOrder(order, orderBy) {
+        $scope.order = order;
+        $scope.orderBy = orderBy;
+        $scope.clearPosts = true;
+        getPosts();
+    }
+
     function getPosts(query) {
         query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-            limit: $scope.itemsPerPage
+            limit: $scope.itemsPerPage,
+            order: $scope.order,
+            orderby: $scope.orderBy
         });
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
