@@ -52,6 +52,8 @@ describe('global event handlers', function () {
             }
         };
 
+        spyOn(mockTOS, 'getTosEntry').and.callThrough();
+
         testApp.service('Session', function () {
             return mockedSessionService;
         })
@@ -114,10 +116,9 @@ describe('global event handlers', function () {
                             expect(mockRoute.reload).toHaveBeenCalled();
                         });
 
-                        // it('should check TOS', function () {
-                        //     spyOn(mockTOS, 'getTosEntry')
-                        //     expect(mockTOS.getTosEntry).toHaveBeenCalled();
-                        // });
+                        it('should check TOS', function () {
+                            expect(mockTOS.getTosEntry).toHaveBeenCalled();
+                        });
                     });
 
                     describe('failed', function () {

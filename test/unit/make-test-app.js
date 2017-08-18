@@ -27,7 +27,7 @@ module.exports = function () {
             'OAUTH_CLIENT_SECRET' : '35e7f0bca957836d05ca0492211b0ac707671261',
             'CLAIMED_ANONYMOUS_SCOPES' : claimedAnonymousScopes,
             'CLAIMED_USER_SCOPES' : claimedAnonymousScopes.concat('dataproviders'),
-            'TOS_RELEASE_DATE'    : '2017-08-04T14:32:22Z'
+            'TOS_RELEASE_DATE'    : new Date('2017-08-04T14:32:22Z')
         })
         .service('Util', require('app/common/services/util.js'));
 

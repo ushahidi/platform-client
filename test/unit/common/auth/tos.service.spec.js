@@ -49,9 +49,8 @@ describe('TermsOfService', function () {
     });
 
     it('should open the tos modal (call Notify.confirmTos) when the agreement date is less than (before) the version date', function () {
-        var inValidTosAgreementDate = 1500588207;
+        var inValidTosAgreementDate = '2017-07-20T22:03:27.000Z';
         data = {results: [{'agreement_date': inValidTosAgreementDate}]};
-
         spyOn(Notify, 'confirmTos').and.callThrough();
         spyOn(TermsOfServiceEndpoint, 'get').and.callThrough();
 
@@ -64,7 +63,7 @@ describe('TermsOfService', function () {
     });
 
     it('should NOT open the tos modal (not call Notify.confirmTos) when the agreement date is greater than (after) the version date', function () {
-        var ValidTosAgreementDate = 1600688207;
+        var ValidTosAgreementDate = '2020-09-21T11:36:47.000Z';
         data = {results: [{'agreement_date': ValidTosAgreementDate}]};
 
         spyOn(Notify, 'confirmTos').and.callThrough();
