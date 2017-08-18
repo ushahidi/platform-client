@@ -1176,12 +1176,6 @@
             }
         }
     },
-    "terms_of_service": {
-        "title": "Ushahidi Terms of Service",
-        "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
-        "agree": "I agree to Ushahidi's Terms of Service.",
-        "accept_and_continue": "Accept and Continue"
-    },
     "languages": {
         "ach": "Acoli",
         "ady": "Adyghe",

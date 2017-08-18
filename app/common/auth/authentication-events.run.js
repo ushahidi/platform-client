@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route) {
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
 
@@ -18,15 +18,12 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function doLogin(redirect, noReload) {
-        TermsOfService.getTosEntry()
-            .then(function () {
-                loadSessionData();
-                $rootScope.loggedin = true;
-                if (redirect) {
-                    $location.url(redirect);
-                }
-                noReload || $route.reload();
-            });
+        loadSessionData();
+        $rootScope.loggedin = true;
+        if (redirect) {
+            $location.url(redirect);
+        }
+        noReload || $route.reload();
     }
 
     function doLogout(redirect) {

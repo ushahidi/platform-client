@@ -14,7 +14,8 @@ describe('Session', function () {
             permissions: undefined,
             accessToken: undefined,
             loginPath: undefined,
-            gravatar: undefined        };
+            gravatar: undefined
+        };
 
         var testApp = makeTestApp();
 

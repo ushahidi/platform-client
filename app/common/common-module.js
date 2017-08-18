@@ -11,12 +11,10 @@ angular.module('ushahidi.common', [
 .service('Registration', require('./auth/registration.service.js'))
 .service('Session', require('./auth/session.service.js'))
 .service('PasswordReset', require('./auth/password-reset.service.js'))
-.service('TermsOfService', require('./auth/tos.service.js'))
 .directive('login', require('./auth/login.directive.js'))
 .directive('register', require('./auth/register.directive.js'))
 .directive('passwordReset', require('./auth/password-reset.directive.js'))
 .directive('passwordResetConfirm', require('./auth/password-reset-confirm.directive.js'))
-.directive('termsOfService', require('./auth/tos.directive.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
 
@@ -45,7 +43,6 @@ angular.module('ushahidi.common', [
 .service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
 .service('ContactEndpoint', require('./services/endpoints/contact.js'))
 .service('NotificationEndpoint', require('./services/endpoints/notification.js'))
-.service('TermsOfServiceEndpoint', require('./services/endpoints/terms-of-service-endpoint.js'))
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))

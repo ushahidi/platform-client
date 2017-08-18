@@ -31,11 +31,6 @@ describe('Authentication', function () {
                 }
             };
         })
-        .service('TermsOfService', () => {
-            return {
-
-            };
-        })
         .service('Authentication', require('app/common/auth/authentication.service.js'));
 
 

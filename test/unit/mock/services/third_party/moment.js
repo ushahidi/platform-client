@@ -6,9 +6,6 @@ module.exports = [function () {
             },
             toDate: function () {
                 return this;
-            },
-            utc: function () {
-                return this;
             }
         };
     };
