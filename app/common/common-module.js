@@ -56,6 +56,7 @@ angular.module('ushahidi.common', [
 .service('Languages', require('./services/languages.js'))
 .service('IconManager', require('./services/icon-manager.js'))
 .service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
+.service('MainsheetService', require('./services/mainsheet.service.js'))
 .service('ModalService', require('./services/modal.service.js'))
 .service('TranslationService', require('./services/translation.service.js'))
 // Controllers
@@ -71,6 +72,7 @@ angular.module('ushahidi.common', [
 
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
+.directive('ushMainsheetContainer', require('./directives/mainsheet-container.directive.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
 .directive('modalBody', require('./directives/modal-body.directive.js'))
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
