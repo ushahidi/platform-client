@@ -22,6 +22,7 @@ PostEditorController.$inject = [
     '$filter',
     '$location',
     '$translate',
+    '$timeout',
     'moment',
     'PostEntity',
     'PostEndpoint',
@@ -43,6 +44,7 @@ function PostEditorController(
     $filter,
     $location,
     $translate,
+    $timeout,
     moment,
     postEntity,
     PostEndpoint,
@@ -87,11 +89,14 @@ function PostEditorController(
         $scope.post.form = $scope.form;
         $scope.fetchAttributesAndTasks($scope.post.form.id)
         .then(function () {
-            // If the post in marked as 'Published' but it is not in
-            // a valid state to be saved as 'Published' warn the user
-            if ($scope.post.status === 'published' && !canSavePost()) {
-                Notify.error('post.valid.invalid_state');
-            }
+            // Use $timeout to delay this check till after form fields are rendered.
+            $timeout(() => {
+                // If the post in marked as 'Published' but it is not in
+                // a valid state to be saved as 'Published' warn the user
+                if ($scope.post.status === 'published' && !canSavePost()) {
+                    Notify.error('post.valid.invalid_state');
+                }
+            });
         });
 
         $scope.medias = {};
@@ -121,9 +126,11 @@ function PostEditorController(
                 if (attr.type === 'title' || attr.type === 'description') {
                     if (attr.type === 'title') {
                         $scope.postTitleLabel = attr.label;
+                        $scope.postTitleInstructions = attr.instructions;
                     }
                     if (attr.type === 'description') {
                         $scope.postDescriptionLabel = attr.label;
+                        $scope.postDescriptionInstructions = attr.instructions;
                     }
                 } else {
                     attributes.push(attr);

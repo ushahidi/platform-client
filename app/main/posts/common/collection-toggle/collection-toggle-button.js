@@ -12,7 +12,8 @@ function (
         replace: true,
         scope: {
             posts: '=',
-            selectedPosts: '='
+            selectedPosts: '=',
+            onDone: '&'
         },
         link: function ($scope, $element, $attrs, ngModel) {
             $scope.toggleCollection = function () {
@@ -22,6 +23,8 @@ function (
                 });
 
                 CollectionsService.showAddToCollection(selectedPostObjects);
+                // Trigger done handler (clear selected posts)
+                $scope.onDone();
             };
         },
         template: require('./collection-toggle-button.html')
