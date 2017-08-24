@@ -30,6 +30,9 @@ describe('mode-context-form-filter directive', function () {
         spyOn(TagEndpoint, 'queryFresh').and.callThrough();
         spyOn(PostEndpoint, 'stats').and.callThrough();
         spyOn(PostFilters, 'getQueryParams').and.callThrough();
+
+        $scope.filters = PostFilters.getDefaults();
+
         element = '<mode-context-form-filter></mode-context-form-filter>';
         element = $compile(element)($scope);
         $scope.$digest();
