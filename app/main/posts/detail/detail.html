@@ -56,11 +56,12 @@
 
             <div ng-if="form_attributes[key].input === 'tags'">
                 <h2 class="form-label">{{form_attributes[key].label}}</h2>
+                <p>
                     <svg class="iconic" style="margin-right:4px;">
                         <use xlink:href="/img/iconic-sprite.svg#tag"></use>
                     </svg>
                     {{formatTags(post.values[key])}}
-                    </span>
+                </p>
             </div>
         </div>
         <div
@@ -116,15 +117,25 @@
           </div>
           <div
             ng-repeat="(key,value) in post.values"
-            ng-if="form_attributes[key].type !== 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
             ng-show="form_attributes[key].form_stage_id === visibleTask"
             >
             <post-value
+              ng-if="form_attributes[key].type !== 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)&& form_attributes[key].input !== 'tags'"
               key="key"
               value="value"
               attribute="form_attributes[key]"
               type="'standard'">
             </post-value>
+             <div class="listing-item-primary" ng-if="form_attributes[key].input === 'tags'">
+                <h2 class="form-label">{{form_attributes[key].label}}</h2>
+                <p>
+                    <svg class="iconic" style="margin-right:4px;">
+                        <use xlink:href="/img/iconic-sprite.svg#tag"></use>
+                    </svg>
+                    {{formatTags(post.values[key])}}
+                </p>
+            </div>
+
           </div>
         </div>
     </div>
