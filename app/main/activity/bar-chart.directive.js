@@ -77,6 +77,7 @@ function ActivityBarChartController($scope, $translate, PostEndpoint, d3, _, Pos
         $scope.$watch('filters', function () {
             getPostStats();
         }, true);
+        PostFilters.setMode('activity');
     }
 
     function getPostStats(query) {

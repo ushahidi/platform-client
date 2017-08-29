@@ -2,17 +2,21 @@
     <header class="form-sheet-summary">
         <h1 class="form-sheet-title section-title">{{stage.label}}</h1>
     </header>
+    <div ng-show="stage.show_when_published" class="alert">
+        <p translate="survey.task_visible_when_published">This task will be visible when post is published</p>
+    </div>
     <!-- Handle stage completion -->
     <div class="form-field switch">
         <label translate="post.task_completed">Task completed</label>
         <div class="toggle-switch">
             <input
                 class="tgl"
-                id="switchT"
+                ng-attr-id="{{ 'toggle-complete-' + stage.id }}"
                 type="checkbox"
                 ng-checked="stageIsComplete(stage.id)"
                 ng-click="toggleStageCompletion(stage.id)">
-            <label class="tgl-btn" for="switchT"></label>
+            <label class="tgl-btn" for="toggle-complete-{{stage.id}}" ng-attr-id="{{ 'toggle-complete-label-' + stage.id }}"></label>
+
         </div>
     </div>
     <post-value-edit

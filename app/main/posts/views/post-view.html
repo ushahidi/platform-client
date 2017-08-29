@@ -12,8 +12,12 @@
         <!-- list view -->
         <post-view-list ng-switch-when="list" is-loading="isLoading" filters="filters"></post-view-list>
 
+        <!-- create view -->
+        <post-view-create ng-switch-when="create"></post-view-create>
+        
         <!-- unavailable view -->
         <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>
+
 
         <!-- default view -->
         <post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>

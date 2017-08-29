@@ -3,9 +3,6 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
     $locationProvider.html5Mode(true);
 
     $routeProvider
-        .when('/', {
-            redirectTo: '/views/map'
-        })
         .when('/login', {
             controller: require('./auth/login.controller.js'),
             template: ''
@@ -30,5 +27,6 @@ module.exports = ['$routeProvider', '$locationProvider', function ($routeProvide
             controller: require('./auth/password-reset-confirm.controller.js'),
             template: ''
         })
+        .otherwise('/')
         ;
 }];

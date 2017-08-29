@@ -14,8 +14,14 @@
 
       <!-- Attribute Label -->
       <label for="values[{{attribute.key}}][0]">
+          <svg ng-show="attribute.response_private" class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+          </svg>
           {{attribute.label}}
       </label>
+      <!-- Attribute Instructions -->
+      <p>{{attribute.instructions}}</p>
+
       <!-- attributes which use the form-field structure -->
       <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
           <div ng-switch="attribute.input">
@@ -154,9 +160,13 @@
 
   <!-- Container for fieldset structured elements -->
   <fieldset ng-if="isFieldSetStructure(attribute)">
-    <legend>{{attribute.label}}</legend>
-    <!-- attributes which use the form-field structure -->
 
+    <!-- Attribute Label -->
+    <label>{{attribute.label}}</label>
+    <!-- Attribute Instructions -->
+    <p>{{attribute.instructions}}</p>
+
+    <!-- attributes which use the form-field structure -->
     <div ng-switch="attribute.input">
       <!-- type: radio -->
       <div ng-switch-when="radio">
