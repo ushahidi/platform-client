@@ -16,15 +16,14 @@ function CategorySelectorDirective() {
 CategorySelectorController.$inject = ['$scope', '_'];
 
 function CategorySelectorController($scope, _) {
-
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
     $scope.selectParent = selectParent;
-
+    $scope.disabledCategories = [];
+    $scope.changeCategories = changeCategories;
     activate();
 
     function activate() {
-
         // remove default null value when creating a new post
         if ($scope.selected[0] === null) {
             $scope.selected = [];
@@ -36,7 +35,7 @@ function CategorySelectorController($scope, _) {
         });
 
         flattenCategories();
-
+        $scope.changeCategories();
     }
 
     function flattenCategories() {
@@ -93,4 +92,27 @@ function CategorySelectorController($scope, _) {
         }
     }
 
+    function changeCategories() {
+        _.each($scope.available, function (category) {
+                    var selectedChildren = _.chain(category.children)
+                        .pluck('id')
+                        .intersection($scope.selected)
+                        .value();
+
+                    // If children are selected, add to disabled categories
+                    if (selectedChildren.length > 0) {
+                        $scope.disabledCategories[category.id] = true;
+
+                        // ... and ensure this category is selected
+                        if (!_.contains($scope.selected, category.id)) {
+                            $scope.selected.push(category.id);
+                        }
+                    } else {
+                        // or, if no children are selected
+                        // remove from disabled categories
+                        $scope.disabledCategories[category.id] = false;
+                    }
+                });
+
+    }
 }

@@ -1,46 +1,45 @@
-<div class="form-field switch">
-    <label translate="category.show_categories"></label>
-    <div class="toggle-switch">
-        <input
-            id="categories"
-            class="tgl init"
-            ng-click="showCategories=!showCategories"
-            type="checkbox"
-        >
-        <label class="tgl-btn" for="categories"></label>
-    </div>
-</div>
-<div class="form-field">
-    <div ng-show="showCategories">
-        <div class="form-field checkbox">
-            <label>
-                <input
+<div class="form-fieldgroup checkbox" overflow-toggle has-overflow="available.length > 2" ng-style="{'borderLeft':'none'}">
+    <div class="form-field">
+        <label>
+            <input
                   type="checkbox"
                   ng-checked="flattened.length === selected.length"
                   ng-click="selectAll()"
-                />
-                <span translate="category.select_all"></span>
-            </label>
-        </div>
-        <div class="form-field checkbox" ng-repeat="category in available">
+            >
+            <span translate="category.select_all"></span>
+        </label>
+    </div>  
+    <div class="form-field checkbox" ng-repeat="(index, category) in available" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
+        <label>
+            <input
+                type="checkbox"
+                checklist-value="category.id"
+                ng-disabled="disabledCategories[category.id]"
+                value="category.id"
+                checklist-model="selected"
+                checklist-change="changeCategories()"
+            > 
+            {{ ::category.tag }}
+        </label>
+        <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
             <label>
-                <input
-                  type="checkbox"
-                  ng-checked="selected.includes(category.id)"
-                  ng-click="selectParent(category)"
-                />
-                {{category.tag}}
-            </label>
-            <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
-                <label>
-                    <input
-                      type="checkbox"
-                      ng-checked="selected.includes(child.id)"
-                      ng-click="selectChild(child)"
-                    />
-                    {{child.tag}}
-                </label>
-            </div>
-        </div>
+                <input 
+                    type="checkbox"
+                    checklist-model="selected"
+                    checklist-value="child.id"
+                    value="child.id"
+                    ng-selected="selected.indexOf(category.id) >-1"
+                    checklist-change="changeCategories()"
+                >
+                {{ ::child.tag }}
+        </label>
+        </div> 
     </div>
-</div>
+    <span class="form-field-toggle">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span translate="nav.more">More</span>
+    </span>
+  </div>
+  
