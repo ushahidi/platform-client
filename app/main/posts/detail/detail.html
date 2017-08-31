@@ -53,15 +53,6 @@
             ng-if="form_attributes[key].type === 'media'"
             label="{{form_attributes[key].label}}"
             media-id="value"></post-media-value>
-
-            <div ng-if="form_attributes[key].input === 'tags'">
-                <h2 class="form-label">{{form_attributes[key].label}}</h2>
-                    <svg class="iconic" style="margin-right:4px;">
-                        <use xlink:href="/img/iconic-sprite.svg#tag"></use>
-                    </svg>
-                    {{formatTags(post.values[key])}}
-                    </span>
-            </div>
         </div>
         <div
           ng-if="post.content"
@@ -71,10 +62,11 @@
 
         <post-value
           ng-repeat="(key,value) in post.values"
-          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type) && form_attributes[key].input !== 'tags'"
+          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type)"
           key="key"
           value="value"
           attribute="form_attributes[key]"
+          tags="tags"
           type="'post'">
         </post-value>
         <post-detail-map post-id="post.id"></post-detail-map>
