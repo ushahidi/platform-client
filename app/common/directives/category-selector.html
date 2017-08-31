@@ -1,4 +1,4 @@
-<div class="form-fieldgroup checkbox" overflow-toggle has-overflow="available.length > 2" ng-style="{'borderLeft':'none'}">
+<div class="form-fieldgroup checkbox" overflow-toggle has-overflow="available.length > 2">
     <div class="form-field">
         <label>
             <input
@@ -8,7 +8,7 @@
             >
             <span translate="category.select_all"></span>
         </label>
-    </div>  
+    </div>
     <div class="form-field checkbox" ng-repeat="(index, category) in available" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
         <label>
             <input
@@ -18,12 +18,12 @@
                 value="category.id"
                 checklist-model="selected"
                 checklist-change="changeCategories()"
-            > 
+            >
             {{ ::category.tag }}
         </label>
         <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
             <label>
-                <input 
+                <input
                     type="checkbox"
                     checklist-model="selected"
                     checklist-value="child.id"
@@ -33,7 +33,7 @@
                 >
                 {{ ::child.tag }}
         </label>
-        </div> 
+        </div>
     </div>
     <span class="form-field-toggle">
         <svg class="iconic">
@@ -42,4 +42,3 @@
         <span translate="nav.more">More</span>
     </span>
   </div>
-  
