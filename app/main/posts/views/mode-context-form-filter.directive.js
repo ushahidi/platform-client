@@ -27,17 +27,21 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.changeForms = changeForms;
     activate();
 
+    $scope.$watch('filters', function () {
+        getPostStats(PostFilters.getFilters()).$promise.then(updateCounts);
+    }, true);
+
     function activate() {
         // Load forms
         $scope.forms = FormEndpoint.queryFresh();
         $scope.tags = TagEndpoint.queryFresh();
-        var postCountRequest = PostEndpoint.stats({ group_by: 'form', status: 'all', include_unmapped: true });
+        var postCountRequest = getPostStats($scope.filters);
         $q.all([$scope.forms.$promise, postCountRequest.$promise, $scope.tags.$promise]).then(function (responses) {
             if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
                 return;
             }
-            var values = responses[1].totals[0].values;
             var tags = responses[2];
+
             // adding children to tags
             _.each(_.where(tags, { parent_id: null }), function (tag) {
                 if (tag && tag.children) {
@@ -47,12 +51,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                 }
             });
 
-            angular.forEach($scope.forms, function (form) {
-                var value = _.findWhere(values, { id: form.id });
-                form.post_count = value ? value.total : 0;
-            });
-
-            $scope.forms.forEach(function (form, index) {
+            angular.forEach($scope.forms, function (form, index) {
                 var formTagIds = _.pluck(form.tags, 'id');
                 // assigning whole tag-object to forms
                 $scope.forms[index].tags = _.filter(_.map(tags, function (tag) {
@@ -75,15 +74,40 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                     return false;
                 }));
             });
-            // Grab the count for form=null
-            var unknownValue = _.findWhere(values, { id: null });
-            if (unknownValue) {
-                $scope.unknown_post_count = unknownValue.total;
-            }
-            // Setting nb of unmapped posts
-            if (responses[1].unmapped) {
-                $scope.unmapped = responses[1].unmapped;
-            }
+
+            updateCounts(responses[1]);
+        });
+    }
+
+    function getPostStats(filters) {
+        var query = PostFilters.getQueryParams(filters);
+        var queryParams = _.extend({}, query, {
+            'group_by': 'form',
+            include_unmapped: true
+        });
+        // we want stats for all forms, not just the ones visible right now
+        if (queryParams.form) {
+            delete queryParams.form;
+        }
+        // deleting categories since they are selected in the sidebar and not in the filter-modal = might get confusing
+        if (queryParams.tags) {
+            delete queryParams.tags;
+        }
+        return PostEndpoint.stats(queryParams);
+    }
+
+    function updateCounts(stats) {
+        // assigning count of unknown-values
+        let unknown = _.findWhere(stats.totals[0].values, { id: null });
+        $scope.unknown_post_count = (unknown && unknown.total) ? unknown.total : 0;
+
+        // Setting nb of unmapped posts
+        $scope.unmapped = stats.unmapped ? stats.unmapped : 0;
+
+        // assigning count for all forms
+        _.each($scope.forms, function (form) {
+            let posts = _.findWhere(stats.totals[0].values, { id: form.id });
+            form.post_count = (posts && posts.total) ? posts.total : 0;
         });
     }
 
