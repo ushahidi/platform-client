@@ -14,6 +14,9 @@
 
       <!-- Attribute Label -->
       <label for="values[{{attribute.key}}][0]">
+          <svg ng-show="attribute.response_private" class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+          </svg>
           {{attribute.label}}
       </label>
       <!-- Attribute Instructions -->
@@ -201,39 +204,39 @@
 
     <!-- type: categories -->
       <div ng-switch-when="tags">
-        <div 
+        <div
           class="form-field checkbox"
           ng-repeat="option in attribute.options"
           ng-if="option.parent_id === null"
           >
         <label>
-          <input 
+          <input
                 type="checkbox"
                 checklist-model="post.values[attribute.key]"
-                name="values_{{attribute.id}}_{{option}}"
+                name="values_{{attribute.id}}_{{option.id}}"
                 checklist-value="option.id"
                 value="option.id"
                 ng-click="selectParent(option, attribute.key)"
             >
                 {{option.tag}}
         </label>
-        <div 
+        <div
           class="form-field checkbox"
           ng-if="option.children"
           ng-repeat="child in option.children"
         >
           <label>
-          <input 
+          <input
             type="checkbox"
             checklist-model="post.values[attribute.key]"
-            name="values_{{attribute.id}}_{{child}}"
+            name="values_{{attribute.id}}_{{child.id}}"
             checklist-value="child.id"
             value="child.id"
             ng-click="selectChild(child, attribute.key)"
           >
             {{child.tag}}
         </label>
-    </div> 
+    </div>
     </div>
 
       <add-category
