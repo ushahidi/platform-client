@@ -19,3 +19,4 @@ vault.txt
 *.svg
 server/www/img/icons/
 server/www/
+app/locales/
