@@ -198,6 +198,7 @@
         "add_task" : "Add Task",
         "title" : "Title",
         "field_allowed_relation_survey": "Allowed surveys",
+        "disable_caption_field": "Disable caption field",
         "description" : "Description",
         "task_description" : "Task description",
         "post_fields" : "Post fields",
