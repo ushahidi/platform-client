@@ -51,6 +51,7 @@
 
           <post-media-value
             ng-if="form_attributes[key].type === 'media'"
+            media-caption-disabled="form_attributes[key].config.captionDisabled"
             label="{{form_attributes[key].label}}"
             media-id="value"></post-media-value>
         </div>

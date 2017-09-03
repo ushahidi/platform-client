@@ -199,6 +199,7 @@
         "title" : "Title",
         "field_allowed_relation_survey": "Allowed surveys",
         "disable_caption_field": "Disable caption field",
+        "disable_caption_field_explanation": "This will disable all captions for this field, but it won't delete them from the database. You will be able to re-enable them later.",
         "description" : "Description",
         "task_description" : "Task description",
         "post_fields" : "Post fields",

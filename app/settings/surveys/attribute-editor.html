@@ -82,6 +82,12 @@
        <!-- start: media upload toggle to make caption an optional field-->
        <div class="form-field switch" ng-show="canDisableCaption()">
          <label translate="survey.disable_caption_field">Disable caption field</label>
+         <p data-fieldgroup-target="field-caption-disabled-warning" class="init active" translate="survey.disable_caption_field_explanation" ng-show="editAttribute.config.captionDisabled">
+           <svg class="iconic">
+               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+           </svg>
+           This will disable all captions for this field, but it won't delete them from the database. You will be able to re-enable them later.
+         </p>
          <div class="toggle-switch">
            <input class="tgl" id="switch-captiondisabled" type="checkbox" ng-model="editAttribute.config.captionDisabled">
            <label class="tgl-btn" for="switch-captiondisabled"></label>
