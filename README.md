@@ -113,7 +113,7 @@ To run end-to-end integration tests run:
 
 ```
 gulp build --mock-backend
-gulp node-server # <- might need to run this in another window
+gulp --node-server # <- might need to run this in another window
 npm run protractor
 ```
 
