@@ -20,11 +20,11 @@ function (
         scope: {
             mediaId: '=',
             media: '=',
-            name: '@'
+            name: '@',
+            mediaCaptionDisabled: '='
         },
         template: require('./media.html'),
         link: function ($scope, element, attr, formCtrl) {
-
             if ($scope.mediaId) {
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                     $scope.media = media;

@@ -15,7 +15,6 @@ function (
         },
         template: require('./post-preview-media.html'),
         link: function ($scope) {
-
             if (!$scope.post.form) {
                 return;
             }
@@ -27,12 +26,12 @@ function (
                     var mediaAttribute = _.find(attributes, function (attribute) {
                         return attribute.type === 'media';
                     });
-
                     // Get the media url and caption
                     if (mediaAttribute && !_.isUndefined($scope.post.values[mediaAttribute.key])) {
                         MediaEndpoint.get({id: $scope.post.values[mediaAttribute.key]}).$promise
                             .then(function (media) {
                                 $scope.media = media;
+                                $scope.mediaCaptionDisabled = mediaAttribute.config.captionDisabled;
                             });
                     }
                 });

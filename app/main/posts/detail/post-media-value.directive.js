@@ -4,7 +4,8 @@ module.exports = ['MediaEndpoint', '_', function (MediaEndpoint, _) {
         replace: true,
         scope: {
             mediaId: '=',
-            label: '@'
+            label: '@',
+            mediaCaptionDisabled: '='
         },
         template: require('./post-media-value.html'),
         link: function ($scope) {
