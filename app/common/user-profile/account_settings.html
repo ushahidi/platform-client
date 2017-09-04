@@ -10,7 +10,7 @@
           user_profile.nav.general
         </a>
       </li>
-      <li ng-class="{'active': notifications}">
+      <li ng-if="!adminUserSetup" ng-class="{'active': notifications}">
         <a ng-click="showNotifications()" translate>
           user_profile.nav.notifications
         </a>
@@ -19,7 +19,7 @@
   </nav>
 
   <div class="modal-body">
-    <user-profile ng-show="general"></user-profile>
-    <notifications ng-show="notifications"></notifications>
+    <user-profile ng-show="general" admin-user-setup="adminUserSetup"></user-profile>
+    <notifications ng-show="notifications && !adminUserSetup"></notifications>
   </div>
 </div>

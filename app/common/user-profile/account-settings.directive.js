@@ -11,6 +11,7 @@ function (
         restrict: 'E',
         replace: true,
         scope: {
+            adminUserSetup: '='
         },
         template: require('./account_settings.html'),
         link: function (scope) {
