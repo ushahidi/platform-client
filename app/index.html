@@ -135,6 +135,17 @@
                 }));
             }
         </script>
+        <script>
+            if (window.ushahidi && window.ushahidi.googleMapsApiKey) {
+                (function(d, t, c, s) {
+                    var g = d.createElement(t);g.id = 'mapsApi';g.type = 'text/javascript';g.async = true; g.src = 'https://maps.googleapis.com/maps/api/js?key=' + window.ushahidi.googleMapsApiKey + '&libraries=places';g.onload=c;g.onreadystatechange=c; s = d.getElementsByTagName(t)[0];s.parentNode.insertBefore(g, s);
+                }(document, 'script', function () {
+                    var e = document.createElement('div');
+                    e.style.display = 'none';
+                    window.googlePlaces = new google.maps.places.PlacesService(e);
+                }));
+            }
+        </script>
 
         <!--
           Facebook sharing code

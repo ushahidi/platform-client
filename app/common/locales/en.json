@@ -14,6 +14,8 @@
         "create_new" : "Create new",
         "create_new_survey" : "Create new survey",
         "created_by" : "Created by {{author}}",
+        "date_created": "Date created",
+        "date_updated": "Date updated",
         "documentation": {
             "title" : "Documentation",
             "description" : "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -67,6 +69,7 @@
         "description" : "Description",
         "color" : "Color",
         "search_users" : "Search users",
+        "searching" : "Searching",
         "fields" : "Fields",
         "filter_by" :"Filter by...",
         "apply_filters" : "Apply filters",
@@ -90,7 +93,10 @@
         "nothing" : "Nothing",
         "who_can_see_this" : "Who can see this?",
         "add" : "Add",
-        "add_new_category" : "+ Add new category"
+        "add_new_category" : "+ Add new category",
+        "sort_by": "Sort By",
+        "newest_first": "Newest first",
+        "oldest_first": "Oldest first"
     },
     "toolbar": {
         "searchbar" : {
@@ -723,6 +729,7 @@
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
         "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
+        "child_permissions" : "Permissions for this category are managed by the parent category.",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
@@ -1168,6 +1175,12 @@
                 "maxlength": "This number is too long"
             }
         }
+    },
+    "terms_of_service": {
+        "title": "Ushahidi Terms of Service",
+        "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
+        "agree": "I agree to Ushahidi's Terms of Service.",
+        "accept_and_continue": "Accept and Continue"
     },
     "languages": {
         "ach": "Acoli",

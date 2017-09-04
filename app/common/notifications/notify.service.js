@@ -14,7 +14,8 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirm: confirm,
         confirmModal: confirmModal,
         confirmDelete: confirmDelete,
-        limit: limit
+        limit: limit,
+        confirmTos: confirmTos
     };
 
     function notify(message, translateValues) {
@@ -118,6 +119,20 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         }
 
         $translate(confirmText, translateValues).then(showSlider, showSlider);
+
+        return deferred.promise;
+    }
+
+    function confirmTos() {
+        var deferred = $q.defer();
+        var scope = getScope();
+
+        scope.confirm = function () {
+            deferred.resolve();
+            ModalService.close();
+        };
+
+        ModalService.openTemplate('<terms-of-service></terms-of-service>', ' ', false, scope, false, false);
 
         return deferred.promise;
     }

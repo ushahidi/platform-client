@@ -53,7 +53,7 @@ function CollectionModeContextController(
             if (notifications.length) {
                 $scope.notification = notifications[0];
             }
-        });
+        }, angular.noop);
     }
 
     function canEdit(collection) {
