@@ -31,7 +31,7 @@ function (
                         MediaEndpoint.get({id: $scope.post.values[mediaAttribute.key]}).$promise
                             .then(function (media) {
                                 $scope.media = media;
-                                $scope.mediaCaptionDisabled = mediaAttribute.config.captionDisabled;
+                                $scope.mediaCaptionDisabled = mediaAttribute.config ? mediaAttribute.config.captionDisabled : null;
                             });
                     }
                 });
