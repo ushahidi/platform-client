@@ -21,7 +21,7 @@ function (
             mediaId: '=',
             media: '=',
             name: '@',
-            mediaCaptionDisabled: '='
+            mediaHasCaption: '='
         },
         template: require('./media.html'),
         link: function ($scope, element, attr, formCtrl) {

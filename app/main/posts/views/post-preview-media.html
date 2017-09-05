@@ -1,5 +1,5 @@
 <div class="postcard-field" ng-show="media">
-	<img ng-if="!mediaCaptionDisabled" ng-src="{{ media.original_file_url }}" alt="{{ media.caption }}" class="postcard-image">
-	<img ng-if="mediaCaptionDisabled" ng-src="{{ media.original_file_url }}" class="postcard-image">
+	<img ng-if="hasCaption" ng-src="{{ media.original_file_url }}" alt="{{ media.caption }}" class="postcard-image">
+	<img ng-if="!hasCaption" ng-src="{{ media.original_file_url }}" class="postcard-image">
 </div>
 

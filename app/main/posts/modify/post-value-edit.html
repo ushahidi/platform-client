@@ -134,7 +134,7 @@
               <post-media
                   ng-switch-when="upload"
                   name="values_{{attribute.id}}"
-                  media-caption-disabled="attribute.config.captionDisabled"
+                  media-has-caption="attribute.config.hasCaption"
                   media-id="post.values[attribute.key][key]"
                   media="medias[attribute.key]"
                   ng-model="post.values[attribute.key][key]"
