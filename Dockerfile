@@ -18,8 +18,10 @@ COPY docker/nginx.default.conf /etc/nginx/conf.d/default.conf
 COPY docker/nginx.run.sh /nginx.run.sh
 RUN sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \
     mkdir /var/lib/nginx && \
-    chgrp -R 0 /var/lib/nginx /run && \
-    chmod -R g+rwX /var/lib/nginx /run
+    chgrp -R 0 . /var/lib/nginx /run && \
+    chmod -R g+rwX . /var/lib/nginx /run && \
+    ln -sf /dev/stdout /var/log/nginx/access.log && \
+    ln -sf /dev/stderr /var/log/nginx/error.log
 
 ENV HTTP_PORT=$HTTP_PORT
 EXPOSE $HTTP_PORT
