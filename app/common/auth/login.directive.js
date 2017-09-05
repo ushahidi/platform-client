@@ -75,7 +75,7 @@ function LoginController(
      * references https://github.com/ushahidi/platform/issues/1714
      */
     function redirectAdminEmailToAccountSettings() {
-        ModalService.openTemplate('<account-settings admin-user-setup="true"></account-settings>', 'Change your email and password', false, false, false, false);
+        ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
     }
 
     function loginSubmit(email, password) {
