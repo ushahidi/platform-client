@@ -11,5 +11,11 @@ function PostViewsController($scope, $translate, $routeParams, PostFilters) {
         $scope.$emit('setPageTitle', title);
     });
 
+    PostFilters.setMode('all');
     $scope.filters = PostFilters.getFilters();
+
+    $scope.$emit('event:allposts:show');
+    $scope.$on('$destroy', function () {
+        $scope.$emit('event:allposts:close');
+    });
 }

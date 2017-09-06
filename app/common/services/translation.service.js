@@ -42,26 +42,37 @@ function (
         });
     };
 
-    var getLanguage = function () {
+    var getLanguage = function (config) {
         return $q(function (resolve, reject) {
                 if (Session.getSessionDataEntry('language')) {
                     resolve(Session.getSessionDataEntry('language'));
+                    return;
                 }
+
+                let configRequest = $q.when(config ? config : ConfigEndpoint.get({id: 'site'}).$promise);
+                let userRequest = $q.when(false);
+
                 if (Authentication.getLoginStatus()) {
-                    UserEndpoint.get({id: 'me'}).$promise.then(function (user) {
-                        if (user.language) {
-                            resolve(user.language);
-                        }
-                    });
+                    userRequest = UserEndpoint.get({id: 'me'}).$promise;
                 }
-                ConfigEndpoint.get({id: 'site'}).$promise.then(function (site) {
-                    site.language ? resolve(site.language) : resolve('en');
+
+                $q.all({
+                    user: userRequest,
+                    config: configRequest
+                }).then(function (result) {
+                    if (result.user && result.user.language) {
+                        resolve(result.user.language);
+                    } else if (result.config.language) {
+                        resolve(result.config.language);
+                    } else {
+                        resolve('en');
+                    }
                 });
             });
     };
 
     var setLanguage = function (code) {
-        Session.setSessionDataEntry({language: code});
+        Session.setSessionDataEntry('language', code);
         if (Authentication.getLoginStatus()) {
             UserEndpoint.get({id: 'me'}).$promise.then(function (user) {
                 user.language = code;
