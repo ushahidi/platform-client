@@ -15,7 +15,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.showOnly = showOnly;
     $scope.selectParent = selectParent;
     $scope.hide = hide;
-    $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
     $scope.canAddToSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.showLanguage = false;
@@ -25,6 +24,8 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.goToUnmapped = goToUnmapped;
     $scope.getUnmapped = getUnmapped;
     $scope.changeForms = changeForms;
+    $scope.unknown = [];
+
     activate();
 
     $scope.$watch('filters', function () {
@@ -93,17 +94,17 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         if (queryParams.tags) {
             delete queryParams.tags;
         }
+        if (queryParams.source) {
+            delete queryParams.source;
+        }
         return PostEndpoint.stats(queryParams);
     }
 
     function updateCounts(stats) {
         // assigning count of unknown-values
-        let unknown = _.findWhere(stats.totals[0].values, { id: null });
-        $scope.unknown_post_count = (unknown && unknown.total) ? unknown.total : 0;
-
+        $scope.unknown = _.filter(stats.totals[0].values, { id: null });
         // Setting nb of unmapped posts
         $scope.unmapped = stats.unmapped ? stats.unmapped : 0;
-
         // assigning count for all forms
         _.each($scope.forms, function (form) {
             let posts = _.findWhere(stats.totals[0].values, { id: form.id });
