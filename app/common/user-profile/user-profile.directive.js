@@ -20,7 +20,7 @@ module.exports = [
                 $scope.state = {
                     success: false,
                     processing: false,
-                    changingPassword: !!$scope.adminUserSetup,
+                    changingPassword: false,
                     password: ''
                 };
 

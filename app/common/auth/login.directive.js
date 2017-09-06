@@ -63,19 +63,6 @@ function LoginController(
         $scope.failed = false;
         $scope.processing = false;
         $scope.$parent.closeModal();
-        if ($scope.email === 'admin') {
-            redirectAdminEmailToAccountSettings();
-        }
-    }
-
-    /**
-     * redirectAdminEmailToAccountSettings is called when there is a login with the 'admin' email instead of a proper email.
-     * This is part of an effort to force users to have proper emails and not use the default email/password combination that the
-     * system had during the setup process.
-     * references https://github.com/ushahidi/platform/issues/1714
-     */
-    function redirectAdminEmailToAccountSettings() {
-        ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
     }
 
     function loginSubmit(email, password) {
