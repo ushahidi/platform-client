@@ -1,7 +1,7 @@
 module.exports = SourceSelectDirective;
 
-SourceSelectDirective.$inject = ['$rootScope'];
-function SourceSelectDirective($rootScope) {
+SourceSelectDirective.$inject = ['$rootScope', 'ConfigEndpoint', '_'];
+function SourceSelectDirective($rootScope, ConfigEndpoint, _) {
     return {
         restrict: 'E',
         replace: true,
@@ -13,11 +13,32 @@ function SourceSelectDirective($rootScope) {
 
     function SourceSelectLink(scope, element, attrs, ngModel) {
         scope.selectedSources = [];
+        scope.availableSources = [];
         scope.hasPermission = $rootScope.hasPermission;
 
         activate();
 
         function activate() {
+            // getting enabled providers if user has permissions
+            if (scope.hasPermission()) {
+                ConfigEndpoint.get({ id: 'data-provider' }).$promise.then(function (results) {
+                    var smsProviders = ['smssync', 'twilio', 'frontlinesms'];
+                    scope.availableSources = _.map(results.providers, function (source, key) {
+                        if (source) {
+                            if (_.contains(smsProviders, key)) {
+                                return 'SMS';
+                            } else {
+                                return key.substr(0, 1).toUpperCase() + key.substr(1);
+                            }
+                        }
+                    });
+
+                    scope.availableSources = _.chain(scope.availableSources)
+                        .compact()
+                        .uniq()
+                        .value();
+                });
+            }
             scope.$watch('selectedSources', saveValueToView, true);
             ngModel.$render = renderModelValue;
         }

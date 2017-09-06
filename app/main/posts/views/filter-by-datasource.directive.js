@@ -16,31 +16,36 @@ function FilterByDatasourceDirective() {
 
 FilterByDatasourceController.$inject = ['$scope', '$rootScope', 'ConfigEndpoint', '_'];
 function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
-
-    $scope.$watch('postStats', function (postStats) {
-        assignStatsToProviders();
-    });
     $scope.dataSources = [];
     $scope.providers = [];
     $scope.formatHeading = formatHeading;
     $scope.showOnly = showOnly;
     $scope.hide = hide;
+    $scope.hasPermission = $rootScope.hasPermission;
+
+    $scope.$watch('postStats', function (postStats) {
+        assignStatsToProviders();
+    });
 
     activate();
 
     function activate() {
-        ConfigEndpoint.get({ id: 'data-provider' }).$promise.then(function (results) {
-            $scope.dataSources = results.providers;
-            assignStatsToProviders();
-        });
+        if ($scope.hasPermission()) {
+            ConfigEndpoint.get({ id: 'data-provider' }).$promise.then(function (results) {
+                $scope.dataSources = results.providers;
+                assignStatsToProviders();
+            });
+        }
     }
+
     function assignStatsToProviders() {
-        var smsProviders = ['smssync', 'twilio', 'frontlinesms'];
-        $scope.providers = _.map($scope.dataSources, function (source, key) {
+        if ($scope.dataSources.length > 0) {
+            var smsProviders = ['smssync', 'twilio', 'frontlinesms'];
+            $scope.providers = _.map($scope.dataSources, function (source, key) {
                     var obj = {};
                     if (source) {
                         if (_.contains(smsProviders, key)) {
-                            obj.label =  'SMS';
+                            obj.label = 'SMS';
                         } else {
                             obj.label = key.substr(0, 1).toUpperCase() + key.substr(1);
                         }
@@ -49,7 +54,19 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
                         return obj;
                     }
                 });
+        } else {
+            $scope.providers = _.map($scope.postStats, function (provider) {
+                var obj = {};
+                if (provider.type !== 'web') {
+                    obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
+                    obj.heading = formatHeading(obj.label);
+                    obj.total = getTotals(obj.label);
+                    return obj;
+                }
+            });
+        }
 
+        // removing duplicates and null-values
         $scope.providers = _.chain($scope.providers)
             .compact()
             .uniq()
@@ -76,6 +93,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
                 return ' ';
         }
     }
+
     function showOnly(source) {
         if ($scope.filters.form.indexOf('none') < 0) {
             $scope.filters.form.push('none');

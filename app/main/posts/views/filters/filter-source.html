@@ -1,31 +1,31 @@
-<fieldset overflow-toggle has-overflow="false" ng-model-options="{ updateOn: 'default' }">
+<fieldset overflow-toggle has-overflow="false" ng-model-options="{ updateOn: 'default' }" ng-show="hasPermission()">
     <legend translate="global_filter.source">Source</legend>
-
-    <div class="form-field checkbox icon-input">
+    <div
+        class="form-field checkbox icon-input"
+        ng-repeat="provider in availableSources">
         <label>
-            <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'sms'" name="selectedSources">
-            <span>SMS</span>
+            <input
+                type="checkbox"
+                ng-model="source"
+                checklist-model="selectedSources"
+                checklist-value="provider.toLowerCase()"
+                name="selectedSources"
+            >
+            <span>{{source}}</span>
         </label>
     </div>
     <div class="form-field checkbox icon-input">
         <label>
-            <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'twitter'" name="selectedSources">
-            <span>Twitter</span>
-        </label>
-    </div>
-    <div class="form-field checkbox icon-input">
-        <label>
-            <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'email'" name="selectedSources">
-            <span>Email</span>
-        </label>
-    </div>
-    <div class="form-field checkbox icon-input">
-        <label>
-            <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'web'" name="selectedSources">
+            <input
+                type="checkbox"
+                ng-model="source"
+                checklist-model="selectedSources"
+                checklist-value="'web'"
+                name="selectedSources"
+            >
             <span>Web</span>
         </label>
     </div>
-
     <span class="form-field-toggle">
         <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
