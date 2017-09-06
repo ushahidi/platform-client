@@ -28,33 +28,35 @@ function CategorySelectorController($scope, _) {
         if ($scope.selected[0] === null) {
             $scope.selected = [];
         }
+        $scope.categories = formatCategories();
 
         // filter out child categories posing as available parent
-        $scope.available = _.filter($scope.available, function (category) {
+        $scope.categories = _.filter($scope.categories, function (category) {
             return category.parent_id === null;
         });
 
-        flattenCategories();
+        // making sure no children are selected without their parents
         $scope.changeCategories();
     }
 
-    function flattenCategories() {
-        $scope.flattened = [];
-        _.each($scope.available, function (category) {
-            $scope.flattened.push(category);
-            if (category.children && category.children.length) {
-                _.each(category.children, function (subcategory) {
-                    $scope.flattened.push(subcategory);
-                });
-            }
-        });
+    function formatCategories() {
+        return _.each($scope.available, function (category) {
+                if (category.children.length > 0) {
+                    category.children = _.chain(category.children)
+                    .map(function (child) {
+                            return _.findWhere($scope.available, {id: child.id});
+                        })
+                    .filter()
+                    .value();
+                }
+            });
     }
 
     function selectAll() {
-        if ($scope.flattened.length === $scope.selected.length) {
+        if ($scope.available.length === $scope.selected.length) {
             $scope.selected.length = [];
         } else {
-            _.each($scope.flattened, function (category) {
+            _.each($scope.available, function (category) {
                 if (!_.contains($scope.selected, category.id)) {
                     $scope.selected.push(category.id);
                 }
@@ -93,7 +95,7 @@ function CategorySelectorController($scope, _) {
     }
 
     function changeCategories() {
-        _.each($scope.available, function (category) {
+        _.each($scope.categories, function (category) {
                     var selectedChildren = _.chain(category.children)
                         .pluck('id')
                         .intersection($scope.selected)
