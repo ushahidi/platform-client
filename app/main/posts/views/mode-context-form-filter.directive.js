@@ -101,17 +101,31 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     }
 
     function updateCounts(stats) {
-        // assigning count of unknown-values
-        $scope.unknown = _.filter(stats.totals[0].values, { id: null });
+        // assigning count for different data-sources
+        $scope.souceStats = getSourceStats(stats);
         // Setting nb of unmapped posts
         $scope.unmapped = stats.unmapped ? stats.unmapped : 0;
         // assigning count for all forms
         _.each($scope.forms, function (form) {
-            let posts = _.findWhere(stats.totals[0].values, { id: form.id });
-            form.post_count = (posts && posts.total) ? posts.total : 0;
+            let posts = _.filter(stats.totals[0].values, { id: form.id });
+            form.post_count = 0;
+            // adding counts from different data-sources
+            if (posts) {
+                form.post_count = _.reduce(posts, function (count, post) {
+                    if (post.total) {
+                        return count + post.total;
+                    }
+                    return 0;
+                }, form.post_count);
+            }
         });
     }
 
+    function getSourceStats(stats) {
+        _.each(stats.totals[0].values, function (value) {
+            //TODO: Add totals for each source
+        });
+    }
     function selectParent(parent, formId) {
         // If we've just selected the tag
         if (_.contains($scope.filters.tags, parent.id)) {
