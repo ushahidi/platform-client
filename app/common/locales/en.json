@@ -557,9 +557,9 @@
             "unpublish" : "Revert to Draft",
             "everyone" : "Everyone",
             "back" : "Back",
-            "contact_info": "Enter your contact info (optional)",
-            "author_realname" : "Name",
-            "author_email" : "Email",
+            "contact_info": "Enter your contact info",
+            "author_realname" : "Enter your name",
+            "author_email" : "Enter your email",
             "form" : {
                 "categories" : "Categories",
                 "description" : "Description",
