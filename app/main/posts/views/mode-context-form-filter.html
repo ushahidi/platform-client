@@ -38,7 +38,7 @@
             <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
             <div class="divider"></div>
             <li ng-show="hasManageSettingsPermission()">
-                <a ng-href="/settings/surveys/{{ form.id }}">
+                <a ng-href="/settings/surveys/edit/{{ form.id }}">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                     </svg>
