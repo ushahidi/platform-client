@@ -26,7 +26,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
                 name: 'Humanitarian',
                 url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
                 layerOptions: {
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, Tiles <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
                 }
             }
         }
