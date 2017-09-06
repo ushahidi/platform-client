@@ -216,17 +216,9 @@ function SurveyEditorController(
         });
     }
     function loadAvailableCategories() {
-        // Get available tags for selected for or all tags if new form
+        // Get available categories.
         TagEndpoint.queryFresh().$promise.then(function (tags) {
-            // adding children to parents
-            $scope.availableCategories = _.map(_.where(tags, { parent_id: null }), function (tag) {
-                if (tag && tag.children) {
-                    tag.children = _.map(tag.children, function (child) {
-                        return _.findWhere(tags, {id: parseInt(child.id)});
-                    });
-                }
-                return tag;
-            });
+            $scope.availableCategories = tags;
         });
     }
 
