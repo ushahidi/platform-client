@@ -10,8 +10,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        scope: {
-        },
+        scope: {},
         template: require('./account_settings.html'),
         link: function (scope) {
             scope.user = UserEndpoint.getFresh({id: 'me'});
