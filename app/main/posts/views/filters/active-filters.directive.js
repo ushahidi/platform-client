@@ -51,6 +51,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             delete activeFilters.set;
             // Remove form filter as its shown by the mode-context-form-filter already
             delete activeFilters.form;
+            // Remove source filter as its shown by the mode-context-form-filter already
+            delete activeFilters.source;
             // Remove categories since its shown by the mode-context-form-filter already
             if (filters.form && filters.form.length <= 1) {
                 delete activeFilters.tags;
