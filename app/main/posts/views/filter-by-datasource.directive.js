@@ -30,7 +30,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
     activate();
 
     function activate() {
-        if ($scope.hasPermission()) {
+        if ($scope.hasPermission('Manage Posts')) {
             ConfigEndpoint.get({ id: 'data-provider' }).$promise.then(function (results) {
                 $scope.dataSources = results.providers;
                 assignStatsToProviders();
@@ -39,23 +39,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
     }
 
     function assignStatsToProviders() {
-        if ($scope.dataSources.length > 0) {
-            var smsProviders = ['smssync', 'twilio', 'frontlinesms'];
-            $scope.providers = _.map($scope.dataSources, function (source, key) {
-                    var obj = {};
-                    if (source) {
-                        if (_.contains(smsProviders, key)) {
-                            obj.label = 'SMS';
-                        } else {
-                            obj.label = key.substr(0, 1).toUpperCase() + key.substr(1);
-                        }
-                        obj.total = getTotals(obj.label);
-                        obj.heading = formatHeading(obj.label);
-                        return obj;
-                    }
-                });
-        } else {
-            $scope.providers = _.map($scope.postStats, function (provider) {
+        $scope.providers = _.map($scope.postStats, function (provider) {
                 var obj = {};
                 if (provider.type !== 'web') {
                     obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
@@ -64,13 +48,29 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
                     return obj;
                 }
             });
-        }
 
         // removing duplicates and null-values
         $scope.providers = _.chain($scope.providers)
             .compact()
             .uniq()
             .value();
+        // if user is logged in and is allowed to see the configs
+        if ($scope.dataSources) {
+            var smsProviders = ['nexmo', 'twilio','frontlinesms', 'smssync'];
+            _.each($scope.dataSources, function (source, key) {
+                    if (source) {
+                        var type = _.contains(smsProviders, key) ? 'SMS' : key.substr(0, 1).toUpperCase() + key.substr(1);
+                        var exists = _.filter($scope.providers, {label: type});
+                        if (exists.length < 1) {
+                            var obj = {};
+                            obj.label = type;
+                            obj.heading = formatHeading(obj.label);
+                            obj.total = getTotals(obj.label);
+                            $scope.providers.push(obj);
+                        }
+                    }
+                });
+        }
     }
 
     function getTotals(source) {
