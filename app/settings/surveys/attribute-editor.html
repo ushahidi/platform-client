@@ -41,6 +41,8 @@
                 type="checkbox"
                 checklist-model="editAttribute.options"
                 checklist-value="category.id"
+                ng-disabled="disabledCategories[category.id]"
+                checklist-change="changeCategories()"
               />
               {{category.tag}}
             </label>
@@ -53,7 +55,7 @@
                   type="checkbox"
                   checklist-model="editAttribute.options"
                   checklist-value="child.id"
-                  ng-click="selectChild(child)"
+                  checklist-change="changeCategories()"
                 />
                 {{child.tag}}
                 </label>
