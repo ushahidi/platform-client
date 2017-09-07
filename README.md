@@ -1,5 +1,5 @@
-Ushahidi Platform Prototype
-===========================
+Ushahidi Platform Web Client
+============================
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/ushahidi/platform-client.svg)](https://greenkeeper.io/)
 
@@ -76,7 +76,7 @@ Our gulp build
 
 #### Set default options with .env
 
-Instead of having to type the flags every time, you can also use a `.gulpconfig.json` file to set the default options for running the client.
+Instead of having to type the flags every time, you can also use a `.env` file to set the default options for running the client.
 
 ```
 NODE_SERVER=true
@@ -85,6 +85,7 @@ UGLIFY_JS=true
 MOCK_BACKEND=false
 KARMA_CHROME=false
 PORT=8080
+APP_LANGUAGES=en,ar
 ```
 
 * `NODE_SERVER` - always run the `node-server` task
@@ -93,6 +94,7 @@ PORT=8080
 * `MOCK_BACKEND` - build the app with an mock backend.
 * `KARMA_CHROME` - Use chrome to run karma tests
 * `PORT` - set the port to run `node-server`
+* `APP_LANGUAGES` - sets the available languages. Defaults to showing all languages
 
 #### Optional: Mock Backend
 
@@ -104,20 +106,13 @@ To build with the mock backend service, run `gulp build --mock-backend`.
 
 #### Running unit specs
 
-To run unit tests run:
+To run unit tests once, run:
 ```
 gulp test
 ```
 
-To run end-to-end integration tests run:
-
-```
-gulp build --mock-backend
-gulp node-server # <- might need to run this in another window
-npm run protractor
-```
-
 For test driven development we have a gulp task `gulp tdd`. This watches for JS changes and re-runs the unit tests.
+
 
 ### Native Server (Apache or Nginx)
 
@@ -131,8 +126,5 @@ Nginx users will have to manually configure rewriting in the site configuration 
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
-We would love your help, but the platform is in heavy development with a rapid rate
-of change. If you're keen to help build something awesome, and happy to get deep
-into the core workings... then yes! Read about [getting involved](https://wiki.ushahidi.com/display/WIKI/Ushahidi+v3.x+-+Getting+Involved) page.
-Most of our active development happens on the [Ushahidi Phabricator](https://phabricator.ushahidi.com/).
-If you haven't used Phabricator before, read [Phab Help](https://phabricator.ushahidi.com/w/help/phabricator/) after you sign up.
+Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://www.ushahidi.com/support/get-involved)..
+

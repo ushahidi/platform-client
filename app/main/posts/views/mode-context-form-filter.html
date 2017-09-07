@@ -38,7 +38,7 @@
             <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
             <div class="divider"></div>
             <li ng-show="hasManageSettingsPermission()">
-                <a ng-href="/settings/surveys/{{ form.id }}">
+                <a ng-href="/settings/surveys/edit/{{ form.id }}">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                     </svg>
@@ -54,8 +54,7 @@
             auto-close="outsideClick"
             ng-show="form.tags.length > 0 && form.post_count > 0"
             >
-            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle ng-class="{ selected : filters.tags.length }">
-            {{form.tags.length}} categories
+            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle ng-class="{ selected : filters.tags.length }" translate="app.categories_count" translate-values="{ count: form.tags.length }">
             </legend>
 
             <div class="form-fieldgroup init" dropdown-menu>
@@ -76,6 +75,7 @@
                         <div
                             class="form-field checkbox"
                             ng-repeat="child in tag.children"
+                            ng-class="{'checked': filters.tags.indexOf(child.id) !== -1}"                            
                             ng-show="filters.tags.indexOf(tag.id) > -1"
                         >
                             <label>

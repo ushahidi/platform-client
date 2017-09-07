@@ -57,7 +57,14 @@
                            <p ng-hide="permissions.length"><em translate>empty.permission</em></p>
                        </div>
 
-                       <div class="form-field checkbox" ng-repeat="permission in permissions">
+                       <div class="form-field checkbox" ng-repeat="permission in permissions" ng-if="role.name == 'admin'">
+                           <label for="{{permission.id}}">
+                               <input id="{{permission.id}}" type="checkbox" disabled checked="checked">
+                               {{permission.name}}
+                           </label>
+                       </div>
+
+                       <div class="form-field checkbox" ng-repeat="permission in permissions" ng-if="role.name != 'admin'">
                            <label for="{{permission.id}}">
                                <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="role.permissions" checklist-value="permission.name">
                                {{permission.name}}

@@ -42,8 +42,7 @@ function (
     };
 
     $scope.deleteSurvey = function (survey) {
-        Notify.confirmDelete('notify.form.delete_form_confirm').then(function () {
-
+        Notify.confirmDelete('notify.form.delete_form_confirm', 'notify.form.delete_form_confirm_desc').then(function () {
             // If we haven't saved the survey
             // just go back to the surveys views
             if (!survey.id) {

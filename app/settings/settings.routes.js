@@ -38,7 +38,7 @@ function (
         template: require('./categories/categories.html')
     })
     .when('/settings/categories/create', {
-        controller: require('./categories/create.controller.js'),
+        controller: require('./categories/edit.controller.js'),
         template: require('./categories/categories-edit.html')
     })
     .when('/settings/categories/:id', {
