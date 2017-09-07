@@ -78,7 +78,7 @@ describe('Post Filters Service', function () {
                 form: ['none'],
                 set: [],
                 user: false,
-                source: []
+                source: ['sms', 'twitter', 'web', 'email']
             });
         });
 
