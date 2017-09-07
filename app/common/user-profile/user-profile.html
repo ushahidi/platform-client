@@ -30,12 +30,12 @@
                 ng-model="user.email"
                 required>
             <p ng-repeat="(error, value) in form.email.$error"
-                ng-show="form.email.$dirty||adminUserSetup"
+                ng-show="form.email.$dirty"
                 class="alert error"
                translate="{{'user.valid.email.' + error}}"></p>
             </div>
 
-            <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changingPassword" translate>user_profile.update_password</a></p>
+            <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
 
             <div ng-if="state.changingPassword">
                 <label class="input-label"
@@ -56,7 +56,7 @@
 
             <div class="modal-actions">
                 <div class="form-field">
-                  <button ng-if="!adminUserSetup" type="button" class="button-link" ng-click="cancel()" translate>
+                  <button type="button" class="button-link" ng-click="cancel()" translate>
                     user_profile.button.cancel
                   </button>
 

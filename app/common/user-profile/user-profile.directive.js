@@ -12,9 +12,7 @@ module.exports = [
         return {
             restrict: 'E',
             replace: true,
-            scope: {
-                adminUserSetup: '='
-            },
+            scope: {},
             template: require('./user-profile.html'),
             link: function ($scope) {
                 $scope.state = {
