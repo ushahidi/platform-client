@@ -90,7 +90,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         if (queryParams.form) {
             delete queryParams.form;
         }
-        // deleting categories since they are selected in the sidebar and not in the filter-modal = might get confusing
+        // deleting categories and sources since they are selected in the sidebar and not in the filter-modal = might get confusing
         if (queryParams.tags) {
             delete queryParams.tags;
         }
@@ -102,7 +102,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
 
     function updateCounts(stats) {
         // assigning count for different data-sources
-        $scope.souceStats = getSourceStats(stats);
+        $scope.sourceStats = getSourceStats(stats);
         // Setting nb of unmapped posts
         $scope.unmapped = stats.unmapped ? stats.unmapped : 0;
         // assigning count for all forms
@@ -122,9 +122,26 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     }
 
     function getSourceStats(stats) {
-        _.each(stats.totals[0].values, function (value) {
-            //TODO: Add totals for each source
+
+        // todo, refactor and reuse for forms too...
+        var sourceStats = [];
+        var providers = ['email', 'sms', 'twitter'];
+        _.each(providers, function (provider) {
+            var posts = _.filter(stats.totals[0].values, {type: provider });
+            if (posts && posts.length > 0) {
+                var sourceStat = {total: 0};
+                sourceStat.total = _.reduce(posts, function (count, post) {
+                    if (post.total) {
+                        return count + post.total;
+                    }
+                    return 0;
+                }, sourceStat.total);
+
+                sourceStat.type = provider;
+                sourceStats.push(sourceStat);
+            }
         });
+        return sourceStats;
     }
     function selectParent(parent, formId) {
         // If we've just selected the tag
