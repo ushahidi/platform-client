@@ -26,11 +26,9 @@ function (
             if (langKey) {
                 $translate.preferredLanguage(langKey);
                 Languages.then(function (languages) {
-                    angular.forEach(languages, function (language) {
-                        if (language.code === langKey) {
-                            $rootScope.rtlEnabled = language.rtl;
-                        }
-                    });
+                    let language = languages.find(l => l.code === langKey);
+
+                    $rootScope.rtlEnabled = language.rtl;
                 });
             }
         });
