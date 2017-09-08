@@ -1,11 +1,8 @@
 var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
-
-var extractCss = new ExtractTextPlugin('[name].[chunkhash].bundle.css');
 
 module.exports = {
   devtool: 'source-map',
@@ -44,14 +41,11 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: extractCss.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
-        })
+        use: 'style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap'
       },
       {
         test: /\.css$/,
-        use: extractCss.extract({ fallback: 'style-loader', use: 'css-loader' })
+        use: 'style-loader!css-loader'
       },
       {
         test: /\.png/,
@@ -83,8 +77,6 @@ module.exports = {
     ]
   },
   plugins: [
-    extractCss,
-
     // Skip locales
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 

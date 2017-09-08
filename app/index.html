@@ -21,6 +21,7 @@
     <!--<body ng-class="{ 'modal-visible': modalVisible , 'layout-class': globalLayout}" class="ltr-namespace" canvas>-->
     <body ng-class="{ 'modal-visible': modalVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
     <!-- TODO: set layouts per view directive -->
+    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }}" canvas>
         <div id="bootstrap-loading">
             <!-- loading the document -->
             <div class="loading">
