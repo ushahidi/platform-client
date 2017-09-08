@@ -28,7 +28,17 @@ function (
                 Languages.then(function (languages) {
                     let language = languages.find(l => l.code === langKey);
 
-                    $rootScope.rtlEnabled = language.rtl;
+                    if ($rootScope.rtlEnabled !== language.rtl) {
+                        if (language.rtl) {
+                            require.ensure(['ushahidi-platform-pattern-library/assets/css/rtl-style.min.css'], () => {
+                                require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
+                                $rootScope.rtlEnabled = language.rtl;
+
+                            }, 'rtl');
+                        } else {
+                            $rootScope.rtlEnabled = language.rtl;
+                        }
+                    }
                 });
             }
         });
