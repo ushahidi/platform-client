@@ -8,6 +8,7 @@ module.exports = [
     'Authentication',
     'UserEndpoint',
     'ConfigEndpoint',
+    'moment',
 function (
     $rootScope,
     $q,
@@ -17,7 +18,8 @@ function (
     Session,
     Authentication,
     UserEndpoint,
-    ConfigEndpoint
+    ConfigEndpoint,
+    moment
 ) {
     var translate = function (lang) {
         $translate.use(lang).then(function (langKey) {
@@ -32,6 +34,13 @@ function (
                 });
             }
         });
+
+        if (lang !== 'en') {
+            require(['moment/locale/' + lang + '.js'], function () {
+                moment.locale(lang);
+            });
+        }
+
         // Translating and setting page-title
         $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
     };
