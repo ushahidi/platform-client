@@ -221,7 +221,7 @@
         "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
-        "task_visible_when_published" : "This task will be visible when post is published ",
+        "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Show field description",
         "add_task" : "Add task",
         "add_field" : "Add field",
