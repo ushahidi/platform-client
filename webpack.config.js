@@ -1,11 +1,8 @@
 var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
-
-var extractCss = new ExtractTextPlugin('[name].[chunkhash].bundle.css');
 
 module.exports = {
   devtool: 'source-map',
@@ -14,8 +11,8 @@ module.exports = {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
        { test: /\.html$/, loader: 'html?attrs[]=img:src&attrs[]=use:xlink:href&attrs[]=link:href&root='+imgPath },
-       { test: /\.scss$/, loader: extractCss.extract('style', 'css!resolve-url!sass?sourceMap') },
-       { test: /\.css$/, loader: extractCss.extract('style', 'css') },
+       { test: /\.scss$/, loader: 'style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap' },
+       { test: /\.css$/, loader: 'style-loader!css-loader' },
        { test: /\.png/, loader: 'url?limit=10000' },
        { test: /\.svg/, loader: 'svg-url?limit=1' },
        { test: /\.woff/, loader: 'url?limit=10000' },
@@ -25,8 +22,6 @@ module.exports = {
     ]
   },
   plugins: [
-    extractCss,
-
     // Skip locales
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
