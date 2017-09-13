@@ -19,7 +19,8 @@ PostExportController.$inject = [
     'ConfigEndpoint',
     'Notify',
     '$q',
-    'PostFilters'
+    'PostFilters',
+    'PostActionsService'
 ];
 function PostExportController(
     $scope,
@@ -28,7 +29,8 @@ function PostExportController(
     ConfigEndpoint,
     Notify,
     $q,
-    PostFilters
+    PostFilters,
+    PostActionsService
 ) {
     $scope.loading = false;
     $scope.exportPosts = exportPosts;
@@ -39,6 +41,11 @@ function PostExportController(
 
             if (!$scope.filters) {
                 $scope.filters = [];
+                /**
+                 * If the user has not applied filters we can assume they will want to see all posts
+                 * The backend will filter out posts that do not match the user permissions.
+                 */
+                $scope.filters.status = PostActionsService.getStatuses();
             }
 
             var format = 'csv',  //@todo handle more formats
