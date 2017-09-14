@@ -4,5 +4,5 @@
   </h2>
 
   <img ng-src="{{ media.original_file_url }}" class="postcard-image">
-  <p class="small"><em>{{ media.caption }}</em></p>
+  <p class="small" ng-if="mediaHasCaption"><em>{{ media.caption }}</em></p>
 </div>
