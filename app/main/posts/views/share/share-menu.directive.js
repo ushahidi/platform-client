@@ -19,17 +19,13 @@ ShareMenuController.$inject = [
     '$scope',
     '$routeParams',
     'Util',
-    '$window',
-    'PostFilters',
-    'PostActionsService'
+    '$window'
 ];
 function ShareMenuController(
     $scope,
     $routeParams,
     Util,
-    $window,
-    PostFilters,
-    PostActionsService
+    $window
 ) {
 
     $scope.loading = false;
