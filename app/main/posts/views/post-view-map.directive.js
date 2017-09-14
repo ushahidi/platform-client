@@ -1,7 +1,7 @@
 module.exports = PostViewMap;
 
-PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$routeParams'];
-function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $routeParams) {
+PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location'];
+function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location) {
     return {
         restrict: 'E',
         replace: true,
@@ -58,7 +58,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             }
         }
         function getUIClass() {
-            return $routeParams.noui === 'true' ? 'map-only' : 'full-size';
+            var params = $location.search();
+            return params.noui === 'true' ? 'map-only' : 'full-size';
         }
 
         function addPostsToMap(posts) {
