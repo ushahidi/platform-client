@@ -35,11 +35,6 @@ function (
             $scope.canDisplay = function () {
                 return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags';
             };
-            $scope.selectChild = function (child) {
-                if (!_.contains($scope.editAttribute.options, child.parent.id) && _.contains($scope.editAttribute.options, child.id)) {
-                    $scope.editAttribute.options.push(child.parent.id);
-                }
-            };
 
             $scope.canMakePrivate = function () {
                 return $scope.editAttribute.type !== 'tags';
