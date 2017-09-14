@@ -9,7 +9,8 @@ function PostVerticalTabs() {
             post: '=',
             stages: '=',
             attributes: '=',
-            visibleStage: '='
+            visibleStage: '=',
+            medias: '='
         },
         template: require('./post-tabs.html'),
         controller: PostVerticalTabsController

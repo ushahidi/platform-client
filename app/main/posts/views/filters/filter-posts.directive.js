@@ -14,8 +14,8 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService'];
-function FilterPostsController($scope, $timeout, ModalService) {
+FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters'];
+function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
@@ -50,12 +50,6 @@ function FilterPostsController($scope, $timeout, ModalService) {
     }
 
     function rollbackForm() {
-        // Store value of q
-        var q = $scope.postFiltersForm.q.$viewValue;
-        // Rolback form
-        $scope.postFiltersForm.$rollbackViewValue();
-        // Restore value of q
-        $scope.postFiltersForm.q.$setViewValue(q);
-        $scope.postFiltersForm.q.$render();
+        PostFilters.clearFilters();
     }
 }

@@ -517,7 +517,7 @@ function SurveyEditorController(
 
     function deleteTask(task) {
 
-        Notify.confirmDelete('notify.form.delete_stage_confirm').then(function () {
+        Notify.confirmDelete('notify.form.delete_stage_confirm', 'notify.form.delete_stage_confirm_desc').then(function () {
             // If we haven't saved the task yet then we can just drop it
             if (!task.id || _.isString(task.id)) {
                 $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {

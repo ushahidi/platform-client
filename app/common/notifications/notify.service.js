@@ -15,7 +15,8 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmModal: confirmModal,
         confirmDelete: confirmDelete,
         limit: limit,
-        confirmTos: confirmTos
+        confirmTos: confirmTos,
+        adminUserSetupModal: adminUserSetupModal
     };
 
     function notify(message, translateValues) {
@@ -121,6 +122,10 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         $translate(confirmText, translateValues).then(showSlider, showSlider);
 
         return deferred.promise;
+    }
+
+    function adminUserSetupModal() {
+        ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
     }
 
     function confirmTos() {
