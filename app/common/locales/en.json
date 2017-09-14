@@ -222,6 +222,8 @@
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
         "show_field_description" : "Show field description",
+        "use_geolocation" : "Use geolocation",
+        "use_geolocation_desc": "When turned on, responses will be geolocated in your deployment's \"Map\" view using data from this field.",
         "add_task" : "Add task",
         "add_field" : "Add field",
         "edit_field" : "Edit field",
