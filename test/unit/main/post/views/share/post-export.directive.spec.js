@@ -58,12 +58,13 @@ describe('post export directive', function () {
         expect(Notify.confirm).toHaveBeenCalled();
     });
 
-    it ('should throw an error if the getQuery function is not available', function () {
+    it('should throw an error if the getQuery function is not available', function () {
         spyOn(myController, 'getQuery').and.callThrough();
         var query = myController.getQuery();
         expect(query).not.toBeNull();
         expect(myController.getQuery).toHaveBeenCalled();
     });
+
     it('Should return only default values when $scope.filter is empty ', function () {
 
         var query = myController.getQuery();
