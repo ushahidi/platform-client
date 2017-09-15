@@ -3,7 +3,6 @@ module.exports = ['$q', function ($q) {
         export: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {
-                    console.log('hhhhhh=======');
                     successCallback('title, content\n my title, my content');
                 }
             }};

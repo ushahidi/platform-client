@@ -21,9 +21,6 @@ describe('post media directive', function () {
     });
 
 
-    /**
-     * @DEVNOTE
-     */
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
