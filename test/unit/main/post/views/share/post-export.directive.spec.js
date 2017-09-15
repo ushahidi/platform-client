@@ -7,6 +7,7 @@ describe('post export directive', function () {
         $rootScope,
         isolateScope,
         PostEndpoint,
+        $q,
         myController,
         PostFilters,
         Notify;
@@ -17,16 +18,16 @@ describe('post export directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$compile_, _$rootScope_, _PostEndpoint_, _PostFilters_, _$controller_, _Notify_) {
+    beforeEach(inject(function (_$compile_, _$rootScope_, _PostEndpoint_, _PostFilters_, _$controller_, _Notify_, _$q_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         PostEndpoint = _PostEndpoint_;
         PostFilters = _PostFilters_;
         $controller = _$controller_;
+        $q = _$q_;
         $scope = _$rootScope_.$new();
         $scope.filters = [];
         element = angular.element('<post-export filters="filters"></post-export>');
-        //element = $compile('<post-export filters="filters"></post-export>')($scope);
         template = $compile(element)($scope);
         $scope.$digest();
         isolateScope = template.isolateScope();
@@ -35,6 +36,11 @@ describe('post export directive', function () {
     }));
 
 
+    it ('should have a loading property', function () {
+        expect(isolateScope.loading).toBeDefined();
+        expect(isolateScope.loading).toBeFalsy();
+    });
+
     it ('Should be defined and have a valid filters property in its scope', function () {
         expect(template.html()).toContain('app.export_to_csv');
         expect(isolateScope).not.toBeUndefined();
@@ -42,11 +48,17 @@ describe('post export directive', function () {
         expect(isolateScope.filters).toEqual([]);
     });
 
-    it ('should replace filters', function () {
-        expect(isolateScope.loading).toBeDefined();
+    it('Should show confirmation alert when I call exportPostsConfirmation', function () {
+        isolateScope = element.isolateScope();
+        spyOn(isolateScope, 'exportPostsConfirmation').and.callThrough();
+        spyOn(Notify, 'confirm').and.callThrough();
+        var clickEv = new Event('click');
+        template[0].getElementsByTagName('a')[0].dispatchEvent(clickEv);
+        expect(isolateScope.exportPostsConfirmation).toHaveBeenCalled();
+        expect(Notify.confirm).toHaveBeenCalled();
     });
 
-    it ('should throw an error if the getQuery function is not available', function(){
+    it ('should throw an error if the getQuery function is not available', function () {
         spyOn(myController, 'getQuery').and.callThrough();
         var query = myController.getQuery();
         expect(query).not.toBeNull();
@@ -77,17 +89,14 @@ describe('post export directive', function () {
         $rootScope.$digest();
     });
 
-    it ('Should call doExport when user accepts the Notify confirmation prompt', function() {
+    it ('Should call prepareExport function when user accepts the Notify confirmation prompt', function () {
         var query = myController.getQuery();
-        spyOn(myController, 'doExport').and.callThrough();
-        spyOn(myController, 'showCSVResults');
+        spyOn(myController, 'prepareExport').and.callThrough();
+        spyOn(myController, 'requestExport').and.callThrough();
         spyOn(PostEndpoint, 'export');
-
-        myController.doExport();
-        expect(myController.doExport).toHaveBeenCalled();
+        myController.prepareExport();
+        expect(myController.prepareExport).toHaveBeenCalled();
         expect(PostEndpoint.export).toHaveBeenCalledWith(query);
-
-        expect(myController.showCSVResults).toHaveBeenCalledWith('title, content\n my title, my content', 'csv');
-
+        expect(isolateScope.loading).toBeTruthy();
     });
 });

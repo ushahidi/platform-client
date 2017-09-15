@@ -33,32 +33,36 @@ function PostExportController(
     _
 ) {
     $scope.loading = false;
-    $scope.exportPostsConfirmation = exportPostsConfirmation;
-    this.getQuery = getQuery;
-    this.doExport = doExport;
-    this.showCSVResults = showCSVResults;
-    /**
-     * Trigger confirm notification for user.
-     * When the user accepts, get the CSV
-     */
-    function exportPostsConfirmation() {
+    $scope.exportPostsConfirmation = function () {
+        /**
+         * Trigger confirm notification for user.
+         * When the user accepts, get the CSV
+         */
         Notify.confirm('notify.post.export').then(function (message) {
-            doExport();
+            prepareExport();
         });
-    }
+    };
+    this.getQuery = getQuery;
+    this.prepareExport = prepareExport;
+    this.showCSVResults = showCSVResults;
+    this.requestExport = requestExport;
 
-    function doExport() {
+    function prepareExport() {
         $scope.loading = true;
         var site = ConfigEndpoint.get({ id: 'site' }).$promise;
         var query = getQuery();
-        var postExport = PostEndpoint.export(query);
-        var self = this;
-        $q.all([site, postExport]).then(function (response) {
-            self.showCSVResults(response, query.format);
+        var exportQuery = PostEndpoint.export(query);
+        requestExport(site, query, exportQuery);
+    }
+
+    function requestExport(site,query,exportQuery) {
+        $q.all([site, exportQuery]).then(function (response) {
+            showCSVResults(response, query.format);
         }).finally(function (response) {
             $scope.loading = false;
         });
     }
+
     function getQuery() {
         /**
          * If the filters are not available, apply the defaults
