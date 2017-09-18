@@ -1,7 +1,8 @@
 module.exports = PostViewNouiController;
 
-PostViewNouiController.$inject = ['$scope', '$translate', '$routeParams', 'PostFilters'];
-function PostViewNouiController($scope, $translate, $routeParams, PostFilters) {
+PostViewNouiController.$inject = ['$scope', '$rootScope', '$translate', '$routeParams', 'PostFilters'];
+function PostViewNouiController($scope, $rootScope, $translate, $routeParams, PostFilters) {
+    $rootScope.setLayout('layout-embed');
     $scope.filters = PostFilters.getFilters();
     $scope.$emit('event:allposts:show');
 }
