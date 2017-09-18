@@ -58,8 +58,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             }
         }
         function getUIClass() {
-            var params = $location.search();
-            return params.noui === 'true' ? 'map-only' : 'full-size';
+            return $location.path() === '/noui' ? 'map-only' : 'full-size';
         }
 
         function addPostsToMap(posts) {
