@@ -15,7 +15,8 @@ function OverflowToggleDirective($parse) {
             $element.toggleClass('has-overflow', hasOverflow);
         });
 
-        angular.element(toggle).on('click', function () {
+        angular.element(toggle).on('click', function ($event) {
+            $event.preventDefault();
             hasOverflow() ? $element.toggleClass('show-overflow') : '';
         });
     }

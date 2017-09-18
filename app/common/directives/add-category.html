@@ -28,6 +28,7 @@
             <span class="hidden" translate="category.delete">Delete</span>
         </button>
 </div>
-<div class="form-field init" ng-click="showInputToggle()" ng-if="userCanAddCategory">
+
+<div class="form-field init" ng-click="showInputToggle()" ng-if="userCanAddCategory && !showInput">
     <a data-toggle="add-label" translate="app.add_new_category">+ Add new category</a>
 </div>
