@@ -1,7 +1,6 @@
 
 <div class="message" ng-class="{'active': classVisible}">
-    <div class='progress-bar'><span>Loading...</span></div><br>
-
+    <div class='progress-bar' ng-if="loading"><span>Loading...</span></div><br>
     <div class="message-image" ng-class="iconClass" ng-if="icon">
         <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ icon }}"></use>

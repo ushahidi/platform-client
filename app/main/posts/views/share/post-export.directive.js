@@ -36,7 +36,7 @@ function PostExportController(
     function exportPosts() {
         Notify.confirm('notify.post.export').then(function (message) {
             $scope.loading = true;
-            Notify.notify('<h3>Your CSV export is in progress...</h3>');
+            Notify.notifyExport('<br><h3>Your CSV export is in progress...</h3><br>');
             if (!$scope.filters) {
                 $scope.filters = [];
             }

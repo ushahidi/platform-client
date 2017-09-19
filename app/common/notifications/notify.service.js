@@ -16,12 +16,21 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmDelete: confirmDelete,
         limit: limit,
         confirmTos: confirmTos,
-        adminUserSetupModal: adminUserSetupModal
+        adminUserSetupModal: adminUserSetupModal,
+        notifyExport: notifyExport
     };
 
     function notify(message, translateValues) {
         function showSlider(message) {
             SliderService.openTemplate('<p>' + message + '</p>');
+        }
+
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
+
+    function notifyExport(message, translateValues) {
+        function showSlider(message) {
+            SliderService.openTemplate(message, null, null, null, false, false, false, true);
         }
 
         $translate(message, translateValues).then(showSlider, showSlider);
