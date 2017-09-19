@@ -23,6 +23,10 @@ function (
         controller: require('./views/post-views.controller.js'),
         template: require('./views/main.html')
     })
+    .when('/map/noui', {
+        controller: require('./views/post-view-noui.controller.js'),
+        template: require('./views/post-view-noui.html')
+    })
     .when('/collections/:id/:view?', {
         controller: require('./collections/collections-controller.js'),
         template: require('./collections/collections.html'),

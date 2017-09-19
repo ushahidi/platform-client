@@ -71,7 +71,6 @@ function PostEditorController(
     $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
 
     $scope.allowedChangeStatus = allowedChangeStatus;
-    $scope.getTag = getTag;
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
@@ -155,18 +154,6 @@ function PostEditorController(
                         })
                         .filter()
                         .value();
-
-                    // adding category-objects to children
-                    _.each(attr.options, function (category) {
-                        if (category.children.length > 0) {
-                            category.children = _.chain(category.children)
-                                .map(function (child) {
-                                    return _.findWhere(attr.options, {id: child.id});
-                                })
-                                .filter()
-                                .value();
-                        }
-                    });
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
@@ -228,15 +215,7 @@ function PostEditorController(
         });
 
     }
-    function getTag(tagId) {
-        var tag;
-        _.each($scope.categories, function (category) {
-            if (category.id === tagId) {
-                tag = category;
-            }
-        });
-        return tag;
-    }
+
     function canSavePost() {
         return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
     }

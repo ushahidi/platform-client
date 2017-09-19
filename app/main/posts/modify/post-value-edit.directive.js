@@ -44,9 +44,6 @@ function PostValueEditController(
     $scope.canRemoveValue = canRemoveValue;
     $scope.addValue = addValue;
     $scope.removeValue = removeValue;
-
-    $scope.selectParent = selectParent;
-    $scope.selectChild = selectChild;
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
     $scope.isFieldSetStructure = isFieldSetStructure;
@@ -103,25 +100,5 @@ function PostValueEditController(
     // Remove a value
     function removeValue(attr, key) {
         $scope.post.values[attr.key].splice(key, 1);
-    }
-
-    function selectParent(parent, attrKey) {
-        if (_.contains($scope.post.values[attrKey], parent.id)) {
-            _.each(parent.children, function (child) {
-                $scope.post.values[attrKey].push(child.id);
-            });
-        } else {
-            _.each(parent.children, function (child) {
-                $scope.post.values[attrKey] = _.filter($scope.post.values[attrKey], function (id) {
-                    return id !== child.id;
-                });
-            });
-        }
-    }
-
-    function selectChild(child, attrKey) {
-        if (!_.contains($scope.post.values[attrKey], child.parent.id) && _.contains($scope.post.values[attrKey], child.id)) {
-            $scope.post.values[attrKey].push(child.parent.id);
-        }
     }
 }
