@@ -12,6 +12,9 @@ module.exports = [function () {
         },
         setSessionDataEntry: function (key, value) {
             mockedSessionData[key] = value;
+        },
+        setSessionDataEntries: function (entries) {
+            mockedSessionData = angular.extend({}, mockedSessionData, entries);
         }
     };
 }];

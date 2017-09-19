@@ -1,18 +1,22 @@
 module.exports = [
     'UserEndpoint',
     'Notify',
+    'Session',
     '_',
     '$translate',
     function (
         UserEndpoint,
         Notify,
+        Session,
         _,
         $translate
     ) {
         return {
             restrict: 'E',
             replace: true,
-            scope: {},
+            scope: {
+                adminUserSetup: '='
+            },
             template: require('./user-profile.html'),
             link: function ($scope) {
                 $scope.state = {
@@ -37,6 +41,7 @@ module.exports = [
 
                     update.$promise.then(function (user) {
                         Notify.notify('user_profile.update_success');
+                        Session.setSessionDataEntries({'email': user.email, 'realname': user.realname});
 
                         $scope.state.success = true;
                         $scope.state.processing = false;
@@ -46,7 +51,6 @@ module.exports = [
                         $scope.state.password = '';
 
                         $scope.user = user;
-
                         $scope.$emit('event:close');
                     }, function (errorResponse) { // error
                         Notify.apiErrors(errorResponse);

@@ -14,14 +14,16 @@ LoginController.$inject = [
     'Authentication',
     'PasswordReset',
     '$location',
-    'ConfigEndpoint'
+    'ConfigEndpoint',
+    'ModalService'
 ];
 function LoginController(
     $scope,
     Authentication,
     PasswordReset,
     $location,
-    ConfigEndpoint
+    ConfigEndpoint,
+    ModalService
 ) {
     $scope.email = '';
     $scope.password = '';
