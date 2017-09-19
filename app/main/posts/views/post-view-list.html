@@ -55,7 +55,7 @@
             </ul>
           </span>
 
-          <collection-toggle-button selected-posts="selectedPosts" posts="posts"></collection-toggle-button>
+          <collection-toggle-button selected-posts="selectedPosts" posts="posts" on-done="clearSelectedPosts()"></collection-toggle-button>
           <button type="button" class="button-destructive" ng-click="deletePosts()">
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
@@ -64,6 +64,8 @@
           </button>
 
         </listing-toolbar>
+
+        <post-timeline-toolbox order="order" order-by="orderBy" on-change="changeOrder(order, orderBy)"></post-timeline-toolbox>
 
         <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
             <h4 translate>post.no_search_results</h5>

@@ -6,14 +6,16 @@
 
     <filter-posts current-view="currentView" filters="filters" embed-only="false"></filter-posts>
 
+    <div class="button-group" embed-only="false">
+      <post-share filters="filters" button="true"></post-share>
+    </div>
+
     <filter-by-survey></filter-by-survey>
 
     <div class="button-group hide-until-medium" embed-only="true">
       <post-share filters="filters" button="true"></post-share>
     </div>
-    <div class="button-group" embed-only="false">
-      <post-share filters="filters" button="true"></post-share>
-    </div>
+
     <!-- toolbar -->
     <div class="progress-bar" ng-show="isLoading.state">
         <span>

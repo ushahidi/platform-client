@@ -11,13 +11,14 @@ describe('setting categories edit controller', function () {
 
         testApp.controller('settingCategoriesEditController', require('app/settings/categories/edit.controller.js'))
 
-
         .run(require('app/common/global/event-handlers.js'));
 
         angular.mock.module('testApp');
+
     });
 
     beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_) {
+
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;
@@ -26,10 +27,11 @@ describe('setting categories edit controller', function () {
         $rootScope.hasManageSettingsPermission = function () {
             return true;
         };
+
     }));
 
-
     beforeEach(function () {
+
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('settingCategoriesEditController', {
@@ -40,25 +42,30 @@ describe('setting categories edit controller', function () {
 
         $rootScope.$digest();
         $rootScope.$apply();
+
     });
 
     it('should save a tag and update the path', function () {
         spyOn(Notify, 'notify');
         $scope.saveCategory({id: 'pass'});
+        $rootScope.$digest();
         expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should show an error on save failure', function () {
         spyOn(Notify, 'apiErrors');
         $scope.saveCategory({id: 'fail'});
+        $rootScope.$digest();
         expect(Notify.apiErrors).toHaveBeenCalled();
     });
+
     it('should return requested parent-tag', function () {
         $scope.addParent(1).$promise.then(function (parent) {
             expect(parent.id).toEqual(1);
             expect(parent.tag).toEqual('test tag');
         });
     });
+
     it('should return parent-name', function () {
         $scope.parents = [{
             id: 1,
@@ -70,4 +77,5 @@ describe('setting categories edit controller', function () {
         parent = $scope.getParentName();
         expect(parent).toEqual('parent');
     });
+
 });

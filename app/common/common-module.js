@@ -11,10 +11,12 @@ angular.module('ushahidi.common', [
 .service('Registration', require('./auth/registration.service.js'))
 .service('Session', require('./auth/session.service.js'))
 .service('PasswordReset', require('./auth/password-reset.service.js'))
+.service('TermsOfService', require('./auth/tos.service.js'))
 .directive('login', require('./auth/login.directive.js'))
 .directive('register', require('./auth/register.directive.js'))
 .directive('passwordReset', require('./auth/password-reset.directive.js'))
 .directive('passwordResetConfirm', require('./auth/password-reset-confirm.directive.js'))
+.directive('termsOfService', require('./auth/tos.directive.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
 
@@ -44,6 +46,7 @@ angular.module('ushahidi.common', [
 .service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
 .service('ContactEndpoint', require('./services/endpoints/contact.js'))
 .service('NotificationEndpoint', require('./services/endpoints/notification.js'))
+.service('TermsOfServiceEndpoint', require('./services/endpoints/terms-of-service-endpoint.js'))
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
@@ -54,6 +57,7 @@ angular.module('ushahidi.common', [
 .service('Languages', require('./services/languages.js'))
 .service('IconManager', require('./services/icon-manager.js'))
 .service('FontAwesomeIcons', require('./services/endpoints/FontAwesomeIcons.js'))
+.service('MainsheetService', require('./services/mainsheet.service.js'))
 .service('ModalService', require('./services/modal.service.js'))
 .service('TranslationService', require('./services/translation.service.js'))
 // Controllers
@@ -69,6 +73,7 @@ angular.module('ushahidi.common', [
 
 .directive('colorPicker', require('./directives/color-picker.js'))
 .directive('firstTimeConfig', require('./directives/first-time-config.js'))
+.directive('ushMainsheetContainer', require('./directives/mainsheet-container.directive.js'))
 .directive('ushModalContainer', require('./directives/modal-container.directive.js'))
 .directive('modalBody', require('./directives/modal-body.directive.js'))
 .directive('layoutClass', require('./directives/layout-class.directive.js'))
@@ -82,6 +87,7 @@ angular.module('ushahidi.common', [
 .directive('fileUpload', require('./directives/file-upload.directive.js'))
 .directive('roleSelector', require('./directives/role-selector.directive.js'))
 .directive('addCategory', require('./directives/add-category.directive.js'))
+.directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 
 // Event actions

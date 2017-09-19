@@ -18,6 +18,10 @@ function (
         },
         template: require('./relation.html'),
         link: function ($scope) {
+
+            $scope.noResults = false;
+            $scope.searching = false;
+
             $scope.$watch(function () {
                 return $scope.model;
             }, function (newValue, oldValue) {
@@ -34,8 +38,15 @@ function (
                     query.form = $scope.attribute.config.input.form.join(',');
                 }
 
+                $scope.noResults = false;
+                $scope.searching = true;
+
                 PostEndpoint.query(query).$promise.then(function (response) {
+                    $scope.searching = false;
                     $scope.results = response.results;
+                    if (!response.results.length) {
+                        $scope.noResults = true;
+                    }
                 });
             };
 

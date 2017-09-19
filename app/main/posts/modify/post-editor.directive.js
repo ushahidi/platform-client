@@ -22,6 +22,7 @@ PostEditorController.$inject = [
     '$filter',
     '$location',
     '$translate',
+    '$timeout',
     'moment',
     'PostEntity',
     'PostEndpoint',
@@ -43,6 +44,7 @@ function PostEditorController(
     $filter,
     $location,
     $translate,
+    $timeout,
     moment,
     postEntity,
     PostEndpoint,
@@ -69,7 +71,6 @@ function PostEditorController(
     $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
 
     $scope.allowedChangeStatus = allowedChangeStatus;
-    $scope.getTag = getTag;
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
@@ -87,11 +88,14 @@ function PostEditorController(
         $scope.post.form = $scope.form;
         $scope.fetchAttributesAndTasks($scope.post.form.id)
         .then(function () {
-            // If the post in marked as 'Published' but it is not in
-            // a valid state to be saved as 'Published' warn the user
-            if ($scope.post.status === 'published' && !canSavePost()) {
-                Notify.error('post.valid.invalid_state');
-            }
+            // Use $timeout to delay this check till after form fields are rendered.
+            $timeout(() => {
+                // If the post in marked as 'Published' but it is not in
+                // a valid state to be saved as 'Published' warn the user
+                if ($scope.post.status === 'published' && !canSavePost()) {
+                    Notify.error('post.valid.invalid_state');
+                }
+            });
         });
 
         $scope.medias = {};
@@ -121,9 +125,11 @@ function PostEditorController(
                 if (attr.type === 'title' || attr.type === 'description') {
                     if (attr.type === 'title') {
                         $scope.postTitleLabel = attr.label;
+                        $scope.postTitleInstructions = attr.instructions;
                     }
                     if (attr.type === 'description') {
                         $scope.postDescriptionLabel = attr.label;
+                        $scope.postDescriptionInstructions = attr.instructions;
                     }
                 } else {
                     attributes.push(attr);
@@ -148,18 +154,6 @@ function PostEditorController(
                         })
                         .filter()
                         .value();
-
-                    // adding category-objects to children
-                    _.each(attr.options, function (category) {
-                        if (category.children.length > 0) {
-                            category.children = _.chain(category.children)
-                                .map(function (child) {
-                                    return _.findWhere(attr.options, {id: child.id});
-                                })
-                                .filter()
-                                .value();
-                        }
-                    });
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
@@ -221,15 +215,7 @@ function PostEditorController(
         });
 
     }
-    function getTag(tagId) {
-        var tag;
-        _.each($scope.categories, function (category) {
-            if (category.id === tagId) {
-                tag = category;
-            }
-        });
-        return tag;
-    }
+
     function canSavePost() {
         return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
     }

@@ -1,0 +1,8 @@
+<ul>
+    <li ng-repeat="form in forms">
+        <a ng-click="handleClick(form)">
+            <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
+            {{form.name}}
+        </a>
+    </li>
+</ul>

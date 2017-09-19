@@ -2,8 +2,22 @@
 	<p ng-if="model">{{ selectedPost.title }} ({{ model }}) <button class="button-secondary icon-only alt trash" type="button" ng-click="clearPost()" translate></button></p>
     <div class="input-inline">
         <input class="form-control" type="text" placeholder="Search.." ng-model="searchTerm">
-        <button class="btn btn-info" type="button" ng-click="search($event)" translate>nav.search</button>
+        <button type="button" ng-click="search($event)">
+						<div class="loading" ng-if="searching">
+								<div class="line"></div>
+								<div class="line"></div>
+								<div class="line"></div>
+						 </div>
+						<span class="button-label" translate="nav.search" ng-if="!searching">Search</span>
+						<span class="button-label" translate="app.searching" ng-if="searching">Searching</span>
+				</button>
     </div>
+		<div class="alert error" ng-if="noResults">
+				<svg class="iconic">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+				</svg>
+				<span translate="post.no_search_results">Your search didn't match any posts</span>
+		</div>
     <ul>
     	<li ng-repeat="post in results">
     		<button type="button" class="button-secondary icon-only check" ng-click="selectPost(post)" translate></button> {{ post.id }} : {{ post.title }}
