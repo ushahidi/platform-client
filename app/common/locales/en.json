@@ -1119,6 +1119,11 @@
         },
         "message" : {
             "sent_to" : "Message sent to {{contact}}"
+        },
+        "export" : {
+            "in_progress" : "Your CSV export is in progress...",
+            "complete" : "Your CSV export is complete.",
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
         }
     },
     "empty": {

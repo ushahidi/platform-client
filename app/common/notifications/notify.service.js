@@ -6,6 +6,7 @@ Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'Modal
 function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     return {
         notify: notify,
+        notifyProgress: notifyProgress,
         error: error,
         errors: errors,
         errorsPretranslated: errorsPretranslated,
@@ -22,6 +23,14 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function notify(message, translateValues) {
         function showSlider(message) {
             SliderService.openTemplate('<p>' + message + '</p>');
+        }
+
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
+
+    function notifyProgress(message, translateValues) {
+        function showSlider(message) {
+            SliderService.openTemplate(message, null, null, null, false, false, false, true);
         }
 
         $translate(message, translateValues).then(showSlider, showSlider);
