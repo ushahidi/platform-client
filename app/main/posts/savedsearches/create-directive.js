@@ -26,6 +26,8 @@ function (
             $scope.saveSearch = function () {
                 // Copy the current filters into our search..
                 $scope.savedSearch.filter = $scope.filters;
+                // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
+                $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
                 ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
             };
 
