@@ -3,6 +3,7 @@ module.exports = [
     '$rootScope',
     '$translate',
     'TranslationService',
+    'ConfigEndpoint', //this was missing
     'Languages',
     'moment',
 function (
@@ -26,10 +27,8 @@ function (
 
     function translate(language) {
         TranslationService.translate(language);
-        if (language !== 'en') {
-            require(['moment/locale/' + language + '.js'], function () {
-                moment.locale(language);
+        require(['moment/locale/' + language + '.js'], function () {
+                moment.updateLocale(language);
             });
-        }
     }
 }];

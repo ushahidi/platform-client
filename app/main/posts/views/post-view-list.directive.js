@@ -15,6 +15,7 @@ function PostListDirective() {
 }
 
 PostListController.$inject = [
+    '$rootScope',
     '$scope',
     '$q',
     '$translate',
@@ -28,6 +29,7 @@ PostListController.$inject = [
     'PostActionsService'
 ];
 function PostListController(
+    $rootScope,
     $scope,
     $q,
     $translate,
@@ -64,6 +66,16 @@ function PostListController(
     $scope.changeOrder = changeOrder;
     activate();
 
+
+    // whenever the translation changes, reload...everything?
+    //  not sure we want to include rootScope here, but angular-translate seems to
+    //  indicate this is the var to watch, and that it's only on rootScope
+    $rootScope.$on('$translateChangeSuccess', function () {
+            console.log('From postList -- translation event was caught!  current locale is: ', moment.locale());
+            getPosts();
+        });
+
+
     // whenever the filters changes, update the current list of posts
     $scope.$watch(function () {
         return $scope.filters;
@@ -73,6 +85,7 @@ function PostListController(
             getPosts();
         }
     }, true);
+
 
 
     function activate() {
