@@ -33,6 +33,10 @@ function PostExportController(
     _
 ) {
     $scope.loading = false;
+    this.getQuery = getQuery;
+    this.prepareExport = prepareExport;
+    this.showCSVResults = showCSVResults;
+    this.requestExport = requestExport;
     $scope.exportPostsConfirmation = function () {
         /**
          * Trigger confirm notification for user.
@@ -42,13 +46,8 @@ function PostExportController(
             prepareExport();
         });
     };
-    this.getQuery = getQuery;
-    this.prepareExport = prepareExport;
-    this.showCSVResults = showCSVResults;
-    this.requestExport = requestExport;
-
     function prepareExport() {
-        $scope.loading = true;
+        loadingStatus(true);
         var site = ConfigEndpoint.get({ id: 'site' }).$promise;
         var query = getQuery();
         var exportQuery = PostEndpoint.export(query);
@@ -59,10 +58,18 @@ function PostExportController(
         $q.all([site, exportQuery]).then(function (response) {
             showCSVResults(response, query.format);
         }).finally(function (response) {
-            $scope.loading = false;
+            loadingStatus(false);
         });
     }
-
+    function loadingStatus(status) {
+        if (status === true) {
+            $scope.loading = true;
+            Notify.notifyProgress('<br><h3 translate="notify.export.in_progress">Your CSV export is in progress...</h3><br>');
+        } else {
+            $scope.loading = false;
+            Notify.notify('<h3 translate="notify.export.complete">Your CSV export is complete.</h3><p translate="notify.export.complete_data_found_message">The data from your export can be found in your browser\'s downloads<p>');
+        }
+    }
     function getQuery() {
         /**
          * If the filters are not available, apply the defaults
@@ -100,7 +107,7 @@ function PostExportController(
 
         // ... and finally remove the link
         anchor.remove();
-        $scope.loading = false;
+        loadingStatus(false);
     }
 
 }
