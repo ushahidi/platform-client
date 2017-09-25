@@ -33,7 +33,7 @@ function (
             }
         });
 
-        if (lang !== 'en') {
+        if (lang === 'en') {
             // Just set moment locale
             moment.locale('en');
         } else {
