@@ -103,6 +103,76 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             if (config.default_view.baselayer === 'MapQuest') {
                 config.default_view.baselayer = 'streets';
             }
+            return deferred.promise;
+        },
+        reloadMapConfig: function () {
+            return ConfigEndpoint.get({ id: 'map' }).$promise.then(_.bind(function (config) {
+                // Handle legacy layers
+                if (config.default_view.baselayer === 'MapQuest') {
+                    config.default_view.baselayer = 'streets';
+                }
+                if (config.default_view.baselayer === 'MapQuestAerial') {
+                    config.default_view.baselayer = 'satellite';
+                }
+                this.config = config;
+                return this.config;
+            }, this));
+        }
+    };
+
+    var Map = {
+        map_name: undefined,
+        leaflet_map: undefined,
+        layers: {
+            geojson: undefined,
+            cluster: undefined
+        },
+        init: function (name) {
+            this.map_name = name;
+
+            // Disable 'Leaflet prefix on attributions'
+            this.map().then(function (map) {
+                map.attributionControl.setPrefix(false);
+                map.setMaxBounds([[-90,-360],[90,360]]);
+                //Add User Location Button
+                var userlocate = L.control.locate({
+                    strings: {
+                        title: 'Show me where I am.'
+                    },
+                    position: 'bottomleft',
+                    //keepCurrentZoomLevel: true,
+                    //flyTo: true,
+                    circleStyle: {
+                        color: '#FF0000',
+                        fillColor: '#FF0000'
+                    },
+                    markerStyle: {
+                        color: '#FF0000',
+                        fillColor: '#FF0000'
+                    },
+                    locateOptions: {
+                        maxZoom: 12
+                    }
+                }).addTo(map);
+                //userlocate.start();
+                //userlocate.stop();
+                userlocate = L.control.locate({
+                    keepCurrentZoomLevel: false //keep the same zoom level
+                });
+            });
+
+            return this;
+        },
+        map: function () {
+            var deferred = $q.defer();
+
+            if (this.leaflet_map) {
+                deferred.resolve(this.leaflet_map);
+            } else {
+                LData.getMap(this.map_name).then(function (map) {
+                    this.leaflet_map = map;
+                    deferred.resolve(this.leaflet_map);
+                });
             if (config.default_view.baselayer === 'MapQuestAerial') {
                 config.default_view.baselayer = 'satellite';
             }
