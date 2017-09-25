@@ -34,7 +34,12 @@ function (
         });
 
         if (lang !== 'en') {
+            // Just set moment locale
+            moment.locale('en');
+        } else {
+            // Load locale
             require(['moment/locale/' + lang + '.js'], function () {
+                // And then set moment locale
                 moment.locale(lang);
             });
         }
