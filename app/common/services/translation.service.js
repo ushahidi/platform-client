@@ -8,6 +8,7 @@ module.exports = [
     'Authentication',
     'UserEndpoint',
     'ConfigEndpoint',
+    'moment',
 function (
     $rootScope,
     $q,
@@ -17,21 +18,32 @@ function (
     Session,
     Authentication,
     UserEndpoint,
-    ConfigEndpoint
+    ConfigEndpoint,
+    moment
 ) {
     var translate = function (lang) {
         $translate.use(lang).then(function (langKey) {
             if (langKey) {
                 $translate.preferredLanguage(langKey);
                 Languages.then(function (languages) {
-                    angular.forEach(languages, function (language) {
-                        if (language.code === langKey) {
-                            $rootScope.rtlEnabled = language.rtl;
-                        }
-                    });
+                    let language = languages.find(l => l.code === langKey);
+
+                    $rootScope.rtlEnabled = language.rtl;
                 });
             }
         });
+
+        if (lang === 'en') {
+            // Just set moment locale
+            moment.locale('en');
+        } else {
+            // Load locale
+            require(['moment/locale/' + lang + '.js'], function () {
+                // And then set moment locale
+                moment.locale(lang);
+            });
+        }
+
         // Translating and setting page-title
         $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
     };
