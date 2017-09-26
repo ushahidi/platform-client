@@ -9,7 +9,9 @@ var extractCss = new ExtractTextPlugin('[name].[chunkhash].bundle.css');
 
 module.exports = {
   devtool: 'source-map',
-  //entry: {},
+  entry: {'app': [
+    'babel-polyfill'
+  ]},
   module: {
     rules: [
       {
