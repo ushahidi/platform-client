@@ -52,7 +52,7 @@
 
           <div class="form-sheet">
               <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
-              <div class="form-field title init required"
+              <div class="form-field init required"
               adaptive-form
               ng-class="{
                 'error': postForm.title.$invalid && postForm.title.$dirty,
@@ -107,7 +107,7 @@
               <!-- End post stage default fields -->
 
               <!-- Start Post custom fields -->
-            
+
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
@@ -139,6 +139,7 @@
              post="post"
              stages="tasks"
              attributes="attributes"
+             medias="medias"
              visible-stage="visibleStage">
           </post-tabs>
           <!-- <div class="form-sheet">

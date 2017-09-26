@@ -22,7 +22,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         hasFilters: hasFilters,
         getActiveFilters: getActiveFilters,
         setMode: setMode,
-        getMode: getMode
+        getMode: getMode,
+        getModeId: getModeId
     };
 
     function activate() {
@@ -154,6 +155,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     function getMode() {
         return filterMode;
+    }
+
+    function getModeId() {
+        return entityId;
     }
 }
 

@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService', 'Notify'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService, Notify) {
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
 
@@ -18,12 +18,24 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function doLogin(redirect, noReload) {
-        loadSessionData();
-        $rootScope.loggedin = true;
-        if (redirect) {
-            $location.url(redirect);
-        }
-        noReload || $route.reload();
+        TermsOfService.getTosEntry()
+            .then(function () {
+                loadSessionData();
+                $rootScope.loggedin = true;
+                /**
+                 * adminUserSetup is called AFRTER the user has agreed to terms of service.
+                 * adminUserSetup is used to verify which user is logging in/logged in and opening a modal box
+                 * when there is an admin login with the 'admin' email instead of a proper email.
+                 * This is part of an effort to force admins to have proper emails and not use the default email/password combination that the
+                 * system had during the setup process.
+                 * references https://github.com/ushahidi/platform/issues/1714
+                 */
+                adminUserSetup();
+                if (redirect) {
+                    $location.url(redirect);
+                }
+                noReload || $route.reload();
+            });
     }
 
     function doLogout(redirect) {
@@ -91,4 +103,12 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             Authentication.openLogin();
         }
     });
+
+    function adminUserSetup() {
+        if ($rootScope.currentUser.email === 'admin' && $rootScope.isAdmin()) {
+            Notify.adminUserSetupModal();
+        }
+
+    }
+
 }

@@ -36,7 +36,7 @@ function PostExportController(
     function exportPosts() {
         Notify.confirm('notify.post.export').then(function (message) {
             $scope.loading = true;
-
+            Notify.notifyProgress('<br><h3 translate="notify.export.in_progress">Your CSV export is in progress...</h3><br>');
             if (!$scope.filters) {
                 $scope.filters = [];
             }
@@ -74,6 +74,7 @@ function PostExportController(
                 // ... and finally remove the link
                 anchor.remove();
                 $scope.loading = false;
+                Notify.notify('<h3 translate="notify.export.complete">Your CSV export is complete.</h3><p translate="notify.export.complete_data_found_message">The data from your export can be found in your browser\'s downloads<p>');
             });
         });
     }

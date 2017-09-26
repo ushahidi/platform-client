@@ -102,7 +102,7 @@ function (
                 $scope.category.parent_id_original = $scope.category.parent.id;
                 delete $scope.category.parent;
             }
-            if (!$scope.category.parent_id) {
+            if ($scope.category.children && $scope.category.children.length) {
                 $scope.isParent = true;
             }
         });

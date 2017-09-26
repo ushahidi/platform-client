@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-client",
-  "version": "3.7.0",
+  "version": "3.7.2",
   "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
@@ -108,7 +108,7 @@
     "checklist-model": "~0.10.0",
     "d3": "^3.5.17",
     "leaflet": "~1.0.1",
-    "leaflet.locatecontrol": "^0.56.0",
+    "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.0",
     "moment": "^2.13.0",
     "moment-timezone": "^0.5.4",
@@ -116,7 +116,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.7.1-rc.15"
+    "ushahidi-platform-pattern-library": "v3.7.2-rc.2"
   },
   "engines": {
     "node": ">=4.0"
