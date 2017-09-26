@@ -33,10 +33,10 @@ function PostExportController(
     _
 ) {
     $scope.loading = false;
-    this.getQuery = getQuery;
-    this.prepareExport = prepareExport;
-    this.showCSVResults = showCSVResults;
-    this.requestExport = requestExport;
+    $scope.getQuery = getQuery;
+    $scope.prepareExport = prepareExport;
+    $scope.showCSVResults = showCSVResults;
+    $scope.requestExport = requestExport;
     $scope.exportPostsConfirmation = function () {
         /**
          * Trigger confirm notification for user.
@@ -57,19 +57,24 @@ function PostExportController(
     function requestExport(site, query, exportQuery) {
         $q.all([site, exportQuery]).then(function (response) {
             showCSVResults(response, query.format);
-        }).finally(function (response) {
-            loadingStatus(false);
+        }, function (err) {
+            loadingStatus(false, err);
         });
     }
-    function loadingStatus(status) {
-        if (status === true) {
-            $scope.loading = true;
-            Notify.notifyProgress('<br><h3 translate="notify.export.in_progress">Your CSV export is in progress...</h3><br>');
+
+    function loadingStatus(status, err) {
+        $scope.loading = status;
+        if (err) {
+            Notify.apiErrors(err);
         } else {
-            $scope.loading = false;
-            Notify.notify('<h3 translate="notify.export.complete">Your CSV export is complete.</h3><p translate="notify.export.complete_data_found_message">The data from your export can be found in your browser\'s downloads<p>');
+            if (status === true) {
+                Notify.notifyProgress('notify.export.in_progress');
+            } else {
+                Notify.notify('<h3 translate="notify.export.complete">Your CSV export is complete.</h3><p translate="notify.export.complete_data_found_message">The data from your export can be found in your browser\'s downloads<p>');
+            }
         }
     }
+
     function getQuery() {
         /**
          * If the filters are not available, apply the defaults

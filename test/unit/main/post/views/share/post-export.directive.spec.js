@@ -59,15 +59,15 @@ describe('post export directive', function () {
     });
 
     it('should throw an error if the getQuery function is not available', function () {
-        spyOn(myController, 'getQuery').and.callThrough();
-        var query = myController.getQuery();
+        spyOn(isolateScope, 'getQuery').and.callThrough();
+        var query = isolateScope.getQuery();
         expect(query).not.toBeNull();
-        expect(myController.getQuery).toHaveBeenCalled();
+        expect(isolateScope.getQuery).toHaveBeenCalled();
     });
 
     it('Should return only default values when $scope.filter is empty ', function () {
 
-        var query = myController.getQuery();
+        var query = isolateScope.getQuery();
         /**
          * Checking against each individual field
          * because it' going to give more meaningful error messages
@@ -91,12 +91,12 @@ describe('post export directive', function () {
     });
 
     it ('Should call prepareExport function when user accepts the Notify confirmation prompt', function () {
-        var query = myController.getQuery();
-        spyOn(myController, 'prepareExport').and.callThrough();
-        spyOn(myController, 'requestExport').and.callThrough();
+        var query = isolateScope.getQuery();
+        spyOn(isolateScope, 'prepareExport').and.callThrough();
+        spyOn(isolateScope, 'requestExport').and.callThrough();
         spyOn(PostEndpoint, 'export');
-        myController.prepareExport();
-        expect(myController.prepareExport).toHaveBeenCalled();
+        isolateScope.prepareExport();
+        expect(isolateScope.prepareExport).toHaveBeenCalled();
         expect(PostEndpoint.export).toHaveBeenCalledWith(query);
         expect(isolateScope.loading).toBeTruthy();
     });
