@@ -12,8 +12,6 @@ function SavedSearchModal() {
 
 SavedSearchModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '$location', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
 function SavedSearchModalController($scope, $element, $attrs, $rootScope, $location, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
-    var users = [];
-
     $scope.searchSearches = searchSearches;
     $scope.createNewSearch = createNewSearch;
     $scope.goToSearch = goToSearch;
@@ -33,18 +31,9 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
         $scope.searches = [];
         query = query || {};
         SavedSearchEndpoint.query(query).$promise.then(function (searches) {
-            $scope.searches = searches;
-
-            angular.forEach($scope.searches, function (search) {
-                // if this search has a user, and its not the currentUser
-                if (_.isObject(search.user) && search.user.id !== _.result($rootScope.currentUser, 'userId')) {
-                    // Load the user (if we haven't already)
-                    if (!users[search.user.id]) {
-                        users[search.user.id] = UserEndpoint.getFresh({id: search.user.id});
-                    }
-                    // Save user info onto the search itself
-                    search.user = users[search.user.id];
-                }
+            $scope.searches = _.filter(searches, function (search) {
+                var isOwner = (search.user && search.user.id === _.result($rootScope.currentUser, 'userId')) === true;
+                return search.featured || isOwner;
             });
         });
     }
