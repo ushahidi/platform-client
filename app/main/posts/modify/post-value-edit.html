@@ -134,6 +134,7 @@
               <post-media
                   ng-switch-when="upload"
                   name="values_{{attribute.id}}"
+                  media-has-caption="attribute.config.hasCaption"
                   media-id="post.values[attribute.key][key]"
                   media="medias[attribute.key]"
                   ng-model="post.values[attribute.key][key]"
@@ -201,49 +202,17 @@
           </label>
         </div>
       </div>
-
     <!-- type: categories -->
-      <div ng-switch-when="tags">
-        <div
-          class="form-field checkbox"
-          ng-repeat="option in attribute.options"
-          ng-if="option.parent_id === null"
-          >
-        <label>
-          <input
-                type="checkbox"
-                checklist-model="post.values[attribute.key]"
-                name="values_{{attribute.id}}_{{option.id}}"
-                checklist-value="option.id"
-                value="option.id"
-                ng-click="selectParent(option, attribute.key)"
-            >
-                {{option.tag}}
-        </label>
-        <div
-          class="form-field checkbox"
-          ng-if="option.children"
-          ng-repeat="child in option.children"
-        >
-          <label>
-          <input
-            type="checkbox"
-            checklist-model="post.values[attribute.key]"
-            name="values_{{attribute.id}}_{{child.id}}"
-            checklist-value="child.id"
-            value="child.id"
-            ng-click="selectChild(child, attribute.key)"
-          >
-            {{child.tag}}
-        </label>
-    </div>
-    </div>
-
-      <add-category
-        form-id="post.form.id"
-        attribute="attribute"
-        post-value="post.values[attribute.key]"
-      ></add-category>
+    <div ng-switch-when="tags">
+        <category-selector
+            available="attribute.options"
+            selected="post.values[attribute.key]"
+        ></category-selector>
+        <add-category
+            form-id="post.form.id"
+            attribute="attribute"
+            post-value="post.values[attribute.key]"
+        ></add-category>
     </div>
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">

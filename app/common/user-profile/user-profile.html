@@ -2,6 +2,10 @@
         <p class="alert confirmation" ng-show="state.success" translate>user_profile.update_success</p>
         <form name="form">
           <div class="form-field">
+              <label translate="nav.role">Role</label>
+              <em>{{user.role}}</em>
+          </div>  
+          <div class="form-field">
             <label class="input-label"
                 ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty, 'success': form.full_name.$valid }"
                 for="full_name" translate>user.full_name</label>
@@ -30,12 +34,12 @@
                 ng-model="user.email"
                 required>
             <p ng-repeat="(error, value) in form.email.$error"
-                ng-show="form.email.$dirty"
+                ng-show="form.email.$dirty||adminUserSetup"
                 class="alert error"
                translate="{{'user.valid.email.' + error}}"></p>
             </div>
 
-            <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changePachangingPasswordssword" translate>user_profile.update_password</a></p>
+            <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changingPassword" translate>user_profile.update_password</a></p>
 
             <div ng-if="state.changingPassword">
                 <label class="input-label"
@@ -56,7 +60,7 @@
 
             <div class="modal-actions">
                 <div class="form-field">
-                  <button type="button" class="button-link" ng-click="cancel()" translate>
+                  <button ng-if="!adminUserSetup" type="button" class="button-link" ng-click="cancel()" translate>
                     user_profile.button.cancel
                   </button>
 
