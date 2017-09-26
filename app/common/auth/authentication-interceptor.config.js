@@ -79,6 +79,11 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             config.ignorable = true;
         }
 
+        if (config.url.indexOf('oauth/token') !== -1) {
+            config.ignorable = true;
+        }
+
+
         if (config.url.indexOf(CONST.API_URL) === -1) {
             deferred.resolve(config);
             return deferred.promise;
