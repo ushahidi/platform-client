@@ -221,6 +221,7 @@
         "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
+        "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Show field description",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -1121,7 +1122,7 @@
             "sent_to" : "Message sent to {{contact}}"
         },
         "export" : {
-            "in_progress" : "Your CSV export is in progress...",
+            "in_progress" : "<p><h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete</p><br>",
             "complete" : "Your CSV export is complete.",
             "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
         }

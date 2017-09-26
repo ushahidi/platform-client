@@ -7,6 +7,13 @@ module.exports = [function () {
                 }
             };
         },
+        notifyProgress: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
         limit: function (message) {
             return {
                 then: function (successCallback) {
