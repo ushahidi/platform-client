@@ -37,6 +37,8 @@ function PostExportController(
     $scope.prepareExport = prepareExport;
     $scope.showCSVResults = showCSVResults;
     $scope.requestExport = requestExport;
+    $scope.loadingStatus = loadingStatus;
+
     $scope.exportPostsConfirmation = function () {
         /**
          * Trigger confirm notification for user.
@@ -112,7 +114,8 @@ function PostExportController(
 
         // ... and finally remove the link
         anchor.remove();
-        loadingStatus(false);
+        $scope.loadingStatus(false);
+        return filename;
     }
 
 }

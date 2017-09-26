@@ -100,4 +100,24 @@ describe('post export directive', function () {
         expect(PostEndpoint.export).toHaveBeenCalledWith(query);
         expect(isolateScope.loading).toBeTruthy();
     });
+
+
+    it ('Should call loadingStatus when I call showCSVResults', function () {
+        spyOn(isolateScope, 'loadingStatus').and.callThrough();
+        isolateScope.showCSVResults([{name: 'csvFile'}, {data: 'my fake csv heading'}], 'csv');
+        expect(isolateScope.loading).toBeFalsy();
+        expect(isolateScope.loadingStatus).toHaveBeenCalled();
+    });
+
+    it ('Should return a valid file name when I call showCSVResults', function () {
+        var oldDate = new Date();
+        spyOn(window, 'Date').and.callFake(function () {
+            return oldDate;
+        });
+        spyOn(isolateScope, 'showCSVResults').and.callThrough();
+        var fileName = isolateScope.showCSVResults([{name: 'csvFile'}, {data: 'my fake csv heading'}], 'csv');
+        expect(fileName).toEqual('csvFile' + '-' + (new Date()).toISOString().substring(0, 10) + '.' + 'csv');
+    });
+
+
 });
