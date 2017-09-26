@@ -1,7 +1,7 @@
 var L = require('leaflet');
 // Load leaflet plugins here too
-require('imports?L=leaflet!leaflet.markercluster');
-require('imports?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
+require('imports-loader?L=leaflet!leaflet.markercluster');
+require('imports-loader?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
 
 describe('post location directive', function () {
 
