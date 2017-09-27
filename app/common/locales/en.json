@@ -198,6 +198,8 @@
         "add_task" : "Add Task",
         "title" : "Title",
         "field_allowed_relation_survey": "Allowed surveys",
+        "collect_image_caption": "Include image caption field",
+        "disable_caption_field_explanation": "This will disable and hide all existing captions for this field, but you can re-enable them at any time.",
         "description" : "Description",
         "task_description" : "Task description",
         "post_fields" : "Post fields",
@@ -219,6 +221,7 @@
         "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
+        "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Show field description",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -736,6 +739,7 @@
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
         "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
+        "show_categories" : "Show available categories",
         "child_permissions" : "Permissions for this category are managed by the parent category.",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
@@ -1123,6 +1127,11 @@
         },
         "message" : {
             "sent_to" : "Message sent to {{contact}}"
+        },
+        "export" : {
+            "in_progress" : "<p><h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete</p><br>",
+            "complete" : "Your CSV export is complete.",
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
         }
     },
     "empty": {

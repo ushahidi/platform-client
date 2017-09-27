@@ -16,7 +16,7 @@
   </span>
 
   <div class="mode-context-body" ng-if="post.form">
-    <p>{{ form.description }}</p>
+    <p markdown-to-html="form.description"></p>
 
     <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}" ng-show="canCreatePostInSurvey(form)">
       <svg class="iconic">
@@ -48,9 +48,9 @@
           ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
           class="postcard-field"
           >
-
           <post-media-value
             ng-if="form_attributes[key].type === 'media'"
+            media-has-caption="form_attributes[key].config.hasCaption"
             label="{{form_attributes[key].label}}"
             media-id="value"></post-media-value>
         </div>
@@ -70,6 +70,7 @@
           type="'post'">
         </post-value>
         <post-detail-map post-id="post.id"></post-detail-map>
+      </div>
     </article>
 
     <div class="listing card init" ng-show="tasks.length">

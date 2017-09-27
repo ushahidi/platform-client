@@ -108,7 +108,6 @@ function (
                 this[attr.key] = attr;
 
             }, $scope.form_attributes);
-
             // Make the first task visible
             if (!_.isEmpty(tasks) && tasks.length > 1) {
                 $scope.visibleTask = tasks[1].id;
@@ -144,6 +143,7 @@ function (
                 }
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
+
         });
     }
 

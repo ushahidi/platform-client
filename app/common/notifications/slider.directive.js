@@ -9,7 +9,8 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         restrict: 'E',
         template: require('./slider.html'),
         scope: {
-            insideModal: '@?'
+            insideModal: '@?',
+            loading: '=?'
         },
         link: SliderLink
     };
@@ -39,7 +40,8 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         SliderService.onOpen(open, $scope);
         SliderService.onClose(close, $scope);
 
-        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate) {
+        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading) {
+            $scope.loading = false;
             // If we're inside a modal, modal must be open
             if ((typeof $scope.insideModal !== 'undefined') !== ModalService.getState()) {
                 // Ignore, the other slider can open
@@ -85,6 +87,10 @@ function Slider($timeout, $compile, SliderService, ModalService) {
             // Set timeout to close in 5s
             if (closeOnTimeout) {
                 closeTimeout = $timeout(close, 5000);
+            }
+
+            if (loading) {
+                $scope.loading = true;
             }
         }
 

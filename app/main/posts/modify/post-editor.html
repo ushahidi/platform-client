@@ -17,7 +17,7 @@
     </span>
 
     <div class="mode-context-body">
-        <p>{{post.form.description}}</p>
+      <p markdown-to-html="post.form.description"></p>
     </div>
   </div>
 
@@ -139,6 +139,7 @@
              post="post"
              stages="tasks"
              attributes="attributes"
+             medias="medias"
              visible-stage="visibleStage">
           </post-tabs>
           <!-- <div class="form-sheet">
