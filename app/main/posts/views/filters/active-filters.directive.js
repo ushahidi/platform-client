@@ -49,10 +49,11 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
-            // Remove form filter as its shown by the mode-context-form-filter already
-            delete activeFilters.form;
-            // Remove source filter as its shown by the mode-context-form-filter already
-            delete activeFilters.source;
+            // Remove form filter as its shown by the mode-context-form-filter already,
+            // exception: if user only wants to see incoming messages (activeFilters.form = ['none']), we keep the form-filter.
+            if (!_.isEqual(activeFilters.form, ['none'])) {
+                delete activeFilters.form;
+            }
             // Remove categories since its shown by the mode-context-form-filter already
             if (filters.form && filters.form.length <= 1) {
                 delete activeFilters.tags;
@@ -115,6 +116,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
                 return $translate.instant('post.' + value);
             },
             source : function (value) {
+                return PostMetadataService.formatSource(value);
+            },
+            form: function (value) {
                 return PostMetadataService.formatSource(value);
             }
         };

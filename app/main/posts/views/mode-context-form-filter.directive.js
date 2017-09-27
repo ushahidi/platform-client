@@ -86,6 +86,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             'group_by': 'form',
             include_unmapped: true
         });
+
         // we want stats for all forms, not just the ones visible right now
         if (queryParams.form) {
             delete queryParams.form;
@@ -93,9 +94,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         // deleting categories and sources since they are selected in the sidebar and not in the filter-modal = might get confusing
         if (queryParams.tags) {
             delete queryParams.tags;
-        }
-        if (queryParams.source) {
-            delete queryParams.source;
         }
         return PostEndpoint.stats(queryParams);
     }
@@ -109,7 +107,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         _.each($scope.forms, function (form) {
             let posts = _.filter(stats.totals[0].values, { id: form.id });
             form.post_count = 0;
-            // adding counts from different data-sources
+            // calculating totals
             if (posts) {
                 form.post_count = _.reduce(posts, function (count, post) {
                     if (post.total) {
@@ -122,12 +120,16 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     }
 
     function getSourceStats(stats) {
-
-        // todo, refactor and reuse for forms too...
         var sourceStats = [];
-        var providers = ['email', 'sms', 'twitter'];
+        var providers = ['email', 'phone', 'twitter'];
+        // calculating stats for each datasource, based on the current form-filter
         _.each(providers, function (provider) {
-            var posts = _.filter(stats.totals[0].values, {type: provider });
+            var posts = _.filter(stats.totals[0].values, function (value) {
+                    // including posts without a form in the stats
+                    var id = value.id === null ? 'none' : value.id;
+                    return value.type === provider && _.contains($scope.filters.form, id);
+                });
+
             if (posts && posts.length > 0) {
                 var sourceStat = {total: 0};
                 sourceStat.total = _.reduce(posts, function (count, post) {
@@ -136,7 +138,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                     }
                     return 0;
                 }, sourceStat.total);
-
                 sourceStat.type = provider;
                 sourceStats.push(sourceStat);
             }
@@ -197,6 +198,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         PostFilters.setFilters(filters);
         $location.path('/views/list');
     }
+
     function hide(formId) {
         var index = $scope.filters.form.indexOf(formId);
         if (index !== -1) {
