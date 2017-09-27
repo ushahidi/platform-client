@@ -29,6 +29,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     function activate() {
         FormEndpoint.queryFresh().$promise.then(function (result) {
             forms = result;
+            // adding incoming messages to filter
+            forms.push({id: 'none'});
             filterState.form = filterState.form || [];
             if (filterState.form.length === 0) { // just in case of race conditions
                 Array.prototype.splice.apply(filterState.form, [0, 0].concat(_.pluck(forms, 'id')));
@@ -58,11 +60,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilter(filterKey, value) {
-        if (angular.isArray(filterState[filterKey])) {
-            filterState[filterKey] = _.without(filterState[filterKey], value);
-        } else {
-            filterState[filterKey] = getDefaults()[filterKey];
-        }
+        filterState[filterKey] = getDefaults()[filterKey];
     }
 
     function getDefaults() {
@@ -79,7 +77,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             tags: [],
             form: _.pluck(forms, 'id'),
             set: [],
-            user: false
+            user: false,
+            source: ['sms', 'twitter','web', 'email']
         };
     }
 
