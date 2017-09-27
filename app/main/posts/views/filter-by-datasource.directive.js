@@ -45,7 +45,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
         $scope.providers = _.map($scope.postStats, function (provider) {
                 var obj = {};
                 if (provider.type !== 'web') {
-                    obj.label = provider.type === 'phone' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
+                    obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
                     obj.heading = formatHeading(obj.label);
                     obj.total = getTotals(provider.type);
                     return obj;
