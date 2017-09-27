@@ -13,6 +13,7 @@
                         type="checkbox"
                         checklist-value="provider.label.toLowerCase()"
                         checklist-model="filters.source"
+                        translate
                     />
                     {{provider.label}}
                 </label>
@@ -26,7 +27,7 @@
             <div class="dropdown-menu init" dropdown-menu>
                 <span class="post-band" ng-style="{backgroundColor: '#00aced'}"></span>
                 <p>
-                    <em>{{provider.heading}} imported by this deployment</em>
+                    <em translate="post.messages.imported_by" translate-values="{messages: provider.heading}"></em>
                 </p>
                 <div class="divider"></div>
                 <ul>
@@ -44,8 +45,16 @@
                             ng-click="hide(provider.label)"
                         ></a>
                     </li>
+                    <li ng-if="featureEnabled()">
+                        <a
+                            translate="post.messages.show_only_incoming"
+                            translate-values="{provider: provider.heading.toLowerCase()}"
+                            ng-click="showOnlyIncoming(provider.label)"
+
+                        ></a>
+                    </li>
                     <div class="divider"></div>
-                    <li>
+                    <li ng-if="featureEnabled()">
                         <div>
                             <a href="/settings/datasources">
                                 <svg class="iconic">

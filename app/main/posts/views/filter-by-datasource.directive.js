@@ -21,7 +21,10 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
     $scope.formatHeading = formatHeading;
     $scope.showOnly = showOnly;
     $scope.hide = hide;
-    $scope.hasPermission = $rootScope.hasPermission;
+    $scope.featureEnabled = featureEnabled;
+    $scope.showOnlyIncoming = showOnlyIncoming;
+    $scope.assignStatsToProviders = assignStatsToProviders;
+    $scope.getTotals = getTotals;
 
     $scope.$watch('postStats', function (postStats) {
         assignStatsToProviders();
@@ -30,7 +33,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
     activate();
 
     function activate() {
-        if ($scope.hasPermission('Manage Posts')) {
+        if ($scope.featureEnabled()) {
             ConfigEndpoint.get({ id: 'data-provider' }).$promise.then(function (results) {
                 $scope.dataSources = results.providers;
                 assignStatsToProviders();
@@ -42,9 +45,9 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
         $scope.providers = _.map($scope.postStats, function (provider) {
                 var obj = {};
                 if (provider.type !== 'web') {
-                    obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
+                    obj.label = provider.type === 'phone' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
                     obj.heading = formatHeading(obj.label);
-                    obj.total = getTotals(obj.label);
+                    obj.total = getTotals(provider.type);
                     return obj;
                 }
             });
@@ -54,7 +57,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
             .compact()
             .uniq()
             .value();
-        // if user is logged in and is allowed to see the configs
+        // if user is logged in and is allowed to see the configs, we add all enabled datasources, even if there are 0 posts
         if ($scope.dataSources) {
             var smsProviders = ['nexmo', 'twilio','frontlinesms', 'smssync'];
             _.each($scope.dataSources, function (source, key) {
@@ -65,7 +68,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
                             var obj = {};
                             obj.label = type;
                             obj.heading = formatHeading(obj.label);
-                            obj.total = getTotals(obj.label);
+                            obj.total = getTotals(key);
                             $scope.providers.push(obj);
                         }
                     }
@@ -111,5 +114,14 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
                 }
             });
         }
+    }
+
+    function showOnlyIncoming(source) {
+        $scope.filters.form = ['none'];
+        $scope.filters.source = [source.toLowerCase()];
+    }
+
+    function featureEnabled() {
+        return $rootScope.hasPermission('Manage Posts');
     }
 }
