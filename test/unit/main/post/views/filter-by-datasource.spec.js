@@ -27,7 +27,7 @@ describe('filter by datasource directive', function () {
         };
         $scope.postStats = [
                 {total: 1, type: 'email'},
-                {total: 2, type: 'phone'}
+                {total: 2, type: 'sms'}
             ];
 
         hasPermission = true;
@@ -59,7 +59,7 @@ describe('filter by datasource directive', function () {
             expect(isolateScope.providers).toEqual(assignedProviders);
         });
         it('get totals for a source', function () {
-            expect(isolateScope.getTotals('phone')).toEqual(2);
+            expect(isolateScope.getTotals('sms')).toEqual(2);
             expect(isolateScope.getTotals('email')).toEqual(1);
             expect(isolateScope.getTotals('twitter')).toEqual(0);
         });
