@@ -14,8 +14,8 @@ function FilterByDatasourceDirective() {
     };
 }
 
-FilterByDatasourceController.$inject = ['$scope', '$rootScope', 'ConfigEndpoint', '_'];
-function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
+FilterByDatasourceController.$inject = ['$scope', '$rootScope', 'ConfigEndpoint', '_', '$location'];
+function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $location) {
     $scope.dataSources = [];
     $scope.providers = [];
     $scope.formatHeading = formatHeading;
@@ -119,6 +119,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
     function showOnlyIncoming(source) {
         $scope.filters.form = ['none'];
         $scope.filters.source = [source.toLowerCase()];
+        $location.path('/views/list');
     }
 
     function featureEnabled() {
