@@ -1123,7 +1123,8 @@
         "export" : {
             "in_progress" : "Your CSV export is in progress...",
             "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
+            "navigate_away" : "You can navigate away from this window. We'll let you know when your download is complete."
         }
     },
     "empty": {
