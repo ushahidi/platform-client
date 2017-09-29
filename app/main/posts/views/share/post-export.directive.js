@@ -55,7 +55,7 @@ function PostExportController(
         var exportQuery = PostEndpoint.export(query);
         requestExport(site, query, exportQuery);
     }
-      
+    
     function requestExport(site, query, exportQuery) {
         $q.all([site, exportQuery]).then(function (response) {
             showCSVResults(response, query.format);
