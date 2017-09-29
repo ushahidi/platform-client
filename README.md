@@ -1,6 +1,8 @@
 Ushahidi Platform Web Client
 ============================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ushahidi/platform-client.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/ushahidi/platform-client.svg?branch=master)](https://travis-ci.org/ushahidi/platform-client)
 [![Coverage Status](https://coveralls.io/repos/github/ushahidi/platform-client/badge.svg?branch=master)](https://coveralls.io/github/ushahidi/platform-client?branch=master)
 [![Dependency Status](https://david-dm.org/ushahidi/platform-client/dev-status.svg?style=flat)](https://david-dm.org/ushahidi/platform-client#info=devDependencies)

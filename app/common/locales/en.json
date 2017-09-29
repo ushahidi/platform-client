@@ -221,6 +221,7 @@
         "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
+        "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Show field description",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -317,7 +318,8 @@
             "has_location": "Post-locations",
             "all_posts": "Show all posts",
             "unmapped": "Show unmapped posts",
-            "mapped": "Show posts with a location"
+            "mapped": "Show posts with a location",
+            "source": "Source"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -341,7 +343,8 @@
         "search" : "Search",
         "date_range" : "Date range",
         "who_its_visible_to": "Who it's visible to",
-        "status" : "Status"
+        "status" : "Status",
+        "source" : "Source"
     },
     "graph" : {
         "all_posts": "Nothing; Show all posts",
@@ -597,7 +600,12 @@
             "send" : "Send New Message",
             "save" : "Save",
             "title" : "Conversation with author",
-            "associated_messages": "View messages associated with this post"
+            "associated_messages": "View messages associated with this post",
+            "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
+            "imported_by": "{{messages}} imported by this deployment",
+            "Twitter": "Twitter",
+            "Email": "Email",
+            "SMS": "SMS"
         },
         "valid" : {
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
@@ -1121,10 +1129,9 @@
             "sent_to" : "Message sent to {{contact}}"
         },
         "export" : {
-            "in_progress" : "Your CSV export is in progress...",
+            "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
             "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
-            "navigate_away" : "You can navigate away from this window. We'll let you know when your download is complete."
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
         }
     },
     "empty": {

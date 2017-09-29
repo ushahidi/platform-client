@@ -15,7 +15,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.showOnly = showOnly;
     $scope.selectParent = selectParent;
     $scope.hide = hide;
-    $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
     $scope.canAddToSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.showLanguage = false;
@@ -25,6 +24,8 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.goToUnmapped = goToUnmapped;
     $scope.getUnmapped = getUnmapped;
     $scope.changeForms = changeForms;
+    $scope.unknown = [];
+
     activate();
 
     $scope.$watch('filters', function () {
@@ -85,11 +86,12 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             'group_by': 'form',
             include_unmapped: true
         });
+
         // we want stats for all forms, not just the ones visible right now
         if (queryParams.form) {
             delete queryParams.form;
         }
-        // deleting categories since they are selected in the sidebar and not in the filter-modal = might get confusing
+        // deleting categories and sources since they are selected in the sidebar and not in the filter-modal = might get confusing
         if (queryParams.tags) {
             delete queryParams.tags;
         }
@@ -97,20 +99,51 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     }
 
     function updateCounts(stats) {
-        // assigning count of unknown-values
-        let unknown = _.findWhere(stats.totals[0].values, { id: null });
-        $scope.unknown_post_count = (unknown && unknown.total) ? unknown.total : 0;
-
+        // assigning count for different data-sources
+        $scope.sourceStats = getSourceStats(stats);
         // Setting nb of unmapped posts
         $scope.unmapped = stats.unmapped ? stats.unmapped : 0;
-
         // assigning count for all forms
         _.each($scope.forms, function (form) {
-            let posts = _.findWhere(stats.totals[0].values, { id: form.id });
-            form.post_count = (posts && posts.total) ? posts.total : 0;
+            let posts = _.filter(stats.totals[0].values, { id: form.id });
+            form.post_count = 0;
+            // calculating totals
+            if (posts) {
+                form.post_count = _.reduce(posts, function (count, post) {
+                    if (post.total) {
+                        return count + post.total;
+                    }
+                    return 0;
+                }, form.post_count);
+            }
         });
     }
 
+    function getSourceStats(stats) {
+        var sourceStats = [];
+        var providers = ['email', 'sms', 'twitter'];
+        // calculating stats for each datasource, based on the current form-filter
+        _.each(providers, function (provider) {
+            var posts = _.filter(stats.totals[0].values, function (value) {
+                    // including posts without a form in the stats
+                    var id = value.id === null ? 'none' : value.id;
+                    return value.type === provider && _.contains($scope.filters.form, id);
+                });
+
+            if (posts && posts.length > 0) {
+                var sourceStat = {total: 0};
+                sourceStat.total = _.reduce(posts, function (count, post) {
+                    if (post.total) {
+                        return count + post.total;
+                    }
+                    return 0;
+                }, sourceStat.total);
+                sourceStat.type = provider;
+                sourceStats.push(sourceStat);
+            }
+        });
+        return sourceStats;
+    }
     function selectParent(parent, formId) {
         // If we've just selected the tag
         if (_.contains($scope.filters.tags, parent.id)) {
@@ -165,6 +198,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         PostFilters.setFilters(filters);
         $location.path('/views/list');
     }
+
     function hide(formId) {
         var index = $scope.filters.form.indexOf(formId);
         if (index !== -1) {
