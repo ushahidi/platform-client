@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="af4b36dd-a413-4af5-bdf2-1c7615d83f09" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/platform-client.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/main/posts/views/filters/filters-dropdown.directive.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/main/posts/views/filters/filters-dropdown.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/main/posts/views/filters/filter-modal.directive.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/main/posts/views/filters/filter-modal.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/posts/posts-module.js" afterPath="$PROJECT_DIR$/app/main/posts/posts-module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/posts/views/filters/filter-posts.directive.js" afterPath="$PROJECT_DIR$/app/main/posts/views/filters/filter-posts.directive.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/posts/views/filters/filter-posts.html" afterPath="$PROJECT_DIR$/app/main/posts/views/filters/filter-posts.html" />
-    </list>
+    <list default="true" id="af4b36dd-a413-4af5-bdf2-1c7615d83f09" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,8 +37,8 @@
       <file leaf-file-name="filter-posts.directive.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/main/posts/views/filters/filter-posts.directive.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="40" column="5" lean-forward="false" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+            <state relative-caret-position="495">
+              <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -705,12 +690,12 @@
       <workItem from="1506178335852" duration="12569000" />
       <workItem from="1506434421309" duration="8680000" />
       <workItem from="1506452627156" duration="4659000" />
-      <workItem from="1506536664005" duration="59157000" />
+      <workItem from="1506536664005" duration="59211000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="378877000" />
+    <option name="totallyTimeSpent" value="378931000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -1170,8 +1155,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/main/posts/views/filters/filter-posts.directive.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="40" column="5" lean-forward="false" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+        <state relative-caret-position="495">
+          <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
           <folding />
         </state>
       </provider>
