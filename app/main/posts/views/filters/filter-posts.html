@@ -10,8 +10,7 @@
             </svg>
             <span class="button-label hidden" translate>app.saved</span>
         </a>
-
-        <a id="togglePostSearchFilters" class="button searchbar-options-filter" ng-click="openFilterModal()">
+        <a id="togglePostSearchFilters" class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle">
             <svg class="iconic">
                 <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px">
                 </use>
@@ -19,4 +18,5 @@
             <span class="button-label" translate>app.filters</span>
         </a>
     </div>
+    <filters-dropdown filters-dropdown-toggle="filtersDropdownToggle"></filters-dropdown>
 </form>

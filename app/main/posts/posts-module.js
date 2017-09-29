@@ -59,7 +59,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterHasLocation', require('./views/filters/filter-has-location.directive.js'))
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
 .service('PostFilters', require('./views/post-filters.service.js'))
-.directive('filterModal', require('./views/filters/filter-modal.directive.js'))
+.directive('filtersDropdown', require('./views/filters/filters-dropdown.directive.js'))
 // Share
 .directive('postShare', require('./views/share/post-share.directive.js'))
 .directive('shareMenu', require('./views/share/share-menu.directive.js'))
