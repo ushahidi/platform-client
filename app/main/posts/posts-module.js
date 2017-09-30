@@ -60,6 +60,7 @@ angular.module('ushahidi.posts', [])
 .directive('postActiveFilters', require('./views/filters/active-filters.directive.js'))
 .service('PostFilters', require('./views/post-filters.service.js'))
 .directive('filtersDropdown', require('./views/filters/filters-dropdown.directive.js'))
+.directive('filterSavedSearch', require('./views/filters/filter-saved-search.directive.js'))
 // Share
 .directive('postShare', require('./views/share/post-share.directive.js'))
 .directive('shareMenu', require('./views/share/share-menu.directive.js'))
