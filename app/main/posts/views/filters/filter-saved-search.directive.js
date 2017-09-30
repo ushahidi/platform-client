@@ -4,22 +4,20 @@ FilterSavedSearch.$inject = [];
 function FilterSavedSearch() {
     return {
         restrict: 'E',
-        scope: true,
+        scope: {
+        },
         controller: FilterSavedSearchController,
+        link: function ($scope, $element, $attrs) {
+            $scope.data = {selectedSearch: 0};
+        },
         template: require('./filter-saved-search.html')
     };
 }
 
 FilterSavedSearchController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '$location', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
 function FilterSavedSearchController($scope, $element, $attrs, $rootScope, $location, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
-    $scope.selectedSearch = '';
-    function activate() {
-        loadSavedSearches();
-    }
-    activate();
-
     // Load searches + users
-    function loadSavedSearches(query) {
+    (function loadSavedSearches(query) {
         $scope.searches = [];
         query = query || {};
         SavedSearchEndpoint.query(query).$promise.then(function (searches) {
@@ -28,5 +26,6 @@ function FilterSavedSearchController($scope, $element, $attrs, $rootScope, $loca
                 return search.featured || isOwner;
             });
         });
-    }
+    })();
+
 }

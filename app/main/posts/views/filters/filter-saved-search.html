@@ -1,12 +1,11 @@
 <fieldset ng-if="searches.length > 0">
     <div class="custom-select">
         <select
-                ng-model="selectedSearch"
+                ng-model="data.selectedSearch"
                 ng-options="search.id as search.name
                 for
                 search in searches"
         >
-            <option selected="selected" value=""> Select one</option>
         </select>
     </div>
 </fieldset>
