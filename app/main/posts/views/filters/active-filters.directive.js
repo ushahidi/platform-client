@@ -82,6 +82,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         }
 
         var transformers = {
+            order_group: function (value) {
+                //return $translate.instant('global_filter.filter_tabs.order_group.' + _.keys(value)[0]);
+            },
             tags : function (value) {
                 return tags[value] ? tags[value].tag : value;
             },
@@ -99,8 +102,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             // set : function (value) {
             //     return options.collections[value] ? options.collections[value].name : value;
             // },
-            savedsearch: function (value) {
-                console.log('value', value);
+            saved_search: function (value) {
+                console.log('savedsearch', value);
                 return searches[value] ? searches[value].name : value;
             },
             center_point : function (value) {

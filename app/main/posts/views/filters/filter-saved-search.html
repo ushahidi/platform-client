@@ -1,7 +1,6 @@
-<fieldset ng-show="searches.length > 0">
+
     <div class="custom-select">
         <select
-                ng-change="changeIt(search)"
                 ng-model="selectedSearch"
                 ng-options="search.id as search.name
                 for
@@ -9,4 +8,3 @@
         >
         </select>
     </div>
-</fieldset>

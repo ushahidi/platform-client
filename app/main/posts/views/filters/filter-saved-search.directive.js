@@ -22,14 +22,11 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
                 });
             });
         })();
-        $scope.selectedSearch = '';
+        $scope.selectedSearch = '0';
         $scope.$watch('selectedSearch', saveToView, true);
         function saveToView(selectedSearch) {
-            console.log('savetoview', selectedSearch);
             ngModel.$setViewValue(selectedSearch);
+
         }
-        $scope.changeIt = function (s) {
-            console.log(s);
-        };
     }
 }

@@ -316,7 +316,14 @@
             }
         },
         "filter_tabs" : {
+            "order_group": {
+                "orderBy" : "Order by",
+                "order": "Order",
+                "unlockedOnTop": "Unlocked posts on top"
+            },
+            "unlockedOnTop": "Unlocked posts on top",
             "savedsearch": "Saved Search",
+            "saved_search": "Saved Search",
             "q": "Keyword",
             "created_after": "Start date",
             "created_before": "End date",

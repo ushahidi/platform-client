@@ -75,7 +75,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             within_km: '1',
             current_stage: [],
             tags: [],
-            savedsearch: '',
+            saved_search: '',
             order_group: {},
             form: _.pluck(forms, 'id'),
             set: [],
