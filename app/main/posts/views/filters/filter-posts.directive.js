@@ -35,6 +35,7 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
     }
 
     function applyFilters(event) {
+        console.log(11);
         // ngFormController automatically commits changes to the model ($scope.filters)
         // Just close the dropdown
         ModalService.close();

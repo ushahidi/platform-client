@@ -1,22 +1,58 @@
-<form name="postFiltersForm" role="search" class="searchbar" dropdown auto-close="outsideClick" ng-submit="applyFilters()" ng-model-options="{ updateOn : 'submit' }">
-    <!-- Include search bar -->
-    <filter-searchbar model="filters.q"></filter-searchbar>
- 
-    <!-- Toggle Filters show/hide -->
-    <div class="searchbar-options">
-        <a class="button" ng-click="openSavedModal()">
-            <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#star"></use>
-            </svg>
-            <span class="button-label hidden" translate>app.saved</span>
-        </a>
-        <a id="togglePostSearchFilters" class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle">
-            <svg class="iconic">
-                <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px">
-                </use>
-            </svg>
-            <span class="button-label" translate>app.filters</span>
-        </a>
-    </div>
-    <filters-dropdown filters-dropdown-toggle="filtersDropdownToggle"></filters-dropdown>
-</form>
+<div>
+
+    <form name="postFiltersFormOpen"
+          dropdown
+          role="search"
+          class="searchbar"
+          auto-close="outsideClick"
+          ng-show="filtersDropdownToggle"
+    >
+        <!-- Toggle Filters show/hide -->
+        <div class="searchbar-options">
+            <a class="button" ng-click="openSavedModal()">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#star"></use>
+                </svg>
+                <span class="button-label hidden" translate>app.saved</span>
+            </a>
+            <a id="togglePostSearchFiltersOpen" class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle">
+                <svg class="iconic">
+                    <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px">
+                    </use>
+                </svg>
+                <span class="button-label" translate>app.filters</span>
+            </a>
+        </div>
+        <filters-dropdown filters-dropdown-toggle="filtersDropdownToggle"></filters-dropdown>
+    </form>
+    <form name="postFiltersForm"
+          role="search"
+          class="searchbar"
+          dropdown
+          auto-close="outsideClick"
+          ng-submit="applyFilters()"
+          ng-model-options="{ updateOn : 'submit' }"
+          ng-show="!filtersDropdownToggle"
+        >
+        <!-- Include search bar -->
+        <filter-searchbar model="filters.q"></filter-searchbar>
+
+        <!-- Toggle Filters show/hide -->
+        <div class="searchbar-options">
+            <a class="button" ng-click="openSavedModal()">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#star"></use>
+                </svg>
+                <span class="button-label hidden" translate>app.saved</span>
+            </a>
+            <a id="togglePostSearchFilters" class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle">
+                <svg class="iconic">
+                    <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px">
+                    </use>
+                </svg>
+                <span class="button-label" translate>app.filters</span>
+            </a>
+        </div>
+    </form>
+
+</div>
