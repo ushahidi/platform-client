@@ -13,20 +13,23 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
 
     function FilterSavedSearchLink($scope, $element, $attrs, ngModel) {
         // Load searches + users
-        (function loadSavedSearches(query) {
-            console.log($scope.searches);
-            query = query || {};
-            SavedSearchEndpoint.query(query).$promise.then(function (searches) {
+        console.log(ngModel);
+        (function loadSavedSearches() {
+            SavedSearchEndpoint.query({}).$promise.then(function (searches) {
                 $scope.searches = _.filter(searches, function (search) {
                     var isOwner = (search.user && search.user.id === _.result($rootScope.currentUser, 'userId')) === true;
                     return search.featured || isOwner;
                 });
             });
         })();
-        $scope.data = {selectedSearch : ''};
-        $scope.$watch('data', saveToView, true);
+        $scope.selectedSearch = '';
+        $scope.$watch('selectedSearch', saveToView, true);
         function saveToView(selectedSearch) {
-            ngModel.$setViewValue(angular.copy(selectedSearch));
+            console.log('savetoview', selectedSearch);
+            ngModel.$setViewValue(selectedSearch);
         }
+        $scope.changeIt = function (s) {
+            console.log(s);
+        };
     }
 }

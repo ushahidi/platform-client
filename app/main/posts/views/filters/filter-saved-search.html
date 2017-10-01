@@ -1,7 +1,8 @@
-<fieldset ng-if="searches.length > 0">
+<fieldset ng-show="searches.length > 0">
     <div class="custom-select">
         <select
-                ng-model="data.selectedSearch"
+                ng-change="changeIt(search)"
+                ng-model="selectedSearch"
                 ng-options="search.id as search.name
                 for
                 search in searches"

@@ -316,6 +316,7 @@
             }
         },
         "filter_tabs" : {
+            "savedsearch": "Saved Search",
             "q": "Keyword",
             "created_after": "Start date",
             "created_before": "End date",

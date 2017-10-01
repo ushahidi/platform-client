@@ -1,7 +1,7 @@
 module.exports = ActiveFilters;
 
-ActiveFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint', 'PostMetadataService'];
-function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint, PostMetadataService) {
+ActiveFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint', 'SavedSearchEndpoint', 'PostMetadataService'];
+function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint, SavedSearchEndpoint, PostMetadataService) {
     return {
         restrict: 'E',
         scope: true,
@@ -18,6 +18,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         var tags = [];
         var roles = [];
         var users = [];
+        var searches = [];
 
         activate();
 
@@ -34,6 +35,10 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             });
             TagEndpoint.query().$promise.then(function (results) {
                 tags = _.indexBy(results, 'id');
+            });
+
+            SavedSearchEndpoint.query({}).$promise.then(function (searches) {
+                searches = _.indexBy(searches, 'id');
             });
         }
 
@@ -60,8 +65,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             }
             // Remove within_km as its shown with the center_point value
             delete activeFilters.within_km;
-
             $scope.activeFilters = _.mapObject(activeFilters, makeArray);
+            console.log($scope.activeFilters);
         }
 
         function transformFilterValue(value, key) {
@@ -94,6 +99,10 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             // set : function (value) {
             //     return options.collections[value] ? options.collections[value].name : value;
             // },
+            savedsearch: function (value) {
+                console.log('value', value);
+                return searches[value] ? searches[value].name : value;
+            },
             center_point : function (value) {
                 return $translate.instant('global_filter.filter_tabs.location_value', {
                     value: rawFilters.location_text ? rawFilters.location_text : value,
