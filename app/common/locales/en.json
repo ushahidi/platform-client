@@ -300,6 +300,21 @@
             "all_collections" : "All Collections",
             "search_collections" : "Search Collections"
         },
+        "sort": {
+            "order": {
+                "filter_type_tag": "Order",
+                "desc": "Newest first",
+                "asc": "Oldest first"
+            },
+            "orderBy": {
+                "post_date": "Post Date",
+                "created": "Date created",
+                "updated": "Date updated"
+            },
+            "unlockedOnTop": {
+                "filter_type_tag": "Unlocked posts on top"
+            }
+        },
         "filter_tabs" : {
             "q": "Keyword",
             "created_after": "Start date",
