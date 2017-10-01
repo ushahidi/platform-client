@@ -1,5 +1,4 @@
 <div>
-
     <form name="postFiltersFormOpen"
           dropdown
           role="search"
@@ -23,7 +22,7 @@
                 <span class="button-label" translate>app.filters</span>
             </a>
         </div>
-        <filters-dropdown filters-dropdown-toggle="filtersDropdownToggle"></filters-dropdown>
+        <filters-dropdown filters-var="filters" cancel="cancel" filters-dropdown-toggle="filtersDropdownToggle" apply-filters="applyFilters"></filters-dropdown>
     </form>
     <form name="postFiltersForm"
           role="search"

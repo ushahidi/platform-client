@@ -8,12 +8,12 @@
             ...come on. -->
             <post-active-filters></post-active-filters>
             <!--<filter-post-sorting-options></filter-post-sorting-options>-->
-            <filter-saved-search ng-model="filters.saved_search"></filter-saved-search>
-            <filter-category ng-model="filters.tags"></filter-category>
-            <filter-status ng-model="filters.status"></filter-status>
-            <filter-form ng-model="filters.form"></filter-form>
-            <filter-date date-after-model="filters.date_after" date-before-model="filters.date_before"></filter-date>
-            <filter-location center-point-model="filters.center_point" within-km-model="filters.within_km"></filter-location>
+            <filter-saved-search ng-model="filtersVar.saved_search"></filter-saved-search>
+            <filter-category ng-model="filtersVar.tags"></filter-category>
+            <filter-status ng-model="filtersVar.status"></filter-status>
+            <filter-form ng-model="filtersVar.form"></filter-form>
+            <filter-date date-after-model="filtersVar.date_after" date-before-model="filtersVar.date_before"></filter-date>
+            <filter-location center-point-model="filtersVar.center_point" within-km-model="filtersVar.within_km"></filter-location>
             <div class="modal-actions">
                 <div class="form-field">
                     <button type="button" class="button-link" ng-click="cancel()" translate>global_filter.clear_filters</button>

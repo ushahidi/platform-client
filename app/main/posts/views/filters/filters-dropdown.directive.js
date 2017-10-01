@@ -5,7 +5,10 @@ function FiltersDropdown() {
     return {
         restrict: 'E',
         scope: {
-            filtersDropdownToggle: '='
+            filtersDropdownToggle: '=',
+            applyFilters: '=',
+            filtersVar: '=',
+            cancel: '='
         },
         link: FiltersDropdownLink,
         template: require('./filters-dropdown.html')
@@ -14,5 +17,6 @@ function FiltersDropdown() {
 
 
 function FiltersDropdownLink($scope, $element, $attrs) {
+    console.log($scope.filtersVar);
 }
 
