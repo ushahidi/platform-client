@@ -55,7 +55,9 @@ module.exports = [
             },
             put: function (orderObj) {
                 order = orderObj;
-                order = angular.merge(orderObj, CONST_ORDER);
+                _.each(orderObj, function (key, val) {
+                    CONST_ORDER[key] = CONST_ORDER[key] ? CONST_ORDER[key].value : null;
+                });
                 return order;
             },
             reset: function () {

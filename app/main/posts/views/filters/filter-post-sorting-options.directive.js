@@ -34,6 +34,7 @@ FilterPostSortingOptionsController.$inject = [
 ];
 function FilterPostSortingOptionsController($scope,PostActiveOrderOptions) {
     $scope.change = function () {
-        PostActiveOrderOptions.put($scope.orderGroup);
+        console.log($scope.orderGroup);
+        console.log(PostActiveOrderOptions.put($scope.orderGroup));
     };
 }
