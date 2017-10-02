@@ -1,0 +1,230 @@
+<!--
+<div class="searchbar-options">
+    <a href="#" class="button" data-toggle="search-saved">
+        <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#star"></use>
+        </svg>
+        <span class="button-label hidden">Saved</span>
+    </a>
+
+    <a href="#" class="button searchbar-options-filter" data-toggle="search-filters">
+        <span class="button-label">Filters</span>
+        <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+    </a>
+</div>-->
+
+<div class="dropdown-menu" data-toggle-target="search-saved" data-toggle-animate="">
+    <h4 class="dropdown-menu-title">Saved Searches</h4>
+
+    <div class="form-field">
+        <label class="hidden">Find a saved search</label>
+        <div class="input-with-icon">
+            <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#magnifying-glass"></use>
+            </svg>
+            <input type="search" placeholder="Find a saved search...">
+        </div>
+    </div>
+    <dl class="dropdown-menu-body">
+        <dt class="list-item"><a href="map-saved.html">Actions on Congress Avenue</a></dt>
+
+        <dt class="list-item"><a href="#">Photos</a></dt>
+
+        <dt class="list-item"><a href="#">Reports on Wednesday</a></dt>
+
+        <dt class="list-item"><a href="#">Assigned to me</a></dt>
+
+        <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+        <dd>by <a href="">Robbie MacKay</a></dd>
+
+        <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+        <dd>by <a href="">Robbie MacKay</a></dd>
+
+        <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+        <dd>by <a href="">Robbie MacKay</a></dd>
+
+        <dt class="list-item"><a href="#">Unknown form with attachment</a></dt>
+        <dd>by <a href="">Robbie MacKay</a></dd>
+    </dl>
+    <div class="form-field">
+        <button type="button" class="button-beta">
+            <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#plus"></use>
+            </svg>
+            <span class="button-label">Create new</span>
+        </button>
+    </div>
+</div>
+
+<div class="dropdown-menu" data-toggle-target="search-filters" data-toggle-animate="">
+    <h4 class="dropdown-menu-title">Filter by...</h4>
+    <div class="dropdown-menu-body">
+        <fieldset>
+            <legend>Survey</legend>
+
+            <div class="form-field checkbox">
+                <label for="traffic">
+                    <input type="checkbox" name="getting-around">
+                    Getting around
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="police-encounters">
+                    <input type="checkbox" name="police-encounters">
+                    Police encounters
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="protester-photos">
+                    <input type="checkbox" name="protester-photos">
+                    Protester photos
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="police-encounters">
+                    <input type="checkbox" name="official-events">
+                    Official events
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="protester-photos">
+                    <input type="checkbox" name="unknown">
+                    Unknown
+                </label>
+            </div>
+            <span class="form-field-toggle">
+                    <svg class="iconic">
+                      <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                    </svg>
+                    More
+                </span>
+        </fieldset>
+
+        <fieldset>
+            <legend>Status</legend>
+
+            <div class="form-field checkbox icon-input">
+                <label for="published">
+                    <svg class="iconic">
+                        <use xlink:href="/img/iconic-sprite.svg#globe"></use>
+                    </svg>
+                    <input checked="" type="checkbox" name="status" id="published">
+                    Published
+                </label>
+            </div>
+            <div class="form-field checkbox icon-input">
+                <label for="underreview">
+                    <svg class="iconic">
+                        <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+                    </svg>
+                    <input type="checkbox" name="status" id="underreview">
+                    Under review
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="archive">
+                    <svg class="iconic">
+                        <use xlink:href="/img/iconic-sprite.svg#box"></use>
+                    </svg>
+                    <input type="checkbox" name="archive" id="archive">
+                    Archive
+                </label>
+            </div>
+            <span class="form-field-toggle">
+                    <svg class="iconic">
+                      <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                    </svg>
+                    More
+                </span>
+        </fieldset>
+
+        <fieldset>
+            <legend>Category</legend>
+
+            <div class="form-field checkbox">
+                <label for="speakers">
+                    <input checked="" type="checkbox" id="speakers"> Speakers
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="opposition">
+                    <input type="checkbox" id="opposition"> Opposition
+                </label>
+            </div>
+            <span class="form-field-toggle">
+                    <svg class="iconic">
+                      <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                    </svg>
+                    More
+                </span>
+        </fieldset>
+
+        <fieldset>
+            <legend>Data Source</legend>
+
+            <div class="form-field checkbox">
+                <label for="web">
+                    <input type="checkbox" id="web">
+                    Web
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="sms">
+                    <input type="checkbox" id="sms">
+                    SMS
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="email">
+                    <input type="checkbox" id="email">
+                    Email
+                </label>
+            </div>
+            <div class="form-field checkbox">
+                <label for="twitter">
+                    <input type="checkbox" id="twitter">
+                    Twitter
+                </label>
+            </div>
+            <span class="form-field-toggle">
+                    <svg class="iconic">
+                      <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                    </svg>
+                    More
+                </span>
+        </fieldset>
+
+        <fieldset>
+            <legend>Date range</legend>
+
+            <div class="form-field date">
+                <label class="hidden">Start date</label>
+                <div class="input-with-icon">
+                    <svg class="iconic">
+                        <use xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                    </svg>
+                    <input type="date" placeholder="Start date">
+                </div>
+                <span class="date-joiner">to</span>
+            </div>
+
+            <div class="form-field date">
+                <label class="hidden">End date</label>
+                <div class="input-with-icon">
+                    <svg class="iconic">
+                        <use xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                    </svg>
+                    <input type="date" placeholder="End date">
+                </div>
+            </div>
+
+        </fieldset>
+    </div>
+
+    <div class="form-field">
+        <button type="button" class="button-link" disabled="">Cancel</button>
+        <button type="button" class="button-alpha" disabled="">Apply filters</button>
+    </div>
+</div>

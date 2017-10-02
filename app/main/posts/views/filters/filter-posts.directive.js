@@ -14,12 +14,14 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters'];
-function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
+FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$routeParams'];
+function FilterPostsController($scope, $timeout, ModalService, PostFilters, $routeParams) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
     $scope.filtersDropdownToggle = false;
+    $scope.searchDropdownToggle = $routeParams.view !== 'list';
+
     activate();
 
     function activate() {

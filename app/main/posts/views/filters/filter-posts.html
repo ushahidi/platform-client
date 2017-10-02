@@ -4,22 +4,24 @@
           role="search"
           class="searchbar"
           auto-close="outsideClick"
-          ng-show="filtersDropdownToggle"
+          ng-show="!searchDropdownToggle"
     >
+        <filter-searchbar model="filters.q"></filter-searchbar>
+
         <!-- Toggle Filters show/hide -->
         <div class="searchbar-options">
-            <a class="button" ng-click="openSavedModal()">
+            <a class="button" ng-click="openSavedModal()" data-toggle="search-saved">
                 <svg class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#star"></use>
                 </svg>
                 <span class="button-label hidden" translate>app.saved</span>
             </a>
             <a id="togglePostSearchFiltersOpen" class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle">
+                <span class="button-label" translate>app.filters</span>
                 <svg class="iconic">
-                    <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px">
+                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom">
                     </use>
                 </svg>
-                <span class="button-label" translate>app.filters</span>
             </a>
         </div>
         <filters-dropdown filters-var="filters" ng-model="filters" cancel="cancel" filters-dropdown-toggle="filtersDropdownToggle" apply-filters="applyFilters"></filters-dropdown>
@@ -31,7 +33,7 @@
           auto-close="outsideClick"
           ng-submit="applyFilters()"
           ng-model-options="{ updateOn : 'submit' }"
-          ng-show="!filtersDropdownToggle"
+          ng-show="searchDropdownToggle"
         >
         <!-- Include search bar -->
         <filter-searchbar model="filters.q"></filter-searchbar>
@@ -44,7 +46,7 @@
                 </svg>
                 <span class="button-label hidden" translate>app.saved</span>
             </a>
-            <a id="togglePostSearchFilters" class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle">
+            <a id="togglePostSearchFilters" class="button searchbar-options-filter">
                 <svg class="iconic">
                     <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px">
                     </use>

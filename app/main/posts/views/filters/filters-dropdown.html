@@ -1,4 +1,4 @@
-<div ng-show="filtersDropdownToggle" ng-class="{'searchbar-results':'searchbar-results','dropdown-menu': 'dropdown-menu'}">
+<div ng-show="filtersDropdownToggle" ng-class="{'dropdown-menu': 'dropdown-menu'}" data-toggle-target="search-saved" data-toggle-animate="">
     <div class="form-field">
         <post-active-search-filters ng-model="filtersVarLocked" filters-var="filtersVar"></post-active-search-filters>
         <filter-post-sorting-options ng-model="filtersVarLocked.order_by"></filter-post-sorting-options>
