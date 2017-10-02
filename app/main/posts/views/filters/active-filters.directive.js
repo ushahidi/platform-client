@@ -18,7 +18,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         var tags = [];
         var roles = [];
         var users = [];
-        var searches = [];
+        var savedSearches = [];
 
         activate();
 
@@ -38,7 +38,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             });
 
             SavedSearchEndpoint.query({}).$promise.then(function (searches) {
-                searches = _.indexBy(searches, 'id');
+                savedSearches = _.indexBy(searches, 'id');
             });
         }
 
@@ -66,7 +66,6 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             // Remove within_km as its shown with the center_point value
             delete activeFilters.within_km;
             $scope.activeFilters = _.mapObject(activeFilters, makeArray);
-            console.log($scope.activeFilters);
         }
 
         function transformFilterValue(value, key) {
@@ -103,8 +102,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             //     return options.collections[value] ? options.collections[value].name : value;
             // },
             saved_search: function (value) {
-                console.log('savedsearch', value);
-                return searches[value] ? searches[value].name : value;
+                return savedSearches[value.selectedSearch] ? savedSearches[value.selectedSearch].name : value.selectedSearch;
             },
             center_point : function (value) {
                 return $translate.instant('global_filter.filter_tabs.location_value', {
