@@ -6,7 +6,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
         restrict: 'E',
         scope: true,
         require: 'ngModel',
-        template: require('./active-filters.html'),
+        template: require('./active-search-filters.html'),
         link: ActiveFiltersLink
     };
 
