@@ -4,20 +4,20 @@
             <span translate-values="{ entity: entityType }" translate>
                 app.sort_by
             </span>
-            <post-active-filters></post-active-filters>
-            <filter-post-sorting-options ng-model="filtersVar.order_by"></filter-post-sorting-options>
-            <filter-post-order-asc-desc ng-model="filtersVar.order_order"></filter-post-order-asc-desc>
-            <filter-unlocked-on-top ng-model="filtersVar.order_unlocked_on_top"></filter-unlocked-on-top>
-            <filter-saved-search ng-model="filtersVar.saved_search"></filter-saved-search>
-            <filter-category ng-model="filtersVar.tags"></filter-category>
-            <filter-status ng-model="filtersVar.status"></filter-status>
-            <filter-form ng-model="filtersVar.form"></filter-form>
-            <filter-date date-after-model="filtersVar.date_after" date-before-model="filtersVar.date_before"></filter-date>
-            <filter-location center-point-model="filtersVar.center_point" within-km-model="filtersVar.within_km"></filter-location>
+            <post-active-search-filters ng-model="filtersVarLocked" filters-var="filtersVar"></post-active-search-filters>
+            <filter-post-sorting-options ng-model="filtersVarLocked.order_by"></filter-post-sorting-options>
+            <filter-post-order-asc-desc ng-model="filtersVarLocked.order_order"></filter-post-order-asc-desc>
+            <filter-unlocked-on-top ng-model="filtersVarLocked.order_unlocked_on_top"></filter-unlocked-on-top>
+            <filter-saved-search ng-model="filtersVarLocked.saved_search"></filter-saved-search>
+            <filter-category ng-model="filtersVarLocked.tags"></filter-category>
+            <filter-status ng-model="filtersVarLocked.status"></filter-status>
+            <filter-form ng-model="filtersVarLocked.form"></filter-form>
+            <filter-date date-after-model="filtersVarLocked.date_after" date-before-model="filtersVarLocked.date_before"></filter-date>
+            <filter-location center-point-model="filtersVarLocked.center_point" within-km-model="filtersVarLocked.within_km"></filter-location>
             <div class="modal-actions">
                 <div class="form-field">
                     <button type="button" class="button-link" ng-click="cancel()" translate>global_filter.clear_filters</button>
-                    <button type="submit" class="button-alpha" translate ng-click="applyFilters()">app.apply_filters</button>
+                    <button type="submit" class="button-alpha" translate ng-click="applyFiltersLocked()">app.apply_filters</button>
                 </div>
             </div>
         </span>
