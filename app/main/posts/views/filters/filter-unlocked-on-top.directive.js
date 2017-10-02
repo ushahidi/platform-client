@@ -3,10 +3,9 @@ module.exports = FilterUnlockedOnTopDirective;
 FilterUnlockedOnTopDirective.$inject = [
     'moment',
     '$rootScope',
-    '_',
-    'PostActiveOrderOptions'
+    '_'
 ];
-function FilterUnlockedOnTopDirective(moment, $rootScope, _, PostActiveOrderOptions) {
+function FilterUnlockedOnTopDirective(moment, $rootScope, _) {
     return {
         restrict: 'E',
         require: 'ngModel',
@@ -16,7 +15,10 @@ function FilterUnlockedOnTopDirective(moment, $rootScope, _, PostActiveOrderOpti
     };
     function FilterUnlockedOnTopDirectiveLink($scope, $element, $attrs, ngModel) {
         function activate() {
-            $scope.unlockedOnTop = PostActiveOrderOptions.getDefinition().unlockedOnTop;
+            $scope.unlockedOnTop = {
+                value: false,
+                labelTranslateKey: 'global_filter.sort.unlockedOnTop.filter_type_tag'
+            };
         }
         activate();
         $scope.$watch('unlockedOnTop', saveToView, true);

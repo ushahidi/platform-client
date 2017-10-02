@@ -34,10 +34,6 @@ module.exports = [
                         labelTranslateKey: 'global_filter.sort.order.asc'
                     }
                 ]
-            },
-            unlockedOnTop: {
-                value: false,
-                labelTranslateKey: 'global_filter.sort.unlockedOnTop.filter_type_tag'
             }
         };
         var order = {};
