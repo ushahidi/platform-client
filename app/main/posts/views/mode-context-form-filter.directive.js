@@ -95,6 +95,10 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         if (queryParams.tags) {
             delete queryParams.tags;
         }
+        // deleting source, we want stats for all datasources to keep the datasource-bucket-stats unaffected by data-source-filters
+        if (queryParams.source) {
+            delete queryParams.source;
+        }
         return PostEndpoint.stats(queryParams);
     }
 
@@ -105,7 +109,11 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         $scope.unmapped = stats.unmapped ? stats.unmapped : 0;
         // assigning count for all forms
         _.each($scope.forms, function (form) {
-            let posts = _.filter(stats.totals[0].values, { id: form.id });
+            let posts = _.filter(stats.totals[0].values, function (value) {
+                // checking source-type, hack to keep the stats in data-source-buckets the same even if adding a source-filter.
+                return value.id === form.id && _.contains($scope.filters.source, value.type);
+            });
+
             form.post_count = 0;
             // calculating totals
             if (posts) {
