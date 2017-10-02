@@ -4,7 +4,8 @@ describe('filter by datasource directive', function () {
         isolateScope,
         element,
         ConfigEndpoint,
-        hasPermission;
+        hasPermission,
+        $location;
 
     beforeEach(function () {
         var testApp;
@@ -14,10 +15,10 @@ describe('filter by datasource directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _ConfigEndpoint_, _) {
+    beforeEach(inject(function (_$rootScope_, $compile, _ConfigEndpoint_, _, _$location_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        $location = _$location_;
         ConfigEndpoint = _ConfigEndpoint_;
         spyOn(ConfigEndpoint, 'get').and.callThrough();
 
@@ -83,6 +84,11 @@ describe('filter by datasource directive', function () {
             isolateScope.showOnlyIncoming('Email');
             expect(isolateScope.filters.source).toEqual(['email']);
             expect(isolateScope.filters.form).toEqual(['none']);
+        });
+        it('should redirect to timeline-view if choosing posts-without a form', function () {
+            $location.path('/views/map');
+            isolateScope.showOnlyIncoming('SMS');
+            expect($location.path()).toEqual('/views/list');
         });
     });
 });
