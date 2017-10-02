@@ -7,12 +7,3 @@
         </select>
     </div>
 </fieldset>
-
-<fieldset>
-    <div class="form-field radio" ng-repeat="orderOption in orderOptions">
-        <label>
-            <input type="radio" id="{{orderOption.value}}" value="{{orderOption.value}}" name="order" ng-model="orderGroup.order" ng-change="change()"/>
-            <span>{{orderOption.labelTranslateKey|translate}}</span>
-        </label>
-    </div>
-</fieldset>
