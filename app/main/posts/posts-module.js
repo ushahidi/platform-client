@@ -31,6 +31,7 @@ angular.module('ushahidi.posts', [])
 .directive('postTabs', require('./modify/post-tabs.directive.js'))
 .directive('postToolbox', require('./modify/post-toolbox.directive.js'))
 .directive('filterPostSortingOptions', require('./views/filters/filter-post-sorting-options.directive.js'))
+.directive('filterUnlockedOnTop', require('./views/filters/filter-unlocked-on-top.directive.js'))
 .directive('postTimelineToolbox', require('./views/post-timeline-toolbox.directive.js'))
 
 // Timeline and Map screen

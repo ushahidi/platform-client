@@ -52,6 +52,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         function handleFiltersUpdate(filters) {
             var activeFilters = angular.copy(filters);
             rawFilters = angular.copy(filters);
+            console.log('activefilters', activeFilters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
             // Remove form filter as its shown by the mode-context-form-filter already,
@@ -81,8 +82,15 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         }
 
         var transformers = {
+            order_unlocked_on_top: function (value) {
+                var boolText = value.value === false ? 'no' : 'yes';
+                return $translate.instant('global_filter.filter_tabs.order_group.unlocked_on_top_' + boolText);
+            },
+            order_group_order: function (value) {
+                return $translate.instant('global_filter.filter_tabs.order_group_order.' + value.order);
+            },
             order_group: function (value) {
-                //return $translate.instant('global_filter.filter_tabs.order_group.' + _.keys(value)[0]);
+                return $translate.instant('global_filter.filter_tabs.order_group.' + _.keys(value)[0]);
             },
             tags : function (value) {
                 return tags[value] ? tags[value].tag : value;

@@ -17,6 +17,5 @@ function FiltersDropdown() {
 
 
 function FiltersDropdownLink($scope, $element, $attrs) {
-    console.log($scope.filtersVar);
 }
 

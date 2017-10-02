@@ -316,12 +316,14 @@
             }
         },
         "filter_tabs" : {
+            "order_group_order": "Order --",
             "order_group": {
                 "orderBy" : "Order by",
                 "order": "Order",
-                "unlockedOnTop": "Unlocked posts on top"
+                "unlocked_on_top_yes": "Yes",
+                "unlocked_on_top_no": "No"
             },
-            "unlockedOnTop": "Unlocked posts on top",
+            "order_unlocked_on_top": "Unlocked posts on top",
             "savedsearch": "Saved Search",
             "saved_search": "Saved Search",
             "q": "Keyword",
