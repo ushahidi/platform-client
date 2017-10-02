@@ -1,8 +1,8 @@
 <fieldset>
     <div class="custom-select">
-        <select name="mySelect" id="order"
-                ng-options="option.labelTranslateKey | translate for option in orderByOptions track by option.value"
-                ng-model="orderGroup.orderBy"
+        <select name="orderByOptions" id="order"
+                ng-options="option.labelTranslateKey | translate for option in orderByOptions.options track by option.value"
+                ng-model="orderByOptions.value"
         >
         </select>
     </div>

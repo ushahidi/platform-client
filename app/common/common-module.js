@@ -59,7 +59,6 @@ angular.module('ushahidi.common', [
 .service('MainsheetService', require('./services/mainsheet.service.js'))
 .service('ModalService', require('./services/modal.service.js'))
 .service('TranslationService', require('./services/translation.service.js'))
-.service('PostActiveOrderOptions', require('./services/filters/post-active-order-options.service.js'))
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('intercom', require('./controllers/intercom.js'))
