@@ -1,4 +1,6 @@
-<form>
+<fieldset>
+    <legend translate="app.data_sources">Data Source</legend>
+
     <div ng-repeat="provider in providers" class="form-field checkbox" ng-class="{ checked: (filters.source.indexOf(provider.label.toLowerCase()) !== -1)}">
         <label>
             <input
@@ -10,4 +12,4 @@
             {{provider.label}}
         </label>
     </div>
-</form>
+</fieldset>
