@@ -6,7 +6,8 @@ function FilterPostsDirective() {
         restrict: 'E',
         scope: {
             filters: '=',
-            currentView: '='
+            currentView: '=',
+            reactiveFilters: '='
         },
         replace: true,
         controller: FilterPostsController,

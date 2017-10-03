@@ -7,7 +7,8 @@ function PostListDirective() {
         replace: true,
         scope: {
             filters: '=',
-            isLoading: '='
+            isLoading: '=',
+            reactiveFilters: '='
         },
         controller: PostListController,
         template: require('./post-view-list.html')
@@ -50,7 +51,7 @@ function PostListController(
     $scope.groupedPosts = {};
     $scope.order = 'desc';
     $scope.orderBy = 'post_date';
-
+    console.log(1 + '- ' + $scope.reactiveFilters.toString());
     $scope.deletePosts = deletePosts;
     $scope.hasFilters = hasFilters;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
@@ -64,13 +65,23 @@ function PostListController(
     $scope.changeOrder = changeOrder;
     activate();
 
-    // whenever the filters changes, update the current list of posts
+    // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
+    // to force the $scope.filters watcher to run
+    $scope.$watch(function () {
+        return $scope.reactiveFilters;
+    }, function () {
+        if ($scope.reactiveFilters === true) {
+            $scope.filters.reactiveFilters = $scope.filters.reactiveFilters ? !$scope.filters.reactiveFilters : true;
+        }
+    }, true);
+    /** whenever the filters changes, update the current list of posts **/
     $scope.$watch(function () {
         return $scope.filters;
     }, function (newValue, oldValue) {
-        if (newValue !== oldValue) {
+        if ($scope.reactiveFilters && (newValue !== oldValue)) {
             $scope.clearPosts = true;
             getPosts();
+            $scope.reactiveFilters = false;
         }
     }, true);
 

@@ -8,6 +8,8 @@ function (
             $scope,
             _
         ) {
+            $scope.reactiveFilters = true;
+            console.log(2 + '- ' + $scope.reactiveFilters.toString());
             // Initial scope
             $scope.isLoading = {
                 state: false

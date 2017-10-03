@@ -7,7 +7,8 @@ function PostToolbarDirective() {
         scope: {
             isLoading: '=',
             filters: '=',
-            currentView: '='
+            currentView: '=',
+            reactiveFilters: '='
         },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')
