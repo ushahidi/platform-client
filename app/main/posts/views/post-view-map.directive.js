@@ -19,15 +19,15 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var limit = 200;
         var requestBlockSize = 5;
         var numberOfChunks = 0;
-        $scope.getUIClass = getUIClass;
+        $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
 
         activate();
 
         function activate() {
             // Start loading data
             var posts = loadPosts();
-            var createMap = Maps.createMap(element[0].querySelector('#map'))
-            .then(function (data) {
+            var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
+            var createMap = createMapDirective.then(function (data) {
                 map = data;
             });
 
@@ -56,9 +56,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 map.removeLayer(markers);
                 markers = undefined;
             }
-        }
-        function getUIClass() {
-            return $location.path() === '/map/noui' ? 'map-only' : 'full-size';
         }
 
         function addPostsToMap(posts) {
