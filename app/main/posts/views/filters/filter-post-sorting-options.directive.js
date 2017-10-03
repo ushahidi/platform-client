@@ -14,6 +14,10 @@ function FilterPostSortingOptionsDirective(moment, $rootScope, _) {
         link: PostSortingOptionsLink
     };
     function PostSortingOptionsLink($scope, $element, $attrs, ngModel) {
+        $scope.orderValue = {
+            value: 'created',
+            labelTranslateKey: 'global_filter.sort.orderBy.filter_type_tag'
+        };
         $scope.orderByOptions = {
             value: 'created',
             labelTranslateKey: 'global_filter.sort.orderBy.filter_type_tag',
@@ -32,16 +36,15 @@ function FilterPostSortingOptionsDirective(moment, $rootScope, _) {
                 }
             ]
         };
-        $scope.$watch('orderByOptions.value', saveToView, true);
+        $scope.$watch('orderValue', saveToView, true);
         function saveToView(orderGroup) {
             /** @DEVNOTE  this is not something we should need.
              * We should be consistently getting the same type here. FIX FIX FIX before we merge
             **/
-            if (orderGroup.value) {
-                ngModel.$setViewValue(angular.copy(orderGroup.value));
-            } else {
-                ngModel.$setViewValue(angular.copy(orderGroup));
+            if (_.isUndefined(orderGroup.value)) {
+                orderGroup = {value: orderGroup};
             }
+            ngModel.$setViewValue(angular.copy(orderGroup.value));
         }
     }
 }

@@ -1,10 +1,9 @@
 <fieldset>
     <div class="custom-select">
-        <h6 class="tool-heading" translate="app.sort_by">Sort By</h6>
+        <h4 class="tool-heading" translate="app.sort_by">Sort By...</h4>
         <select name="orderByOptions" id="order"
                 ng-options="option.labelTranslateKey | translate for option in orderByOptions.options track by option.value"
-                ng-model="orderByOptions.value"
-        >
+                ng-model="orderValue">
         </select>
     </div>
 </fieldset>

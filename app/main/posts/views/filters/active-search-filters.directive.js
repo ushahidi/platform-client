@@ -1,7 +1,7 @@
 module.exports = ActiveSearchFilters;
 
-ActiveSearchFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint', 'SavedSearchEndpoint', 'PostMetadataService'];
-function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint, SavedSearchEndpoint, PostMetadataService) {
+ActiveSearchFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint', 'SavedSearchEndpoint', 'PostMetadataService', 'FormEndpoint'];
+function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint, SavedSearchEndpoint, PostMetadataService, FormEndpoint) {
     return {
         restrict: 'E',
         scope: true,
@@ -19,6 +19,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
         var tags = [];
         var roles = [];
         var users = [];
+        var forms = [];
         var savedSearches = [];
 
         activate();
@@ -37,7 +38,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
             TagEndpoint.query().$promise.then(function (results) {
                 tags = _.indexBy(results, 'id');
             });
-
+            FormEndpoint.query().$promise.then(function (results) {
+                forms = _.indexBy(results, 'id');
+            });
             SavedSearchEndpoint.query({}).$promise.then(function (searches) {
                 savedSearches = _.indexBy(searches, 'id');
             });
@@ -56,17 +59,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
             console.log('activefilters', activeFilters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
-            // Remove form filter as its shown by the mode-context-form-filter already,
-            // exception: if user only wants to see incoming messages (activeFilters.form = ['none']), we keep the form-filter.
-            if (!_.isEqual(activeFilters.form, ['none'])) {
-                delete activeFilters.form;
-            }
-            // Remove categories since its shown by the mode-context-form-filter already
-            if (filters.form && filters.form.length <= 1) {
-                delete activeFilters.tags;
-            }
-            // Remove within_km as its shown with the center_point value
-            delete activeFilters.within_km;
+
             $scope.activeFilters = _.mapObject(activeFilters, makeArray);
         }
 
@@ -99,17 +92,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
             user : function (value) {
                 return users[value] ? users[value].realname : value;
             },
-            // form : function (value) {
-            //     return options.forms[value] ? options.forms[value].name : value;
-            // },
-            // current_stage : function (value) {
-            //     var stages = _.flatten(_.values(options.postStages), true),
-            //         stage = _.findWhere(stages, {id : value});
-            //     return stage ? stage.label : value;
-            // },
-            // set : function (value) {
-            //     return options.collections[value] ? options.collections[value].name : value;
-            // },
             saved_search: function (value) {
                 return savedSearches[value.selectedSearch] ? savedSearches[value.selectedSearch].name : value.selectedSearch;
             },
@@ -138,7 +120,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
                 return PostMetadataService.formatSource(value);
             },
             form: function (value) {
-                return PostMetadataService.formatSource(value);
+                return forms[value] ? forms[value].name : value;
             }
         };
     }
