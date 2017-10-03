@@ -7,7 +7,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     var forms = [];
     var filterMode = 'all';
     var entityId = null;
-
     // @todo take this out of the service
     // but ensure it happens at the right times
     activate();
@@ -23,8 +22,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getActiveFilters: getActiveFilters,
         setMode: setMode,
         getMode: getMode,
-        getModeId: getModeId
+        getModeId: getModeId,
+        reactiveFilters: 'enabled'
     };
+
 
     function activate() {
         FormEndpoint.queryFresh().$promise.then(function (result) {

@@ -6,8 +6,7 @@ function FilterPostsDirective() {
         restrict: 'E',
         scope: {
             filters: '=',
-            currentView: '=',
-            reactiveFilters: '='
+            currentView: '='
         },
         replace: true,
         controller: FilterPostsController,
@@ -38,7 +37,6 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     }
 
     function applyFilters(event) {
-        console.log($scope.filters);
     }
 
     function rollbackForm() {
