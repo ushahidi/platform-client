@@ -1,9 +1,13 @@
-<div class="custom-select" ng-show="searches.length > 0">
-    <select
-            ng-model="data.selectedSearch"
-            ng-options="search.id as search.name
+<div class="form-field" >
+    <label translate="app.saved_search"></label>
+    <div class="custom-select">
+        <select
+                ng-model="data.selectedSearch"
+                ng-options="search.id as search.name
             for
             search in searches"
-    >
-    </select>
+        >
+            <option value="" disabled selected translate="app.select_one"></option>
+        </select>
+    </div>
 </div>

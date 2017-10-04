@@ -26,6 +26,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
 
         function activate() {
             $scope.$watch(function () {
+                console.log(PostFilters.getActiveFilters(PostFilters.getFilters()));
                 return PostFilters.getActiveFilters(PostFilters.getFilters());
             }, handleFiltersUpdate, true);
 
