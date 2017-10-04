@@ -83,7 +83,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             form: _.pluck(forms, 'id'),
             set: [],
             user: false,
-            source: ['sms', 'twitter','web', 'email'],
+            source: ['sms', 'twitter','web', 'email']
         };
     }
 
