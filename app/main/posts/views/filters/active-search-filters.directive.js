@@ -26,7 +26,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
 
         function activate() {
             $scope.$watch(function () {
-                console.log(PostFilters.getActiveFilters(PostFilters.getFilters()));
                 return PostFilters.getActiveFilters(PostFilters.getFilters());
             }, handleFiltersUpdate, true);
 
@@ -57,7 +56,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
         function handleFiltersUpdate(filters) {
             var activeFilters = angular.copy(filters);
             rawFilters = angular.copy(filters);
-            console.log('activefilters', activeFilters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
 
@@ -94,7 +92,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
                 return users[value] ? users[value].realname : value;
             },
             saved_search: function (value) {
-                return savedSearches[value.selectedSearch] ? savedSearches[value.selectedSearch].name : value.selectedSearch;
+                return savedSearches[value] ? savedSearches[value].name : value;
             },
             center_point : function (value) {
                 return $translate.instant('global_filter.filter_tabs.location_value', {

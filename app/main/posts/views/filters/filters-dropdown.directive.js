@@ -16,10 +16,8 @@ function FiltersDropdown(PostFilters) {
     };
 
     function FiltersDropdownLink($scope, $element, $attrs, ngModel) {
-        console.log('init directive');
         PostFilters.reactiveFilters = 'disabled';
         $scope.applyFiltersLocked = function () {
-            console.log('ractivefilters', PostFilters.reactiveFilters);
             PostFilters.reactiveFilters = 'enabled';
         };
     }

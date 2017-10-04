@@ -1,8 +1,8 @@
 <div class="form-field" >
     <label translate="app.saved_search"></label>
-    <div class="custom-select">
+    <div class="custom-select" ng-model-options="{ updateOn: 'default' }">
         <select
-                ng-model="data.selectedSearch"
+                ng-model="selectedSavedSearch"
                 ng-options="search.id as search.name
             for
             search in searches"

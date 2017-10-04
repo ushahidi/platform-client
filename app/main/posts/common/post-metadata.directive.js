@@ -21,7 +21,6 @@ function PostMetadataDirective(
         },
         template: require('./post-metadata.html'),
         link: function ($scope) {
-            //console.log($scope.post);
             $scope.visibleTo = '';
             $scope.displayTime = '';
             $scope.displayTimeFull = '';
