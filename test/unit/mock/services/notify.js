@@ -7,6 +7,13 @@ module.exports = [function () {
                 }
             };
         },
+        notifyProgress: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
         limit: function (message) {
             return {
                 then: function (successCallback) {
@@ -57,6 +64,13 @@ module.exports = [function () {
             };
         },
         confirmModal: function (message, callbackEvent, buttonText, action) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
+        confirmTos: function () {
             return {
                 then: function (successCallback) {
                     successCallback();

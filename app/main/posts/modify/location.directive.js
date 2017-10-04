@@ -57,7 +57,9 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
                     $scope.showCurrentPositionControl = true;
                     currentPositionControl = L.control.locate({
-                        follow: true
+                        locateOptions: {
+                            maximumAge: 60000 // 1 minute
+                        }
                     }).addTo(map);
                 }
                 // @todo: Should we watch the model and update map?

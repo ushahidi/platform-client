@@ -10,7 +10,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
                     mapid: 'mapbox.satellite',
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a>'
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
                 }
             },
             streets: {
@@ -19,14 +19,14 @@ function Maps(ConfigEndpoint, L, _, CONST) {
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
                     mapid: 'mapbox.streets',
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a>'
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
                 }
             },
             hOSM: {
                 name: 'Humanitarian',
-                url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+                url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
                 layerOptions: {
-                    attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, Tiles <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap Team</a>'
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
                 }
             }
         }

@@ -15,8 +15,19 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback([{
                         name: 'test form',
-                        id: 1
-                    }]);
+                        id: 1,
+                        tags: [{
+                            id: 1,
+                            tag: 'Test-tag'
+                        }]},
+                        {
+                        name: 'test form 2',
+                        id: 2,
+                        tags: [{
+                            id: 1,
+                            tag: 'Test-tag'
+                        }]}
+                    ]);
                 }
             }};
         },

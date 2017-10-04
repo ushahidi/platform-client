@@ -44,7 +44,6 @@ function (
         if (post.allowed_privileges.indexOf('update') === -1) {
             $location.url('/posts/' + post.id);
         }
-
         // Make post tags numeric
         post.tags = post.tags.map(function (tag) {
             return parseInt(tag.id);

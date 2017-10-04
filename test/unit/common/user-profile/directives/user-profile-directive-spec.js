@@ -6,6 +6,7 @@ describe('user profile directive', function () {
         $compile,
         UserEndpoint,
         Notify,
+        Session,
         element;
 
     beforeEach(function () {
@@ -20,13 +21,13 @@ describe('user profile directive', function () {
 
 
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _UserEndpoint_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _UserEndpoint_, _Notify_, _Session_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         UserEndpoint = _UserEndpoint_;
         Notify = _Notify_;
+        Session = _Session_ ;
         $scope = _$rootScope_.$new();
-
         element = '<user-profile><user-profile>';
         element = $compile(element)($scope);
         $rootScope.$digest();

@@ -217,17 +217,9 @@ function SurveyEditorController(
         });
     }
     function loadAvailableCategories() {
-        // Get available tags for selected for or all tags if new form
+        // Get available categories.
         TagEndpoint.queryFresh().$promise.then(function (tags) {
-            // adding children to parents
-            $scope.availableCategories = _.map(_.where(tags, { parent_id: null }), function (tag) {
-                if (tag && tag.children) {
-                    tag.children = _.map(tag.children, function (child) {
-                        return _.findWhere(tags, {id: parseInt(child.id)});
-                    });
-                }
-                return tag;
-            });
+            $scope.availableCategories = tags;
         });
     }
 
@@ -526,7 +518,7 @@ function SurveyEditorController(
 
     function deleteTask(task) {
 
-        Notify.confirmDelete('notify.form.delete_stage_confirm').then(function () {
+        Notify.confirmDelete('notify.form.delete_stage_confirm', 'notify.form.delete_stage_confirm_desc').then(function () {
             // If we haven't saved the task yet then we can just drop it
             if (!task.id || _.isString(task.id)) {
                 $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {

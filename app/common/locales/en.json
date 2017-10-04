@@ -201,6 +201,8 @@
         "add_task" : "Add Task",
         "title" : "Title",
         "field_allowed_relation_survey": "Allowed surveys",
+        "collect_image_caption": "Include image caption field",
+        "disable_caption_field_explanation": "This will disable and hide all existing captions for this field, but you can re-enable them at any time.",
         "description" : "Description",
         "task_description" : "Task description",
         "post_fields" : "Post fields",
@@ -222,6 +224,7 @@
         "video_desc" : "Allows Youtube or Vimeo videos to be embed in the post",
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
+        "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Show field description",
         "add_task" : "Add task",
         "add_field" : "Add field",
@@ -605,7 +608,12 @@
             "send" : "Send New Message",
             "save" : "Save",
             "title" : "Conversation with author",
-            "associated_messages": "View messages associated with this post"
+            "associated_messages": "View messages associated with this post",
+            "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
+            "imported_by": "{{messages}} imported by this deployment",
+            "Twitter": "Twitter",
+            "Email": "Email",
+            "SMS": "SMS"
         },
         "valid" : {
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
@@ -739,6 +747,8 @@
         "delete_category" : "Delete category",
         "delete_this_category" : "Delete this category",
         "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
+        "show_categories" : "Show available categories",
+        "child_permissions" : "Permissions for this category are managed by the parent category.",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
@@ -1094,11 +1104,13 @@
             "edit_form_success" : "Survey {{name}} updated",
             "edit_stage_success" : "Survey task {{name}} updated",
             "delete_form_confirm" : "Are you sure you want to delete this survey?",
+            "delete_form_confirm_desc" : "This action cannot be undone. Deleting this survey will remove all of its data, including posts.",
             "destroy_form_success" : "Survey {{name}} deleted",
             "delete_stage_confirm" : "Are you sure you want to delete this task?",
+            "delete_stage_confirm_desc" : "This action cannot be undone. Deleting this task will remove all of its fields, and any data in them.",
             "destroy_stage_success" : "Survey task {{name}} deleted",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?",
-            "delete_attribute_confirm_desc" : "Deleting this field will remove its data from all existing posts. Please proceed with caution.",
+            "delete_attribute_confirm_desc" : "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
             "destroy_attribute_success" : "Field {{name}} deleted"
         },
         "collection" : {
@@ -1123,6 +1135,11 @@
         },
         "message" : {
             "sent_to" : "Message sent to {{contact}}"
+        },
+        "export" : {
+            "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
+            "complete" : "Your CSV export is complete.",
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
         }
     },
     "empty": {
@@ -1184,6 +1201,12 @@
                 "maxlength": "This number is too long"
             }
         }
+    },
+    "terms_of_service": {
+        "title": "Ushahidi Terms of Service",
+        "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
+        "agree": "I agree to Ushahidi's Terms of Service.",
+        "accept_and_continue": "Accept and Continue"
     },
     "languages": {
         "ach": "Acoli",

@@ -15,7 +15,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.showOnly = showOnly;
     $scope.selectParent = selectParent;
     $scope.hide = hide;
-    $scope.unknown_post_count = 0;
     $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
     $scope.canAddToSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.showLanguage = false;
@@ -25,19 +24,26 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.goToUnmapped = goToUnmapped;
     $scope.getUnmapped = getUnmapped;
     $scope.changeForms = changeForms;
+    $scope.unknown = [];
+
     activate();
+
+    $scope.$watch('filters', function () {
+        getPostStats(PostFilters.getFilters()).$promise.then(updateCounts);
+    }, true);
 
     function activate() {
         // Load forms
         $scope.forms = FormEndpoint.queryFresh();
         $scope.tags = TagEndpoint.queryFresh();
-        var postCountRequest = PostEndpoint.stats({ group_by: 'form', status:  ['draft', 'published'], include_unmapped: true });
+
+        var postCountRequest = getPostStats($scope.filters);
         $q.all([$scope.forms.$promise, postCountRequest.$promise, $scope.tags.$promise]).then(function (responses) {
             if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
                 return;
             }
-            var values = responses[1].totals[0].values;
             var tags = responses[2];
+
             // adding children to tags
             _.each(_.where(tags, { parent_id: null }), function (tag) {
                 if (tag && tag.children) {
@@ -47,12 +53,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                 }
             });
 
-            angular.forEach($scope.forms, function (form) {
-                var value = _.findWhere(values, { id: form.id });
-                form.post_count = value ? value.total : 0;
-            });
-
-            $scope.forms.forEach(function (form, index) {
+            angular.forEach($scope.forms, function (form, index) {
                 var formTagIds = _.pluck(form.tags, 'id');
                 // assigning whole tag-object to forms
                 $scope.forms[index].tags = _.filter(_.map(tags, function (tag) {
@@ -75,18 +76,83 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                     return false;
                 }));
             });
-            // Grab the count for form=null
-            var unknownValue = _.findWhere(values, { id: null });
-            if (unknownValue) {
-                $scope.unknown_post_count = unknownValue.total;
-            }
-            // Setting nb of unmapped posts
-            if (responses[1].unmapped) {
-                $scope.unmapped = responses[1].unmapped;
+
+            updateCounts(responses[1]);
+        });
+    }
+
+    function getPostStats(filters) {
+        var query = PostFilters.getQueryParams(filters);
+        var queryParams = _.extend({}, query, {
+            'group_by': 'form',
+            include_unmapped: true
+        });
+
+        // we want stats for all forms, not just the ones visible right now
+        if (queryParams.form) {
+            delete queryParams.form;
+        }
+        // deleting categories and sources since they are selected in the sidebar and not in the filter-modal = might get confusing
+        if (queryParams.tags) {
+            delete queryParams.tags;
+        }
+        // deleting source, we want stats for all datasources to keep the datasource-bucket-stats unaffected by data-source-filters
+        if (queryParams.source) {
+            delete queryParams.source;
+        }
+        return PostEndpoint.stats(queryParams);
+    }
+
+    function updateCounts(stats) {
+        // assigning count for different data-sources
+        $scope.sourceStats = getSourceStats(stats);
+        // Setting nb of unmapped posts
+        $scope.unmapped = stats.unmapped ? stats.unmapped : 0;
+        // assigning count for all forms
+        _.each($scope.forms, function (form) {
+            let posts = _.filter(stats.totals[0].values, function (value) {
+                // checking source-type, hack to keep the stats in data-source-buckets the same even if adding a source-filter.
+                return value.id === form.id && _.contains($scope.filters.source, value.type);
+            });
+
+            form.post_count = 0;
+            // calculating totals
+            if (posts) {
+                form.post_count = _.reduce(posts, function (count, post) {
+                    if (post.total) {
+                        return count + post.total;
+                    }
+                    return 0;
+                }, form.post_count);
             }
         });
     }
 
+    function getSourceStats(stats) {
+        var sourceStats = [];
+        var providers = ['email', 'sms', 'twitter'];
+        // calculating stats for each datasource, based on the current form-filter
+        _.each(providers, function (provider) {
+            var posts = _.filter(stats.totals[0].values, function (value) {
+                    // including posts without a form in the stats
+                    var id = value.id === null ? 'none' : value.id;
+                    return value.type === provider && _.contains($scope.filters.form, id);
+                });
+
+            if (posts && posts.length > 0) {
+                var sourceStat = {total: 0};
+                sourceStat.total = _.reduce(posts, function (count, post) {
+                    if (post.total) {
+                        return count + post.total;
+                    }
+                    return 0;
+                }, sourceStat.total);
+                sourceStat.type = provider;
+                sourceStats.push(sourceStat);
+            }
+        });
+        return sourceStats;
+    }
     function selectParent(parent, formId) {
         // If we've just selected the tag
         if (_.contains($scope.filters.tags, parent.id)) {
@@ -143,6 +209,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         PostFilters.setFilters(filters);
         $location.path('/views/list');
     }
+
     function hide(formId) {
         var index = $scope.filters.form.indexOf(formId);
         if (index !== -1) {

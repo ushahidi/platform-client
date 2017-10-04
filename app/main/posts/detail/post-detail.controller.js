@@ -135,7 +135,6 @@ function (
                 this[attr.key] = attr;
 
             }, $scope.form_attributes);
-
             // Make the first task visible
             if (!_.isEmpty(tasks) && tasks.length > 1) {
                 $scope.visibleTask = tasks[1].id;
@@ -171,6 +170,7 @@ function (
                 }
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
+
         });
     }
 
@@ -187,23 +187,6 @@ function (
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
     };
 
-    // TODO Move to Service
-    $scope.formatTags = function (tagIds) {
-        // getting tag-names and formatting them for displaying
-        var formatedTags = ' ';
-        _.each(tagIds, function (tag, index) {
-            var tagObj = _.where($scope.tags, {id: parseInt(tag)});
-            if (tagObj[0]) {
-                tag = tagObj[0].tag;
-                if (index < tagIds.length - 1) {
-                    formatedTags += tag + ', ';
-                } else {
-                    formatedTags += tag;
-                }
-            }
-        });
-        return formatedTags;
-    };
     $scope.showType = function (type) {
         if (type === 'point') {
             return false;

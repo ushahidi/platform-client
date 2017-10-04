@@ -1,5 +1,12 @@
 module.exports = ['$q', function ($q) {
     return {
+        export: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback('title, content\n my title, my content');
+                }
+            }};
+        },
         query: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {

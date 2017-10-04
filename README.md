@@ -1,6 +1,8 @@
 Ushahidi Platform Web Client
 ============================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ushahidi/platform-client.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/ushahidi/platform-client.svg?branch=master)](https://travis-ci.org/ushahidi/platform-client)
 [![Coverage Status](https://coveralls.io/repos/github/ushahidi/platform-client/badge.svg?branch=master)](https://coveralls.io/github/ushahidi/platform-client?branch=master)
 [![Dependency Status](https://david-dm.org/ushahidi/platform-client/dev-status.svg?style=flat)](https://david-dm.org/ushahidi/platform-client#info=devDependencies)
@@ -104,20 +106,13 @@ To build with the mock backend service, run `gulp build --mock-backend`.
 
 #### Running unit specs
 
-To run unit tests run:
+To run unit tests once, run:
 ```
 gulp test
 ```
 
-To run end-to-end integration tests run:
-
-```
-gulp build --mock-backend
-gulp node-server # <- might need to run this in another window
-npm run protractor
-```
-
 For test driven development we have a gulp task `gulp tdd`. This watches for JS changes and re-runs the unit tests.
+
 
 ### Native Server (Apache or Nginx)
 
