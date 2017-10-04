@@ -30,7 +30,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function notifyProgress(message, translateValues) {
         function showSlider(message) {
-            SliderService.openTemplate(message, null, null, null, false, false, false, true);
+            SliderService.openTemplate(message, null, null, null, false, true, true, true);
         }
 
         $translate(message, translateValues).then(showSlider, showSlider);
