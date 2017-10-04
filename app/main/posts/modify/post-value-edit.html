@@ -163,12 +163,11 @@
   <fieldset ng-if="isFieldSetStructure(attribute)">
 
     <!-- Attribute Label -->
-    <label  ng-class="{'required': attribute.required}">{{attribute.label}}</label>
+    <label>{{attribute.label}}</label>
     <!-- Attribute Instructions -->
     <p>{{attribute.instructions}}</p>
 
     <!-- attributes which use the form-field structure -->
-
     <div ng-switch="attribute.input">
       <!-- type: radio -->
       <div ng-switch-when="radio">
