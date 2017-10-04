@@ -118,6 +118,9 @@ angular.module('app',
     .factory('moment', function () {
         return require('moment');
     })
+    .factory('io', function () {
+        return require('socket.io-client');
+    })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
