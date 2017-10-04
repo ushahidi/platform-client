@@ -9,7 +9,8 @@ function PostEditor() {
             post: '=',
             attributesToIgnore: '=',
             form: '=',
-            postMode: '='
+            postMode: '=',
+            lockId: '='
         },
         template: require('./post-editor.html'),
         controller: PostEditorController
@@ -59,7 +60,6 @@ function PostEditorController(
     PostActionsService,
     MediaEditService
   ) {
-
     // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
     $scope.isEdit = !!$scope.post.id;
@@ -109,7 +109,7 @@ function PostEditorController(
 
     function fetchAttributesAndTasks(formId) {
         return $q.all([
-            FormStageEndpoint.queryFresh({ formId: formId }).$promise,
+            FormStageEndpoint.queryFresh({ formId: formId, postStatus: $scope.post.status }).$promise,
             FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
             TagEndpoint.queryFresh().$promise
         ]).then(function (results) {
@@ -221,9 +221,10 @@ function PostEditorController(
     }
 
     function cancel() {
-
-        var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
-        $location.path(path);
+        PostEndpoint.breakLock({lock_id: $scope.lockId}).$promise.then(function (result) {
+            var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
+            $location.path(path);
+        });
     }
 
     function deletePost(post) {
@@ -280,7 +281,7 @@ function PostEditorController(
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/posts/' + response.id);
+                    $location.path('/');
                 } else {
                     Notify.notify(success_message, { name: $scope.post.title });
                     $location.path('/');

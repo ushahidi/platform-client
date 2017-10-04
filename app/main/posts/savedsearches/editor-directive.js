@@ -7,7 +7,6 @@ module.exports = [
     '_',
     'Notify',
     'ViewHelper',
-    'RoleEndpoint',
 function (
     $q,
     $location,
@@ -16,8 +15,7 @@ function (
     SavedSearchEndpoint,
     _,
     Notify,
-    ViewHelper,
-    RoleEndpoint
+    ViewHelper
 ) {
     return {
         restrict: 'E',
@@ -33,18 +31,26 @@ function (
                 };
             }
 
-            $scope.featuredEnabled = function () {
-                return $rootScope.hasPermission('Manage Posts');
-            };
-
             $scope.isAdmin = $rootScope.isAdmin;
 
             $scope.views = ViewHelper.views();
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 
+            $scope.editableRoles = {
+                'role': $scope.cpySavedSearch.edit_role
+            };
+
+            $scope.featuredEnabled = function () {
+                return $rootScope.hasPermission('Manage Posts');
+            };
+
             $scope.save = function (savedSearch) {
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
+
+                // Add back editable roles
+                savedSearch.edit_role = $scope.editableRoles.role;
+
                 persist(savedSearch)
                 .$promise
                 .then(function (savedSearch) {

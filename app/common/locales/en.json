@@ -92,6 +92,7 @@
         "this_category_is_child_to" : "This category is a child to <strong>{{parent}}</strong>",
         "nothing" : "Nothing",
         "who_can_see_this" : "Who can see this?",
+        "who_can_edit_this" : "Who can edit this?",
         "add" : "Add",
         "add_new_category" : "+ Add new category",
         "sort_by": "Sort By",
@@ -187,6 +188,8 @@
     },
 
     "survey": {
+        "internal_use_task" : "Task is only for internal use",
+        "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "delete_task" : "Delete task",
         "duplicate_task" : "Duplicate task",
         "show_this_task_to" : "Show this task to everyone when published",
@@ -462,6 +465,11 @@
     },
     "post": {
         "add_to_form" : "Add to {{form}}",
+        "someone_is_already_editing" : "Someone else is currently editing this post.",
+        "already_locked" : "This post is currently locked for editing by another user, the lock will expire automatically after the user finished editing or when 2 hours have passed.",
+        "break_lock" : "This post is currently locked for editing by another user. As an Administrator you can break this lock. Do you wish to do so?",
+        "lock_broken" : "The edit lock has been broken successfully.",
+        "failed_to_break_lock" : "It was not possible to break the lock, locks expire automatically 2 hours after they are first requested.",
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",

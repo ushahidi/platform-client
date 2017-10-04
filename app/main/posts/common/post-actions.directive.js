@@ -1,6 +1,7 @@
 module.exports = PostActionsDirective;
 
 PostActionsDirective.$inject = [
+    '$rootScope',
     'PostEndpoint',
     'Notify',
     '$location',
@@ -8,6 +9,7 @@ PostActionsDirective.$inject = [
     'PostActionsService'
 ];
 function PostActionsDirective(
+    $rootScope,
     PostEndpoint,
     Notify,
     $location,
@@ -27,11 +29,39 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
+        $scope.openEditMode = openEditMode;
+        $scope.postLocked = false;
 
         activate();
 
         function activate() {
             $scope.statuses = PostActionsService.getStatuses();
+            checkPostLockStatus();
+        }
+
+        // TODO move to service
+        function checkPostLockStatus() {
+            $scope.postLocked = $scope.post.is_locked;
+        }
+
+        function openEditMode() {
+            if ($scope.postLocked) {
+                if ($rootScope.isAdmin()) {
+                    Notify.confirm('post.break_lock').then(function (result) {
+                        PostEndpoint.breakLock({id: $scope.post.id}).$promise.then(function (result) {
+                            Notify.success('post.lock_broken');
+                            $location.url('/posts/' + $scope.post.id + '/edit');
+                        }, function (error) {
+                            Notify.error('post.failed_to_break');
+                        });
+                    }, function () {
+                    });
+                } else {
+                    Notify.error('post.already_locked');
+                }
+            } else {
+                $location.url('/posts/' + $scope.post.id + '/edit');
+            }
         }
 
         function deletePost() {

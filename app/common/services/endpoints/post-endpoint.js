@@ -38,6 +38,21 @@ function (
                 return data;
             }
         },
+        requestLock: {
+            url: Util.apiUrl('/posts/:id/lock'),
+            method: 'POST'
+        },
+        checkLock: {
+            url: Util.apiUrl('/posts/:id/lock'),
+            method: 'GET'
+        },
+        breakLock: {
+            url: Util.apiUrl('/posts/:id/lock/:lock_id'),
+            params: {
+                lock_id: '@lock_id'
+            },
+            method: 'PUT'
+        },
         update: {
             method: 'PUT'
         },
