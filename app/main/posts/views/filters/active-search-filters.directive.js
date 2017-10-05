@@ -76,7 +76,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, TagEndpoint, R
 
         var transformers = {
             order_unlocked_on_top: function (value) {
-                var boolText = value.value === false ? 'no' : 'yes';
+                var boolText = value === 'true' ? 'yes' : 'no';
                 return $translate.instant('global_filter.filter_tabs.order_group.unlocked_on_top_' + boolText);
             },
             order_group_order: function (value) {
