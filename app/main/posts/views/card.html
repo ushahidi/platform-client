@@ -1,4 +1,4 @@
-<article ng-class="['postcard', {selected: inFocus}]" ng-click="clickAction(post)">
+<article class="postcard">
     <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
     <div class="listing-item-select">
         <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
@@ -12,9 +12,11 @@
       </header>
       <div class="postcard-overflow">
         <div class="postcard-title">
+          <a ng-href="/posts/{{post.id}}">
             <div class="postcard-field">
               {{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}
             </div>
+          </a>
         </div>
 
 
