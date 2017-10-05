@@ -80,7 +80,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             saved_search: '',
             order_by: '',
             order_group_order: '',
-            order_unlocked_on_top: false,
+            order_unlocked_on_top: true,
             form: _.pluck(forms, 'id'),
             set: [],
             user: false,

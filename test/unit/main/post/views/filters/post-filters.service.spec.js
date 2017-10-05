@@ -78,7 +78,11 @@ describe('Post Filters Service', function () {
                 form: ['none'],
                 set: [],
                 user: false,
-                source: ['sms', 'twitter', 'web', 'email']
+                source: ['sms', 'twitter', 'web', 'email'],
+                saved_search: '',
+                order_by: '',// @DEVNOTE : is this correct?
+                order_group_order: '', // @DEVNOTE : is this correct?
+                order_unlocked_on_top: true // @DEVNOTE : is this correct? check with Will
             });
         });
 
