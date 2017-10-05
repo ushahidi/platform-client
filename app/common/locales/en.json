@@ -320,14 +320,17 @@
             }
         },
         "filter_tabs" : {
-            "order_order": "Order",
+            "order": "Order",
             "order_group": {
                 "order_by": {
                     "post_date": "Post Date",
                     "created": "Date created",
                     "updated": "Date updated"
                 },
-                "order": "Order",
+                "order": {
+                    "desc": "Newest first",
+                    "asc": "Oldest first"
+                },
                 "unlocked_on_top_yes": "Yes",
                 "unlocked_on_top_no": "No"
             },

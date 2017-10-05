@@ -5,7 +5,7 @@
       class="searchbar"
       auto-close="outsideClick"
       ng-submit="applyFilters()"
-      ng-model-options="{ updateOn : 'submit' }"
+      ng-model-options="{ updateOn : 'submit default' }"
       data-message="search"
 >
     <filter-searchbar model="filters.q"></filter-searchbar>
@@ -17,4 +17,4 @@
         </a>
     </div>
     <filters-dropdown filters-var="filters" ng-model="filters" cancel="cancel" filters-dropdown-toggle="filtersDropdownToggle" apply-filters="applyFilters"></filters-dropdown>
-</form><!-- this is the guilty ng-model-options -->
+</form>

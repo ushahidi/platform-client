@@ -29,7 +29,7 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
                 return $translate.instant('global_filter.filter_tabs.order_group.unlocked_on_top_' + boolText);
             },
             order: function (value) {
-                return $translate.instant('global_filter.filter_tabs.order_group_order.' + value.order);
+                return $translate.instant('global_filter.filter_tabs.order_group.order.' + value.toLowerCase());
             },
             order_by: function (value) {
                 return $translate.instant('global_filter.filter_tabs.order_group.order_by.' + value);
