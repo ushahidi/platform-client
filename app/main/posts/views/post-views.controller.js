@@ -2,9 +2,9 @@ module.exports = PostViewsController;
 
 PostViewsController.$inject = ['$scope', '$translate', '$routeParams', 'PostFilters'];
 function PostViewsController($scope, $translate, $routeParams, PostFilters) {
-    // Set view based out route
+    // Set view and layout based out route
     $scope.currentView = $routeParams.view;
-    $scope.modeBarShown = $routeParams.view !== 'list';
+    $scope.layout = $routeParams.view === 'data' ? 'd' : 'a';
     // Set the page title
     $translate('post.posts').then(function (title) {
         $scope.title = title;

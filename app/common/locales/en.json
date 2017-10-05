@@ -492,7 +492,8 @@
     "views" : {
         "map" : "Map",
         "list" : "Timeline",
-        "activity" : "Activity"
+        "activity" : "Activity",
+        "data" : "Data"
     },
     "post": {
         "add_to_form" : "Add to {{form}}",
