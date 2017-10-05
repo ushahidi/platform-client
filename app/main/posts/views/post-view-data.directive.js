@@ -48,6 +48,7 @@ function PostViewDataController(
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
 
+
     $rootScope.setLayout('layout-d');
     activate();
     function activate() {
@@ -140,7 +141,4 @@ function PostViewDataController(
         $scope.clearPosts = false;
         getPosts();
     }
-
-
-
 }
