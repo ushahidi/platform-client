@@ -13,6 +13,7 @@ angular.module('ushahidi.posts', [])
 .directive('postMediaValue', require('./detail/post-media-value.directive.js'))
 .directive('postVideoView', require('./detail/post-video-value.directive.js'))
 .directive('postDetailMap', require('./detail/map.directive.js'))
+.directive('postDetailData', require('./detail/post-detail-data.directive.js'))
 .service('PostActionsService', require('./common/post-actions.service.js'))
 
 // Create / Edit Screens
@@ -32,7 +33,7 @@ angular.module('ushahidi.posts', [])
 .directive('postToolbox', require('./modify/post-toolbox.directive.js'))
 .directive('postTimelineToolbox', require('./views/post-timeline-toolbox.directive.js'))
 
-// Timeline and Map screen
+// Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
 .directive('postView', require('./views/post-view.directive.js'))
 .directive('postViewList', require('./views/post-view-list.directive.js'))
@@ -48,6 +49,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterBySurveyDropdown', require('./views/filter-by-survey-dropdown.directive.js'))
 .directive('postToolbar', require('./views/post-toolbar.directive.js'))
 .directive('filterByDatasource', require('./views/filter-by-datasource.directive.js'))
+.directive('postViewData', require('./views/post-view-data.directive.js'))
 // Filters
 .directive('filterPosts', require('./views/filters/filter-posts.directive.js'))
 .directive('filterCategory', require('./views/filters/filter-category.directive.js'))
