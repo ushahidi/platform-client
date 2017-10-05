@@ -1,6 +1,20 @@
 <div ng-show="filtersDropdownToggle" ng-class="{'dropdown-menu': 'dropdown-menu'}" data-toggle-target="search-filters" data-toggle-animate>
     <div class="dropdown-menu-body">
         <div class="form-field filter-buttons">
+            <div ng-class="{active: (filtersVar.q.length > 0) }">
+                <div ng-class="{active: (filtersVar.q.length > 0) , 'form-field': 'form-field'}">
+                    <button type="submit" class="button-plain">
+                        <span class="button-label">
+                            <span translate-values="{ entity: entityType }" translate>
+                                toolbar.searchbar.search_all_entities_for
+                            </span>
+                            "<em>{{ filtersVar.q }}</em>"
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-field filter-buttons">
             <post-active-search-filters ng-model="filtersVar" filters-var="filtersVar"></post-active-search-filters>
         </div>
         <div class="form-field">
