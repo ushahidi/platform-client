@@ -25,7 +25,8 @@ PostListController.$inject = [
     'ConfigEndpoint',
     'moment',
     'PostFilters',
-    'PostActionsService'
+    'PostActionsService',
+    '$timeout'
 ];
 function PostListController(
     $scope,
@@ -38,7 +39,8 @@ function PostListController(
     ConfigEndpoint,
     moment,
     PostFilters,
-    PostActionsService
+    PostActionsService,
+    $timeout
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -62,6 +64,9 @@ function PostListController(
     $scope.clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.changeOrder = changeOrder;
+
+    $scope.newPostsCount = 0;
+    $scope.recentPosts = [];
     activate();
 
     // whenever the filters changes, update the current list of posts
@@ -130,6 +135,8 @@ function PostListController(
                 PostViewService.showNoPostsSlider();
             }
         });
+
+        $timeout(postWatcher, 5000);
     }
 
     function groupPosts(posts) {
@@ -235,5 +242,41 @@ function PostListController(
     function clearSelectedPosts() {
         // Clear selected posts
         $scope.selectedPosts.splice(0);
+    }
+
+    function postWatcher() {
+        var mostRecentPostDate = $scope.posts[0].post_date;
+        // console.log(moment().add(1, 'second'));
+        var existingFilters = PostFilters.getQueryParams($scope.filters);
+        // If the user has set a date_before and that date is in the future from right now
+        existingFilters.date_after = mostRecentPostDate;
+        // console.log("existingFilters ", existingFilters)
+        var query = existingFilters;
+
+        var postQuery = _.extend({}, query, {
+            order: $scope.order,
+            orderby: $scope.orderBy
+        });
+        // console.log(postQuery)
+        PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+            console.log(postsResponse);
+
+            Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
+
+            // Merge grouped posts into existing groups
+            angular.forEach(groupPosts(postsResponse.results), function (posts, group) {
+                if (angular.isArray($scope.groupedPosts[group])) {
+                    Array.prototype.push.apply($scope.groupedPosts[group], posts);
+                } else {
+                    $scope.groupedPosts[group] = posts;
+                }
+            });
+
+            $scope.newPostsCount = postsResponse.count;
+        });
+
+        console.log($scope.posts);
+
+
     }
 }

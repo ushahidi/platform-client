@@ -1,5 +1,7 @@
 <div class="main-col">
 
+    <button class="" ng-click="addNewestPosts" ng-show="newPostsCount > 0">Load {{newPostsCount}} newest posts</button>
+
     <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
 
         <h2 class="listing-heading-section" ng-repeat-start="(timeAgo, posts) in groupedPosts">
