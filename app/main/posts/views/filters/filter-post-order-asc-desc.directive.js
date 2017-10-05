@@ -14,8 +14,10 @@ function FilterPostOrderAscDescDirective(moment, $rootScope, _) {
         link: FilterPostOrderAscDescLink
     };
     function FilterPostOrderAscDescLink($scope, $element, $attrs, ngModel) {
-        $scope.activeOrderOptions = {
+        $scope.selectedValue = {
             value: 'desc',
+            labelTranslateKey: 'global_filter.sort.order.filter_type_tag'};
+        $scope.activeOrderOptions = {
             labelTranslateKey: 'global_filter.sort.order.filter_type_tag',
             options: [
                 {
@@ -28,9 +30,11 @@ function FilterPostOrderAscDescDirective(moment, $rootScope, _) {
                 }
             ]
         };
-        $scope.$watch('activeOrderOptions.value', saveToView, true);
-        function saveToView(orderGroup) {
-            ngModel.$setViewValue(angular.copy(orderGroup ? orderGroup.toString() : ''));
+        //$scope.$watch('activeOrderOptions', saveToView, true);
+        $scope.$watch('selectedValue', saveToViewSelected, true);
+        function saveToViewSelected(orderGroup) {
+            console.log(ngModel);
+            ngModel.$setViewValue(angular.copy(orderGroup ? orderGroup.value.toString() : ''), 'radio');
         }
     }
 }

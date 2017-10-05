@@ -25,6 +25,7 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     activate();
 
     function activate() {
+        console.log($scope.filters);
         // @todo define initial filter values
         // $scope.$watch('filters', handleFilterChange, true);
     }
