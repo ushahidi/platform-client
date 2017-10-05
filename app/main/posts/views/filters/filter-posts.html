@@ -12,12 +12,7 @@
         <div class="searchbar-options">
             <a class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle" data-toggle="search-filters">
                 <!-- DEVNOTE translate -->
-                <span class="button-label-d">
-                    <span class="badge iconic">2</span>Sort & filter
-                </span>
-                <svg class="iconic">
-                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                </svg>
+                <sort-and-filter-counter></sort-and-filter-counter>
             </a>
             <!-- <a id="togglePostSearchFiltersOpen" class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle">
                 <span class="button-label" translate>app.filters</span>

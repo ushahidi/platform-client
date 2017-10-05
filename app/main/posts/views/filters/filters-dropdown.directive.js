@@ -24,6 +24,4 @@ function FiltersDropdown(PostFilters) {
             $scope.filtersVar = PostFilters.clearFilters();
         };
     }
-
 }
-

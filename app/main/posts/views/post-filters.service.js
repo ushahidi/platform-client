@@ -23,6 +23,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         setMode: setMode,
         getMode: getMode,
         getModeId: getModeId,
+        countFilters: countFilters,
         reactiveFilters: 'enabled'
     };
 
@@ -163,6 +164,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     function getModeId() {
         return entityId;
+    }
+    function countFilters() {
+        return _.keys(this.getActiveFilters(this.getFilters())).length;
     }
 }
 

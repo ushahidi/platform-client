@@ -85,6 +85,7 @@
         "default_value" : "Default value",
         "fields" : "Fields",
         "select_one": "Select One",
+        "sort_and_filter": "Sort & filter",
         "saved_search": "Saved Search",
         "tasks" : "Tasks",
         "return_to_all_posts" : "Return to all posts",

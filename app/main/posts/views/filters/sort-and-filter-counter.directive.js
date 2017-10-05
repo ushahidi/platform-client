@@ -4,19 +4,19 @@ SortAndFilterCounterDirective.$inject = ['PostFilters'];
 function SortAndFilterCounterDirective(PostFilters) {
     return {
         restrict: 'E',
-        require: 'ngModel',
-        scope: {
-            filtersDropdownToggle: '=',
-            applyFilters: '=',
-            filtersVar: '=',
-            cancel: '='
-        },
+        scope: {},
         link: SortAndFilterCounterDirectiveLink,
-        template: require('./filters-dropdown.html')
+        template: require('./sort-and-filter-counter.html')
     };
 
     function SortAndFilterCounterDirectiveLink($scope, $element, $attrs, ngModel) {
-        $scope.filtersVarLocked = angular.copy($scope.filtersVar);
+        $scope.$watch(function () {
+            return PostFilters.countFilters();
+        }, handleFiltersUpdate, true);
+
+        function handleFiltersUpdate() {
+            $scope.filtersCount = PostFilters.countFilters();
+        }
     }
 
 }
