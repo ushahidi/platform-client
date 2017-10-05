@@ -28,7 +28,7 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
                 var boolText = value === 'true' ? 'yes' : 'no';
                 return $translate.instant('global_filter.filter_tabs.order_group.unlocked_on_top_' + boolText);
             },
-            order_order: function (value) {
+            order: function (value) {
                 return $translate.instant('global_filter.filter_tabs.order_group_order.' + value.order);
             },
             order_by: function (value) {
