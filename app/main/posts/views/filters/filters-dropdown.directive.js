@@ -20,6 +20,9 @@ function FiltersDropdown(PostFilters) {
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = 'enabled';
         };
+        $scope.clearFilters = function () {
+            $scope.filtersVar = PostFilters.clearFilters();
+        };
     }
 
 }
