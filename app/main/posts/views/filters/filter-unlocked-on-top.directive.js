@@ -20,7 +20,7 @@ function FilterUnlockedOnTopDirective(moment, $rootScope, _) {
         };
         $scope.$watch('unlockedOnTop', saveToView, true);
         function saveToView(unlockedOnTop) {
-            ngModel.$setViewValue(angular.copy(unlockedOnTop));
+            ngModel.$setViewValue(angular.copy(unlockedOnTop ? unlockedOnTop.value.toString() : ''));
         }
     }
 }

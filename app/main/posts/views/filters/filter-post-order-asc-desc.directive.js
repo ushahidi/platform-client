@@ -30,7 +30,7 @@ function FilterPostOrderAscDescDirective(moment, $rootScope, _) {
         };
         $scope.$watch('activeOrderOptions.value', saveToView, true);
         function saveToView(orderGroup) {
-            ngModel.$setViewValue(angular.copy(orderGroup));
+            ngModel.$setViewValue(angular.copy(orderGroup ? orderGroup.toString() : ''));
         }
     }
 }

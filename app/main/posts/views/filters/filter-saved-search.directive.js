@@ -18,7 +18,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
             scope.$watch('selectedSavedSearch', saveValueToView, true);
         }
         function saveValueToView(selectedSavedSearch) {
-            ngModel.$setViewValue(selectedSavedSearch.toString());
+            ngModel.$setViewValue(selectedSavedSearch ? selectedSavedSearch.toString() : '');
         }
 
         activate();
