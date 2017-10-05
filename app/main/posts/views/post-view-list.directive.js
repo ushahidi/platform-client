@@ -179,7 +179,6 @@ function PostListController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
-
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
@@ -205,9 +204,7 @@ function PostListController(
 
         $q.all(updateStatusPromises).then(function () {
             Notify.notify('notify.post.update_status_success_bulk', {count: count});
-
             clearSelectedPosts();
-
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
         })
