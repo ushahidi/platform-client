@@ -15,7 +15,7 @@ function FilterUnlockedOnTopDirective(moment, $rootScope, _) {
     };
     function FilterUnlockedOnTopDirectiveLink($scope, $element, $attrs, ngModel) {
         $scope.unlockedOnTop = {
-            value: 'false',
+            value: 'true',
             labelTranslateKey: 'global_filter.sort.unlockedOnTop.filter_type_tag'
         };
         $scope.$watch('unlockedOnTop', saveToView, true);

@@ -20,6 +20,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         clearFilter: clearFilter,
         hasFilters: hasFilters,
         getActiveFilters: getActiveFilters,
+        getCleanActiveFilters: getCleanActiveFilters,
         setMode: setMode,
         getMode: getMode,
         getModeId: getModeId,
@@ -78,9 +79,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             current_stage: [],
             tags: [],
             saved_search: '',
-            order_by: '',
-            order: '',
-            order_unlocked_on_top: true,
+            order_by: 'created',
+            order: 'desc',
+            order_unlocked_on_top: 'true',
             form: _.pluck(forms, 'id'),
             set: [],
             user: false,
@@ -119,6 +120,45 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return query;
     }
 
+    /**
+     * Returns the non-default filters so that we don' show the user 3 filters when they didn' select one yet
+     * Example: when the active filters load we show "sort", "unlockedOnTop", "sort_by" as active with their value
+     * but since the user didn't select a filter, it can be really confusing.
+     * @param filters
+     */
+    function getCleanActiveFilters(filters) {
+        var defaults = getDefaults();
+        return _.omit(
+            filters,
+            function (value, key, object) {
+                if (defaults[key] === value) {
+                    return true;
+                }
+                // Ignore difference in within_km
+                if (key === 'within_km') {
+                    return true;
+                }
+                // Is the same as the default?
+                if (_.isEqual(defaults[key], value)) {
+                    return true;
+                }
+                // Is an array with all the same elements? (order doesn't matter)
+                if (_.isArray(defaults[key]) &&
+                    _.difference(value, defaults[key]).length === 0 &&
+                    _.difference(defaults[key], value).length === 0) {
+                    return true;
+                }
+                // Is value empty? ..and not a date object
+                // _.empty only works on arrays, object and strings.
+                return (_.isEmpty(value) && !_.isDate(value));
+            }
+        );
+    }
+
+    /**
+     * Gets the real active filters, including defaults.
+     * @param filters
+     */
     function getActiveFilters(filters) {
         var defaults = getDefaults();
         return _.omit(

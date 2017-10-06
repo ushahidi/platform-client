@@ -31,8 +31,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         }
 
         function handleFiltersUpdate(filters) {
-            console.log(filters);
-            var activeFilters = angular.copy(filters);
+            var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
