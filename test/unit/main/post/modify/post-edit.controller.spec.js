@@ -1,6 +1,8 @@
 describe('Post edit controller', function () {
     var $scope,
-       $controller;
+        $rootScope,
+        $controller,
+        $q;
 
     var mockFormEndpoint = {
         get: function (parameters, success, error) {
@@ -10,6 +12,7 @@ describe('Post edit controller', function () {
     var mockPostEndpoint = {
         get: function (parameters, success, error) {
             var post = {
+                id: 1,
                 tags: [],
                 form: {
                     id: 1
@@ -25,13 +28,41 @@ describe('Post edit controller', function () {
             if (success) {
                 success(post);
             }
-            return {
-                $promise : {
-                    then : function (cb) {
-                        cb(post);
-                    }
-                }
+            return { $promise: $q.when(post) };
+        },
+        requestLock: (params) => {
+            var post = {
+                id: 1,
+                tags: [],
+                form: {
+                    id: 1
+                },
+                user: {
+                    id: 1
+                },
+                title: 'test',
+                status: 'draft',
+                completed_stages: ['1', '2', '3'],
+                allowed_privileges: ['get', 'update']
             };
+            return {$promise: $q.when(post)};
+        },
+        checkLock: (params) => {
+            var post = {
+                id: 1,
+                tags: [],
+                form: {
+                    id: 1
+                },
+                user: {
+                    id: 1
+                },
+                title: 'test',
+                status: 'draft',
+                completed_stages: ['1', '2', '3'],
+                allowed_privileges: ['get', 'update']
+            };
+            return {$promise: $q.when(post)};
         }
     };
 
@@ -42,9 +73,11 @@ describe('Post edit controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _$q_) {
         $scope = _$rootScope_.$new();
         $controller = _$controller_;
+        $q = _$q_;
+        $rootScope = _$rootScope_;
 
         $controller('postEditController', {
             $scope: $scope,
@@ -55,6 +88,8 @@ describe('Post edit controller', function () {
     }));
 
     it('should set post correctly', function () {
+        $rootScope.$apply();
+
         expect($scope.post.title).toEqual('test');
     });
 });

@@ -7,7 +7,8 @@ function RoleSelectorDirective() {
         restrict: 'E',
         scope: {
             model: '=',
-            title: '='
+            title: '=',
+            name: '='
         },
         controller: RoleSelectorController,
         template: require('./role-selector.html')

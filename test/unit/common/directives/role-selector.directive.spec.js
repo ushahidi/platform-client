@@ -21,8 +21,9 @@ describe('role-selector directive', function () {
 
         $scope = _$rootScope_.$new();
         $scope.title = 'This is title';
+        $scope.name = 'test';
         $scope.model = {};
-        element = '<role-selector title="title" model="model"></role-selector>';
+        element = '<role-selector name="name" title="title" model="model"></role-selector>';
 
         element = $compile(element)($scope);
         $scope.$digest();
@@ -42,7 +43,7 @@ describe('role-selector directive', function () {
 
     it('should add all roles when clicking on "everyone"', function () {
         var change = new Event('click');
-        var elementToClick = element[0].querySelector('#add_everyone');
+        var elementToClick = element[0].querySelector('#add_everyone-test');
         elementToClick.dispatchEvent(change);
         expect(isolateScope.setEveryone).toHaveBeenCalled();
         expect(isolateScope.model.role).toEqual([]);

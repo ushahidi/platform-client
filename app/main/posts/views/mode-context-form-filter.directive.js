@@ -36,6 +36,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         // Load forms
         $scope.forms = FormEndpoint.queryFresh();
         $scope.tags = TagEndpoint.queryFresh();
+
         var postCountRequest = getPostStats($scope.filters);
         $q.all([$scope.forms.$promise, postCountRequest.$promise, $scope.tags.$promise]).then(function (responses) {
             if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
@@ -161,7 +162,9 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             });
 
             // Also filter to just this form
-            $scope.filters.form.splice(0, $scope.filters.form.length, formId);
+            // PAY ATTENTION TO THIS
+            // TODO: probably need to undo this
+            //$scope.filters.form.splice(0, $scope.filters.form.length, formId);
         // Or if we're deselecting the parent
         } else {
             // Deselect the children too
