@@ -2,18 +2,25 @@
     <!-- toolbar -->
 
     <!-- floating action button -->
-    <add-post-button></add-post-button>
+    <add-post-button ng-if="currentView !== 'data'"></add-post-button>
 
     <filter-posts current-view="currentView" filters="filters" embed-only="false"></filter-posts>
 
-    <div class="button-group" embed-only="false">
-      <post-share filters="filters" button="true"></post-share>
+    <div class="button-group" embed-only="false" ng-switch="editMode.editing">
+        <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
+        <button ng-switch-when="false" ng-if="selectedPost" class="button button-alpha" ng-click="setEditMode()">EDIT</button>
+        <button ng-switch-when="true" class="button" ng-click="setEditMode()">CANCEL</button>
+        <button ng-switch-when="true" ng-click="savePost()" class=" button button-alpha">SAVE</button>
     </div>
 
+    
     <filter-by-survey></filter-by-survey>
 
-    <div class="button-group hide-until-medium" embed-only="true">
-      <post-share filters="filters" button="true"></post-share>
+    <div class="button-group hide-until-medium" ng-switch="editMode.editing" embed-only="true">
+        <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
+        <button ng-switch-when="false" ng-if="selectedPost" class="button button-alpha" ng-click="setEditMode()">EDIT</button>
+        <button ng-switch-when="true" class="button" ng-click="setEditMode()">CANCEL</button>
+        <button ng-switch-when="true" class="button button-alpha"  ng-click="savePost()">SAVE</button>
     </div>
 
     <!-- toolbar -->
