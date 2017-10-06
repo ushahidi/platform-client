@@ -156,6 +156,10 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 return posts;
             });
         }
+        // This function should be sent to postcard
+        // function goToPost (id) {
+        //     $location.path('/posts/' + id);
+        // }
 
         function onEachFeature(feature, layer) {
             layer.on('click', function (e) {
@@ -173,8 +177,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     getPostDetails(feature).then(function (details) {
                         var scope = $rootScope.$new();
                         scope.post = details;
-
-                        var el = $compile('<post-card post="post" short-content="true"></post-card>')(scope);
+                        // click-action does not work...
+                        var el = $compile('<post-card post="post" short-content="true" click-action="goToPost(post.id)"></post-card>')(scope);
 
                         layer.bindPopup(el[0], {
                             'minWidth': '300',
