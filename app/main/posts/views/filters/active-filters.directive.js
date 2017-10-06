@@ -88,8 +88,8 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             order: function (value) {
                 return $translate.instant('global_filter.filter_tabs.order_group.order.' + value.order);
             },
-            orderBy: function (value) {
-                return $translate.instant('global_filter.filter_tabs.order_group.orderBy.' + value);
+            orderby: function (value) {
+                return $translate.instant('global_filter.filter_tabs.order_group.orderby.' + value);
             },
             tags : function (value) {
                 return tags[value] ? tags[value].tag : value;

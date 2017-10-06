@@ -44,7 +44,7 @@ function PostViewDataController(
     $scope.posts = [];
     $scope.groupedPosts = {};
     $scope.order = PostFilters.getDefaults().order;
-    $scope.orderBy = PostFilters.getDefaults().orderBy;
+    $scope.orderby = PostFilters.getDefaults().orderby;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
 

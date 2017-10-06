@@ -79,7 +79,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             current_stage: [],
             tags: [],
             saved_search: '',
-            orderBy: 'created',
+            orderby: 'created',
             order: 'desc',
             order_unlocked_on_top: 'true',
             form: _.pluck(forms, 'id'),

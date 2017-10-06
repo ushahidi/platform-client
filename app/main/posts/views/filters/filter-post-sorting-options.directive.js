@@ -16,23 +16,23 @@ function FilterPostSortingOptionsDirective(moment, $rootScope, _) {
     function PostSortingOptionsLink($scope, $element, $attrs, ngModel) {
         $scope.orderValue = {
             value: 'created',
-            labelTranslateKey: 'global_filter.sort.orderBy.filter_type_tag'
+            labelTranslateKey: 'global_filter.sort.orderby.filter_type_tag'
         };
         $scope.orderByOptions = {
             value: 'created',
-            labelTranslateKey: 'global_filter.sort.orderBy.filter_type_tag',
+            labelTranslateKey: 'global_filter.sort.orderby.filter_type_tag',
             options: [
                 {
                     value: 'post_date',
-                    labelTranslateKey: 'global_filter.sort.orderBy.post_date'
+                    labelTranslateKey: 'global_filter.sort.orderby.post_date'
                 },
                 {
                     value: 'updated',
-                    labelTranslateKey: 'global_filter.sort.orderBy.updated'
+                    labelTranslateKey: 'global_filter.sort.orderby.updated'
                 },
                 {
                     value: 'created',
-                    labelTranslateKey: 'global_filter.sort.orderBy.created'
+                    labelTranslateKey: 'global_filter.sort.orderby.created'
                 }
             ]
         };
