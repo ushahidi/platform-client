@@ -47,6 +47,9 @@ module.exports = [function () {
         clearFilters: function () {},
         clearFilter: function () {},
         hasFilters: function () {},
+        getCleanActiveFilters: function (filters) {
+            return filters;
+        },
         getActiveFilters: function (filters) {
             return filters;
         },

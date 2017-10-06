@@ -15,6 +15,7 @@ describe('post active filters directive', function () {
         var testApp = makeTestApp();
 
         testApp.directive('postActiveFilters', require('app/main/posts/views/filters/active-filters.directive'))
+        .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';
@@ -23,8 +24,6 @@ describe('post active filters directive', function () {
 
         angular.mock.module('testApp');
     });
-
-
 
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_, _SavedSearchEndpoint_) {
         $rootScope = _$rootScope_;
