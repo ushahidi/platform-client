@@ -18,7 +18,19 @@ function FilterUnlockedOnTopDirective(moment, $rootScope, _) {
             value: 'true',
             labelTranslateKey: 'global_filter.sort.unlockedOnTop.filter_type_tag'
         };
-        $scope.$watch('unlockedOnTop', saveToView, true);
+
+        function activate() {
+            ngModel.$render = renderModelValue;
+            $scope.$watch('unlockedOnTop', saveToView, true);
+        }
+
+        function renderModelValue() {
+            $scope.unlockedOnTop = {
+                value: ngModel.$viewValue,
+                labelTranslateKey: 'global_filter.sort.unlockedOnTop.filter_type_tag'
+            };
+        }
+        activate();
         function saveToView(unlockedOnTop) {
             ngModel.$setViewValue(angular.copy(unlockedOnTop ? unlockedOnTop.value.toString() : ''));
         }
