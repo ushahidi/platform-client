@@ -23,24 +23,21 @@
         <div class="divider"></div>
         <!-- sorting options -->
         <h4 class="dropdown-menu-title" translate="app.sort_by"></h4>
-        <div class="form-field">
-            <span class="tool-trigger init dropdown-toggle active">
-                <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                </svg>
-                <span class="label hidden" translate="app.show_hide">&nbsp;</span>
-            </span>
-            <filter-post-sorting-options ng-model="filtersVar.order_by"></filter-post-sorting-options>
+
+        <filter-post-sorting-options ng-model="filtersVar.order_by"></filter-post-sorting-options>
+        <fieldset>
             <filter-post-order-asc-desc ng-model="filtersVar.order"></filter-post-order-asc-desc>
             <filter-unlocked-on-top ng-model="filtersVar.order_unlocked_on_top"></filter-unlocked-on-top>
-        </div>
+        </fieldset>
+
+
         <!-- end: sorting options -->
 
         <!-- filter options -->
         <h4 class="dropdown-menu-title" translate="app.filter_by"></h4>
         <filter-saved-search ng-model="filtersVar.saved_search"></filter-saved-search>
-        <filter-category ng-model="filtersVar.tags"></filter-category>
         <filter-status ng-model="filtersVar.status"></filter-status>
+        <filter-category ng-model="filtersVar.tags"></filter-category>
         <filter-form ng-model="filtersVar.form"></filter-form>
         <filter-source ng-model="filtersVar.source"></filter-source>
         <filter-date date-after-model="filtersVar.date_after" date-before-model="filtersVar.date_before"></filter-date>
