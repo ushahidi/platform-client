@@ -80,9 +80,9 @@ describe('Post Filters Service', function () {
                 user: false,
                 source: ['sms', 'twitter', 'web', 'email'],
                 saved_search: '',
-                order_by: '',
-                order: '',
-                order_unlocked_on_top: true
+                order_by: 'created',
+                order: 'desc',
+                order_unlocked_on_top: 'true'
             });
         });
 
