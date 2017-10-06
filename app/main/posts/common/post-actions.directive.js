@@ -18,7 +18,8 @@ function PostActionsDirective(
         restrict: 'E',
         replace: true,
         scope: {
-            post: '='
+            post: '=',
+            editMode: '='
         },
         template: require('./post-actions.html'),
         link: PostActionsLink
@@ -27,7 +28,7 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
-
+        $scope.openEditMode = openEditMode;
         activate();
 
         function activate() {
@@ -46,6 +47,13 @@ function PostActionsDirective(
                     $route.reload();
                 }
             });
+        }
+        function openEditMode(id) {
+            if ($location.path() !== '/views/data') {
+                $location.path('/posts/' + id + '/edit');
+            } else {
+                $scope.editMode.editing = true;
+            }
         }
 
         function updateStatus(status) {
