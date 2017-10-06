@@ -113,7 +113,7 @@ function PostListController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
             order: $scope.order,
-            orderby: $scope.orderBy
+            orderBy: $scope.orderBy
         });
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {

@@ -21,7 +21,7 @@ function (
             paramSerializer: '$httpParamSerializerJQLike',
             params: {
                 order: 'desc',
-                orderby: 'post_date'
+                orderBy: 'post_date'
             }
         },
         get: {

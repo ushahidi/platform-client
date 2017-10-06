@@ -80,7 +80,7 @@ describe('Post Filters Service', function () {
                 user: false,
                 source: ['sms', 'twitter', 'web', 'email'],
                 saved_search: '',
-                order_by: 'created',
+                orderby: 'created',
                 order: 'desc',
                 order_unlocked_on_top: 'true'
             });

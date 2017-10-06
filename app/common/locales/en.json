@@ -322,7 +322,7 @@
         "filter_tabs" : {
             "order": "Order",
             "order_group": {
-                "order_by": {
+                "orderBy": {
                     "post_date": "Post Date",
                     "created": "Date created",
                     "updated": "Date updated"
@@ -334,7 +334,7 @@
                 "unlocked_on_top_yes": "Yes",
                 "unlocked_on_top_no": "No"
             },
-            "order_by" : "Order by",
+            "orderBy" : "Order by",
             "order_unlocked_on_top": "Unlocked posts on top",
             "savedsearch": "Saved Search",
             "saved_search": "Saved Search",

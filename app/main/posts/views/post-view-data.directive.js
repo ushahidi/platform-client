@@ -43,8 +43,8 @@ function PostViewDataController(
     $scope.totalItems = $scope.itemsPerPage;
     $scope.posts = [];
     $scope.groupedPosts = {};
-    $scope.order = 'desc';
-    $scope.orderBy = 'post_date';
+    $scope.order = PostFilters.getDefaults().order;
+    $scope.orderBy = PostFilters.getDefaults().orderBy;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
 
@@ -83,9 +83,7 @@ function PostViewDataController(
         query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-            limit: $scope.itemsPerPage,
-            order: $scope.order,
-            orderBy: $scope.orderBy
+            limit: $scope.itemsPerPage
         });
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
