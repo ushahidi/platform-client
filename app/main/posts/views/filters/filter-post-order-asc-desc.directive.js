@@ -33,7 +33,6 @@ function FilterPostOrderAscDescDirective(moment, $rootScope, _) {
         //$scope.$watch('activeOrderOptions', saveToView, true);
         $scope.$watch('selectedValue', saveToViewSelected, true);
         function saveToViewSelected(orderGroup) {
-            console.log(ngModel);
             ngModel.$setViewValue(angular.copy(orderGroup ? orderGroup.value.toString() : ''), 'radio');
         }
     }
