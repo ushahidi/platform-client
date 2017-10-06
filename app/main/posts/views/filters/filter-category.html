@@ -1,5 +1,5 @@
 <fieldset ng-show="categories.length" overflow-toggle has-overflow="parents.length > 2" ng-model-options="{ updateOn: 'default' }">
-    <legend translate="nav.categories">Categories</legend>
+    <label translate="nav.categories">Categories</label>
 
     <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
         <label>
@@ -35,7 +35,3 @@
         <span translate="nav.more">More</span>
     </span>
 </fieldset>
-
-
-
-      

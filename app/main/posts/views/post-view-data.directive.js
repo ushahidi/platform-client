@@ -43,26 +43,35 @@ function PostViewDataController(
     $scope.totalItems = $scope.itemsPerPage;
     $scope.posts = [];
     $scope.groupedPosts = {};
-    $scope.order = 'desc';
-    $scope.orderBy = 'post_date';
+    $scope.order = PostFilters.getDefaults().order;
+    $scope.orderby = PostFilters.getDefaults().orderby;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
-
-    // whenever the filters changes, update the current list of posts
-    $scope.$watch(function () {
-        return $scope.filters;
-    }, function (newValue, oldValue) {
-        if (newValue !== oldValue) {
-            $scope.clearPosts = true;
-            getPosts();
-        }
-    }, true);
 
 
     $rootScope.setLayout('layout-d');
     activate();
     function activate() {
         getPosts();
+        // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
+        // to force the $scope.filters watcher to run
+        $scope.$watch(function () {
+            return PostFilters.reactiveFilters;
+        }, function () {
+            if (PostFilters.reactiveFilters === 'enabled') {
+                $scope.filters.reactToFilters = $scope.filters.reactToFilters ? !$scope.filters.reactToFilters : true;
+            }
+        }, true);
+        /** whenever the filters changes, update the current list of posts **/
+        $scope.$watch(function () {
+            return $scope.filters;
+        }, function (newValue, oldValue) {
+            if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
+                $scope.clearPosts = true;
+                getPosts();
+                PostFilters.reactiveFilters = 'disabled';
+            }
+        }, true);
     }
 
     function showPost(post) {
@@ -74,9 +83,7 @@ function PostViewDataController(
         query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-            limit: $scope.itemsPerPage,
-            order: $scope.order,
-            orderBy: $scope.orderBy
+            limit: $scope.itemsPerPage
         });
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
@@ -132,6 +139,4 @@ function PostViewDataController(
         $scope.clearPosts = false;
         getPosts();
     }
-
-
 }

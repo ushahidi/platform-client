@@ -1,0 +1,13 @@
+<fieldset>
+    <label translate="app.saved_search"></label>
+    <div class="custom-select" ng-model-options="{ updateOn: 'default' }">
+        <select
+                ng-model="selectedSavedSearch"
+                ng-options="search.id as search.name
+        for
+        search in searches"
+        >
+            <option value="" selected translate="app.select_one"></option>
+        </select>
+    </div>
+</fieldset>
