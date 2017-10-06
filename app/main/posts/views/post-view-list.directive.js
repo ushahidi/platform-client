@@ -27,7 +27,8 @@ PostListController.$inject = [
     'PostFilters',
     'PostActionsService',
     '$timeout',
-    '$rootScope'
+    '$anchorScroll',
+    '$location'
 ];
 function PostListController(
     $scope,
@@ -42,7 +43,8 @@ function PostListController(
     PostFilters,
     PostActionsService,
     $timeout,
-    $rootScope
+    $anchorScroll,
+    $location
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -123,7 +125,7 @@ function PostListController(
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
 
-            groupPosts();
+            groupPosts($scope.posts);
 
             $scope.totalItems = postsResponse.total_count;
             $scope.isLoading.state = false;
@@ -152,10 +154,10 @@ function PostListController(
         });
     }
 
-    function groupPosts() {
-        angular.forEach(createPostGroups($scope.posts), function (posts, group) {
+    function groupPosts(postList) {
+        angular.forEach(createPostGroups(postList), function (posts, group) {
             if (angular.isArray($scope.groupedPosts[group])) {
-                Array.prototype.push.apply($scope.groupedPosts[group], posts);
+                Array.prototype.unshift.apply($scope.groupedPosts[group], posts);
             } else {
                 $scope.groupedPosts[group] = posts;
             }
@@ -272,10 +274,12 @@ function PostListController(
 
     function addNewestPosts() {
         Array.prototype.unshift.apply($scope.posts, $scope.recentPosts);
-        groupPosts();
+        groupPosts($scope.recentPosts);
         $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
         $scope.recentPosts = [];
         $scope.newPostsCount = 0;
+        $location.hash('top');
+        $anchorScroll();
     }
 
     function checkForNewPosts(time) {
