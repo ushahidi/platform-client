@@ -25,7 +25,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getMode: getMode,
         getModeId: getModeId,
         countFilters: countFilters,
-        reactiveFilters: 'enabled'
+        reactiveFilters: 'enabled',
+        qEnabled: false
     };
 
 

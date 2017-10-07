@@ -21,7 +21,7 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     $scope.applyFilters = applyFilters;
     $scope.filtersDropdownToggle = false;
     $scope.searchDropdownToggle = $routeParams.view !== 'list';
-
+    $scope.qFilter = '';
     activate();
 
     function activate() {

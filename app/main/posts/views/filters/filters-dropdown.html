@@ -3,7 +3,7 @@
         <div class="form-field filter-buttons">
             <div ng-show="filtersVar.q.length > 0" ng-class="{active: (filtersVar.q.length > 0) }">
                 <div ng-class="{active: (filtersVar.q.length > 0) , 'form-field': 'form-field'}">
-                    <button type="submit" class="button-plain">
+                    <button class="button-plain" ng-click="enableQuery()">
                         <span class="button-label">
                             <span translate-values="{ entity: entityType }" translate>
                                 toolbar.searchbar.search_all_entities_for

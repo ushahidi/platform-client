@@ -23,6 +23,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         activate();
 
+
         function activate() {
             // Start loading data
             var posts = loadPosts();
@@ -59,7 +60,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function addPostsToMap(posts) {
-
             var geojson = L.geoJson(posts, {
                 pointToLayer: Maps.pointToLayer,
                 onEachFeature: onEachFeature
@@ -88,16 +88,39 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 map.setZoom(15);
             }
         }
-
         function watchFilters() {
+            // whenever the qEnabled var changes, do a dummy update of $scope.filters.reactToQEnabled
+            // to force the $scope.filters watcher to run
+            //$rootScope.$watchTrue(function () {
+            $scope.$watch(function () {
+                return PostFilters.qEnabled;
+            }, function () {
+                if (PostFilters.qEnabled === true) {
+                    $scope.filters.reactToQEnabled = $scope.filters.reactToQEnabled ? !$scope.filters.reactToQEnabled : true;
+                }
+            });
             // whenever filters change, reload the posts on the map
             $scope.$watch(function () {
                 return $scope.filters;
             }, function (newValue, oldValue) {
-                if (newValue !== oldValue) {
-                    cancelCurrentRequests();
-                    clearData();
-                    reloadMapPosts();
+                var diff = _.omit(newValue, function (value, key, obj) {
+                    return _.isEqual(oldValue[key], value);
+                });
+                var diffLength = _.keys(diff).length;
+                var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
+                if (diffLength > 0) {
+                    if (PostFilters.qEnabled === true || qDiffOnly === false) {
+                        cancelCurrentRequests();
+                        clearData();
+                        reloadMapPosts();
+                    } else if (PostFilters.qEnabled === true && qDiffOnly === true) {
+                        cancelCurrentRequests();
+                        clearData();
+                        reloadMapPosts();
+                    }
+                }
+                if (PostFilters.qEnabled === true) {
+                    PostFilters.qEnabled = false;
                 }
             }, true);
         }
@@ -109,8 +132,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             currentGeoJsonRequests = [];
         }
 
-        function reloadMapPosts() {
-            var test = loadPosts();
+        function reloadMapPosts(query) {
+            var test = loadPosts(query);
             test.then(addPostsToMap);
         }
 

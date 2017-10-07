@@ -22,12 +22,15 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
             view : 'map',
             role : []
         };
-
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = 'enabled';
         };
         $scope.clearFilters = function () {
             $scope.filtersVar = PostFilters.clearFilters();
+        };
+
+        $scope.enableQuery = function () {
+            PostFilters.qEnabled = true;
         };
         $scope.openSavedModal = function () {
             $scope.savedSearch.filter = $scope.filtersVar;
