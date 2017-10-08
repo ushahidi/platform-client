@@ -33,6 +33,7 @@ module.exports = [function () {
     var filterMode = 'all';
 
     return {
+        qEnabled: false,
         filterState: filterState,
         getDefaults: function () {
             return defaultFilters;

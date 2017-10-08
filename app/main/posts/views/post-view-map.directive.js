@@ -19,6 +19,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var limit = 200;
         var requestBlockSize = 5;
         var numberOfChunks = 0;
+        $scope.loadPosts = loadPosts;
         $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
 
         activate();
@@ -26,7 +27,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         function activate() {
             // Start loading data
-            var posts = loadPosts();
+            var posts = $scope.loadPosts();
             var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
@@ -108,16 +109,15 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 });
                 var diffLength = _.keys(diff).length;
                 var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
-                if (diffLength > 0) {
-                    if (PostFilters.qEnabled === true || qDiffOnly === false) {
-                        cancelCurrentRequests();
-                        clearData();
-                        reloadMapPosts();
-                    } else if (PostFilters.qEnabled === true && qDiffOnly === true) {
-                        cancelCurrentRequests();
-                        clearData();
-                        reloadMapPosts();
-                    }
+                /**
+                 * We only want to call reloadMapPosts if we :
+                 * - Have changes other than q= in the filters
+                 * - Only q= changed but we also have enabled the q filter
+                 */
+                if (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && PostFilters.qEnabled === true)) {
+                    cancelCurrentRequests();
+                    clearData();
+                    reloadMapPosts();
                 }
                 if (PostFilters.qEnabled === true) {
                     PostFilters.qEnabled = false;
@@ -133,7 +133,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function reloadMapPosts(query) {
-            var test = loadPosts(query);
+            var test = $scope.loadPosts(query);
             test.then(addPostsToMap);
         }
 
@@ -169,7 +169,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     while (block > 0) {
                         block -= 1;
                         offset += limit;
-                        loadPosts(query, offset, block).then(addPostsToMap);
+                        $scope.loadPosts(query, offset, block).then(addPostsToMap);
                     }
                 }
 
