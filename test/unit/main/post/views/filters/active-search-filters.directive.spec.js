@@ -1,0 +1,81 @@
+describe('post active search filters directive', function () {
+
+    var $rootScope,
+        $scope,
+        directiveScope,
+        PostFilters,
+        Notify,
+        SavedSearchEndpoint,
+        element;
+
+    beforeEach(function () {
+        fixture.setBase('mocked_backend/api/v3');
+
+
+        var testApp = makeTestApp();
+
+        testApp.directive('postActiveSearchFilters', require('app/main/posts/views/filters/active-search-filters.directive'))
+        .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
+        .value('$filter', function () {
+            return function () {
+                return 'Feb 17, 2016';
+            };
+        });
+
+        angular.mock.module('testApp');
+    });
+
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_, _SavedSearchEndpoint_) {
+        $rootScope = _$rootScope_;
+        $scope = _$rootScope_.$new();
+        SavedSearchEndpoint = _SavedSearchEndpoint_;
+        PostFilters = _PostFilters_;
+        Notify = _Notify_;
+
+        $scope.filters = {
+            status: 'published',
+            published_to: ''
+        };
+
+        element = '<post-active-search-filters ng-model="$scope.filters"></post-active-search-filters>';
+        element = $compile(element)($scope);
+        $scope.$digest();
+        directiveScope = element.scope();
+    }));
+
+    describe('test directive functions', function () {
+        it('should execute the set of transformers and return the correct values for each', function () {
+            var transformers = ['tags', 'center_point', 'created_before', 'created_after', 'fake'];
+            var result = '';
+
+            _.each(transformers, function (transformer) {
+
+                if (_.contains(['tags'], transformer)) {
+
+                    result = directiveScope.transformFilterValue('test', transformer);
+                    expect(result).toEqual('test');
+
+                } else if (_.contains(['created_before', 'created_after'], transformer)) {
+
+                    result = directiveScope.transformFilterValue('2016-02-17T18:06:46+00:00', transformer);
+                    expect(result).toEqual('Feb 17, 2016');
+
+                } else if (transformer === 'center_point') {
+                    result = directiveScope.transformFilterValue('test', transformer);
+                    // should be tested via e2e tests
+                } else {
+                    result = directiveScope.transformFilterValue('test', transformer);
+                    expect(result).toEqual('test');
+                }
+            });
+        });
+
+        it('should remove a given filter from the PostFilters object', function () {
+            spyOn(PostFilters, 'clearFilter');
+            directiveScope.removeFilter('test', 'test');
+
+            expect(PostFilters.clearFilter).toHaveBeenCalled();
+        });
+
+    });
+});
