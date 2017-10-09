@@ -72,9 +72,9 @@ describe('post active search filters directive', function () {
             isolateScope.enableQuery();
             expect(PostFilters.qEnabled).toEqual(true);
         });
-        it('should call saved-search-modal once when I call openSavedModal', function () {
+        it('should call saved-search-modal once when I call saveSavedSearchModal', function () {
             spyOn(ModalService, 'openTemplate');
-            isolateScope.openSavedModal();
+            isolateScope.saveSavedSearchModal();
             expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
         });
     });
