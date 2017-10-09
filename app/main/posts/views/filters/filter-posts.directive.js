@@ -22,6 +22,7 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     $scope.filtersDropdownToggle = false;
     $scope.searchDropdownToggle = $routeParams.view !== 'list';
     $scope.qFilter = '';
+    $scope.openSavedModal = openSavedModal;
     activate();
 
     function activate() {
@@ -41,5 +42,8 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
 
     function rollbackForm() {
         PostFilters.clearFilters();
+    }
+    function openSavedModal() {
+        ModalService.openTemplate('<saved-search-modal></saved-search-modal>', 'nav.saved_searches', '/img/iconic-sprite.svg#star', $scope, true, true);
     }
 }
