@@ -134,7 +134,7 @@ function PostListController(
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
 
-            groupPosts($scope.posts);
+            groupPosts(postsResponse.results);
 
             $scope.totalItems = postsResponse.total_count;
             $scope.isLoading.state = false;
