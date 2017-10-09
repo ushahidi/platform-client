@@ -83,10 +83,19 @@ function PostDataEditorController(
     $scope.saving = $translate.instant('app.saving');
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
-
+    $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
+    $scope.leavePost = leavePost;
     $rootScope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
     });
+    $rootScope.$on('event:edit:leave:form', function () {
+        if ($scope.postForm.$dirty) {
+            $scope.leavePost();
+        } else {
+            $scope.editMode.editing = false;
+        }
+    });
+
     activate();
 
     function activate() {
@@ -245,8 +254,21 @@ function PostDataEditorController(
         return MediaEditService.saveMedia($scope.medias, $scope.post);
     }
 
+    function leavePost() {
+        Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+            $scope.editMode.editing = false;
+        });
+    }
+
     function savePost() {
         $scope.saving_post = true;
+        // Checking if changes are made
+        if (!$scope.postForm.$dirty) {
+            Notify.infoModal('post.valid.no_changes');
+            $scope.saving_post = false;
+            return;
+        }
+
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
             $scope.saving_post = false;
@@ -262,6 +284,7 @@ function PostDataEditorController(
                 $scope.post.values.message_location = [];
             }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
                 post.tags = _.chain(post.values)
@@ -280,7 +303,7 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-
+                $scope.postToEdit = post;
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
                     $scope.post.id = response.id;

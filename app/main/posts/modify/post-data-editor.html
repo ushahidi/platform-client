@@ -72,7 +72,6 @@
         <!-- IF: User has permission to see other 'Tasks' -->
 
         <post-toolbox post="post"></post-toolbox>
-      </div>
        <post-tabs
            ng-show="tasks.length > 1"
            form="postForm"
@@ -83,11 +82,12 @@
            visible-stage="visibleStage">
         </post-tabs>
       </fieldset>
+    </div>
+
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
-          <button class="button-flat" data-modal="cancel-without-saving">Cancel</button>
-          <button class="button button-alpha" ng-click="savePost()">Save</a>
+          <button class="button-flat" ng-click="leavePost()">Cancel</button>
+          <button class="button button-alpha" ng-click="savePost()">Save</button>
         </div>
       </div>
-    </div>
   </form>
