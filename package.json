@@ -116,7 +116,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "v3.7.1-rc.30"
+    "ushahidi-platform-pattern-library": "v3.7.2-rc.3"
   },
   "engines": {
     "node": ">=4.0"
