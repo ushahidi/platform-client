@@ -16,15 +16,21 @@ function PostToolbarDirective() {
     };
 }
 
-PostToolbarController.$inject = ['$scope', '$rootScope'];
-function PostToolbarController($scope, $rootScope) {
+PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify'];
+function PostToolbarController($scope, $rootScope, Notify) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
+    $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
+
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');
     }
 
     function setEditMode() {
-        $scope.editMode.editing = !$scope.editMode.editing ? true : false;
+        if ($scope.editMode.editing) {
+            $rootScope.$broadcast('event:edit:leave:form');
+        } else {
+            $scope.editMode.editing = true;
+        }
     }
 }
