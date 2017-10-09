@@ -106,7 +106,7 @@
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-ui-bootstrap": "^2.5.0",
     "checklist-model": "~0.11.0",
-    "d3": "^4.8.0",
+    "d3": "^3.5.17",
     "leaflet": "~1.0.1",
     "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.5",
@@ -116,7 +116,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "v3.7.2-rc.2",
+    "ushahidi-platform-pattern-library": "v3.7.1-rc.30",
     "socket.io-client": "2.0.3"
   },
   "engines": {

@@ -70,7 +70,7 @@ function PostExportController(
             Notify.apiErrors(err);
         } else {
             if (status === true) {
-                Notify.notifyProgress('notify.export.in_progress');
+                Notify.notifyProgress('<p translate="notify.export.in_progress"></p>');
             } else {
                 Notify.notify('<h3 translate="notify.export.complete">Your CSV export is complete.</h3><p translate="notify.export.complete_data_found_message">The data from your export can be found in your browser\'s downloads<p>');
             }

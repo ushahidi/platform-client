@@ -5,6 +5,7 @@ describe('post active filters directive', function () {
         directiveScope,
         PostFilters,
         Notify,
+        SavedSearchEndpoint,
         element;
 
     beforeEach(function () {
@@ -25,10 +26,10 @@ describe('post active filters directive', function () {
 
 
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_, _SavedSearchEndpoint_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        SavedSearchEndpoint = _SavedSearchEndpoint_;
         PostFilters = _PostFilters_;
         Notify = _Notify_;
 
@@ -44,7 +45,7 @@ describe('post active filters directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('should excute the set of transformers and return the correct values for each', function () {
+        it('should execute the set of transformers and return the correct values for each', function () {
             var transformers = ['tags', 'center_point', 'created_before', 'created_after', 'fake'];
             var result = '';
 

@@ -1,7 +1,7 @@
 module.exports = ActiveFilters;
 
-ActiveFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint'];
-function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint) {
+ActiveFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'TagEndpoint', 'RoleEndpoint', 'UserEndpoint', 'SavedSearchEndpoint', 'PostMetadataService'];
+function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEndpoint, UserEndpoint, SavedSearchEndpoint, PostMetadataService) {
     return {
         restrict: 'E',
         scope: true,
@@ -18,6 +18,7 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         var tags = [];
         var roles = [];
         var users = [];
+        var savedSearches = [];
 
         activate();
 
@@ -35,6 +36,10 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             TagEndpoint.query().$promise.then(function (results) {
                 tags = _.indexBy(results, 'id');
             });
+
+            SavedSearchEndpoint.query({}).$promise.then(function (searches) {
+                savedSearches = _.indexBy(searches, 'id');
+            });
         }
 
         function makeArray(value) {
@@ -49,15 +54,17 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
-            // Remove form filter as its shown by the mode-context-form-filter already
-            delete activeFilters.form;
+            // Remove form filter as its shown by the mode-context-form-filter already,
+            // exception: if user only wants to see incoming messages (activeFilters.form = ['none']), we keep the form-filter.
+            if (!_.isEqual(activeFilters.form, ['none'])) {
+                delete activeFilters.form;
+            }
             // Remove categories since its shown by the mode-context-form-filter already
             if (filters.form && filters.form.length <= 1) {
                 delete activeFilters.tags;
             }
             // Remove within_km as its shown with the center_point value
             delete activeFilters.within_km;
-
             $scope.activeFilters = _.mapObject(activeFilters, makeArray);
         }
 
@@ -74,6 +81,16 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
         }
 
         var transformers = {
+            order_unlocked_on_top: function (value) {
+                var boolText = value === 'true' ? 'yes' : 'no';
+                return $translate.instant('global_filter.filter_tabs.order_group.unlocked_on_top_' + boolText);
+            },
+            order: function (value) {
+                return $translate.instant('global_filter.filter_tabs.order_group.order.' + value.toLowerCase());
+            },
+            orderby: function (value) {
+                return $translate.instant('global_filter.filter_tabs.order_group.orderby.' + value);
+            },
             tags : function (value) {
                 return tags[value] ? tags[value].tag : value;
             },
@@ -91,6 +108,9 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             // set : function (value) {
             //     return options.collections[value] ? options.collections[value].name : value;
             // },
+            saved_search: function (value) {
+                return savedSearches[value.selectedSearch] ? savedSearches[value.selectedSearch].name : value.selectedSearch;
+            },
             center_point : function (value) {
                 return $translate.instant('global_filter.filter_tabs.location_value', {
                     value: rawFilters.location_text ? rawFilters.location_text : value,
@@ -111,6 +131,12 @@ function ActiveFilters($translate, $filter, PostFilters, _, TagEndpoint, RoleEnd
             },
             status : function (value) {
                 return $translate.instant('post.' + value);
+            },
+            source : function (value) {
+                return PostMetadataService.formatSource(value);
+            },
+            form: function (value) {
+                return PostMetadataService.formatSource(value);
             }
         };
     }

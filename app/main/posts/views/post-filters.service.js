@@ -7,7 +7,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     var forms = [];
     var filterMode = 'all';
     var entityId = null;
-
     // @todo take this out of the service
     // but ensure it happens at the right times
     activate();
@@ -21,14 +20,20 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         clearFilter: clearFilter,
         hasFilters: hasFilters,
         getActiveFilters: getActiveFilters,
+        getCleanActiveFilters: getCleanActiveFilters,
         setMode: setMode,
         getMode: getMode,
-        getModeId: getModeId
+        getModeId: getModeId,
+        countFilters: countFilters,
+        reactiveFilters: 'enabled'
     };
+
 
     function activate() {
         FormEndpoint.queryFresh().$promise.then(function (result) {
             forms = result;
+            // adding incoming messages to filter
+            forms.push({id: 'none'});
             filterState.form = filterState.form || [];
             if (filterState.form.length === 0) { // just in case of race conditions
                 Array.prototype.splice.apply(filterState.form, [0, 0].concat(_.pluck(forms, 'id')));
@@ -58,11 +63,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilter(filterKey, value) {
-        if (angular.isArray(filterState[filterKey])) {
-            filterState[filterKey] = _.without(filterState[filterKey], value);
-        } else {
-            filterState[filterKey] = getDefaults()[filterKey];
-        }
+        filterState[filterKey] = getDefaults()[filterKey];
     }
 
     function getDefaults() {
@@ -77,9 +78,14 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             within_km: '1',
             current_stage: [],
             tags: [],
+            saved_search: '',
+            orderby: 'created',
+            order: 'desc',
+            order_unlocked_on_top: 'true',
             form: _.pluck(forms, 'id'),
             set: [],
-            user: false
+            user: false,
+            source: ['sms', 'twitter','web', 'email']
         };
     }
 
@@ -114,6 +120,45 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return query;
     }
 
+    /**
+     * Returns the non-default filters so that we don' show the user 3 filters when they didn' select one yet
+     * Example: when the active filters load we show "sort", "unlockedOnTop", "sort_by" as active with their value
+     * but since the user didn't select a filter, it can be really confusing.
+     * @param filters
+     */
+    function getCleanActiveFilters(filters) {
+        var defaults = getDefaults();
+        return _.omit(
+            filters,
+            function (value, key, object) {
+                if (defaults[key] === value) {
+                    return true;
+                }
+                // Ignore difference in within_km
+                if (key === 'within_km') {
+                    return true;
+                }
+                // Is the same as the default?
+                if (_.isEqual(defaults[key], value)) {
+                    return true;
+                }
+                // Is an array with all the same elements? (order doesn't matter)
+                if (_.isArray(defaults[key]) &&
+                    _.difference(value, defaults[key]).length === 0 &&
+                    _.difference(defaults[key], value).length === 0) {
+                    return true;
+                }
+                // Is value empty? ..and not a date object
+                // _.empty only works on arrays, object and strings.
+                return (_.isEmpty(value) && !_.isDate(value));
+            }
+        );
+    }
+
+    /**
+     * Gets the real active filters, including defaults.
+     * @param filters
+     */
     function getActiveFilters(filters) {
         var defaults = getDefaults();
         return _.omit(
@@ -159,6 +204,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     function getModeId() {
         return entityId;
+    }
+    function countFilters() {
+        return _.keys(this.getActiveFilters(this.getFilters())).length;
     }
 }
 

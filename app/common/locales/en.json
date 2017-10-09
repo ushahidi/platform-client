@@ -70,6 +70,7 @@
         "color" : "Color",
         "search_users" : "Search users",
         "searching" : "Searching",
+        "show_hide": "Show/Hide",
         "fields" : "Fields",
         "filter_by" :"Filter by...",
         "apply_filters" : "Apply filters",
@@ -83,6 +84,9 @@
         "survey_web_address" : "Your survey's web address",
         "default_value" : "Default value",
         "fields" : "Fields",
+        "select_one": "Select One",
+        "sort_and_filter": "Sort & filter",
+        "saved_search": "Saved Search",
         "tasks" : "Tasks",
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
@@ -94,7 +98,7 @@
         "who_can_see_this" : "Who can see this?",
         "add" : "Add",
         "add_new_category" : "+ Add new category",
-        "sort_by": "Sort By",
+        "sort_by": "Sort By ...",
         "newest_first": "Newest first",
         "oldest_first": "Oldest first"
     },
@@ -300,7 +304,40 @@
             "all_collections" : "All Collections",
             "search_collections" : "Search Collections"
         },
+        "sort": {
+            "order": {
+                "filter_type_tag": "Order",
+                "desc": "Newest first",
+                "asc": "Oldest first"
+            },
+            "orderby": {
+                "post_date": "Post Date",
+                "created": "Date created",
+                "updated": "Date updated"
+            },
+            "unlockedOnTop": {
+                "filter_type_tag": "Unlocked posts on top"
+            }
+        },
         "filter_tabs" : {
+            "order": "Order",
+            "order_group": {
+                "orderby": {
+                    "post_date": "Post Date",
+                    "created": "Date created",
+                    "updated": "Date updated"
+                },
+                "order": {
+                    "desc": "Newest first",
+                    "asc": "Oldest first"
+                },
+                "unlocked_on_top_yes": "Yes",
+                "unlocked_on_top_no": "No"
+            },
+            "orderby" : "Order by",
+            "order_unlocked_on_top": "Unlocked posts on top",
+            "savedsearch": "Saved Search",
+            "saved_search": "Saved Search",
             "q": "Keyword",
             "created_after": "Start date",
             "created_before": "End date",
@@ -318,7 +355,8 @@
             "has_location": "Post-locations",
             "all_posts": "Show all posts",
             "unmapped": "Show unmapped posts",
-            "mapped": "Show posts with a location"
+            "mapped": "Show posts with a location",
+            "source": "Source"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -342,7 +380,8 @@
         "search" : "Search",
         "date_range" : "Date range",
         "who_its_visible_to": "Who it's visible to",
-        "status" : "Status"
+        "status" : "Status",
+        "source" : "Source"
     },
     "graph" : {
         "all_posts": "Nothing; Show all posts",
@@ -456,7 +495,8 @@
     "views" : {
         "map" : "Map",
         "list" : "Timeline",
-        "activity" : "Activity"
+        "activity" : "Activity",
+        "data" : "Data"
     },
     "post": {
         "add_to_form" : "Add to {{form}}",
@@ -602,7 +642,12 @@
             "send" : "Send New Message",
             "save" : "Save",
             "title" : "Conversation with author",
-            "associated_messages": "View messages associated with this post"
+            "associated_messages": "View messages associated with this post",
+            "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
+            "imported_by": "{{messages}} imported by this deployment",
+            "Twitter": "Twitter",
+            "Email": "Email",
+            "SMS": "SMS"
         },
         "valid" : {
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
@@ -1126,7 +1171,7 @@
             "sent_to" : "Message sent to {{contact}}"
         },
         "export" : {
-            "in_progress" : "<p><h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete</p><br>",
+            "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
             "complete" : "Your CSV export is complete.",
             "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
         }
