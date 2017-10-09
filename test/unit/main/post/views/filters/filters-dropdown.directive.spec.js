@@ -7,21 +7,15 @@ describe('post active search filters directive', function () {
         SavedSearchEndpoint,
         element,
         isolateScope,
+        FilterTransformers,
         $compile;
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
-
-
         var testApp = makeTestApp();
-
-        testApp.directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
-            .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
-            .value('$filter', function () {
-                return function () {
-                    return 'Feb 17, 2016';
-                };
-            });
-
+        testApp.directive('postActiveSearchFilters', require('app/main/posts/views/filters/active-search-filters.directive'))
+        .directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
+        .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
+        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
         angular.mock.module('testApp');
     });
     var defaults = {
@@ -44,13 +38,14 @@ describe('post active search filters directive', function () {
         user: false,
         source: ['sms', 'twitter','web', 'email']
     };
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _ModalService_, _PostFilters_, _SavedSearchEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _ModalService_, _PostFilters_, _SavedSearchEndpoint_, _FilterTransformers_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         SavedSearchEndpoint = _SavedSearchEndpoint_;
         PostFilters = _PostFilters_;
         ModalService = _ModalService_;
+        FilterTransformers = _FilterTransformers_;
         $rootScope.filters = defaults;
         $scope.filters = defaults;
         element = '<filters-dropdown filters-var="$scope.filters" ng-model="$scope.filters"></filters-dropdown>';
@@ -81,6 +76,20 @@ describe('post active search filters directive', function () {
             spyOn(ModalService, 'openTemplate');
             isolateScope.openSavedModal();
             expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
+        });
+    });
+    describe('test children', function () {
+        it('should have a filter-post-order-asc-desc directive child', function () {
+            expect(element.find('filter-post-sorting-options').length).toEqual(1);
+            expect(element.find('filter-post-order-asc-desc').length).toEqual(1);
+            expect(element.find('filter-unlocked-on-top').length).toEqual(1);
+            expect(element.find('filter-saved-search').length).toEqual(1);
+            expect(element.find('filter-status').length).toEqual(1);
+            expect(element.find('filter-category').length).toEqual(1);
+            expect(element.find('filter-form').length).toEqual(1);
+            expect(element.find('filter-source').length).toEqual(1);
+            expect(element.find('filter-date').length).toEqual(1);
+            expect(element.find('filter-location').length).toEqual(1);
         });
     });
 });
