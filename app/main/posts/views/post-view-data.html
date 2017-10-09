@@ -1,7 +1,9 @@
 <div>
-<div class="listing timeline">
+<div class="listing timeline" id="data-view-top">
          <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters"></post-toolbar>
     <!-- @DEVNOTE: ANNA this was throwing an error . <ng-transclude></ng-transclude>-->
+    <button class="button-gamma button-flat" ng-click="addNewestPosts()" ng-show="newPostsCount > 0" style="position:fixed; z-index: 10000;" translate="post.see_more">See {{newPostsCount}} new post<span ng-hide="newPostsCount > 1">s</span></button>
+
     <div class="timeline-col">
         <post-card
                 ng-repeat="post in posts"
