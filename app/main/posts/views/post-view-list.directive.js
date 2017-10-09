@@ -104,6 +104,10 @@ function PostListController(
         $scope.order = order;
         $scope.orderby = orderBy;
         $scope.clearPosts = true;
+
+        $scope.filters.order = order;
+        $scope.filters.orderby = orderBy;
+
         getPosts();
     }
 

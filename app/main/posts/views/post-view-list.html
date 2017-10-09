@@ -65,7 +65,11 @@
 
         </listing-toolbar>
 
-        <post-timeline-toolbox order="order" order-by="orderBy" on-change="changeOrder(order, orderBy)"></post-timeline-toolbox>
+        <!--Leaving here as a reference of when the post-timeline-toolbox can be added and how
+        <post-timeline-toolbox filters="filters"></post-timeline-toolbox>
+        this was discussed with Jess about removing it to avoid confusion with filters being applied in
+        non reactive ways + reactive ways in the same screen
+        -->
 
         <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
             <h4 translate>post.no_search_results</h4>
