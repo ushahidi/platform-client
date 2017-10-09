@@ -12,7 +12,6 @@ function (
         searchAllInfo: searchAllInfo
     };
 
-
     function searchCoordinates(location_name) {
         return build_query(location_name).then(function (results) {
             if (results && results[0]) {
@@ -20,7 +19,6 @@ function (
                     return [parseFloat(results[0].lat), parseFloat(results[0].lon)];
                 }
             }
-
 
             return null;
         });

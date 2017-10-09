@@ -15,8 +15,7 @@ function (
                 required : false,
                 attributes: [],
                 type: 'task',
-                show_when_published: false,
-                task_is_internal_only: true
+                show_when_published: 1
             };
 
             $scope.closeModal = function () {
