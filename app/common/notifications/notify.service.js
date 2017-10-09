@@ -42,7 +42,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         function showSlider(errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error', null, false);
         }
-
         $translate(errorText, translateValues).then(showSlider, showSlider);
     }
 
@@ -64,7 +63,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function apiErrors(errorResponse) {
         var scope = getScope();
         scope.errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-
         if (!scope.errors) {
             return;
         }
@@ -95,8 +93,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         function showSlider(confirmText) {
             scope.confirmText = confirmText;
-            var scope = getScope();
-
             SliderService.openTemplate(
                 '<p>{{ confirmText }}</p>' +
                 '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
