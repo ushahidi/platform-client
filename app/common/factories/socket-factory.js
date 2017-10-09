@@ -1,7 +1,7 @@
 module.exports = SocketFactory;
 
-SocketFactory.$inject = ['$rootScope', '$window', 'io'];
-function SocketFactory($rootScope, $window, io) {
+SocketFactory.$inject = ['$rootScope', '$window', 'CONST', 'io'];
+function SocketFactory($rootScope, $window, CONST, io) {
     var socket;
     init();
     var services = {
@@ -13,7 +13,7 @@ function SocketFactory($rootScope, $window, io) {
     return services;
 
     function init() {
-        var ioRoom = 'http://127.0.0.1:3009/';
+        var ioRoom = CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_URL + ':' + CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_PORT;
         socket = io.connect(ioRoom);
     }
 

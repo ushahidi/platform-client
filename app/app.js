@@ -38,6 +38,8 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
+    platform_websocket_redis_adpater_url = window.ushahidi.platform_websocket_redis_adpater_url || '',
+    platform_websocket_redis_adpater_port = window.ushahidi.platform_websocket_redis_adpater_port || '',
     claimedAnonymousScopes = [
         'posts',
         'media',
@@ -92,7 +94,9 @@ angular.module('app',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
         CLAIMED_USER_SCOPES      : claimedAnonymousScopes.concat('dataproviders'),
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
-        TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false // Date in UTC
+        TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
+        PLATFORM_WEBSOCKET_REDIS_ADPATER_URL : platform_websocket_redis_adpater_url,
+        PLATFORM_WEBSOCKET_REDIS_ADPATER_PORT : platform_websocket_redis_adpater_port
     })
 
     .config(['$compileProvider', function ($compileProvider) {
