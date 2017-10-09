@@ -1,11 +1,9 @@
 module.exports = FilterUnlockedOnTopDirective;
 
 FilterUnlockedOnTopDirective.$inject = [
-    'moment',
-    '$rootScope',
     '_'
 ];
-function FilterUnlockedOnTopDirective(moment, $rootScope, _) {
+function FilterUnlockedOnTopDirective(_) {
     return {
         restrict: 'E',
         require: 'ngModel',
