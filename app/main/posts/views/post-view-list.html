@@ -1,6 +1,6 @@
-<div class="main-col" id='top'>
+<div class="main-col" id='post-list-view-top'>
 
-    <button class="button-gamma button-flat" ng-click="addNewestPosts()" ng-show="newPostsCount > 0" style="position:fixed; z-index: 10000;">See {{newPostsCount}} new post<span ng-hide="newPostsCount > 1">s</span>.</button>
+    <button class="button-gamma button-flat" ng-click="addNewestPosts()" ng-show="newPostsCount > 0" style="position:fixed; z-index: 10000;" translate="post.see_more">See {{newPostsCount}} new post<span ng-hide="newPostsCount > 1">s</span></button>
 
       <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
 

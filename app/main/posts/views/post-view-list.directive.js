@@ -284,7 +284,7 @@ function PostListController(
         $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
         $scope.recentPosts = [];
         $scope.newPostsCount = 0;
-        $location.hash('top');
+        $location.hash('post-list-view-top');
         $anchorScroll();
     }
 
