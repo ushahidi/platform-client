@@ -206,7 +206,8 @@
     <div ng-switch-when="tags">
         <category-selector
             available="attribute.options"
-            selected="post.values[attribute.key]"
+            selected="post.values[attribute.key]",
+            form="form"
         ></category-selector>
         <add-category
             form-id="post.form.id"
