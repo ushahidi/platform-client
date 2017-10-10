@@ -25,7 +25,8 @@ PostListController.$inject = [
     'ConfigEndpoint',
     'moment',
     'PostFilters',
-    'PostActionsService'
+    'PostActionsService',
+    '$location'
 ];
 function PostListController(
     $scope,
@@ -38,7 +39,8 @@ function PostListController(
     ConfigEndpoint,
     moment,
     PostFilters,
-    PostActionsService
+    PostActionsService,
+    $location
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -61,6 +63,7 @@ function PostListController(
     $scope.clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.changeOrder = changeOrder;
+    $scope.goToPost = goToPost;
     activate();
 
     // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
@@ -142,7 +145,9 @@ function PostListController(
             }
         });
     }
-
+    function goToPost(id) {
+        $location.path('/posts/' + id);
+    }
     function groupPosts(posts) {
         var now = moment(),
             yesterday = moment().subtract(1, 'days');
