@@ -39,6 +39,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterPostOrderAscDesc', require('./views/filters/filter-post-order-asc-desc.directive.js'))
 .directive('filterUnlockedOnTop', require('./views/filters/filter-unlocked-on-top.directive.js'))
 .directive('postTimelineToolbox', require('./views/post-timeline-toolbox.directive.js'))
+.directive('postDataEditor', require('./modify/post-data-editor.directive.js'))
 
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))

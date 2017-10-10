@@ -651,6 +651,7 @@
             "SMS": "SMS"
         },
         "valid" : {
+            "no_changes" : "You haven’t made any changes",
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
             "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
             "title" : {
@@ -1060,7 +1061,8 @@
         "generic" : {
             "okay" : "Ok",
             "alerts": "Alerts",
-            "confirm": "Confirmation"
+            "confirm": "Confirmation",
+            "save" : "Save"
         },
         "login" : {
             "failed" : "Login failed, check your email and password."
@@ -1091,7 +1093,10 @@
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
             "stage_save_success" : "Updated {{stage}}",
             "export" : "This will export filtered posts. Are you sure you want to continue?",
-            "update_status_success_bulk" : "Status updated for {{count}} posts"
+            "update_status_success_bulk" : "Status updated for {{count}} posts",
+            "leave_without_save" : "Do you want to leave this report without saving?",
+            "leave_confirm_message" : "If you continue, all of your changes will be lost",
+            "leave_confirm" : "Continue without saving"
         },
         "category" : {
             "save_success" : "Saved category {{name}}",
