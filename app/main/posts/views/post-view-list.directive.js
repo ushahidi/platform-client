@@ -71,6 +71,8 @@ function PostListController(
     $scope.newPostsCount = 0;
     $scope.recentPosts = [];
     $scope.addNewestPosts = addNewestPosts;
+
+    $scope.goToPost = goToPost;
     activate();
 
     // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
@@ -145,6 +147,9 @@ function PostListController(
         });
 
         // $timeout(getNewPosts, 5000);
+    }
+    function goToPost(id) {
+        $location.path('/posts/' + id);
     }
 
     function createPostGroups(posts) {
