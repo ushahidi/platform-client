@@ -53,16 +53,16 @@
             class="form-field init required"
             ng-class="{'error': postForm.form.$invalid && postForm.form.$dirty, 'success': !postForm.form.$invalid && postForm.form.$dirty}"
           >
-          <label translate>app.surveys</label>
-            <select
+          <p translate="post.unstructured.add_survey.info" translate-values="{source:post.source}"></p>
+          <label translate>post.unstructured.add_survey.title</label>
+              <select
               class="custom-select"
               ng-change="selectForm(form)"
               ng-model="post.form"
             >
-              <option disabled>Select a form</option>
+              <option selected disabled translate>post.unstructured.add_survey.choose</option>
               <option ng-repeat="form in forms" ng-value="form">{{form.name}}</option>
             </select>
-
           <div class="alert error" ng-show="postForm.form.$dirty" ng-repeat="(error, value) in postForm.form.$error">
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
