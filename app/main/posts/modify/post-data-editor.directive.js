@@ -85,6 +85,7 @@ function PostDataEditorController(
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
+    $scope.selectForm = selectForm;
     $rootScope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
     });
@@ -104,6 +105,23 @@ function PostDataEditorController(
     activate();
 
     function activate() {
+        if ($scope.post.form) {
+            $scope.selectForm();
+        } else {
+            FormEndpoint.get().$promise.then(function (results) {
+                $scope.forms = results.results;
+            });
+        }
+
+        $scope.medias = {};
+        $scope.savingText = $translate.instant('app.saving');
+        $scope.submittingText = $translate.instant('app.submitting');
+    }
+
+    function setVisibleStage(stageId) {
+        $scope.visibleStage = stageId;
+    }
+    function selectForm() {
         $scope.form = $scope.post.form;
         $scope.fetchAttributesAndTasks($scope.post.form.id)
         .then(function () {
@@ -116,14 +134,6 @@ function PostDataEditorController(
                 }
             });
         });
-
-        $scope.medias = {};
-        $scope.savingText = $translate.instant('app.saving');
-        $scope.submittingText = $translate.instant('app.submitting');
-    }
-
-    function setVisibleStage(stageId) {
-        $scope.visibleStage = stageId;
     }
 
     function fetchAttributesAndTasks(formId) {
