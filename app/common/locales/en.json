@@ -499,7 +499,8 @@
         "data" : "Data"
     },
     "post": {
-        "see_more" : "See {{newPostsCount}} new post<span ng-hide=\"newPostsCount > 1\">s</span>",
+        "see_more_plural" : "See {{newPostsCount}} new posts",
+        "see_more_singular" : "See {{newPostsCount}} new post",
         "add_to_form" : "Add to {{form}}",
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
