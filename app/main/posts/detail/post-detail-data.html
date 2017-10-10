@@ -3,13 +3,12 @@
 
         <div class="postcard-body"> 
             <div ng-if="post.form">
-            <h1 class="form-sheet-title survey-title">{{post.form.name}}</h1>
-            <p>{{post.form.description}}</p>
-                    </div>
+              <h1 class="form-sheet-title survey-title">{{post.title}}</h1>
+            </div>
 
             <div class="postcard-header">
                 <post-metadata post="post" hide-date-this-week="true"></post-metadata>
-                <post-actions post="post"></post-actions>
+                <post-actions  edit-mode="editMode" post="post"></post-actions>
             </div>
             <div
           ng-repeat="(key,value) in post.values"
