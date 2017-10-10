@@ -7,7 +7,8 @@ function PostViewData() {
         replace: true,
         scope: {
             filters: '=',
-            isLoading: '='
+            isLoading: '=',
+            currentView: '='
         },
         controller: PostViewDataController,
         template: require('./post-view-data.html')
@@ -47,7 +48,7 @@ function PostViewDataController(
     $scope.orderby = PostFilters.getDefaults().orderby;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
-
+    $scope.editMode = {editing: false};
 
     $rootScope.setLayout('layout-d');
     activate();
@@ -75,12 +76,20 @@ function PostViewDataController(
     }
 
     function showPost(post) {
-        $scope.selectedPost = post;
-        $scope.selectedPostId = post.id;
+        if (post.id !== $scope.selectedPostId) {
+            $scope.selectedPost = post;
+            $scope.selectedPostId = post.id;
+        } else {
+            $scope.selectedPost = null;
+            $scope.selectedPostId = null;
+        }
     }
 
     function getPosts(query) {
         query = query || PostFilters.getQueryParams($scope.filters);
+        PostEndpoint.stats(query).$promise.then(function (results) {
+            $scope.total = results.totals[0].values[0].total;
+        });
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
@@ -102,7 +111,6 @@ function PostViewDataController(
             });
             $scope.totalItems = postsResponse.total_count;
             $scope.isLoading.state = false;
-
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();
             }
