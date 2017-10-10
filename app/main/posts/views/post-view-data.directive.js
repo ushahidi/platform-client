@@ -49,6 +49,9 @@ function PostViewDataController(
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
     $scope.editMode = {editing: false};
+    $scope.selectBulkActions = selectBulkActions;
+    $scope.bulkActionsSelected = false;
+
 
     $rootScope.setLayout('layout-d');
     activate();
@@ -142,9 +145,15 @@ function PostViewDataController(
     }
 
     function loadMore() {
+        console.log("loading?")
         // Increment page
         $scope.currentPage++;
         $scope.clearPosts = false;
         getPosts();
+    }
+
+    function selectBulkActions() {
+        console.log("clicking bulk acitions")
+        $scope.bulkActionsSelected = true;
     }
 }

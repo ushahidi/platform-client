@@ -1,7 +1,7 @@
 <article ng-class="['postcard', {selected: inFocus}]" ng-click="clickAction(post)">
     <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
     <div class="listing-item-select">
-        <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+        <input ng-if="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
     </div>
     <div class="postcard-body">
       <header class="postcard-header">
