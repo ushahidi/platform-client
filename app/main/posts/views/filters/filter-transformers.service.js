@@ -1,27 +1,20 @@
 module.exports = FilterTransformersService;
 
 FilterTransformersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', 'RoleEndpoint',
-    'UserEndpoint', 'SavedSearchEndpoint', 'PostMetadataService', '$translate', '$filter'];
+    'UserEndpoint', 'SavedSearchEndpoint', 'PostMetadataService', '$translate', '$filter', '$q'];
 function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
-                            UserEndpoint, SavedSearchEndpoint, PostMetadataService, $translate, $filter) {
+                            UserEndpoint, SavedSearchEndpoint, PostMetadataService, $translate, $filter, $q) {
     var roles, users, tags, forms, savedSearches = [];
     var self = this;
     this.rawFilters = {};
     this.requestsFiltersData = function () {
-        RoleEndpoint.query().$promise.then(function (results) {
-            roles = _.indexBy(results, 'name');
-        });
-        UserEndpoint.query().$promise.then(function (results) {
-            users = _.indexBy(results.results, 'id');
-        });
-        TagEndpoint.query().$promise.then(function (results) {
-            tags = _.indexBy(results, 'id');
-        });
-        FormEndpoint.query().$promise.then(function (results) {
-            forms = _.indexBy(results, 'id');
-        });
-        SavedSearchEndpoint.query({}).$promise.then(function (searches) {
-            savedSearches = _.indexBy(searches, 'id');
+        return $q.all([RoleEndpoint.query().$promise, UserEndpoint.query().$promise,
+            TagEndpoint.query().$promise, FormEndpoint.query().$promise, SavedSearchEndpoint.query({}).$promise]).then(function (results) {
+            roles = results[0];
+            users = results[1];
+            tags = results[2];
+            forms = results[3];
+            savedSearches = results[4];
         });
     };
     this.transformers = {

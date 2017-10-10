@@ -16,10 +16,11 @@ function ActiveFilters($translate, $filter, PostFilters, _, FilterTransformers) 
         activate();
 
         function activate() {
-            $scope.$watch(function () {
-                return PostFilters.getActiveFilters(PostFilters.getFilters());
-            }, handleFiltersUpdate, true);
-            FilterTransformers.requestsFiltersData();
+            FilterTransformers.requestsFiltersData().then(function (all) {
+                $scope.$watch(function () {
+                    return PostFilters.getActiveFilters(PostFilters.getFilters());
+                }, handleFiltersUpdate, true);
+            });
         }
 
         function makeArray(value) {
