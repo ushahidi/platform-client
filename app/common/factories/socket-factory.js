@@ -1,9 +1,8 @@
 module.exports = SocketFactory;
 
-SocketFactory.$inject = ['$rootScope', '$window', 'CONST', 'io'];
-function SocketFactory($rootScope, $window, CONST, io) {
+SocketFactory.$inject = ['$rootScope', '$window', 'CONST', 'io', 'Features'];
+function SocketFactory($rootScope, $window, CONST, io, Features) {
     var socket;
-    init();
     var services = {
         on: on,
         emit: emit,
@@ -13,8 +12,12 @@ function SocketFactory($rootScope, $window, CONST, io) {
     return services;
 
     function init() {
-        var ioRoom = CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_URL + ':' + CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_PORT;
-        socket = io.connect(ioRoom);
+        if (Features.isFeatureEnabled('redis')) {
+            var ioRoom = CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_URL + ':' + CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_PORT;
+            socket = io.connect(ioRoom);
+            return true;
+        }
+        return false;
     }
 
     function on(eventName, callback) {

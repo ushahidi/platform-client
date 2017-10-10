@@ -7,8 +7,8 @@ angular.module('ushahidi.posts', [])
 .service('PostSurveyService', require('./common/post-survey.service.js'))
 
 // Post Locking
-.service('postLocking', require('./common/post-locking.service.js'))
-.directive('postLocking', require('./common/post-locking.directive.js'))
+.service('PostLockService', require('./common/post-lock.service.js'))
+.directive('postLock', require('./common/post-lock.directive.js'))
 
 // Detail Screen
 .directive('postMessages', require('./detail/post-messages.directive.js'))

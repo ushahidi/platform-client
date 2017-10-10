@@ -27,6 +27,8 @@ PostDataEditorController.$inject = [
     'moment',
     'PostEntity',
     'PostEndpoint',
+    'PostLockEndpoint',
+    'PostLockService',
     'PostEditService',
     'FormEndpoint',
     'FormStageEndpoint',
@@ -50,6 +52,8 @@ function PostDataEditorController(
     moment,
     postEntity,
     PostEndpoint,
+    PostLockEndpoint,
+    PostLockService,
     PostEditService,
     FormEndpoint,
     FormStageEndpoint,
@@ -70,7 +74,7 @@ function PostDataEditorController(
     $scope.visibleStage = 1;
     $scope.enableTitle = true;
     $scope.setVisibleStage = setVisibleStage;
-    $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
+    $scope.loadData = loadData;
     $scope.allowedChangeStatus = allowedChangeStatus;
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
@@ -85,13 +89,16 @@ function PostDataEditorController(
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
+
     $rootScope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
     });
+
     $rootScope.$on('event:edit:leave:form', function () {
         if ($scope.postForm.$dirty) {
             $scope.leavePost();
         } else {
+            $scope.cancel();
             $scope.editMode.editing = false;
         }
     });
@@ -100,8 +107,7 @@ function PostDataEditorController(
 
     function activate() {
         $scope.form = $scope.post.form;
-        $scope.fetchAttributesAndTasks($scope.post.form.id)
-        .then(function () {
+        $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
                 // If the post in marked as 'Published' but it is not in
@@ -115,24 +121,49 @@ function PostDataEditorController(
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
+
+        if ($scope.post.id) {
+            PostLockService.createSocketListener();
+        }
     }
 
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
     }
 
-    function fetchAttributesAndTasks(formId) {
-        return $q.all([
-            FormStageEndpoint.queryFresh({ formId: formId }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
+    function loadData() {
+
+        var requests = [
+            FormStageEndpoint.queryFresh({ formId: $scope.post.id }).$promise,
+            FormAttributeEndpoint.queryFresh({ formId: $scope.post.id }).$promise,
             TagEndpoint.queryFresh().$promise
-        ]).then(function (results) {
+        ];
+
+        // If existing Post attempt to acquire lock
+        if ($scope.post.id) {
+            requests.push(PostLockEndpoint.getLock({'post_id': $scope.post.id}).$promise);
+        }
+
+        return $q.all(requests).then(function (results) {
+
+            if ($scope.post.id && !results[3].id) {
+                // Failed to get a lock
+                // Bounce user back to the detail page where admin/manage post perm
+                // have the option to break the lock
+                $scope.editMode.editing = false;
+            }
+
+
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
             var attrs = _.chain(results[1])
                 .sortBy('priority')
                 .value();
             var categories = results[2];
+
+            // Set Post Lock
+            $scope.post.lock = results[3];
+
             // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
@@ -235,9 +266,12 @@ function PostDataEditorController(
     }
 
     function cancel() {
-
-        var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
-        $location.path(path);
+        PostLockEndpoint.unlock({
+            id: $scope.post.lock.id,
+            post_id: $scope.post.id
+        }).$promise.then(function (result) {
+            $scope.editMode.editing = false;
+        });
     }
 
     function deletePost(post) {
@@ -256,7 +290,7 @@ function PostDataEditorController(
 
     function leavePost() {
         Notify.confirmLeave('notify.post.leave_without_save').then(function () {
-            $scope.editMode.editing = false;
+            $scope.cancel();
         });
     }
 

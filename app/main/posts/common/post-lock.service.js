@@ -21,7 +21,7 @@ function PostLockService(
 
     return {
         unlock: unlock,
-        unLockByPost: unLockByPost,
+        unlockByPost: unlockByPost,
         getLock: getLock,
         createSocketListener: createSocketListener
     };
@@ -32,11 +32,13 @@ function PostLockService(
 
     function createSocketListener() {
         // If logged in subscribe to user lock message channel
-        if ($rootScope.currentUser === null) {
-            var channel = $rootScope.currentUser + '-lock';
-            socket.on(channel, function (data) {
-                Notify.error('post.locking.lock_broken_by_other', { user: data.user.realname });
-            });
+        if ($rootScope.currentUser !== null) {
+            if (socket.init()) {
+                var channel = $rootScope.currentUser.userId + '-lock';
+                socket.on(channel, function (data) {
+                    Notify.error('post.locking.lock_broken_by_other');
+                });
+            }
         }
     }
 
@@ -46,10 +48,15 @@ function PostLockService(
         });
     }
 
-    function unLockByPost(post) {
+    function unlockByPost(post) {
+        var deferred = $q.defer();
+
         PostLockEndpoint.unlockByPost({post_id: post.id}).$promise.then(function () {
             Notify.success('post.locking.unlocked');
+            deferred.resolve();
         });
+
+        return deferred.promise;
     }
 
     function getLock(post) {

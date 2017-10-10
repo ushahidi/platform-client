@@ -26,7 +26,9 @@ PostEditorController.$inject = [
     'moment',
     'PostEntity',
     'PostEndpoint',
+    'PostLockEndpoint',
     'PostEditService',
+    'PostLockService',
     'FormEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
@@ -48,7 +50,9 @@ function PostEditorController(
     moment,
     postEntity,
     PostEndpoint,
+    PostLockEndpoint,
     PostEditService,
+    PostLockService,
     FormEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
@@ -68,7 +72,7 @@ function PostEditorController(
     $scope.enableTitle = true;
 
     $scope.setVisibleStage = setVisibleStage;
-    $scope.fetchAttributesAndTasks = fetchAttributesAndTasks;
+    $scope.loadData = loadData;
 
     $scope.allowedChangeStatus = allowedChangeStatus;
     $scope.deletePost = deletePost;
@@ -86,8 +90,7 @@ function PostEditorController(
 
     function activate() {
         $scope.post.form = $scope.form;
-        $scope.fetchAttributesAndTasks($scope.post.form.id)
-        .then(function () {
+        $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
                 // If the post in marked as 'Published' but it is not in
@@ -101,18 +104,38 @@ function PostEditorController(
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
+
+        if ($scope.post.id) {
+            PostLockService.createSocketListener();
+        }
     }
 
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
     }
 
-    function fetchAttributesAndTasks(formId) {
-        return $q.all([
-            FormStageEndpoint.queryFresh({ formId: formId }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: formId }).$promise,
+    function loadData() {
+
+        var requests = [
+            FormStageEndpoint.queryFresh({ formId: $scope.post.id }).$promise,
+            FormAttributeEndpoint.queryFresh({ formId: $scope.post.id }).$promise,
             TagEndpoint.queryFresh().$promise
-        ]).then(function (results) {
+        ];
+
+        // If existing Post attempt to acquire lock
+        if ($scope.post.id) {
+            requests.push(PostLockEndpoint.getLock($scope.post).$promise);
+        }
+
+        return $q.all(requests).then(function (results) {
+
+            if ($scope.post.id && !results[3].id) {
+                // Failed to get a lock
+                // Bounce user back to the detail page where admin/manage post perm
+                // have the option to break the lock
+                $location.url('/posts/' + post.id);
+            }
+
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
             var attrs = _.chain(results[1])
@@ -221,9 +244,10 @@ function PostEditorController(
     }
 
     function cancel() {
-
-        var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
-        $location.path(path);
+        PostLockEndpoint.unlock($scope.post.lock).$promise.then(function (result) {
+            var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
+            $location.path(path);
+        });
     }
 
     function deletePost(post) {

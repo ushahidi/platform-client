@@ -5,14 +5,16 @@ PostActionsDirective.$inject = [
     'Notify',
     '$location',
     '$route',
-    'PostActionsService'
+    'PostActionsService',
+    'PostLockService'
 ];
 function PostActionsDirective(
     PostEndpoint,
     Notify,
     $location,
     $route,
-    PostActionsService
+    PostActionsService,
+    PostLockService
 ) {
     return {
         restrict: 'E',
@@ -49,6 +51,12 @@ function PostActionsDirective(
             });
         }
         function openEditMode(id) {
+
+            // Ensure Post is not locked before proceeding
+            if ($scope.post.lock) {
+                Notify.error('post.already_locked');
+            }
+
             if ($location.path() !== '/views/data') {
                 $location.path('/posts/' + id + '/edit');
             } else {

@@ -584,9 +584,10 @@
         "status_review" : "Under review",
         "status_archived" : "Archived",
         "locking" : {
+            "unlocked" : "Post successfully unlocked",
             "unlock" : "Unlock",
-            "lock_broken_by_other" : "Your Post has been unlocked by {{ user }}. Your unsaved changes will be lost."
-            "lock_message" : "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+            "lock_broken_by_other" : "Your Post has been unlocked. Your current unsaved changes will be lost.",
+            "locked_message" : "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
         },
         "modify" : {
             "intro" : "Select survey:",

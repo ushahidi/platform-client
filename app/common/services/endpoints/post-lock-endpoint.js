@@ -19,7 +19,7 @@ function (
         getLock: {
             method: 'PUT'
         },
-        unLockByPost: {
+        unlockByPost: {
             method: 'DELETE'
         },
         unlock: {

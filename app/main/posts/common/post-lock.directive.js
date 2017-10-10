@@ -10,11 +10,13 @@ function PostLockDirective(UserEndpoint, PostLockService) {
         },
         template: require('./post-lock.html'),
         link: function ($scope) {
-            activate();
+
             $scope.canUnlock = false;
             $scope.user = undefined;
 
             $scope.unlock = unlock;
+
+            activate();
 
             function activate() {
                 $scope.canUnlock = userHasUnlockPermission();
@@ -24,7 +26,9 @@ function PostLockDirective(UserEndpoint, PostLockService) {
             }
 
             function unlock() {
-                PostLockService.unLockByPost($scope.post);
+                PostLockService.unlockByPost($scope.post).then(function () {
+                    $scope.post.lock = undefined;
+                });
             }
 
             function userHasUnlockPermission() {
