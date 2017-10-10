@@ -108,8 +108,8 @@ function PostDataEditorController(
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
-            FormEndpoint.get().$promise.then(function (results) {
-                $scope.forms = results.results;
+            FormEndpoint.queryFresh().$promise.then(function (results) {
+                $scope.forms = results;
             });
         }
 
