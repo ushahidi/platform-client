@@ -1,6 +1,8 @@
 <article class="postcard" role="article">
         <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
 
+        <post-locking post="post"></post-locking>
+
         <div class="postcard-body"> 
             <div ng-if="post.form">
             <h1 class="form-sheet-title survey-title">{{post.form.name}}</h1>

@@ -23,6 +23,7 @@ angular.module('ushahidi.mock', [])
 .service('DataImportEndpoint', require('./services/data-import.js'))
 .service('DataRetriever', require('./services/data-retriever.js'))
 .service('MediaEndpoint', require('./services/media.js'))
+.service('MediaEndpoint', require('./services/media.js'))
 
 .service('Features', require('./services/features.js'))
 .service('Authentication', require('./services/authentication.js'))
@@ -47,4 +48,5 @@ angular.module('ushahidi.mock', [])
 })
 
 .controller('navigation', require('./controllers/navigation.controller.mock.js'))
+.factory('socket', require('./factories/socket-factory.mock.js'))
 ;

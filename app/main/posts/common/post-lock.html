@@ -7,8 +7,8 @@
 
     <p translate-values="{{ user: user.realname}}" translate="post.locking.message">The report is locked because <strong>Seth Hall</strong> is working on it right now. Try editing a different post.</p>
 
-    <div class="button-group">
-        <button class="button button-alpha" translate="poost.locking.unlock">Unlock</button>
+    <div class="button-group" ng-show="canUnlock">
+        <button class="button button-alpha" translate="poost.locking.unlock" ng-click="unlock()">Unlock</button>
     </div>
 
 </div>

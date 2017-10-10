@@ -18,7 +18,6 @@ module.exports = [
     'Notify',
     'moment',
     'PostSurveyService',
-    'socket',
 function (
     $scope,
     $rootScope,
@@ -38,8 +37,7 @@ function (
     _,
     Notify,
     moment,
-    PostSurveyService,
-    socket
+    PostSurveyService
 ) {
     $rootScope.setLayout('layout-c');
     $scope.post = post;
@@ -58,15 +56,6 @@ function (
 
         return 'post.publish_for_everyone';
     };
-
-    // If logged in subscribe to user lock message channel
-    if ($rootScope.currentUser === null) {
-        var channel = $rootScope.currentUser + '-lock';
-        socket.on(channel, function (data) {
-            console.log('Receiving...');
-            console.log(data);
-        });
-    }
 
     $scope.stageIsComplete = function (stageId) {
         return _.includes($scope.post.completed_stages, stageId);

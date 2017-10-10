@@ -585,6 +585,7 @@
         "status_archived" : "Archived",
         "locking" : {
             "unlock" : "Unlock",
+            "lock_broken_by_other" : "Your Post has been unlocked by {{ user }}. Your unsaved changes will be lost."
             "lock_message" : "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
         },
         "modify" : {
