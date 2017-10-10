@@ -96,6 +96,11 @@ function PostDataEditorController(
         }
     });
 
+    $scope.$on('$locationChangeStart', function (e) {
+        e.preventDefault();
+        $scope.leavePost();
+    });
+
     activate();
 
     function activate() {
