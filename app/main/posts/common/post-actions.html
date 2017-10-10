@@ -1,9 +1,4 @@
 <div class="postcard-actions" dropdown>
-  <a ng-show="post.allowed_privileges.indexOf('update') !== -1" ng-click="openEditMode()" class="button-gamma button-flat hide-until-small">
-      <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
-      </svg>
-  </a>
   <button class="button-gamma button-flat init" data-toggle="dropdown-menu" dropdown-toggle>
       <svg class="iconic">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
@@ -12,8 +7,9 @@
   </button>
   <div class="dropdown-menu init" dropdown-menu>
     <ul>
-        <li ng-show="post.allowed_privileges.indexOf('update') !== -1" class="hide-when-small">
-          <a ng-show="post.allowed_privileges.indexOf('update') !== -1" ng-click="openEditMode()">
+
+        <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
+          <a ng-show="post.allowed_privileges.indexOf('update') !== -1" ng-click="openEditMode(post.id)">
               <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
               </svg>
@@ -38,7 +34,7 @@
       -->
     </ul>
     <div class="divider" ng-show="post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 "></div>
-    <ul ng-show="post.allowed_privileges.indexOf('update') !== -1 && !postLocked">
+    <ul>
       <li ng-repeat="status in statuses"
           ng-show="post.allowed_privileges.indexOf('change_status') !== -1">
         <a ng-click="updateStatus(status)">
@@ -53,7 +49,7 @@
         </a>
       </li>
 
-      <li ng-show="post.allowed_privileges.indexOf('delete') !== -1">
+      <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
         <a ng-click="deletePost()">
           <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>

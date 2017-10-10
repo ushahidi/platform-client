@@ -9,10 +9,14 @@ function PostCardDirective(FormEndpoint) {
             post:  '=',
             canSelect: '=',
             selectedPosts: '=',
-            shortContent: '@'
+            inFocus: '=',
+            shortContent: '@',
+            clickAction: '=',
+            editMode: '='
         },
         template: require('./card.html'),
         link: function ($scope) {
+
             activate();
 
             function activate() {

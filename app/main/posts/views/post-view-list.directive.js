@@ -25,7 +25,8 @@ PostListController.$inject = [
     'ConfigEndpoint',
     'moment',
     'PostFilters',
-    'PostActionsService'
+    'PostActionsService',
+    '$location'
 ];
 function PostListController(
     $scope,
@@ -38,7 +39,8 @@ function PostListController(
     ConfigEndpoint,
     moment,
     PostFilters,
-    PostActionsService
+    PostActionsService,
+    $location
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -49,8 +51,7 @@ function PostListController(
     $scope.posts = [];
     $scope.groupedPosts = {};
     $scope.order = 'desc';
-    $scope.orderBy = 'post_date';
-
+    $scope.orderby = 'post_date';
     $scope.deletePosts = deletePosts;
     $scope.hasFilters = hasFilters;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
@@ -62,15 +63,26 @@ function PostListController(
     $scope.clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.changeOrder = changeOrder;
+    $scope.goToPost = goToPost;
     activate();
 
-    // whenever the filters changes, update the current list of posts
+    // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
+    // to force the $scope.filters watcher to run
+    $scope.$watch(function () {
+        return PostFilters.reactiveFilters;
+    }, function () {
+        if (PostFilters.reactiveFilters === 'enabled') {
+            $scope.filters.reactToFilters = $scope.filters.reactToFilters ? !$scope.filters.reactToFilters : true;
+        }
+    }, true);
+    /** whenever the filters changes, update the current list of posts **/
     $scope.$watch(function () {
         return $scope.filters;
     }, function (newValue, oldValue) {
-        if (newValue !== oldValue) {
+        if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
             $scope.clearPosts = true;
             getPosts();
+            PostFilters.reactiveFilters = 'disabled';
         }
     }, true);
 
@@ -93,7 +105,7 @@ function PostListController(
 
     function changeOrder(order, orderBy) {
         $scope.order = order;
-        $scope.orderBy = orderBy;
+        $scope.orderby = orderBy;
         $scope.clearPosts = true;
         getPosts();
     }
@@ -104,7 +116,7 @@ function PostListController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage,
             order: $scope.order,
-            orderby: $scope.orderBy
+            orderby: $scope.orderby
         });
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
@@ -131,7 +143,9 @@ function PostListController(
             }
         });
     }
-
+    function goToPost(id) {
+        $location.path('/posts/' + id);
+    }
     function groupPosts(posts) {
         var now = moment(),
             yesterday = moment().subtract(1, 'days');
@@ -179,7 +193,6 @@ function PostListController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
-
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
@@ -205,9 +218,7 @@ function PostListController(
 
         $q.all(updateStatusPromises).then(function () {
             Notify.notify('notify.post.update_status_success_bulk', {count: count});
-
             clearSelectedPosts();
-
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
         })
