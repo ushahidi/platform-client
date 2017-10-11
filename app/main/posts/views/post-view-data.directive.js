@@ -145,7 +145,6 @@ function PostViewDataController(
     }
 
     function loadMore() {
-        console.log("loading?")
         // Increment page
         $scope.currentPage++;
         $scope.clearPosts = false;
@@ -153,7 +152,6 @@ function PostViewDataController(
     }
 
     function selectBulkActions() {
-        console.log("clicking bulk acitions")
         $scope.bulkActionsSelected = true;
     }
 }
