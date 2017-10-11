@@ -6,7 +6,7 @@ function PostDataEditor() {
     return {
         restrict: 'E',
         scope: {
-            postToEdit: '=',
+            postContainer: '=',
             attributesToIgnore: '=',
             postMode: '=',
             editMode: '='
@@ -63,7 +63,7 @@ function PostDataEditorController(
   ) {
 
     // Setup initial stages container
-    $scope.post = angular.copy($scope.postToEdit);
+    $scope.post = angular.copy($scope.postContainer.post);
     $scope.everyone = $filter('translate')('post.modify.everyone');
     $scope.isEdit = !!$scope.post.id;
     $scope.validationErrors = [];
@@ -318,7 +318,7 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-                $scope.postToEdit = post;
+                $scope.postContainer.post = $scope.post;
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
