@@ -29,6 +29,7 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
         $scope.clearFilters = function () {
             $scope.filtersVar = PostFilters.clearFilters();
             $scope.filtersDropdownToggle = false;
+            PostFilters.reactiveFilters = 'enabled';
         };
         $scope.enableQuery = function () {
             PostFilters.qEnabled = true;
