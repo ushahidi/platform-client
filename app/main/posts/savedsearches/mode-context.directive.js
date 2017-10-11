@@ -36,7 +36,7 @@ function SavedSearchModeContextController(
     $scope.showNotificationLink = true;
     $scope.canEdit = false;
     $scope.notification = false;
-
+    $scope.collectionView =
     $scope.saveNotification = saveNotification;
     $scope.removeNotification = removeNotification;
     $scope.editSavedSearch = editSavedSearch;
