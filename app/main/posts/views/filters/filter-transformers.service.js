@@ -7,14 +7,15 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
     var roles, users, tags, forms, savedSearches = [];
     var self = this;
     this.rawFilters = {};
+
     this.requestsFiltersData = function () {
         return $q.all([RoleEndpoint.query().$promise, UserEndpoint.query().$promise,
             TagEndpoint.query().$promise, FormEndpoint.query().$promise, SavedSearchEndpoint.query({}).$promise]).then(function (results) {
-            roles = results[0];
-            users = results[1];
-            tags = results[2];
+            roles = _.indexBy(results[0], 'name');
+            users = _.indexBy(results[1], 'id');
+            tags = _.indexBy(results[2], 'id');
             forms = _.indexBy(results[3], 'id');
-            savedSearches = results[4];
+            savedSearches = _.indexBy(results[4], 'id');
         });
     };
     this.transformers = {
