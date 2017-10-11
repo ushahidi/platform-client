@@ -1,6 +1,5 @@
-<div>
-<div class="listing timeline" id="data-view-top">
-         <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters"></post-toolbar>
+<div class="flex-container">
+    <post-toolbar is-loading="isLoading" current-view="currentView" selected-post="selectedPost" edit-mode="editMode" filters="filters"></post-toolbar>
     <!-- @DEVNOTE: ANNA this was throwing an error . <ng-transclude></ng-transclude>-->
     <button class="button-gamma button-flat" ng-click="addNewestPosts()" ng-show="newPostsCount > 0" style="position:fixed; z-index: 10000;">
         <span ng-switch on="newPostsCount">
@@ -10,15 +9,18 @@
     </button>
 
     <div class="timeline-col">
-        <post-card
+        <div class="listing timeline init">
+            <h2 class="tool-heading">{{posts.length}} of {{total}} posts</h2>
+            <post-card
                 ng-repeat="post in posts"
                 can-select="false"
                 post="post"
                 selected-posts="selectedPosts"
                 click-action="showPost"
-                in-focus="selectedPostId === post.id"
+                in-focus="selectedPostId === post.id",
+                edit-mode="editMode"
             >
-        </post-card>
+            </post-card>
 
             <button class="button-gamma button-flat" ng-click="loadMore()">Load more</button>
             <div class="listing-toolbar">
@@ -29,7 +31,7 @@
             </div>
         </div>
     </div>
-      <div class="post-col" ng-if="selectedPost">
-        <post-detail-data filters="filters" is-loading="isLoading" post="selectedPost"></post-detail-data>
-    </div>
+    <div class="post-col">
+        <post-detail-data ng-if="selectedPost && !editMode.editing" filters="filters" is-loading="isLoading" post="selectedPost"></post-detail-data>
+        <post-data-editor edit-mode="editMode" ng-if="editMode.editing" post-to-edit="selectedPost"></post-editor>
 </div>

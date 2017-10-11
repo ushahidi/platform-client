@@ -14,7 +14,7 @@
         <post-view-list ng-switch-when="list" is-loading="isLoading" filters="filters"></post-view-list>
 
         <!-- data view -->
-        <post-view-data ng-switch-when="data" is-loading="isLoading" filters="filters"></post-view-data>
+        <post-view-data ng-switch-when="data" current-view="currentView" is-loading="isLoading" filters="filters"></post-view-data>
         
         <!-- create view -->
         <post-view-create ng-switch-when="create"></post-view-create>
