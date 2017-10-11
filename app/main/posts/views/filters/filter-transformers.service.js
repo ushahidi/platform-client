@@ -13,7 +13,7 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
             roles = results[0];
             users = results[1];
             tags = results[2];
-            forms = results[3];
+            forms = _.indexBy(results[3], 'id');
             savedSearches = results[4];
         });
     };
