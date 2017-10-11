@@ -110,13 +110,13 @@
     "leaflet": "~1.0.1",
     "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.5",
-    "moment": "^2.13.0",
+    "moment": "2.18.0",
     "moment-timezone": "^0.5.4",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "v3.7.2-rc.4"
+    "ushahidi-platform-pattern-library": "v3.7.2-rc.5"
   },
   "engines": {
     "node": ">=4.0"

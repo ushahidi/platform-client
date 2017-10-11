@@ -22,14 +22,18 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
             view : 'map',
             role : []
         };
-
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = 'enabled';
+            $scope.filtersDropdownToggle = false;
         };
         $scope.clearFilters = function () {
             $scope.filtersVar = PostFilters.clearFilters();
+            $scope.filtersDropdownToggle = false;
         };
-        $scope.openSavedModal = function () {
+        $scope.enableQuery = function () {
+            PostFilters.qEnabled = true;
+        };
+        $scope.saveSavedSearchModal = function () {
             $scope.savedSearch.filter = $scope.filtersVar;
             // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
             $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;

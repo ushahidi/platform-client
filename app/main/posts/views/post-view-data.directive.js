@@ -24,6 +24,7 @@ PostViewDataController.$inject = [
 'PostViewService',
 'moment',
 '$translate',
+'Notify'
 ];
 
 function PostViewDataController(
@@ -35,6 +36,7 @@ function PostViewDataController(
     PostViewService,
     moment,
     $translate,
+    Notify
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -44,8 +46,6 @@ function PostViewDataController(
     $scope.totalItems = $scope.itemsPerPage;
     $scope.posts = [];
     $scope.groupedPosts = {};
-    $scope.order = PostFilters.getDefaults().order;
-    $scope.orderby = PostFilters.getDefaults().orderby;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
     $scope.editMode = {editing: false};
@@ -53,7 +53,10 @@ function PostViewDataController(
     $scope.bulkActionsSelected = false;
 
 
-    $rootScope.setLayout('layout-d');
+    if (PostFilters.getMode() !== 'collection' && PostFilters.getMode() !== 'savedsearch') {
+        $rootScope.setLayout('layout-d');
+    }
+
     activate();
     function activate() {
         getPosts();
@@ -79,11 +82,18 @@ function PostViewDataController(
     }
 
     function showPost(post) {
-        if (post.id !== $scope.selectedPostId) {
-            $scope.selectedPost = post;
+        // displaying warning if user is in editmode when trying to change post
+        if ($scope.editMode.editing) {
+            Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+                $scope.editMode.editing = false;
+                $scope.selectedPost = {post: post};
+                $scope.selectedPostId = post.id;
+            });
+        } else if (post.id !== $scope.selectedPostId) {
+            $scope.selectedPost = {post: post};
             $scope.selectedPostId = post.id;
         } else {
-            $scope.selectedPost = null;
+            $scope.selectedPost = {post: null};
             $scope.selectedPostId = null;
         }
     }

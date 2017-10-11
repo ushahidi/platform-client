@@ -11,6 +11,12 @@
     <filter-searchbar model="filters.q"></filter-searchbar>
     <!-- Toggle Filters show/hide -->
     <div class="searchbar-options">
+        <a class="button" ng-click="openSavedModal()">
+            <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#star"></use>
+            </svg>
+            <span class="button-label hidden" translate>app.saved</span>
+        </a>
         <a class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle" data-toggle="search-filters">
             <!-- DEVNOTE translate -->
             <sort-and-filter-counter></sort-and-filter-counter>

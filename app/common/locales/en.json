@@ -1191,9 +1191,10 @@
         "search": "Search",
         "use_current_location": "Use your current location",
         "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
-        "placeholder":"Find a location..",
+        "placeholder":"Search for addresses, place names, or coordinates...",
         "search_results": "Search results",
-        "error":"Sorry we could not find a location matching your search"
+        "error":"Sorry we could not find a location matching your search",
+        "coordinates_tooltip": "Example Coordinates"
     },
     "notification": {
         "title": "Notifications",

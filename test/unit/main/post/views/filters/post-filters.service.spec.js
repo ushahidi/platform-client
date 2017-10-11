@@ -35,7 +35,11 @@ describe('Post Filters Service', function () {
             var filters = PostFilters.getActiveFilters(PostFilters.getFilters());
             expect(filters.tags).toEqual(['test']);
         });
-
+        it('getCleanActiveFilters should return only the difference between the default filters and the currently set filters', function () {
+            PostFilters.setFilters({ tags : ['test']});
+            var filters = PostFilters.getCleanActiveFilters(PostFilters.getFilters());
+            expect(filters).toEqual({tags: ['test']});
+        });
         it('should return status filter if different from defaults', function () {
             var filters = PostFilters.getActiveFilters({ status: ['draft'] });
             expect(filters.status).toEqual(['draft']);
