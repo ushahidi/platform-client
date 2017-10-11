@@ -338,15 +338,24 @@
                 <label class="tgl-btn" for="task-required-{{task.id}}" ng-attr-id="{{ 'task-required-label-' + task.id }}"></label>
             </div>
         </div>
-          <div class="form-field switch checked">
-              <label translate="survey.show_this_task_to">Show this task to everyone when published</label>
-              <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
-              <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
-                  <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
+        <div class="form-field switch checked">
+            <label translate="survey.internal_use_task">Task is only for internal use</label>
+            <!-- todo show list of roles with correct permission for clarity in message below-->
+            <p data-fieldgroup-target="internal_only-message" class="active" ng-show="task.task_is_internal_only" translate="survey.internal_use_task_desc">This task will only be visible to User who have Manage Post permission.</p>
+            <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
+                <input class="tgl init" ng-attr-id="{{ 'internal_only-' + task.id }}" type="checkbox" data-fieldgroup-toggle="internal_only-message" ng-model="task.task_is_internal_only">
+                <label class="tgl-btn" for="internal_only-{{task.id}}" ng-attr-id="{{ 'internal_only-label-' + task.id }}"></label>
+            </div>
+        </div>
+        <div class="form-field switch checked">
+            <label translate="survey.show_this_task_to">Show this task to everyone when published</label>
+            <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
+            <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
+                <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
 
-                  <label class="tgl-btn" for="show_section-{{task.id}}" ng-attr-id="{{ 'show_section-label-' + task.id }}"></label>
-              </div>
-          </div>
+                <label class="tgl-btn" for="show_section-{{task.id}}" ng-attr-id="{{ 'show_section-label-' + task.id }}"></label>
+            </div>
+        </div>
 
           <!-- <fieldset>
             <legend translate="survey.who_can_contribute_to_section">Who can contribute to fields in this section</legend>
