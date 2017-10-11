@@ -149,8 +149,8 @@ function PostDataEditorController(
     function loadData() {
 
         var requests = [
-            FormStageEndpoint.queryFresh({ formId: $scope.post.id }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.post.id }).$promise,
+            FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
+            FormAttributeEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
             TagEndpoint.queryFresh().$promise
         ];
 

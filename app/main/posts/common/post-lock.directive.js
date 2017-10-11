@@ -1,7 +1,7 @@
 module.exports = PostLockDirective;
 
-PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', 'Notify'];
-function PostLockDirective(UserEndpoint, PostLockService, Notify) {
+PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', 'Notify', '$rootScope'];
+function PostLockDirective(UserEndpoint, PostLockService, Notify, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -16,6 +16,8 @@ function PostLockDirective(UserEndpoint, PostLockService, Notify) {
 
             $scope.unlock = unlock;
 
+            $scope.showLockMessage = showLockMessage;
+
             activate();
 
             function activate() {
@@ -23,6 +25,10 @@ function PostLockDirective(UserEndpoint, PostLockService, Notify) {
                 UserEndpoint.get({id: $scope.post.lock.user_id}).$promise.then(function (result) {
                     $scope.user = result;
                 });
+            }
+
+            function showLockMessage() {
+                PostLockService.isPostLockedForCurrentUser($scope.post);
             }
 
             function unlock() {

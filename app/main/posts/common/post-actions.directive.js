@@ -50,14 +50,17 @@ function PostActionsDirective(
                 }
             });
         }
-        function openEditMode(id) {
 
+        function editEnabled() {
+            return !PostLockService.isPostLockedForCurrentUser($scope.post);
+        }
+
+        function openEditMode(id) {
             // Ensure Post is not locked before proceeding
-            if ($scope.post.lock) {
+            if (editEnabled) {
                 Notify.error('post.already_locked');
                 return;
             }
-
             if ($location.path() !== '/views/data') {
                 $location.path('/posts/' + id + '/edit');
             } else {

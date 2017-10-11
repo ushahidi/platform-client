@@ -16,11 +16,12 @@ function PostToolbarDirective() {
     };
 }
 
-PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify'];
-function PostToolbarController($scope, $rootScope, Notify) {
+PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService'];
+function PostToolbarController($scope, $rootScope, Notify, PostLockService) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
+    $scope.editEnabled = !PostLockService.isPostLockedForCurrentUser($scope.selectedPost);
 
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');

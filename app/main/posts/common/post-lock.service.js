@@ -23,7 +23,8 @@ function PostLockService(
         unlock: unlock,
         unlockByPost: unlockByPost,
         getLock: getLock,
-        createSocketListener: createSocketListener
+        createSocketListener: createSocketListener,
+        isPostLockedForCurrentUser: isPostLockedForCurrentUser
     };
 
     function activate() {
@@ -40,6 +41,16 @@ function PostLockService(
                 });
             }
         }
+    }
+
+    function isPostLockedForCurrentUser(post) {
+        // We only wish to show the lock message when the Current User
+        // is different from the User who owns the lock
+        if ($rootScope.currentUser) {
+            return $rootScope.currentUser.id !== post.lock.user_id;
+        }
+
+        return false;
     }
 
     function unlock(lock) {
