@@ -129,11 +129,11 @@ function PostEditorController(
 
         return $q.all(requests).then(function (results) {
 
-            if ($scope.post.id && !results[3].id) {
+            if ($scope.post.id && !results[3]) {
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                $location.url('/posts/' + post.id);
+                $location.url('/posts/' + $scope.post.id);
             }
 
             var post = $scope.post;
