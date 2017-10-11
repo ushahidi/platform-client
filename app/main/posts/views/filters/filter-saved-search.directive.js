@@ -13,6 +13,9 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
 
     function FilterSavedSearchLink(scope, element, attrs, ngModel) {
         scope.selectedSavedSearch = null;
+        scope.searches = [];
+        scope.searchesLength = 0;
+
         function activate() {
             ngModel.$render = renderModelValue;
             if (ngModel.$viewValue.length > 0) {
@@ -38,6 +41,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
                     return search.featured || isOwner;
                 });
                 scope.searches = _.indexBy(searchesTmp, 'id');
+                scope.searchesLength = _.keys(scope.searches).length;
             }).then(function () {
                 activate();
             });
