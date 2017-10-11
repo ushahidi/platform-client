@@ -55,6 +55,7 @@ function PostActionsDirective(
             // Ensure Post is not locked before proceeding
             if ($scope.post.lock) {
                 Notify.error('post.already_locked');
+                return;
             }
 
             if ($location.path() !== '/views/data') {

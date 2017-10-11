@@ -45,7 +45,7 @@ function PostLockService(
     function unlock(lock) {
         PostLockEndpoint.unlock(lock).$promise.then(function () {
             Notify.success('post.locking.unlocked');
-        });
+        }, handleFailure);
     }
 
     function unlockByPost(post) {
@@ -54,6 +54,9 @@ function PostLockService(
         PostLockEndpoint.unlockByPost({post_id: post.id}).$promise.then(function () {
             Notify.success('post.locking.unlocked');
             deferred.resolve();
+        }, function (errorResponse) {
+            handleFailure(errorResponse);
+            deferred.reject(errorResponse);
         });
 
         return deferred.promise;
@@ -62,6 +65,10 @@ function PostLockService(
     function getLock(post) {
         PostLockEndpoint.unlock({post_id: post.id}).$promise.then(function () {
             Notify.success('post.locking.locked');
-        });
+        }, handleFailure);
+    }
+
+    function handleFailure(errorResponse) {
+        Notify.apiErrors(errorResponse);
     }
 }
