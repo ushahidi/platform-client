@@ -192,6 +192,8 @@
 
     "survey": {
         "delete_task" : "Delete task",
+        "internal_use_task" : "Task is only for internal use",
+        "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "duplicate_task" : "Duplicate task",
         "show_this_task_to" : "Show this task to everyone when published",
         "show_this_task_to_desc" : "When a survey response is published, data from this task will be displayed.",
@@ -499,6 +501,8 @@
         "data" : "Data"
     },
     "post": {
+        "see_more_plural" : "See {{newPostsCount}} new posts",
+        "see_more_singular" : "See {{newPostsCount}} new post",
         "add_to_form" : "Add to {{form}}",
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
