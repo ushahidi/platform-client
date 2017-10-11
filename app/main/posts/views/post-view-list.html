@@ -1,6 +1,13 @@
-<div class="main-col">
+<div class="main-col" id='post-list-view-top'>
 
-    <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
+    <button class="button-gamma button-flat" ng-click="addNewestPosts()" ng-show="newPostsCount > 0" style="position:fixed; z-index: 10000;">
+      <span ng-switch on="newPostsCount">
+        <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
+        <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
+      </span>
+    </button>
+
+      <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
 
         <h2 class="listing-heading-section" ng-repeat-start="(timeAgo, posts) in groupedPosts">
             {{ timeAgo }}
