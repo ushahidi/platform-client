@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['FormEndpoint'];
-function PostCardDirective(FormEndpoint) {
+PostCardDirective.$inject = ['FormEndpoint', '$rootScope'];
+function PostCardDirective(FormEndpoint, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -16,7 +16,9 @@ function PostCardDirective(FormEndpoint) {
         },
         template: require('./card.html'),
         link: function ($scope) {
-
+            $rootScope.$on('bulkActionsSelected:true', function () {
+                $scope.canSelect = true;
+            });
             activate();
 
             function activate() {

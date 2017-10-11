@@ -23,7 +23,7 @@ PostViewDataController.$inject = [
 'PostEndpoint',
 'PostViewService',
 'moment',
-'$translate'
+'$translate',
 ];
 
 function PostViewDataController(
@@ -34,7 +34,7 @@ function PostViewDataController(
     PostEndpoint,
     PostViewService,
     moment,
-    $translate
+    $translate,
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -153,5 +153,6 @@ function PostViewDataController(
 
     function selectBulkActions() {
         $scope.bulkActionsSelected = true;
+        $rootScope.$broadcast('bulkActionsSelected:true');
     }
 }
