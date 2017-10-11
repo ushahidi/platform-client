@@ -37,7 +37,7 @@ function PostViewDataController(
     moment,
     $translate,
     Notify
-) {
+ ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
     $scope.itemsPerPageOptions = [10, 20, 50];
