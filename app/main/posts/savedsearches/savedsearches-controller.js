@@ -19,6 +19,7 @@ module.exports = [
     ) {
         // Set view based on route or set view
         $scope.currentView = function () {
+            console.log(savedSearch);
             return $routeParams.view || savedSearch.view;
         };
 

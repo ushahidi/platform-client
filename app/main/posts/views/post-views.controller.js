@@ -4,7 +4,9 @@ PostViewsController.$inject = ['$scope', '$translate', '$routeParams', 'PostFilt
 function PostViewsController($scope, $translate, $routeParams, PostFilters) {
     // Set view and layout based out route
     $scope.currentView = $routeParams.view;
-    $scope.layout = $routeParams.view === 'data' ? 'd' : 'a';
+    console.log($scope.currentView);
+    var viewLayouts = {'data': 'd', 'list': 'a', 'map': 'a'};
+    $scope.layout = viewLayouts[$routeParams.view];
     // Set the page title
     $translate('post.posts').then(function (title) {
         $scope.title = title;
