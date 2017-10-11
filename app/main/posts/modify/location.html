@@ -3,7 +3,7 @@
     <div id="{{id}}-map" class="map" style="height: 265px; width: 100%;"></div>
     <form class="searchbar">
         <div class="searchbar-input init" role="search"> 
-            <div class="form-field">
+            <div class="form-field tooltip">
                 <input name="{{name}}" 
                     type="search" 
                     maxlength="250" 
@@ -12,6 +12,7 @@
                     ng-focus="showSearchResults()" 
                     ng-keydown="handleActiveSearch($event)"
                 />
+                <span class="bug"><span translate="location.coordinates_tooltip">Example Coordinates</span>: -1.2832533, 36.8172449</span>
             </div>
             <div id="searchbar-results" class="searchbar-results dropdown-menu init">
                 <div class="form-field">
