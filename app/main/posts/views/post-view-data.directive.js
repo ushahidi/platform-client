@@ -23,7 +23,8 @@ PostViewDataController.$inject = [
 'PostEndpoint',
 'PostViewService',
 'moment',
-'$translate'
+'$translate',
+'Notify'
 ];
 
 function PostViewDataController(
@@ -34,7 +35,8 @@ function PostViewDataController(
     PostEndpoint,
     PostViewService,
     moment,
-    $translate
+    $translate,
+    Notify
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -77,11 +79,18 @@ function PostViewDataController(
     }
 
     function showPost(post) {
-        if (post.id !== $scope.selectedPostId) {
-            $scope.selectedPost = post;
+        // displaying warning if user is in editmode when trying to change post
+        if ($scope.editMode.editing) {
+            Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+                $scope.editMode.editing = false;
+                $scope.selectedPost = {post: post};
+                $scope.selectedPostId = post.id;
+            });
+        } else if (post.id !== $scope.selectedPostId) {
+            $scope.selectedPost = {post: post};
             $scope.selectedPostId = post.id;
         } else {
-            $scope.selectedPost = null;
+            $scope.selectedPost = {post: null};
             $scope.selectedPostId = null;
         }
     }
