@@ -268,8 +268,8 @@ function PostListController(
             existingFilters.date_after = mostRecentPostDate;
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
-                order: $scope.order,
-                orderby: $scope.orderBy
+                order: $scope.filters.order,
+                orderby: $scope.filters.orderby
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
