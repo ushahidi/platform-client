@@ -8,7 +8,8 @@ function PostDetailData() {
         scope: {
             filters: '=',
             isLoading: '=',
-            post: '='
+            post: '=',
+            editMode: '='
         },
         controller: PostDetailDataController,
         template: require('./post-detail-data.html')
