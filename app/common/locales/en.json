@@ -501,6 +501,8 @@
         "data" : "Data"
     },
     "post": {
+        "see_more_plural" : "See {{newPostsCount}} new posts",
+        "see_more_singular" : "See {{newPostsCount}} new post",
         "add_to_form" : "Add to {{form}}",
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
@@ -1193,9 +1195,10 @@
         "search": "Search",
         "use_current_location": "Use your current location",
         "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
-        "placeholder":"Find a location..",
+        "placeholder":"Search for addresses, place names, or coordinates...",
         "search_results": "Search results",
-        "error":"Sorry we could not find a location matching your search"
+        "error":"Sorry we could not find a location matching your search",
+        "coordinates_tooltip": "Example Coordinates"
     },
     "notification": {
         "title": "Notifications",

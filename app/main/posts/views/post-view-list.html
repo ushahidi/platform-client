@@ -1,6 +1,13 @@
-<div class="main-col">
+<div class="main-col" id='post-list-view-top'>
 
-    <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
+    <button class="button-gamma button-flat" ng-click="addNewestPosts()" ng-show="newPostsCount > 0" style="position:fixed; z-index: 10000;">
+      <span ng-switch on="newPostsCount">
+        <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
+        <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
+      </span>
+    </button>
+
+      <div class="listing timeline" ng-class="{ 'toolbar-active' : selectedPosts.length > 0 }">
 
         <h2 class="listing-heading-section" ng-repeat-start="(timeAgo, posts) in groupedPosts">
             {{ timeAgo }}
@@ -11,7 +18,7 @@
             can-select="userHasBulkActionPermissions()"
             post="post"
             selected-posts="selectedPosts"
-            click-action="goToPost(post.id)"
+            click-action="goToPost"
         >
         </post-card>
 
@@ -66,7 +73,11 @@
 
         </listing-toolbar>
 
-        <post-timeline-toolbox order="order" order-by="orderBy" on-change="changeOrder(order, orderBy)"></post-timeline-toolbox>
+        <!--Leaving here as a reference of when the post-timeline-toolbox can be added and how
+        <post-timeline-toolbox filters="filters"></post-timeline-toolbox>
+        this was discussed with Jess about removing it to avoid confusion with filters being applied in
+        non reactive ways + reactive ways in the same screen
+        -->
 
         <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
             <h4 translate>post.no_search_results</h4>
