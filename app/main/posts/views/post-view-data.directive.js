@@ -44,13 +44,14 @@ function PostViewDataController(
     $scope.totalItems = $scope.itemsPerPage;
     $scope.posts = [];
     $scope.groupedPosts = {};
-    $scope.order = PostFilters.getDefaults().order;
-    $scope.orderby = PostFilters.getDefaults().orderby;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
     $scope.editMode = {editing: false};
 
-    $rootScope.setLayout('layout-d');
+    if (PostFilters.getMode() !== 'collection' && PostFilters.getMode() !== 'savedsearch') {
+        $rootScope.setLayout('layout-d');
+    }
+
     activate();
     function activate() {
         getPosts();

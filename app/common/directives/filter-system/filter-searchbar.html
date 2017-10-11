@@ -14,7 +14,7 @@
 
     <div class="searchbar-results dropdown-menu" ng-class="{active: (searchResultsVisible && form.q.$viewValue.length > 0) }">
         <div class="form-field">
-            <button type="submit" class="button-plain">
+            <button class="button-plain" ng-click="enableQuery()">
                 <span class="button-label">
                     <span translate-values="{ entity: entityType }" translate>
                         toolbar.searchbar.search_all_entities_for
