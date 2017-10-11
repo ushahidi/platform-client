@@ -26,7 +26,7 @@ PostViewDataController.$inject = [
 '$translate',
 'Notify',
 '$q',
-'PostActionsService',
+'PostActionsService'
 ];
 
 function PostViewDataController(
@@ -41,7 +41,6 @@ function PostViewDataController(
     Notify,
     $q,
     PostActionsService
-
  ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -64,9 +63,6 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    
-    
-
 
     if (PostFilters.getMode() !== 'collection' && PostFilters.getMode() !== 'savedsearch') {
         $rootScope.setLayout('layout-d');
