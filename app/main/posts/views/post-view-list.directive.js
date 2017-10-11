@@ -107,6 +107,10 @@ function PostListController(
         $scope.order = order;
         $scope.orderby = orderBy;
         $scope.clearPosts = true;
+
+        $scope.filters.order = order;
+        $scope.filters.orderby = orderBy;
+
         getPosts();
     }
 
@@ -114,9 +118,7 @@ function PostListController(
         query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-            limit: $scope.itemsPerPage,
-            order: $scope.order,
-            orderby: $scope.orderby
+            limit: $scope.itemsPerPage
         });
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {

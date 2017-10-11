@@ -25,7 +25,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getMode: getMode,
         getModeId: getModeId,
         countFilters: countFilters,
-        reactiveFilters: 'enabled'
+        reactiveFilters: 'enabled',
+        qEnabled: false
     };
 
 
@@ -193,7 +194,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         // If mode changes, reset filters
         if (newMode !== filterMode) {
             filterMode = newMode;
-            clearFilters();
+            if (filterMode === 'collection') {
+                clearFilters();
+            }
+
         }
         entityId = id;
     }
