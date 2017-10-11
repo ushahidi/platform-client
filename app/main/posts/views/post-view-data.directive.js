@@ -25,7 +25,7 @@ PostViewDataController.$inject = [
 'moment',
 '$translate',
 '$q',
-'PostActionsService'
+'PostActionsService',
 '$timeout',
 '$location',
 '$anchorScroll',
@@ -213,7 +213,7 @@ function PostViewDataController(
         })
         ;
     }
- 
+
     function createPostGroups(posts) {
         var now = moment(),
             yesterday = moment().subtract(1, 'days');
@@ -274,7 +274,8 @@ function PostViewDataController(
         return _.any($scope.posts, function (post) {
             return _.intersection(post.allowed_privileges, ['update', 'delete', 'change_status']).length > 0;
         });
-      
+    }
+
     function getNewPosts() {
         var existingFilters = PostFilters.getQueryParams($scope.filters);
         var filterDate = moment(existingFilters.date_before).format('MMM Do YY');
