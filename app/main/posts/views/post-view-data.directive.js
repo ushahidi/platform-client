@@ -198,7 +198,7 @@ function PostViewDataController(
         $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
         $scope.recentPosts = [];
         $scope.newPostsCount = 0;
-        $location.hash('post-list-view-top');
+        $location.hash('post-data-view-top');
         $anchorScroll();
     }
 
