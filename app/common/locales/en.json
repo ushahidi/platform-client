@@ -70,6 +70,7 @@
         "color" : "Color",
         "search_users" : "Search users",
         "searching" : "Searching",
+        "show_hide": "Show/Hide",
         "fields" : "Fields",
         "filter_by" :"Filter by...",
         "apply_filters" : "Apply filters",
@@ -83,6 +84,9 @@
         "survey_web_address" : "Your survey's web address",
         "default_value" : "Default value",
         "fields" : "Fields",
+        "select_one": "Select One",
+        "sort_and_filter": "Sort & filter",
+        "saved_search": "Saved Search",
         "tasks" : "Tasks",
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
@@ -94,7 +98,7 @@
         "who_can_see_this" : "Who can see this?",
         "add" : "Add",
         "add_new_category" : "+ Add new category",
-        "sort_by": "Sort By",
+        "sort_by": "Sort By ...",
         "newest_first": "Newest first",
         "oldest_first": "Oldest first"
     },
@@ -302,7 +306,40 @@
             "all_collections" : "All Collections",
             "search_collections" : "Search Collections"
         },
+        "sort": {
+            "order": {
+                "filter_type_tag": "Order",
+                "desc": "Newest first",
+                "asc": "Oldest first"
+            },
+            "orderby": {
+                "post_date": "Post Date",
+                "created": "Date created",
+                "updated": "Date updated"
+            },
+            "unlockedOnTop": {
+                "filter_type_tag": "Unlocked posts on top"
+            }
+        },
         "filter_tabs" : {
+            "order": "Order",
+            "order_group": {
+                "orderby": {
+                    "post_date": "Post Date",
+                    "created": "Date created",
+                    "updated": "Date updated"
+                },
+                "order": {
+                    "desc": "Newest first",
+                    "asc": "Oldest first"
+                },
+                "unlocked_on_top_yes": "Yes",
+                "unlocked_on_top_no": "No"
+            },
+            "orderby" : "Order by",
+            "order_unlocked_on_top": "Unlocked posts on top",
+            "savedsearch": "Saved Search",
+            "saved_search": "Saved Search",
             "q": "Keyword",
             "created_after": "Start date",
             "created_before": "End date",
@@ -611,6 +648,7 @@
             "SMS": "SMS"
         },
         "valid" : {
+            "no_changes" : "You haven’t made any changes",
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
             "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
             "title" : {
@@ -1020,7 +1058,8 @@
         "generic" : {
             "okay" : "Ok",
             "alerts": "Alerts",
-            "confirm": "Confirmation"
+            "confirm": "Confirmation",
+            "save" : "Save"
         },
         "login" : {
             "failed" : "Login failed, check your email and password."
@@ -1051,7 +1090,10 @@
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
             "stage_save_success" : "Updated {{stage}}",
             "export" : "This will export filtered posts. Are you sure you want to continue?",
-            "update_status_success_bulk" : "Status updated for {{count}} posts"
+            "update_status_success_bulk" : "Status updated for {{count}} posts",
+            "leave_without_save" : "Do you want to leave this report without saving?",
+            "leave_confirm_message" : "If you continue, all of your changes will be lost",
+            "leave_confirm" : "Continue without saving"
         },
         "category" : {
             "save_success" : "Saved category {{name}}",

@@ -11,6 +11,7 @@
             can-select="userHasBulkActionPermissions()"
             post="post"
             selected-posts="selectedPosts"
+            click-action="goToPost(post.id)"
         >
         </post-card>
 
@@ -68,11 +69,11 @@
         <post-timeline-toolbox order="order" order-by="orderBy" on-change="changeOrder(order, orderBy)"></post-timeline-toolbox>
 
         <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
-            <h4 translate>post.no_search_results</h5>
+            <h4 translate>post.no_search_results</h4>
         </div>
 
         <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading.state">
-            <h4 translate>post.no_posts_yet</h5>
+            <h4 translate>post.no_posts_yet</h4>
         </div>
 
         <div class="listing-item" ng-if="posts.length > 0 || isLoading.state">
