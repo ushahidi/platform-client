@@ -6,7 +6,7 @@ function PostDataEditor() {
     return {
         restrict: 'E',
         scope: {
-            postToEdit: '=',
+            postContainer: '=',
             attributesToIgnore: '=',
             postMode: '=',
             editMode: '='
@@ -67,7 +67,7 @@ function PostDataEditorController(
   ) {
 
     // Setup initial stages container
-    $scope.post = angular.copy($scope.postToEdit);
+    $scope.post = angular.copy($scope.postContainer.post);
     $scope.everyone = $filter('translate')('post.modify.everyone');
     $scope.isEdit = !!$scope.post.id;
     $scope.validationErrors = [];
@@ -89,6 +89,7 @@ function PostDataEditorController(
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
+    $scope.selectForm = selectForm;
 
     $rootScope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
@@ -103,9 +104,35 @@ function PostDataEditorController(
         }
     });
 
+    $scope.$on('$locationChangeStart', function (e) {
+        e.preventDefault();
+        $scope.leavePost();
+    });
+
     activate();
 
     function activate() {
+        if ($scope.post.form) {
+            $scope.selectForm();
+        } else {
+            FormEndpoint.queryFresh().$promise.then(function (results) {
+                $scope.forms = results;
+            });
+        }
+
+        $scope.medias = {};
+        $scope.savingText = $translate.instant('app.saving');
+        $scope.submittingText = $translate.instant('app.submitting');
+      
+        if ($scope.post.id) {
+            PostLockService.createSocketListener();
+        }
+    }
+
+    function setVisibleStage(stageId) {
+        $scope.visibleStage = stageId;
+    }
+    function selectForm() {
         $scope.form = $scope.post.form;
         $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
@@ -117,18 +144,6 @@ function PostDataEditorController(
                 }
             });
         });
-
-        $scope.medias = {};
-        $scope.savingText = $translate.instant('app.saving');
-        $scope.submittingText = $translate.instant('app.submitting');
-
-        if ($scope.post.id) {
-            PostLockService.createSocketListener();
-        }
-    }
-
-    function setVisibleStage(stageId) {
-        $scope.visibleStage = stageId;
     }
 
     function loadData() {
@@ -338,7 +353,7 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-                $scope.postToEdit = post;
+                $scope.postContainer.post = $scope.post;
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
