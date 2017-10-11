@@ -145,8 +145,8 @@ function PostListController(
             }
         });
     }
-    function goToPost(id) {
-        $location.path('/posts/' + id);
+    function goToPost(post) {
+        $location.path('/posts/' + post.id);
     }
     function groupPosts(posts) {
         var now = moment(),
