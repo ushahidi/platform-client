@@ -11,25 +11,17 @@ function PostTimelineToolboxDirective(
     return {
         restrict: 'E',
         scope: {
-            orderBy: '<',
-            order: '<',
-            onChange: '&'
+            filters: '='
         },
         template: require('./post-timeline-toolbox.html'),
         link: PostTimelineToolboxLink
     };
 
     function PostTimelineToolboxLink($scope) {
-        $scope.change = change;
-
         activate();
 
         function activate() {
 
-        }
-
-        function change() {
-            $scope.onChange({order: $scope.order, orderBy: $scope.orderBy});
         }
     }
 }

@@ -3,7 +3,7 @@
         <div class="form-field filter-buttons">
             <div ng-show="filtersVar.q.length > 0" ng-class="{active: (filtersVar.q.length > 0) }">
                 <div ng-class="{active: (filtersVar.q.length > 0) , 'form-field': 'form-field'}">
-                    <button type="submit" class="button-plain">
+                    <button class="button-plain" ng-click="enableQuery()">
                         <span class="button-label">
                             <span translate-values="{ entity: entityType }" translate>
                                 toolbar.searchbar.search_all_entities_for
@@ -18,7 +18,7 @@
             <post-active-search-filters ng-model="filtersVar" filters-var="filtersVar"></post-active-search-filters>
         </div>
         <div class="form-field">
-            <button type="button" class="button button-alpha button-right" ng-click="openSavedModal()">Save search</button>
+            <button type="button" class="button button-alpha button-right" ng-click="saveSavedSearchModal()">Save search</button>
         </div>
         <div class="divider"></div>
         <!-- sorting options -->

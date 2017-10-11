@@ -1,4 +1,4 @@
-describe('post active filters directive', function () {
+describe('post active search filters directive', function () {
 
     var $rootScope,
         $scope,
@@ -6,16 +6,17 @@ describe('post active filters directive', function () {
         PostFilters,
         Notify,
         SavedSearchEndpoint,
-        element;
-
+        element,
+        $compile;
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
 
         var testApp = makeTestApp();
 
-        testApp.directive('postActiveFilters', require('app/main/posts/views/filters/active-filters.directive'))
+        testApp.directive('postActiveSearchFilters', require('app/main/posts/views/filters/active-search-filters.directive'))
         .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
+        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';
@@ -24,20 +25,36 @@ describe('post active filters directive', function () {
 
         angular.mock.module('testApp');
     });
-
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_, _SavedSearchEndpoint_) {
+    var defaults = {
+        q: '',
+        date_after: '',
+        date_before: '',
+        status: ['published', 'draft'],
+        published_to: '',
+        center_point: '',
+        has_location: 'all',
+        within_km: '1',
+        current_stage: [],
+        tags: [],
+        saved_search: '',
+        orderby: 'created',
+        order: 'desc',
+        order_unlocked_on_top: 'true',
+        form: [1, 2, 3, 4],
+        set: [],
+        user: false,
+        source: ['sms', 'twitter','web', 'email']
+    };
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _PostFilters_, _SavedSearchEndpoint_) {
+        $compile = _$compile_;
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         SavedSearchEndpoint = _SavedSearchEndpoint_;
         PostFilters = _PostFilters_;
         Notify = _Notify_;
-
-        $scope.filters = {
-            status: 'published',
-            published_to: ''
-        };
-
-        element = '<post-active-filters></post-active-filters>';
+        $rootScope.filters = defaults;
+        $scope.filters = defaults;
+        element = '<post-active-search-filters ng-model="$scope.filters"></post-active-search-filters>';
         element = $compile(element)($scope);
         $scope.$digest();
         directiveScope = element.scope();
@@ -76,6 +93,20 @@ describe('post active filters directive', function () {
 
             expect(PostFilters.clearFilter).toHaveBeenCalled();
         });
-
+    });
+    describe('test clean filters', function () {
+        it ('should show the clean active search filters, which are different from their default value', function () {
+            spyOn(PostFilters, 'getActiveFilters').and.callThrough();
+            spyOn(PostFilters, 'getCleanActiveFilters').and.callThrough();
+            var elementDir = '<post-active-search-filters ng-model="$scope.filters"></post-active-search-filters>';
+            elementDir = $compile(elementDir)($scope);
+            var directiveScopeTest = elementDir.scope();
+            var newDefaults = defaults;
+            newDefaults.source = ['sms'];
+            PostFilters.setFilters(newDefaults);
+            $scope.$digest();
+            expect(PostFilters.getCleanActiveFilters).toHaveBeenCalled();
+            expect(directiveScopeTest.activeFilters).toEqual({source: ['sms'], form: [1,2,3,4]});
+        });
     });
 });
