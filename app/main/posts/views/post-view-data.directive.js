@@ -59,9 +59,7 @@ function PostViewDataController(
     $scope.addNewestPosts = addNewestPosts;
     $scope.editMode = {editing: false};
 
-    if (PostFilters.getMode() !== 'collection' && PostFilters.getMode() !== 'savedsearch') {
-        $rootScope.setLayout('layout-d');
-    }
+    $rootScope.setLayout('layout-d');
 
     activate();
     function activate() {

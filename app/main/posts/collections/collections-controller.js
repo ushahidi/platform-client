@@ -15,9 +15,12 @@ module.exports = [
         UserEndpoint,
         _
     ) {
+
         // Add set to the scope
         $scope.collection = collection;
         $scope.currentView = currentView;
+        var viewLayouts = {'data': 'd', 'list': 'a', 'map': 'a'};
+        $scope.layout = viewLayouts[$scope.currentView()];
 
         activate();
 
