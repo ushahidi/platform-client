@@ -85,7 +85,7 @@ function PostViewDataController(
                 PostFilters.reactiveFilters = 'disabled';
             }
         }, true);
-        checkForNewPosts(5000);
+        checkForNewPosts(30000);
     }
 
     function showPost(post) {
