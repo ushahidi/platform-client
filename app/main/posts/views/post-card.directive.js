@@ -19,6 +19,9 @@ function PostCardDirective(FormEndpoint, $rootScope) {
             $rootScope.$on('bulkActionsSelected:true', function () {
                 $scope.canSelect = true;
             });
+            $rootScope.$on('bulkActionsSelected:false', function () {
+                $scope.canSelect = false;
+            });
             activate();
 
             function activate() {
