@@ -150,8 +150,8 @@ function PostListController(
 
         // $timeout(getNewPosts, 5000);
     }
-    function goToPost(id) {
-        $location.path('/posts/' + id);
+    function goToPost(post) {
+        $location.path('/posts/' + post.id);
     }
 
     function createPostGroups(posts) {

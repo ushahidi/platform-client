@@ -180,8 +180,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             });
         }
 
-        function goToPost(id) {
-            $location.path('/posts/' + id);
+        function goToPost(post) {
+            $location.path('/posts/' + post.id);
         }
 
         function onEachFeature(feature, layer) {
@@ -201,7 +201,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         var scope = $rootScope.$new();
                         scope.post = details;
                         scope.goToPost = goToPost;
-                        var el = $compile('<post-card post="post" short-content="true" click-action="goToPost(post.id)"></post-card>')(scope);
+                        var el = $compile('<post-card post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
 
                         layer.bindPopup(el[0], {
                             'minWidth': '300',
