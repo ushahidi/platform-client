@@ -1,30 +1,7 @@
 <div class="flex-container" id='post-data-view-top'>
     <post-toolbar is-loading="isLoading" current-view="currentView" selected-post="selectedPost.post" edit-mode="editMode" filters="filters"></post-toolbar>
-    <button class="button-gamma button-flat" ng-click="addNewestPosts()" ng-show="newPostsCount > 0" style="position:fixed; z-index: 10000;">
-        <span ng-switch on="newPostsCount">
-            <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
-            <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
-        </span>
-    </button>
     <div class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
-        <div class="listing timeline init">
-        <div class="bulk-action" ng-if="posts.length > 0 || !isLoading.state">
-            <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
-            <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
-        </div>
-            <post-card
-                ng-repeat="post in posts"
-                can-select="bulkActionsSelected"
-                post="post.id === selectedPostId ? selectedPost.post : post"
-                selected-posts="selectedPosts"
-                click-action="showPost"
-                in-focus="selectedPostId === post.id",
-                edit-mode="editMode"
-            >
-            </post-card>
-
-
-            <listing-toolbar
+                <listing-toolbar
             entities="posts"
             selected-set="selectedPosts"
           >
@@ -60,7 +37,7 @@
                 <span class="button-label hidden">nav.delete</span>
               </button>
 
-              <button href="" ng-click="closeBulkActions()" class="button-beta button-flat toolbar-close-button">
+              <button href="" ng-click="closeBulkActions()" class="button-link toolbar-close-button">
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
                 </svg>
@@ -68,6 +45,32 @@
             </button>
 
         </listing-toolbar>
+        <div class="listing timeline init">
+        <div class="bulk-action" ng-if="posts.length > 0 || !isLoading.state">
+            <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
+            <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
+        </div>
+        <div class="button-group">
+            <button class="button button-beta button-flat full-width" ng-click="addNewestPosts()" ng-show="newPostsCount > 0">
+                <span ng-switch on="newPostsCount">
+                    <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
+                    <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
+                </span>
+            </button>
+        </div>
+            <post-card
+                ng-repeat="post in posts"
+                can-select="bulkActionsSelected"
+                post="post.id === selectedPostId ? selectedPost.post : post"
+                selected-posts="selectedPosts"
+                click-action="showPost"
+                in-focus="selectedPostId === post.id",
+                edit-mode="editMode"
+            >
+            </post-card>
+
+
+
 
             <!-- <listing-toolbar></listing-toolbar> -->
             <!-- <div class="listing-toolbar">
