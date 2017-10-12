@@ -5,14 +5,16 @@ PostActionsDirective.$inject = [
     'Notify',
     '$location',
     '$route',
-    'PostActionsService'
+    'PostActionsService',
+    'PostLockService'
 ];
 function PostActionsDirective(
     PostEndpoint,
     Notify,
     $location,
     $route,
-    PostActionsService
+    PostActionsService,
+    PostLockService
 ) {
     return {
         restrict: 'E',
@@ -29,6 +31,7 @@ function PostActionsDirective(
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
         $scope.openEditMode = openEditMode;
+        $scope.postIsUnlocked = postIsUnlocked;
         activate();
 
         function activate() {
@@ -48,7 +51,17 @@ function PostActionsDirective(
                 }
             });
         }
+
+        function postIsUnlocked() {
+            return !PostLockService.isPostLockedForCurrentUser($scope.post);
+        }
+
         function openEditMode(id) {
+            // Ensure Post is not locked before proceeding
+            if (!postIsUnlocked()) {
+                Notify.error('post.already_locked');
+                return;
+            }
             if ($location.path() !== '/views/data') {
                 $location.path('/posts/' + id + '/edit');
             } else {

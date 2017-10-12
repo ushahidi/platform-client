@@ -1,29 +1,28 @@
 <ul class="metadata">
-      <li>
-        <span class="status-indicator" ng-if="post.status=='published'">
-        <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#globe"></use>
-          </svg></span>
-         <span class="status-indicator yellow" ng-if="post.status=='draft'">
+      <li class="status-indicator" ng-if="post.status=='published'">
+          <svg class="iconic">
+              <use xlink:href="/img/iconic-sprite.svg#globe"></use>
+          </svg>
+          <span class="label" translate="post.status_published" ng-if="post.status=='published'">post.status_published</span>
+      </li>
+      <li class="status-indicator yellow" ng-if="post.status=='draft'">
           <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
           </svg>
-        </span>
-          <span class="status-indicator dark" ng-if="post.status=='archived'">
-            <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#box" ></use>
-        </svg>
-      </span>
-
-        <span class="label" translate="post.status_published" ng-if="post.status=='published'">post.status_published</span>
-        <span class="label" translate="post.status_review" ng-if="post.status=='draft'"></span>
-        <span class="label" translate="post.status_archived" ng-if="post.status=='archived'"></span>
+          <span class="label" translate="post.status_review" ng-if="post.status=='draft'"></span>
       </li>
-    <li>
-      <img src="//www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
-      <strong class="label" ng-show="post.user && !post.author_realname">{{ post.user.realname }}</strong>
-      <strong class="label" ng-show="post.contact && !post.author_realname">{{ post.contact.contact}}</strong>
-      <strong class="label" ng-show="post.author_realname">{{ post.author_realname}}</strong>
+      <li class="status-indicator dark" ng-if="post.status=='archived'">
+          <svg class="iconic">
+             <use xlink:href="/img/iconic-sprite.svg#box" ></use>
+          </svg>
+           <span class="label" translate="post.status_archived" ng-if="post.status=='archived'"></span>
+      </li>
+        
+      <li>
+        <img src="//www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
+        <strong class="label" ng-show="post.user && !post.author_realname">{{ post.user.realname }}</strong>
+        <strong class="label" ng-show="post.contact && !post.author_realname">{{ post.contact.contact}}</strong>
+        <strong class="label" ng-show="post.author_realname">{{ post.author_realname}}</strong>
 
     </li>
     <li class="tooltip">
