@@ -2,7 +2,7 @@
 <form name="postFiltersFormOpen"
       dropdown
       role="search"
-      class="searchbar"
+      class="searchbar dropdown-menu init toggle-dropdown"
       auto-close="outsideClick"
       ng-submit="applyFilters()"
       ng-model-options="{ updateOn : 'submit default' }"
@@ -17,10 +17,12 @@
             </svg>
             <span class="button-label hidden" translate>app.saved</span>
         </a>
-        <a class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle" data-toggle="search-filters">
+        <a         dropdown-toggle
+                   type="button"
+                   class="searchbar-options-filter dropdown toggle-dropdown-trigger button">
             <!-- DEVNOTE translate -->
             <sort-and-filter-counter></sort-and-filter-counter>
         </a>
     </div>
-    <filters-dropdown filters-var="filters" ng-model="filters" cancel="cancel" filters-dropdown-toggle="filtersDropdownToggle" apply-filters="applyFilters"></filters-dropdown>
+    <filters-dropdown filters-var="filters" ng-model="filters" cancel="cancel" apply-filters="applyFilters"></filters-dropdown>
 </form>
