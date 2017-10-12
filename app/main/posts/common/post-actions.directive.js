@@ -23,8 +23,8 @@ function PostActionsDirective(
         replace: true,
         scope: {
             post: '=',
-            editMode: '=',
-            selectedPost: '='
+            selectedPosts: '=',
+            editMode: '='
         },
         template: require('./post-actions.html'),
         link: PostActionsLink
@@ -35,6 +35,7 @@ function PostActionsDirective(
         $scope.updateStatus = updateStatus;
         $scope.openEditMode = openEditMode;
         $scope.postIsUnlocked = postIsUnlocked;
+
         activate();
 
         function activate() {
@@ -65,7 +66,9 @@ function PostActionsDirective(
                 Notify.error('post.already_locked');
                 return;
             }
-            $scope.selectedPost.post = $scope.post;
+            if ($scope.selectedPost && $scope.selectedPost.post) {
+                $scope.selectedPost.post = $scope.post ;
+            }
 
             if ($location.path().indexOf('data') === -1) {
                 $location.path('/posts/' + id + '/edit');

@@ -118,7 +118,7 @@ function PostViewDataController(
                 $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
             });
-        } else if (post.id !== $scope.selectedPostId) {
+        } else {
             $scope.selectedPost.post = post;
             $scope.selectedPostId = post.id;
         }
