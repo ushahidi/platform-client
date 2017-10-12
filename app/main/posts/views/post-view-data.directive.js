@@ -24,6 +24,8 @@ PostViewDataController.$inject = [
 'PostViewService',
 'moment',
 '$translate',
+'$q',
+'PostActionsService',
 '$timeout',
 '$location',
 '$anchorScroll',
@@ -39,11 +41,14 @@ function PostViewDataController(
     PostViewService,
     moment,
     $translate,
+    $q,
+    PostActionsService,
     $timeout,
     $location,
     $anchorScroll,
     Notify
 ) {
+
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
     $scope.itemsPerPageOptions = [10, 20, 50];
@@ -52,12 +57,22 @@ function PostViewDataController(
     $scope.totalItems = $scope.itemsPerPage;
     $scope.posts = [];
     $scope.groupedPosts = {};
+    $scope.deletePosts = deletePosts;
+    $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
+    $scope.statuses = PostActionsService.getStatuses();
+    $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
+    $scope.resetPosts = resetPosts;
+    $scope.clearPosts = false;
+    $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
     $scope.recentPosts = [];
     $scope.addNewestPosts = addNewestPosts;
     $scope.editMode = {editing: false};
+    $scope.selectBulkActions = selectBulkActions;
+    $scope.bulkActionsSelected = '';
+    $scope.closeBulkActions = closeBulkActions;
 
     $rootScope.setLayout('layout-d');
 
@@ -83,6 +98,10 @@ function PostViewDataController(
                 PostFilters.reactiveFilters = 'disabled';
             }
         }, true);
+        $scope.$watch('selectedPosts.length', function () {
+            $scope.$emit('post:list:selected', $scope.selectedPosts);
+        });
+
         checkForNewPosts(30000);
     }
 
@@ -130,6 +149,69 @@ function PostViewDataController(
         });
     }
 
+    function deletePosts() {
+        Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
+            // ask server to delete selected posts
+            // and refetch posts from server
+            $scope.isLoading.state = true;
+            var deletePostsPromises = _.map(
+                $scope.selectedPosts,
+                function (postId) {
+                    $scope.selectedPosts = _.without($scope.selectedPosts, postId);
+                    return PostEndpoint.delete({ id: postId }).$promise;
+                });
+            $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
+            ;
+
+            function handleDeleteErrors(errorResponse) {
+                $scope.isLoading.state = false;
+                Notify.apiErrors(errorResponse);
+            }
+            function handleDeleteSuccess(deleted) {
+                $scope.isLoading.state = false;
+                Notify.notify('notify.post.destroy_success_bulk');
+                // Remove deleted posts from state
+                var deletedIds = _.pluck(deleted, 'id');
+                angular.forEach($scope.groupedPosts, function (posts, group) {
+                    $scope.groupedPosts[group] = _.reject(posts, function (post) {
+                        return _.contains(deletedIds, post.id);
+                    });
+                });
+                $scope.posts = _.reject($scope.posts, function (post) {
+                    return _.contains(deletedIds, post.id);
+                });
+                clearSelectedPosts();
+
+                if (!$scope.posts.length) {
+                    $scope.clearPosts = true;
+                    getPosts();
+                }
+            }
+        });
+    }
+
+    function changeStatus(status) {
+        var selectedPosts = _.filter($scope.posts, function (post) {
+            return _.contains($scope.selectedPosts, post.id);
+        });
+
+        var count = $scope.selectedPosts.length;
+
+        var updateStatusPromises = _.map(selectedPosts, function (post) {
+            post.status = status;
+            // $scope.selectedPosts = _.without($scope.selectedPosts, post.id);
+            return PostEndpoint.update(post).$promise;
+        });
+
+        $q.all(updateStatusPromises).then(function () {
+            Notify.notify('notify.post.update_status_success_bulk', {count: count});
+            clearSelectedPosts();
+        }, function (errorResponse) {
+            Notify.apiErrors(errorResponse);
+        })
+        ;
+    }
+
     function createPostGroups(posts) {
         var now = moment(),
             yesterday = moment().subtract(1, 'days');
@@ -169,6 +251,27 @@ function PostViewDataController(
         $scope.currentPage++;
         $scope.clearPosts = false;
         getPosts();
+    }
+
+    function selectBulkActions() {
+        $scope.bulkActionsSelected = 'toolbar-active';
+        $rootScope.$broadcast('bulkActionsSelected:true');
+    }
+
+    function closeBulkActions() {
+        $scope.bulkActionsSelected = '';
+        $rootScope.$broadcast('bulkActionsSelected:false');
+    }
+
+    function clearSelectedPosts() {
+        // Clear selected posts
+        $scope.selectedPosts.splice(0);
+    }
+
+    function userHasBulkActionPermissions() {
+        return _.any($scope.posts, function (post) {
+            return _.intersection(post.allowed_privileges, ['update', 'delete', 'change_status']).length > 0;
+        });
     }
 
     function getNewPosts() {

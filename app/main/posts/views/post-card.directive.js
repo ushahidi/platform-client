@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['FormEndpoint', 'PostLockService'];
-function PostCardDirective(FormEndpoint, PostLockService) {
+PostCardDirective.$inject = ['FormEndpoint', 'PostLockService', '$rootScope'];
+function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -17,13 +17,19 @@ function PostCardDirective(FormEndpoint, PostLockService) {
         template: require('./card.html'),
         link: function ($scope) {
             $scope.isPostLockedForCurrentUser = PostLockService.isPostLockedForCurrentUser($scope.post);
+
+            $rootScope.$on('bulkActionsSelected:true', function () {
+                $scope.canSelect = true;
+            });
+            $rootScope.$on('bulkActionsSelected:false', function () {
+                $scope.canSelect = false;
+            });
+
             activate();
 
             function activate() {
                 loadForm($scope.post.form);
             }
-
-
 
             function loadForm(form) {
                 // Replace form with full object
