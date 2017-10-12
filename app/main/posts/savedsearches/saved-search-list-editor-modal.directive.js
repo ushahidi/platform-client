@@ -15,10 +15,12 @@ function SavedSearchListEditorModal() {
 SavedSearchListEditorModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '$location', '$q', 'Notify', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
 function SavedSearchListEditorModalController($scope, $element, $attrs, $rootScope, $location, $q, Notify, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
     $scope.selectedSavedSearches = [];
+    $scope.processing = false;
     $scope.close = function () {
         ModalService.close();
     };
     $scope.delete = function () {
+        $scope.processing = true;
         var deleteList = _.map($scope.selectedSavedSearches, function (itm) {
             return SavedSearchEndpoint.delete({
                 id: itm
@@ -29,9 +31,14 @@ function SavedSearchListEditorModalController($scope, $element, $attrs, $rootSco
             _.forEach($scope.selectedSavedSearches, function (itmId) {
                 delete $scope.searches[itmId];
             });
-        }).catch(function (err) {
+            cancelLoading();
+        }, function (err) {
             Notify.apiErrors(err);
+            cancelLoading();
         });
-        ModalService.close();
+        var cancelLoading = function () {
+            $scope.processing = false;
+            ModalService.close();
+        };
     };
 }
