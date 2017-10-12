@@ -107,7 +107,8 @@
         "loading_log_entries": "Loading log entries...",
         "entry_by": "Entry by",
         "post_updated_by": "Post updated by",
-        "add_a_log_entry": "Add an entry"
+        "add_a_log_entry": "Add an entry",
+        "no_entries_yet": "There are no log entries for this post."
     },
     "toolbar": {
         "searchbar" : {
@@ -1191,7 +1192,7 @@
         "export" : {
             "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
             "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads"
         }
     },
     "empty": {

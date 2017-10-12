@@ -1,45 +1,50 @@
 <div class="listing card change-log" ng-show="displayChangeLog">
     <div class="change-log-header">
         <h3 class="listing-heading">Change Log</h3>
-        <div class="button-group" ng-click="enterAddEntryMode()" ng-hide="enteringManually">
-            <button type="button" class="button-primary">
-              <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#plus"></use>
-              </svg>
-                <span class="button-label" translate="changelog.add_a_log_entry">Add an entry</span>
-            </button>
-        </div>
+    </div>
+    <div class="progress-bar" ng-hide="entriesLoaded">
+      <span translate="changelog.loading_log_entries">Loading log entries...</span>
     </div>
 
-    <!-- include these? -->
-    <div class="listing-item">
-      <div class="alert confirmation" ng-show="successfulSave">
-        <span translate="changelog.entry_saved">Entry saved.</span>
+    <div class="listing-item" ng-show="hasCreatePermission">
+      <div class="button-group" ng-click="enterAddEntryMode()" ng-hide="enteringManually">
+          <button type="button" class="button-primary">
+            <svg class="iconic">
+              <use xlink:href="/img/iconic-sprite.svg#plus"></use>
+            </svg>
+              <span class="button-label" translate="changelog.add_a_log_entry">Add an entry</span>
+          </button>
       </div>
 
-      <div class="progress-bar" ng-hide="entriesLoaded">
-        <span translate="changelog.loading_log_entries">Loading log entries...</span>
-      </div>
-    </div>
-
-    <div class="listing-item" ng-show="enteringManually">
-        <div class="listing-item-primary">
+        <div class="listing-item-primary" ng-show="(enteringManually && hasCreatePermission )">
             <div class="form-field required">
                 <label>New entry</label>
                 <textarea ng-model="manualLogEntry"></textarea>
             </div>
-
-            <div class="button-group">
+            <div class="button-group" >
                 <button type="button" class="button-primary">
                     <span class="button-label" ng-click="cancelAddEntryMode()">Cancel</span>
                 </button>
-
                 <button type="button" class="button-alpha">
-                    <span class="button-label" ng-disabled="!manualLogEntry.length" ng-click="saveManualLogEntry()">Save</span>
+                    <span class="button-label" ng-disabled="manualLogEntry.length < 1" ng-click="saveManualLogEntry()">Save</span>
                 </button>
             </div>
-
         </div>
+        <!-- include these? -->
+        <div class="listing-item">
+          <div class="alert confirmation" ng-show="successfulSave && (manualLogEntry.length < 1) && enteringManually">
+            <span translate="changelog.entry_saved">Entry saved.</span>
+          </div>
+        </div>
+
+    </div>
+
+    <!-- action to load log is done, but nothing was found... -->
+    <div class="listing-item" ng-show="(entriesLoaded && logEntries.length < 1)" >
+      <div class="listing-item-primary">
+        <p class="listing-item-secondary"></p>
+        <p translate="changelog.no_entries_yet">There are no log entries for this post.</p>
+      </div>
     </div>
 
     <div class="listing-item" ng-repeat="entry in logEntries">
