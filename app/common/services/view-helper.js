@@ -9,10 +9,6 @@ function (
             display_name: $translate.instant('views.map')
         },
         {
-            name: 'list',
-            display_name: $translate.instant('views.list')
-        },
-        {
             name: 'data',
             display_name: $translate.instant('views.data')
         }
