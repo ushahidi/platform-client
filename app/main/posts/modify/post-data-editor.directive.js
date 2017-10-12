@@ -103,9 +103,9 @@ function PostDataEditorController(
         }
     });
 
-    $scope.$on('$locationChangeStart', function (e) {
+    $scope.$on('$locationChangeStart', function (e, next) {
         e.preventDefault();
-        $scope.leavePost();
+        $scope.leavePost(next);
     });
 
     activate();
@@ -280,12 +280,15 @@ function PostDataEditorController(
         return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
     }
 
-    function cancel() {
+    function cancel(url) {
         PostLockEndpoint.unlock({
             id: $scope.post.lock.id,
             post_id: $scope.post.id
         }).$promise.then(function (result) {
             $scope.editMode.editing = false;
+            if (url) {
+                $location.path(url);
+            }
         });
     }
 
@@ -303,9 +306,9 @@ function PostDataEditorController(
         return MediaEditService.saveMedia($scope.medias, $scope.post);
     }
 
-    function leavePost() {
+    function leavePost(url) {
         Notify.confirmLeave('notify.post.leave_without_save').then(function () {
-            $scope.cancel();
+            $scope.cancel(url);
         });
     }
 
