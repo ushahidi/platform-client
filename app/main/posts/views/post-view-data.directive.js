@@ -60,6 +60,7 @@ function PostViewDataController(
     $scope.posts = [];
     $scope.groupedPosts = {};
     $scope.deletePosts = deletePosts;
+    $scope.hasFilters = hasFilters;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
     $scope.statuses = PostActionsService.getStatuses();
     $scope.changeStatus = changeStatus;
@@ -134,6 +135,7 @@ function PostViewDataController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
+        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             $scope.clearPosts ? resetPosts() : null;
@@ -229,6 +231,10 @@ function PostViewDataController(
                 return postDate.fromNow();
             }
         });
+    }
+
+    function hasFilters() {
+        return PostFilters.hasFilters($scope.filters);
     }
 
     function groupPosts(postList) {

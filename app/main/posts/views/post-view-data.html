@@ -8,7 +8,7 @@
     </button>
     <div class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
         <div class="listing timeline init">
-        <div class="bulk-action">
+        <div class="bulk-action" ng-if="posts.length > 0 || !isLoading.state">
             <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
             <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
         </div>
@@ -155,8 +155,28 @@
                     </button>
                 </div>
         </div> -->
+            <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
+                <h4 translate>post.no_search_results</h4>
+            </div>
 
-            <button class="button-gamma button-flat" ng-click="loadMore()">Load more</button>
+            <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading.state">
+                <h4 translate>post.no_posts_yet</h4>
+            </div>
+
+            <div class="listing-item" ng-if="posts.length > 0 || isLoading.state">
+                <div class="listing-item-primary">
+                    <button ng-disabled="isLoading.state" ng-hide="isLoading.state" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                    </button>
+                    <button type="button" class="button-gamma button-flat" ng-show="isLoading.state">
+                        <div class="loading">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                        <span class="button-label" translate="app.loading">Loading</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="post-col">
