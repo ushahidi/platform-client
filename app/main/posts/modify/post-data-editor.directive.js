@@ -100,7 +100,6 @@ function PostDataEditorController(
             $scope.leavePost();
         } else {
             $scope.cancel();
-            $scope.editMode.editing = false;
         }
     });
 

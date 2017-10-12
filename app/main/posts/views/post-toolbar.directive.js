@@ -24,7 +24,7 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService) {
     $scope.editEnabled = editEnabled;
 
     function editEnabled() {
-        return $scope.selectPosted ? PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
+        return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
     }
 
     function savePost() {
@@ -32,10 +32,12 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService) {
     }
 
     function setEditMode() {
-        if ($scope.editMode.editing) {
-            $rootScope.$broadcast('event:edit:leave:form');
-        } else {
-            $scope.editMode.editing = true;
+        if (editEnabled()) {
+            if ($scope.editMode.editing) {
+                $rootScope.$broadcast('event:edit:leave:form');
+            } else {
+                $scope.editMode.editing = true;
+            }
         }
     }
 }

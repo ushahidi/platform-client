@@ -9,7 +9,7 @@
     <ul>
       
 
-        <li ng-show="editEnabled()">
+        <li ng-show="(post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked()">
           <a ng-click="openEditMode(post.id)">
               <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
@@ -34,10 +34,10 @@
       </li>
       -->
     </ul>
-    <div class="divider" ng-show="post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 "></div>
+    <div class="divider" ng-show="(post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 ) && postIsUnlocked()"></div>
     <ul>
       <li ng-repeat="status in statuses"
-          ng-show="post.allowed_privileges.indexOf('change_status') !== -1">
+          ng-show="post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked()">
         <a ng-click="updateStatus(status)">
           <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
@@ -50,7 +50,7 @@
         </a>
       </li>
 
-      <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
+      <li ng-show="post.allowed_privileges.indexOf('update') !== -1 && postIsUnlocked()">
         <a ng-click="deletePost()">
           <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>

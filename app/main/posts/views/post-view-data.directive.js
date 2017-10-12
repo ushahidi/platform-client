@@ -26,6 +26,7 @@ PostViewDataController.$inject = [
 '$translate',
 '$q',
 'PostActionsService',
+'PostLockService',
 '$timeout',
 '$location',
 '$anchorScroll',
@@ -43,6 +44,7 @@ function PostViewDataController(
     $translate,
     $q,
     PostActionsService,
+    PostLockService,
     $timeout,
     $location,
     $anchorScroll,
@@ -109,6 +111,7 @@ function PostViewDataController(
         // displaying warning if user is in editmode when trying to change post
         if ($scope.editMode.editing) {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+                //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
                 $scope.selectedPost = {post: post};
                 $scope.selectedPostId = post.id;

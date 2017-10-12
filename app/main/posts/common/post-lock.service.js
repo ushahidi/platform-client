@@ -24,7 +24,8 @@ function PostLockService(
         unlockByPost: unlockByPost,
         getLock: getLock,
         createSocketListener: createSocketListener,
-        isPostLockedForCurrentUser: isPostLockedForCurrentUser
+        isPostLockedForCurrentUser: isPostLockedForCurrentUser,
+        unlockSilent: unlockSilent
     };
 
     function activate() {
@@ -48,7 +49,7 @@ function PostLockService(
         // is different from the User who owns the lock
         if (post.lock) {
             if ($rootScope.currentUser) {
-                return $rootScope.currentUser.userId === post.lock.user_id;
+                return $rootScope.currentUser.userId !== parseInt(post.lock.user_id);
             }
         } else {
             return false;
@@ -60,6 +61,12 @@ function PostLockService(
         PostLockEndpoint.unlock(lock).$promise.then(function () {
             Notify.success('post.locking.unlocked');
         }, handleFailure);
+    }
+
+    function unlockSilent(post) {
+        PostLockEndpoint.unlock({post_id: post.id}).$promise.then(function () {
+            // Do nothing
+        });
     }
 
     function unlockByPost(post) {

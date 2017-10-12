@@ -8,7 +8,7 @@
 
     <div class="button-group" embed-only="false" ng-switch="editMode.editing">
         <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
-        <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled" class="button button-alpha" ng-click="setEditMode()">EDIT</button>
+        <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled()" class="button button-alpha" ng-click="setEditMode()">EDIT</button>
         <button ng-switch-when="true" ng-if="hasPermission" class="button" ng-click="setEditMode()">CANCEL</button>
         <button ng-switch-when="true" ng-if="hasPermission" ng-click="savePost()" class=" button button-alpha">SAVE</button>
     </div>
@@ -18,7 +18,7 @@
 
     <div class="button-group hide-until-medium" ng-switch="editMode.editing" embed-only="true">
         <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
-        <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled" class="button button-alpha" ng-click="setEditMode()">EDIT</button>
+        <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled()" class="button button-alpha" ng-click="setEditMode()">EDIT</button>
         <button ng-switch-when="true" ng-if="hasPermission" class="button" ng-click="setEditMode()">CANCEL</button>
         <button ng-switch-when="true" ng-if="hasPermission" ng-click="savePost()" class=" button button-alpha">SAVE</button>
     </div>

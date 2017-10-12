@@ -17,6 +17,7 @@ function PostLockDirective(UserEndpoint, PostLockService, Notify, $rootScope) {
             $scope.unlock = unlock;
 
             $scope.showLockMessage = showLockMessage;
+            $scope.hasPermission = $rootScope.hasPermission;
 
             activate();
 
@@ -28,7 +29,7 @@ function PostLockDirective(UserEndpoint, PostLockService, Notify, $rootScope) {
             }
 
             function showLockMessage() {
-                PostLockService.isPostLockedForCurrentUser($scope.post);
+                return PostLockService.isPostLockedForCurrentUser($scope.post);
             }
 
             function unlock() {

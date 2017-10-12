@@ -27,6 +27,13 @@ module.exports = [function () {
                     successCallback();
                 }
             }};
+        },
+        isPostLockedForCurrentUser: function () {
+            return {$promise: {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            }};
         }
     };
 }];

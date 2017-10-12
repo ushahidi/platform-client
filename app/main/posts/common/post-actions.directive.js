@@ -31,7 +31,7 @@ function PostActionsDirective(
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
         $scope.openEditMode = openEditMode;
-        $scope.editEnabled = editEnabled;
+        $scope.postIsUnlocked = postIsUnlocked;
         activate();
 
         function activate() {
@@ -52,13 +52,13 @@ function PostActionsDirective(
             });
         }
 
-        function editEnabled() {
-            return $scope.post.allowed_privileges.indexOf('update') !== -1 && PostLockService.isPostLockedForCurrentUser($scope.post);
+        function postIsUnlocked() {
+            return !PostLockService.isPostLockedForCurrentUser($scope.post);
         }
 
         function openEditMode(id) {
             // Ensure Post is not locked before proceeding
-            if (editEnabled) {
+            if (!postIsUnlocked()) {
                 Notify.error('post.already_locked');
                 return;
             }
