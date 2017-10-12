@@ -9,7 +9,8 @@ function PostDetailData() {
             filters: '=',
             isLoading: '=',
             post: '=',
-            editMode: '='
+            editMode: '=',
+            postContainer: '='
         },
         controller: PostDetailDataController,
         template: require('./post-detail-data.html')
