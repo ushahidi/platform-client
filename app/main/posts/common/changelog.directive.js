@@ -18,9 +18,10 @@ function PostChangeLog($translate, PostsChangeLogEndpoint) {
         $scope.entriesLoaded = false;
         $scope.enteringManually = false;
 
-        $scope.$watch('postId', function(newValue, oldValue) {
-                if (newValue)
+        $scope.$watch('postId', function (newValue, oldValue) {
+                if (newValue) {
                     activate();
+                }
             }, true);
 
         activate();
