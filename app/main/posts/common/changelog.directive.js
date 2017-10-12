@@ -18,6 +18,10 @@ function PostChangeLog($rootScope, $translate, PostsChangeLogEndpoint) {
         $scope.entriesLoaded = false;
         $scope.enteringManually = false;
         $scope.manualLogEntry = '';
+        //  $scope.hasReadPermission = ($rootScope.currentUser !== null) ? true : false;
+
+        //  Currently only showing posts to people with manage posts permission.
+        $scope.hasReadPermission = $rootScope.hasPermission('Manage Posts');
         $scope.hasCreatePermission = $rootScope.hasPermission('Manage Posts');
 
         $scope.$watch('postId', function (newValue, oldValue) {
@@ -29,6 +33,10 @@ function PostChangeLog($rootScope, $translate, PostsChangeLogEndpoint) {
         activate();
 
         function activate() {
+            if (!$scope.hasReadPermission) {
+                //don't bother displaying or loading anything
+                return;
+            }
             $scope.displayChangeLog = true;
 
             //  reset to blank
@@ -38,7 +46,7 @@ function PostChangeLog($rootScope, $translate, PostsChangeLogEndpoint) {
             // then load what we can load
             if ($scope.postId) {
                 PostsChangeLogEndpoint.get({post_id: $scope.postId}, function (response) {
-                    console.log(response);
+                    //console.log(response);
                     $scope.displayChangeLog = true;
                     $scope.logEntries = response.results;
                     $scope.entriesLoaded = true;
@@ -63,7 +71,7 @@ function PostChangeLog($rootScope, $translate, PostsChangeLogEndpoint) {
         };
 
         $scope.saveManualLogEntry = function () {
-            console.log('saving....', $scope.manualLogEntry);
+            //console.log('saving....', $scope.manualLogEntry);
 
             var changeLogEntry = {
                 post_id: $scope.postId,
