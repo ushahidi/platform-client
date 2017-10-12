@@ -20,25 +20,27 @@ function SavedSearchListEditorModalController($scope, $element, $attrs, $rootSco
         ModalService.close();
     };
     $scope.delete = function () {
-        $scope.processing = true;
-        var deleteList = _.map($scope.selectedSavedSearches, function (itm) {
-            return SavedSearchEndpoint.delete({
-                id: itm
-            }).$promise;
-        });
-        $q.all (deleteList).then(function (results) {
-            $rootScope.$broadcast('savedSearch:update');
-            _.forEach($scope.selectedSavedSearches, function (itmId) {
-                delete $scope.searches[itmId];
+        if (!_.isEmpty($scope.selectedSavedSearches)) {
+            $scope.processing = true;
+            var deleteList = _.map($scope.selectedSavedSearches, function (itm) {
+                return SavedSearchEndpoint.delete({
+                    id: itm
+                }).$promise;
             });
-            cancelLoading();
-        }, function (err) {
-            Notify.apiErrors(err);
-            cancelLoading();
-        });
-        var cancelLoading = function () {
-            $scope.processing = false;
-            ModalService.close();
-        };
+            $q.all (deleteList).then(function (results) {
+                $rootScope.$broadcast('savedSearch:update');
+                _.forEach($scope.selectedSavedSearches, function (itmId) {
+                    delete $scope.searches[itmId];
+                });
+                cancelLoading();
+            }, function (err) {
+                Notify.apiErrors(err);
+                cancelLoading();
+            });
+            var cancelLoading = function () {
+                $scope.processing = false;
+                ModalService.close();
+            };
+        }
     };
 }
