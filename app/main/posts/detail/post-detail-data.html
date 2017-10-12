@@ -1,7 +1,7 @@
 <article class="postcard" role="article">
         <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
 
-        <div class="postcard-body"> 
+        <div class="postcard-body">
             <div ng-if="post.form">
               <h1 class="form-sheet-title survey-title">{{post.title}}</h1>
               <p>{{post.content}}</p>
@@ -38,7 +38,8 @@
           type="'post'">
         </post-value>
         <post-detail-map post-id="post.id"></post-detail-map>
+        <post-change-log post-id="post.id"></post-change-log>
       </div>
-        </div>
+      </div>
 
 </article>

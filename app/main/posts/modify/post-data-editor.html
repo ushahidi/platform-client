@@ -2,7 +2,7 @@
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
       <fieldset>
-        <div 
+        <div
           class="form-field init required"
           adaptive-form
           ng-class="{'error': postForm.title.$invalid && postForm.title.$dirty, 'success': !postForm.title.$invalid && postForm.title.$dirty}"
@@ -112,4 +112,5 @@
           <button class="button button-alpha" ng-click="savePost()">Save</button>
         </div>
       </div>
+      <post-change-log post-id="post.id"></post-change-log>
   </form>

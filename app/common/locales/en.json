@@ -102,6 +102,13 @@
         "newest_first": "Newest first",
         "oldest_first": "Oldest first"
     },
+    "changelog": {
+        "entry_saved": "Entry saved.",
+        "loading_log_entries": "Loading log entries...",
+        "entry_by": "Entry by",
+        "post_updated_by": "Post updated by",
+        "add_a_log_entry": "Add an entry"
+    },
     "toolbar": {
         "searchbar" : {
             "search_entity" : "Search {{entity}}",
