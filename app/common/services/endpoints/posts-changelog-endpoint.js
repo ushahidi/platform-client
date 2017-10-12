@@ -10,7 +10,11 @@ function (
         'post_id': '@post_id'
     }, {
         get: {
-            method: 'GET'
+            method: 'GET',
+            params: {
+                order: 'desc',
+                orderby: 'created'
+            }
         }
     });
 
