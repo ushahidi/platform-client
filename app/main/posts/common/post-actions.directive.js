@@ -1,6 +1,7 @@
 module.exports = PostActionsDirective;
 
 PostActionsDirective.$inject = [
+    '$rootScope',
     'PostEndpoint',
     'Notify',
     '$location',
@@ -9,6 +10,7 @@ PostActionsDirective.$inject = [
     'PostLockService'
 ];
 function PostActionsDirective(
+    $rootScope,
     PostEndpoint,
     Notify,
     $location,
@@ -21,7 +23,8 @@ function PostActionsDirective(
         replace: true,
         scope: {
             post: '=',
-            editMode: '='
+            editMode: '=',
+            selectedPost: '='
         },
         template: require('./post-actions.html'),
         link: PostActionsLink
@@ -62,8 +65,12 @@ function PostActionsDirective(
                 Notify.error('post.already_locked');
                 return;
             }
-            if ($location.path() !== '/views/data') {
+            $scope.selectedPost.post = $scope.post;
+
+            if ($location.path().indexOf('data') === -1) {
                 $location.path('/posts/' + id + '/edit');
+            } else if ($scope.editMode.editing) {
+                $rootScope.$broadcast('event:edit:leave:form');
             } else {
                 $scope.editMode.editing = true;
             }

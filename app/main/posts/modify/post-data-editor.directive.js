@@ -65,7 +65,6 @@ function PostDataEditorController(
     PostActionsService,
     MediaEditService
   ) {
-
     // Setup initial stages container
     $scope.post = angular.copy($scope.postContainer.post);
     $scope.everyone = $filter('translate')('post.modify.everyone');
@@ -286,6 +285,7 @@ function PostDataEditorController(
             post_id: $scope.post.id
         }).$promise.then(function (result) {
             $scope.editMode.editing = false;
+            // redirecting if user is leaving page
             if (url) {
                 $location.path(url);
             }
@@ -309,6 +309,11 @@ function PostDataEditorController(
     function leavePost(url) {
         Notify.confirmLeave('notify.post.leave_without_save').then(function () {
             $scope.cancel(url);
+        }, function () {
+            // redirecting if user is leaving the page
+            if (url) {
+                $location.path(url);
+            }
         });
     }
 
