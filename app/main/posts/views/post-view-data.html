@@ -20,6 +20,7 @@
                 click-action="showPost"
                 in-focus="selectedPostId === post.id",
                 edit-mode="editMode"
+                selected-post="selectedPost"
             >
             </post-card>
 
@@ -182,4 +183,5 @@
     <div class="post-col">
         <post-detail-data ng-if="selectedPost.post && !editMode.editing" edit-mode="editMode" filters="filters" is-loading="isLoading" post="selectedPost.post"></post-detail-data>
         <post-data-editor edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
+    </div>
 </div>

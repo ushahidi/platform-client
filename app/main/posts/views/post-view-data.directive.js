@@ -76,6 +76,8 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
+    $scope.selectedPost = {post: null};
+    $scope.selectedPostId = null;
 
     $rootScope.setLayout('layout-d');
 
@@ -114,15 +116,12 @@ function PostViewDataController(
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
-                $scope.selectedPost = {post: post};
+                $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
             });
-        } else if (post.id !== $scope.selectedPostId) {
-            $scope.selectedPost = {post: post};
-            $scope.selectedPostId = post.id;
         } else {
-            $scope.selectedPost = {post: null};
-            $scope.selectedPostId = null;
+            $scope.selectedPost.post = post;
+            $scope.selectedPostId = post.id;
         }
     }
 
