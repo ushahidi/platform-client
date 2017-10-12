@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['FormEndpoint'];
-function PostCardDirective(FormEndpoint) {
+PostCardDirective.$inject = ['FormEndpoint', 'PostLockService'];
+function PostCardDirective(FormEndpoint, PostLockService) {
     return {
         restrict: 'E',
         replace: true,
@@ -16,12 +16,14 @@ function PostCardDirective(FormEndpoint) {
         },
         template: require('./card.html'),
         link: function ($scope) {
-
+            $scope.isPostLockedForCurrentUser = PostLockService.isPostLockedForCurrentUser($scope.post);
             activate();
 
             function activate() {
                 loadForm($scope.post.form);
             }
+
+
 
             function loadForm(form) {
                 // Replace form with full object

@@ -7,8 +7,9 @@
   </button>
   <div class="dropdown-menu init" dropdown-menu>
     <ul>
+      
 
-        <li ng-show="(post.allowed_privileges.indexOf('update') !== -1) && editEnabled()">
+        <li ng-show="editEnabled()">
           <a ng-click="openEditMode(post.id)">
               <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
