@@ -7,7 +7,8 @@ function CategorySelectorDirective() {
         restrict: 'E',
         scope: {
             available: '=',
-            selected: '='
+            selected: '=',
+            form: '='
         },
         controller: CategorySelectorController,
         template: require('./category-selector.html')
@@ -53,6 +54,11 @@ function CategorySelectorController($scope, _) {
     }
 
     function selectAll() {
+        if ($scope.form) {
+            // if used in a form, add the ng-dirty-class to categories.
+            $scope.form.$setDirty();
+        }
+
         if ($scope.available.length === $scope.selected.length) {
             $scope.selected.length = [];
         } else {

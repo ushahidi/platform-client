@@ -19,13 +19,15 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var limit = 200;
         var requestBlockSize = 5;
         var numberOfChunks = 0;
+        $scope.loadPosts = loadPosts;
         $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
 
         activate();
 
+
         function activate() {
             // Start loading data
-            var posts = loadPosts();
+            var posts = $scope.loadPosts();
             var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
@@ -59,7 +61,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function addPostsToMap(posts) {
-
             var geojson = L.geoJson(posts, {
                 pointToLayer: Maps.pointToLayer,
                 onEachFeature: onEachFeature
@@ -88,16 +89,38 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 map.setZoom(15);
             }
         }
-
         function watchFilters() {
+            // whenever the qEnabled var changes, do a dummy update of $scope.filters.reactToQEnabled
+            // to force the $scope.filters watcher to run
+            //$rootScope.$watchTrue(function () {
+            $scope.$watch(function () {
+                return PostFilters.qEnabled;
+            }, function () {
+                if (PostFilters.qEnabled === true) {
+                    $scope.filters.reactToQEnabled = $scope.filters.reactToQEnabled ? !$scope.filters.reactToQEnabled : true;
+                }
+            });
             // whenever filters change, reload the posts on the map
             $scope.$watch(function () {
                 return $scope.filters;
             }, function (newValue, oldValue) {
-                if (newValue !== oldValue) {
+                var diff = _.omit(newValue, function (value, key, obj) {
+                    return _.isEqual(oldValue[key], value);
+                });
+                var diffLength = _.keys(diff).length;
+                var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
+                /**
+                 * We only want to call reloadMapPosts if we :
+                 * - Have changes other than q= in the filters
+                 * - Only q= changed but we also have enabled the q filter
+                 */
+                if (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && PostFilters.qEnabled === true)) {
                     cancelCurrentRequests();
                     clearData();
                     reloadMapPosts();
+                }
+                if (PostFilters.qEnabled === true) {
+                    PostFilters.qEnabled = false;
                 }
             }, true);
         }
@@ -109,8 +132,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             currentGeoJsonRequests = [];
         }
 
-        function reloadMapPosts() {
-            var test = loadPosts();
+        function reloadMapPosts(query) {
+            var test = $scope.loadPosts(query);
             test.then(addPostsToMap);
         }
 
@@ -146,7 +169,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     while (block > 0) {
                         block -= 1;
                         offset += limit;
-                        loadPosts(query, offset, block).then(addPostsToMap);
+                        $scope.loadPosts(query, offset, block).then(addPostsToMap);
                     }
                 }
 
@@ -155,6 +178,10 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 }
                 return posts;
             });
+        }
+
+        function goToPost(post) {
+            $location.path('/posts/' + post.id);
         }
 
         function onEachFeature(feature, layer) {
@@ -173,8 +200,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     getPostDetails(feature).then(function (details) {
                         var scope = $rootScope.$new();
                         scope.post = details;
-
-                        var el = $compile('<post-card post="post" short-content="true"></post-card>')(scope);
+                        scope.goToPost = goToPost;
+                        var el = $compile('<post-card post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
 
                         layer.bindPopup(el[0], {
                             'minWidth': '300',

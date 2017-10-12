@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['FormEndpoint'];
-function PostCardDirective(FormEndpoint) {
+PostCardDirective.$inject = ['FormEndpoint', 'PostLockService', '$rootScope'];
+function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -9,11 +9,27 @@ function PostCardDirective(FormEndpoint) {
             post:  '=',
             canSelect: '=',
             selectedPosts: '=',
-            shortContent: '@'
+            inFocus: '=',
+            shortContent: '@',
+            clickAction: '=',
+            editMode: '='
         },
         template: require('./card.html'),
         link: function ($scope) {
+            $scope.isPostLocked = isPostLocked;
+
+            $rootScope.$on('bulkActionsSelected:true', function () {
+                $scope.canSelect = true;
+            });
+            $rootScope.$on('bulkActionsSelected:false', function () {
+                $scope.canSelect = false;
+            });
+
             activate();
+
+            function isPostLocked() {
+                return PostLockService.isPostLockedForCurrentUser($scope.post);
+            }
 
             function activate() {
                 loadForm($scope.post.form);

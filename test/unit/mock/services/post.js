@@ -95,22 +95,6 @@ module.exports = ['$q', function ($q) {
                     });
                 }
             }};
-        },
-        requestLock: (post) => {
-            return {$promise: {
-                then: function (successcallback, failcallback) {
-                    successcallback({id: 1, title: 'test', allowed_privileges: ['read']});
-                    //post.id === 'pass' ? successcallback({id: 1, allowed_privileges: ['read']}) : failcallback('error');
-                }
-            }};
-        },
-        checkLock: (post) => {
-            return {$promise: {
-                then: function (successcallback, failcallback) {
-                    successcallback({id: 1, title: 'test', allowed_privileges: ['read']});
-                    //post.id === 'pass' ? successcallback({id: 1, allowed_privileges: ['read']}) : failcallback('error');
-                }
-            }};
         }
     };
 }];

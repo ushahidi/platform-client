@@ -25,7 +25,10 @@ PostListController.$inject = [
     'ConfigEndpoint',
     'moment',
     'PostFilters',
-    'PostActionsService'
+    'PostActionsService',
+    '$timeout',
+    '$anchorScroll',
+    '$location'
 ];
 function PostListController(
     $scope,
@@ -38,7 +41,10 @@ function PostListController(
     ConfigEndpoint,
     moment,
     PostFilters,
-    PostActionsService
+    PostActionsService,
+    $timeout,
+    $anchorScroll,
+    $location
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -49,8 +55,7 @@ function PostListController(
     $scope.posts = [];
     $scope.groupedPosts = {};
     $scope.order = 'desc';
-    $scope.orderBy = 'post_date';
-
+    $scope.orderby = 'post_date';
     $scope.deletePosts = deletePosts;
     $scope.hasFilters = hasFilters;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
@@ -62,15 +67,31 @@ function PostListController(
     $scope.clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.changeOrder = changeOrder;
+
+    $scope.newPostsCount = 0;
+    $scope.recentPosts = [];
+    $scope.addNewestPosts = addNewestPosts;
+
+    $scope.goToPost = goToPost;
     activate();
 
-    // whenever the filters changes, update the current list of posts
+    // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
+    // to force the $scope.filters watcher to run
+    $scope.$watch(function () {
+        return PostFilters.reactiveFilters;
+    }, function () {
+        if (PostFilters.reactiveFilters === 'enabled') {
+            $scope.filters.reactToFilters = $scope.filters.reactToFilters ? !$scope.filters.reactToFilters : true;
+        }
+    }, true);
+    /** whenever the filters changes, update the current list of posts **/
     $scope.$watch(function () {
         return $scope.filters;
     }, function (newValue, oldValue) {
-        if (newValue !== oldValue) {
+        if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
             $scope.clearPosts = true;
             getPosts();
+            PostFilters.reactiveFilters = 'disabled';
         }
     }, true);
 
@@ -81,6 +102,7 @@ function PostListController(
         $scope.$watch('selectedPosts.length', function () {
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
+        checkForNewPosts(30000);
     }
 
     function resetPosts() {
@@ -93,8 +115,12 @@ function PostListController(
 
     function changeOrder(order, orderBy) {
         $scope.order = order;
-        $scope.orderBy = orderBy;
+        $scope.orderby = orderBy;
         $scope.clearPosts = true;
+
+        $scope.filters.order = order;
+        $scope.filters.orderby = orderBy;
+
         getPosts();
     }
 
@@ -102,9 +128,7 @@ function PostListController(
         query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-            limit: $scope.itemsPerPage,
-            order: $scope.order,
-            orderby: $scope.orderBy
+            limit: $scope.itemsPerPage
         });
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
@@ -114,14 +138,7 @@ function PostListController(
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
 
-            // Merge grouped posts into existing groups
-            angular.forEach(groupPosts(postsResponse.results), function (posts, group) {
-                if (angular.isArray($scope.groupedPosts[group])) {
-                    Array.prototype.push.apply($scope.groupedPosts[group], posts);
-                } else {
-                    $scope.groupedPosts[group] = posts;
-                }
-            });
+            groupPosts(postsResponse.results);
 
             $scope.totalItems = postsResponse.total_count;
             $scope.isLoading.state = false;
@@ -130,9 +147,14 @@ function PostListController(
                 PostViewService.showNoPostsSlider();
             }
         });
+
+        // $timeout(getNewPosts, 5000);
+    }
+    function goToPost(post) {
+        $location.path('/posts/' + post.id);
     }
 
-    function groupPosts(posts) {
+    function createPostGroups(posts) {
         var now = moment(),
             yesterday = moment().subtract(1, 'days');
 
@@ -144,6 +166,16 @@ function PostListController(
                 return $translate.instant('nav.yesterday');
             } else {
                 return postDate.fromNow();
+            }
+        });
+    }
+
+    function groupPosts(postList) {
+        angular.forEach(createPostGroups(postList), function (posts, group) {
+            if (angular.isArray($scope.groupedPosts[group])) {
+                Array.prototype.unshift.apply($scope.groupedPosts[group], posts);
+            } else {
+                $scope.groupedPosts[group] = posts;
             }
         });
     }
@@ -179,7 +211,6 @@ function PostListController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
-
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
@@ -205,9 +236,7 @@ function PostListController(
 
         $q.all(updateStatusPromises).then(function () {
             Notify.notify('notify.post.update_status_success_bulk', {count: count});
-
             clearSelectedPosts();
-
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
         })
@@ -235,5 +264,41 @@ function PostListController(
     function clearSelectedPosts() {
         // Clear selected posts
         $scope.selectedPosts.splice(0);
+    }
+
+    function getNewPosts() {
+        var existingFilters = PostFilters.getQueryParams($scope.filters);
+        var filterDate = moment(existingFilters.date_before).format('MMM Do YY');
+        var now = moment().format('MMM Do YY');
+        if (filterDate >= now) {
+            var mostRecentPostDate = $scope.recentPosts[0] ? $scope.recentPosts[0].post_date : $scope.posts[0].post_date;
+            existingFilters.date_after = mostRecentPostDate;
+            var query = existingFilters;
+            var postQuery = _.extend({}, query, {
+                order: $scope.filters.order,
+                orderby: $scope.filters.orderby
+            });
+            PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+                Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
+                $scope.newPostsCount += postsResponse.count;
+            });
+        }
+    }
+
+    function addNewestPosts() {
+        Array.prototype.unshift.apply($scope.posts, $scope.recentPosts);
+        groupPosts($scope.recentPosts);
+        $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
+        $scope.recentPosts = [];
+        $scope.newPostsCount = 0;
+        $location.hash('post-list-view-top');
+        $anchorScroll();
+    }
+
+    function checkForNewPosts(time) {
+        if ($scope.posts.length) {
+            getNewPosts();
+        }
+        $timeout(checkForNewPosts, time, true, time);
     }
 }

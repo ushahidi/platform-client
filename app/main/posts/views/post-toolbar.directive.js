@@ -7,13 +7,37 @@ function PostToolbarDirective() {
         scope: {
             isLoading: '=',
             filters: '=',
-            currentView: '='
+            currentView: '=',
+            editMode: '=',
+            selectedPost: '='
         },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')
     };
 }
 
-PostToolbarController.$inject = [];
-function PostToolbarController() {
+PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService'];
+function PostToolbarController($scope, $rootScope, Notify, PostLockService) {
+    $scope.setEditMode = setEditMode;
+    $scope.savePost = savePost;
+    $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
+    $scope.editEnabled = editEnabled;
+
+    function editEnabled() {
+        return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
+    }
+
+    function savePost() {
+        $rootScope.$broadcast('event:edit:post:data:mode:save');
+    }
+
+    function setEditMode() {
+        if (editEnabled()) {
+            if ($scope.editMode.editing) {
+                $rootScope.$broadcast('event:edit:leave:form');
+            } else {
+                $scope.editMode.editing = true;
+            }
+        }
+    }
 }

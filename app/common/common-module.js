@@ -40,6 +40,7 @@ angular.module('ushahidi.common', [
 .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
 .service('MessageEndpoint', require('./services/endpoints/message.js'))
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
+.service('PostLockEndpoint', require('./services/endpoints/post-lock-endpoint.js'))
 .service('CollectionEndpoint', require('./services/endpoints/collection.js'))
 .service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'))
 .service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
@@ -59,7 +60,6 @@ angular.module('ushahidi.common', [
 .service('MainsheetService', require('./services/mainsheet.service.js'))
 .service('ModalService', require('./services/modal.service.js'))
 .service('TranslationService', require('./services/translation.service.js'))
-// Controllers
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('intercom', require('./controllers/intercom.js'))
@@ -89,6 +89,8 @@ angular.module('ushahidi.common', [
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 
+// Factories
+.factory('socket', require('./factories/socket-factory.js'))
 // Event actions
 .constant('EVENT', {
     ACTIONS : {

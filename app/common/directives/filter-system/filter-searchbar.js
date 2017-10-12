@@ -4,8 +4,8 @@
  * and selection of appropriate sub directive
  */
 
-module.exports = ['$timeout',
-function ($timeout) {
+module.exports = ['$timeout', 'PostFilters',
+function ($timeout, PostFilters) {
     var link =
         function (
             $scope, $elem, $attrs, formControl
@@ -21,6 +21,10 @@ function ($timeout) {
                 $timeout(function () {
                     $scope.searchResultsVisible = false;
                 }, 100);
+            };
+
+            $scope.enableQuery = function () {
+                PostFilters.qEnabled = true;
             };
         };
     return {

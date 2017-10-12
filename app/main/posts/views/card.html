@@ -1,22 +1,28 @@
-<article class="postcard">
+<article ng-class="['postcard', {selected: inFocus}]" ng-click="clickAction(post)">
     <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
-    <div class="listing-item-select">
-        <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+
+    <div class="listing-item-locked" ng-show="isPostLocked()">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+        </svg>
     </div>
+
+    <!--TODO: This HTML is causing a display issue I'm disabling it until it is fixed-->
+    <!--<div class="listing-item-select">
+        <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+    </div>-->
     <div class="postcard-body">
       <header class="postcard-header">
 
         <post-metadata post="post" hide-date-this-week="true"></post-metadata>
 
-        <post-actions post="post"></post-actions>
+        <post-actions edit-mode="editMode" post="post"></post-actions>
       </header>
       <div class="postcard-overflow">
         <div class="postcard-title">
-          <a ng-href="/posts/{{post.id}}">
             <div class="postcard-field">
               {{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}
             </div>
-          </a>
         </div>
 
 

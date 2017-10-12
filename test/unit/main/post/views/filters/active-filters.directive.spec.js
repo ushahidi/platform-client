@@ -5,6 +5,7 @@ describe('post active filters directive', function () {
         directiveScope,
         PostFilters,
         Notify,
+        SavedSearchEndpoint,
         element;
 
     beforeEach(function () {
@@ -14,6 +15,7 @@ describe('post active filters directive', function () {
         var testApp = makeTestApp();
 
         testApp.directive('postActiveFilters', require('app/main/posts/views/filters/active-filters.directive'))
+        .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';
@@ -23,12 +25,10 @@ describe('post active filters directive', function () {
         angular.mock.module('testApp');
     });
 
-
-
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_, _SavedSearchEndpoint_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        SavedSearchEndpoint = _SavedSearchEndpoint_;
         PostFilters = _PostFilters_;
         Notify = _Notify_;
 
@@ -44,7 +44,7 @@ describe('post active filters directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('should excute the set of transformers and return the correct values for each', function () {
+        it('should execute the set of transformers and return the correct values for each', function () {
             var transformers = ['tags', 'center_point', 'created_before', 'created_after', 'fake'];
             var result = '';
 

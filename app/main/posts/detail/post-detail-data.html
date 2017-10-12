@@ -1,0 +1,46 @@
+<article class="postcard" role="article">
+        <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
+
+        <post-lock ng-if="post.lock" post="post"></post-lock>
+
+        <div class="postcard-body"> 
+            <div ng-if="post.form">
+              <h1 class="form-sheet-title survey-title">{{post.title}}</h1>
+              <p>{{post.content}}</p>
+            </div>
+
+            <div class="postcard-header">
+                <post-metadata post="post" hide-date-this-week="true"></post-metadata>
+                <post-actions  edit-mode="editMode" post="post"></post-actions>
+            </div>
+            <div
+          ng-repeat="(key,value) in post.values"
+          ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+          class="postcard-field"
+          >
+          <post-media-value
+            ng-if="form_attributes[key].type === 'media'"
+            media-has-caption="form_attributes[key].config.hasCaption"
+            label="{{form_attributes[key].label}}"
+            media-id="value"></post-media-value>
+        </div>
+        <div
+          ng-if="post.content"
+          class="postcard-field">
+          <p markdown-to-html="post.content"></p>
+        </div>
+
+        <post-value
+          ng-repeat="(key,value) in post.values"
+          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type)"
+          key="key"
+          value="value"
+          attribute="form_attributes[key]"
+          tags="tags"
+          type="'post'">
+        </post-value>
+        <post-detail-map post-id="post.id"></post-detail-map>
+      </div>
+        </div>
+
+</article>

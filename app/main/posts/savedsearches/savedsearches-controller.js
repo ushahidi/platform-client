@@ -17,10 +17,12 @@ module.exports = [
         UserEndpoint,
         Notify
     ) {
+        var viewLayouts = {'data': 'd', 'list': 'a', 'map': 'a'};
         // Set view based on route or set view
         $scope.currentView = function () {
             return $routeParams.view || savedSearch.view;
         };
+        $scope.layout = viewLayouts[$scope.currentView()];
 
         $scope.$emit('event:savedsearch:show', savedSearch);
         $scope.$on('$destroy', function () {
