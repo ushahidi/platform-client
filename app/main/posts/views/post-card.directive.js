@@ -17,14 +17,6 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
         template: require('./card.html'),
         link: function ($scope) {
             $scope.isPostLocked = isPostLocked;
-
-            $rootScope.$on('bulkActionsSelected:true', function () {
-                $scope.canSelect = true;
-            });
-            $rootScope.$on('bulkActionsSelected:false', function () {
-                $scope.canSelect = false;
-            });
-
             activate();
 
             function isPostLocked() {

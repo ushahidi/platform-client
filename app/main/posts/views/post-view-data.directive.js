@@ -60,6 +60,7 @@ function PostViewDataController(
     $scope.posts = [];
     $scope.groupedPosts = {};
     $scope.deletePosts = deletePosts;
+    $scope.hasFilters = hasFilters;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
     $scope.statuses = PostActionsService.getStatuses();
     $scope.changeStatus = changeStatus;
@@ -134,6 +135,7 @@ function PostViewDataController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
+        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             $scope.clearPosts ? resetPosts() : null;
@@ -231,6 +233,10 @@ function PostViewDataController(
         });
     }
 
+    function hasFilters() {
+        return PostFilters.hasFilters($scope.filters);
+    }
+
     function groupPosts(postList) {
         angular.forEach(createPostGroups(postList), function (posts, group) {
             if (angular.isArray($scope.groupedPosts[group])) {
@@ -257,13 +263,11 @@ function PostViewDataController(
     }
 
     function selectBulkActions() {
-        $scope.bulkActionsSelected = 'toolbar-active';
-        $rootScope.$broadcast('bulkActionsSelected:true');
+        $scope.bulkActionsSelected = true;
     }
 
     function closeBulkActions() {
         $scope.bulkActionsSelected = '';
-        $rootScope.$broadcast('bulkActionsSelected:false');
     }
 
     function clearSelectedPosts() {
