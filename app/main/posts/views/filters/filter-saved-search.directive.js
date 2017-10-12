@@ -1,7 +1,7 @@
 module.exports = FilterSavedSearch;
 
-FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope'];
-function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
+FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope', 'ModalService'];
+function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService) {
     return {
         restrict: 'E',
         require: 'ngModel',
@@ -15,6 +15,11 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
         scope.selectedSavedSearch = null;
         scope.searches = [];
         scope.searchesLength = 0;
+        scope.$on('savedSearch:update', loadSavedSearches);
+
+        scope.openSavedSearchListEditorModal = function () {
+            ModalService.openTemplate('<saved-search-list-editor-modal searches="searches"></saved-search-list-editor-modal>', 'set.delete_saved_searches', 'star', scope, false, false);
+        };
 
         function activate() {
             ngModel.$render = renderModelValue;

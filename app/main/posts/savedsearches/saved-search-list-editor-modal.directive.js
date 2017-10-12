@@ -1,0 +1,37 @@
+module.exports = SavedSearchListEditorModal;
+
+SavedSearchListEditorModal.$inject = [];
+function SavedSearchListEditorModal() {
+    return {
+        restrict: 'E',
+        scope: {
+            searches: '='
+        },
+        controller: SavedSearchListEditorModalController,
+        template: require('./saved-search-list-editor-modal.html')
+    };
+}
+
+SavedSearchListEditorModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '$location', '$q', 'Notify', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
+function SavedSearchListEditorModalController($scope, $element, $attrs, $rootScope, $location, $q, Notify, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
+    $scope.selectedSavedSearches = [];
+    $scope.close = function () {
+        ModalService.close();
+    };
+    $scope.delete = function () {
+        var deleteList = _.map($scope.selectedSavedSearches, function (itm) {
+            return SavedSearchEndpoint.delete({
+                id: itm
+            }).$promise;
+        });
+        $q.all (deleteList).then(function (results) {
+            $rootScope.$broadcast('savedSearch:update');
+            _.forEach($scope.selectedSavedSearches, function (itmId) {
+                delete $scope.searches[itmId];
+            });
+        }).catch(function (err) {
+            Notify.apiErrors(err);
+        });
+        ModalService.close();
+    };
+}

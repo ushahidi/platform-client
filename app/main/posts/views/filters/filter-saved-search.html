@@ -4,10 +4,11 @@
         <select
                 ng-model="selectedSavedSearch"
                 ng-options="search.name
-                            for
-                            search in searches
-                            track by search.id"
+                        for
+                        search in searches
+                        track by search.id"
         >
         </select>
     </div>
+    <a class="button button-beta" ng-click="openSavedSearchListEditorModal()">Edit</a>
 </fieldset>
