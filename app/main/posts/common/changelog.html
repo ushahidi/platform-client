@@ -1,0 +1,65 @@
+<div class="listing card change-log" ng-show="displayChangeLog">
+    <div class="change-log-header">
+        <h3 class="listing-heading">Change Log</h3>
+        <div class="button-group" ng-click="enterAddEntryMode()" ng-hide="enteringManually">
+            <button type="button" class="button-primary">
+              <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#plus"></use>
+              </svg>
+                <span class="button-label" translate="changelog.add_a_log_entry">Add an entry</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- include these? -->
+    <div class="listing-item">
+      <div class="alert confirmation" ng-show="successfulSave">
+        <span translate="changelog.entry_saved">Entry saved.</span>
+      </div>
+
+      <div class="progress-bar" ng-hide="entriesLoaded">
+        <span translate="changelog.loading_log_entries">Loading log entries...</span>
+      </div>
+    </div>
+
+    <div class="listing-item" ng-show="enteringManually">
+        <div class="listing-item-primary">
+            <div class="form-field required">
+                <label>New entry</label>
+                <textarea ng-model="manualLogEntry"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="button-primary">
+                    <span class="button-label" ng-click="cancelAddEntryMode()">Cancel</span>
+                </button>
+
+                <button type="button" class="button-alpha">
+                    <span class="button-label" ng-disabled="!manualLogEntry.length" ng-click="saveManualLogEntry()">Save</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="listing-item" ng-repeat="entry in logEntries">
+        <div class="listing-item-primary">
+            <p class="listing-item-secondary" am-time-ago="entry.created">{{entry.created}}</p>
+            <h2 class="listing-item-title">
+                  <a href="" ng-if="entry.entry_type == 'm'"><span translate="changelog.entry_by">Entry by</span> {{entry.realname }}</a>
+                  <a href="" ng-if="entry.entry_type == 'a'"><span translate="changelog.post_updated_by">Post updated by</spane> {{entry.realname }}</a>
+            </h2>
+            <p markdown-to-html="entry.content"></p>
+        </div>
+    </div>
+
+    <!-- Disabling this until we know how this will work.
+      <div class="listing-item">
+        <div class="listing-item-primary">
+            <h2 class="listing-item-title">
+                <a href="" class="button button-beta button-flat">Load more changes</a>
+            </h2>
+        </div>
+    </div>-->
+
+</div>

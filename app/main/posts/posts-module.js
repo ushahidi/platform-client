@@ -18,6 +18,7 @@ angular.module('ushahidi.posts', [])
 .directive('postVideoView', require('./detail/post-video-value.directive.js'))
 .directive('postDetailMap', require('./detail/map.directive.js'))
 .directive('postDetailData', require('./detail/post-detail-data.directive.js'))
+.directive('postChangeLog', require('./common/changelog.directive.js'))
 .service('PostActionsService', require('./common/post-actions.service.js'))
 
 // Create / Edit Screens
