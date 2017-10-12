@@ -6,8 +6,7 @@
             <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
         </span>
     </button>
-
-    <div class="timeline-col" ng-class="bulkActionsSelected">
+    <div class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
         <div class="listing timeline init">
         <div class="bulk-action">
             <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
@@ -15,7 +14,7 @@
         </div>
             <post-card
                 ng-repeat="post in posts"
-                can-select="false"
+                can-select="bulkActionsSelected"
                 post="post.id === selectedPostId ? selectedPost.post : post"
                 selected-posts="selectedPosts"
                 click-action="showPost"

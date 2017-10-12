@@ -257,13 +257,11 @@ function PostViewDataController(
     }
 
     function selectBulkActions() {
-        $scope.bulkActionsSelected = 'toolbar-active';
-        $rootScope.$broadcast('bulkActionsSelected:true');
+        $scope.bulkActionsSelected = true;
     }
 
     function closeBulkActions() {
         $scope.bulkActionsSelected = '';
-        $rootScope.$broadcast('bulkActionsSelected:false');
     }
 
     function clearSelectedPosts() {
