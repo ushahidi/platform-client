@@ -40,6 +40,7 @@ angular.module('ushahidi.common', [
 .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
 .service('MessageEndpoint', require('./services/endpoints/message.js'))
 .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
+.service('PostLockEndpoint', require('./services/endpoints/post-lock-endpoint.js'))
 .service('CollectionEndpoint', require('./services/endpoints/collection.js'))
 .service('SavedSearchEndpoint', require('./services/endpoints/savedsearch.js'))
 .service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
@@ -88,6 +89,8 @@ angular.module('ushahidi.common', [
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 
+// Factories
+.factory('socket', require('./factories/socket-factory.js'))
 // Event actions
 .constant('EVENT', {
     ACTIONS : {

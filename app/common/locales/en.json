@@ -587,6 +587,12 @@
         "status_published" : "Published",
         "status_review" : "Under review",
         "status_archived" : "Archived",
+        "locking" : {
+            "unlocked" : "Post successfully unlocked",
+            "unlock" : "Unlock",
+            "lock_broken_by_other" : "Your Post has been unlocked. Your current unsaved changes will be lost.",
+            "locked_message" : "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+        },
         "modify" : {
             "intro" : "Select survey:",
             "no_task_values": "There are currently no saved values for this task.",

@@ -6,6 +6,10 @@ angular.module('ushahidi.posts', [])
 .service('PostMetadataService', require('./common/post-metadata.service.js'))
 .service('PostSurveyService', require('./common/post-survey.service.js'))
 
+// Post Locking
+.service('PostLockService', require('./common/post-lock.service.js'))
+.directive('postLock', require('./common/post-lock.directive.js'))
+
 // Detail Screen
 .directive('postMessages', require('./detail/post-messages.directive.js'))
 .directive('postAddForm', require('./detail/post-add-form.directive.js'))
