@@ -101,6 +101,11 @@ function PostDataEditorController(
             $scope.cancel();
         }
     });
+    window.onbeforeunload = function (e) {
+        if ($scope.postForm && $scope.postForm.$dirty) {
+            return 'Are you sure you want to leave this page?  You will lose any unsaved data.';
+        }
+    };
 
     $scope.$on('$locationChangeStart', function (e, next) {
         e.preventDefault();
