@@ -72,6 +72,7 @@
         "searching" : "Searching",
         "show_hide": "Show/Hide",
         "fields" : "Fields",
+        "no_results": "No results found.",
         "filter_by" :"Filter by...",
         "apply_filters" : "Apply filters",
         "show_more_less" : "Show more/less",
