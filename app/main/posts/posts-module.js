@@ -44,7 +44,6 @@ angular.module('ushahidi.posts', [])
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
 .directive('postView', require('./views/post-view.directive.js'))
-.directive('postViewList', require('./views/post-view-list.directive.js'))
 .directive('postViewMap', require('./views/post-view-map.directive.js'))
 .directive('postViewCreate', require('./views/post-view-create.directive.js'))
 .directive('postCard', require('./views/post-card.directive.js'))
