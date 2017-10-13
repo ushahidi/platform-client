@@ -15,6 +15,7 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
     $scope.searchSearches = searchSearches;
     $scope.createNewSearch = createNewSearch;
     $scope.goToSearch = goToSearch;
+    $scope.loading = false;
     activate();
 
     // Reload searches on login / logout events
@@ -23,6 +24,7 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
     $scope.$on('savedSearch:update', loadSavedSearches);
 
     function activate() {
+        $scope.loading = true;
         loadSavedSearches();
     }
 
@@ -35,6 +37,9 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
                 var isOwner = (search.user && search.user.id === _.result($rootScope.currentUser, 'userId')) === true;
                 return search.featured || isOwner;
             });
+            $scope.loading = false;
+        }, function (fail) {
+            $scope.loading = false;
         });
     }
 
