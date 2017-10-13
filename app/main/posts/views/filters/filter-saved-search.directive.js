@@ -1,7 +1,7 @@
 module.exports = FilterSavedSearch;
 
-FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope'];
-function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
+FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope', 'ModalService'];
+function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService) {
     return {
         restrict: 'E',
         require: 'ngModel',
@@ -15,6 +15,12 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
         scope.selectedSavedSearch = null;
         scope.searches = [];
         scope.searchesLength = 0;
+        scope.loading = false;
+        scope.$on('savedSearch:update', loadSavedSearches);
+
+        scope.openSavedSearchListEditorModal = function () {
+            ModalService.openTemplate('<saved-search-list-editor-modal searches="searches"></saved-search-list-editor-modal>', 'set.delete_saved_searches', 'star', scope, false, false);
+        };
 
         function activate() {
             ngModel.$render = renderModelValue;
@@ -35,6 +41,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
 
         // Load searches + users
         function loadSavedSearches() {
+            scope.loading = true;
             SavedSearchEndpoint.query({}).$promise.then(function (searches) {
                 var searchesTmp = _.filter(searches, function (search) {
                     var isOwner = (search.user && search.user.id === _.result($rootScope.currentUser, 'userId')) === true;
@@ -42,8 +49,11 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope) {
                 });
                 scope.searches = _.indexBy(searchesTmp, 'id');
                 scope.searchesLength = _.keys(scope.searches).length;
+                scope.loading = false;
             }).then(function () {
                 activate();
+            }, function (err) {
+                scope.loading = false;
             });
         }
         loadSavedSearches();
