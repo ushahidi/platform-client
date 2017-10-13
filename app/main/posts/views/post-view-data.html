@@ -50,8 +50,8 @@
             <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
             <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
         </div>
-        <div class="button-group">
-            <button class="button-flat full-width" ng-click="addNewestPosts()" ng-show="newPostsCount > 0">
+        <div class="button-group" ng-show="newPostsCount > 0">
+            <button class="button-flat full-width" ng-click="addNewestPosts()">
                 <span ng-switch on="newPostsCount">
                     <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
                     <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
