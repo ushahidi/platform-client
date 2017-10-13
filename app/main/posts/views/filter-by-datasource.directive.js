@@ -119,7 +119,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
     function showOnlyIncoming(source) {
         $scope.filters.form = ['none'];
         $scope.filters.source = [source.toLowerCase()];
-        $location.path('/views/list');
+        $location.path('/views/data');
     }
 
     function featureEnabled() {

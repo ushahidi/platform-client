@@ -49,7 +49,7 @@ function PostActionsDirective(
                     $location.path().indexOf('collections') === -1 &&
                     $location.path().indexOf('savedsearches') === -1) {
                     // Redirect to list
-                    $location.path('/views/list');
+                    $location.path('/views/data');
                 } else {
                     $route.reload();
                 }

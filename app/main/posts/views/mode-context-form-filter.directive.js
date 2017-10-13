@@ -204,7 +204,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         filters.form.push('none');
         filters.has_location = 'unmapped';
         PostFilters.setFilters(filters);
-        $location.path('/views/list');
+        $location.path('/views/data');
     }
 
     function hide(formId) {
