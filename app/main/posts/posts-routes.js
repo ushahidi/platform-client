@@ -19,6 +19,7 @@ function (
             }
         }]
     })
+    .when('/views/list', { redirectTo: '/views/data' })
     .when('/views/:view?', {
         controller: require('./views/post-views.controller.js'),
         template: require('./views/main.html')
