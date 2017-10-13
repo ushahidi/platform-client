@@ -17,13 +17,13 @@ function PostLockDirective(UserEndpoint, PostLockService, Notify, $rootScope) {
             $scope.unlock = unlock;
 
             $scope.showLockMessage = showLockMessage;
-            $scope.hasPermission = $rootScope.hasPermission;
+            $scope.isAdmin = $rootScope.isAdmin;
 
             activate();
 
             function activate() {
                 $scope.canUnlock = userHasUnlockPermission();
-                UserEndpoint.get({id: $scope.post.lock.user_id}).$promise.then(function (result) {
+                UserEndpoint.get({id: $scope.post.lock.user.id}).$promise.then(function (result) {
                     $scope.user = result;
                 });
             }

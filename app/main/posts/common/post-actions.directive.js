@@ -1,6 +1,7 @@
 module.exports = PostActionsDirective;
 
 PostActionsDirective.$inject = [
+    '$rootScope',
     'PostEndpoint',
     'Notify',
     '$location',
@@ -9,6 +10,7 @@ PostActionsDirective.$inject = [
     'PostLockService'
 ];
 function PostActionsDirective(
+    $rootScope,
     PostEndpoint,
     Notify,
     $location,
@@ -21,6 +23,7 @@ function PostActionsDirective(
         replace: true,
         scope: {
             post: '=',
+            selectedPosts: '=',
             editMode: '='
         },
         template: require('./post-actions.html'),
@@ -32,6 +35,7 @@ function PostActionsDirective(
         $scope.updateStatus = updateStatus;
         $scope.openEditMode = openEditMode;
         $scope.postIsUnlocked = postIsUnlocked;
+
         activate();
 
         function activate() {
@@ -62,8 +66,19 @@ function PostActionsDirective(
                 Notify.error('post.already_locked');
                 return;
             }
-            if ($location.path() !== '/views/data') {
+            /**
+             * keep the same post obj reference if we got one from the parent
+             * if not, recreate the object
+             */
+            if ($scope.selectedPost && $scope.selectedPost.post) {
+                $scope.selectedPost.post = $scope.post ;
+            } else {
+                $scope.selectedPost = {post: $scope.post};
+            }
+            if ($location.path().indexOf('data') === -1) {
                 $location.path('/posts/' + id + '/edit');
+            } else if ($scope.editMode.editing) {
+                $rootScope.$broadcast('event:edit:leave:form');
             } else {
                 $scope.editMode.editing = true;
             }

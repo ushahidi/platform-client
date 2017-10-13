@@ -60,6 +60,7 @@ function PostViewDataController(
     $scope.posts = [];
     $scope.groupedPosts = {};
     $scope.deletePosts = deletePosts;
+    $scope.hasFilters = hasFilters;
     $scope.userHasBulkActionPermissions = userHasBulkActionPermissions;
     $scope.statuses = PostActionsService.getStatuses();
     $scope.changeStatus = changeStatus;
@@ -75,6 +76,8 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
+    $scope.selectedPost = {post: null};
+    $scope.selectedPostId = null;
 
     $rootScope.setLayout('layout-d');
 
@@ -113,15 +116,12 @@ function PostViewDataController(
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
-                $scope.selectedPost = {post: post};
+                $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
             });
-        } else if (post.id !== $scope.selectedPostId) {
-            $scope.selectedPost = {post: post};
-            $scope.selectedPostId = post.id;
         } else {
-            $scope.selectedPost = {post: null};
-            $scope.selectedPostId = null;
+            $scope.selectedPost.post = post;
+            $scope.selectedPostId = post.id;
         }
     }
 
@@ -134,6 +134,7 @@ function PostViewDataController(
             offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
+        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             $scope.clearPosts ? resetPosts() : null;
@@ -231,6 +232,10 @@ function PostViewDataController(
         });
     }
 
+    function hasFilters() {
+        return PostFilters.hasFilters($scope.filters);
+    }
+
     function groupPosts(postList) {
         angular.forEach(createPostGroups(postList), function (posts, group) {
             if (angular.isArray($scope.groupedPosts[group])) {
@@ -257,13 +262,11 @@ function PostViewDataController(
     }
 
     function selectBulkActions() {
-        $scope.bulkActionsSelected = 'toolbar-active';
-        $rootScope.$broadcast('bulkActionsSelected:true');
+        $scope.bulkActionsSelected = true;
     }
 
     function closeBulkActions() {
         $scope.bulkActionsSelected = '';
-        $rootScope.$broadcast('bulkActionsSelected:false');
     }
 
     function clearSelectedPosts() {

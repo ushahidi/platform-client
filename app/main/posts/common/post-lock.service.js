@@ -49,7 +49,7 @@ function PostLockService(
         // is different from the User who owns the lock
         if (post.lock) {
             if ($rootScope.currentUser) {
-                return $rootScope.currentUser.userId !== parseInt(post.lock.user_id);
+                return $rootScope.currentUser.userId !== parseInt(post.lock.user.id);
             }
         } else {
             return false;
