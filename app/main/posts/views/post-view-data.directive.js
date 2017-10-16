@@ -30,7 +30,8 @@ PostViewDataController.$inject = [
 '$timeout',
 '$location',
 '$anchorScroll',
-'Notify'
+'Notify',
+'$routeParams'
 ];
 
 function PostViewDataController(
@@ -48,7 +49,8 @@ function PostViewDataController(
     $timeout,
     $location,
     $anchorScroll,
-    Notify
+    Notify,
+    $routeParams
 ) {
 
     $scope.currentPage = 1;
@@ -83,6 +85,7 @@ function PostViewDataController(
 
     activate();
     function activate() {
+
         getPosts();
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
@@ -111,6 +114,9 @@ function PostViewDataController(
     }
 
     function showPost(post) {
+
+        $location.path('/posts/' + post.id, false);
+
         // displaying warning if user is in editmode when trying to change post
         if ($scope.editMode.editing) {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
