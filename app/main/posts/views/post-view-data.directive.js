@@ -30,7 +30,8 @@ PostViewDataController.$inject = [
 '$timeout',
 '$location',
 '$anchorScroll',
-'Notify'
+'Notify',
+'$window'
 ];
 
 function PostViewDataController(
@@ -48,7 +49,8 @@ function PostViewDataController(
     $timeout,
     $location,
     $anchorScroll,
-    Notify
+    Notify,
+    $window
 ) {
 
     $scope.currentPage = 1;
@@ -127,8 +129,11 @@ function PostViewDataController(
 
     function showPost(post) {
         return confirmEditingExit().then(function () {
-            $scope.selectedPost.post = post;
-            $scope.selectedPostId = post.id;
+            var currentWidth = $window.innerWidth;
+            if (currentWidth > 1023) {
+                $scope.selectedPost.post = post;
+                $scope.selectedPostId = post.id;
+            }
         });
     }
 
