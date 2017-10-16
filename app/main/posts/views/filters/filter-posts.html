@@ -7,6 +7,7 @@
       ng-submit="applyFilters()"
       ng-model-options="{ updateOn : 'submit default' }"
       data-message="search"
+      is-open="status.isopen"
 >
     <filter-searchbar model="filters.q"></filter-searchbar>
     <!-- Toggle Filters show/hide -->
@@ -17,7 +18,8 @@
             </svg>
             <span class="button-label hidden" translate>app.saved</span>
         </a>
-        <a         dropdown-toggle
+        <a      ng-click="toggleDropdown($event)"
+                dropdown-toggle
                    type="button"
                    class="searchbar-options-filter dropdown toggle-dropdown-trigger button">
             <!-- DEVNOTE translate -->
