@@ -110,19 +110,26 @@ function PostViewDataController(
         checkForNewPosts(30000);
     }
 
-    function showPost(post) {
-        // displaying warning if user is in editmode when trying to change post
-        if ($scope.editMode.editing) {
+    function confirmEditingExit() {
+        var deferred = $q.defer();
+
+        if (!$scope.editMode.editing) {
+            deferred.resolve();
+        } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
-                $scope.selectedPost.post = post;
-                $scope.selectedPostId = post.id;
+                deferred.resolve();
             });
-        } else {
+        }
+        return deferred.promise;
+    }
+
+    function showPost(post) {
+        return confirmEditingExit().then(function () {
             $scope.selectedPost.post = post;
             $scope.selectedPostId = post.id;
-        }
+        });
     }
 
     function getPosts(query) {
