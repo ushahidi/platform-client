@@ -241,7 +241,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 '<p><i translate>notify.post.leave_confirm_message</i></p>' +
                 '    <button class="button button-flat" ng-click="confirm()" translate>notify.post.leave_confirm</button>' +
                 '    <button class="button-alpha button-flat" ng-click="save()" translate>notify.generic.save</button>' +
-                '</div>', confirmText, false, scope, false, false);
+                '</div>', confirmText, false, scope, false, true);
 
         return deferred.promise;
     }
