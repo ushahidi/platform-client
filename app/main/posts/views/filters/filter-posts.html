@@ -2,7 +2,7 @@
 <form name="postFiltersFormOpen"
       dropdown
       role="search"
-      class="searchbar dropdown-menu init toggle-dropdown"
+      class="searchbar init toggle-dropdown"
       auto-close="outsideClick"
       ng-submit="applyFilters()"
       ng-model-options="{ updateOn : 'submit default' }"
@@ -24,5 +24,6 @@
             <sort-and-filter-counter></sort-and-filter-counter>
         </a>
     </div>
+
     <filters-dropdown filters-var="filters" ng-model="filters" cancel="cancel" apply-filters="applyFilters"></filters-dropdown>
 </form>
