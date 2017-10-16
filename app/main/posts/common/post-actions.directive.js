@@ -7,7 +7,8 @@ PostActionsDirective.$inject = [
     '$location',
     '$route',
     'PostActionsService',
-    'PostLockService'
+    'PostLockService',
+    '$routeParams'
 ];
 function PostActionsDirective(
     $rootScope,
@@ -16,7 +17,8 @@ function PostActionsDirective(
     $location,
     $route,
     PostActionsService,
-    PostLockService
+    PostLockService,
+    $routeParams
 ) {
     return {
         restrict: 'E',
@@ -75,7 +77,7 @@ function PostActionsDirective(
             } else {
                 $scope.selectedPost = {post: $scope.post};
             }
-            if ($location.path().indexOf('data') === -1) {
+            if ($routeParams.view !== 'data') {
                 $location.path('/posts/' + id + '/edit');
             } else if ($scope.editMode.editing) {
                 $rootScope.$broadcast('event:edit:leave:form');
