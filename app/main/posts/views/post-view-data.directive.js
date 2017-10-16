@@ -127,12 +127,18 @@ function PostViewDataController(
         return deferred.promise;
     }
 
+    function goToPost(post) {
+        $location.path('/posts/' + post.id);
+    }
+
     function showPost(post) {
         return confirmEditingExit().then(function () {
             var currentWidth = $window.innerWidth;
             if (currentWidth > 1023) {
                 $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
+            } else {
+                goToPost(post);
             }
         });
     }
