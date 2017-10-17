@@ -1,5 +1,5 @@
 <div>
-    <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data'"></post-toolbar>
+    <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data'" edit-mode="{editing: false}"></post-toolbar>
     <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>
      <!-- todo: toolbox-->
 
