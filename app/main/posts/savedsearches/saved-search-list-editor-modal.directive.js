@@ -32,6 +32,11 @@ function SavedSearchListEditorModalController($scope, $element, $attrs, $rootSco
                 _.forEach($scope.selectedSavedSearches, function (itmId) {
                     delete $scope.searches[itmId];
                 });
+                if (deleteList.length > 1) {
+                    Notify.notify('notify.savedsearch.delete_savedsearch_plural_success');
+                } else {
+                    Notify.notify('notify.savedsearch.delete_savedsearch_success');
+                }
                 cancelLoading();
             }, function (err) {
                 Notify.apiErrors(err);
