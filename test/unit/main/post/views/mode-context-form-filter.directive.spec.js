@@ -75,10 +75,10 @@ describe('mode-context-form-filter directive', function () {
             expect(isolateScope.filters.form.length).toEqual(1);
             expect(isolateScope.filters.form[0]).toEqual(2);
         });
-        it('should redirect to list-view', function () {
+        it('should redirect to data-view', function () {
             $location.path('/views/map');
             isolateScope.goToUnmapped();
-            expect($location.path()).toEqual('/views/list');
+            expect($location.path()).toEqual('/views/data');
         });
         it('should return the correct formatting for unmapped posts', function () {
             isolateScope.unmapped = 1;

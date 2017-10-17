@@ -19,6 +19,7 @@ function (
             }
         }]
     })
+    .when('/views/list', { redirectTo: '/views/data' })
     .when('/views/:view?', {
         controller: require('./views/post-views.controller.js'),
         template: require('./views/main.html')
@@ -27,6 +28,7 @@ function (
         controller: require('./views/post-view-noui.controller.js'),
         template: require('./views/post-view-noui.html')
     })
+    .when('/collections/:id/list', { redirectTo: '/collections/:id/data' })
     .when('/collections/:id/:view?', {
         controller: require('./collections/collections-controller.js'),
         template: require('./collections/collections.html'),
@@ -37,6 +39,7 @@ function (
             }]
         }
     })
+    .when('/savedsearches/:id/list', { redirectTo: '/savedsearches/:id/data' })
     .when('/savedsearches/:id/:view?', {
         controller: require('./savedsearches/savedsearches-controller.js'),
         template: require('./savedsearches/savedsearches.html'),
