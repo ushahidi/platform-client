@@ -8,7 +8,7 @@
       ng-model-options="{ updateOn : 'submit default' }"
       data-message="search"
 >
-    <filter-searchbar model="filters.q"></filter-searchbar>
+    <filter-searchbar model="filters.q" filters="filters"></filter-searchbar>
     <!-- Toggle Filters show/hide -->
     <div class="searchbar-options">
         <a class="button" ng-click="openSavedModal()">
