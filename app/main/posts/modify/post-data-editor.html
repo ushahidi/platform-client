@@ -92,7 +92,7 @@
         END: IF -->
         <!-- IF: User has permission to see other 'Tasks' -->
 
-        <post-toolbox post="post" ng-if="form"></post-toolbox>
+        <post-toolbox form="postForm" post="post" ng-show="form"></post-toolbox>
         <post-tabs
           ng-show="tasks.length > 1"
           form="postForm"

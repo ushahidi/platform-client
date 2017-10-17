@@ -1,6 +1,6 @@
-<div class="toolbox" ng-if="post.id">
+<div class="toolbox" ng-show="post.id">
   <!-- IF: User has permission to manage post status -->
-  <div class="tool" ng-if="allowedChangeStatus()" dropdown>
+  <div class="tool" ng-show="allowedChangeStatus()" dropdown>
     <fieldset class="custom-fieldset init">
       <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
         <span class="legend-label">
