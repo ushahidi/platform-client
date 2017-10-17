@@ -27,12 +27,18 @@ function ($timeout, PostFilters) {
                 PostFilters.qEnabled = true;
                 PostFilters.reactiveFilters = 'enabled';
             };
+
+            $scope.removeFilter = function (filterKey, value) {
+                $scope.filters.q = '';
+                PostFilters.clearFilter(filterKey, value);
+            };
         };
     return {
         restrict: 'E',
         replace: true,
         template: require('./filter-searchbar.html'),
         scope: {
+            filters: '=',
             model: '=',
             placeholderEntity: '='
         },
