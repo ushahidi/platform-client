@@ -46,6 +46,7 @@ function (
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
+    $scope.selectedPost = {post: post};
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
