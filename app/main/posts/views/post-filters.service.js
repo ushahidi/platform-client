@@ -65,6 +65,15 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     function clearFilter(filterKey, value) {
         filterState[filterKey] = getDefaults()[filterKey];
+        /**
+         * Since q is a special type of filter that gets applied on the click
+         * of a button separate from the input control, and since it should be automatically
+         * enabled when you clear it, we are adding this
+         */
+        if (filterKey === 'q') {
+            this.qEnabled = true;
+            this.reactiveFilters = 'enabled';
+        }
     }
 
     function getDefaults() {
