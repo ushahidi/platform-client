@@ -9,7 +9,8 @@ function PostToolbarDirective() {
             filters: '=',
             currentView: '=',
             editMode: '=',
-            selectedPost: '='
+            selectedPost: '=',
+            savingPost: '='
         },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')
@@ -28,6 +29,7 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService) {
     }
 
     function savePost() {
+        $scope.savingPost.post = true;
         $rootScope.$broadcast('event:edit:post:data:mode:save');
     }
 

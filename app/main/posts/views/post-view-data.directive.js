@@ -50,7 +50,6 @@ function PostViewDataController(
     $anchorScroll,
     Notify
 ) {
-
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
     $scope.itemsPerPageOptions = [10, 20, 50];
@@ -78,9 +77,8 @@ function PostViewDataController(
     $scope.closeBulkActions = closeBulkActions;
     $scope.selectedPost = {post: null};
     $scope.selectedPostId = null;
-
     $rootScope.setLayout('layout-d');
-
+    $scope.savingPost = {saving: false};
     activate();
     function activate() {
         getPosts();
