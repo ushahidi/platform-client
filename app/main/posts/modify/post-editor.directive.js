@@ -122,9 +122,9 @@ function PostEditorController(
             TagEndpoint.queryFresh().$promise
         ];
 
-        // If existing Post attempt to acquire lock
+        /// If existing Post attempt to acquire lock
         if ($scope.post.id) {
-            requests.push(PostLockEndpoint.getLock($scope.post).$promise);
+            requests.push(PostLockEndpoint.getLock({'post_id': $scope.post.id}).$promise);
         }
 
         return $q.all(requests).then(function (results) {
