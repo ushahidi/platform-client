@@ -31,7 +31,8 @@ PostViewDataController.$inject = [
 '$location',
 '$anchorScroll',
 'Notify',
-'$routeParams'
+'$routeParams',
+'$window'
 ];
 
 function PostViewDataController(
@@ -50,7 +51,8 @@ function PostViewDataController(
     $location,
     $anchorScroll,
     Notify,
-    $routeParams
+    $routeParams,
+    $window
 ) {
 
     $scope.currentPage = 1;
@@ -113,22 +115,36 @@ function PostViewDataController(
         checkForNewPosts(30000);
     }
 
-    function showPost(post) {
+    function confirmEditingExit() {
+        var deferred = $q.defer();
 
-        $location.path('/posts/' + post.id, false);
-
-        // displaying warning if user is in editmode when trying to change post
-        if ($scope.editMode.editing) {
+        if (!$scope.editMode.editing) {
+            deferred.resolve();
+        } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
+                deferred.resolve();
+            });
+        }
+        return deferred.promise;
+    }
+
+    function goToPost(post) {
+        $location.path('/posts/' + post.id);
+    }
+
+    function showPost(post) {
+        $location.path('/posts/' + post.id, false);
+        return confirmEditingExit().then(function () {
+            var currentWidth = $window.innerWidth;
+            if (currentWidth > 1023) {
                 $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
-            });
-        } else {
-            $scope.selectedPost.post = post;
-            $scope.selectedPostId = post.id;
-        }
+            } else {
+                goToPost(post);
+            }
+        });
     }
 
     function getPosts(query) {

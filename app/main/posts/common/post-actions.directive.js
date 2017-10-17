@@ -25,7 +25,7 @@ function PostActionsDirective(
         replace: true,
         scope: {
             post: '=',
-            selectedPosts: '=',
+            selectedPost: '=',
             editMode: '='
         },
         template: require('./post-actions.html'),
@@ -51,7 +51,7 @@ function PostActionsDirective(
                     $location.path().indexOf('collections') === -1 &&
                     $location.path().indexOf('savedsearches') === -1) {
                     // Redirect to list
-                    $location.path('/views/list');
+                    $location.path('/views/data');
                 } else {
                     $route.reload();
                 }
@@ -68,16 +68,8 @@ function PostActionsDirective(
                 Notify.error('post.already_locked');
                 return;
             }
-            /**
-             * keep the same post obj reference if we got one from the parent
-             * if not, recreate the object
-             */
-            if ($scope.selectedPost && $scope.selectedPost.post) {
-                $scope.selectedPost.post = $scope.post ;
-            } else {
-                $scope.selectedPost = {post: $scope.post};
-            }
-            if ($routeParams.view !== 'data') {
+            $scope.selectedPost.post = $scope.post;
+            if ($routeParams.view !== 'data' && $location.path().indexOf('data') === -1) {
                 $location.path('/posts/' + id + '/edit');
             } else if ($scope.editMode.editing) {
                 $rootScope.$broadcast('event:edit:leave:form');
