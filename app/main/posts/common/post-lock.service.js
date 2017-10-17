@@ -45,8 +45,14 @@ function PostLockService(
     }
 
     function isPostLockedForCurrentUser(post) {
-        // We only wish to show the lock message when the Current User
-        // is different from the User who owns the lock
+        /* We only wish to show the lock message when a lock exists
+         * a user is currently logged in and the owner of the lock is
+         * different from the currently logged in user
+         * Anonymous users should not see lock information
+         */
+        if (!$rootScope.loggedin) {
+            return false;
+        }
         if (post.lock) {
             if ($rootScope.currentUser) {
                 return $rootScope.currentUser.userId !== post.lock.user ? parseInt(post.lock.user.id) : 0;
