@@ -18,6 +18,9 @@ module.exports = [function () {
             return {$promise: {
                 then: function (successCallback) {
                     successCallback();
+                },
+                finally: function (successCallback) {
+                    successCallback();
                 }
             }};
         },
