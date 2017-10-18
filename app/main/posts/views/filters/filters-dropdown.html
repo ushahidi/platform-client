@@ -1,5 +1,4 @@
-<div class="dropdown-menu" data-toggle-target="search-filters" ng-show="filtersDropdownToggle" ng-class="{ 'active': filtersDropdownToggle }" data-toggle-animate>
-
+<div class="dropdown-menu" ng-class="{ 'active': dropdownToggleStatus.status }" data-toggle-animate>
     <div class="dropdown-menu-body">
         <div class="form-field filter-buttons">
             <div ng-show="filtersVar.q.length > 0" ng-class="{active: (filtersVar.q.length > 0) }">
