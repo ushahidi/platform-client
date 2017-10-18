@@ -79,7 +79,8 @@ angular.module('app',
         'ngRaven',
         'ushahidi.common',
         'ushahidi.main',
-        'ushahidi.settings'
+        'ushahidi.settings',
+        'ui.bootstrap.dropdown',
     ])
 
     .constant('CONST', {

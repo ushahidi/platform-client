@@ -15,8 +15,8 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$routeParams'];
-function FilterPostsController($scope, $timeout, ModalService, PostFilters, $routeParams) {
+FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$routeParams', '$log'];
+function FilterPostsController($scope, $timeout, ModalService, PostFilters, $routeParams, $log) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
@@ -25,13 +25,18 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     $scope.dropdownToggleStatus = {}
     activate();
 
-    $scope.dropdownToggleStatus = {
-        status: false
-    };
+    $scope.status = {
+        isopen: false
+      };
+
+      $scope.toggled = function(open) {
+        $log.log('Dropdown is now: ', open);
+      };
+
     $scope.toggleDropdown = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        $scope.dropdownToggleStatus.status = !$scope.dropdownToggleStatus.status
+        $scope.status.isopen = !$scope.status.isopen;
     };
     function activate() {
         // @todo define initial filter values
