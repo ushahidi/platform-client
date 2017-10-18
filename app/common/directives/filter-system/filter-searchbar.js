@@ -29,8 +29,7 @@ function ($timeout, PostFilters) {
             };
 
             $scope.removeFilter = function (filterKey, value) {
-                $scope.filters.q = '';
-                PostFilters.clearFilter(filterKey, value);
+                PostFilters.clearFilter('q', '');
             };
         };
     return {
