@@ -80,7 +80,7 @@ angular.module('app',
         'ushahidi.common',
         'ushahidi.main',
         'ushahidi.settings',
-        'ui.bootstrap.dropdown',
+        'ui.bootstrap.dropdown'
     ])
 
     .constant('CONST', {

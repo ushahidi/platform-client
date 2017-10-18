@@ -6,7 +6,7 @@ function FilterPostsDirective() {
         restrict: 'E',
         scope: {
             filters: '=',
-            currentView: '=',
+            currentView: '='
 
         },
         replace: true,
@@ -22,16 +22,11 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     $scope.applyFilters = applyFilters;
     $scope.qFilter = '';
     $scope.openSavedModal = openSavedModal;
-    $scope.dropdownToggleStatus = {}
     activate();
 
     $scope.status = {
         isopen: false
-      };
-
-      $scope.toggled = function(open) {
-        $log.log('Dropdown is now: ', open);
-      };
+    };
 
     $scope.toggleDropdown = function ($event) {
         $event.preventDefault();
