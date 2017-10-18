@@ -9,7 +9,9 @@ function PostDataEditor() {
             postContainer: '=',
             attributesToIgnore: '=',
             postMode: '=',
-            editMode: '='
+            editMode: '=',
+            isLoading: '=',
+            savingPost: '='
         },
         template: require('./post-data-editor.html'),
         controller: PostDataEditorController
@@ -89,13 +91,12 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
-
     $rootScope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
     });
 
     $rootScope.$on('event:edit:leave:form', function () {
-        if ($scope.postForm.$dirty) {
+        if ($scope.postForm && $scope.postForm.$dirty) {
             $scope.leavePost();
         } else {
             $scope.cancel();
@@ -106,15 +107,17 @@ function PostDataEditorController(
         e.preventDefault();
         $scope.leavePost(next);
     });
-
     activate();
 
     function activate() {
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
+            $scope.isLoading.state = true;
             FormEndpoint.queryFresh().$promise.then(function (results) {
                 $scope.forms = results;
+                $scope.isLoading.state = false;
+
             });
         }
 
@@ -132,6 +135,7 @@ function PostDataEditorController(
     }
     function selectForm() {
         $scope.form = $scope.post.form;
+        $scope.isLoading.state = true;
         $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
@@ -271,6 +275,7 @@ function PostDataEditorController(
                 incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
             $scope.tasks = tasks;
+            $scope.isLoading.state = false;
         });
 
     }
@@ -280,6 +285,8 @@ function PostDataEditorController(
     }
 
     function cancel(url) {
+        $scope.isLoading.state = false;
+        $scope.savingPost.saving = false;
         PostLockEndpoint.unlock({
             id: $scope.post.lock.id,
             post_id: $scope.post.id
@@ -308,6 +315,8 @@ function PostDataEditorController(
 
     function leavePost(url) {
         Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+            $scope.isLoading.state = false;
+            $scope.savingPost.saving = false;
             $scope.cancel(url);
         }, function () {
             // redirecting if user is leaving the page
@@ -318,17 +327,21 @@ function PostDataEditorController(
     }
 
     function savePost() {
-        $scope.saving_post = true;
+        $scope.isLoading.state = true;
+        $scope.savingPost.saving = true;
         // Checking if changes are made
-        if (!$scope.postForm.$dirty) {
+        if ($scope.postForm && !$scope.postForm.$dirty) {
+            $scope.savingPost.saving = false;
+            $scope.isLoading.state = false;
             Notify.infoModal('post.valid.no_changes');
-            $scope.saving_post = false;
+
             return;
         }
 
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
-            $scope.saving_post = false;
+            $scope.savingPost.saving = false;
+            $scope.isLoading.state = false;
             return;
         }
         // Create/update any associated media objects
@@ -362,7 +375,7 @@ function PostDataEditorController(
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 $scope.postContainer.post = $scope.post;
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
-                    $scope.saving_post = false;
+                    $scope.savingPost.saving = false;
                     $scope.post.id = response.id;
                     Notify.notify(success_message, { name: $scope.post.title });
                     $scope.editMode.editing = false;
@@ -370,6 +383,7 @@ function PostDataEditorController(
                     Notify.notify(success_message, { name: $scope.post.title });
                     $scope.editMode.editing = false;
                 }
+                $scope.isLoading.state = false;
             }, function (errorResponse) { // errors
                 var validationErrors = [];
                 // @todo refactor limit handling
@@ -381,9 +395,11 @@ function PostDataEditorController(
                     } else {
                         validationErrors.push(value);
                     }
+                    $scope.isLoading.state = false;
                 });
                 Notify.errors(_.pluck(validationErrors, 'message'));
-                $scope.saving_post = false;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
             });
         });
     }

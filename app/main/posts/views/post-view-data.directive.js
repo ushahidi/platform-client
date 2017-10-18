@@ -52,7 +52,6 @@ function PostViewDataController(
     Notify,
     $window
 ) {
-
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
     $scope.itemsPerPageOptions = [10, 20, 50];
@@ -80,12 +79,12 @@ function PostViewDataController(
     $scope.closeBulkActions = closeBulkActions;
     $scope.selectedPost = {post: null};
     $scope.selectedPostId = null;
-
     $rootScope.setLayout('layout-d');
     /**
      * setting "now" time as utc for new posts filter
      */
     var newPostsAfter = moment.utc().format();
+    $scope.savingPost = {saving: false};
     activate();
     function activate() {
 
@@ -118,13 +117,14 @@ function PostViewDataController(
 
     function confirmEditingExit() {
         var deferred = $q.defer();
-
         if (!$scope.editMode.editing) {
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
                 deferred.resolve();
             });
         }
