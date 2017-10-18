@@ -116,6 +116,8 @@ function PostViewDataController(
                 $scope.editMode.editing = false;
                 $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
             });
         } else {
             $scope.selectedPost.post = post;

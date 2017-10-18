@@ -96,7 +96,7 @@ function PostDataEditorController(
     });
 
     $rootScope.$on('event:edit:leave:form', function () {
-        if ($scope.postForm.$dirty) {
+        if ($scope.postForm && $scope.postForm.$dirty) {
             $scope.leavePost();
         } else {
             $scope.cancel();
@@ -107,7 +107,6 @@ function PostDataEditorController(
         e.preventDefault();
         $scope.leavePost(next);
     });
-
     activate();
 
     function activate() {
@@ -286,6 +285,8 @@ function PostDataEditorController(
     }
 
     function cancel(url) {
+        $scope.isLoading.state = false;
+        $scope.savingPost.saving = false;
         PostLockEndpoint.unlock({
             id: $scope.post.lock.id,
             post_id: $scope.post.id
@@ -314,10 +315,11 @@ function PostDataEditorController(
 
     function leavePost(url) {
         Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+            $scope.isLoading.state = false;
+            $scope.savingPost.saving = false;
             $scope.cancel(url);
         }, function () {
             // redirecting if user is leaving the page
-            $scope.isLoading = false;
             if (url) {
                 $location.path(url);
             }
@@ -328,17 +330,18 @@ function PostDataEditorController(
         $scope.isLoading.state = true;
         $scope.savingPost.saving = true;
         // Checking if changes are made
-        if (!$scope.postForm.$dirty) {
-            Notify.infoModal('post.valid.no_changes');
+        if ($scope.postForm && !$scope.postForm.$dirty) {
             $scope.savingPost.saving = false;
-            $scope.isLoading = false;
+            $scope.isLoading.state = false;
+            Notify.infoModal('post.valid.no_changes');
+
             return;
         }
 
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
             $scope.savingPost.saving = false;
-            $scope.isLoading = false;
+            $scope.isLoading.state = false;
             return;
         }
         // Create/update any associated media objects
