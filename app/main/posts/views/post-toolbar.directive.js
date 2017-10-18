@@ -9,7 +9,8 @@ function PostToolbarDirective() {
             filters: '=',
             currentView: '=',
             editMode: '=',
-            selectedPost: '='
+            selectedPost: '=',
+            savingPost: '='
         },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')

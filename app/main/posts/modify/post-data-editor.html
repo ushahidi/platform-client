@@ -106,8 +106,15 @@
         </post-tabs>
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
-          <button class="button-flat" ng-click="leavePost()">Cancel</button>
-          <button class="button button-alpha" ng-click="savePost()">Save</button>
+          <button class="button-flat" ng-click="leavePost()" translate>app.cancel</button>
+          <button class="button button-alpha" ng-click="savePost()" ng-if="!savingPost.saving" translate="">app.save</button>
+          <button class="button-alpha" disabled ng-if="savingPost.saving" translate>app.saving
+            <div class="loading">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+          </button>
         </div>
       </div>
   </form>

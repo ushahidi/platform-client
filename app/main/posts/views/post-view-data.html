@@ -1,5 +1,5 @@
 <div class="flex-container" id='post-data-view-top'>
-    <post-toolbar is-loading="isLoading" current-view="currentView" selected-post="selectedPost.post" edit-mode="editMode" filters="filters"></post-toolbar>
+    <post-toolbar saving-post="savingPost" is-loading="isLoading" current-view="currentView" selected-post="selectedPost.post" edit-mode="editMode" filters="filters"></post-toolbar>
     <div class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
         <listing-toolbar
             entities="posts"
@@ -166,7 +166,7 @@
             <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading.state">
                 <h4 translate>post.no_posts_yet</h4>
             </div>
-
+    
             <div class="listing-item" ng-if="posts.length > 0 || isLoading.state">
                 <div class="listing-item-primary">
                     <button ng-disabled="isLoading.state" ng-hide="( isLoading.state || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
@@ -186,6 +186,6 @@
     <div class="post-col">
         <post-detail-data ng-if="selectedPost.post && !editMode.editing" edit-mode="editMode" filters="filters" is-loading="isLoading" post="selectedPost.post"></post-detail-data>
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
-        <post-data-editor edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
+        <post-data-editor saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
     </div>
 </div>
