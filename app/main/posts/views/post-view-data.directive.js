@@ -82,9 +82,13 @@ function PostViewDataController(
     $scope.selectedPostId = null;
 
     $rootScope.setLayout('layout-d');
-
+    /**
+     * setting "now" time as utc for new posts filter
+     */
+    var newPostsAfter = moment.utc().format();
     activate();
     function activate() {
+
         getPosts();
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
@@ -300,19 +304,23 @@ function PostViewDataController(
 
     function getNewPosts() {
         var existingFilters = PostFilters.getQueryParams($scope.filters);
-        var filterDate = moment(existingFilters.date_before).format('MMM Do YY');
-        var now = moment().format('MMM Do YY');
-        if (filterDate >= now) {
-            var mostRecentPostDate = $scope.recentPosts[0] ? $scope.recentPosts[0].post_date : $scope.posts[0].post_date;
-            existingFilters.date_after = mostRecentPostDate;
+        var filterDate = moment(existingFilters.date_before).utc().format();
+
+        if (filterDate >= newPostsAfter) {
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
                 order: $scope.filters.order,
-                orderby: $scope.filters.orderby
+                orderby: $scope.filters.orderby,
+                date_after: newPostsAfter
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
                 $scope.newPostsCount += postsResponse.count;
+                if (postsResponse.count > 0) {
+                    // after we get the posts, we set the mostrecentpost
+                    newPostsAfter = moment.utc().format();
+                }
+
             });
         }
     }
