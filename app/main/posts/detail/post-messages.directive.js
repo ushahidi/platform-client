@@ -29,7 +29,6 @@ function (
         link: function ($scope) {
 
             $scope.$watch('post', function (post) {
-                console.log('post changed to ' + post.id + ', reloading messages content.');
                 activate();
             });
 
