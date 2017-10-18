@@ -42,9 +42,8 @@
           {{form.description}}
         </p>
         <div class="postcard-header">
-
           <post-metadata post="post"></post-metadata>
-          <post-actions post="post"></post-actions>
+          <post-actions post="post" selected-post="selectedPost"></post-actions>
         </div>
         <div
           ng-repeat="(key,value) in post.values"
