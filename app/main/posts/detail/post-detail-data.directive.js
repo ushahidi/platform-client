@@ -68,6 +68,7 @@ function PostDetailDataController(
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
+    $scope.selectedPost = {post: $scope.post};
 
     activate();
 
