@@ -28,27 +28,42 @@ function (
         template: require('./post-messages.html'),
         link: function ($scope) {
 
+            $scope.$watch('post', function (post) {
+                console.log('post changed to ' + post.id + ', reloading messages content.');
+                activate();
+            });
+
             // Pagination
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
             $scope.totalItems = $scope.itemsPerPage;
             $scope.pageChanged = getMessagesForPagination;
+            $scope.isLoadingMessages = false;
 
-            // Initialize
-            ContactEndpoint.get({ id: $scope.post.contact.id })
-                .$promise.then(function (contact) {
-                    $scope.contact = contact;
-                });
+            function activate()
+            {
+                $scope.messages = []; // init to blank
+                // Initialize
+                ContactEndpoint.get({ id: $scope.post.contact.id })
+                    .$promise.then(function (contact) {
+                        $scope.contact = contact;
+                    });
 
-            getMessagesForPagination();
+                getMessagesForPagination();
+            }
+
+            activate();
 
             function getMessagesForPagination() {
+                $scope.isLoadingMessages = true; // show progress bar
+
                 if ($scope.post.contact.id) {
                     MessageEndpoint.allInThread({
                         contact: $scope.post.contact.id,
                         offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
                         limit: $scope.itemsPerPage
                     }).$promise.then(function (response) {
+
                         var created,
                             messages = response.results;
 
@@ -63,7 +78,9 @@ function (
                             message.displayTime = formatDate(created);
 
                             $scope.totalItems = response.total_count;
+
                         });
+                        $scope.isLoadingMessages = false; //hide progress bar
                     });
                 }
             }
