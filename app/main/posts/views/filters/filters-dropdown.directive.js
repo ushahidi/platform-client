@@ -6,7 +6,6 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
         restrict: 'E',
         require: 'ngModel',
         scope: {
-            dropdownToggleStatus: '=',
             applyFilters: '=',
             filtersVar: '=',
             cancel: '='
@@ -24,11 +23,11 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
         };
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = 'enabled';
-            $scope.dropdownToggleStatus.status = false;
+            $scope.$parent.dropdownToggleStatus.status = false;
         };
         $scope.clearFilters = function () {
             $scope.filtersVar = PostFilters.clearFilters();
-            $scope.dropdownToggleStatus.status = false;
+            $scope.$parent.dropdownToggleStatus.status = false;
             PostFilters.reactiveFilters = 'enabled';
         };
         $scope.enableQuery = function () {

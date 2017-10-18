@@ -328,6 +328,7 @@ function PostViewDataController(
     }
 
     function checkForNewPosts(time) {
+        console.log("checking")
         if ($scope.posts.length) {
             getNewPosts();
         }

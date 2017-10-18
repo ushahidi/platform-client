@@ -6,7 +6,8 @@ function FilterPostsDirective() {
         restrict: 'E',
         scope: {
             filters: '=',
-            currentView: '='
+            currentView: '=',
+
         },
         replace: true,
         controller: FilterPostsController,
@@ -21,15 +22,16 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     $scope.applyFilters = applyFilters;
     $scope.qFilter = '';
     $scope.openSavedModal = openSavedModal;
+    $scope.dropdownToggleStatus = {}
     activate();
 
-    $scope.status = {
-        isopen: false
+    $scope.dropdownToggleStatus = {
+        status: false
     };
     $scope.toggleDropdown = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        $scope.status.isopen = !$scope.status.isopen;
+        $scope.dropdownToggleStatus.status = !$scope.dropdownToggleStatus.status
     };
     function activate() {
         // @todo define initial filter values
