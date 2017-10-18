@@ -40,8 +40,7 @@ function (
             $scope.pageChanged = getMessagesForPagination;
             $scope.isLoadingMessages = false;
 
-            function activate()
-            {
+            function activate() {
                 $scope.messages = []; // init to blank
                 // Initialize
                 ContactEndpoint.get({ id: $scope.post.contact.id })
