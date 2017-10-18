@@ -85,7 +85,7 @@ function PostViewDataController(
 
     activate();
     function activate() {
-        getPosts();
+        getPosts(false, false);
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
         $scope.$watch(function () {
@@ -101,7 +101,7 @@ function PostViewDataController(
         }, function (newValue, oldValue) {
             if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
                 $scope.clearPosts = true;
-                getPosts();
+                getPosts(false, false);
                 PostFilters.reactiveFilters = 'disabled';
             }
         }, true);
@@ -143,15 +143,18 @@ function PostViewDataController(
         });
     }
 
-    function getPosts(query) {
+    function getPosts(query, useOffset) {
         query = query || PostFilters.getQueryParams($scope.filters);
         PostEndpoint.stats(query).$promise.then(function (results) {
             $scope.total = results.totals[0].values[0].total;
         });
+
         var postQuery = _.extend({}, query, {
-            offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
+        if (useOffset === true) {
+            postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
+        }
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
@@ -206,7 +209,7 @@ function PostViewDataController(
 
                 if (!$scope.posts.length) {
                     $scope.clearPosts = true;
-                    getPosts();
+                    getPosts(false, false);
                 }
             }
         });
@@ -276,7 +279,7 @@ function PostViewDataController(
         // Increment page
         $scope.currentPage++;
         $scope.clearPosts = false;
-        getPosts();
+        getPosts(false, true);
     }
 
     function selectBulkActions() {
