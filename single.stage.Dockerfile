@@ -3,7 +3,8 @@ FROM ushahidi/node-ci:node-6
 ARG HTTP_PORT=8080
 
 RUN apt-get update && \
-    apt-get install -y nginx && \
+    apt-get install --no-install-recommends -y nginx python python-pip python-setuptools python-yaml && \
+    pip install 'jinja2-cli[yaml]==0.6.0' && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -16,7 +17,9 @@ COPY . ./
 RUN gulp build
 
 WORKDIR /usr/share/nginx/html
-RUN rsync -a --delete-after /var/app/server/www/ /usr/share/nginx/html/
+RUN rsync -a --delete-after /var/app/server/www/ ./
+COPY app/config.js.j2 ./config.js.j2
+COPY app/config.json.j2 ./config.json.j2
 COPY docker/nginx.default.conf /etc/nginx/sites-enabled/default
 COPY docker/nginx.run.sh /nginx.run.sh
 RUN sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/sites-enabled/default && \
