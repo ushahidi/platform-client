@@ -116,7 +116,7 @@
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.7.2-rc.16",
+    "ushahidi-platform-pattern-library": "v3.7.2-rc.17",
     "socket.io-client": "2.0.3"
   },
   "engines": {
