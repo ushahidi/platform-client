@@ -82,7 +82,7 @@ function PostViewDataController(
     $scope.selectedPostId = null;
 
     $rootScope.setLayout('layout-d');
-
+    var stopInterval;
     activate();
     function activate() {
         getPosts();
@@ -109,6 +109,10 @@ function PostViewDataController(
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
 
+        $scope.$on('$destroy', function (ev) {
+                $timeout.cancel(stopInterval);
+            }
+        );
         checkForNewPosts(30000);
     }
 
@@ -304,11 +308,11 @@ function PostViewDataController(
         var now = moment().format('MMM Do YY');
         if (filterDate >= now) {
             var mostRecentPostDate = $scope.recentPosts[0] ? $scope.recentPosts[0].post_date : $scope.posts[0].post_date;
-            existingFilters.date_after = mostRecentPostDate;
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
                 order: $scope.filters.order,
-                orderby: $scope.filters.orderby
+                orderby: $scope.filters.orderby,
+                date_after: mostRecentPostDate
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
@@ -328,9 +332,10 @@ function PostViewDataController(
     }
 
     function checkForNewPosts(time) {
+
         if ($scope.posts.length) {
             getNewPosts();
         }
-        $timeout(checkForNewPosts, time, true, time);
+        stopInterval = $timeout(checkForNewPosts, time, true, time);
     }
 }
