@@ -48,7 +48,8 @@ describe('post active search filters directive', function () {
         FilterTransformers = _FilterTransformers_;
         $rootScope.filters = defaults;
         $scope.filters = defaults;
-        element = '<filters-dropdown filters-var="$scope.filters" ng-model="$scope.filters"></filters-dropdown>';
+        $scope.status = {isopen: false};
+        element = '<filters-dropdown dropdown-status="status" filters-var="$scope.filters" ng-model="$scope.filters"></filters-dropdown>';
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.isolateScope();
