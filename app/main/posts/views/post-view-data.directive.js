@@ -52,7 +52,6 @@ function PostViewDataController(
     Notify,
     $window
 ) {
-
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
     $scope.itemsPerPageOptions = [10, 20, 50];
@@ -80,11 +79,16 @@ function PostViewDataController(
     $scope.closeBulkActions = closeBulkActions;
     $scope.selectedPost = {post: null};
     $scope.selectedPostId = null;
-
     $rootScope.setLayout('layout-d');
     var stopInterval;
+    /**
+     * setting "now" time as utc for new posts filter
+     */
+    var newPostsAfter = moment.utc().format();
+    $scope.savingPost = {saving: false};
     activate();
     function activate() {
+
         getPosts();
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
@@ -118,13 +122,14 @@ function PostViewDataController(
 
     function confirmEditingExit() {
         var deferred = $q.defer();
-
         if (!$scope.editMode.editing) {
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
                 deferred.resolve();
             });
         }
@@ -304,19 +309,23 @@ function PostViewDataController(
 
     function getNewPosts() {
         var existingFilters = PostFilters.getQueryParams($scope.filters);
-        var filterDate = moment(existingFilters.date_before).format('MMM Do YY');
-        var now = moment().format('MMM Do YY');
-        if (filterDate >= now) {
-            var mostRecentPostDate = $scope.recentPosts[0] ? $scope.recentPosts[0].post_date : $scope.posts[0].post_date;
+        var filterDate = moment(existingFilters.date_before).utc().format();
+
+        if (filterDate >= newPostsAfter) {
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
                 order: $scope.filters.order,
                 orderby: $scope.filters.orderby,
-                date_after: mostRecentPostDate
+                date_after: newPostsAfter
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
                 $scope.newPostsCount += postsResponse.count;
+                if (postsResponse.count > 0) {
+                    // after we get the posts, we set the mostrecentpost
+                    newPostsAfter = moment.utc().format();
+                }
+
             });
         }
     }
