@@ -25,13 +25,6 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $rou
     $scope.openSavedModal = openSavedModal;
     activate();
 
-    $scope.status = {isopen: false};
-
-    $scope.toggleDropdown = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        $scope.status.isopen = !$scope.status.isopen;
-    };
     function activate() {
         // @todo define initial filter values
         // $scope.$watch('filters', handleFilterChange, true);
