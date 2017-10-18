@@ -59,7 +59,8 @@
                   id="values[{{attribute.key}}][{{key}}]"
                   name="values_{{attribute.id}}"
                   ng-model="post.values[attribute.key][key]"
-                  ng-required="attribute.required">
+                  ng-required="attribute.required"
+                >
                   <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
               </select>
               <!-- type: number -->
@@ -163,7 +164,11 @@
   <fieldset ng-if="isFieldSetStructure(attribute)">
 
     <!-- Attribute Label -->
-    <label>{{attribute.label}}</label>
+    <label ng-class="{
+        'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+        'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+        'required': attribute.required
+      }">{{attribute.label}}</label>
     <!-- Attribute Instructions -->
     <p>{{attribute.instructions}}</p>
 

@@ -85,10 +85,10 @@ describe('filter by datasource directive', function () {
             expect(isolateScope.filters.source).toEqual(['email']);
             expect(isolateScope.filters.form).toEqual(['none']);
         });
-        it('should redirect to timeline-view if choosing posts-without a form', function () {
+        it('should redirect to data-view if choosing posts-without a form', function () {
             $location.path('/views/map');
             isolateScope.showOnlyIncoming('SMS');
-            expect($location.path()).toEqual('/views/list');
+            expect($location.path()).toEqual('/views/data');
         });
     });
 });
