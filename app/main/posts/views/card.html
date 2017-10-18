@@ -13,7 +13,6 @@
         <div class="postcard-overflow">
         <div class="postcard-title">
             <div class="postcard-field">
-                {{selectedPost.post.id}}
               {{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}
             </div>
         </div>
