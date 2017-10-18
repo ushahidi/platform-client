@@ -14,16 +14,6 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
     function DetailMapLink($scope, element, attrs) {
         var map;
         $scope.hideMap = false;
-        console.log('post id is currently: ' + $scope.postId);
-
-        $scope.$watch('postId', function (postId) {
-            console.log('post changed to ' + postId + ', reloading location content.');
-            console.log('What is this map?: ', map);
-            if (map) {
-                map.remove();
-            }
-            activate();
-        });
 
         activate();
 
