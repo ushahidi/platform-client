@@ -24,6 +24,7 @@ PostDataEditorController.$inject = [
     '$q',
     '$filter',
     '$location',
+    '$routeParams',
     '$translate',
     '$timeout',
     'moment',
@@ -49,6 +50,7 @@ function PostDataEditorController(
     $q,
     $filter,
     $location,
+    $routeParams,
     $translate,
     $timeout,
     moment,
@@ -130,6 +132,22 @@ function PostDataEditorController(
         }
     }
 
+    /**
+     * redirecting if user is leaving the page, but only changing the URL and not the actual page if the user
+     * is navigation between posts.
+     * @FIXME This is a very fragile and not an ideal way to handle it. But since we are faking URLs we can't rely only on
+     * routePrams or only on the location, I think, so we are going to use this for the moment
+     */
+    function doChangePage(url) {
+        var locationMatch = url.match(/\/posts\/[0-9]+(\/|$)/);
+        var locationIsPost =  locationMatch ? locationMatch.length > 0 : false;
+        var movingToDataPost = ($routeParams.view === 'data' && locationIsPost);
+        if (url &&  !(movingToDataPost)) {
+            $location.url(url);
+        } else if (movingToDataPost) {
+            $location.path(url.match(/\/posts\/[0-9]+(\/|$)/)[0]);
+        }
+    }
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
     }
@@ -292,10 +310,7 @@ function PostDataEditorController(
             post_id: $scope.post.id
         }).$promise.then(function (result) {
             $scope.editMode.editing = false;
-            // redirecting if user is leaving page
-            if (url) {
-                $location.path(url);
-            }
+            doChangePage(url);
         });
     }
 
@@ -319,10 +334,7 @@ function PostDataEditorController(
             $scope.savingPost.saving = false;
             $scope.cancel(url);
         }, function () {
-            // redirecting if user is leaving the page
-            if (url) {
-                $location.path(url);
-            }
+            doChangePage(url);
         });
     }
 
