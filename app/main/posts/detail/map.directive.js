@@ -18,14 +18,15 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
         $scope.$watch('postId', function (postId) {
             if (map) {
                 map.remove();
-                activate();
             }
+            activate();
         });
 
         activate();
 
         function activate() {
             // Start loading data
+            $scope.hideMap = true;
             var geojson = PostEndpoint.geojson({id: $scope.postId}).$promise;
             var createMap = Maps.createMap(element[0].querySelector('#post-map'))
             .then(function (data) {
@@ -56,6 +57,7 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
                 $scope.hideMap = true;
                 return;
             }
+            $scope.hideMap = false;
 
             var geojson = L.geoJson(geojsonData, {
                 pointToLayer: Maps.pointToLayer
