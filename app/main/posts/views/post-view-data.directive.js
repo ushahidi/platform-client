@@ -82,6 +82,7 @@ function PostViewDataController(
     $scope.selectedPost = {post: null};
     $scope.selectedPostId = null;
     $rootScope.setLayout('layout-d');
+    var stopInterval;
     /**
      * setting "now" time as utc for new posts filter
      */
@@ -113,6 +114,10 @@ function PostViewDataController(
             $scope.$emit('post:list:selected', $scope.selectedPosts);
         });
 
+        $scope.$on('$destroy', function (ev) {
+                $timeout.cancel(stopInterval);
+            }
+        );
         checkForNewPosts(30000);
     }
 
@@ -341,9 +346,10 @@ function PostViewDataController(
     }
 
     function checkForNewPosts(time) {
+
         if ($scope.posts.length) {
             getNewPosts();
         }
-        $timeout(checkForNewPosts, time, true, time);
+        stopInterval = $timeout(checkForNewPosts, time, true, time);
     }
 }
