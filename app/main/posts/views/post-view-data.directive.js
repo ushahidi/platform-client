@@ -31,6 +31,7 @@ PostViewDataController.$inject = [
 '$location',
 '$anchorScroll',
 'Notify',
+'$routeParams',
 '$window'
 ];
 
@@ -50,6 +51,7 @@ function PostViewDataController(
     $location,
     $anchorScroll,
     Notify,
+    $routeParams,
     $window
 ) {
     $scope.currentPage = 1;
@@ -140,6 +142,7 @@ function PostViewDataController(
     }
 
     function showPost(post) {
+        $location.path('/posts/' + post.id, false);
         return confirmEditingExit().then(function () {
             var currentWidth = $window.innerWidth;
             if (currentWidth > 1023) {
