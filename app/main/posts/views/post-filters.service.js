@@ -25,7 +25,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getMode: getMode,
         getModeId: getModeId,
         countFilters: countFilters,
-        mapFiltersEnabled: mapFiltersEnabled,
         reactiveFilters: 'enabled',
         qEnabled: false
     };
@@ -221,20 +220,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
     function countFilters() {
         return _.keys(this.getActiveFilters(this.getFilters())).length;
-    }
-
-    function mapFiltersEnabled(newValue, oldValue) {
-        var diff = _.omit(newValue, function (value, key, obj) {
-            return _.isEqual(oldValue[key], value);
-        });
-        var diffLength = _.keys(diff).length;
-        var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
-        /**
-         * We only want to call updateCounts if we :
-         * - Have changes other than q= in the filters
-         * - Only q= changed but we also have enabled the q filter
-         */
-        return (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && this.qEnabled === true));
     }
 }
 
