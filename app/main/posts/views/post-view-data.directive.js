@@ -150,11 +150,8 @@ function PostViewDataController(
                 $scope.savingPost.saving = false;
                 deferred.resolve();
             }, function (reject) {
-                if (reject.error === true) {
-                    $scope.editMode.editing = true;
-                } else {
-                    $scope.editMode.editing = false;
-                }
+                deferred.reject();
+                $scope.editMode.editing = true;
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
             });
@@ -177,6 +174,8 @@ function PostViewDataController(
             } else {
                 goToPost(post);
             }
+        }, function () {
+
         });
     }
 

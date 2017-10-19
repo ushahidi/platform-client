@@ -349,7 +349,7 @@ function PostDataEditorController(
             $scope.savingPost.saving = false;
             $scope.isLoading.state = false;
             Notify.infoModal('post.valid.no_changes');
-
+            $rootScope.$broadcast('event:edit:post:data:mode:save:success');
             return;
         }
 
@@ -357,6 +357,7 @@ function PostDataEditorController(
             Notify.error('post.valid.validation_fail');
             $scope.savingPost.saving = false;
             $scope.isLoading.state = false;
+            $rootScope.$broadcast('event:edit:post:data:mode:save:error');
             return;
         }
         // Create/update any associated media objects
