@@ -118,6 +118,23 @@ function PostViewDataController(
                 $timeout.cancel(stopInterval);
             }
         );
+        $scope.$watch(function () {
+            return $location.path();
+        }, function (newValue, oldValue) {
+            if ($scope.editMode.editing) {
+                var postId = newValue.match(/^\/posts\/([0-9]+)(\/|$)/);
+                if (postId && postId.length > 1) {
+                    var tmpPost = _.filter($scope.posts, function (postItm) {
+                        return postItm.id === parseInt(postId[1]);
+                    });
+                    if (tmpPost.length > 0) {
+                        $scope.selectedPost.post = tmpPost[0];
+                        $scope.selectedPostId = tmpPost[0].id;
+                        $scope.editMode.editing = false;
+                    }
+                }
+            }
+        });
         checkForNewPosts(30000);
     }
 
@@ -142,10 +159,11 @@ function PostViewDataController(
     }
 
     function showPost(post) {
-        $location.path('/posts/' + post.id, false);
+
         return confirmEditingExit().then(function () {
             var currentWidth = $window.innerWidth;
             if (currentWidth > 1023) {
+                $location.path('/posts/' + post.id, false);
                 $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
             } else {
