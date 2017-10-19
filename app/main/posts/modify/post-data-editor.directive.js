@@ -349,7 +349,7 @@ function PostDataEditorController(
             $scope.savingPost.saving = false;
             $scope.isLoading.state = false;
             Notify.infoModal('post.valid.no_changes');
-            $rootScope.$broadcast('event:edit:post:data:mode:save:error');
+            $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
         }
 
@@ -357,7 +357,7 @@ function PostDataEditorController(
             Notify.error('post.valid.validation_fail');
             $scope.savingPost.saving = false;
             $scope.isLoading.state = false;
-            $rootScope.$broadcast('event:edit:post:data:mode:save:error');
+            $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
         }
         // Create/update any associated media objects
@@ -400,7 +400,7 @@ function PostDataEditorController(
                     $scope.editMode.editing = false;
                 }
                 $scope.isLoading.state = false;
-                $rootScope.$broadcast('event:edit:post:data:mode:save:success');
+                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess');
             }, function (errorResponse) { // errors
                 var validationErrors = [];
                 // @todo refactor limit handling
@@ -417,7 +417,7 @@ function PostDataEditorController(
                 Notify.errors(_.pluck(validationErrors, 'message'));
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
-                $rootScope.$broadcast('event:edit:post:data:mode:save:error');
+                $rootScope.$broadcast('event:edit:post:data:mode:saveError');
 
             });
         });

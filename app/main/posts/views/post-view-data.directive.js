@@ -118,6 +118,7 @@ function PostViewDataController(
                 $timeout.cancel(stopInterval);
             }
         );
+
         $scope.$watch(function () {
             return $location.path();
         }, function (newValue, oldValue) {
