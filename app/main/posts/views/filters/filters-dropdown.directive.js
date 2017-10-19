@@ -5,7 +5,6 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
     return {
         restrict: 'E',
         require: 'ngModel',
-        replace: true,
         scope: {
             dropdownStatus: '=',
             applyFilters: '=',
