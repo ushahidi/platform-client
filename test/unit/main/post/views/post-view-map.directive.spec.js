@@ -21,7 +21,8 @@ describe('post view map directive', function () {
         var testApp = makeTestApp();
 
         testApp.directive('postViewMap', require('app/main/posts/views/post-view-map.directive'))
-        .value('Leaflet', L)
+            .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
+            .value('Leaflet', L)
         ;
 
         angular.mock.module('testApp');

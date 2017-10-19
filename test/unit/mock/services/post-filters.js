@@ -58,6 +58,9 @@ module.exports = [function () {
         },
         getMode: function () {
             return filterMode;
+        },
+        mapFiltersEnabled: function (newValue, oldValue) {
+            return true;
         }
     };
 }];
