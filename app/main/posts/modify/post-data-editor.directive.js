@@ -139,6 +139,9 @@ function PostDataEditorController(
      * routePrams or only on the location, I think, so we are going to use this for the moment
      */
     function doChangePage(url) {
+        if (!url) {
+            return;
+        }
         var locationMatch = url.match(/\/posts\/[0-9]+(\/|$)/);
         var locationIsPost =  locationMatch ? locationMatch.length > 0 : false;
         var movingToDataPost = ($routeParams.view === 'data' && locationIsPost);
@@ -396,6 +399,7 @@ function PostDataEditorController(
                     $scope.editMode.editing = false;
                 }
                 $scope.isLoading.state = false;
+                $rootScope.$broadcast('event:edit:post:data:mode:save:success');
             }, function (errorResponse) { // errors
                 var validationErrors = [];
                 // @todo refactor limit handling
@@ -412,6 +416,8 @@ function PostDataEditorController(
                 Notify.errors(_.pluck(validationErrors, 'message'));
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
+                $rootScope.$broadcast('event:edit:post:data:mode:save:error', {'errors' : validationErrors});
+
             });
         });
     }

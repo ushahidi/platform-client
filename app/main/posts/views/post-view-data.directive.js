@@ -149,6 +149,14 @@ function PostViewDataController(
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
                 deferred.resolve();
+            }, function (reject) {
+                if (reject.error === true) {
+                    $scope.editMode.editing = true;
+                } else {
+                    $scope.editMode.editing = false;
+                }
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
             });
         }
         return deferred.promise;
