@@ -54,7 +54,6 @@ function PostViewDataController(
     $routeParams,
     $window
 ) {
-
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
     $scope.itemsPerPageOptions = [10, 20, 50];
@@ -82,13 +81,15 @@ function PostViewDataController(
     $scope.closeBulkActions = closeBulkActions;
     $scope.selectedPost = {post: null};
     $scope.selectedPostId = null;
-
     $rootScope.setLayout('layout-d');
-
+    /**
+     * setting "now" time as utc for new posts filter
+     */
+    var newPostsAfter = moment.utc().format();
+    $scope.savingPost = {saving: false};
     activate();
     function activate() {
-
-        getPosts();
+        getPosts(false, false);
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
         $scope.$watch(function () {
@@ -104,7 +105,7 @@ function PostViewDataController(
         }, function (newValue, oldValue) {
             if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
                 $scope.clearPosts = true;
-                getPosts();
+                getPosts(false, false);
                 PostFilters.reactiveFilters = 'disabled';
             }
         }, true);
@@ -117,13 +118,14 @@ function PostViewDataController(
 
     function confirmEditingExit() {
         var deferred = $q.defer();
-
         if (!$scope.editMode.editing) {
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
                 deferred.resolve();
             });
         }
@@ -147,15 +149,18 @@ function PostViewDataController(
         });
     }
 
-    function getPosts(query) {
+    function getPosts(query, useOffset) {
         query = query || PostFilters.getQueryParams($scope.filters);
         PostEndpoint.stats(query).$promise.then(function (results) {
             $scope.total = results.totals[0].values[0].total;
         });
+
         var postQuery = _.extend({}, query, {
-            offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
             limit: $scope.itemsPerPage
         });
+        if (useOffset === true) {
+            postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
+        }
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
@@ -210,7 +215,7 @@ function PostViewDataController(
 
                 if (!$scope.posts.length) {
                     $scope.clearPosts = true;
-                    getPosts();
+                    getPosts(false, false);
                 }
             }
         });
@@ -280,7 +285,7 @@ function PostViewDataController(
         // Increment page
         $scope.currentPage++;
         $scope.clearPosts = false;
-        getPosts();
+        getPosts(false, true);
     }
 
     function selectBulkActions() {
@@ -304,19 +309,23 @@ function PostViewDataController(
 
     function getNewPosts() {
         var existingFilters = PostFilters.getQueryParams($scope.filters);
-        var filterDate = moment(existingFilters.date_before).format('MMM Do YY');
-        var now = moment().format('MMM Do YY');
-        if (filterDate >= now) {
-            var mostRecentPostDate = $scope.recentPosts[0] ? $scope.recentPosts[0].post_date : $scope.posts[0].post_date;
-            existingFilters.date_after = mostRecentPostDate;
+        var filterDate = moment(existingFilters.date_before).utc().format();
+
+        if (filterDate >= newPostsAfter) {
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
                 order: $scope.filters.order,
-                orderby: $scope.filters.orderby
+                orderby: $scope.filters.orderby,
+                date_after: newPostsAfter
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
                 $scope.newPostsCount += postsResponse.count;
+                if (postsResponse.count > 0) {
+                    // after we get the posts, we set the mostrecentpost
+                    newPostsAfter = moment.utc().format();
+                }
+
             });
         }
     }
