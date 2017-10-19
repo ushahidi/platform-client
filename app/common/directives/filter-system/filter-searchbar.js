@@ -27,6 +27,10 @@ function ($timeout, PostFilters) {
                 PostFilters.qEnabled = true;
                 PostFilters.reactiveFilters = 'enabled';
             };
+
+            $scope.removeQueryFilter = function () {
+                PostFilters.clearFilter('q', '');
+            };
         };
     return {
         restrict: 'E',
