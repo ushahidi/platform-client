@@ -15,6 +15,13 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
         var map;
         $scope.hideMap = false;
 
+        $scope.$watch('postId', function (postId) {
+            if (map) {
+                map.remove();
+                activate();
+            }
+        });
+
         activate();
 
         function activate() {
