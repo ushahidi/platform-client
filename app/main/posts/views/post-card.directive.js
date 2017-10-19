@@ -20,6 +20,10 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
             $scope.isPostLocked = isPostLocked;
             activate();
 
+            $scope.stopClickPropagation = function ($event) {
+                $event.stopPropagation();
+            };
+
             function isPostLocked() {
                 return PostLockService.isPostLockedForCurrentUser($scope.post);
             }

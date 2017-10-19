@@ -15,7 +15,8 @@ function PostToolboxDirective(
     return {
         restrict: 'E',
         scope: {
-            post:  '='
+            post:  '=',
+            form: '='
         },
         template: require('./post-toolbox.html'),
         link: PostToolboxLink
@@ -41,6 +42,7 @@ function PostToolboxDirective(
 
         function changeStatus(status) {
             $scope.post.status = status;
+            $scope.form.status.$setDirty();
         }
 
         // TODO: this function should be moved to a general service handling permissions
