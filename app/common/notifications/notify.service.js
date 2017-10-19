@@ -232,11 +232,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         scope.save = function () {
             $rootScope.$broadcast('event:edit:post:data:mode:save');
-            $rootScope.$on('event:edit:post:data:mode:save:error', function () {
+            $rootScope.$on('event:edit:post:data:mode:saveError', function () {
                 deferred.reject();
                 ModalService.close();
             });
-            $rootScope.$on('event:edit:post:data:mode:save:success', function () {
+            $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
                 deferred.resolve();
                 ModalService.close();
             });
