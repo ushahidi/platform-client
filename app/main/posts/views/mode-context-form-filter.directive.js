@@ -27,9 +27,38 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.unknown = [];
 
     activate();
+    /**
+     * TODO this needs refactoring about refactoring the  qenabled/reactivefilters situation
+     * since it might get out of hand as we need it in multiple places.
+     */
+    $scope.$watch(function () {
+        return PostFilters.qEnabled;
+    }, function () {
+        if (PostFilters.qEnabled === true) {
+            $scope.filters.reactToQEnabled = $scope.filters.reactToQEnabled ? !$scope.filters.reactToQEnabled : true;
+        }
+    });
 
-    $scope.$watch('filters', function () {
-        getPostStats(PostFilters.getFilters()).$promise.then(updateCounts);
+    // whenever filters change, reload the stats
+    $scope.$watch(function () {
+        return $scope.filters;
+    }, function (newValue, oldValue) {
+        var diff = _.omit(newValue, function (value, key, obj) {
+            return _.isEqual(oldValue[key], value);
+        });
+        var diffLength = _.keys(diff).length;
+        var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
+        /**
+         * We only want to call updateCounts if we :
+         * - Have changes other than q= in the filters
+         * - Only q= changed but we also have enabled the q filter
+         */
+        if (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && PostFilters.qEnabled === true)) {
+            getPostStats(PostFilters.getFilters()).$promise.then(updateCounts);
+        }
+        if (PostFilters.qEnabled === true) {
+            PostFilters.qEnabled = false;
+        }
     }, true);
 
     function activate() {

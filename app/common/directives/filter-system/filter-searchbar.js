@@ -28,7 +28,7 @@ function ($timeout, PostFilters) {
                 PostFilters.reactiveFilters = 'enabled';
             };
 
-            $scope.removeFilter = function (filterKey, value) {
+            $scope.removeQueryFilter = function () {
                 PostFilters.clearFilter('q', '');
             };
         };
@@ -37,7 +37,6 @@ function ($timeout, PostFilters) {
         replace: true,
         template: require('./filter-searchbar.html'),
         scope: {
-            filters: '=',
             model: '=',
             placeholderEntity: '='
         },
