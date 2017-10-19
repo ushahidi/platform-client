@@ -21,11 +21,11 @@ describe('post actions directive', function () {
         .value('$filter', function () {
             return function () {};
         })
-        .value('$route', mockRoute);
+        .value('$route', mockRoute)
+        .value('$routeParams', {'view': 'data'});
 
         angular.mock.module('testApp');
     });
-
 
 
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _PostEndpoint_, _PostActionsService_, _$location_) {
