@@ -1,6 +1,7 @@
 
 <form name="postFiltersFormOpen"
-      dropdown
+      uib-dropdown
+      is-open="status.isopen"
       role="search"
       class="searchbar"
       auto-close="outsideClick"
@@ -10,17 +11,21 @@
 >
     <filter-searchbar model="filters.q" filters="filters"></filter-searchbar>
     <!-- Toggle Filters show/hide -->
-    <div class="searchbar-options">
+    <div uib-dropdown-toggle class="searchbar-options">
         <a class="button" ng-click="openSavedModal()">
             <svg class="iconic">
                 <use xlink:href="/img/iconic-sprite.svg#star"></use>
             </svg>
             <span class="button-label hidden" translate>app.saved</span>
         </a>
-        <a class="button searchbar-options-filter" ng-click="filtersDropdownToggle = !filtersDropdownToggle" data-toggle="search-filters">
+        <a     ng-click="toggleDropdown($event)"
+                   type="button"
+                   class="searchbar-options-filter button"
+                   >
             <!-- DEVNOTE translate -->
             <sort-and-filter-counter></sort-and-filter-counter>
         </a>
     </div>
-    <filters-dropdown filters-var="filters" ng-model="filters" cancel="cancel" filters-dropdown-toggle="filtersDropdownToggle" apply-filters="applyFilters"></filters-dropdown>
+
+    <filters-dropdown uib-dropdown-menu class="dropdown-menu" dropdown-status="status" filters-var="filters" ng-model="filters" cancel="cancel" apply-filters="applyFilters"></filters-dropdown>
 </form>

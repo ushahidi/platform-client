@@ -7,6 +7,7 @@ function FilterPostsDirective() {
         scope: {
             filters: '=',
             currentView: '='
+
         },
         replace: true,
         controller: FilterPostsController,
@@ -14,17 +15,24 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$routeParams'];
-function FilterPostsController($scope, $timeout, ModalService, PostFilters, $routeParams) {
+FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$routeParams', '$log'];
+function FilterPostsController($scope, $timeout, ModalService, PostFilters, $routeParams, $log) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
-    $scope.filtersDropdownToggle = false;
-    $scope.searchDropdownToggle = $routeParams.view !== 'list';
     $scope.qFilter = '';
     $scope.openSavedModal = openSavedModal;
     activate();
 
+    $scope.status = {
+        isopen: false
+    };
+
+    $scope.toggleDropdown = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.status.isopen = !$scope.status.isopen;
+    };
     function activate() {
         // @todo define initial filter values
         // $scope.$watch('filters', handleFilterChange, true);
