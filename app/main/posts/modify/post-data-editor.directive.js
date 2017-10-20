@@ -95,11 +95,11 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
-    $rootScope.$on('event:edit:post:data:mode:save', function () {
+    $scope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
     });
 
-    $rootScope.$on('event:edit:leave:form', function () {
+    $scope.$on('event:edit:leave:form', function () {
         if ($scope.parentForm.form && $scope.parentForm.form.$dirty) {
             $scope.leavePost();
         } else {
@@ -341,7 +341,9 @@ function PostDataEditorController(
             $scope.savingPost.saving = false;
             doChangePage(url);
         } else {
-            ev.preventDefault();
+            if (ev) {
+                ev.preventDefault();
+            }
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
