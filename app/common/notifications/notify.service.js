@@ -231,9 +231,15 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         };
 
         scope.save = function () {
-            deferred.reject();
             $rootScope.$broadcast('event:edit:post:data:mode:save');
-            ModalService.close();
+            $rootScope.$on('event:edit:post:data:mode:saveError', function () {
+                deferred.reject();
+                ModalService.close();
+            });
+            $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
+                deferred.resolve();
+                ModalService.close();
+            });
         };
 
         ModalService.openTemplate(
