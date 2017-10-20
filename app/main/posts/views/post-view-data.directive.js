@@ -373,8 +373,7 @@ function PostViewDataController(
         $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
         $scope.recentPosts = [];
         $scope.newPostsCount = 0;
-        $location.hash('post-data-view-top');
-        $anchorScroll();
+        $window.document.getElementById('post-data-view-top').scrollTop = 0;
     }
 
     function checkForNewPosts(time) {
