@@ -81,6 +81,7 @@ function PostViewDataController(
     $scope.closeBulkActions = closeBulkActions;
     $scope.selectedPost = {post: null};
     $scope.selectedPostId = null;
+    $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
     var stopInterval;
     /**
@@ -142,6 +143,11 @@ function PostViewDataController(
     function confirmEditingExit() {
         var deferred = $q.defer();
         if (!$scope.editMode.editing) {
+            deferred.resolve();
+        } else if ($scope.formData.form && !$scope.formData.form.$dirty) {
+            $scope.editMode.editing = false;
+            $scope.isLoading.state = false;
+            $scope.savingPost.saving = false;
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
