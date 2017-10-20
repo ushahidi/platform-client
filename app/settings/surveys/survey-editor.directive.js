@@ -160,7 +160,7 @@ function SurveyEditorController(
         loadAvailableCategories();
 
         if (!$scope.surveyId) {
-            $q.all([Features.loadFeatures(), FormEndpoint.queryFresh().$promise]).then(function (data) {
+            $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
@@ -212,7 +212,7 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        FormEndpoint.queryFresh().$promise.then(function (forms) {
+        FormEndpoint.query().$promise.then(function (forms) {
             $scope.availableForms = forms;
         });
     }
@@ -227,10 +227,10 @@ function SurveyEditorController(
         // If we're editing an existing survey,
         // load the survey info and all the fields.
         $q.all([
-            FormEndpoint.getFresh({ id: $scope.surveyId }).$promise,
-            FormStageEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
-            FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise
+            FormEndpoint.get({ id: $scope.surveyId }).$promise,
+            FormStageEndpoint.query({ formId: $scope.surveyId }).$promise,
+            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise,
+            FormRoleEndpoint.query({ formId: $scope.surveyId }).$promise
         ]).then(function (results) {
             var survey = results[0];
             survey.tasks = _.sortBy(results[1], 'priority');
@@ -489,8 +489,6 @@ function SurveyEditorController(
                 });
 
                 task.attributes.splice(index, 1);
-
-                FormStageEndpoint.invalidateCache();
 
                 Notify.notify('notify.form.destroy_attribute_success', {name: attribute.label});
 

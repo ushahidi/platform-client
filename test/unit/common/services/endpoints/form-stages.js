@@ -106,7 +106,7 @@ describe('FormStageEndpoint', function () {
                 var successCallback = jasmine.createSpy('success');
                 $httpBackend.expectGET(BACKEND_URL + '/api/v2/forms/1/stages?order=asc&orderby=priority').respond(mockFormStageDataResponse);
 
-                FormStageEndpoint.queryFresh({formId: 1}).$promise.then(successCallback);
+                FormStageEndpoint.query({formId: 1}).$promise.then(successCallback);
 
                 $httpBackend.flush();
                 $rootScope.$digest();
@@ -174,7 +174,7 @@ describe('FormStageEndpoint', function () {
 
                 spyOn(FormStageEndpoint, 'get').and.callThrough();
 
-                FormStageEndpoint.getFresh({id: 1, formId: 1}).$promise.then(successCallback);
+                FormStageEndpoint.get({id: 1, formId: 1}).$promise.then(successCallback);
                 expect(FormStageEndpoint.get).toHaveBeenCalled();
             });
 
@@ -233,20 +233,12 @@ describe('FormStageEndpoint', function () {
                 expect(actualFormStageData.label).toEqual(formstagesDataToUpdate.label);
             });
 
-            it('using saveCache should call the correct url and return the correct data', function () {
-                var successCallback = jasmine.createSpy('success');
-
-                spyOn(FormStageEndpoint, 'update').and.callThrough();
-
-                FormStageEndpoint.saveCache({id: 1, formId: 1}).$promise.then(successCallback);
-                expect(FormStageEndpoint.update).toHaveBeenCalled();
-            });
 
             it('should return an id when deleting an entity', function () {
                 var successCallback = jasmine.createSpy('success');
                 $httpBackend.expectDELETE(BACKEND_URL + '/api/v2/forms/1/stages/1?order=asc&orderby=priority').respond(mockFormStageDataResponse);
 
-                FormStageEndpoint.deleteEntity({id: 1, formId: 1}).$promise.then(successCallback);
+                FormStageEndpoint.delete({id: 1, formId: 1}).$promise.then(successCallback);
 
                 $httpBackend.flush();
                 $rootScope.$digest();

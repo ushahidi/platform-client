@@ -41,7 +41,7 @@ describe('mode-context-form-filter directive', function () {
     }));
     describe('test directive-functions', function () {
         it('should fetch forms from endpoint', function () {
-            expect(FormEndpoint.queryFresh).toHaveBeenCalled();
+            expect(FormEndpoint.query).toHaveBeenCalled();
         });
         it('should fetch tags from endpoint', function () {
             expect(TagEndpoint.queryFresh).toHaveBeenCalled();
