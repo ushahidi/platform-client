@@ -11,7 +11,8 @@ function PostDataEditor() {
             postMode: '=',
             editMode: '=',
             isLoading: '=',
-            savingPost: '='
+            savingPost: '=',
+            parentForm: '='
         },
         template: require('./post-data-editor.html'),
         controller: PostDataEditorController
@@ -69,6 +70,7 @@ function PostDataEditorController(
     PostActionsService,
     MediaEditService
   ) {
+
     // Setup initial stages container
     $scope.post = angular.copy($scope.postContainer.post);
     $scope.everyone = $filter('translate')('post.modify.everyone');
@@ -98,7 +100,7 @@ function PostDataEditorController(
     });
 
     $rootScope.$on('event:edit:leave:form', function () {
-        if ($scope.postForm && $scope.postForm.$dirty) {
+        if ($scope.parentForm.form && $scope.parentForm.form.$dirty) {
             $scope.leavePost();
         } else {
             $scope.cancel();
@@ -302,7 +304,7 @@ function PostDataEditorController(
     }
 
     function canSavePost() {
-        return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
+        return PostEditService.validatePost($scope.post, $scope.parentForm.form, $scope.tasks);
     }
 
     function cancel(url) {
@@ -345,7 +347,7 @@ function PostDataEditorController(
         $scope.isLoading.state = true;
         $scope.savingPost.saving = true;
         // Checking if changes are made
-        if ($scope.postForm && !$scope.postForm.$dirty) {
+        if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
             $scope.savingPost.saving = false;
             $scope.isLoading.state = false;
             Notify.infoModal('post.valid.no_changes');
