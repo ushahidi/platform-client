@@ -186,6 +186,6 @@
     <div class="post-col">
         <post-detail-data ng-if="selectedPost.post && !editMode.editing" edit-mode="editMode" filters="filters" is-loading="isLoading" post="selectedPost.post"></post-detail-data>
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
-        <post-data-editor saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
+        <post-data-editor parent-form="formData" saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
     </div>
 </div>
