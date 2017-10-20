@@ -125,7 +125,8 @@ function PostViewDataController(
         }, function (newValue, oldValue) {
             if ($scope.editMode.editing) {
                 var postId = newValue.match(/^\/posts\/([0-9]+)(\/|$)/);
-                if (postId && postId.length > 1) {
+                var locationUrlMatch = $location.path().match(/^\/posts\/([0-9]+)(\/|$)/);
+                if (postId && postId.length > 1 && !locationUrlMatch) {
                     var tmpPost = _.filter($scope.posts, function (postItm) {
                         return postItm.id === parseInt(postId[1]);
                     });

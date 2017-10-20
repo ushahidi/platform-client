@@ -113,6 +113,7 @@ function PostDataEditorController(
     activate();
 
     function activate() {
+        $scope.editMode.editing = true;
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
@@ -341,12 +342,16 @@ function PostDataEditorController(
             $scope.savingPost.saving = false;
             doChangePage(url);
         } else {
+            $scope.editMode.editing = true;
             ev.preventDefault();
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
                 $scope.cancel(url);
             }, function () {
+                $scope.editMode.editing = true;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
                 doChangePage(url);
             });
         }
