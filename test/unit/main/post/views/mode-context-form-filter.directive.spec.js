@@ -26,7 +26,7 @@ describe('mode-context-form-filter directive', function () {
         PostSurveyService = _PostSurveyService_;
         PostFilters = _PostFilters_;
         $location = _$location_;
-        spyOn(FormEndpoint, 'queryFresh').and.callThrough();
+        spyOn(FormEndpoint, 'query').and.callThrough();
         spyOn(TagEndpoint, 'queryFresh').and.callThrough();
         spyOn(PostEndpoint, 'stats').and.callThrough();
         spyOn(PostFilters, 'getQueryParams').and.callThrough();

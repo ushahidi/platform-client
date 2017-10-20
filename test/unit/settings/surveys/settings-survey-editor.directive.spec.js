@@ -38,7 +38,7 @@ describe('setting survey editor directive', function () {
         spyOn(Notify, 'limit');
 
         mockFormEndpoint = {
-            queryFresh : function () {
+            query : function () {
                 return {
                     '$promise': $q.resolve([
                         { id: 1 },
