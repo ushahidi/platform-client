@@ -31,5 +31,10 @@ function (
         }
     });
 
+    FormAttributeEndpoint.save = function (item) {
+        var persist = item.id ? FormAttributeEndpoint.update : FormAttributeEndpoint.save;
+        return persist(item);
+    };
+
     return FormAttributeEndpoint;
 }];

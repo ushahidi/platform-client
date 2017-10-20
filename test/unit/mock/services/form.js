@@ -5,16 +5,6 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback([{
                         name: 'test form',
-                        id: 1
-                    }]);
-                }
-            }};
-        },
-        queryFresh: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback([{
-                        name: 'test form',
                         id: 1,
                         tags: [{
                             id: 1,
@@ -41,16 +31,6 @@ module.exports = [function () {
                 }
             }};
         },
-        getFresh: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback({
-                        name: 'test form',
-                        id: 1
-                    });
-                }
-            }};
-        },
         delete: function () {
             return {$promise: {
                 then: function (successCallback) {
@@ -58,7 +38,7 @@ module.exports = [function () {
                 }
             }};
         },
-        saveCache: function (form) {
+        save: function (form) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     form.id === 'pass' ? successCallback({id: 1}) : failCallback('error');

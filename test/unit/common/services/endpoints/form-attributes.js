@@ -169,7 +169,7 @@ describe('FormAttributeEndpoint', function () {
                 expect(actualFormAttributeData.label).toEqual(mockFormAttributeDataResponse.label);
             });
 
-            it('using getFresh should call the correct url and return the correct data', function () {
+            it('using get should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
 
                 spyOn(FormAttributeEndpoint, 'get').and.callThrough();
@@ -231,6 +231,13 @@ describe('FormAttributeEndpoint', function () {
                 expect(actualFormAttributeData.id).toEqual(mockFormAttributeDataResponse.id);
                 expect(actualFormAttributeData.key).toEqual(formattributesDataToUpdate.key);
                 expect(actualFormAttributeData.label).toEqual(formattributesDataToUpdate.label);
+            });
+
+            it('using save should call the correct url and return the correct data', function () {
+                var successCallback = jasmine.createSpy('success');
+                spyOn(FormAttributeEndpoint, 'update').and.callThrough();
+                FormAttributeEndpoint.save({id: 1, formId: 1}).$promise.then(successCallback);
+                expect(FormAttributeEndpoint.update).toHaveBeenCalled();
             });
 
             it('should return an id when deleting an entity', function () {

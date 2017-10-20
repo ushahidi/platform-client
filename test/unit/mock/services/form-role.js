@@ -23,7 +23,7 @@ module.exports = [function () {
                 }
             }};
         },
-        getFresh: function () {
+        get: function () {
             return {
                 id: 1,
                 form_id: 1,
@@ -37,7 +37,7 @@ module.exports = [function () {
                 }
             }};
         },
-        saveCache: function (attribute) {
+        save: function (attribute) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     attribute.formId === 1 ? successCallback({id: 1}) : failCallback('error');

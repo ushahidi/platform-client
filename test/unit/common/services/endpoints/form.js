@@ -110,7 +110,7 @@ describe('FormEndpoint', function () {
                 expect(actualFormData[0].form).toEqual(mockFormDataResponse.results[0].form);
             });
 
-            it('using queryFresh should call the correct url and return the correct data', function () {
+            it('using query should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
 
                 spyOn(FormEndpoint, 'query').and.callThrough();
@@ -169,7 +169,7 @@ describe('FormEndpoint', function () {
                 expect(actualFormData.icon).toEqual(mockFormDataResponse.icon);
             });
 
-            it('using getFresh should call the correct url and return the correct data', function () {
+            it('using Fresh should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
 
                 spyOn(FormEndpoint, 'get').and.callThrough();
@@ -227,6 +227,15 @@ describe('FormEndpoint', function () {
                 expect(actualFormData.id).toEqual(mockFormDataResponse.id);
                 expect(actualFormData.form).toEqual(formDataToUpdate.form);
                 expect(actualFormData.description).toEqual(formDataToUpdate.description);
+            });
+
+            it('using save should call the correct url and return the correct data', function () {
+                var successCallback = jasmine.createSpy('success');
+
+                spyOn(FormEndpoint, 'update').and.callThrough();
+
+                FormEndpoint.save({id: 1}).$promise.then(successCallback);
+                expect(FormEndpoint.update).toHaveBeenCalled();
             });
 
             it('should return an id when deleting an entity', function () {

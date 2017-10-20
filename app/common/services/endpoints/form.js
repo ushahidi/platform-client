@@ -27,6 +27,11 @@ function (
         }
     });
 
+    FormEndpoint.save = function (item) {
+        var persist = item.id ? FormEndpoint.update : FormEndpoint.save;
+        return persist(item);
+    };
+
     return FormEndpoint;
 
 }];

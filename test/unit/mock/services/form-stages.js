@@ -18,31 +18,7 @@ module.exports = [function () {
                 }
             }};
         },
-        queryFresh: function () {
-            return {$promise: {
-                then: function (successCallback, failCallback) {
-                    successCallback([
-                        {
-                            name: 'test form stages',
-                            priority: 1,
-                            id: 1
-                        },
-                        {
-                            name: 'test form stages 2',
-                            priority: 2,
-                            id: 2
-                        }
-                    ]);
-                }
-            }};
-        },
         invalidateCache: function () {},
-        getFresh: function () {
-            return {
-                name: 'test form stages',
-                id: 1
-            };
-        },
         get: function () {
             return {
                 name: 'test form stages',
@@ -56,7 +32,7 @@ module.exports = [function () {
                 }
             }};
         },
-        saveCache: function (stage) {
+        save: function (stage) {
             return {$promise: {
                 then: function (successCallback, failCallback) {
                     stage.formId === 1 ? successCallback({id: 1}) : failCallback('error');

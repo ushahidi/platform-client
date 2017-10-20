@@ -169,7 +169,7 @@ describe('FormStageEndpoint', function () {
                 expect(actualFormStageData.label).toEqual(mockFormStageDataResponse.label);
             });
 
-            it('using getFresh should call the correct url and return the correct data', function () {
+            it('using Fresh should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
 
                 spyOn(FormStageEndpoint, 'get').and.callThrough();
@@ -231,6 +231,15 @@ describe('FormStageEndpoint', function () {
                 expect(actualFormStageData.id).toEqual(mockFormStageDataResponse.id);
                 expect(actualFormStageData.key).toEqual(formstagesDataToUpdate.key);
                 expect(actualFormStageData.label).toEqual(formstagesDataToUpdate.label);
+            });
+
+            it('using save should call the correct url and return the correct data', function () {
+                var successCallback = jasmine.createSpy('success');
+
+                spyOn(FormStageEndpoint, 'update').and.callThrough();
+
+                FormStageEndpoint.save({id: 1, formId: 1}).$promise.then(successCallback);
+                expect(FormStageEndpoint.update).toHaveBeenCalled();
             });
 
 
