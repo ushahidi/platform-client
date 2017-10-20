@@ -97,11 +97,9 @@ angular.module('app',
         TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
         PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url
     })
-
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
     }])
-
     .factory('_', function () {
         return require('underscore/underscore');
     })
@@ -129,9 +127,23 @@ angular.module('app',
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
     }])
-    .run(function () {
-        // Once bootstrapped, show the app
+    .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
+        /**
+         * Shamelessly copied from
+         * https://www.consolelog.io/angularjs-change-path-without-reloading
+         */
+        var original = $location.path;
+        $location.path = function (path, reload) {
+            if (reload === false) {
+                var lastRoute = $route.current;
+                var un = $rootScope.$on('$locationChangeSuccess', function () {
+                    $route.current = lastRoute;
+                    un();
+                });
+            }
+            return original.apply($location, [path]);
+        };
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    })
-    ;
+    }]);
+

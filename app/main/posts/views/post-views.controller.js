@@ -11,7 +11,6 @@ function PostViewsController($scope, $translate, $routeParams, PostFilters) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
-
     PostFilters.setMode('all');
     $scope.filters = PostFilters.getFilters();
 

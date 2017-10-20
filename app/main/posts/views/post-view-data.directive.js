@@ -31,6 +31,7 @@ PostViewDataController.$inject = [
 '$location',
 '$anchorScroll',
 'Notify',
+'$routeParams',
 '$window'
 ];
 
@@ -50,6 +51,7 @@ function PostViewDataController(
     $location,
     $anchorScroll,
     Notify,
+    $routeParams,
     $window
 ) {
     $scope.currentPage = 1;
@@ -79,6 +81,7 @@ function PostViewDataController(
     $scope.closeBulkActions = closeBulkActions;
     $scope.selectedPost = {post: null};
     $scope.selectedPostId = null;
+    $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
     var stopInterval;
     /**
@@ -116,12 +119,36 @@ function PostViewDataController(
                 $timeout.cancel(stopInterval);
             }
         );
+
+        $scope.$watch(function () {
+            return $location.path();
+        }, function (newValue, oldValue) {
+            if ($scope.editMode.editing) {
+                var postId = newValue.match(/^\/posts\/([0-9]+)(\/|$)/);
+                var locationUrlMatch = $location.path().match(/^\/posts\/([0-9]+)(\/|$)/);
+                if (postId && postId.length > 1 && !locationUrlMatch) {
+                    var tmpPost = _.filter($scope.posts, function (postItm) {
+                        return postItm.id === parseInt(postId[1]);
+                    });
+                    if (tmpPost.length > 0) {
+                        $scope.selectedPost.post = tmpPost[0];
+                        $scope.selectedPostId = tmpPost[0].id;
+                        $scope.editMode.editing = false;
+                    }
+                }
+            }
+        });
         checkForNewPosts(30000);
     }
 
     function confirmEditingExit() {
         var deferred = $q.defer();
         if (!$scope.editMode.editing) {
+            deferred.resolve();
+        } else if ($scope.formData.form && !$scope.formData.form.$dirty) {
+            $scope.editMode.editing = false;
+            $scope.isLoading.state = false;
+            $scope.savingPost.saving = false;
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
@@ -130,6 +157,11 @@ function PostViewDataController(
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
                 deferred.resolve();
+            }, function (reject) {
+                deferred.reject();
+                $scope.editMode.editing = true;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
             });
         }
         return deferred.promise;
@@ -140,14 +172,18 @@ function PostViewDataController(
     }
 
     function showPost(post) {
+
         return confirmEditingExit().then(function () {
             var currentWidth = $window.innerWidth;
             if (currentWidth > 1023) {
+                $location.path('/posts/' + post.id, false);
                 $scope.selectedPost.post = post;
                 $scope.selectedPostId = post.id;
             } else {
                 goToPost(post);
             }
+        }, function () {
+
         });
     }
 
@@ -338,8 +374,7 @@ function PostViewDataController(
         $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
         $scope.recentPosts = [];
         $scope.newPostsCount = 0;
-        $location.hash('post-data-view-top');
-        $anchorScroll();
+        $window.document.getElementById('post-data-view-top').scrollTop = 0;
     }
 
     function checkForNewPosts(time) {
