@@ -72,7 +72,7 @@ function PostViewDataController(
     $scope.resetPosts = resetPosts;
     $scope.clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
-    $scope.newPostsCount = 1;
+    $scope.newPostsCount = 0;
     $scope.recentPosts = [];
     $scope.addNewestPosts = addNewestPosts;
     $scope.editMode = {editing: false};
