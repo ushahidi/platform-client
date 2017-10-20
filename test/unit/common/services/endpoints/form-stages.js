@@ -261,10 +261,10 @@ describe('FormStageEndpoint', function () {
             it('using delete should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
 
-                spyOn(FormStageEndpoint, 'deleteEntity').and.callThrough();
+                spyOn(FormStageEndpoint, 'delete').and.callThrough();
 
                 FormStageEndpoint.delete({id: 1, formId: 1}).$promise.then(successCallback);
-                expect(FormStageEndpoint.deleteEntity).toHaveBeenCalled();
+                expect(FormStageEndpoint.delete).toHaveBeenCalled();
             });
         });
     });
