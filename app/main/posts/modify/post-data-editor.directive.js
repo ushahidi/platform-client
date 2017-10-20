@@ -334,13 +334,20 @@ function PostDataEditorController(
     }
 
     function leavePost(url) {
-        Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+        if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
+            $scope.editMode.editing = false;
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
-            $scope.cancel(url);
-        }, function () {
             doChangePage(url);
-        });
+        } else {
+            Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
+                $scope.cancel(url);
+            }, function () {
+                doChangePage(url);
+            });
+        }
     }
 
     function savePost() {
