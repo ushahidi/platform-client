@@ -107,9 +107,8 @@ function PostDataEditorController(
         }
     });
 
-    $scope.$on('$locationChangeStart', function (e, next) {
-        e.preventDefault();
-        $scope.leavePost(next);
+    var $locationChangeStartHandler = $scope.$on('$locationChangeStart', function (e, next) {
+        $scope.leavePost(next, e);
     });
     activate();
 
@@ -147,8 +146,10 @@ function PostDataEditorController(
         var locationMatch = url.match(/\/posts\/[0-9]+(\/|$)/);
         var locationIsPost =  locationMatch ? locationMatch.length > 0 : false;
         var movingToDataPost = ($routeParams.view === 'data' && locationIsPost);
+
         if (url &&  !(movingToDataPost)) {
-            $location.url(url);
+            $location.path(url.replace($location.$$absUrl.replace($location.$$url, ''), ''));
+            $locationChangeStartHandler();
         } else if (movingToDataPost) {
             $location.path(url.match(/\/posts\/[0-9]+(\/|$)/)[0]);
         }
@@ -333,13 +334,14 @@ function PostDataEditorController(
         return MediaEditService.saveMedia($scope.medias, $scope.post);
     }
 
-    function leavePost(url) {
+    function leavePost(url, ev) {
         if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
             $scope.editMode.editing = false;
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
             doChangePage(url);
         } else {
+            ev.preventDefault();
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
