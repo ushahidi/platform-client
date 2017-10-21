@@ -35,6 +35,7 @@ director:
     DEPLOYMENT_RULES_REPO_VERSION: master 
     DEPLOYMENT_RULES_FILE: platform.yml 
     PLATFORM_CLIENT_BUILD: /vols/last_build
+    AWS_DEFAULT_REGION: us-east-1
   volumes:
     - ./tmp/out/last_build:/vols/last_build
   add_docker: true
