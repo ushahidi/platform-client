@@ -31,8 +31,12 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             }
         }
     };
+    var map = null;
 
     return {
+        map: map,
+        setMap: setMap,
+        getMap: getMap,
         createMap: createMap,
         getLeafletConfig: getLeafletConfig,
         getBaseLayers: getBaseLayers,
@@ -41,11 +45,20 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         getLayer: getLayer,
         pointIcon: pointIcon
     };
-
+    function getMap() {
+        return map;
+    }
+    function setMap(element, config) {
+        if (map) {
+            map.off();
+            map.remove();
+        }
+        map = L.map(element, config);
+        return map;
+    }
     function createMap(element) {
         return getLeafletConfig().then(function (config) {
-            var map = L.map(element, config);
-
+            setMap(element, config);
             map.attributionControl.setPrefix(false);
             map.zoomControl.setPosition('bottomleft');
             map.setMaxBounds([[-90,-360],[90,360]]);

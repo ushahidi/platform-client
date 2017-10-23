@@ -48,6 +48,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             // Cleanup leaflet map
             $scope.$on('$destroy', function () {
                 if (map) {
+                    map.off();
                     map.remove();
                 }
             });

@@ -16,9 +16,6 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
         $scope.hideMap = false;
 
         $scope.$watch('postId', function (postId) {
-            if (map) {
-                map.remove();
-            }
             activate();
         });
 
@@ -42,12 +39,13 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             .then(addGeoJSONToMap)
             ;
 
-            // Cleanup leaflet map
-            $scope.$on('$destroy', function () {
-                if (map) {
-                    map.remove();
-                }
-            });
+            // // Cleanup leaflet map
+            // $scope.$on('$destroy', function () {
+            //     if (map) {
+            //         map.off();
+            //         map.remove();
+            //     }
+            // });
         }
 
         function addGeoJSONToMap(data) {
