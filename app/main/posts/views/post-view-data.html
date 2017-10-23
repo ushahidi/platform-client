@@ -1,7 +1,7 @@
 <div class="flex-container">
     <post-toolbar saving-post="savingPost" is-loading="isLoading" current-view="currentView" selected-post="selectedPost.post" edit-mode="editMode" filters="filters"></post-toolbar>
     <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">     
-        <div class="button-group" ng-show="newPostsCount > 0">
+        <div class="button-group" ng-show="newPostsCount > 0 && filters.order !== 'asc'">
             <button class="button-flat full-width" ng-click="addNewestPosts()">
                 <span ng-switch on="newPostsCount">
                     <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
