@@ -168,6 +168,8 @@ function PostViewDataController(
     }
 
     function goToPost(post) {
+        angular.element(document.getElementById('bootstrap-app')).addClass('hidden');
+        angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
         $location.path('/posts/' + post.id);
     }
 
