@@ -348,8 +348,7 @@ function PostViewDataController(
     function getNewPosts() {
         var existingFilters = PostFilters.getQueryParams($scope.filters);
         var filterDate = moment(existingFilters.date_before).utc().format();
-
-        if (filterDate >= newPostsAfter) {
+        if (filterDate >= newPostsAfter && existingFilters.order !== 'asc') {
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
                 order: $scope.filters.order,
