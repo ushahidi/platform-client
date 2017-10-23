@@ -36,7 +36,7 @@ function (
 
     // Get all the forms for display
     $scope.refreshForms = function () {
-        FormEndpoint.queryFresh().$promise.then(function (response) {
+        FormEndpoint.query().$promise.then(function (response) {
             $scope.forms = response;
         });
     };

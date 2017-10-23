@@ -63,7 +63,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
 
     function activate() {
         // Load forms
-        $scope.forms = FormEndpoint.queryFresh();
+        $scope.forms = FormEndpoint.query();
         $scope.tags = TagEndpoint.queryFresh();
         var postCountRequest = getPostStats($scope.filters);
         $q.all([$scope.forms.$promise, postCountRequest.$promise, $scope.tags.$promise]).then(function (responses) {

@@ -106,7 +106,7 @@ describe('FormAttributeEndpoint', function () {
                 var successCallback = jasmine.createSpy('success');
                 $httpBackend.expectGET(BACKEND_URL + '/api/v2/forms/1/attributes?order=asc&orderby=priority').respond(mockFormAttributeDataResponse);
 
-                FormAttributeEndpoint.queryFresh({formId: 1}).$promise.then(successCallback);
+                FormAttributeEndpoint.query({formId: 1}).$promise.then(successCallback);
 
                 $httpBackend.flush();
                 $rootScope.$digest();
@@ -169,12 +169,12 @@ describe('FormAttributeEndpoint', function () {
                 expect(actualFormAttributeData.label).toEqual(mockFormAttributeDataResponse.label);
             });
 
-            it('using getFresh should call the correct url and return the correct data', function () {
+            it('using get should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
 
                 spyOn(FormAttributeEndpoint, 'get').and.callThrough();
 
-                FormAttributeEndpoint.getFresh({id: 1, formId: 1}).$promise.then(successCallback);
+                FormAttributeEndpoint.get({id: 1, formId: 1}).$promise.then(successCallback);
                 expect(FormAttributeEndpoint.get).toHaveBeenCalled();
             });
 
@@ -233,12 +233,10 @@ describe('FormAttributeEndpoint', function () {
                 expect(actualFormAttributeData.label).toEqual(formattributesDataToUpdate.label);
             });
 
-            it('using saveCache should call the correct url and return the correct data', function () {
+            it('using save should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
-
                 spyOn(FormAttributeEndpoint, 'update').and.callThrough();
-
-                FormAttributeEndpoint.saveCache({id: 1, formId: 1}).$promise.then(successCallback);
+                FormAttributeEndpoint.save({id: 1, formId: 1}).$promise.then(successCallback);
                 expect(FormAttributeEndpoint.update).toHaveBeenCalled();
             });
 
@@ -246,7 +244,7 @@ describe('FormAttributeEndpoint', function () {
                 var successCallback = jasmine.createSpy('success');
                 $httpBackend.expectDELETE(BACKEND_URL + '/api/v2/forms/1/attributes/1?order=asc&orderby=priority').respond(mockFormAttributeDataResponse);
 
-                FormAttributeEndpoint.deleteEntity({id: 1, formId: 1}).$promise.then(successCallback);
+                FormAttributeEndpoint.delete({id: 1, formId: 1}).$promise.then(successCallback);
 
                 $httpBackend.flush();
                 $rootScope.$digest();
@@ -260,10 +258,10 @@ describe('FormAttributeEndpoint', function () {
             it('using delete should call the correct url and return the correct data', function () {
                 var successCallback = jasmine.createSpy('success');
 
-                spyOn(FormAttributeEndpoint, 'deleteEntity').and.callThrough();
+                spyOn(FormAttributeEndpoint, 'delete').and.callThrough();
 
                 FormAttributeEndpoint.delete({id: 1, formId: 1}).$promise.then(successCallback);
-                expect(FormAttributeEndpoint.deleteEntity).toHaveBeenCalled();
+                expect(FormAttributeEndpoint.delete).toHaveBeenCalled();
             });
         });
     });

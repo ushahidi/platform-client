@@ -118,7 +118,7 @@ function PostDataEditorController(
             $scope.selectForm();
         } else {
             $scope.isLoading.state = true;
-            FormEndpoint.queryFresh().$promise.then(function (results) {
+            FormEndpoint.query().$promise.then(function (results) {
                 $scope.forms = results;
                 $scope.isLoading.state = false;
 
@@ -176,8 +176,8 @@ function PostDataEditorController(
     function loadData() {
 
         var requests = [
-            FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
+            FormStageEndpoint.query({ formId: $scope.post.form.id }).$promise,
+            FormAttributeEndpoint.query({ formId: $scope.post.form.id }).$promise,
             TagEndpoint.queryFresh().$promise
         ];
 

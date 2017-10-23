@@ -160,7 +160,7 @@ function SurveyEditorController(
         loadAvailableCategories();
 
         if (!$scope.surveyId) {
-            $q.all([Features.loadFeatures(), FormEndpoint.queryFresh().$promise]).then(function (data) {
+            $q.all([Features.loadFeatures(), FormEndpoint.query().$promise]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
@@ -212,7 +212,7 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        FormEndpoint.queryFresh().$promise.then(function (forms) {
+        FormEndpoint.query().$promise.then(function (forms) {
             $scope.availableForms = forms;
         });
     }
@@ -227,10 +227,10 @@ function SurveyEditorController(
         // If we're editing an existing survey,
         // load the survey info and all the fields.
         $q.all([
-            FormEndpoint.getFresh({ id: $scope.surveyId }).$promise,
-            FormStageEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
-            FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise
+            FormEndpoint.get({ id: $scope.surveyId }).$promise,
+            FormStageEndpoint.query({ formId: $scope.surveyId }).$promise,
+            FormAttributeEndpoint.query({ formId: $scope.surveyId }).$promise,
+            FormRoleEndpoint.query({ formId: $scope.surveyId }).$promise
         ]).then(function (results) {
             var survey = results[0];
             survey.tasks = _.sortBy(results[1], 'priority');
@@ -490,8 +490,6 @@ function SurveyEditorController(
 
                 task.attributes.splice(index, 1);
 
-                FormStageEndpoint.invalidateCache();
-
                 Notify.notify('notify.form.destroy_attribute_success', {name: attribute.label});
 
                 // Attribute is only available in modal so
@@ -550,7 +548,7 @@ function SurveyEditorController(
         $scope.saving_survey = true;
         // Save the survey
         FormEndpoint
-        .saveCache($scope.survey)
+        .save($scope.survey)
         .$promise
         .then(function (survey) {
             // If the survey is new, cache the new id
@@ -558,7 +556,7 @@ function SurveyEditorController(
                 $scope.survey.id = survey.id;
             }
             // Save tasks and roles and return promises
-            return $q.all([saveTasks(), saveRoles()]);
+            return $q(saveTasks());
         })
         .then(function () {
             // Save attributes and return promises
@@ -588,7 +586,7 @@ function SurveyEditorController(
             // Add each task to promise array
             promises.push(
                 FormStageEndpoint
-                .saveCache(_.extend(task, { formId: $scope.survey.id }))
+                .save(_.extend(task, { formId: $scope.survey.id }))
                 .$promise
             );
         });
@@ -617,18 +615,12 @@ function SurveyEditorController(
                 // Add each attribute to promise array
                 promises.push(
                     FormAttributeEndpoint
-                    .saveCache(_.extend(attribute, { formId: $scope.survey.id }))
+                    .save(_.extend(attribute, { formId: $scope.survey.id }))
                     .$promise
                 );
             });
         });
         return $q.all(promises);
-    }
-
-    function saveRoles() {
-        return FormRoleEndpoint
-        .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
-        .$promise;
     }
 
     function toggleTaskRequired(task) {

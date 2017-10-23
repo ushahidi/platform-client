@@ -86,9 +86,9 @@ function PostDetailDataController(
         // Load the post form
         if ($scope.post.form && $scope.post.form.id) {
             $q.all([
-                FormEndpoint.getFresh({id: $scope.post.form.id}),
-                FormStageEndpoint.queryFresh({formId:  $scope.post.form.id, postStatus: $scope.post.status}).$promise,
-                FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
+                FormEndpoint.get({id: $scope.post.form.id}),
+                FormStageEndpoint.query({formId:  $scope.post.form.id, postStatus: $scope.post.status}).$promise,
+                FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise,
                 TagEndpoint.queryFresh().$promise
             ]).then(function (results) {
                 $scope.form = results[0];
