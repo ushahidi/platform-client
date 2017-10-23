@@ -15,14 +15,17 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
         var map;
         $scope.hideMap = false;
 
-        $scope.$watch('postId', function (postId) {
-            if (map) {
-                map.remove();
-            }
-            activate();
-        });
-
         activate();
+
+        $scope.$watch('postId', function (postId, oldPostId) {
+            if (postId !== oldPostId) {
+                if (map) {
+                    map.remove();
+                    map = null;
+                }
+                activate();
+            }
+        });
 
         function activate() {
             // Start loading data
@@ -46,8 +49,10 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             $scope.$on('$destroy', function () {
                 if (map) {
                     map.remove();
+                    map = null;
                 }
             });
+
         }
 
         function addGeoJSONToMap(data) {
