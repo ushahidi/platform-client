@@ -144,6 +144,8 @@ function (
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
 
+            angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
+            angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
         });
     }
 
