@@ -11,7 +11,7 @@ function (
 ) {
     var PostEditService = {
         cleanPostValues: function (post) {
-            _.each(post.values, function (value, key) {
+            _.forEach(post.values, function (value, key) {
                 // Strip out empty values
                 post.values[key] = _.filter(value);
                 // Remove entirely if no values are left
