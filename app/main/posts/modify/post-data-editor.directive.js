@@ -312,13 +312,21 @@ function PostDataEditorController(
     function cancel(url) {
         $scope.isLoading.state = false;
         $scope.savingPost.saving = false;
-        PostLockEndpoint.unlock({
-            id: $scope.post.lock.id,
-            post_id: $scope.post.id
-        }).$promise.then(function (result) {
+        /** @DEVNOTE I think we shouldn't need to check this,
+         * but in unstructured posts the lock is not available consistently.
+        **/
+        if ($scope.post.lock) {
+            PostLockEndpoint.unlock({
+                id: $scope.post.lock.id,
+                post_id: $scope.post.id
+            }).$promise.then(function (result) {
+                $scope.editMode.editing = false;
+                doChangePage(url);
+            });
+        } else {
             $scope.editMode.editing = false;
             doChangePage(url);
-        });
+        }
     }
 
     function deletePost(post) {
@@ -384,11 +392,13 @@ function PostDataEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
+
             if ('message_location' in $scope.post.values) {
                 $scope.post.values.message_location = [];
             }
-            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
 
+
+            var post = PostEditService.cleanPostValues(_.clone($scope.post));
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
                 post.tags = _.chain(post.values)
