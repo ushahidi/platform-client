@@ -72,9 +72,8 @@ function PostDataEditorController(
   ) {
 
     // Setup initial stages container
-    $scope.post = angular.copy($scope.postContainer.post);
     $scope.everyone = $filter('translate')('post.modify.everyone');
-    $scope.isEdit = !!$scope.post.id;
+
     $scope.validationErrors = [];
     $scope.visibleStage = 1;
     $scope.enableTitle = true;
@@ -95,6 +94,12 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
+
+    // Need state management
+    $scope.$on('event:edit:post:reactivate', function () {
+        activate();
+    });
+
     $scope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
     });
@@ -113,7 +118,8 @@ function PostDataEditorController(
     activate();
 
     function activate() {
-        $scope.editMode.editing = true;
+        $scope.post = angular.copy($scope.postContainer.post);
+        //$scope.editMode.editing = true;
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
@@ -141,6 +147,10 @@ function PostDataEditorController(
      * routePrams or only on the location, I think, so we are going to use this for the moment
      */
     function doChangePage(url) {
+
+        leaveEditMode();
+        signalLeaveComplete();
+
         if (!url) {
             return;
         }
@@ -192,7 +202,7 @@ function PostDataEditorController(
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                $scope.editMode.editing = false;
+                leaveEditMode();
                 return;
             }
 
@@ -320,11 +330,9 @@ function PostDataEditorController(
                 id: $scope.post.lock.id,
                 post_id: $scope.post.id
             }).$promise.then(function (result) {
-                $scope.editMode.editing = false;
                 doChangePage(url);
             });
         } else {
-            $scope.editMode.editing = false;
             doChangePage(url);
         }
     }
@@ -343,14 +351,22 @@ function PostDataEditorController(
         return MediaEditService.saveMedia($scope.medias, $scope.post);
     }
 
+    function leaveEditMode() {
+        $scope.editMode.editing = false;
+    }
+
+    function signalLeaveComplete() {
+        $rootScope.$broadcast('event:edit:leave:form:complete');
+    }
+
     function leavePost(url, ev) {
         if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
-            $scope.editMode.editing = false;
+            leaveEditMode();
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
             doChangePage(url);
         } else {
-            $scope.editMode.editing = true;
+            //$scope.editMode.editing = true;
             if (ev) {
                 ev.preventDefault();
             }
@@ -359,7 +375,7 @@ function PostDataEditorController(
                 $scope.savingPost.saving = false;
                 $scope.cancel(url);
             }, function () {
-                $scope.editMode.editing = true;
+                //$scope.editMode.editing = true;
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
                 doChangePage(url);
@@ -416,17 +432,20 @@ function PostDataEditorController(
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 $scope.postContainer.post = $scope.post;
+
+                // DEVNOTE: Not sure how this would ever happen in the case of data view
+                // ideally this will go away when the two editors are integrated
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
-                    $scope.savingPost.saving = false;
                     $scope.post.id = response.id;
-                    Notify.notify(success_message, { name: $scope.post.title });
-                    $scope.editMode.editing = false;
-                } else {
-                    Notify.notify(success_message, { name: $scope.post.title });
-                    $scope.editMode.editing = false;
                 }
+
+                $scope.savingPost.saving = false;
+                Notify.notify(success_message, { name: $scope.post.title });
+
                 $scope.isLoading.state = false;
                 $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess');
+
+                leaveEditMode();
             }, function (errorResponse) { // errors
                 var validationErrors = [];
                 // @todo refactor limit handling

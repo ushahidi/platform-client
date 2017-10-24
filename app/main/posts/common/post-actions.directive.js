@@ -8,7 +8,8 @@ PostActionsDirective.$inject = [
     '$route',
     'PostActionsService',
     'PostLockService',
-    '$routeParams'
+    '$routeParams',
+    '_'
 ];
 function PostActionsDirective(
     $rootScope,
@@ -18,7 +19,8 @@ function PostActionsDirective(
     $route,
     PostActionsService,
     PostLockService,
-    $routeParams
+    $routeParams,
+    _
 ) {
     return {
         restrict: 'E',
@@ -69,11 +71,15 @@ function PostActionsDirective(
                 return;
             }
 
-            $scope.selectedPost.post = $scope.post ;
+            $scope.selectedPost.post = _.clone($scope.post);
             if ($routeParams.view !== 'data' && $location.path().indexOf('data') === -1) {
                 $location.path('/posts/' + postId + '/edit');
             } else if ($scope.editMode.editing) {
                 $rootScope.$broadcast('event:edit:leave:form');
+                $scope.$on('event:edit:leave:form:complete', function () {
+                    $scope.editMode.editing = true;
+                    $rootScope.$broadcast('event:edit:post:reactivate');
+                });
             } else {
                 $scope.editMode.editing = true;
             }
