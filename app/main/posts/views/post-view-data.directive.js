@@ -69,11 +69,10 @@ function PostViewDataController(
     $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
-    $scope.resetPosts = resetPosts;
-    $scope.clearPosts = false;
+    var clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
-    $scope.recentPosts = [];
+    var recentPosts = [];
     $scope.addNewestPosts = addNewestPosts;
     $scope.editMode = {editing: false};
     $scope.selectBulkActions = selectBulkActions;
@@ -87,7 +86,7 @@ function PostViewDataController(
     /**
      * setting "now" time as utc for new posts filter
      */
-    var newPostsAfter = moment.utc().format();
+    var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
     activate();
     function activate() {
@@ -106,7 +105,7 @@ function PostViewDataController(
             return $scope.filters;
         }, function (newValue, oldValue) {
             if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
-                $scope.clearPosts = true;
+                clearPosts = true;
                 getPosts(false, false);
                 PostFilters.reactiveFilters = 'disabled';
             }
@@ -204,10 +203,15 @@ function PostViewDataController(
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
-            $scope.clearPosts ? resetPosts() : null;
+            clearPosts ? resetPosts() : null;
             // Add posts to full set of posts
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
+
+            // Use the most recent post date as the date to search for new posts since
+            if ($scope.posts.length > 0 && $scope.posts[0].created) {
+                newPostsAfter = moment($scope.posts[0].created).utc().add(1, 's');
+            }
 
             // Merge grouped posts into existing groups
             groupPosts(postsResponse.results);
@@ -254,7 +258,7 @@ function PostViewDataController(
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
-                    $scope.clearPosts = true;
+                    clearPosts = true;
                     getPosts(false, false);
                 }
             }
@@ -319,12 +323,15 @@ function PostViewDataController(
         $scope.totalItems = $scope.itemsPerPage;
         $scope.currentPage = 1;
         $scope.selectedPosts = [];
+        recentPosts = [];
+        $scope.newPostsCount = 0;
+        newPostsAfter = moment().utc();
     }
 
     function loadMore() {
         // Increment page
         $scope.currentPage++;
-        $scope.clearPosts = false;
+        clearPosts = false;
         getPosts(false, true);
     }
 
@@ -349,21 +356,25 @@ function PostViewDataController(
 
     function getNewPosts() {
         var existingFilters = PostFilters.getQueryParams($scope.filters);
-        var filterDate = moment(existingFilters.date_before).utc().format();
-
-        if (filterDate >= newPostsAfter) {
+        var filterDate = moment(existingFilters.date_before).utc();
+        if (newPostsAfter.isSameOrBefore(filterDate) &&
+            existingFilters.order === 'desc' &&
+            existingFilters.orderby === 'created' // @todo handle update or post_date ordering
+        ) {
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
                 order: $scope.filters.order,
                 orderby: $scope.filters.orderby,
-                date_after: newPostsAfter
+                // Important to use `created_after` here, `date_after` compares against `post_date` not `created`
+                created_after: newPostsAfter.format()
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-                Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
+                Array.prototype.unshift.apply(recentPosts, postsResponse.results);
                 $scope.newPostsCount += postsResponse.count;
                 if (postsResponse.count > 0) {
                     // after we get the posts, we set the mostrecentpost
-                    newPostsAfter = moment.utc().format();
+                    // Use the most recent post date as the date to search for new posts since
+                    newPostsAfter = moment(postsResponse.results[0].created).utc().add(1, 's');
                 }
 
             });
@@ -371,10 +382,10 @@ function PostViewDataController(
     }
 
     function addNewestPosts() {
-        Array.prototype.unshift.apply($scope.posts, $scope.recentPosts);
-        groupPosts($scope.recentPosts);
+        Array.prototype.unshift.apply($scope.posts, recentPosts);
+        groupPosts(recentPosts);
         $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
-        $scope.recentPosts = [];
+        recentPosts = [];
         $scope.newPostsCount = 0;
         $window.document.getElementById('post-data-view-top').scrollTop = 0;
     }
