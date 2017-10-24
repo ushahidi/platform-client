@@ -86,7 +86,7 @@ function PostViewDataController(
     /**
      * setting "now" time as utc for new posts filter
      */
-    var newPostsAfter = moment.utc().format();
+    var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
     activate();
     function activate() {
@@ -208,6 +208,11 @@ function PostViewDataController(
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
 
+            // Use the most recent post date as the date to search for new posts since
+            if ($scope.posts.length > 0 && $scope.posts[0].created) {
+                newPostsAfter = moment($scope.posts[0].created).utc().add(1, 's');
+            }
+
             // Merge grouped posts into existing groups
             groupPosts(postsResponse.results);
 
@@ -320,7 +325,7 @@ function PostViewDataController(
         $scope.selectedPosts = [];
         recentPosts = [];
         $scope.newPostsCount = 0;
-        newPostsAfter = moment.utc().format();
+        newPostsAfter = moment().utc();
     }
 
     function loadMore() {
@@ -351,20 +356,25 @@ function PostViewDataController(
 
     function getNewPosts() {
         var existingFilters = PostFilters.getQueryParams($scope.filters);
-        var filterDate = moment(existingFilters.date_before).utc().format();
-        if (filterDate >= newPostsAfter && existingFilters.order !== 'asc') {
+        var filterDate = moment(existingFilters.date_before).utc();
+        if (newPostsAfter.isSameOrBefore(filterDate) &&
+            existingFilters.order === 'desc' &&
+            existingFilters.orderby === 'created' // @todo handle update or post_date ordering
+        ) {
             var query = existingFilters;
             var postQuery = _.extend({}, query, {
                 order: $scope.filters.order,
                 orderby: $scope.filters.orderby,
-                date_after: newPostsAfter
+                // Important to use `created_after` here, `date_after` compares against `post_date` not `created`
+                created_after: newPostsAfter.format()
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply(recentPosts, postsResponse.results);
                 $scope.newPostsCount += postsResponse.count;
                 if (postsResponse.count > 0) {
                     // after we get the posts, we set the mostrecentpost
-                    newPostsAfter = moment.utc().format();
+                    // Use the most recent post date as the date to search for new posts since
+                    newPostsAfter = moment(postsResponse.results[0].created).utc().add(1, 's');
                 }
 
             });
