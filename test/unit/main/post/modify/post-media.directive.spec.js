@@ -25,7 +25,7 @@ describe('post media directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $scope.media = 5;
-        element = '<form name="form"><post-media name="media-test" media="mediaVal" media-id="5"></post-media></form>';
+        element = '<form name="form"><post-media ng-model="mediaVal" name="media-test" media="mediaVal" media-id="5"></post-media></form>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.children().isolateScope();
