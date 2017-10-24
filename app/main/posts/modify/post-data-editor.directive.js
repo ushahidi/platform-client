@@ -392,11 +392,13 @@ function PostDataEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
+
             if ('message_location' in $scope.post.values) {
                 $scope.post.values.message_location = [];
             }
-            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
 
+
+            var post = PostEditService.cleanPostValues(_.clone($scope.post));
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
                 post.tags = _.chain(post.values)
