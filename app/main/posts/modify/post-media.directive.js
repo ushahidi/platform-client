@@ -16,7 +16,7 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        require: '^^form',
+        require: ['^^form', 'ngModel'],
         scope: {
             mediaId: '=',
             media: '=',
@@ -24,12 +24,20 @@ function (
             mediaHasCaption: '='
         },
         template: require('./media.html'),
-        link: function ($scope, element, attr, formCtrl) {
-            $scope.$watch('media.changed', function (newValue, oldValue) {
-                if (newValue === true) {
-                    formCtrl.$setDirty();
+        link: function ($scope, element, attr, requiredAttributes) {
+            var form = requiredAttributes[0];
+            var ngModelForm = requiredAttributes[1];
+            console.log(ngModelForm);
+
+            ngModelForm.$render = renderViewValue;
+
+            function renderViewValue() {
+                if (ngModelForm.$viewValue === 'changed') {
+                    form.$setDirty();
                 }
-            });
+                return ngModelForm.$viewValue;
+            }
+
             if ($scope.mediaId) {
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                     $scope.media = media;
