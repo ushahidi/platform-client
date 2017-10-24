@@ -27,7 +27,6 @@ function (
         link: function ($scope, element, attr, requiredAttributes) {
             var form = requiredAttributes[0];
             var ngModelForm = requiredAttributes[1];
-            console.log(ngModelForm);
 
             ngModelForm.$render = renderViewValue;
 
