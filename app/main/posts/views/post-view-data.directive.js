@@ -69,11 +69,10 @@ function PostViewDataController(
     $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
-    $scope.resetPosts = resetPosts;
-    $scope.clearPosts = false;
+    var clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
-    $scope.recentPosts = [];
+    var recentPosts = [];
     $scope.addNewestPosts = addNewestPosts;
     $scope.editMode = {editing: false};
     $scope.selectBulkActions = selectBulkActions;
@@ -106,7 +105,7 @@ function PostViewDataController(
             return $scope.filters;
         }, function (newValue, oldValue) {
             if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
-                $scope.clearPosts = true;
+                clearPosts = true;
                 getPosts(false, false);
                 PostFilters.reactiveFilters = 'disabled';
             }
@@ -204,7 +203,7 @@ function PostViewDataController(
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
-            $scope.clearPosts ? resetPosts() : null;
+            clearPosts ? resetPosts() : null;
             // Add posts to full set of posts
             // @todo figure out if we can store these more efficiently
             Array.prototype.push.apply($scope.posts, postsResponse.results);
@@ -254,7 +253,7 @@ function PostViewDataController(
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
-                    $scope.clearPosts = true;
+                    clearPosts = true;
                     getPosts(false, false);
                 }
             }
@@ -324,7 +323,7 @@ function PostViewDataController(
     function loadMore() {
         // Increment page
         $scope.currentPage++;
-        $scope.clearPosts = false;
+        clearPosts = false;
         getPosts(false, true);
     }
 
@@ -358,7 +357,7 @@ function PostViewDataController(
                 date_after: newPostsAfter
             });
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-                Array.prototype.unshift.apply($scope.recentPosts, postsResponse.results);
+                Array.prototype.unshift.apply(recentPosts, postsResponse.results);
                 $scope.newPostsCount += postsResponse.count;
                 if (postsResponse.count > 0) {
                     // after we get the posts, we set the mostrecentpost
@@ -370,10 +369,10 @@ function PostViewDataController(
     }
 
     function addNewestPosts() {
-        Array.prototype.unshift.apply($scope.posts, $scope.recentPosts);
-        groupPosts($scope.recentPosts);
+        Array.prototype.unshift.apply($scope.posts, recentPosts);
+        groupPosts(recentPosts);
         $scope.totalItems = $scope.totalItems + $scope.newPostsCount;
-        $scope.recentPosts = [];
+        recentPosts = [];
         $scope.newPostsCount = 0;
         $window.document.getElementById('post-data-view-top').scrollTop = 0;
     }
