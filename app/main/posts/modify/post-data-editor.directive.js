@@ -312,13 +312,21 @@ function PostDataEditorController(
     function cancel(url) {
         $scope.isLoading.state = false;
         $scope.savingPost.saving = false;
-        PostLockEndpoint.unlock({
-            id: $scope.post.lock.id,
-            post_id: $scope.post.id
-        }).$promise.then(function (result) {
+        /** @DEVNOTE I think we shouldn't need to check this,
+         * but in unstructured posts the lock is not available consistently.
+        **/
+        if ($scope.post.lock) {
+            PostLockEndpoint.unlock({
+                id: $scope.post.lock.id,
+                post_id: $scope.post.id
+            }).$promise.then(function (result) {
+                $scope.editMode.editing = false;
+                doChangePage(url);
+            });
+        } else {
             $scope.editMode.editing = false;
             doChangePage(url);
-        });
+        }
     }
 
     function deletePost(post) {
