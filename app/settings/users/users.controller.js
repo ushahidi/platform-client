@@ -138,7 +138,7 @@ function (
         UserEndpoint.queryFresh(filters).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
             $scope.totalItems = usersResponse.total_count;
-            $scope.showPagination = $scope.totalItems / $scope.itemsPerPage < 2;
+            $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
         });
     };
 
