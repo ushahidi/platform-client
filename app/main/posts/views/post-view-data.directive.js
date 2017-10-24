@@ -318,6 +318,9 @@ function PostViewDataController(
         $scope.totalItems = $scope.itemsPerPage;
         $scope.currentPage = 1;
         $scope.selectedPosts = [];
+        recentPosts = [];
+        $scope.newPostsCount = 0;
+        newPostsAfter = moment.utc().format();
     }
 
     function loadMore() {
