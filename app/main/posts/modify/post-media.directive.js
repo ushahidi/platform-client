@@ -25,6 +25,11 @@ function (
         },
         template: require('./media.html'),
         link: function ($scope, element, attr, formCtrl) {
+            $scope.$watch('media.changed', function (newValue, oldValue) {
+                if (newValue === true) {
+                    formCtrl.$setDirty();
+                }
+            });
             if ($scope.mediaId) {
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                     $scope.media = media;
