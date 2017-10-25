@@ -22,24 +22,32 @@ function (
             params: {
                 order: 'desc',
                 orderby: 'post_date'
+            },
+            transformResponse: (data) => {
+                data = angular.fromJson(data);
+                data.results = data.results.map(normalizePost);
+
+                return data;
             }
+
         },
         get: {
             method: 'GET',
             transformResponse: function (data /*, header*/) {
-                data = angular.fromJson(data);
-                // Ensure values is always an object
-                if (_.isArray(data.values)) {
-                    data.values = _.object(data.values);
-                }
-                if (!_.isArray(data.published_to)) {
-                    data.published_to = [];
-                }
-                return data;
+                return normalizePost(angular.fromJson(data));
+            }
+        },
+        save: {
+            method: 'POST',
+            transformResponse: function (data /*, header*/) {
+                return normalizePost(angular.fromJson(data));
             }
         },
         update: {
-            method: 'PUT'
+            method: 'PUT',
+            transformResponse: function (data /*, header*/) {
+                return normalizePost(angular.fromJson(data));
+            }
         },
         options: {
             method: 'OPTIONS'
@@ -76,6 +84,18 @@ function (
     $rootScope.$on('event:authentication:logout:succeeded', function () {
         PostEndpoint.query();
     });
+
+    function normalizePost(post) {
+        // Ensure values is always an object
+        if (_.isArray(post.values)) {
+            post.values = _.object(post.values);
+        }
+        if (!_.isArray(post.published_to)) {
+            post.published_to = [];
+        }
+
+        return post;
+    }
 
     return PostEndpoint;
 
