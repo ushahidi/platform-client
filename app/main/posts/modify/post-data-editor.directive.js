@@ -415,7 +415,8 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-                $scope.postContainer.post = $scope.post;
+                // Save the updated post back to outside context
+                $scope.postContainer.post = response;
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.savingPost.saving = false;
                     $scope.post.id = response.id;
