@@ -78,7 +78,7 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    $scope.selectedPost = {post: null};
+    $scope.selectedPost = {post: null, next: {}};
     $scope.selectedPostId = null;
     $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
@@ -88,6 +88,36 @@ function PostViewDataController(
      */
     var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
+
+    $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
+        function removePostFromList() {
+            $scope.posts.forEach((post, index) => {
+                if (post.id === $scope.selectedPostId) {
+                    let nextInLine = $scope.posts[index + 1];
+                    $scope.posts.splice(index, 1);
+                    groupPosts($scope.posts);
+                    $scope.selectedPost.post = nextInLine;
+                    $scope.selectedPostId = nextInLine.id;
+                }
+            });
+        }
+
+        if ($scope.hasFilters()) {
+
+            let query = PostFilters.getQueryParams($scope.filters);
+
+            let postQuery = _.extend({}, query, {
+                post_id: $scope.selectedPostId
+            });
+
+            PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+                if (postsResponse.count === 0) {
+                    removePostFromList();
+                }
+            });
+        }
+    });
+
     activate();
     function activate() {
         getPosts(false, false);
@@ -119,6 +149,30 @@ function PostViewDataController(
             }
         );
 
+        $scope.$on('event:edit:leave:form:complete', function () {
+            // Bercause there is no state management
+            // We copy the next Post to be the current Post
+            // if the previous Post exited correctly
+            // Ideally Post Card would become a service more akin
+            // to Notify and manage its own scope
+            if (!_.isEmpty($scope.selectedPost.next)) {
+                $scope.selectedPost.post = $scope.selectedPost.next;
+                $scope.selectedPost.next = {};
+                $scope.editMode.editing = true;
+                $rootScope.$broadcast('event:edit:post:reactivate');
+            }
+        });
+
+        // When a Post has been saved in the Data View it must be updated in the
+        // Post list so that the change will persist.
+        // This event is expected to be fired on successful completion of a Post save
+        // it expects the updated Post data as an argument passed via the event
+        $scope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
+            if (args.post) {
+                persistUpdatedPost(args.post);
+            }
+        });
+
         $scope.$watch(function () {
             return $location.path();
         }, function (newValue, oldValue) {
@@ -138,6 +192,13 @@ function PostViewDataController(
             }
         });
         checkForNewPosts(30000);
+    }
+
+    function persistUpdatedPost(updatedPost) {
+        var index = _.findIndex($scope.posts, function (post) {
+            return post.id === updatedPost.id;
+        });
+        $scope.posts.splice(index, 1, updatedPost);
     }
 
     function confirmEditingExit() {

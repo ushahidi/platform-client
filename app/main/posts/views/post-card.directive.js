@@ -9,7 +9,6 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
             post:  '=',
             canSelect: '=',
             selectedPosts: '=',
-            inFocus: '=',
             shortContent: '@',
             clickAction: '=',
             editMode: '=',
