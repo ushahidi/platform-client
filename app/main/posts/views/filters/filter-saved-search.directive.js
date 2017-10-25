@@ -6,7 +6,6 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
         restrict: 'E',
         require: 'ngModel',
         scope: {
-            filters: '='
         },
         link: FilterSavedSearchLink,
         template: require('./filter-saved-search.html')
@@ -24,8 +23,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
         };
 
         function activate() {
-            ngModel.$render = renderModelValue;
-            if (ngModel.$viewValue.length > 0) {
+            if (ngModel.$viewValue) {
                 scope.selectedSavedSearch = scope.searches[ngModel.$viewValue];
             }
             scope.$watch('selectedSavedSearch', saveValueToView, true);
@@ -34,17 +32,8 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
             if (selectedSavedSearch && selectedSavedSearch.hasOwnProperty('filter')) {
                 PostFilters.setFilters(selectedSavedSearch.filter);
             }
-
-            //PostFilters.setFilters(scope.filters);
-            ngModel.$setViewValue(selectedSavedSearch && selectedSavedSearch.id ?
-                selectedSavedSearch.id.toString() : ngModel.$viewValue);
+            ngModel.$setViewValue(selectedSavedSearch);
         }
-
-        function renderModelValue() {
-            scope.selectedSavedSearch = ngModel.$viewValue;
-            // Update savedSearch w/o breaking references used by selectedSavedSearch model
-        }
-
         // Load searches + users
         function loadSavedSearches() {
             scope.loading = true;

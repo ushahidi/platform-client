@@ -19,6 +19,10 @@
     <div class="form-field">
         <button type="button" class="button button-alpha button-right" ng-click="saveSavedSearchModal()" translate="set.save_savedsearch">Save search</button>
     </div>
+
+    <div class="form-field">
+        <button type="button" class="button button-alpha button-right" ng-click="editSavedSearchModal()" ng-show="filtersVar.saved_search" translate="set.update_savedsearch">Edit Saved search</button>
+    </div>
     <div class="divider"></div>
     <!-- sorting options -->
     <h4 class="dropdown-menu-title" translate="app.sort_by"></h4>
@@ -32,7 +36,7 @@
 
     <!-- filter options -->
     <h4 class="dropdown-menu-title" translate="app.filter_by"></h4>
-    <filter-saved-search filters="filtersVar" ng-model="filtersVar.saved_search"></filter-saved-search>
+    <filter-saved-search ng-model="filtersVar.saved_search"></filter-saved-search>
     <filter-status ng-model="filtersVar.status"></filter-status>
     <filter-category ng-model="filtersVar.tags"></filter-category>
     <filter-form ng-model="filtersVar.form"></filter-form>
@@ -47,5 +51,3 @@
         </div>
     </div>
 </div>
-
-

@@ -187,6 +187,16 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return _.omit(
             filters,
             function (value, key, object) {
+                if (key === 'reactiveFilters') {
+                    return true;
+                }
+                if (key === 'qEnabled') {
+                    return true;
+                }
+                // we don't want this showing up in bug icons
+                if (key === 'saved_search') {
+                    return true;
+                }
                 // Ignore difference in within_km
                 if (key === 'within_km') {
                     return true;
