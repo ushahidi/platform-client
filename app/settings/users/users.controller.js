@@ -138,6 +138,7 @@ function (
         UserEndpoint.queryFresh(filters).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
             $scope.totalItems = usersResponse.total_count;
+            $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
         });
     };
 
@@ -155,7 +156,6 @@ function (
     $scope.itemsPerPage = $scope.itemsPerPageOptions[0];
     // untill we have the correct total_count value from backend request:
     $scope.totalItems = $scope.itemsPerPage;
-
     $scope.getUsersForPagination();
     // --- end: initialization
     $scope.$watch('filters', function () {
