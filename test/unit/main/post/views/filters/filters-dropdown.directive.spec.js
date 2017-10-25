@@ -58,12 +58,12 @@ describe('post active search filters directive', function () {
 
     describe('test directive functions', function () {
         it('reactiveFilters should be false', function () {
-            expect(PostFilters.reactiveFilters).toEqual('disabled');
+            expect(PostFilters.reactiveFilters).toEqual(false);
         });
         it('should enable reactiveFilters when I call applyFiltersLocked', function () {
-            expect(PostFilters.reactiveFilters).toEqual('disabled');
+            expect(PostFilters.reactiveFilters).toEqual(false);
             isolateScope.applyFiltersLocked();
-            expect(PostFilters.reactiveFilters).toEqual('enabled');
+            expect(PostFilters.reactiveFilters).toEqual(true);
         });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.clearFilters();
