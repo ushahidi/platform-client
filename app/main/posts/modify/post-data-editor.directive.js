@@ -431,10 +431,13 @@ function PostDataEditorController(
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
                 // Save the updated post back to outside context
-                $scope.postContainer.post = $scope.post;
+                $scope.postContainer.post = response;
 
                 // DEVNOTE: Not sure how this would ever happen in the case of data view
                 // ideally this will go away when the two editors are integrated
+                // This is not currently relevant to the data view directive
+                // if data view becomes capable of creating Posts this will need to be changed
+                // as it will not currently prevent display of the Post
 
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.post.id = response.id;
@@ -444,7 +447,7 @@ function PostDataEditorController(
                 Notify.notify(success_message, { name: $scope.post.title });
 
                 $scope.isLoading.state = false;
-                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess');
+                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
 
                 leaveEditMode();
             }, function (errorResponse) { // errors

@@ -122,14 +122,24 @@ function PostViewDataController(
         $scope.$on('event:edit:leave:form:complete', function () {
             // Bercause there is no state management
             // We copy the next Post to be the current Post
-            // if the previous Post existed correctly
+            // if the previous Post exited correctly
             // Ideally Post Card would become a service more akin
-            // to Notify
+            // to Notify and manage its own scope
             if (!_.isEmpty($scope.selectedPost.next)) {
                 $scope.selectedPost.post = $scope.selectedPost.next;
                 $scope.selectedPost.next = {};
                 $scope.editMode.editing = true;
                 $rootScope.$broadcast('event:edit:post:reactivate');
+            }
+        });
+
+        // When a Post has been saved in the Data View it must be updated in the
+        // Post list so that the change will persist.
+        // This event is expected to be fired on successful completion of a Post save
+        // it expects the updated Post data as an argument passed via the event
+        $scope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
+            if (args.post) {
+                persistUpdatedPost(args.post);
             }
         });
 
@@ -152,6 +162,11 @@ function PostViewDataController(
             }
         });
         checkForNewPosts(30000);
+    }
+
+    function persistUpdatedPost(updatedPost) {
+        _.extend(_.findWhere($scope.posts, { id: updatedPost.id }), updatedPost);
+        console.log();
     }
 
     function confirmEditingExit() {
