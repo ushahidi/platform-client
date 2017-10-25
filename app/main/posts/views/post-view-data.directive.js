@@ -235,10 +235,8 @@ function PostViewDataController(
         if (useOffset === true) {
             postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
         }
-
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-
             //Clear posts
             clearPosts ? resetPosts() : null;
             // Add posts to full set of posts
