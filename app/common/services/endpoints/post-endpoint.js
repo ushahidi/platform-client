@@ -29,8 +29,9 @@ function (
                     if (!data) {
                         return data;
                     }
-
-                    data.results = data.results.map(normalizePost);
+                    if (data.results) {
+                        data.results = data.results.map(normalizePost);
+                    }
 
                     return data;
                 }

@@ -107,18 +107,13 @@ function PostViewDataController(
             let query = PostFilters.getQueryParams($scope.filters);
 
             let postQuery = _.extend({}, query, {
-                limit: $scope.itemsPerPage
+                post_id: $scope.selectedPostId
             });
 
-            postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
-
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-                for (let i = 0; i < postsResponse.results.length; i++) {
-                    if (postsResponse.results[i].id === $scope.selectedPostId) {
-                        return;
-                    }
+                if (!postsResponse) {
+                    removePostFromList();
                 }
-                removePostFromList();
             });
         }
     });
