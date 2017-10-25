@@ -91,15 +91,15 @@ function PostViewDataController(
 
     $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
         function removePostFromList() {
-            for (var i = 0; i < $scope.posts.length; i++) {
-                if ($scope.posts[i].id === $scope.selectedPostId) {
-                    let nextInLine = $scope.posts[i + 1];
-                    $scope.posts.splice(i, 1);
+            $scope.posts.forEach((post, index) => {
+                if (post.id === $scope.selectedPostId) {
+                    let nextInLine = $scope.posts[index + 1];
+                    $scope.posts.splice(index, 1);
                     groupPosts($scope.posts);
                     $scope.selectedPost.post = nextInLine;
                     $scope.selectedPostId = nextInLine.id;
                 }
-            }
+            });
         }
 
         if ($scope.hasFilters()) {
