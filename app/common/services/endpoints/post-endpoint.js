@@ -37,8 +37,17 @@ function (
                 return normalizePost(angular.fromJson(data));
             }
         },
+        save: {
+            method: 'POST',
+            transformResponse: function (data /*, header*/) {
+                return normalizePost(angular.fromJson(data));
+            }
+        },
         update: {
-            method: 'PUT'
+            method: 'PUT',
+            transformResponse: function (data /*, header*/) {
+                return normalizePost(angular.fromJson(data));
+            }
         },
         options: {
             method: 'OPTIONS'
