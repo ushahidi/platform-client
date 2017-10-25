@@ -9,9 +9,9 @@ function (
         realname: undefined,
         email: undefined,
         accessToken: undefined,
+        accessTokenExpires: undefined,
         role: undefined,
         permissions: undefined,
-        loginPath: undefined,
         gravatar: undefined
     };
 

@@ -100,6 +100,7 @@ describe('Authentication', function () {
 
                 it('should add the accessToken to the Session', function () {
                     expect(mockedSessionData.accessToken).toEqual(mockedOauthTokenResponse.access_token);
+                    expect(mockedSessionData.accessTokenExpires).toEqual(mockedOauthTokenResponse.expires);
                 });
 
                 it('should add the userData to the Session', function () {
