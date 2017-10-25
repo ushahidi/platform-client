@@ -20,7 +20,10 @@ PostExportController.$inject = [
     'Notify',
     '$q',
     'PostFilters',
-    '_'
+    '_',
+    '$window',
+    '$location',
+    '$timeout'
 ];
 function PostExportController(
     $scope,
@@ -30,7 +33,10 @@ function PostExportController(
     Notify,
     $q,
     PostFilters,
-    _
+    _,
+    $window,
+    $location,
+    $timeout
 ) {
     $scope.loading = false;
     $scope.getQuery = getQuery;
@@ -97,25 +103,51 @@ function PostExportController(
         var filename = response[0].name + '-' + (new Date()).toISOString().substring(0, 10) + '.' + format,
             data = response[1].data;
 
-        // Create anchor link
-        var anchor = angular.element('<a/>');
+        handleArrayBuffer(filename, data, 'csv');
 
-        // ...and attach it.
-        angular.element(document.body).append(anchor);
-
-        // Set attributes
-        anchor.attr({
-            href: 'data:attachment/' + format + ';charset=utf-8,' + encodeURIComponent(data),
-            download: filename
-        });
-
-        // Show file download dialog
-        anchor[0].click();
-
-        // ... and finally remove the link
-        anchor.remove();
         $scope.loadingStatus(false);
         return filename;
     }
 
+    function handleArrayBuffer(filename, data, type) {
+        /**
+         * If we have the HTML5 Api for File available we use that. If not, a Blob
+         */
+        function createCSVFile() {
+            if (_.isFunction(File)) {
+                return new File([data], filename, { type: type });
+            } else {
+                return new Blob([data], { type: type });
+            }
+        }
+        var blob = createCSVFile();
+        if (!_.isUndefined($window.navigator.msSaveBlob)) {
+            /** IE specific workaround for "HTML7007"
+             * https://stackoverflow.com/questions/20310688/blob-download-not-working-in-ie
+            **/
+            $window.navigator.msSaveBlob(blob, filename);
+        } else {
+            var URL = $window.URL || $window.webkitURL;
+            var downloadUrl = URL.createObjectURL(blob);
+            if (filename) {
+                // use HTML5 a[download] attribute to specify filename
+                // Create anchor link
+                var anchor = angular.element('<a/>');
+                anchor.attr({
+                    href: downloadUrl,
+                    download: filename
+                });
+                angular.element(document.body).append(anchor);
+                anchor[0].click();
+                anchor[0].remove();
+            } else {
+                $location.url(downloadUrl);
+            }
+
+            $timeout(function () {
+                URL.revokeObjectURL(downloadUrl);
+            }, 100); // cleanup
+
+        }
+    }
 }

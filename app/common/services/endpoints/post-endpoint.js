@@ -101,7 +101,8 @@ function (
     PostEndpoint.export = function (filters) {
         var config =  {
             params: filters,
-            paramSerializer: '$httpParamSerializerJQLike'
+            paramSerializer: '$httpParamSerializerJQLike',
+            responseType: 'arraybuffer'
         };
 
         return $http.get(Util.apiUrl('/posts/export'), config);
