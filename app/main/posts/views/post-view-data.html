@@ -62,10 +62,9 @@
             <post-card
                 ng-repeat="post in posts"
                 can-select="bulkActionsSelected"
-                post="post.id === selectedPostId ? selectedPost.post : post"
+                post="post"
                 selected-posts="selectedPosts"
                 click-action="showPost"
-                in-focus="selectedPostId === post.id",
                 edit-mode="editMode"
                 selected-post="selectedPost"
             >
