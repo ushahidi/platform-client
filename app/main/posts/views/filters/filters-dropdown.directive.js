@@ -1,7 +1,7 @@
 module.exports = FiltersDropdown;
 
-FiltersDropdown.$inject = ['PostFilters', 'ModalService', '$rootScope'];
-function FiltersDropdown(PostFilters, ModalService, $rootScope) {
+FiltersDropdown.$inject = ['PostFilters', 'ModalService', '$rootScope', '_'];
+function FiltersDropdown(PostFilters, ModalService, $rootScope, _) {
     return {
         restrict: 'E',
         require: 'ngModel',
@@ -21,6 +21,11 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
         $scope.savedSearch = {
             view : 'map',
             role : []
+        };
+
+        // Check if we can edit
+        $scope.canEdit = function (savedSearch) {
+            return _.contains(savedSearch.allowed_privileges, 'update');
         };
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = true;
