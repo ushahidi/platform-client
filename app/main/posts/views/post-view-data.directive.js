@@ -93,8 +93,10 @@ function PostViewDataController(
         function removePostFromList() {
             for (var i = 0; i < $scope.posts.length; i++) {
                 if ($scope.posts[i].id === $scope.selectedPostId) {
+                    let nextInLine = $scope.posts[i + 1];
                     $scope.posts.splice(i, 1);
                     groupPosts($scope.posts);
+                    $scope.selectedPost.post = nextInLine;
                 }
             }
         }
@@ -106,6 +108,8 @@ function PostViewDataController(
             let postQuery = _.extend({}, query, {
                 limit: $scope.itemsPerPage
             });
+
+            postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
 
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 for (let i = 0; i < postsResponse.results.length; i++) {
