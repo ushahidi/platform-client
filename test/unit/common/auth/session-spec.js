@@ -13,8 +13,10 @@ describe('Session', function () {
             role: undefined,
             permissions: undefined,
             accessToken: undefined,
-            loginPath: undefined,
-            gravatar: undefined        };
+            accessTokenExpires: undefined,
+
+            gravatar: undefined
+        };
 
         var testApp = makeTestApp();
 
@@ -87,7 +89,7 @@ describe('Session', function () {
                     role: undefined,
                     permissions: undefined,
                     accessToken: 'secrettoken',
-                    loginPath: undefined,
+                    accessTokenExpires: undefined,
                     gravatar: undefined
                 };
 
