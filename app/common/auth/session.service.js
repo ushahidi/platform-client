@@ -12,7 +12,6 @@ function (
         accessTokenExpires: undefined,
         role: undefined,
         permissions: undefined,
-        loginPath: undefined,
         gravatar: undefined
     };
 
