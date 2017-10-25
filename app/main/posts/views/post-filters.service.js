@@ -103,6 +103,15 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         var query = _.omit(
             filters,
             function (value, key, object) {
+                if (key === 'saved_search') {
+                    return true;
+                }
+                if (key === 'reactiveFilters') {
+                    return true;
+                }
+                if (key === 'qEnabled') {
+                    return true;
+                }
                 // Is value empty?
                 // Is it a date?
                 if (_.isDate(value)) {
@@ -142,6 +151,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             filters,
             function (value, key, object) {
                 if (defaults[key] === value) {
+                    return true;
+                }
+                // we don't want this showing up in bug icons
+                if (key === 'saved_search') {
                     return true;
                 }
                 // Ignore difference in within_km

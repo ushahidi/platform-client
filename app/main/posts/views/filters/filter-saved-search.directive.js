@@ -1,11 +1,12 @@
 module.exports = FilterSavedSearch;
 
-FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope', 'ModalService'];
-function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService) {
+FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope', 'ModalService', 'PostFilters'];
+function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, PostFilters) {
     return {
         restrict: 'E',
         require: 'ngModel',
         scope: {
+            filters: '='
         },
         link: FilterSavedSearchLink,
         template: require('./filter-saved-search.html')
@@ -30,6 +31,11 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService) {
             scope.$watch('selectedSavedSearch', saveValueToView, true);
         }
         function saveValueToView(selectedSavedSearch) {
+            if (selectedSavedSearch && selectedSavedSearch.hasOwnProperty('filter')) {
+                PostFilters.setFilters(selectedSavedSearch.filter);
+            }
+
+            //PostFilters.setFilters(scope.filters);
             ngModel.$setViewValue(selectedSavedSearch && selectedSavedSearch.id ?
                 selectedSavedSearch.id.toString() : ngModel.$viewValue);
         }
