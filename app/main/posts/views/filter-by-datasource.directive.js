@@ -34,10 +34,22 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
 
     function activate() {
         if ($scope.featureEnabled()) {
-            ConfigEndpoint.get({ id: 'data-provider' }).$promise.then(function (results) {
-                $scope.dataSources = results.providers;
-                assignStatsToProviders();
-            });
+            // FIXME: Only admins can access this info right now, because most of it is sensitive
+            // ConfigEndpoint.get({ id: 'data-provider' }).$promise.then(function (results) {
+            //     $scope.dataSources = results.providers;
+            //     assignStatsToProviders();
+            // });
+            // Hardcoding dataSources for now
+            $scope.dataSources =
+                {
+                    'smssync': true,
+                    'email': true,
+                    'twilio': false,
+                    'nexmo': false,
+                    'twitter': true,
+                    'frontlinesms': true
+                };
+            assignStatsToProviders();
         }
     }
 
