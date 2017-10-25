@@ -392,13 +392,11 @@ function PostDataEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
-
             if ('message_location' in $scope.post.values) {
                 $scope.post.values.message_location = [];
             }
+            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
 
-
-            var post = PostEditService.cleanPostValues(_.clone($scope.post));
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
                 post.tags = _.chain(post.values)
@@ -417,7 +415,8 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-                $scope.postContainer.post = $scope.post;
+                // Save the updated post back to outside context
+                $scope.postContainer.post = response;
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.savingPost.saving = false;
                     $scope.post.id = response.id;
