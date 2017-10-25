@@ -165,8 +165,10 @@ function PostViewDataController(
     }
 
     function persistUpdatedPost(updatedPost) {
-        _.extend(_.findWhere($scope.posts, { id: updatedPost.id }), updatedPost);
-        console.log();
+        var index = _.findIndex($scope.posts, function (post) {
+            return post.id === updatedPost.id;
+        });
+        $scope.posts.splice(index, 1, updatedPost);
     }
 
     function confirmEditingExit() {
