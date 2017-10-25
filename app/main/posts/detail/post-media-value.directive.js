@@ -12,17 +12,20 @@ module.exports = ['MediaEndpoint', '_', function (MediaEndpoint, _) {
     };
 
     function MediaValueLink($scope) {
-        function loadMedia()
-        {
+        function loadMedia() {
             if (!_.isNull($scope.mediaId)) {
+                $scope.mediaLoaded = false;
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                     $scope.media = media;
+                    $scope.mediaLoaded = true;
                 });
             }
         }
+        loadMedia();
 
         $scope.$watch('mediaId', function (newMediaId, oldMediaId) {
             if (newMediaId !== oldMediaId) {
+                console.log('new media loading...');
                 loadMedia();
             }
         });
