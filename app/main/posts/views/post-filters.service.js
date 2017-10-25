@@ -25,7 +25,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getMode: getMode,
         getModeId: getModeId,
         countFilters: countFilters,
-        reactiveFilters: 'enabled',
+        reactiveFilters: true,
         qEnabled: false
     };
 
@@ -72,7 +72,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
          */
         if (filterKey === 'q') {
             this.qEnabled = true;
-            this.reactiveFilters = 'enabled';
+            this.reactiveFilters = true;
         }
     }
 

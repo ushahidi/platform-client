@@ -96,7 +96,7 @@ function PostViewDataController(
         $scope.$watch(function () {
             return PostFilters.reactiveFilters;
         }, function () {
-            if (PostFilters.reactiveFilters === 'enabled') {
+            if (PostFilters.reactiveFilters === true) {
                 $scope.filters.reactToFilters = $scope.filters.reactToFilters ? !$scope.filters.reactToFilters : true;
             }
         }, true);
@@ -104,10 +104,10 @@ function PostViewDataController(
         $scope.$watch(function () {
             return $scope.filters;
         }, function (newValue, oldValue) {
-            if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
+            if (PostFilters.reactiveFilters === true && (newValue !== oldValue)) {
                 clearPosts = true;
                 getPosts(false, false);
-                PostFilters.reactiveFilters = 'disabled';
+                PostFilters.reactiveFilters = false;
             }
         }, true);
         $scope.$watch('selectedPosts.length', function () {

@@ -16,20 +16,20 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope) {
     };
 
     function FiltersDropdownLink($scope, $element, $attrs, ngModel) {
-        PostFilters.reactiveFilters = 'disabled';
+        PostFilters.reactiveFilters = false;
         // Init an empty saved search
         $scope.savedSearch = {
             view : 'map',
             role : []
         };
         $scope.applyFiltersLocked = function () {
-            PostFilters.reactiveFilters = 'enabled';
+            PostFilters.reactiveFilters = true;
             $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
         };
         $scope.clearFilters = function () {
             $scope.filtersVar = PostFilters.clearFilters();
             $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
-            PostFilters.reactiveFilters = 'enabled';
+            PostFilters.reactiveFilters = true;
         };
         $scope.enableQuery = function () {
             PostFilters.qEnabled = true;
