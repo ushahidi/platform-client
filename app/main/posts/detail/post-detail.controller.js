@@ -147,6 +147,9 @@ function (
             angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
             angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
         });
+    } else {
+        angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
+        angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     }
 
     $scope.taskHasValues = function (task) {
