@@ -78,7 +78,7 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    $scope.selectedPost = {post: null};
+    $scope.selectedPost = {post: null, next: {}};
     $scope.selectedPostId = null;
     $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
@@ -118,6 +118,20 @@ function PostViewDataController(
                 $timeout.cancel(stopInterval);
             }
         );
+
+        $scope.$on('event:edit:leave:form:complete', function () {
+            // Bercause there is no state management
+            // We copy the next Post to be the current Post
+            // if the previous Post existed correctly
+            // Ideally Post Card would become a service more akin
+            // to Notify
+            if (!_.isEmpty($scope.selectedPost.next)) {
+                $scope.selectedPost.post = $scope.selectedPost.next;
+                $scope.selectedPost.next = {};
+                $scope.editMode.editing = true;
+                $rootScope.$broadcast('event:edit:post:reactivate');
+            }
+        });
 
         $scope.$watch(function () {
             return $location.path();
