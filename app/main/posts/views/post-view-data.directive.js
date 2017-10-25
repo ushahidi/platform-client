@@ -88,6 +88,10 @@ function PostViewDataController(
      */
     var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
+
+    $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
+        console.log($scope.groupedPosts);
+    })
     activate();
     function activate() {
         getPosts(false, false);
