@@ -90,7 +90,7 @@ function PostViewDataController(
     $scope.savingPost = {saving: false};
 
     $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
-        console.log($scope.groupedPosts);
+        console.log($scope.selectedPost);
     })
     activate();
     function activate() {
