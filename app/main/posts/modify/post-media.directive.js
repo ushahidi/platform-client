@@ -16,51 +16,79 @@ function (
     return {
         restrict: 'E',
         replace: true,
-        require: ['^^form', 'ngModel'],
+        require: 'ngModel',
         scope: {
-            mediaId: '=',
             media: '=',
             name: '@',
-            mediaHasCaption: '='
+            mediaHasCaption: '<'
         },
         template: require('./media.html'),
-        link: function ($scope, element, attr, requiredAttributes) {
-            var form = requiredAttributes[0];
-            var ngModelForm = requiredAttributes[1];
+        link: function ($scope, element, attr, ngModel) {
+            // Initialize media object
+            $scope.media = { id: null, file: null, caption: '', dataURI: null, changed: false };
+            $scope.mediaId = null;
+            $scope.showAdd = showAdd;
+            $scope.showReplace = showReplace;
+            $scope.showDelete = showDelete;
+            $scope.deleteMedia = deleteMedia;
 
-            ngModelForm.$render = renderViewValue;
+            activate();
+
+            function activate() {
+                renderViewValue();
+
+                // Watch for media changes
+                $scope.$watch('media.changed', handleMediaChange);
+
+                // Watch for media changes
+                $scope.$watch('mediaId', handleMediaIdChange);
+
+                // Set up rendering any model changes
+                ngModel.$render = renderViewValue;
+            }
 
             function renderViewValue() {
-                if (ngModelForm.$viewValue === 'changed') {
-                    form.$setDirty();
+                if (ngModel.$viewValue) {
+                    $scope.mediaId = parseInt(ngModel.$viewValue);
+
+                    // Load the media from the API
+                    if ($scope.media.id !== $scope.mediaId) {
+                        MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
+                            $scope.media = media;
+                            // Set initial media state
+                            $scope.media.changed = false;
+                        });
+                    }
                 }
-                return ngModelForm.$viewValue;
             }
 
-            if ($scope.mediaId) {
-                MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
-                    $scope.media = media;
-                    // Set initial media state
-                    $scope.media.changed = false;
-                });
-            } else {
-                // Initialize media object
-                $scope.media = {file: null, caption: null, dataURI: null, changed: false};
+            function handleMediaChange(changed) {
+                if (changed) {
+                    // Make sure the model is set dirty if media changes
+                    ngModel.$setDirty();
+                }
             }
 
-            $scope.showAdd = function () {
+            function handleMediaIdChange(id) {
+                if (id === 'changed') {
+                    // Make sure the model is set dirty if media changes
+                    ngModel.$setDirty();
+                }
+            }
+
+            function showAdd() {
                 return (!$scope.media.id && !$scope.media.changed || $scope.media.deleted);
-            };
+            }
 
-            $scope.showReplace = function () {
+            function showReplace() {
                 return $scope.media.dataURI || $scope.media.id;
-            };
+            }
 
-            $scope.showDelete = function () {
+            function showDelete() {
                 return $scope.media.id;
-            };
+            }
 
-            $scope.deleteMedia = function (mediaId) {
+            function deleteMedia(mediaId) {
                 // Mark for deletion
                 Notify.confirmDelete('notify.post.delete_image_confirm').then(function () {
                     MediaEditService.deleteMedia(mediaId).then(function () {
@@ -70,7 +98,7 @@ function (
                         $scope.mediaId = null;
                     });
                 });
-            };
+            }
         }
     };
 }];
