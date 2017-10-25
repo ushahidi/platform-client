@@ -25,7 +25,6 @@ module.exports = ['MediaEndpoint', '_', function (MediaEndpoint, _) {
 
         $scope.$watch('mediaId', function (newMediaId, oldMediaId) {
             if (newMediaId !== oldMediaId) {
-                console.log('new media loading...');
                 loadMedia();
             }
         });
