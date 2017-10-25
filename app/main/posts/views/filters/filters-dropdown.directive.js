@@ -54,7 +54,7 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location) {
             $scope.savedSearch.filter = PostFilters.getActiveFilters($scope.filtersVar);
             // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
             $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
-            ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
+            ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.update_savedsearch', 'star', $scope, false, false);
         };
     }
 }
