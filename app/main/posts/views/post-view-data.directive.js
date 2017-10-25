@@ -88,6 +88,36 @@ function PostViewDataController(
      */
     var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
+
+    $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
+        function removePostFromList() {
+            $scope.posts.forEach((post, index) => {
+                if (post.id === $scope.selectedPostId) {
+                    let nextInLine = $scope.posts[index + 1];
+                    $scope.posts.splice(index, 1);
+                    groupPosts($scope.posts);
+                    $scope.selectedPost.post = nextInLine;
+                    $scope.selectedPostId = nextInLine.id;
+                }
+            });
+        }
+
+        if ($scope.hasFilters()) {
+
+            let query = PostFilters.getQueryParams($scope.filters);
+
+            let postQuery = _.extend({}, query, {
+                post_id: $scope.selectedPostId
+            });
+
+            PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+                if (postsResponse.count === 0) {
+                    removePostFromList();
+                }
+            });
+        }
+    });
+
     activate();
     function activate() {
         getPosts(false, false);
