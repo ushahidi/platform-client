@@ -236,14 +236,9 @@ function PostViewDataController(
             postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
         }
 
-        // if (changedPostId) {
-        //     postQuery.id = changedPostId
-        // }
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-            // if (changedPostId) {
-            //     changedPost = postsResponse;
-            // }
+
             //Clear posts
             clearPosts ? resetPosts() : null;
             // Add posts to full set of posts
