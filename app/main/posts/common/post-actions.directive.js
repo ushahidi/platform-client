@@ -71,12 +71,12 @@ function PostActionsDirective(
                 return;
             }
 
-            $scope.selectedPost.post = _.clone($scope.post);
             if ($routeParams.view !== 'data' && $location.path().indexOf('data') === -1) {
                 $location.path('/posts/' + postId + '/edit');
             } else if ($scope.editMode.editing) {
                 $rootScope.$broadcast('event:edit:leave:form');
                 $scope.$on('event:edit:leave:form:complete', function () {
+                    $scope.selectedPost.post = _.clone($scope.post);
                     $scope.editMode.editing = true;
                     $rootScope.$broadcast('event:edit:post:reactivate');
                 });

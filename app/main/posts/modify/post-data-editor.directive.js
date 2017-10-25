@@ -364,9 +364,8 @@ function PostDataEditorController(
             leaveEditMode();
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
-            doChangePage(url);
+            $scope.cancel(url);
         } else {
-            //$scope.editMode.editing = true;
             if (ev) {
                 ev.preventDefault();
             }
@@ -375,10 +374,9 @@ function PostDataEditorController(
                 $scope.savingPost.saving = false;
                 $scope.cancel(url);
             }, function () {
-                //$scope.editMode.editing = true;
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
-                doChangePage(url);
+                $scope.cancel(url);
             });
         }
     }
