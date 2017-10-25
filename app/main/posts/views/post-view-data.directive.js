@@ -90,8 +90,34 @@ function PostViewDataController(
     $scope.savingPost = {saving: false};
 
     $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
-        console.log($scope.selectedPost);
-    })
+        function removePostFromList() {
+            for (var i = 0; i < $scope.posts.length; i++) {
+                if ($scope.posts[i].id === $scope.selectedPostId) {
+                    $scope.posts.splice(i, 1);
+                    groupPosts($scope.posts);
+                }
+            }
+        }
+
+        if ($scope.hasFilters()) {
+
+            let query = PostFilters.getQueryParams($scope.filters);
+
+            let postQuery = _.extend({}, query, {
+                limit: $scope.itemsPerPage
+            });
+
+            PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+                for (let i = 0; i < postsResponse.results.length; i++) {
+                    if (postsResponse.results[i].id === $scope.selectedPostId) {
+                        return;
+                    }
+                }
+                removePostFromList();
+            });
+        }
+    });
+
     activate();
     function activate() {
         getPosts(false, false);
@@ -204,8 +230,15 @@ function PostViewDataController(
         if (useOffset === true) {
             postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
         }
+
+        // if (changedPostId) {
+        //     postQuery.id = changedPostId
+        // }
         $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+            // if (changedPostId) {
+            //     changedPost = postsResponse;
+            // }
             //Clear posts
             clearPosts ? resetPosts() : null;
             // Add posts to full set of posts
