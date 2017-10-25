@@ -97,6 +97,7 @@ function PostViewDataController(
                     $scope.posts.splice(i, 1);
                     groupPosts($scope.posts);
                     $scope.selectedPost.post = nextInLine;
+                    $scope.selectedPostId = nextInLine.id;
                 }
             }
         }
