@@ -15,7 +15,8 @@ describe('authentication interceptor', function () {
         });
 
         mockedSessionData = {
-            accessToken: null
+            accessToken: null,
+            accessTokenExpires: null
         };
         mockAuthentication = {
             loginStatus : false,
@@ -69,6 +70,7 @@ describe('authentication interceptor', function () {
             describe('with an accessToken stored in the Session service', function () {
                 beforeEach(function () {
                     mockedSessionData.accessToken = 'fooBarToken';
+                    mockedSessionData.accessTokenExpires = 9999999999999;
                 });
 
                 it('should add the authorization token header', function () {

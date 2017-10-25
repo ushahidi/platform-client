@@ -22,11 +22,13 @@ function (
     ModalService
 ) {
 
-    // check whether we have initially an old access_token and userId
+    // check whether we have initially an valid access_token and userId
     // and assume that, if yes, we are still loggedin
-    var loginStatus = !!Session.getSessionDataEntry('accessToken') && !!Session.getSessionDataEntry('userId'),
+    var loginStatus = !!Session.getSessionDataEntry('accessToken') &&
+        Session.getSessionDataEntry('accessTokenExpires') > Math.floor(Date.now() / 1000) &&
+        !!Session.getSessionDataEntry('userId');
 
-    setToLoginState = function (userData) {
+    function setToLoginState(userData) {
         Session.setSessionDataEntries({
             userId: userData.id,
             realname: userData.realname,
@@ -37,13 +39,13 @@ function (
             language: userData.language
         });
         loginStatus = true;
-    },
+    }
 
-    setToLogoutState = function () {
+    function setToLogoutState() {
         Session.clearSessionData();
         UserEndpoint.invalidateCache();
         loginStatus = false;
-    };
+    }
 
     return {
 
@@ -68,6 +70,7 @@ function (
             handleRequestSuccess = function (authResponse) {
                 var accessToken = authResponse.data.access_token;
                 Session.setSessionDataEntry('accessToken', accessToken);
+                Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
 
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
