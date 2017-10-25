@@ -28,7 +28,11 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
 
         function handleRequestSuccess(authResponse) {
             var accessToken = authResponse.data.access_token;
+            // Save access token
             Session.setSessionDataEntry('accessToken', accessToken);
+            // Save token expires time
+            Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+            // Add Authorization header
             config.headers.Authorization = 'Bearer ' + accessToken;
             deferred.resolve(config);
         }
@@ -90,9 +94,11 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
         }
 
         var accessToken = Session.getSessionDataEntry('accessToken');
+        var accessTokenExpires = Session.getSessionDataEntry('accessTokenExpires');
+        var now = Math.floor(Date.now() / 1000);
 
-        if (accessToken !== undefined && accessToken !== null) {
-            // if we already have an accessToken,
+        if (accessToken !== undefined && accessToken !== null && accessTokenExpires > now) {
+            // if we already have a valid accessToken,
             // we will set it straight ahead
             // and resolve the promise for the config hash
             config.headers.Authorization = 'Bearer ' + accessToken;
