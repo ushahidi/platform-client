@@ -23,31 +23,57 @@ function (
                 order: 'desc',
                 orderby: 'post_date'
             },
-            transformResponse: (data) => {
-                data = angular.fromJson(data);
-                data.results = data.results.map(normalizePost);
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                (data) => {
+                    if (!data) {
+                        return data;
+                    }
 
-                return data;
-            }
+                    data.results = data.results.map(normalizePost);
 
+                    return data;
+                }
+            ]
         },
         get: {
             method: 'GET',
-            transformResponse: function (data /*, header*/) {
-                return normalizePost(angular.fromJson(data));
-            }
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                function (data /*, header*/) {
+                    if (!data) {
+                        return data;
+                    }
+
+                    return normalizePost(data);
+                }
+            ]
         },
         save: {
             method: 'POST',
-            transformResponse: function (data /*, header*/) {
-                return normalizePost(angular.fromJson(data));
-            }
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                function (data /*, header*/) {
+                    if (!data) {
+                        return data;
+                    }
+
+                    return normalizePost(data);
+                }
+            ]
         },
         update: {
             method: 'PUT',
-            transformResponse: function (data /*, header*/) {
-                return normalizePost(angular.fromJson(data));
-            }
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                function (data /*, header*/) {
+                    if (!data) {
+                        return data;
+                    }
+
+                    return normalizePost(data);
+                }
+            ]
         },
         options: {
             method: 'OPTIONS'
