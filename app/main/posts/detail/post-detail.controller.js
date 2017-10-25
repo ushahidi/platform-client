@@ -71,6 +71,8 @@ function (
             $scope.$emit('setPageTitle', title);
         });
     }
+    angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
+    angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
 
     // Load the post form
     if ($scope.post.form && $scope.post.form.id) {
@@ -143,13 +145,7 @@ function (
                 }
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
-
-            angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
-            angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
         });
-    } else {
-        angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
-        angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     }
 
     $scope.taskHasValues = function (task) {
