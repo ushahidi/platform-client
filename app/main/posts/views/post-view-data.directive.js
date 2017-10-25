@@ -111,7 +111,7 @@ function PostViewDataController(
             });
 
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-                if (!postsResponse) {
+                if (postsResponse.count === 0) {
                     removePostFromList();
                 }
             });

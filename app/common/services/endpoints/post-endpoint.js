@@ -29,10 +29,7 @@ function (
                     if (!data) {
                         return data;
                     }
-                    if (data.results) {
-                        data.results = data.results.map(normalizePost);
-                    }
-
+                    data.results = data.results.map(normalizePost);
                     return data;
                 }
             ]
