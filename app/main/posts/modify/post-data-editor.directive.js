@@ -447,6 +447,7 @@ function PostDataEditorController(
                 Notify.notify(success_message, { name: $scope.post.title });
 
                 $scope.isLoading.state = false;
+                // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
 
                 leaveEditMode();
