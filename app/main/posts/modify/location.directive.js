@@ -100,6 +100,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         function manualLatLong(lat, lon) {
             updateMarkerPosition(lat, lon);
             centerMapTo(lat, lon);
+            updateModelLatLon(lat, lon);
         }
 
         function updateMarkerPosition(lat, lon) {
