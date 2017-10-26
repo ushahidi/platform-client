@@ -1,7 +1,7 @@
 module.exports = FiltersDropdown;
 
-FiltersDropdown.$inject = ['PostFilters', 'ModalService', '$rootScope', '_', '$location'];
-function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location) {
+FiltersDropdown.$inject = ['PostFilters', 'ModalService', '$rootScope', '_', '$location', 'SavedSearchEndpoint'];
+function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, SavedSearchEndpoint) {
     return {
         restrict: 'E',
         require: 'ngModel',
@@ -32,7 +32,8 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location) {
             $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
         };
         $scope.clearFilters = function () {
-            if ($scope.filtersVar.saved_search && $scope.filtersVar.saved_search.id) {
+            if (PostFilters.getMode() === 'savedsearch' && PostFilters.getModeId()) {
+                PostFilters.setMode('all');
                 $location.url('/views/' + $scope.filtersVar.saved_search.view);
             }
             $scope.filtersVar = PostFilters.clearFilters();
@@ -50,11 +51,13 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location) {
             ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
         };
         $scope.editSavedSearchModal = function () {
-            $scope.savedSearch = $scope.filtersVar.saved_search;
-            $scope.savedSearch.filter = PostFilters.getActiveFilters($scope.filtersVar);
-            // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
-            $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
-            ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.update_savedsearch', 'star', $scope, false, false);
+            SavedSearchEndpoint.get({id: PostFilters.getModeId()}, function (savedSearch) {
+                $scope.savedSearch = savedSearch;
+                $scope.savedSearch.filter = PostFilters.getActiveFilters($scope.filtersVar);
+                // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
+                $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
+                ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.update_savedsearch', 'star', $scope, false, false);
+            });
         };
     }
 }
