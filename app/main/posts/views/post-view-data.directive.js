@@ -111,25 +111,16 @@ function PostViewDataController(
     // Because it's just the post status only, we're just checking if it matches
     // filters on the frontend. This makes it MUCH faster than using the API
     $rootScope.$on('event:edit:post:status:data:mode:saveSuccess', function (event, args) {
-        if ($scope.hasFilters()) {
-            let matchingStatus = false;
-            $scope.filters.status.forEach((status) => {
-                if (args.post.status === status) {
-                    matchingStatus = true;
-                    return;
-                }
-            });
-
-            if (matchingStatus === false) {
-                removePostFromList(args);
-            }
+        let postObj = args.post;
+        if (!newStatusMatchesFilters(postObj)) {
+            removePostFromList(postObj);
         }
     });
 
-    function removePostFromList(args) {
+    function removePostFromList(postObj) {
         $scope.posts.forEach((post, index) => {
             // args.post is the post being updated/saved and sent from the broadcast
-            if (post.id === args.post.id) {
+            if (post.id === postObj.id) {
                 let nextInLine = $scope.posts[index + 1];
                 $scope.posts.splice(index, 1);
                 groupPosts($scope.posts);
@@ -137,6 +128,20 @@ function PostViewDataController(
                 $scope.selectedPostId = nextInLine.id;
             }
         });
+    }
+
+    function newStatusMatchesFilters(postObj) {
+        if ($scope.hasFilters()) {
+            let matchingStatus = false;
+            $scope.filters.status.forEach((status) => {
+                if (postObj.status === status) {
+                    matchingStatus = true;
+                }
+            });
+            return matchingStatus;
+        } else {
+            return true;
+        }
     }
 
     activate();
@@ -362,6 +367,11 @@ function PostViewDataController(
 
         $q.all(updateStatusPromises).then(function () {
             Notify.notify('notify.post.update_status_success_bulk', {count: count});
+            selectedPosts.forEach((post) => {
+                if (!newStatusMatchesFilters(post)) {
+                    removePostFromList(post);
+                }
+            });
             clearSelectedPosts();
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
