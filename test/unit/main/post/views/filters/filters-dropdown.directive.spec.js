@@ -15,7 +15,8 @@ describe('post active search filters directive', function () {
         testApp.directive('postActiveSearchFilters', require('app/main/posts/views/filters/active-search-filters.directive'))
         .directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
         .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
-        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
+        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
+        .value('$routeParams', {'view': 'data'});
         angular.mock.module('testApp');
     });
     var defaults = {
