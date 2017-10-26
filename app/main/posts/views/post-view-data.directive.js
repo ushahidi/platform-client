@@ -123,9 +123,15 @@ function PostViewDataController(
             if (post.id === postObj.id) {
                 let nextInLine = $scope.posts[index + 1];
                 $scope.posts.splice(index, 1);
-                groupPosts($scope.posts);
-                $scope.selectedPost.post = nextInLine;
-                $scope.selectedPostId = nextInLine.id;
+                if ($scope.posts.length) {
+                    groupPosts($scope.posts);
+                    $scope.selectedPost.post = nextInLine;
+                    $scope.selectedPostId = nextInLine.id;
+                } else {
+                    $scope.selectedPost = {post: null, next: {}};
+                    $scope.selectedPostId = null;
+                    getPosts(false, false);
+                }
             }
         });
     }
