@@ -88,6 +88,8 @@ function PostActionsDirective(
             $scope.post.status = status;
 
             PostEndpoint.update($scope.post).$promise.then(function () {
+                // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
+                $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post});
                 Notify.notify('notify.post.save_success', { name: $scope.post.title });
             }, function (errorResponse) {
                 Notify.apiErrors(errorResponse);
