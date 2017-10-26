@@ -29,9 +29,7 @@ function (
                     if (!data) {
                         return data;
                     }
-
                     data.results = data.results.map(normalizePost);
-
                     return data;
                 }
             ]
@@ -101,7 +99,8 @@ function (
     PostEndpoint.export = function (filters) {
         var config =  {
             params: filters,
-            paramSerializer: '$httpParamSerializerJQLike'
+            paramSerializer: '$httpParamSerializerJQLike',
+            responseType: 'arraybuffer'
         };
 
         return $http.get(Util.apiUrl('/posts/export'), config);
