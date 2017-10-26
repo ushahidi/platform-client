@@ -45,7 +45,6 @@ module.exports = [
         PostFilters.setMode('savedsearch', savedSearch.id);
 
         var filters = savedSearch.filter;
-        filters.saved_search = savedSearch.id;
         PostFilters.setFilters(filters);
         $scope.filters = PostFilters.getFilters();
         // Slight hack: to avoid incorrectly detecting a changed search

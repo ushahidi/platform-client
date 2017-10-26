@@ -1,7 +1,7 @@
 module.exports = FiltersDropdown;
 
-FiltersDropdown.$inject = ['PostFilters', 'ModalService', '$rootScope', '_', '$location', 'SavedSearchEndpoint'];
-function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, SavedSearchEndpoint) {
+FiltersDropdown.$inject = ['PostFilters', 'ModalService', '$rootScope', '_', '$location', 'SavedSearchEndpoint', '$routeParams'];
+function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, SavedSearchEndpoint, $routeParams) {
     return {
         restrict: 'E',
         require: 'ngModel',
@@ -34,7 +34,8 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         $scope.clearFilters = function () {
             if (PostFilters.getMode() === 'savedsearch' && PostFilters.getModeId()) {
                 PostFilters.setMode('all');
-                $location.url('/views/' + $scope.filtersVar.saved_search.view);
+                var viewParam = $routeParams.view ? $routeParams.view : 'data';
+                $location.url('/views/' + viewParam);
             }
             $scope.filtersVar = PostFilters.clearFilters();
             $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
