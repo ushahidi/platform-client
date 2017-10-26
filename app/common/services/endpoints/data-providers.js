@@ -13,8 +13,9 @@ function (
     var cache;
 
     if (!(cache = CacheFactory.get('providerCache'))) {
-        cache = new CacheFactory('providerCache');
+        cache = CacheFactory.createCache('providerCache');
     }
+    cache.removeExpired();
 
     var DataProviderEndpoint = $resource(Util.apiUrl('/dataproviders/:id'), {
         id: '@id'
