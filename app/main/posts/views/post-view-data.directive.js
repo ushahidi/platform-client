@@ -131,17 +131,16 @@ function PostViewDataController(
     }
 
     function newStatusMatchesFilters(postObj) {
-        if ($scope.hasFilters()) {
-            let matchingStatus = false;
-            $scope.filters.status.forEach((status) => {
-                if (postObj.status === status) {
-                    matchingStatus = true;
-                }
-            });
-            return matchingStatus;
-        } else {
-            return true;
-        }
+        let filters = $scope.hasFilters() ?  $scope.filters.status : PostFilters.getDefaults().status;
+        let matchingStatus = false;
+
+        filters.forEach((status) => {
+            if (postObj.status === status) {
+                matchingStatus = true;
+            }
+        });
+
+        return matchingStatus;
     }
 
     activate();
