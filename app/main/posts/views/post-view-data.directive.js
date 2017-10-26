@@ -89,19 +89,10 @@ function PostViewDataController(
     var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
 
+    // This is for when you edit a post. Because anything could be changing, we have to
+    // check to see if everything in the post still matches all the filters.
+    // It's too cumbersome to do on the frontend, so we're checking in the API
     $rootScope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
-        function removePostFromList() {
-            $scope.posts.forEach((post, index) => {
-                // args.post is the post being updated/saved and sent from the broadcast
-                if (post.id === args.post.id) {
-                    let nextInLine = $scope.posts[index + 1];
-                    $scope.posts.splice(index, 1);
-                    groupPosts($scope.posts);
-                    $scope.selectedPost.post = nextInLine;
-                    $scope.selectedPostId = nextInLine.id;
-                }
-            });
-        }
         if ($scope.hasFilters()) {
             let query = PostFilters.getQueryParams($scope.filters);
             let postQuery = _.extend({}, query, {
@@ -110,11 +101,43 @@ function PostViewDataController(
 
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 if (postsResponse.count === 0) {
-                    removePostFromList();
+                    removePostFromList(args);
                 }
             });
         }
     });
+
+    // And this is for when you change the post status using the ... button
+    // Because it's just the post status only, we're just checking if it matches
+    // filters on the frontend. This makes it MUCH faster than using the API
+    $rootScope.$on('event:edit:post:status:data:mode:saveSuccess', function (event, args) {
+        if ($scope.hasFilters()) {
+            let matchingStatus = false;
+            $scope.filters.status.forEach((status) => {
+                if (args.post.status === status) {
+                    matchingStatus = true;
+                    return;
+                }
+            });
+
+            if (matchingStatus === false) {
+                removePostFromList(args);
+            }
+        }
+    });
+
+    function removePostFromList(args) {
+        $scope.posts.forEach((post, index) => {
+            // args.post is the post being updated/saved and sent from the broadcast
+            if (post.id === args.post.id) {
+                let nextInLine = $scope.posts[index + 1];
+                $scope.posts.splice(index, 1);
+                groupPosts($scope.posts);
+                $scope.selectedPost.post = nextInLine;
+                $scope.selectedPostId = nextInLine.id;
+            }
+        });
+    }
 
     activate();
     function activate() {
@@ -342,8 +365,7 @@ function PostViewDataController(
             clearSelectedPosts();
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
-        })
-        ;
+        });
     }
 
     function createPostGroups(posts) {
