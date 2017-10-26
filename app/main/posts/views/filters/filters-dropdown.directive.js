@@ -16,6 +16,12 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location) {
     };
 
     function FiltersDropdownLink($scope, $element, $attrs, ngModel) {
+        $scope.canSeeUpdateSavedSearchButton = false;
+
+        $scope.$watch('filtersVar.saved_search', function () {
+            $scope.canSeeUpdateSavedSearchButton = _.isObject($scope.filtersVar.saved_search) &&
+                $scope.filtersVar.saved_search && _.contains($scope.filtersVar.saved_search.allowed_privileges, 'update');
+        });
         PostFilters.reactiveFilters = false;
         // Init an empty saved search
         $scope.savedSearch = {

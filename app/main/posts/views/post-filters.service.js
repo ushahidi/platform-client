@@ -88,7 +88,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             within_km: '1',
             current_stage: [],
             tags: [],
-            saved_search: '',
+            saved_search: {},
             orderby: 'created',
             order: 'desc',
             order_unlocked_on_top: 'true',
