@@ -88,7 +88,7 @@ function (
         }
     };
 
-    $q.all([DataProviderEndpoint.queryFresh().$promise, ConfigEndpoint.get({ id: 'data-provider' }).$promise]).then(function (response) {
+    $q.all([DataProviderEndpoint.queryFresh().$promise, ConfigEndpoint.getFresh({ id: 'data-provider' }).$promise]).then(function (response) {
         $scope.providers = response[0];
         $scope.settings = response[1];
 

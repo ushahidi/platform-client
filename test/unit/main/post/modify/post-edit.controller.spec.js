@@ -5,6 +5,9 @@ describe('Post edit controller', function () {
     var mockFormEndpoint = {
         get: function (parameters, success, error) {
             return success({name: 'test form'});
+        },
+        getFresh: function (parameters, success, error) {
+            return success({name: 'test form'});
         }
     };
     var mockPostEndpoint = {
