@@ -89,10 +89,11 @@ function PostViewDataController(
     var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
 
-    $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
+    $rootScope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
         function removePostFromList() {
             $scope.posts.forEach((post, index) => {
-                if (post.id === $scope.selectedPostId) {
+                // args.post is the post being updated/saved and sent from the broadcast
+                if (post.id === args.post.id) {
                     let nextInLine = $scope.posts[index + 1];
                     $scope.posts.splice(index, 1);
                     groupPosts($scope.posts);
@@ -101,13 +102,10 @@ function PostViewDataController(
                 }
             });
         }
-
         if ($scope.hasFilters()) {
-
             let query = PostFilters.getQueryParams($scope.filters);
-
             let postQuery = _.extend({}, query, {
-                post_id: $scope.selectedPostId
+                post_id: args.post.id
             });
 
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
