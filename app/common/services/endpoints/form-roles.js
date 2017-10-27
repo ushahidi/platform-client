@@ -10,8 +10,9 @@ function (
     var cache;
 
     if (!(cache = CacheFactory.get('formRoleCache'))) {
-        cache = new CacheFactory('formRoleCache');
+        cache = CacheFactory.createCache('formRoleCache');
     }
+    cache.removeExpired();
 
     var FormRoleEndpoint = $resource(Util.apiUrl('/forms/:formId/roles/'), {
         formId: '@formId',

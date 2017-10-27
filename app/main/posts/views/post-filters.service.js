@@ -31,7 +31,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
 
     function activate() {
-        FormEndpoint.queryFresh().$promise.then(function (result) {
+        FormEndpoint.query().$promise.then(function (result) {
             forms = result;
             // adding incoming messages to filter
             forms.push({id: 'none'});

@@ -22,7 +22,7 @@ function CategorySelectDirective(TagEndpoint, _) {
 
         function activate() {
             // Load categories
-            TagEndpoint.queryFresh().$promise.then(function (result) {
+            TagEndpoint.query().$promise.then(function (result) {
                 scope.categories = result;
                 // adding children to tags
                 _.each(scope.categories, function (category) {
