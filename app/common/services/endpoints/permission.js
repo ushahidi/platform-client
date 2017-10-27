@@ -10,8 +10,9 @@ function (
     var cache;
 
     if (!(cache = CacheFactory.get('permissionCache'))) {
-        cache = new CacheFactory('permissionCache');
+        cache = CacheFactory.createCache('permissionCache');
     }
+    cache.removeExpired();
 
     var PermissionEndpoint = $resource(Util.apiUrl('/permissions/:id'), {
             id: '@id'

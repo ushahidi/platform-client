@@ -25,16 +25,22 @@ function PostMetadataService(
         },
         loadUser: function (post) {
             if (post.user && post.user.id) {
-                return UserEndpoint.getFresh({id: post.user.id});
+                return UserEndpoint.get({id: post.user.id});
+            } else {
+                return post.user;
             }
         },
         loadContact: function (post) {
             if (!post.user && post.contact && post.contact.id) {
                 return ContactEndpoint.get(
                     { id: post.contact.id, ignore403: true },
-                    angular.noop,
+                    (resp) => {
+                        console.log(resp);
+                    },
                     angular.noop
                 );
+            } else {
+                return post.contact;
             }
         }
     };

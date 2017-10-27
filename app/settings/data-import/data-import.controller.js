@@ -30,7 +30,7 @@ function (
         file : null
     };
 
-    FormEndpoint.queryFresh().$promise.then(function (response) {
+    FormEndpoint.query().$promise.then(function (response) {
         $scope.forms = response;
     });
 }];

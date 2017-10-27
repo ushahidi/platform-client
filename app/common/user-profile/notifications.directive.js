@@ -45,7 +45,7 @@ module.exports = [
                 };
 
                 var loadContacts = function () {
-                    ContactEndpoint.query({user: 'me'}).$promise.then(function (contacts) {
+                    ContactEndpoint.queryFresh({user: 'me'}).$promise.then(function (contacts) {
                         _.forEach(contacts, function (contact) {
                             // Save the original contact values
                             // and use them to track changes
@@ -76,14 +76,12 @@ module.exports = [
                 };
 
                 var saveContact = function (contact) {
-                    if (contact.id) {
-                        return ContactEndpoint.update(contact).$promise;
-
-                    } else {
+                    if (!contact.id) {
                         // Enable notifications for new contacts by default
                         contact.can_notify = true;
-                        return ContactEndpoint.save(contact).$promise;
                     }
+
+                    return ContactEndpoint.saveCache(contact).$promise;
                 };
 
                 var contactHasChanged = function (contact) {
