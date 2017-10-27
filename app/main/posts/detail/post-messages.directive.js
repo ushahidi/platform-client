@@ -37,6 +37,7 @@ function (
             $scope.itemsPerPage = 5;
             $scope.totalItems = $scope.itemsPerPage;
             $scope.pageChanged = getMessagesForPagination;
+            $scope.showPagination = false;
             $scope.isLoadingMessages = false;
 
             function activate() {
@@ -74,10 +75,11 @@ function (
                             // Format update time for display
                             created = message.updated || message.created;
                             message.displayTime = formatDate(created);
-
-                            $scope.totalItems = response.total_count;
-
                         });
+
+                        $scope.totalItems = response.total_count;
+                        $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
+
                         $scope.isLoadingMessages = false; //hide progress bar
                     });
                 }
