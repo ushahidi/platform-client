@@ -27,8 +27,10 @@ function PostMetadataDirective(
             $scope.timeago = '';
             $scope.hideDateThisWeek = $scope.hideDateThisWeek || false;
 
-            $scope.$watch('post', function (post) {
-                activate();
+            $scope.$watch('post.id', function (postId, oldPostId) {
+                if (postId !== oldPostId) {
+                    activate();
+                }
             });
 
             activate();
