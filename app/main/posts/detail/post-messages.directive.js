@@ -41,12 +41,21 @@ function (
             $scope.isLoadingMessages = false;
 
             function activate() {
+                // Can't activate if we don't have a contact
+                if (!$scope.post.contact || !$scope.post.contact.id) {
+                    return;
+                }
+
                 $scope.messages = []; // init to blank
                 // Initialize
-                ContactEndpoint.get({ id: $scope.post.contact.id })
-                    .$promise.then(function (contact) {
-                        $scope.contact = contact;
-                    });
+                if ($scope.post.contact.contact) {
+                    $scope.contact = $scope.post.contact;
+                } else {
+                    ContactEndpoint.get({ id: $scope.post.contact.id })
+                        .$promise.then(function (contact) {
+                            $scope.contact = contact;
+                        });
+                }
 
                 getMessagesForPagination();
             }
