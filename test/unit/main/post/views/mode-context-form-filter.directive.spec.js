@@ -26,8 +26,8 @@ describe('mode-context-form-filter directive', function () {
         PostSurveyService = _PostSurveyService_;
         PostFilters = _PostFilters_;
         $location = _$location_;
-        spyOn(FormEndpoint, 'queryFresh').and.callThrough();
-        spyOn(TagEndpoint, 'queryFresh').and.callThrough();
+        spyOn(FormEndpoint, 'query').and.callThrough();
+        spyOn(TagEndpoint, 'query').and.callThrough();
         spyOn(PostEndpoint, 'stats').and.callThrough();
         spyOn(PostFilters, 'getQueryParams').and.callThrough();
 
@@ -41,10 +41,10 @@ describe('mode-context-form-filter directive', function () {
     }));
     describe('test directive-functions', function () {
         it('should fetch forms from endpoint', function () {
-            expect(FormEndpoint.queryFresh).toHaveBeenCalled();
+            expect(FormEndpoint.query).toHaveBeenCalled();
         });
         it('should fetch tags from endpoint', function () {
-            expect(TagEndpoint.queryFresh).toHaveBeenCalled();
+            expect(TagEndpoint.query).toHaveBeenCalled();
         });
         it('should fetch queryParams from service', function () {
             expect(PostFilters.getQueryParams).toHaveBeenCalled();
