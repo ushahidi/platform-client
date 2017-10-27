@@ -44,6 +44,9 @@ function CategorySelectDirective(TagEndpoint, _) {
                         return category;
                     }
                 });
+                if (!scope.selectedCategories || scope.selectedCategories.length === 0) {
+                    scope.selectedCategories = _.pluck(scope.categories, 'id');
+                }
             });
 
             scope.$watch('selectedCategories', saveValueToView, true);

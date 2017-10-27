@@ -5,6 +5,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
+    var tags = [];
     var filterMode = 'all';
     var entityId = null;
     // @todo take this out of the service
@@ -31,8 +32,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
 
     function activate() {
-        FormEndpoint.query().$promise.then(function (result) {
-            forms = result;
+        return $q.all([TagEndpoint.query().$promise, FormEndpoint.query().$promise]).then(function (results) {
+            tags = _.pluck(results[0], 'id');
+            forms = results[1];
             // adding incoming messages to filter
             forms.push({id: 'none'});
             filterState.form = filterState.form || [];
@@ -87,7 +89,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             has_location: 'all',
             within_km: '1',
             current_stage: [],
-            tags: [],
+            tags: tags,
             saved_search: '',
             orderby: 'created',
             order: 'desc',
