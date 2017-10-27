@@ -10,7 +10,27 @@ module.exports = [function () {
                 }
             }};
         },
+        queryFresh: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({'results': [{
+                            contact: 'test@ushahidi.com',
+                            id: 1
+                        }]});
+                }
+            }};
+        },
         get: function () {
+            return {$promise: {
+                then: function (successCallback) {
+                    successCallback({
+                        contact: 'test@ushahidi.com',
+                        id: 1
+                    });
+                }
+            }};
+        },
+        getFresh: function () {
             return {$promise: {
                 then: function (successCallback) {
                     successCallback({
@@ -28,6 +48,11 @@ module.exports = [function () {
             }};
         },
         save: function (contact) {
+            return function (successCallback, failCallback) {
+                contact.contact === 'pass' ? successCallback({id: 1}) : failCallback('error');
+            };
+        },
+        saveCache: function (contact) {
             return function (successCallback, failCallback) {
                 contact.contact === 'pass' ? successCallback({id: 1}) : failCallback('error');
             };
