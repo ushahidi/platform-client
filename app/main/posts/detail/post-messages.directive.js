@@ -28,8 +28,10 @@ function (
         template: require('./post-messages.html'),
         link: function ($scope) {
 
-            $scope.$watch('post', function (post) {
-                activate();
+            $scope.$watch('post.contact.id', function (contactId, oldContactId) {
+                if (contactId !== oldContactId) {
+                    activate();
+                }
             });
 
             // Pagination
@@ -37,15 +39,25 @@ function (
             $scope.itemsPerPage = 5;
             $scope.totalItems = $scope.itemsPerPage;
             $scope.pageChanged = getMessagesForPagination;
+            $scope.showPagination = false;
             $scope.isLoadingMessages = false;
 
             function activate() {
+                // Can't activate if we don't have a contact
+                if (!$scope.post.contact || !$scope.post.contact.id) {
+                    return;
+                }
+
                 $scope.messages = []; // init to blank
                 // Initialize
-                ContactEndpoint.get({ id: $scope.post.contact.id })
-                    .$promise.then(function (contact) {
-                        $scope.contact = contact;
-                    });
+                if ($scope.post.contact.contact) {
+                    $scope.contact = $scope.post.contact;
+                } else {
+                    ContactEndpoint.get({ id: $scope.post.contact.id })
+                        .$promise.then(function (contact) {
+                            $scope.contact = contact;
+                        });
+                }
 
                 getMessagesForPagination();
             }
@@ -74,10 +86,11 @@ function (
                             // Format update time for display
                             created = message.updated || message.created;
                             message.displayTime = formatDate(created);
-
-                            $scope.totalItems = response.total_count;
-
                         });
+
+                        $scope.totalItems = response.total_count;
+                        $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
+
                         $scope.isLoadingMessages = false; //hide progress bar
                     });
                 }
