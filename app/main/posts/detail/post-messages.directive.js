@@ -28,8 +28,10 @@ function (
         template: require('./post-messages.html'),
         link: function ($scope) {
 
-            $scope.$watch('post', function (post) {
-                activate();
+            $scope.$watch('post.contact.id', function (contactId, oldContactId) {
+                if (contactId !== oldContactId) {
+                    activate();
+                }
             });
 
             // Pagination
