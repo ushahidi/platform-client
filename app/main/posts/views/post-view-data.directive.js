@@ -265,18 +265,21 @@ function PostViewDataController(
     }
 
     function showPost(post) {
-
         return confirmEditingExit().then(function () {
-            var currentWidth = $window.innerWidth;
-            if (currentWidth > 1023) {
-                $location.path('/posts/' + post.id, false);
-                $scope.selectedPost.post = post;
-                $scope.selectedPostId = post.id;
+            if ($scope.selectedPost.post && $scope.selectedPost.post.id === post.id) {
+                $scope.selectedPost.post = null;
+                $scope.selectedPostId = null;
             } else {
-                goToPost(post);
+                var currentWidth = $window.innerWidth;
+                if (currentWidth > 1023) {
+                    $location.path('/posts/' + post.id, false);
+                    $scope.selectedPost.post = post;
+                    $scope.selectedPostId = post.id;
+                } else {
+                    goToPost(post);
+                }
             }
         }, function () {
-
         });
     }
 
