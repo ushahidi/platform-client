@@ -102,6 +102,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function getQueryParams(filters) {
+        var defaults = getDefaults();
         var query = _.omit(
             filters,
             function (value, key, object) {
@@ -119,6 +120,14 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (_.isDate(value)) {
                     return false;
                 }
+
+                // Is an array with all the same elements? (order doesn't matter)
+                if ((key === 'tags' || key === 'form') && _.isArray(defaults[key]) &&
+                    _.difference(value, defaults[key]).length === 0 &&
+                    _.difference(defaults[key], value).length === 0) {
+                    return true;
+                }
+
                 // Is it an empty object or array?
                 if (_.isObject(value) || _.isArray(value)) {
                     return _.isEmpty(value);
@@ -134,7 +143,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         } else {
             delete query.within_km;
         }
-
         if (filterMode === 'collection') {
             query.set = [entityId].concat(query.set);
         }
