@@ -17,6 +17,11 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
     function FiltersDropdownLink($scope, $element, $attrs, ngModel) {
         $scope.canUpdateSavedSearch = false;
         PostFilters.reactiveFilters = false;
+        $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
+            if (oldValue !== newValue) {
+                setSavedSearchUpdateStatus();
+            }
+        });
         // Init an empty saved search
         $scope.savedSearch = {
             view : 'map',
@@ -24,7 +29,7 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         };
 
         // Check if we can edit
-        function activate() {
+        function setSavedSearchUpdateStatus() {
             var savedSearchId = PostFilters.getModeId();
             if (savedSearchId) {
                 SavedSearchEndpoint.get({id: savedSearchId}, function (savedSearch) {
@@ -32,7 +37,6 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
                 });
             }
         }
-        activate();
 
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = true;
