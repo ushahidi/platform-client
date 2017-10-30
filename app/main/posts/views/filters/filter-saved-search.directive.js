@@ -17,7 +17,13 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
         scope.searchesLength = 0;
         scope.loading = false;
         scope.$on('savedSearch:update', loadSavedSearches);
-
+        scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
+            if (typeof (newValue) === 'undefined') {
+                scope.selectedSavedSearch = null;
+            } else if (oldValue !== newValue && scope.searches.length > 0) {
+                scope.selectedSavedSearch =  scope.searches[newValue];
+            }
+        });
         scope.openSavedSearchListEditorModal = function () {
             ModalService.openTemplate('<saved-search-list-editor-modal searches="searches"></saved-search-list-editor-modal>', 'set.delete_saved_searches', 'star', scope, false, false);
         };
@@ -32,6 +38,8 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
             if (selectedSavedSearch && selectedSavedSearch.hasOwnProperty('filter')) {
                 PostFilters.setFilters(selectedSavedSearch.filter);
                 PostFilters.setMode('savedsearch', selectedSavedSearch.id);
+            } else if (selectedSavedSearch === null) {
+                PostFilters.setMode('all');
             }
             ngModel.$setViewValue(selectedSavedSearch);
         }
