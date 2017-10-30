@@ -54,7 +54,9 @@ function CategorySelectDirective(TagEndpoint, _) {
         }
         function renderModelValue() {
             // Update selectCategories w/o breaking references used by checklist-model
-            Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
+            if (ngModel.$viewValue) {
+                Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
+            }
         }
 
         function saveValueToView(selectedCategories) {
