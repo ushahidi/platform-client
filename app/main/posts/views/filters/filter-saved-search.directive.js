@@ -31,6 +31,8 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
         function activate() {
             if (ngModel.$viewValue) {
                 scope.selectedSavedSearch = scope.searches[ngModel.$viewValue];
+            } else if (PostFilters.getModeId()) {
+                scope.selectedSavedSearch = scope.searches[PostFilters.getModeId()];
             }
             scope.$watch('selectedSavedSearch', saveValueToView, true);
         }
@@ -38,7 +40,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
             if (selectedSavedSearch && selectedSavedSearch.hasOwnProperty('filter')) {
                 PostFilters.setFilters(selectedSavedSearch.filter);
                 PostFilters.setMode('savedsearch', selectedSavedSearch.id);
-            } else if (selectedSavedSearch === null) {
+            } else if (selectedSavedSearch === null && PostFilters.getModeId() !== null) {
                 PostFilters.setMode('all');
             }
             ngModel.$setViewValue(selectedSavedSearch);
