@@ -60,16 +60,7 @@ function CategorySelectDirective(TagEndpoint, _) {
         }
 
         function saveValueToView(selectedCategories) {
-            var selected = [];
-            // removing children that has no parent selected
-            _.each(scope.categories, function (category) {
-                        if (category.parent && _.contains(selectedCategories, category.id) && _.contains(selectedCategories, category.parent.id)) {
-                            selected.push(category.id);
-                        } else if (category.parent_id === null && _.contains(selectedCategories, category.id)) {
-                            selected.push(category.id);
-                        }
-                    });
-            ngModel.$setViewValue(angular.copy(selected));
+            ngModel.$setViewValue(angular.copy(selectedCategories));
         }
     }
 }
