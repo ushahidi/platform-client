@@ -51,6 +51,7 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
             $scope.filtersVar = PostFilters.clearFilters();
             $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
             PostFilters.reactiveFilters = true;
+            $scope.canUpdateSavedSearch = false;
 
         };
         $scope.enableQuery = function () {
