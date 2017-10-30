@@ -14,8 +14,8 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         link: FiltersDropdownLink,
         template: require('./filters-dropdown.html')
     };
-
     function FiltersDropdownLink($scope, $element, $attrs, ngModel) {
+        $scope.canUpdateSavedSearch = false;
         PostFilters.reactiveFilters = false;
         // Init an empty saved search
         $scope.savedSearch = {
@@ -24,9 +24,16 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         };
 
         // Check if we can edit
-        $scope.canEdit = function (savedSearch) {
-            return _.contains(savedSearch.allowed_privileges, 'update');
-        };
+        function activate() {
+            var savedSearchId = PostFilters.getModeId();
+            if (savedSearchId) {
+                SavedSearchEndpoint.get({id: savedSearchId}, function (savedSearch) {
+                    $scope.canUpdateSavedSearch = _.contains(savedSearch.allowed_privileges, 'update');
+                });
+            }
+        }
+        activate();
+
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = true;
             $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
