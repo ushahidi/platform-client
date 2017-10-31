@@ -36,7 +36,10 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
             return users[value] ? users[value].realname : value;
         },
         saved_search: function (value) {
-            return savedSearches[value] ? savedSearches[value].name : value;
+            if (value) {
+                return savedSearches[value.id].name;
+            }
+            return '';
         },
         center_point : function (value) {
             return $translate.instant('global_filter.filter_tabs.location_value', {
