@@ -25,7 +25,7 @@ function ($timeout, PostFilters) {
 
             $scope.enableQuery = function () {
                 PostFilters.qEnabled = true;
-                PostFilters.reactiveFilters = 'enabled';
+                PostFilters.reactiveFilters = true;
             };
 
             $scope.removeQueryFilter = function () {
