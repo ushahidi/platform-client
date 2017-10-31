@@ -157,7 +157,7 @@ function PostViewDataController(
         $scope.$watch(function () {
             return PostFilters.reactiveFilters;
         }, function () {
-            if (PostFilters.reactiveFilters === 'enabled') {
+            if (PostFilters.reactiveFilters === true) {
                 $scope.filters.reactToFilters = $scope.filters.reactToFilters ? !$scope.filters.reactToFilters : true;
             }
         }, true);
@@ -165,10 +165,10 @@ function PostViewDataController(
         $scope.$watch(function () {
             return $scope.filters;
         }, function (newValue, oldValue) {
-            if (PostFilters.reactiveFilters === 'enabled' && (newValue !== oldValue)) {
+            if (PostFilters.reactiveFilters === true && (newValue !== oldValue)) {
                 clearPosts = true;
                 getPosts(false, false);
-                PostFilters.reactiveFilters = 'disabled';
+                PostFilters.reactiveFilters = false;
             }
         }, true);
         $scope.$watch('selectedPosts.length', function () {
@@ -265,18 +265,21 @@ function PostViewDataController(
     }
 
     function showPost(post) {
-
         return confirmEditingExit().then(function () {
-            var currentWidth = $window.innerWidth;
-            if (currentWidth > 1023) {
-                $location.path('/posts/' + post.id, false);
-                $scope.selectedPost.post = post;
-                $scope.selectedPostId = post.id;
+            if ($scope.selectedPost.post && $scope.selectedPost.post.id === post.id) {
+                $scope.selectedPost.post = null;
+                $scope.selectedPostId = null;
             } else {
-                goToPost(post);
+                var currentWidth = $window.innerWidth;
+                if (currentWidth > 1023) {
+                    $location.path('/posts/' + post.id, false);
+                    $scope.selectedPost.post = post;
+                    $scope.selectedPostId = post.id;
+                } else {
+                    goToPost(post);
+                }
             }
         }, function () {
-
         });
     }
 

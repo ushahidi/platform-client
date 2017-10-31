@@ -32,7 +32,9 @@ describe('set savedsearches controller', function () {
         $controller('savedsearchesController', {
             $scope: $scope,
             savedSearch: {
-                allowed_privileges: 'update'
+                allowed_privileges: 'update',
+                id: 1,
+                filter: {}
             },
             $routeParams: {view: 'list'}
         });

@@ -35,7 +35,7 @@ function PostMetadataService(
                 return ContactEndpoint.get(
                     { id: post.contact.id, ignore403: true },
                     (resp) => {
-                        console.log(resp);
+                        //what should we do here??? console.log(resp);
                     },
                     angular.noop
                 );

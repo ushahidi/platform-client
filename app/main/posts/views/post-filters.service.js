@@ -5,6 +5,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
+    var tags = [];
     var filterMode = 'all';
     var entityId = null;
     // @todo take this out of the service
@@ -25,14 +26,15 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getMode: getMode,
         getModeId: getModeId,
         countFilters: countFilters,
-        reactiveFilters: 'enabled',
+        reactiveFilters: true,
         qEnabled: false
     };
 
 
     function activate() {
-        FormEndpoint.query().$promise.then(function (result) {
-            forms = result;
+        return $q.all([TagEndpoint.query().$promise, FormEndpoint.query().$promise]).then(function (results) {
+            tags = _.pluck(results[0], 'id');
+            forms = results[1];
             // adding incoming messages to filter
             forms.push({id: 'none'});
             filterState.form = filterState.form || [];
@@ -72,7 +74,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
          */
         if (filterKey === 'q') {
             this.qEnabled = true;
-            this.reactiveFilters = 'enabled';
+            this.reactiveFilters = true;
         }
     }
 
@@ -87,7 +89,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             has_location: 'all',
             within_km: '1',
             current_stage: [],
-            tags: [],
+            tags: tags,
             saved_search: '',
             orderby: 'created',
             order: 'desc',
@@ -100,14 +102,32 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function getQueryParams(filters) {
+        var defaults = getDefaults();
         var query = _.omit(
             filters,
             function (value, key, object) {
+                if (key === 'saved_search') {
+                    return true;
+                }
+                if (key === 'reactiveFilters') {
+                    return true;
+                }
+                if (key === 'qEnabled') {
+                    return true;
+                }
                 // Is value empty?
                 // Is it a date?
                 if (_.isDate(value)) {
                     return false;
                 }
+
+                // Is an array with all the same elements? (order doesn't matter)
+                if ((key === 'tags' || key === 'form') && _.isArray(defaults[key]) &&
+                    _.difference(value, defaults[key]).length === 0 &&
+                    _.difference(defaults[key], value).length === 0) {
+                    return true;
+                }
+
                 // Is it an empty object or array?
                 if (_.isObject(value) || _.isArray(value)) {
                     return _.isEmpty(value);
@@ -123,7 +143,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         } else {
             delete query.within_km;
         }
-
         if (filterMode === 'collection') {
             query.set = [entityId].concat(query.set);
         }
@@ -142,6 +161,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             filters,
             function (value, key, object) {
                 if (defaults[key] === value) {
+                    return true;
+                }
+                // we don't want this showing up in bug icons
+                if (key === 'saved_search') {
                     return true;
                 }
                 // Ignore difference in within_km
@@ -174,6 +197,16 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return _.omit(
             filters,
             function (value, key, object) {
+                if (key === 'reactiveFilters') {
+                    return true;
+                }
+                if (key === 'qEnabled') {
+                    return true;
+                }
+                // we don't want this showing up in bug icons
+                if (key === 'saved_search') {
+                    return true;
+                }
                 // Ignore difference in within_km
                 if (key === 'within_km') {
                     return true;
