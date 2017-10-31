@@ -1174,7 +1174,8 @@
             "delete_savedsearch_success": "Saved search deleted successfully.",
             "delete_savedsearch_plural_success": "Saved searches deleted successfully.",
             "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?",
-            "savedsearch_updated": "{{savedsearch}} was updated"
+            "savedsearch_updated": "{{savedsearch}} was updated",
+            "savedsearch_saved": "{{savedsearch}} was saved"
         },
         "passwordreset" : {
             "failed" : "Password reset failed",
