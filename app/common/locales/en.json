@@ -41,6 +41,7 @@
         "save_and_close" : "Save &amp; close",
         "add_and_close" : "Add &amp; close",
         "update_and_close" : "Update &amp; close",
+        "updating" : "Updating",
         "saving" : "Saving",
         "settings": "Settings",
         "share": "Share",
@@ -1172,7 +1173,8 @@
         "savedsearch" : {
             "delete_savedsearch_success": "Saved search deleted successfully.",
             "delete_savedsearch_plural_success": "Saved searches deleted successfully.",
-            "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?"
+            "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?",
+            "savedsearch_updated": "{{savedsearch}} was updated"
         },
         "passwordreset" : {
             "failed" : "Password reset failed",

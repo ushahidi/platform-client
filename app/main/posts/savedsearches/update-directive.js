@@ -31,12 +31,15 @@ function (
             $scope.saveSearch = function () {
                 // Copy the current filters into our search..
                 $scope.savedSearch.filter = PostFilters.getQueryParams($scope.filters);
-
+                $scope.isSaving = true;
                 SavedSearchEndpoint.update($scope.savedSearch)
                 .$promise
                 .then(function (savedSearch) {
-                    $rootScope.$broadcast('event:savedSearch:update');
+                    $scope.isSaving = false;
+                    Notify.notify('notify.savedsearch.savedsearch_updated', {savedsearch: savedSearch.name});
+                    $scope.resetSearch();
                 }, function (errorResponse) {
+                    $scope.isSaving = false;
                     Notify.apiErrors(errorResponse);
                 });
             };
