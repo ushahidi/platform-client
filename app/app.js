@@ -1,5 +1,5 @@
 require('angular');
-require('angular-route');
+require('@uirouter/angularjs');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
@@ -65,7 +65,7 @@ angular.module('app',
     [
         'checklist-model',
         'monospaced.elastic',
-        'ngRoute',
+        'ui.router',
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',
@@ -126,12 +126,11 @@ angular.module('app',
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
-    }])
+    }]);
+/**
+ * @uirouter-refactor
+ *
     .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
-        /**
-         * Shamelessly copied from
-         * https://www.consolelog.io/angularjs-change-path-without-reloading
-         */
         var original = $location.path;
         $location.path = function (path, reload) {
             if (reload === false) {
@@ -146,4 +145,4 @@ angular.module('app',
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     }]);
-
+**/

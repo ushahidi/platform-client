@@ -21,4 +21,4 @@ angular.module('ushahidi.settings', [])
 .directive('customWebhooks', require('./webhooks/webhooks.directive.js'))
 .directive('customWebhooksEditor', require('./webhooks/editor.directive.js'))
 
-.config(require('./settings.routes.js'));
+//.config(require('./settings.routes.js'));

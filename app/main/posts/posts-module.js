@@ -98,7 +98,7 @@ angular.module('ushahidi.posts', [])
 .directive('collectionToggleLink', require('./common/collection-toggle/collection-toggle-link.js'))
 
 
-.config(require('./posts-routes.js'))
+//.config(require('./posts-routes.js'))
 
 .run(['Leaflet', function (L) {
     L.Icon.Default.imagePath = '/img';

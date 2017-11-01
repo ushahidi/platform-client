@@ -1,25 +1,25 @@
 module.exports = [
-    '$routeProvider',
+    '$stateProvider',
 function (
-    $routeProvider
+    $stateProvider
 ) {
 
-    $routeProvider
-    .when('/', {
-        resolveRedirectTo: ['PostFilters', (PostFilters) => {
-            let mode = PostFilters.getMode();
-            let entityId = PostFilters.getModeId();
-
-            if (mode === 'collection') {
-                return '/collections/' + entityId;
-            } else if (mode === 'savedsearch') {
-                return '/savedsearches/' + entityId;
-            } else {
-                return '/views/map';
-            }
-        }]
-    })
-    .when('/views/list', { redirectTo: '/views/data' })
+    $stateProvider
+    //@uirouter-refactor add this .when('/', {
+    //     resolveRedirectTo: ['PostFilters', (PostFilters) => {
+    //         let mode = PostFilters.getMode();
+    //         let entityId = PostFilters.getModeId();
+    //
+    //         if (mode === 'collection') {
+    //             return '/collections/' + entityId;
+    //         } else if (mode === 'savedsearch') {
+    //             return '/savedsearches/' + entityId;
+    //         } else {
+    //             return '/views/map';
+    //         }
+    //     }]
+    // })
+    // @uirouter-refactor add this  .when('/views/list', { redirectTo: '/views/data' })
     .when('/views/:view?', {
         controller: require('./views/post-views.controller.js'),
         template: require('./views/main.html')

@@ -1,13 +1,14 @@
 module.exports = [
-    '$routeProvider',
+    '$stateProvider',
 function (
-    $routeProvider
+    $stateProvider
 ) {
 
-    $routeProvider
-    .when('/activity', {
+    $stateProvider
+    .state({
+        name: 'activity',
+        url: '/activity',
         controller: require('./activity.controller.js'),
         template: require('./activity.html')
     });
-
 }];
