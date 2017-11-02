@@ -33,7 +33,7 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             // Save token expires time
             Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
 
-            Session.setSessionDataEntry('grantType', 'client');
+            Session.setSessionDataEntry('grantType', 'client_credentials');
             // Add Authorization header
             config.headers.Authorization = 'Bearer ' + accessToken;
             deferred.resolve(config);
