@@ -1,16 +1,16 @@
 module.exports = [
     '$translate',
     '$location',
-    '$routeParams',
-    '$route',
+    '$stateParams',
+    '$state',
     'RoleEndpoint',
     'PermissionEndpoint',
     'Notify',
 function (
     $translate,
     $location,
-    $routeParams,
-    $route,
+    $stateParams,
+    $state,
     RoleEndpoint,
     PermissionEndpoint,
     Notify
@@ -22,7 +22,7 @@ function (
             $scope.save = $translate.instant('app.save');
             $scope.saving = $translate.instant('app.saving');
             $scope.saving_role = false;
-            RoleEndpoint.getFresh({id: $routeParams.id}).$promise.then(function (role) {
+            RoleEndpoint.getFresh({id: $stateParams.id}).$promise.then(function (role) {
                 $scope.role = role;
 
                 $scope.title = $scope.role.id ? 'role.edit_role' : 'role.add_role';

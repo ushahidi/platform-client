@@ -5,10 +5,10 @@ PostActionsDirective.$inject = [
     'PostEndpoint',
     'Notify',
     '$location',
-    '$route',
+    '$state',
     'PostActionsService',
     'PostLockService',
-    '$routeParams',
+    '$stateParams',
     '_'
 ];
 function PostActionsDirective(
@@ -16,10 +16,10 @@ function PostActionsDirective(
     PostEndpoint,
     Notify,
     $location,
-    $route,
+    $state,
     PostActionsService,
     PostLockService,
-    $routeParams,
+    $stateParams,
     _
 ) {
     return {
@@ -55,7 +55,7 @@ function PostActionsDirective(
                     // Redirect to list
                     $location.path('/views/data');
                 } else {
-                    $route.reload();
+                    $state.go($state.$current, null, { reload: true }); // in favor of $route.reload();
                 }
             });
         }
@@ -71,7 +71,7 @@ function PostActionsDirective(
                 return;
             }
 
-            if ($routeParams.view !== 'data' && $location.path().indexOf('data') === -1) {
+            if ($stateParams.view !== 'data' && $location.path().indexOf('data') === -1) {
                 $location.path('/posts/' + postId + '/edit');
             } else if ($scope.editMode.editing) {
                 // At this point we are not certain we will switch to this Post so we back it up

@@ -1,12 +1,12 @@
 module.exports = [
     '$scope',
     '$rootScope',
-    '$routeParams',
+    '$stateParams',
 function (
     $scope,
     $rootScope,
-    $routeParams
+    $stateParams
 ) {
-    $scope.surveyId = $routeParams.id;
-    $scope.actionType = $routeParams.action;
+    $scope.surveyId = $stateParams.id;
+    $scope.actionType = $stateParams.action;
 }];

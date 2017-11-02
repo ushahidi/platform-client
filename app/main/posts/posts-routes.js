@@ -20,15 +20,25 @@ function (
     //     }]
     // })
     // @uirouter-refactor add this  .when('/views/list', { redirectTo: '/views/data' })
-    .when('/views/:view?', {
-        controller: require('./views/post-views.controller.js'),
-        template: require('./views/main.html')
-    })
-    .when('/map/noui', {
-        controller: require('./views/post-view-noui.controller.js'),
-        template: require('./views/post-view-noui.html')
-    })
-    .when('/collections/:id/list', { redirectTo: '/collections/:id/data' })
+    .state(
+        {
+            name: 'view.selected',
+            url: '/views/:view?',
+            controller: require('./views/post-views.controller.js'),
+            template: require('./views/main.html')
+        }
+    )
+    .state(
+        {
+            name: 'view.map.noui',
+            url: '/map/noui',
+            controller: require('./views/post-view-noui.controller.js'),
+            template: require('./views/post-view-noui.html')
+        }
+    )
+    /** @uirouter-refactor add this back to state
+     *  .when('/collections/:id/list', { redirectTo: '/collections/:id/data' })
+    **
     .when('/collections/:id/:view?', {
         controller: require('./collections/collections-controller.js'),
         template: require('./collections/collections.html'),
@@ -40,6 +50,7 @@ function (
         }
     })
     .when('/savedsearches/:id/list', { redirectTo: '/savedsearches/:id/data' })
+
     .when('/savedsearches/:id/:view?', {
         controller: require('./savedsearches/savedsearches-controller.js'),
         template: require('./savedsearches/savedsearches.html'),
@@ -65,5 +76,5 @@ function (
     .when('/posts/:id/edit', {
         controller: require('./modify/post-edit.controller.js'),
         template: require('./modify/main.html')
-    });
+    }); **/
 }];

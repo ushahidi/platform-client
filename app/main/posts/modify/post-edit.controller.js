@@ -3,7 +3,7 @@ module.exports = [
     '$translate',
     '$location',
     '$controller',
-    '$routeParams',
+    '$stateParams',
     'FormEndpoint',
     'PostEndpoint',
 function (
@@ -11,7 +11,7 @@ function (
     $translate,
     $location,
     $controller,
-    $routeParams,
+    $stateParams,
     FormEndpoint,
     PostEndpoint
 ) {
@@ -21,7 +21,7 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    PostEndpoint.get({ id: $routeParams.id }).$promise.then(function (post) {
+    PostEndpoint.get({ id: $stateParams.id }).$promise.then(function (post) {
         // Redirect to view if no edit permissions
         if (post.allowed_privileges.indexOf('update') === -1) {
             $location.url('/posts/' + post.id);

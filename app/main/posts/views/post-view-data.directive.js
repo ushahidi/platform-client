@@ -31,7 +31,7 @@ PostViewDataController.$inject = [
 '$location',
 '$anchorScroll',
 'Notify',
-'$routeParams',
+'$stateParams',
 '$window'
 ];
 
@@ -51,7 +51,7 @@ function PostViewDataController(
     $location,
     $anchorScroll,
     Notify,
-    $routeParams,
+    $stateParams,
     $window
 ) {
     $scope.currentPage = 1;

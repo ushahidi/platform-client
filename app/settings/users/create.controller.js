@@ -3,7 +3,7 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
-    '$route',
+    '$state',
     'UserEndpoint',
     'Notify',
     '_',
@@ -13,7 +13,7 @@ function (
     $rootScope,
     $translate,
     $location,
-    $route,
+    $state,
     UserEndpoint,
     Notify,
     _,
@@ -45,7 +45,8 @@ function (
                 $scope.saving_user = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
-                addAnother ? $route.reload() : $location.path(whereToNext);
+                // in favor of $route.reload();
+                addAnother ? $state.go($state.$current, null, { reload: true }) : $location.path(whereToNext);
             }
         }, function (errorResponse) { // error
             var validationErrors = [],

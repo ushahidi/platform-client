@@ -15,8 +15,8 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$routeParams', '$log'];
-function FilterPostsController($scope, $timeout, ModalService, PostFilters, $routeParams, $log) {
+FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$stateParams', '$log'];
+function FilterPostsController($scope, $timeout, ModalService, PostFilters, $stateParams, $log) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;

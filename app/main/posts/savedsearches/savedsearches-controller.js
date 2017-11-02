@@ -1,7 +1,7 @@
 module.exports = [
     '$scope',
     '$translate',
-    '$routeParams',
+    '$stateParams',
     '_',
     'PostFilters',
     'savedSearch',
@@ -10,7 +10,7 @@ module.exports = [
     function (
         $scope,
         $translate,
-        $routeParams,
+        $stateParams,
         _,
         PostFilters,
         savedSearch,
@@ -20,7 +20,7 @@ module.exports = [
         var viewLayouts = {'data': 'd', 'list': 'a', 'map': 'a'};
         // Set view based on route or set view
         $scope.currentView = function () {
-            return $routeParams.view || savedSearch.view;
+            return $stateParams.view || savedSearch.view;
         };
         $scope.layout = viewLayouts[$scope.currentView()];
 

@@ -25,7 +25,7 @@ PostDataEditorController.$inject = [
     '$q',
     '$filter',
     '$location',
-    '$routeParams',
+    '$stateParams',
     '$translate',
     '$timeout',
     'moment',
@@ -51,7 +51,7 @@ function PostDataEditorController(
     $q,
     $filter,
     $location,
-    $routeParams,
+    $stateParams,
     $translate,
     $timeout,
     moment,
@@ -156,7 +156,7 @@ function PostDataEditorController(
         }
         var locationMatch = url.match(/\/posts\/[0-9]+(\/|$)/);
         var locationIsPost =  locationMatch ? locationMatch.length > 0 : false;
-        var movingToDataPost = ($routeParams.view === 'data' && locationIsPost);
+        var movingToDataPost = ($stateParams.view === 'data' && locationIsPost);
 
         if (url &&  !(movingToDataPost)) {
             $location.path(url.replace($location.$$absUrl.replace($location.$$url, ''), ''));
