@@ -13,6 +13,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     activate();
 
     return {
+        resetDefaults: resetDefaults,
         getDefaults: getDefaults,
         getQueryParams: getQueryParams,
         getFilters: getFilters,
@@ -30,6 +31,14 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         qEnabled: false
     };
 
+    /**
+     * function to deal with the fact that logout and login don't really reset the defaults.
+     */
+    function resetDefaults() {
+        return activate().then(function () {
+            clearFilters();
+        });
+    }
 
     function activate() {
         return $q.all([TagEndpoint.query().$promise, FormEndpoint.query().$promise]).then(function (results) {

@@ -1,6 +1,7 @@
 describe('global event handlers', function () {
 
-    var mockedSessionData,
+    var mockedPostFiltersService,
+        mockedSessionData,
         mockedAuthenticationData,
         mockedAuthenticationService,
         mockTOS,
@@ -11,9 +12,16 @@ describe('global event handlers', function () {
         };
 
     beforeEach(function () {
-
         var testApp = makeTestApp();
-
+        mockedPostFiltersService = {
+            resetDefaults: function () {
+                return {
+                    then: function (successCallback, failCallback) {
+                        return {};
+                    }
+                };
+            }
+        };
         var mockedSessionService =
         {
             getSessionData: function () {
@@ -53,7 +61,9 @@ describe('global event handlers', function () {
         };
 
         spyOn(mockTOS, 'getTosEntry').and.callThrough();
-
+        testApp.service('PostFilters', function () {
+            return mockedPostFiltersService;
+        })
         testApp.service('Session', function () {
             return mockedSessionService;
         })
@@ -144,7 +154,6 @@ describe('global event handlers', function () {
                         beforeEach(function () {
                             $rootScope.$broadcast('event:authentication:logout:succeeded');
                         });
-
                         it('should set $rootScope.currentUser to null', function () {
                             expect($rootScope.currentUser).toEqual(null);
                         });
