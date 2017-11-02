@@ -11,7 +11,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
         if (Authentication.getLoginStatus()) {
             doLogin(false, true);
         } else {
-            Authentication.logout();
+            doLogout(false);
         }
     }
 
