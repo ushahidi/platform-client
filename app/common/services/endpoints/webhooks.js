@@ -10,8 +10,9 @@ function (
     var cache;
 
     if (!(cache = CacheFactory.get('webhookCache'))) {
-        cache = new CacheFactory('webhookCache');
+        cache = CacheFactory.createCache('webhookCache');
     }
+    cache.removeExpired();
 
     var WebhookEndpoint = $resource(Util.apiUrl('/webhooks/:id'), {
             id: '@id'

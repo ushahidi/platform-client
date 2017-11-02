@@ -9,7 +9,10 @@ function PostDataEditor() {
             postContainer: '=',
             attributesToIgnore: '=',
             postMode: '=',
-            editMode: '='
+            editMode: '=',
+            isLoading: '=',
+            savingPost: '=',
+            parentForm: '='
         },
         template: require('./post-data-editor.html'),
         controller: PostDataEditorController
@@ -22,6 +25,7 @@ PostDataEditorController.$inject = [
     '$q',
     '$filter',
     '$location',
+    '$routeParams',
     '$translate',
     '$timeout',
     'moment',
@@ -47,6 +51,7 @@ function PostDataEditorController(
     $q,
     $filter,
     $location,
+    $routeParams,
     $translate,
     $timeout,
     moment,
@@ -65,10 +70,10 @@ function PostDataEditorController(
     PostActionsService,
     MediaEditService
   ) {
+
     // Setup initial stages container
-    $scope.post = angular.copy($scope.postContainer.post);
     $scope.everyone = $filter('translate')('post.modify.everyone');
-    $scope.isEdit = !!$scope.post.id;
+
     $scope.validationErrors = [];
     $scope.visibleStage = 1;
     $scope.enableTitle = true;
@@ -90,31 +95,39 @@ function PostDataEditorController(
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
 
-    $rootScope.$on('event:edit:post:data:mode:save', function () {
+    // Need state management
+    $scope.$on('event:edit:post:reactivate', function () {
+        activate();
+    });
+
+    $scope.$on('event:edit:post:data:mode:save', function () {
         $scope.savePost();
     });
 
-    $rootScope.$on('event:edit:leave:form', function () {
-        if ($scope.postForm.$dirty) {
+    $scope.$on('event:edit:leave:form', function () {
+        if ($scope.parentForm.form && $scope.parentForm.form.$dirty) {
             $scope.leavePost();
         } else {
             $scope.cancel();
         }
     });
 
-    $scope.$on('$locationChangeStart', function (e, next) {
-        e.preventDefault();
-        $scope.leavePost(next);
+    var $locationChangeStartHandler = $scope.$on('$locationChangeStart', function (e, next) {
+        $scope.leavePost(next, e);
     });
-
     activate();
 
     function activate() {
+        $scope.post = angular.copy($scope.postContainer.post);
+        //$scope.editMode.editing = true;
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
+            $scope.isLoading.state = true;
             FormEndpoint.queryFresh().$promise.then(function (results) {
                 $scope.forms = results;
+                $scope.isLoading.state = false;
+
             });
         }
 
@@ -127,11 +140,37 @@ function PostDataEditorController(
         }
     }
 
+    /**
+     * redirecting if user is leaving the page, but only changing the URL and not the actual page if the user
+     * is navigation between posts.
+     * @FIXME This is a very fragile and not an ideal way to handle it. But since we are faking URLs we can't rely only on
+     * routePrams or only on the location, I think, so we are going to use this for the moment
+     */
+    function doChangePage(url) {
+
+        leaveEditMode();
+        signalLeaveComplete();
+
+        if (!url) {
+            return;
+        }
+        var locationMatch = url.match(/\/posts\/[0-9]+(\/|$)/);
+        var locationIsPost =  locationMatch ? locationMatch.length > 0 : false;
+        var movingToDataPost = ($routeParams.view === 'data' && locationIsPost);
+
+        if (url &&  !(movingToDataPost)) {
+            $location.path(url.replace($location.$$absUrl.replace($location.$$url, ''), ''));
+            $locationChangeStartHandler();
+        } else if (movingToDataPost) {
+            $location.path(url.match(/\/posts\/[0-9]+(\/|$)/)[0]);
+        }
+    }
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
     }
     function selectForm() {
         $scope.form = $scope.post.form;
+        $scope.isLoading.state = true;
         $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
@@ -163,7 +202,7 @@ function PostDataEditorController(
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                $scope.editMode.editing = false;
+                leaveEditMode();
                 return;
             }
 
@@ -271,25 +310,31 @@ function PostDataEditorController(
                 incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
             $scope.tasks = tasks;
+            $scope.isLoading.state = false;
         });
 
     }
 
     function canSavePost() {
-        return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
+        return PostEditService.validatePost($scope.post, $scope.parentForm.form, $scope.tasks);
     }
 
     function cancel(url) {
-        PostLockEndpoint.unlock({
-            id: $scope.post.lock.id,
-            post_id: $scope.post.id
-        }).$promise.then(function (result) {
-            $scope.editMode.editing = false;
-            // redirecting if user is leaving page
-            if (url) {
-                $location.path(url);
-            }
-        });
+        $scope.isLoading.state = false;
+        $scope.savingPost.saving = false;
+        /** @DEVNOTE I think we shouldn't need to check this,
+         * but in unstructured posts the lock is not available consistently.
+        **/
+        if ($scope.post.lock) {
+            PostLockEndpoint.unlock({
+                id: $scope.post.lock.id,
+                post_id: $scope.post.id
+            }).$promise.then(function (result) {
+                doChangePage(url);
+            });
+        } else {
+            doChangePage(url);
+        }
     }
 
     function deletePost(post) {
@@ -306,29 +351,53 @@ function PostDataEditorController(
         return MediaEditService.saveMedia($scope.medias, $scope.post);
     }
 
-    function leavePost(url) {
-        Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+    function leaveEditMode() {
+        $scope.editMode.editing = false;
+    }
+
+    function signalLeaveComplete() {
+        $rootScope.$broadcast('event:edit:leave:form:complete');
+    }
+
+    function leavePost(url, ev) {
+        if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
+            leaveEditMode();
+            $scope.isLoading.state = false;
+            $scope.savingPost.saving = false;
             $scope.cancel(url);
-        }, function () {
-            // redirecting if user is leaving the page
-            if (url) {
-                $location.path(url);
+        } else {
+            if (ev) {
+                ev.preventDefault();
             }
-        });
+            Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
+                $scope.cancel(url);
+            }, function () {
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
+                $scope.cancel(url);
+            });
+        }
     }
 
     function savePost() {
-        $scope.saving_post = true;
+        $scope.isLoading.state = true;
+        $scope.savingPost.saving = true;
         // Checking if changes are made
-        if (!$scope.postForm.$dirty) {
+        if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
+            $scope.savingPost.saving = false;
+            $scope.isLoading.state = false;
             Notify.infoModal('post.valid.no_changes');
-            $scope.saving_post = false;
+            $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
         }
 
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
-            $scope.saving_post = false;
+            $scope.savingPost.saving = false;
+            $scope.isLoading.state = false;
+            $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
         }
         // Create/update any associated media objects
@@ -360,16 +429,28 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-                $scope.postContainer.post = $scope.post;
+
+                // Save the updated post back to outside context
+                $scope.postContainer.post = response;
+
+                // DEVNOTE: Not sure how this would ever happen in the case of data view
+                // ideally this will go away when the two editors are integrated
+                // This is not currently relevant to the data view directive
+                // if data view becomes capable of creating Posts this will need to be changed
+                // as it will not currently prevent display of the Post
+
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
-                    $scope.saving_post = false;
                     $scope.post.id = response.id;
-                    Notify.notify(success_message, { name: $scope.post.title });
-                    $scope.editMode.editing = false;
-                } else {
-                    Notify.notify(success_message, { name: $scope.post.title });
-                    $scope.editMode.editing = false;
                 }
+
+                $scope.savingPost.saving = false;
+                Notify.notify(success_message, { name: $scope.post.title });
+
+                $scope.isLoading.state = false;
+                // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
+                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
+
+                leaveEditMode();
             }, function (errorResponse) { // errors
                 var validationErrors = [];
                 // @todo refactor limit handling
@@ -381,9 +462,13 @@ function PostDataEditorController(
                     } else {
                         validationErrors.push(value);
                     }
+                    $scope.isLoading.state = false;
                 });
                 Notify.errors(_.pluck(validationErrors, 'message'));
-                $scope.saving_post = false;
+                $scope.isLoading.state = false;
+                $scope.savingPost.saving = false;
+                $rootScope.$broadcast('event:edit:post:data:mode:saveError');
+
             });
         });
     }

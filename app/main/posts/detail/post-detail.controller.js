@@ -46,6 +46,7 @@ function (
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
+    $scope.selectedPost = {post: post};
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
             return 'post.publish_for_you';
@@ -70,14 +71,16 @@ function (
             $scope.$emit('setPageTitle', title);
         });
     }
+    angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
+    angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
 
     // Load the post form
     if ($scope.post.form && $scope.post.form.id) {
         $q.all([
-            FormEndpoint.getFresh({id: $scope.post.form.id}),
-            FormStageEndpoint.queryFresh({formId:  $scope.post.form.id}).$promise,
-            FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
-            TagEndpoint.queryFresh().$promise
+            FormEndpoint.get({id: $scope.post.form.id}),
+            FormStageEndpoint.query({formId:  $scope.post.form.id}).$promise,
+            FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise,
+            TagEndpoint.query().$promise
         ]).then(function (results) {
             $scope.form = results[0];
             $scope.form_name = results[0].name;
@@ -142,7 +145,6 @@ function (
                 }
             });
             $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
-
         });
     }
 

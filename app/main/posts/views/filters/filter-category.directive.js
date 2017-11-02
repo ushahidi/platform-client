@@ -22,7 +22,7 @@ function CategorySelectDirective(TagEndpoint, _) {
 
         function activate() {
             // Load categories
-            TagEndpoint.queryFresh().$promise.then(function (result) {
+            TagEndpoint.query().$promise.then(function (result) {
                 scope.categories = result;
                 // adding children to tags
                 _.each(scope.categories, function (category) {
@@ -44,6 +44,9 @@ function CategorySelectDirective(TagEndpoint, _) {
                         return category;
                     }
                 });
+                if (!scope.selectedCategories || scope.selectedCategories.length === 0) {
+                    scope.selectedCategories = _.pluck(scope.categories, 'id');
+                }
             });
 
             scope.$watch('selectedCategories', saveValueToView, true);
@@ -51,20 +54,13 @@ function CategorySelectDirective(TagEndpoint, _) {
         }
         function renderModelValue() {
             // Update selectCategories w/o breaking references used by checklist-model
-            Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
+            if (ngModel.$viewValue) {
+                Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
+            }
         }
 
         function saveValueToView(selectedCategories) {
-            var selected = [];
-            // removing children that has no parent selected
-            _.each(scope.categories, function (category) {
-                        if (category.parent && _.contains(selectedCategories, category.id) && _.contains(selectedCategories, category.parent.id)) {
-                            selected.push(category.id);
-                        } else if (category.parent_id === null && _.contains(selectedCategories, category.id)) {
-                            selected.push(category.id);
-                        }
-                    });
-            ngModel.$setViewValue(angular.copy(selected));
+            ngModel.$setViewValue(angular.copy(selectedCategories));
         }
     }
 }

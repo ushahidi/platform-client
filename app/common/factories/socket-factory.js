@@ -13,7 +13,7 @@ function SocketFactory($rootScope, $window, CONST, io, Features) {
 
     function init() {
         if (Features.isFeatureEnabled('redis')) {
-            var ioRoom = CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_URL + ':' + CONST.PLATFORM_WEBSOCKET_REDIS_ADPATER_PORT;
+            var ioRoom = CONST.PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL;
             socket = io.connect(ioRoom);
             return true;
         }

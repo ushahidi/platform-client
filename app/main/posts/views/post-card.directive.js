@@ -9,7 +9,6 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
             post:  '=',
             canSelect: '=',
             selectedPosts: '=',
-            inFocus: '=',
             shortContent: '@',
             clickAction: '=',
             editMode: '=',
@@ -19,6 +18,10 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
         link: function ($scope) {
             $scope.isPostLocked = isPostLocked;
             activate();
+
+            $scope.stopClickPropagation = function ($event) {
+                $event.stopPropagation();
+            };
 
             function isPostLocked() {
                 return PostLockService.isPostLockedForCurrentUser($scope.post);

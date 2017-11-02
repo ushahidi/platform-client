@@ -201,7 +201,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         var scope = $rootScope.$new();
                         scope.post = details;
                         scope.goToPost = goToPost;
-                        var el = $compile('<post-card post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
+                        scope.selectedPost = {post : details};
+
+                        var el = $compile('<post-card selected-post="selectedPost" post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
 
                         layer.bindPopup(el[0], {
                             'minWidth': '300',

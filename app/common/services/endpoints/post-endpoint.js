@@ -22,24 +22,56 @@ function (
             params: {
                 order: 'desc',
                 orderby: 'post_date'
-            }
+            },
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                (data) => {
+                    if (!data) {
+                        return data;
+                    }
+                    data.results = data.results.map(normalizePost);
+                    return data;
+                }
+            ]
         },
         get: {
             method: 'GET',
-            transformResponse: function (data /*, header*/) {
-                data = angular.fromJson(data);
-                // Ensure values is always an object
-                if (_.isArray(data.values)) {
-                    data.values = _.object(data.values);
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                function (data /*, header*/) {
+                    if (!data) {
+                        return data;
+                    }
+
+                    return normalizePost(data);
                 }
-                if (!_.isArray(data.published_to)) {
-                    data.published_to = [];
+            ]
+        },
+        save: {
+            method: 'POST',
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                function (data /*, header*/) {
+                    if (!data) {
+                        return data;
+                    }
+
+                    return normalizePost(data);
                 }
-                return data;
-            }
+            ]
         },
         update: {
-            method: 'PUT'
+            method: 'PUT',
+            transformResponse: [
+                $http.defaults.transformResponse[0],
+                function (data /*, header*/) {
+                    if (!data) {
+                        return data;
+                    }
+
+                    return normalizePost(data);
+                }
+            ]
         },
         options: {
             method: 'OPTIONS'
@@ -67,7 +99,8 @@ function (
     PostEndpoint.export = function (filters) {
         var config =  {
             params: filters,
-            paramSerializer: '$httpParamSerializerJQLike'
+            paramSerializer: '$httpParamSerializerJQLike',
+            responseType: 'arraybuffer'
         };
 
         return $http.get(Util.apiUrl('/posts/export'), config);
@@ -76,6 +109,18 @@ function (
     $rootScope.$on('event:authentication:logout:succeeded', function () {
         PostEndpoint.query();
     });
+
+    function normalizePost(post) {
+        // Ensure values is always an object
+        if (_.isArray(post.values)) {
+            post.values = _.object(post.values);
+        }
+        if (!_.isArray(post.published_to)) {
+            post.published_to = [];
+        }
+
+        return post;
+    }
 
     return PostEndpoint;
 

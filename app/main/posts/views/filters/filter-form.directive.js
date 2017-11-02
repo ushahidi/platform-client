@@ -23,7 +23,7 @@ function FormSelectDirective(FormEndpoint) {
 
         function activate() {
             // Load forms
-            scope.forms = FormEndpoint.queryFresh();
+            scope.forms = FormEndpoint.query();
 
             scope.$watch('selectedForms', saveValueToView, true);
             ngModel.$render = renderModelValue;

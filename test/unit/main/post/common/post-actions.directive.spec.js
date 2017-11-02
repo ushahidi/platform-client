@@ -21,11 +21,11 @@ describe('post actions directive', function () {
         .value('$filter', function () {
             return function () {};
         })
-        .value('$route', mockRoute);
+        .value('$route', mockRoute)
+        .value('$routeParams', {'view': 'data'});
 
         angular.mock.module('testApp');
     });
-
 
 
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _PostEndpoint_, _PostActionsService_, _$location_) {
@@ -53,7 +53,7 @@ describe('post actions directive', function () {
                 cb();
             }
         });
-        spyOn($location, 'path').and.returnValue('/views/list');
+        spyOn($location, 'path').and.returnValue('/views/data');
 
         isolateScope.deletePost(isolateScope.post);
         expect(PostActionsService.delete).toHaveBeenCalled();
@@ -70,7 +70,7 @@ describe('post actions directive', function () {
 
         isolateScope.deletePost(isolateScope.post);
         expect(PostActionsService.delete).toHaveBeenCalled();
-        expect($location.path).toHaveBeenCalledWith('/views/list');
+        expect($location.path).toHaveBeenCalledWith('/views/data');
     });
 
     it('should update the status of a  post', function () {

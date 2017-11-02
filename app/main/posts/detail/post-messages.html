@@ -1,6 +1,8 @@
 <div class="listing card">
   <h3 class="listing-heading" translate>post.messages.title</h3>
 
+  <div class="progress-bar" ng-show="isLoadingMessages"><span>Loading...</span></div>
+
     <div ng-repeat="message in messages track by message.id" class="listing-item">
       <div class="listing-item-primary">
         <div class="listing-item-image" ng-if="message.direction == 'outgoing'">
@@ -11,8 +13,8 @@
         </div>
       <h2 class="listing-item-title">
 
-        <span ng-if="message.direction == 'incoming'">{{ ::contact.contact }}</span>
-        <span ng-if="message.direction == 'outgoing' && message.user.realname">{{ ::message.user.realname }}</span>
+        <span ng-if="message.direction == 'incoming'">{{ contact.contact }}</span>
+        <span ng-if="message.direction == 'outgoing' && message.user.realname">{{ message.user.realname }}</span>
       </h2>
       <!--
       <p>{{message.updated || message.created | date:'mediumDate'}} at {{message.updated || message.created | date:'shortTime'}}</p>
@@ -25,7 +27,9 @@
   <div class="listing-item" ng-show="totalItems > itemsPerPage">
     <div class="listing-item-primary">
 
-      <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" rotate="false"></uib-pagination>
+      <nav class="pagination" ng-show="showPagination">
+          <ul uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></ul>
+      </nav>
 
     </div>
   </div>
@@ -69,5 +73,3 @@
   </div>
   -->
 </div>
-
-

@@ -32,7 +32,10 @@ describe('post toolbox directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $scope.post = fixture.load('posts/120.json');
-        element = '<post-toolbox post="post"></post-toolbox>';
+        $scope.form = {'status': {
+            $setDirty: function () {}
+        }};
+        element = '<post-toolbox form="form" post="post"></post-toolbox>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();

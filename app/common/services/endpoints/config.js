@@ -21,8 +21,9 @@ function (
 ) {
     var cache;
     if (!(cache = CacheFactory.get('configCache'))) {
-        cache = new CacheFactory('configCache', { storageMode : 'memory' });
+        cache = CacheFactory.createCache('configCache', { storageMode : 'memory' });
     }
+    cache.removeExpired();
 
     var ConfigEndpoint = $resource(Util.apiUrl('/config/:id'), {
         'id': '@id'

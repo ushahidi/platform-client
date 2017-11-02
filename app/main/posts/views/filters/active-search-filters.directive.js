@@ -46,7 +46,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
-        function removeFilter(filterKey, value) {
+        function removeFilter(filterKey, value, $event) {
+            $event.preventDefault();
+            $event.stopPropagation();
             PostFilters.clearFilter(filterKey, value);
         }
 

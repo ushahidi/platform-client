@@ -39,7 +39,6 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     platform_websocket_redis_adapter_url = window.ushahidi.platform_websocket_redis_adapter_url || '',
-    platform_websocket_redis_adapter_port = window.ushahidi.platform_websocket_redis_adapter_port || '',
     claimedAnonymousScopes = [
         'posts',
         'media',
@@ -80,7 +79,8 @@ angular.module('app',
         'ngRaven',
         'ushahidi.common',
         'ushahidi.main',
-        'ushahidi.settings'
+        'ushahidi.settings',
+        'ui.bootstrap.dropdown'
     ])
 
     .constant('CONST', {
@@ -95,14 +95,11 @@ angular.module('app',
         CLAIMED_USER_SCOPES      : claimedAnonymousScopes.concat('dataproviders'),
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
         TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
-        PLATFORM_WEBSOCKET_REDIS_ADPATER_URL : platform_websocket_redis_adapter_url,
-        PLATFORM_WEBSOCKET_REDIS_ADPATER_PORT : platform_websocket_redis_adapter_port
+        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url
     })
-
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
     }])
-
     .factory('_', function () {
         return require('underscore/underscore');
     })
@@ -130,9 +127,23 @@ angular.module('app',
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
     }])
-    .run(function () {
-        // Once bootstrapped, show the app
+    .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
+        /**
+         * Shamelessly copied from
+         * https://www.consolelog.io/angularjs-change-path-without-reloading
+         */
+        var original = $location.path;
+        $location.path = function (path, reload) {
+            if (reload === false) {
+                var lastRoute = $route.current;
+                var un = $rootScope.$on('$locationChangeSuccess', function () {
+                    $route.current = lastRoute;
+                    un();
+                });
+            }
+            return original.apply($location, [path]);
+        };
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    })
-    ;
+    }]);
+

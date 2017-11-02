@@ -15,7 +15,8 @@ describe('post active search filters directive', function () {
         testApp.directive('postActiveSearchFilters', require('app/main/posts/views/filters/active-search-filters.directive'))
         .directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
         .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
-        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
+        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
+        .value('$routeParams', {'view': 'data'});
         angular.mock.module('testApp');
     });
     var defaults = {
@@ -46,9 +47,11 @@ describe('post active search filters directive', function () {
         PostFilters = _PostFilters_;
         ModalService = _ModalService_;
         FilterTransformers = _FilterTransformers_;
-        $rootScope.filters = defaults;
         $scope.filters = defaults;
-        element = '<filters-dropdown filters-var="$scope.filters" ng-model="$scope.filters"></filters-dropdown>';
+        $scope.status = {
+            isopen: false
+        };
+        element = '<filters-dropdown dropdown-status="status" filters-var="filters" ng-model="$scope.filters"></filters-dropdown>';
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.isolateScope();
@@ -57,12 +60,12 @@ describe('post active search filters directive', function () {
 
     describe('test directive functions', function () {
         it('reactiveFilters should be false', function () {
-            expect(PostFilters.reactiveFilters).toEqual('disabled');
+            expect(PostFilters.reactiveFilters).toEqual(false);
         });
         it('should enable reactiveFilters when I call applyFiltersLocked', function () {
-            expect(PostFilters.reactiveFilters).toEqual('disabled');
+            expect(PostFilters.reactiveFilters).toEqual(false);
             isolateScope.applyFiltersLocked();
-            expect(PostFilters.reactiveFilters).toEqual('enabled');
+            expect(PostFilters.reactiveFilters).toEqual(true);
         });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.clearFilters();
