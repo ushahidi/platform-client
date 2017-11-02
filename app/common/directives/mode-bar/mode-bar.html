@@ -14,7 +14,7 @@
             </li>
 
             <li ng-class="{ active: activeMode === 'data' }">
-                <a ng-href="{{baseUrl + 'data' }}" class="view-data">
+                <a ui-sref="posts({view: 'data'})" class="view-data">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#list-rich"></use>
                     </svg>

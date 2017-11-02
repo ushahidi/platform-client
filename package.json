@@ -91,6 +91,7 @@
   },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.10",
+    "@uirouter/visualizer": "^5.0.0",
     "URIjs": "^1.14.1",
     "angular": "<2",
     "angular-cache": "^4.6.0",

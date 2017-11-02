@@ -16,6 +16,7 @@ window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
+var Visualizer = require('@uirouter/visualizer').Visualizer;
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -126,7 +127,12 @@ angular.module('app',
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
-    }]);
+    }])// inject the router instance into a `run` block by name
+    .run(function ($uiRouter, $trace) {
+        var pluginInstance = $uiRouter.plugin(Visualizer);
+        $trace.enable('TRANSITION');
+
+    });
 /**
  * @uirouter-refactor
  *

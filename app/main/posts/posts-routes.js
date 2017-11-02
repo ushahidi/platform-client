@@ -22,8 +22,8 @@ function (
     // @uirouter-refactor add this  .when('/views/list', { redirectTo: '/views/data' })
     .state(
         {
-            name: 'view.selected',
-            url: '/views/:view?',
+            name: 'posts',
+            url: '/views/:view',
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html')
         }
