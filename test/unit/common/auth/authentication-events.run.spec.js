@@ -64,7 +64,7 @@ describe('global event handlers', function () {
         testApp.service('PostFilters', function () {
             return mockedPostFiltersService;
         })
-        testApp.service('Session', function () {
+        .service('Session', function () {
             return mockedSessionService;
         })
         .service('Authentication', function () {
