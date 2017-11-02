@@ -25,7 +25,7 @@ function (
     // check whether we have initially an valid access_token and userId
     // and assume that, if yes, we are still loggedin
     var loginStatus = !!Session.getSessionDataEntry('accessToken') &&
-        Session.getSessionDataEntry('accessTokenExpires') > Math.floor(Date.now() / 1000) &&
+        Session.getSessionDataEntry('accessTokenExpires') > Math.floor(Date.now() / 1000) && Session.getSessionDataEntry('grantType') === 'password' &&
         !!Session.getSessionDataEntry('userId');
 
     function setToLoginState(userData) {
@@ -71,6 +71,7 @@ function (
                 var accessToken = authResponse.data.access_token;
                 Session.setSessionDataEntry('accessToken', accessToken);
                 Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+                Session.setSessionDataEntry('grantType', 'password');
 
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
