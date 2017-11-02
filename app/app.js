@@ -101,6 +101,9 @@ angular.module('app',
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
     }])
+    .config(['$locationProvider', function($locationProvider) {
+        $locationProvider.html5Mode(true).hashPrefix('!');
+    }])
     .factory('_', function () {
         return require('underscore/underscore');
     })
@@ -128,7 +131,7 @@ angular.module('app',
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
     }])// inject the router instance into a `run` block by name
-    .run(function ($uiRouter, $trace) {
+    .run(function ($uiRouter, $trace, $location) {
         var pluginInstance = $uiRouter.plugin(Visualizer);
         $trace.enable('TRANSITION');
 

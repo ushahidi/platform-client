@@ -20,9 +20,10 @@ function (
     //     }]
     // })
     // @uirouter-refactor add this  .when('/views/list', { redirectTo: '/views/data' })
+
     .state(
         {
-            name: 'posts',
+            name: 'list',
             url: '/views/:view',
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html')
@@ -30,10 +31,40 @@ function (
     )
     .state(
         {
-            name: 'view.map.noui',
+            name: 'list.map.noui',
             url: '/map/noui',
             controller: require('./views/post-view-noui.controller.js'),
             template: require('./views/post-view-noui.html')
+        }
+    )
+    /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
+    at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
+     since you won't be sent to a sole post' detail view **/
+    .state(
+        {
+            name: 'list.detail',
+            url: '/posts/:postId',
+            controller: require('./views/post-views.controller.js'),
+            template: require('./views/main.html'),
+            resolve: {
+                //change to selectedPost and refactor the selectedposts in general
+                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+                    return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                }]
+            }
+        }
+    )
+    .state(
+        {
+            name: 'posts',
+            url: '/posts/:postId',
+            controller: require('./detail/post-detail.controller.js'),
+            template: require('./detail/detail.html'),
+            resolve: {
+                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+                    return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                }]
+            }
         }
     )
     /** @uirouter-refactor add this back to state
@@ -64,17 +95,14 @@ function (
         controller: require('./modify/post-create.controller.js'),
         template: require('./modify/main.html')
     })
-    .when('/posts/:id', {
-        controller: require('./detail/post-detail.controller.js'),
-        template: require('./detail/detail.html'),
-        resolve: {
-            post: ['$route', 'PostEndpoint', function ($route, PostEndpoint) {
-                return PostEndpoint.get({ id: $route.current.params.id }).$promise;
-            }]
-        }
-    })
+     **/
+
+    /** @uirouter-refactor add this back to state
+     *  .when('/collections/:id/list', { redirectTo: '/collections/:id/data' })
+     **
     .when('/posts/:id/edit', {
         controller: require('./modify/post-edit.controller.js'),
         template: require('./modify/main.html')
-    }); **/
+    });
+    **/
 }];
