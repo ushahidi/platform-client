@@ -10,7 +10,24 @@ describe('setting categories edit controller', function () {
         var testApp = makeTestApp();
 
         testApp.controller('settingCategoriesEditController', require('app/settings/categories/edit.controller.js'))
-
+        .service('$transition$', function () {
+            return {
+                'params': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        })
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        })
         .run(require('app/common/global/event-handlers.js'));
 
         angular.mock.module('testApp');
@@ -36,8 +53,7 @@ describe('setting categories edit controller', function () {
 
         $controller('settingCategoriesEditController', {
             $scope: $scope,
-            $rootScope: $rootScope,
-            $routeParams: {id: 1}
+            $rootScope: $rootScope
         });
 
         $rootScope.$digest();

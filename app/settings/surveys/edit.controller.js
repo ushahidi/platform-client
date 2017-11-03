@@ -1,12 +1,12 @@
 module.exports = [
     '$scope',
     '$rootScope',
-    '$stateParams',
+    '$transition$',
 function (
     $scope,
     $rootScope,
-    $stateParams
+    $transition$
 ) {
-    $scope.surveyId = $stateParams.id;
-    $scope.actionType = $stateParams.action;
+    $scope.surveyId = $transition$.params().id;
+    $scope.actionType = $transition$.params().action;
 }];

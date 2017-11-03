@@ -10,8 +10,16 @@ describe('set collections controller', function () {
 
         var testApp = makeTestApp();
 
-        testApp.controller('collectionsController', require('app/main/posts/collections/collections-controller.js'));
-
+        testApp.controller('collectionsController', require('app/main/posts/collections/collections-controller.js'))
+        .service('$transition$', function () {
+            return {
+                'params': function () {
+                    return {
+                        'view': 'list'
+                    };
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
 

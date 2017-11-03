@@ -3,7 +3,7 @@ module.exports = [
     '$translate',
     '$location',
     '$controller',
-    '$stateParams',
+    '$transition$',
     'PostEntity',
     'PostEndpoint',
     'FormEndpoint',
@@ -12,7 +12,7 @@ function (
     $translate,
     $location,
     $controller,
-    $stateParams,
+    $transition$,
     postEntity,
     PostEndpoint,
     FormEndpoint
@@ -28,7 +28,7 @@ function (
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
 
-    FormEndpoint.getFresh({ id: $stateParams.id }).$promise.then(function (form) {
+    FormEndpoint.getFresh({ id: $transition$.params().id }).$promise.then(function (form) {
         $scope.form = form;
     });
 }];

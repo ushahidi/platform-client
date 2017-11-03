@@ -12,17 +12,28 @@ describe('setting roles editor directive', function () {
         var testApp = makeTestApp();
 
         testApp.directive('rolesEditor', require('app/settings/roles/editor.directive'))
-        .value('$routeParams', {
-            id: 1
-        })
-        .value('$route', {
-            reload: function () {}
-        })
         .value('$filter', function () {
             return function () {};
         })
-        .value('PostEntity', {});
-
+        .value('PostEntity', {})
+        .service('$transition$', function () {
+            return {
+                'params': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        })
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
 

@@ -7,12 +7,14 @@ describe('global event handlers', function () {
         mockTOS,
         $rootScope,
         $location,
-        mockRoute = {
-            reload: jasmine.createSpy()
+        mockState = {
+            go: jasmine.createSpy(),
+            current: jasmine.createSpy()
         };
 
     beforeEach(function () {
         var testApp = makeTestApp();
+
         mockedPostFiltersService = {
             resetDefaults: function () {
                 return {
@@ -74,8 +76,8 @@ describe('global event handlers', function () {
             return mockTOS;
         })
         .run(require('app/common/auth/authentication-events.run.js'))
-        .service('$route', function () {
-            return mockRoute;
+        .service('$state', function () {
+            return mockState;
         });
 
 
@@ -123,7 +125,7 @@ describe('global event handlers', function () {
                         });
 
                         it('should reload the route', function () {
-                            expect(mockRoute.reload).toHaveBeenCalled();
+                            expect(mockState.go).toHaveBeenCalled();
                         });
 
                         it('should check TOS', function () {
@@ -163,7 +165,7 @@ describe('global event handlers', function () {
                         });
 
                         it('should reload the route', function () {
-                            expect(mockRoute.reload).toHaveBeenCalled();
+                            expect(mockState.go).toHaveBeenCalled();
                         });
                     });
                 });

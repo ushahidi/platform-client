@@ -23,8 +23,12 @@ describe('injecting things', function () {
 
             $controller('postViewsController', {
                 $scope: $scope,
-                $routeParams: {
-                    view: 'list'
+                $transition$: {
+                    'params': function () {
+                        return {
+                            'view': 'list'
+                        };
+                    }
                 }
             });
 

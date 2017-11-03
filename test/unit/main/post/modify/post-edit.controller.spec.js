@@ -37,7 +37,16 @@ describe('Post edit controller', function () {
 
     beforeEach(function () {
         makeTestApp()
-        .controller('postEditController', require('app/main/posts/modify/post-edit.controller.js'));
+        .controller('postEditController', require('app/main/posts/modify/post-edit.controller.js'))
+        .service('$transition$', function () {
+            return {
+                'params': function () {
+                    return {
+                        'id': 1
+                    };
+                }
+            };
+        });
 
         angular.mock.module('testApp');
     });
@@ -49,8 +58,7 @@ describe('Post edit controller', function () {
         $controller('postEditController', {
             $scope: $scope,
             FormEndpoint: mockFormEndpoint,
-            PostEndpoint: mockPostEndpoint,
-            $routeParams: { id: 1 }
+            PostEndpoint: mockPostEndpoint
         });
     }));
 

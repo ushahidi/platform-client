@@ -1,9 +1,9 @@
 module.exports = PasswordResetConfirmController;
 
-PasswordResetConfirmController.$inject = ['$rootScope', 'PasswordReset', '$location', '$stateParams'];
-function PasswordResetConfirmController($rootScope, PasswordReset, $location, $stateParams) {
+PasswordResetConfirmController.$inject = ['$rootScope', 'PasswordReset', '$location', '$transition$'];
+function PasswordResetConfirmController($rootScope, PasswordReset, $location, $transition$) {
     var $scope = $rootScope.$new();
-    $scope.token = $stateParams.token;
+    $scope.token = $transition$.params().token;
 
     PasswordReset.openResetConfirm($scope);
     $location.url('/');

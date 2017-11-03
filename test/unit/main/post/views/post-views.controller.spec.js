@@ -18,13 +18,24 @@ describe('posts views controller', function () {
         .controller('postViewsController', require('app/main/posts/views/post-views.controller.js'))
         .service('PostFilters', function () {
             return mockPostFilters;
+        })
+        .service('$transition$', function () {
+            return {
+                'params': function () {
+                    return {
+                        'view': 'list'
+                    };
+                }
+            };
+        })
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {};
+                }
+            };
         });
-
         angular.mock.module('testApp');
-
-        var mockRouteParams = {
-            view : 'list'
-        };
 
         spyOn(mockPostFilters, 'getFilters').and.callThrough();
 
@@ -34,8 +45,7 @@ describe('posts views controller', function () {
             $scope = _$rootScope_.$new();
 
             $controller('postViewsController', {
-                $scope: $scope,
-                $routeParams: mockRouteParams
+                $scope: $scope
             });
 
             $rootScope.$digest();

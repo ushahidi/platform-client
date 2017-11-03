@@ -10,7 +10,16 @@ describe('set savedsearches controller', function () {
 
         var testApp = makeTestApp();
 
-        testApp.controller('savedsearchesController', require('app/main/posts/savedsearches/savedsearches-controller.js'));
+        testApp.controller('savedsearchesController', require('app/main/posts/savedsearches/savedsearches-controller.js'))
+        .service('$transition$', function () {
+            return {
+                'params': function () {
+                    return {
+                        'view': 'list'
+                    };
+                }
+            };
+        });
 
         angular.mock.module('testApp');
     });

@@ -1,7 +1,7 @@
 module.exports = [
     '$scope',
     '$translate',
-    '$stateParams',
+    '$transition$',
     'PostFilters',
     'collection',
     'UserEndpoint',
@@ -9,7 +9,7 @@ module.exports = [
     function (
         $scope,
         $translate,
-        $stateParams,
+        $transition$,
         PostFilters,
         collection,
         UserEndpoint,
@@ -55,7 +55,7 @@ module.exports = [
 
         // Set view based on route or set view
         function currentView() {
-            return $stateParams.view || collection.view;
+            return $transition$.params().view || collection.view;
         }
 
         function setCollection(collection) {

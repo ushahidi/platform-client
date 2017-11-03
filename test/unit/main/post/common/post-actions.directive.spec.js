@@ -7,8 +7,8 @@ describe('post actions directive', function () {
         element,
         PostActionsService,
         PostEndpoint,
-        mockRoute = {
-            reload: jasmine.createSpy()
+        mockState = {
+            go: jasmine.createSpy()
         };
 
     beforeEach(function () {
@@ -21,8 +21,14 @@ describe('post actions directive', function () {
         .value('$filter', function () {
             return function () {};
         })
-        .value('$route', mockRoute)
-        .value('$routeParams', {'view': 'data'});
+        .service('$state', function () {
+            return mockState;
+        })
+        .service('$stateParams', function () {
+            return {
+                'view': 'data'
+            };
+        });
 
         angular.mock.module('testApp');
     });
@@ -57,7 +63,7 @@ describe('post actions directive', function () {
 
         isolateScope.deletePost(isolateScope.post);
         expect(PostActionsService.delete).toHaveBeenCalled();
-        expect(mockRoute.reload).toHaveBeenCalled();
+        expect(mockState.go).toHaveBeenCalled();
     });
 
     it('should delete a post and redirect to list', function () {
@@ -73,7 +79,7 @@ describe('post actions directive', function () {
         expect($location.path).toHaveBeenCalledWith('/views/data');
     });
 
-    it('should update the status of a  post', function () {
+    it('should update the status of a post', function () {
         var status = 'published';
         spyOn(PostEndpoint, 'update').and.callThrough();
         isolateScope.updateStatus(status);
