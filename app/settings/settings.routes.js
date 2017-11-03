@@ -99,7 +99,7 @@ function (
     .state(
         {
             name: 'settings.users.create',
-            url: '/users/create',
+            url: '/create',
             controller: require('./users/create.controller.js'),
             template: require('./users/users-edit.html')
         }
@@ -107,7 +107,7 @@ function (
     .state(
         {
             name: 'settings.users.edit',
-            url: '/users/:id',
+            url: '/:id',
             controller: require('./users/edit.controller.js'),
             template: require('./users/users-edit.html')
         }
