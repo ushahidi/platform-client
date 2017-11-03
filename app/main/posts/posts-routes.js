@@ -5,7 +5,7 @@ function (
 ) {
 
     $stateProvider
-    //@uirouter-refactor add this .when('/', {
+    //.state('/', {
     //     resolveRedirectTo: ['PostFilters', (PostFilters) => {
     //         let mode = PostFilters.getMode();
     //         let entityId = PostFilters.getModeId();
@@ -19,14 +19,18 @@ function (
     //         }
     //     }]
     // })
-    // @uirouter-refactor add this  .when('/views/list', { redirectTo: '/views/data' })
-
+    .state({name: 'list.deprecated', url: '/views/list', redirectTo: '/views/data'})
     .state(
         {
             name: 'list',
             url: '/views/:view',
             controller: require('./views/post-views.controller.js'),
-            template: require('./views/main.html')
+            template: require('./views/main.html'),
+            onEnter: function ($state, $transition$) {
+                if ($transition$.params().view === 'list') {
+                    $state.go('list', {view: 'data'}, {reload: true});
+                }
+            }
         }
     )
     .state(

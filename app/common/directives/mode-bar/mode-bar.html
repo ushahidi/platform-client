@@ -23,7 +23,7 @@
             </li>
 
             <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ng-class="{ active: activeMode === 'activity' }" data-message="customize">
-                <a href="/activity">
+                <a ui-sref="activity">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pulse"></use>
                     </svg>
