@@ -135,7 +135,11 @@ angular.module('app',
         var pluginInstance = $uiRouter.plugin(Visualizer);
         $trace.enable('TRANSITION');
 
+    }).run(function($rootScope) {
+        $rootScope.$on("$stateChangeError", console.log.bind(console));
     });
+
+
 /**
  * @uirouter-refactor
  *

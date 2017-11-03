@@ -16,7 +16,7 @@ function (
     .state(
         {
             name: 'settings.general',
-            url: '/settings/general',
+            url: '/general',
             controller: require('./site/site.controller.js'),
             template: require('./site/settings-general.html')
         }
@@ -24,7 +24,7 @@ function (
     .state(
         {
             name: 'settings.dataImport',
-            url: '/settings/data-import',
+            url: '/data-import',
             controller: require('./data-import/data-import.controller.js'),
             template: require('./data-import/data-import.html')
         }
@@ -32,7 +32,7 @@ function (
     .state(
         {
             name: 'settings.dataAfterImport',
-            url: '/settings/data-after-import',
+            url: '/data-after-import',
             controller: require('./data-import/data-after-import.controller.js'),
             template: require('./data-import/after-import.html')
         }
@@ -40,7 +40,7 @@ function (
     .state(
         {
             name: 'settings.surveys',
-            url: '/settings/surveys',
+            url: '/surveys',
             controller: require('./surveys/surveys.controller.js'),
             template: require('./surveys/surveys.html')
         }
@@ -64,23 +64,26 @@ function (
     .state(
         {
             name: 'settings.categories',
-            url: '/settings/categories',
+            url: '/categories',
             controller: require('./categories/categories.controller.js'),
-            template: require('./categories/categories.html')
+            template: require('./categories/categories.html'),
+            onEnter: function ($state, $transition$) {
+                console.log('entered');
+            }
         }
     )
     .state(
         {
             name: 'settings.categories.create',
-            url: '/settings/categories/create',
+            url: '/categories/create',
             controller: require('./categories/edit.controller.js'),
             template: require('./categories/categories-edit.html')
         }
     )
     .state(
         {
-            name: 'settings.categories.id',
-            url: '/settings/categories/:id',
+            name: 'settings.categories.edit',
+            url: '/categories/:id',
             controller: require('./categories/edit.controller.js'),
             template: require('./categories/categories-edit.html')
         }
@@ -88,7 +91,7 @@ function (
     .state(
         {
             name: 'settings.users',
-            url: '/settings/users',
+            url: '/users',
             controller: require('./users/users.controller.js'),
             template: require('./users/users.html')
         }
@@ -96,15 +99,15 @@ function (
     .state(
         {
             name: 'settings.users.create',
-            url: '/settings/users/create',
+            url: '/users/create',
             controller: require('./users/create.controller.js'),
             template: require('./users/users-edit.html')
         }
     )
     .state(
         {
-            name: 'settings.users.id',
-            url: '/settings/users/:id',
+            name: 'settings.users.edit',
+            url: '/users/:id',
             controller: require('./users/edit.controller.js'),
             template: require('./users/users-edit.html')
         }
@@ -112,7 +115,7 @@ function (
     .state(
         {
             name: 'settings.roles',
-            url: '/settings/roles',
+            url: '/roles',
             controller: require('./roles/roles.controller.js'),
             template: require('./roles/roles.html')
         }
@@ -120,15 +123,15 @@ function (
     .state(
         {
             name: 'settings.roles.create',
-            url: '/settings/roles/create',
+            url: '/create',
             controller: require('./roles/roles.controller.js'),
             template: require('./roles/roles-edit.html')
         }
     )
     .state(
         {
-            name: 'settings.roles.id',
-            url: '/settings/roles/:id',
+            name: 'settings.roles.edit',
+            url: '/:id',
             controller: require('./roles/roles.controller.js'),
             template: require('./roles/roles-edit.html')
         }
@@ -136,7 +139,7 @@ function (
     .state(
         {
             name: 'settings.webhooks',
-            url: '/settings/webhooks',
+            url: '/webhooks',
             controller: require('./webhooks/webhooks.controller.js'),
             template: require('./webhooks/webhooks.html')
         }
@@ -144,15 +147,15 @@ function (
     .state(
         {
             name: 'settings.webhooks.create',
-            url: '/settings/webhooks/create',
+            url: '/webhooks/create',
             controller: require('./webhooks/webhooks.controller.js'),
             template: require('./webhooks/webhooks-edit.html')
         }
     )
     .state(
         {
-            name: 'settings.webhooks.id',
-            url: '/settings/webhooks/:id',
+            name: 'settings.webhooks.edit',
+            url: '/webhooks/:id',
             controller: require('./webhooks/webhooks.controller.js'),
             template: require('./webhooks/webhooks-edit.html')
         }
@@ -160,7 +163,7 @@ function (
     .state(
         {
             name: 'settings.datasources',
-            url: '/settings/datasources',
+            url: '/datasources',
             controller: require('./datasources/datasources.controller.js'),
             template: require('./datasources/datasources.html')
         }
@@ -168,7 +171,7 @@ function (
     .state(
         {
             name: 'settings.plan',
-            url: '/settings/plan',
+            url: '/plan',
             controller: require('./plans/plans.controller.js'),
             template: require('./plans/plan.html')
         }
