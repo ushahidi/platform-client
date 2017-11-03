@@ -147,7 +147,7 @@ function (
     .state(
         {
             name: 'settings.webhooks.create',
-            url: '/webhooks/create',
+            url: '/create',
             controller: require('./webhooks/webhooks.controller.js'),
             template: require('./webhooks/webhooks-edit.html')
         }
@@ -155,7 +155,7 @@ function (
     .state(
         {
             name: 'settings.webhooks.edit',
-            url: '/webhooks/:id',
+            url: '/:id',
             controller: require('./webhooks/webhooks.controller.js'),
             template: require('./webhooks/webhooks-edit.html')
         }
