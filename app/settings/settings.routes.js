@@ -48,15 +48,15 @@ function (
     .state(
         {
             name: 'settings.surveys.create',
-            url: '/settings/surveys/create',
+            url: '/create',
             controller: require('./surveys/edit.controller.js'),
             template: require('./surveys/survey-edit.html')
         }
     )
     .state(
         {
-            name: 'settings.surveys.action.id',
-            url: '/settings/surveys/:action/:id',
+            name: 'settings.surveys.id',
+            url: '/:action/:id',
             controller: require('./surveys/edit.controller.js'),
             template: require('./surveys/survey-edit.html')
         }
