@@ -75,7 +75,7 @@ function (
     .state(
         {
             name: 'settings.categories.create',
-            url: '/categories/create',
+            url: '/create',
             controller: require('./categories/edit.controller.js'),
             template: require('./categories/categories-edit.html')
         }
@@ -83,7 +83,7 @@ function (
     .state(
         {
             name: 'settings.categories.edit',
-            url: '/categories/:id',
+            url: '/:id',
             controller: require('./categories/edit.controller.js'),
             template: require('./categories/categories-edit.html')
         }
