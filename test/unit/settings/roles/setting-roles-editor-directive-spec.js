@@ -16,13 +16,9 @@ describe('setting roles editor directive', function () {
             return function () {};
         })
         .value('PostEntity', {})
-        .service('$transition$', function () {
+        .service('$stateParams', function () {
             return {
-                'params': function () {
-                    return {
-                        'id': '1'
-                    };
-                }
+                'id': '1'
             };
         })
         .service('$state', function () {
