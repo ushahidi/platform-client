@@ -60,7 +60,7 @@ function (
     )
     .state(
         {
-            name: 'posts',
+            name: 'postDetail',
             url: '/posts/:postId',
             controller: require('./detail/post-detail.controller.js'),
             template: require('./detail/detail.html'),
@@ -69,6 +69,22 @@ function (
                     return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                 }]
             }
+        }
+    )
+    .state(
+        {
+            name: 'postCreate',
+            url: '/posts/create/:id',
+            controller: require('./modify/post-create.controller.js'),
+            template: require('./modify/main.html')
+        }
+    )
+    .state(
+        {
+            name: 'postEdit',
+            url: '/posts/:id/edit',
+            controller: require('./modify/post-edit.controller.js'),
+            template: require('./modify/main.html')
         }
     )
     /** @uirouter-refactor add this back to state
@@ -95,18 +111,11 @@ function (
             }]
         }
     })
-    .when('/posts/create/:id', {
-        controller: require('./modify/post-create.controller.js'),
-        template: require('./modify/main.html')
-    })
+
      **/
 
     /** @uirouter-refactor add this back to state
      *  .when('/collections/:id/list', { redirectTo: '/collections/:id/data' })
-     **
-    .when('/posts/:id/edit', {
-        controller: require('./modify/post-edit.controller.js'),
-        template: require('./modify/main.html')
-    });
-    **/
+     **/
+    ;
 }];

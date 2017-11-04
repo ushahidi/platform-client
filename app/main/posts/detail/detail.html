@@ -17,7 +17,7 @@
   <div class="mode-context-body" ng-if="post.form">
     <p markdown-to-html="form.description"></p>
 
-    <a class="button button-flat" ng-href="/posts/create/{{post.form.id}}" ng-show="canCreatePostInSurvey(form)">
+    <a class="button button-flat" ui-sref="postCreate({postId: post.form.id})" ng-show="canCreatePostInSurvey(form)">
       <svg class="iconic">
         <use xlink:href="/img/iconic-sprite.svg#plus"></use>
       </svg>
