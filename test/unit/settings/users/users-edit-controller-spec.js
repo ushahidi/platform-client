@@ -19,7 +19,7 @@ describe('setting users edit controller', function () {
                         };
                     }
                 };
-        });
+            });
         angular.mock.module('testApp');
 
 

@@ -16,8 +16,10 @@ window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
-var Visualizer = require('@uirouter/visualizer').Visualizer;
 
+/** uncomment this to enable the visualizer
+var Visualizer = require('@uirouter/visualizer').Visualizer;
+**/
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
@@ -101,7 +103,7 @@ angular.module('app',
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
     }])
-    .config(['$locationProvider', function($locationProvider) {
+    .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
     .factory('_', function () {
@@ -132,11 +134,12 @@ angular.module('app',
             { map: {}, site: {}, features: {} };
     }])// inject the router instance into a `run` block by name
     .run(function ($uiRouter, $trace, $location) {
+        /** uncomment this to enable the visualizer
         var pluginInstance = $uiRouter.plugin(Visualizer);
         $trace.enable('TRANSITION');
-
-    }).run(function($rootScope) {
-        $rootScope.$on("$stateChangeError", console.log.bind(console));
+         **/
+    }).run(function ($rootScope) {
+        $rootScope.$on('$stateChangeError', console.log.bind(console));
     });
 
 
