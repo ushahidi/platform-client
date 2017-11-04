@@ -87,35 +87,38 @@ function (
             template: require('./modify/main.html')
         }
     )
-    /** @uirouter-refactor add this back to state
-     *  .when('/collections/:id/list', { redirectTo: '/collections/:id/data' })
-    **
-    .when('/collections/:id/:view?', {
-        controller: require('./collections/collections-controller.js'),
-        template: require('./collections/collections.html'),
-        resolve: {
-            collection: ['$route', 'CollectionEndpoint', function ($route, CollectionEndpoint) {
-
-                return CollectionEndpoint.get({collectionId: $route.current.params.id}).$promise;
-            }]
+    .state(
+        {
+            url: '/collections/:id/:view',
+            name: 'collection',
+            controller: require('./collections/collections-controller.js'),
+            template: require('./collections/collections.html'),
+            resolve: {
+                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
+                }]
+            }
         }
-    })
-    .when('/savedsearches/:id/list', { redirectTo: '/savedsearches/:id/data' })
-
-    .when('/savedsearches/:id/:view?', {
-        controller: require('./savedsearches/savedsearches-controller.js'),
-        template: require('./savedsearches/savedsearches.html'),
-        resolve: {
-            savedSearch: ['$route', 'SavedSearchEndpoint', function ($route, SavedSearchEndpoint) {
-                return SavedSearchEndpoint.get({id: $route.current.params.id}).$promise;
-            }]
+    )
+    .state(
+        {
+            name: 'collectionDeprecated',
+            url: '/collections/:id/list',
+            redirectTo: '/collections/:id/data'
         }
-    })
+    )
+    .state({name: 'savedsearchDeprecated', url: '/savedsearches/:id/list', redirectTo: '/savedsearches/:id/data' })
+    .state(
+        {
+            name: 'savedsearch', url: '/savedsearches/:id/:view',
+            controller: require('./savedsearches/savedsearches-controller.js'),
+            template: require('./savedsearches/savedsearches.html'),
+            resolve: {
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
+                }]
+            }
+        }
+    );
 
-     **/
-
-    /** @uirouter-refactor add this back to state
-     *  .when('/collections/:id/list', { redirectTo: '/collections/:id/data' })
-     **/
-    ;
 }];
