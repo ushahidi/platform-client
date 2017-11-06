@@ -90,5 +90,12 @@ describe('filter by datasource directive', function () {
             isolateScope.showOnlyIncoming('SMS');
             expect($location.path()).toEqual('/views/data');
         });
+        it('should toggle the filters based on if selected filter is activated or not', function () {
+            console.info(isolateScope.filters.source);
+            expect(isolateScope.filters.source).toEqual(['sms', 'twitter', 'web', 'email']);
+            var filter = isolateScope.filters.source[Math.floor(Math.random() * isolateScope.filters.source.length)];
+            isolateScope.toggleFilters(filter);
+            expect(isolateScope.filters.source).not.toContain(filter);
+        });
     });
 });
