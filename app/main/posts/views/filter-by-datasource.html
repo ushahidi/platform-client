@@ -11,6 +11,7 @@
                 <label>
                     <input 
                         type="checkbox"
+                        ng-checked="filters.source.indexOf(provider.label.toLowerCase()) !== -1"
                         translate
                         ng-click="toggleFilters(provider.label.toLowerCase())"
                     />
