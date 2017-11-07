@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService', 'Notify'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService, Notify) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService', 'Notify', 'PostFilters'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService, Notify, PostFilters) {
     let loginPath = null;
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
@@ -11,6 +11,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     function activate() {
         if (Authentication.getLoginStatus()) {
             doLogin(false, true);
+        } else {
+            doLogout(false);
         }
     }
 
@@ -32,6 +34,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                  * references https://github.com/ushahidi/platform/issues/1714
                  */
                 adminUserSetup();
+                PostFilters.resetDefaults();
                 if (redirect) {
                     $location.url(redirect);
                 }
@@ -42,10 +45,14 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     function doLogout(redirect) {
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
-        if (redirect) {
-            $location.url(redirect);
-        }
-        $route.reload();
+        // we don' wat to reload until after filters are correctly set with the backend default that the user
+        // would get when logged out
+        PostFilters.resetDefaults().then(function () {
+            if (redirect) {
+                $location.url(redirect);
+            }
+            $route.reload();
+        });
     }
 
     // todo: move to service
