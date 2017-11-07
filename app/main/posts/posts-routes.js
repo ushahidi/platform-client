@@ -80,8 +80,23 @@ function (
         {
             url: '/collections/:id/:view',
             name: 'collection',
+            params: {
+                id: null,
+                view: {squash: true, value: null}
+            },
             controller: require('./collections/collections-controller.js'),
             template: require('./collections/collections.html'),
+            onEnter: function ($state, $transition$, collection) {
+                var view = collection.view;
+                if (view === 'list') {
+                    view = 'data';
+                } else if (!view) {
+                    view = 'map';
+                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
+                    view = $transition$.params().view;
+                }
+                $state.go('collection', {view: view, id: $transition$.params().id});
+            },
             resolve: {
                 collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
                     return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
