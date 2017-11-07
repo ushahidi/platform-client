@@ -25,7 +25,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
     $scope.showOnlyIncoming = showOnlyIncoming;
     $scope.assignStatsToProviders = assignStatsToProviders;
     $scope.getTotals = getTotals;
-
+    $scope.toggleFilters = toggleFilters;
     $scope.$watch('postStats', function (postStats) {
         assignStatsToProviders();
     });
@@ -38,6 +38,15 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
                 $scope.dataSources = results.providers;
                 assignStatsToProviders();
             });
+        }
+    }
+
+    function toggleFilters(filter) {
+        var index = $scope.filters.source.indexOf(filter);
+        if (index !== -1) {
+            $scope.filters.source.splice(index, 1);
+        } else {
+            $scope.filters.source.push(filter);
         }
     }
 
@@ -83,6 +92,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
         }
         return 0;
     }
+
 
     function formatHeading(name) {
         switch (name) {
