@@ -106,6 +106,11 @@ angular.module('app',
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
+    .config(function ($urlRouterProvider) {
+        // if the path doesn't match any of the urls you configured
+        // otherwise will take care of routing the user to the specified url
+        $urlRouterProvider.otherwise('/views/map');
+    })
     .factory('_', function () {
         return require('underscore/underscore');
     })

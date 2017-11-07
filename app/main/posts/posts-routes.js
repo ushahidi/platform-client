@@ -5,20 +5,6 @@ function (
 ) {
 
     $stateProvider
-    //.state('/', {
-    //     resolveRedirectTo: ['PostFilters', (PostFilters) => {
-    //         let mode = PostFilters.getMode();
-    //         let entityId = PostFilters.getModeId();
-    //
-    //         if (mode === 'collection') {
-    //             return '/collections/' + entityId;
-    //         } else if (mode === 'savedsearch') {
-    //             return '/savedsearches/' + entityId;
-    //         } else {
-    //             return '/views/map';
-    //         }
-    //     }]
-    // })
     .state({name: 'list.deprecated', url: '/views/list', redirectTo: '/views/data'})
     .state(
         {
@@ -27,9 +13,12 @@ function (
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html'),
             onEnter: function ($state, $transition$) {
-                if ($transition$.params().view === 'list') {
+                var view = $transition$.params().view ? $transition$.params().view : 'map';
+                console.log($transition$.params().view);
+                if (view === 'list') {
                     $state.go('list', {view: 'data'}, {reload: true});
                 }
+                //$state.go('list', {view: view});
             }
         }
     )
@@ -107,12 +96,27 @@ function (
             redirectTo: '/collections/:id/data'
         }
     )
-    .state({name: 'savedsearchDeprecated', url: '/savedsearches/:id/list', redirectTo: '/savedsearches/:id/data' })
     .state(
         {
-            name: 'savedsearch', url: '/savedsearches/:id/:view',
+            name: 'savedsearch',
+            url: '/savedsearches/:id/:view',
+            params: {
+                id: null,
+                view: {squash: true, value: null}
+            },
             controller: require('./savedsearches/savedsearches-controller.js'),
             template: require('./savedsearches/savedsearches.html'),
+            onEnter: function ($state, $transition$, savedSearch) {
+                var view = savedSearch.view;
+                if (view === 'list') {
+                    view = 'data';
+                } else if (!view) {
+                    view = 'map';
+                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
+                    view = $transition$.params().view;
+                }
+                $state.go('savedsearch', {view: view, id: $transition$.params().id});
+            },
             resolve: {
                 savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
                     return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
