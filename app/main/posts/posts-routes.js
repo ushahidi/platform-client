@@ -5,7 +5,6 @@ function (
 ) {
 
     $stateProvider
-    .state({name: 'list.deprecated', url: '/views/list', redirectTo: '/views/data'})
     .state(
         {
             name: 'list',
