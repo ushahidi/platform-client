@@ -106,13 +106,6 @@ function (
     )
     .state(
         {
-            name: 'collectionDeprecated',
-            url: '/collections/:id/list',
-            redirectTo: '/collections/:id/data'
-        }
-    )
-    .state(
-        {
             name: 'savedsearch',
             url: '/savedsearches/:id/:view',
             params: {
