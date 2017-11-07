@@ -12,11 +12,21 @@ function (
             url: '/views/:view',
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html'),
-            onEnter: function ($state, $transition$) {
-                var view = $transition$.params().view ? $transition$.params().view : 'map';
-                if (view === 'list') {
-                    $state.go('list', {view: 'data'}, {reload: true});
+            onEnter: function ($state, $transition$, PostFilters) {
+                switch (PostFilters.getMode()) {
+                    case 'savedsearch':
+                        $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+                        break;
+                    case 'collection':
+                        $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+                        break;
+                    default:
+                        var view = $transition$.params().view ? $transition$.params().view : 'map';
+                        if (view === 'list') {
+                            $state.go('list', {view: 'data'}, {reload: true});
+                        }
                 }
+
             }
         }
     )
@@ -86,15 +96,15 @@ function (
             controller: require('./collections/collections-controller.js'),
             template: require('./collections/collections.html'),
             onEnter: function ($state, $transition$, collection) {
-                var view = collection.view;
-                if (view === 'list') {
-                    view = 'data';
-                } else if (!view) {
-                    view = 'map';
+                var viewParam = collection.view;
+                if (viewParam === 'list') {
+                    viewParam = 'data';
+                } else if (!viewParam) {
+                    viewParam = 'map';
                 } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    view = $transition$.params().view;
+                    viewParam = $transition$.params().view;
                 }
-                $state.go('collection', {view: view, id: $transition$.params().id});
+                $state.go('collection', {view: viewParam, id: $transition$.params().id});
             },
             resolve: {
                 collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
@@ -114,15 +124,15 @@ function (
             controller: require('./savedsearches/savedsearches-controller.js'),
             template: require('./savedsearches/savedsearches.html'),
             onEnter: function ($state, $transition$, savedSearch) {
-                var view = savedSearch.view;
-                if (view === 'list') {
-                    view = 'data';
-                } else if (!view) {
-                    view = 'map';
+                var viewParam = savedSearch.view;
+                if (viewParam === 'list') {
+                    viewParam = 'data';
+                } else if (!viewParam) {
+                    viewParam = 'map';
                 } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    view = $transition$.params().view;
+                    viewParam = $transition$.params().view;
                 }
-                $state.go('savedsearch', {view: view, id: $transition$.params().id});
+                $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
             },
             resolve: {
                 savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
