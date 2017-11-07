@@ -14,11 +14,9 @@ function (
             template: require('./views/main.html'),
             onEnter: function ($state, $transition$) {
                 var view = $transition$.params().view ? $transition$.params().view : 'map';
-                console.log($transition$.params().view);
                 if (view === 'list') {
                     $state.go('list', {view: 'data'}, {reload: true});
                 }
-                //$state.go('list', {view: view});
             }
         }
     )
