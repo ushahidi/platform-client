@@ -249,7 +249,7 @@ function PostViewDataController(
             } else {
                 var currentWidth = $window.innerWidth;
                 if (currentWidth > 1023) {
-                    $state.go('list.detail', {postId: post.id});
+                    $state.go('list.data.detail', {postId: post.id});
                     $scope.selectedPost.post = post;
                     $scope.selectedPostId = post.id;
                 } else {

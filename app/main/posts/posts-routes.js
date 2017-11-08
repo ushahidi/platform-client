@@ -9,10 +9,7 @@ function (
         {
             name: 'list',
             controller: require('./views/post-views.controller.js'),
-            template: require('./views/main.html'),
-            onEnter: function ($state) {
-                console.log($state);
-            }
+            template: require('./views/main.html')
             // onEnter: function ($state, $transition$, PostFilters) {
             //     switch (PostFilters.getMode()) {
             //         case 'savedsearch':
@@ -36,10 +33,10 @@ function (
             name: 'list.data',
             url: '/views/:view',
             controller: require('./views/post-view-data.controller.js'),
-            template: require('./views/post-view-data.html'),
-            onEnter: function ($state) {
-                console.log($state);
+            template: function ($transition$) {
+                return require('./views/post-view-' + $transition$.view + '.html');
             }
+
             // onEnter: function ($state, $transition$, PostFilters) {
             //     switch (PostFilters.getMode()) {
             //         case 'savedsearch':
