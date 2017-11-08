@@ -245,7 +245,10 @@ function PostViewDataController(
         return confirmEditingExit().then(function () {
             if ($scope.selectedPost.post && $scope.selectedPost.post.id === post.id) {
                 $scope.selectedPost.post = null;
+                $scope.post = null;
                 $scope.selectedPostId = null;
+                $state.go('list.data');
+
             } else {
                 var currentWidth = $window.innerWidth;
                 if (currentWidth > 1023) {
