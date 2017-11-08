@@ -782,6 +782,7 @@
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
+        "edit_savedsearch" : "Edit Search",
         "set_settings" : "Collection Settings",
         "add_notification" : "Add Notification",
         "remove" : "remove"
