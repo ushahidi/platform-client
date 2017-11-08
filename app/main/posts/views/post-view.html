@@ -2,8 +2,7 @@
     <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data'" edit-mode="{editing: false}"></post-toolbar>
     <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>
      <!-- todo: toolbox-->
-    <h1>{{currentView}}</h1>
-    <div ui-view="list.data"></div>
+    <div ui-view></div>
     <!--<div ng-switch="currentView">-->
         <!--&lt;!&ndash; Each of the views in sequence, which are shown or hidden by tabs &ndash;&gt;-->
 

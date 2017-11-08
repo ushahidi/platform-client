@@ -35,7 +35,7 @@ function (
         {
             name: 'list.data',
             url: '/views/:view',
-            controller: require('./views/post-views.controller.js'),
+            controller: require('./views/post-view-data.controller.js'),
             template: require('./views/post-view-data.html'),
             onEnter: function ($state) {
                 console.log($state);
