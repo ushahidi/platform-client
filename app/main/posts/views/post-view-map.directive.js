@@ -6,8 +6,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         restrict: 'E',
         replace: true,
         scope: {
-            filters: '=',
-            isLoading: '='
+            // filters: '=',
+            // isLoading: '='
         },
         link: PostViewMapLink,
         template: require('./post-view-map.html')
@@ -21,7 +21,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var numberOfChunks = 0;
         $scope.loadPosts = loadPosts;
         $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
-
+        $scope.filters = PostFilters.getFilters();
+        $scope.isLoading = {state: true};
         activate();
 
 
@@ -48,10 +49,19 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             // Cleanup leaflet map
             $scope.$on('$destroy', function () {
                 if (map) {
+                    map.off();
                     map.remove();
                 }
             });
         }
+        // $scope.$on('$stateChangeSuccess', function() {
+        //     // TODO: this is a hack...
+        //     $interval(function() {
+        //         leafl.getMap().then(function(map) {
+        //             map.invalidateSize();
+        //         });
+        //     }, 500, 1);
+        // });
 
         function clearData() {
             if (markers) {

@@ -8,7 +8,6 @@ function (
             $scope,
             _
         ) {
-            console.log($scope);
             // Initial scope
             $scope.isLoading = {
                 state: false

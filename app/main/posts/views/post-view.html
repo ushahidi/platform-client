@@ -2,24 +2,7 @@
     <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data'" edit-mode="{editing: false}"></post-toolbar>
     <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>
      <!-- todo: toolbox-->
-    <div ui-view></div>
-    <!--<div ng-switch="currentView">-->
-        <!--&lt;!&ndash; Each of the views in sequence, which are shown or hidden by tabs &ndash;&gt;-->
+    <div ui-view noanimation="true"></div>
+    <!--<post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>-->
 
-        <!--&lt;!&ndash; map view &ndash;&gt;-->
-        <!--<post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>-->
-
-        <!--&lt;!&ndash; data view &ndash;&gt;-->
-        <!--<post-view-data ng-switch-when="data" current-view="currentView" is-loading="isLoading" filters="filters"></post-view-data>-->
-
-        <!--&lt;!&ndash; create view &ndash;&gt;-->
-        <!--<post-view-create ng-switch-when="create"></post-view-create>-->
-
-    <!--&lt;!&ndash; unavailable view &ndash;&gt;-->
-    <!--<post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>-->
-
-
-    <!--&lt;!&ndash; default view &ndash;&gt;-->
-    <!--<post-view-map ng-switch-default is-loading="isLoading" filters="filters"></post-view-map>-->
-    <!--</div>-->
 </div>

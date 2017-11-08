@@ -31,12 +31,46 @@ function (
     .state(
         {
             name: 'list.data',
-            url: '/views/:view',
+            url: '/views/data',
             controller: require('./views/post-view-data.controller.js'),
-            template: function ($transition$) {
-                return require('./views/post-view-' + $transition$.view + '.html');
+            template: require('./views/post-view-data.html'),
+            params: {
+                view: {value: 'data', squash: true}
+            },
+            onEnter: function ($state, $transition$) {
             }
 
+            // onEnter: function ($state, $transition$, PostFilters) {
+            //     switch (PostFilters.getMode()) {
+            //         case 'savedsearch':
+            //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+            //             break;
+            //         case 'collection':
+            //             $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+            //             break;
+            //         default:
+            //             var view = $transition$.params().view ? $transition$.params().view : 'map';
+            //             if (view === 'list') {
+            //                 $state.go('list', {view: 'data'}, {reload: true});
+            //             }
+            //     }
+            //
+            // }
+        }
+    )
+    .state(
+        {
+            cache: false,
+            name: 'list.map',
+            url: '/views/map',
+            template: function ($state, $transition$) {
+                return '<post-view-map></post-view-map>';
+            },
+            params: {
+                view: {value: 'map', squash: true}
+            },
+            onEnter: function ($state, $transition$) {
+            }
             // onEnter: function ($state, $transition$, PostFilters) {
             //     switch (PostFilters.getMode()) {
             //         case 'savedsearch':
@@ -78,7 +112,10 @@ function (
             name: 'list.noui',
             url: '/map/noui',
             controller: require('./views/post-view-noui.controller.js'),
-            template: require('./views/post-view-noui.html')
+            template: require('./views/post-view-noui.html'),
+            params: {
+                view: {value: 'noui', squash: true}
+            }
         }
     )
     .state(

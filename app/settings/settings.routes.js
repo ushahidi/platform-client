@@ -68,7 +68,6 @@ function (
             controller: require('./categories/categories.controller.js'),
             template: require('./categories/categories.html'),
             onEnter: function ($state, $transition$) {
-                console.log('entered');
             }
         }
     )
