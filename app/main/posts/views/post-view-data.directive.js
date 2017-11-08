@@ -8,7 +8,8 @@ function PostViewData() {
         scope: {
             filters: '=',
             isLoading: '=',
-            currentView: '='
+            currentView: '=',
+            post: '='
         },
         controller: PostViewDataController,
         template: require('./post-view-data.html')
@@ -26,12 +27,11 @@ PostViewDataController.$inject = [
 '$translate',
 '$q',
 'PostActionsService',
-'PostLockService',
 '$timeout',
 '$location',
-'$anchorScroll',
 'Notify',
-'$window'
+'$window',
+'$state'
 ];
 
 function PostViewDataController(
@@ -45,12 +45,11 @@ function PostViewDataController(
     $translate,
     $q,
     PostActionsService,
-    PostLockService,
     $timeout,
     $location,
-    $anchorScroll,
     Notify,
-    $window
+    $window,
+    $state
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -259,7 +258,7 @@ function PostViewDataController(
     function goToPost(post) {
         angular.element(document.getElementById('bootstrap-app')).addClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
-        $location.path('/posts/' + post.id);
+        $state.go('postDetail', {postId: post.id});
     }
 
     function showPost(post) {
@@ -270,7 +269,7 @@ function PostViewDataController(
             } else {
                 var currentWidth = $window.innerWidth;
                 if (currentWidth > 1023) {
-                    $location.path('/posts/' + post.id, false);
+                    $state.go('list.detail', {postId: post.id});
                     $scope.selectedPost.post = post;
                     $scope.selectedPostId = post.id;
                 } else {

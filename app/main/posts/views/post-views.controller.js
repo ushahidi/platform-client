@@ -13,7 +13,6 @@ function PostViewsController($scope, $translate, $transition$, PostFilters) {
     });
     PostFilters.setMode('all');
     $scope.filters = PostFilters.getFilters();
-
     $scope.$emit('event:allposts:show');
     $scope.$on('$destroy', function () {
         $scope.$emit('event:allposts:close');

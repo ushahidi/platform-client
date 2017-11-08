@@ -8,51 +8,80 @@ function (
     .state(
         {
             name: 'list',
-            url: '/views/:view',
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html'),
-            onEnter: function ($state, $transition$, PostFilters) {
-                switch (PostFilters.getMode()) {
-                    case 'savedsearch':
-                        $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    case 'collection':
-                        $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    default:
-                        var view = $transition$.params().view ? $transition$.params().view : 'map';
-                        if (view === 'list') {
-                            $state.go('list', {view: 'data'}, {reload: true});
-                        }
-                }
-
+            onEnter: function ($state) {
+                console.log($state);
             }
+            // onEnter: function ($state, $transition$, PostFilters) {
+            //     switch (PostFilters.getMode()) {
+            //         case 'savedsearch':
+            //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+            //             break;
+            //         case 'collection':
+            //             $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+            //             break;
+            //         default:
+            //             var view = $transition$.params().view ? $transition$.params().view : 'map';
+            //             if (view === 'list') {
+            //                 $state.go('list', {view: 'data'}, {reload: true});
+            //             }
+            //     }
+            //
+            // }
         }
     )
     .state(
         {
-            name: 'list.map.noui',
-            url: '/map/noui',
-            controller: require('./views/post-view-noui.controller.js'),
-            template: require('./views/post-view-noui.html')
+            name: 'list.data',
+            url: '/views/:view',
+            controller: require('./views/post-views.controller.js'),
+            template: require('./views/post-view-data.html'),
+            onEnter: function ($state) {
+                console.log($state);
+            }
+            // onEnter: function ($state, $transition$, PostFilters) {
+            //     switch (PostFilters.getMode()) {
+            //         case 'savedsearch':
+            //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+            //             break;
+            //         case 'collection':
+            //             $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+            //             break;
+            //         default:
+            //             var view = $transition$.params().view ? $transition$.params().view : 'map';
+            //             if (view === 'list') {
+            //                 $state.go('list', {view: 'data'}, {reload: true});
+            //             }
+            //     }
+            //
+            // }
         }
     )
     /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
-        at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
-        since you won't be sent to a sole post' detail view
+     at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
+     since you won't be sent to a sole post' detail view
      **/
     .state(
         {
-            name: 'list.detail',
+            name: 'list.data.detail',
             url: '/posts/:postId',
-            controller: require('./views/post-views.controller.js'),
-            template: require('./views/main.html'),
+            template: require('./detail/post-detail-data.html'),
+            controller: require('./detail/post-detail-data.controller.js'),
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                 }]
             }
+        }
+    )
+    .state(
+        {
+            name: 'list.noui',
+            url: '/map/noui',
+            controller: require('./views/post-view-noui.controller.js'),
+            template: require('./views/post-view-noui.html')
         }
     )
     .state(

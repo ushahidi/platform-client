@@ -184,7 +184,10 @@
         </div>
     </div>
     <div class="post-col">
-        <post-detail-data ng-if="selectedPost.post && !editMode.editing" edit-mode="editMode" filters="filters" is-loading="isLoading" post="selectedPost.post"></post-detail-data>
+
+        <!--<post-detail-data ui-view='list.detail' ng-if="selectedPost.post && !editMode.editing" edit-mode="editMode" filters="filters" is-loading="isLoading" post="selectedPost.post"></post-detail-data>
+        -->
+        <div ui-view="list.data.detail"></div>
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
         <post-data-editor parent-form="formData" saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
     </div>
