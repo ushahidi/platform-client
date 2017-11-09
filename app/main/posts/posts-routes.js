@@ -92,12 +92,12 @@ function (
     )
     .state(
         {
-            url: '^/collections/:id/:view',
+            url: '^/collections/:id/data',
             name: 'collection',
             parent: 'list.data',
             params: {
                 id: null,
-                view: {squash: true, value: null}
+                view: {squash: true, value: 'data'}
             },
             controller: require('./collections/collections-controller.js'),
             template: require('./collections/collections.html'),
