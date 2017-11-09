@@ -1,6 +1,6 @@
 <div>
     <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data'" edit-mode="{editing: false}"></post-toolbar>
-    <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>
+    <!--@uirouter-refactor ASK ANNA About this <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>-->
      <!-- todo: toolbox-->
     <div ui-view noanimation="true"></div>
     <!-- this is needed for saved searches and collections since they can only render here.

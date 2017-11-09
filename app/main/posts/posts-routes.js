@@ -93,7 +93,8 @@ function (
     .state(
         {
             name: 'savedsearch',
-            url: '/savedsearches/:id/:view',
+            url: '^/savedsearches/:id/:view',
+            parent: 'list.data',
             params: {
                 id: null,
                 view: {squash: true, value: null}
@@ -114,12 +115,16 @@ function (
                 }
             },
             resolve: {
+                isLoading: function () {
+                    return {state: true};
+                },
                 savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
                     return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
                 }]
             }
         }
     )
+
     /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
      at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
      since you won't be sent to a sole post' detail view
