@@ -60,6 +60,7 @@ function PostViewDataController(
     $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
     $scope.isLoading = $scope.$resolve.isLoading;
+    $scope.getPosts = getPosts;
     var stopInterval;
     /**
      * setting "now" time as utc for new posts filter

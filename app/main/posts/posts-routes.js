@@ -109,8 +109,8 @@ function (
                     viewParam = 'map';
                 } else if ($transition$.params().view && $transition$.params().view !== 'list') {
                     viewParam = $transition$.params().view;
+                    $state.go('collection', {view: viewParam, id: $transition$.params().id});
                 }
-                $state.go('collection', {view: viewParam, id: $transition$.params().id});
             },
             resolve: {
                 collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
