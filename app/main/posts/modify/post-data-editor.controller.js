@@ -92,9 +92,13 @@ function PostDataEditorController(
         }
     });
 
-    var $locationChangeStartHandler = $scope.$on('$locationChangeStart', function (e, next) {
+    /**
+     * @uirouter-refactor check this and add back if neded
+     * var $locationChangeStartHandler = $scope.$on('$locationChangeStart', function (e, next) {
         $scope.leavePost(next, e);
     });
+     */
+
     activate();
 
     function activate() {
@@ -138,9 +142,10 @@ function PostDataEditorController(
             $state.go('postDetail', {postId: $scope.$resolve.post.id});
             //@uirouter-refactor $location.path(url.replace($location.$$absUrl.replace($location.$$url, ''), ''));
             //@uirouter-refactor $locationChangeStartHandler();
-        } else if (movingToDataPost) {
-            //@uirouter-refactor $location.path(url.match(/\/posts\/[0-9]+(\/|$)/)[0]);
         }
+        //else if (movingToDataPost) {
+        //@uirouter-refactor $location.path(url.match(/\/posts\/[0-9]+(\/|$)/)[0]);
+        //}
     }
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;

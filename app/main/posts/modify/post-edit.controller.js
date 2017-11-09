@@ -46,9 +46,10 @@ function (
                     });
                 }
             });
-        } else {
-            //@uirouter-refactor $location.url('/posts/' + post.id);
         }
+        // else {
+        //@uirouter-refactor $location.url('/posts/' + post.id);
+        //}
         $scope.post = post;
     });
 }];

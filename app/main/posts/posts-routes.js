@@ -92,6 +92,35 @@ function (
     )
     .state(
         {
+            url: '^/collections/:id/:view',
+            name: 'collection',
+            parent: 'list.data',
+            params: {
+                id: null,
+                view: {squash: true, value: null}
+            },
+            controller: require('./collections/collections-controller.js'),
+            template: require('./collections/collections.html'),
+            onEnter: function ($state, $transition$, collection) {
+                var viewParam = collection.view;
+                if (viewParam === 'list') {
+                    viewParam = 'data';
+                } else if (!viewParam) {
+                    viewParam = 'map';
+                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
+                    viewParam = $transition$.params().view;
+                }
+                $state.go('collection', {view: viewParam, id: $transition$.params().id});
+            },
+            resolve: {
+                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
+                }]
+            }
+        }
+    )
+    .state(
+        {
             name: 'savedsearch',
             url: '^/savedsearches/:id/:view',
             parent: 'list.data',
@@ -205,34 +234,6 @@ function (
             url: '/posts/:id/edit',
             controller: require('./modify/post-edit.controller.js'),
             template: require('./modify/main.html')
-        }
-    )
-    .state(
-        {
-            url: '/collections/:id/:view',
-            name: 'collection',
-            params: {
-                id: null,
-                view: {squash: true, value: null}
-            },
-            controller: require('./collections/collections-controller.js'),
-            template: require('./collections/collections.html'),
-            onEnter: function ($state, $transition$, collection) {
-                var viewParam = collection.view;
-                if (viewParam === 'list') {
-                    viewParam = 'data';
-                } else if (!viewParam) {
-                    viewParam = 'map';
-                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    viewParam = $transition$.params().view;
-                }
-                $state.go('collection', {view: viewParam, id: $transition$.params().id});
-            },
-            resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
-                }]
-            }
         }
     );
 

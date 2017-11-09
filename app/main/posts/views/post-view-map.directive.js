@@ -12,73 +12,22 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         template: require('./post-view-map.html'),
         link: PostViewMapLink,
         controller: function ($scope) {
-            $scope.loadPosts = loadPosts;
             $scope.filters = PostFilters.getFilters();
             $scope.isLoading = {state: true};
             $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
-            var limit = 200;
-            var requestBlockSize = 5;
-            var numberOfChunks = 0;
-            var currentGeoJsonRequests = [];
-
-            $scope.cancelCurrentRequests = function () {
-                _.each(currentGeoJsonRequests, function (request) {
-                    request.$cancelRequest();
-                });
-                currentGeoJsonRequests = [];
-            }
-
-            function loadPosts(query, offset, currentBlock) {
-                offset = offset || 0;
-                currentBlock = currentBlock || 1;
-
-                query = query || PostFilters.getQueryParams($scope.filters);
-
-                var conditions = _.extend(query, {
-                    limit: limit,
-                    offset: offset,
-                    has_location: 'mapped'
-                });
-                $scope.isLoading.state = true;
-
-                var request = PostEndpoint.geojson(conditions);
-                currentGeoJsonRequests.push(request);
-
-                return request.$promise.then(function (posts) {
-
-                    // Set number of chunks
-                    if (offset === 0 && posts.total > limit) {
-                        numberOfChunks = Math.floor((posts.total - limit) / limit);
-                        numberOfChunks += ((posts.total - limit) % limit) > 0 ? 1 : 0;
-                    }
-
-                    // Retrieve blocks of chunks
-                    // At the end of a block request the next block of chunks
-                    if (numberOfChunks > 0 && currentBlock === 1) {
-                        var block = numberOfChunks > requestBlockSize ? requestBlockSize : numberOfChunks;
-                        numberOfChunks -= requestBlockSize;
-                        while (block > 0) {
-                            block -= 1;
-                            offset += limit;
-                            $scope.loadPosts(query, offset, block).then(addPostsToMap);
-                        }
-                    }
-
-                    if (numberOfChunks <= 0) {
-                        $scope.isLoading.state = false;
-                    }
-                    return posts;
-                });
-            }
-
         }
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
         var map, markers;
 
+        var limit = 200;
+        var requestBlockSize = 5;
+        var numberOfChunks = 0;
+        var currentGeoJsonRequests = [];
+
         // Start loading data
-        var posts = $scope.loadPosts();
+        var posts = loadPosts();
         var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
         var createMap = createMapDirective.then(function (data) {
             map = data;
@@ -176,7 +125,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             }, true);
         }
         function reloadMapPosts(query) {
-            var test = $scope.loadPosts(query);
+            var test = loadPosts(query);
             test.then(addPostsToMap);
         }
 
@@ -220,6 +169,54 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             return PostEndpoint.get({id: feature.properties.id}).$promise;
         }
 
+        $scope.cancelCurrentRequests = function () {
+            _.each(currentGeoJsonRequests, function (request) {
+                request.$cancelRequest();
+            });
+            currentGeoJsonRequests = [];
+        };
 
+        function loadPosts(query, offset, currentBlock) {
+            offset = offset || 0;
+            currentBlock = currentBlock || 1;
+
+            query = query || PostFilters.getQueryParams($scope.filters);
+
+            var conditions = _.extend(query, {
+                limit: limit,
+                offset: offset,
+                has_location: 'mapped'
+            });
+            $scope.isLoading.state = true;
+
+            var request = PostEndpoint.geojson(conditions);
+            currentGeoJsonRequests.push(request);
+
+            return request.$promise.then(function (posts) {
+
+                // Set number of chunks
+                if (offset === 0 && posts.total > limit) {
+                    numberOfChunks = Math.floor((posts.total - limit) / limit);
+                    numberOfChunks += ((posts.total - limit) % limit) > 0 ? 1 : 0;
+                }
+
+                // Retrieve blocks of chunks
+                // At the end of a block request the next block of chunks
+                if (numberOfChunks > 0 && currentBlock === 1) {
+                    var block = numberOfChunks > requestBlockSize ? requestBlockSize : numberOfChunks;
+                    numberOfChunks -= requestBlockSize;
+                    while (block > 0) {
+                        block -= 1;
+                        offset += limit;
+                        loadPosts(query, offset, block).then(addPostsToMap);
+                    }
+                }
+
+                if (numberOfChunks <= 0) {
+                    $scope.isLoading.state = false;
+                }
+                return posts;
+            });
+        }
     }
 }
