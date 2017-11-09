@@ -89,6 +89,41 @@ describe('Post Filters Service', function () {
                 order_unlocked_on_top: 'true'
             });
         });
+        it ('if filter is represented of an array, only selected filter-value should be removed', function () {
+            PostFilters.setFilters({
+                status: ['archived', 'draft'],
+                tags: [1,3,4],
+                source: ['sms', 'twitter', 'web', 'email'],
+                form: ['testForm1', 'testForm2', 'testForm3']
+            });
 
+            PostFilters.clearFilter('status', 'archived');
+            PostFilters.clearFilter('tags', 4);
+            PostFilters.clearFilter('source', 'twitter');
+            PostFilters.clearFilter('form', 'testForm1');
+            var filters = PostFilters.getFilters();
+            expect(filters.status).toEqual(['draft']);
+            expect(filters.tags).toEqual([1, 3]);
+            expect(filters.source).toEqual(['sms', 'web', 'email']);
+            expect(filters.form).toEqual(['testForm2', 'testForm3']);
+        });
+        it ('if filter is not represented by an array, the selected filter should be reset to default ', function () {
+            var defaultFilters = PostFilters.getDefaults();
+
+            PostFilters.setFilters({
+                date_before: 'Feb 17, 2016',
+                within_km: '5',
+                order_unlocked_on_top: false
+            });
+
+            PostFilters.clearFilter('date_before', 'Feb 17, 2016');
+            PostFilters.clearFilter('within_km', 5);
+            PostFilters.clearFilter('order_unlocked_on_top', false);
+
+            var filters = PostFilters.getFilters();
+            expect(filters.date_before).toEqual(defaultFilters.date_before);
+            expect(filters.within_km).toEqual(defaultFilters.within_km);
+            expect(filters.order_unlocked_on_top).toEqual(defaultFilters.order_unlocked_on_top);
+        });
     });
 });
