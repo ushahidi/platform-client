@@ -46,7 +46,6 @@ function PostViewDataController(
     $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
-    var clearPosts = false;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
     var recentPosts = [];
@@ -145,8 +144,7 @@ function PostViewDataController(
             return $scope.filters;
         }, function (newValue, oldValue) {
             if (PostFilters.reactiveFilters === true && (newValue !== oldValue)) {
-                clearPosts = true;
-                getPosts(false, false);
+                getPosts(false, false, true);
                 PostFilters.reactiveFilters = false;
             }
         }, true);
@@ -266,7 +264,7 @@ function PostViewDataController(
         });
     }
 
-    function getPosts(query, useOffset) {
+    function getPosts(query, useOffset, clearPosts) {
         query = query || PostFilters.getQueryParams($scope.filters);
         PostEndpoint.stats(query).$promise.then(function (results) {
             $scope.total = results.totals[0].values[0].total;
@@ -336,8 +334,7 @@ function PostViewDataController(
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
-                    clearPosts = true;
-                    getPosts(false, false);
+                    getPosts(false, false, true);
                 }
             }
         });
@@ -413,8 +410,7 @@ function PostViewDataController(
     function loadMore() {
         // Increment page
         $scope.currentPage++;
-        clearPosts = false;
-        getPosts(false, true);
+        getPosts(false, true, false);
     }
 
     function selectBulkActions() {

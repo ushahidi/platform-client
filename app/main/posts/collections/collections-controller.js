@@ -52,7 +52,7 @@ module.exports = [
             /**
              * call getPosts manually to ensure the collection reloads
              */
-            $scope.$parent.getPosts();
+            $scope.$parent.getPosts(false, false, true);
         }
 
         // Set view based on route or set view
