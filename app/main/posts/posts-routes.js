@@ -107,9 +107,32 @@ function (
                     viewParam = 'data';
                 } else if (!viewParam) {
                     viewParam = 'map';
-                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    viewParam = $transition$.params().view;
-                    $state.go('collection', {view: viewParam, id: $transition$.params().id});
+                }
+            },
+            resolve: {
+                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
+                }]
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/collections/:id/map',
+            name: 'collectionMap',
+            parent: 'list.map',
+            params: {
+                id: null,
+                view: {squash: true, value: 'map'}
+            },
+            controller: require('./collections/collections-controller.js'),
+            template: require('./collections/collections.html'),
+            onEnter: function ($state, $transition$, collection) {
+                var viewParam = collection.view;
+                if (viewParam === 'list') {
+                    viewParam = 'data';
+                } else if (!viewParam) {
+                    viewParam = 'map';
                 }
             },
             resolve: {
