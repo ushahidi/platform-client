@@ -8,8 +8,14 @@ function (
     .state(
         {
             name: 'list',
+            abstract: true,
             controller: require('./views/post-views.controller.js'),
-            template: require('./views/main.html')
+            template: require('./views/main.html'),
+            resolve: {
+                isLoading: function () {
+                    return {state: true};
+                }
+            }
             // onEnter: function ($state, $transition$, PostFilters) {
             //     switch (PostFilters.getMode()) {
             //         case 'savedsearch':

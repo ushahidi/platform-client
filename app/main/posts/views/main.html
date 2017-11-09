@@ -24,7 +24,10 @@
         </div>
     </div>
     <main role="main">
-        <post-view current-view="currentView" filters="filters" base-url="/views/"> </post-view>
+        <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data'" edit-mode="{editing: false}"></post-toolbar>
+        <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>
+        <!-- todo: toolbox-->
+        <div ui-view noanimation="true"></div>
         <ush-logo></ush-logo>
     </main>
 </div>

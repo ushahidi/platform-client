@@ -22,6 +22,7 @@ module.exports = [
     '_',
     'PostActionsService',
     'MediaEditService',
+    '$state',
 function PostDataEditorController(
     $scope,
     $rootScope,
@@ -45,7 +46,8 @@ function PostDataEditorController(
     Notify,
     _,
     PostActionsService,
-    MediaEditService
+    MediaEditService,
+    $state
   ) {
 
     // Setup initial stages container
@@ -409,7 +411,7 @@ function PostDataEditorController(
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
                 // Save the updated post back to outside context
-                $scope.postContainer.post = response;
+                $state.go('list.data.detail', {view: 'data', postId: response.id});
 
                 // DEVNOTE: Not sure how this would ever happen in the case of data view
                 // ideally this will go away when the two editors are integrated
