@@ -10,7 +10,6 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
         $scope.currentGeoJsonRequests = [];
 
         // Start loading data
-        $scope.posts = $scope.loadPosts();
         /**
          * functions
          */
@@ -102,6 +101,47 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
             $scope.currentGeoJsonRequests = [];
         };
 
+        $scope.reloadMapPosts = function (query) {
+            var test = $scope.loadPosts(query);
+            test.then($scope.addPostsToMap);
+        };
+
+        $scope.watchFilters = function () {
+            // whenever the qEnabled var changes, do a dummy update of $scope.filters.reactToQEnabled
+            // to force the $scope.filters watcher to run
+            //$rootScope.$watchTrue(function () {
+            $scope.$watch(function () {
+                return PostFilters.qEnabled;
+            }, function () {
+                if (PostFilters.qEnabled === true) {
+                    $scope.filters.reactToQEnabled = $scope.filters.reactToQEnabled ? !$scope.filters.reactToQEnabled : true;
+                }
+            });
+            // whenever filters change, reload the posts on the map
+            $scope.$watch(function () {
+                return $scope.filters;
+            }, function (newValue, oldValue) {
+                var diff = _.omit(newValue, function (value, key, obj) {
+                    return _.isEqual(oldValue[key], value);
+                });
+                var diffLength = _.keys(diff).length;
+                var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
+                /**
+                 * We only want to call reloadMapPosts if we :
+                 * - Have changes other than q= in the filters
+                 * - Only q= changed but we also have enabled the q filter
+                 */
+                if (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && PostFilters.qEnabled === true)) {
+                    $scope.cancelCurrentRequests();
+                    $scope.clearData();
+                    $scope.reloadMapPosts();
+                }
+                if (PostFilters.qEnabled === true) {
+                    PostFilters.qEnabled = false;
+                }
+            }, true);
+        };
+
         $scope.loadPosts = function (query, offset, currentBlock) {
             offset = offset || 0;
             currentBlock = currentBlock || 1;
@@ -145,45 +185,10 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
             });
         };
 
-        $scope.reloadMapPosts = function (query) {
-            var test = $scope.loadPosts(query);
-            test.then($scope.addPostsToMap);
-        };
+        function activate() {
+            $scope.posts = $scope.loadPosts();
+        }
 
-        $scope.watchFilters = function () {
-            // whenever the qEnabled var changes, do a dummy update of $scope.filters.reactToQEnabled
-            // to force the $scope.filters watcher to run
-            //$rootScope.$watchTrue(function () {
-            $scope.$watch(function () {
-                return PostFilters.qEnabled;
-            }, function () {
-                if (PostFilters.qEnabled === true) {
-                    $scope.filters.reactToQEnabled = $scope.filters.reactToQEnabled ? !$scope.filters.reactToQEnabled : true;
-                }
-            });
-            // whenever filters change, reload the posts on the map
-            $scope.$watch(function () {
-                return $scope.filters;
-            }, function (newValue, oldValue) {
-                var diff = _.omit(newValue, function (value, key, obj) {
-                    return _.isEqual(oldValue[key], value);
-                });
-                var diffLength = _.keys(diff).length;
-                var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
-                /**
-                 * We only want to call reloadMapPosts if we :
-                 * - Have changes other than q= in the filters
-                 * - Only q= changed but we also have enabled the q filter
-                 */
-                if (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && PostFilters.qEnabled === true)) {
-                    $scope.cancelCurrentRequests();
-                    $scope.clearData();
-                    $scope.reloadMapPosts();
-                }
-                if (PostFilters.qEnabled === true) {
-                    PostFilters.qEnabled = false;
-                }
-            }, true);
-        };
+        activate();
     }
 ];
