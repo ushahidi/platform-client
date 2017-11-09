@@ -17,14 +17,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
-        console.log(controller.$scope);
         var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
         var createMap = createMapDirective.then(function (data) {
             $scope.map = data;
-            setTimeout(function () {
-                $scope.map.invalidateSize();
-                $scope.$apply(); //this triggers a $digest
-            }, 2);
         });
         // When data is loaded
         $q.all({

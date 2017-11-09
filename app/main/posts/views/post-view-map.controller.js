@@ -10,8 +10,7 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
         $scope.currentGeoJsonRequests = [];
 
         // Start loading data
-        $scope.posts = loadPosts();
-        $scope.loadPosts = loadPosts;
+        $scope.posts = $scope.loadPosts();
         /**
          * functions
          */
@@ -20,7 +19,7 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
                 $scope.map.removeLayer($scope.markers);
                 $scope.markers = undefined;
             }
-        }
+        };
 
         $scope.addPostsToMap = function (posts) {
             var geojson = L.geoJson(posts, {
@@ -50,7 +49,10 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
             if ($scope.map.getZoom() > 15) {
                 $scope.map.setZoom(15);
             }
-        }
+            $timeout(function () {
+                $scope.map.invalidateSize();
+            }, 1);
+        };
 
 
         $scope.onEachFeature  = function (feature, layer) {
@@ -83,14 +85,15 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
                     });
                 }
             });
-        }
+        };
 
         $scope.goToPost = function (post) {
             $location.path('/posts/' + post.id);
-        }
+        };
+
         $scope.getPostDetails = function (feature) {
             return PostEndpoint.get({id: feature.properties.id}).$promise;
-        }
+        };
 
         $scope.cancelCurrentRequests = function () {
             _.each($scope.currentGeoJsonRequests, function (request) {
@@ -99,7 +102,7 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
             $scope.currentGeoJsonRequests = [];
         };
 
-        function loadPosts(query, offset, currentBlock) {
+        $scope.loadPosts = function (query, offset, currentBlock) {
             offset = offset || 0;
             currentBlock = currentBlock || 1;
 
@@ -131,7 +134,7 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
                     while (block > 0) {
                         block -= 1;
                         offset += $scope.limit;
-                        loadPosts(query, offset, block).then($scope.addPostsToMap);
+                        $scope.loadPosts(query, offset, block).then($scope.addPostsToMap);
                     }
                 }
 
@@ -140,13 +143,12 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
                 }
                 return posts;
             });
-        }
+        };
 
         $scope.reloadMapPosts = function (query) {
             var test = $scope.loadPosts(query);
             test.then($scope.addPostsToMap);
-        }
-
+        };
 
         $scope.watchFilters = function () {
             // whenever the qEnabled var changes, do a dummy update of $scope.filters.reactToQEnabled
@@ -182,8 +184,6 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
                     PostFilters.qEnabled = false;
                 }
             }, true);
-        }
-
-
+        };
     }
 ];
