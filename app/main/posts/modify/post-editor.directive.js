@@ -250,6 +250,7 @@ function PostEditorController(
         PostLockEndpoint.unlock($scope.post.lock).$promise.then(function (result) {
             // @uirouter-refactor add back
             // var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
+
             // $location.path(path);
         });
     }

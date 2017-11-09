@@ -6,6 +6,7 @@ module.exports = [
     '$transition$',
     'FormEndpoint',
     'PostEndpoint',
+    '$state',
 function (
     $scope,
     $translate,
@@ -13,7 +14,8 @@ function (
     $controller,
     $transition$,
     FormEndpoint,
-    PostEndpoint
+    PostEndpoint,
+    $state
 ) {
 
     $translate('post.edit_post').then(function (title) {
@@ -24,7 +26,7 @@ function (
     PostEndpoint.get({ id: $transition$.params().id }).$promise.then(function (post) {
         // Redirect to view if no edit permissions
         if (post.allowed_privileges.indexOf('update') === -1) {
-            //@uirouter-refactor $location.url('/posts/' + post.id);
+            $state.go('postDetail', {postId: post.id});
         }
         // Make post tags numeric
         post.tags = post.tags.map(function (tag) {

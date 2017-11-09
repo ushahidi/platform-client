@@ -147,24 +147,3 @@ angular.module('app',
     }).run(function ($rootScope) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
     });
-
-
-/**
- * @uirouter-refactor
- *
-    .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
-        var original = $location.path;
-        $location.path = function (path, reload) {
-            if (reload === false) {
-                var lastRoute = $route.current;
-                var un = $rootScope.$on('$locationChangeSuccess', function () {
-                    $route.current = lastRoute;
-                    un();
-                });
-            }
-            return original.apply($location, [path]);
-        };
-        angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
-        angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    }]);
-**/

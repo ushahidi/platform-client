@@ -15,7 +15,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             $scope.loadPosts = loadPosts;
             $scope.filters = PostFilters.getFilters();
             $scope.isLoading = {state: true};
-            $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'map-only';
+            $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
             var limit = 200;
             var requestBlockSize = 5;
             var numberOfChunks = 0;

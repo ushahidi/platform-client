@@ -130,15 +130,12 @@ function PostDataEditorController(
 
         leaveEditMode();
         signalLeaveComplete();
-
-        if (!url) {
-            return;
-        }
         var locationMatch = url.match(/\/posts\/[0-9]+(\/|$)/);
         var locationIsPost =  locationMatch ? locationMatch.length > 0 : false;
         var movingToDataPost = ($stateParams.view === 'data' && locationIsPost);
 
         if (url &&  !(movingToDataPost)) {
+            $state.go('postDetail', {postId: $scope.$resolve.post.id});
             //@uirouter-refactor $location.path(url.replace($location.$$absUrl.replace($location.$$url, ''), ''));
             //@uirouter-refactor $locationChangeStartHandler();
         } else if (movingToDataPost) {
