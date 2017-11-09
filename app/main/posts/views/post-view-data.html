@@ -69,96 +69,6 @@
                 selected-post="selectedPost"
             >
             </post-card>
-
-
-
-
-            <!-- <listing-toolbar></listing-toolbar> -->
-            <!-- <div class="listing-toolbar">
-                <div class="listing-item">
-                    <button href="" ng-click="closeBulkActions()" class="button-beta button-flat listing-item-secondary">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
-                        </svg>
-                        <span class="hidden">Close</span>
-                    </button>
-                    <div class="listing-toolbar-summary listing-item-primary">
-                        <strong><span class="total"></span> selected</strong>
-                        <button class="button-link">Deselect</button>
-                    </div>
-                </div>
-
-                <div class="listing-toolbar-actions">
-                    <button class="button-beta" data-toggle="toggle-content">
-                        <span class="button-label">Mark as</span>
-                        <svg class="iconic">
-                            <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                        </svg>
-                    </button>
-
-                    <ul class="dropdown-menu toggle-content">
-                        <li>
-                            <a href="" data-message="publish-success">
-                                <svg class="iconic">
-                                    <use xlink:href="/img/iconic-sprite.svg#globe"></use>
-                                </svg>
-                                <span class="label">Published</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" data-message="under_review-success">
-                                <svg class="iconic">
-                                    <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
-                                </svg>
-                                <span class="label">Under Review</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" data-message="archive-success">
-                                <svg class="iconic">
-                                    <use xlink:href="/img/iconic-sprite.svg#box"></use>
-                                </svg>
-                                <span class="label">Archived</span>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <button class="button-beta" data-modal="add-to-collection">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
-                        </svg>
-                        <span class="button-label hidden">Add to Collection</span>
-                    </button>
-
-                    <button class="button-beta">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
-                        </svg>
-                        <span class="button-label hidden">Edit</span>
-                    </button>
-
-                    <button class="button-destructive" data-modal="delete-post">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                        </svg>
-                        <span class="button-label hidden">Delete</span>
-                    </button>
-
-                    <button class="listing-toolbar-toggle more">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
-                        </svg>
-                        <span class="button-label hidden">Edit</span>
-                    </button>
-
-                    <button class="listing-toolbar-toggle less">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                        </svg>
-                        <span class="button-label hidden">Delete</span>
-                    </button>
-                </div>
-        </div> -->
             <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
                 <h4 translate>post.no_search_results</h4>
             </div>
@@ -184,11 +94,8 @@
         </div>
     </div>
     <div class="post-col">
-
-        <!--<post-detail-data ui-view='list.detail' ng-if="selectedPost.post && !editMode.editing" edit-mode="editMode" filters="filters" is-loading="isLoading" post="selectedPost.post"></post-detail-data>
-        -->
         <div ui-view></div>
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
-        <post-data-editor parent-form="formData" saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
+        <!--<post-data-editor parent-form="formData" saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>-->
     </div>
 </div>

@@ -37,25 +37,22 @@ function (
             params: {
                 view: {value: 'data', squash: true}
             },
-            onEnter: function ($state, $transition$) {
-            }
+            onEnter: function ($state, $transition$, PostFilters) {
+                // switch (PostFilters.getMode()) {
+                //     case 'savedsearch':
+                //         $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+                //         break;
+                //     case 'collection':
+                //         $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+                //         break;
+                //     default:
+                //         var view = $transition$.params().view ? $transition$.params().view : 'map';
+                //         if (view === 'list') {
+                //             $state.go('list.data', {view: 'data'}, {reload: true});
+                //         }
+                // }
 
-            // onEnter: function ($state, $transition$, PostFilters) {
-            //     switch (PostFilters.getMode()) {
-            //         case 'savedsearch':
-            //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         case 'collection':
-            //             $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         default:
-            //             var view = $transition$.params().view ? $transition$.params().view : 'map';
-            //             if (view === 'list') {
-            //                 $state.go('list', {view: 'data'}, {reload: true});
-            //             }
-            //     }
-            //
-            // }
+            }
         }
     )
     .state(
@@ -69,24 +66,52 @@ function (
             params: {
                 view: {value: 'map', squash: true}
             },
-            onEnter: function ($state, $transition$) {
+            onEnter: function ($state, $transition$, PostFilters) {
+                switch (PostFilters.getMode()) {
+                    case 'savedsearch':
+                        $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+                        break;
+                    case 'collection':
+                        $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
+                        break;
+                    default:
+                        var view = $transition$.params().view ? $transition$.params().view : 'map';
+                        if (view === 'list') {
+                            $state.go('list', {view: 'data'}, {reload: true});
+                        }
+                }
+
             }
-            // onEnter: function ($state, $transition$, PostFilters) {
-            //     switch (PostFilters.getMode()) {
-            //         case 'savedsearch':
-            //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         case 'collection':
-            //             $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         default:
-            //             var view = $transition$.params().view ? $transition$.params().view : 'map';
-            //             if (view === 'list') {
-            //                 $state.go('list', {view: 'data'}, {reload: true});
-            //             }
-            //     }
-            //
-            // }
+        }
+    )
+    .state(
+        {
+            name: 'savedsearch',
+            url: '/savedsearches/:id/:view',
+            params: {
+                id: null,
+                view: {squash: true, value: null}
+            },
+            controller: require('./savedsearches/savedsearches-controller.js'),
+            template: require('./savedsearches/savedsearches.html'),
+            onEnter: function ($state, $transition$, savedSearch) {
+                var viewParam = savedSearch.view;
+                if (viewParam === 'list') {
+                    viewParam = 'data';
+                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
+                } else if (!viewParam) {
+                    viewParam = 'map';
+                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
+                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
+                    viewParam = $transition$.params().view;
+                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
+                }
+            },
+            resolve: {
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
+                }]
+            }
         }
     )
     /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
@@ -104,6 +129,30 @@ function (
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                 }]
+            },
+            onEnter: function ($state, $transition$) {
+                console.log($state, $transition$);
+            }
+        }
+    )
+    /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
+     at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
+     since you won't be sent to a sole post' detail view
+     **/
+    .state(
+        {
+            name: 'list.data.edit',
+            url: '/posts/:postId/edit',
+            template: require('./modify/post-data-editor.html'),
+            controller: require('./modify/post-data-editor.controller.js'),
+            resolve: {
+                //change to selectedPost and refactor the selectedposts in general
+                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+                    return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                }]
+            },
+            onEnter: function ($state, $transition$) {
+                console.log($state, $transition$);
             }
         }
     )
@@ -171,34 +220,6 @@ function (
             resolve: {
                 collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
                     return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            name: 'savedsearch',
-            url: '/savedsearches/:id/:view',
-            params: {
-                id: null,
-                view: {squash: true, value: null}
-            },
-            controller: require('./savedsearches/savedsearches-controller.js'),
-            template: require('./savedsearches/savedsearches.html'),
-            onEnter: function ($state, $transition$, savedSearch) {
-                var viewParam = savedSearch.view;
-                if (viewParam === 'list') {
-                    viewParam = 'data';
-                } else if (!viewParam) {
-                    viewParam = 'map';
-                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    viewParam = $transition$.params().view;
-                }
-                $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
-            },
-            resolve: {
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
-                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
                 }]
             }
         }

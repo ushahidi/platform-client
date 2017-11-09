@@ -3,6 +3,10 @@
     <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>
      <!-- todo: toolbox-->
     <div ui-view noanimation="true"></div>
-    <!--<post-view-map ng-switch-when="map" is-loading="isLoading" filters="filters"></post-view-map>-->
-
+    <!-- this is needed for saved searches and collections since they can only render here.
+    But in theory we could use  list.x.savedsearch and load here with ui-view? -->
+    <!--<post-view-data ng-if="currentView == 'data'" current-view="currentView" is-loading="isLoading" filters="filters"></post-view-data>-->
+    <!--<post-view-map ng-if="currentView == 'map'" is-loading="isLoading" filters="filters"></post-view-map>-->
+    <!-- @uirouter-refactor I don't know what this does but I need to find a replacement state for it
+    <post-view-unavailable ng-switch-when="unavailable" view="unavailableView"></post-view-unavailable>  -->
 </div>

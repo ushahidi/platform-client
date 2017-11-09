@@ -133,7 +133,8 @@ function PostEditorController(
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                $location.url('/posts/' + $scope.post.id);
+                console.log('fail to get lock!!!');
+                /////// @uirouter-refactor add back $location.url('/posts/' + $scope.post.id);
             }
 
             var post = $scope.post;
@@ -245,8 +246,9 @@ function PostEditorController(
 
     function cancel() {
         PostLockEndpoint.unlock($scope.post.lock).$promise.then(function (result) {
-            var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
-            $location.path(path);
+            // @uirouter-refactor add back
+            // var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
+            // $location.path(path);
         });
     }
 
@@ -304,7 +306,7 @@ function PostEditorController(
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/posts/' + response.id);
+                    //@uirouter-refactor add back $location.path('/posts/' + response.id);
                 } else {
                     Notify.notify(success_message, { name: $scope.post.title });
                     $location.path('/');

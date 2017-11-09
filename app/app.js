@@ -109,7 +109,7 @@ angular.module('app',
     .config(function ($urlRouterProvider) {
         // if the path doesn't match any of the urls you configured
         // otherwise will take care of routing the user to the specified url
-        $urlRouterProvider.otherwise('/views/map');
+        //$urlRouterProvider.otherwise('/views/map');
 
     })
     .factory('_', function () {

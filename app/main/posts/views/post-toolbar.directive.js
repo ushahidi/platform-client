@@ -17,8 +17,8 @@ function PostToolbarDirective() {
     };
 }
 
-PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService'];
-function PostToolbarController($scope, $rootScope, Notify, PostLockService) {
+PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService', '$state'];
+function PostToolbarController($scope, $rootScope, Notify, PostLockService, $state) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
@@ -37,6 +37,7 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService) {
             if ($scope.editMode.editing) {
                 $rootScope.$broadcast('event:edit:leave:form');
             } else {
+                $state.go('list.data.edit', {postId: $scope.selectedPost.id}, {reload: true});
                 $scope.editMode.editing = true;
             }
         }

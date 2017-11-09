@@ -72,7 +72,7 @@ function PostActionsDirective(
             }
 
             if ($stateParams.view !== 'data' && $location.path().indexOf('data') === -1) {
-                $location.path('/posts/' + postId + '/edit');
+                //@uirouter-refactor add back $location.path('/posts/' + postId + '/edit');
             } else if ($scope.editMode.editing) {
                 // At this point we are not certain we will switch to this Post so we back it up
                 // in anticipation of using it later if the current Post exists corectly
@@ -81,6 +81,7 @@ function PostActionsDirective(
             } else {
                 $scope.selectedPost.post = _.clone($scope.post);
                 $scope.editMode.editing = true;
+                $state.go('list.data.edit', {postId: $scope.post.id});
             }
         }
 

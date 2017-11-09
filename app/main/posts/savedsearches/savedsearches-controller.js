@@ -22,13 +22,8 @@ module.exports = [
         $scope.currentView = function () {
             return $transition$.params().view || savedSearch.view;
         };
+        $scope.isLoading = {state: true};
         $scope.layout = viewLayouts[$scope.currentView()];
-
-        $scope.$emit('event:savedsearch:show', savedSearch);
-        $scope.$on('$destroy', function () {
-            $scope.$emit('event:savedsearch:close');
-        });
-
         // Add set to the scope
         $scope.savedSearch = savedSearch;
         $scope.getSavedSearchUser = function () {

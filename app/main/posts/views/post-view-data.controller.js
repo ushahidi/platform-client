@@ -236,6 +236,7 @@ function PostViewDataController(
     }
 
     function goToPost(post) {
+        console.log('gotopost');
         angular.element(document.getElementById('bootstrap-app')).addClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
         $state.go('postDetail', {postId: post.id});
