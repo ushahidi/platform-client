@@ -7,29 +7,29 @@ module.exports = [
     $stateProvider
     .state(
         {
-            url: '^/collections/:id',
-            name: 'collectionRedirector',
+            url: '^/savedsearches/:id',
+            name: 'savedsearchesRedirector',
             params: {
                 id: null
             },
-            onEnter: function ($state, collection) {
-                var viewParam = collection.view;
+            onEnter: function ($state, savedSearch) {
+                var viewParam = savedSearch.view;
                 if (viewParam === 'list' || viewParam === 'data') {
-                    $state.go('collection.all.data', {id: collection.id});
+                    $state.go('savedsearches.all.data', {id: savedSearch.id});
                 } else {
-                    $state.go('collection.all.map', {id: collection.id});
+                    $state.go('savedsearches.all.map', {id: savedSearch.id});
                 }
             },
             resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
                 }]
             }
         }
     )
     .state(
         {
-            name: 'collection',
+            name: 'savedsearches',
             controller: require('./../views/post-views.controller.js'),
             template: require('./../views/main.html'),
             resolve: {
@@ -41,33 +41,33 @@ module.exports = [
     )
     .state(
         {
-            name: 'collection.all',
+            name: 'savedsearches.all',
             params: {
                 id: null,
                 view: {squash: true, value: 'data'}
             },
             views: {
-                collectionsAll: {
-                    controller: require('./collections-controller.js'),
-                    template: require('./collections.html')
+                savedsearchesAll: {
+                    controller: require('./savedsearches-controller.js'),
+                    template: require('./savedsearches.html')
                 }
             },
             resolve: {
                 isLoading: function () {
                     return {state: true};
                 },
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
                 }]
             }
         }
     )
     .state(
         {
-            url: '^/collections/:id/data',
-            name: 'collection.all.data',
+            url: '^/savedsearches/:id/data',
+            name: 'savedsearches.all.data',
             views: {
-                collectionData: {
+                savedsearchesData: {
                     controller: require('./../views/post-view-data.controller.js'),
                     template: require('./../views/post-view-data.html')
                 }
@@ -79,14 +79,14 @@ module.exports = [
     )
     .state(
         {
-            url: '^/collections/:id/map',
-            name: 'collection.all.map',
+            url: '^/savedsearches/:id/map',
+            name: 'savedsearches.all.map',
             params: {
                 id: null,
                 view: {squash: true, value: 'map'}
             },
             views: {
-                collectionData: {
+                savedsearchesData: {
                     controller: require('./../views/post-view-map.controller.js'),
                     template: function ($state, $transition$) {
                         return '<post-view-map></post-view-map>';

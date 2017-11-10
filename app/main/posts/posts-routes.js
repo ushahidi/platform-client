@@ -28,19 +28,6 @@ function (
                 view: {value: 'data', squash: true}
             },
             onEnter: function ($state, $transition$, PostFilters) {
-                // switch (PostFilters.getMode()) {
-                //     case 'savedsearch':
-                //         $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                //         break;
-                //     case 'collection':
-                //         $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                //         break;
-                //     default:
-                //         var view = $transition$.params().view ? $transition$.params().view : 'map';
-                //         if (view === 'list') {
-                //             $state.go('list.data', {view: 'data'}, {reload: true});
-                //         }
-                // }
 
             }
         }
@@ -51,8 +38,7 @@ function (
             name: 'list.map',
             url: '/views/map',
             template: function ($state, $transition$) {
-                return '<post-view-map></post-view-map>' +
-                    '<div ui-view="collectionSavedSearchMap"></div>';
+                return '<post-view-map></post-view-map>';
             },
             params: {
                 view: {value: 'map', squash: true}
@@ -72,77 +58,6 @@ function (
                         }
                 }
 
-            }
-        }
-    )
-    .state(
-        {
-            url: '^/savedsearches/:id',
-            name: 'savedsearches',
-            params: {
-                id: null
-            },
-            onEnter: function ($state, savedSearch) {
-                var viewParam = savedSearch.view;
-                if (viewParam === 'list' || viewParam === 'data') {
-                    $state.go('savedsearchesData', {id: savedSearch.id});
-                } else {
-                    $state.go('savedsearchesMap', {id: savedSearch.id});
-                }
-            },
-            resolve: {
-                isLoading: function () {
-                    return {state: true};
-                },
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
-                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            url: '^/savedsearches/:id/data',
-            name: 'savedsearchesData',
-            parent: 'list.data',
-            params: {
-                id: null,
-                view: {squash: true, value: 'data'}
-            },
-            controller: require('./savedsearches/savedsearches-controller.js'),
-            template: require('./savedsearches/savedsearches.html'),
-            resolve: {
-                isLoading: function () {
-                    return {state: true};
-                },
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
-                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            url: '^/savedsearches/:id/map',
-            name: 'savedsearchesMap',
-            parent: 'list.map',
-            params: {
-                id: null,
-                view: {squash: true, value: 'map'}
-            },
-            views: {
-                collectionSavedSearchMap: {
-                    controller: require('./savedsearches/savedsearches-controller.js'),
-                    template: require('./savedsearches/savedsearches.html')
-                }
-            },
-            resolve: {
-                isLoading: function () {
-                    return {state: true};
-                },
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
-                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
-                }]
             }
         }
     )
