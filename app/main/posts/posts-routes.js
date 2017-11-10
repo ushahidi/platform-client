@@ -93,8 +93,30 @@ function (
     )
     .state(
         {
-            url: '^/collections/:id/data',
+            url: '^/collections/:id',
             name: 'collection',
+            params: {
+                id: null
+            },
+            onEnter: function ($state, collection) {
+                var viewParam = collection.view;
+                if (viewParam === 'list' || viewParam === 'data') {
+                    $state.go('collectionData', {id: collection.id});
+                } else {
+                    $state.go('collectionMap', {id: collection.id});
+                }
+            },
+            resolve: {
+                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
+                }]
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/collections/:id/data',
+            name: 'collectionData',
             parent: 'list.data',
             params: {
                 id: null,
@@ -102,14 +124,6 @@ function (
             },
             controller: require('./collections/collections-controller.js'),
             template: require('./collections/collections.html'),
-            onEnter: function ($state, $transition$, collection) {
-                var viewParam = collection.view;
-                if (viewParam === 'list') {
-                    viewParam = 'data';
-                } else if (!viewParam) {
-                    viewParam = 'map';
-                }
-            },
             resolve: {
                 collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
                     return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
@@ -130,14 +144,6 @@ function (
                 collectionMap: {
                     controller: require('./collections/collections-controller.js'),
                     template: require('./collections/collections.html')
-                }
-            },
-            onEnter: function ($state, $transition$, collection) {
-                var viewParam = collection.view;
-                if (viewParam === 'list') {
-                    viewParam = 'data';
-                } else if (!viewParam) {
-                    viewParam = 'map';
                 }
             },
             resolve: {
