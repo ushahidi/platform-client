@@ -8,18 +8,19 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         scope: {
             // filters: '=',
             // isLoading: '='
+            noui: '='
         },
         template: require('./post-view-map.html'),
         link: PostViewMapLink,
         controller: function ($scope) {
             $scope.filters = PostFilters.getFilters();
             $scope.isLoading = {state: true};
-            $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
         }
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
         var map, markers;
+            
 
         var limit = 200;
         var requestBlockSize = 5;

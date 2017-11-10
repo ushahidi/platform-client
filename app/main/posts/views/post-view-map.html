@@ -1,3 +1,4 @@
 <div class="map-view">
-    <div id="map" class="map {{getUIClass}}"></div>
+    <div id="map" ng-show="noui" class="map map-only"></div>
+    <div id="map" ng-show="!noui" class="map full-size"></div>
 </div>
