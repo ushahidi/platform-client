@@ -116,18 +116,26 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             include_unmapped: true
         });
 
+        // @uirouter-refactor - Ask Anna??
+        // The code talks about the filter modal and the sidebar,
+        // but why were we deleting from the queryParams??
+        // I noticed this works in Sandbox but not in develop or uirouter branch
+        // if this code is not commented out
+        // (when you switch a saved search the stats do not update)
+
         // we want stats for all forms, not just the ones visible right now
-        if (queryParams.form) {
-            delete queryParams.form;
-        }
-        // deleting categories and sources since they are selected in the sidebar and not in the filter-modal = might get confusing
-        if (queryParams.tags) {
-            delete queryParams.tags;
-        }
+        // if (queryParams.form) {
+        //     delete queryParams.form;
+        // }
+        // // deleting categories and sources since they are
+        // // selected in the sidebar and not in the filter-modal = might get confusing
+        // if (queryParams.tags) {
+        //     delete queryParams.tags;
+        // }
         // deleting source, we want stats for all datasources to keep the datasource-bucket-stats unaffected by data-source-filters
-        if (queryParams.source) {
-            delete queryParams.source;
-        }
+        // if (queryParams.source) {
+        //     delete queryParams.source;
+        // }
         return PostEndpoint.stats(queryParams);
     }
 
