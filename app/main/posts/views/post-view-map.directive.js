@@ -8,19 +8,18 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         scope: {
             // filters: '=',
             // isLoading: '='
+            noui: '='
         },
         template: require('./post-view-map.html'),
         link: PostViewMapLink,
         controller: function ($scope) {
             $scope.filters = PostFilters.getFilters();
             $scope.isLoading = {state: true};
-            $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
         }
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
         var map, markers;
-
         var limit = 200;
         var requestBlockSize = 5;
         var numberOfChunks = 0;
@@ -28,7 +27,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         // Start loading data
         var posts = loadPosts();
-        var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
+        var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
+        var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
         var createMap = createMapDirective.then(function (data) {
             map = data;
         });
