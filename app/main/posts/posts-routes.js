@@ -16,22 +16,6 @@ function (
                     return {state: true};
                 }
             }
-            // onEnter: function ($state, $transition$, PostFilters) {
-            //     switch (PostFilters.getMode()) {
-            //         case 'savedsearch':
-            //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         case 'collection':
-            //             $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         default:
-            //             var view = $transition$.params().view ? $transition$.params().view : 'map';
-            //             if (view === 'list') {
-            //                 $state.go('list', {view: 'data'}, {reload: true});
-            //             }
-            //     }
-            //
-            // }
         }
     )
     .state(
@@ -88,68 +72,6 @@ function (
                         }
                 }
 
-            }
-        }
-    )
-    .state(
-        {
-            url: '^/collections/:id',
-            name: 'collection',
-            params: {
-                id: null
-            },
-            onEnter: function ($state, collection) {
-                var viewParam = collection.view;
-                if (viewParam === 'list' || viewParam === 'data') {
-                    $state.go('collectionData', {id: collection.id});
-                } else {
-                    $state.go('collectionMap', {id: collection.id});
-                }
-            },
-            resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            url: '^/collections/:id/data',
-            name: 'collectionData',
-            parent: 'list.data',
-            params: {
-                id: null,
-                view: {squash: true, value: 'data'}
-            },
-            controller: require('./collections/collections-controller.js'),
-            template: require('./collections/collections.html'),
-            resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            url: '^/collections/:id/map',
-            name: 'collectionMap',
-            parent: 'list.map',
-            params: {
-                id: null,
-                view: {squash: true, value: 'map'}
-            },
-            views: {
-                collectionSavedSearchMap: {
-                    controller: require('./collections/collections-controller.js'),
-                    template: require('./collections/collections.html')
-                }
-            },
-            resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
-                }]
             }
         }
     )

@@ -59,11 +59,11 @@ module.exports = [
              * We can probably figure out a better way to do this.
              * @FIXME ?
              */
-            if ($transition$.params().view === 'map') {
-                $scope.$$prevSibling.loadPosts(null, null, null, true);
-            } else {
-                $scope.$parent.getPosts(false, false, true);
-            }
+            // if ($transition$.params().view === 'map') {
+            //     $scope.$$prevSibling.loadPosts(null, null, null, true);
+            // } else {
+            //     $scope.$parent.getPosts(false, false, true);
+            // }
 
         }
 
