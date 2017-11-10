@@ -5,7 +5,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
     return {
         restrict: 'E',
         replace: true,
-        scope: {},
+        scope: {
+            noui: '@'
+        },
         template: require('./post-view-map.html'),
         link: {
             pre: function ($scope, element, attrs) {
@@ -17,7 +19,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
-        var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
+        var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
+        var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
         var createMap = createMapDirective.then(function (data) {
             $scope.map = data;
         });

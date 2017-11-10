@@ -8,7 +8,6 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
         $scope.requestBlockSize = 5;
         $scope.numberOfChunks = 0;
         $scope.currentGeoJsonRequests = [];
-
         // Start loading data
         /**
          * functions
