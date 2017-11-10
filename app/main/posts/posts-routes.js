@@ -68,7 +68,7 @@ function (
             url: '/views/map',
             template: function ($state, $transition$) {
                 return '<post-view-map></post-view-map>' +
-                    '<div ui-view="collectionMap"></div>';
+                    '<div ui-view="collectionSavedSearchMap"></div>';
             },
             params: {
                 view: {value: 'map', squash: true}
@@ -141,7 +141,7 @@ function (
                 view: {squash: true, value: 'map'}
             },
             views: {
-                collectionMap: {
+                collectionSavedSearchMap: {
                     controller: require('./collections/collections-controller.js'),
                     template: require('./collections/collections.html')
                 }
@@ -155,26 +155,17 @@ function (
     )
     .state(
         {
-            name: 'savedsearch',
-            url: '^/savedsearches/:id/:view',
-            parent: 'list.data',
+            url: '^/savedsearches/:id',
+            name: 'savedsearches',
             params: {
-                id: null,
-                view: {squash: true, value: null}
+                id: null
             },
-            controller: require('./savedsearches/savedsearches-controller.js'),
-            template: require('./savedsearches/savedsearches.html'),
-            onEnter: function ($state, $transition$, savedSearch) {
+            onEnter: function ($state, savedSearch) {
                 var viewParam = savedSearch.view;
-                if (viewParam === 'list') {
-                    viewParam = 'data';
-                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
-                } else if (!viewParam) {
-                    viewParam = 'map';
-                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
-                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    viewParam = $transition$.params().view;
-                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
+                if (viewParam === 'list' || viewParam === 'data') {
+                    $state.go('savedsearchesData', {id: savedSearch.id});
+                } else {
+                    $state.go('savedsearchesMap', {id: savedSearch.id});
                 }
             },
             resolve: {
@@ -187,7 +178,52 @@ function (
             }
         }
     )
-
+    .state(
+        {
+            url: '^/savedsearches/:id/data',
+            name: 'savedsearchesData',
+            parent: 'list.data',
+            params: {
+                id: null,
+                view: {squash: true, value: 'data'}
+            },
+            controller: require('./savedsearches/savedsearches-controller.js'),
+            template: require('./savedsearches/savedsearches.html'),
+            resolve: {
+                isLoading: function () {
+                    return {state: true};
+                },
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
+                }]
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/savedsearches/:id/map',
+            name: 'savedsearchesMap',
+            parent: 'list.map',
+            params: {
+                id: null,
+                view: {squash: true, value: 'map'}
+            },
+            views: {
+                collectionSavedSearchMap: {
+                    controller: require('./savedsearches/savedsearches-controller.js'),
+                    template: require('./savedsearches/savedsearches.html')
+                }
+            },
+            resolve: {
+                isLoading: function () {
+                    return {state: true};
+                },
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
+                }]
+            }
+        }
+    )
     /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
      at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
      since you won't be sent to a sole post' detail view

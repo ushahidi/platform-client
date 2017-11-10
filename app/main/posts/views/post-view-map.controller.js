@@ -141,7 +141,10 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
             }, true);
         };
 
-        $scope.loadPosts = function (query, offset, currentBlock) {
+        $scope.loadPosts = function (query, offset, currentBlock, clearPosts) {
+            if (clearPosts === true) {
+                $scope.posts = [];
+            }
             offset = offset || 0;
             currentBlock = currentBlock || 1;
 

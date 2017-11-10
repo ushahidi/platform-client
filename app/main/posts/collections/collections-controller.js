@@ -60,7 +60,7 @@ module.exports = [
              * @FIXME ?
              */
             if ($transition$.params().view === 'map') {
-                $scope.$$prevSibling.loadPosts();
+                $scope.$$prevSibling.loadPosts(null, null, null, true);
             } else {
                 $scope.$parent.getPosts(false, false, true);
             }
