@@ -50,9 +50,21 @@ module.exports = [
             PostFilters.setMode('collection', $scope.collection.id);
             $scope.filters = PostFilters.getFilters();
             /**
-             * call getPosts manually to ensure the collection reloads
+             * @uirouter-refactor improve on this as we continue migrations?
+             * call getPosts or loadPosts manually to ensure the collection reloads
+             * In the map we are using the previous sibling, this comes from the fact that we have a named ui-view setup in
+             * the list.map state to render the map collections.
+             * Calling prevsibling makes me a bit uncomfortable compared to parent, altought objectively is not all that different
+             * in terms of how fragile it is.
+             * We can probably figure out a better way to do this.
+             * @FIXME ?
              */
-            $scope.$parent.getPosts(false, false, true);
+            if ($transition$.params().view === 'map') {
+                $scope.$$prevSibling.loadPosts();
+            } else {
+                $scope.$parent.getPosts(false, false, true);
+            }
+
         }
 
         // Set view based on route or set view

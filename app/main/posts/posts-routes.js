@@ -67,7 +67,8 @@ function (
             name: 'list.map',
             url: '/views/map',
             template: function ($state, $transition$) {
-                return '<post-view-map></post-view-map>';
+                return '<post-view-map></post-view-map>' +
+                    '<div ui-view="collectionMap"></div>';
             },
             params: {
                 view: {value: 'map', squash: true}
@@ -125,8 +126,12 @@ function (
                 id: null,
                 view: {squash: true, value: 'map'}
             },
-            controller: require('./collections/collections-controller.js'),
-            template: require('./collections/collections.html'),
+            views: {
+                collectionMap: {
+                    controller: require('./collections/collections-controller.js'),
+                    template: require('./collections/collections.html')
+                }
+            },
             onEnter: function ($state, $transition$, collection) {
                 var viewParam = collection.view;
                 if (viewParam === 'list') {
