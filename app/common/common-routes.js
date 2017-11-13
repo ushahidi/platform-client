@@ -49,6 +49,14 @@ module.exports = ['$stateProvider', function ($stateProvider) {
                 template: ''
             }
         )
+        .state(
+            {
+                name: '404',
+                url: '/404',
+                controller: require('./auth/404.controller.js'),
+                template: require('./auth/404.html')
+            }
+        )
         //.otherwise('/')
         ;
 }];
