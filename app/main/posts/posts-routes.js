@@ -37,7 +37,6 @@ function (
     )
     .state(
         {
-            cache: false,
             name: 'list.map',
             url: '/views/map',
             template: function ($state, $transition$) {
@@ -47,19 +46,7 @@ function (
                 view: {value: 'map', squash: true}
             },
             onEnter: function ($state, $transition$, PostFilters) {
-                switch (PostFilters.getMode()) {
-                    case 'savedsearch':
-                        $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    case 'collection':
-                        $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    default:
-                        var view = $transition$.params().view ? $transition$.params().view : 'map';
-                        if (view === 'list') {
-                            $state.go('list', {view: 'data'}, {reload: true});
-                        }
-                }
+
 
             }
         }
