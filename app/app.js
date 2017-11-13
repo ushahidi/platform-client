@@ -111,6 +111,8 @@ angular.module('app',
         // otherwise will take care of routing the user to the specified url
         //$urlRouterProvider.otherwise('/views/map');
 
+    }).config(function ($urlMatcherFactoryProvider) {
+        $urlMatcherFactoryProvider.strictMode(false);
     })
     .factory('_', function () {
         return require('underscore/underscore');
