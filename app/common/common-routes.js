@@ -1,4 +1,6 @@
-module.exports = ['$stateProvider', function ($stateProvider) {
+module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($stateProvider, $urlMatcherFactoryProvider) {
+
+    $urlMatcherFactoryProvider.strictMode(false);
 
     $stateProvider
         .state(
