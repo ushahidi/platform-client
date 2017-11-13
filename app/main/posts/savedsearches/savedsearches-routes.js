@@ -1,9 +1,11 @@
 module.exports = [
     '$stateProvider',
+    '$urlMatcherFactoryProvider',
     function (
-        $stateProvider
+        $stateProvider,
+        $urlMatcherFactoryProvider
     ) {
-
+    $urlMatcherFactoryProvider.strictMode(false);
     $stateProvider
     .state(
         {
