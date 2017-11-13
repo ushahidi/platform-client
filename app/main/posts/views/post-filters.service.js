@@ -75,8 +75,11 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilter(filterKey, value) {
-        // if filter is in an array, we only want to remove that specific value
-        if (Array.isArray(filterState[filterKey])) {
+        /*
+         * if filter is in an array, we only want to remove that specific value
+         * if all filter-values are removed from array, we want to reset to default
+         */
+        if (Array.isArray(filterState[filterKey]) && filterState[filterKey].length > 1) {
             filterState[filterKey].splice(filterState[filterKey].indexOf(value), 1);
         } else {
             filterState[filterKey] = getDefaults()[filterKey];

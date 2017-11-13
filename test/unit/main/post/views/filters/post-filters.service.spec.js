@@ -107,6 +107,23 @@ describe('Post Filters Service', function () {
             expect(filters.source).toEqual(['sms', 'web', 'email']);
             expect(filters.form).toEqual(['testForm2', 'testForm3']);
         });
+        it('if filter is represented by an array, and all filter-values for that filters are removed, the filter should reset to default', function () {
+            var newFilters = {
+                status: ['archived', 'draft'],
+                tags: [1,3,4],
+                source: ['sms', 'twitter', 'web', 'email'],
+                form: ['testForm1', 'testForm2', 'testForm3']
+            };
+            PostFilters.setFilters(newFilters);
+
+            _.each(newFilters, function (values, filterKey) {
+                _.each(newFilters[filterKey], function (filterValue) {
+                    PostFilters.clearFilter(filterKey, filterValue);
+                });
+            });
+            var filters = PostFilters.getFilters();
+            expect(filters).toEqual(PostFilters.getDefaults());
+        });
         it ('if filter is not represented by an array, the selected filter should be reset to default ', function () {
             var defaultFilters = PostFilters.getDefaults();
 
