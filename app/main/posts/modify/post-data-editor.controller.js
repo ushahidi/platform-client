@@ -76,7 +76,7 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
-
+    var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
         activate();
@@ -99,35 +99,46 @@ function PostDataEditorController(
         //where is it going? transition.to().name
         // return rejected promise or false to cancel the transition
         // leavePost calls cancel which then resolves or rejects the state change.
-        if (transition.from().name === 'list.data.edit') {
-            return $scope.leavePost();
+        if (!ignoreCancelEvent && transition.from().name === 'list.data.edit') {
+            return $scope.leavePost(transition);
         }
+
         return true;
 
     });
 
-
-    function leavePost() {
-        if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
-            //@uirouter-refactor leaveEditMode();
+    function leavePost(transition) {
+        /**
+         * just a wrapper function because we were doing the same thing
+         * over and over again in the promise
+         * @param resolve
+         * @param reject
+         */
+        var cancelResolveFn = function (resolve, reject) {
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
-            return $scope.cancel();
-        } else {
-            // @uirouter-refactor if we end up having onbeforeunload features,we need to add this back
-            // if (ev) {
-            //     ev.preventDefault();
-            // }
-            Notify.confirmLeave('notify.post.leave_without_save').then(function () {
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
-                return $scope.cancel();
-            }, function () {
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
-                return $scope.cancel();
+            return $scope.cancel().then(function () {
+                resolve(true);
+            }).catch(function () {
+                reject(false);
             });
-        }
+        };
+
+        return new Promise (function (resolve, reject) {
+            if (!$scope.parentForm.form || ($scope.parentForm.form && !$scope.parentForm.form.$dirty)) {
+                cancelResolveFn(resolve, reject);
+            } else {
+                // @uirouter-refactor if we end up having onbeforeunload features,we need to add this back
+                // if (ev) {
+                //     ev.preventDefault();
+                // }
+                Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+                    cancelResolveFn(resolve, reject);
+                }, function () {
+                    cancelResolveFn(resolve, reject);
+                });
+            }
+        });
     }
 
     activate();
@@ -142,14 +153,11 @@ function PostDataEditorController(
             FormEndpoint.queryFresh().$promise.then(function (results) {
                 $scope.forms = results;
                 $scope.isLoading.state = false;
-
             });
         }
-
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
-
         if ($scope.post.id) {
             PostLockService.createSocketListener();
         }
@@ -321,10 +329,10 @@ function PostDataEditorController(
                     id: $scope.post.lock.id,
                     post_id: $scope.post.id
                 }).$promise.then(function (result) {
-                    resolve(true);
+                    return resolve(true);
                 });
             } else {
-                reject(true);
+                return reject(true);
             }
         });
     }
@@ -391,8 +399,9 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-
+                $scope.parentForm.form.$dirty = false;
                 // Save the updated post back to outside context
+                ignoreCancelEvent = true;
                 $state.go('list.data.detail', {view: 'data', postId: response.id});
 
                 // DEVNOTE: Not sure how this would ever happen in the case of data view
