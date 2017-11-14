@@ -57,6 +57,15 @@ function (
                     controller: require('./views/post-view-data.controller.js'),
                     template: require('./views/post-view-data.html')
                 }
+            },
+            resolve: {
+                //change to selectedPost and refactor the selectedposts in general
+                selectedPost: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+                    if ($transition$.params().postId) {
+                        return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                    }
+
+                }]
             }
         }
     )

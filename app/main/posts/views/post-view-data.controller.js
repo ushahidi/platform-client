@@ -56,7 +56,7 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    $scope.selectedPost = {post: null, next: {}};
+    $scope.selectedPost = {post: $scope.$resolve.selectedPost, next: {}};
     $scope.selectedPostId = null;
     $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
