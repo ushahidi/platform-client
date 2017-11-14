@@ -80,7 +80,13 @@ function (
                 view: {value: 'map', squash: true},
                 filterState: {value: null, squash: true},
                 savedSearchState: {value: null, squash: true}
+            },
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                if (!savedSearch) {
+                    PostFilters.resetDefaults();
+                }
             }
+
         }
     )
     .state(
