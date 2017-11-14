@@ -329,17 +329,6 @@ function PostDataEditorController(
         });
     }
 
-    /**
-     * redirecting if user is leaving the page, but only changing the URL and not the actual page if the user
-     * is navigation between posts.
-     * @FIXME This is a very fragile and not an ideal way to handle it. But since we are faking URLs we can't rely only on
-     * routePrams or only on the location, I think, so we are going to use this for the moment
-     */
-    function doChangePage(transition) {
-        //@uirouter-refactor leaveEditMode();
-        return true;
-    }
-
     function deletePost(post) {
         PostActionsService.delete(post).then(function () {
             $location.path('/');
@@ -354,15 +343,6 @@ function PostDataEditorController(
         return MediaEditService.saveMedia($scope.medias, $scope.post);
     }
 
-    function leaveEditMode() {
-        // @uirouter-refactor editmode.editing needs to be abolished.
-        // Commented out so it hurts and we fix it pre-merge
-        //$scope.editMode.editing = false;
-    }
-
-    function signalLeaveComplete() {
-        $rootScope.$broadcast('event:edit:leave:form:complete');
-    }
     function savePost() {
         $scope.isLoading.state = true;
         $scope.savingPost.saving = true;
