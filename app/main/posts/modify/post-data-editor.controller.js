@@ -86,15 +86,6 @@ function PostDataEditorController(
         $scope.savePost();
     });
 
-    // @uirouter-refactor this needs to be replaced !!!!
-    // $scope.$on('event:edit:leave:form', function () {
-    //     if ($scope.parentForm.form && $scope.parentForm.form.$dirty) {
-    //         $scope.leavePost();
-    //     } else {
-    //         $scope.cancel();
-    //     }
-    // });
-
     $transitions.onStart({}, function (transition) {
         //where is it going? transition.to().name
         // return rejected promise or false to cancel the transition
