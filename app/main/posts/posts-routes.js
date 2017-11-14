@@ -10,57 +10,96 @@ function (
     $stateProvider
     .state(
         {
-            name: 'list',
+            name: 'list', /** I agree, this is a terrible name for this state. Ideas are welcome.**/
             abstract: true,
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html'),
+            params: {
+                view: {value: null, squash: true},
+                filterState: {value: null, squash: true},
+                savedSearchState: {value: null, squash: true}
+            },
             resolve: {
                 isLoading: function () {
                     return {state: true};
+                },
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    if ($transition$.params().savedSearchId) {
+                        return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
+                    }
+
+                }]
+            },
+            onEnter: function ($state, $transition$, PostFilters) {
+                console.log($state, $transition$);
+                if ($transition$.params().filterState) {
+                    PostFilters.setFilters($transition$.params().filterState);
                 }
             }
         }
     )
     .state(
         {
-            name: 'list.data',
             url: '/views/data',
-            controller: require('./views/post-view-data.controller.js'),
-            template: require('./views/post-view-data.html'),
+            name: 'list.data',
             params: {
-                view: {value: 'data', squash: true}
+                view: {value: 'data', squash: true},
+                filterState: {value: null, squash: true},
+                savedSearchState: {value: null, squash: true}
             },
-            onEnter: function ($state, $transition$, PostFilters) {
-
+            views: {
+                listView: {
+                    controller: require('./views/post-view-data.controller.js'),
+                    template: require('./views/post-view-data.html')
+                }
             }
         }
     )
     .state(
         {
-            cache: false,
+            url: '^/savedsearches/:savedSearchId/data',
+            name: 'list.data.savedsearch',
+            resolve: {
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
+                }]
+            },
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                PostFilters.setFilters(savedSearch.filter);
+            },
+            views: {
+                savedsearchesAll: {
+                    controller: require('./savedsearches/savedsearches-controller.js'),
+                    template: require('./savedsearches/savedsearches.html')
+                }
+            }
+        }
+    )
+    .state(
+        {
             name: 'list.map',
             url: '/views/map',
-            template: function ($state, $transition$) {
-                return '<post-view-map></post-view-map>';
+            views: {
+                listView: {
+                    controller: require('./views/post-view-data.controller.js'),
+                    template: function ($state, $transition$) {
+                        return '<post-view-map></post-view-map>';
+                    }
+                }
             },
             params: {
-                view: {value: 'map', squash: true}
-            },
-            onEnter: function ($state, $transition$, PostFilters) {
-                switch (PostFilters.getMode()) {
-                    case 'savedsearch':
-                        $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    case 'collection':
-                        $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    default:
-                        var view = $transition$.params().view ? $transition$.params().view : 'map';
-                        if (view === 'list') {
-                            $state.go('list', {view: 'data'}, {reload: true});
-                        }
-                }
-
+                view: {value: 'map', squash: true},
+                filterState: {value: null, squash: true},
+                savedSearchState: {value: null, squash: true}
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/savedsearches/:savedSearchId/map',
+            name: 'list.map.savedsearch',
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                PostFilters.setFilters(savedSearch.filter);
             }
         }
     )

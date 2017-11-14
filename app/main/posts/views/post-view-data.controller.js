@@ -14,6 +14,7 @@ module.exports = [
     'Notify',
     '$window',
     '$state',
+    '$transition$',
 function PostViewDataController(
     $scope,
     $rootScope,
@@ -29,7 +30,8 @@ function PostViewDataController(
     $location,
     Notify,
     $window,
-    $state
+    $state,
+    $transition$
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
