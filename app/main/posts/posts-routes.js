@@ -11,12 +11,13 @@ function (
             abstract: true,
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html'),
-            resolve: {
-                isLoading: function () {
-                    return {state: true};
-                }
-            }
-            // onEnter: function ($state, $transition$, PostFilters) {
+            // resolve: {
+            //     isLoading: function () {
+            //         return {state: true};
+            //     }
+            // },
+            onEnter: function ($state, $transition$, PostFilters) {
+                console.log($state);
             //     switch (PostFilters.getMode()) {
             //         case 'savedsearch':
             //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
@@ -31,7 +32,8 @@ function (
             //             }
             //     }
             //
-            // }
+            },
+            onFinish: function () {}
         }
     )
     .state(
@@ -144,9 +146,9 @@ function (
                 }
             },
             resolve: {
-                isLoading: function () {
-                    return {state: true};
-                },
+                // isLoading: function () {
+                //     return {state: true};
+                // },
                 savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
                     return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
                 }]

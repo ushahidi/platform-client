@@ -142,8 +142,17 @@ angular.module('app',
     .run(function ($uiRouter, $trace, $location) {
         /** uncomment this to enable the visualizer
         var pluginInstance = $uiRouter.plugin(Visualizer);
-        $trace.enable('TRANSITION');
-         **/
-    }).run(function ($rootScope) {
+        $trace.enable('TRANSITION');**/
+    }).run(function ($rootScope, $transitions) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
+
+        /* this handles the loading-state app-wide,
+        * TODO: need logic based on whats transitioning too.
+        */
+        $transitions.onStart({}, function (transition) {
+            $rootScope.isLoading = {state: true};
+        });
+        $transitions.onFinish({}, function (transition) {
+            $rootScope.isLoading = {state: false};
+        });
     });

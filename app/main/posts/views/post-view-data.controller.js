@@ -59,8 +59,12 @@ function PostViewDataController(
     $scope.selectedPostId = null;
     $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
-    $scope.isLoading = $scope.$resolve.isLoading;
-    var stopInterval;
+    var stopInterval;            
+    $scope.isLoading = $rootScope.isLoading;
+    $rootScope.$watch('isLoading', function (isLoading) {
+        $scope.isLoading = isLoading;
+    });
+
     /**
      * setting "now" time as utc for new posts filter
      */
@@ -84,7 +88,6 @@ function PostViewDataController(
             });
         }
     });
-
     // And this is for when you change the post status using the ... button
     // Because it's just the post status only, we're just checking if it matches
     // filters on the frontend. This makes it MUCH faster than using the API

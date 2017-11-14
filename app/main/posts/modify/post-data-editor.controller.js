@@ -74,6 +74,7 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
+    $scope.isLoading = $rootScope.isLoading;
 
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {

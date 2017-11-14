@@ -5,7 +5,6 @@ function PostToolbarDirective() {
     return {
         restrict: 'E',
         scope: {
-            isLoading: '=',
             filters: '=',
             currentView: '=',
             editMode: '=',
@@ -23,6 +22,11 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
+
+    $scope.isLoading = $rootScope.isLoading;
+    $rootScope.$watch('isLoading', function (isLoading) {
+        $scope.isLoading = isLoading;
+    });
 
     function editEnabled() {
         return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
