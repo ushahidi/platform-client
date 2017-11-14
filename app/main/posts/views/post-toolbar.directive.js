@@ -23,13 +23,16 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
-
+    $scope.saveButtonEnabled = saveButtonEnabled;
     function editEnabled() {
         return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
     }
 
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');
+    }
+    function saveButtonEnabled() {
+        return $state.$current.name === 'list.data.edit';
     }
 
     function setEditMode() {
