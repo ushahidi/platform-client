@@ -59,19 +59,8 @@ function (
         {
             url: '^/savedsearches/:savedSearchId/data',
             name: 'list.data.savedsearch',
-            resolve: {
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
-                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
-                }]
-            },
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 PostFilters.setFilters(savedSearch.filter);
-            },
-            views: {
-                savedsearchesAll: {
-                    controller: require('./savedsearches/savedsearches-controller.js'),
-                    template: require('./savedsearches/savedsearches.html')
-                }
             }
         }
     )
@@ -81,7 +70,7 @@ function (
             url: '/views/map',
             views: {
                 listView: {
-                    controller: require('./views/post-view-data.controller.js'),
+                    controller: require('./views/post-view-map.controller.js'),
                     template: function ($state, $transition$) {
                         return '<post-view-map></post-view-map>';
                     }
