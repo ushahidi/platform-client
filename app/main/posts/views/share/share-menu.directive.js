@@ -17,12 +17,14 @@ function ShareMenuDirective() {
 
 ShareMenuController.$inject = [
     '$scope',
+    '$rootScope',
     '$routeParams',
     'Util',
     '$window'
 ];
 function ShareMenuController(
     $scope,
+    $rootScope,
     $routeParams,
     Util,
     $window
@@ -30,7 +32,7 @@ function ShareMenuController(
 
     $scope.loading = false;
     $scope.shareUrl = Util.currentUrl();
-    $scope.isExportable = isExportable;
+    $scope.canExport = canExport;
 
     activate();
 
