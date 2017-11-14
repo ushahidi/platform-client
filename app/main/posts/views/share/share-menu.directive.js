@@ -54,7 +54,7 @@ function ShareMenuController(
     // Check if current view is exportable based on URI
     function canExport() {
         // UCHAGUZI only: guests cannot export
-        if ($rootScope.currentUser && $window.location.href.indexOf('post') > 0) {
+        if (!$rootScope.currentUser || $window.location.href.indexOf('post') > 0) {
             return false;
         }
         return true;
