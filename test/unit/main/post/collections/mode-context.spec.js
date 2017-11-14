@@ -26,7 +26,11 @@ describe('collections mode context directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
-
+        $scope.$resolve = {
+            collection: {
+                allowed_privileges: 'update'
+            }
+        };
         $scope.collection = {};
 
         element = '<collections-mode-context></collections-mode-context>';

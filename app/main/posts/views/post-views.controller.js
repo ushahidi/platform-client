@@ -4,6 +4,7 @@ PostViewsController.$inject = ['$scope', '$translate', '$transition$', 'PostFilt
 function PostViewsController($scope, $translate, $transition$, PostFilters) {
     // Set view and layout based out route
     $scope.currentView = $transition$.params().view;
+    $scope.transitionTo = $transition$.to().name;
     var viewLayouts = {'data': 'd', 'list': 'a', 'map': 'a'};
     $scope.layout = !$transition$.params().view ? 'a' : viewLayouts[$transition$.params().view];
     // Set the page title
@@ -11,7 +12,16 @@ function PostViewsController($scope, $translate, $transition$, PostFilters) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
-    PostFilters.setMode('all');
+
+    if ($scope.$resolve.collection) {
+        PostFilters.setMode('collection', $scope.$resolve.collection.id);
+
+    } else if ($scope.$resolve.savedSearch) {
+        PostFilters.setMode('savedsearch', $scope.$resolve.savedSearch.id);
+    } else {
+        PostFilters.setMode('all');
+    }
+
     $scope.filters = PostFilters.getFilters();
     $scope.$emit('event:allposts:show');
     $scope.$on('$destroy', function () {

@@ -17,9 +17,9 @@
                 <p markdown-to-html="nav.site.description"></p>
 
                 <saved-search-create></saved-search-create>
-
-                <mode-context-form-filter></mode-context-form-filter>
-
+                <mode-context-form-filter ng-if="transitionTo === 'list.map'"></mode-context-form-filter>
+                <saved-search-mode-context ng-if="transitionTo === 'list.map.savedsearch'"></saved-search-mode-context>
+                <collection-mode-context ng-if="transitionTo === 'list.map.collection'"></collection-mode-context>
             </div>
         </div>
     </div>
@@ -27,9 +27,7 @@
         <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data' && currentView !=='noui'" edit-mode="{editing: false}"></post-toolbar>
         <!--@uirouter-refactor ask Anna about this <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>-->
         <!-- todo: toolbox-->
-        <div ui-view noanimation="true"></div>
-        <div ui-view="collectionsAll" noanimation="true"></div>
-        <div ui-view="savedsearchesAll" noanimation="true"></div>
+        <div ui-view="listView" noanimation="true"></div>
         <ush-logo></ush-logo>
     </main>
 </div>
