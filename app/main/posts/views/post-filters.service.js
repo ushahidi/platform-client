@@ -246,7 +246,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         if (newMode !== filterMode) {
             filterMode = newMode;
             if (filterMode === 'collection') {
-                clearFilters();
+                var filters = clearFilters();
+                filters.set.push(id);
+                setFilters(filters);
             }
 
         }

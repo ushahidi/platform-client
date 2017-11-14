@@ -45,6 +45,8 @@ function CollectionModeContextController(
     activate();
 
     function activate() {
+        $scope.collection = $scope.$resolve.collection;
+
         $scope.canEdit = canEdit($scope.collection);
 
         NotificationEndpoint.query({set: $scope.collection.id, ignore403: true, user: 'me'}, function (notifications) {

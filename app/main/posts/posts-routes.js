@@ -23,6 +23,11 @@ function (
                 isLoading: function () {
                     return {state: true};
                 },
+                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                    if ($transition$.params().collectionId) {
+                        return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
+                    }
+                }],
                 savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
                     if ($transition$.params().savedSearchId) {
                         return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
@@ -66,6 +71,15 @@ function (
     )
     .state(
         {
+            url: '^/collections/:collectionId/data',
+            name: 'list.data.collection',
+            onEnter: function ($state, $transition$, PostFilters, collection) {
+                PostFilters.setMode('collection', collection.id);
+            }
+        }
+    )
+    .state(
+        {
             name: 'list.map',
             url: '/views/map',
             views: {
@@ -98,6 +112,16 @@ function (
             }
         }
     )
+    .state(
+        {
+            url: '^/collections/:collectionId/map',
+            name: 'list.map.collection',
+            onEnter: function ($state, $transition$, PostFilters, collection) {
+                PostFilters.setMode('collection', collection.id);
+            }
+        }
+    )
+
     /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
      at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
      since you won't be sent to a sole post' detail view
