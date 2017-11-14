@@ -45,6 +45,32 @@ function (
     )
     .state(
         {
+            url: '^/savedsearches/:savedSearchId',
+            name: 'list.savedsearchRedirector',
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                if (savedSearch.view === 'data' || savedSearch.view === 'list') {
+                    $state.go('list.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
+                } else {
+                    $state.go('list.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
+                }
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/collections/:collectionId',
+            name: 'list.collectionRedirector',
+            onEnter: function ($state, $transition$, PostFilters, collection) {
+                if (collection.view === 'data' || collection.view === 'list') {
+                    $state.go('list.data.collection', {collectionId: collection.id, view: 'data'});
+                } else {
+                    $state.go('list.map.collection', {collectionId: collection.id, view: 'map'});
+                }
+            }
+        }
+    )
+    .state(
+        {
             url: '/views/data',
             name: 'list.data',
             params: {
