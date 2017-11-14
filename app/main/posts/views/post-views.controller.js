@@ -12,7 +12,16 @@ function PostViewsController($scope, $translate, $transition$, PostFilters) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
-    PostFilters.setMode('all');
+
+    if ($scope.$resolve.collection) {
+        PostFilters.setMode('collection', $scope.$resolve.collection.id);
+
+    } else if ($scope.$resolve.savedSearch) {
+        PostFilters.setMode('savedsearch', $scope.$resolve.savedSearch.id);
+    } else {
+        PostFilters.setMode('all');
+    }
+
     $scope.filters = PostFilters.getFilters();
     $scope.$emit('event:allposts:show');
     $scope.$on('$destroy', function () {
