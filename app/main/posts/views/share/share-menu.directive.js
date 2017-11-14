@@ -50,8 +50,9 @@ function ShareMenuController(
         $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
     }
     // Check if current view is exportable based on URI
-    function isExportable() {
-        if ($window.location.href.indexOf('post') > 0) {
+    function canExport() {
+        // UCHAGUZI only: guests cannot export
+        if ($rootScope.currentUser && $window.location.href.indexOf('post') > 0) {
             return false;
         }
         return true;
