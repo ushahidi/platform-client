@@ -55,7 +55,7 @@ function PostActionsDirective(
                     // Redirect to list
                     $location.path('/views/data');
                 } else {
-                    $state.go($state.$current, null, { reload: true }); // in favor of $route.reload();
+                    $state.go('list.data', null, { reload: true }); // in favor of $route.reload();
                 }
             });
         }

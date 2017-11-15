@@ -23,6 +23,7 @@ module.exports = [
     'PostActionsService',
     'MediaEditService',
     '$state',
+    '$transitions',
 function PostDataEditorController(
     $scope,
     $rootScope,
@@ -47,7 +48,8 @@ function PostDataEditorController(
     _,
     PostActionsService,
     MediaEditService,
-    $state
+    $state,
+    $transitions
   ) {
 
     // Setup initial stages container
@@ -74,7 +76,7 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
-
+    var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
         activate();
@@ -84,20 +86,51 @@ function PostDataEditorController(
         $scope.savePost();
     });
 
-    $scope.$on('event:edit:leave:form', function () {
-        if ($scope.parentForm.form && $scope.parentForm.form.$dirty) {
-            $scope.leavePost();
-        } else {
-            $scope.cancel();
+    $transitions.onStart({}, function (transition) {
+        //where is it going? transition.to().name
+        // return rejected promise or false to cancel the transition
+        // leavePost calls cancel which then resolves or rejects the state change.
+        if (!ignoreCancelEvent && transition.from().name === 'list.data.edit') {
+            return $scope.leavePost(transition);
         }
+
+        return true;
+
     });
 
-    /**
-     * @uirouter-refactor check this and add back if neded
-     * var $locationChangeStartHandler = $scope.$on('$locationChangeStart', function (e, next) {
-        $scope.leavePost(next, e);
-    });
-     */
+    function leavePost(transition) {
+        /**
+         * just a wrapper function because we were doing the same thing
+         * over and over again in the promise
+         * @param resolve
+         * @param reject
+         */
+        var cancelResolveFn = function (resolve, reject) {
+            $scope.isLoading.state = false;
+            $scope.savingPost.saving = false;
+            return $scope.cancel().then(function () {
+                resolve(true);
+            }).catch(function () {
+                reject(false);
+            });
+        };
+
+        return new Promise (function (resolve, reject) {
+            if (!$scope.parentForm.form || ($scope.parentForm.form && !$scope.parentForm.form.$dirty)) {
+                cancelResolveFn(resolve, reject);
+            } else {
+                // @uirouter-refactor if we end up having onbeforeunload features,we need to add this back
+                // if (ev) {
+                //     ev.preventDefault();
+                // }
+                Notify.confirmLeave('notify.post.leave_without_save').then(function () {
+                    cancelResolveFn(resolve, reject);
+                }, function () {
+                    cancelResolveFn(resolve, reject);
+                });
+            }
+        });
+    }
 
     activate();
 
@@ -111,42 +144,16 @@ function PostDataEditorController(
             FormEndpoint.queryFresh().$promise.then(function (results) {
                 $scope.forms = results;
                 $scope.isLoading.state = false;
-
             });
         }
-
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
-
         if ($scope.post.id) {
             PostLockService.createSocketListener();
         }
     }
 
-    /**
-     * redirecting if user is leaving the page, but only changing the URL and not the actual page if the user
-     * is navigation between posts.
-     * @FIXME This is a very fragile and not an ideal way to handle it. But since we are faking URLs we can't rely only on
-     * routePrams or only on the location, I think, so we are going to use this for the moment
-     */
-    function doChangePage(url) {
-
-        leaveEditMode();
-        signalLeaveComplete();
-        var locationMatch = url.match(/\/posts\/[0-9]+(\/|$)/);
-        var locationIsPost =  locationMatch ? locationMatch.length > 0 : false;
-        var movingToDataPost = ($stateParams.view === 'data' && locationIsPost);
-
-        if (url &&  !(movingToDataPost)) {
-            $state.go('postDetail', {postId: $scope.$resolve.post.id});
-            //@uirouter-refactor $location.path(url.replace($location.$$absUrl.replace($location.$$url, ''), ''));
-            //@uirouter-refactor $locationChangeStartHandler();
-        }
-        //else if (movingToDataPost) {
-        //@uirouter-refactor $location.path(url.match(/\/posts\/[0-9]+(\/|$)/)[0]);
-        //}
-    }
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
     }
@@ -184,7 +191,7 @@ function PostDataEditorController(
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                leaveEditMode();
+                //@uirouter-refactor leaveEditMode();
                 return;
             }
 
@@ -301,22 +308,24 @@ function PostDataEditorController(
         return PostEditService.validatePost($scope.post, $scope.parentForm.form, $scope.tasks);
     }
 
-    function cancel(url) {
-        $scope.isLoading.state = false;
-        $scope.savingPost.saving = false;
-        /** @DEVNOTE I think we shouldn't need to check this,
-         * but in unstructured posts the lock is not available consistently.
-        **/
-        if ($scope.post.lock) {
-            PostLockEndpoint.unlock({
-                id: $scope.post.lock.id,
-                post_id: $scope.post.id
-            }).$promise.then(function (result) {
-                doChangePage(url);
-            });
-        } else {
-            doChangePage(url);
-        }
+    function cancel() {
+        return new Promise(function (resolve, reject) {
+            $scope.isLoading.state = false;
+            $scope.savingPost.saving = false;
+            /** @DEVNOTE I think we shouldn't need to check this,
+             * but in unstructured posts the lock is not available consistently.
+             **/
+            if ($scope.post.lock) {
+                PostLockEndpoint.unlock({
+                    id: $scope.post.lock.id,
+                    post_id: $scope.post.id
+                }).$promise.then(function (result) {
+                    return resolve(true);
+                });
+            } else {
+                return reject(true);
+            }
+        });
     }
 
     function deletePost(post) {
@@ -331,36 +340,6 @@ function PostDataEditorController(
 
     function resolveMedia() {
         return MediaEditService.saveMedia($scope.medias, $scope.post);
-    }
-
-    function leaveEditMode() {
-        $scope.editMode.editing = false;
-    }
-
-    function signalLeaveComplete() {
-        $rootScope.$broadcast('event:edit:leave:form:complete');
-    }
-
-    function leavePost(url, ev) {
-        if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
-            leaveEditMode();
-            $scope.isLoading.state = false;
-            $scope.savingPost.saving = false;
-            $scope.cancel(url);
-        } else {
-            if (ev) {
-                ev.preventDefault();
-            }
-            Notify.confirmLeave('notify.post.leave_without_save').then(function () {
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
-                $scope.cancel(url);
-            }, function () {
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
-                $scope.cancel(url);
-            });
-        }
     }
 
     function savePost() {
@@ -411,9 +390,10 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-
+                $scope.parentForm.form.$dirty = false;
                 // Save the updated post back to outside context
-                $state.go('posts.data.detail', {view: 'data', postId: response.id});
+                ignoreCancelEvent = true;
+                $state.go('list.data.detail', {view: 'data', postId: response.id});
 
                 // DEVNOTE: Not sure how this would ever happen in the case of data view
                 // ideally this will go away when the two editors are integrated
@@ -432,7 +412,7 @@ function PostDataEditorController(
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
 
-                leaveEditMode();
+                //@uirouter-refactor leaveEditMode();
             }, function (errorResponse) { // errors
                 var validationErrors = [];
                 // @todo refactor limit handling

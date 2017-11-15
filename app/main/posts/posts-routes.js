@@ -133,7 +133,6 @@ function (
                     PostFilters.resetDefaults();
                 }
             }
-
         }
     )
     .state(
