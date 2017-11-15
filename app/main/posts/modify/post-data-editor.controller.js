@@ -64,7 +64,6 @@ function PostDataEditorController(
     $scope.deletePost = deletePost;
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
-    $scope.cancel = cancel;
     $scope.postTitleLabel = 'Title';
     $scope.postDescriptionLabel = 'Description';
     $scope.post = $scope.$resolve.post;
@@ -74,7 +73,6 @@ function PostDataEditorController(
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
-    $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
     var ignoreCancelEvent = false;
     // Need state management
@@ -86,47 +84,89 @@ function PostDataEditorController(
         $scope.savePost();
     });
 
+    /**
+     * $transitions.onStart is a handler for when a transition starts.
+     * When a transition starts here you want to either let it go or cancel it here,
+     * because you need the leavePost functionality with the warning modal and all that.
+     * The ignoreCancelEvent bool is for a special case where you literally are transitioning after the user accepts
+     * (you don't want to show it again) and you have the transition.from().name making sure you were in a list.data.edit state
+     * (editing mode). If you are there, you either resolve or reject a promise depending on form state, user actions, etc.
+     * Resolve will let the transition continue. Reject will stop the transition meaning you stay in the edit mode
+     */
     $transitions.onStart({}, function (transition) {
         //where is it going? transition.to().name
         // return rejected promise or false to cancel the transition
-        // leavePost calls cancel which then resolves or rejects the state change.
+        // saveChangesAndContinue calls cancel which then resolves or rejects the state change.
         if (!ignoreCancelEvent && transition.from().name === 'list.data.edit') {
-            return $scope.leavePost(transition);
+            return saveChangesAndContinue();
         }
-
         return true;
-
     });
 
-    function leavePost(transition) {
+    /**
+     *
+     * @returns {Promise}
+     */
+    function unlockPost() {
+        return new Promise(function (resolve, reject) {
+            /** @DEVNOTE I think we shouldn't need to check this,
+             * but in unstructured posts the lock is not available consistently.
+             **/
+            if ($scope.post.lock) {
+                PostLockEndpoint.unlock({
+                    id: $scope.post.lock.id,
+                    post_id: $scope.post.id
+                }).$promise.then(function (result) {
+                    return resolve(true);
+                });
+            } else {
+                return reject(true);
+            }
+        });
+    }
+
+    /**
+     * This function is called when the user attempts to leave the post edit form.
+     * - No changes: resolve and let the transition out of it continue
+     * - There are Changes: warn the user they will lose data if they don't save
+     * -  - Continue with no saving: let the transition continue (resolve)
+     * -  - Cancel button with no saving: let the transition continue (resolve)
+     * - - Save success:  let the transition continue (resolve)
+     * - - Save failure: cancel the transition, show errors or whatever the save post does.
+     */
+    function saveChangesAndContinue() {
         /**
          * just a wrapper function because we were doing the same thing
          * over and over again in the promise
          * @param resolve
          * @param reject
          */
-        var cancelResolveFn = function (resolve, reject) {
+        function resolveUnlockPost(resolve, reject) {
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
-            return $scope.cancel().then(function () {
+            return unlockPost().then(function () {
                 resolve(true);
             }).catch(function () {
                 reject(false);
             });
-        };
+        }
 
         return new Promise (function (resolve, reject) {
+            // Do we have unsaved changes? If not , leave them continue
             if (!$scope.parentForm.form || ($scope.parentForm.form && !$scope.parentForm.form.$dirty)) {
-                cancelResolveFn(resolve, reject);
+                resolveUnlockPost(resolve, reject);
             } else {
                 // @uirouter-refactor if we end up having onbeforeunload features,we need to add this back
                 // if (ev) {
                 //     ev.preventDefault();
                 // }
                 Notify.confirmLeave('notify.post.leave_without_save').then(function () {
-                    cancelResolveFn(resolve, reject);
+                    // continue without saving goes here,
+                    // save goes here too, because it's a RESOLVE.
+                    resolveUnlockPost(resolve, reject);
                 }, function () {
-                    cancelResolveFn(resolve, reject);
+                    // when reject, we should not change state/transition. This happens in save errors
+                    reject(false);
                 });
             }
         });
@@ -306,26 +346,6 @@ function PostDataEditorController(
 
     function canSavePost() {
         return PostEditService.validatePost($scope.post, $scope.parentForm.form, $scope.tasks);
-    }
-
-    function cancel() {
-        return new Promise(function (resolve, reject) {
-            $scope.isLoading.state = false;
-            $scope.savingPost.saving = false;
-            /** @DEVNOTE I think we shouldn't need to check this,
-             * but in unstructured posts the lock is not available consistently.
-             **/
-            if ($scope.post.lock) {
-                PostLockEndpoint.unlock({
-                    id: $scope.post.lock.id,
-                    post_id: $scope.post.id
-                }).$promise.then(function (result) {
-                    return resolve(true);
-                });
-            } else {
-                return reject(true);
-            }
-        });
     }
 
     function deletePost(post) {
