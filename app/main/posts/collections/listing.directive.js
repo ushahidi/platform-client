@@ -135,9 +135,9 @@ function CollectionListingController(
         $scope.$parent.closeModal();
         var viewParam = collection.view;
         if (viewParam === 'list' || viewParam === 'data') {
-            $state.go('list.data.collection', {collectionId: collection.id});
+            $state.go('posts.data.collection', {collectionId: collection.id});
         } else {
-            $state.go('list.map.collection', {collectionId: collection.id});
+            $state.go('posts.map.collection', {collectionId: collection.id});
         }
     }
 

@@ -10,7 +10,7 @@ function (
     $stateProvider
     .state(
         {
-            name: 'list', /** I agree, this is a terrible name for this state. Ideas are welcome.**/
+            name: 'posts',
             abstract: true,
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html'),
@@ -44,12 +44,12 @@ function (
     .state(
         {
             url: '^/savedsearches/:savedSearchId',
-            name: 'list.savedsearchRedirector',
+            name: 'posts.savedsearchRedirector',
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
-                    $state.go('list.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
+                    $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
                 } else {
-                    $state.go('list.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
+                    $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
                 }
             }
         }
@@ -57,12 +57,12 @@ function (
     .state(
         {
             url: '^/collections/:collectionId',
-            name: 'list.collectionRedirector',
+            name: 'posts.collectionRedirector',
             onEnter: function ($state, $transition$, PostFilters, collection) {
                 if (collection.view === 'data' || collection.view === 'list') {
-                    $state.go('list.data.collection', {collectionId: collection.id, view: 'data'});
+                    $state.go('posts.data.collection', {collectionId: collection.id, view: 'data'});
                 } else {
-                    $state.go('list.map.collection', {collectionId: collection.id, view: 'map'});
+                    $state.go('posts.map.collection', {collectionId: collection.id, view: 'map'});
                 }
             }
         }
@@ -70,7 +70,7 @@ function (
     .state(
         {
             url: '/views/data',
-            name: 'list.data',
+            name: 'posts.data',
             params: {
                 view: {value: 'data', squash: true},
                 filterState: {value: null, squash: true}
@@ -98,7 +98,7 @@ function (
     .state(
         {
             url: '^/savedsearches/:savedSearchId/data',
-            name: 'list.data.savedsearch',
+            name: 'posts.data.savedsearch',
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 PostFilters.setFilters(savedSearch.filter);
             }
@@ -107,7 +107,7 @@ function (
     .state(
         {
             url: '^/collections/:collectionId/data',
-            name: 'list.data.collection',
+            name: 'posts.data.collection',
             onEnter: function ($state, $transition$, PostFilters, collection) {
                 PostFilters.setMode('collection', collection.id);
             }
@@ -115,7 +115,7 @@ function (
     )
     .state(
         {
-            name: 'list.map',
+            name: 'posts.map',
             url: '/views/map',
             views: {
                 listView: {
@@ -139,7 +139,7 @@ function (
     .state(
         {
             url: '^/savedsearches/:savedSearchId/map',
-            name: 'list.map.savedsearch',
+            name: 'posts.map.savedsearch',
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 PostFilters.setFilters(savedSearch.filter);
             }
@@ -148,7 +148,7 @@ function (
     .state(
         {
             url: '^/collections/:collectionId/map',
-            name: 'list.map.collection',
+            name: 'posts.map.collection',
             onEnter: function ($state, $transition$, PostFilters, collection) {
                 PostFilters.setMode('collection', collection.id);
             }
@@ -156,7 +156,7 @@ function (
     )
     .state(
         {
-            name: 'list.data.detail',
+            name: 'posts.data.detail',
             url: '/posts/:postId',
             template: require('./detail/post-detail-data.html'),
             controller: require('./detail/post-detail-data.controller.js'),
@@ -177,7 +177,7 @@ function (
      **/
     .state(
         {
-            name: 'list.data.edit',
+            name: 'posts.data.edit',
             url: '/posts/:postId/edit',
             template: require('./modify/post-data-editor.html'),
             controller: require('./modify/post-data-editor.controller.js'),
@@ -194,7 +194,7 @@ function (
     )
     .state(
         {
-            name: 'list.noui',
+            name: 'posts.noui',
             url: '/map/noui',
             controller: require('./views/post-view-noui.controller.js'),
             template: require('./views/post-view-noui.html'),
