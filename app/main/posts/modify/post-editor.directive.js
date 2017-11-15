@@ -135,7 +135,6 @@ function PostEditorController(
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                console.log('fail to get lock!!!');
                 $state.go('postEdit', {id: $scope.post.id});
             }
 
