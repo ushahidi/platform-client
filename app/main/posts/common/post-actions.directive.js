@@ -8,7 +8,6 @@ PostActionsDirective.$inject = [
     '$state',
     'PostActionsService',
     'PostLockService',
-    '$stateParams',
     '_'
 ];
 function PostActionsDirective(
@@ -19,7 +18,6 @@ function PostActionsDirective(
     $state,
     PostActionsService,
     PostLockService,
-    $stateParams,
     _
 ) {
     return {
@@ -71,7 +69,7 @@ function PostActionsDirective(
                 return;
             }
 
-            if ($stateParams.view !== 'data' && $location.path().indexOf('data') === -1) {
+            if ($scope.$resolve.$transition$.params().view !== 'data' && $location.path().indexOf('data') === -1) {
                 $state.go('posts.data.edit', {postId: postId});
             } else if ($scope.editMode.editing) {
                 // At this point we are not certain we will switch to this Post so we back it up
@@ -89,6 +87,7 @@ function PostActionsDirective(
             $scope.post.status = status;
 
             PostEndpoint.update($scope.post).$promise.then(function () {
+                // @uirouter-refactor fix this to work with new states
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post});
                 Notify.notify('notify.post.save_success', { name: $scope.post.title });

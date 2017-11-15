@@ -16,11 +16,6 @@ describe('setting roles editor directive', function () {
             return function () {};
         })
         .value('PostEntity', {})
-        .service('$stateParams', function () {
-            return {
-                'id': '1'
-            };
-        })
         .service('$state', function () {
             return {
                 'go': function () {
@@ -38,7 +33,13 @@ describe('setting roles editor directive', function () {
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        $scope.$resolve = {
+            $transition$: {
+                params: function () {
+                    return {id: 1};
+                }
+            }
+        };
         Notify = _Notify_;
 
         element = '<div roles-editor></div>';
