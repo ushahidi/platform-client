@@ -152,6 +152,7 @@ function PostDataEditorController(
         }
 
         return new Promise (function (resolve, reject) {
+            // Do we have unsaved changes? If not , leave them continue
             if (!$scope.parentForm.form || ($scope.parentForm.form && !$scope.parentForm.form.$dirty)) {
                 resolveUnlockPost(resolve, reject);
             } else {
