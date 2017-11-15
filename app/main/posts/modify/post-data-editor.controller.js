@@ -413,7 +413,7 @@ function PostDataEditorController(
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
 
                 // Save the updated post back to outside context
-                $state.go('list.data.detail', {view: 'data', postId: response.id});
+                $state.go('posts.data.detail', {view: 'data', postId: response.id});
 
                 // DEVNOTE: Not sure how this would ever happen in the case of data view
                 // ideally this will go away when the two editors are integrated

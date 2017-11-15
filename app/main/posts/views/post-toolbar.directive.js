@@ -37,7 +37,7 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
             if ($scope.editMode.editing) {
                 $rootScope.$broadcast('event:edit:leave:form');
             } else {
-                $state.go('list.data.edit', {postId: $scope.selectedPost.id}, {reload: true});
+                $state.go('posts.data.edit', {postId: $scope.selectedPost.id}, {reload: true});
                 $scope.editMode.editing = true;
             }
         }
