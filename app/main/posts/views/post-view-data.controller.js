@@ -14,6 +14,7 @@ module.exports = [
     'Notify',
     '$window',
     '$state',
+    'LoadingProgress',
 function PostViewDataController(
     $scope,
     $rootScope,
@@ -29,7 +30,8 @@ function PostViewDataController(
     $location,
     Notify,
     $window,
-    $state
+    $state,
+    LoadingProgress
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -59,10 +61,11 @@ function PostViewDataController(
     $scope.selectedPostId = null;
     $scope.formData = {form: {}};
     $rootScope.setLayout('layout-d');
-    var stopInterval;            
-    $scope.isLoading = $rootScope.isLoading;
-    $rootScope.$watch('isLoading', function (isLoading) {
-        $scope.isLoading = isLoading;
+    var stopInterval;
+    $scope.loading = LoadingProgress.getLoadingState();
+
+    LoadingProgress.subscribeOnLoadingState(function (loading) {
+        $scope.loading = loading;
     });
 
     /**
@@ -219,20 +222,17 @@ function PostViewDataController(
             deferred.resolve();
         } else if ($scope.formData.form && !$scope.formData.form.$dirty) {
             $scope.editMode.editing = false;
-            $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
                 $scope.editMode.editing = false;
-                $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
                 deferred.resolve();
             }, function (reject) {
                 deferred.reject();
                 $scope.editMode.editing = true;
-                $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
             });
         }
@@ -280,7 +280,6 @@ function PostViewDataController(
         if (useOffset === true) {
             postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
         }
-        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             clearPosts ? resetPosts() : null;
@@ -297,7 +296,6 @@ function PostViewDataController(
             groupPosts(postsResponse.results);
 
             $scope.totalItems = postsResponse.total_count;
-            $scope.isLoading.state = false;
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();
             }
@@ -308,7 +306,6 @@ function PostViewDataController(
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
-            $scope.isLoading.state = true;
             var deletePostsPromises = _.map(
                 $scope.selectedPosts,
                 function (postId) {
@@ -319,11 +316,9 @@ function PostViewDataController(
             ;
 
             function handleDeleteErrors(errorResponse) {
-                $scope.isLoading.state = false;
                 Notify.apiErrors(errorResponse);
             }
             function handleDeleteSuccess(deleted) {
-                $scope.isLoading.state = false;
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
                 var deletedIds = _.pluck(deleted, 'id');

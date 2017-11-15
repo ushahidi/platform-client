@@ -8,24 +8,25 @@ function PostToolbarDirective() {
             filters: '=',
             currentView: '=',
             editMode: '=',
-            selectedPost: '=',
-            savingPost: '='
+            selectedPost: '='
         },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')
     };
 }
 
-PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService', '$state'];
-function PostToolbarController($scope, $rootScope, Notify, PostLockService, $state) {
+PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService', '$state', 'LoadingProgress'];
+function PostToolbarController($scope, $rootScope, Notify, PostLockService, $state, LoadingProgress) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
 
     $scope.isLoading = $rootScope.isLoading;
-    $rootScope.$watch('isLoading', function (isLoading) {
-        $scope.isLoading = isLoading;
+    $scope.savingPost = $rootScope.savingPost;
+    $scope.loading = LoadingProgress.getLoadingState();
+    LoadingProgress.subscribeOnLoadingState(function (loading) {
+        $scope.loading = loading;
     });
 
     function editEnabled() {
