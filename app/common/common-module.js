@@ -88,6 +88,7 @@ angular.module('ushahidi.common', [
 .directive('addCategory', require('./directives/add-category.directive.js'))
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
+.directive('loadingDots', require('./directives/loading-dots.directive.js'))
 
 // Factories
 .factory('socket', require('./factories/socket-factory.js'))
