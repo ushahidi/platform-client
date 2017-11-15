@@ -16,8 +16,7 @@ function (
             template: require('./views/main.html'),
             params: {
                 view: {value: null, squash: true},
-                filterState: {value: null, squash: true},
-                savedSearchState: {value: null, squash: true}
+                filterState: {value: null, squash: true}
             },
             resolve: {
                 isLoading: function () {
@@ -74,8 +73,7 @@ function (
             name: 'list.data',
             params: {
                 view: {value: 'data', squash: true},
-                filterState: {value: null, squash: true},
-                savedSearchState: {value: null, squash: true}
+                filterState: {value: null, squash: true}
             },
             views: {
                 listView: {
@@ -128,8 +126,7 @@ function (
             },
             params: {
                 view: {value: 'map', squash: true},
-                filterState: {value: null, squash: true},
-                savedSearchState: {value: null, squash: true}
+                filterState: {value: null, squash: true}
             },
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 if (!savedSearch) {
