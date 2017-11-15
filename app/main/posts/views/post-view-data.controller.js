@@ -32,7 +32,7 @@ function PostViewDataController(
     Notify,
     $window,
     $state,
-    $transition$
+    $transition$,
     LoadingProgress
 ) {
     $scope.currentPage = 1;
@@ -269,6 +269,7 @@ function PostViewDataController(
     }
 
     function getPosts(query, useOffset, clearPosts) {
+        LoadingProgress.setLoadingState({isLoading: true});
         query = query || PostFilters.getQueryParams($scope.filters);
         PostEndpoint.stats(query).$promise.then(function (results) {
             $scope.total = results.totals[0].values[0].total;
@@ -299,10 +300,14 @@ function PostViewDataController(
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();
             }
+            LoadingProgress.setLoadingState({isLoading: false});
+
         });
     }
 
     function deletePosts() {
+        LoadingProgress.setLoadingState({isLoading: true});
+
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
@@ -312,11 +317,12 @@ function PostViewDataController(
                     $scope.selectedPosts = _.without($scope.selectedPosts, postId);
                     return PostEndpoint.delete({ id: postId }).$promise;
                 });
-            $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
-            ;
+            $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors);
 
             function handleDeleteErrors(errorResponse) {
                 Notify.apiErrors(errorResponse);
+                LoadingProgress.setLoadingState({isLoading: false});
+
             }
             function handleDeleteSuccess(deleted) {
                 Notify.notify('notify.post.destroy_success_bulk');
@@ -335,11 +341,15 @@ function PostViewDataController(
                 if (!$scope.posts.length) {
                     getPosts(false, false, true);
                 }
+                LoadingProgress.setLoadingState({isLoading: false});
             }
+
         });
     }
 
     function changeStatus(status) {
+        LoadingProgress.setLoadingState({isLoading: true});
+
         var selectedPosts = _.filter($scope.posts, function (post) {
             return _.contains($scope.selectedPosts, post.id);
         });
@@ -360,8 +370,10 @@ function PostViewDataController(
                 }
             });
             clearSelectedPosts();
+            LoadingProgress.setLoadingState({isLoading: false});
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
+            LoadingProgress.setLoadingState({isLoading: false});
         });
     }
 

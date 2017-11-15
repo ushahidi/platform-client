@@ -1,13 +1,16 @@
-module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$scope',
-    function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $scope) {
+module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$scope','LoadingProgress',
+    function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $scope, LoadingProgress) {
         $scope.filters = PostFilters.getFilters();
-        $scope.isLoading = {state: true};
         $scope.map;
         $scope.markers;
         $scope.limit = 200;
         $scope.requestBlockSize = 5;
         $scope.numberOfChunks = 0;
         $scope.currentGeoJsonRequests = [];
+        $scope.loading = LoadingProgress.getLoadingState();
+        LoadingProgress.subscribeOnLoadingState(function (loading) {
+            $scope.loading = loading;
+        });
         // Start loading data
         /**
          * functions
@@ -155,7 +158,8 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
                 offset: offset,
                 has_location: 'mapped'
             });
-            $scope.isLoading.state = true;
+
+            LoadingProgress.setLoadingState({isLoading: true});
 
             var request = PostEndpoint.geojson(conditions);
             $scope.currentGeoJsonRequests.push(request);
@@ -181,7 +185,8 @@ module.exports = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '
                 }
 
                 if ($scope.numberOfChunks <= 0) {
-                    $scope.isLoading.state = false;
+                    LoadingProgress.setLoadingState({isLoading: false});
+
                 }
                 return posts;
             });

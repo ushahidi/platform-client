@@ -4,7 +4,7 @@ LoadingProgress.$inject = ['$rootScope', '$transitions'];
 function LoadingProgress($rootScope, $transitions) {
     function watchTransitions() {
         $transitions.onStart({}, function (transition) {
-            $rootScope.loading = {isLoading: true, isSaving: false};
+            $rootScope.loading = {isLoading: true};
             if (transition.from().name === 'list.data.edit') {
                 $rootScope.loading.isSaving = true;
             }

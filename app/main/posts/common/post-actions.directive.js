@@ -9,8 +9,9 @@ PostActionsDirective.$inject = [
     'PostActionsService',
     'PostLockService',
     '$stateParams',
-    '_'
-];
+    '_',
+    'LoadingProgress'
+    ];
 function PostActionsDirective(
     $rootScope,
     PostEndpoint,
@@ -20,7 +21,8 @@ function PostActionsDirective(
     PostActionsService,
     PostLockService,
     $stateParams,
-    _
+    _,
+    LoadingProgress
 ) {
     return {
         restrict: 'E',
@@ -47,7 +49,10 @@ function PostActionsDirective(
         }
 
         function deletePost() {
+            LoadingProgress.setLoadingState({isLoading: true});
             PostActionsService.delete($scope.post).then(function () {
+                LoadingProgress.setLoadingState({isLoading: false});
+
                 // If we're not already on some top level view
                 if ($location.path().indexOf('views') === -1 &&
                     $location.path().indexOf('collections') === -1 &&
@@ -57,6 +62,7 @@ function PostActionsDirective(
                 } else {
                     $state.go($state.$current, null, { reload: true }); // in favor of $route.reload();
                 }
+
             });
         }
 
@@ -87,12 +93,16 @@ function PostActionsDirective(
 
         function updateStatus(status) {
             $scope.post.status = status;
+            LoadingProgress.setLoadingState({isLoading: true});
 
             PostEndpoint.update($scope.post).$promise.then(function () {
+                LoadingProgress.setLoadingState({isLoading: false});
+
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post});
                 Notify.notify('notify.post.save_success', { name: $scope.post.title });
             }, function (errorResponse) {
+                LoadingProgress.setLoadingState({isLoading: false});
                 Notify.apiErrors(errorResponse);
             });
         }
