@@ -5,7 +5,6 @@ function PostToolbarDirective() {
     return {
         restrict: 'E',
         scope: {
-            isLoading: '=',
             filters: '=',
             currentView: '=',
             editMode: '=',

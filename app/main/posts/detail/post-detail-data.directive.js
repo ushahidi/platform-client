@@ -7,7 +7,6 @@ function PostDetailData() {
         replace: true,
         scope: {
             filters: '=',
-            isLoading: '=',
             editMode: '=',
             postContainer: '='
         },

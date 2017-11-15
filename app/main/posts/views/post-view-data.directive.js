@@ -7,7 +7,6 @@ function PostViewData() {
         replace: true,
         scope: {
             filters: '=',
-            isLoading: '=',
             currentView: '=',
             post: '='
         },

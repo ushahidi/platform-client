@@ -10,7 +10,6 @@ function PostDataEditor() {
             attributesToIgnore: '=',
             postMode: '=',
             editMode: '=',
-            isLoading: '=',
             savingPost: '=',
             parentForm: '='
         },

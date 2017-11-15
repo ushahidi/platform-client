@@ -24,7 +24,7 @@
         </div>
     </div>
     <main role="main">
-        <post-toolbar is-loading="isLoading" current-view="currentView" filters="filters" ng-if="currentView !== 'data' && currentView !=='noui'" edit-mode="{editing: false}"></post-toolbar>
+        <post-toolbar current-view="currentView" filters="filters" ng-if="currentView !== 'data' && currentView !=='noui'" edit-mode="{editing: false}"></post-toolbar>
         <!--@uirouter-refactor ask Anna about this <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>-->
         <!-- todo: toolbox-->
         <div ui-view="listView" noanimation="true"></div>

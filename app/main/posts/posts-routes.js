@@ -20,9 +20,6 @@ function (
                 savedSearchState: {value: null, squash: true}
             },
             resolve: {
-                isLoading: function () {
-                    return {state: true};
-                },
                 collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
                     if ($transition$.params().collectionId) {
                         return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
@@ -87,6 +84,7 @@ function (
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 selectedPost: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+
                     if ($transition$.params().postId) {
                         return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                     }

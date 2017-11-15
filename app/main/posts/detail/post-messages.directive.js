@@ -40,7 +40,6 @@ function (
             $scope.totalItems = $scope.itemsPerPage;
             $scope.pageChanged = getMessagesForPagination;
             $scope.showPagination = false;
-            $scope.isLoadingMessages = false;
 
             function activate() {
                 // Can't activate if we don't have a contact
@@ -65,7 +64,6 @@ function (
             activate();
 
             function getMessagesForPagination() {
-                $scope.isLoadingMessages = true; // show progress bar
 
                 if ($scope.post.contact.id) {
                     MessageEndpoint.allInThread({
@@ -91,7 +89,6 @@ function (
                         $scope.totalItems = response.total_count;
                         $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
 
-                        $scope.isLoadingMessages = false; //hide progress bar
                     });
                 }
             }
