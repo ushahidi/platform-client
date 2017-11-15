@@ -143,9 +143,11 @@ angular.module('app',
     }])// inject the router instance into a `run` block by name
     .run(function ($uiRouter, $trace, $location) {
         /** uncomment this to enable the visualizer
-        var pluginInstance = $uiRouter.plugin(Visualizer);
-        $trace.enable('TRANSITION');
-         **/
-    }).run(function ($rootScope) {
+        var pluginInstance = $uiRouter.plugin(Visualizer);**/
+        // $trace.enable('TRANSITION');
+    }).run(function ($rootScope, LoadingProgress) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
+        // this handles the loading-state app-wide
+        LoadingProgress.watchTransitions();
+
     });

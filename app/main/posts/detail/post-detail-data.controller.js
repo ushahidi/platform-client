@@ -57,7 +57,6 @@ function (
 
     function activate() {
         // Set page title to post title, if there is one available.
-        //$scope.isLoading.state = true;
         if ($scope.post.title && $scope.post.title.length) {
             $scope.$emit('setPageTitle', $scope.post.title);
         } else {
@@ -137,12 +136,10 @@ function (
                     }
                 });
                 $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
-                //$scope.isLoading.state = false;
             });
         } else {
             // for when user switch between posts, if new post has no form, there are no tasks either.
             $scope.tasks = [];
-            //$scope.isLoading.state = false;
         }
     }
 

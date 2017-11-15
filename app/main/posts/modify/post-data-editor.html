@@ -107,14 +107,9 @@
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
           <button class="button-flat" ng-click="leavePost()" translate>app.cancel</button>
-          <button class="button button-alpha" ng-click="savePost()" ng-if="!savingPost.saving" translate="">app.save</button>
-          <button class="button-alpha" disabled ng-if="savingPost.saving" translate>app.saving
-            <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
-          </button>
+          <button class="button button-alpha" ng-click="savePost()" ng-if="!loading.isSaving" translate="">app.save</button>
+
+          <loading-dots button-class="'button-alpha'" ng-if="loading.isSaving" disabled=true label="'app.saving'"></loading-dots>
         </div>
       </div>
   </form>
