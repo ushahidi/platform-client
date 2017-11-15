@@ -118,7 +118,6 @@ function (
             url: '/views/map',
             views: {
                 listView: {
-                    controller: require('./views/post-view-map.controller.js'),
                     template: function ($state, $transition$) {
                         return '<post-view-map></post-view-map>';
                     }
