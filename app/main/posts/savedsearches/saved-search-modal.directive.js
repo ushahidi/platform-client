@@ -66,9 +66,9 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
         $scope.$parent.closeModal();
         var viewParam = savedSearch.view;
         if (viewParam === 'list' || viewParam === 'data') {
-            $state.go('list.data.savedsearch', {savedSearchId: savedSearch.id}, {reload: true});
+            $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id}, {reload: true});
         } else {
-            $state.go('list.map.savedsearch', {savedSearchId: savedSearch.id}, {reload: true});
+            $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id}, {reload: true});
         }
     }
 
