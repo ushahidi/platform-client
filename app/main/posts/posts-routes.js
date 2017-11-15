@@ -32,7 +32,6 @@ function (
                     if ($transition$.params().savedSearchId) {
                         return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
                     }
-
                 }]
             },
             onEnter: function ($state, $transition$, PostFilters) {
