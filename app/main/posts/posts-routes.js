@@ -84,7 +84,10 @@ function (
                 }
             },
             resolve: {
-                //change to selectedPost and refactor the selectedposts in general
+                /**
+                 * This is enabling the feature of loading with a selectedPost "selected" in the data mode left side.
+                 * Nothing happens if there no postId except for not having a selectedPost.
+                  */
                 selectedPost: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     if ($transition$.params().postId) {
                         return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
@@ -154,11 +157,6 @@ function (
             }
         }
     )
-
-    /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
-     at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
-     since you won't be sent to a sole post' detail view
-     **/
     .state(
         {
             name: 'list.data.detail',
