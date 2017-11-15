@@ -89,7 +89,7 @@ function PostDataEditorController(
      * When a transition starts here you want to either let it go or cancel it here,
      * because you need the leavePost functionality with the warning modal and all that.
      * The ignoreCancelEvent bool is for a special case where you literally are transitioning after the user accepts
-     * (you don't want to show it again) and you have the transition.from().name making sure you were in a list.data.edit state
+     * (you don't want to show it again) and you have the transition.from().name making sure you were in a posts.data.edit state
      * (editing mode). If you are there, you either resolve or reject a promise depending on form state, user actions, etc.
      * Resolve will let the transition continue. Reject will stop the transition meaning you stay in the edit mode
      */
@@ -97,7 +97,7 @@ function PostDataEditorController(
         //where is it going? transition.to().name
         // return rejected promise or false to cancel the transition
         // saveChangesAndContinue calls cancel which then resolves or rejects the state change.
-        if (!ignoreCancelEvent && transition.from().name === 'list.data.edit') {
+        if (!ignoreCancelEvent && transition.from().name === 'posts.data.edit') {
             return saveChangesAndContinue();
         }
         return true;
@@ -231,10 +231,9 @@ function PostDataEditorController(
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                //@uirouter-refactor leaveEditMode();
+                $state.go('posts.data.detail', {view: 'data', postId: $scope.post.id});
                 return;
             }
-
 
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
@@ -413,7 +412,7 @@ function PostDataEditorController(
                 $scope.parentForm.form.$dirty = false;
                 // Save the updated post back to outside context
                 ignoreCancelEvent = true;
-                $state.go('list.data.detail', {view: 'data', postId: response.id});
+                $state.go('posts.data.detail', {view: 'data', postId: response.id});
 
                 // DEVNOTE: Not sure how this would ever happen in the case of data view
                 // ideally this will go away when the two editors are integrated
@@ -431,8 +430,6 @@ function PostDataEditorController(
                 $scope.isLoading.state = false;
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
-
-                //@uirouter-refactor leaveEditMode();
             }, function (errorResponse) { // errors
                 var validationErrors = [];
                 // @todo refactor limit handling

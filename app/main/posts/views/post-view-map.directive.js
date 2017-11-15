@@ -126,7 +126,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         function goToPost(post) {
             // reload because otherwise the layout does not reload and that is wrong because we change layouts on data and map
-            $state.go('list.data.detail', {postId: post.id}, {reload: true});
+            $state.go('posts.data.detail', {postId: post.id}, {reload: true});
         }
 
         function getPostDetails(feature) {

@@ -32,15 +32,15 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
         $rootScope.$broadcast('event:edit:post:data:mode:save');
     }
     function saveButtonEnabled() {
-        return $state.$current.name === 'list.data.edit';
+        return $state.$current.name === 'posts.data.edit';
     }
 
     function setEditMode() {
         if (editEnabled()) {
             if ($scope.editMode.editing) {
-                $state.go('list.data.detail', {postId: $scope.selectedPost.id});
+                $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
             } else {
-                $state.go('list.data.edit', {postId: $scope.selectedPost.id});
+                $state.go('posts.data.edit', {postId: $scope.selectedPost.id});
                 $scope.editMode.editing = true;
             }
         }

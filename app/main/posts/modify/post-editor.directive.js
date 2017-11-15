@@ -248,10 +248,11 @@ function PostEditorController(
 
     function cancel() {
         PostLockEndpoint.unlock($scope.post.lock).$promise.then(function (result) {
-            // @uirouter-refactor add back
-            // var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
-
-            // $location.path(path);
+            if ($scope.post.id) {
+                $state.go('postDetail', {postId: $scope.post.id});
+            } else {
+                $state.go('posts.data');
+            }
         });
     }
 
@@ -309,10 +310,10 @@ function PostEditorController(
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
                     Notify.notify(success_message, { name: $scope.post.title });
-                    //@uirouter-refactor add back $location.path('/posts/' + response.id);
+                    $state.go('postDetail', {postId: response.id});
                 } else {
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/');
+                    $state.go('posts.map');
                 }
             }, function (errorResponse) { // errors
                 var validationErrors = [];

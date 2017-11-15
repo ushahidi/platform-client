@@ -46,10 +46,9 @@ function (
                     });
                 }
             });
+        } else {
+            $state.go('postDetail', {postId: post.id});
         }
-        // else {
-        //@uirouter-refactor $location.url('/posts/' + post.id);
-        //}
         $scope.post = post;
     });
 }];
