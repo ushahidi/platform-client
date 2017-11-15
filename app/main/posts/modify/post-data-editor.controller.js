@@ -87,9 +87,9 @@ function PostDataEditorController(
     $transitions.onStart({}, function (transition) {
         //where is it going? transition.to().name
         // return rejected promise or false to cancel the transition
-        // leavePost calls cancel which then resolves or rejects the state change.
+        // saveChangesAndContinue calls cancel which then resolves or rejects the state change.
         if (!ignoreCancelEvent && transition.from().name === 'list.data.edit') {
-            return leavePost();
+            return saveChangesAndContinue();
         }
         return true;
     });
@@ -98,10 +98,8 @@ function PostDataEditorController(
      *
      * @returns {Promise}
      */
-    function cancel() {
+    function unlockPost() {
         return new Promise(function (resolve, reject) {
-            $scope.isLoading.state = false;
-            $scope.savingPost.saving = false;
             /** @DEVNOTE I think we shouldn't need to check this,
              * but in unstructured posts the lock is not available consistently.
              **/
@@ -119,29 +117,34 @@ function PostDataEditorController(
     }
 
     /**
-     *
-     * @returns {Promise}
+     * This function is called when the user attempts to leave the post edit form.
+     * - No changes: resolve and let the transition out of it continue
+     * - There are Changes: warn the user they will lose data if they don't save
+     * -  - Continue with no saving: let the transition continue (resolve)
+     * -  - Cancel button with no saving: let the transition continue (resolve)
+     * - - Save success:  let the transition continue (resolve)
+     * - - Save failure: cancel the transition, show errors or whatever the save post does.
      */
-    function leavePost() {
+    function saveChangesAndContinue() {
         /**
          * just a wrapper function because we were doing the same thing
          * over and over again in the promise
          * @param resolve
          * @param reject
          */
-        var cancelResolveFn = function (resolve, reject) {
+        function resolveUnlockPost(resolve, reject) {
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
-            return cancel().then(function () {
+            return unlockPost().then(function () {
                 resolve(true);
             }).catch(function () {
                 reject(false);
             });
-        };
+        }
 
         return new Promise (function (resolve, reject) {
             if (!$scope.parentForm.form || ($scope.parentForm.form && !$scope.parentForm.form.$dirty)) {
-                cancelResolveFn(resolve, reject);
+                resolveUnlockPost(resolve, reject);
             } else {
                 // @uirouter-refactor if we end up having onbeforeunload features,we need to add this back
                 // if (ev) {
@@ -150,7 +153,7 @@ function PostDataEditorController(
                 Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                     // continue without saving goes here,
                     // save goes here too, because it's a RESOLVE.
-                    cancelResolveFn(resolve, reject);
+                    resolveUnlockPost(resolve, reject);
                 }, function () {
                     // when reject, we should not change state/transition. This happens in save errors
                     reject(false);
