@@ -84,6 +84,15 @@ function PostDataEditorController(
         $scope.savePost();
     });
 
+    /**
+     * $transitions.onStart is a handler for when a transition starts.
+     * When a transition starts here you want to either let it go or cancel it here,
+     * because you need the leavePost functionality with the warning modal and all that.
+     * The ignoreCancelEvent bool is for a special case where you literally are transitioning after the user accepts
+     * (you don't want to show it again) and you have the transition.from().name making sure you were in a list.data.edit state
+     * (editing mode). If you are there, you either resolve or reject a promise depending on form state, user actions, etc.
+     * Resolve will let the transition continue. Reject will stop the transition meaning you stay in the edit mode
+     */
     $transitions.onStart({}, function (transition) {
         //where is it going? transition.to().name
         // return rejected promise or false to cancel the transition
