@@ -144,6 +144,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (key === 'qEnabled') {
                     return true;
                 }
+                // Ignore saved_search
+                if (key === 'saved_search') {
+                    return true;
+                }
                 // Is value empty?
                 // Is it a date?
                 if (_.isDate(value)) {
@@ -190,6 +194,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             filters,
             function (value, key, object) {
                 if (defaults[key] === value) {
+                    return true;
+                }
+                // Ignore difference in saved_search
+                if (key === 'saved_search') {
                     return true;
                 }
                 // Ignore difference in within_km

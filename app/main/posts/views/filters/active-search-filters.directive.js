@@ -62,15 +62,12 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 // get clean version (no defaults) of the saved search filters
                 $scope.savedSearch.filter = PostFilters.getCleanActiveFilters(filters.saved_search.filter);
                 $scope.activeFilters = _.mapObject(_.mapObject(activeFilters, function (value, key) {
-                    if (value === $scope.savedSearch.filter[key]) {
-                        return '';
-                    }
                     if (_.isNumber(value) || _.isString(value)) {
                         return value;
                     }
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 }), makeArray);
-                console.log($scope.activeFilters, $scope.savedSearch.filter);
+                console.log($scope.activeFilters);
             } else {
                 $scope.activeFilters =  _.mapObject(activeFilters, makeArray);
             }
