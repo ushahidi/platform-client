@@ -52,7 +52,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                 $location.url(redirect);
             }
 
-            $state.go($state.$current.name ? $state.$current : 'map', null, { reload: true });
+            $state.go('posts.map');
         });
     }
 
