@@ -34,7 +34,6 @@ function (
                 }]
             },
             onEnter: function ($state, $transition$, PostFilters) {
-                console.log($state, $transition$);
                 if ($transition$.params().filterState) {
                     PostFilters.setFilters($transition$.params().filterState);
                 }
