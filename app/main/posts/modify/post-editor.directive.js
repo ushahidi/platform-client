@@ -309,7 +309,7 @@ function PostEditorController(
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $state.go('postDetail', {postId: response.id});
+                    $state.go('posts.data.detail', {postId: response.id});
                 } else {
                     Notify.notify(success_message, { name: $scope.post.title });
                     $state.go('posts.map');
