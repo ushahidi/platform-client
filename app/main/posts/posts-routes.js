@@ -12,16 +12,11 @@ function (
         {
             name: 'posts',
             abstract: true,
-            controller: require('./views/post-views.controller.js'),
-            template: require('./views/main.html'),
             params: {
                 view: {value: null, squash: true},
                 filterState: {value: null, squash: true}
             },
             resolve: {
-                isLoading: function () {
-                    return {state: true};
-                },
                 collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
                     if ($transition$.params().collectionId) {
                         return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
@@ -74,22 +69,16 @@ function (
                 view: {value: 'data', squash: true},
                 filterState: {value: null, squash: true}
             },
-            views: {
-                listView: {
-                    controller: require('./views/post-view-data.controller.js'),
-                    template: require('./views/post-view-data.html')
-                }
-            },
+            component: 'postViewData',
             resolve: {
                 /**
                  * This is enabling the feature of loading with a selectedPost "selected" in the data mode left side.
                  * Nothing happens if there no postId except for not having a selectedPost.
                   */
-                selectedPost: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     if ($transition$.params().postId) {
                         return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                     }
-
                 }]
             }
         }
@@ -173,8 +162,7 @@ function (
         {
             name: 'posts.data.edit',
             url: '/posts/:postId/edit',
-            template: require('./modify/post-data-editor.html'),
-            controller: require('./modify/post-data-editor.controller.js'),
+            component: 'postDataEditor',
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {

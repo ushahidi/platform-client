@@ -1,4 +1,6 @@
+<main role="main">
 <div class="flex-container">
+    <layout-class layout="d"></layout-class>
     <post-toolbar saving-post="savingPost" is-loading="isLoading" current-view="currentView" selected-post="selectedPost.post" edit-mode="editMode" filters="filters"></post-toolbar>
     <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
         <div class="load-more"  ng-show="newPostsCount > 0">
@@ -94,8 +96,11 @@
         </div>
     </div>
     <div class="post-col">
-        <div ui-view></div>
+        <!-- Verify if we need all these bindings ie. parentForm savingPost -->
+        <div ui-view edit-mode="editMode" filters="filters" is-loading="isLoading" saving-post="savingPost" ></post-detail-data>
         <!-- @uirouter-refactor: need to move this -->
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
     </div>
 </div>
+<ush-logo></ush-logo>
+</main>

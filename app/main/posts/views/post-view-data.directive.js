@@ -4,12 +4,10 @@ PostViewData.$inject = [];
 function PostViewData() {
     return {
         restrict: 'E',
-        replace: true,
         scope: {
-            filters: '=',
-            isLoading: '=',
-            currentView: '=',
-            post: '='
+            post: '<',
+            collection: '<',
+            savedSearch: '<',
         },
         controller: PostViewDataController,
         template: require('./post-view-data.html')
@@ -31,8 +29,7 @@ PostViewDataController.$inject = [
     '$location',
     'Notify',
     '$window',
-    '$state',
-    '$transition$'
+    '$state'
 ];
 function PostViewDataController(
     $scope,
@@ -49,8 +46,7 @@ function PostViewDataController(
     $location,
     Notify,
     $window,
-    $state,
-    $transition$
+    $state
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -75,12 +71,12 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    $scope.selectedPost = {post: $scope.$resolve.selectedPost, next: {}};
+    $scope.selectedPost = {post: $scope.post, next: {}};
     $scope.selectedPostId = null;
     $scope.formData = {form: {}};
-    $rootScope.setLayout('layout-d');
-    $scope.isLoading = $scope.$resolve.isLoading;
     $scope.getPosts = getPosts;
+    $scope.isLoading = {state: false};
+
     var stopInterval;
     /**
      * setting "now" time as utc for new posts filter
@@ -150,6 +146,22 @@ function PostViewDataController(
 
     activate();
     function activate() {
+        // Set the page title
+        $translate('post.posts').then(function (title) {
+            $scope.title = title;
+            $scope.$emit('setPageTitle', title);
+        });
+
+        // Grab initial filters
+        if ($scope.collection) {
+            PostFilters.setMode('collection', $scope.collection.id);
+        } else if ($scope.savedSearch) {
+            PostFilters.setMode('savedsearch', $scope.savedSearch.id);
+        } else {
+            PostFilters.setMode('all');
+        }
+        $scope.filters = PostFilters.getFilters();
+
         getPosts(false, false);
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run

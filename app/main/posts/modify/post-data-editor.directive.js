@@ -6,13 +6,9 @@ function PostDataEditor() {
     return {
         restrict: 'E',
         scope: {
-            postContainer: '=',
-            attributesToIgnore: '=',
-            postMode: '=',
-            editMode: '=',
+            post: '<',
             isLoading: '=',
             savingPost: '=',
-            parentForm: '='
         },
         template: require('./post-data-editor.html'),
         controller: PostDataEditorController
@@ -86,7 +82,6 @@ function PostDataEditorController(
     $scope.savePost = savePost;
     $scope.postTitleLabel = 'Title';
     $scope.postDescriptionLabel = 'Description';
-    $scope.post = $scope.$resolve.post;
     $scope.tagKeys = [];
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
@@ -173,7 +168,7 @@ function PostDataEditorController(
 
         return new Promise (function (resolve, reject) {
             // Do we have unsaved changes? If not , leave them continue
-            if (!$scope.parentForm.form || ($scope.parentForm.form && !$scope.parentForm.form.$dirty)) {
+            if (!$scope.editForm || ($scope.editForm && !$scope.editForm.$dirty)) {
                 resolveUnlockPost(resolve, reject);
             } else {
                 // @uirouter-refactor if we end up having onbeforeunload features,we need to add this back
@@ -195,8 +190,6 @@ function PostDataEditorController(
     activate();
 
     function activate() {
-        //$scope.post = angular.copy($scope.postContainer.post);
-        //$scope.editMode.editing = true;
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
@@ -265,7 +258,6 @@ function PostDataEditorController(
             // Set Post Lock
             $scope.post.lock = results[3];
 
-            // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
                 if (attr.type === 'title' || attr.type === 'description') {
@@ -364,7 +356,7 @@ function PostDataEditorController(
     }
 
     function canSavePost() {
-        return PostEditService.validatePost($scope.post, $scope.parentForm.form, $scope.tasks);
+        return PostEditService.validatePost($scope.post, $scope.editForm, $scope.tasks);
     }
 
     function deletePost(post) {
@@ -385,7 +377,7 @@ function PostDataEditorController(
         $scope.isLoading.state = true;
         $scope.savingPost.saving = true;
         // Checking if changes are made
-        if ($scope.parentForm.form && !$scope.parentForm.form.$dirty) {
+        if ($scope.editForm && !$scope.editForm.$dirty) {
             $scope.savingPost.saving = false;
             $scope.isLoading.state = false;
             Notify.infoModal('post.valid.no_changes');
@@ -429,7 +421,7 @@ function PostDataEditorController(
             }
             request.$promise.then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-                $scope.parentForm.form.$dirty = false;
+                $scope.editForm.$dirty = false;
                 // Save the updated post back to outside context
                 ignoreCancelEvent = true;
                 $state.go('posts.data.detail', {view: 'data', postId: response.id});
