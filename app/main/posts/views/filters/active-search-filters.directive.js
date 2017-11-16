@@ -36,7 +36,15 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
+            // if (filters.saved_search) {
+            //     activeFilters = _.difference(_.map(filters.saved_search.filter, function (k, v) {
+            //         var tmp = {};
+            //         tmp[k] = v;
+            //         return tmp;
+            //     }), activeFilters);
+            // }
             $scope.activeFilters = _.mapObject(activeFilters, makeArray);
+            $scope.savedSearch = filters.saved_search;
         }
 
         function transformFilterValue(value, key) {
