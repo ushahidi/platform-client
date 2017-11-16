@@ -6,10 +6,9 @@ function PostDetailData() {
         restrict: 'E',
         replace: true,
         scope: {
-            filters: '=',
             isLoading: '=',
-            editMode: '=',
-            postContainer: '='
+            editMode: '=', // @todo remove
+            post: '='
         },
         controller: require('./post-detail-data.controller.js'),
         template: require('./post-detail-data.html')

@@ -87,17 +87,9 @@ function (
                     });
                 }
                 var tasks = _.sortBy(results[1], 'priority');
-                var attrs = _.chain(results[2])
+                var attributes = _.chain(results[2])
                     .sortBy('priority')
                     .value();
-
-                var attributes = [];
-                _.each(attrs, function (attr) {
-                    if (!_.contains($scope.attributesToIgnore, attr.key)) {
-                        attributes.push(attr);
-                    }
-                });
-                attributes = (attributes.length) ? attributes : attrs;
 
                 angular.forEach(attributes, function (attr) {
                     this[attr.key] = attr;

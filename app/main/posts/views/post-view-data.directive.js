@@ -7,7 +7,7 @@ function PostViewData() {
         scope: {
             post: '<',
             collection: '<',
-            savedSearch: '<',
+            savedSearch: '<'
         },
         controller: PostViewDataController,
         template: require('./post-view-data.html')

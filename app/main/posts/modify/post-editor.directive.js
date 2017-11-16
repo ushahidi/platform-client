@@ -7,9 +7,7 @@ function PostEditor() {
         restrict: 'E',
         scope: {
             post: '=',
-            attributesToIgnore: '=',
-            form: '=',
-            postMode: '='
+            form: '='
         },
         template: require('./post-editor.html'),
         controller: PostEditorController
@@ -144,7 +142,6 @@ function PostEditorController(
                 .sortBy('priority')
                 .value();
             var categories = results[2];
-            // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
                 if (attr.type === 'title' || attr.type === 'description') {

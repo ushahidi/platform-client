@@ -8,7 +8,7 @@ function PostDataEditor() {
         scope: {
             post: '<',
             isLoading: '=',
-            savingPost: '=',
+            savingPost: '='
         },
         template: require('./post-data-editor.html'),
         controller: PostDataEditorController
