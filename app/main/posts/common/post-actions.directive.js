@@ -51,9 +51,12 @@ function PostActionsDirective(
                     $location.path().indexOf('collections') === -1 &&
                     $location.path().indexOf('savedsearches') === -1) {
                     // Redirect to list
-                    $location.path('/views/data');
-                } else {
+                    $state.go('posts.data');
+                } else if ($state.current.name === 'posts.data' || $state.current.name === 'posts.data.detail') {
+                    // we only want to do this in the data detail view because it's where you can really update a list
                     $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post, deleted: true});
+                } else {
+                    $state.reload();
                 }
             });
         }
