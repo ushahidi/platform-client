@@ -139,8 +139,7 @@ function (
         {
             name: 'posts.data.detail',
             url: '/posts/:postId',
-            template: require('./detail/post-detail-data.html'),
-            controller: require('./detail/post-detail-data.controller.js'),
+            component: 'postDetailData',
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
