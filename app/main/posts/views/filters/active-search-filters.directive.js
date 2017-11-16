@@ -14,6 +14,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         $scope.activeFilters = {};
         $scope.removeFilter = removeFilter;
         $scope.transformFilterValue = transformFilterValue;
+        $scope.removeSavedSearch = removeSavedSearch;
         activate();
 
         function activate() {
@@ -80,11 +81,33 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
-        function removeFilter(filterKey, value, $event) {
+        function removeFilter(filterKey, value, savedSearch, $event) {
             $event.preventDefault();
             $event.stopPropagation();
-            PostFilters.clearFilter(filterKey, value);
+            if (savedSearch) {
+                $scope.savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, $scope.savedSearch.filter);
+            } else {
+                PostFilters.clearFilter(filterKey, value);
+            }
         }
+        function removeSavedSearch(savedSearch, $event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            PostFilters.clearFilter('saved_search', savedSearch);
 
+            _.each(savedSearch.filter, function (filter, key) {
+                if (_.isArray(filter)) {
+                    _.each(filter, function (filterV, keyV) {
+                        PostFilters.clearFilter(key, filterV);
+                    });
+                } else {
+                    PostFilters.clearFilter(key, filter);
+                }
+            });
+            $scope.savedSearch.filter = [];
+            $scope.savedSearch = null;
+
+
+        }
     }
 }
