@@ -17,9 +17,6 @@ require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 
-/** uncomment this to enable the visualizer
-var Visualizer = require('@uirouter/visualizer').Visualizer;
-**/
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
@@ -106,12 +103,10 @@ angular.module('app',
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
-    .config(function ($urlRouterProvider) {
+    .config(function ($urlRouterProvider, $urlMatcherFactoryProvider) {
         // if the path doesn't match any of the urls you configured
         // otherwise will take care of routing the user to the specified url
-        //$urlRouterProvider.otherwise('/views/map');
-
-    }).config(function ($urlMatcherFactoryProvider) {
+        // $urlRouterProvider.otherwise('/views/map');
         $urlMatcherFactoryProvider.strictMode(false);
     })
     .factory('_', function () {
@@ -140,12 +135,13 @@ angular.module('app',
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
-    }])// inject the router instance into a `run` block by name
-    .run(function ($uiRouter, $trace, $location) {
-        /** uncomment this to enable the visualizer
-        var pluginInstance = $uiRouter.plugin(Visualizer);
-        $trace.enable('TRANSITION');
-         **/
-    }).run(function ($rootScope) {
+    }])
+    // .run(function ($uiRouter, $trace, $location) {
+    //     let Visualizer = require('@uirouter/visualizer').Visualizer;
+
+    //     let pluginInstance = $uiRouter.plugin(Visualizer);
+    //     $trace.enable('TRANSITION');
+    // })
+    .run(function ($rootScope) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
     });
