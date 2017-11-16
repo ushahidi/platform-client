@@ -51,7 +51,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             if (redirect) {
                 $location.url(redirect);
             }
-            $state.reload();
+
+            $state.go($state.$current.name ? $state.$current : 'map', null, { reload: true });
         });
     }
 
