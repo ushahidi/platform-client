@@ -92,7 +92,7 @@ function PostViewDataController(
     // filters on the frontend. This makes it MUCH faster than using the API
     $rootScope.$on('event:edit:post:status:data:mode:saveSuccess', function (event, args) {
         let postObj = args.post;
-        if (!newStatusMatchesFilters(postObj)) {
+        if (args.deleted || !newStatusMatchesFilters(postObj)) {
             removePostFromList(postObj);
         }
     });
@@ -107,6 +107,7 @@ function PostViewDataController(
                     groupPosts($scope.posts);
                     $scope.selectedPost.post = nextInLine;
                     $scope.selectedPostId = nextInLine.id;
+                    $state.go('posts.data.detail', {postId: $scope.selectedPostId});
                 } else {
                     $scope.selectedPost = {post: null, next: {}};
                     $scope.selectedPostId = null;

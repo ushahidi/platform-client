@@ -53,7 +53,7 @@ function PostActionsDirective(
                     // Redirect to list
                     $location.path('/views/data');
                 } else {
-                    $state.go('posts.data', null, { reload: true }); // in favor of $route.reload();
+                    $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post, deleted: true});
                 }
             });
         }
