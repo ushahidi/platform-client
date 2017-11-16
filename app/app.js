@@ -144,4 +144,8 @@ angular.module('app',
     // })
     .run(function ($rootScope) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
+    })
+    .run(function () {
+        angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
+        angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     });
