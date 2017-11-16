@@ -55,7 +55,7 @@
         </listing-toolbar>
         <div class="listing timeline init">
           
-        <div class="bulk-action" ng-if="posts.length > 0 || !loading.isLoading">
+        <div class="bulk-action" ng-if="posts.length > 0 || !isLoading">
             <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
             <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
         </div>
@@ -69,20 +69,20 @@
                 selected-post="selectedPost"
             >
             </post-card>
-            <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !loading.isLoading">
+            <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading">
                 <h4 translate>post.no_search_results</h4>
             </div>
 
-            <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !loading.isLoading">
+            <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading">
                 <h4 translate>post.no_posts_yet</h4>
             </div>
 
-            <div class="listing-item" ng-if="posts.length > 0 || loading.isLoading">
+            <div class="listing-item" ng-if="posts.length > 0 || isLoading">
 
                 <div class="listing-item-primary">
-                    <button ng-disabled="loading.isLoading" ng-hide="( loading.isLoading || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                    <button ng-disabled="isLoading" ng-hide="( isLoading || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
                     </button>
-                     <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-show="loading.isLoading"></loading-dots>
+                     <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-show="isLoading"></loading-dots>
                 </div>
             </div>
         </div>
@@ -90,6 +90,6 @@
     <div class="post-col">
         <div ui-view></div>
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
-        <!--<post-data-editor parent-form="formData" saving-post="savingPost" is-loading.isLoading="loading.isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>-->
+        <!--<post-data-editor parent-form="formData" saving-post="savingPost" is-isLoading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>-->
     </div>
 </div>

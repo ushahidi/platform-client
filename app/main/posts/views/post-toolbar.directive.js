@@ -22,9 +22,14 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
 
-    $scope.loading = LoadingProgress.getLoadingState();
-    LoadingProgress.subscribeOnLoadingState(function (loading) {
-        $scope.loading = loading;
+    $scope.isLoading = LoadingProgress.getLoadingState();
+    $scope.isSaving = LoadingProgress.getSavingState();
+
+    LoadingProgress.subscribeOnLoadingState(function (isLoading) {
+        $scope.isLoading = isLoading;
+    });
+    LoadingProgress.subscribeOnSavingState(function (isSaving) {
+        $scope.isSaving = isSaving;
     });
 
     function editEnabled() {

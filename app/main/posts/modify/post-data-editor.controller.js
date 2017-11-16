@@ -76,9 +76,9 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.leavePost = leavePost;
     $scope.selectForm = selectForm;
-    $scope.loading = LoadingProgress.getLoadingState();
-    LoadingProgress.subscribeOnLoadingState(function (loading) {
-        $scope.loading = loading;
+    $scope.isSaving = LoadingProgress.getSavingState();
+    LoadingProgress.subscribeOnSavingState(function (isSaving) {
+        $scope.isSaving = isSaving;
     });
 
     // Need state management

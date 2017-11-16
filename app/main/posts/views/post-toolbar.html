@@ -10,8 +10,8 @@
         <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
         <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled()" class="button button-alpha" ng-click="setEditMode()"translate>app.edit</button>
         <button ng-switch-when="true" ng-if="hasPermission" class="button" ng-click="setEditMode()" translate>app.cancel</button>
-        <button ng-switch-when="true" ng-if="hasPermission && !loading.isSaving" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
-        <loading-dots ng-switch-when="true" button-class="'button-alpha'" disabled=true label="'app.saving" ng-if="loading.isSaving"></loading-dots>
+        <button ng-switch-when="true" ng-if="hasPermission && !isSaving" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
+        <loading-dots ng-switch-when="true" button-class="'button-alpha'" disabled=true label="'app.saving" ng-if="isSaving"></loading-dots>
     </div>
 
     
@@ -21,14 +21,14 @@
         <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
         <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
         <button ng-switch-when="true" ng-if="hasPermission" class="button" ng-click="setEditMode()" translate>app.cancel</button>
-        <button ng-switch-when="true" ng-if="hasPermission && !loading.isSaving" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
-        <loading-dots ng-switch-when="true" button-class="'button-alpha'" disabled=true label="'app.saving" ng-if="loading.isSaving"></loading-dots>
+        <button ng-switch-when="true" ng-if="hasPermission && !isSaving" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
+        <loading-dots ng-switch-when="true" button-class="'button-alpha'" disabled=true label="'app.saving" ng-if="isSaving"></loading-dots>
     </div>
 
     <!-- toolbar -->
-    <div class="progress-bar" ng-show="loading.isLoading">
+    <div class="progress-bar" ng-show="isLoading">
         <span>
-            Loading...
+            ..
         </span>
     </div>
 </div>
