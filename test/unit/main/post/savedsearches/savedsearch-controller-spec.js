@@ -19,6 +19,15 @@ describe('set savedsearches controller', function () {
                     };
                 }
             };
+        })
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
         });
 
         angular.mock.module('testApp');

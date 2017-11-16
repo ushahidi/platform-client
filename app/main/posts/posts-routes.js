@@ -1,166 +1,161 @@
 module.exports = [
     '$stateProvider',
+    '$urlMatcherFactoryProvider',
 function (
-    $stateProvider
+    $stateProvider,
+    $urlMatcherFactoryProvider
 ) {
+    $urlMatcherFactoryProvider.strictMode(false);
 
     $stateProvider
     .state(
         {
-            name: 'list',
+            name: 'posts',
             abstract: true,
             controller: require('./views/post-views.controller.js'),
             template: require('./views/main.html'),
-            resolve: {
-                isLoading: function () {
-                    return {state: true};
-                }
-            }
-            // onEnter: function ($state, $transition$, PostFilters) {
-            //     switch (PostFilters.getMode()) {
-            //         case 'savedsearch':
-            //             $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         case 'collection':
-            //             $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-            //             break;
-            //         default:
-            //             var view = $transition$.params().view ? $transition$.params().view : 'map';
-            //             if (view === 'list') {
-            //                 $state.go('list', {view: 'data'}, {reload: true});
-            //             }
-            //     }
-            //
-            // }
-        }
-    )
-    .state(
-        {
-            name: 'list.data',
-            url: '/views/data',
-            controller: require('./views/post-view-data.controller.js'),
-            template: require('./views/post-view-data.html'),
             params: {
-                view: {value: 'data', squash: true}
-            },
-            onEnter: function ($state, $transition$, PostFilters) {
-                // switch (PostFilters.getMode()) {
-                //     case 'savedsearch':
-                //         $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                //         break;
-                //     case 'collection':
-                //         $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                //         break;
-                //     default:
-                //         var view = $transition$.params().view ? $transition$.params().view : 'map';
-                //         if (view === 'list') {
-                //             $state.go('list.data', {view: 'data'}, {reload: true});
-                //         }
-                // }
-
-            }
-        }
-    )
-    .state(
-        {
-            cache: false,
-            name: 'list.map',
-            url: '/views/map',
-            template: function ($state, $transition$) {
-                return '<post-view-map></post-view-map>';
-            },
-            params: {
-                view: {value: 'map', squash: true}
-            },
-            onEnter: function ($state, $transition$, PostFilters) {
-                switch (PostFilters.getMode()) {
-                    case 'savedsearch':
-                        $state.go('savedsearch', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    case 'collection':
-                        $state.go('collection', {id: PostFilters.getModeId(), view: $transition$.params().view}, {reload: true});
-                        break;
-                    default:
-                        var view = $transition$.params().view ? $transition$.params().view : 'map';
-                        if (view === 'list') {
-                            $state.go('list', {view: 'data'}, {reload: true});
-                        }
-                }
-
-            }
-        }
-    )
-    .state(
-        {
-            url: '^/collections/:id/:view',
-            name: 'collection',
-            parent: 'list.data',
-            params: {
-                id: null,
-                view: {squash: true, value: null}
-            },
-            controller: require('./collections/collections-controller.js'),
-            template: require('./collections/collections.html'),
-            onEnter: function ($state, $transition$, collection) {
-                var viewParam = collection.view;
-                if (viewParam === 'list') {
-                    viewParam = 'data';
-                } else if (!viewParam) {
-                    viewParam = 'map';
-                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    viewParam = $transition$.params().view;
-                }
-                $state.go('collection', {view: viewParam, id: $transition$.params().id});
-            },
-            resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    return CollectionEndpoint.get({collectionId: $transition$.params().id}).$promise;
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            name: 'savedsearch',
-            url: '^/savedsearches/:id/:view',
-            parent: 'list.data',
-            params: {
-                id: null,
-                view: {squash: true, value: null}
-            },
-            controller: require('./savedsearches/savedsearches-controller.js'),
-            template: require('./savedsearches/savedsearches.html'),
-            onEnter: function ($state, $transition$, savedSearch) {
-                var viewParam = savedSearch.view;
-                if (viewParam === 'list') {
-                    viewParam = 'data';
-                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
-                } else if (!viewParam) {
-                    viewParam = 'map';
-                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
-                } else if ($transition$.params().view && $transition$.params().view !== 'list') {
-                    viewParam = $transition$.params().view;
-                    $state.go('savedsearch', {view: viewParam, id: $transition$.params().id});
-                }
+                view: {value: null, squash: true},
+                filterState: {value: null, squash: true}
             },
             resolve: {
                 isLoading: function () {
                     return {state: true};
                 },
+                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                    if ($transition$.params().collectionId) {
+                        return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
+                    }
+                }],
                 savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
-                    return SavedSearchEndpoint.get({id: $transition$.params().id}).$promise;
+                    if ($transition$.params().savedSearchId) {
+                        return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
+                    }
+                }]
+            },
+            onEnter: function ($state, $transition$, PostFilters) {
+                console.log($state, $transition$);
+                if ($transition$.params().filterState) {
+                    PostFilters.setFilters($transition$.params().filterState);
+                }
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/savedsearches/:savedSearchId',
+            name: 'posts.savedsearchRedirector',
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                if (savedSearch.view === 'data' || savedSearch.view === 'list') {
+                    $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
+                } else {
+                    $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
+                }
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/collections/:collectionId',
+            name: 'posts.collectionRedirector',
+            onEnter: function ($state, $transition$, PostFilters, collection) {
+                if (collection.view === 'data' || collection.view === 'list') {
+                    $state.go('posts.data.collection', {collectionId: collection.id, view: 'data'});
+                } else {
+                    $state.go('posts.map.collection', {collectionId: collection.id, view: 'map'});
+                }
+            }
+        }
+    )
+    .state(
+        {
+            url: '/views/data',
+            name: 'posts.data',
+            params: {
+                view: {value: 'data', squash: true},
+                filterState: {value: null, squash: true}
+            },
+            views: {
+                listView: {
+                    controller: require('./views/post-view-data.controller.js'),
+                    template: require('./views/post-view-data.html')
+                }
+            },
+            resolve: {
+                /**
+                 * This is enabling the feature of loading with a selectedPost "selected" in the data mode left side.
+                 * Nothing happens if there no postId except for not having a selectedPost.
+                  */
+                selectedPost: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+                    if ($transition$.params().postId) {
+                        return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                    }
+
                 }]
             }
         }
     )
-
-    /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
-     at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
-     since you won't be sent to a sole post' detail view
-     **/
     .state(
         {
-            name: 'list.data.detail',
+            url: '^/savedsearches/:savedSearchId/data',
+            name: 'posts.data.savedsearch',
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                PostFilters.setFilters(savedSearch.filter);
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/collections/:collectionId/data',
+            name: 'posts.data.collection',
+            onEnter: function ($state, $transition$, PostFilters, collection) {
+                PostFilters.setMode('collection', collection.id);
+            }
+        }
+    )
+    .state(
+        {
+            name: 'posts.map',
+            url: '/views/map',
+            views: {
+                listView: {
+                    template: function ($state, $transition$) {
+                        return '<post-view-map></post-view-map>';
+                    }
+                }
+            },
+            params: {
+                view: {value: 'map', squash: true},
+                filterState: {value: null, squash: true}
+            },
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                if (!savedSearch) {
+                    PostFilters.resetDefaults();
+                }
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/savedsearches/:savedSearchId/map',
+            name: 'posts.map.savedsearch',
+            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                PostFilters.setFilters(savedSearch.filter);
+            }
+        }
+    )
+    .state(
+        {
+            url: '^/collections/:collectionId/map',
+            name: 'posts.map.collection',
+            onEnter: function ($state, $transition$, PostFilters, collection) {
+                PostFilters.setMode('collection', collection.id);
+            }
+        }
+    )
+    .state(
+        {
+            name: 'posts.data.detail',
             url: '/posts/:postId',
             template: require('./detail/post-detail-data.html'),
             controller: require('./detail/post-detail-data.controller.js'),
@@ -175,13 +170,9 @@ function (
             }
         }
     )
-    /** @uirouter-refactor this implies that we will find out selected post details from the data view in /views/data/posts/6539
-     at the moment it' not done, just shows the data view. This would fix the massive annoyance that the current selectedPost feature is
-     since you won't be sent to a sole post' detail view
-     **/
     .state(
         {
-            name: 'list.data.edit',
+            name: 'posts.data.edit',
             url: '/posts/:postId/edit',
             template: require('./modify/post-data-editor.html'),
             controller: require('./modify/post-data-editor.controller.js'),
@@ -198,7 +189,7 @@ function (
     )
     .state(
         {
-            name: 'list.noui',
+            name: 'posts.noui',
             url: '/map/noui',
             controller: require('./views/post-view-noui.controller.js'),
             template: require('./views/post-view-noui.html'),

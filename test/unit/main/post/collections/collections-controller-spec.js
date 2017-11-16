@@ -19,7 +19,17 @@ describe('set collections controller', function () {
                     };
                 }
             };
+        })
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
         });
+
         angular.mock.module('testApp');
     });
 
@@ -29,7 +39,11 @@ describe('set collections controller', function () {
         Notify = _Notify_;
         Session = _Session_;
         $scope = _$rootScope_.$new();
-
+        $scope.$resolve = {
+            collection: {
+                allowed_privileges: 'update'
+            }
+        };
         $rootScope.goBack = function () {};
     }));
 
@@ -37,11 +51,7 @@ describe('set collections controller', function () {
         spyOn($rootScope, '$emit').and.callThrough();
 
         $controller('collectionsController', {
-            $scope: $scope,
-            collection: {
-                allowed_privileges: 'update'
-            },
-            $routeParams: {view: 'list'}
+            $scope: $scope
         });
 
         $rootScope.$digest();

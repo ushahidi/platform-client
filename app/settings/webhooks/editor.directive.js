@@ -1,14 +1,12 @@
 module.exports = [
     '$translate',
     '$location',
-    '$stateParams',
     '$state',
     'WebhookEndpoint',
     'Notify',
 function (
     $translate,
     $location,
-    $stateParams,
     $state,
     WebhookEndpoint,
     Notify
@@ -24,7 +22,7 @@ function (
             $scope.save = $translate.instant('app.save');
             $scope.saving = $translate.instant('app.saving');
             $scope.processing = false;
-            WebhookEndpoint.getFresh({id: $stateParams.id}).$promise.then(function (webhook) {
+            WebhookEndpoint.getFresh({id: $scope.$resolve.$transition$.params().id}).$promise.then(function (webhook) {
                 $scope.webhook = webhook;
 
                 $scope.title = $scope.webhook.id ? 'webhook.edit_webhook' : 'webhook.add_webhook';

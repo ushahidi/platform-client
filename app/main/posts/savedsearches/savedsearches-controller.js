@@ -7,6 +7,7 @@ module.exports = [
     'savedSearch',
     'UserEndpoint',
     'Notify',
+    '$state',
     function (
         $scope,
         $translate,
@@ -15,7 +16,8 @@ module.exports = [
         PostFilters,
         savedSearch,
         UserEndpoint,
-        Notify
+        Notify,
+        $state
     ) {
         var viewLayouts = {'data': 'd', 'list': 'a', 'map': 'a'};
         // Set view based on route or set view

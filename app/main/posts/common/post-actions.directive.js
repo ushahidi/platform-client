@@ -8,7 +8,6 @@ PostActionsDirective.$inject = [
     '$state',
     'PostActionsService',
     'PostLockService',
-    '$stateParams',
     '_'
 ];
 function PostActionsDirective(
@@ -19,7 +18,6 @@ function PostActionsDirective(
     $state,
     PostActionsService,
     PostLockService,
-    $stateParams,
     _
 ) {
     return {
@@ -55,7 +53,7 @@ function PostActionsDirective(
                     // Redirect to list
                     $location.path('/views/data');
                 } else {
-                    $state.go($state.$current, null, { reload: true }); // in favor of $route.reload();
+                    $state.go('posts.data', null, { reload: true }); // in favor of $route.reload();
                 }
             });
         }
@@ -71,8 +69,8 @@ function PostActionsDirective(
                 return;
             }
 
-            if ($stateParams.view !== 'data' && $location.path().indexOf('data') === -1) {
-                $state.go('list.data.edit', {postId: postId});
+            if ($scope.$resolve.$transition$.params().view !== 'data' && $location.path().indexOf('data') === -1) {
+                $state.go('posts.data.edit', {postId: postId});
             } else if ($scope.editMode.editing) {
                 // At this point we are not certain we will switch to this Post so we back it up
                 // in anticipation of using it later if the current Post exists corectly
@@ -81,7 +79,7 @@ function PostActionsDirective(
             } else {
                 $scope.selectedPost.post = _.clone($scope.post);
                 $scope.editMode.editing = true;
-                $state.go('list.data.edit', {postId: $scope.post.id});
+                $state.go('posts.data.edit', {postId: $scope.post.id});
             }
         }
 
@@ -89,6 +87,7 @@ function PostActionsDirective(
             $scope.post.status = status;
 
             PostEndpoint.update($scope.post).$promise.then(function () {
+                // @uirouter-refactor fix this to work with new states
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post});
                 Notify.notify('notify.post.save_success', { name: $scope.post.title });

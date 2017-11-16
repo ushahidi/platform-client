@@ -20,13 +20,19 @@ describe('injecting things', function () {
             $controller = _$controller_;
 
             $scope = $rootScope.$new();
-
+            $scope.$resolve = {
+            };
             $controller('postViewsController', {
                 $scope: $scope,
                 $transition$: {
                     'params': function () {
                         return {
                             'view': 'list'
+                        };
+                    },
+                    to: function () {
+                        return {
+                            name : ''
                         };
                     }
                 }

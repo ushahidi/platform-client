@@ -23,7 +23,7 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
-
+    $scope.saveButtonEnabled = saveButtonEnabled;
     function editEnabled() {
         return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
     }
@@ -31,13 +31,16 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');
     }
+    function saveButtonEnabled() {
+        return $state.$current.name === 'posts.data.edit';
+    }
 
     function setEditMode() {
         if (editEnabled()) {
             if ($scope.editMode.editing) {
-                $rootScope.$broadcast('event:edit:leave:form');
+                $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
             } else {
-                $state.go('list.data.edit', {postId: $scope.selectedPost.id}, {reload: false});
+                $state.go('posts.data.edit', {postId: $scope.selectedPost.id});
                 $scope.editMode.editing = true;
             }
         }

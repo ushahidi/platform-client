@@ -24,7 +24,11 @@ describe('collections mode context directive', function () {
         Notify = _Notify_;
 
         $scope.savedSearch = {};
-
+        $scope.$resolve = {
+            savedSearch: {
+                allowed_privileges: 'update'
+            }
+        };
         element = '<saved-search-mode-context></saved-search-mode-context>';
         element = $compile(element)($scope);
         $scope.$digest();

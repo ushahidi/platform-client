@@ -1,4 +1,6 @@
-module.exports = ['$stateProvider', function ($stateProvider) {
+module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($stateProvider, $urlMatcherFactoryProvider) {
+
+    $urlMatcherFactoryProvider.strictMode(false);
 
     $stateProvider
         .state(
@@ -57,6 +59,5 @@ module.exports = ['$stateProvider', function ($stateProvider) {
                 template: require('./auth/404.html')
             }
         )
-        //.otherwise('/')
         ;
 }];

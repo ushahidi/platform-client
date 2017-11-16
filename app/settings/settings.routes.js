@@ -1,8 +1,11 @@
 module.exports = [
     '$stateProvider',
+    '$urlMatcherFactoryProvider',
 function (
-    $stateProvider
+    $stateProvider,
+    $urlMatcherFactoryProvider
 ) {
+    $urlMatcherFactoryProvider.strictMode(false);
     /* todo: these routes should only exist when the user is admin! */
     $stateProvider
     .state(

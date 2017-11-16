@@ -25,6 +25,11 @@ describe('posts views controller', function () {
                     return {
                         'view': 'list'
                     };
+                },
+                to: function () {
+                    return {
+                        name : ''
+                    };
                 }
             };
         })
@@ -43,7 +48,11 @@ describe('posts views controller', function () {
             $rootScope = _$rootScope_;
             $controller = _$controller_;
             $scope = _$rootScope_.$new();
-
+            $scope.$resolve = {
+                collection: {
+                    allowed_privileges: 'update'
+                }
+            };
             $controller('postViewsController', {
                 $scope: $scope
             });

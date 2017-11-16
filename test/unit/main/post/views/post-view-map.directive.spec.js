@@ -22,8 +22,16 @@ describe('post view map directive', function () {
 
         testApp.directive('postViewMap', require('app/main/posts/views/post-view-map.directive'))
         .value('Leaflet', L)
-        ;
 
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
 

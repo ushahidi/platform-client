@@ -3,7 +3,6 @@ module.exports = [
     '$translate',
     '$transition$',
     'PostFilters',
-    'collection',
     'UserEndpoint',
     '_',
     function (
@@ -11,13 +10,12 @@ module.exports = [
         $translate,
         $transition$,
         PostFilters,
-        collection,
         UserEndpoint,
         _
     ) {
 
         // Add set to the scope
-        $scope.collection = collection;
+        $scope.collection = $scope.$resolve.collection;
         $scope.currentView = currentView;
         var viewLayouts = {'data': 'd', 'list': 'a', 'map': 'a'};
         $scope.layout = viewLayouts[$scope.currentView()];
@@ -25,7 +23,7 @@ module.exports = [
         activate();
 
         function activate() {
-            setCollection(collection);
+            setCollection($scope.collection);
 
             // Set the page title
             $translate('post.posts').then(function (title) {
@@ -33,7 +31,7 @@ module.exports = [
                 $scope.$emit('setPageTitle', title);
             });
 
-            $scope.$emit('event:collection:show', collection);
+            $scope.$emit('event:collection:show', $scope.collection);
             $scope.$on('$destroy', function () {
                 $scope.$emit('event:collection:close');
             });
@@ -49,13 +47,14 @@ module.exports = [
             // Reset GlobalFilter + add set filter
             // Ensure that ALL posts are visible under collections
             // Set default collection status filters
-            PostFilters.setMode('collection', collection.id);
+            PostFilters.setMode('collection', $scope.collection.id);
             $scope.filters = PostFilters.getFilters();
+
         }
 
         // Set view based on route or set view
         function currentView() {
-            return $transition$.params().view || collection.view;
+            return $transition$.params().view || $scope.collection.view;
         }
 
         function setCollection(collection) {

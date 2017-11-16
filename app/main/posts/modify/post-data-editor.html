@@ -106,7 +106,7 @@
         </post-tabs>
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
-          <button class="button-flat" ng-click="leavePost()" translate>app.cancel</button>
+          <button class="button-flat" ui-sref="posts.data.detail({postId: post.id})" translate>app.cancel</button>
           <button class="button button-alpha" ng-click="savePost()" ng-if="!savingPost.saving" translate="">app.save</button>
           <button class="button-alpha" disabled ng-if="savingPost.saving" translate>app.saving
             <div class="loading">

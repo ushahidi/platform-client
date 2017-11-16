@@ -9,7 +9,8 @@ describe('global event handlers', function () {
         $location,
         mockState = {
             go: jasmine.createSpy(),
-            current: jasmine.createSpy()
+            current: jasmine.createSpy(),
+            reload: jasmine.createSpy()
         };
 
     beforeEach(function () {
@@ -125,7 +126,7 @@ describe('global event handlers', function () {
                         });
 
                         it('should reload the route', function () {
-                            expect(mockState.go).toHaveBeenCalled();
+                            expect(mockState.reload).toHaveBeenCalled();
                         });
 
                         it('should check TOS', function () {
@@ -165,7 +166,7 @@ describe('global event handlers', function () {
                         });
 
                         it('should reload the route', function () {
-                            expect(mockState.go).toHaveBeenCalled();
+                            expect(mockState.reload).toHaveBeenCalled();
                         });
                     });
                 });
