@@ -11,7 +11,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
         if (Authentication.getLoginStatus()) {
             doLogin(false, true);
         } else {
-            doLogout(false);
+            doLogout();
         }
     }
 
@@ -42,16 +42,12 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             });
     }
 
-    function doLogout(redirect) {
+    function doLogout() {
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
         // we don' wat to reload until after filters are correctly set with the backend default that the user
         // would get when logged out
         PostFilters.resetDefaults().then(function () {
-            if (redirect) {
-                $location.url(redirect);
-            }
-
             $state.go('posts.map');
         });
     }
