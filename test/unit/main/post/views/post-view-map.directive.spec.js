@@ -67,12 +67,20 @@ describe('post view map directive', function () {
         spyOn(PostEndpoint, 'get').and.callThrough();
 
         $scope = _$rootScope_.$new();
-        $scope.isLoading = {
-            state: true
+        $scope.$transition$ = {
+            params: function () {
+                return {
+                    'view': 'map'
+                };
+            },
+            to: function () {
+                return {
+                    name : ''
+                };
+            }
         };
-        $scope.filters = {};
 
-        element = '<post-view-map filters="filters" is-loading="isLoading"></post-view-map>';
+        element = '<post-view-map $transition$="$transition$"></post-view-map>';
     }));
 
     it('should create a map', function () {
