@@ -51,6 +51,5 @@ module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($sta
                 template: ''
             }
         )
-        //.otherwise('/')
         ;
 }];
