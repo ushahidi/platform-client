@@ -18,6 +18,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getQueryParams: getQueryParams,
         getFilters: getFilters,
         setFilters: setFilters,
+        setFilter: setFilter,
         clearFilters: clearFilters,
         clearFilter: clearFilter,
         clearFilterFromArray: clearFilterFromArray,
@@ -69,6 +70,11 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         // Replace filterState with defaults + newState
         // Including defaults ensures all values are always defined
         return angular.extend(filterState, getDefaults(), newState);
+    }
+
+    function setFilter(key, value) {
+        filterState[key] = value;
+        return filterState;
     }
 
     function clearFilters() {

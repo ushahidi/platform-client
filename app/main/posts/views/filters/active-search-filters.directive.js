@@ -89,6 +89,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             if (savedSearch) {
                 $scope.savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, $scope.savedSearch.filter);
                 PostFilters.clearFilter(filterKey, value);
+                PostFilters.setFilter('saved_search', $scope.savedSearch);
             } else {
                 PostFilters.clearFilter(filterKey, value);
             }
