@@ -37,6 +37,8 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
+            delete activeFilters.saved_search;
+
             $scope.savedSearch = null;
             /**
              * This handles the requirement to have saved search filters displayed in a different way
@@ -86,6 +88,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             $event.stopPropagation();
             if (savedSearch) {
                 $scope.savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, $scope.savedSearch.filter);
+                PostFilters.clearFilter(filterKey, value);
             } else {
                 PostFilters.clearFilter(filterKey, value);
             }

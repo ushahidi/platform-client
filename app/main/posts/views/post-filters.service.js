@@ -186,10 +186,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (defaults[key] === value) {
                     return true;
                 }
-                // we don't want this showing up in bug icons
-                if (key === 'saved_search') {
-                    return true;
-                }
                 // Ignore difference in within_km
                 if (key === 'within_km') {
                     return true;
