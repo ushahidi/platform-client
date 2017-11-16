@@ -92,59 +92,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             }, 1);
         }
 
-        function onEachFeature(feature, layer) {
-            layer.on('click', function (e) {
-                // Grab the layer that was actually clicked on
-                var layer = e.layer;
-                // If we somehow got the feature group: grab the first child
-                // because the FeatureGroup doesn't get added to the map when clustering
-                if (layer instanceof L.FeatureGroup) {
-                    layer = layer.getLayers()[0];
-                }
-
-                if (layer.getPopup()) {
-                    layer.openPopup();
-                } else {
-                    getPostDetails(feature).then(function (details) {
-                        var scope = $rootScope.$new();
-                        scope.post = details;
-                        scope.goToPost = goToPost;
-                        scope.selectedPost = {post : details};
-
-                        var el = $compile('<post-card selected-post="selectedPost" post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
-
-                        layer.bindPopup(el[0], {
-                            'minWidth': '300',
-                            'maxWidth': '300',
-                            'className': 'pl-popup'
-                        });
-                        layer.openPopup();
-                    });
-                }
-            });
-        }
-
-        function goToPost(post) {
-            // reload because otherwise the layout does not reload and that is wrong because we change layouts on data and map
-            $state.go('posts.data.detail', {postId: post.id}, {reload: true});
-        }
-
-        function getPostDetails(feature) {
-            return PostEndpoint.get({id: feature.properties.id}).$promise;
-        }
-
-        function cancelCurrentRequests() {
-            _.each(currentGeoJsonRequests, function (request) {
-                request.$cancelRequest();
-            });
-            currentGeoJsonRequests = [];
-        }
-
-        function reloadMapPosts(query) {
-            var test = $scope.loadPosts(query);
-            test.then(addPostsToMap);
-        }
-
         function watchFilters() {
             // whenever the qEnabled var changes, do a dummy update of $scope.filters.reactToQEnabled
             // to force the $scope.filters watcher to run
@@ -179,6 +126,18 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     PostFilters.qEnabled = false;
                 }
             }, true);
+        }
+
+        function cancelCurrentRequests() {
+            _.each(currentGeoJsonRequests, function (request) {
+                request.$cancelRequest();
+            });
+            currentGeoJsonRequests = [];
+        }
+
+        function reloadMapPosts(query) {
+            var test = $scope.loadPosts(query);
+            test.then(addPostsToMap);
         }
 
         function loadPosts(query, offset, currentBlock) {
@@ -222,6 +181,47 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 }
                 return posts;
             });
+        }
+
+        function goToPost(post) {
+            // reload because otherwise the layout does not reload and that is wrong because we change layouts on data and map
+            $state.go('posts.data.detail', {postId: post.id}, {reload: true});
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on('click', function (e) {
+                // Grab the layer that was actually clicked on
+                var layer = e.layer;
+                // If we somehow got the feature group: grab the first child
+                // because the FeatureGroup doesn't get added to the map when clustering
+                if (layer instanceof L.FeatureGroup) {
+                    layer = layer.getLayers()[0];
+                }
+
+                if (layer.getPopup()) {
+                    layer.openPopup();
+                } else {
+                    getPostDetails(feature).then(function (details) {
+                        var scope = $rootScope.$new();
+                        scope.post = details;
+                        scope.goToPost = goToPost;
+                        scope.selectedPost = {post : details};
+
+                        var el = $compile('<post-card selected-post="selectedPost" post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
+
+                        layer.bindPopup(el[0], {
+                            'minWidth': '300',
+                            'maxWidth': '300',
+                            'className': 'pl-popup'
+                        });
+                        layer.openPopup();
+                    });
+                }
+            });
+        }
+
+        function getPostDetails(feature) {
+            return PostEndpoint.get({id: feature.properties.id}).$promise;
         }
 
     }
