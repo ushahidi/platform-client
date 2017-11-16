@@ -105,13 +105,7 @@ function (
         {
             name: 'posts.map',
             url: '/views/map',
-            views: {
-                listView: {
-                    template: function ($state, $transition$) {
-                        return '<post-view-map></post-view-map>';
-                    }
-                }
-            },
+            component: 'postViewMap',
             params: {
                 view: {value: 'map', squash: true},
                 filterState: {value: null, squash: true}

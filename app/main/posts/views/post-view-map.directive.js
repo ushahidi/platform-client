@@ -1,12 +1,13 @@
 module.exports = PostViewMap;
 
-PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$state'];
-function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $state) {
+PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$state', '$translate'];
+function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $state, $translate) {
     return {
         restrict: 'E',
         replace: true,
         scope: {
-            noui: '@'
+            noui: '@',
+            $transition$: '<'
         },
         template: require('./post-view-map.html'),
         link: PostViewMapLink
@@ -26,6 +27,23 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         activate();
 
         function activate() {
+            // Set the page title
+            $translate('post.posts').then(function (title) {
+                $scope.title = title;
+                $scope.$emit('setPageTitle', title);
+            });
+            $scope.transitionTo = $scope.$transition$.to().name;
+
+            // Grab initial filters
+            if ($scope.collection) {
+                PostFilters.setMode('collection', $scope.collection.id);
+            } else if ($scope.savedSearch) {
+                PostFilters.setMode('savedsearch', $scope.savedSearch.id);
+            } else {
+                PostFilters.setMode('all');
+            }
+            $scope.filters = PostFilters.getFilters();
+
             // Start loading data
             var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
             var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
