@@ -37,7 +37,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                 if (redirect) {
                     $location.url(redirect);
                 }
-                noReload || $state.go($state.$current, null, { reload: true }); // in favor of $route.reload();
+                noReload || $state.reload(); // in favor of $route.reload();
 
             });
     }
@@ -51,6 +51,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             if (redirect) {
                 $location.url(redirect);
             }
+
             $state.go($state.$current.name ? $state.$current : 'map', null, { reload: true });
         });
     }

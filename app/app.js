@@ -17,9 +17,6 @@ require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 
-/** uncomment this to enable the visualizer
-var Visualizer = require('@uirouter/visualizer').Visualizer;
-**/
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
@@ -106,12 +103,13 @@ angular.module('app',
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
-    .config(function ($urlRouterProvider) {
+    .config(function ($urlRouterProvider, $urlMatcherFactoryProvider) {
+        $urlRouterProvider.when('', '/views/map');
+        $urlRouterProvider.when('/', '/views/map');
         // if the path doesn't match any of the urls you configured
         // otherwise will take care of routing the user to the specified url
-        //$urlRouterProvider.otherwise('/views/map');
+        $urlRouterProvider.otherwise('/404');
 
-    }).config(function ($urlMatcherFactoryProvider) {
         $urlMatcherFactoryProvider.strictMode(false);
     })
     .factory('_', function () {
@@ -178,5 +176,11 @@ angular.module('app',
         $rootScope.$on('$stateChangeError', console.log.bind(console));
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
-
+    })
+    .run(function ($rootScope) {
+        $rootScope.$on('$stateChangeError', console.log.bind(console));
+    })
+    .run(function () {
+        angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
+        angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     });
