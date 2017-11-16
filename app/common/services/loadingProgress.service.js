@@ -4,33 +4,49 @@ LoadingProgress.$inject = ['$rootScope', '$transitions'];
 function LoadingProgress($rootScope, $transitions) {
     function watchTransitions() {
         $transitions.onStart({}, function (transition) {
-            $rootScope.loading = {isLoading: true};
+            $rootScope.isLoading = true;
             if (transition.from().name === 'list.data.edit') {
-                $rootScope.loading.isSaving = true;
+                $rootScope.isSaving = true;
             }
         });
 
         $transitions.onFinish({}, function (transition) {
-            $rootScope.loading = {isLoading: false, isSaving: false};
+            $rootScope.isLoading = false;
+            $rootScope.isSaving = false;
         });
+
     }
 
     function getLoadingState() {
-        return $rootScope.loading;
+        return $rootScope.isLoading;
+    }
+
+    function getSavingState() {
+        return $rootScope.isSaving;
     }
 
     function setLoadingState(newState) {
-        $rootScope.loading = newState;
+        $rootScope.isLoading = newState;
     }
 
+    function setSavingState(newState) {
+        $rootScope.isSaving = newState;
+    }
     function subscribeOnLoadingState(callback) {
-        $rootScope.$watch('loading', callback);
+        $rootScope.$watch('isLoading', callback);
+    }
+
+    function subscribeOnSavingState(callback) {
+        $rootScope.$watch('isSaving', callback);
     }
 
     return {
         watchTransitions: watchTransitions,
         getLoadingState: getLoadingState,
+        getSavingState: getSavingState,
         setLoadingState: setLoadingState,
-        subscribeOnLoadingState: subscribeOnLoadingState
+        setSavingState: setSavingState,
+        subscribeOnLoadingState: subscribeOnLoadingState,
+        subscribeOnSavingState: subscribeOnSavingState
     };
 }
