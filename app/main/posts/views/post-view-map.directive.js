@@ -181,10 +181,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             }, true);
         }
 
-        function loadPosts(query, offset, currentBlock, clearPosts) {
-            if (clearPosts === true) {
-                posts = [];
-            }
+        function loadPosts(query, offset, currentBlock) {
             offset = offset || 0;
             currentBlock = currentBlock || 1;
 

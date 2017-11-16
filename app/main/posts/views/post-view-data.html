@@ -95,7 +95,7 @@
     </div>
     <div class="post-col">
         <div ui-view></div>
+        <!-- @uirouter-refactor: need to move this -->
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
-        <!--<post-data-editor parent-form="formData" saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>-->
     </div>
 </div>
