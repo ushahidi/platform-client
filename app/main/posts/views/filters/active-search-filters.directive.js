@@ -17,6 +17,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         $scope.removeSavedSearch = removeSavedSearch;
         $scope.userCanUpdateSavedSearch = false;
         $scope.activeFiltersOnSavedSearch = false;
+        $scope.isArray = angular.isArray;
         $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
             if (oldValue !== newValue || (!$scope.userCanUpdateSavedSearch)) {
                 setSavedSearchUpdateStatus();
@@ -49,7 +50,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         function activeFiltersHaveNoValues() {
             let filtersHaveNoValue = true;
             _.each($scope.activeFilters, function(value, key, obj){
-                console.log("VALUE ", value)
                 if (Array.isArray(value) && value.length || !Array.isArray(value) && value === undefined) {
                     filtersHaveNoValue = false
                 } 
@@ -85,7 +85,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
 
         function handleFiltersUpdate(filters) {
             var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
-            console.log(activeFilters, $scope.activeFilters)
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
@@ -110,12 +109,11 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             if (filters.saved_search) {
                 $scope.savedSearch = angular.copy(filters.saved_search);
                 // get clean version (no defaults) of the saved search filters
-                console.log($scope.savedSearch)
                 $scope.savedSearch.filter = PostFilters.getCleanActiveFilters(filters.saved_search.filter);
                 $scope.activeFiltersOnSavedSearch = !$scope.activeFiltersAreEmpty
                 $scope.activeFilters = _.mapObject(_.mapObject(activeFilters, function (value, key) {
                     if (value === $scope.savedSearch.filter[key]) {
-                        return '';
+                        return [];
                     }
                     if (_.isNumber(value) || _.isString(value)) {
                         return value;
