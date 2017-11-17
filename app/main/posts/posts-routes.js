@@ -26,6 +26,9 @@ function (
                     if ($transition$.params().savedSearchId) {
                         return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
                     }
+                }],
+                filters: ['PostFilters', (PostFilters) => {
+                    return PostFilters.getFilters();
                 }]
             },
             onEnter: function ($state, $transition$, PostFilters) {
@@ -104,16 +107,24 @@ function (
     .state(
         {
             name: 'posts.map',
-            url: '/views/map',
+            abstract: true,
             component: 'postViewMap',
             params: {
                 view: {value: 'map', squash: true},
                 filterState: {value: null, squash: true}
+            }
+        }
+    )
+    .state(
+        {
+            url: '/views/map',
+            name: 'posts.map.all',
+            views: {
+                'mode-context': 'modeContext'
             },
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
-                if (!savedSearch) {
-                    PostFilters.resetDefaults();
-                }
+                PostFilters.setMode('all');
+                PostFilters.resetDefaults();
             }
         }
     )
@@ -121,7 +132,11 @@ function (
         {
             url: '^/savedsearches/:savedSearchId/map',
             name: 'posts.map.savedsearch',
+            views: {
+                'mode-context': 'savedSearchModeContext'
+            },
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                PostFilters.setMode('savedsearch', savedSearch.id);
                 PostFilters.setFilters(savedSearch.filter);
             }
         }
@@ -130,6 +145,9 @@ function (
         {
             url: '^/collections/:collectionId/map',
             name: 'posts.map.collection',
+            views: {
+                'mode-context': 'collectionModeContext'
+            },
             onEnter: function ($state, $transition$, PostFilters, collection) {
                 PostFilters.setMode('collection', collection.id);
             }

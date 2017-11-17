@@ -7,7 +7,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         replace: true,
         scope: {
             noui: '@',
-            $transition$: '<'
+            $transition$: '<',
+            filters: '<'
         },
         template: require('./post-view-map.html'),
         link: PostViewMapLink
@@ -19,10 +20,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var requestBlockSize = 5;
         var numberOfChunks = 0;
         var currentGeoJsonRequests = [];
-        $scope.filters = PostFilters.getFilters();
         $scope.isLoading = {state: true};
-        $scope.loadPosts = loadPosts;
-        var posts = $scope.loadPosts();
 
         activate();
 
@@ -32,17 +30,11 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 $scope.title = title;
                 $scope.$emit('setPageTitle', title);
             });
-            $scope.transitionTo = $scope.$transition$.to().name;
 
             // Grab initial filters
-            if ($scope.collection) {
-                PostFilters.setMode('collection', $scope.collection.id);
-            } else if ($scope.savedSearch) {
-                PostFilters.setMode('savedsearch', $scope.savedSearch.id);
-            } else {
-                PostFilters.setMode('all');
-            }
-            $scope.filters = PostFilters.getFilters();
+            //$scope.filters = PostFilters.getFilters();
+
+            var posts = loadPosts();
 
             // Start loading data
             var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
@@ -154,7 +146,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function reloadMapPosts(query) {
-            var test = $scope.loadPosts(query);
+            var test = loadPosts(query);
             test.then(addPostsToMap);
         }
 
@@ -190,7 +182,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     while (block > 0) {
                         block -= 1;
                         offset += limit;
-                        $scope.loadPosts(query, offset, block).then(addPostsToMap);
+                        loadPosts(query, offset, block).then(addPostsToMap);
                     }
                 }
 

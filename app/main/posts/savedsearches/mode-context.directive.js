@@ -5,6 +5,10 @@ SavedSearchModeContext.$inject = [];
 function SavedSearchModeContext() {
     return {
         restrict: 'E',
+        scope: {
+            filters: '=',
+            savedSearch: '='
+        },
         controller: SavedSearchModeContextController,
         template: require('./mode-context.html')
     };
@@ -45,7 +49,6 @@ function SavedSearchModeContextController(
     activate();
 
     function activate() {
-        $scope.savedSearch = $scope.$resolve.savedSearch;
         $scope.canEdit = canEdit($scope.savedSearch);
 
         NotificationEndpoint.query({set: $scope.savedSearch.id, ignore403: true, user: 'me'}, function (notifications) {

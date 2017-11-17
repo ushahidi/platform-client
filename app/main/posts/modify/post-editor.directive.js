@@ -309,7 +309,7 @@ function PostEditorController(
                     $state.go('posts.data.detail', {postId: response.id});
                 } else {
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $state.go('posts.map');
+                    $state.go('posts.map.all');
                 }
             }, function (errorResponse) { // errors
                 var validationErrors = [];
