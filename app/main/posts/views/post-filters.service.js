@@ -230,6 +230,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (key === 'reactiveFilters') {
                     return true;
                 }
+                // Ignore difference in saved_search
+                if (key === 'saved_search') {
+                    return true;
+                }
                 if (key === 'qEnabled') {
                     return true;
                 }

@@ -12,6 +12,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
 
     function ActiveFiltersLink($scope, ngModel) {
         $scope.activeFilters = {};
+        $scope.savedSearch = null;
         $scope.removeFilter = removeFilter;
         $scope.transformFilterValue = transformFilterValue;
         $scope.removeSavedSearch = removeSavedSearch;
@@ -37,9 +38,13 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
-            delete activeFilters.saved_search;
+            var savedSearchEntity = PostFilters.getModeEntity();
+            if ($scope.savedSearch && savedSearchEntity.id !== $scope.savedSearch.id) {
+                $scope.savedSearch = savedSearchEntity;
+            } else if (!$scope.savedSearch && PostFilters.getMode() === 'savedsearch') {
+                $scope.savedSearch = savedSearchEntity;
+            }
 
-            $scope.savedSearch = null;
             /**
              * This handles the requirement to have saved search filters displayed in a different way
              * from the rest of the filters.
@@ -57,14 +62,11 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              *  - - - Diffing rules: return the _difference if the value is not equal, not a number or not a string, because we will want to show for isntance:
              *  saved search: tag id 1 + filters tag id 2 (so it's not just ignoring the arrays)
              */
-            if (filters.saved_search) {
-                $scope.savedSearch = angular.copy(filters.saved_search);
+            if ($scope.savedSearch) {
                 // get clean version (no defaults) of the saved search filters
-                $scope.savedSearch.filter = PostFilters.getCleanActiveFilters(filters.saved_search.filter);
-                var filterOut = [];
+                $scope.savedSearch.filter = PostFilters.getCleanActiveFilters($scope.savedSearch.filter);
                 $scope.activeFilters = _.mapObject(_.mapObject(activeFilters, function (value, key) {
                     if (_.isNumber(value) || _.isString(value)) {
-                        filterOut.push(key);
                         return '';
                     }
                     return _.difference(value, $scope.savedSearch.filter[key]);
