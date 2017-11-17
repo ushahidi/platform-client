@@ -121,10 +121,6 @@ function (
             name: 'posts.map.all',
             views: {
                 'mode-context': 'modeContext'
-            },
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
-                PostFilters.setMode('all');
-                PostFilters.resetDefaults();
             }
         }
     )
