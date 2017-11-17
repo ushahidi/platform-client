@@ -19,6 +19,7 @@ module.exports = [
     'PostSurveyService',
     '$state',
     '$transition$',
+    '$window',
 function (
     $scope,
     $rootScope,
@@ -39,7 +40,8 @@ function (
     moment,
     PostSurveyService,
     $state,
-    $transition$) {
+    $transition$,
+    $window) {
     $scope.$watch('post', function (post) {
         activate();
     });
@@ -65,6 +67,11 @@ function (
                 $scope.$emit('setPageTitle', title);
             });
         }
+
+        let currentWidth = $window.innerWidth;
+            if (currentWidth < 1023) {
+                $scope.showPost($scope.post)
+            }
 
         // Load the post form
         if ($scope.post.form && $scope.post.form.id) {

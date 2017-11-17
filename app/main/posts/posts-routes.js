@@ -199,19 +199,6 @@ function (
     )
     .state(
         {
-            name: 'postDetail',
-            url: '/posts/:postId',
-            controller: require('./detail/post-detail.controller.js'),
-            template: require('./detail/detail.html'),
-            resolve: {
-                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
-                    return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
-                }]
-            }
-        }
-    )
-    .state(
-        {
             name: 'postCreate',
             url: '/posts/create/:id',
             controller: require('./modify/post-create.controller.js'),
