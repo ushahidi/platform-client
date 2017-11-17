@@ -74,11 +74,7 @@ function PostDataEditorController(
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.selectForm = selectForm;
-    $scope.isSaving = LoadingProgress.getSavingState();
-
-    LoadingProgress.subscribeOnSavingState(function (isSaving) {
-        $scope.isSaving = isSaving;
-    });
+    $scope.isSaving = isSaving;
 
     var ignoreCancelEvent = false;
     // Need state management
@@ -214,7 +210,9 @@ function PostDataEditorController(
             });
         });
     }
-
+    function isSaving() {
+        return LoadingProgress.getSavingState();
+    }
     function loadData() {
 
         var requests = [

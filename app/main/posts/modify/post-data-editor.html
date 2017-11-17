@@ -108,8 +108,8 @@
         <div class="button-group">
 
           <button class="button-flat" ng-click="leavePost()" translate>app.cancel</button>
-          <button class="button button-alpha" ng-click="savePost()" ng-if="!isSaving" translate="">app.save</button>
-          <loading-dots button-class="'button-alpha'" ng-if="isSaving" disabled=true label="'app.saving'"></loading-dots>
+          <button class="button button-alpha" ng-click="savePost()" ng-if="!isSaving()" translate="">app.save</button>
+          <loading-dots button-class="'button-alpha'" ng-if="isSaving()" disabled=true label="'app.saving'"></loading-dots>
         </div>
       </div>
   </form>

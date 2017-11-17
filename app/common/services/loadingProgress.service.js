@@ -34,21 +34,12 @@ function LoadingProgress($rootScope, $transitions, $injector) {
     function setSavingState(newState) {
         $rootScope.isSaving = newState;
     }
-    function subscribeOnLoadingState(callback) {
-        $rootScope.$watch('isLoading', callback);
-    }
-
-    function subscribeOnSavingState(callback) {
-        $rootScope.$watch('isSaving', callback);
-    }
 
     return {
         watchTransitions: watchTransitions,
         getLoadingState: getLoadingState,
         getSavingState: getSavingState,
         setLoadingState: setLoadingState,
-        setSavingState: setSavingState,
-        subscribeOnLoadingState: subscribeOnLoadingState,
-        subscribeOnSavingState: subscribeOnSavingState
+        setSavingState: setSavingState
     };
 }

@@ -21,22 +21,22 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
-
-    $scope.isLoading = LoadingProgress.getLoadingState();
-    $scope.isSaving = LoadingProgress.getSavingState();
-
-    LoadingProgress.subscribeOnLoadingState(function (isLoading) {
-        $scope.isLoading = isLoading;
-    });
-    LoadingProgress.subscribeOnSavingState(function (isSaving) {
-        $scope.isSaving = isSaving;
-    });
+    $scope.isLoading = isLoading;
+    $scope.isSaving = isSaving;
 
     $scope.saveButtonEnabled = saveButtonEnabled;
 
     function editEnabled() {
         return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
     }
+    function isLoading() {
+        return LoadingProgress.getLoadingState();
+    }
+
+    function isSaving() {
+        return LoadingProgress.getSavingState();
+    }
+
 
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');

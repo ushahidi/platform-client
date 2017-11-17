@@ -50,6 +50,7 @@ function PostViewDataController(
     $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
+    $scope.isLoading = isLoading;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
     var recentPosts = [];
@@ -64,12 +65,6 @@ function PostViewDataController(
     $rootScope.setLayout('layout-d');
     $scope.getPosts = getPosts;
     var stopInterval;
-    $scope.isLoading = LoadingProgress.getLoadingState();
-
-    LoadingProgress.subscribeOnLoadingState(function (isLoading) {
-        $scope.isLoading = isLoading;
-    });
-
     /**
      * setting "now" time as utc for new posts filter
      */
@@ -208,6 +203,10 @@ function PostViewDataController(
             }
         });
         checkForNewPosts(30000);
+    }
+
+    function isLoading() {
+        return LoadingProgress.getLoadingState();
     }
 
     function persistUpdatedPost(updatedPost) {
