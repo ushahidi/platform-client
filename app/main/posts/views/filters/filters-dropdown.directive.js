@@ -14,28 +14,16 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         link: FiltersDropdownLink,
         template: require('./filters-dropdown.html')
     };
+
     function FiltersDropdownLink($scope, $element, $attrs, ngModel) {
-        $scope.canUpdateSavedSearch;
         PostFilters.reactiveFilters = false;
-        $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
-            if (oldValue !== newValue || typeof ($scope.canUpdateSavedSearch) === 'undefined') {
-                setSavedSearchUpdateStatus();
-            }
-        });
+       
         // Init an empty saved search
         $scope.savedSearch = {
             view : 'map',
             role : []
         };
-        // Check if we can edit
-        function setSavedSearchUpdateStatus() {
-            var savedSearchId = PostFilters.getModeId();
-            if (savedSearchId) {
-                SavedSearchEndpoint.get({id: savedSearchId}, function (savedSearch) {
-                    $scope.canUpdateSavedSearch = _.contains(savedSearch.allowed_privileges, 'update');
-                });
-            }
-        }
+      
 
         $scope.applyFiltersLocked = function () {
             PostFilters.reactiveFilters = true;
@@ -55,12 +43,6 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         };
         $scope.enableQuery = function () {
             PostFilters.qEnabled = true;
-        };
-        $scope.saveSavedSearchModal = function () {
-            $scope.savedSearch.filter = $scope.filtersVar;
-            // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
-            $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
-            ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
         };
         $scope.editSavedSearchModal = function (editOrUpdate) {
             let modalHeaderText = editOrUpdate === 'edit' ? 'set.edit_savedsearch' : 'set.update_savedsearch';

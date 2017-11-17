@@ -1,7 +1,7 @@
 module.exports = ActiveSearchFilters;
 
-ActiveSearchFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'FilterTransformers'];
-function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransformers) {
+ActiveSearchFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'FilterTransformers', '$rootScope', 'ModalService', 'SavedSearchEndpoint'];
+function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransformers, $rootScope, ModalService, SavedSearchEndpoint) {
     return {
         restrict: 'E',
         scope: true,
@@ -15,6 +15,57 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         $scope.removeFilter = removeFilter;
         $scope.transformFilterValue = transformFilterValue;
         $scope.removeSavedSearch = removeSavedSearch;
+        $scope.userCanUpdateSavedSearch = false;
+        $scope.activeFiltersOnSavedSearch = false;
+        $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
+            if (oldValue !== newValue || (!$scope.userCanUpdateSavedSearch)) {
+                setSavedSearchUpdateStatus();
+            }
+        });
+
+        $scope.saveSavedSearchModal = function() {
+            let savedSearch = {
+                view : 'map',
+                role : []
+            };
+            savedSearch.filter = $scope.filtersVar;
+            // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
+            savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
+            $scope.copySavedSearch = savedSearch
+            ModalService.openTemplate('<saved-search-editor saved-search="copySavedSearch"></saved-search-editor>', 'set.create_savedsearch', 'star', $scope, false, false);
+        };
+
+        $scope.activeFiltersAreEmpty = function() {
+            console.log($scope.activeFilters)
+            if (_.isEmpty($scope.activeFilters)) {
+                return true;
+            } else if (activeFiltersHaveNoValues()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function activeFiltersHaveNoValues() {
+            let filtersHaveNoValue = true;
+            _.each($scope.activeFilters, function(value, key, obj){
+                console.log("VALUE ", value)
+                if (Array.isArray(value) && value.length || !Array.isArray(value) && value === undefined) {
+                    filtersHaveNoValue = false
+                } 
+            })
+            return filtersHaveNoValue;
+        }
+        // Check if we can edit
+        function setSavedSearchUpdateStatus() {
+            var savedSearchId = PostFilters.getModeId();
+            if (savedSearchId) {
+                SavedSearchEndpoint.get({id: savedSearchId}, function (savedSearch) {
+                    $scope.userCanUpdateSavedSearch = _.contains(savedSearch.allowed_privileges, 'update');
+                });
+            }
+        }
+
         activate();
 
         function activate() {
@@ -34,6 +85,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
 
         function handleFiltersUpdate(filters) {
             var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
+            console.log(activeFilters, $scope.activeFilters)
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
@@ -58,7 +110,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             if (filters.saved_search) {
                 $scope.savedSearch = angular.copy(filters.saved_search);
                 // get clean version (no defaults) of the saved search filters
+                console.log($scope.savedSearch)
                 $scope.savedSearch.filter = PostFilters.getCleanActiveFilters(filters.saved_search.filter);
+                $scope.activeFiltersOnSavedSearch = !$scope.activeFiltersAreEmpty
                 $scope.activeFilters = _.mapObject(_.mapObject(activeFilters, function (value, key) {
                     if (value === $scope.savedSearch.filter[key]) {
                         return '';
@@ -68,7 +122,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                     }
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 }), makeArray);
-                console.log($scope.activeFilters, $scope.savedSearch.filter);
             } else {
                 $scope.activeFilters =  _.mapObject(activeFilters, makeArray);
             }
@@ -106,7 +159,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             });
             $scope.savedSearch.filter = [];
             $scope.savedSearch = null;
-
 
         }
     }
