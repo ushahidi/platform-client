@@ -82,7 +82,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilter(filterKey, value) {
-        filterState = clearFilterFromArray(filterKey, value, filterState);
+        filterState = this.clearFilterFromArray(filterKey, value, filterState);
     }
     function clearFilterFromArray(filterKey, value, from) {
         /*
@@ -142,10 +142,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                     return true;
                 }
                 if (key === 'qEnabled') {
-                    return true;
-                }
-                // Ignore saved_search
-                if (key === 'saved_search') {
                     return true;
                 }
                 // Is value empty?

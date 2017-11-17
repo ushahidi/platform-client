@@ -32,7 +32,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
-        function handleFiltersUpdate(filters) {
+        function handleFiltersUpdate(filters, oldVal) {
             var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
@@ -61,12 +61,16 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 $scope.savedSearch = angular.copy(filters.saved_search);
                 // get clean version (no defaults) of the saved search filters
                 $scope.savedSearch.filter = PostFilters.getCleanActiveFilters(filters.saved_search.filter);
+                var filterOut = [];
                 $scope.activeFilters = _.mapObject(_.mapObject(activeFilters, function (value, key) {
                     if (_.isNumber(value) || _.isString(value)) {
-                        return value;
+                        filterOut.push(key);
+                        return null;
                     }
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 }), makeArray);
+               // $scope.activeFilters = _.filter($scope.activeFilters, function(obj){ return num % 2 == 0; });
+
                 console.log($scope.activeFilters);
             } else {
                 $scope.activeFilters =  _.mapObject(activeFilters, makeArray);
@@ -84,9 +88,10 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             $event.preventDefault();
             $event.stopPropagation();
             if (savedSearch) {
-                $scope.savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, $scope.savedSearch.filter);
+                savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, savedSearch.filter);
                 PostFilters.clearFilter(filterKey, value);
-                PostFilters.setFilter('saved_search', $scope.savedSearch);
+                PostFilters.setFilter('saved_search', savedSearch);
+                $scope.savedSearch = savedSearch;
             } else {
                 PostFilters.clearFilter(filterKey, value);
             }
