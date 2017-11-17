@@ -52,7 +52,6 @@ function (
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
     $scope.selectedPost = {post: $scope.post};
-
     activate();
 
     function activate() {
@@ -145,6 +144,13 @@ function (
             //$scope.isLoading.state = false;
         }
     }
+
+    $scope.goToPostList = function (post) {
+        // TODO: We need to reset the selectedPost in the timeline, but how?
+        angular.element(document.querySelector('.timeline-col')).addClass('active');
+        angular.element(document.querySelector('.post-col')).removeClass('active');
+        $state.go('posts.data', {postId: null});
+    };
 
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {

@@ -237,30 +237,21 @@ function PostViewDataController(
         return deferred.promise;
     }
 
-    function goToPost(post) {
-        console.log('gotopost');
-        angular.element(document.getElementById('bootstrap-app')).addClass('hidden');
-        angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
-        $state.go('postDetail', {postId: post.id});
-    }
-
     function showPost(post) {
         return confirmEditingExit().then(function () {
             if ($scope.selectedPost.post && $scope.selectedPost.post.id === post.id) {
+                angular.element(document.querySelector('.timeline-col')).addClass('active');
+                angular.element(document.querySelector('.post-col')).removeClass('active');
                 $scope.selectedPost.post = null;
                 $scope.post = null;
                 $scope.selectedPostId = null;
                 $state.go('posts.data');
-
             } else {
-                var currentWidth = $window.innerWidth;
-                if (currentWidth > 1023) {
-                    $state.go('posts.data.detail', {postId: post.id});
-                    $scope.selectedPost.post = post;
-                    $scope.selectedPostId = post.id;
-                } else {
-                    goToPost(post);
-                }
+                angular.element(document.querySelector('.post-col')).addClass('active');
+                angular.element(document.querySelector('.timeline-col')).removeClass('active');
+                $scope.selectedPost.post = post;
+                $scope.selectedPostId = post.id;
+                $state.go('posts.data.detail', {postId: post.id});
             }
         }, function () {
         });
