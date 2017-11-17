@@ -7,7 +7,6 @@ function PostDetailData() {
         replace: true,
         scope: {
             isLoading: '=',
-            editMode: '=', // @todo remove
             post: '<'
         },
         controller: PostDetailDataController,

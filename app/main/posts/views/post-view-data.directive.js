@@ -67,7 +67,6 @@ function PostViewDataController(
     $scope.newPostsCount = 0;
     var recentPosts = [];
     $scope.addNewestPosts = addNewestPosts;
-    $scope.editMode = {editing: false};
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
@@ -199,7 +198,6 @@ function PostViewDataController(
             if (!_.isEmpty($scope.selectedPost.next)) {
                 $scope.selectedPost.post = $scope.selectedPost.next;
                 $scope.selectedPost.next = {};
-                $scope.editMode.editing = true;
                 $rootScope.$broadcast('event:edit:post:reactivate');
             }
         });
@@ -214,24 +212,26 @@ function PostViewDataController(
             }
         });
 
-        $scope.$watch(function () {
-            return $location.path();
-        }, function (newValue, oldValue) {
-            if ($scope.editMode.editing) {
-                var postId = newValue.match(/^\/posts\/([0-9]+)(\/|$)/);
-                var locationUrlMatch = $location.path().match(/^\/posts\/([0-9]+)(\/|$)/);
-                if (postId && postId.length > 1 && !locationUrlMatch) {
-                    var tmpPost = _.filter($scope.posts, function (postItm) {
-                        return postItm.id === parseInt(postId[1]);
-                    });
-                    if (tmpPost.length > 0) {
-                        $scope.selectedPost.post = tmpPost[0];
-                        $scope.selectedPostId = tmpPost[0].id;
-                        $scope.editMode.editing = false;
-                    }
-                }
-            }
-        });
+        // I don't know what this does but its terrifying
+        //
+        // $scope.$watch(function () {
+        //     return $location.path();
+        // }, function (newValue, oldValue) {
+        //     if ($scope.editMode.editing) {
+        //         var postId = newValue.match(/^\/posts\/([0-9]+)(\/|$)/);
+        //         var locationUrlMatch = $location.path().match(/^\/posts\/([0-9]+)(\/|$)/);
+        //         if (postId && postId.length > 1 && !locationUrlMatch) {
+        //             var tmpPost = _.filter($scope.posts, function (postItm) {
+        //                 return postItm.id === parseInt(postId[1]);
+        //             });
+        //             if (tmpPost.length > 0) {
+        //                 $scope.selectedPost.post = tmpPost[0];
+        //                 $scope.selectedPostId = tmpPost[0].id;
+        //                 $scope.editMode.editing = false;
+        //             }
+        //         }
+        //     }
+        // });
         checkForNewPosts(30000);
     }
 
@@ -244,23 +244,20 @@ function PostViewDataController(
 
     function confirmEditingExit() {
         var deferred = $q.defer();
-        if (!$scope.editMode.editing) {
+        if ($state.$current.name !== 'posts.data.edit') {
             deferred.resolve();
         } else if ($scope.formData.form && !$scope.formData.form.$dirty) {
-            $scope.editMode.editing = false;
             $scope.isLoading.state = false;
             $scope.savingPost.saving = false;
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
-                $scope.editMode.editing = false;
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
                 deferred.resolve();
             }, function (reject) {
                 deferred.reject();
-                $scope.editMode.editing = true;
                 $scope.isLoading.state = false;
                 $scope.savingPost.saving = false;
             });

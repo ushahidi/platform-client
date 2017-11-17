@@ -11,7 +11,6 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
             selectedPosts: '=',
             shortContent: '@',
             clickAction: '=',
-            editMode: '=',
             selectedPost: '='
         },
         template: require('./card.html'),
