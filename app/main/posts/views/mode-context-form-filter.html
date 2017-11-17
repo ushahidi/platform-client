@@ -75,7 +75,7 @@
                         <div
                             class="form-field checkbox"
                             ng-repeat="child in tag.children"
-                            ng-class="{'checked': filters.tags.indexOf(child.id) !== -1}"                            
+                            ng-class="{'checked': filters.tags.indexOf(child.id) !== -1}"
                             ng-show="filters.tags.indexOf(tag.id) > -1"
                         >
                             <label>
@@ -93,7 +93,7 @@
         </fieldset>
     </div>
 </form>
-<div class="tool" ng-show="unmapped > 0 && currentView === 'map'">
+<div class="tool" ng-show="unmapped > 0">
 <p>There are
     <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.</p>
 </div>
