@@ -106,7 +106,7 @@ function (
             url: '^/collections/:collectionId/data',
             name: 'posts.data.collection',
             onEnter: function ($state, $transition$, PostFilters, collection) {
-                PostFilters.setMode('collection', collection.id);
+                PostFilters.setMode('collection', collection);
             }
         }
     )
@@ -156,7 +156,7 @@ function (
                 'mode-context': 'collectionModeContext'
             },
             onEnter: function ($state, $transition$, PostFilters, collection) {
-                PostFilters.setMode('collection', collection.id);
+                PostFilters.setMode('collection', collection);
             }
         }
     )

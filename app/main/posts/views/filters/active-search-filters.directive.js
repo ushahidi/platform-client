@@ -65,7 +65,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 $scope.activeFilters = _.mapObject(_.mapObject(activeFilters, function (value, key) {
                     if (_.isNumber(value) || _.isString(value)) {
                         filterOut.push(key);
-                        return null;
+                        return '';
                     }
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 }), makeArray);
