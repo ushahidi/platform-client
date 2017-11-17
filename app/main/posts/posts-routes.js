@@ -86,6 +86,12 @@ function (
             }
         }
     )
+
+    /**
+     * @uirouter-refactor
+     * we need to  be able to set mode-context as collectionModeContext or as savedSearchModeContext
+     * without the route since the user would land in /views/map after the redirect
+     */
     .state(
         {
             url: '^/savedsearches/:savedSearchId/data',
@@ -148,7 +154,12 @@ function (
             }
         }
     )
-    .state(
+    /**
+     * @uirouter-refactor
+     * we need to  be able to set mode-context as collectionModeContext or as savedSearchModeContext
+     * without the route since the user would land in /views/map after the redirect
+     */
+        .state(
         {
             url: '^/collections/:collectionId/map',
             name: 'posts.map.collection',

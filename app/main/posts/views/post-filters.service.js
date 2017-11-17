@@ -266,7 +266,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         // If mode changes, reset filters
         if (newMode !== filterMode) {
             filterMode = newMode;
-            if (filterMode === 'collection' || filterMode === 'savedsearch') {
+            if (filterMode === 'collection') {
                 clearFilters();
             }
 
