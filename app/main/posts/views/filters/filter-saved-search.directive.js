@@ -36,7 +36,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
         function saveValueToView(selectedSavedSearch) {
             if (selectedSavedSearch && selectedSavedSearch.hasOwnProperty('filter')) {
                 PostFilters.setFilters(selectedSavedSearch.filter);
-                PostFilters.setMode('savedsearch', selectedSavedSearch.id);
+                PostFilters.setMode('savedsearch', selectedSavedSearch);
             } else if (selectedSavedSearch === null && PostFilters.getModeId() !== null) {
                 PostFilters.setMode('all');
             }

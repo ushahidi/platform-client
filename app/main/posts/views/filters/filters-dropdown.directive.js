@@ -29,12 +29,9 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         };
         // Check if we can edit
         function setSavedSearchUpdateStatus() {
-            var savedSearchId = PostFilters.getModeId();
-            if (savedSearchId) {
-                SavedSearchEndpoint.get({id: savedSearchId}, function (savedSearch) {
-                    $scope.canUpdateSavedSearch = _.contains(savedSearch.allowed_privileges, 'update');
-                });
-            }
+            var savedSearch = PostFilters.getModeEntity();
+
+            $scope.canUpdateSavedSearch = savedSearch && _.contains(savedSearch.allowed_privileges, 'update');
         }
 
         $scope.applyFiltersLocked = function () {
@@ -64,14 +61,12 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         };
         $scope.editSavedSearchModal = function (editOrUpdate) {
             let modalHeaderText = editOrUpdate === 'edit' ? 'set.edit_savedsearch' : 'set.update_savedsearch';
+            $scope.savedSearch = PostFilters.getModeEntity();
+            $scope.savedSearch.filter = PostFilters.getActiveFilters($scope.filtersVar);
+            // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
+            $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
+            ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', modalHeaderText, 'star', $scope, false, false);
 
-            SavedSearchEndpoint.get({id: PostFilters.getModeId()}, function (savedSearch) {
-                $scope.savedSearch = savedSearch;
-                $scope.savedSearch.filter = PostFilters.getActiveFilters($scope.filtersVar);
-                // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
-                $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
-                ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', modalHeaderText, 'star', $scope, false, false);
-            });
         };
     }
 }

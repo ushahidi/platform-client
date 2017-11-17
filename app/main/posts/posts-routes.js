@@ -91,7 +91,7 @@ function (
             url: '^/savedsearches/:savedSearchId/data',
             name: 'posts.data.savedsearch',
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
-                PostFilters.setMode('savedsearch', savedSearch.id);
+                PostFilters.setMode('savedsearch', savedSearch);
                 PostFilters.setFilters(savedSearch.filter);
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
                     $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
@@ -138,7 +138,7 @@ function (
                 'mode-context': 'savedSearchModeContext'
             },
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
-                PostFilters.setMode('savedsearch', savedSearch.id);
+                PostFilters.setMode('savedsearch', savedSearch);
                 PostFilters.setFilters(savedSearch.filter);
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
                     $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});

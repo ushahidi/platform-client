@@ -156,7 +156,7 @@ function PostViewDataController(
         if ($scope.collection) {
             PostFilters.setMode('collection', $scope.collection.id);
         } else if ($scope.savedSearch) {
-            PostFilters.setMode('savedsearch', $scope.savedSearch.id);
+            PostFilters.setMode('savedsearch', $scope.savedSearch);
         } else {
             PostFilters.setMode('all');
         }

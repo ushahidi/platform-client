@@ -7,7 +7,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     var forms = [];
     var tags = [];
     var filterMode = 'all';
-    var entityId = null;
+    var entity = null;
     // @todo take this out of the service
     // but ensure it happens at the right times
     activate();
@@ -28,6 +28,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         setMode: setMode,
         getMode: getMode,
         getModeId: getModeId,
+        getModeEntity: getModeEntity,
         countFilters: countFilters,
         reactiveFilters: true,
         qEnabled: false
@@ -257,16 +258,16 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return !_.isEmpty(getActiveFilters(filters));
     }
 
-    function setMode(newMode, id) {
+    function setMode(newMode, obj) {
         // If mode changes, reset filters
         if (newMode !== filterMode) {
             filterMode = newMode;
-            if (filterMode === 'collection') {
+            if (filterMode === 'collection' || filterMode === 'savedsearch') {
                 clearFilters();
             }
 
         }
-        entityId = id;
+        entity = obj;
     }
 
     function getMode() {
@@ -274,7 +275,11 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function getModeId() {
-        return entityId;
+        return entity ? entity.id : null;
+    }
+
+    function getModeEntity() {
+        return entity;
     }
     function countFilters() {
         return _.keys(this.getActiveFilters(this.getFilters())).length;
