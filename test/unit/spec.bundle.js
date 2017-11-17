@@ -36,3 +36,6 @@ var context = require.context('test/unit/', true, /spec\.js$/);
 // that will require the file and load it here. Context will
 // loop and require those spec files here.
 context.keys().forEach(context);
+
+let inlineTestsContext = require.context('app/', true, /\.spec\.js$/);
+inlineTestsContext.keys().forEach(inlineTestsContext);
