@@ -62,6 +62,7 @@ function PostViewDataController(
     $rootScope.setLayout('layout-d');
     $scope.isLoading = $scope.$resolve.isLoading;
     $scope.getPosts = getPosts;
+    $scope.shouldWeRunCheckForNewPosts = true;
     var stopInterval;
     /**
      * setting "now" time as utc for new posts filter
@@ -131,7 +132,19 @@ function PostViewDataController(
 
     activate();
     function activate() {
-        getPosts(false, false);
+        // If we are coming into Data View with a selected post
+        // then go get 19 posts before that post and put those in the post list
+        // *
+        // *
+        // Otherwise, go get posts just normal
+        if ($scope.selectedPost.post) {
+            let query = PostFilters.getQueryParams($scope.filters);
+            query.created_before = $scope.selectedPost.post.created;
+            getPosts(query, false);
+            $scope.shouldWeRunCheckForNewPosts = false;
+        } else {
+            getPosts(false, false);
+        }
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
         $scope.$watch(function () {
@@ -201,7 +214,9 @@ function PostViewDataController(
                 }
             }
         });
-        checkForNewPosts(30000);
+        if ($scope.shouldWeRunCheckForNewPosts) {
+            checkForNewPosts(30000);
+        }
     }
 
     function persistUpdatedPost(updatedPost) {
@@ -238,7 +253,6 @@ function PostViewDataController(
     }
 
     $scope.goToPostList = function (post) {
-        console.log("goToPostList")
         angular.element(document.querySelector('.timeline-col')).addClass('active');
         angular.element(document.querySelector('.post-col')).removeClass('active');
         $state.go('posts.data', {postId: null});
@@ -248,22 +262,11 @@ function PostViewDataController(
 
     function showPost(post) {
         return confirmEditingExit().then(function () {
-            // if ($scope.selectedPost.post && $scope.selectedPost.post.id === post.id) {
-            //     console.log("if")
-            //     angular.element(document.querySelector('.timeline-col')).addClass('active');
-            //     angular.element(document.querySelector('.post-col')).removeClass('active');
-            //     $scope.selectedPost.post = null;
-            //     $scope.post = null;
-            //     $scope.selectedPostId = null;
-            //     $state.go('posts.data');
-            // } else {
-                console.log("else")
-                angular.element(document.querySelector('.post-col')).addClass('active');
-                angular.element(document.querySelector('.timeline-col')).removeClass('active');
-                $scope.selectedPost.post = post;
-                $scope.selectedPostId = post.id;
-                $state.go('posts.data.detail', {postId: post.id});
-            // }
+            angular.element(document.querySelector('.post-col')).addClass('active');
+            angular.element(document.querySelector('.timeline-col')).removeClass('active');
+            $scope.selectedPost.post = post;
+            $scope.selectedPostId = post.id;
+            $state.go('posts.data.detail', {postId: post.id});
         }, function () {
         });
     }

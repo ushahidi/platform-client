@@ -69,9 +69,9 @@ function (
         }
 
         let currentWidth = $window.innerWidth;
-            if (currentWidth < 1023) {
-                $scope.showPost($scope.post)
-            }
+        if (currentWidth < 1023) {
+            $scope.showPost($scope.post);
+        }
 
         // Load the post form
         if ($scope.post.form && $scope.post.form.id) {
