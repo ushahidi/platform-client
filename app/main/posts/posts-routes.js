@@ -44,9 +44,9 @@ function (
             name: 'posts.savedsearchRedirector',
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
-                    $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
+                    $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
                 } else {
-                    $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
                 }
             }
         }
@@ -91,7 +91,13 @@ function (
             url: '^/savedsearches/:savedSearchId/data',
             name: 'posts.data.savedsearch',
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+                PostFilters.setMode('savedsearch', savedSearch.id);
                 PostFilters.setFilters(savedSearch.filter);
+                if (savedSearch.view === 'data' || savedSearch.view === 'list') {
+                    $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
+                } else {
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
+                }
             }
         }
     )
@@ -134,6 +140,11 @@ function (
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 PostFilters.setMode('savedsearch', savedSearch.id);
                 PostFilters.setFilters(savedSearch.filter);
+                if (savedSearch.view === 'data' || savedSearch.view === 'list') {
+                    $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
+                } else {
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
+                }
             }
         }
     )

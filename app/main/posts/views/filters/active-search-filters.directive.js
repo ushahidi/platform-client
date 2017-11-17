@@ -69,9 +69,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                     }
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 }), makeArray);
-               // $scope.activeFilters = _.filter($scope.activeFilters, function(obj){ return num % 2 == 0; });
-
-                console.log($scope.activeFilters);
             } else {
                 $scope.activeFilters =  _.mapObject(activeFilters, makeArray);
             }

@@ -49,7 +49,6 @@ function (
                 persist(savedSearch)
                 .$promise
                 .then(function (savedSearch) {
-                    $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
                     $scope.$parent.closeModal();
                     $rootScope.$broadcast('savedSearch:update');
