@@ -63,6 +63,7 @@ function PostViewDataController(
     $scope.isLoading = $scope.$resolve.isLoading;
     $scope.getPosts = getPosts;
     $scope.shouldWeRunCheckForNewPosts = true;
+    $scope.fromWhere;
     var stopInterval;
     /**
      * setting "now" time as utc for new posts filter
@@ -255,17 +256,22 @@ function PostViewDataController(
     $scope.goToPostList = function (post) {
         angular.element(document.querySelector('.timeline-col')).addClass('active');
         angular.element(document.querySelector('.post-col')).removeClass('active');
-        $state.go('posts.data', {postId: null});
         $scope.selectedPost = {post: null, next: {}};
         $scope.selectedPostId = null;
+        if ($scope.fromWhere === 'posts.map' || $scope.fromWhere === undefined) {
+            $state.go('posts.map');
+        } else {
+            $state.go('posts.data', {postId: null});
+        }
     };
 
-    function showPost(post) {
+    function showPost(post, fromWhere) {
         return confirmEditingExit().then(function () {
             angular.element(document.querySelector('.post-col')).addClass('active');
             angular.element(document.querySelector('.timeline-col')).removeClass('active');
             $scope.selectedPost.post = post;
             $scope.selectedPostId = post.id;
+            $scope.fromWhere = fromWhere ? fromWhere : undefined;
             $state.go('posts.data.detail', {postId: post.id});
         }, function () {
         });

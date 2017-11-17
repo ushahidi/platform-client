@@ -41,7 +41,8 @@ function (
     PostSurveyService,
     $state,
     $transition$,
-    $window) {
+    $window
+    ) {
     $scope.$watch('post', function (post) {
         activate();
     });
@@ -68,9 +69,10 @@ function (
             });
         }
 
+        // Route and display accordingly if the we are in mobile or tablet view
         let currentWidth = $window.innerWidth;
         if (currentWidth < 1023) {
-            $scope.showPost($scope.post);
+            $scope.showPost($scope.post, $transition$.$from().name);
         }
 
         // Load the post form
