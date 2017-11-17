@@ -8,7 +8,7 @@ function PostDetailData() {
         scope: {
             isLoading: '=',
             editMode: '=', // @todo remove
-            post: '='
+            post: '<'
         },
         controller: PostDetailDataController,
         template: require('./post-detail-data.html')
@@ -34,8 +34,7 @@ PostDetailDataController.$inject = [
     'Notify',
     'moment',
     'PostSurveyService',
-    '$state',
-    '$transition$'
+    '$state'
 ];
 function PostDetailDataController(
     $scope,
@@ -56,14 +55,14 @@ function PostDetailDataController(
     Notify,
     moment,
     PostSurveyService,
-    $state,
-    $transition$) {
+    $state
+) {
     $scope.$watch('post', function (post) {
         activate();
     });
 
     $rootScope.setLayout('layout-d');
-    $scope.post = $scope.$resolve.post;
+    $scope.post = $scope.post;
     $scope.post_task = {};
     $scope.hasPermission = $rootScope.hasPermission;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
