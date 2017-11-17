@@ -237,6 +237,14 @@ function PostViewDataController(
         return deferred.promise;
     }
 
+    $scope.goToPostList = function (post) {
+        angular.element(document.querySelector('.timeline-col')).addClass('active');
+        angular.element(document.querySelector('.post-col')).removeClass('active');
+        $state.go('posts.data', {postId: null});
+        $scope.selectedPost = {post: $scope.$resolve.selectedPost, next: {}};
+        $scope.selectedPostId = null;
+    };
+
     function showPost(post) {
         return confirmEditingExit().then(function () {
             if ($scope.selectedPost.post && $scope.selectedPost.post.id === post.id) {
