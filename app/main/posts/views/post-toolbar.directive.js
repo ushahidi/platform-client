@@ -7,7 +7,6 @@ function PostToolbarDirective() {
         scope: {
             isLoading: '=',
             filters: '=',
-            currentView: '=',
             editMode: '=',
             selectedPost: '=',
             savingPost: '='

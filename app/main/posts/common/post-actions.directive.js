@@ -69,18 +69,7 @@ function PostActionsDirective(
                 return;
             }
 
-            if ($scope.$resolve.$transition$.params().view !== 'data' && $location.path().indexOf('data') === -1) {
-                $state.go('posts.data.edit', {postId: postId});
-            } else if ($scope.editMode.editing) {
-                // At this point we are not certain we will switch to this Post so we back it up
-                // in anticipation of using it later if the current Post exists corectly
-                $scope.selectedPost.next = _.clone($scope.post);
-                $rootScope.$broadcast('event:edit:leave:form');
-            } else {
-                $scope.selectedPost.post = _.clone($scope.post);
-                $scope.editMode.editing = true;
-                $state.go('posts.data.edit', {postId: $scope.post.id});
-            }
+            $state.go('posts.data.edit', {postId: postId});
         }
 
         function updateStatus(status) {
