@@ -1,7 +1,7 @@
 module.exports = LoadingProgress;
 
-LoadingProgress.$inject = ['$rootScope', '$transitions'];
-function LoadingProgress($rootScope, $transitions) {
+LoadingProgress.$inject = ['$rootScope', '$transitions', '$injector'];
+function LoadingProgress($rootScope, $transitions, $injector) {
     function watchTransitions() {
         $transitions.onStart({}, function (transition) {
             $rootScope.isLoading = true;
@@ -11,10 +11,12 @@ function LoadingProgress($rootScope, $transitions) {
         });
 
         $transitions.onFinish({}, function (transition) {
-            $rootScope.isLoading = false;
-            $rootScope.isSaving = false;
+            var $httpProvider = $injector.get('$http');
+            if ($httpProvider.pendingRequests.length === 0) {
+                $rootScope.isLoading = false;
+                $rootScope.isSaving = false;
+            }
         });
-
     }
 
     function getLoadingState() {
