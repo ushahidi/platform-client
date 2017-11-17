@@ -7,8 +7,6 @@ function PostToolbarDirective() {
         scope: {
             isLoading: '=',
             filters: '=',
-            currentView: '=',
-            editMode: '=',
             selectedPost: '=',
             savingPost: '='
         },
@@ -23,26 +21,32 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
-    $scope.saveButtonEnabled = saveButtonEnabled;
+    $scope.editMode = editMode;
+    $scope.cancel = cancel;
+
     function editEnabled() {
+        if (!$scope.selectedPost || !$scope.hasPermission) {
+            return false;
+        }
+
         return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
     }
 
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');
     }
-    function saveButtonEnabled() {
+
+    function editMode() {
         return $state.$current.name === 'posts.data.edit';
     }
 
     function setEditMode() {
         if (editEnabled()) {
-            if ($scope.editMode.editing) {
-                $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
-            } else {
-                $state.go('posts.data.edit', {postId: $scope.selectedPost.id});
-                $scope.editMode.editing = true;
-            }
+            $state.go('posts.data.edit', {postId: $scope.selectedPost.id});
         }
+    }
+
+    function cancel() {
+        $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
     }
 }
