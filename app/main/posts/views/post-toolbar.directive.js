@@ -6,8 +6,6 @@ function PostToolbarDirective() {
         restrict: 'E',
         scope: {
             filters: '=',
-            currentView: '=',
-            editMode: '=',
             selectedPost: '='
         },
         controller: PostToolbarController,
@@ -23,10 +21,15 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.editEnabled = editEnabled;
     $scope.isLoading = isLoading;
     $scope.isSaving = isSaving;
+    $scope.editMode = editMode;
+    $scope.cancel = cancel;
 
-    $scope.saveButtonEnabled = saveButtonEnabled;
 
     function editEnabled() {
+        if (!$scope.selectedPost || !$scope.hasPermission) {
+            return false;
+        }
+
         return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
     }
     function isLoading() {
@@ -41,18 +44,18 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');
     }
-    function saveButtonEnabled() {
+
+    function editMode() {
         return $state.$current.name === 'posts.data.edit';
     }
 
     function setEditMode() {
         if (editEnabled()) {
-            if ($scope.editMode.editing) {
-                $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
-            } else {
-                $state.go('posts.data.edit', {postId: $scope.selectedPost.id});
-                $scope.editMode.editing = true;
-            }
+            $state.go('posts.data.edit', {postId: $scope.selectedPost.id});
         }
+    }
+
+    function cancel() {
+        $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
     }
 }

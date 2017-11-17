@@ -1,8 +1,10 @@
+<main role="main">
 <div class="flex-container">
-    <post-toolbar saving-post="savingPost" current-view="currentView" selected-post="selectedPost.post" edit-mode="editMode" filters="filters"></post-toolbar>
+    <layout-class layout="d"></layout-class>
+    <post-toolbar selected-post="selectedPost.post" filters="filters"></post-toolbar>
     <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
-        <div class="button-group" ng-show="newPostsCount > 0">
-            <button class="button-flat full-width" ng-click="addNewestPosts()">
+        <div class="load-more"  ng-show="newPostsCount > 0">
+            <button class="button-flat button-gamma full-width" ng-click="addNewestPosts()">
                 <span ng-switch on="newPostsCount">
                     <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
                     <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
@@ -65,7 +67,6 @@
                 post="post"
                 selected-posts="selectedPosts"
                 click-action="showPost"
-                edit-mode="editMode"
                 selected-post="selectedPost"
             >
             </post-card>
@@ -88,8 +89,11 @@
         </div>
     </div>
     <div class="post-col">
-        <div ui-view></div>
+        <!-- Verify if we need all these bindings ie. parentForm savingPost -->
+        <div ui-view filters="filters" is-loading="isLoading" saving-post="savingPost" ></post-detail-data>
         <!-- @uirouter-refactor: need to move this -->
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
     </div>
 </div>
+<ush-logo></ush-logo>
+</main>
