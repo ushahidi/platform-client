@@ -24,9 +24,7 @@ function PostActionsDirective(
         restrict: 'E',
         replace: true,
         scope: {
-            post: '=',
-            selectedPost: '=',
-            editMode: '='
+            post: '='
         },
         template: require('./post-actions.html'),
         link: PostActionsLink
