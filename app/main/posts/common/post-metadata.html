@@ -6,21 +6,12 @@
       </div>
       <li>
           <span class="status-indicator" ng-if="post.status=='published'">
-              <svg class="iconic">
-                  <use xlink:href="/img/iconic-sprite.svg#globe"></use>
-              </svg>
               <span class="label" translate="post.status_published" ng-if="post.status=='published'">post.status_published</span>
           </span>
           <span class="status-indicator yellow" ng-if="post.status=='draft'">
-              <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
-              </svg>
               <span class="label" translate="post.status_review" ng-if="post.status=='draft'"></span>
           </span>
           <span class="status-indicator dark" ng-if="post.status=='archived'">
-              <svg class="iconic">
-                 <use xlink:href="/img/iconic-sprite.svg#box" ></use>
-              </svg>
                <span class="label" translate="post.status_archived" ng-if="post.status=='archived'"></span>
           </span>
       </li>
