@@ -76,6 +76,7 @@
         "fields" : "Fields",
         "no_results": "No results found.",
         "filter_by" :"Filter by...",
+        "sort_filter": "Sort & filter",
         "apply_filters" : "Apply filters",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",

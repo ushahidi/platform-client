@@ -13,6 +13,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     activate();
 
     return {
+        resetDefaults: resetDefaults,
         getDefaults: getDefaults,
         getQueryParams: getQueryParams,
         getFilters: getFilters,
@@ -30,6 +31,14 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         qEnabled: false
     };
 
+    /**
+     * function to deal with the fact that logout and login don't really reset the defaults.
+     */
+    function resetDefaults() {
+        return activate().then(function () {
+            clearFilters();
+        });
+    }
 
     function activate() {
         return $q.all([TagEndpoint.query().$promise, FormEndpoint.query().$promise]).then(function (results) {
@@ -66,7 +75,16 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilter(filterKey, value) {
-        filterState[filterKey] = getDefaults()[filterKey];
+        /*
+         * if filter is in an array, we only want to remove that specific value
+         * if all filter-values are removed from array, we want to reset to default
+         */
+        if (Array.isArray(filterState[filterKey]) && filterState[filterKey].length > 1) {
+            filterState[filterKey].splice(filterState[filterKey].indexOf(value), 1);
+        } else {
+            filterState[filterKey] = getDefaults()[filterKey];
+        }
+
         /**
          * Since q is a special type of filter that gets applied on the click
          * of a button separate from the input control, and since it should be automatically

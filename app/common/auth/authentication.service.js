@@ -24,11 +24,21 @@ function (
     ModalService
 ) {
 
-    // check whether we have initially an valid access_token and userId
-    // and assume that, if yes, we are still loggedin
-    var loginStatus = !!Session.getSessionDataEntry('accessToken') &&
-        Session.getSessionDataEntry('accessTokenExpires') > Math.floor(Date.now() / 1000) &&
-        !!Session.getSessionDataEntry('userId');
+    // check whether we have initially an valid access_token and assume that, if yes, we are still loggedin
+    let loginStatus = false;
+    if (!!Session.getSessionDataEntry('accessToken') &&
+        Session.getSessionDataEntry('grantType') === 'password' &&
+        !!Session.getSessionDataEntry('userId')
+    ) {
+        // If the access token is expired
+        if (Session.getSessionDataEntry('accessTokenExpires') <= Math.floor(Date.now() / 1000)) {
+            // Clear any login state
+            setToLogoutState();
+        } else {
+            // Otherwise mark as logged in
+            loginStatus = true;
+        }
+    }
 
     function setToLoginState(userData) {
         Session.setSessionDataEntries({
@@ -73,6 +83,7 @@ function (
                 var accessToken = authResponse.data.access_token;
                 Session.setSessionDataEntry('accessToken', accessToken);
                 Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+                Session.setSessionDataEntry('grantType', 'password');
 
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {

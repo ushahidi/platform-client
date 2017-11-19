@@ -14,7 +14,7 @@ describe('Session', function () {
             permissions: undefined,
             accessToken: undefined,
             accessTokenExpires: undefined,
-
+            grantType: undefined,
             gravatar: undefined
         };
 
@@ -90,6 +90,7 @@ describe('Session', function () {
                     permissions: undefined,
                     accessToken: 'secrettoken',
                     accessTokenExpires: undefined,
+                    grantType: undefined,
                     gravatar: undefined
                 };
 
