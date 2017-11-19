@@ -154,6 +154,7 @@
                   </div>
             </div>
           </div> -->
+
           <div class="form-sheet" ng-if="post.id">
               <div class="form-sheet-summary">
                   <h3 class="form-sheet-title" translate="post.delete_post">Delete this post</h3>
@@ -170,6 +171,8 @@
                   </button>
               </div>
           </div>
+
+          <post-change-log post-id="post.id"></post-change-log>
 
           <ush-logo></ush-logo>
       </div> <!-- END main column -->
