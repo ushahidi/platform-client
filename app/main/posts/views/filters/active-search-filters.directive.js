@@ -35,15 +35,15 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
-        function handleFiltersUpdate(filters, oldValue) {
-            /**
-             * TODO: to handle removal correctly we need to make sure we take oldValue into account,
-             * because that is where our savedsearch filters will be represented still when we remove them.
-             * If there's a key in oldValue that is NOT present in filters but IS IN savedsearch
-             * that means we have to remove it from the saved search. Right?
-            **/
-            var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
+        function cleanDeprecatedValuesFromSavedSearch(currentFilters, savedSearch) {
+            //find filters in currentFilters that are NOT in savedSearch.filters
+            var validFilters = _.without(_.keys(currentFilters), _.keys(savedSearch));
+            console.log(_.pick(savedSearch, validFilters));
+            return _.pick(savedSearch, validFilters);
+        }
 
+        function handleFiltersUpdate(filters, oldValue) {
+            var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
@@ -76,8 +76,14 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              */
             activeFilters = _.mapObject(activeFilters, makeArray);
             if ($scope.savedSearch) {
-                // get clean version (no defaults) of the saved search filters
-                $scope.savedSearch.filter = _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray);
+                /**
+                 * to handle removal correctly we need to make sure we take currentFilters (which has up to date info) into account,
+                 * because that is where our savedsearch filters will stop being represented when we remove them.
+                 * If there's a key in our current filters that is in the saved search but is not in the active filters at this point,
+                 * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
+                 * that means we have to remove it from the saved search.
+                 **/
+                $scope.savedSearch.filter =  cleanDeprecatedValuesFromSavedSearch(activeFilters, _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray));
                 $scope.activeFilters = _.mapObject(activeFilters, function (value, key) {
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 });
