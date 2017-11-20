@@ -7,7 +7,8 @@ function PostDetailData() {
         replace: true,
         scope: {
             isLoading: '=',
-            post: '<'
+            post: '<',
+            '$transition$': '<'
         },
         controller: PostDetailDataController,
         template: require('./post-detail-data.html')
@@ -34,7 +35,6 @@ PostDetailDataController.$inject = [
     'moment',
     'PostSurveyService',
     '$state',
-    '$transition$',
     '$window'
 ];
 function PostDetailDataController(
@@ -57,7 +57,6 @@ function PostDetailDataController(
     moment,
     PostSurveyService,
     $state,
-    $transition$,
     $window
 ) {
     $scope.$watch('post', function (post) {
@@ -85,12 +84,6 @@ function PostDetailDataController(
                 $scope.title = title;
                 $scope.$emit('setPageTitle', title);
             });
-        }
-
-        // Route and display accordingly if the we are in mobile or tablet view
-        let currentWidth = $window.innerWidth;
-        if (currentWidth < 1023) {
-            $scope.showPost($scope.post, $transition$.$from().name);
         }
 
         // Load the post form
@@ -235,6 +228,20 @@ function PostDetailDataController(
             }, function (errorResponse) {
                 Notify.apiErrors(errorResponse);
             });
+    };
+
+    $scope.close = function () {
+        // Return to previous state, whatever that was.
+        let previousState = $scope.$transition$.$from().name;
+        // If we've jumped between 2 different posts
+        // Or we loaded this view directly
+        if (previousState === 'posts.data.detail' || previousState === '') {
+            // ... just return to the data list
+            $state.go('posts.data');
+        } else {
+            // ... otherwise go to the previous stat
+            $state.go(previousState);
+        }
     };
 }
 

@@ -29,7 +29,8 @@ PostViewDataController.$inject = [
     '$location',
     'Notify',
     '$window',
-    '$state'
+    '$state',
+    '$transitions'
 ];
 function PostViewDataController(
     $scope,
@@ -46,7 +47,8 @@ function PostViewDataController(
     $location,
     Notify,
     $window,
-    $state
+    $state,
+    $transitions
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -71,12 +73,11 @@ function PostViewDataController(
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
     $scope.selectedPost = {post: $scope.post, next: {}};
-    $scope.selectedPostId = null;
     $scope.formData = {form: {}};
     $scope.getPosts = getPosts;
     $scope.isLoading = {state: false};
     $scope.shouldWeRunCheckForNewPosts = true;
-    $scope.fromWhere;
+    $scope.activeCol = $state.params.activeCol;
 
     var stopInterval;
     /**
@@ -85,10 +86,12 @@ function PostViewDataController(
     var newPostsAfter = moment().utc();
     $scope.savingPost = {saving: false};
 
+    let unbindFns = [];
+
     // This is for when you edit a post. Because anything could be changing, we have to
     // check to see if everything in the post still matches all the filters.
     // It's too cumbersome to do on the frontend, so we're checking in the API
-    $rootScope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
+    unbindFns.push($rootScope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
         if ($scope.hasFilters()) {
             let query = PostFilters.getQueryParams($scope.filters);
             let postQuery = _.extend({}, query, {
@@ -101,49 +104,28 @@ function PostViewDataController(
                 }
             });
         }
-    });
+    }));
 
     // And this is for when you change the post status using the ... button
     // Because it's just the post status only, we're just checking if it matches
     // filters on the frontend. This makes it MUCH faster than using the API
-    $rootScope.$on('event:edit:post:status:data:mode:saveSuccess', function (event, args) {
+    unbindFns.push($rootScope.$on('event:edit:post:status:data:mode:saveSuccess', function (event, args) {
         let postObj = args.post;
         if (!newStatusMatchesFilters(postObj)) {
             removePostFromList(postObj);
         }
+    }));
+
+    unbindFns.push($transitions.onSuccess({
+        to: 'posts.data.**'
+    }, () => {
+        $scope.activeCol = $state.params.activeCol;
+    }));
+
+    // Cleanup and remove all listeners
+    $scope.$on('$destroy', () => {
+        unbindFns.forEach(Function.prototype.call, Function.prototype.call);
     });
-
-    function removePostFromList(postObj) {
-        $scope.posts.forEach((post, index) => {
-            // args.post is the post being updated/saved and sent from the broadcast
-            if (post.id === postObj.id) {
-                let nextInLine = $scope.posts[index + 1];
-                $scope.posts.splice(index, 1);
-                if ($scope.posts.length) {
-                    groupPosts($scope.posts);
-                    $scope.selectedPost.post = nextInLine;
-                    $scope.selectedPostId = nextInLine.id;
-                } else {
-                    $scope.selectedPost = {post: null, next: {}};
-                    $scope.selectedPostId = null;
-                    getPosts(false, false);
-                }
-            }
-        });
-    }
-
-    function newStatusMatchesFilters(postObj) {
-        let filters = $scope.hasFilters() ?  $scope.filters.status : PostFilters.getDefaults().status;
-        let matchingStatus = false;
-
-        filters.forEach((status) => {
-            if (postObj.status === status) {
-                matchingStatus = true;
-            }
-        });
-
-        return matchingStatus;
-    }
 
     activate();
     function activate() {
@@ -240,7 +222,6 @@ function PostViewDataController(
         //             });
         //             if (tmpPost.length > 0) {
         //                 $scope.selectedPost.post = tmpPost[0];
-        //                 $scope.selectedPostId = tmpPost[0].id;
         //                 $scope.editMode.editing = false;
         //             }
         //         }
@@ -249,6 +230,36 @@ function PostViewDataController(
         if ($scope.shouldWeRunCheckForNewPosts) {
             checkForNewPosts(30000);
         }
+    }
+
+    function removePostFromList(postObj) {
+        $scope.posts.forEach((post, index) => {
+            // args.post is the post being updated/saved and sent from the broadcast
+            if (post.id === postObj.id) {
+                let nextInLine = $scope.posts[index + 1];
+                $scope.posts.splice(index, 1);
+                if ($scope.posts.length) {
+                    groupPosts($scope.posts);
+                    $scope.selectedPost.post = nextInLine;
+                } else {
+                    $scope.selectedPost = {post: null, next: {}};
+                    getPosts(false, false);
+                }
+            }
+        });
+    }
+
+    function newStatusMatchesFilters(postObj) {
+        let filters = $scope.hasFilters() ?  $scope.filters.status : PostFilters.getDefaults().status;
+        let matchingStatus = false;
+
+        filters.forEach((status) => {
+            if (postObj.status === status) {
+                matchingStatus = true;
+            }
+        });
+
+        return matchingStatus;
     }
 
     function persistUpdatedPost(updatedPost) {
@@ -281,25 +292,9 @@ function PostViewDataController(
         return deferred.promise;
     }
 
-    $scope.goToPostList = function (post) {
-        angular.element(document.querySelector('.timeline-col')).addClass('active');
-        angular.element(document.querySelector('.post-col')).removeClass('active');
-        $scope.selectedPost = {post: null, next: {}};
-        $scope.selectedPostId = null;
-        if ($scope.fromWhere === 'posts.map' || $scope.fromWhere === undefined) {
-            $state.go('posts.map');
-        } else {
-            $state.go('posts.data', {postId: null});
-        }
-    };
-
     function showPost(post, fromWhere) {
         return confirmEditingExit().then(function () {
-            angular.element(document.querySelector('.post-col')).addClass('active');
-            angular.element(document.querySelector('.timeline-col')).removeClass('active');
             $scope.selectedPost.post = post;
-            $scope.selectedPostId = post.id;
-            $scope.fromWhere = fromWhere ? fromWhere : undefined;
             $state.go('posts.data.detail', {postId: post.id});
         }, function () {
         });

@@ -70,7 +70,8 @@ function (
             name: 'posts.data',
             params: {
                 view: {value: 'data', squash: true},
-                filterState: {value: null, squash: true}
+                filterState: {value: null, squash: true},
+                activeCol: {value: 'timeline', squash: true}
             },
             component: 'postViewData',
             resolve: {
@@ -90,6 +91,9 @@ function (
         {
             url: '^/savedsearches/:savedSearchId/data',
             name: 'posts.data.savedsearch',
+            params: {
+                activeCol: {value: 'timeline', squash: true}
+            },
             onEnter: function ($state, $transition$, PostFilters, savedSearch) {
                 PostFilters.setFilters(savedSearch.filter);
             }
@@ -99,6 +103,9 @@ function (
         {
             url: '^/collections/:collectionId/data',
             name: 'posts.data.collection',
+            params: {
+                activeCol: {value: 'timeline', squash: true}
+            },
             onEnter: function ($state, $transition$, PostFilters, collection) {
                 PostFilters.setMode('collection', collection.id);
             }
@@ -156,16 +163,16 @@ function (
     .state(
         {
             name: 'posts.data.detail',
-            url: '/posts/:postId',
+            url: '^/posts/:postId',
             component: 'postDetailData',
+            params: {
+                activeCol: {value: 'post', squash: true}
+            },
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                 }]
-            },
-            onEnter: function ($state, $transition$) {
-                console.log($state, $transition$);
             }
         }
     )
@@ -174,14 +181,14 @@ function (
             name: 'posts.data.edit',
             url: '/posts/:postId/edit',
             component: 'postDataEditor',
+            params: {
+                activeCol: {value: 'post', squash: true}
+            },
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                 }]
-            },
-            onEnter: function ($state, $transition$) {
-                console.log($state, $transition$);
             }
         }
     )
