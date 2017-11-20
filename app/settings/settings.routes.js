@@ -69,9 +69,7 @@ function (
             name: 'settings.categories',
             url: '/categories',
             controller: require('./categories/categories.controller.js'),
-            template: require('./categories/categories.html'),
-            onEnter: function ($state, $transition$) {
-            }
+            template: require('./categories/categories.html')
         }
     )
     .state(
