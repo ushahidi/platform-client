@@ -35,10 +35,14 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
+        /**
+         * Looks for keys that are NOT present in currentFilters but that are in the savedSearch filters (which means they are removed)
+         * and removes them from the saved search filters array.
+         * Does not handle removal where the key exists but the values are an array and some are missing. Need to fix that.
+         **/
         function cleanDeprecatedValuesFromSavedSearch(currentFilters, savedSearch) {
             //find filters in currentFilters that are NOT in savedSearch.filters
             var validFilters = _.without(_.keys(currentFilters), _.keys(savedSearch));
-            console.log(_.pick(savedSearch, validFilters));
             return _.pick(savedSearch, validFilters);
         }
 
