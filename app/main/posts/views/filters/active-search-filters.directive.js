@@ -17,7 +17,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         $scope.transformFilterValue = transformFilterValue;
         $scope.removeSavedSearch = removeSavedSearch;
         activate();
-
+        $scope.$on('savedSearch:update', function () {
+            handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()));
+        });
         function activate() {
             FilterTransformers.requestsFiltersData().then(function (all) {
                 $scope.$watch(function () {
@@ -33,18 +35,20 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
-        function handleFiltersUpdate(filters, oldVal) {
+        function handleFiltersUpdate(filters) {
             var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
             var savedSearchEntity = PostFilters.getModeEntity();
-            var savedSearchChanged = $scope.savedSearch && savedSearchEntity.id !== $scope.savedSearch.id;
-            var isModeSavedSearch = !$scope.savedSearch && PostFilters.getMode() === 'savedsearch';
+            var savedSearchChanged = $scope.savedSearch && savedSearchEntity && savedSearchEntity.id !== $scope.savedSearch.id;
+            var isModeSavedSearch = PostFilters.getMode() === 'savedsearch';
             // if it's a different saved search, set it in the scope.
             // else if there is no saved search but we did find that the mode is 'savedsearch' , get it and set in scope
             if (isModeSavedSearch || savedSearchChanged) {
                 $scope.savedSearch = savedSearchEntity;
+            } else if (!isModeSavedSearch) {
+                $scope.savedSearch = null;
             }
 
             /**
@@ -60,8 +64,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              *  - - - Diffing rules: value from activeFilters takes priority over value from search. this is because
              *  the user will always have selected the value after they select a saved search,meaning they want to change it.
              *  - - - Diffing rules: if the value is equal, just ignore it/send empty value.
-             *  - - - Diffing rules: if the value is a number or string, return Value because it is a priority (the one from filters not from saved search)
-             *  - - - Diffing rules: return the _difference if the value is not equal, not a number or not a string, because we will want to show for isntance:
+             *  - - - Diffing rules: return the _difference if the value is not equal, because we will want to show for instance:
              *  saved search: tag id 1 + filters tag id 2 (so it's not just ignoring the arrays)
              */
             activeFilters = _.mapObject(activeFilters, makeArray);
@@ -89,16 +92,16 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             if (savedSearch) {
                 savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, savedSearch.filter);
                 PostFilters.clearFilter(filterKey, value);
-                PostFilters.setFilter('saved_search', savedSearch);
+                PostFilters.setMode('savedsearch', savedSearch);
                 $scope.savedSearch = savedSearch;
             } else {
                 PostFilters.clearFilter(filterKey, value);
             }
         }
+
         function removeSavedSearch(savedSearch, $event) {
             $event.preventDefault();
             $event.stopPropagation();
-            PostFilters.clearFilter('saved_search', savedSearch);
             PostFilters.setMode('all', null);
             _.each(savedSearch.filter, function (filter, key) {
                 if (_.isArray(filter)) {
@@ -109,10 +112,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                     PostFilters.clearFilter(key, filter);
                 }
             });
-            $scope.savedSearch.filter = [];
             $scope.savedSearch = null;
-
-
         }
     }
 }

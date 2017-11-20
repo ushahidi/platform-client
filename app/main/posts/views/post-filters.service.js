@@ -78,7 +78,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return filterState;
     }
 
-    function clearFilters() {
+    function clearFilters(resetMode) {
+        if (resetMode === true) {
+            setMode('all');
+        }
         return angular.copy(getDefaults(), filterState);
     }
 
