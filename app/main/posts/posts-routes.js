@@ -31,37 +31,37 @@ function (
                     return PostFilters.getFilters();
                 }]
             },
-            onEnter: function ($state, $transition$, PostFilters) {
+            onEnter: ['$transition$', 'PostFilters', function ($transition$, PostFilters) {
                 if ($transition$.params().filterState) {
                     PostFilters.setFilters($transition$.params().filterState);
                 }
-            }
+            }]
         }
     )
     .state(
         {
             url: '^/savedsearches/:savedSearchId',
             name: 'posts.savedsearchRedirector',
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+            onEnter: ['$state', 'savedSearch', function ($state, savedSearch) {
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
                     $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
                 } else {
                     $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
                 }
-            }
+            }]
         }
     )
     .state(
         {
             url: '^/collections/:collectionId',
             name: 'posts.collectionRedirector',
-            onEnter: function ($state, $transition$, PostFilters, collection) {
+            onEnter: ['$state', 'collection', function ($state, collection) {
                 if (collection.view === 'data' || collection.view === 'list') {
                     $state.go('posts.data.collection', {collectionId: collection.id, view: 'data'});
                 } else {
                     $state.go('posts.map.collection', {collectionId: collection.id, view: 'map'});
                 }
-            }
+            }]
         }
     )
     .state(
@@ -94,9 +94,9 @@ function (
             params: {
                 activeCol: {value: 'timeline', squash: true}
             },
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+            onEnter: ['PostFilters', 'savedSearch', function (PostFilters, savedSearch) {
                 PostFilters.setFilters(savedSearch.filter);
-            }
+            }]
         }
     )
     .state(
@@ -106,9 +106,9 @@ function (
             params: {
                 activeCol: {value: 'timeline', squash: true}
             },
-            onEnter: function ($state, $transition$, PostFilters, collection) {
+            onEnter: ['PostFilters', 'collection', function (PostFilters, collection) {
                 PostFilters.setMode('collection', collection.id);
-            }
+            }]
         }
     )
     .state(
@@ -129,10 +129,10 @@ function (
             views: {
                 'mode-context': 'modeContext'
             },
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+            onEnter: ['PostFilters', function (PostFilters) {
                 PostFilters.setMode('all');
                 PostFilters.resetDefaults();
-            }
+            }]
         }
     )
     .state(
@@ -142,10 +142,10 @@ function (
             views: {
                 'mode-context': 'savedSearchModeContext'
             },
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+            onEnter: ['PostFilters', 'savedSearch', function (PostFilters, savedSearch) {
                 PostFilters.setMode('savedsearch', savedSearch.id);
                 PostFilters.setFilters(savedSearch.filter);
-            }
+            }]
         }
     )
     .state(
@@ -155,9 +155,9 @@ function (
             views: {
                 'mode-context': 'collectionModeContext'
             },
-            onEnter: function ($state, $transition$, PostFilters, collection) {
+            onEnter: ['PostFilters', 'collection', function (PostFilters, collection) {
                 PostFilters.setMode('collection', collection.id);
-            }
+            }]
         }
     )
     .state(
