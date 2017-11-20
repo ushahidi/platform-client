@@ -140,18 +140,20 @@ angular.module('app',
             { map: {}, site: {}, features: {} };
     }])
     // inject the router instance into a `run` block by name
-    .run(function ($uiRouter, $trace, $location) {
-        /** uncomment this to enable the visualizer
-        var pluginInstance = $uiRouter.plugin(Visualizer);**/
-        // $trace.enable('TRANSITION');
-    }).run(function ($rootScope, LoadingProgress) {
+    // .run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
+    //     // * uncomment this to enable the visualizer *
+    //     let Visualizer = require('@uirouter/visualizer').Visualizer;
+    //     let pluginInstance = $uiRouter.plugin(Visualizer);
+    //     $trace.enable('TRANSITION');
+    // }])
+    .run(['$rootScope', 'LoadingProgress', function ($rootScope, LoadingProgress) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
-    })
-    .run(function ($rootScope) {
+    }])
+    .run(['$rootScope', function ($rootScope) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
-    })
+    }])
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
