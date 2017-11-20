@@ -6,7 +6,8 @@ function PostDetailData() {
         restrict: 'E',
         replace: true,
         scope: {
-            post: '<'
+            post: '<',
+            '$transition$': '<'
         },
         controller: PostDetailDataController,
         template: require('./post-detail-data.html')
@@ -32,7 +33,8 @@ PostDetailDataController.$inject = [
     'Notify',
     'moment',
     'PostSurveyService',
-    '$state'
+    '$state',
+    '$window'
 ];
 function PostDetailDataController(
     $scope,
@@ -53,7 +55,8 @@ function PostDetailDataController(
     Notify,
     moment,
     PostSurveyService,
-    $state
+    $state,
+    $window
 ) {
     $scope.$watch('post', function (post) {
         activate();
@@ -221,6 +224,21 @@ function PostDetailDataController(
             }, function (errorResponse) {
                 Notify.apiErrors(errorResponse);
             });
+    };
+
+    $scope.close = function () {
+        // Return to previous state, whatever that was.
+        let previousState = $scope.$transition$.$from().name;
+        // If we've jumped between 2 different posts
+        // Or we loaded this view directly
+        if (previousState === 'posts.data.detail' || previousState === '' || previousState === 'posts.data.edit') {
+            // ... just return to the data list
+            $state.go('posts.data');
+        } else {
+            // ... otherwise go to the previous stat
+            $state.go(previousState);
+        }
+        $scope.$parent.deselectPost();
     };
 }
 

@@ -1,10 +1,12 @@
-describe('Post detail controller', function () {
+describe('Post detail directive', function () {
     var $scope,
        $rootScope,
-       $controller,
+       isolateScope,
        PostEndpoint,
        Notify,
-       FormEndpoint;
+       FormEndpoint,
+       $compile,
+       element;
 
     function moment() {
         return {
@@ -15,99 +17,107 @@ describe('Post detail controller', function () {
     }
 
     beforeEach(function () {
+        let testApp = makeTestApp();
 
-        makeTestApp()
-       .controller('postDetailController', require('app/main/posts/detail/post-detail.controller.js'))
-       ;
+        testApp.directive('postDetailData', require('app/main/posts/detail/post-detail-data.directive.js'))
+         .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': 1
+                    };
+                }
+            };
+        });
 
         angular.mock.module('testApp');
     });
 
     beforeEach(angular.mock.inject(function (_$rootScope_,
-                                _$controller_,
                                 _Notify_,
                                 _PostEndpoint_,
-                                _FormEndpoint_
+                                _FormEndpoint_,
+                                _$compile_
                                ) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
-        $controller = _$controller_;
         PostEndpoint = _PostEndpoint_;
         FormEndpoint = _FormEndpoint_;
-    }));
+        $compile = _$compile_;
 
-    beforeEach(function () {
-        $controller('postDetailController', {
-            $scope: $scope,
-            post: {
-                tags: [],
-                form: {
-                    id: 1,
-                    name: 'test form'
-                },
-                user: {
-                    id: 1
-                },
-                status: 'draft',
-                completed_stages: ['1', '2', '3']
+        $rootScope.setLayout = function () {};
+
+        $scope.post = {
+            tags: [],
+            form: {
+                id: 1,
+                name: 'test form'
             },
-            moment: moment,
-            $rootScope: {
-                setLayout: function () {}
-            }
-        });
+            user: {
+                id: 1
+            },
+            status: 'draft',
+            completed_stages: ['1', '2', '3']
+        };
+
+        $scope.moment = moment;
+        element = '<post-detail-data post="post"></post-detail-data>';
+        element = $compile(element)($scope);
         $rootScope.$digest();
-        $rootScope.$apply();
-    });
+        isolateScope = element.isolateScope();
+        // $rootScope.$apply();
+
+
+    }));
 
     it('should activate a stage', function () {
         var selectedStage = {id: '1', active: false};
-        $scope.activateTaskTab(selectedStage);
-        expect($scope.visibleTask.id).toEqual(selectedStage.id);
+        isolateScope.activateTaskTab(selectedStage);
+        expect(isolateScope.visibleTask.id).toEqual(selectedStage.id);
     });
 
     it('should set visible stage to 3', function () {
-        $scope.activateTaskTab({id: 3});
-        expect($scope.visibleTask.id).toEqual(3);
+        isolateScope.activateTaskTab({id: 3});
+        expect(isolateScope.visibleTask.id).toEqual(3);
     });
 
     it('should show the current published state as draft', function () {
-        expect($scope.publishedFor()).toEqual('post.publish_for_you');
+        expect(isolateScope.publishedFor()).toEqual('post.publish_for_you');
     });
 
     it('should show type as false for point and geometry but true for other', function () {
-        expect($scope.showType('point')).toEqual(false);
-        expect($scope.showType('geometry')).toEqual(false);
-        expect($scope.showType('other')).toEqual(true);
+        expect(isolateScope.showType('point')).toEqual(false);
+        expect(isolateScope.showType('geometry')).toEqual(false);
+        expect(isolateScope.showType('other')).toEqual(true);
     });
 
     it('should publish a post to a given role', function () {
         spyOn(Notify, 'notify');
 
-        $scope.post.id = 'pass';
-        $scope.publishPostTo($scope.post);
+        isolateScope.post.id = 'pass';
+        isolateScope.publishPostTo(isolateScope.post);
         expect(Notify.notify).toHaveBeenCalled();
     });
 
     it('should fail to publish a post to a given role', function () {
         spyOn(Notify, 'apiErrors');
 
-        $scope.post.id = 'fail';
-        $scope.publishPostTo($scope.post);
+        isolateScope.post.id = 'fail';
+        isolateScope.publishPostTo(isolateScope.post);
         expect(Notify.apiErrors).toHaveBeenCalled();
     });
 
     it('should fail to publish a post to a given role when a required stage is not completed', function () {
         spyOn(Notify, 'errorsPretranslated');
 
-        $scope.post.id = 'pass';
-        $scope.tasks = [{
+        isolateScope.post.id = 'pass';
+        isolateScope.tasks = [{
             required: true
         }];
-        $scope.post.completed_stages = [];
+        isolateScope.post.completed_stages = [];
 
-        $scope.publishPostTo($scope.post);
+        isolateScope.publishPostTo(isolateScope.post);
         expect(Notify.errorsPretranslated).toHaveBeenCalled();
     });
 
