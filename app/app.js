@@ -146,6 +146,11 @@ angular.module('app',
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
+    .run(['$rootScope', 'LoadingProgress', function ($rootScope, LoadingProgress) {
+        $rootScope.$on('$stateChangeError', console.log.bind(console));
+        // this handles the loading-state app-wide
+        LoadingProgress.watchTransitions();
+    }])
     .run(['$rootScope', function ($rootScope) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
     }])

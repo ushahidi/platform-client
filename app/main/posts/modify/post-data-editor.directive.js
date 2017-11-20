@@ -6,9 +6,7 @@ function PostDataEditor() {
     return {
         restrict: 'E',
         scope: {
-            post: '<',
-            isLoading: '=',
-            savingPost: '='
+            post: '<'
         },
         template: require('./post-data-editor.html'),
         controller: PostDataEditorController
@@ -39,7 +37,8 @@ PostDataEditorController.$inject = [
     'PostActionsService',
     'MediaEditService',
     '$state',
-    '$transitions'
+    '$transitions',
+    'LoadingProgress'
 ];
 function PostDataEditorController(
     $scope,
@@ -65,7 +64,8 @@ function PostDataEditorController(
     PostActionsService,
     MediaEditService,
     $state,
-    $transitions
+    $transitions,
+    LoadingProgress
   ) {
 
     // Setup initial stages container
@@ -89,6 +89,8 @@ function PostDataEditorController(
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.selectForm = selectForm;
+    $scope.isSaving = LoadingProgress.getSavingState;
+
     var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
@@ -157,8 +159,6 @@ function PostDataEditorController(
          * @param reject
          */
         function resolveUnlockPost(resolve, reject) {
-            $scope.isLoading.state = false;
-            $scope.savingPost.saving = false;
             return unlockPost().then(function () {
                 resolve(true);
             }).catch(function () {
@@ -193,10 +193,8 @@ function PostDataEditorController(
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
-            $scope.isLoading.state = true;
             FormEndpoint.queryFresh().$promise.then(function (results) {
                 $scope.forms = results;
-                $scope.isLoading.state = false;
             });
         }
         $scope.medias = {};
@@ -212,7 +210,6 @@ function PostDataEditorController(
     }
     function selectForm() {
         $scope.form = $scope.post.form;
-        $scope.isLoading.state = true;
         $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
@@ -350,7 +347,6 @@ function PostDataEditorController(
                 incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
             $scope.tasks = tasks;
-            $scope.isLoading.state = false;
         });
 
     }
@@ -374,12 +370,8 @@ function PostDataEditorController(
     }
 
     function savePost() {
-        $scope.isLoading.state = true;
-        $scope.savingPost.saving = true;
         // Checking if changes are made
         if ($scope.editForm && !$scope.editForm.$dirty) {
-            $scope.savingPost.saving = false;
-            $scope.isLoading.state = false;
             Notify.infoModal('post.valid.no_changes');
             $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
@@ -387,8 +379,6 @@ function PostDataEditorController(
 
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
-            $scope.savingPost.saving = false;
-            $scope.isLoading.state = false;
             $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
         }
@@ -436,10 +426,8 @@ function PostDataEditorController(
                     $scope.post.id = response.id;
                 }
 
-                $scope.savingPost.saving = false;
                 Notify.notify(success_message, { name: $scope.post.title });
 
-                $scope.isLoading.state = false;
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
             }, function (errorResponse) { // errors
@@ -453,11 +441,8 @@ function PostDataEditorController(
                     } else {
                         validationErrors.push(value);
                     }
-                    $scope.isLoading.state = false;
                 });
                 Notify.errors(_.pluck(validationErrors, 'message'));
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
                 $rootScope.$broadcast('event:edit:post:data:mode:saveError');
 
             });
