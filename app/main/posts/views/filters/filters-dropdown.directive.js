@@ -41,6 +41,7 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
         $scope.clearFilters = function () {
             if (PostFilters.getMode() === 'savedsearch' && PostFilters.getModeId()) {
                 PostFilters.setMode('all');
+                // @uirouter-refactor this is very wrong.
                 var viewParam = $scope.$resolve.$transition$.params().view ? $scope.$resolve.$transition$.params().view : 'data';
                 $location.url('/views/' + viewParam);
             }

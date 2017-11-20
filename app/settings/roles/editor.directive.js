@@ -18,6 +18,7 @@ function (
             $scope.save = $translate.instant('app.save');
             $scope.saving = $translate.instant('app.saving');
             $scope.saving_role = false;
+            // @uirouter-refactor this is very wrong.
             RoleEndpoint.getFresh({id: $scope.$resolve.$transition$.params().id}).$promise.then(function (role) {
                 $scope.role = role;
 

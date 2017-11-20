@@ -62,19 +62,15 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              *  - - - Diffing rules: return the _difference if the value is not equal, not a number or not a string, because we will want to show for isntance:
              *  saved search: tag id 1 + filters tag id 2 (so it's not just ignoring the arrays)
              */
+            activeFilters = _.mapObject(activeFilters, makeArray);
             if ($scope.savedSearch) {
                 // get clean version (no defaults) of the saved search filters
-                $scope.savedSearch.filter = PostFilters.getCleanActiveFilters($scope.savedSearch.filter);
-                $scope.activeFilters = _.mapObject(_.mapObject(activeFilters, function (value, key) {
-                    if (_.isNumber(value) || _.isString(value)) {
-                        return '';
-                    }
+                $scope.savedSearch.filter = _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray);
+                $scope.activeFilters = _.mapObject(activeFilters, function (value, key) {
                     return _.difference(value, $scope.savedSearch.filter[key]);
-                }), makeArray);
-                console.log($scope.activeFilters);
-                console.log($scope.savedSearch);
+                });
             } else {
-                $scope.activeFilters =  _.mapObject(activeFilters, makeArray);
+                $scope.activeFilters = activeFilters;
             }
         }
 
