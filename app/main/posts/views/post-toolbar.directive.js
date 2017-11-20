@@ -19,8 +19,8 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
-    $scope.isLoading = isLoading;
-    $scope.isSaving = isSaving;
+    $scope.isLoading = LoadingProgress.getLoadingState;
+    $scope.isSaving = LoadingProgress.getSavingState;
     $scope.editMode = editMode;
     $scope.cancel = cancel;
 
@@ -32,14 +32,6 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
 
         return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
     }
-    function isLoading() {
-        return LoadingProgress.getLoadingState();
-    }
-
-    function isSaving() {
-        return LoadingProgress.getSavingState();
-    }
-
 
     function savePost() {
         $rootScope.$broadcast('event:edit:post:data:mode:save');

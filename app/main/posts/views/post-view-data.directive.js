@@ -66,7 +66,7 @@ function PostViewDataController(
     $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
-    $scope.isLoading = isLoading;
+    $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
     var recentPosts = [];
@@ -235,10 +235,6 @@ function PostViewDataController(
         //     }
         // });
         checkForNewPosts(30000);
-    }
-
-    function isLoading() {
-        return LoadingProgress.getLoadingState();
     }
 
     function persistUpdatedPost(updatedPost) {
