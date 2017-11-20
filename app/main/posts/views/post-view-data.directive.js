@@ -29,7 +29,8 @@ PostViewDataController.$inject = [
     '$location',
     'Notify',
     '$window',
-    '$state'
+    '$state',
+    'LoadingProgress'
 ];
 function PostViewDataController(
     $scope,
@@ -46,7 +47,9 @@ function PostViewDataController(
     $location,
     Notify,
     $window,
-    $state
+    $state,
+    LoadingProgress
+
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -63,6 +66,7 @@ function PostViewDataController(
     $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
+    $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
     var recentPosts = [];
@@ -74,14 +78,12 @@ function PostViewDataController(
     $scope.selectedPostId = null;
     $scope.formData = {form: {}};
     $scope.getPosts = getPosts;
-    $scope.isLoading = {state: false};
 
     var stopInterval;
     /**
      * setting "now" time as utc for new posts filter
      */
     var newPostsAfter = moment().utc();
-    $scope.savingPost = {saving: false};
 
     // This is for when you edit a post. Because anything could be changing, we have to
     // check to see if everything in the post still matches all the filters.
@@ -247,19 +249,13 @@ function PostViewDataController(
         if ($state.$current.name !== 'posts.data.edit') {
             deferred.resolve();
         } else if ($scope.formData.form && !$scope.formData.form.$dirty) {
-            $scope.isLoading.state = false;
-            $scope.savingPost.saving = false;
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
                 deferred.resolve();
             }, function (reject) {
                 deferred.reject();
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
             });
         }
         return deferred.promise;
@@ -306,7 +302,6 @@ function PostViewDataController(
         if (useOffset === true) {
             postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
         }
-        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             clearPosts ? resetPosts() : null;
@@ -323,7 +318,6 @@ function PostViewDataController(
             groupPosts(postsResponse.results);
 
             $scope.totalItems = postsResponse.total_count;
-            $scope.isLoading.state = false;
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();
             }
@@ -334,7 +328,6 @@ function PostViewDataController(
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
-            $scope.isLoading.state = true;
             var deletePostsPromises = _.map(
                 $scope.selectedPosts,
                 function (postId) {
@@ -345,11 +338,9 @@ function PostViewDataController(
             ;
 
             function handleDeleteErrors(errorResponse) {
-                $scope.isLoading.state = false;
                 Notify.apiErrors(errorResponse);
             }
             function handleDeleteSuccess(deleted) {
-                $scope.isLoading.state = false;
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
                 var deletedIds = _.pluck(deleted, 'id');

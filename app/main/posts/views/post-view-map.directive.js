@@ -20,7 +20,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var requestBlockSize = 5;
         var numberOfChunks = 0;
         var currentGeoJsonRequests = [];
-        $scope.isLoading = {state: true};
 
         activate();
 
@@ -161,7 +160,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 offset: offset,
                 has_location: 'mapped'
             });
-            $scope.isLoading.state = true;
 
             var request = PostEndpoint.geojson(conditions);
             currentGeoJsonRequests.push(request);
@@ -184,10 +182,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         offset += limit;
                         loadPosts(query, offset, block).then(addPostsToMap);
                     }
-                }
-
-                if (numberOfChunks <= 0) {
-                    $scope.isLoading.state = false;
                 }
                 return posts;
             });

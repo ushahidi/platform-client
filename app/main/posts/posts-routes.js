@@ -31,37 +31,37 @@ function (
                     return PostFilters.getFilters();
                 }]
             },
-            onEnter: function ($state, $transition$, PostFilters) {
+            onEnter: ['$transition$', 'PostFilters', function ($transition$, PostFilters) {
                 if ($transition$.params().filterState) {
                     PostFilters.setFilters($transition$.params().filterState);
                 }
-            }
+            }]
         }
     )
     .state(
         {
             url: '^/savedsearches/:savedSearchId',
             name: 'posts.savedsearchRedirector',
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+            onEnter: ['$state', 'savedSearch', function ($state, savedSearch) {
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
                     $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
                 } else {
                     $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
                 }
-            }
+            }]
         }
     )
     .state(
         {
             url: '^/collections/:collectionId',
             name: 'posts.collectionRedirector',
-            onEnter: function ($state, $transition$, PostFilters, collection) {
+            onEnter: ['$state', 'collection', function ($state, collection) {
                 if (collection.view === 'data' || collection.view === 'list') {
                     $state.go('posts.data.collection', {collectionId: collection.id, view: 'data'});
                 } else {
                     $state.go('posts.map.collection', {collectionId: collection.id, view: 'map'});
                 }
-            }
+            }]
         }
     )
     .state(
@@ -181,9 +181,6 @@ function (
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                 }]
-            },
-            onEnter: function ($state, $transition$) {
-                console.log($state, $transition$);
             }
         }
     )
@@ -197,9 +194,6 @@ function (
                 post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
                     return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                 }]
-            },
-            onEnter: function ($state, $transition$) {
-                console.log($state, $transition$);
             }
         }
     )
