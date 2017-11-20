@@ -14,15 +14,9 @@
         </div>
     </div>
     <div class="form-field filter-buttons">
-        <post-active-search-filters ng-model="filtersVar" filters-var="filtersVar"></post-active-search-filters>
+        <post-active-search-filters ng-model="filtersVar"></post-active-search-filters>
     </div>
-    <div class="form-field">
-        <button type="button" class="button button-alpha button-right" ng-click="saveSavedSearchModal()" translate="set.save_savedsearch">Save search</button>
-    </div>
-
-    <div class="form-field">
-        <button type="button" class="button button-alpha button-right" ng-click="editSavedSearchModal('update')" ng-show="canUpdateSavedSearch" translate="set.update_savedsearch">Edit Saved search</button>
-    </div>
+  
     <div class="divider"></div>
     <!-- sorting options -->
     <h4 class="dropdown-menu-title" translate="app.sort_by"></h4>

@@ -20,6 +20,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         setFilters: setFilters,
         clearFilters: clearFilters,
         clearFilter: clearFilter,
+        clearFilterFromArray: clearFilterFromArray,
         hasFilters: hasFilters,
         getActiveFilters: getActiveFilters,
         getCleanActiveFilters: getCleanActiveFilters,
@@ -75,14 +76,17 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilter(filterKey, value) {
+        filterState = clearFilterFromArray(filterKey, value, filterState);
+    }
+    function clearFilterFromArray(filterKey, value, from) {
         /*
          * if filter is in an array, we only want to remove that specific value
          * if all filter-values are removed from array, we want to reset to default
          */
-        if (Array.isArray(filterState[filterKey]) && filterState[filterKey].length > 1) {
-            filterState[filterKey].splice(filterState[filterKey].indexOf(value), 1);
+        if (Array.isArray(from[filterKey]) && from[filterKey].length > 1) {
+            from[filterKey].splice(from[filterKey].indexOf(value), 1);
         } else {
-            filterState[filterKey] = getDefaults()[filterKey];
+            from[filterKey] = getDefaults()[filterKey];
         }
 
         /**
@@ -94,6 +98,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             this.qEnabled = true;
             this.reactiveFilters = true;
         }
+        return from;
     }
 
     function getDefaults() {
@@ -219,10 +224,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                     return true;
                 }
                 if (key === 'qEnabled') {
-                    return true;
-                }
-                // we don't want this showing up in bug icons
-                if (key === 'saved_search') {
                     return true;
                 }
                 // Ignore difference in within_km
