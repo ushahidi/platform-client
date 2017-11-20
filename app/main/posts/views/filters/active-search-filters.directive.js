@@ -35,8 +35,15 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
-        function handleFiltersUpdate(filters) {
+        function handleFiltersUpdate(filters, oldValue) {
+            /**
+             * TODO: to handle removal correctly we need to make sure we take oldValue into account,
+             * because that is where our savedsearch filters will be represented still when we remove them.
+             * If there's a key in oldValue that is NOT present in filters but IS IN savedsearch
+             * that means we have to remove it from the saved search. Right?
+            **/
             var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
+
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
