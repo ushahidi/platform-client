@@ -9,7 +9,8 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
             dropdownStatus: '=',
             applyFilters: '=',
             filtersVar: '=',
-            cancel: '='
+            cancel: '=',
+            view: '<'
         },
         link: FiltersDropdownLink,
         template: require('./filters-dropdown.html')
@@ -42,7 +43,7 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
             if (PostFilters.getMode() === 'savedsearch' && PostFilters.getModeId()) {
                 PostFilters.setMode('all');
                 // @uirouter-refactor this is very wrong.
-                var viewParam = $scope.$resolve.$transition$.params().view ? $scope.$resolve.$transition$.params().view : 'data';
+                var viewParam = $scope.view ? $scope.view : 'data';
                 $location.url('/views/' + viewParam);
             }
             $scope.filtersVar = PostFilters.clearFilters();

@@ -13,13 +13,14 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters'];
-function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
+FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$state'];
+function FilterPostsController($scope, $timeout, ModalService, PostFilters, $state) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
     $scope.qFilter = '';
     $scope.openSavedModal = openSavedModal;
+    $scope.view = $state.params.view;
     activate();
 
     $scope.status = {
