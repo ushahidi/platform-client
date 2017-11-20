@@ -9,7 +9,7 @@ PostActionsDirective.$inject = [
     'PostActionsService',
     'PostLockService',
     '_'
-];
+    ];
 function PostActionsDirective(
     $rootScope,
     PostEndpoint,
@@ -18,8 +18,7 @@ function PostActionsDirective(
     $state,
     PostActionsService,
     PostLockService,
-    _
-) {
+    _) {
     return {
         restrict: 'E',
         replace: true,
@@ -53,6 +52,7 @@ function PostActionsDirective(
                     // only map needs to reload
                     $state.reload();
                 }
+
             });
         }
 
@@ -72,7 +72,6 @@ function PostActionsDirective(
 
         function updateStatus(status) {
             $scope.post.status = status;
-
             PostEndpoint.update($scope.post).$promise.then(function () {
                 // @uirouter-refactor fix this to work with new states
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.

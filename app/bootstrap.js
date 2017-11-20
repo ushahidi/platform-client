@@ -1,8 +1,8 @@
 require('./app');
-require('angular-lazy-bootstarp/src/bootstrap.js');
+require('angular-lazy-bootstrap/src/bootstrap.js');
 
 // Load site config THEN bootstrap the app
-angular.lazy('app')
+angular.lazy()
     .resolve(['$q', '$http', function ($q, $http) {
         return $http.get(window.ushahidi.apiUrl + '/config')
         .then(function (response) {
@@ -21,4 +21,6 @@ angular.lazy('app')
         // Hide loading
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     })
-    .bootstrap();
+    .bootstrap(document, ['app'], {
+        strictDi: true
+    });
