@@ -133,6 +133,9 @@ function PostViewDataController(
                 }
             }
         });
+        if (selectedPost.post && selectedPost.post.id === postObj.id) {
+            deselectPost();
+        }
     }
 
     function newStatusMatchesFilters(postObj) {
