@@ -39,9 +39,11 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             // Remove set filter as it is only relevant to collections and should be immutable in that view
             delete activeFilters.set;
             var savedSearchEntity = PostFilters.getModeEntity();
-            if ($scope.savedSearch && savedSearchEntity.id !== $scope.savedSearch.id) {
-                $scope.savedSearch = savedSearchEntity;
-            } else if (!$scope.savedSearch && PostFilters.getMode() === 'savedsearch') {
+            var savedSearchChanged = $scope.savedSearch && savedSearchEntity.id !== $scope.savedSearch.id;
+            var isModeSavedSearch = !$scope.savedSearch && PostFilters.getMode() === 'savedsearch';
+            // if it's a different saved search, set it in the scope.
+            // else if there is no saved search but we did find that the mode is 'savedsearch' , get it and set in scope
+            if (isModeSavedSearch || savedSearchChanged) {
                 $scope.savedSearch = savedSearchEntity;
             }
 
