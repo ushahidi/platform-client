@@ -80,6 +80,7 @@ function PostViewDataController(
     $scope.getPosts = getPosts;
     $scope.shouldWeRunCheckForNewPosts = true;
     $scope.activeCol = $state.params.activeCol;
+    $scope.deselectPost = deselectPost;
 
     var stopInterval;
     /**
@@ -231,6 +232,10 @@ function PostViewDataController(
         if ($scope.shouldWeRunCheckForNewPosts) {
             checkForNewPosts(30000);
         }
+    }
+
+    function deselectPost() {
+        $scope.selectedPost = {post: null, next: {}};
     }
 
     function removePostFromList(postObj) {

@@ -231,13 +231,14 @@ function PostDetailDataController(
         let previousState = $scope.$transition$.$from().name;
         // If we've jumped between 2 different posts
         // Or we loaded this view directly
-        if (previousState === 'posts.data.detail' || previousState === '') {
+        if (previousState === 'posts.data.detail' || previousState === '' || previousState === 'posts.data.edit') {
             // ... just return to the data list
             $state.go('posts.data');
         } else {
             // ... otherwise go to the previous stat
             $state.go(previousState);
         }
+        $scope.$parent.deselectPost();
     };
 }
 
