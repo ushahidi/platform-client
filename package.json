@@ -98,7 +98,7 @@
     "angular-datepicker": "alongubkin/angular-datepicker.git",
     "angular-elastic": "^2.5.1",
     "angular-filter": "^0.5.4",
-    "angular-lazy-bootstarp": "ushahidi/angular-lazy-bootstrap",
+    "angular-lazy-bootstrap": "github:ushahidi/angular-lazy-bootstrap",
     "angular-local-storage": "^0.5.0",
     "angular-nvd3": "^1.0.9",
     "angular-resource": "^1.5.6",
