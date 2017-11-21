@@ -234,7 +234,7 @@ function PostViewDataController(
         if ($scope.selectedPost.post && $scope.posts[0]) {
             postDoesNotMatchFilters($scope.selectedPost.post).then((bool) => {
                 if (bool) {
-                    $scope.selectedPost.post = null;
+                    $scope.selectedPost.post = $scope.posts[0];
                     $state.go('posts.data.detail', {view: 'data', postId: $scope.posts[0].id});
                 }
             });
