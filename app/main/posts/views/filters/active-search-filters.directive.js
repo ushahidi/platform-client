@@ -42,8 +42,13 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
          **/
         function cleanDeprecatedValuesFromSavedSearch(currentFilters, savedSearch) {
             //find filters in currentFilters that are NOT in savedSearch.filters
-            var validFilters = _.without(_.keys(currentFilters), _.keys(savedSearch));
-            return _.pick(savedSearch, validFilters);
+            var validFilters = _.pick(savedSearch, _.without(_.keys(currentFilters), _.keys(savedSearch)));
+            validFilters = _.mapObject(validFilters, function (obj, key) {
+                return _.filter(savedSearch[key], function (tag) {
+                    return currentFilters[key].indexOf(tag) > -1;
+                });
+            });
+            return validFilters;
         }
 
         function handleFiltersUpdate(filters, oldValue) {
@@ -87,7 +92,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
                  * that means we have to remove it from the saved search.
                  **/
-                $scope.savedSearch.filter =  cleanDeprecatedValuesFromSavedSearch(activeFilters, _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray));
+                $scope.savedSearch.filter = cleanDeprecatedValuesFromSavedSearch(activeFilters, _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray));
                 $scope.activeFilters = _.mapObject(activeFilters, function (value, key) {
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 });
