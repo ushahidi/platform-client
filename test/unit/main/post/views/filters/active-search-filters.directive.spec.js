@@ -94,8 +94,7 @@ describe('post active search filters directive', function () {
                 stopPropagation: function () {},
                 preventDefault: function () {}
             };
-
-            directiveScope.removeFilter('test', 'test', mockEvent);
+            directiveScope.removeFilter('test', 'test', false, mockEvent);
 
             expect(PostFilters.clearFilter).toHaveBeenCalled();
         });
