@@ -245,7 +245,7 @@ function PostEditorController(
     function cancel() {
         PostLockEndpoint.unlock($scope.post.lock).$promise.then(function (result) {
             if ($scope.post.id) {
-                $state.go('postDetail', {postId: $scope.post.id});
+                $state.go('posts.data.detail', {view: 'data', postId: $scope.post.id});
             } else {
                 $state.go('posts.data');
             }

@@ -43,14 +43,14 @@ function PostActionsDirective(
 
         function deletePost() {
             PostActionsService.delete($scope.post).then(function () {
-                // If we're not already on some top level view
-                if ($location.path().indexOf('views') === -1 &&
-                    $location.path().indexOf('collections') === -1 &&
-                    $location.path().indexOf('savedsearches') === -1) {
+                $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post, deleted: true});
+                // If we're not already on some of the posts views
+                if (!$state.current.includes.posts) {
                     // Redirect to list
-                    $location.path('/views/data');
-                } else {
-                    $state.go('posts.data', null, { reload: true }); // in favor of $route.reload();
+                    $state.go('posts.data');
+                } else if ($state.current.includes['posts.map']) {
+                    // only map needs to reload
+                    $state.reload();
                 }
 
             });
