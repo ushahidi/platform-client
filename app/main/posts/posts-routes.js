@@ -96,7 +96,7 @@ function (
         {
             url: '^/savedsearches/:savedSearchId/data',
             name: 'posts.data.savedsearch',
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+            onEnter: ['$state', 'PostFilters', 'savedSearch', function ($state, PostFilters, savedSearch) {
                 PostFilters.setMode('savedsearch', savedSearch);
                 PostFilters.setFilters(savedSearch.filter);
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
@@ -104,16 +104,16 @@ function (
                 } else {
                     $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
                 }
-            }
+            }]
         }
     )
     .state(
         {
             url: '^/collections/:collectionId/data',
             name: 'posts.data.collection',
-            onEnter: function ($state, $transition$, PostFilters, collection) {
+            onEnter: ['$state', 'PostFilters', 'collection', function ($state, PostFilters, collection) {
                 PostFilters.setMode('collection', collection);
-            }
+            }]
         }
     )
     .state(
@@ -143,7 +143,7 @@ function (
             views: {
                 'mode-context': 'savedSearchModeContext'
             },
-            onEnter: function ($state, $transition$, PostFilters, savedSearch) {
+            onEnter: ['$state', 'PostFilters', 'savedSearch', function ($state, PostFilters, savedSearch) {
                 PostFilters.setMode('savedsearch', savedSearch);
                 PostFilters.setFilters(savedSearch.filter);
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
@@ -151,7 +151,7 @@ function (
                 } else {
                     $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
                 }
-            }
+            }]
         }
     )
     /**
@@ -166,9 +166,9 @@ function (
             views: {
                 'mode-context': 'collectionModeContext'
             },
-            onEnter: function ($state, $transition$, PostFilters, collection) {
+            onEnter: ['$state', 'PostFilters', 'collection', function ($state, PostFilters, collection) {
                 PostFilters.setMode('collection', collection);
-            }
+            }]
         }
     )
     .state(
