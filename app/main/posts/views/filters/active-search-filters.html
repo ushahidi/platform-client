@@ -22,3 +22,11 @@
         <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> {{ transformFilterValue(value, key) }}</span>
     </span>
 </div>
+
+<div class="form-field" ng-show="showSaveSavedSearchButton()">
+    <button type="button" class="button button-alpha button-right" ng-click="saveSavedSearchModal()" translate="set.save_savedsearch">Save search</button>
+</div>
+<!-- userCanUpdateSavedSearch && !activeFiltersAreEmpty -->
+<div class="form-field" ng-show="showUpdatedSavedSearchButton()">
+    <button type="button" class="button button-alpha button-right" ng-click="$parent.editSavedSearchModal('update')" translate="set.update_savedsearch">Edit Saved search</button>
+</div>

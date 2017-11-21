@@ -16,6 +16,10 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         $scope.removeFilter = removeFilter;
         $scope.transformFilterValue = transformFilterValue;
         $scope.removeSavedSearch = removeSavedSearch;
+        $scope.showUpdatedSavedSearchButton = showUpdatedSavedSearchButton;
+        $scope.showSaveSavedSearchButton = showSaveSavedSearchButton;
+        $scope.userCanUpdateSavedSearch = false;
+
         activate();
         $scope.$on('savedSearch:update', function () {
             handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()));
@@ -35,22 +39,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return value;
         }
 
-        /**
-         * Looks for keys that are NOT present in currentFilters but that are in the savedSearch filters (which means they are removed)
-         * and removes them from the saved search filters array.
-         * Does not handle removal where the key exists but the values are an array and some are missing. Need to fix that.
-         **/
-        function cleanDeprecatedValuesFromSavedSearch(currentFilters, savedSearch) {
-            //find filters in currentFilters that are NOT in savedSearch.filters
-            var validFilters = _.pick(savedSearch, _.without(_.keys(currentFilters), _.keys(savedSearch)));
-            validFilters = _.mapObject(validFilters, function (obj, key) {
-                return _.filter(savedSearch[key], function (tag) {
-                    return currentFilters[key].indexOf(tag) > -1;
-                });
-            });
-            return validFilters;
-        }
-
         function handleFiltersUpdate(filters, oldValue) {
             var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
@@ -59,6 +47,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             var savedSearchEntity = PostFilters.getModeEntity();
             var savedSearchChanged = $scope.savedSearch && savedSearchEntity && savedSearchEntity.id !== $scope.savedSearch.id;
             var isModeSavedSearch = PostFilters.getMode() === 'savedsearch';
+            console.log('handleFiltersUpdate', filters, PostFilters.getModeEntity());
             // if it's a different saved search, set it in the scope.
             // else if there is no saved search but we did find that the mode is 'savedsearch' , get it and set in scope
             if (isModeSavedSearch || savedSearchChanged) {
@@ -92,11 +81,13 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
                  * that means we have to remove it from the saved search.
                  **/
-                $scope.savedSearch.filter = cleanDeprecatedValuesFromSavedSearch(activeFilters, _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray));
+                $scope.savedSearch.filter = PostFilters.cleanDeprecatedValuesFromSavedSearch(activeFilters, _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray));
                 $scope.activeFilters = _.mapObject(activeFilters, function (value, key) {
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 });
+                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update');
             } else {
+                $scope.userCanUpdateSavedSearch = false;
                 $scope.activeFilters = activeFilters;
             }
         }
@@ -135,6 +126,14 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 }
             });
             $scope.savedSearch = null;
+        }
+
+        function showSaveSavedSearchButton() {
+            return !_.isEmpty($scope.activeFilters) && !$scope.savedSearch;
+        }
+
+        function showUpdatedSavedSearchButton() {
+            return $scope.userCanUpdateSavedSearch;
         }
     }
 }
