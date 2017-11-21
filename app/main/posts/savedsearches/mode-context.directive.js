@@ -62,7 +62,7 @@ function SavedSearchModeContextController(
 
     // Check if we can edit
     function canEdit(savedSearch) {
-        return _.contains(savedSearch.allowed_privileges, 'update');
+        return savedSearch && _.contains(savedSearch.allowed_privileges, 'update');
     }
 
     function editSavedSearch() {

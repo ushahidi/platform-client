@@ -177,7 +177,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             delete query.within_km;
         }
         if (filterMode === 'collection') {
-            query.set = [entity.id].concat(query.set);
+            query.set = [getModeId()].concat(query.set);
         }
         return query;
     }

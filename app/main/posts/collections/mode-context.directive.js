@@ -61,7 +61,7 @@ function CollectionModeContextController(
     }
 
     function canEdit(collection) {
-        return _.contains(collection.allowed_privileges, 'update');
+        return collection && _.contains(collection.allowed_privileges, 'update');
     }
 
     function editCollection() {
