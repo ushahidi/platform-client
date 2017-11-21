@@ -2,7 +2,7 @@
 <div class="flex-container">
     <layout-class layout="d"></layout-class>
     <post-toolbar selected-post="selectedPost.post" filters="filters"></post-toolbar>
-    <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
+    <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected, 'active' : activeCol === 'timeline' }">
         <div class="load-more"  ng-show="newPostsCount > 0">
             <button class="button-flat button-gamma full-width" ng-click="addNewestPosts()">
                 <span ng-switch on="newPostsCount">
@@ -88,9 +88,9 @@
             </div>
         </div>
     </div>
-    <div class="post-col">
+    <div class="post-col" ng-class="{'active' : activeCol === 'post' }">
         <!-- Verify if we need all these bindings ie. parentForm savingPost -->
-        <div ui-view filters="filters" is-loading="isLoading" saving-post="savingPost" ></post-detail-data>
+        <div ui-view filters="filters" is-loading="isLoading" saving-post="savingPost"></post-detail-data>
         <!-- @uirouter-refactor: need to move this -->
         <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
     </div>
