@@ -4,7 +4,7 @@
     "description": "Ushahidi testing deployment",
     "email": "someone@somewhere.somehow",
     "timezone": "UTC",
-    "language": "en-US",
+    "language": "en",
     "date_format": "n/j/Y",
     "client_url": false,
     "first_login": true,
