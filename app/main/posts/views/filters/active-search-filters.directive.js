@@ -82,12 +82,10 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  * that means we have to remove it from the saved search.
                  **/
                 $scope.savedSearch.filter = PostFilters.cleanRemovedValuesFromObject(filters, PostFilters.getUIActiveFilters($scope.savedSearch.filter));
-                console.log($scope.savedSearch.filter);
                 /**
                  * Add back in savedSearch.filter if an originally saved search filter is removed+added back
                  */
                 $scope.savedSearch.filter = PostFilters.getUIActiveFilters(PostFilters.addIfCurrentObjectMatchesOriginal(PostFilters.getUIActiveFilters($scope.savedSearch.filter), PostFilters.getUIActiveFilters(originalSavedSearch.filter), PostFilters.getUIActiveFilters($scope.uiFilters)));
-                console.log($scope.savedSearch.filter);
                 //!_.isEqual($scope.savedSearch.filter, PostFilters.getUIActiveFilters(originalSavedSearch.filter)
                 var savedSearchFiltersChanged = _.filter(originalSavedSearch.filter, function (obj, key) {
                     if (!_.isArray(obj)) {

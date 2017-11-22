@@ -50,9 +50,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
      * @param original
      */
     function addIfCurrentObjectMatchesOriginal(currentSS, originalSS, uiObj) {
-        console.log('currentSS ', currentSS);
-        console.log('originalSS ', originalSS);
-        console.log('uiObj ', uiObj);
         //find filters in current that are part of the original object
         var ret =  _.mapObject(originalSS, function (obj, key) {
             if (!_.isArray(obj)) {
@@ -66,7 +63,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 return currentSS[key].indexOf(val) < 0;
             }))), undefined);
         });
-        console.log('ret', ret);
         return ret;
     }
 
