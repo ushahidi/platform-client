@@ -22,7 +22,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
 
         activate();
         $scope.$on('savedSearch:update', function () {
-            handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()));
+            handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()), null, true);
         });
 
         $scope.isArray = angular.isArray;
@@ -35,7 +35,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             });
         }
 
-        function handleFiltersUpdate(filters, oldValue) {
+        function handleFiltersUpdate(filters, oldValue, resetSearch) {
             var currentFilters = angular.copy(PostFilters.getUIActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
@@ -51,7 +51,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              and is used for showing the filters as the user adds/removes filters
              **/
 
-            if (!$scope.savedSearch || originalSavedSearch.id !== $scope.savedSearch.id) {
+            if (resetSearch === true || !$scope.savedSearch || originalSavedSearch.id !== PostFilters.getModeId()) {
                 originalSavedSearch = angular.copy(PostFilters.getModeEntity());
                 $scope.savedSearch = PostFilters.getModeEntity();
             }
