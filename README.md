@@ -106,13 +106,20 @@ To build with the mock backend service, run `gulp build --mock-backend`.
 
 #### Running unit specs
 
-To run unit tests once, run:
+To run unit tests run:
 ```
 gulp test
 ```
 
-For test driven development we have a gulp task `gulp tdd`. This watches for JS changes and re-runs the unit tests.
+To run end-to-end integration tests run:
 
+```
+gulp build --mock-backend
+gulp node-server # <- might need to run this in another window
+npm run protractor
+```
+
+For test driven development we have a gulp task `gulp tdd`. This watches for JS changes and re-runs the unit tests.
 
 ### Native Server (Apache or Nginx)
 

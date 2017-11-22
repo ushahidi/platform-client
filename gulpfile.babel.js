@@ -117,6 +117,36 @@ gulp.task('dev', () => {
   });
 });
 
+gulp.task('serve:e2e', () => {
+  const config = require('./webpack.dev.config');
+  config.entry.app =
+  // Replace default bootstrap with test-bootstrap
+  config.entry.app = [
+    'babel-polyfill',
+    path.join(__dirname, root, 'test-bootstrap.js')
+  ];
+
+  var compiler = webpack(config);
+
+  serve({
+    port: process.env.PORT || 3000,
+    open: false,
+    server: {baseDir: root},
+    middleware: [
+      historyApiFallback(),
+      webpackDevMiddleware(compiler, {
+        stats: {
+          colors: colorsSupported,
+          chunks: false,
+          modules: false
+        },
+        publicPath: config.output.publicPath
+      }),
+      webpackHotMiddleware(compiler)
+    ]
+  });
+});
+
 gulp.task('serve', ['dev']);
 gulp.task('watch', ['dev']);
 
