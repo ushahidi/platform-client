@@ -47,7 +47,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
      */
     function addIfCurrentObjectMatchesOriginal(currentSavedSearch, originalSavedSearch, currentFilters) {
         //find filters in current that are part of the original object
-        var ret =  _.mapObject(originalSavedSearch, function (obj, key) {
+        return _.mapObject(originalSavedSearch, function (obj, key) {
             if (!_.isArray(obj)) {
                 return currentFilters[key];
             }
@@ -60,7 +60,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 return _.intersection(currentSavedSearch[key], currentFilters[key]);
             }
         });
-        return ret;
     }
     /**
      * Looks for keys that are NOT present in currentFilters but that are in the savedSearch filters (which means they are removed)
