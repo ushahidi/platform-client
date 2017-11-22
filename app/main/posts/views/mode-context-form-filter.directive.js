@@ -174,7 +174,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                     if (post.total) {
                         return count + post.total;
                     }
-                    return 0;
+                    return count;
                 }, sourceStat.total);
                 sourceStat.type = provider;
                 sourceStats.push(sourceStat);
