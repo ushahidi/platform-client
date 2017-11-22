@@ -24,7 +24,8 @@ CollectionListingController.$inject = [
     'Notify',
     'CollectionEndpoint',
     '_',
-    'CollectionsService'
+    'CollectionsService',
+    '$state'
 ];
 function CollectionListingController(
     $rootScope,
@@ -35,9 +36,9 @@ function CollectionListingController(
     Notify,
     CollectionEndpoint,
     _,
-    CollectionsService
+    CollectionsService,
+    $state
 ) {
-    var collectionsPath = '/collections/';
 
     $scope.postInCollection = postInCollection;
     $scope.toggleCollection = toggleCollection;
@@ -132,7 +133,15 @@ function CollectionListingController(
     // they will be directed to the collection page
     function goToCollection(collection) {
         $scope.$parent.closeModal();
-        $location.path(collectionsPath + collection.id + '/' + collection.view);
+        var viewParam = collection.view;
+        if (viewParam === 'list' || viewParam === 'data') {
+            /** need to reload: true for the collection to resolve on the parent state, views code to run, etc.
+             * for Child states to force a parent to run, reload is needed.
+            **/
+            $state.go('posts.data.collection', {collectionId: collection.id}, {reload: true});
+        } else {
+            $state.go('posts.map.collection', {collectionId: collection.id}, {reload: true});
+        }
     }
 
     // Toggle a post as selected or not

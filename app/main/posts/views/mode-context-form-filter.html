@@ -18,7 +18,7 @@
         </span>
         <ul class="dropdown-menu init" dropdown-menu>
             <li ng-show="canAddToSurvey(form)">
-                <a ng-href="posts/create/{{ ::form.id }}">
+                <a ui-sref="postCreate({id: form.id })">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
@@ -38,7 +38,7 @@
             <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
             <div class="divider"></div>
             <li ng-show="hasManageSettingsPermission()">
-                <a ng-href="/settings/surveys/edit/{{ form.id }}">
+                <a ui-sref="settings.surveys.id({id: form.id, action: 'edit'})">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                     </svg>
@@ -75,7 +75,7 @@
                         <div
                             class="form-field checkbox"
                             ng-repeat="child in tag.children"
-                            ng-class="{'checked': filters.tags.indexOf(child.id) !== -1}"                            
+                            ng-class="{'checked': filters.tags.indexOf(child.id) !== -1}"
                             ng-show="filters.tags.indexOf(tag.id) > -1"
                         >
                             <label>
@@ -93,12 +93,12 @@
         </fieldset>
     </div>
 </form>
-<div class="tool" ng-show="unmapped > 0 && currentView === 'map'">
+<div class="tool" ng-show="unmapped > 0">
 <p>There are
     <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.</p>
 </div>
 <div class="form-field" ng-show="hasManageSettingsPermission()">
-        <a ng-href="/settings/surveys/create" class="button button-link">
+        <a ui-sref="settings.surveys.create" class="button button-link">
             <svg class="iconic">
                 <use xlink:href="/img/iconic-sprite.svg#plus"></use>
             </svg>

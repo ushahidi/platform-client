@@ -1,13 +1,17 @@
 module.exports = [
-    '$routeProvider',
+    '$stateProvider',
+    '$urlMatcherFactoryProvider',
 function (
-    $routeProvider
+    $stateProvider,
+    $urlMatcherFactoryProvider
 ) {
+    $urlMatcherFactoryProvider.strictMode(false);
 
-    $routeProvider
-    .when('/activity', {
+    $stateProvider
+    .state({
+        name: 'activity',
+        url: '/activity',
         controller: require('./activity.controller.js'),
         template: require('./activity.html')
     });
-
 }];

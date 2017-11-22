@@ -12,7 +12,15 @@ describe('Post create controller', function () {
             return fixture.load('posts/120.json');
         })
         .controller('postCreateController', require('app/main/posts/modify/post-create.controller.js'))
-        ;
+        .service('$transition$', function () {
+            return {
+                'params': function () {
+                    return {
+                        'id': 1
+                    };
+                }
+            };
+        });
 
         angular.mock.module('testApp');
     });
@@ -30,8 +38,7 @@ describe('Post create controller', function () {
 
     beforeEach(function () {
         $controller('postCreateController', {
-            $scope: $scope,
-            $routeParams: { id: 1 }
+            $scope: $scope
         });
     });
 

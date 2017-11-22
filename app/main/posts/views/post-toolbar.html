@@ -4,44 +4,39 @@
     <!-- floating action button -->
     <add-post-button></add-post-button>
 
-    <filter-posts current-view="currentView" filters="filters" embed-only="false"></filter-posts>
+    <filter-posts filters="filters" embed-only="false"></filter-posts>
 
-    <div class="button-group" embed-only="false" ng-switch="editMode.editing">
-        <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
-        <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled()" class="button button-alpha" ng-click="setEditMode()"translate>app.edit</button>
-        <button ng-switch-when="true" ng-if="hasPermission" class="button" ng-click="setEditMode()" translate>app.cancel</button>
-        <button ng-switch-when="true" ng-if="hasPermission && !savingPost.saving" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
-        <button ng-switch-when="true" class="button-alpha" disabled ng-if="savingPost.saving" translate>app.saving
-            <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
-          </button>    
+    <div class="button-group" embed-only="false">
+        <div ng-if="!editMode()">
+            <post-share filters="filters" button="true"></post-share>
+            <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
+        </div>
 
+        <div ng-if="editMode()">
+            <button ng-if="hasPermission" class="button" ng-click="cancel()" translate>app.cancel</button>
+            <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
+            <loading-dots button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots>
+        </div>
     </div>
 
-    
     <filter-by-survey></filter-by-survey>
+    <div class="button-group hide-until-medium" embed-only="true">
+        <div ng-if="!editMode()">
+            <post-share filters="filters" button="true"></post-share>
+            <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
+        </div>
 
-    <div class="button-group hide-until-medium" ng-switch="editMode.editing" embed-only="true">
-        <post-share ng-switch-when="false" filters="filters" button="true"></post-share>
-        <button ng-switch-when="false" ng-if="selectedPost && hasPermission && editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
-        <button ng-switch-when="true" ng-if="hasPermission" class="button" ng-click="setEditMode()" translate>app.cancel</button>
-        <button ng-switch-when="true" ng-if="hasPermission && !savingPost.saving" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
-        <button ng-switch-when="true" class="button-alpha" disabled ng-if="savingPost.saving" translate>app.saving
-            <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
-        </button>    
+        <div ng-if="editMode()">
+            <button ng-if="hasPermission" class="button" ng-click="cancel()" translate>app.cancel</button>
+             <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
+            <loading-dots button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots>     
+        </div>
     </div>
 
     <!-- toolbar -->
-    <div class="progress-bar" ng-show="isLoading.state">
+    <div class="progress-bar" ng-show="isLoading()">
         <span>
-            Loading...
+            ..
         </span>
     </div>
 </div>

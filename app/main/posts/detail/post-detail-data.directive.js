@@ -6,11 +6,8 @@ function PostDetailData() {
         restrict: 'E',
         replace: true,
         scope: {
-            filters: '=',
-            isLoading: '=',
-            post: '=',
-            editMode: '=',
-            postContainer: '='
+            post: '<',
+            '$transition$': '<'
         },
         controller: PostDetailDataController,
         template: require('./post-detail-data.html')
@@ -35,9 +32,10 @@ PostDetailDataController.$inject = [
     '_',
     'Notify',
     'moment',
-    'PostSurveyService'
-    ];
-
+    'PostSurveyService',
+    '$state',
+    '$window'
+];
 function PostDetailDataController(
     $scope,
     $rootScope,
@@ -56,13 +54,16 @@ function PostDetailDataController(
     _,
     Notify,
     moment,
-    PostSurveyService) {
-
+    PostSurveyService,
+    $state,
+    $window
+) {
     $scope.$watch('post', function (post) {
         activate();
     });
 
     $rootScope.setLayout('layout-d');
+    $scope.post = $scope.post;
     $scope.post_task = {};
     $scope.hasPermission = $rootScope.hasPermission;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
@@ -74,7 +75,6 @@ function PostDetailDataController(
 
     function activate() {
         // Set page title to post title, if there is one available.
-        $scope.isLoading.state = true;
         if ($scope.post.title && $scope.post.title.length) {
             $scope.$emit('setPageTitle', $scope.post.title);
         } else {
@@ -88,7 +88,7 @@ function PostDetailDataController(
         if ($scope.post.form && $scope.post.form.id) {
             $q.all([
                 FormEndpoint.get({id: $scope.post.form.id}),
-                FormStageEndpoint.query({formId:  $scope.post.form.id, postStatus: $scope.post.status}).$promise,
+                FormStageEndpoint.query({formId: $scope.post.form.id, postStatus: $scope.post.status}).$promise,
                 FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise,
                 TagEndpoint.query().$promise
             ]).then(function (results) {
@@ -99,22 +99,14 @@ function PostDetailDataController(
                 $scope.tags = results[3];
                 // Set page title to '{form.name} Details' if a post title isn't provided.
                 if (!$scope.post.title) {
-                    $translate('post.type_details', { type: results[0].name }).then(function (title) {
+                    $translate('post.type_details', {type: results[0].name}).then(function (title) {
                         $scope.$emit('setPageTitle', title);
                     });
                 }
                 var tasks = _.sortBy(results[1], 'priority');
-                var attrs = _.chain(results[2])
+                var attributes = _.chain(results[2])
                     .sortBy('priority')
                     .value();
-
-                var attributes = [];
-                _.each(attrs, function (attr) {
-                    if (!_.contains($scope.attributesToIgnore, attr.key)) {
-                        attributes.push(attr);
-                    }
-                });
-                attributes = (attributes.length) ? attributes : attrs;
 
                 angular.forEach(attributes, function (attr) {
                     this[attr.key] = attr;
@@ -154,12 +146,10 @@ function PostDetailDataController(
                     }
                 });
                 $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
-                $scope.isLoading.state = false;
             });
         } else {
             // for when user switch between posts, if new post has no form, there are no tasks either.
             $scope.tasks = [];
-            $scope.isLoading.state = false;
         }
     }
 
@@ -214,7 +204,7 @@ function PostDetailDataController(
         _.each(requiredTasks, function (task) {
             // if this stage isn't complete, add to errors
             if (_.indexOf($scope.post.completed_stages, task.id) === -1) {
-                errors.push($filter('translate')('post.modify.incomplete_step', { stage: task.label }));
+                errors.push($filter('translate')('post.modify.incomplete_step', {stage: task.label}));
             }
         });
 
@@ -225,16 +215,30 @@ function PostDetailDataController(
 
         $scope.post = updatedPost;
 
-        PostEndpoint.update($scope.post).
-        $promise
-        .then(function () {
-            var message = $scope.post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
-            var role = message === 'draft' ? 'draft' : (_.isEmpty($scope.post.published_to) ? 'everyone' : $scope.post.published_to.join(', '));
+        PostEndpoint.update($scope.post).$promise
+            .then(function () {
+                var message = $scope.post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
+                var role = message === 'draft' ? 'draft' : (_.isEmpty($scope.post.published_to) ? 'everyone' : $scope.post.published_to.join(', '));
 
-            Notify.notify(message, {role: role});
-        }, function (errorResponse) {
-            Notify.apiErrors(errorResponse);
-        });
+                Notify.notify(message, {role: role});
+            }, function (errorResponse) {
+                Notify.apiErrors(errorResponse);
+            });
     };
 
+    $scope.close = function () {
+        // Return to previous state, whatever that was.
+        let previousState = $scope.$transition$.$from().name;
+        // If we've jumped between 2 different posts
+        // Or we loaded this view directly
+        if (previousState === 'posts.data.detail' || previousState === '' || previousState === 'posts.data.edit') {
+            // ... just return to the data list
+            $state.go('posts.data');
+        } else {
+            // ... otherwise go to the previous stat
+            $state.go(previousState);
+        }
+        $scope.$parent.deselectPost();
+    };
 }
+

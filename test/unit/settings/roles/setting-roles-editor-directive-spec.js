@@ -12,17 +12,19 @@ describe('setting roles editor directive', function () {
         var testApp = makeTestApp();
 
         testApp.directive('rolesEditor', require('app/settings/roles/editor.directive'))
-        .value('$routeParams', {
-            id: 1
-        })
-        .value('$route', {
-            reload: function () {}
-        })
         .value('$filter', function () {
             return function () {};
         })
-        .value('PostEntity', {});
-
+        .value('PostEntity', {})
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
 
@@ -31,7 +33,13 @@ describe('setting roles editor directive', function () {
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        $scope.$resolve = {
+            $transition$: {
+                params: function () {
+                    return {id: 1};
+                }
+            }
+        };
         Notify = _Notify_;
 
         element = '<div roles-editor></div>';

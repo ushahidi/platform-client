@@ -52,7 +52,7 @@ function (
                     $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
                     $scope.$parent.closeModal();
-                    $rootScope.$broadcast('event:savedSearch:update');
+                    $rootScope.$broadcast('savedSearch:update');
                     Notify.notify('notify.savedsearch.savedsearch_saved', {savedsearch: savedSearch.name});
                     $scope.isSaving = false;
                 }, function (errorResponse) {

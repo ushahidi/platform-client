@@ -5,9 +5,7 @@ function FilterPostsDirective() {
     return {
         restrict: 'E',
         scope: {
-            filters: '=',
-            currentView: '='
-
+            filters: '='
         },
         replace: true,
         controller: FilterPostsController,
@@ -15,8 +13,8 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters', '$routeParams', '$log'];
-function FilterPostsController($scope, $timeout, ModalService, PostFilters, $routeParams, $log) {
+FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters'];
+function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;

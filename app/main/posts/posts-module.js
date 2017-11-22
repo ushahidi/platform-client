@@ -43,7 +43,6 @@ angular.module('ushahidi.posts', [])
 
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
-.directive('postView', require('./views/post-view.directive.js'))
 .directive('postViewMap', require('./views/post-view-map.directive.js'))
 .directive('postViewCreate', require('./views/post-view-create.directive.js'))
 .directive('postCard', require('./views/post-card.directive.js'))
@@ -51,6 +50,7 @@ angular.module('ushahidi.posts', [])
 .directive('addPostButton', require('./views/add-post-button.directive.js'))
 .directive('addPostSurveyList', require('./views/add-post-survey-list.directive.js'))
 .directive('addPostTextButton', require('./views/add-post-text-button.directive.js'))
+.directive('modeContext', require('./views/mode-context.directive.js'))
 .directive('modeContextFormFilter', require('./views/mode-context-form-filter.directive.js'))
 .directive('filterBySurvey', require('./views/filter-by-survey.directive.js'))
 .directive('filterBySurveyDropdown', require('./views/filter-by-survey-dropdown.directive.js'))
@@ -94,10 +94,8 @@ angular.module('ushahidi.posts', [])
 .directive('collectionModeContext', require('./collections/mode-context.directive.js'))
 .directive('collectionEditor', require('./collections/editor.directive.js'))
 .directive('collectionListing', require('./collections/listing.directive.js'))
-
 .directive('collectionToggleButton', require('./common/collection-toggle/collection-toggle-button.js'))
 .directive('collectionToggleLink', require('./common/collection-toggle/collection-toggle-link.js'))
-
 
 .config(require('./posts-routes.js'))
 

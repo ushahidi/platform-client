@@ -1,10 +1,10 @@
-<form name="parentForm.form" novalidate>
+<form name="editForm" novalidate>
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
         <div
           class="form-field init required"
           adaptive-form
-          ng-class="{'error': parentForm.form.title.$invalid && parentForm.form.title.$dirty, 'success': !parentForm.form.title.$invalid && parentForm.form.title.$dirty}"
+          ng-class="{'error': editForm.title.$invalid && editForm.title.$dirty, 'success': !editForm.title.$invalid && editForm.title.$dirty}"
         >
           <label>{{postTitleLabel}}</label>
           <p>{{postTitleInstructions}}</p>
@@ -20,8 +20,8 @@
           >
           <div
             class="alert error"
-            ng-show="parentForm.form.title.$dirty"
-            ng-repeat="(error, value) in parentForm.form.title.$error"
+            ng-show="editForm.title.$dirty"
+            ng-repeat="(error, value) in editForm.title.$error"
           >
             <svg class="iconic">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -32,14 +32,14 @@
         <!-- Post stage default fields -->
         <div
           class="form-field init required"
-          ng-class="{'error': parentForm.form.content.$invalid && parentForm.form.content.$dirty, 'success': !parentForm.form.content.$invalid && parentForm.form.content.$dirty}"
+          ng-class="{'error': editForm.content.$invalid && editForm.content.$dirty, 'success': !editForm.content.$invalid && editForm.content.$dirty}"
           adaptive-form
         >
           <label>{{postDescriptionLabel}}</label>
           <p>{{postDescriptionInstructions}}</p>
           <textarea id="content" name="content" data-min-rows="1" rows="1" ng-model="post.content" ng-required="true" adaptive-input msd-elastic></textarea>
 
-          <div class="alert error" ng-show="parentForm.form.content.$dirty" ng-repeat="(error, value) in parentForm.form.content.$error">
+          <div class="alert error" ng-show="editForm.content.$dirty" ng-repeat="(error, value) in editForm.content.$error">
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
             </svg>
@@ -50,7 +50,7 @@
           <div
             ng-if="!form"
             class="form-field init required"
-            ng-class="{'error': parentForm.form.form.$invalid && parentForm.form.form.$dirty, 'success': !parentForm.form.form.$invalid && parentForm.form.form.$dirty}"
+            ng-class="{'error': editForm.form.$invalid && editForm.form.$dirty, 'success': !editForm.form.$invalid && editForm.form.$dirty}"
           >
           <p translate="post.unstructured.add_survey.info" translate-values="{source:post.source}"></p>
           <label translate>post.unstructured.add_survey.title</label>
@@ -62,7 +62,7 @@
               <option selected disabled translate>post.unstructured.add_survey.choose</option>
               <option ng-repeat="form in forms" ng-value="form">{{form.name}}</option>
             </select>
-          <div class="alert error" ng-show="parentForm.form.form.$dirty" ng-repeat="(error, value) in parentForm.form.form.$error">
+          <div class="alert error" ng-show="editForm.form.$dirty" ng-repeat="(error, value) in editForm.form.$error">
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
             </svg>
@@ -76,7 +76,7 @@
             ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
             post="post"
             post-field=true
-            form="parentForm.form"
+            form="editForm"
             medias="medias"
             attribute="attribute"
             ng-if="form"
@@ -92,10 +92,10 @@
         END: IF -->
         <!-- IF: User has permission to see other 'Tasks' -->
 
-        <post-toolbox form="parentForm.form" post="post" ng-if="form"></post-toolbox>
+        <post-toolbox form="editForm" post="post" ng-if="form"></post-toolbox>
         <post-tabs
           ng-show="tasks.length > 1"
-          form="parentForm.form"
+          form="editForm"
           post="post"
           stages="tasks"
           attributes="attributes"
@@ -106,15 +106,10 @@
         </post-tabs>
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
+
           <button class="button-flat" ng-click="leavePost()" translate>app.cancel</button>
-          <button class="button button-alpha" ng-click="savePost()" ng-if="!savingPost.saving" translate="">app.save</button>
-          <button class="button-alpha" disabled ng-if="savingPost.saving" translate>app.saving
-            <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
-          </button>
+          <button class="button button-alpha" ng-click="savePost()" ng-if="!isSaving()" translate="">app.save</button>
+          <loading-dots button-class="'button-alpha'" ng-if="isSaving()" disabled=true label="'app.saving'"></loading-dots>
         </div>
       </div>
       <post-change-log post-id="post.id"></post-change-log>

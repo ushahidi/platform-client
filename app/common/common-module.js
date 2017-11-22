@@ -64,7 +64,7 @@ angular.module('ushahidi.common', [
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('intercom', require('./controllers/intercom.js'))
-
+.service('LoadingProgress', require('./services/loadingProgress.service.js'))
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 
@@ -89,6 +89,7 @@ angular.module('ushahidi.common', [
 .directive('addCategory', require('./directives/add-category.directive.js'))
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
+.directive('loadingDots', require('./directives/loading-dots.directive.js'))
 
 // Factories
 .factory('socket', require('./factories/socket-factory.js'))
@@ -99,7 +100,8 @@ angular.module('ushahidi.common', [
         DELETE : 'delete'
     }
 })
-
+.factory('loading', require('./factories/loading.interceptor-factory.js'))
+.config(require('./configs/loading.interceptor-config.js'))
 .config(require('./configs/locale-config.js'))
 .run(require('./configs/ui-bootstrap-template-decorators.js'))
 .config(require('./configs/cache-config.js'))

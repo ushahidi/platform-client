@@ -24,9 +24,6 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
                 scope.selectedSavedSearch =  scope.searches[newValue];
             }
         });
-        scope.openSavedSearchListEditorModal = function () {
-            ModalService.openTemplate('<saved-search-list-editor-modal searches="searches"></saved-search-list-editor-modal>', 'set.delete_saved_searches', 'star', scope, false, false);
-        };
 
         function activate() {
             if (ngModel.$viewValue) {

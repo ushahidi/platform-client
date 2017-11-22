@@ -1,5 +1,5 @@
 require('angular');
-require('angular-route');
+require('@uirouter/angularjs');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
@@ -65,7 +65,7 @@ angular.module('app',
     [
         'checklist-model',
         'monospaced.elastic',
-        'ngRoute',
+        'ui.router',
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',
@@ -100,6 +100,18 @@ angular.module('app',
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
     }])
+    .config(['$locationProvider', function ($locationProvider) {
+        $locationProvider.html5Mode(true).hashPrefix('!');
+    }])
+    .config(function ($urlRouterProvider, $urlMatcherFactoryProvider) {
+        $urlRouterProvider.when('', '/views/map');
+        $urlRouterProvider.when('/', '/views/map');
+        // if the path doesn't match any of the urls you configured
+        // otherwise will take care of routing the user to the specified url
+        $urlRouterProvider.otherwise('/404');
+
+        $urlMatcherFactoryProvider.strictMode(false);
+    })
     .factory('_', function () {
         return require('underscore/underscore');
     })
@@ -127,23 +139,22 @@ angular.module('app',
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
     }])
-    .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
-        /**
-         * Shamelessly copied from
-         * https://www.consolelog.io/angularjs-change-path-without-reloading
-         */
-        var original = $location.path;
-        $location.path = function (path, reload) {
-            if (reload === false) {
-                var lastRoute = $route.current;
-                var un = $rootScope.$on('$locationChangeSuccess', function () {
-                    $route.current = lastRoute;
-                    un();
-                });
-            }
-            return original.apply($location, [path]);
-        };
+    // inject the router instance into a `run` block by name
+    // .run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
+    //     // * uncomment this to enable the visualizer *
+    //     let Visualizer = require('@uirouter/visualizer').Visualizer;
+    //     let pluginInstance = $uiRouter.plugin(Visualizer);
+    //     $trace.enable('TRANSITION');
+    // }])
+    .run(['$rootScope', 'LoadingProgress', function ($rootScope, LoadingProgress) {
+        $rootScope.$on('$stateChangeError', console.log.bind(console));
+        // this handles the loading-state app-wide
+        LoadingProgress.watchTransitions();
+    }])
+    .run(['$rootScope', function ($rootScope) {
+        $rootScope.$on('$stateChangeError', console.log.bind(console));
+    }])
+    .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    }]);
-
+    });
