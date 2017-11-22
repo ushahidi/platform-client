@@ -4,18 +4,15 @@ FiltersDropdown.$inject = ['PostFilters', 'ModalService', '$rootScope', '_', '$l
 function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, SavedSearchEndpoint) {
     return {
         restrict: 'E',
-        require: 'ngModel',
         scope: {
             dropdownStatus: '=',
-            applyFilters: '=',
             filters: '=',
-            cancel: '=',
             view: '<'
         },
         link: FiltersDropdownLink,
         template: require('./filters-dropdown.html')
     };
-    function FiltersDropdownLink($scope, $element, $attrs, ngModel) {
+    function FiltersDropdownLink($scope, $element, $attrs) {
         $scope.canUpdateSavedSearch;
         PostFilters.reactiveFilters = false;
         $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
@@ -50,7 +47,6 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
             $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
             PostFilters.reactiveFilters = true;
             $scope.canUpdateSavedSearch = false;
-
         };
         $scope.enableQuery = function () {
             PostFilters.qEnabled = true;
