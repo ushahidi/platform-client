@@ -66,6 +66,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              *  - - - Diffing rules: return the _difference if the value is not equal, because we will want to show for instance:
              *  saved search: tag id 1 + filters tag id 2 (so it's not just ignoring the arrays)
              */
+            $scope.userCanUpdateSavedSearch = false;
+            $scope.activeFilters = activeFilters;
+
             if ($scope.savedSearch) {
                 /**
                  * to handle removal correctly we need to make sure we take currentFilters (which has up to date info) into account,
@@ -77,7 +80,8 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && !_.isEqual($scope.savedSearch.filter, filters);
 
                 $scope.savedSearch.filter = PostFilters.cleanRemovedValuesFromSavedSearch(filters, PostFilters.getCleanActiveFilters($scope.savedSearch.filter));
-                _.each(activeFilters, function (value, key) {
+
+                _.each($scope.activeFilters, function (value, key) {
                     if (!_.isArray(activeFilters[key]) && !$scope.savedSearch.filter[key]) {
                         $scope.activeFilters[key] = activeFilters[key];
                     } else if (!_.isArray(activeFilters[key])) {
@@ -88,9 +92,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                         $scope.activeFilters[key] =  _.difference(value, $scope.savedSearch.filter[key]);
                     }
                 });
-            } else {
-                $scope.userCanUpdateSavedSearch = false;
-                $scope.activeFilters = activeFilters;
+
             }
         }
 
