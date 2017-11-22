@@ -25,7 +25,7 @@ function PostChangeLog($rootScope, $translate, PostsChangeLogEndpoint) {
         $scope.hasCreatePermission = $rootScope.hasPermission('Manage Posts');
 
         $scope.$watch('postId', function (newValue, oldValue) {
-                if (newValue) {
+                if (newValue !== oldValue) {
                     $scope.changedPostInit();
                 }
             }, true);
