@@ -107,7 +107,7 @@ describe('post active search filters directive', function () {
             PostFilters.setFilters(newDefaults);
             $scope.$digest();
             expect(PostFilters.getUIActiveFilters).toHaveBeenCalled();
-            expect(directiveScopeTest.activeFilters).toEqual({source: ['sms'], form: [1,2,3,4]});
+            expect(directiveScopeTest.uiFilters).toEqual({source: ['sms'], form: [1,2,3,4]});
         });
     });
 });
