@@ -1,32 +1,63 @@
-module.exports = ['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($stateProvider, $urlMatcherFactoryProvider) {
 
-    $locationProvider.html5Mode(true);
+    $urlMatcherFactoryProvider.strictMode(false);
 
-    $routeProvider
-        .when('/login', {
-            controller: require('./auth/login.controller.js'),
-            template: ''
-        })
-        .when('/forbidden', {
-            controller: require('./auth/forbidden.controller.js'),
-            template: require('./auth/forbidden.html')
-        })
-        .when('/register', {
-            controller: require('./auth/register.controller.js'),
-            template: ''
-        })
-        .when('/forgotpassword', {
-            controller: require('./auth/password-reset.controller.js'),
-            template: ''
-        })
-        .when('/forgotpassword/confirm', {
-            controller: require('./auth/password-reset-confirm.controller.js'),
-            template: ''
-        })
-        .when('/forgotpassword/confirm/:token*', {
-            controller: require('./auth/password-reset-confirm.controller.js'),
-            template: ''
-        })
-        .otherwise('/')
+    $stateProvider
+        .state(
+            {
+                name: 'login',
+                url: '/login',
+                controller: require('./auth/login.controller.js'),
+                template: ''
+            }
+        )
+        .state(
+            {
+                name: 'forbidden',
+                url: '/forbidden',
+                controller: require('./auth/forbidden.controller.js'),
+                template: require('./auth/forbidden.html')
+            }
+        )
+        .state(
+            {
+                name: 'register',
+                url: '/register',
+                controller: require('./auth/register.controller.js'),
+                template: ''
+            }
+        )
+        .state(
+            {
+                name: 'forgotpassword',
+                url: '/forgotpassword',
+                controller: require('./auth/password-reset.controller.js'),
+                template: ''
+            }
+        )
+        .state(
+            {
+                name: 'forgotpassword.confirm',
+                url: '/forgotpassword/confirm',
+                controller: require('./auth/password-reset-confirm.controller.js'),
+                template: ''
+            }
+        )
+        .state(
+            {
+                name: 'forgotpassword.confirm.token',
+                url: '/forgotpassword/confirm/:token',
+                controller: require('./auth/password-reset-confirm.controller.js'),
+                template: ''
+            }
+        )
+        .state(
+            {
+                name: '404',
+                url: '/404',
+                controller: require('./auth/404.controller.js'),
+                template: require('./auth/404.html')
+            }
+        )
         ;
 }];

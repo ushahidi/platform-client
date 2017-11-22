@@ -7,9 +7,7 @@ function PostEditor() {
         restrict: 'E',
         scope: {
             post: '=',
-            attributesToIgnore: '=',
-            form: '=',
-            postMode: '='
+            form: '='
         },
         template: require('./post-editor.html'),
         controller: PostEditorController
@@ -37,7 +35,8 @@ PostEditorController.$inject = [
     'Notify',
     '_',
     'PostActionsService',
-    'MediaEditService'
+    'MediaEditService',
+    '$state'
   ];
 
 function PostEditorController(
@@ -61,7 +60,8 @@ function PostEditorController(
     Notify,
     _,
     PostActionsService,
-    MediaEditService
+    MediaEditService,
+    $state
   ) {
 
     // Setup initial stages container
@@ -133,7 +133,7 @@ function PostEditorController(
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
-                $location.url('/posts/' + $scope.post.id);
+                $state.go('postEdit', {id: $scope.post.id});
             }
 
             var post = $scope.post;
@@ -142,7 +142,6 @@ function PostEditorController(
                 .sortBy('priority')
                 .value();
             var categories = results[2];
-            // If attributesToIgnore is set, remove those attributes from set of fields to display
             var attributes = [];
             _.each(attrs, function (attr) {
                 if (attr.type === 'title' || attr.type === 'description') {
@@ -245,8 +244,11 @@ function PostEditorController(
 
     function cancel() {
         PostLockEndpoint.unlock($scope.post.lock).$promise.then(function (result) {
-            var path = $scope.post.id ? '/posts/' + $scope.post.id : '/';
-            $location.path(path);
+            if ($scope.post.id) {
+                $state.go('posts.data.detail', {view: 'data', postId: $scope.post.id});
+            } else {
+                $state.go('posts.data');
+            }
         });
     }
 
@@ -304,10 +306,10 @@ function PostEditorController(
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/posts/' + response.id);
+                    $state.go('posts.data.detail', {postId: response.id});
                 } else {
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $location.path('/');
+                    $state.go('posts.map.all');
                 }
             }, function (errorResponse) { // errors
                 var validationErrors = [];

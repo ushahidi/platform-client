@@ -1,4 +1,4 @@
-<div>
+<div ui-view>
     <!-- mode-context needs to be in each template -->
     <layout-class layout="a"></layout-class>
     <div class="mode-context init" dropdown>
@@ -24,7 +24,7 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="fab">
-                <a ng-href="/settings/surveys/create" type="button" class="button button-alpha button-fab">
+                <a ui-sref="settings.surveys.create" type="button" class="button button-alpha button-fab">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>

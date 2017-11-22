@@ -17,15 +17,19 @@
                 <p markdown-to-html="nav.site.description"></p>
 
                 <saved-search-create></saved-search-create>
-
-                <mode-context-form-filter></mode-context-form-filter>
-
+                <!-- @uirouter-refactor make this a named view -->
+                <mode-context-form-filter ng-if="transitionTo === 'posts.map'"></mode-context-form-filter>
+                <saved-search-mode-context ng-if="transitionTo === 'posts.map.savedsearch'"></saved-search-mode-context>
+                <collection-mode-context ng-if="transitionTo === 'posts.map.collection'"></collection-mode-context>
             </div>
         </div>
     </div>
     <main role="main">
-        <post-view current-view="currentView" filters="filters" base-url="/views/">
-        </post-view>
+
+        <post-toolbar current-view="currentView" filters="filters" ng-if="currentView !== 'data' && currentView !=='noui'" edit-mode="{editing: false}"></post-toolbar>
+        <!--@uirouter-refactor ask Anna about this <ng-transclude ng-if="currentView !== 'data'"></ng-transclude>-->
+        <!-- todo: toolbox-->
+        <div ui-view="listView" noanimation="true"></div>
         <ush-logo></ush-logo>
     </main>
 </div>

@@ -120,7 +120,8 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         if (queryParams.form) {
             delete queryParams.form;
         }
-        // deleting categories and sources since they are selected in the sidebar and not in the filter-modal = might get confusing
+        // deleting categories and sources since they are
+        // selected in the sidebar and not in the filter-modal = might get confusing
         if (queryParams.tags) {
             delete queryParams.tags;
         }

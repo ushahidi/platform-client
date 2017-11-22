@@ -5,6 +5,10 @@ SavedSearchModeContext.$inject = [];
 function SavedSearchModeContext() {
     return {
         restrict: 'E',
+        scope: {
+            filters: '=',
+            savedSearch: '='
+        },
         controller: SavedSearchModeContextController,
         template: require('./mode-context.html')
     };

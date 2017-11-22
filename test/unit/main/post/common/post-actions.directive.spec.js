@@ -7,8 +7,16 @@ describe('post actions directive', function () {
         element,
         PostActionsService,
         PostEndpoint,
-        mockRoute = {
-            reload: jasmine.createSpy()
+        mockState = {
+            go: jasmine.createSpy(),
+            reload: jasmine.createSpy(),
+            current: {
+                includes: {
+                    'posts.data.detail' : true,
+                    'posts.data' : true,
+                    'posts' : true
+                }
+            }
         };
 
     beforeEach(function () {
@@ -21,8 +29,14 @@ describe('post actions directive', function () {
         .value('$filter', function () {
             return function () {};
         })
-        .value('$route', mockRoute)
-        .value('$routeParams', {'view': 'data'});
+        .service('$state', function () {
+            return mockState;
+        })
+        .service('$stateParams', function () {
+            return {
+                'view': 'data'
+            };
+        });
 
         angular.mock.module('testApp');
     });
@@ -53,27 +67,36 @@ describe('post actions directive', function () {
                 cb();
             }
         });
-        spyOn($location, 'path').and.returnValue('/views/data');
+        mockState.current.includes = {
+            'posts.data.detail' : true,
+            'posts.data' : true,
+            'posts' : true
+        };
 
         isolateScope.deletePost(isolateScope.post);
         expect(PostActionsService.delete).toHaveBeenCalled();
-        expect(mockRoute.reload).toHaveBeenCalled();
+        expect(mockState.reload).not.toHaveBeenCalled();
+        expect(mockState.go).not.toHaveBeenCalled();
     });
 
-    it('should delete a post and redirect to list', function () {
+    it('should delete a post and reload the map', function () {
         spyOn(PostActionsService, 'delete').and.returnValue({
             then: function (cb) {
                 cb();
             }
         });
-        spyOn($location, 'path').and.returnValue('/post/120');
+        mockState.current.includes = {
+            'posts' : true,
+            'posts.map' : true
+        };
 
         isolateScope.deletePost(isolateScope.post);
         expect(PostActionsService.delete).toHaveBeenCalled();
-        expect($location.path).toHaveBeenCalledWith('/views/data');
+        expect(mockState.reload).toHaveBeenCalled();
+        expect(mockState.go).not.toHaveBeenCalled();
     });
 
-    it('should update the status of a  post', function () {
+    it('should update the status of a post', function () {
         var status = 'published';
         spyOn(PostEndpoint, 'update').and.callThrough();
         isolateScope.updateStatus(status);

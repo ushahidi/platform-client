@@ -1,7 +1,6 @@
 module.exports = AuthenticationEvents;
-
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService', 'Notify', 'PostFilters'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService, Notify, PostFilters) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters) {
     let loginPath = null;
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
@@ -38,7 +37,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                 if (redirect) {
                     $location.url(redirect);
                 }
-                noReload || $route.reload();
+                noReload || $state.reload(); // in favor of $route.reload();
+
             });
     }
 
@@ -51,7 +51,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             if (redirect) {
                 $location.url(redirect);
             }
-            $route.reload();
+
+            $state.go($state.$current.name ? $state.$current : 'map', null, { reload: true });
         });
     }
 

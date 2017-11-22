@@ -1,11 +1,10 @@
-
-<div>
+<div ui-view>
 	<layout-class layout="b"></layout-class>
     <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
                 <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
-                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a ui-sref="settings" translate>app.settings</a></li>
             </ol>
             <h1 class="mode-context-title" translate>app.categories</h1>
         </header>
@@ -22,7 +21,7 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="fab">
-                <a ng-href="/settings/categories/create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedCategories.length}">
+                <a ui-sref="settings.categories.create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedCategories.length}">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
@@ -46,7 +45,7 @@
                     </div>
 
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a ng-href="/settings/categories/{{category.id}}">{{category.tag}}</a></h2>
+                        <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: category.id})">{{category.tag}}</a></h2>
                     </div>
                     <div class="listing-item-secondary">
                         <button class="button-beta button-flat" ng-click="deleteCategory(category)">
@@ -64,7 +63,7 @@
                         </div>
 
                         <div class="listing-item-primary">
-                            <h2 class="listing-item-title"><a ng-href="/settings/categories/{{child.id}}">{{child.tag}}</a></h2>
+                            <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: child.id})">{{child.tag}}</a></h2>
                         </div>
                         <div class="listing-item-secondary">
                             <button class="button-beta button-flat" ng-click="deleteCategory(child)">

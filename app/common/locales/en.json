@@ -30,6 +30,7 @@
             "description" : "See what Ushahidi can do and how it works."
         },
         "forbidden": "Sorry, you're not allowed to do that.",
+        "404" : "That URL doesn't exist",
         "get_notifications" : "Get notifications",
         "turn_off_notifications" : "Turn off notifications",
         "load_more": "Load more",
@@ -427,6 +428,7 @@
         }
     },
     "nav" : {
+        "404" : "Whoops",
         "about" : "About",
         "activity" : "Activity",
         "add_post" : "Add Post",
@@ -783,6 +785,7 @@
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
+        "edit_savedsearch" : "Edit Search",
         "set_settings" : "Collection Settings",
         "add_notification" : "Add Notification",
         "remove" : "remove"
