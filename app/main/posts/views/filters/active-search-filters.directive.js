@@ -107,9 +107,11 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             $event.preventDefault();
             $event.stopPropagation();
             if (savedSearch) {
-                savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, savedSearch.filter);
+                // commented - if we do this here we can' compare for removal and know that it's updated
+                // savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, savedSearch.filter);
                 PostFilters.clearFilter(filterKey, value);
-                PostFilters.setMode('savedsearch', savedSearch);
+                // commented - if we do this here we can' compare for removal and know that it's updated
+                // PostFilters.setMode('savedsearch', savedSearch);
                 $scope.savedSearch = savedSearch;
             } else {
                 PostFilters.clearFilter(filterKey, value);
