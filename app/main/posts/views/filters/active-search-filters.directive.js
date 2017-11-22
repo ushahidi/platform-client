@@ -85,7 +85,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 $scope.activeFilters = _.mapObject(activeFilters, function (value, key) {
                     return _.difference(value, $scope.savedSearch.filter[key]);
                 });
-                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update');
+                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && !_.isEqual($scope.savedSearch.filter, _.mapObject(filters, makeArray));
             } else {
                 $scope.userCanUpdateSavedSearch = false;
                 $scope.activeFilters = activeFilters;
