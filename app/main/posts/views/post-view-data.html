@@ -58,7 +58,7 @@
         <div class="listing timeline init">
           
         <div class="bulk-action" ng-if="posts.length > 0 || !isLoading()">
-            <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
+            <div class="bulk-action-primary">{{posts.length}} of {{totalItems}} reports</div>
             <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
         </div>
             <post-card
