@@ -131,6 +131,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         function removeSavedSearch(savedSearch, $event) {
             $event.preventDefault();
             $event.stopPropagation();
+            originalSavedSearch = null;
+            $scope.savedSearch = null;
+
             PostFilters.setMode('all', null);
             _.each(savedSearch.filter, function (filter, key) {
                 if (_.isArray(filter)) {
@@ -141,7 +144,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                     PostFilters.clearFilter(key, filter);
                 }
             });
-            $scope.savedSearch = null;
         }
 
         function showSaveSavedSearchButton() {
