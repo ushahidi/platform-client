@@ -43,22 +43,31 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
      *  uiFiltersCurrent = {status: ['draft', 'review', 'archive']}
      *  Original has 3 filters, then 1 was removed, so current has 2. uiFiltersCurrent has 3 again because the user re-added it.
      *  We need to compare  original and uiFIltersCurrent.
-     *  If `uiFiltersCurrent` has values that are present in  `original`, we need to add them to `current` (*some other function will remove them from uiFiltersCurrent too)
+     *  If `uiFiltersCurrent` has values that are present in  `original`,
+     *  we need to add them to `current` (*some other function will remove them from uiFiltersCurrent too)
      *
      * @param current
      * @param original
      */
     function addIfCurrentObjectMatchesOriginal(currentSS, originalSS, uiObj) {
+        console.log('currentSS ', currentSS);
+        console.log('originalSS ', originalSS);
+        console.log('uiObj ', uiObj);
         //find filters in current that are part of the original object
-        return _.mapObject(originalSS, function (obj, key) {
+        var ret =  _.mapObject(originalSS, function (obj, key) {
             if (!_.isArray(obj)) {
-                return obj;
+                if (originalSS[key] === uiObj[key]) {
+                    currentSS[key] = uiObj[key];
+                    return currentSS[key];
+                }
             }
             // get the array values correctly
             return _.without(_.flatten(_.zip(currentSS[key], _.filter(uiObj[key], function (val) {
                 return currentSS[key].indexOf(val) < 0;
             }))), undefined);
         });
+        console.log('ret', ret);
+        return ret;
     }
 
     /**
