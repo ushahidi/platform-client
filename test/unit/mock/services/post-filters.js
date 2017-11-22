@@ -48,7 +48,7 @@ module.exports = [function () {
         clearFilters: function () {},
         clearFilter: function () {},
         hasFilters: function () {},
-        getCleanActiveFilters: function (filters) {
+        getUIActiveFilters: function (filters) {
             return filters;
         },
         getActiveFilters: function (filters) {

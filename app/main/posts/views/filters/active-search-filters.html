@@ -24,7 +24,7 @@
         </span>
     </div>
 </div>
-<div ng-repeat="(key, values) in activeFilters" class='inline-filters'>
+<div ng-repeat="(key, values) in uiFilters" class='inline-filters'>
     <span ng-if="isArray(values)">
         <span class="bug" ng-repeat="value in values track by $index" >
             <svg class="iconic" ng-click="removeFilter(key, value, false, $event)">
@@ -46,7 +46,6 @@
 <div class="form-field" ng-show="showSaveSavedSearchButton()">
     <button type="button" class="button button-alpha button-right" ng-click="saveSavedSearchModal()" translate="set.save_savedsearch">Save search</button>
 </div>
-<!-- userCanUpdateSavedSearch && !activeFiltersAreEmpty -->
 <div class="form-field" ng-show="userCanUpdateSavedSearch">
     <button type="button" class="button button-alpha button-right" ng-click="$parent.editSavedSearchModal('update')" translate="set.update_savedsearch">Edit Saved search</button>
 </div>

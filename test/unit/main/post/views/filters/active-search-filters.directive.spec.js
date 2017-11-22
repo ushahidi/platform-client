@@ -98,7 +98,7 @@ describe('post active search filters directive', function () {
     describe('test clean filters', function () {
         it ('should show the clean active search filters, which are different from their default value', function () {
             spyOn(PostFilters, 'getActiveFilters').and.callThrough();
-            spyOn(PostFilters, 'getCleanActiveFilters').and.callThrough();
+            spyOn(PostFilters, 'getUIActiveFilters').and.callThrough();
             var elementDir = '<post-active-search-filters ng-model="$scope.filters"></post-active-search-filters>';
             elementDir = $compile(elementDir)($scope);
             var directiveScopeTest = elementDir.scope();
@@ -106,7 +106,7 @@ describe('post active search filters directive', function () {
             newDefaults.source = ['sms'];
             PostFilters.setFilters(newDefaults);
             $scope.$digest();
-            expect(PostFilters.getCleanActiveFilters).toHaveBeenCalled();
+            expect(PostFilters.getUIActiveFilters).toHaveBeenCalled();
             expect(directiveScopeTest.activeFilters).toEqual({source: ['sms'], form: [1,2,3,4]});
         });
     });

@@ -24,31 +24,56 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         clearFilterFromArray: clearFilterFromArray,
         hasFilters: hasFilters,
         getActiveFilters: getActiveFilters,
-        getCleanActiveFilters: getCleanActiveFilters,
+        getUIActiveFilters: getUIActiveFilters,
         setMode: setMode,
         getMode: getMode,
         getModeId: getModeId,
         getModeEntity: getModeEntity,
         countFilters: countFilters,
-        cleanRemovedValuesFromSavedSearch: cleanRemovedValuesFromSavedSearch,
+        cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
+        addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
         reactiveFilters: true,
         qEnabled: false
     };
 
+    /**
+     *
+     *  original = {status: ['draft', 'review', 'archive']};
+     *  current = {status: ['draft', 'review']}
+     *  uiFiltersCurrent = {status: ['draft', 'review', 'archive']}
+     *  Original has 3 filters, then 1 was removed, so current has 2. uiFiltersCurrent has 3 again because the user re-added it.
+     *  We need to compare  original and uiFIltersCurrent.
+     *  If `uiFiltersCurrent` has values that are present in  `original`, we need to add them to `current` (*some other function will remove them from uiFiltersCurrent too)
+     *
+     * @param current
+     * @param original
+     */
+    function addIfCurrentObjectMatchesOriginal(currentSS, originalSS, uiObj) {
+        //find filters in current that are part of the original object
+        return _.mapObject(originalSS, function (obj, key) {
+            if (!_.isArray(obj)) {
+                return obj;
+            }
+            // get the array values correctly
+            return _.without(_.flatten(_.zip(currentSS[key], _.filter(uiObj[key], function (val) {
+                return currentSS[key].indexOf(val) < 0;
+            }))), undefined);
+        });
+    }
 
     /**
      * Looks for keys that are NOT present in currentFilters but that are in the savedSearch filters (which means they are removed)
      * and removes them from the saved search filters array.
      * Does not handle removal where the key exists but the values are an array and some are missing. Need to fix that.
      **/
-    function cleanRemovedValuesFromSavedSearch(currentFilters, savedSearch) {
+    function cleanRemovedValuesFromObject(currentFilters, oldFilters) {
         //find filters in currentFilters that are NOT in savedSearch.filters
-        var validFilters = _.pick(savedSearch, _.without(_.keys(currentFilters), _.keys(savedSearch)));
+        var validFilters = _.pick(oldFilters, _.without(_.keys(currentFilters), _.keys(oldFilters)));
         validFilters = _.mapObject(validFilters, function (obj, key) {
-            if (!_.isArray(savedSearch[key])) {
+            if (!_.isArray(oldFilters[key])) {
                 return currentFilters[key];
             }
-            return _.filter(savedSearch[key], function (val) {
+            return _.filter(oldFilters[key], function (val) {
                 return currentFilters[key].indexOf(val) > -1;
             });
         });
@@ -204,12 +229,13 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     /**
+     * For UI purposes only
      * Returns the non-default filters so that we don' show the user 3 filters when they didn' select one yet
      * Example: when the active filters load we show "sort", "unlockedOnTop", "sort_by" as active with their value
      * but since the user didn't select a filter, it can be really confusing.
      * @param filters
      */
-    function getCleanActiveFilters(filters) {
+    function getUIActiveFilters(filters) {
         var defaults = getDefaults();
         return _.omit(
             filters,

@@ -11,8 +11,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
     };
 
     function ActiveFiltersLink($scope, ngModel) {
-        $scope.activeFilters = {};
+        $scope.uiFilters = {};
         $scope.savedSearch = null;
+        var originalSavedSearch;
         $scope.removeFilter = removeFilter;
         $scope.transformFilterValue = transformFilterValue;
         $scope.removeSavedSearch = removeSavedSearch;
@@ -35,39 +36,42 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         }
 
         function handleFiltersUpdate(filters, oldValue) {
-            var activeFilters = angular.copy(PostFilters.getCleanActiveFilters(filters));
+            var currentFilters = angular.copy(PostFilters.getUIActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
-            delete activeFilters.set;
-            var savedSearchEntity = PostFilters.getModeEntity();
-            var savedSearchChanged = $scope.savedSearch && savedSearchEntity && savedSearchEntity.id !== $scope.savedSearch.id;
+            delete currentFilters.set;
             var isModeSavedSearch = PostFilters.getMode() === 'savedsearch';
-            // if it's a different saved search, set it in the scope.
-            // else if there is no saved search but we did find that the mode is 'savedsearch' , get it and set in scope
-            if (isModeSavedSearch || savedSearchChanged) {
-                $scope.savedSearch = savedSearchEntity;
-            } else if (!isModeSavedSearch) {
+            // if we are not in a saved search, make sure to reset the original and the scope saved search
+            if (!isModeSavedSearch) {
                 $scope.savedSearch = null;
+                originalSavedSearch = null;
             }
+            /** if there is not yet a savedSearch selected or if it is a different one than the selected,
+             setup the originalSavedSearch (which NEVER changes) and the savedSearch, which changes
+             and is used for showing the filters as the user adds/removes filters
+             **/
 
+            if (!$scope.savedSearch || originalSavedSearch.id !== $scope.savedSearch.id) {
+                originalSavedSearch = angular.copy(PostFilters.getModeEntity());
+                $scope.savedSearch = PostFilters.getModeEntity();
+            }
             /**
              * This handles the requirement to have saved search filters displayed in a different way
              * from the rest of the filters.
-             *  - If there is no saved_search in the filters, continue with the normal filters (else)
              *  - If there is a saved search:
-             *  - - set it in the scope : this is what we will use to display the saved search and its filters in the UI
+             *  - - set it in the scope: this is what we will use to display the saved search and its filters in the UI
              *  - - get clean version (no defaults) of the saved search filters
-             *  - - get a clean activeFilters array that does not include the saved search filters. $scope.activeFilters: this
+             *  - - get a clean currentFilters array that does not include the saved search filters. $scope.uiFilters: this
              *  is the array we will be using to show the "extra" filters the user can set AFTER they selected  a saved search
              *  (keep in mind that when a saved search is selected all filters are erased in favor of the saved search)
-             *  - - - Diffing rules: value from activeFilters takes priority over value from search. this is because
+             *  - - - Diffing rules: value from currentFilters takes priority over value from search. this is because
              *  the user will always have selected the value after they select a saved search,meaning they want to change it.
              *  - - - Diffing rules: if the value is equal, just ignore it/send empty value.
              *  - - - Diffing rules: return the _difference if the value is not equal, because we will want to show for instance:
              *  saved search: tag id 1 + filters tag id 2 (so it's not just ignoring the arrays)
              */
             $scope.userCanUpdateSavedSearch = false;
-            $scope.activeFilters = activeFilters;
+            $scope.uiFilters = currentFilters;
 
             if ($scope.savedSearch) {
                 /**
@@ -77,24 +81,29 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
                  * that means we have to remove it from the saved search.
                  **/
-                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && !_.isEqual($scope.savedSearch.filter, filters);
-
-                $scope.savedSearch.filter = PostFilters.cleanRemovedValuesFromSavedSearch(filters, PostFilters.getCleanActiveFilters($scope.savedSearch.filter));
-
-                _.each($scope.activeFilters, function (value, key) {
-                    if (!_.isArray(activeFilters[key]) && !$scope.savedSearch.filter[key]) {
-                        $scope.activeFilters[key] = activeFilters[key];
-                    } else if (!_.isArray(activeFilters[key])) {
-                        if ($scope.activeFilters[key]) {
-                            delete $scope.activeFilters[key];
+                $scope.savedSearch.filter = PostFilters.cleanRemovedValuesFromObject(filters, PostFilters.getUIActiveFilters($scope.savedSearch.filter));
+                /**
+                 * Add back in savedSearch.filter if an originally saved search filter is removed+added back
+                 */
+                $scope.savedSearch.filter = (PostFilters.addIfCurrentObjectMatchesOriginal(PostFilters.getUIActiveFilters($scope.savedSearch.filter), PostFilters.getUIActiveFilters(originalSavedSearch.filter), PostFilters.getUIActiveFilters($scope.uiFilters)));
+                var savedSearchFiltersChanged = !_.isEqual($scope.savedSearch.filter, PostFilters.getUIActiveFilters(originalSavedSearch.filter));
+                var filtersDifferentToSavedSearch = !_.isEqual($scope.savedSearch.filter, filters);
+                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && (savedSearchFiltersChanged || filtersDifferentToSavedSearch);
+                _.each($scope.uiFilters, function (value, key) {
+                    if (!_.isArray(currentFilters[key]) && !$scope.savedSearch.filter[key]) {
+                        $scope.uiFilters[key] = currentFilters[key];
+                    } else if (!_.isArray(currentFilters[key])) {
+                        if ($scope.uiFilters[key]) {
+                            delete $scope.uiFilters[key];
                         }
                     } else {
-                        $scope.activeFilters[key] =  _.difference(value, $scope.savedSearch.filter[key]);
+                        $scope.uiFilters[key] =  _.difference(value, $scope.savedSearch.filter[key]);
                     }
                 });
 
             }
         }
+
 
         function transformFilterValue(value, key) {
             if (FilterTransformers.transformers[key]) {
@@ -135,7 +144,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         }
 
         function showSaveSavedSearchButton() {
-            return !_.isEmpty($scope.activeFilters) && !$scope.savedSearch;
+            return !_.isEmpty($scope.uiFilters) && !$scope.savedSearch;
         }
 
     }
