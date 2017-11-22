@@ -88,7 +88,14 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  */
                 $scope.savedSearch.filter = PostFilters.getUIActiveFilters(PostFilters.addIfCurrentObjectMatchesOriginal(PostFilters.getUIActiveFilters($scope.savedSearch.filter), PostFilters.getUIActiveFilters(originalSavedSearch.filter), PostFilters.getUIActiveFilters($scope.uiFilters)));
                 console.log($scope.savedSearch.filter);
-                var savedSearchFiltersChanged = !_.isEqual($scope.savedSearch.filter, PostFilters.getUIActiveFilters(originalSavedSearch.filter));
+                //!_.isEqual($scope.savedSearch.filter, PostFilters.getUIActiveFilters(originalSavedSearch.filter)
+                var savedSearchFiltersChanged = _.filter(originalSavedSearch.filter, function (obj, key) {
+                    if (!_.isArray(obj)) {
+                        return $scope.savedSearch.filter[key] !== obj;
+                    } else {
+                        return _.difference($scope.savedSearch.filter[key], obj).length !== 0 || _.difference(obj, $scope.savedSearch.filter[key]).length !== 0 ;
+                    }
+                }).length > 0 ;
                 var filtersDifferentToSavedSearch = !_.isEqual($scope.savedSearch.filter, filters);
                 $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && (savedSearchFiltersChanged || filtersDifferentToSavedSearch);
                 _.each($scope.uiFilters, function (value, key) {
