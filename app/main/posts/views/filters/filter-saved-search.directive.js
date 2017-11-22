@@ -18,7 +18,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
         scope.loading = false;
         scope.$on('savedSearch:update', loadSavedSearches);
         scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
-            if (typeof (newValue) === 'undefined') {
+            if (typeof (newValue) === 'undefined' || newValue === null) {
                 scope.selectedSavedSearch = null;
             } else if (oldValue !== newValue && scope.searches.length > 0) {
                 scope.selectedSavedSearch =  scope.searches[newValue];

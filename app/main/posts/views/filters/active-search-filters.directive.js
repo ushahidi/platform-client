@@ -138,7 +138,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             $event.stopPropagation();
             originalSavedSearch = null;
             $scope.savedSearch = null;
-
             PostFilters.setMode('all', null);
             _.each(savedSearch.filter, function (filter, key) {
                 if (_.isArray(filter)) {
