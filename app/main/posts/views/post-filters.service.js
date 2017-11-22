@@ -37,10 +37,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     };
 
     /**
-     *
-     *  original = {status: ['draft', 'review', 'archive']};
-     *  current = {status: ['draft', 'review']}
-     *  uiFiltersCurrent = {status: ['draft', 'review', 'archive']}
      *  Original has 3 filters, then 1 was removed, so current has 2. uiFiltersCurrent has 3 again because the user re-added it.
      *  We need to compare  original and uiFIltersCurrent.
      *  If `uiFiltersCurrent` has values that are present in  `original`,
@@ -49,23 +45,23 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
      * @param current
      * @param original
      */
-    function addIfCurrentObjectMatchesOriginal(currentSS, originalSS, uiObj) {
+    function addIfCurrentObjectMatchesOriginal(currentSavedSearch, originalSavedSearch, currentFilters) {
         //find filters in current that are part of the original object
-        var ret =  _.mapObject(originalSS, function (obj, key) {
+        var ret =  _.mapObject(originalSavedSearch, function (obj, key) {
             if (!_.isArray(obj)) {
-                if (originalSS[key] === uiObj[key]) {
-                    currentSS[key] = uiObj[key];
-                    return currentSS[key];
-                }
+                return currentFilters[key];
             }
-            // get the array values correctly
-            return _.without(_.flatten(_.zip(currentSS[key], _.filter(uiObj[key], function (val) {
-                return currentSS[key].indexOf(val) < 0;
-            }))), undefined);
+            var currentContainsOriginalSavedSearch = _.every(originalSavedSearch[key], function (obj) {
+                return _.contains(currentFilters[key], obj);
+            });
+            if (currentContainsOriginalSavedSearch) {
+                return _.intersection(originalSavedSearch[key], currentFilters[key]);
+            } else {
+                return _.intersection(currentSavedSearch[key], currentFilters[key]);
+            }
         });
         return ret;
     }
-
     /**
      * Looks for keys that are NOT present in currentFilters but that are in the savedSearch filters (which means they are removed)
      * and removes them from the saved search filters array.
