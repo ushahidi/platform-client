@@ -17,14 +17,18 @@ function (
                 filterState: {value: null, squash: true}
             },
             resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                collection: ['$transition$', 'CollectionEndpoint', 'PostFilters', function ($transition$, CollectionEndpoint, PostFilters) {
                     if ($transition$.params().collectionId) {
                         return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
+                    } else if (PostFilters.getMode() === 'collection') {
+                        return PostFilters.getModeEntity();
                     }
                 }],
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', 'PostFilters', function ($transition$, SavedSearchEndpoint, PostFilters) {
                     if ($transition$.params().savedSearchId) {
                         return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
+                    } else if (PostFilters.getMode() === 'savedsearch') {
+                        return PostFilters.getModeEntity();
                     }
                 }],
                 filters: ['PostFilters', (PostFilters) => {
@@ -151,8 +155,13 @@ function (
                 'mode-context': 'savedSearchModeContext'
             },
             onEnter: ['$state', 'PostFilters', 'savedSearch', function ($state, PostFilters, savedSearch) {
-                PostFilters.setMode('savedsearch', savedSearch);
-                PostFilters.setFilters(savedSearch.filter);
+                if (!PostFilters.getModeId() && savedSearch) {
+                    PostFilters.setMode('savedsearch', savedSearch);
+                    PostFilters.setFilters(savedSearch.filter);
+                } else {
+                    savedSearch = PostFilters.getModeEntity();
+                }
+
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
                     $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
                 } else {

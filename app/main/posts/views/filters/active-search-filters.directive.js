@@ -16,7 +16,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         $scope.removeFilter = removeFilter;
         $scope.transformFilterValue = transformFilterValue;
         $scope.removeSavedSearch = removeSavedSearch;
-        $scope.showUpdatedSavedSearchButton = showUpdatedSavedSearchButton;
         $scope.showSaveSavedSearchButton = showSaveSavedSearchButton;
         $scope.userCanUpdateSavedSearch = false;
 
@@ -24,19 +23,15 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         $scope.$on('savedSearch:update', function () {
             handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()));
         });
+
+        $scope.isArray = angular.isArray;
+
         function activate() {
             FilterTransformers.requestsFiltersData().then(function (all) {
                 $scope.$watch(function () {
                     return PostFilters.getActiveFilters(PostFilters.getFilters());
                 }, handleFiltersUpdate, true);
             });
-        }
-
-        function makeArray(value) {
-            if (!angular.isArray(value)) {
-                return [value];
-            }
-            return value;
         }
 
         function handleFiltersUpdate(filters, oldValue) {
@@ -47,7 +42,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             var savedSearchEntity = PostFilters.getModeEntity();
             var savedSearchChanged = $scope.savedSearch && savedSearchEntity && savedSearchEntity.id !== $scope.savedSearch.id;
             var isModeSavedSearch = PostFilters.getMode() === 'savedsearch';
-            console.log('handleFiltersUpdate', filters, PostFilters.getModeEntity());
             // if it's a different saved search, set it in the scope.
             // else if there is no saved search but we did find that the mode is 'savedsearch' , get it and set in scope
             if (isModeSavedSearch || savedSearchChanged) {
@@ -72,7 +66,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              *  - - - Diffing rules: return the _difference if the value is not equal, because we will want to show for instance:
              *  saved search: tag id 1 + filters tag id 2 (so it's not just ignoring the arrays)
              */
-            activeFilters = _.mapObject(activeFilters, makeArray);
             if ($scope.savedSearch) {
                 /**
                  * to handle removal correctly we need to make sure we take currentFilters (which has up to date info) into account,
@@ -81,11 +74,19 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
                  * that means we have to remove it from the saved search.
                  **/
-                $scope.savedSearch.filter = PostFilters.cleanDeprecatedValuesFromSavedSearch(activeFilters, _.mapObject(PostFilters.getCleanActiveFilters($scope.savedSearch.filter), makeArray));
-                $scope.activeFilters = _.mapObject(activeFilters, function (value, key) {
-                    return _.difference(value, $scope.savedSearch.filter[key]);
+                $scope.savedSearch.filter = PostFilters.cleanRemovedValuesFromSavedSearch(filters, PostFilters.getCleanActiveFilters($scope.savedSearch.filter));
+                _.each(activeFilters, function (value, key) {
+                    if (!_.isArray(activeFilters[key]) && !$scope.savedSearch.filter[key]) {
+                        $scope.activeFilters[key] = activeFilters[key];
+                    } else if (!_.isArray(activeFilters[key])) {
+                        if ($scope.activeFilters[key]) {
+                            delete $scope.activeFilters[key];
+                        }
+                    } else {
+                        $scope.activeFilters[key] =  _.difference(value, $scope.savedSearch.filter[key]);
+                    }
                 });
-                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && !_.isEqual($scope.savedSearch.filter, _.mapObject(filters, makeArray));
+                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && !_.isEqual($scope.savedSearch.filter, filters);
             } else {
                 $scope.userCanUpdateSavedSearch = false;
                 $scope.activeFilters = activeFilters;
@@ -132,8 +133,5 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             return !_.isEmpty($scope.activeFilters) && !$scope.savedSearch;
         }
 
-        function showUpdatedSavedSearchButton() {
-            return $scope.userCanUpdateSavedSearch;
-        }
     }
 }
