@@ -137,6 +137,6 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
     }
 
     function featureEnabled() {
-        return $rootScope.hasPermission('Manage Posts');
+        return $rootScope.isAdmin();
     }
 }
