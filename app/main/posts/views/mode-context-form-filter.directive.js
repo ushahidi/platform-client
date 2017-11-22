@@ -159,7 +159,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
 
     function getSourceStats(stats) {
         var sourceStats = [];
-        var providers = ['email', 'sms', 'twitter'];
+        var providers = ['email', 'sms', 'twitter', 'web'];
         // calculating stats for each datasource, based on the current form-filter
         _.each(providers, function (provider) {
             var posts = _.filter(stats.totals[0].values, function (value) {

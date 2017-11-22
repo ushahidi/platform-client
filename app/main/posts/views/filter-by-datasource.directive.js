@@ -53,12 +53,10 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
     function assignStatsToProviders() {
         $scope.providers = _.map($scope.postStats, function (provider) {
                 var obj = {};
-                if (provider.type !== 'web') {
-                    obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
-                    obj.heading = formatHeading(obj.label);
-                    obj.total = getTotals(provider.type);
-                    return obj;
-                }
+                obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
+                obj.heading = formatHeading(obj.label);
+                obj.total = getTotals(provider.type);
+                return obj;
             });
 
         // removing duplicates and null-values
@@ -102,6 +100,8 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
                 return 'SMS';
             case 'Email':
                 return 'Emails';
+            case 'Web':
+                return 'Web';
             default:
                 return ' ';
         }
