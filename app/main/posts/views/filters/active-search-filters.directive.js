@@ -74,6 +74,8 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
                  * that means we have to remove it from the saved search.
                  **/
+                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && !_.isEqual($scope.savedSearch.filter, filters);
+
                 $scope.savedSearch.filter = PostFilters.cleanRemovedValuesFromSavedSearch(filters, PostFilters.getCleanActiveFilters($scope.savedSearch.filter));
                 _.each(activeFilters, function (value, key) {
                     if (!_.isArray(activeFilters[key]) && !$scope.savedSearch.filter[key]) {
@@ -86,7 +88,6 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                         $scope.activeFilters[key] =  _.difference(value, $scope.savedSearch.filter[key]);
                     }
                 });
-                $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && !_.isEqual($scope.savedSearch.filter, filters);
             } else {
                 $scope.userCanUpdateSavedSearch = false;
                 $scope.activeFilters = activeFilters;
