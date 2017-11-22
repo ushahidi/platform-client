@@ -64,23 +64,27 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
             .compact()
             .uniq()
             .value();
-        // if user is logged in and is allowed to see the configs, we add all enabled datasources, even if there are 0 posts
+
+        // if user is logged in and is allowed to see the configs,
+        // we add all enabled datasources, even if there are 0 posts
         if ($scope.dataSources) {
-            var smsProviders = ['nexmo', 'twilio','frontlinesms', 'smssync'];
+            var smsProviders = ['nexmo', 'twilio', 'frontlinesms', 'smssync'];
             _.each($scope.dataSources, function (source, key) {
                     if (source) {
                         var type = _.contains(smsProviders, key) ? 'SMS' : key.substr(0, 1).toUpperCase() + key.substr(1);
-                        var exists = _.filter($scope.providers, {label: type});
+                        var exists = _.filter($scope.providers, { label: type });
                         if (exists.length < 1) {
                             var obj = {};
                             obj.label = type;
                             obj.heading = formatHeading(obj.label);
-                            obj.total = getTotals(key);
+                            obj.total = getTotals(key); // Isn't this always 0?
                             $scope.providers.push(obj);
                         }
                     }
                 });
         }
+
+        $scope.providers = _.sortBy($scope.providers, 'label');
     }
 
     function getTotals(source) {
