@@ -25,7 +25,7 @@ PostViewDataController.$inject = [
     '$translate',
     '$q',
     'PostActionsService',
-    '$timeout',
+    '$interval',
     '$location',
     'Notify',
     '$window',
@@ -44,7 +44,7 @@ function PostViewDataController(
     $translate,
     $q,
     PostActionsService,
-    $timeout,
+    $interval,
     $location,
     Notify,
     $window,
@@ -176,9 +176,10 @@ function PostViewDataController(
         });
 
         $scope.$on('$destroy', function (ev) {
-                $timeout.cancel(stopInterval);
+            if (stopInterval) {
+                $interval.cancel(stopInterval);
             }
-        );
+        });
 
         $scope.$on('event:edit:leave:form:complete', function () {
             // Bercause there is no state management
@@ -223,7 +224,7 @@ function PostViewDataController(
         //     }
         // });
         if ($scope.shouldWeRunCheckForNewPosts) {
-            checkForNewPosts(30000);
+            stopInterval = $interval(checkForNewPosts, 30000);
         }
     }
 
@@ -537,11 +538,9 @@ function PostViewDataController(
     }
 
     function checkForNewPosts(time) {
-
         if ($scope.posts.length) {
             getNewPosts();
         }
-        stopInterval = $timeout(checkForNewPosts, time, true, time);
     }
 }
 
