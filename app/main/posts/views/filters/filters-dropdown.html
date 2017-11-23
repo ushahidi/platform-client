@@ -1,19 +1,5 @@
 <div class="dropdown-menu-body">
     <div class="form-field filter-buttons">
-        <div ng-show="filters.q.length > 0" ng-class="{active: (filters.q.length > 0) }">
-            <div ng-class="{active: (filters.q.length > 0) , 'form-field': 'form-field'}">
-                <button class="button-plain" ng-click="enableQuery()">
-                    <span class="button-label">
-                        <span translate-values="{ entity: entityType }" translate>
-                            toolbar.searchbar.search_all_entities_for
-                        </span>
-                        "<em>{{ filters.q }}</em>"
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="form-field filter-buttons">
         <post-active-search-filters ng-model="filters" filters-var="filters"></post-active-search-filters>
     </div>
     <div class="divider"></div>
