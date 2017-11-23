@@ -1,21 +1,36 @@
-
 <form name="postFiltersFormOpen"
       uib-dropdown
       is-open="status.isopen"
       role="search"
       class="searchbar"
-      auto-close="outsideClick"
+      auto-close="disabled"
       ng-submit="applyFilters()"
       ng-model-options="{ updateOn : 'submit default' }"
       data-message="search"
 >
-    <filter-searchbar model="filters.q" on-clear="removeQueryFilter()"></filter-searchbar>
+
+    <div class="searchbar-input">
+        <!-- Search input -->
+        <div class="form-field">
+            <label class="hidden" translate="toolbar.searchbar.search_entity">Search</label>
+            <div class="input-with-icon">
+                <input name="q" type="search" autocomplete="off"
+                placeholder="{{ 'toolbar.searchbar.search_entity' | translate }}"
+                ng-model="filters.q" ng-focus="showDropdown()" ng-keyup="showDropdown()">
+                <svg class="iconic" ng-show="!postFiltersFormOpen.q.$viewValue.length">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#magnifying-glass"></use>
+                </svg>
+                <svg class="iconic" ng-click="removeQueryFilter()" ng-show="postFiltersFormOpen.q.$viewValue.length">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Toggle Filters show/hide -->
     <div uib-dropdown-toggle class="searchbar-options">
-        <a     ng-click="toggleDropdown($event)"
-                   type="button"
-                   class="searchbar-options-filter button"
-                   >
+        <a type="button" class="searchbar-options-filter button">
             <sort-and-filter-counter></sort-and-filter-counter>
         </a>
     </div>
