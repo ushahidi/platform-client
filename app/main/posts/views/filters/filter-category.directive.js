@@ -50,6 +50,7 @@ function CategorySelectDirective(TagEndpoint, _) {
             });
 
             scope.$watch('selectedCategories', saveValueToView, true);
+            scope.$watch(() => ngModel.$viewValue, renderModelValue, true);
             ngModel.$render = renderModelValue;
         }
         function renderModelValue() {

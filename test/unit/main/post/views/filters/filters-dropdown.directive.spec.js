@@ -73,7 +73,7 @@ describe('post active search filters directive', function () {
         });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.clearFilters();
-            expect(isolateScope.filtersVar).toEqual(PostFilters.getDefaults());
+            expect(isolateScope.filters).toEqual(PostFilters.getDefaults());
         });
         it('should set qEnabled true when I call enableQuery', function () {
             isolateScope.enableQuery();
