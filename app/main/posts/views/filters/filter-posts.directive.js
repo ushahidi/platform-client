@@ -33,4 +33,14 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters, $sta
         // @todo define initial filter values
         // $scope.$watch('filters', handleFilterChange, true);
     }
+
+    $scope.applyFilters = function () {
+        PostFilters.qEnabled = true;
+        PostFilters.reactiveFilters = true;
+        $scope.status.isopen = false;
+    };
+
+    $scope.removeQueryFilter = function () {
+        PostFilters.clearFilter('q', '');
+    };
 }

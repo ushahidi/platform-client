@@ -9,7 +9,7 @@
       ng-model-options="{ updateOn : 'submit default' }"
       data-message="search"
 >
-    <filter-searchbar model="filters.q"></filter-searchbar>
+    <filter-searchbar model="filters.q" on-clear="removeQueryFilter()"></filter-searchbar>
     <!-- Toggle Filters show/hide -->
     <div uib-dropdown-toggle class="searchbar-options">
         <a     ng-click="toggleDropdown($event)"

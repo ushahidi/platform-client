@@ -32,10 +32,6 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
             $scope.canUpdateSavedSearch = savedSearch && _.contains(savedSearch.allowed_privileges, 'update');
         }
 
-        $scope.applyFiltersLocked = function () {
-            PostFilters.reactiveFilters = true;
-            $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
-        };
         $scope.clearFilters = function () {
             if (PostFilters.getMode() === 'savedsearch' && PostFilters.getModeId()) {
                 PostFilters.setMode('all');
