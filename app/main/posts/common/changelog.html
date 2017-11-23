@@ -1,20 +1,20 @@
 <div class="listing card change-log" ng-show="displayChangeLog">
     <div class="change-log-header">
         <h3 class="listing-heading">Change Log</h3>
+        <div class="button-group" ng-show="hasCreatePermission" >
+            <button type="button" ng-click="enterAddEntryMode()" ng-hide="enteringManually" class="button-primary" >
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#plus"></use>
+                </svg>
+                <span class="button-label" translate="changelog.add_a_log_entry">Add an entry</span>
+            </button>
+        </div>
     </div>
     <div class="progress-bar" ng-hide="entriesLoaded">
       <span translate="changelog.loading_log_entries">Loading log entries...</span>
     </div>
 
     <div class="listing-item" ng-show="hasCreatePermission">
-      <div class="button-group" ng-click="enterAddEntryMode()" ng-hide="enteringManually">
-          <button type="button" class="button-primary">
-            <svg class="iconic">
-              <use xlink:href="/img/iconic-sprite.svg#plus"></use>
-            </svg>
-              <span class="button-label" translate="changelog.add_a_log_entry">Add an entry</span>
-          </button>
-      </div>
 
         <div class="listing-item-primary" ng-show="(enteringManually && hasCreatePermission )">
             <div class="form-field required">
@@ -25,8 +25,8 @@
                 <button type="button" class="button-primary">
                     <span class="button-label" ng-click="cancelAddEntryMode()">Cancel</span>
                 </button>
-                <button type="button" class="button-alpha">
-                    <span class="button-label" ng-disabled="manualLogEntry.length < 1" ng-click="saveManualLogEntry()">Save</span>
+                <button type="button" class="button-alpha" ng-disabled="manualLogEntry.length < 1" ng-click="saveManualLogEntry()">
+                    <span class="button-label" >Save</span>
                 </button>
             </div>
         </div>
