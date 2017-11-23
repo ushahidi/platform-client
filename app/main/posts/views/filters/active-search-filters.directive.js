@@ -86,7 +86,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                  * Add back in savedSearch.filter if an originally saved search filter is removed+added back
                  */
                 $scope.savedSearch.filter = PostFilters.getUIActiveFilters(PostFilters.addIfCurrentObjectMatchesOriginal(PostFilters.getUIActiveFilters($scope.savedSearch.filter), PostFilters.getUIActiveFilters(originalSavedSearch.filter), PostFilters.getUIActiveFilters($scope.uiFilters)));
-                var savedSearchFiltersChanged = _.filter(originalSavedSearch.filter, function (obj, key) {
+                var savedSearchFiltersChanged = _.filter(PostFilters.getUIActiveFilters(originalSavedSearch.filter), function (obj, key) {
                     if (!_.isArray(obj)) {
                         return $scope.savedSearch.filter[key] !== obj;
                     } else {
