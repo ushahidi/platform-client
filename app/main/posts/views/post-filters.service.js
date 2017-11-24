@@ -30,12 +30,30 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getModeId: getModeId,
         getModeEntity: getModeEntity,
         countFilters: countFilters,
+        cleanUIFilters: cleanUIFilters,
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
         reactiveFilters: true,
         qEnabled: false
     };
 
+    function cleanUIFilters(target, from) {
+        _.each(target, function (value, key) {
+            if (!_.isArray(target[key]) && !from[key]) {
+                target[key] = target[key];
+            } else if (!_.isArray(target[key])) {
+                if (target[key]) {
+                    delete target[key];
+                }
+            } else {
+                target[key] =  _.difference(value, from[key]);
+                if (target[key].length === 0) {
+                    delete target[key];
+                }
+            }
+        });
+        return target;
+    }
     /**
      *  Original has 3 filters, then 1 was removed, so current has 2. uiFiltersCurrent has 3 again because the user re-added it.
      *  We need to compare  original and uiFIltersCurrent.

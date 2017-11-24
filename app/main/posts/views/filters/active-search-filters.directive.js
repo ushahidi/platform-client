@@ -96,17 +96,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 var filtersDifferentToSavedSearch = !_.isEqual($scope.savedSearch.filter, filters);
                 $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && (savedSearchFiltersChanged || filtersDifferentToSavedSearch);
                 // remove values that are in the saved search frmo the uifilters.
-                _.each($scope.uiFilters, function (value, key) {
-                    if (!_.isArray(currentFilters[key]) && !$scope.savedSearch.filter[key]) {
-                        $scope.uiFilters[key] = currentFilters[key];
-                    } else if (!_.isArray(currentFilters[key])) {
-                        if ($scope.uiFilters[key]) {
-                            delete $scope.uiFilters[key];
-                        }
-                    } else {
-                        $scope.uiFilters[key] =  _.difference(value, $scope.savedSearch.filter[key]);
-                    }
-                });
+                $scope.uiFilters = PostFilters.cleanUIFilters($scope.uiFilters, $scope.savedSearch.filter);
             }
         }
 
@@ -122,7 +112,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             $event.stopPropagation();
             if (savedSearch) {
                 // commented - if we do this here we can' compare for removal and know that it's updated
-                // savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, savedSearch.filter);
+                savedSearch.filter = PostFilters.clearFilterFromArray(filterKey, value, savedSearch.filter);
                 PostFilters.clearFilter(filterKey, value);
                 // commented - if we do this here we can' compare for removal and know that it's updated
                 // PostFilters.setMode('savedsearch', savedSearch);
