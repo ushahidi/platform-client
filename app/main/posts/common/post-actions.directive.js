@@ -45,10 +45,10 @@ function PostActionsDirective(
             PostActionsService.delete($scope.post).then(function () {
                 $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post, deleted: true});
                 // If we're not already on some of the posts views
-                if (!$state.current.includes.posts) {
+                if (!$state.$current.includes.posts) {
                     // Redirect to list
                     $state.go('posts.data');
-                } else if ($state.current.includes['posts.map']) {
+                } else if ($state.$current.includes['posts.map']) {
                     // only map needs to reload
                     $state.reload();
                 }

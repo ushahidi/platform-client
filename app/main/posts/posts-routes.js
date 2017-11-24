@@ -13,7 +13,6 @@ function (
             name: 'posts',
             abstract: true,
             params: {
-                view: {value: null, squash: true},
                 filterState: {value: null, squash: true}
             },
             resolve: {
@@ -48,9 +47,9 @@ function (
             name: 'posts.savedsearchRedirector',
             onEnter: ['$state', 'savedSearch', function ($state, savedSearch) {
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
-                    $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
+                    $state.go('posts.data', {savedSearchId: savedSearch.id});
                 } else {
-                    $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id});
                 }
             }]
         }
@@ -61,9 +60,9 @@ function (
             name: 'posts.collectionRedirector',
             onEnter: ['$state', 'collection', function ($state, collection) {
                 if (collection.view === 'data' || collection.view === 'list') {
-                    $state.go('posts.data.collection', {collectionId: collection.id, view: 'data'});
+                    $state.go('posts.data.collection', {collectionId: collection.id});
                 } else {
-                    $state.go('posts.map.collection', {collectionId: collection.id, view: 'map'});
+                    $state.go('posts.map.collection', {collectionId: collection.id});
                 }
             }]
         }
@@ -73,7 +72,6 @@ function (
             url: '/views/data',
             name: 'posts.data',
             params: {
-                view: {value: 'data', squash: true},
                 filterState: {value: null, squash: true},
                 activeCol: {value: 'timeline', squash: true}
             },
@@ -108,9 +106,9 @@ function (
                 PostFilters.setMode('savedsearch', savedSearch);
                 PostFilters.setFilters(savedSearch.filter);
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
-                    $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
+                    $state.go('posts.data', {savedSearchId: savedSearch.id});
                 } else {
-                    $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id});
                 }
             }]
         }
@@ -133,7 +131,6 @@ function (
             abstract: true,
             component: 'postViewMap',
             params: {
-                view: {value: 'map', squash: true},
                 filterState: {value: null, squash: true}
             }
         }
@@ -163,9 +160,9 @@ function (
                 }
 
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
-                    $state.go('posts.data.all', {savedSearchId: savedSearch.id, view: 'data'});
+                    $state.go('posts.data', {savedSearchId: savedSearch.id});
                 } else {
-                    $state.go('posts.map.all', {savedSearchId: savedSearch.id, view: 'map'});
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id});
                 }
             }]
         }

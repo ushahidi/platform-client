@@ -16,9 +16,15 @@ describe('post active search filters directive', function () {
         .directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
         .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
         .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
-        .service('$stateParams', function () {
+        .service('$state', function () {
             return {
-                'view': 'data'
+                '$current': {
+                    name: 'posts.data',
+                    includes: {
+                        'posts': true,
+                        'posts.data': true
+                    }
+                }
             };
         });
         angular.mock.module('testApp');

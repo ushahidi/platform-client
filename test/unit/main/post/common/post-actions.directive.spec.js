@@ -10,7 +10,7 @@ describe('post actions directive', function () {
         mockState = {
             go: jasmine.createSpy(),
             reload: jasmine.createSpy(),
-            current: {
+            $current: {
                 includes: {
                     'posts.data.detail' : true,
                     'posts.data' : true,
@@ -31,11 +31,6 @@ describe('post actions directive', function () {
         })
         .service('$state', function () {
             return mockState;
-        })
-        .service('$stateParams', function () {
-            return {
-                'view': 'data'
-            };
         });
 
         angular.mock.module('testApp');
@@ -67,7 +62,7 @@ describe('post actions directive', function () {
                 cb();
             }
         });
-        mockState.current.includes = {
+        mockState.$current.includes = {
             'posts.data.detail' : true,
             'posts.data' : true,
             'posts' : true
@@ -85,7 +80,7 @@ describe('post actions directive', function () {
                 cb();
             }
         });
-        mockState.current.includes = {
+        mockState.$current.includes = {
             'posts' : true,
             'posts.map' : true
         };
