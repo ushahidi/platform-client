@@ -98,7 +98,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              * Add back in savedSearch.filter if an originally saved search filter is removed+added back
              */
             var uiSavedSearchActiveFilters = PostFilters.getUIActiveFilters(savedSearchFilters);
-            var uiOriginalSavedSearchFilters = PostFilters.getUIActiveFilters(originalSavedSearchFilters.filter);
+            var uiOriginalSavedSearchFilters = PostFilters.getUIActiveFilters(originalSavedSearchFilters);
             var uiActiveFilters = PostFilters.getUIActiveFilters(uiFilters);
             var cleanSavedSearchFilters = PostFilters.addIfCurrentObjectMatchesOriginal(uiSavedSearchActiveFilters, uiOriginalSavedSearchFilters, uiActiveFilters);
             // get clean version (no defaults) of the saved search filters after processing it with addIfCurrentObjectMatchesOriginal
