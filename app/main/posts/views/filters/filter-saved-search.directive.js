@@ -36,7 +36,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
 
         function saveValueToView(selectedSavedSearch) {
             var modeEntity = PostFilters.getModeEntity();
-            var isSameSavedSearch = modeEntity? selectedSavedSearch.id === modeEntity.id : false;
+            var isSameSavedSearch = modeEntity ? selectedSavedSearch.id === modeEntity.id : false;
             if (selectedSavedSearch && selectedSavedSearch.hasOwnProperty('filter') && !isSameSavedSearch) {
                 PostFilters.setFilters(selectedSavedSearch.filter);
                 PostFilters.setMode('savedsearch', selectedSavedSearch);
