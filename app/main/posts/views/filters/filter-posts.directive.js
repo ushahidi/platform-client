@@ -19,7 +19,6 @@ FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document',
 function FilterPostsController($scope, PostFilters, $state, $document, $element) {
     $scope.searchSavedToggle = false;
     $scope.status = { isopen: false };
-    $scope.view = $state.params.view;
     $scope.hideDropdown = hideDropdown;
     $scope.showDropdown = showDropdown;
     $scope.removeQueryFilter = removeQueryFilter;
