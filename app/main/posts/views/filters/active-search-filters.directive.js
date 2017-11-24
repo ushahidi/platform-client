@@ -93,7 +93,13 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                         return _.difference($scope.savedSearch.filter[key], obj).length !== 0 || _.difference(obj, $scope.savedSearch.filter[key]).length !== 0 ;
                     }
                 }).length > 0 ;
-                var filtersDifferentToSavedSearch = !_.isEqual($scope.savedSearch.filter, filters);
+                var filtersDifferentToSavedSearch =  _.filter(filters, function (obj, key) {
+                    if (!_.isArray(obj)) {
+                        return $scope.savedSearch.filter[key] !== obj;
+                    } else {
+                        return _.difference($scope.savedSearch.filter[key], obj).length !== 0 || _.difference(obj, $scope.savedSearch.filter[key]).length !== 0 ;
+                    }
+                }).length > 0 ;
                 $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && (savedSearchFiltersChanged || filtersDifferentToSavedSearch);
                 // remove values that are in the saved search frmo the uifilters.
                 $scope.uiFilters = PostFilters.cleanUIFilters($scope.uiFilters, $scope.savedSearch.filter);
