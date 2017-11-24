@@ -74,36 +74,45 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             $scope.uiFilters = currentFilters;
 
             if ($scope.savedSearch) {
-                /**
-                 * to handle removal correctly we need to make sure we take currentFilters (which has up to date info) into account,
-                 * because that is where our savedsearch filters will stop being represented when we remove them.
-                 * If there's a key in our current filters that is in the saved search but is not in the active filters at this point,
-                 * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
-                 * that means we have to remove it from the saved search.
-                 **/
-                $scope.savedSearch.filter = PostFilters.cleanRemovedValuesFromObject(filters, PostFilters.getUIActiveFilters($scope.savedSearch.filter));
-                /**
-                 * Add back in savedSearch.filter if an originally saved search filter is removed+added back
-                 */
-                $scope.savedSearch.filter = PostFilters.getUIActiveFilters(PostFilters.addIfCurrentObjectMatchesOriginal(PostFilters.getUIActiveFilters($scope.savedSearch.filter), PostFilters.getUIActiveFilters(originalSavedSearch.filter), PostFilters.getUIActiveFilters($scope.uiFilters)));
-                var savedSearchFiltersChanged = _.filter(PostFilters.getUIActiveFilters(originalSavedSearch.filter), function (obj, key) {
-                    if (!_.isArray(obj)) {
-                        return $scope.savedSearch.filter[key] !== obj;
-                    } else {
-                        return _.difference($scope.savedSearch.filter[key], obj).length !== 0 || _.difference(obj, $scope.savedSearch.filter[key]).length !== 0 ;
-                    }
-                }).length > 0 ;
-                var filtersDifferentToSavedSearch =  _.filter(filters, function (obj, key) {
-                    if (!_.isArray(obj)) {
-                        return $scope.savedSearch.filter[key] !== obj;
-                    } else {
-                        return _.difference($scope.savedSearch.filter[key], obj).length !== 0 || _.difference(obj, $scope.savedSearch.filter[key]).length !== 0 ;
-                    }
-                }).length > 0 ;
+                var originalSavedSearchFilters = PostFilters.getUIActiveFilters(originalSavedSearch.filter);
+                $scope.savedSearch.filter = getUISavedSearchFilters($scope.savedSearch.filter, originalSavedSearchFilters, $scope.uiFilters, filters);
+                var savedSearchFiltersChanged = filtersHaveDifferences(originalSavedSearchFilters, $scope.savedSearch.filter);
+                var filtersDifferentToSavedSearch = filtersHaveDifferences(filters, $scope.savedSearch.filter);
                 $scope.userCanUpdateSavedSearch = _.contains($scope.savedSearch.allowed_privileges, 'update') && (savedSearchFiltersChanged || filtersDifferentToSavedSearch);
-                // remove values that are in the saved search frmo the uifilters.
+                // remove values that are in the saved search from the uifilters.
                 $scope.uiFilters = PostFilters.cleanUIFilters($scope.uiFilters, $scope.savedSearch.filter);
             }
+        }
+
+        function getUISavedSearchFilters(savedSearchFilters, originalSavedSearchFilters, uiFilters, filters) {
+            savedSearchFilters = PostFilters.getUIActiveFilters(savedSearchFilters);
+            /**
+             * to handle removal correctly we need to make sure we take currentFilters (which has up to date info) into account,
+             * because that is where our savedsearch filters will stop being represented when we remove them.
+             * If there's a key in our current filters that is in the saved search but is not in the active filters at this point,
+             * it is because it was removed (since before saved search gets assigned, they are all assigned to the filters)
+             * that means we have to remove it from the saved search.
+             **/
+            savedSearchFilters = PostFilters.cleanRemovedValuesFromObject(filters, savedSearchFilters);
+            /**
+             * Add back in savedSearch.filter if an originally saved search filter is removed+added back
+             */
+            var uiSavedSearchActiveFilters = PostFilters.getUIActiveFilters(savedSearchFilters);
+            var uiOriginalSavedSearchFilters = PostFilters.getUIActiveFilters(originalSavedSearchFilters.filter);
+            var uiActiveFilters = PostFilters.getUIActiveFilters(uiFilters);
+            var cleanSavedSearchFilters = PostFilters.addIfCurrentObjectMatchesOriginal(uiSavedSearchActiveFilters, uiOriginalSavedSearchFilters, uiActiveFilters);
+            // get clean version (no defaults) of the saved search filters after processing it with addIfCurrentObjectMatchesOriginal
+            return PostFilters.getUIActiveFilters(cleanSavedSearchFilters);
+        }
+
+        function filtersHaveDifferences(original, current) {
+            return _.filter(original, function (obj, key) {
+                if (!_.isArray(obj)) {
+                    return current[key] !== obj;
+                } else {
+                    return _.difference(current[key], obj).length !== 0 || _.difference(obj, current[key]).length !== 0 ;
+                }
+            }).length > 0 ;
         }
 
         function transformFilterValue(value, key) {
