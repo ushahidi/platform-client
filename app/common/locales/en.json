@@ -78,7 +78,7 @@
         "no_results": "No results found.",
         "filter_by" :"Filter by...",
         "sort_filter": "Sort & filter",
-        "apply_filters" : "Apply filters",
+        "apply_filters" : "Apply",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
         "filter_by_survey" : "Filter by survey",
@@ -1196,7 +1196,7 @@
         "export" : {
             "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
             "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads"
         }
     },
     "empty": {
