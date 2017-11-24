@@ -16,7 +16,6 @@ function FiltersDropdown() {
 FiltersDropdownController.$inject = ['$scope', '$state', 'PostFilters', 'ModalService', '$rootScope', '_', '$location', 'SavedSearchEndpoint'];
 function FiltersDropdownController($scope, $state, PostFilters, ModalService, $rootScope, _, $location, SavedSearchEndpoint) {
     $scope.canUpdateSavedSearch = false;
-    PostFilters.reactiveFilters = false;
 
     $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
         if (oldValue !== newValue || typeof ($scope.canUpdateSavedSearch) === 'undefined') {

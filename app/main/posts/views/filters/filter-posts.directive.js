@@ -23,6 +23,7 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
     $scope.showDropdown = showDropdown;
     $scope.removeQueryFilter = removeQueryFilter;
     $scope.applyFilters = applyFilters;
+    PostFilters.reactiveFilters = false;
     activate();
 
     function activate() {
