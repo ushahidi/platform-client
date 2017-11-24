@@ -16,23 +16,24 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
         scope.searches = [];
         scope.searchesLength = 0;
         scope.loading = false;
-        scope.$on('savedSearch:update', loadSavedSearches);
-        scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
-            if (typeof (newValue) === 'undefined' || newValue === null) {
-                scope.selectedSavedSearch = null;
-            } else if (oldValue !== newValue && scope.searches.length > 0) {
-                scope.selectedSavedSearch =  scope.searches[newValue];
-            }
-        });
+
+        activate();
 
         function activate() {
-            if (ngModel.$viewValue) {
-                scope.selectedSavedSearch = scope.searches[ngModel.$viewValue];
-            } else if (PostFilters.getModeId()) {
-                scope.selectedSavedSearch = scope.searches[PostFilters.getModeId()];
-            }
-            scope.$watch('selectedSavedSearch', saveValueToView, true);
+            loadSavedSearches().then(function () {
+                if (ngModel.$viewValue) {
+                    scope.selectedSavedSearch = scope.searches[ngModel.$viewValue.id];
+                } else if (PostFilters.getModeId()) {
+                    scope.selectedSavedSearch = scope.searches[PostFilters.getModeId()];
+                }
+
+                scope.$watch('selectedSavedSearch', saveValueToView, true);
+            });
+
+            scope.$on('savedSearch:update', loadSavedSearches);
+            scope.$watch(PostFilters.getModeId, handleModeIdChange);
         }
+
         function saveValueToView(selectedSavedSearch) {
             if (selectedSavedSearch && selectedSavedSearch.hasOwnProperty('filter')) {
                 PostFilters.setFilters(selectedSavedSearch.filter);
@@ -42,10 +43,21 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
             }
             ngModel.$setViewValue(selectedSavedSearch);
         }
+
+        function handleModeIdChange(newValue, oldValue) {
+            if (newValue !== oldValue) {
+                if (typeof (newValue) === 'undefined' || newValue === null) {
+                    scope.selectedSavedSearch = null;
+                } else if (scope.searchesLength > 0) {
+                    scope.selectedSavedSearch =  scope.searches[newValue];
+                }
+            }
+        }
+
         // Load searches + users
         function loadSavedSearches() {
             scope.loading = true;
-            SavedSearchEndpoint.query({}).$promise.then(function (searches) {
+            return SavedSearchEndpoint.query({}).$promise.then(function (searches) {
                 var searchesTmp = _.filter(searches, function (search) {
                     var isOwner = (search.user && search.user.id === _.result($rootScope.currentUser, 'userId')) === true;
                     return search.featured || isOwner;
@@ -53,12 +65,7 @@ function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, Po
                 scope.searches = _.indexBy(searchesTmp, 'id');
                 scope.searchesLength = _.keys(scope.searches).length;
                 scope.loading = false;
-            }).then(function () {
-                activate();
-            }, function (err) {
-                scope.loading = false;
             });
         }
-        loadSavedSearches();
     }
 }
