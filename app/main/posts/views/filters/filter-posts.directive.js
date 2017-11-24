@@ -18,7 +18,6 @@ function FilterPostsDirective() {
 FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element'];
 function FilterPostsController($scope, PostFilters, $state, $document, $element) {
     $scope.searchSavedToggle = false;
-    $scope.qFilter = '';
     $scope.status = { isopen: false };
     $scope.view = $state.params.view;
     $scope.hideDropdown = hideDropdown;
@@ -28,9 +27,6 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
     activate();
 
     function activate() {
-        // @todo define initial filter values
-        // $scope.$watch('filters', handleFilterChange, true);
-
         // Watch all click events on the page
         $document.on('click', handleDocumentClick);
 
@@ -48,7 +44,6 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
     }
 
     function applyFilters() {
-        PostFilters.qEnabled = true;
         PostFilters.reactiveFilters = true;
         $scope.status.isopen = false;
     }

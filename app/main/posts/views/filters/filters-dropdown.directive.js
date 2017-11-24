@@ -44,9 +44,7 @@ function FiltersDropdown(PostFilters, ModalService, $rootScope, _, $location, Sa
             PostFilters.reactiveFilters = true;
             $scope.canUpdateSavedSearch = false;
         };
-        $scope.enableQuery = function () {
-            PostFilters.qEnabled = true;
-        };
+
         $scope.saveSavedSearchModal = function () {
             $scope.savedSearch.filter = $scope.filters;
             // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
