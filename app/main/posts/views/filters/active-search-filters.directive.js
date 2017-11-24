@@ -1,7 +1,7 @@
 module.exports = ActiveSearchFilters;
 
-ActiveSearchFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'FilterTransformers'];
-function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransformers) {
+ActiveSearchFilters.$inject = ['$translate', '$filter', 'PostFilters', '_', 'FilterTransformers', '$rootScope'];
+function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransformers, $rootScope) {
     return {
         restrict: 'E',
         scope: true,
@@ -150,7 +150,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
         }
 
         function showSaveSavedSearchButton() {
-            return !_.isEmpty($scope.uiFilters) && !$scope.savedSearch;
+            return !_.isEmpty($scope.uiFilters) && !$scope.savedSearch && $rootScope.loggedin;
         }
 
     }
