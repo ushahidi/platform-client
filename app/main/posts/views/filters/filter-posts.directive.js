@@ -5,7 +5,9 @@ function FilterPostsDirective() {
     return {
         restrict: 'E',
         scope: {
-            filters: '='
+            filters: '=',
+            onOpen: '&',
+            onClose: '&'
         },
         replace: true,
         controller: FilterPostsController,
@@ -34,6 +36,14 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
 
         $scope.$on('$destroy', () => {
             $document.off('click', handleDocumentClick);
+        });
+
+        $scope.$watch('status.isopen', (value) => {
+            if (value) {
+                $scope.onOpen();
+            } else {
+                $scope.onClose();
+            }
         });
     }
 
