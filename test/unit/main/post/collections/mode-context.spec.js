@@ -3,7 +3,8 @@ describe('collections mode context directive', function () {
     var $rootScope,
         $scope,
         element,
-        Notify;
+        Notify,
+        isolateScope;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -26,21 +27,19 @@ describe('collections mode context directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
-        $scope.$resolve = {
-            collection: {
-                allowed_privileges: 'update'
-            }
+        $scope.collection =  {
+            allowed_privileges: 'update'
         };
-        $scope.collection = {};
 
-        element = '<collections-mode-context></collections-mode-context>';
+        element = '<collections-mode-context collection="collection"></collections-mode-context>';
         element = $compile(element)($scope);
         $scope.$digest();
+        isolateScope = element.isolateScope();
     }));
 
     it('should save a notification', function () {
         spyOn(Notify, 'notify');
-        $scope.saveNotification({id: 'pass'});
+        isolateScope.saveNotification({id: 'pass'});
 
         expect(Notify.notify).toHaveBeenCalled();
     });

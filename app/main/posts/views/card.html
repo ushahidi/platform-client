@@ -3,14 +3,14 @@
     <div class="listing-item-select">
         <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts" ng-click="stopClickPropagation($event)">
     </div>
-    <div class="postcard-body">
+    <div class="postcard-body" ng-click="clickAction(post)">
       <header class="postcard-header">
 
         <post-metadata post="post" hide-date-this-week="true"></post-metadata>
         <!-- this is used in the map view card and the sidebar card in the data view-->
-        <post-actions selected-post="selectedPost" edit-mode="editMode" post="post"></post-actions>
+        <post-actions post="post"></post-actions>
       </header>
-        <div class="postcard-overflow" ng-click="clickAction(post)">
+        <div class="postcard-overflow">
             <div class="postcard-title">
                 <div class="postcard-field">
                 {{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}

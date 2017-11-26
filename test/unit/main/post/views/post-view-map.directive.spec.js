@@ -67,12 +67,21 @@ describe('post view map directive', function () {
         spyOn(PostEndpoint, 'get').and.callThrough();
 
         $scope = _$rootScope_.$new();
-        $scope.isLoading = {
-            state: true
+        $scope.$transition$ = {
+            params: function () {
+                return {
+                    'view': 'map'
+                };
+            },
+            to: function () {
+                return {
+                    name : ''
+                };
+            }
         };
-        $scope.filters = {};
+        $scope.filters = PostFilters.getFilters();
 
-        element = '<post-view-map filters="filters" is-loading="isLoading"></post-view-map>';
+        element = '<post-view-map $transition$="$transition$" filters="filters"></post-view-map>';
     }));
 
     it('should create a map', function () {
@@ -162,7 +171,7 @@ describe('post view map directive', function () {
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
-        spyOn(isolateScope, 'loadPosts').and.callThrough();
+        //spyOn(isolateScope, 'loadPosts').and.callThrough();
         /**
          * Set default qEnabled value to ensure we are dealing
          * with the directive's logic and not the postFilters defaults
@@ -198,7 +207,7 @@ describe('post view map directive', function () {
          */
         PostFilters.qEnabled = true;
         $rootScope.$digest();
-        expect(isolateScope.loadPosts.calls.count()).toEqual(2);
+        expect(PostEndpoint.geojson.calls.count()).toEqual(3);
 
         /**
          * Change q twice. qEnabled is now false because we already 'clicked'and set it back to false.
@@ -220,7 +229,7 @@ describe('post view map directive', function () {
         /**
          * qEnabled is set to false successfuly if this equals 2
          */
-        expect(isolateScope.loadPosts.calls.count()).toEqual(2);
+        expect(PostEndpoint.geojson.calls.count()).toEqual(3);
 
         /**
          * Set qEnabled to true. This should generate 2 more call to loadPosts,
@@ -231,7 +240,7 @@ describe('post view map directive', function () {
          */
         PostFilters.qEnabled = true;
         $rootScope.$digest();
-        expect(isolateScope.loadPosts.calls.count()).toEqual(4);
+        expect(PostEndpoint.geojson.calls.count()).toEqual(5);
         /**
          * If I (for whatever reason) enable qEnabled with no changes,
          * loadPosts is still called. This is because we are actually changing
@@ -241,7 +250,7 @@ describe('post view map directive', function () {
          */
         PostFilters.qEnabled = true;
         $rootScope.$digest();
-        expect(isolateScope.loadPosts.calls.count()).toEqual(5);
+        expect(PostEndpoint.geojson.calls.count()).toEqual(6);
 
     });
 });
