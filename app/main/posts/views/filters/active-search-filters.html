@@ -5,7 +5,7 @@
         </svg>
         <span><em><translate translate="app.saved_search"></translate>: </em>{{savedSearch.name}}</span>
     </span>
-    <div class="form-field" ng-repeat="(key, values) in savedSearch.filter">
+    <div ng-repeat="(key, values) in savedSearch.filter">
         <span ng-if="isArray(values)">
             <span class="bug saved-search-filter" ng-repeat="value in values track by $index ">
                 <svg class="iconic" ng-click="removeFilter(key, value, savedSearch, $event)">
