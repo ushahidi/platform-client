@@ -30,11 +30,39 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         getModeId: getModeId,
         getModeEntity: getModeEntity,
         countFilters: countFilters,
+        cleanUIFilters: cleanUIFilters,
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
         reactiveFilters: true
     };
 
+    /**
+     * Removes every value that is not an array from the "target" object IF the key is present in the "from" object.
+     * For array values it runs a diff between the "target" and "from" current value:
+     * - if it' empty, DELETES the key from "target"
+     * - if not empty, assigns the diff in "target"
+     * Finally this returns the target object to be used elsewhere.
+     * The function was created for the uiFilters specifically.
+     * @param target
+     * @param from
+     * @returns object
+     */
+    function cleanUIFilters(target, from) {
+        _.each(target, function (value, key) {
+            var shouldDeleteTargetKey = !_.isArray(target[key]) && target.hasOwnProperty(key) && !_.isEmpty(from[key]) || !_.isArray(target[key]) && target[key] === getDefaults()[key];
+            if (shouldDeleteTargetKey) {
+                delete target[key];
+            } else if (_.isArray(target[key])) {
+                var diff =  _.difference(value, from[key]);
+                if (diff.length === 0) {
+                    delete target[key];
+                } else {
+                    target[key] = diff;
+                }
+            }
+        });
+        return target;
+    }
     /**
      *  Original has 3 filters, then 1 was removed, so current has 2. uiFiltersCurrent has 3 again because the user re-added it.
      *  We need to compare  original and uiFIltersCurrent.

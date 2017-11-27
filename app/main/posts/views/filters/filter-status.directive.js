@@ -20,6 +20,7 @@ function StatusSelectDirective(PostActionsService, $rootScope) {
 
         function activate() {
             scope.$watch('selectedStatuses', saveValueToView, true);
+            scope.$watch(() => ngModel.$viewValue, renderModelValue, true);
             ngModel.$render = renderModelValue;
         }
 

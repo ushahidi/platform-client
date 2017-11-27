@@ -48,9 +48,11 @@ module.exports = [function () {
         clearFilters: function () {},
         clearFilter: function () {},
         hasFilters: function () {},
+        cleanUIFilters: function () {},
         getUIActiveFilters: function (filters) {
             return filters;
         },
+        addIfCurrentObjectMatchesOriginal: function () {},
         getActiveFilters: function (filters) {
             return filters;
         },
