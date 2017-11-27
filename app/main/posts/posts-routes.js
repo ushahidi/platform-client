@@ -140,7 +140,18 @@ function (
             url: '/views/map',
             name: 'posts.map.all',
             views: {
-                'mode-context': 'modeContext'
+                'mode-context': {
+                    componentProvider : ['PostFilters', (PostFilters) => {
+                        if (PostFilters.getMode() === 'savedsearch') {
+                            return 'savedSearchModeContext';
+                        }
+                        if (PostFilters.getMode() === 'collection') {
+                            return 'collectionModeContext';
+                        }
+
+                        return 'modeContext';
+                    }]
+                }
             }
         }
     )
