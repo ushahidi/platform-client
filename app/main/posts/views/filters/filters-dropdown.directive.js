@@ -40,9 +40,8 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
         $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
     };
     $scope.clearFilters = function () {
-        if (PostFilters.getMode() === 'savedsearch' && PostFilters.getModeId()) {
+        if (_.contains(['savedsearch', 'collection'], PostFilters.getMode()) && PostFilters.getModeId()) {
             PostFilters.setMode('all');
-
             if ($state.$current.includes['posts.map']) {
                 $state.go('posts.map.all');
             } else {
