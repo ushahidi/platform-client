@@ -360,8 +360,11 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return entity ? entity.id : null;
     }
 
-    function getModeEntity() {
-        return entity;
+    function getModeEntity(type) {
+        if (getMode() === type) {
+            return entity;
+        }
+        return null;
     }
     function countFilters() {
         return _.keys(this.getActiveFilters(this.getFilters())).length;

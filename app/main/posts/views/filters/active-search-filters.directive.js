@@ -52,8 +52,8 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              **/
 
             else if (resetSearch === true || !$scope.savedSearch || originalSavedSearch.id !== PostFilters.getModeId()) {
-                originalSavedSearch = angular.copy(PostFilters.getModeEntity());
-                $scope.savedSearch = PostFilters.getModeEntity();
+                originalSavedSearch = angular.copy(PostFilters.getModeEntity('savedsearch'));
+                $scope.savedSearch = PostFilters.getModeEntity('savedsearch');
             }
             /**
              * This handles the requirement to have saved search filters displayed in a different way

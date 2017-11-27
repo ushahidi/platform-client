@@ -30,7 +30,7 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
     };
     // Check if we can edit
     function setSavedSearchUpdateStatus() {
-        var savedSearch = PostFilters.getModeEntity();
+        var savedSearch = PostFilters.getModeEntity('savedsearch');
 
         $scope.canUpdateSavedSearch = savedSearch && _.contains(savedSearch.allowed_privileges, 'update');
     }
@@ -65,7 +65,7 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
     };
     $scope.editSavedSearchModal = function (editOrUpdate) {
         let modalHeaderText = editOrUpdate === 'edit' ? 'set.edit_savedsearch' : 'set.update_savedsearch';
-        $scope.savedSearch = PostFilters.getModeEntity();
+        $scope.savedSearch = PostFilters.getModeEntity('savedsearch');
         $scope.savedSearch.filter = PostFilters.getActiveFilters($scope.filters);
         // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
         $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;

@@ -20,14 +20,14 @@ function (
                     if ($transition$.params().collectionId) {
                         return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
                     } else if (PostFilters.getMode() === 'collection') {
-                        return PostFilters.getModeEntity();
+                        return PostFilters.getModeEntity('collection');
                     }
                 }],
                 savedSearch: ['$transition$', 'SavedSearchEndpoint', 'PostFilters', function ($transition$, SavedSearchEndpoint, PostFilters) {
                     if ($transition$.params().savedSearchId) {
                         return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
                     } else if (PostFilters.getMode() === 'savedsearch') {
-                        return PostFilters.getModeEntity();
+                        return PostFilters.getModeEntity('savedsearch');
                     }
                 }],
                 filters: ['PostFilters', (PostFilters) => {
@@ -167,7 +167,7 @@ function (
                     PostFilters.setMode('savedsearch', savedSearch);
                     PostFilters.setFilters(savedSearch.filter);
                 } else {
-                    savedSearch = PostFilters.getModeEntity();
+                    savedSearch = PostFilters.getModeEntity('savedsearch');
                 }
 
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
