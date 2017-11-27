@@ -39,7 +39,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             var currentFilters = angular.copy(PostFilters.getUIActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
-            delete currentFilters.set;
+            // delete currentFilters.set;
             var isModeSavedSearch = PostFilters.getMode() === 'savedsearch';
             // if we are not in a saved search, make sure to reset the original and the scope saved search
             if (!isModeSavedSearch) {
