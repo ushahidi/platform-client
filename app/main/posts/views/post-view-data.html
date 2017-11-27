@@ -28,7 +28,7 @@
                     <a ng-click="changeStatus(status)">
                       <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-                        <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
                         <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
                       </svg>
                       <span class="label" translate="post.published" ng-if="status == 'published'">Published</span>
@@ -56,7 +56,7 @@
 
         </listing-toolbar>
         <div class="listing timeline init">
-          
+
         <div class="bulk-action" ng-if="posts.length > 0 || !isLoading()">
             <div class="bulk-action-primary">{{posts.length}} of {{totalItems}} reports</div>
             <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
