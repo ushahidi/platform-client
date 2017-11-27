@@ -51,7 +51,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              and is used for showing the filters as the user adds/removes filters
              **/
 
-            if (resetSearch === true || !$scope.savedSearch || originalSavedSearch.id !== PostFilters.getModeId()) {
+            else if (resetSearch === true || !$scope.savedSearch || originalSavedSearch.id !== PostFilters.getModeId()) {
                 originalSavedSearch = angular.copy(PostFilters.getModeEntity());
                 $scope.savedSearch = PostFilters.getModeEntity();
             }
