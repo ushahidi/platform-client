@@ -16,10 +16,7 @@ function FilterPostsDirective() {
 FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters'];
 function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
     $scope.searchSavedToggle = false;
-    $scope.cancel = cancel;
-    $scope.applyFilters = applyFilters;
     $scope.qFilter = '';
-    $scope.openSavedModal = openSavedModal;
     activate();
 
     $scope.status = {
@@ -34,22 +31,5 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
     function activate() {
         // @todo define initial filter values
         // $scope.$watch('filters', handleFilterChange, true);
-    }
-
-    function cancel() {
-        // Reset filters
-        rollbackForm();
-        // .. and close the dropdown
-        ModalService.close();
-    }
-
-    function applyFilters(event) {
-    }
-
-    function rollbackForm() {
-        PostFilters.clearFilters();
-    }
-    function openSavedModal() {
-        ModalService.openTemplate('<saved-search-modal></saved-search-modal>', 'nav.saved_searches', '/img/iconic-sprite.svg#star', $scope, true, true);
     }
 }

@@ -16,9 +16,15 @@ describe('post active search filters directive', function () {
         .directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
         .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
         .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
-        .service('$stateParams', function () {
+        .service('$state', function () {
             return {
-                'view': 'data'
+                '$current': {
+                    name: 'posts.data',
+                    includes: {
+                        'posts': true,
+                        'posts.data': true
+                    }
+                }
             };
         });
         angular.mock.module('testApp');
@@ -73,7 +79,7 @@ describe('post active search filters directive', function () {
         });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.clearFilters();
-            expect(isolateScope.filtersVar).toEqual(PostFilters.getDefaults());
+            expect(isolateScope.filters).toEqual(PostFilters.getDefaults());
         });
         it('should set qEnabled true when I call enableQuery', function () {
             isolateScope.enableQuery();

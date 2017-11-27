@@ -130,11 +130,11 @@ function PostViewDataController(
             $scope.$emit('setPageTitle', title);
         });
 
-        // Grab initial filters
+        // set mode IF the mode is not already set
         if ($scope.collection) {
-            PostFilters.setMode('collection', $scope.collection.id);
+            PostFilters.setMode('collection', $scope.collection);
         } else if ($scope.savedSearch) {
-            PostFilters.setMode('savedsearch', $scope.savedSearch.id);
+            PostFilters.setMode('savedsearch', $scope.savedSearch);
         } else {
             PostFilters.setMode('all');
         }

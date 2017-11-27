@@ -3,6 +3,12 @@
 
     <div class="form-field checkbox icon-input">
         <label>
+            <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'email'" name="selectedSources">
+            <span>Email</span>
+        </label>
+    </div>
+    <div class="form-field checkbox icon-input">
+        <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'sms'" name="selectedSources">
             <span>SMS</span>
         </label>
@@ -11,12 +17,6 @@
         <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'twitter'" name="selectedSources">
             <span>Twitter</span>
-        </label>
-    </div>
-    <div class="form-field checkbox icon-input">
-        <label>
-            <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'email'" name="selectedSources">
-            <span>Email</span>
         </label>
     </div>
     <div class="form-field checkbox icon-input">

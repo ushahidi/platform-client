@@ -22,6 +22,7 @@ function (
             $scope.save = $translate.instant('app.save');
             $scope.saving = $translate.instant('app.saving');
             $scope.processing = false;
+            // @uirouter-refactor this is very wrong.
             WebhookEndpoint.getFresh({id: $scope.$resolve.$transition$.params().id}).$promise.then(function (webhook) {
                 $scope.webhook = webhook;
 

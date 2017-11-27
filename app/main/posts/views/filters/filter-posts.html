@@ -12,12 +12,6 @@
     <filter-searchbar model="filters.q"></filter-searchbar>
     <!-- Toggle Filters show/hide -->
     <div uib-dropdown-toggle class="searchbar-options">
-        <a class="button" ng-click="openSavedModal()">
-            <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#star"></use>
-            </svg>
-            <span class="button-label hidden" translate>app.saved</span>
-        </a>
         <a     ng-click="toggleDropdown($event)"
                    type="button"
                    class="searchbar-options-filter button"
@@ -26,5 +20,5 @@
         </a>
     </div>
 
-    <filters-dropdown uib-dropdown-menu class="dropdown-menu" dropdown-status="status" filters-var="filters" ng-model="filters" cancel="cancel" apply-filters="applyFilters"></filters-dropdown>
+    <filters-dropdown uib-dropdown-menu class="dropdown-menu" dropdown-status="status" filters="filters"></filters-dropdown>
 </form>

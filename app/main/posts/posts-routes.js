@@ -13,18 +13,21 @@ function (
             name: 'posts',
             abstract: true,
             params: {
-                view: {value: null, squash: true},
                 filterState: {value: null, squash: true}
             },
             resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
+                collection: ['$transition$', 'CollectionEndpoint', 'PostFilters', function ($transition$, CollectionEndpoint, PostFilters) {
                     if ($transition$.params().collectionId) {
                         return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
+                    } else if (PostFilters.getMode() === 'collection') {
+                        return PostFilters.getModeEntity();
                     }
                 }],
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
+                savedSearch: ['$transition$', 'SavedSearchEndpoint', 'PostFilters', function ($transition$, SavedSearchEndpoint, PostFilters) {
                     if ($transition$.params().savedSearchId) {
                         return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
+                    } else if (PostFilters.getMode() === 'savedsearch') {
+                        return PostFilters.getModeEntity();
                     }
                 }],
                 filters: ['PostFilters', (PostFilters) => {
@@ -44,9 +47,9 @@ function (
             name: 'posts.savedsearchRedirector',
             onEnter: ['$state', 'savedSearch', function ($state, savedSearch) {
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
-                    $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
+                    $state.go('posts.data', {savedSearchId: savedSearch.id});
                 } else {
-                    $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id});
                 }
             }]
         }
@@ -57,9 +60,9 @@ function (
             name: 'posts.collectionRedirector',
             onEnter: ['$state', 'collection', function ($state, collection) {
                 if (collection.view === 'data' || collection.view === 'list') {
-                    $state.go('posts.data.collection', {collectionId: collection.id, view: 'data'});
+                    $state.go('posts.data.collection', {collectionId: collection.id});
                 } else {
-                    $state.go('posts.map.collection', {collectionId: collection.id, view: 'map'});
+                    $state.go('posts.map.collection', {collectionId: collection.id});
                 }
             }]
         }
@@ -69,7 +72,6 @@ function (
             url: '/views/data',
             name: 'posts.data',
             params: {
-                view: {value: 'data', squash: true},
                 filterState: {value: null, squash: true},
                 activeCol: {value: 'timeline', squash: true}
             },
@@ -87,6 +89,12 @@ function (
             }
         }
     )
+
+    /**
+     * @uirouter-refactor
+     * we need to  be able to set mode-context as collectionModeContext or as savedSearchModeContext
+     * without the route since the user would land in /views/map after the redirect
+     */
     .state(
         {
             url: '^/savedsearches/:savedSearchId/data',
@@ -94,8 +102,14 @@ function (
             params: {
                 activeCol: {value: 'timeline', squash: true}
             },
-            onEnter: ['PostFilters', 'savedSearch', function (PostFilters, savedSearch) {
+            onEnter: ['PostFilters', '$state', 'savedSearch', function (PostFilters, $state, savedSearch) {
+                PostFilters.setMode('savedsearch', savedSearch);
                 PostFilters.setFilters(savedSearch.filter);
+                if (savedSearch.view === 'data' || savedSearch.view === 'list') {
+                    $state.go('posts.data', {savedSearchId: savedSearch.id});
+                } else {
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id});
+                }
             }]
         }
     )
@@ -103,12 +117,12 @@ function (
         {
             url: '^/collections/:collectionId/data',
             name: 'posts.data.collection',
+            onEnter: ['$state', 'PostFilters', 'collection', function ($state, PostFilters, collection) {
+                PostFilters.setMode('collection', collection);
+            }],
             params: {
                 activeCol: {value: 'timeline', squash: true}
-            },
-            onEnter: ['PostFilters', 'collection', function (PostFilters, collection) {
-                PostFilters.setMode('collection', collection.id);
-            }]
+            }
         }
     )
     .state(
@@ -117,7 +131,6 @@ function (
             abstract: true,
             component: 'postViewMap',
             params: {
-                view: {value: 'map', squash: true},
                 filterState: {value: null, squash: true}
             }
         }
@@ -128,11 +141,7 @@ function (
             name: 'posts.map.all',
             views: {
                 'mode-context': 'modeContext'
-            },
-            onEnter: ['PostFilters', function (PostFilters) {
-                PostFilters.setMode('all');
-                PostFilters.resetDefaults();
-            }]
+            }
         }
     )
     .state(
@@ -142,21 +151,36 @@ function (
             views: {
                 'mode-context': 'savedSearchModeContext'
             },
-            onEnter: ['PostFilters', 'savedSearch', function (PostFilters, savedSearch) {
-                PostFilters.setMode('savedsearch', savedSearch.id);
-                PostFilters.setFilters(savedSearch.filter);
+            onEnter: ['$state', 'PostFilters', 'savedSearch', function ($state, PostFilters, savedSearch) {
+                if (!PostFilters.getModeId() && savedSearch) {
+                    PostFilters.setMode('savedsearch', savedSearch);
+                    PostFilters.setFilters(savedSearch.filter);
+                } else {
+                    savedSearch = PostFilters.getModeEntity();
+                }
+
+                if (savedSearch.view === 'data' || savedSearch.view === 'list') {
+                    $state.go('posts.data', {savedSearchId: savedSearch.id});
+                } else {
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id});
+                }
             }]
         }
     )
-    .state(
+    /**
+     * @uirouter-refactor
+     * we need to  be able to set mode-context as collectionModeContext or as savedSearchModeContext
+     * without the route since the user would land in /views/map after the redirect
+     */
+        .state(
         {
             url: '^/collections/:collectionId/map',
             name: 'posts.map.collection',
             views: {
                 'mode-context': 'collectionModeContext'
             },
-            onEnter: ['PostFilters', 'collection', function (PostFilters, collection) {
-                PostFilters.setMode('collection', collection.id);
+            onEnter: ['$state', 'PostFilters', 'collection', function ($state, PostFilters, collection) {
+                PostFilters.setMode('collection', collection);
             }]
         }
     )
