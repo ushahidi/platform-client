@@ -33,8 +33,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         cleanUIFilters: cleanUIFilters,
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
-        reactiveFilters: true,
-        qEnabled: false
+        reactiveFilters: true
     };
 
     /**
@@ -173,15 +172,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             from[filterKey] = getDefaults()[filterKey];
         }
 
-        /**
-         * Since q is a special type of filter that gets applied on the click
-         * of a button separate from the input control, and since it should be automatically
-         * enabled when you clear it, we are adding this
-         */
-        if (filterKey === 'q') {
-            this.qEnabled = true;
-            this.reactiveFilters = true;
-        }
         return from;
     }
 
@@ -217,9 +207,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                     return true;
                 }
                 if (key === 'reactiveFilters') {
-                    return true;
-                }
-                if (key === 'qEnabled') {
                     return true;
                 }
                 // Is value empty?
@@ -310,9 +297,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 }
                 // Ignore difference in saved_search
                 if (key === 'saved_search') {
-                    return true;
-                }
-                if (key === 'qEnabled') {
                     return true;
                 }
                 // Ignore difference in within_km
