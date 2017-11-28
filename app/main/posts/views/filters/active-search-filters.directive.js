@@ -13,21 +13,46 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
     function ActiveFiltersLink($scope, ngModel) {
         $scope.uiFilters = {};
         $scope.savedSearch = null;
+        $scope.collection = PostFilters.getModeEntity('collection');
         var originalSavedSearch;
         $scope.removeFilter = removeFilter;
         $scope.transformFilterValue = transformFilterValue;
         $scope.removeSavedSearch = removeSavedSearch;
+        $scope.removeCollection = removeCollection;
         $scope.showSaveSavedSearchButton = showSaveSavedSearchButton;
         $scope.userCanUpdateSavedSearch = false;
 
         activate();
-        $scope.$on('savedSearch:update', function () {
-            handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()), null, true);
-        });
 
         $scope.isArray = angular.isArray;
 
         function activate() {
+            /**
+             * we need to listen for saved searches and collections update events
+             * so that we are notified when a user changes a collection or
+             * saved search
+             */
+            $scope.$on('savedSearch:update', function () {
+                handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()), null, true);
+            });
+            $scope.$on('collection:update', function () {
+                handleFiltersUpdate(PostFilters.getActiveFilters(PostFilters.getFilters()), null, true);
+            });
+            /**
+             * we don't have filters set when we are on a collection
+             * so we need to watch for collection mode changes specifically instead of relying on the filters
+             * changing like we do for saved searches
+             */
+            $scope.$watch(function () {
+                return PostFilters.getModeId();
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    $scope.collection = PostFilters.getModeEntity('collection');
+                    $scope.savedSearch = null;
+                    originalSavedSearch = null;
+                }
+            }, true);
+
             FilterTransformers.requestsFiltersData().then(function (all) {
                 $scope.$watch(function () {
                     return PostFilters.getActiveFilters(PostFilters.getFilters());
@@ -39,7 +64,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             var currentFilters = angular.copy(PostFilters.getUIActiveFilters(filters));
             FilterTransformers.rawFilters = angular.copy(filters);
             // Remove set filter as it is only relevant to collections and should be immutable in that view
-            delete currentFilters.set;
+            // delete currentFilters.set;
             var isModeSavedSearch = PostFilters.getMode() === 'savedsearch';
             // if we are not in a saved search, make sure to reset the original and the scope saved search
             if (!isModeSavedSearch) {
@@ -50,10 +75,10 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              setup the originalSavedSearch (which NEVER changes) and the savedSearch, which changes
              and is used for showing the filters as the user adds/removes filters
              **/
-
-            if (resetSearch === true || !$scope.savedSearch || originalSavedSearch.id !== PostFilters.getModeId()) {
-                originalSavedSearch = angular.copy(PostFilters.getModeEntity());
-                $scope.savedSearch = PostFilters.getModeEntity();
+            else if (resetSearch === true || !$scope.savedSearch || originalSavedSearch.id !== PostFilters.getModeId()) {
+                $scope.collection = null;
+                originalSavedSearch = angular.copy(PostFilters.getModeEntity('savedsearch'));
+                $scope.savedSearch = PostFilters.getModeEntity('savedsearch');
             }
             /**
              * This handles the requirement to have saved search filters displayed in a different way
@@ -151,8 +176,22 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             });
         }
 
+        function removeCollection(collection, $event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.collection = null;
+            PostFilters.setMode('all', null);
+            /**
+             * because the default for collections is different than the default for
+             * other modes, we need to explicitly reset the filters or it will be shown
+             * as if we had manually set the collection status defaults [published, draft, archived]
+             */
+            PostFilters.setFilter('status', PostFilters.getDefaults().status);
+        }
+
+        // collections should not be saved within a saved search
         function showSaveSavedSearchButton() {
-            return !_.isEmpty($scope.uiFilters) && !$scope.savedSearch && $rootScope.loggedin;
+            return !$scope.collection && !_.isEmpty($scope.uiFilters) && !$scope.savedSearch && $rootScope.loggedin;
         }
 
     }

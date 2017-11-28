@@ -60,6 +60,9 @@ module.exports = [function () {
         },
         getMode: function () {
             return filterMode;
+        },
+        getModeId: function () {
+            return 1;
         }
     };
 }];

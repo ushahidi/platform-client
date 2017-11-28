@@ -112,7 +112,7 @@
         <!--// END IF //-->
         <div class="form-field">
             <!-- mode context is only available in the map so we are always sending you back to it in the return to all posts feature -->
-            <a ui-sref="posts.map.all" ui-sref-opts="{reload: true}" type="button" class="button-link">
+            <a ng-click="clearFilters()" type="button" class="button-link">
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#arrow-left"></use>
                 </svg>

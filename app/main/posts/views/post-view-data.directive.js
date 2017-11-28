@@ -136,14 +136,6 @@ function PostViewDataController(
             $scope.$emit('setPageTitle', title);
         });
 
-        // set mode IF the mode is not already set
-        if ($scope.collection) {
-            PostFilters.setMode('collection', $scope.collection);
-        } else if ($scope.savedSearch) {
-            PostFilters.setMode('savedsearch', $scope.savedSearch);
-        } else {
-            PostFilters.setMode('all');
-        }
         $scope.filters = PostFilters.getFilters();
 
         // If we are coming into Data View with a selected post

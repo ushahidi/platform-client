@@ -8,6 +8,7 @@
         "submit_another" : "Submit & Add Another",
         "submit_response": "Submit a survey response",
         "can_see_this" : "can see this",
+        "collection": "Collection",
         "collections" : "Collections",
         "create_collection" : "Create collection",
         "export_to_csv" : "Export to CSV",

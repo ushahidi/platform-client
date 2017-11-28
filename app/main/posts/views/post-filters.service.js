@@ -111,8 +111,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
      * function to deal with the fact that logout and login don't really reset the defaults.
      */
     function resetDefaults() {
-        return activate().then(function () {
-            clearFilters();
+        return activate().then(() => {
+            this.clearFilters();
         });
     }
 
@@ -151,11 +151,12 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return filterState;
     }
 
-    function clearFilters(resetMode) {
-        if (resetMode === true) {
-            setMode('all');
-        }
-        return angular.copy(getDefaults(), filterState);
+    function clearFilters() {
+        // Replace filterState with defaults
+        angular.copy(getDefaults(), filterState);
+        // Trigger reactive filters
+        this.reactiveFilters = true;
+        return filterState;
     }
 
     function clearFilter(filterKey, value) {
@@ -329,7 +330,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         if (newMode !== filterMode) {
             filterMode = newMode;
             if (filterMode === 'collection') {
-                clearFilters();
+                this.clearFilters();
             }
 
         }
@@ -344,11 +345,23 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return entity ? entity.id : null;
     }
 
-    function getModeEntity() {
-        return entity;
+    function getModeEntity(type) {
+        if (getMode() === type) {
+            return entity;
+        }
+        return null;
     }
     function countFilters() {
-        return _.keys(this.getActiveFilters(this.getFilters())).length;
+        let count = _.keys(this.getActiveFilters(this.getFilters())).length;
+
+        // Hacky workaround to make sure set is counted in filter counter
+        // Can probably be refactored to just include set in the filterState
+        // itself
+        if (filterMode === 'collection') {
+            count++;
+        }
+
+        return count;
     }
 }
 
