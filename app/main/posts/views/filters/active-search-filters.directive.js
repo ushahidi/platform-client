@@ -189,8 +189,9 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             PostFilters.setFilter('status', PostFilters.getDefaults().status);
         }
 
+        // collections should not be saved within a saved search
         function showSaveSavedSearchButton() {
-            return !_.isEmpty($scope.uiFilters) && !$scope.savedSearch && $rootScope.loggedin;
+            return !$scope.collection && !_.isEmpty($scope.uiFilters) && !$scope.savedSearch && $rootScope.loggedin;
         }
 
     }
