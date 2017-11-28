@@ -117,6 +117,12 @@ function PostViewDataController(
         $scope.activeCol = $state.params.activeCol;
     }));
 
+    unbindFns.push($transitions.onSuccess({
+        to: 'posts.data.*'
+    }, () => {
+        $scope.selectedPost.post = _.findWhere($scope.posts, { id: parseInt($state.params.postId, 10) });
+    }));
+
     // Cleanup and remove all listeners
     $scope.$on('$destroy', () => {
         unbindFns.forEach(Function.prototype.call, Function.prototype.call);
