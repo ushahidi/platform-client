@@ -21,7 +21,7 @@ function PostActionsDirective(
     _) {
     return {
         restrict: 'E',
-        replace: true,
+        replace: false,
         scope: {
             post: '='
         },
