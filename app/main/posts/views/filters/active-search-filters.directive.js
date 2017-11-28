@@ -44,10 +44,10 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              * changing like we do for saved searches
              */
             $scope.$watch(function () {
-                return PostFilters.getModeEntity('collection');
+                return PostFilters.getModeId();
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    $scope.collection = newValue;
+                    $scope.collection = PostFilters.getModeEntity('collection');
                     $scope.savedSearch = null;
                     originalSavedSearch = null;
                 }
