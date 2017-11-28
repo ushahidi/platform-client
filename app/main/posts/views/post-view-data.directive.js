@@ -203,6 +203,19 @@ function PostViewDataController(
             }
         });
 
+        // Change state on mode change
+        $scope.$watch(() => {
+            return PostFilters.getModeId();
+        }, (mode) => {
+            if (PostFilters.getMode() === 'savedsearch') {
+                $state.go('posts.data.savedsearch', {savedSearchId: PostFilters.getModeId()});
+            } else if (PostFilters.getMode() === 'collection') {
+                $state.go('posts.data.collection', {collectionId: PostFilters.getModeId()});
+            } else {
+                $state.go('posts.data');
+            }
+        });
+
         // I don't know what this does but its terrifying
         //
         // $scope.$watch(function () {

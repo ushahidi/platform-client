@@ -52,6 +52,19 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 })
                 .then(watchFilters);
 
+            // Change state on mode change
+            $scope.$watch(() => {
+                return PostFilters.getModeId();
+            }, (mode) => {
+                if (PostFilters.getMode() === 'savedsearch') {
+                    $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                } else if (PostFilters.getMode() === 'collection') {
+                    $state.go('posts.map.collection', {collectionId: PostFilters.getModeId()});
+                } else {
+                    $state.go('posts.map.all');
+                }
+            });
+
             // Cleanup leaflet map
             $scope.$on('$destroy', function () {
                 if (map) {
