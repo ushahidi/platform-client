@@ -13,8 +13,8 @@ function FiltersDropdown() {
     };
 }
 
-FiltersDropdownController.$inject = ['$scope', '$state', 'PostFilters', 'ModalService', '$rootScope', '_', '$location', 'SavedSearchEndpoint'];
-function FiltersDropdownController($scope, $state, PostFilters, ModalService, $rootScope, _, $location, SavedSearchEndpoint) {
+FiltersDropdownController.$inject = ['$scope', '$state', 'PostFilters', 'ModalService', '$rootScope', '_'];
+function FiltersDropdownController($scope, $state, PostFilters, ModalService, $rootScope, _) {
     $scope.canUpdateSavedSearch = false;
     PostFilters.reactiveFilters = false;
 

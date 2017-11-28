@@ -1,3 +1,11 @@
+<div class="form-field saved-search" ng-show="collection">
+    <span class="bug">
+        <svg class="iconic" ng-click="removeCollection(collection, $event)">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
+        </svg>
+        <span><em><translate translate="app.collection"></translate>: </em>{{collection.name}}</span>
+    </span>
+</div>
 <div class="form-field saved-search" ng-show="savedSearch">
     <span class="bug">
         <svg class="iconic" ng-click="removeSavedSearch(savedSearch, $event)">
