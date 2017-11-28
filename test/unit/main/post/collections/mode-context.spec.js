@@ -16,6 +16,11 @@ describe('collections mode context directive', function () {
         .directive('collectionsModeContext', require('app/main/posts/collections/mode-context.directive'))
         .service('CollectionsService', function () {
             return {};
+        })
+        .service('$state', () => {
+            return {
+                go: () => {}
+            };
         });
 
         angular.mock.module('testApp');
