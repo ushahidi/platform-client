@@ -352,7 +352,16 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return null;
     }
     function countFilters() {
-        return _.keys(this.getActiveFilters(this.getFilters())).length;
+        let count = _.keys(this.getActiveFilters(this.getFilters())).length;
+
+        // Hacky workaround to make sure set is counted in filter counter
+        // Can probably be refactored to just include set in the filterState
+        // itself
+        if (filterMode === 'collection') {
+            count++;
+        }
+
+        return count;
     }
 }
 
