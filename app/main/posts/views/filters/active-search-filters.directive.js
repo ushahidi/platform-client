@@ -48,6 +48,8 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
                     $scope.collection = newValue;
+                    $scope.savedSearch = null;
+                    originalSavedSearch = null;
                 }
             }, true);
 
@@ -73,8 +75,8 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
              setup the originalSavedSearch (which NEVER changes) and the savedSearch, which changes
              and is used for showing the filters as the user adds/removes filters
              **/
-
             else if (resetSearch === true || !$scope.savedSearch || originalSavedSearch.id !== PostFilters.getModeId()) {
+                $scope.collection = null;
                 originalSavedSearch = angular.copy(PostFilters.getModeEntity('savedsearch'));
                 $scope.savedSearch = PostFilters.getModeEntity('savedsearch');
             }
