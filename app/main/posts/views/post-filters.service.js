@@ -112,8 +112,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
      * function to deal with the fact that logout and login don't really reset the defaults.
      */
     function resetDefaults() {
-        return activate().then(function () {
-            clearFilters();
+        return activate().then(() => {
+            this.clearFilters();
         });
     }
 
@@ -153,7 +153,11 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilters() {
-        return angular.copy(getDefaults(), filterState);
+        // Replace filterState with defaults
+        angular.copy(getDefaults(), filterState);
+        // Trigger reactive filters
+        this.reactiveFilters = true;
+        return filterState;
     }
 
     function clearFilter(filterKey, value) {
@@ -342,7 +346,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         if (newMode !== filterMode) {
             filterMode = newMode;
             if (filterMode === 'collection') {
-                clearFilters();
+                this.clearFilters();
             }
 
         }

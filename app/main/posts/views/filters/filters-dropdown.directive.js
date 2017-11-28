@@ -50,7 +50,6 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
         }
         $scope.filters = PostFilters.clearFilters();
         $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
-        PostFilters.reactiveFilters = true;
         $scope.canUpdateSavedSearch = false;
     };
     $scope.enableQuery = function () {
