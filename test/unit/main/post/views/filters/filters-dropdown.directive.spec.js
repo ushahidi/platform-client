@@ -1,4 +1,4 @@
-describe('post active search filters directive', function () {
+describe('post filters-dropdown directive', function () {
 
     var $rootScope,
         $scope,
@@ -69,21 +69,9 @@ describe('post active search filters directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('reactiveFilters should be false', function () {
-            expect(PostFilters.reactiveFilters).toEqual(false);
-        });
-        it('should enable reactiveFilters when I call applyFiltersLocked', function () {
-            expect(PostFilters.reactiveFilters).toEqual(false);
-            isolateScope.applyFiltersLocked();
-            expect(PostFilters.reactiveFilters).toEqual(true);
-        });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.clearFilters();
             expect(isolateScope.filters).toEqual(PostFilters.getDefaults());
-        });
-        it('should set qEnabled true when I call enableQuery', function () {
-            isolateScope.enableQuery();
-            expect(PostFilters.qEnabled).toEqual(true);
         });
         it('should call saved-search-modal once when I call saveSavedSearchModal', function () {
             spyOn(ModalService, 'openTemplate');

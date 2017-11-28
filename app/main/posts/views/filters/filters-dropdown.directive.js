@@ -16,7 +16,6 @@ function FiltersDropdown() {
 FiltersDropdownController.$inject = ['$scope', '$state', 'PostFilters', 'ModalService', '$rootScope', '_'];
 function FiltersDropdownController($scope, $state, PostFilters, ModalService, $rootScope, _) {
     $scope.canUpdateSavedSearch = false;
-    PostFilters.reactiveFilters = false;
 
     $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
         if (oldValue !== newValue || typeof ($scope.canUpdateSavedSearch) === 'undefined') {
@@ -35,10 +34,6 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
         $scope.canUpdateSavedSearch = savedSearch && _.contains(savedSearch.allowed_privileges, 'update');
     }
 
-    $scope.applyFiltersLocked = function () {
-        PostFilters.reactiveFilters = true;
-        $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
-    };
     $scope.clearFilters = function () {
         if (_.contains(['savedsearch', 'collection'], PostFilters.getMode()) && PostFilters.getModeId()) {
             PostFilters.setMode('all');
@@ -52,9 +47,7 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
         $scope.dropdownStatus.isopen = !$scope.dropdownStatus.isopen;
         $scope.canUpdateSavedSearch = false;
     };
-    $scope.enableQuery = function () {
-        PostFilters.qEnabled = true;
-    };
+
     $scope.saveSavedSearchModal = function () {
         $scope.savedSearch.filter = $scope.filters;
         // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in

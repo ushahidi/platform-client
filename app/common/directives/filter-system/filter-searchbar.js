@@ -4,8 +4,8 @@
  * and selection of appropriate sub directive
  */
 
-module.exports = ['$timeout', 'PostFilters',
-function ($timeout, PostFilters) {
+module.exports = ['$timeout',
+function ($timeout) {
     var link =
         function (
             $scope, $elem, $attrs, formControl
@@ -22,15 +22,6 @@ function ($timeout, PostFilters) {
                     $scope.searchResultsVisible = false;
                 }, 100);
             };
-
-            $scope.enableQuery = function () {
-                PostFilters.qEnabled = true;
-                PostFilters.reactiveFilters = true;
-            };
-
-            $scope.removeQueryFilter = function () {
-                PostFilters.clearFilter('q', '');
-            };
         };
     return {
         restrict: 'E',
@@ -38,7 +29,8 @@ function ($timeout, PostFilters) {
         template: require('./filter-searchbar.html'),
         scope: {
             model: '=',
-            placeholderEntity: '='
+            placeholderEntity: '=',
+            onClear: '&'
         },
         link: link,
         require: '?^form'

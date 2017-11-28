@@ -115,16 +115,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function watchFilters() {
-            // whenever the qEnabled var changes, do a dummy update of $scope.filters.reactToQEnabled
-            // to force the $scope.filters watcher to run
-            //$rootScope.$watchTrue(function () {
-            $scope.$watch(function () {
-                return PostFilters.qEnabled;
-            }, function () {
-                if (PostFilters.qEnabled === true) {
-                    $scope.filters.reactToQEnabled = $scope.filters.reactToQEnabled ? !$scope.filters.reactToQEnabled : true;
-                }
-            });
             // whenever filters change, reload the posts on the map
             $scope.$watch(function () {
                 return $scope.filters;
@@ -133,19 +123,11 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     return _.isEqual(oldValue[key], value);
                 });
                 var diffLength = _.keys(diff).length;
-                var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
-                /**
-                 * We only want to call reloadMapPosts if we :
-                 * - Have changes other than q= in the filters
-                 * - Only q= changed but we also have enabled the q filter
-                 */
-                if (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && PostFilters.qEnabled === true)) {
+
+                if (diffLength > 0) {
                     cancelCurrentRequests();
                     clearData();
                     reloadMapPosts();
-                }
-                if (PostFilters.qEnabled === true) {
-                    PostFilters.qEnabled = false;
                 }
             }, true);
         }

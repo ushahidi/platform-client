@@ -10,12 +10,13 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
             canSelect: '=',
             selectedPosts: '=',
             shortContent: '@',
-            clickAction: '=',
+            externalClickAction: '=clickAction',
             selectedPost: '='
         },
         template: require('./card.html'),
-        link: function ($scope) {
+        link: function ($scope, $element) {
             $scope.isPostLocked = isPostLocked;
+            $scope.clickAction = clickAction;
             activate();
 
             $scope.stopClickPropagation = function ($event) {
@@ -37,6 +38,17 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
                         $scope.post.form = form;
                     });
                 }
+            }
+
+            function clickAction(evt) {
+                let postActions = $element.find('post-actions')[0];
+                // If the click was inside post-actions
+                if (evt && $element && postActions.contains(evt.target)) {
+                    // But ignore the action
+                    return;
+                }
+
+                $scope.externalClickAction($scope.post);
             }
         }
     };
