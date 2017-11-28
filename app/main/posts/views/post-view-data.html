@@ -91,8 +91,6 @@
     <div class="post-col" ng-class="{'active' : activeCol === 'post' }">
         <!-- Verify if we need all these bindings ie. parentForm savingPost -->
         <div ui-view filters="filters" is-loading="isLoading" saving-post="savingPost"></post-detail-data>
-        <!-- @uirouter-refactor: need to move this -->
-        <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
     </div>
 </div>
 <ush-logo></ush-logo>
