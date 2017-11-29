@@ -123,8 +123,12 @@ function (
                 savedSearch: resolveSavedSearch
             },
             onEnter: ['PostFilters', '$state', 'savedSearch', function (PostFilters, $state, savedSearch) {
-                PostFilters.setMode('savedsearch', savedSearch);
-                PostFilters.setFilters(savedSearch.filter);
+                if (!PostFilters.getModeId() && savedSearch) {
+                    PostFilters.setMode('savedsearch', savedSearch);
+                    PostFilters.setFilters(savedSearch.filter);
+                } else {
+                    savedSearch = PostFilters.getModeEntity('savedsearch');
+                }
             }]
         }
     )
