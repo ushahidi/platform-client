@@ -5,8 +5,7 @@ function FilterPostsDirective() {
     return {
         restrict: 'E',
         scope: {
-            filters: '=',
-            currentView: '='
+            filters: '='
         },
         replace: true,
         controller: FilterPostsController,
@@ -19,10 +18,19 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
     $scope.searchSavedToggle = false;
     $scope.cancel = cancel;
     $scope.applyFilters = applyFilters;
-    $scope.openFilterModal = openFilterModal;
+    $scope.qFilter = '';
     $scope.openSavedModal = openSavedModal;
     activate();
 
+    $scope.status = {
+        isopen: false
+    };
+
+    $scope.toggleDropdown = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.status.isopen = !$scope.status.isopen;
+    };
     function activate() {
         // @todo define initial filter values
         // $scope.$watch('filters', handleFilterChange, true);
@@ -35,21 +43,13 @@ function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
         ModalService.close();
     }
 
-    function openFilterModal() {
-        // Set active task so we know who this attribute will belong to
-        ModalService.openTemplate('<filter-modal></filter-modal>', 'app.filter_by', '/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px', $scope, true, true);
-    }
     function applyFilters(event) {
-        // ngFormController automatically commits changes to the model ($scope.filters)
-        // Just close the dropdown
-        ModalService.close();
-    }
-
-    function openSavedModal() {
-        ModalService.openTemplate('<saved-search-modal></saved-search-modal>', 'nav.saved_searches', '/img/iconic-sprite.svg#star', $scope, true, true);
     }
 
     function rollbackForm() {
         PostFilters.clearFilters();
+    }
+    function openSavedModal() {
+        ModalService.openTemplate('<saved-search-modal></saved-search-modal>', 'nav.saved_searches', '/img/iconic-sprite.svg#star', $scope, true, true);
     }
 }

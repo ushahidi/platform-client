@@ -28,42 +28,67 @@ function (
         template: require('./post-messages.html'),
         link: function ($scope) {
 
+            $scope.$watch('post.contact.id', function (contactId, oldContactId) {
+                if (contactId !== oldContactId) {
+                    activate();
+                }
+            });
+
             // Pagination
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
             $scope.totalItems = $scope.itemsPerPage;
             $scope.pageChanged = getMessagesForPagination;
+            $scope.showPagination = false;
 
-            // Initialize
-            ContactEndpoint.get({ id: $scope.post.contact.id })
-                .$promise.then(function (contact) {
-                    $scope.contact = contact;
-                });
+            function activate() {
+                // Can't activate if we don't have a contact
+                if (!$scope.post.contact || !$scope.post.contact.id) {
+                    return;
+                }
 
-            getMessagesForPagination();
+                $scope.messages = []; // init to blank
+                // Initialize
+                if ($scope.post.contact.contact) {
+                    $scope.contact = $scope.post.contact;
+                } else {
+                    ContactEndpoint.get({ id: $scope.post.contact.id })
+                        .$promise.then(function (contact) {
+                            $scope.contact = contact;
+                        });
+                }
+
+                getMessagesForPagination();
+            }
+
+            activate();
 
             function getMessagesForPagination() {
+
                 if ($scope.post.contact.id) {
                     MessageEndpoint.allInThread({
                         contact: $scope.post.contact.id,
                         offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
                         limit: $scope.itemsPerPage
                     }).$promise.then(function (response) {
+
                         var created,
                             messages = response.results;
 
                         $scope.messages = messages;
                         _.each(messages, function (message, index) {
                             if (message.user) {
-                                message.user = UserEndpoint.getFresh({id: message.user.id});
+                                message.user = UserEndpoint.get({id: message.user.id});
                             }
 
                             // Format update time for display
                             created = message.updated || message.created;
                             message.displayTime = formatDate(created);
-
-                            $scope.totalItems = response.total_count;
                         });
+
+                        $scope.totalItems = response.total_count;
+                        $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
+
                     });
                 }
             }

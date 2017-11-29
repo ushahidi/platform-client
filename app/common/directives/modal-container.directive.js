@@ -4,8 +4,8 @@
  */
 module.exports = ModalContainer;
 
-ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService'];
-function ModalContainer($timeout, $rootScope, $compile, ModalService) {
+ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService', 'SliderService'];
+function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderService) {
     return {
         restrict: 'E',
         template: require('./modal-container.html'),
@@ -92,6 +92,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
 
         function closeModal() {
             // @todo fade out
+
             $scope.classVisible = false;
             $rootScope.toggleModalVisible(false);
             ModalService.setState(false);
@@ -117,7 +118,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService) {
             if (context === 'overlay' && $scope.closeOnOverlayClick !== true) {
                 return;
             }
-
+            SliderService.close();
             closeModal();
         }
 

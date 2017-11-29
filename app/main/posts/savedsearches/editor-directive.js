@@ -44,6 +44,7 @@ function (
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
 
             $scope.save = function (savedSearch) {
+                $scope.isSaving = true;
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
                 persist(savedSearch)
                 .$promise
@@ -51,9 +52,12 @@ function (
                     $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
                     $scope.$parent.closeModal();
-                    $rootScope.$broadcast('event:savedSearch:update');
+                    $rootScope.$broadcast('savedSearch:update');
+                    Notify.notify('notify.savedsearch.savedsearch_saved', {savedsearch: savedSearch.name});
+                    $scope.isSaving = false;
                 }, function (errorResponse) {
                     Notify.apiErrors(errorResponse);
+                    $scope.isSaving = false;
                 });
             };
 

@@ -5,6 +5,7 @@ function ShareMenuDirective() {
     return {
         restrict: 'E',
         scope: {
+            filters: '=',
             surveyId: '=',
             postId: '='
         },
@@ -16,16 +17,15 @@ function ShareMenuDirective() {
 
 ShareMenuController.$inject = [
     '$scope',
-    '$routeParams',
     'Util',
     '$window'
 ];
 function ShareMenuController(
     $scope,
-    $routeParams,
     Util,
     $window
 ) {
+
     $scope.loading = false;
     $scope.shareUrl = Util.currentUrl();
     $scope.isExportable = isExportable;
@@ -44,6 +44,7 @@ function ShareMenuController(
         if ($scope.surveyId) {
             $scope.shareUrl = $window.location.origin + '/posts/create/' + $scope.surveyId;
         }
+
         $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
     }
     // Check if current view is exportable based on URI

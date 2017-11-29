@@ -6,8 +6,11 @@
         <p translate="survey.task_visible_when_published">This task will be visible when post is published</p>
     </div>
     <!-- Handle stage completion -->
+    <div ng-show="stage.task_is_internal_only" class="alert">
+        <p>This task is marked for internal use only. It is not seen by users when they create a post.</p>
+    </div>
     <div class="form-field switch">
-        <label translate="post.task_completed">Task completed</label>
+        <label translate="post.task_completed" ng-class="{'required': stage.required}">Task completed</label>
         <div class="toggle-switch">
             <input
                 class="tgl"

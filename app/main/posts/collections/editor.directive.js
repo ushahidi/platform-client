@@ -78,7 +78,10 @@ function CollectionEditorController(
     function saveCollection(collection) {
         // Are we creating or updating?
         var persist = collection.id ? CollectionEndpoint.update : CollectionEndpoint.save;
-
+        if (!collection.id) {
+            // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
+            collection.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
+        }
         // Collection endpoint uses collectionId so make sure thats set
         collection.collectionId = collection.id;
 

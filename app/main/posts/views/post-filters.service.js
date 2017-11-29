@@ -5,14 +5,15 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
+    var tags = [];
     var filterMode = 'all';
     var entityId = null;
-
     // @todo take this out of the service
     // but ensure it happens at the right times
     activate();
 
     return {
+        resetDefaults: resetDefaults,
         getDefaults: getDefaults,
         getQueryParams: getQueryParams,
         getFilters: getFilters,
@@ -21,14 +22,30 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         clearFilter: clearFilter,
         hasFilters: hasFilters,
         getActiveFilters: getActiveFilters,
+        getCleanActiveFilters: getCleanActiveFilters,
         setMode: setMode,
         getMode: getMode,
-        getModeId: getModeId
+        getModeId: getModeId,
+        countFilters: countFilters,
+        reactiveFilters: true,
+        qEnabled: false
     };
 
+    /**
+     * function to deal with the fact that logout and login don't really reset the defaults.
+     */
+    function resetDefaults() {
+        return activate().then(function () {
+            clearFilters();
+        });
+    }
+
     function activate() {
-        FormEndpoint.queryFresh().$promise.then(function (result) {
-            forms = result;
+        return $q.all([TagEndpoint.query().$promise, FormEndpoint.query().$promise]).then(function (results) {
+            tags = _.pluck(results[0], 'id');
+            forms = results[1];
+            // adding incoming messages to filter
+            forms.push({id: 'none'});
             filterState.form = filterState.form || [];
             if (filterState.form.length === 0) { // just in case of race conditions
                 Array.prototype.splice.apply(filterState.form, [0, 0].concat(_.pluck(forms, 'id')));
@@ -58,10 +75,24 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilter(filterKey, value) {
-        if (angular.isArray(filterState[filterKey])) {
-            filterState[filterKey] = _.without(filterState[filterKey], value);
+        /*
+         * if filter is in an array, we only want to remove that specific value
+         * if all filter-values are removed from array, we want to reset to default
+         */
+        if (Array.isArray(filterState[filterKey]) && filterState[filterKey].length > 1) {
+            filterState[filterKey].splice(filterState[filterKey].indexOf(value), 1);
         } else {
             filterState[filterKey] = getDefaults()[filterKey];
+        }
+
+        /**
+         * Since q is a special type of filter that gets applied on the click
+         * of a button separate from the input control, and since it should be automatically
+         * enabled when you clear it, we are adding this
+         */
+        if (filterKey === 'q') {
+            this.qEnabled = true;
+            this.reactiveFilters = true;
         }
     }
 
@@ -76,22 +107,45 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             has_location: 'all',
             within_km: '1',
             current_stage: [],
-            tags: [],
+            tags: tags,
+            saved_search: '',
+            orderby: 'created',
+            order: 'desc',
+            order_unlocked_on_top: 'true',
             form: _.pluck(forms, 'id'),
             set: [],
-            user: false
+            user: false,
+            source: ['sms', 'twitter','web', 'email']
         };
     }
 
     function getQueryParams(filters) {
+        var defaults = getDefaults();
         var query = _.omit(
             filters,
             function (value, key, object) {
+                if (key === 'saved_search') {
+                    return true;
+                }
+                if (key === 'reactiveFilters') {
+                    return true;
+                }
+                if (key === 'qEnabled') {
+                    return true;
+                }
                 // Is value empty?
                 // Is it a date?
                 if (_.isDate(value)) {
                     return false;
                 }
+
+                // Is an array with all the same elements? (order doesn't matter)
+                if ((key === 'tags' || key === 'form') && _.isArray(defaults[key]) &&
+                    _.difference(value, defaults[key]).length === 0 &&
+                    _.difference(defaults[key], value).length === 0) {
+                    return true;
+                }
+
                 // Is it an empty object or array?
                 if (_.isObject(value) || _.isArray(value)) {
                     return _.isEmpty(value);
@@ -107,18 +161,70 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         } else {
             delete query.within_km;
         }
-
         if (filterMode === 'collection') {
             query.set = [entityId].concat(query.set);
         }
         return query;
     }
 
+    /**
+     * Returns the non-default filters so that we don' show the user 3 filters when they didn' select one yet
+     * Example: when the active filters load we show "sort", "unlockedOnTop", "sort_by" as active with their value
+     * but since the user didn't select a filter, it can be really confusing.
+     * @param filters
+     */
+    function getCleanActiveFilters(filters) {
+        var defaults = getDefaults();
+        return _.omit(
+            filters,
+            function (value, key, object) {
+                if (defaults[key] === value) {
+                    return true;
+                }
+                // we don't want this showing up in bug icons
+                if (key === 'saved_search') {
+                    return true;
+                }
+                // Ignore difference in within_km
+                if (key === 'within_km') {
+                    return true;
+                }
+                // Is the same as the default?
+                if (_.isEqual(defaults[key], value)) {
+                    return true;
+                }
+                // Is an array with all the same elements? (order doesn't matter)
+                if (_.isArray(defaults[key]) &&
+                    _.difference(value, defaults[key]).length === 0 &&
+                    _.difference(defaults[key], value).length === 0) {
+                    return true;
+                }
+                // Is value empty? ..and not a date object
+                // _.empty only works on arrays, object and strings.
+                return (_.isEmpty(value) && !_.isDate(value));
+            }
+        );
+    }
+
+    /**
+     * Gets the real active filters, including defaults.
+     * @param filters
+     */
     function getActiveFilters(filters) {
         var defaults = getDefaults();
         return _.omit(
             filters,
             function (value, key, object) {
+                if (key === 'reactiveFilters') {
+                    return true;
+                }
+                if (key === 'qEnabled') {
+                    return true;
+                }
+                // we don't want this showing up in bug icons
+                if (key === 'saved_search') {
+                    return true;
+                }
                 // Ignore difference in within_km
                 if (key === 'within_km') {
                     return true;
@@ -148,7 +254,10 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         // If mode changes, reset filters
         if (newMode !== filterMode) {
             filterMode = newMode;
-            clearFilters();
+            if (filterMode === 'collection') {
+                clearFilters();
+            }
+
         }
         entityId = id;
     }
@@ -159,6 +268,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     function getModeId() {
         return entityId;
+    }
+    function countFilters() {
+        return _.keys(this.getActiveFilters(this.getFilters())).length;
     }
 }
 

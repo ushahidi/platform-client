@@ -1,5 +1,5 @@
 <fieldset overflow-toggle has-overflow="forms.length > 1" ng-model-options="{ updateOn: 'default' }">
-    <legend translate="app.surveys">Survey</legend>
+    <label translate="app.surveys">Survey</label>
 
     <div class="form-field checkbox" ng-repeat="(index, form) in forms" ng-class="{ overflow : ($index > 1) }">
         <label>

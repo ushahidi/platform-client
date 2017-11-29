@@ -5,6 +5,10 @@ SavedSearchModeContext.$inject = [];
 function SavedSearchModeContext() {
     return {
         restrict: 'E',
+        scope: {
+            filters: '=',
+            savedSearch: '='
+        },
         controller: SavedSearchModeContextController,
         template: require('./mode-context.html')
     };
@@ -36,7 +40,7 @@ function SavedSearchModeContextController(
     $scope.showNotificationLink = true;
     $scope.canEdit = false;
     $scope.notification = false;
-
+    $scope.collectionView = 'map';
     $scope.saveNotification = saveNotification;
     $scope.removeNotification = removeNotification;
     $scope.editSavedSearch = editSavedSearch;

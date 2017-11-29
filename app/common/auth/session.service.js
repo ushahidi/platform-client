@@ -13,7 +13,6 @@ function (
         grantType: undefined,
         role: undefined,
         permissions: undefined,
-        loginPath: undefined,
         gravatar: undefined
     };
 

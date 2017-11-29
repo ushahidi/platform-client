@@ -7,6 +7,7 @@ module.exports = [
     'Session',
     'RoleEndpoint',
     'UserEndpoint',
+    'PostLockEndpoint',
     '_',
     'ModalService',
 function (
@@ -18,6 +19,7 @@ function (
     Session,
     RoleEndpoint,
     UserEndpoint,
+    PostLockEndpoint,
     _,
     ModalService
 ) {
@@ -110,10 +112,16 @@ function (
         logout: function (silent) {
             //TODO: ASK THE BACKEND TO DESTROY SESSION
 
-            setToLogoutState();
-            if (!silent) {
-                $rootScope.$broadcast('event:authentication:logout:succeeded');
-            }
+            // Release all locks owned by the user
+            // TODO: At present releasing locks should not prevent users from logging out
+            // in future this should be expanded to include an error state
+            // Though ultinately unlocking should be handled solely API side
+            PostLockEndpoint.unlock().$promise.finally(function () {
+                setToLogoutState();
+                if (!silent) {
+                    $rootScope.$broadcast('event:authentication:logout:succeeded');
+                }
+            });
         },
 
         getLoginStatus: function () {

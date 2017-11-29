@@ -59,7 +59,8 @@
                   id="values[{{attribute.key}}][{{key}}]"
                   name="values_{{attribute.id}}"
                   ng-model="post.values[attribute.key][key]"
-                  ng-required="attribute.required">
+                  ng-required="attribute.required"
+                >
                   <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
               </select>
               <!-- type: number -->
@@ -126,7 +127,6 @@
                   key="key"
                   id="values[{{attribute.key}}][{{key}}]"
                   name="values_{{attribute.id}}"
-                  model="post.values[attribute.key][key]"
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
                   ng-switch-when="location"></post-location>
@@ -135,7 +135,6 @@
                   ng-switch-when="upload"
                   name="values_{{attribute.id}}"
                   media-has-caption="attribute.config.hasCaption"
-                  media-id="post.values[attribute.key][key]"
                   media="medias[attribute.key]"
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
@@ -163,7 +162,11 @@
   <fieldset ng-if="isFieldSetStructure(attribute)">
 
     <!-- Attribute Label -->
-    <label>{{attribute.label}}</label>
+    <label ng-class="{
+        'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+        'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+        'required': attribute.required
+      }">{{attribute.label}}</label>
     <!-- Attribute Instructions -->
     <p>{{attribute.instructions}}</p>
 
@@ -206,7 +209,8 @@
     <div ng-switch-when="tags">
         <category-selector
             available="attribute.options"
-            selected="post.values[attribute.key]"
+            selected="post.values[attribute.key]",
+            form="form"
         ></category-selector>
         <add-category
             form-id="post.form.id"

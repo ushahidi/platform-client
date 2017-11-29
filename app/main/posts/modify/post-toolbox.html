@@ -22,6 +22,8 @@
       </legend>
       <div class="dropdown-menu init" dropdown-menu>
         <div class="form-field radio icon-input"
+             name="status"
+             ng-model="post.status"
              ng-repeat="status in statuses"
              ng-class="{'checked' : status == post.status}"
              ng-click="changeStatus(status)"
@@ -32,7 +34,7 @@
             <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
           </svg>
-          <input type="radio" name="status" id="{{status}}" />
+          <input type="radio" id="{{status}}" />
           <span translate="post.published" ng-if="status == 'published'">Published</span>
             <span translate="post.draft" ng-if="status == 'draft'">Under review</span>
             <span translate="post.archived" ng-if="status == 'archived'">Archived</span>

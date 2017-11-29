@@ -17,6 +17,7 @@
         </svg>
         <span class="label hidden" translate>app.show_more_less</span>
     </span>
+
     <div class="mode-context-body">
         <!--// IF: Saved Search has description //-->
         <p ng-if="collection.description">{{collection.description}}</p>
@@ -110,7 +111,8 @@
         </div>
         <!--// END IF //-->
         <div class="form-field">
-            <a ng-href="/views/{{collection.view}}" type="button" class="button-link">
+            <!-- mode context bar is only available in the map so it should take you back there -->
+            <a ui-sref="posts.map.all" type="button" class="button-link">
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#arrow-left"></use>
                 </svg>
@@ -119,8 +121,6 @@
         </div>
 
         <mode-context-form-filter></mode-context-form-filter>
-
-        <post-active-filters></post-active-filters>
 
     </div>
 </div>

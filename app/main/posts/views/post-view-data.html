@@ -1,0 +1,99 @@
+<main role="main">
+<div class="flex-container">
+    <layout-class layout="d"></layout-class>
+    <post-toolbar selected-post="selectedPost.post" filters="filters"></post-toolbar>
+    <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected, 'active' : activeCol === 'timeline' }">
+        <div class="load-more"  ng-show="newPostsCount > 0">
+            <button class="button-flat button-gamma full-width" ng-click="addNewestPosts()">
+                <span ng-switch on="newPostsCount">
+                    <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
+                    <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
+                </span>
+            </button>
+        </div>
+        <listing-toolbar
+            entities="posts"
+            selected-set="selectedPosts"
+          >
+              <!-- status bulk actions -->
+              <span dropdown ng-if="userHasBulkActionPermissions()">
+                <button class="button-beta init" data-toggle="toggle-content" dropdown-toggle>
+                  <span class="button-label" translate="app.mark_as">Mark as</span>
+                  <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                  </svg>
+                </button>
+                <ul class="dropdown-menu toggle-content init" dropdown-menu unpositioned="true">
+                  <li ng-repeat="status in statuses">
+                    <a ng-click="changeStatus(status)">
+                      <svg class="iconic">
+                        <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
+                      </svg>
+                      <span class="label" translate="post.published" ng-if="status == 'published'">Published</span>
+                      <span class="label" translate="post.draft" ng-if="status == 'draft'">Under review</span>
+                      <span class="label" translate="post.archived" ng-if="status == 'archived'">Archive</span>
+                    </a>
+                  </li>
+                </ul>
+              </span>
+
+              <collection-toggle-button selected-posts="selectedPosts" posts="posts" on-done="clearSelectedPosts()"></collection-toggle-button>
+              <button type="button" class="button-destructive" ng-click="deletePosts()" ng-if="userHasBulkActionPermissions()">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                </svg>
+                <span class="button-label hidden">nav.delete</span>
+              </button>
+
+              <button href="" ng-click="closeBulkActions()" class="button-link toolbar-close-button">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
+                </svg>
+                <span class="hidden">Close</span>
+            </button>
+
+        </listing-toolbar>
+        <div class="listing timeline init">
+          
+        <div class="bulk-action" ng-if="posts.length > 0 || !isLoading()">
+            <div class="bulk-action-primary">{{posts.length}} of {{totalItems}} reports</div>
+            <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
+        </div>
+            <post-card
+                ng-repeat="post in posts"
+                can-select="bulkActionsSelected"
+                post="post"
+                selected-posts="selectedPosts"
+                click-action="showPost"
+                selected-post="selectedPost"
+            >
+            </post-card>
+            <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading()">
+                <h4 translate>post.no_search_results</h4>
+            </div>
+
+            <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading()">
+                <h4 translate>post.no_posts_yet</h4>
+            </div>
+
+            <div class="listing-item" ng-if="posts.length > 0 || isLoading()">
+
+                <div class="listing-item-primary">
+                    <button ng-disabled="isLoading()" ng-hide="( isLoading() || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                    </button>
+                     <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-show="isLoading()"></loading-dots>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-col" ng-class="{'active' : activeCol === 'post' }">
+        <!-- Verify if we need all these bindings ie. parentForm savingPost -->
+        <div ui-view filters="filters" is-loading="isLoading" saving-post="savingPost"></post-detail-data>
+        <!-- @uirouter-refactor: need to move this -->
+        <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
+    </div>
+</div>
+<ush-logo></ush-logo>
+</main>

@@ -9,19 +9,77 @@ var extractCss = new ExtractTextPlugin('[name].[chunkhash].bundle.css');
 
 module.exports = {
   devtool: 'source-map',
-  entry: {},
+  entry: {'app': [
+    'babel-polyfill'
+  ]},
   module: {
-    loaders: [
-       { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
-       { test: /\.html$/, loader: 'html?attrs[]=img:src&attrs[]=use:xlink:href&attrs[]=link:href&root='+imgPath },
-       { test: /\.scss$/, loader: extractCss.extract('style', 'css!resolve-url!sass?sourceMap') },
-       { test: /\.css$/, loader: extractCss.extract('style', 'css') },
-       { test: /\.png/, loader: 'url?limit=10000' },
-       { test: /\.svg/, loader: 'svg-url?limit=1' },
-       { test: /\.woff/, loader: 'url?limit=10000' },
-       { test: /\.ttf|\.eot/, loader: 'file' },
-       { test: /\.json$/, exclude:[/manifest.json$/],loader: 'json' },
-       { test: /manifest.json$/, loader: 'file-loader?name=manifest.json!web-app-manifest-loader' }
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: [/app\/lib/, /node_modules/],
+        use: [
+          'ng-annotate-loader',
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['es2015', { modules: false }],
+                'stage-0'
+              ],
+            }
+          }
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options : {
+              attrs : ['img:src','use:xlink:href','link:href'],
+              root: imgPath
+            }
+          }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: extractCss.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+        })
+      },
+      {
+        test: /\.css$/,
+        use: extractCss.extract({ fallback: 'style-loader', use: 'css-loader' })
+      },
+      {
+        test: /\.png/,
+        use: {
+          loader: 'url-loader?limit=10000'
+        }
+      },
+      {
+        test: /\.svg/,
+        use: 'svg-url-loader?limit=1'
+      },
+      {
+        test: /\.woff/,
+        use: 'url-loader?limit=10000'
+      },
+      {
+        test: /\.ttf|\.eot/,
+        use: 'file-loader'
+      },
+      {
+        test: /\.json$/,
+        exclude: [/manifest.json$/],
+        use: 'json-loader'
+      },
+      {
+        test: /manifest.json$/,
+        loader: ['file-loader?name=manifest.json', 'web-app-manifest-loader']
+      }
     ]
   },
   plugins: [

@@ -11,7 +11,15 @@ describe('setting users create controller', function () {
         var testApp = makeTestApp();
 
         testApp.controller('settingUsersCreateController', require('app/settings/users/create.controller.js'));
-
+        testApp.service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
 

@@ -6,7 +6,8 @@ function ShareMenuDirective() {
         restrict: 'E',
         scope: {
             surveyId: '=',
-            postId: '='
+            postId: '=',
+            filters: '='
         },
         replace: true,
         controller: ShareMenuController,
@@ -16,15 +17,12 @@ function ShareMenuDirective() {
 
 ShareMenuController.$inject = [
     '$scope',
-    '$routeParams',
     'Util',
     '$window'
 ];
 function ShareMenuController(
     $scope,
-    $routeParams,
     Util,
     $window
 ) {
-
 }

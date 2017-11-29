@@ -1,33 +1,32 @@
-<article class="postcard">
+<article ng-class="['postcard', {selected: post.id === selectedPost.post.id}]" >
     <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
     <div class="listing-item-select">
-        <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts">
+        <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts" ng-click="stopClickPropagation($event)">
     </div>
-    <div class="postcard-body">
+    <div class="postcard-body" ng-click="clickAction(post)">
       <header class="postcard-header">
 
         <post-metadata post="post" hide-date-this-week="true"></post-metadata>
-
+        <!-- this is used in the map view card and the sidebar card in the data view-->
         <post-actions post="post"></post-actions>
       </header>
-      <div class="postcard-overflow">
-        <div class="postcard-title">
-          <a ng-href="/posts/{{post.id}}">
-            <div class="postcard-field">
-              {{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}
+        <div class="postcard-overflow">
+            <div class="postcard-title">
+                <div class="postcard-field">
+                {{ post.title || post.content | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}
+                </div>
             </div>
-          </a>
-        </div>
 
 
-        <post-preview-media post="post"></post-preview-media>
-        <!-- <img src="http://lorempixel.com/400/300/" class="postcard-image"> -->
+            <post-preview-media post="post"></post-preview-media>
+            <!-- <img src="http://lorempixel.com/400/300/" class="postcard-image"> -->
 
-
-        <div ng-if="!shortContent" class="postcard-field" markdown-to-html="post.content">
-        </div>
-        <div ng-if="shortContent" class="postcard-field">
-            {{ post.content | limitTo:150 }}{{ post.content.length > 150 ? ' ...' : ''}}
+            <div ng-if="!shortContent" class="postcard-field">
+                {{ post.content }}
+            </div>
+            <div ng-if="shortContent" class="postcard-field">
+                {{ post.content | limitTo:150 }}{{ post.content.length > 150 ? ' ...' : ''}}
+            </div>
         </div>
     </div> <!-- /postcard-body -->
 </article>
