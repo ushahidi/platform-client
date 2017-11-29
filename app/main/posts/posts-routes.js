@@ -133,7 +133,7 @@ function (
                  * A: You won't retain filters as you move around the app, which is terrible usability.
                  */
                 PostFilters.setMode('savedsearch', savedSearch);
-                if (!PostFilters.getModeId() && savedSearch) {
+                if (savedSearch && PostFilters.getModeId() !== savedSearch.id) {
                     PostFilters.setFilters(savedSearch.filter);
                 }
             }]
@@ -198,7 +198,7 @@ function (
                  * A: You won't retain filters as you move around the app, which is terrible usability.
                  */
                 PostFilters.setMode('savedsearch', savedSearch);
-                if (!PostFilters.getModeId() && savedSearch) {
+                if (savedSearch && PostFilters.getModeId() !== savedSearch.id) {
                     PostFilters.setFilters(savedSearch.filter);
                 }
             }],
