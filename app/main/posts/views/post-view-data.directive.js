@@ -117,6 +117,12 @@ function PostViewDataController(
         $scope.activeCol = $state.params.activeCol;
     }));
 
+    unbindFns.push($transitions.onSuccess({
+        to: 'posts.data.*'
+    }, () => {
+        $scope.selectedPost.post = _.findWhere($scope.posts, { id: parseInt($state.params.postId, 10) });
+    }));
+
     // Cleanup and remove all listeners
     $scope.$on('$destroy', () => {
         unbindFns.forEach(Function.prototype.call, Function.prototype.call);
@@ -130,14 +136,6 @@ function PostViewDataController(
             $scope.$emit('setPageTitle', title);
         });
 
-        // Grab initial filters
-        if ($scope.collection) {
-            PostFilters.setMode('collection', $scope.collection.id);
-        } else if ($scope.savedSearch) {
-            PostFilters.setMode('savedsearch', $scope.savedSearch.id);
-        } else {
-            PostFilters.setMode('all');
-        }
         $scope.filters = PostFilters.getFilters();
 
         // If we are coming into Data View with a selected post
@@ -203,25 +201,6 @@ function PostViewDataController(
             }
         });
 
-        // I don't know what this does but its terrifying
-        //
-        // $scope.$watch(function () {
-        //     return $location.path();
-        // }, function (newValue, oldValue) {
-        //     if ($scope.editMode.editing) {
-        //         var postId = newValue.match(/^\/posts\/([0-9]+)(\/|$)/);
-        //         var locationUrlMatch = $location.path().match(/^\/posts\/([0-9]+)(\/|$)/);
-        //         if (postId && postId.length > 1 && !locationUrlMatch) {
-        //             var tmpPost = _.filter($scope.posts, function (postItm) {
-        //                 return postItm.id === parseInt(postId[1]);
-        //             });
-        //             if (tmpPost.length > 0) {
-        //                 $scope.selectedPost.post = tmpPost[0];
-        //                 $scope.editMode.editing = false;
-        //             }
-        //         }
-        //     }
-        // });
         if ($scope.shouldWeRunCheckForNewPosts) {
             checkForNewPosts(30000);
         }

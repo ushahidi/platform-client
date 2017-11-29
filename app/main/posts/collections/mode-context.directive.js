@@ -18,28 +18,31 @@ CollectionModeContextController.$inject = [
     '$scope',
     '$rootScope',
     '$translate',
-    '$location',
+    '$state',
     'NotificationEndpoint',
     'CollectionEndpoint',
     'Notify',
     '_',
-    'CollectionsService'
+    'CollectionsService',
+    'PostFilters'
 ];
 function CollectionModeContextController(
     $scope,
     $rootScope,
     $translate,
-    $location,
+    $state,
     NotificationEndpoint,
     CollectionEndpoint,
     Notify,
     _,
-    CollectionsService
+    CollectionsService,
+    PostFilters
 ) {
     $scope.editCollection = editCollection;
     $scope.deleteCollection = deleteCollection;
     $scope.saveNotification = saveNotification;
     $scope.removeNotification = removeNotification;
+    $scope.clearFilters = clearFilters;
 
     // Show Add Notification link
     $scope.showNotificationLink = true;
@@ -61,7 +64,7 @@ function CollectionModeContextController(
     }
 
     function canEdit(collection) {
-        return _.contains(collection.allowed_privileges, 'update');
+        return collection && _.contains(collection.allowed_privileges, 'update');
     }
 
     function editCollection() {
@@ -89,5 +92,10 @@ function CollectionModeContextController(
                 Notify.notify('notify.notification.destroy_notification_success', {name: notification.name});
             });
         });
+    }
+
+    function clearFilters() {
+        PostFilters.clearFilters();
+        PostFilters.setMode('all');
     }
 }

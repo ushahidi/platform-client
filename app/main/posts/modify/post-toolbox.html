@@ -7,7 +7,7 @@
           <span class="custom-fieldset-value">
             <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="post.status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="post.status=='draft'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
             </svg>
             <span translate="post.published" ng-if="post.status == 'published'">Published</span>
@@ -31,7 +31,7 @@
           <label for="{{status}}">
           <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
           </svg>
           <input type="radio" id="{{status}}" />
