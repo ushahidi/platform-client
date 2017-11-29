@@ -47,9 +47,12 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 return PostFilters.getModeId();
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    $scope.collection = PostFilters.getModeEntity('collection');
-                    $scope.savedSearch = null;
-                    originalSavedSearch = null;
+                    if (PostFilters.getMode() === 'collection') {
+                        $scope.collection = PostFilters.getModeEntity('collection');
+                        $scope.savedSearch = null;
+                        originalSavedSearch = null;
+                    }
+                    // Other modes should be handled elsewhere
                 }
             }, true);
 
