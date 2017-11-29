@@ -110,7 +110,7 @@ function PostDataEditorController(
      * (editing mode). If you are there, you either resolve or reject a promise depending on form state, user actions, etc.
      * Resolve will let the transition continue. Reject will stop the transition meaning you stay in the edit mode
      */
-    $transitions.onStart({}, function (transition) {
+    let unbindOnStart = $transitions.onStart({}, function (transition) {
         //where is it going? transition.to().name
         // return rejected promise or false to cancel the transition
         // saveChangesAndContinue calls cancel which then resolves or rejects the state change.
@@ -118,6 +118,9 @@ function PostDataEditorController(
             return saveChangesAndContinue();
         }
         return true;
+    });
+    $scope.$on('$destroy', () => {
+        unbindOnStart();
     });
 
     /**
@@ -133,11 +136,9 @@ function PostDataEditorController(
                 PostLockEndpoint.unlock({
                     id: $scope.post.lock.id,
                     post_id: $scope.post.id
-                }).$promise.then(function (result) {
-                    return resolve(true);
-                });
+                }).$promise.then(resolve, reject);
             } else {
-                return reject(true);
+                return reject();
             }
         });
     }
@@ -152,24 +153,10 @@ function PostDataEditorController(
      * - - Save failure: cancel the transition, show errors or whatever the save post does.
      */
     function saveChangesAndContinue() {
-        /**
-         * just a wrapper function because we were doing the same thing
-         * over and over again in the promise
-         * @param resolve
-         * @param reject
-         */
-        function resolveUnlockPost(resolve, reject) {
-            return unlockPost().then(function () {
-                resolve(true);
-            }).catch(function () {
-                reject(false);
-            });
-        }
-
         return new Promise (function (resolve, reject) {
             // Do we have unsaved changes? If not , leave them continue
             if (!$scope.editForm || ($scope.editForm && !$scope.editForm.$dirty)) {
-                resolveUnlockPost(resolve, reject);
+                unlockPost().then(resolve, resolve); // Resolve even if unlock fails
             } else {
                 // @uirouter-refactor if we end up having onbeforeunload features,we need to add this back
                 // if (ev) {
@@ -178,10 +165,10 @@ function PostDataEditorController(
                 Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                     // continue without saving goes here,
                     // save goes here too, because it's a RESOLVE.
-                    resolveUnlockPost(resolve, reject);
+                    unlockPost().then(resolve, resolve); // Resolve even if unlock fails
                 }, function () {
                     // when reject, we should not change state/transition. This happens in save errors
-                    reject(false);
+                    reject();
                 });
             }
         });
