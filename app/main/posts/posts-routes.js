@@ -128,7 +128,7 @@ function (
                  * if we have an entity id already set in the PostFilters service.
                  * So if we have a saved search but it's not yet set in the modeState inside PostFilters,
                  * we want to replace everything (since it means the user is either fresh loading or changed saved searches)
-                 * but in other scenarios we need keep the saved search data in postfilters as is.
+                 * but in other scenarios we need keep our filters in postfilters as they are.
                  * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
                  * A: You won't retain filters as you move around the app, which is terrible usability.
                  */
@@ -193,7 +193,7 @@ function (
                  * if we have an entity id already set in the PostFilters service.
                  * So if we have a saved search but it's not yet set in the modeState inside PostFilters,
                  * we want to replace everything (since it means the user is either fresh loading or changed saved searches)
-                 * but in other scenarios we need keep the saved search data in postfilters as is.
+                 * but in other scenarios we need keep our filters in postfilters as they are.
                  * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
                  * A: You won't retain filters as you move around the app, which is terrible usability.
                  */
