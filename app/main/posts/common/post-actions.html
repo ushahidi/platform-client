@@ -1,10 +1,5 @@
-<div class="postcard-actions" dropdown>
-  <a ng-show="post.allowed_privileges.indexOf('update') !== -1" ng-href="/posts/{{post.id}}/edit" class="button-gamma button-flat hide-until-small">
-      <svg class="iconic">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
-      </svg>
-  </a>
-  <button class="button-gamma button-flat init" data-toggle="dropdown-menu" dropdown-toggle>
+<div class="postcard-actions" dropdown >
+  <button class="button-gamma button-flat init" data-toggle="dropdown-menu" dropdown-toggle ng-click="$event.stopPropagation()">
       <svg class="iconic">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
       </svg>
@@ -12,8 +7,10 @@
   </button>
   <div class="dropdown-menu init" dropdown-menu>
     <ul>
-        <li ng-show="post.allowed_privileges.indexOf('update') !== -1" class="hide-when-small">
-          <a ng-href="/posts/{{post.id}}/edit">
+
+
+        <li ng-show="(post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked()">
+          <a ng-click="openEditMode(post.id)">
               <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
               </svg>
@@ -37,15 +34,15 @@
       </li>
       -->
     </ul>
-    <div class="divider" ng-show="post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 "></div>
+    <div class="divider" ng-show="(post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 ) && postIsUnlocked()"></div>
     <ul>
       <li ng-repeat="status in statuses"
-          ng-show="post.allowed_privileges.indexOf('change_status') !== -1">
+          ng-show="post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked()">
         <a ng-click="updateStatus(status)">
           <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
           </svg>
           <span class="label" ng-if="status=='published'" translate="post.post_actions.publish">Publish</span>
           <span class="label" ng-if="status=='draft'" translate="post.post_actions.put_under_review">Put under </span>
@@ -53,7 +50,7 @@
         </a>
       </li>
 
-      <li ng-show="post.allowed_privileges.indexOf('update') !== -1">
+      <li ng-show="post.allowed_privileges.indexOf('update') !== -1 && postIsUnlocked()">
         <a ng-click="deletePost()">
           <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>

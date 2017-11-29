@@ -6,7 +6,8 @@ function FilterPostsDirective() {
         restrict: 'E',
         scope: {
             filters: '=',
-            currentView: '='
+            onOpen: '&',
+            onClose: '&'
         },
         replace: true,
         controller: FilterPostsController,
@@ -14,42 +15,60 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', '$timeout','ModalService', 'PostFilters'];
-function FilterPostsController($scope, $timeout, ModalService, PostFilters) {
+FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element'];
+function FilterPostsController($scope, PostFilters, $state, $document, $element) {
     $scope.searchSavedToggle = false;
-    $scope.cancel = cancel;
+    $scope.status = { isopen: false };
+    $scope.hideDropdown = hideDropdown;
+    $scope.showDropdown = showDropdown;
+    $scope.removeQueryFilter = removeQueryFilter;
     $scope.applyFilters = applyFilters;
-    $scope.openFilterModal = openFilterModal;
-    $scope.openSavedModal = openSavedModal;
+    PostFilters.reactiveFilters = false;
     activate();
 
     function activate() {
-        // @todo define initial filter values
-        // $scope.$watch('filters', handleFilterChange, true);
+        // Watch all click events on the page
+        $document.on('click', handleDocumentClick);
+
+        $scope.$on('$destroy', () => {
+            $document.off('click', handleDocumentClick);
+        });
+
+        $scope.$watch('status.isopen', (value) => {
+            if (value) {
+                $scope.onOpen();
+            } else {
+                $scope.onClose();
+            }
+        });
     }
 
-    function cancel() {
-        // Reset filters
-        rollbackForm();
-        // .. and close the dropdown
-        ModalService.close();
+    function applyFilters() {
+        PostFilters.reactiveFilters = true;
+        $scope.status.isopen = false;
     }
 
-    function openFilterModal() {
-        // Set active task so we know who this attribute will belong to
-        ModalService.openTemplate('<filter-modal></filter-modal>', 'app.filter_by', '/img/material/svg-sprite-content-symbol.svg#ic_filter_list_24px', $scope, true, true);
-    }
-    function applyFilters(event) {
-        // ngFormController automatically commits changes to the model ($scope.filters)
-        // Just close the dropdown
-        ModalService.close();
+    function removeQueryFilter() {
+        PostFilters.clearFilter('q', '');
     }
 
-    function openSavedModal() {
-        ModalService.openTemplate('<saved-search-modal></saved-search-modal>', 'nav.saved_searches', '/img/iconic-sprite.svg#star', $scope, true, true);
+    function showDropdown() {
+        $scope.status.isopen = true;
     }
 
-    function rollbackForm() {
-        PostFilters.clearFilters();
+    function hideDropdown() {
+        $scope.status.isopen = false;
+    }
+
+    // Close the dropdown for any clicks outside of the filters
+    function handleDocumentClick(evt) {
+        // If the click was inside the directive
+        if (evt && $element && $element[0].contains(evt.target)) {
+            // Ignore it
+            return;
+        }
+
+        // Otherwise close the dropdown
+        $scope.$apply(hideDropdown);
     }
 }

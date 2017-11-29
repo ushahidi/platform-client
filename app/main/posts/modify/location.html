@@ -1,15 +1,15 @@
- 
+
 <div class="location-wrapper">
     <div id="{{id}}-map" class="map" style="height: 265px; width: 100%;"></div>
     <form class="searchbar">
-        <div class="searchbar-input init" role="search"> 
-            <div class="form-field">
-                <input name="{{name}}" 
-                    type="search" 
-                    maxlength="250" 
-                    placeholder="{{'location.placeholder' | translate}}" 
-                    ng-model="searchLocationTerm" 
-                    ng-focus="showSearchResults()" 
+        <div class="searchbar-input init" role="search">
+            <div class="form-field tooltip">
+                <input name="{{name}}"
+                    type="search"
+                    maxlength="250"
+                    placeholder="{{'location.placeholder' | translate}}"
+                    ng-model="searchLocationTerm"
+                    ng-focus="showSearchResults()"
                     ng-keydown="handleActiveSearch($event)"
                 />
             </div>
@@ -17,8 +17,8 @@
                 <div class="form-field">
                     <button class="button-beta button-plain" ng-click="chooseCurrentLocation()" ng-if="showCurrentPositionControl" >
                         <svg class="iconic">
-                            <use 
-                                xmlns:xlink="http://www.w3.org/1999/xlink" 
+                            <use
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
                                 xlink:href="/img/iconic-sprite.svg#location">
                             </use>
                         </svg>
@@ -30,8 +30,8 @@
                     <dl ng-repeat="result in searchResults" ng-if="!processing && searchResults.length > 0">
                         <dt class="list-item" ng-click="chooseLocation(result)">
                             <svg class="iconic">
-                                <use 
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                <use
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
                                     xlink:href="/img/iconic-sprite.svg#map-marker">
                                 </use>
                             </svg>
@@ -57,4 +57,21 @@
         </div>
     </form>
     <p translate>location.click_map</p>
+    <div class="form-field">
+      <label>Lat</label>
+      <input type="text" ng-model="model.lat">
+   </div>
+   <div class="form-field">
+      <label>Long</label>
+      <input type="text" ng-model="model.lon">
+   </div>
+   <button type="button" class="button-primary" ng-click="manualLatLong(model.lat, model.lon)">
+        <svg class="iconic">
+       <use 
+                                xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                xlink:href="/img/iconic-sprite.svg#location">
+                            </use>
+        </svg>
+        <span class="button-label">Update Map</span>
+    </button>
 </div>

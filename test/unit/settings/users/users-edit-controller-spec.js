@@ -4,26 +4,36 @@ describe('setting users edit controller', function () {
         $scope,
         Notify,
         Session,
+        $transition$,
         $controller;
 
     beforeEach(function () {
-
         var testApp = makeTestApp();
 
         testApp.controller('settingUsersEditController', require('app/settings/users/edit.controller.js'));
-
+        testApp.service('$transition$', function () {
+                return {
+                    'params': function () {
+                        return {
+                            'id': '1'
+                        };
+                    }
+                };
+            });
         angular.mock.module('testApp');
+
+
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_, _Session_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_, _Session_, _$transition$_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;
         Session = _Session_;
         $scope = _$rootScope_.$new();
+        $transition$ = _$transition$_;
 
         $rootScope.goBack = function () {};
-
         $rootScope.hasManageSettingsPermission = function () {
             return true;
         };

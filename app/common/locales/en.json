@@ -8,6 +8,7 @@
         "submit_another" : "Submit & Add Another",
         "submit_response": "Submit a survey response",
         "can_see_this" : "can see this",
+        "collection": "Collection",
         "collections" : "Collections",
         "create_collection" : "Create collection",
         "export_to_csv" : "Export to CSV",
@@ -30,16 +31,19 @@
             "description" : "See what Ushahidi can do and how it works."
         },
         "forbidden": "Sorry, you're not allowed to do that.",
+        "404" : "That URL doesn't exist",
         "get_notifications" : "Get notifications",
         "turn_off_notifications" : "Turn off notifications",
         "load_more": "Load more",
         "loading": "Loading",
+        "loading_saved_searches": "Loading saved searches",
         "more" : "More",
         "cancel" : "Cancel",
         "save" : "Save",
         "save_and_close" : "Save &amp; close",
         "add_and_close" : "Add &amp; close",
         "update_and_close" : "Update &amp; close",
+        "updating" : "Updating",
         "saving" : "Saving",
         "settings": "Settings",
         "share": "Share",
@@ -70,9 +74,12 @@
         "color" : "Color",
         "search_users" : "Search users",
         "searching" : "Searching",
+        "show_hide": "Show/Hide",
         "fields" : "Fields",
+        "no_results": "No results found.",
         "filter_by" :"Filter by...",
-        "apply_filters" : "Apply filters",
+        "sort_filter": "Sort & filter",
+        "apply_filters" : "Apply",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
         "filter_by_survey" : "Filter by survey",
@@ -83,6 +90,9 @@
         "survey_web_address" : "Your survey's web address",
         "default_value" : "Default value",
         "fields" : "Fields",
+        "select_one": "Select One",
+        "sort_and_filter": "Sort & filter",
+        "saved_search": "Saved Search",
         "tasks" : "Tasks",
         "return_to_all_posts" : "Return to all posts",
         "this_deplyment_is_private" : "This deployment is private",
@@ -94,7 +104,7 @@
         "who_can_see_this" : "Who can see this?",
         "add" : "Add",
         "add_new_category" : "+ Add new category",
-        "sort_by": "Sort By",
+        "sort_by": "Sort By ...",
         "newest_first": "Newest first",
         "oldest_first": "Oldest first"
     },
@@ -133,7 +143,7 @@
         "add_field" : "Add field",
         "add_field_instructions": "Add instructions to this field",
         "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
-        "add_field_instructions_placeholder": "Instructions for field",
+        "add_field_instructions_placeholder": "Explain this field...",
         "add_post_type": "Add Survey",
         "add_step": "Add Task",
         "added_form_stage_attribute": "Saved field",
@@ -160,7 +170,7 @@
         "field_name": "Field Name",
         "field_options": "Field Options",
         "field_key_placeholder": "field-key",
-        "field_name_placeholder": "Title",
+        "field_name_placeholder": "Name this field",
         "field_option_placeholder": "Option 1",
         "field_required": "This field is required",
         "form_name": "Name",
@@ -188,6 +198,8 @@
 
     "survey": {
         "delete_task" : "Delete task",
+        "internal_use_task" : "Task is only for internal use",
+        "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "duplicate_task" : "Duplicate task",
         "show_this_task_to" : "Show this task to everyone when published",
         "show_this_task_to_desc" : "When a survey response is published, data from this task will be displayed.",
@@ -300,7 +312,40 @@
             "all_collections" : "All Collections",
             "search_collections" : "Search Collections"
         },
+        "sort": {
+            "order": {
+                "filter_type_tag": "Order",
+                "desc": "Newest first",
+                "asc": "Oldest first"
+            },
+            "orderby": {
+                "post_date": "Post Date",
+                "created": "Date created",
+                "updated": "Date updated"
+            },
+            "unlockedOnTop": {
+                "filter_type_tag": "Unlocked posts on top"
+            }
+        },
         "filter_tabs" : {
+            "order": "Order",
+            "order_group": {
+                "orderby": {
+                    "post_date": "Post Date",
+                    "created": "Date created",
+                    "updated": "Date updated"
+                },
+                "order": {
+                    "desc": "Newest first",
+                    "asc": "Oldest first"
+                },
+                "unlocked_on_top_yes": "Yes",
+                "unlocked_on_top_no": "No"
+            },
+            "orderby" : "Order by",
+            "order_unlocked_on_top": "Unlocked posts on top",
+            "savedsearch": "Saved Search",
+            "saved_search": "Saved Search",
             "q": "Keyword",
             "created_after": "Start date",
             "created_before": "End date",
@@ -318,7 +363,8 @@
             "has_location": "Post-locations",
             "all_posts": "Show all posts",
             "unmapped": "Show unmapped posts",
-            "mapped": "Show posts with a location"
+            "mapped": "Show posts with a location",
+            "source": "Source"
         },
         "more" : "More",
         "keyword" : "Keyword",
@@ -342,7 +388,8 @@
         "search" : "Search",
         "date_range" : "Date range",
         "who_its_visible_to": "Who it's visible to",
-        "status" : "Status"
+        "status" : "Status",
+        "source" : "Source"
     },
     "graph" : {
         "all_posts": "Nothing; Show all posts",
@@ -382,6 +429,7 @@
         }
     },
     "nav" : {
+        "404" : "Whoops",
         "about" : "About",
         "activity" : "Activity",
         "add_post" : "Add Post",
@@ -456,9 +504,12 @@
     "views" : {
         "map" : "Map",
         "list" : "Timeline",
-        "activity" : "Activity"
+        "activity" : "Activity",
+        "data" : "Data"
     },
     "post": {
+        "see_more_plural" : "See {{newPostsCount}} new posts",
+        "see_more_singular" : "See {{newPostsCount}} new post",
         "add_to_form" : "Add to {{form}}",
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
@@ -543,6 +594,12 @@
         "status_published" : "Published",
         "status_review" : "Under review",
         "status_archived" : "Archived",
+        "locking" : {
+            "unlocked" : "Post successfully unlocked",
+            "unlock" : "Unlock",
+            "lock_broken_by_other" : "Your Post has been unlocked. Your current unsaved changes will be lost.",
+            "locked_message" : "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+        },
         "modify" : {
             "intro" : "Select survey:",
             "no_task_values": "There are currently no saved values for this task.",
@@ -598,9 +655,15 @@
             "send" : "Send New Message",
             "save" : "Save",
             "title" : "Conversation with author",
-            "associated_messages": "View messages associated with this post"
+            "associated_messages": "View messages associated with this post",
+            "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
+            "imported_by": "{{messages}} imported by this deployment",
+            "Twitter": "Twitter",
+            "Email": "Email",
+            "SMS": "SMS"
         },
         "valid" : {
+            "no_changes" : "You haven’t made any changes",
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
             "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
             "title" : {
@@ -710,6 +773,7 @@
         "featured_collection_tooltip" : "Featured Collections appear to all users in <br>the \"Collections\" menu",
         "find_a_collection" : "Find a collection...",
         "find_a_saved_search" : "Find a saved search...",
+        "delete_saved_searches" : "Delete Saved Searches",
         "add_to_collection" : "Add to Collection",
         "empty_list_collections" : "No collections",
         "empty_list_savedsearches" : "No saved searches",
@@ -722,6 +786,7 @@
         "save_set" : "Save Collection",
         "save_savedsearch" : "Save Search",
         "update_savedsearch" : "Update Search",
+        "edit_savedsearch" : "Edit Search",
         "set_settings" : "Collection Settings",
         "add_notification" : "Add Notification",
         "remove" : "remove"
@@ -1010,7 +1075,8 @@
         "generic" : {
             "okay" : "Ok",
             "alerts": "Alerts",
-            "confirm": "Confirmation"
+            "confirm": "Confirmation",
+            "save" : "Save"
         },
         "login" : {
             "failed" : "Login failed, check your email and password."
@@ -1041,7 +1107,10 @@
             "bulk_destroy_confirm" : "Are you sure you want to delete {{count}} posts?",
             "stage_save_success" : "Updated {{stage}}",
             "export" : "This will export filtered posts. Are you sure you want to continue?",
-            "update_status_success_bulk" : "Status updated for {{count}} posts"
+            "update_status_success_bulk" : "Status updated for {{count}} posts",
+            "leave_without_save" : "Do you want to leave this report without saving?",
+            "leave_confirm_message" : "If you continue, all of your changes will be lost",
+            "leave_confirm" : "Continue without saving"
         },
         "category" : {
             "save_success" : "Saved category {{name}}",
@@ -1107,7 +1176,11 @@
             "bulk_add_to_collection" : "{{count}} posts have been added to {{collection}}"
         },
         "savedsearch" : {
-            "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?"
+            "delete_savedsearch_success": "Saved search deleted successfully.",
+            "delete_savedsearch_plural_success": "Saved searches deleted successfully.",
+            "delete_savedsearch_confirm" : "Are you sure you want to delete this saved search?",
+            "savedsearch_updated": "{{savedsearch}} was updated",
+            "savedsearch_saved": "{{savedsearch}} was saved"
         },
         "passwordreset" : {
             "failed" : "Password reset failed",
@@ -1122,9 +1195,9 @@
             "sent_to" : "Message sent to {{contact}}"
         },
         "export" : {
-            "in_progress" : "Your CSV export is in progress...",
+            "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
             "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads"
         }
     },
     "empty": {
@@ -1141,7 +1214,7 @@
         "search": "Search",
         "use_current_location": "Use your current location",
         "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
-        "placeholder":"Find a location..",
+        "placeholder":"Search for addresses, place names, or coordinates...",
         "search_results": "Search results",
         "error":"Sorry we could not find a location matching your search"
     },

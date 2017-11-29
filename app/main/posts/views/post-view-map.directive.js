@@ -1,47 +1,69 @@
 module.exports = PostViewMap;
 
-PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location'];
-function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location) {
+PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$state', '$translate'];
+function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $state, $translate) {
     return {
         restrict: 'E',
         replace: true,
         scope: {
-            filters: '=',
-            isLoading: '='
+            noui: '@',
+            $transition$: '<',
+            filters: '<'
         },
-        link: PostViewMapLink,
-        template: require('./post-view-map.html')
+        template: require('./post-view-map.html'),
+        link: PostViewMapLink
     };
 
-    function PostViewMapLink($scope, element, attrs) {
+    function PostViewMapLink($scope, element, attrs, controller) {
         var map, markers;
-        var currentGeoJsonRequests = [];
         var limit = 200;
         var requestBlockSize = 5;
         var numberOfChunks = 0;
-        $scope.getUIClass = $location.path() === '/map/noui' ? 'map-only' : 'full-size';
+        var currentGeoJsonRequests = [];
 
         activate();
 
         function activate() {
-            // Start loading data
+            // Set the page title
+            $translate('post.posts').then(function (title) {
+                $scope.title = title;
+                $scope.$emit('setPageTitle', title);
+            });
+
+            // Grab initial filters
+            //$scope.filters = PostFilters.getFilters();
+
             var posts = loadPosts();
-            var createMapDirective =  Maps.createMap(element[0].querySelector('#map'));
+
+            // Start loading data
+            var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
+            var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
             });
-
             // When data is loaded
             $q.all({
                 map: createMap,
                 posts: posts
             })
-            .then(function (data) {
-                addPostsToMap(data.posts);
-                return data;
-            })
-            .then(watchFilters)
-            ;
+                .then(function (data) {
+                    addPostsToMap(data.posts);
+                    return data;
+                })
+                .then(watchFilters);
+
+            // Change state on mode change
+            $scope.$watch(() => {
+                return PostFilters.getModeId();
+            }, (mode) => {
+                if (PostFilters.getMode() === 'savedsearch') {
+                    $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                } else if (PostFilters.getMode() === 'collection') {
+                    $state.go('posts.map.collection', {collectionId: PostFilters.getModeId()});
+                } else {
+                    $state.go('posts.map.all');
+                }
+            });
 
             // Cleanup leaflet map
             $scope.$on('$destroy', function () {
@@ -49,6 +71,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     map.remove();
                 }
             });
+
         }
 
         function clearData() {
@@ -59,7 +82,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function addPostsToMap(posts) {
-
             var geojson = L.geoJson(posts, {
                 pointToLayer: Maps.pointToLayer,
                 onEachFeature: onEachFeature
@@ -87,6 +109,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             if (map.getZoom() > 15) {
                 map.setZoom(15);
             }
+            $timeout(function () {
+                map.invalidateSize();
+            }, 1);
         }
 
         function watchFilters() {
@@ -94,7 +119,12 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             $scope.$watch(function () {
                 return $scope.filters;
             }, function (newValue, oldValue) {
-                if (newValue !== oldValue) {
+                var diff = _.omit(newValue, function (value, key, obj) {
+                    return _.isEqual(oldValue[key], value);
+                });
+                var diffLength = _.keys(diff).length;
+
+                if (diffLength > 0) {
                     cancelCurrentRequests();
                     clearData();
                     reloadMapPosts();
@@ -109,8 +139,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             currentGeoJsonRequests = [];
         }
 
-        function reloadMapPosts() {
-            var test = loadPosts();
+        function reloadMapPosts(query) {
+            var test = loadPosts(query);
             test.then(addPostsToMap);
         }
 
@@ -125,7 +155,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 offset: offset,
                 has_location: 'mapped'
             });
-            $scope.isLoading.state = true;
 
             var request = PostEndpoint.geojson(conditions);
             currentGeoJsonRequests.push(request);
@@ -149,12 +178,13 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         loadPosts(query, offset, block).then(addPostsToMap);
                     }
                 }
-
-                if (numberOfChunks <= 0) {
-                    $scope.isLoading.state = false;
-                }
                 return posts;
             });
+        }
+
+        function goToPost(post) {
+            // reload because otherwise the layout does not reload and that is wrong because we change layouts on data and map
+            $state.go('posts.data.detail', {postId: post.id}, {reload: true});
         }
 
         function onEachFeature(feature, layer) {
@@ -173,8 +203,10 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     getPostDetails(feature).then(function (details) {
                         var scope = $rootScope.$new();
                         scope.post = details;
+                        scope.goToPost = goToPost;
+                        scope.selectedPost = {post : details};
 
-                        var el = $compile('<post-card post="post" short-content="true"></post-card>')(scope);
+                        var el = $compile('<post-card selected-post="selectedPost" post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
 
                         layer.bindPopup(el[0], {
                             'minWidth': '300',
@@ -190,5 +222,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         function getPostDetails(feature) {
             return PostEndpoint.get({id: feature.properties.id}).$promise;
         }
+
     }
 }

@@ -11,14 +11,26 @@
         >
     </div>
 </div>
-
 <div class="modal-body">
-    <div class="listing">
+
+    <button ng-show="loading" type="button" class="button button-full-width button-beta">
+        <div class="loading">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <span class="button-label" translate="app.loading">Loading</span>
+    </button>
+
+    <div ng-show="!loading" class="listing">
         <div class="listing-item" ng-repeat="search in searches">
             <div class="listing-item-primary">
-                <h2 class="listing-item-title"><a href="#" ng-click="goToSearch(search.id)">{{search.name}}</a></h2>
+                <h2 class="listing-item-title"><a href="#" ng-click="goToSearch(search)">{{search.name}}</a></h2>
             </div>
         </div>
+    </div>
+    <div ng-show="!loading && searches.length === 0">
+        <span translate="app.no_results">&nbsp;</span>
     </div>
        <!--  <div class="modal-actions">
             <div class="form-field">

@@ -1,0 +1,26 @@
+<fieldset ng-show="searchesLength > 0 && !loading">
+<label translate="app.saved_search"></label>
+    <div class="custom-select" ng-model-options="{ updateOn: 'default' }">
+        <select
+                ng-model="selectedSavedSearch"
+                ng-options="search.name
+                        for
+                        search in searches
+                        track by search.id"
+        >
+            <option value="" translate="app.select_one">Select one</option>
+        </select>
+    </div>
+    <a class="button button-beta" ng-show="selectedSavedSearch" ng-click="$parent.editSavedSearchModal('edit')">Edit</a>
+</fieldset>
+<fieldset ng-show="loading">
+    <label translate="app.saved_search"></label>
+    <button ng-show="loading" type="button" class="button button-full-width button-beta">
+        <div class="loading">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <span class="button-label" translate="app.loading_saved_searches">Loading saved searches</span>
+    </button>
+</fieldset>

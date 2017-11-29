@@ -1,5 +1,15 @@
 module.exports = [function () {
     return {
+        query: function () {
+            return {$promise: {
+                then: function (successCallback, failCallback) {
+                    successCallback({'results': [{
+                            name: 'test savedsearch',
+                            id: 1
+                        }]});
+                }
+            }};
+        },
         queryFresh: function () {
             return {$promise: {
                 then: function (successCallback, failCallback) {

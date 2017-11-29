@@ -1,9 +1,10 @@
-describe('collections mode context directive', function () {
+describe('savedsearch mode context directive', function () {
 
     var $rootScope,
         $scope,
         element,
-        Notify;
+        Notify,
+        isolateScope;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -11,7 +12,13 @@ describe('collections mode context directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('savedSearchModeContext', require('app/main/posts/savedsearches/mode-context.directive'));
+        testApp
+        .directive('savedSearchModeContext', require('app/main/posts/savedsearches/mode-context.directive'))
+        .service('$state', () => {
+            return {
+                go: () => {}
+            };
+        });
 
         angular.mock.module('testApp');
     });
@@ -23,16 +30,18 @@ describe('collections mode context directive', function () {
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
 
-        $scope.savedSearch = {};
-
-        element = '<saved-search-mode-context></saved-search-mode-context>';
+        $scope.savedSearch = {
+            allowed_privileges: ['update']
+        };
+        element = '<saved-search-mode-context saved-search="savedSearch"></saved-search-mode-context>';
         element = $compile(element)($scope);
         $scope.$digest();
+        isolateScope = element.isolateScope();
     }));
 
     it('should save a notification', function () {
         spyOn(Notify, 'notify');
-        $scope.saveNotification({id: 'pass'});
+        isolateScope.saveNotification({id: 'pass'});
 
         expect(Notify.notify).toHaveBeenCalled();
     });
