@@ -18,7 +18,7 @@
           <a ui-sref="posts.detail.data({postId: entry.id})">{{entry.title}}</a>
       </div>
      <div ng-repeat="entry in value track by $index" ng-if="attribute.type !== 'relation' && attribute.input !== 'tags'">
-          <p ng-if="attribute.type !== 'markdown'">{{entry}}</p>
+          <p ng-if="attribute.type !== 'markdown'" linkify>{{entry}}</p>
           <p ng-if="attribute.type === 'markdown'" markdown-to-html="entry"></p>
       </div>
     </div>

@@ -16,6 +16,7 @@ window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
+require('angular-linkify');
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -76,6 +77,7 @@ angular.module('app',
         'ngGeolocation',
         'nvd3',
         'angular-cache',
+        'linkify',
         'ngRaven',
         'ushahidi.common',
         'ushahidi.main',
@@ -109,9 +111,15 @@ angular.module('app',
         // if the path doesn't match any of the urls you configured
         // otherwise will take care of routing the user to the specified url
         $urlRouterProvider.otherwise('/404');
-
         $urlMatcherFactoryProvider.strictMode(false);
     })
+    .config(['$showdownProvider', function ($showdownProvider) {
+        $showdownProvider.setOption('simplifiedAutoLink', true);
+        $showdownProvider.setOption('excludeTrailingPunctuationFromURLs', true);
+        $showdownProvider.setOption('openLinksInNewWindow', true);
+        $showdownProvider.setOption('tasklists', true);
+    }])
+
     .factory('_', function () {
         return require('underscore/underscore');
     })
