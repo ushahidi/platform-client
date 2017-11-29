@@ -1,4 +1,4 @@
-describe('post active search filters directive', function () {
+describe('post filters-dropdown directive', function () {
 
     var $rootScope,
         $scope,
@@ -16,7 +16,17 @@ describe('post active search filters directive', function () {
         .directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
         .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
         .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
-        .value('$routeParams', {'view': 'data'});
+        .service('$state', function () {
+            return {
+                '$current': {
+                    name: 'posts.data',
+                    includes: {
+                        'posts': true,
+                        'posts.data': true
+                    }
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
     var defaults = {
@@ -59,21 +69,9 @@ describe('post active search filters directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('reactiveFilters should be false', function () {
-            expect(PostFilters.reactiveFilters).toEqual(false);
-        });
-        it('should enable reactiveFilters when I call applyFiltersLocked', function () {
-            expect(PostFilters.reactiveFilters).toEqual(false);
-            isolateScope.applyFiltersLocked();
-            expect(PostFilters.reactiveFilters).toEqual(true);
-        });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.clearFilters();
-            expect(isolateScope.filtersVar).toEqual(PostFilters.getDefaults());
-        });
-        it('should set qEnabled true when I call enableQuery', function () {
-            isolateScope.enableQuery();
-            expect(PostFilters.qEnabled).toEqual(true);
+            expect(isolateScope.filters).toEqual(PostFilters.getDefaults());
         });
         it('should call saved-search-modal once when I call saveSavedSearchModal', function () {
             spyOn(ModalService, 'openTemplate');

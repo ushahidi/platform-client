@@ -7,29 +7,114 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     var forms = [];
     var tags = [];
     var filterMode = 'all';
-    var entityId = null;
+    var entity = null;
     // @todo take this out of the service
     // but ensure it happens at the right times
     activate();
 
     return {
+        resetDefaults: resetDefaults,
         getDefaults: getDefaults,
         getQueryParams: getQueryParams,
         getFilters: getFilters,
         setFilters: setFilters,
+        setFilter: setFilter,
         clearFilters: clearFilters,
         clearFilter: clearFilter,
+        clearFilterFromArray: clearFilterFromArray,
         hasFilters: hasFilters,
         getActiveFilters: getActiveFilters,
-        getCleanActiveFilters: getCleanActiveFilters,
+        getUIActiveFilters: getUIActiveFilters,
         setMode: setMode,
         getMode: getMode,
         getModeId: getModeId,
+        getModeEntity: getModeEntity,
         countFilters: countFilters,
-        reactiveFilters: true,
-        qEnabled: false
+        cleanUIFilters: cleanUIFilters,
+        cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
+        addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
+        reactiveFilters: true
     };
 
+    /**
+     * Removes every value that is not an array from the "target" object IF the key is present in the "from" object.
+     * For array values it runs a diff between the "target" and "from" current value:
+     * - if it' empty, DELETES the key from "target"
+     * - if not empty, assigns the diff in "target"
+     * Finally this returns the target object to be used elsewhere.
+     * The function was created for the uiFilters specifically.
+     * @param target
+     * @param from
+     * @returns object
+     */
+    function cleanUIFilters(target, from) {
+        _.each(target, function (value, key) {
+            var shouldDeleteTargetKey = !_.isArray(target[key]) && target.hasOwnProperty(key) && !_.isEmpty(from[key]) || !_.isArray(target[key]) && target[key] === getDefaults()[key];
+            if (shouldDeleteTargetKey) {
+                delete target[key];
+            } else if (_.isArray(target[key])) {
+                var diff =  _.difference(value, from[key]);
+                if (diff.length === 0) {
+                    delete target[key];
+                } else {
+                    target[key] = diff;
+                }
+            }
+        });
+        return target;
+    }
+    /**
+     *  Original has 3 filters, then 1 was removed, so current has 2. uiFiltersCurrent has 3 again because the user re-added it.
+     *  We need to compare  original and uiFIltersCurrent.
+     *  If `uiFiltersCurrent` has values that are present in  `original`,
+     *  we need to add them to `current` (*some other function will remove them from uiFiltersCurrent too)
+     *
+     * @param current
+     * @param original
+     */
+    function addIfCurrentObjectMatchesOriginal(currentSavedSearch, originalSavedSearch, currentFilters) {
+        //find filters in current that are part of the original object
+        return _.mapObject(originalSavedSearch, function (obj, key) {
+            if (!_.isArray(obj)) {
+                return currentFilters[key];
+            }
+            var currentContainsOriginalSavedSearch = _.every(originalSavedSearch[key], function (obj) {
+                return _.contains(currentFilters[key], obj);
+            });
+            if (currentContainsOriginalSavedSearch) {
+                return _.intersection(originalSavedSearch[key], currentFilters[key]);
+            } else {
+                return _.intersection(currentSavedSearch[key], currentFilters[key]);
+            }
+        });
+    }
+    /**
+     * Looks for keys that are NOT present in currentFilters but that are in the savedSearch filters (which means they are removed)
+     * and removes them from the saved search filters array.
+     * Does not handle removal where the key exists but the values are an array and some are missing. Need to fix that.
+     **/
+    function cleanRemovedValuesFromObject(currentFilters, oldFilters) {
+        //find filters in currentFilters that are NOT in savedSearch.filters
+        var validFilters = _.pick(oldFilters, _.without(_.keys(currentFilters), _.keys(oldFilters)));
+        validFilters = _.mapObject(validFilters, function (obj, key) {
+            if (!_.isArray(oldFilters[key])) {
+                return currentFilters[key];
+            }
+            return _.filter(oldFilters[key], function (val) {
+                return currentFilters[key].indexOf(val) > -1;
+            });
+        });
+        return validFilters;
+    }
+
+    /**
+     * function to deal with the fact that logout and login don't really reset the defaults.
+     */
+    function resetDefaults() {
+        return activate().then(() => {
+            this.clearFilters();
+        });
+    }
 
     function activate() {
         return $q.all([TagEndpoint.query().$promise, FormEndpoint.query().$promise]).then(function (results) {
@@ -61,21 +146,34 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return angular.extend(filterState, getDefaults(), newState);
     }
 
+    function setFilter(key, value) {
+        filterState[key] = value;
+        return filterState;
+    }
+
     function clearFilters() {
-        return angular.copy(getDefaults(), filterState);
+        // Replace filterState with defaults
+        angular.copy(getDefaults(), filterState);
+        // Trigger reactive filters
+        this.reactiveFilters = true;
+        return filterState;
     }
 
     function clearFilter(filterKey, value) {
-        filterState[filterKey] = getDefaults()[filterKey];
-        /**
-         * Since q is a special type of filter that gets applied on the click
-         * of a button separate from the input control, and since it should be automatically
-         * enabled when you clear it, we are adding this
+        filterState = this.clearFilterFromArray(filterKey, value, filterState);
+    }
+    function clearFilterFromArray(filterKey, value, from) {
+        /*
+         * if filter is in an array, we only want to remove that specific value
+         * if all filter-values are removed from array, we want to reset to default
          */
-        if (filterKey === 'q') {
-            this.qEnabled = true;
-            this.reactiveFilters = true;
+        if (Array.isArray(from[filterKey]) && from[filterKey].length > 1) {
+            from[filterKey].splice(from[filterKey].indexOf(value), 1);
+        } else {
+            from[filterKey] = getDefaults()[filterKey];
         }
+
+        return from;
     }
 
     function getDefaults() {
@@ -112,9 +210,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (key === 'reactiveFilters') {
                     return true;
                 }
-                if (key === 'qEnabled') {
-                    return true;
-                }
                 // Is value empty?
                 // Is it a date?
                 if (_.isDate(value)) {
@@ -144,18 +239,19 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
             delete query.within_km;
         }
         if (filterMode === 'collection') {
-            query.set = [entityId].concat(query.set);
+            query.set = [getModeId()].concat(query.set);
         }
         return query;
     }
 
     /**
+     * For UI purposes only
      * Returns the non-default filters so that we don' show the user 3 filters when they didn' select one yet
      * Example: when the active filters load we show "sort", "unlockedOnTop", "sort_by" as active with their value
      * but since the user didn't select a filter, it can be really confusing.
      * @param filters
      */
-    function getCleanActiveFilters(filters) {
+    function getUIActiveFilters(filters) {
         var defaults = getDefaults();
         return _.omit(
             filters,
@@ -163,7 +259,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (defaults[key] === value) {
                     return true;
                 }
-                // we don't want this showing up in bug icons
+                // Ignore difference in saved_search
                 if (key === 'saved_search') {
                     return true;
                 }
@@ -200,10 +296,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (key === 'reactiveFilters') {
                     return true;
                 }
-                if (key === 'qEnabled') {
-                    return true;
-                }
-                // we don't want this showing up in bug icons
+                // Ignore difference in saved_search
                 if (key === 'saved_search') {
                     return true;
                 }
@@ -232,16 +325,16 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return !_.isEmpty(getActiveFilters(filters));
     }
 
-    function setMode(newMode, id) {
+    function setMode(newMode, obj) {
         // If mode changes, reset filters
         if (newMode !== filterMode) {
             filterMode = newMode;
             if (filterMode === 'collection') {
-                clearFilters();
+                this.clearFilters();
             }
 
         }
-        entityId = id;
+        entity = obj;
     }
 
     function getMode() {
@@ -249,10 +342,26 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function getModeId() {
-        return entityId;
+        return entity ? entity.id : null;
+    }
+
+    function getModeEntity(type) {
+        if (getMode() === type) {
+            return entity;
+        }
+        return null;
     }
     function countFilters() {
-        return _.keys(this.getActiveFilters(this.getFilters())).length;
+        let count = _.keys(this.getActiveFilters(this.getFilters())).length;
+
+        // Hacky workaround to make sure set is counted in filter counter
+        // Can probably be refactored to just include set in the filterState
+        // itself
+        if (filterMode === 'collection') {
+            count++;
+        }
+
+        return count;
     }
 }
 

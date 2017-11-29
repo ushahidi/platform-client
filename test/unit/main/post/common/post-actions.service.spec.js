@@ -3,7 +3,10 @@ describe('Post Actions Service', function () {
     var PostActionsService,
         post,
         Notify,
-        PostEndpoint;
+        PostEndpoint,
+        mockState = {
+            go: jasmine.createSpy()
+        };
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -12,10 +15,9 @@ describe('Post Actions Service', function () {
         testApp.service('PostActionsService', require('app/main/posts/common/post-actions.service.js'))
         .value('$filter', function () {
             return function () {};
+        }).service('$state', function () {
+            return mockState;
         });
-
-
-
         angular.mock.module('testApp');
     });
 

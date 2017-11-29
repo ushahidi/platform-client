@@ -27,17 +27,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
     $scope.unknown = [];
 
     activate();
-    /**
-     * TODO this needs refactoring about refactoring the  qenabled/reactivefilters situation
-     * since it might get out of hand as we need it in multiple places.
-     */
-    $scope.$watch(function () {
-        return PostFilters.qEnabled;
-    }, function () {
-        if (PostFilters.qEnabled === true) {
-            $scope.filters.reactToQEnabled = $scope.filters.reactToQEnabled ? !$scope.filters.reactToQEnabled : true;
-        }
-    });
 
     // whenever filters change, reload the stats
     $scope.$watch(function () {
@@ -47,17 +36,9 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
             return _.isEqual(oldValue[key], value);
         });
         var diffLength = _.keys(diff).length;
-        var qDiffOnly =  _.keys(diff).length === 1 && diff.hasOwnProperty('q');
-        /**
-         * We only want to call updateCounts if we :
-         * - Have changes other than q= in the filters
-         * - Only q= changed but we also have enabled the q filter
-         */
-        if (diffLength > 0 && !qDiffOnly || (diffLength >= 1 && PostFilters.qEnabled === true)) {
+
+        if (diffLength > 0) {
             getPostStats(PostFilters.getFilters()).$promise.then(updateCounts);
-        }
-        if (PostFilters.qEnabled === true) {
-            PostFilters.qEnabled = false;
         }
     }, true);
 
@@ -120,7 +101,8 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
         if (queryParams.form) {
             delete queryParams.form;
         }
-        // deleting categories and sources since they are selected in the sidebar and not in the filter-modal = might get confusing
+        // deleting categories and sources since they are
+        // selected in the sidebar and not in the filter-modal = might get confusing
         if (queryParams.tags) {
             delete queryParams.tags;
         }
@@ -158,7 +140,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
 
     function getSourceStats(stats) {
         var sourceStats = [];
-        var providers = ['email', 'sms', 'twitter'];
+        var providers = ['email', 'sms', 'twitter', 'web'];
         // calculating stats for each datasource, based on the current form-filter
         _.each(providers, function (provider) {
             var posts = _.filter(stats.totals[0].values, function (value) {
@@ -173,7 +155,7 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, TagEndpoint, 
                     if (post.total) {
                         return count + post.total;
                     }
-                    return 0;
+                    return count;
                 }, sourceStat.total);
                 sourceStat.type = provider;
                 sourceStats.push(sourceStat);

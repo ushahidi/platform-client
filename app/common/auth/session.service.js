@@ -10,6 +10,7 @@ function (
         email: undefined,
         accessToken: undefined,
         accessTokenExpires: undefined,
+        grantType: undefined,
         role: undefined,
         permissions: undefined,
         gravatar: undefined

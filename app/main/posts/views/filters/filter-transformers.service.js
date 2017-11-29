@@ -1,21 +1,28 @@
 module.exports = FilterTransformersService;
 
 FilterTransformersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', 'RoleEndpoint',
-    'UserEndpoint', 'SavedSearchEndpoint', 'PostMetadataService', '$translate', '$filter', '$q'];
+    'UserEndpoint', 'SavedSearchEndpoint', 'CollectionEndpoint', 'PostMetadataService', '$translate', '$filter', '$q'];
 function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
-                            UserEndpoint, SavedSearchEndpoint, PostMetadataService, $translate, $filter, $q) {
-    var roles, users, tags, forms, savedSearches = [];
+                            UserEndpoint, SavedSearchEndpoint, CollectionEndpoint, PostMetadataService, $translate, $filter, $q) {
+    var roles, users, tags, forms, savedSearches, collections = [];
     var self = this;
     this.rawFilters = {};
 
     this.requestsFiltersData = function () {
-        return $q.all([RoleEndpoint.query().$promise, UserEndpoint.query().$promise,
-            TagEndpoint.query().$promise, FormEndpoint.query().$promise, SavedSearchEndpoint.query({}).$promise]).then(function (results) {
+        return $q.all([
+                RoleEndpoint.query().$promise,
+                UserEndpoint.query().$promise,
+                TagEndpoint.query().$promise,
+                FormEndpoint.query().$promise,
+                SavedSearchEndpoint.query({}).$promise,
+                CollectionEndpoint.query({}).$promise
+            ]).then(function (results) {
             roles = _.indexBy(results[0], 'name');
             users = _.indexBy(results[1], 'id');
             tags = _.indexBy(results[2], 'id');
             forms = _.indexBy(results[3], 'id');
             savedSearches = _.indexBy(results[4], 'id');
+            collections = _.indexBy(results[5], 'id');
         });
     };
     this.transformers = {
@@ -38,6 +45,12 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
         saved_search: function (value) {
             if (value) {
                 return savedSearches[value.id].name;
+            }
+            return '';
+        },
+        set: function (value) {
+            if (value) {
+                return collections[value.id].name;
             }
             return '';
         },

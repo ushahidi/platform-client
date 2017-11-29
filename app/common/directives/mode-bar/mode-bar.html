@@ -4,8 +4,8 @@
     <nav>
         <!-- main menu -->
         <ul class="deployment-menu">
-            <li ng-class="{ active: activeMode === 'map' }">
-                <a ng-href="{{baseUrl + 'map' }}" class="view-map">
+            <li ui-sref-active="{ 'active' : 'posts.map' }">
+                <a ui-sref="posts.map.all" ui-sref-opts="{reload:true}" class="view-map">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#map-marker"></use>
                     </svg>
@@ -13,8 +13,8 @@
                 </a>
             </li>
 
-            <li ng-class="{ active: activeMode === 'data' }">
-                <a ng-href="{{baseUrl + 'data' }}" class="view-data">
+            <li ui-sref-active="active">
+                <a ui-sref="posts.data" ui-sref-opts="{reload:true}" class="view-data">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#list-rich"></use>
                     </svg>
@@ -22,8 +22,8 @@
                 </a>
             </li>
 
-            <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ng-class="{ active: activeMode === 'activity' }" data-message="customize">
-                <a href="/activity">
+            <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ui-sref-active="active" data-message="customize">
+                <a ui-sref="activity">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pulse"></use>
                     </svg>
@@ -39,8 +39,8 @@
                     <translate>nav.more</translate>
                 </a>
                 <ul>
-                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{ active: activeMode === 'settings' }">
-                        <a href="/settings">
+                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ui-sref-active="active">
+                        <a ui-sref="settings">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                             </svg>
@@ -102,15 +102,6 @@
                         <use xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
                     </svg>
                     <span class="label" translate>nav.collections</span>
-                </a>
-            </li>
-
-            <li ng-if="todo">
-                <a>
-                    <svg class="iconic">
-                        <use xlink:href="/img/iconic-sprite.svg#bell"></use>
-                    </svg>
-                    <span class="label"><translate>nav.alerts</translate> <span class="badge">2</span></span>
                 </a>
             </li>
         <!-- user account menu -->

@@ -4,7 +4,7 @@ describe('filter by datasource directive', function () {
         isolateScope,
         element,
         ConfigEndpoint,
-        hasPermission,
+        isAdmin,
         $location;
 
     beforeEach(function () {
@@ -31,9 +31,9 @@ describe('filter by datasource directive', function () {
                 {total: 2, type: 'sms'}
             ];
 
-        hasPermission = true;
-        $rootScope.hasPermission = function () {
-            return hasPermission;
+        isAdmin = true;
+        $rootScope.isAdmin = function () {
+            return isAdmin;
         };
         element = '<filter-by-datasource filters="filters" post-stats="postStats"></filter-by-datasource>';
         element = $compile(element)($scope);
@@ -89,6 +89,12 @@ describe('filter by datasource directive', function () {
             $location.path('/views/map');
             isolateScope.showOnlyIncoming('SMS');
             expect($location.path()).toEqual('/views/data');
+        });
+        it('should toggle the filters based on if selected filter is activated or not', function () {
+            expect(isolateScope.filters.source).toEqual(['sms', 'twitter', 'web', 'email']);
+            var filter = isolateScope.filters.source[Math.floor(Math.random() * isolateScope.filters.source.length)];
+            isolateScope.toggleFilters(filter);
+            expect(isolateScope.filters.source).not.toContain(filter);
         });
     });
 });

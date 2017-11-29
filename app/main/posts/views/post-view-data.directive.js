@@ -4,11 +4,10 @@ PostViewData.$inject = [];
 function PostViewData() {
     return {
         restrict: 'E',
-        replace: true,
         scope: {
-            filters: '=',
-            isLoading: '=',
-            currentView: '='
+            post: '<',
+            collection: '<',
+            savedSearch: '<'
         },
         controller: PostViewDataController,
         template: require('./post-view-data.html')
@@ -16,25 +15,24 @@ function PostViewData() {
 }
 
 PostViewDataController.$inject = [
-'$scope',
-'$rootScope',
-'PostFilters',
-'_',
-'PostEndpoint',
-'PostViewService',
-'moment',
-'$translate',
-'$q',
-'PostActionsService',
-'PostLockService',
-'$timeout',
-'$location',
-'$anchorScroll',
-'Notify',
-'$routeParams',
-'$window'
+    '$scope',
+    '$rootScope',
+    'PostFilters',
+    '_',
+    'PostEndpoint',
+    'PostViewService',
+    'moment',
+    '$translate',
+    '$q',
+    'PostActionsService',
+    '$timeout',
+    '$location',
+    'Notify',
+    '$window',
+    '$state',
+    'LoadingProgress',
+    '$transitions'
 ];
-
 function PostViewDataController(
     $scope,
     $rootScope,
@@ -46,13 +44,13 @@ function PostViewDataController(
     $translate,
     $q,
     PostActionsService,
-    PostLockService,
     $timeout,
     $location,
-    $anchorScroll,
     Notify,
-    $routeParams,
-    $window
+    $window,
+    $state,
+    LoadingProgress,
+    $transitions
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -69,89 +67,90 @@ function PostViewDataController(
     $scope.changeStatus = changeStatus;
     $scope.showPost = showPost;
     $scope.loadMore = loadMore;
-    var clearPosts = false;
+    $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.clearSelectedPosts = clearSelectedPosts;
     $scope.newPostsCount = 0;
     var recentPosts = [];
     $scope.addNewestPosts = addNewestPosts;
-    $scope.editMode = {editing: false};
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    $scope.selectedPost = {post: null, next: {}};
-    $scope.selectedPostId = null;
+    $scope.selectedPost = {post: $scope.post, next: {}};
     $scope.formData = {form: {}};
-    $rootScope.setLayout('layout-d');
+    $scope.getPosts = getPosts;
+    $scope.shouldWeRunCheckForNewPosts = true;
+    $scope.activeCol = $state.params.activeCol;
+    $scope.deselectPost = deselectPost;
+    $scope.removePostThatDoesntMatchFilters = removePostThatDoesntMatchFilters;
+
     var stopInterval;
     /**
      * setting "now" time as utc for new posts filter
      */
     var newPostsAfter = moment().utc();
-    $scope.savingPost = {saving: false};
+
+    let unbindFns = [];
 
     // This is for when you edit a post. Because anything could be changing, we have to
     // check to see if everything in the post still matches all the filters.
     // It's too cumbersome to do on the frontend, so we're checking in the API
-    $rootScope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
-        if ($scope.hasFilters()) {
-            let query = PostFilters.getQueryParams($scope.filters);
-            let postQuery = _.extend({}, query, {
-                post_id: args.post.id
-            });
+    unbindFns.push($scope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
+        let post = args.post;
+        $scope.removePostThatDoesntMatchFilters(post);
+    }));
 
-            PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
-                if (postsResponse.count === 0) {
-                    removePostFromList(args.post);
-                }
-            });
-        }
-    });
 
     // And this is for when you change the post status using the ... button
     // Because it's just the post status only, we're just checking if it matches
     // filters on the frontend. This makes it MUCH faster than using the API
-    $rootScope.$on('event:edit:post:status:data:mode:saveSuccess', function (event, args) {
+
+    unbindFns.push($scope.$on('event:edit:post:status:data:mode:saveSuccess', function (event, args) {
         let postObj = args.post;
-        if (!newStatusMatchesFilters(postObj)) {
+        if (args.deleted || !newStatusMatchesFilters(postObj)) {
             removePostFromList(postObj);
         }
+    }));
+
+    unbindFns.push($transitions.onSuccess({
+        to: 'posts.data.**'
+    }, () => {
+        $scope.activeCol = $state.params.activeCol;
+    }));
+
+    unbindFns.push($transitions.onSuccess({
+        to: 'posts.data.*'
+    }, () => {
+        $scope.selectedPost.post = _.findWhere($scope.posts, { id: parseInt($state.params.postId, 10) });
+    }));
+
+    // Cleanup and remove all listeners
+    $scope.$on('$destroy', () => {
+        unbindFns.forEach(Function.prototype.call, Function.prototype.call);
     });
-
-    function removePostFromList(postObj) {
-        $scope.posts.forEach((post, index) => {
-            // args.post is the post being updated/saved and sent from the broadcast
-            if (post.id === postObj.id) {
-                let nextInLine = $scope.posts[index + 1];
-                $scope.posts.splice(index, 1);
-                if ($scope.posts.length) {
-                    groupPosts($scope.posts);
-                    $scope.selectedPost.post = nextInLine;
-                    $scope.selectedPostId = nextInLine.id;
-                } else {
-                    $scope.selectedPost = {post: null, next: {}};
-                    $scope.selectedPostId = null;
-                    getPosts(false, false);
-                }
-            }
-        });
-    }
-
-    function newStatusMatchesFilters(postObj) {
-        let filters = $scope.hasFilters() ?  $scope.filters.status : PostFilters.getDefaults().status;
-        let matchingStatus = false;
-
-        filters.forEach((status) => {
-            if (postObj.status === status) {
-                matchingStatus = true;
-            }
-        });
-
-        return matchingStatus;
-    }
 
     activate();
     function activate() {
-        getPosts(false, false);
+        // Set the page title
+        $translate('post.posts').then(function (title) {
+            $scope.title = title;
+            $scope.$emit('setPageTitle', title);
+        });
+
+        $scope.filters = PostFilters.getFilters();
+
+        // If we are coming into Data View with a selected post
+        // then go get 19 posts before that post and put those in the post list
+        // *
+        // *
+        // Otherwise, go get posts just normal
+        if ($scope.selectedPost.post) {
+            let query = PostFilters.getQueryParams($scope.filters);
+            query.created_before = $scope.selectedPost.post.created;
+            getPosts(query, false);
+            $scope.shouldWeRunCheckForNewPosts = false;
+        } else {
+            getPosts(false, false);
+        }
         // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
         $scope.$watch(function () {
@@ -166,8 +165,7 @@ function PostViewDataController(
             return $scope.filters;
         }, function (newValue, oldValue) {
             if (PostFilters.reactiveFilters === true && (newValue !== oldValue)) {
-                clearPosts = true;
-                getPosts(false, false);
+                getPosts(false, false, true, goToFirstPostIfPostDoesNotMatchFilters);
                 PostFilters.reactiveFilters = false;
             }
         }, true);
@@ -189,7 +187,6 @@ function PostViewDataController(
             if (!_.isEmpty($scope.selectedPost.next)) {
                 $scope.selectedPost.post = $scope.selectedPost.next;
                 $scope.selectedPost.next = {};
-                $scope.editMode.editing = true;
                 $rootScope.$broadcast('event:edit:post:reactivate');
             }
         });
@@ -204,25 +201,86 @@ function PostViewDataController(
             }
         });
 
-        $scope.$watch(function () {
-            return $location.path();
-        }, function (newValue, oldValue) {
-            if ($scope.editMode.editing) {
-                var postId = newValue.match(/^\/posts\/([0-9]+)(\/|$)/);
-                var locationUrlMatch = $location.path().match(/^\/posts\/([0-9]+)(\/|$)/);
-                if (postId && postId.length > 1 && !locationUrlMatch) {
-                    var tmpPost = _.filter($scope.posts, function (postItm) {
-                        return postItm.id === parseInt(postId[1]);
-                    });
-                    if (tmpPost.length > 0) {
-                        $scope.selectedPost.post = tmpPost[0];
-                        $scope.selectedPostId = tmpPost[0].id;
-                        $scope.editMode.editing = false;
+        if ($scope.shouldWeRunCheckForNewPosts) {
+            checkForNewPosts(30000);
+        }
+    }
+
+    function deselectPost() {
+        $scope.selectedPost = {post: null, next: {}};
+    }
+    function goToFirstPostIfPostDoesNotMatchFilters() {
+        if ($scope.selectedPost.post && $scope.posts[0]) {
+            postDoesNotMatchFilters($scope.selectedPost.post).then((bool) => {
+                if (bool) {
+                    $scope.selectedPost.post = $scope.posts[0];
+                    $state.go('posts.data.detail', {view: 'data', postId: $scope.posts[0].id});
+                }
+            });
+        }
+    }
+
+    function postDoesNotMatchFilters(postObj) {
+        var deferred = $q.defer();
+
+        if ($scope.hasFilters()) {
+            let query = PostFilters.getQueryParams($scope.filters);
+            let postQuery = _.extend({}, query, {
+                post_id: postObj.id
+            });
+
+            PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
+                if (postsResponse.count === 0) {
+                    deferred.resolve(true);
+                } else {
+                    deferred.reject(false);
+                }
+            });
+        } else {
+            deferred.reject(false);
+        }
+        return deferred.promise;
+    }
+
+    function removePostThatDoesntMatchFilters(postObj) {
+        postDoesNotMatchFilters(postObj).then((bool) => {
+            if (bool) {
+                removePostFromList(postObj);
+            }
+        });
+    }
+
+    function removePostFromList(postObj) {
+        $scope.posts.forEach((post, index) => {
+            // args.post is the post being updated/saved and sent from the broadcast
+            if (post.id === postObj.id) {
+                let nextInLine = $scope.posts[index + 1];
+                $scope.posts.splice(index, 1);
+                if ($scope.posts.length) {
+                    groupPosts($scope.posts);
+                    if ($scope.selectedPost.post) {
+                        $scope.selectedPost.post = nextInLine;
+                        $state.go('posts.data.detail', {view: 'data', postId: $scope.selectedPost.post.id});
                     }
+                } else {
+                    $scope.selectedPost = {post: null, next: {}};
+                    getPosts(false, false);
                 }
             }
         });
-        checkForNewPosts(30000);
+    }
+
+    function newStatusMatchesFilters(postObj) {
+        let filters = $scope.hasFilters() ?  $scope.filters.status : PostFilters.getDefaults().status;
+        let matchingStatus = false;
+
+        filters.forEach((status) => {
+            if (postObj.status === status) {
+                matchingStatus = true;
+            }
+        });
+
+        return matchingStatus;
     }
 
     function persistUpdatedPost(updatedPost) {
@@ -234,60 +292,31 @@ function PostViewDataController(
 
     function confirmEditingExit() {
         var deferred = $q.defer();
-        if (!$scope.editMode.editing) {
+        if ($state.$current.name !== 'posts.data.edit') {
             deferred.resolve();
         } else if ($scope.formData.form && !$scope.formData.form.$dirty) {
-            $scope.editMode.editing = false;
-            $scope.isLoading.state = false;
-            $scope.savingPost.saving = false;
             deferred.resolve();
         } else {
             Notify.confirmLeave('notify.post.leave_without_save').then(function () {
                 //PostLockService.unlockSilent($scope.selectedPost);
-                $scope.editMode.editing = false;
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
                 deferred.resolve();
             }, function (reject) {
                 deferred.reject();
-                $scope.editMode.editing = true;
-                $scope.isLoading.state = false;
-                $scope.savingPost.saving = false;
             });
         }
         return deferred.promise;
     }
 
-    function goToPost(post) {
-        angular.element(document.getElementById('bootstrap-app')).addClass('hidden');
-        angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
-        $location.path('/posts/' + post.id);
-    }
-
-    function showPost(post) {
+    function showPost(post, fromWhere) {
         return confirmEditingExit().then(function () {
-            if ($scope.selectedPost.post && $scope.selectedPost.post.id === post.id) {
-                $scope.selectedPost.post = null;
-                $scope.selectedPostId = null;
-            } else {
-                var currentWidth = $window.innerWidth;
-                if (currentWidth > 1023) {
-                    $location.path('/posts/' + post.id, false);
-                    $scope.selectedPost.post = post;
-                    $scope.selectedPostId = post.id;
-                } else {
-                    goToPost(post);
-                }
-            }
+            $scope.selectedPost.post = post;
+            $state.go('posts.data.detail', {postId: post.id});
         }, function () {
         });
     }
 
-    function getPosts(query, useOffset) {
+    function getPosts(query, useOffset, clearPosts, callback) {
         query = query || PostFilters.getQueryParams($scope.filters);
-        PostEndpoint.stats(query).$promise.then(function (results) {
-            $scope.total = results.totals[0].values[0].total;
-        });
 
         var postQuery = _.extend({}, query, {
             limit: $scope.itemsPerPage
@@ -295,7 +324,6 @@ function PostViewDataController(
         if (useOffset === true) {
             postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
         }
-        $scope.isLoading.state = true;
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             clearPosts ? resetPosts() : null;
@@ -312,9 +340,12 @@ function PostViewDataController(
             groupPosts(postsResponse.results);
 
             $scope.totalItems = postsResponse.total_count;
-            $scope.isLoading.state = false;
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
                 PostViewService.showNoPostsSlider();
+            }
+
+            if (callback) {
+                callback();
             }
         });
     }
@@ -323,7 +354,6 @@ function PostViewDataController(
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
-            $scope.isLoading.state = true;
             var deletePostsPromises = _.map(
                 $scope.selectedPosts,
                 function (postId) {
@@ -334,11 +364,9 @@ function PostViewDataController(
             ;
 
             function handleDeleteErrors(errorResponse) {
-                $scope.isLoading.state = false;
                 Notify.apiErrors(errorResponse);
             }
             function handleDeleteSuccess(deleted) {
-                $scope.isLoading.state = false;
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
                 var deletedIds = _.pluck(deleted, 'id');
@@ -353,8 +381,7 @@ function PostViewDataController(
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
-                    clearPosts = true;
-                    getPosts(false, false);
+                    getPosts(false, false, true);
                 }
             }
         });
@@ -430,8 +457,7 @@ function PostViewDataController(
     function loadMore() {
         // Increment page
         $scope.currentPage++;
-        clearPosts = false;
-        getPosts(false, true);
+        getPosts(false, true, false);
     }
 
     function selectBulkActions() {
@@ -497,3 +523,4 @@ function PostViewDataController(
         stopInterval = $timeout(checkForNewPosts, time, true, time);
     }
 }
+

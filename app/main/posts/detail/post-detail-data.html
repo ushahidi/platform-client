@@ -1,16 +1,20 @@
 <div>
   <article class="postcard" role="article">
+    <button class="button-beta button-flat postcard-close" ng-click="close()">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
+        </svg>
+    </button>
         <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
 
         <post-lock ng-if="post.lock" post="post"></post-lock>
 
-        <div class="postcard-body"> 
+        <div class="postcard-body">
               <h1 class="form-sheet-title survey-title">{{post.title}}</h1>
-              <p>{{post.content}}</p>
 
             <div class="postcard-header">
                 <post-metadata post="post" hide-date-this-week="true"></post-metadata>
-                <post-actions selected-post="selectedPost" edit-mode="editMode" post="post"></post-actions>
+                <post-actions post="post"></post-actions>
             </div>
             <div
               ng-repeat="(key,value) in post.values"
@@ -91,4 +95,6 @@
           </div>
         </div>
   </div>
+
+    <post-messages post="post" ng-if="post.contact.id"></post-messages>
 </div>

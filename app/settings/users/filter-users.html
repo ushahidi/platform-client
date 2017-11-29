@@ -1,4 +1,4 @@
-<form name="usersFiltersForm" role="search" class="searchbar" dropdown is-open="filtersMenuOpen" auto-close="outsideClick" ng-submit="applyFilters()" ng-model-options="{ updateOn : 'submit' }">
+<form name="usersFiltersForm" role="search" class="searchbar" dropdown is-open="filtersMenuOpen" auto-close="outsideClick" ng-submit="applyFilters()" ng-model-options="{ updateOn : 'submit' }" ng-class="{ active: status.isopen }">
     <!-- Include search bar -->
     <filter-searchbar model="filters.q"></filter-searchbar>
 
@@ -18,7 +18,7 @@
             <filter-role model="filters.role"></filter-role>
         </div>
 
-        <div class="form-field">
+        <div class="form-field filter-actions">
             <button type="button" class="button-link" ng-click="cancel()" translate>app.cancel</button>
             <button type="submit" class="button-alpha" ng-disabled="applyEnabled"  translate>app.apply_filters</button>
         </div>

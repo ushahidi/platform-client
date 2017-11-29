@@ -1,8 +1,10 @@
+<main role="main">
 <div class="flex-container">
-    <post-toolbar saving-post="savingPost" is-loading="isLoading" current-view="currentView" selected-post="selectedPost.post" edit-mode="editMode" filters="filters"></post-toolbar>
-    <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected}">
-        <div class="button-group" ng-show="newPostsCount > 0">
-            <button class="button-flat full-width" ng-click="addNewestPosts()">
+    <layout-class layout="d"></layout-class>
+    <post-toolbar selected-post="selectedPost.post" filters="filters"></post-toolbar>
+    <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected, 'active' : activeCol === 'timeline' }">
+        <div class="load-more"  ng-show="newPostsCount > 0">
+            <button class="button-flat button-gamma full-width" ng-click="addNewestPosts()">
                 <span ng-switch on="newPostsCount">
                     <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
                     <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
@@ -26,7 +28,7 @@
                     <a ng-click="changeStatus(status)">
                       <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-                        <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
                         <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
                       </svg>
                       <span class="label" translate="post.published" ng-if="status == 'published'">Published</span>
@@ -54,10 +56,10 @@
 
         </listing-toolbar>
         <div class="listing timeline init">
-        <div class="bulk-action" ng-if="posts.length > 0 || !isLoading.state">
-            <div class="bulk-action-primary">{{posts.length}} of {{total}} reports</div>
-            <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
 
+        <div class="bulk-action" ng-if="posts.length > 0 || !isLoading()">
+            <div class="bulk-action-primary">{{posts.length}} of {{totalItems}} reports</div>
+            <button id="bulk-action" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin">Bulk Actions</button>
         </div>
             <post-card
                 ng-repeat="post in posts"
@@ -65,127 +67,31 @@
                 post="post"
                 selected-posts="selectedPosts"
                 click-action="showPost"
-                edit-mode="editMode"
                 selected-post="selectedPost"
             >
             </post-card>
-
-
-
-
-            <!-- <listing-toolbar></listing-toolbar> -->
-            <!-- <div class="listing-toolbar">
-                <div class="listing-item">
-                    <button href="" ng-click="closeBulkActions()" class="button-beta button-flat listing-item-secondary">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
-                        </svg>
-                        <span class="hidden">Close</span>
-                    </button>
-                    <div class="listing-toolbar-summary listing-item-primary">
-                        <strong><span class="total"></span> selected</strong>
-                        <button class="button-link">Deselect</button>
-                    </div>
-                </div>
-
-                <div class="listing-toolbar-actions">
-                    <button class="button-beta" data-toggle="toggle-content">
-                        <span class="button-label">Mark as</span>
-                        <svg class="iconic">
-                            <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                        </svg>
-                    </button>
-
-                    <ul class="dropdown-menu toggle-content">
-                        <li>
-                            <a href="" data-message="publish-success">
-                                <svg class="iconic">
-                                    <use xlink:href="/img/iconic-sprite.svg#globe"></use>
-                                </svg>
-                                <span class="label">Published</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" data-message="under_review-success">
-                                <svg class="iconic">
-                                    <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
-                                </svg>
-                                <span class="label">Under Review</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" data-message="archive-success">
-                                <svg class="iconic">
-                                    <use xlink:href="/img/iconic-sprite.svg#box"></use>
-                                </svg>
-                                <span class="label">Archived</span>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <button class="button-beta" data-modal="add-to-collection">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
-                        </svg>
-                        <span class="button-label hidden">Add to Collection</span>
-                    </button>
-
-                    <button class="button-beta">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
-                        </svg>
-                        <span class="button-label hidden">Edit</span>
-                    </button>
-
-                    <button class="button-destructive" data-modal="delete-post">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                        </svg>
-                        <span class="button-label hidden">Delete</span>
-                    </button>
-
-                    <button class="listing-toolbar-toggle more">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
-                        </svg>
-                        <span class="button-label hidden">Edit</span>
-                    </button>
-
-                    <button class="listing-toolbar-toggle less">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                        </svg>
-                        <span class="button-label hidden">Delete</span>
-                    </button>
-                </div>
-        </div> -->
-            <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading.state">
+            <div class="listing-item" ng-if="posts.length == 0 && hasFilters() && !isLoading()">
                 <h4 translate>post.no_search_results</h4>
             </div>
 
-            <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading.state">
+            <div class="listing-item" ng-if="posts.length == 0 && !hasFilters() && !isLoading()">
                 <h4 translate>post.no_posts_yet</h4>
             </div>
 
-            <div class="listing-item" ng-if="posts.length > 0 || isLoading.state">
+            <div class="listing-item" ng-if="posts.length > 0 || isLoading()">
+
                 <div class="listing-item-primary">
-                    <button ng-disabled="isLoading.state" ng-hide="( isLoading.state || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                    <button ng-disabled="isLoading()" ng-hide="( isLoading() || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
                     </button>
-                    <button type="button" class="button-gamma button-flat" ng-show="isLoading.state">
-                        <div class="loading">
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                        </div>
-                        <span class="button-label" translate="app.loading">Loading</span>
-                    </button>
+                     <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-show="isLoading()"></loading-dots>
                 </div>
             </div>
         </div>
     </div>
-    <div class="post-col">
-        <post-detail-data ng-if="selectedPost.post && !editMode.editing" edit-mode="editMode" filters="filters" is-loading="isLoading" post="selectedPost.post"></post-detail-data>
-        <post-messages post="selectedPost.post" ng-if="selectedPost.post && selectedPost.post.contact.id && !editMode.editing"></post-messages>
-        <post-data-editor parent-form="formData" saving-post="savingPost" is-loading="isLoading" edit-mode="editMode" ng-if="editMode.editing" post-container="selectedPost"></post-data-editor>
+    <div class="post-col" ng-class="{'active' : activeCol === 'post' }">
+        <!-- Verify if we need all these bindings ie. parentForm savingPost -->
+        <div ui-view filters="filters" is-loading="isLoading" saving-post="savingPost"></post-detail-data>
     </div>
 </div>
+<ush-logo></ush-logo>
+</main>

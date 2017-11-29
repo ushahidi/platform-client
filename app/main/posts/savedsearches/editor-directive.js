@@ -8,6 +8,7 @@ module.exports = [
     'Notify',
     'ViewHelper',
     'RoleEndpoint',
+    'PostFilters',
 function (
     $q,
     $location,
@@ -17,7 +18,8 @@ function (
     _,
     Notify,
     ViewHelper,
-    RoleEndpoint
+    RoleEndpoint,
+    PostFilters
 ) {
     return {
         restrict: 'E',
@@ -49,10 +51,10 @@ function (
                 persist(savedSearch)
                 .$promise
                 .then(function (savedSearch) {
-                    $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
                     $scope.$parent.closeModal();
-                    $rootScope.$broadcast('event:savedSearch:update');
+                    PostFilters.setMode('savedsearch', savedSearch);
+                    $rootScope.$broadcast('savedSearch:update');
                     Notify.notify('notify.savedsearch.savedsearch_saved', {savedsearch: savedSearch.name});
                     $scope.isSaving = false;
                 }, function (errorResponse) {

@@ -19,6 +19,7 @@ function SourceSelectDirective($rootScope) {
 
         function activate() {
             scope.$watch('selectedSources', saveValueToView, true);
+            scope.$watch(() => ngModel.$viewValue, renderModelValue, true);
             ngModel.$render = renderModelValue;
         }
 

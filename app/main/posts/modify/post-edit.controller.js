@@ -3,17 +3,19 @@ module.exports = [
     '$translate',
     '$location',
     '$controller',
-    '$routeParams',
+    '$transition$',
     'FormEndpoint',
     'PostEndpoint',
+    '$state',
 function (
     $scope,
     $translate,
     $location,
     $controller,
-    $routeParams,
+    $transition$,
     FormEndpoint,
-    PostEndpoint
+    PostEndpoint,
+    $state
 ) {
 
     $translate('post.edit_post').then(function (title) {
@@ -21,10 +23,10 @@ function (
         $scope.$emit('setPageTitle', title);
     });
 
-    PostEndpoint.get({ id: $routeParams.id }).$promise.then(function (post) {
+    PostEndpoint.get({ id: $transition$.params().id }).$promise.then(function (post) {
         // Redirect to view if no edit permissions
         if (post.allowed_privileges.indexOf('update') === -1) {
-            $location.url('/posts/' + post.id);
+            $state.go('posts.data.detail', {view: 'data', postId: post.id});
         }
         // Make post tags numeric
         post.tags = post.tags.map(function (tag) {
@@ -45,7 +47,7 @@ function (
                 }
             });
         } else {
-            $location.url('/posts/' + post.id);
+            $state.go('posts.data.detail', {view: 'data', postId: post.id});
         }
         $scope.post = post;
     });

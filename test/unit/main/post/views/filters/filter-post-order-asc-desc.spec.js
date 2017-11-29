@@ -59,7 +59,7 @@ describe('filter post order ASC/DESC  directive', function () {
             /**
              * Checks that no other filters changed because of changing orderby
              */
-            expect(PostFilters.getCleanActiveFilters($scope.filters)).toEqual({order: 'asc'});
+            expect(PostFilters.getUIActiveFilters($scope.filters)).toEqual({order: 'asc'});
         });
     });
 });

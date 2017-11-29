@@ -1,4 +1,4 @@
-<div>
+<div ui-view>
     <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
@@ -20,7 +20,7 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="fab">
-                <a ng-href="/settings/users/create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
+                <a ui-sref="settings.users.create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
@@ -58,7 +58,7 @@
                             <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
                         </div>
 
-                        <h2 class="listing-item-title"><a ng-href="/settings/users/{{user.id}}">{{user.realname}}</a></h2>
+                        <h2 class="listing-item-title"><a ui-sref="settings.users.edit({id: user.id})">{{user.realname}}</a></h2>
                         <p class="listing-item-secondary">{{ roles[user.role].display_name }}</p>
                     </div>
                 </div>

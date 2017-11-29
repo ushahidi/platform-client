@@ -1,8 +1,6 @@
 <div class="listing card">
   <h3 class="listing-heading" translate>post.messages.title</h3>
 
-  <div class="progress-bar" ng-show="isLoadingMessages"><span>Loading...</span></div>
-
     <div ng-repeat="message in messages track by message.id" class="listing-item">
       <div class="listing-item-primary">
         <div class="listing-item-image" ng-if="message.direction == 'outgoing'">
