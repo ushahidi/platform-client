@@ -132,8 +132,8 @@ function (
                  * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
                  * A: You won't retain filters as you move around the app, which is terrible usability.
                  */
-                PostFilters.setMode('savedsearch', savedSearch);
                 if (savedSearch && PostFilters.getModeId() !== savedSearch.id) {
+                    PostFilters.setMode('savedsearch', savedSearch);
                     PostFilters.setFilters(savedSearch.filter);
                 }
             }]
@@ -197,8 +197,8 @@ function (
                  * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
                  * A: You won't retain filters as you move around the app, which is terrible usability.
                  */
-                PostFilters.setMode('savedsearch', savedSearch);
                 if (savedSearch && PostFilters.getModeId() !== savedSearch.id) {
+                    PostFilters.setMode('savedsearch', savedSearch);
                     PostFilters.setFilters(savedSearch.filter);
                 }
             }],
