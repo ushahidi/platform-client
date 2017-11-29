@@ -123,6 +123,15 @@ function (
                 savedSearch: resolveSavedSearch
             },
             onEnter: ['PostFilters', '$state', 'savedSearch', function (PostFilters, $state, savedSearch) {
+                /**
+                 * we need to make sure that we don't replace the postfilter values
+                 * if we have an entity id already set in the PostFilters service.
+                 * So if we have a saved search but it's not yet set in the modeState inside PostFilters,
+                 * we want to replace everything (since it means the user is either fresh loading or changed saved searches)
+                 * but in other scenarios we need keep the saved search data in postfilters as is.
+                 * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
+                 * A: You won't retain filters as you move around the app, which is terrible usability.
+                 */
                 if (!PostFilters.getModeId() && savedSearch) {
                     PostFilters.setMode('savedsearch', savedSearch);
                     PostFilters.setFilters(savedSearch.filter);
@@ -181,6 +190,15 @@ function (
                 'mode-context': 'savedSearchModeContext'
             },
             onEnter: ['$state', 'PostFilters', 'savedSearch', function ($state, PostFilters, savedSearch) {
+                /**
+                 * we need to make sure that we don't replace the postfilter values
+                 * if we have an entity id already set in the PostFilters service.
+                 * So if we have a saved search but it's not yet set in the modeState inside PostFilters,
+                 * we want to replace everything (since it means the user is either fresh loading or changed saved searches)
+                 * but in other scenarios we need keep the saved search data in postfilters as is.
+                 * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
+                 * A: You won't retain filters as you move around the app, which is terrible usability.
+                 */
                 if (!PostFilters.getModeId() && savedSearch) {
                     PostFilters.setMode('savedsearch', savedSearch);
                     PostFilters.setFilters(savedSearch.filter);
