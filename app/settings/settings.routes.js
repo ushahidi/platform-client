@@ -11,11 +11,16 @@ function (
     .state(
         {
             name: 'settings',
-            url: '/settings',
             controller: require('./settings.controller.js'),
             template: require('./settings.html')
         }
     )
+    .state({
+        name: 'settings.list',
+        url: '/settings',
+        template: require('./settings-list.html'),
+        controller: require('./settings-list.controller.js')
+    })
     .state(
         {
             name: 'settings.general',
