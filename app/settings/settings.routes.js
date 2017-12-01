@@ -15,16 +15,18 @@ function (
             template: require('./settings.html')
         }
     )
-    .state({
-        name: 'settings.list',
-        url: '/settings',
-        template: require('./settings-list.html'),
-        controller: require('./settings-list.controller.js')
-    })
+    .state(
+        {
+            name: 'settings.list',
+            url: '/settings',
+            template: require('./settings-list.html'),
+            controller: require('./settings-list.controller.js')
+        }
+    )
     .state(
         {
             name: 'settings.general',
-            url: '/general',
+            url: '/settings/general',
             controller: require('./site/site.controller.js'),
             template: require('./site/settings-general.html')
         }
@@ -32,7 +34,7 @@ function (
     .state(
         {
             name: 'settings.dataImport',
-            url: '/data-import',
+            url: '/settings/data-import',
             controller: require('./data-import/data-import.controller.js'),
             template: require('./data-import/data-import.html')
         }
@@ -40,7 +42,7 @@ function (
     .state(
         {
             name: 'settings.dataAfterImport',
-            url: '/data-after-import',
+            url: '/settings/data-after-import',
             controller: require('./data-import/data-after-import.controller.js'),
             template: require('./data-import/after-import.html')
         }
@@ -48,7 +50,7 @@ function (
     .state(
         {
             name: 'settings.surveys',
-            url: '/surveys',
+            url: '/settings/surveys',
             controller: require('./surveys/surveys.controller.js'),
             template: require('./surveys/surveys.html')
         }
@@ -72,7 +74,7 @@ function (
     .state(
         {
             name: 'settings.categories',
-            url: '/categories',
+            url: '/settings/categories',
             controller: require('./categories/categories.controller.js'),
             template: require('./categories/categories.html')
         }
@@ -96,7 +98,7 @@ function (
     .state(
         {
             name: 'settings.users',
-            url: '/users',
+            url: '/settings/users',
             controller: require('./users/users.controller.js'),
             template: require('./users/users.html')
         }
@@ -120,7 +122,7 @@ function (
     .state(
         {
             name: 'settings.roles',
-            url: '/roles',
+            url: '/settings/roles',
             controller: require('./roles/roles.controller.js'),
             template: require('./roles/roles.html')
         }
@@ -144,7 +146,7 @@ function (
     .state(
         {
             name: 'settings.webhooks',
-            url: '/webhooks',
+            url: '/settings/webhooks',
             controller: require('./webhooks/webhooks.controller.js'),
             template: require('./webhooks/webhooks.html')
         }
@@ -168,7 +170,7 @@ function (
     .state(
         {
             name: 'settings.datasources',
-            url: '/datasources',
+            url: '/settings/datasources',
             controller: require('./datasources/datasources.controller.js'),
             template: require('./datasources/datasources.html')
         }
@@ -176,7 +178,7 @@ function (
     .state(
         {
             name: 'settings.plan',
-            url: '/plan',
+            url: '/settings/plan',
             controller: require('./plans/plans.controller.js'),
             template: require('./plans/plan.html')
         }
