@@ -6,6 +6,7 @@ module.exports = [
     '$rootScope',
     'ConfigEndpoint',
     'CollectionsService',
+    '$window',
 function (
     Features,
     Authentication,
@@ -13,7 +14,8 @@ function (
     ModalService,
     $rootScope,
     ConfigEndpoint,
-    CollectionsService
+    CollectionsService,
+    $window
 ) {
     return {
         restrict: 'E',
@@ -35,6 +37,7 @@ function (
             $scope.login = Authentication.openLogin;
             $scope.logout = Authentication.logout;
             $scope.register = Registration.openRegister;
+            $scope.intercomAppId = $window.ushahidi.intercomAppId;
 
             activate();
 
@@ -57,7 +60,11 @@ function (
 
             // Show support links
             function viewSupportLinks() {
-                ModalService.openTemplate(require('./support-links.html'), '', false, false, true, true);
+                var scope = {
+                    intercomAppId: $scope.intercomAppId,
+                    loggedin: Authentication.getLoginStatus()
+                };
+                ModalService.openTemplate(require('./support-links.html'), '', false, scope, true, true);
             }
 
             // Add 'click' handler to toggle trigger
