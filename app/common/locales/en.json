@@ -23,7 +23,7 @@
         },
         "intercom": {
             "intercom" : "Intercom",
-            "description" : "Contact Ushahidi staff for real time chat support"
+            "description" : "Contact Ushahidi staff for chat support"
         },
         "report_a_bug": {
             "title" : "Report a bug",
