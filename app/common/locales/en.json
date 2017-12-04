@@ -8,6 +8,7 @@
         "submit_another" : "Submit & Add Another",
         "submit_response": "Submit a survey response",
         "can_see_this" : "can see this",
+        "collection": "Collection",
         "collections" : "Collections",
         "create_collection" : "Create collection",
         "export_to_csv" : "Export to CSV",
@@ -82,7 +83,7 @@
         "no_results": "No results found.",
         "filter_by" :"Filter by...",
         "sort_filter": "Sort & filter",
-        "apply_filters" : "Apply filters",
+        "apply_filters" : "Apply",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
         "filter_by_survey" : "Filter by survey",
@@ -146,7 +147,7 @@
         "add_field" : "Add field",
         "add_field_instructions": "Add instructions to this field",
         "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
-        "add_field_instructions_placeholder": "Instructions for field",
+        "add_field_instructions_placeholder": "Explain this field...",
         "add_post_type": "Add Survey",
         "add_step": "Add Task",
         "added_form_stage_attribute": "Saved field",
@@ -173,7 +174,7 @@
         "field_name": "Field Name",
         "field_options": "Field Options",
         "field_key_placeholder": "field-key",
-        "field_name_placeholder": "Title",
+        "field_name_placeholder": "Name this field",
         "field_option_placeholder": "Option 1",
         "field_required": "This field is required",
         "form_name": "Name",
@@ -1200,7 +1201,7 @@
         "export" : {
             "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
             "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads" 
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads"
         }
     },
     "empty": {

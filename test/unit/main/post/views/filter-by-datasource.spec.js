@@ -4,7 +4,7 @@ describe('filter by datasource directive', function () {
         isolateScope,
         element,
         ConfigEndpoint,
-        hasPermission,
+        isAdmin,
         $location;
 
     beforeEach(function () {
@@ -31,9 +31,9 @@ describe('filter by datasource directive', function () {
                 {total: 2, type: 'sms'}
             ];
 
-        hasPermission = true;
-        $rootScope.hasPermission = function () {
-            return hasPermission;
+        isAdmin = true;
+        $rootScope.isAdmin = function () {
+            return isAdmin;
         };
         element = '<filter-by-datasource filters="filters" post-stats="postStats"></filter-by-datasource>';
         element = $compile(element)($scope);

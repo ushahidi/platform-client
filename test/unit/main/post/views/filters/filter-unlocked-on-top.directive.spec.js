@@ -48,7 +48,7 @@ describe('filter unlocked on top directive', function () {
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.isolateScope();
-        spyOn(PostFilters, 'getCleanActiveFilters').and.callThrough();
+        spyOn(PostFilters, 'getUIActiveFilters').and.callThrough();
         spyOn(PostFilters, 'getFilters').and.callThrough();
     }));
 
@@ -67,7 +67,7 @@ describe('filter unlocked on top directive', function () {
             /**
              * Checks that no other filters changed because of changing order_unlocked_on_top
              */
-            expect(PostFilters.getCleanActiveFilters($scope.filters)).toEqual({order_unlocked_on_top: 'false'});
+            expect(PostFilters.getUIActiveFilters($scope.filters)).toEqual({order_unlocked_on_top: 'false'});
         });
     });
 });

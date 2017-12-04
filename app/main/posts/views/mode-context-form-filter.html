@@ -71,12 +71,11 @@
                         />
                         {{tag.tag}}
                     </label>
-                    <div class="form-fieldgroup" ng-class="{'active': filters.tags.indexOf(tag.id) > -1}">
+                    <div class="form-fieldgroup active">
                         <div
                             class="form-field checkbox"
                             ng-repeat="child in tag.children"
                             ng-class="{'checked': filters.tags.indexOf(child.id) !== -1}"
-                            ng-show="filters.tags.indexOf(tag.id) > -1"
                         >
                             <label>
                                 <input

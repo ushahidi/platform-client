@@ -7,26 +7,33 @@ function (
 ) {
     $urlMatcherFactoryProvider.strictMode(false);
 
+    let resolveCollection = ['$transition$', 'CollectionEndpoint', 'PostFilters', function ($transition$, CollectionEndpoint, PostFilters) {
+        if ($transition$.params().collectionId) {
+            return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
+        } else if (PostFilters.getMode() === 'collection') {
+            return PostFilters.getModeEntity('collection');
+        }
+    }];
+
+    let resolveSavedSearch = ['$transition$', 'SavedSearchEndpoint', 'PostFilters', function ($transition$, SavedSearchEndpoint, PostFilters) {
+        if ($transition$.params().savedSearchId) {
+            return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
+        } else if (PostFilters.getMode() === 'savedsearch') {
+            return PostFilters.getModeEntity('savedsearch');
+        }
+    }];
+
     $stateProvider
     .state(
         {
             name: 'posts',
             abstract: true,
             params: {
-                view: {value: null, squash: true},
                 filterState: {value: null, squash: true}
             },
             resolve: {
-                collection: ['$transition$', 'CollectionEndpoint', function ($transition$, CollectionEndpoint) {
-                    if ($transition$.params().collectionId) {
-                        return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
-                    }
-                }],
-                savedSearch: ['$transition$', 'SavedSearchEndpoint', function ($transition$, SavedSearchEndpoint) {
-                    if ($transition$.params().savedSearchId) {
-                        return SavedSearchEndpoint.get({id: $transition$.params().savedSearchId}).$promise;
-                    }
-                }],
+                collection: resolveCollection,
+                savedSearch: resolveSavedSearch,
                 filters: ['PostFilters', (PostFilters) => {
                     return PostFilters.getFilters();
                 }]
@@ -40,26 +47,32 @@ function (
     )
     .state(
         {
-            url: '^/savedsearches/:savedSearchId',
+            url: '^/savedsearches/{savedSearchId:int}',
             name: 'posts.savedsearchRedirector',
+            resolve: {
+                savedSearch: resolveSavedSearch
+            },
             onEnter: ['$state', 'savedSearch', function ($state, savedSearch) {
                 if (savedSearch.view === 'data' || savedSearch.view === 'list') {
-                    $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id, view: 'data'});
+                    $state.go('posts.data', {savedSearchId: savedSearch.id});
                 } else {
-                    $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id, view: 'map'});
+                    $state.go('posts.map.all', {savedSearchId: savedSearch.id});
                 }
             }]
         }
     )
     .state(
         {
-            url: '^/collections/:collectionId',
+            url: '^/collections/{collectionId:int}',
             name: 'posts.collectionRedirector',
+            resolve: {
+                collection: resolveCollection
+            },
             onEnter: ['$state', 'collection', function ($state, collection) {
                 if (collection.view === 'data' || collection.view === 'list') {
-                    $state.go('posts.data.collection', {collectionId: collection.id, view: 'data'});
+                    $state.go('posts.data.collection', {collectionId: collection.id});
                 } else {
-                    $state.go('posts.map.collection', {collectionId: collection.id, view: 'map'});
+                    $state.go('posts.map.collection', {collectionId: collection.id});
                 }
             }]
         }
@@ -69,7 +82,6 @@ function (
             url: '/views/data',
             name: 'posts.data',
             params: {
-                view: {value: 'data', squash: true},
                 filterState: {value: null, squash: true},
                 activeCol: {value: 'timeline', squash: true}
             },
@@ -84,31 +96,62 @@ function (
                         return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
                     }
                 }]
-            }
+            },
+            onEnter: ['$state', 'PostFilters', function ($state, PostFilters) {
+                if (PostFilters.getMode() === 'savedsearch') {
+                    $state.go('posts.data.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                } else if (PostFilters.getMode() === 'collection') {
+                    $state.go('posts.data.collection', {collectionId: PostFilters.getModeId()});
+                }
+            }]
         }
     )
+
+    /**
+     * @uirouter-refactor
+     * we need to  be able to set mode-context as collectionModeContext or as savedSearchModeContext
+     * without the route since the user would land in /views/map after the redirect
+     */
     .state(
         {
-            url: '^/savedsearches/:savedSearchId/data',
+            url: '^/savedsearches/{savedSearchId:int}/data',
             name: 'posts.data.savedsearch',
             params: {
                 activeCol: {value: 'timeline', squash: true}
             },
-            onEnter: ['PostFilters', 'savedSearch', function (PostFilters, savedSearch) {
-                PostFilters.setFilters(savedSearch.filter);
+            resolve: {
+                savedSearch: resolveSavedSearch
+            },
+            onEnter: ['PostFilters', '$state', 'savedSearch', function (PostFilters, $state, savedSearch) {
+                /**
+                 * we need to make sure that we don't replace the postfilter values
+                 * if we have an entity id already set in the PostFilters service.
+                 * So if we have a saved search but it's not yet set in the modeState inside PostFilters,
+                 * we want to replace everything (since it means the user is either fresh loading or changed saved searches)
+                 * but in other scenarios we need keep our filters in postfilters as they are.
+                 * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
+                 * A: You won't retain filters as you move around the app, which is terrible usability.
+                 */
+                if (savedSearch && PostFilters.getModeId() !== savedSearch.id) {
+                    PostFilters.setMode('savedsearch', savedSearch);
+                    PostFilters.setFilters(savedSearch.filter);
+                }
             }]
         }
     )
     .state(
         {
-            url: '^/collections/:collectionId/data',
+            url: '^/collections/{collectionId:int}/data',
             name: 'posts.data.collection',
+            onEnter: ['$state', 'PostFilters', 'collection', function ($state, PostFilters, collection) {
+                PostFilters.setMode('collection', collection);
+            }],
             params: {
                 activeCol: {value: 'timeline', squash: true}
             },
-            onEnter: ['PostFilters', 'collection', function (PostFilters, collection) {
-                PostFilters.setMode('collection', collection.id);
-            }]
+            resolve: {
+                collection: resolveCollection
+            }
         }
     )
     .state(
@@ -117,7 +160,6 @@ function (
             abstract: true,
             component: 'postViewMap',
             params: {
-                view: {value: 'map', squash: true},
                 filterState: {value: null, squash: true}
             }
         }
@@ -129,35 +171,60 @@ function (
             views: {
                 'mode-context': 'modeContext'
             },
-            onEnter: ['PostFilters', function (PostFilters) {
-                PostFilters.setMode('all');
-                PostFilters.resetDefaults();
+            onEnter: ['$state', 'PostFilters', function ($state, PostFilters) {
+                if (PostFilters.getMode() === 'savedsearch') {
+                    $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                } else if (PostFilters.getMode() === 'collection') {
+                    $state.go('posts.map.collection', {collectionId: PostFilters.getModeId()});
+                }
             }]
         }
     )
     .state(
         {
-            url: '^/savedsearches/:savedSearchId/map',
+            url: '^/savedsearches/{savedSearchId:int}/map',
             name: 'posts.map.savedsearch',
             views: {
                 'mode-context': 'savedSearchModeContext'
             },
-            onEnter: ['PostFilters', 'savedSearch', function (PostFilters, savedSearch) {
-                PostFilters.setMode('savedsearch', savedSearch.id);
-                PostFilters.setFilters(savedSearch.filter);
-            }]
+            onEnter: ['$state', 'PostFilters', 'savedSearch', function ($state, PostFilters, savedSearch) {
+                /**
+                 * we need to make sure that we don't replace the postfilter values
+                 * if we have an entity id already set in the PostFilters service.
+                 * So if we have a saved search but it's not yet set in the modeState inside PostFilters,
+                 * we want to replace everything (since it means the user is either fresh loading or changed saved searches)
+                 * but in other scenarios we need keep our filters in postfilters as they are.
+                 * Q: What happens if we just replace PostFilters.setFilters(savedSearch.filter); all the time?
+                 * A: You won't retain filters as you move around the app, which is terrible usability.
+                 */
+                if (savedSearch && PostFilters.getModeId() !== savedSearch.id) {
+                    PostFilters.setMode('savedsearch', savedSearch);
+                    PostFilters.setFilters(savedSearch.filter);
+                }
+            }],
+            resolve: {
+                savedSearch: resolveSavedSearch
+            }
         }
     )
-    .state(
+    /**
+     * @uirouter-refactor
+     * we need to  be able to set mode-context as collectionModeContext or as savedSearchModeContext
+     * without the route since the user would land in /views/map after the redirect
+     */
+        .state(
         {
-            url: '^/collections/:collectionId/map',
+            url: '^/collections/{collectionId:int}/map',
             name: 'posts.map.collection',
             views: {
                 'mode-context': 'collectionModeContext'
             },
-            onEnter: ['PostFilters', 'collection', function (PostFilters, collection) {
-                PostFilters.setMode('collection', collection.id);
-            }]
+            onEnter: ['$state', 'PostFilters', 'collection', function ($state, PostFilters, collection) {
+                PostFilters.setMode('collection', collection);
+            }],
+            resolve: {
+                collection: resolveCollection
+            }
         }
     )
     .state(
@@ -179,7 +246,7 @@ function (
     .state(
         {
             name: 'posts.data.edit',
-            url: '/posts/:postId/edit',
+            url: '^/posts/:postId/edit',
             component: 'postDataEditor',
             params: {
                 activeCol: {value: 'post', squash: true}
@@ -211,13 +278,14 @@ function (
             template: require('./modify/main.html')
         }
     )
-    .state(
-        {
-            name: 'postEdit',
-            url: '/posts/:id/edit',
-            controller: require('./modify/post-edit.controller.js'),
-            template: require('./modify/main.html')
-        }
-    );
+    // .state(
+    //     {
+    //         name: 'postEdit',
+    //         url: '/posts/:id/edit',
+    //         controller: require('./modify/post-edit.controller.js'),
+    //         template: require('./modify/main.html')
+    //     }
+    // )
+    ;
 
 }];

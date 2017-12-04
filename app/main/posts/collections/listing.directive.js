@@ -135,12 +135,9 @@ function CollectionListingController(
         $scope.$parent.closeModal();
         var viewParam = collection.view;
         if (viewParam === 'list' || viewParam === 'data') {
-            /** need to reload: true for the collection to resolve on the parent state, views code to run, etc.
-             * for Child states to force a parent to run, reload is needed.
-            **/
-            $state.go('posts.data.collection', {collectionId: collection.id}, {reload: true});
+            $state.go('posts.data.collection', {collectionId: collection.id});
         } else {
-            $state.go('posts.map.collection', {collectionId: collection.id}, {reload: true});
+            $state.go('posts.map.collection', {collectionId: collection.id});
         }
     }
 
