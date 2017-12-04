@@ -1,6 +1,7 @@
 module.exports = [
     '$scope',
     '$rootScope',
+    'Authentication',
     'UserEndpoint',
     'ConfigEndpoint',
     '$q',
@@ -9,19 +10,32 @@ module.exports = [
 function (
     $scope,
     $rootScope,
+    Authentication,
     UserEndpoint,
     ConfigEndpoint,
     $q,
     $window,
     $location
 ) {
-    $rootScope.$on('event:authentication:login:succeeded', function () {
-        if ($window.self === $window.top) {
+    $scope.startIntercom = startIntercom;
+    $scope.stopIntercom = stopIntercom;
+
+    activate();
+    function activate() {
+        $rootScope.$on('event:authentication:login:succeeded', function () {
+            $scope.startIntercom();
+        });
+
+        $rootScope.$on('event:authentication:logout:succeeded', function () {
+            $scope.stopIntercom();
+        });
+
+        if (Authentication.getLoginStatus()) {
             $scope.startIntercom();
         }
-    });
+    }
 
-    $scope.startIntercom = function () {
+    function startIntercom() {
         if ($window.ushahidi.intercomAppId !== '') {
             $q.all([
                 ConfigEndpoint.get({ id: 'site' }).$promise,
@@ -33,6 +47,8 @@ function (
 
                 $window.Intercom('boot', {
                     app_id: $window.ushahidi.intercomAppId,
+                    custom_launcher_selector: '#intercom_custom_launcher',
+                    hide_default_launcher: true,
                     email: user.email,
                     created_at: user.created,
                     user_id: domain + '_' + user.id,
@@ -49,15 +65,11 @@ function (
                 });
             });
         }
-    };
+    }
 
-    $rootScope.$on('event:authentication:logout:succeeded', function () {
-        $scope.stopIntercom();
-    });
-
-    $scope.stopIntercom = function () {
+    function stopIntercom() {
         if ($window.ushahidi.intercomAppId !== '') {
             $window.Intercom('shutdown');
         }
-    };
+    }
 }];
