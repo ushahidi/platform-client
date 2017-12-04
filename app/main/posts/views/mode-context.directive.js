@@ -23,6 +23,6 @@ function ModeContextController(
     activate();
 
     function activate() {
-        console.log($scope);
+
     }
 }

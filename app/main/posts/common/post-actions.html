@@ -1,5 +1,5 @@
 <div class="postcard-actions" dropdown >
-  <button class="button-gamma button-flat init" data-toggle="dropdown-menu" dropdown-toggle>
+  <button class="button-gamma button-flat init" data-toggle="dropdown-menu" dropdown-toggle ng-click="$event.stopPropagation()">
       <svg class="iconic">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
       </svg>
@@ -7,7 +7,7 @@
   </button>
   <div class="dropdown-menu init" dropdown-menu>
     <ul>
-      
+
 
         <li ng-show="(post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked()">
           <a ng-click="openEditMode(post.id)">
@@ -42,7 +42,7 @@
           <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#lock-locked" ng-if="status=='draft'"></use>
+            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
           </svg>
           <span class="label" ng-if="status=='published'" translate="post.post_actions.publish">Publish</span>
           <span class="label" ng-if="status=='draft'" translate="post.post_actions.put_under_review">Put under </span>

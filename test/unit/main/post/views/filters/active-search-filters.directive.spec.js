@@ -5,7 +5,6 @@ describe('post active search filters directive', function () {
         directiveScope,
         PostFilters,
         Notify,
-        SavedSearchEndpoint,
         element,
         $compile;
     beforeEach(function () {
@@ -45,11 +44,10 @@ describe('post active search filters directive', function () {
         user: false,
         source: ['sms', 'twitter','web', 'email']
     };
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _PostFilters_, _SavedSearchEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _PostFilters_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-        SavedSearchEndpoint = _SavedSearchEndpoint_;
         PostFilters = _PostFilters_;
         Notify = _Notify_;
         $rootScope.filters = defaults;
@@ -61,31 +59,29 @@ describe('post active search filters directive', function () {
     }));
 
     describe('test directive functions', function () {
+
         it('should execute the set of transformers and return the correct values for each', function () {
-            var transformers = ['tags', 'center_point', 'created_before', 'created_after', 'fake'];
-            var result = '';
+            var result;
 
-            _.each(transformers, function (transformer) {
+            result = directiveScope.transformFilterValue('test', 'tags');
+            expect(result).toEqual('test');
 
-                if (_.contains(['tags'], transformer)) {
+            result = directiveScope.transformFilterValue('2016-02-17T18:06:46+00:00', 'created_after');
+            expect(result).toEqual('Feb 17, 2016');
 
-                    result = directiveScope.transformFilterValue('test', transformer);
-                    expect(result).toEqual('test');
+            result = directiveScope.transformFilterValue('2016-02-17T18:06:46+00:00', 'created_before');
+            expect(result).toEqual('Feb 17, 2016');
 
-                } else if (_.contains(['created_before', 'created_after'], transformer)) {
+            result = directiveScope.transformFilterValue('asc', 'order');
+            expect(result).toEqual('global_filter.filter_tabs.order_group.order.asc');
 
-                    result = directiveScope.transformFilterValue('2016-02-17T18:06:46+00:00', transformer);
-                    expect(result).toEqual('Feb 17, 2016');
+            result = directiveScope.transformFilterValue('created_before', 'orderby');
+            expect(result).toEqual('global_filter.filter_tabs.order_group.orderby.created_before');
 
-                } else if (transformer === 'center_point') {
-                    result = directiveScope.transformFilterValue('test', transformer);
-                    // should be tested via e2e tests
-                } else {
-                    result = directiveScope.transformFilterValue('test', transformer);
-                    expect(result).toEqual('test');
-                }
-            });
+            result = directiveScope.transformFilterValue('test', 'fake');
+            expect(result).toEqual('test');
         });
+
 
         it('should remove a given filter from the PostFilters object', function () {
             spyOn(PostFilters, 'clearFilter');
@@ -94,8 +90,7 @@ describe('post active search filters directive', function () {
                 stopPropagation: function () {},
                 preventDefault: function () {}
             };
-
-            directiveScope.removeFilter('test', 'test', mockEvent);
+            directiveScope.removeFilter('test', 'test', false, mockEvent);
 
             expect(PostFilters.clearFilter).toHaveBeenCalled();
         });
@@ -103,7 +98,7 @@ describe('post active search filters directive', function () {
     describe('test clean filters', function () {
         it ('should show the clean active search filters, which are different from their default value', function () {
             spyOn(PostFilters, 'getActiveFilters').and.callThrough();
-            spyOn(PostFilters, 'getCleanActiveFilters').and.callThrough();
+            spyOn(PostFilters, 'getUIActiveFilters').and.callThrough();
             var elementDir = '<post-active-search-filters ng-model="$scope.filters"></post-active-search-filters>';
             elementDir = $compile(elementDir)($scope);
             var directiveScopeTest = elementDir.scope();
@@ -111,8 +106,8 @@ describe('post active search filters directive', function () {
             newDefaults.source = ['sms'];
             PostFilters.setFilters(newDefaults);
             $scope.$digest();
-            expect(PostFilters.getCleanActiveFilters).toHaveBeenCalled();
-            expect(directiveScopeTest.activeFilters).toEqual({source: ['sms'], form: [1,2,3,4]});
+            expect(PostFilters.getUIActiveFilters).toHaveBeenCalled();
+            expect(directiveScopeTest.uiFilters).toEqual({source: ['sms'], form: [1,2,3,4]});
         });
     });
 });

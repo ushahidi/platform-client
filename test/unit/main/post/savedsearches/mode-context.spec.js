@@ -12,7 +12,13 @@ describe('savedsearch mode context directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('savedSearchModeContext', require('app/main/posts/savedsearches/mode-context.directive'));
+        testApp
+        .directive('savedSearchModeContext', require('app/main/posts/savedsearches/mode-context.directive'))
+        .service('$state', () => {
+            return {
+                go: () => {}
+            };
+        });
 
         angular.mock.module('testApp');
     });

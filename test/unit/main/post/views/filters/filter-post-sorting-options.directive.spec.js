@@ -59,7 +59,7 @@ describe('filter post sorting options on top directive', function () {
             /**
              * Checks that no other filters changed because of changing orderby
              */
-            expect(PostFilters.getCleanActiveFilters($scope.filters)).toEqual({orderby: 'updated'});
+            expect(PostFilters.getUIActiveFilters($scope.filters)).toEqual({orderby: 'updated'});
         });
     });
 });

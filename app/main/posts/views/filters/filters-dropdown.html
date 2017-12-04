@@ -1,51 +1,30 @@
 <div class="dropdown-menu-body">
     <div class="form-field filter-buttons">
-        <div ng-show="filtersVar.q.length > 0" ng-class="{active: (filtersVar.q.length > 0) }">
-            <div ng-class="{active: (filtersVar.q.length > 0) , 'form-field': 'form-field'}">
-                <button class="button-plain" ng-click="enableQuery()">
-                    <span class="button-label">
-                        <span translate-values="{ entity: entityType }" translate>
-                            toolbar.searchbar.search_all_entities_for
-                        </span>
-                        "<em>{{ filtersVar.q }}</em>"
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="form-field filter-buttons">
-        <post-active-search-filters ng-model="filtersVar" filters-var="filtersVar"></post-active-search-filters>
-    </div>
-    <div class="form-field">
-        <button type="button" class="button button-alpha button-right" ng-click="saveSavedSearchModal()" translate="set.save_savedsearch">Save search</button>
-    </div>
-
-    <div class="form-field">
-        <button type="button" class="button button-alpha button-right" ng-click="editSavedSearchModal('update')" ng-show="canUpdateSavedSearch" translate="set.update_savedsearch">Edit Saved search</button>
+        <post-active-search-filters ng-model="filters" filters-var="filters"></post-active-search-filters>
     </div>
     <div class="divider"></div>
     <!-- sorting options -->
     <h4 class="dropdown-menu-title" translate="app.sort_by"></h4>
 
-    <filter-post-sorting-options ng-model="filtersVar.orderby"></filter-post-sorting-options>
+    <filter-post-sorting-options ng-model="filters.orderby"></filter-post-sorting-options>
     <fieldset>
-        <filter-post-order-asc-desc ng-model="filtersVar.order"></filter-post-order-asc-desc>
-        <filter-unlocked-on-top ng-model="filtersVar.order_unlocked_on_top"></filter-unlocked-on-top>
+        <filter-post-order-asc-desc ng-model="filters.order"></filter-post-order-asc-desc>
+        <filter-unlocked-on-top ng-model="filters.order_unlocked_on_top"></filter-unlocked-on-top>
     </fieldset>
     <!-- end: sorting options -->
 
     <!-- filter options -->
     <h4 class="dropdown-menu-title" translate="app.filter_by"></h4>
-    <filter-saved-search ng-model="filtersVar.saved_search"></filter-saved-search>
-    <filter-status ng-model="filtersVar.status"></filter-status>
-    <filter-category ng-model="filtersVar.tags"></filter-category>
-    <filter-form ng-model="filtersVar.form"></filter-form>
-    <filter-source ng-model="filtersVar.source"></filter-source>
-    <filter-date date-after-model="filtersVar.date_after" date-before-model="filtersVar.date_before"></filter-date>
-    <filter-location center-point-model="filtersVar.center_point" within-km-model="filtersVar.within_km"></filter-location>
+    <filter-saved-search ng-model="filters.saved_search"></filter-saved-search>
+    <filter-status ng-model="filters.status"></filter-status>
+    <filter-category ng-model="filters.tags"></filter-category>
+    <filter-form ng-model="filters.form"></filter-form>
+    <filter-source ng-model="filters.source"></filter-source>
+    <filter-date date-after-model="filters.date_after" date-before-model="filters.date_before"></filter-date>
+    <filter-location center-point-model="filters.center_point" within-km-model="filters.within_km"></filter-location>
     <!-- end: filter options -->
 </div>
 <div class="form-field filter-actions">
     <button type="button" class="button-link" ng-click="clearFilters()" translate>global_filter.clear_filters</button>
-    <button type="submit" class="button-alpha" translate ng-click="applyFiltersLocked()">app.apply_filters</button>
+    <button type="submit" class="button-alpha" translate>app.apply_filters</button>
 </div>

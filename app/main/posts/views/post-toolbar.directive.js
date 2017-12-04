@@ -23,6 +23,9 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.isSaving = LoadingProgress.getSavingState;
     $scope.editMode = editMode;
     $scope.cancel = cancel;
+    $scope.hideOtherActions = hideOtherActions;
+    $scope.showOtherActions = showOtherActions;
+    $scope.filtersActive = false;
 
 
     function editEnabled() {
@@ -49,5 +52,13 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
 
     function cancel() {
         $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
+    }
+
+    function hideOtherActions() {
+        $scope.filtersActive = true;
+    }
+
+    function showOtherActions() {
+        $scope.filtersActive = false;
     }
 }
