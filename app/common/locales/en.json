@@ -20,6 +20,10 @@
             "title" : "Documentation",
             "description" : "Learn how to set up, configure, and manage your Ushahidi deployment."
         },
+        "intercom": {
+            "intercom" : "Intercom",
+            "description" : "Contact Ushahidi staff for real time chat support"
+        },
         "report_a_bug": {
             "title" : "Report a bug",
             "description" : "Tell us when something doesn't work the way you expected."
