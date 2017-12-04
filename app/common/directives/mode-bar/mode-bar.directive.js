@@ -69,7 +69,8 @@ function (
             // Show support links
             function viewSupportLinks() {
                 var scope = {
-                    intercomAppId: $scope.intercomAppId
+                    intercomAppId: $scope.intercomAppId,
+                    loggedin: Authentication.getLoginStatus()
                 };
                 ModalService.openTemplate(require('./support-links.html'), '', false, scope, true, true);
             }
