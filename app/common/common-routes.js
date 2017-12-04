@@ -37,7 +37,7 @@ module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($sta
         )
         .state(
             {
-                name: 'forgotpassword.confirm',
+                name: 'confirm',
                 url: '/forgotpassword/confirm',
                 controller: require('./auth/password-reset-confirm.controller.js'),
                 template: ''
@@ -45,8 +45,8 @@ module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($sta
         )
         .state(
             {
-                name: 'forgotpassword.confirm.token',
-                url: '/forgotpassword/confirm/:token',
+                name: 'confirm.token',
+                url: '/:token',
                 controller: require('./auth/password-reset-confirm.controller.js'),
                 template: ''
             }
