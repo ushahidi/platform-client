@@ -31,7 +31,11 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             // Save access token
             Session.setSessionDataEntry('accessToken', accessToken);
             // Save token expires time
-            Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+            if (authResponse.data.expires_in) {
+                Session.setSessionDataEntry('accessTokenExpires', Math.floor(Date.now() / 1000) + authResponse.data.expires_in);
+            } else if (authResponse.data.expires) {
+                Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+            }
 
             Session.setSessionDataEntry('grantType', 'client_credentials');
             // Add Authorization header
