@@ -8,7 +8,17 @@ describe('post filters-dropdown directive', function () {
         element,
         isolateScope,
         FilterTransformers,
-        $compile;
+        $compile,
+        mockState = {
+            '$current': {
+                name: 'posts.data',
+                includes: {
+                    'posts': true,
+                    'posts.data': true
+                }
+            }
+        };
+
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
@@ -17,15 +27,7 @@ describe('post filters-dropdown directive', function () {
         .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
         .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
         .service('$state', function () {
-            return {
-                '$current': {
-                    name: 'posts.data',
-                    includes: {
-                        'posts': true,
-                        'posts.data': true
-                    }
-                }
-            };
+            return mockState;
         });
         angular.mock.module('testApp');
     });
@@ -77,6 +79,16 @@ describe('post filters-dropdown directive', function () {
             spyOn(ModalService, 'openTemplate');
             isolateScope.saveSavedSearchModal();
             expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
+        });
+        it('should return false when calling disableApplyButton if in data-view', function () {
+            expect(isolateScope.disableApplyButton()).toEqual(false);
+        });
+        it('should return true when calling disableApplyButton if in map-view', function () {
+            mockState.$current.includes = {
+                    'posts': true,
+                    'posts.map': true
+                };
+            expect(isolateScope.disableApplyButton()).toEqual(true);
         });
     });
     describe('test children', function () {
