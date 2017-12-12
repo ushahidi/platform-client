@@ -40,6 +40,7 @@ function (
             $scope.totalItems = $scope.itemsPerPage;
             $scope.pageChanged = getMessagesForPagination;
             $scope.showPagination = false;
+            $scope.getContactDisplay = getContactDisplay;
 
             function activate() {
                 // Can't activate if we don't have a contact
@@ -51,10 +52,14 @@ function (
                 // Initialize
                 if ($scope.post.contact.contact) {
                     $scope.contact = $scope.post.contact;
+                    // Set contact user is available
+                    setContactUser($scope.contact);
                 } else {
                     ContactEndpoint.get({ id: $scope.post.contact.id })
                         .$promise.then(function (contact) {
                             $scope.contact = contact;
+                            // Set contact user is available
+                            setContactUser($scope.contact);
                         });
                 }
 
@@ -62,6 +67,23 @@ function (
             }
 
             activate();
+
+            function getContactDisplay() {
+                if ($scope.contact.user && $scope.contact.user.realname) {
+                    return $scope.contact.user.realname;
+                }
+
+                return $scope.contact.contact;
+            }
+
+            function setContactUser(contact) {
+                if ($scope.contact.user) {
+                    UserEndpoint.get({ id: $scope.contact.user.id })
+                        .$promise.then(function (user) {
+                            $scope.contact.user = user;
+                        });
+                }
+            }
 
             function getMessagesForPagination() {
 

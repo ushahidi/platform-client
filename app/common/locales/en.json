@@ -968,6 +968,8 @@
         "which_survey" : "which survey?"
     },
     "user": {
+        "role_display" : "Role: {{role}}",
+        "contact" : "{{type}}: {{contact}}",
         "add_user" : "Add User",
         "edit_user" : "Edit User",
         "update_password" : "Update Password",
