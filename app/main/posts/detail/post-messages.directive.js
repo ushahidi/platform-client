@@ -50,7 +50,7 @@ function (
 
                 $scope.messages = []; // init to blank
                 // Initialize
-                if ($scope.post.contact.contact) {
+                if ($scope.post.contact && $scope.post.contact.contact) {
                     $scope.contact = $scope.post.contact;
                     // Set contact user is available
                     setContactUser($scope.contact);
