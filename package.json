@@ -86,7 +86,7 @@
     "transifex": "^1.4.4",
     "url-loader": "^0.5.7",
     "webpack": "^2.4.1",
-    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-middleware": "^2.0.0",
     "webpack-hot-middleware": "^2.6.0",
     "@uirouter/visualizer": "^5.0.0"
   },
