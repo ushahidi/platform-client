@@ -1,3 +1,11 @@
-<div class="map-view">
-    <div id="map" class="map" ng-class="getUIClass()" ></div>
+<div>
+    <layout-class layout="a"></layout-class>
+    <div ui-view="mode-context" noanimation="true" filters="filters"></div>
+    <main role="main">
+		<post-toolbar is-loading="isLoading" filters="filters" edit-mode="{ editing: false }"></post-toolbar>
+    	<div class="map-view">
+		    <div id="map-full-size" class="map full-size" ng-show="!noui"></div>
+		    <div id="map-noui" class="map map-only" ng-show="noui"></div>
+		</div>
+	</main>
 </div>

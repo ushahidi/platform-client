@@ -5,17 +5,17 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
     return {
         restrict: 'E',
         replace: true,
+        require: 'ngModel',
         scope: {
             id: '@',
             name: '@',
-            model: '=',
             required: '='
         },
         template: require('./location.html'),
         link: PostLocationLink
     };
 
-    function PostLocationLink($scope, element, attrs) {
+    function PostLocationLink($scope, element, attrs, ngModel) {
         var currentPositionControl, map, marker,
             zoom = 8;
 
@@ -33,6 +33,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         $scope.chooseCurrentLocation = chooseCurrentLocation;
         $scope.searchResults = [];
         $scope.showCurrentPositionControl = false;
+        $scope.manualLatLong = manualLatLong;
         activate();
 
         function activate() {
@@ -41,14 +42,12 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             .then(function (data) {
                 map = data;
 
-                // init marker with current model value
-                if ($scope.model &&
-                    typeof $scope.model.lat !== 'undefined' &&
-                    typeof $scope.model.lon !== 'undefined'
-                ) {
-                    updateMarkerPosition($scope.model.lat, $scope.model.lon);
-                    centerMapTo($scope.model.lat, $scope.model.lon);
-                }
+                // Init marker with current model value
+                renderViewValue();
+
+                // Update Map if model changes
+                ngModel.$render = renderViewValue;
+
                 map.on('click', onMapClick);
                 // treat locationfound same as map click
                 map.on('locationfound', onMapClick);
@@ -56,14 +55,14 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
                     $scope.showCurrentPositionControl = true;
                     currentPositionControl = L.control.locate({
-                        follow: true
+                        locateOptions: {
+                            maximumAge: 60000 // 1 minute
+                        }
                     }).addTo(map);
                 }
-                // @todo: Should we watch the model and update map?
             });
 
             $document.on('click', onDocumentClick);
-
         }
 
         function onDocumentClick(event) {
@@ -81,11 +80,27 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             updateModelLatLon(lat, lon);
         }
 
+        function renderViewValue() {
+            if (ngModel.$viewValue &&
+                typeof ngModel.$viewValue.lat !== 'undefined' &&
+                typeof ngModel.$viewValue.lon !== 'undefined'
+            ) {
+                updateMarkerPosition(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
+                centerMapTo(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
+            }
+        }
+
         function updateModelLatLon(lat, lon) {
-            $scope.model = {
+            ngModel.$setViewValue({
                 lat: lat,
                 lon: lon
-            };
+            });
+        }
+
+        function manualLatLong(lat, lon) {
+            updateMarkerPosition(lat, lon);
+            centerMapTo(lat, lon);
+            updateModelLatLon(lat, lon);
         }
 
         function updateMarkerPosition(lat, lon) {
@@ -110,7 +125,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         }
 
         function clear() {
-            $scope.model = null;
+            ngModel.$setViewValue(null);
             if (marker) {
                 map.removeLayer(marker);
                 marker = null;

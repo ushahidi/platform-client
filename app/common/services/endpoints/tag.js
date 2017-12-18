@@ -11,9 +11,9 @@ function (
 ) {
     var cache;
     if (!(cache = CacheFactory.get('tagCache'))) {
-        cache = new CacheFactory('tagCache');
+        cache = CacheFactory.createCache('tagCache');
     }
-
+    cache.removeExpired();
 
     var TagEndpoint = $resource(Util.apiUrl('/tags/:id'), {
         id: '@id'

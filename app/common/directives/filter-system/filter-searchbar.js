@@ -29,7 +29,8 @@ function ($timeout) {
         template: require('./filter-searchbar.html'),
         scope: {
             model: '=',
-            placeholderEntity: '='
+            placeholderEntity: '=',
+            onClear: '&'
         },
         link: link,
         require: '?^form'

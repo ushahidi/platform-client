@@ -1,0 +1,6 @@
+<div class="form-field radio" ng-repeat="orderOption in activeOrderOptions.options">
+    <label>
+        <input type="radio" id="{{orderOption.value}}" value="{{orderOption.value}}" name="order" ng-model="selectedValue.value" />
+        <span>{{orderOption.labelTranslateKey|translate}}</span>
+    </label>
+</div>

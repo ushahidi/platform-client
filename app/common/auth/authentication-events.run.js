@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
-
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$route', 'TermsOfService', 'Notify'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $route, TermsOfService, Notify) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters) {
+    let loginPath = null;
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
 
@@ -10,6 +10,8 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     function activate() {
         if (Authentication.getLoginStatus()) {
             doLogin(false, true);
+        } else {
+            doLogout(false);
         }
     }
 
@@ -31,20 +33,27 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                  * references https://github.com/ushahidi/platform/issues/1714
                  */
                 adminUserSetup();
+                PostFilters.resetDefaults();
                 if (redirect) {
                     $location.url(redirect);
                 }
-                noReload || $route.reload();
+                noReload || $state.reload(); // in favor of $route.reload();
+
             });
     }
 
     function doLogout(redirect) {
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
-        if (redirect) {
-            $location.url(redirect);
-        }
-        $route.reload();
+        // we don' wat to reload until after filters are correctly set with the backend default that the user
+        // would get when logged out
+        PostFilters.resetDefaults().then(function () {
+            if (redirect) {
+                $location.url(redirect);
+            }
+
+            $state.go($state.$current.name ? $state.$current : 'map', null, { reload: true });
+        });
     }
 
     // todo: move to service
@@ -68,7 +77,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     };
 
     $rootScope.$on('event:authentication:login:succeeded', function () {
-        doLogin(Session.getSessionDataEntry('loginPath'));
+        doLogin(loginPath);
     });
 
     $rootScope.$on('event:authentication:logout:succeeded', function () {
@@ -81,8 +90,9 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     // });
 
     $rootScope.$on('event:unauthorized', function () {
-        if ($location.url() !== '/login') {
-            Session.setSessionDataEntry('loginPath', $location.url());
+        let currentUrl = $location.url();
+        if (currentUrl !== '/login') {
+            loginPath = currentUrl;
         }
         Authentication.logout(true);
         doLogout();
@@ -94,10 +104,11 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             // We're logged in hit forbidden page
             $location.url('/forbidden');
         } else {
+            let currentUrl = $location.url();
             // We're logged out, redirect to login
-            if ($location.url() !== '/login') {
-                Session.setSessionDataEntry('loginPath', $location.url());
-                // We're logged in hit forbidden page
+            if (currentUrl !== '/login') {
+                loginPath = currentUrl;
+                // Show forbidden page until we're logged in
                 $location.url('/forbidden');
             }
             Authentication.openLogin();

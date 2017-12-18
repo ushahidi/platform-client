@@ -17,7 +17,9 @@
 
         <base href="/">
     </head>
-    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
+    <!-- TODO: swap namespace based on rtlEnabled variable -->
+    <!--<body ng-class="{ 'modal-visible': modalVisible , 'layout-class': globalLayout}" class="ltr-namespace" canvas>-->
+    <body ng-class="{ 'modal-visible': modalVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
     <!-- TODO: set layouts per view directive -->
         <div id="bootstrap-loading">
             <!-- loading the document -->
@@ -38,12 +40,10 @@
                 </main>
             </div>
         </div>
-
         <div id="bootstrap-app" class="hidden">
 
             <mode-bar embed-only=false current-user="currentUser"></mode-bar>
-
-            <ng-view></ng-view>
+            <ui-view></ui-view>
 
             <!-- TODO: fix and uncomment
             <first-time-config></first-time-config>

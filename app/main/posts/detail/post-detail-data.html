@@ -1,0 +1,100 @@
+<div>
+  <article class="postcard" role="article">
+    <button class="button-beta button-flat postcard-close" ng-click="close()">
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
+        </svg>
+    </button>
+        <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
+
+        <post-lock ng-if="post.lock" post="post"></post-lock>
+
+        <div class="postcard-body">
+              <h1 class="form-sheet-title survey-title" linkify>{{post.title}}</h1>
+
+            <div class="postcard-header">
+                <post-metadata post="post" hide-date-this-week="true"></post-metadata>
+                <post-actions post="post"></post-actions>
+            </div>
+            <div
+              ng-repeat="(key,value) in post.values"
+              ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+              class="postcard-field"
+            >
+          <post-media-value
+            ng-if="form_attributes[key].type === 'media'"
+            media-has-caption="form_attributes[key].config.hasCaption"
+            label="{{form_attributes[key].label}}"
+            media-id="value"></post-media-value>
+        </div>
+        <div
+          ng-if="post.content"
+          class="postcard-field">
+          <p markdown-to-html="post.content"></p>
+        </div>
+
+        <post-value
+          ng-repeat="(key,value) in post.values"
+          ng-if="form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type)"
+          key="key"
+          value="value"
+          attribute="form_attributes[key]"
+          tags="tags"
+          type="'post'">
+        </post-value>
+        <post-detail-map post-id="post.id"></post-detail-map>
+
+      </div>
+  </article>
+  <div class="listing card init" ng-show="tasks.length">
+        <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
+
+        <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
+          <ul>
+            <li
+              ng-repeat="task in tasks"
+              ng-class="{'active': visibleTask == task.id}"  >
+              <a ng-click="activateTaskTab(task.id)">
+                {{task.label}}
+              </a>
+              <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
+              </span>
+            </li>
+          </ul>
+        </nav>
+        <div class="listing-item tasks-tabs tabs-target active">
+          <div class="alert"
+              ng-repeat="task in tasks"
+              ng-if="!taskHasValues(task)"
+              ng-show="task.id === visibleTask">
+                <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
+          </div>
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key].type === 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
+            class="listing-item-primary"
+            >
+
+            <post-media-value
+              label="{{form_attributes[key].label}}"
+              media-id="value"></post-media-value>
+          </div>
+          <div
+            ng-repeat="(key,value) in post.values"
+            ng-if="form_attributes[key].type !== 'media' && !isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
+            ng-show="form_attributes[key].form_stage_id === visibleTask"
+            >
+            <post-value
+              tags="tags"
+              key="key"
+              value="value"
+              attribute="form_attributes[key]"
+              type="'standard'">
+            </post-value>
+          </div>
+        </div>
+  </div>
+
+    <post-messages post="post" ng-if="post.contact.id"></post-messages>
+</div>

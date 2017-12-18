@@ -4,15 +4,13 @@ module.exports = [
     '$translate',
     'TranslationService',
     'Languages',
-    'moment',
 function (
     // $scope,
     $rootScope,
     $translate,
     TranslationService,
     ConfigEndpoint,
-    Languages,
-    moment
+    Languages
 ) {
 
     $rootScope.rtlEnabled = false;
@@ -26,10 +24,5 @@ function (
 
     function translate(language) {
         TranslationService.translate(language);
-        if (language !== 'en') {
-            require(['moment/locale/' + language + '.js'], function () {
-                moment.locale(language);
-            });
-        }
     }
 }];

@@ -5,6 +5,7 @@ module.exports = [
     '$routeParams',
     '$route',
     '_',
+    '$state',
     'WebhookEndpoint',
     'FormEndpoint',
     'FormAttributeEndpoint',
@@ -16,6 +17,7 @@ function (
     $routeParams,
     $route,
     _,
+    $state,
     WebhookEndpoint,
     FormEndpoint,
     FormAttributeEndpoint,
@@ -39,7 +41,7 @@ function (
 
             $q.all([
               FormEndpoint.query().$promise,
-              WebhookEndpoint.getFresh({id: $routeParams.id}).$promise
+              WebhookEndpoint.getFresh({id: $scope.$resolve.$transition$.params().id}).$promise
             ]).then(function (response) {
                 $scope.forms = response[0];
                 $scope.webhook = response[1];

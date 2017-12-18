@@ -6,6 +6,7 @@ Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'Modal
 function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     return {
         notify: notify,
+        notifyProgress: notifyProgress,
         error: error,
         errors: errors,
         errorsPretranslated: errorsPretranslated,
@@ -16,7 +17,9 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmDelete: confirmDelete,
         limit: limit,
         confirmTos: confirmTos,
-        adminUserSetupModal: adminUserSetupModal
+        adminUserSetupModal: adminUserSetupModal,
+        infoModal: infoModal,
+        confirmLeave: confirmLeave
     };
 
     function notify(message, translateValues) {
@@ -27,11 +30,18 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         $translate(message, translateValues).then(showSlider, showSlider);
     }
 
+    function notifyProgress(message, translateValues) {
+        function showSlider(message) {
+            SliderService.openTemplate(message, null, null, null, false, true, true, true);
+        }
+
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
+
     function error(errorText, translateValues) {
         function showSlider(errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error', null, false);
         }
-
         $translate(errorText, translateValues).then(showSlider, showSlider);
     }
 
@@ -53,7 +63,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function apiErrors(errorResponse) {
         var scope = getScope();
         scope.errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-
         if (!scope.errors) {
             return;
         }
@@ -124,6 +133,17 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         return deferred.promise;
     }
 
+    function infoModal(confirmText, translate) {
+        var scope = getScope();
+        scope.cancel = function () {
+            ModalService.close();
+        };
+        ModalService.openTemplate(
+                '<div class="form-field">' +
+                '    <button class="button-alpha" ng-click="$parent.cancel()" translate="notify.generic.okay">Ok</button>' +
+                '</div>', confirmText, false, scope, false, false);
+    }
+
     function adminUserSetupModal() {
         ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
     }
@@ -189,14 +209,45 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 ModalService.openTemplate(
                 '<div class="form-field">' +
                 '<p><i translate="{{confirmWarningText}}"></i></p>' +
-                '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
-                '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
+                '    <button class="button-beta button-flat" ng-click="cancel()">Cancel</button>' +
+                '    <button class="button-destructive button-flat" ng-click="confirm()">' +
                 '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
                 '    <span translate="app.delete">Delete</span>' +
                 '    </button>' +
                 '</div>', confirmText, false, scope, false, false);
             }
         }
+
+        return deferred.promise;
+    }
+
+    function confirmLeave(confirmText, translateValues) {
+        var deferred = $q.defer();
+        var scope = getScope();
+
+        scope.confirm = function () {
+            deferred.resolve();
+            ModalService.close();
+        };
+
+        scope.save = function () {
+            $rootScope.$broadcast('event:edit:post:data:mode:save');
+            $rootScope.$on('event:edit:post:data:mode:saveError', function () {
+                deferred.reject();
+                ModalService.close();
+            });
+            $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
+                deferred.resolve();
+                ModalService.close();
+            });
+        };
+
+        ModalService.openTemplate(
+                '<div class="form-field">' +
+                '<p><i translate>notify.post.leave_confirm_message</i></p>' +
+                '    <button class="button button-flat" ng-click="confirm()" translate>notify.post.leave_confirm</button>' +
+                '    <button class="button-alpha button-flat" ng-click="save()" translate>notify.generic.save</button>' +
+                '</div>', confirmText, false, scope, false, true);
 
         return deferred.promise;
     }

@@ -9,7 +9,7 @@ module.exports = [
     'Notify',
     '_',
     'Util',
-    '$routeParams',
+    '$transition$',
     '$q',
 function (
     $scope,
@@ -22,7 +22,7 @@ function (
     Notify,
     _,
     Util,
-    $routeParams,
+    $transition$,
     $q
 ) {
 
@@ -88,13 +88,13 @@ function (
         TagEndpoint.queryFresh({ level: 'parent' }).$promise.then(function (tags) {
             // Remove current tag to avoid circular reference
             $scope.parents = _.filter(tags, function (tag) {
-                return tag.id !== parseInt($routeParams.id);
+                return tag.id !== parseInt($transition$.params().id);
             });
         });
     }
 
     function getCategory() {
-        TagEndpoint.getFresh({ id: $routeParams.id }).$promise.then(function (tag) {
+        TagEndpoint.getFresh({ id: $transition$.params().id }).$promise.then(function (tag) {
             $scope.category = tag;
             // Normalize parent category
             if ($scope.category.parent) {

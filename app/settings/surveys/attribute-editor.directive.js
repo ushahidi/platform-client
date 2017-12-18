@@ -19,11 +19,7 @@ function (
             $scope.editAttribute.config = (!$scope.editAttribute.config || (_.isArray($scope.editAttribute.config) && $scope.editAttribute.config.length === 0)) ? {} : $scope.editAttribute.config;
             $scope.defaultValueToggle = false;
             $scope.descriptionToggle = false;
-            $scope.editName = function () {
-                if (!$scope.editAttribute.id) {
-                    $scope.editAttribute.label = '';
-                }
-            };
+
             $scope.closeModal = function () {
                 ModalService.close();
             };

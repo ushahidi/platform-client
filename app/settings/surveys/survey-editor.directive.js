@@ -122,7 +122,8 @@ function SurveyEditorController(
                         priority: 0,
                         required: false,
                         type: 'post',
-                        show_when_published: 1,
+                        show_when_published: true,
+                        task_is_internal_only: false,
                         attributes: [
                             {
                                 cardinality: 0,

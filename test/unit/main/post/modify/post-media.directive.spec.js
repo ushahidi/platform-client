@@ -21,12 +21,12 @@ describe('post media directive', function () {
     });
 
 
-
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-        $scope.media = 5;
-        element = '<form name="form"><post-media name="media-test" media="mediaVal" media-id="5"></post-media></form>';
+        $scope.mediaId = 5;
+        $scope.media = {};
+        element = '<form name="form"><post-media ng-model="mediaId" name="media-test" media="media"></post-media></form>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.children().isolateScope();

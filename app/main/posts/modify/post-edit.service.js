@@ -25,7 +25,6 @@ function (
             // First get tasks to be validated
             // The post task is always validated
             // Other tasks are only validated if marked completed
-
             var isPostValid = true;
             var tasks_to_validate = [];
 
@@ -37,6 +36,10 @@ function (
 
             // Validate Post default fields
             if (!form) {
+                return false;
+            }
+
+            if (!post.form) {
                 return false;
             }
 

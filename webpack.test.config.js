@@ -6,7 +6,10 @@ config.plugins = [];
 
 // Add root to resolve for easier refs within tests
 config.resolve = {
-    root : [path.resolve('./')]
+    modules : [
+        path.resolve('./'),
+        'node_modules'
+    ]
 };
 
 module.exports = config;

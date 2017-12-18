@@ -1,7 +1,7 @@
 var L = require('leaflet');
 // Load leaflet plugins here too
-require('imports?L=leaflet!leaflet.markercluster');
-require('imports?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
+require('imports-loader?L=leaflet!leaflet.markercluster');
+require('imports-loader?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
 
 describe('post location directive', function () {
 
@@ -14,7 +14,8 @@ describe('post location directive', function () {
     Maps,
     map,
     marker,
-    currentPositionControl;
+    currentPositionControl,
+    ngModel;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -61,12 +62,15 @@ describe('post location directive', function () {
             lat: 3,
             lon: 4
         };
-        element = '<post-location attribute="attribute" key="key" model="model" id="1"></post-location>';
+        element = '<post-location attribute="attribute" key="key" ng-model="model" id="1"></post-location>';
         element = $compile(element)($scope);
         $scope.$digest();
         isolateScope = element.children().scope();
+        ngModel = element.controller('ngModel');
+
         spyOn(isolateScope, 'chooseCurrentLocation').and.callThrough();
         spyOn(currentPositionControl, 'start').and.callThrough();
+        spyOn(ngModel, '$setViewValue').and.callThrough();
     }));
 
     describe('test directive functions', function () {
@@ -104,19 +108,23 @@ describe('post location directive', function () {
             var elementToClick = element[0].querySelector('.list-item');
             elementToClick.dispatchEvent(new Event('click'));
             expect(isolateScope.chooseLocation).toHaveBeenCalledWith(newLocation);
-            expect(isolateScope.model.lat).toEqual(1);
-            expect(isolateScope.model.lon).toEqual(2);
+            expect(ngModel.$setViewValue).toHaveBeenCalledWith({
+                lat: 1,
+                lon: 2
+            });
+            expect(ngModel.$viewValue.lat).toEqual(1);
+            expect(ngModel.$viewValue.lon).toEqual(2);
             expect(marker.setLatLng).toHaveBeenCalledWith([1, 2]);
             expect(map.setView).toHaveBeenCalledWith([1, 2], 8);
         });
         it('should clear scope model, and remove the marker', function () {
             isolateScope.$apply(function () {
-                isolateScope.model = { lat: 100, lng: 200 };
+                ngModel.$setViewValue({ lat: 100, lng: 200 });
             });
 
             isolateScope.clear();
 
-            expect(isolateScope.model).toBeNull();
+            expect(ngModel.$viewValue).toBeNull();
             expect(marker.remove).toBeCalled;
         });
         it('should start checking for current location', function () {

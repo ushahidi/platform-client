@@ -5,6 +5,10 @@ SavedSearchModeContext.$inject = [];
 function SavedSearchModeContext() {
     return {
         restrict: 'E',
+        scope: {
+            filters: '=',
+            savedSearch: '='
+        },
         controller: SavedSearchModeContextController,
         template: require('./mode-context.html')
     };
@@ -13,34 +17,37 @@ function SavedSearchModeContext() {
 SavedSearchModeContextController.$inject = [
     '$scope',
     '$translate',
-    '$location',
+    '$state',
     '$rootScope',
     'NotificationEndpoint',
     'SavedSearchEndpoint',
     'Notify',
     '_',
-    'ModalService'
+    'ModalService',
+    'PostFilters'
 ];
 function SavedSearchModeContextController(
     $scope,
     $translate,
-    $location,
+    $state,
     $rootScope,
     NotificationEndpoint,
     SavedSearchEndpoint,
     Notify,
     _,
-    ModalService
+    ModalService,
+    PostFilters
 ) {
     // Show Add Notification link
     $scope.showNotificationLink = true;
     $scope.canEdit = false;
     $scope.notification = false;
-
+    $scope.collectionView = 'map';
     $scope.saveNotification = saveNotification;
     $scope.removeNotification = removeNotification;
     $scope.editSavedSearch = editSavedSearch;
     $scope.deleteSavedSearch = deleteSavedSearch;
+    $scope.clearFilters = clearFilters;
 
     activate();
 
@@ -58,7 +65,7 @@ function SavedSearchModeContextController(
 
     // Check if we can edit
     function canEdit(savedSearch) {
-        return _.contains(savedSearch.allowed_privileges, 'update');
+        return savedSearch && _.contains(savedSearch.allowed_privileges, 'update');
     }
 
     function editSavedSearch() {
@@ -71,7 +78,7 @@ function SavedSearchModeContextController(
             SavedSearchEndpoint.delete({
                 id: $scope.savedSearch.id
             }).$promise.then(function () {
-                $location.url('/');
+                $state.go('posts.map.all');
                 $rootScope.$broadcast('savedSearch:update');
             }, function (errorResponse) {
                 Notify.apiErrors(errorResponse);
@@ -97,5 +104,10 @@ function SavedSearchModeContextController(
                 Notify.notify('notify.notification.destroy_notification_success', {name: notification.name});
             });
         });
+    }
+
+    function clearFilters() {
+        PostFilters.clearFilters();
+        PostFilters.setMode('all');
     }
 }

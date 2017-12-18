@@ -110,6 +110,18 @@
 
                 </div>
 
+                <div class="form-sheet" ng-show="user.id && user.contacts.length">
+                    <div class="form-sheet-summary">
+                        <h3 class="form-sheet-title" translate>Contacts</h3>
+                    </div>
+                    <div class="form-field" ng-repeat="contact in user.contacts">
+                        <div class="form-field-addon" style="text-transform: capitalize">
+                            <span class="addon before">{{contact.type}}</span>
+                            <input type="text" value="{{contact.contact}}" disabled="">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-sheet" ng-show="user.id">
                    <div class="form-sheet-summary">
                        <h3 class="form-sheet-title" translate>user.delete_user</h3>

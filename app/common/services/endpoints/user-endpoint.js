@@ -12,8 +12,9 @@ function (
     var cache;
 
     if (!(cache = CacheFactory.get('userCache'))) {
-        cache = new CacheFactory('userCache');
+        cache = CacheFactory.createCache('userCache');
     }
+    cache.removeExpired();
 
     var UserEndpoint = $resource(Util.apiUrl('/users/:id'), {
         id: '@id'

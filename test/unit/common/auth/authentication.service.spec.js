@@ -2,6 +2,7 @@ describe('Authentication', function () {
 
     var $rootScope,
         $httpBackend,
+        $injector,
         BACKEND_URL,
         Authentication,
         loginPromiseSuccessCallback,
@@ -44,22 +45,49 @@ describe('Authentication', function () {
 
     });
 
-    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _Authentication_) {
+    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _$injector_) {
         $httpBackend = _$httpBackend_;
         $rootScope = _$rootScope_;
         BACKEND_URL = _CONST_.BACKEND_URL;
-        Authentication = _Authentication_;
+        $injector = _$injector_;
     }));
 
-    describe('beeing still logged out', function () {
-        describe('getLoginStatus', function () {
-            it('should return false', function () {
-                expect(Authentication.getLoginStatus()).toBe(false);
-            });
+    describe('initial login status', function () {
+        it('should be logged in if we have a valid auth token', function () {
+            mockedSessionData.accessToken = 123;
+            mockedSessionData.grantType = 'password';
+            mockedSessionData.userId = 10;
+            mockedSessionData.accessTokenExpires = Math.floor(Date.now() / 1000) + 3600;
+            Authentication = $injector.get('Authentication');
+
+            expect(Authentication.getLoginStatus()).toBe(true);
+        });
+
+        it('should be logged out if the auth token is expired', function () {
+            mockedSessionData.accessToken = 123;
+            mockedSessionData.grantType = 'password';
+            mockedSessionData.accessTokenExpires = Math.floor(Date.now() / 1000) - 3600;
+            mockedSessionData.userId = 10;
+            Authentication = $injector.get('Authentication');
+
+            expect(Authentication.getLoginStatus()).toBe(false);
+            expect(mockedSessionData.userId).toBe(undefined);
+        });
+
+        it('should be logged out if the auth token is client creds', function () {
+            mockedSessionData.accessToken = 123;
+            mockedSessionData.grantType = 'client';
+            Authentication = $injector.get('Authentication');
+
+            expect(Authentication.getLoginStatus()).toBe(false);
         });
     });
 
     describe('login', function () {
+
+        beforeEach(angular.mock.inject(function (_Authentication_) {
+            Authentication = _Authentication_;
+        }));
 
         describe('with successful post call to "/oauth/token"', function () {
 
@@ -100,6 +128,7 @@ describe('Authentication', function () {
 
                 it('should add the accessToken to the Session', function () {
                     expect(mockedSessionData.accessToken).toEqual(mockedOauthTokenResponse.access_token);
+                    expect(mockedSessionData.accessTokenExpires).toEqual(mockedOauthTokenResponse.expires);
                 });
 
                 it('should add the userData to the Session', function () {
@@ -208,19 +237,22 @@ describe('Authentication', function () {
 
     describe('logout', function () {
 
-        beforeEach(function () {
+        beforeEach(angular.mock.inject(function (_Authentication_) {
+            Authentication = _Authentication_;
+
             mockedSessionData = {
                 userId: 2,
                 realname: 'Max Doe',
                 email: 'max@doe.org',
                 role: 'role',
-                accessToken: 'fooBarAccessToken'
+                accessToken: 'fooBarAccessToken',
+                grantType: 'password'
             };
 
             spyOn($rootScope, '$broadcast').and.callThrough();
 
             Authentication.logout();
-        });
+        }));
 
         it('should broadcast the "logout:succeeded" event on the rootScope', function () {
             expect($rootScope.$broadcast).toHaveBeenCalled();

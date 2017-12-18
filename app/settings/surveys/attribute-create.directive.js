@@ -24,7 +24,7 @@ function (
 
             $scope.createNewAttribute = function (type) {
                 // Set initial label name based on type
-                type.label = 'New ' + type.label.toLowerCase() + ' field';
+                type.label = '';
                 $scope.openAttributeEditModal($scope.activeTask, _.extend($scope.newAttribute, type));
             };
 

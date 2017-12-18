@@ -1,10 +1,10 @@
-<div>
+<div ui-view>
     <div class="mode-context init" dropdown>
 
         <header class="mode-context-header">
             <ol class="breadcrumbs">
                 <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
-                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a ui-sref="settings.list" translate>app.settings</a></li>
             </ol>
             <h1 class="mode-context-title" translate>app.roles</h1>
         </header>
@@ -22,7 +22,7 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="fab" ng-show="rolesEnabled">
-                <a ng-href="/settings/roles/create" type="button" class="button button-alpha button-fab">
+                <a ui-sref="settings.roles.create" type="button" class="button button-alpha button-fab">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
@@ -43,13 +43,10 @@
             <div class="listing card" ng-show="roles.length" ng-show="rolesEnabled">
                 <div class="listing-item" ng-repeat="role in roles | orderBy:'role'">
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a ng-href="/settings/roles/{{role.id}}">{{role.display_name}}</a></h2>
+                        <h2 class="listing-item-title"><a ui-sref="settings.roles.edit({id: role.id})">{{role.display_name}}</a></h2>
                     </div>
                 </div>
             </div>
-
-            <uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></uib-pagination>
-
         </div>
     </main>
 </div>
