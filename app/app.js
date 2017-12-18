@@ -118,6 +118,7 @@ angular.module('app',
         $showdownProvider.setOption('excludeTrailingPunctuationFromURLs', true);
         $showdownProvider.setOption('openLinksInNewWindow', true);
         $showdownProvider.setOption('tasklists', true);
+        $showdownProvider.setOption('sanitize', true);
     }])
 
     .factory('_', function () {
