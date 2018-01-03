@@ -78,7 +78,7 @@
     "protractor": "^5.1.1",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^2.0.2",
-    "run-sequence": "^1.1.0",
+    "run-sequence": "^2.2.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "supports-color": "^3.1.2",
