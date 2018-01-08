@@ -76,6 +76,11 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
         return (($rootScope.currentUser || {}).role === 'admin');
     };
 
+    // todo: move to service
+    $rootScope.isOrgAdmin = function () {
+        return (($rootScope.currentUser || {}).role === 'org_admin');
+    };
+
     $rootScope.$on('event:authentication:login:succeeded', function () {
         doLogin(loginPath);
     });

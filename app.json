@@ -13,6 +13,10 @@
     "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-multi.git",
     "NODE_ENV": "dev",
     "NPM_CONFIG_PRODUCTION": "false",
+    "ENTERPRISE_DASHBOARD_URL": {
+      "description" : "A link to the enteprise multiple deployments dashboard",
+      "required" : false
+    },
     "BACKEND_URL": {
       "description" : "A deployment of ushahidi/platform to use",
       "value" : "https://ushahidi-platform-api-master.herokuapp.com",

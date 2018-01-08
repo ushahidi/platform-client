@@ -25,6 +25,8 @@ let root = 'app';
 dotenv.config({silent: true});
 // Grab backend-url from gulp options
 process.env.BACKEND_URL = gutil.env['backend-url'] || process.env.BACKEND_URL;
+// Grab enterprise-dashboard-url from gulp options
+process.env.ENTERPRISE_DASHBOARD_URL = gutil.env['enterprise-dashboard-url'] || process.env.ENTERPRISE_DASHBOARD_URL;
 
 // helper method for resolving paths
 let resolveToApp = (glob = '') => {

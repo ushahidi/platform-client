@@ -89,7 +89,8 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
     new webpack.DefinePlugin({
-        BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined')
+        BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined'),
+        ENTERPRISE_DASHBOARD_URL: JSON.stringify(process.env.ENTERPRISE_DASHBOARD_URL || 'http://enterprise.url.undefined')
     }),
 
     // Injects bundles in your index.html instead of wiring all manually.

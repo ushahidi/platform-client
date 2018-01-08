@@ -19,6 +19,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmTos: confirmTos,
         adminUserSetupModal: adminUserSetupModal,
         infoModal: infoModal,
+        goToEnterpriseDashboardModal: goToEnterpriseDashboardModal,
         confirmLeave: confirmLeave
     };
 
@@ -131,6 +132,18 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         $translate(confirmText, translateValues).then(showSlider, showSlider);
 
         return deferred.promise;
+    }
+
+
+    function goToEnterpriseDashboardModal(text, translate) {
+        var scope = getScope();
+        scope.cancel = function () {
+            ModalService.close();
+        };
+        ModalService.openTemplate(
+            '<div class="form-field">' +
+            '    <a class="button-alpha" ng-click="$parent.cancel()" translate="notify.enterpriseDashboard.go">Go to dashboard</a>' +
+            '</div>', text, false, scope, false, false);
     }
 
     function infoModal(confirmText, translate) {

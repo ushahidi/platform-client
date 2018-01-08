@@ -22,7 +22,7 @@
                translate="{{'user.valid.full_name.' + error}}"></p>
           </div>
 
-          <div class="form-field">
+          <div class="form-field" ng-hide="state.showLinkToEntepriseDashboard">
             <label class="input-label"
                 ng-class="{ 'error': form.email.$invalid && form.email.$dirty, 'success': form.email.$valid }"
                 for="email" translate>user.email</label>
@@ -39,7 +39,8 @@
                translate="{{'user.valid.email.' + error}}"></p>
             </div>
 
-            <p ng-hide="state.changingPassword"><a href class="cta change-password" ng-click="state.changingPassword = !state.changingPassword" translate>user_profile.update_password</a></p>
+            <p ng-hide="state.changingPassword || state.showLinkToEntepriseDashboard"><a href class="cta change-password" ng-click="state.changingPassword = !state.changingPassword" translate>user_profile.update_password</a></p>
+            <p ng-show="state.showLinkToEntepriseDashboard"><a href class="cta change-password" ng-href="{{state.enterpriseDashboardProfileUrl}}" translate>user_profile.update_email_password</a></p>
 
             <div ng-if="state.changingPassword">
                 <label class="input-label"

@@ -4,12 +4,16 @@ module.exports = [
     'Session',
     '_',
     '$translate',
+    '$rootScope',
+    'CONST',
     function (
         UserEndpoint,
         Notify,
         Session,
         _,
-        $translate
+        $translate,
+        $rootScope,
+        CONST
     ) {
         return {
             restrict: 'E',
@@ -20,6 +24,8 @@ module.exports = [
             template: require('./user-profile.html'),
             link: function ($scope) {
                 $scope.state = {
+                    showLinkToEntepriseDashboard: $rootScope.isOrgAdmin(),
+                    enterpriseDashboardProfileUrl: `${CONST.ENTERPRISE_DASHBOARD_URL}/profile`,
                     success: false,
                     processing: false,
                     changingPassword: false,

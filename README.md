@@ -86,6 +86,7 @@ MOCK_BACKEND=false
 KARMA_CHROME=false
 PORT=8080
 APP_LANGUAGES=en,ar
+ENTERPRISE_DASHBOARD_URL=https://ushahidi-enterprise-dashboard
 ```
 
 * `NODE_SERVER` - always run the `node-server` task

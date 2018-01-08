@@ -35,7 +35,8 @@ angular.module('ngRaven', []);
 window.ushahidi = window.ushahidi || {};
 
 // this 'environment variable' will be set within the gulpfile
-var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
+var enterpriseDashboardUrl = window.ushahidi.enterpriseDashboardUrl = (window.ushahidi.enterpriseDashboardUrl || ENTERPRISE_DASHBOARD_URL).replace(/\/$/, ''),
+    backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
@@ -97,7 +98,8 @@ angular.module('app',
         CLAIMED_USER_SCOPES      : claimedAnonymousScopes.concat('dataproviders'),
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
         TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
-        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url
+        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url,
+        ENTERPRISE_DASHBOARD_URL : enterpriseDashboardUrl
     })
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);

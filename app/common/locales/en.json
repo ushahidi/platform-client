@@ -1024,6 +1024,7 @@
     "user_profile" : {
         "title" : "account settings",
         "update_password" : "Update password",
+        "update_email_password": "Update email and password",
         "update_success" : "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected.",
         "button" : {
             "save" : "Save &amp; close",

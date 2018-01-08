@@ -42,6 +42,7 @@
         "afterEach",
         "-event",
         "makeTestApp",
-        "BACKEND_URL"
+        "BACKEND_URL",
+        "ENTERPRISE_DASHBOARD_URL"
     ]
 }
