@@ -21,10 +21,10 @@ function CategorySelectDirective(TagEndpoint, _) {
         activate();
 
         function activate() {
-            // Load categories
+            // Load categories from server
             TagEndpoint.query().$promise.then(function (result) {
                 scope.categories = result;
-                // adding children to tags
+                // assign children to their parent categories
                 _.each(scope.categories, function (category) {
                     if (category.children) {
                         var children = [];
@@ -44,6 +44,7 @@ function CategorySelectDirective(TagEndpoint, _) {
                         return category;
                     }
                 });
+                // setting only the ids in the selectedCategories array
                 if (!scope.selectedCategories || scope.selectedCategories.length === 0) {
                     scope.selectedCategories = _.pluck(scope.categories, 'id');
                 }
@@ -54,6 +55,10 @@ function CategorySelectDirective(TagEndpoint, _) {
             ngModel.$render = renderModelValue;
         }
         function renderModelValue() {
+            // TODO if we detect parents that used to have children now don't have a child selected, we should unselect them
+            // TODO if we detect a child was unselected, we should unselect the parent
+            // TODO if we find a previously unselected parent that is now selected, we need to re-select all the children in it
+            // TODO if we find a previously selected parent that is now un-selected by a user action, we need to un-select all the children in it
             // Update selectCategories w/o breaking references used by checklist-model
             if (ngModel.$viewValue) {
                 Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
@@ -61,7 +66,40 @@ function CategorySelectDirective(TagEndpoint, _) {
         }
 
         function saveValueToView(selectedCategories) {
+            selectedCategories = handleParentUnselectedByUser(selectedCategories);
             ngModel.$setViewValue(angular.copy(selectedCategories));
+        }
+        // unselect children when parent is unselected and all children are selected
+
+        // current result arrays when I unselect a parent with children
+        // selectedCategories > [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
+        // ngModel.$viewValue > [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        // current results in this after processing >  [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
+        // SHOULD be:  [1, 2, 3, 5, 6, 9, 10, 11, 12] (which means, unselect children [7, 8]
+        function handleParentUnselectedByUser(newSelection) {
+            const findRemoved = _.difference(_.pluck(scope.categories, 'id'), newSelection);
+            const parentsRemoved = _.filter(findRemoved, (category) => { // return parents that were removed
+                return isParent(category);
+            });
+            let result = angular.copy(newSelection);
+            _.each(parentsRemoved, (parent) => {
+                const toReject = allChildrenToUnselect(parent);
+                result = _.without(result, ...toReject);
+            });
+            return result;
+        }
+
+        function allChildrenToUnselect(parentId) {
+            const children = _.find(scope.parents, (category) => {
+                return category.id === parentId;
+            }).children;
+            return _.pluck(children, 'id');
+        }
+        function isParent(categoryId) {
+            const parent = _.find(scope.parents, (category) => {
+                return category.id === categoryId;
+            });
+            return !!parent;
         }
     }
 }
