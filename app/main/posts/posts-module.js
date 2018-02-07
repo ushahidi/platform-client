@@ -58,6 +58,7 @@ angular.module('ushahidi.posts', [])
 .directive('postViewData', require('./views/post-view-data.directive.js'))
 // Filters
 .directive('filterPosts', require('./views/filters/filter-posts.directive.js'))
+.service('CategorySelection', require('./views/filters/filter-category.service.js'))
 .directive('filterCategory', require('./views/filters/filter-category.directive.js'))
 .directive('filterDate', require('./views/filters/filter-date.directive.js'))
 .directive('filterForm', require('./views/filters/filter-form.directive.js'))
