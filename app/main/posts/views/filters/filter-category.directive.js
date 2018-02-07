@@ -60,14 +60,16 @@ function CategorySelectDirective(TagEndpoint, _) {
             // TODO if we find a previously unselected parent that is now selected, we need to re-select all the children in it
             // TODO if we find a previously selected parent that is now un-selected by a user action, we need to un-select all the children in it
             // Update selectCategories w/o breaking references used by checklist-model
+            // scope.selectedCategories = handleParents(selectedCategories);
+
             if (ngModel.$viewValue) {
                 Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
             }
         }
 
         function saveValueToView(selectedCategories) {
-            selectedCategories = handleParentUnselectedByUser(selectedCategories);
-            ngModel.$setViewValue(angular.copy(selectedCategories));
+            selectedCategories = handleParents(selectedCategories);
+            ngModel.$setViewValue(angular.copy(selectedCategories), ngModel.$viewValue);
         }
         // unselect children when parent is unselected and all children are selected
 
@@ -76,17 +78,35 @@ function CategorySelectDirective(TagEndpoint, _) {
         // ngModel.$viewValue > [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         // current results in this after processing >  [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
         // SHOULD be:  [1, 2, 3, 5, 6, 9, 10, 11, 12] (which means, unselect children [7, 8]
-        function handleParentUnselectedByUser(newSelection) {
-            const findRemoved = _.difference(_.pluck(scope.categories, 'id'), newSelection);
+        function handleParents(newSelection, old) {
+            let result = angular.copy(newSelection);
+            const findRemoved = _.difference(ngModel.$viewValue, newSelection);
+            const findAdded = _.difference(newSelection, ngModel.$viewValue);
             const parentsRemoved = _.filter(findRemoved, (category) => { // return parents that were removed
                 return isParent(category);
             });
-            let result = angular.copy(newSelection);
-            _.each(parentsRemoved, (parent) => {
-                const toReject = allChildrenToUnselect(parent);
-                result = _.without(result, ...toReject);
-            });
+
+            if (findRemoved.length > 0 && parentsRemoved.length > 0) {
+                _.each(parentsRemoved, (parent) => {
+                    const toReject = allChildrenToUnselect(parent);
+                    result = _.without(result, ...toReject);
+                });
+            } else if (findAdded.length > 0) {
+                _.each(newSelection, (any) => {
+                    const toAdd = childrenToReSelect(any);
+                    if (toAdd.length > 0) {
+                        result = result.concat(toAdd);
+                    }
+                });
+            }
             return result;
+        }
+
+        function childrenToReSelect(parentId) {
+            const parent = _.find(scope.parents, (category) => {
+                return category.id === parentId;
+            });
+            return parent ? _.pluck(parent.children, 'id') : [];
         }
 
         function allChildrenToUnselect(parentId) {
@@ -95,6 +115,7 @@ function CategorySelectDirective(TagEndpoint, _) {
             }).children;
             return _.pluck(children, 'id');
         }
+
         function isParent(categoryId) {
             const parent = _.find(scope.parents, (category) => {
                 return category.id === categoryId;
