@@ -5,7 +5,6 @@ describe('mode-context-form-filter directive', function () {
         isolateScope,
         PostEndpoint,
         FormEndpoint,
-        TagEndpoint,
         $location,
         PostSurveyService,
         PostFilters;
@@ -17,17 +16,15 @@ describe('mode-context-form-filter directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _FormEndpoint_, _PostEndpoint_, _TagEndpoint_, _PostSurveyService_, _PostFilters_, _$location_) {
+    beforeEach(inject(function (_$rootScope_, $compile, _FormEndpoint_, _PostEndpoint_, _PostSurveyService_, _PostFilters_, _$location_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         PostEndpoint = _PostEndpoint_;
         FormEndpoint = _FormEndpoint_;
-        TagEndpoint = _TagEndpoint_;
         PostSurveyService = _PostSurveyService_;
         PostFilters = _PostFilters_;
         $location = _$location_;
         spyOn(FormEndpoint, 'query').and.callThrough();
-        spyOn(TagEndpoint, 'query').and.callThrough();
         spyOn(PostEndpoint, 'stats').and.callThrough();
         spyOn(PostFilters, 'getQueryParams').and.callThrough();
 
@@ -42,9 +39,6 @@ describe('mode-context-form-filter directive', function () {
     describe('test directive-functions', function () {
         it('should fetch forms from endpoint', function () {
             expect(FormEndpoint.query).toHaveBeenCalled();
-        });
-        it('should fetch tags from endpoint', function () {
-            expect(TagEndpoint.query).toHaveBeenCalled();
         });
         it('should fetch queryParams from service', function () {
             expect(PostFilters.getQueryParams).toHaveBeenCalled();
@@ -63,12 +57,6 @@ describe('mode-context-form-filter directive', function () {
             expect(isolateScope.showLanguage).toEqual(false);
             isolateScope.languageToggle();
             expect(isolateScope.showLanguage).toEqual(true);
-        });
-        it('should change form if a category is selected on a new form', function () {
-            isolateScope.forms = [{id: 1}, {id: 2}];
-            isolateScope.filters.tags = [1,2];
-            isolateScope.changeForms();
-            expect(isolateScope.filters.tags).toEqual([]);
         });
         it('should change filters when selecting show only', function () {
             isolateScope.showOnly(2);
