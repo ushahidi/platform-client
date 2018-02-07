@@ -16,7 +16,6 @@ function FiltersDropdown() {
 FiltersDropdownController.$inject = ['$scope', '$state', 'PostFilters', 'ModalService', '$rootScope', '_'];
 function FiltersDropdownController($scope, $state, PostFilters, ModalService, $rootScope, _) {
     $scope.canUpdateSavedSearch = false;
-
     $scope.$watch(PostFilters.getModeId, function (newValue, oldValue) {
         if (oldValue !== newValue || typeof ($scope.canUpdateSavedSearch) === 'undefined') {
             setSavedSearchUpdateStatus();
@@ -61,6 +60,9 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
         // @TODO Prevent the user from creating one if they somehow manage to get to this point without being logged in
         $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
         ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', modalHeaderText, 'star', $scope, false, false);
-
+    };
+    $scope.disableApplyButton = function () {
+        return $state.$current.includes['posts.map'] ? true : false;
     };
 }
+

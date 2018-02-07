@@ -41,6 +41,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     platform_websocket_redis_adapter_url = window.ushahidi.platform_websocket_redis_adapter_url || '',
     claimedAnonymousScopes = [
+        'apikeys',
         'posts',
         'media',
         'forms',
@@ -118,6 +119,7 @@ angular.module('app',
         $showdownProvider.setOption('excludeTrailingPunctuationFromURLs', true);
         $showdownProvider.setOption('openLinksInNewWindow', true);
         $showdownProvider.setOption('tasklists', true);
+        $showdownProvider.setOption('sanitize', true);
     }])
 
     .factory('_', function () {
