@@ -41,6 +41,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     platform_websocket_redis_adapter_url = window.ushahidi.platform_websocket_redis_adapter_url || '',
     claimedAnonymousScopes = [
+        'apikeys',
         'posts',
         'media',
         'forms',
