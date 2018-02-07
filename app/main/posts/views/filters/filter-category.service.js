@@ -1,5 +1,6 @@
 module.exports = CategorySelectionService;
-
+// TODO BUG: when closing categories from the x in the filters bug icons, the logic here is not working correctly,
+// this is likely due to 'internallymodified' flag not being set as false
 CategorySelectionService.$inject = ['_'];
 function CategorySelectionService(_) {
     let internallyModified = false;
@@ -36,7 +37,6 @@ function CategorySelectionService(_) {
             // changes when not internally modified AND all children of an unselected parent were selected
             result = childrenAllSelectedResult(newSelection, oldSelection, result);
         }
-
         return {internallyModified: internallyModified, result: result};
     }
 
@@ -60,7 +60,7 @@ function CategorySelectionService(_) {
         if (findAdded.length > 0 && isParent(findAdded[0])) {
             _.each(newSelection, (any) => {
                 const toAdd = childrenToReSelect(any);
-                if (toAdd.length > 0) {
+                if (!_.isUndefined(toAdd) && !_.isEmpty(toAdd)) {
                     result = _.uniq(result.concat(toAdd));
                     internallyModified = true;
                 }
@@ -79,7 +79,7 @@ function CategorySelectionService(_) {
                     const contained = _.every(_.pluck(parentCategory.children, 'id'), (childId) => {
                         return _.find(newSelection, (itm) => itm === childId);
                     });
-                    if (contained) {
+                    if (contained && parentCategory.id) {
                         result = _.uniq(result.concat(parentCategory.id));
                         internallyModified = true;
                     }
