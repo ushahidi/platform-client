@@ -22,7 +22,7 @@
     <div embed-only="true" class="hide-until-medium">
         <filter-posts filters="filters" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
         <div class="button-group">
-            <div class="button" ng-hide="filtersActive">
+            <div ng-hide="filtersActive">
                 <div ng-if="!editMode()">
                     <post-share filters="filters" button="true"></post-share>
                     <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
