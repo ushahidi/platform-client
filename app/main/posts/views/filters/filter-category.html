@@ -4,6 +4,7 @@
     <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
         <label>
             <input
+                ng-click="internal()"
                 type="checkbox"
                 checklist-value="category.id"
                 value="category.id"
@@ -16,7 +17,8 @@
           ng-repeat="child in category.children"
         >
           <label>
-          <input 
+          <input
+            ng-click="internal()"
             type="checkbox"
             checklist-model="selectedCategories"
             checklist-value="child.id"
