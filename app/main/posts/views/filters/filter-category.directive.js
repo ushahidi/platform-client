@@ -117,7 +117,7 @@ function CategorySelectDirective(TagEndpoint, _) {
 
         function parentsAddedResult(newSelection, oldSelection, result) {
             const findAdded = _.difference(newSelection, oldSelection);
-            if (findAdded.length > 0) {
+            if (findAdded.length > 0 && isParent(findAdded[0])) {
                 _.each(newSelection, (any) => {
                     const toAdd = childrenToReSelect(any);
                     if (toAdd.length > 0) {
