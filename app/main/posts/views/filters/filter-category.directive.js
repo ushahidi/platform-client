@@ -45,11 +45,11 @@ function CategorySelectDirective(TagEndpoint, _, PostFilters) {
                     }
                 });
                 // separating parents from children
-                scope.setParents(_.filter(scope.categories, function (category) {
+                scope.parents = _.filter(scope.categories, function (category) {
                     if (category.parent_id === null) {
                         return category;
                     }
-                }));
+                });
                 // setting only the ids in the selectedCategories array
                 if (!scope.selectedCategories || scope.selectedCategories.length === 0) {
                     scope.selectedCategories = _.pluck(scope.categories, 'id');
