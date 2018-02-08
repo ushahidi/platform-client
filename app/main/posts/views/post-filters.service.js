@@ -33,7 +33,8 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         cleanUIFilters: cleanUIFilters,
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
-        reactiveFilters: true
+        reactiveFilters: true,
+        filtersInternalChange: true
     };
 
     /**
@@ -152,6 +153,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilters() {
+        this.filtersInternalChange = false;
         // Replace filterState with defaults
         angular.copy(getDefaults(), filterState);
         // Trigger reactive filters
@@ -163,6 +165,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         filterState = this.clearFilterFromArray(filterKey, value, filterState);
     }
     function clearFilterFromArray(filterKey, value, from) {
+        this.filtersInternalChange = false;
         /*
          * if filter is in an array, we only want to remove that specific value
          * if all filter-values are removed from array, we want to reset to default
