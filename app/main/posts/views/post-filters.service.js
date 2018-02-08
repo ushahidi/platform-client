@@ -34,6 +34,12 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
         reactiveFilters: true,
+        /**
+         * This flag is used to syncronize the "internalChange" state globally
+         * (useful between filters bug icons and checkboxes).
+         * Since we use ngmodel all our changes in filter-category to selectecategories trigger changes
+         * and we want to keep a state to know if the user did the change or our handleParents category
+         */
         filtersInternalChange: true
     };
 
