@@ -20,9 +20,6 @@ function CategorySelectDirective(TagEndpoint, _, PostFilters) {
         scope.categories = [];
         scope.parents = [];
         scope.selectedCategories = [];
-        scope.internal = function () {
-            PostFilters.filtersInternalChange = false;
-        };
 
         activate();
 
@@ -61,44 +58,63 @@ function CategorySelectDirective(TagEndpoint, _, PostFilters) {
             ngModel.$render = renderModelValue;
         }
         function renderModelValue() {
-            // TODO if we detect parents that used to have children now don't have a child selected, we should unselect them
-            // TODO if we detect a child was unselected, we should unselect the parent
-            // TODO if we find a previously unselected parent that is now selected, we need to re-select all the children in it
-            // TODO if we find a previously selected parent that is now un-selected by a user action, we need to un-select all the children in it
-            // Update selectCategories w/o breaking references used by checklist-model
-            // scope.selectedCategories = handleParents(selectedCategories);
-
             if (ngModel.$viewValue) {
                 Array.prototype.splice.apply(scope.selectedCategories, [0, scope.selectedCategories.length].concat(ngModel.$viewValue));
             }
         }
+
+        /**
+         * Compares the current selected items with the previous ones and uses the parents scope var to
+         * know if we need to unselect/select items based on the state and how our categories should work
+         * "Filters dropdown: Top Level categories with children should behave as Select all"
+         * https://github.com/ushahidi/platform/issues/2436
+         * @param newSelection
+         * @param oldSelection
+         * @returns {*}
+         */
         function handleParents(newSelection, oldSelection) {
+            /**
+             * If nothing changed, don't manipulate the arrays at all
+             * @type {boolean}
+             */
             const noChanges = newSelection === oldSelection;
             const internal = PostFilters.filtersInternalChange === true;
+            /**
+             *reset the internal var to false if it's true, since that means we just passed through
+             * an internal change of the selectedCategories array by this function
+            */
             if (internal) {
                 PostFilters.filtersInternalChange = false;
             }
             if (noChanges || internal === true) {
                 return newSelection;
             }
-            // if we find a selected parent and SOME of its children are missing, but not all:
-            // unselect the parent
-
-            // if we find an unselected parent with ALL children selected
-            // select the parent
-
-            // if we find a parent selected with NO children selected
-            // select all children
             let result = newSelection;
             const itemsAdded = _.difference(newSelection, oldSelection);
             const itemsRemoved = _.difference(oldSelection, newSelection);
             const added = itemsAdded.length > 0;
             const item = added ? itemsAdded[0] : itemsRemoved[0];
+            /**
+             * go through each parent category to decide if the selectedCategories need
+             * to change according to the categories selection rules
+             */
             _.each(scope.parents, (parent) => {
+                /**
+                 * parents with no children don't need any changes since they are simply enabled/disabled by the user
+                 * in the checkboxes/bug icons
+                */
                 if (parent.children.length > 0) {
+                    /**
+                     * separate the children and pick only their ids
+                     * @type {Array}
+                     */
                     const children = _.map(parent.children, (child) => {
                         return child.id;
                     });
+                    /**
+                     * if the item that changed (was selected/unselected) is NOT related
+                     * to the current parent (or equal) we don't need to change it
+                     */
                     let itemIsRelated = item === parent.id;
                     if (!itemIsRelated) {
                         itemIsRelated = !!_.find(children, (itm) => itm === item);
@@ -106,48 +122,67 @@ function CategorySelectDirective(TagEndpoint, _, PostFilters) {
                     if (!itemIsRelated) {
                         return;
                     }
-
+                    /**
+                     * Find out if the selected item is a parent;
+                     */
                     const parentSelected = _.find(newSelection, (itm) => itm === parent.id);
+                    /**
+                     * Check if ALL the children are selected
+                     */
                     const childrenAllSelected = _.every(children, (childId) => {
                         return _.find(newSelection, (itm) => itm === childId);
                     });
+                    /**
+                     * Check if ALL the children are unselected
+                     */
                     const childrenAllUnselected = _.every(children, (childId) => {
                         return !_.find(newSelection, (itm) => itm === childId);
                     });
-                    const someChildrenSelected = _.some(children, (childId) => {
-                        return _.find(newSelection, (itm) => itm === childId);
-                    });
                     if (!parentSelected && childrenAllSelected) {
+                        /**
+                         * If all the children of a parent are selected but the parent isn't
+                         * we need to know if the parent was just unselected or if the last child
+                         * was just selected.
+                         * If the last child was just selected, add the parent
+                         * If the parent was just unselected, remove the children
+                         */
                         if (added) {
-                            // ADD parent
                             result = _.uniq(newSelection.concat(parent.id));
-                            PostFilters.filtersInternalChange = true;
                         } else {
                             // REMOVE children
                             result = _.without(newSelection, ...children);
-                            PostFilters.filtersInternalChange = true;
                         }
+                        PostFilters.filtersInternalChange = true;
                     } else if (parentSelected && childrenAllUnselected) {
-                        // ADD the children
+                        /**
+                         * If all the children of a parent are unselected but the parent is selected,
+                         * we need to know if the parent was just selected or if the last child
+                         * was just unselected.
+                         * If the last child was just unselected, remove the parent
+                         * If the parent was just selected, add the children
+                         */
                         if (added) {
                             result = _.uniq(newSelection.concat(children));
-                            PostFilters.filtersInternalChange = true;
                         } else {
                             // REMOVE parent
                             result = _.without(newSelection, parent.id);
-                            PostFilters.filtersInternalChange = true;
                         }
-
-                    } else if (parentSelected && someChildrenSelected) {
+                        PostFilters.filtersInternalChange = true;
+                    } else if (parentSelected) {
+                        /**
+                         * If the parent is selected
+                         * we need to know if the parent was just selected  or just unselected
+                         * If the parent was just unselected, remove the parent
+                         * If the parent was just selected, add the children
+                         */
                         if (added) {
                             // ADD all the children
                             result = _.uniq(newSelection.concat(children));
-                            PostFilters.filtersInternalChange = true;
                         } else {
                             // REMOVE parent
                             result = _.without(newSelection, parent.id);
-                            PostFilters.filtersInternalChange = true;
                         }
+                        PostFilters.filtersInternalChange = true;
                     }
 
                 }
