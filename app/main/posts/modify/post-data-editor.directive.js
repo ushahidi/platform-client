@@ -272,11 +272,23 @@ function PostDataEditorController(
                     // adding category-objects attribute-options
                     attr.options = _.chain(attr.options)
                         .map(function (category) {
-                            return _.findWhere(categories, {id: category});
+                            const ret = _.findWhere(categories, {id: category});
+                            if (ret.children.length > 0) {
+                                ret.children = _.chain(ret.children)
+                                    .map(function (child) {
+                                        return _.findWhere(categories, {id: child.id});
+                                    })
+                                    .filter()
+                                    .value();
+                            }
+                            return ret;
                         })
                         .filter()
                         .value();
+
+
                 }
+
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
                     if (attr.input === 'location') {
