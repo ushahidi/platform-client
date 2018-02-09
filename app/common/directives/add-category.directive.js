@@ -8,7 +8,8 @@ function AddCategoryDirective() {
         scope: {
             formId: '=',
             attribute: '=',
-            postValue: '='
+            postValue: '=',
+            available: '='
         },
         controller: AddCategoryController,
         template: require('./add-category.html')
@@ -38,6 +39,7 @@ function AddCategoryController($rootScope, $scope, TagEndpoint, FormAttributeEnd
         $scope.showInput = !$scope.showInput;
     };
 
+
     $scope.saveCategory = function ($event) {
         $event.preventDefault();
         $scope.category.tag = $scope.categoryName;
@@ -60,6 +62,7 @@ function AddCategoryController($rootScope, $scope, TagEndpoint, FormAttributeEnd
                         $scope.categoryName = '';
                     });
                 Notify.notify('category added', {response: response});
+                $scope.$parent.available.push.apply($scope.$parent.available, response);
             }
 
         }, function (errorResponse) {

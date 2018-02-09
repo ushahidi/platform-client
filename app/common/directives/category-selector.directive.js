@@ -6,7 +6,6 @@ function CategorySelectorDirective() {
     return {
         restrict: 'E',
         scope: {
-            available: '=',
             selected: '=',
             form: '='
         },
@@ -30,28 +29,12 @@ function CategorySelectorController($scope, _) {
         if ($scope.selected[0] === null) {
             $scope.selected = [];
         }
-        $scope.categories = formatCategories();
+        $scope.categories = [];
 
-        // filter out child categories posing as available parent
-        $scope.categories = _.filter($scope.categories, function (category) {
-            return category.parent_id === null;
-        });
+        $scope.categories = $scope.$parent.available;
 
         // making sure no children are selected without their parents
         $scope.changeCategories();
-    }
-
-    function formatCategories() {
-        return _.each($scope.available, function (category) {
-                if (category.children.length > 0) {
-                    category.children = _.chain(category.children)
-                    .map(function (child) {
-                            return _.findWhere($scope.available, {id: child.id});
-                        })
-                    .filter()
-                    .value();
-                }
-            });
     }
 
     function selectAll() {
@@ -60,10 +43,10 @@ function CategorySelectorController($scope, _) {
             $scope.form.$setDirty();
         }
 
-        if ($scope.available.length === $scope.selected.length) {
-            $scope.selected.length = [];
+        if ($scope.$parent.available.length === $scope.selected.length) {
+            $scope.selected.splice(0, $scope.selected.length);
         } else {
-            _.each($scope.available, function (category) {
+            _.each($scope.$parent.available, function (category) {
                 if (!_.contains($scope.selected, category.id)) {
                     $scope.selected.push(category.id);
                 }

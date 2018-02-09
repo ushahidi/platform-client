@@ -33,6 +33,7 @@ angular.module('ushahidi.posts', [])
 // Post editing workflows
 .directive('postEditor', require('./modify/post-editor.directive.js'))
 .directive('postValueEdit', require('./modify/post-value-edit.directive.js'))
+.directive('postCategoryEditor', require('./modify/post-category-editor.js'))
 .directive('postTabs', require('./modify/post-tabs.directive.js'))
 .directive('postToolbox', require('./modify/post-toolbox.directive.js'))
 .directive('filterPostSortingOptions', require('./views/filters/filter-post-sorting-options.directive.js'))
