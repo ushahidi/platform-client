@@ -96,21 +96,18 @@ function CategorySelectorController($scope, _) {
                 $scope.disabledCategories[category.id] = true;
                 // ... and ensure this category is selected
                 if (!_.contains($scope.selectedParents, category.id)) {
-                    $scope.selectedParents.push(category.id);
+                    $scope.selectedParents.push.apply($scope.selectedParents, [category.id]);
                 }
-
-                //
-                // // ... and ensure this category is selected
-                // if (!_.contains($scope.selected, category.id)) {
-                //     $scope.selected.push(category.id);
-                // }
             } else {
                 var parentIndex = _.findIndex($scope.selectedParents, function (parentId) {
                     return parentId === category.id;
                 });
-                $scope.selectedParents.splice(parentIndex, 1);
-                // or, if no children are selected
-                // remove from disabled categories
+                if (parentIndex >= 0) {
+                    $scope.selectedParents.splice(parentIndex, 1);
+                    // or, if no children are selected
+                    // remove from disabled categories
+                }
+
                 $scope.disabledCategories[category.id] = false;
             }
         });
