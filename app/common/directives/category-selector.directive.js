@@ -20,6 +20,7 @@ function CategorySelectorController($scope, _) {
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
     $scope.selectParent = selectParent;
+    $scope.selectedParents = [];
     $scope.disabledCategories = [];
     $scope.changeCategories = changeCategories;
     activate();
@@ -102,25 +103,34 @@ function CategorySelectorController($scope, _) {
 
     function changeCategories() {
         _.each($scope.categories, function (category) {
-                    var selectedChildren = _.chain(category.children)
-                        .pluck('id')
-                        .intersection($scope.selected)
-                        .value();
+            var selectedChildren = _.chain(category.children)
+                .pluck('id')
+                .intersection($scope.selected)
+                .value();
 
-                    // If children are selected, add to disabled categories
-                    if (selectedChildren.length > 0) {
-                        $scope.disabledCategories[category.id] = true;
+            // If children are selected, add to disabled categories
+            if (selectedChildren.length > 0) {
+                $scope.disabledCategories[category.id] = true;
+                // ... and ensure this category is selected
+                if (!_.contains($scope.selectedParents, category.id)) {
+                    $scope.selectedParents.push(category.id);
+                }
 
-                        // ... and ensure this category is selected
-                        if (!_.contains($scope.selected, category.id)) {
-                            $scope.selected.push(category.id);
-                        }
-                    } else {
-                        // or, if no children are selected
-                        // remove from disabled categories
-                        $scope.disabledCategories[category.id] = false;
-                    }
+                //
+                // // ... and ensure this category is selected
+                // if (!_.contains($scope.selected, category.id)) {
+                //     $scope.selected.push(category.id);
+                // }
+            } else {
+                var parentIndex = _.findIndex($scope.selectedParents, function (parentId) {
+                    return parentId === category.id;
                 });
+                $scope.selectedParents.splice(parentIndex, 1);
+                // or, if no children are selected
+                // remove from disabled categories
+                $scope.disabledCategories[category.id] = false;
+            }
+        });
 
     }
 }
