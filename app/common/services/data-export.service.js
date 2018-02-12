@@ -2,20 +2,23 @@ module.exports = DataExport;
 
 DataExport.$inject = ['ConfigEndpoint', 'PostEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location'];
 function DataExport(ConfigEndpoint, PostEndpoint, $q, _, $window, $timeout, Notify, $location) {
+
     function prepareExport(query) {
         loadingStatus(true);
         var site = ConfigEndpoint.get({ id: 'site' }).$promise;
         var exportQuery = PostEndpoint.export(query);
         requestExport(site, query, exportQuery);
     }
-function requestExport(site, query, exportQuery) {
+
+    function requestExport(site, query, exportQuery) {
         $q.all([site, exportQuery]).then(function (response) {
             showCSVResults(response, query.format);
         }, function (err) {
             loadingStatus(false, err);
         });
     }
-     function showCSVResults(response, format) {
+
+    function showCSVResults(response, format) {
         // Save export data to file
         var filename = response[0].name + '-' + (new Date()).toISOString().substring(0, 10) + '.' + format,
             data = response[1].data;
@@ -25,7 +28,7 @@ function requestExport(site, query, exportQuery) {
         return filename;
     }
 
-       function handleArrayBuffer(filename, data, type) {
+    function handleArrayBuffer(filename, data, type) {
         /**
          * If we have the HTML5 Api for File available we use that. If not, a Blob
          */
@@ -36,7 +39,9 @@ function requestExport(site, query, exportQuery) {
                 return new Blob([data], { type: type });
             }
         }
+
         var blob = createCSVFile();
+
         if (!_.isUndefined($window.navigator.msSaveBlob)) {
             /** IE specific workaround for "HTML7007"
              * https://stackoverflow.com/questions/20310688/blob-download-not-working-in-ie
@@ -67,10 +72,10 @@ function requestExport(site, query, exportQuery) {
         }
     }
 
-     function loadingStatus(status, err) {
-            if (err) {
+    function loadingStatus(status, err) {
+        if (err) {
             Notify.apiErrors(err);
-                } else {
+        } else {
             if (status === true) {
                 Notify.notifyProgress('<p translate="notify.export.in_progress"></p>');
             } else {
@@ -78,6 +83,7 @@ function requestExport(site, query, exportQuery) {
             }
         }
     }
+
     return {
         prepareExport: prepareExport,
         requestExport: requestExport,
