@@ -65,6 +65,7 @@ angular.module('ushahidi.common', [
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('intercom', require('./controllers/intercom.js'))
 .service('LoadingProgress', require('./services/loadingProgress.service.js'))
+.service('DataExport', require('./services/data-export.service.js'))
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 

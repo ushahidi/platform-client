@@ -6,11 +6,10 @@ describe('post export directive', function () {
         $controller,
         $rootScope,
         isolateScope,
-        PostEndpoint,
-        $q,
         myController,
         PostFilters,
-        Notify;
+        Notify,
+        DataExport;
 
     beforeEach(function () {
         var testApp = makeTestApp();
@@ -18,13 +17,12 @@ describe('post export directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$compile_, _$rootScope_, _PostEndpoint_, _PostFilters_, _$controller_, _Notify_, _$q_) {
+    beforeEach(inject(function (_$compile_, _$rootScope_, _PostFilters_, _$controller_, _Notify_, _DataExport_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
-        PostEndpoint = _PostEndpoint_;
         PostFilters = _PostFilters_;
+        DataExport = _DataExport_;
         $controller = _$controller_;
-        $q = _$q_;
         $scope = _$rootScope_.$new();
         $scope.filters = [];
         element = angular.element('<post-export filters="filters"></post-export>');
@@ -35,27 +33,11 @@ describe('post export directive', function () {
         Notify = _Notify_;
     }));
 
-
-    it ('should have a loading property', function () {
-        expect(isolateScope.loading).toBeDefined();
-        expect(isolateScope.loading).toBeFalsy();
-    });
-
     it ('Should be defined and have a valid filters property in its scope', function () {
         expect(template.html()).toContain('app.export_to_csv');
         expect(isolateScope).not.toBeUndefined();
         expect(isolateScope.filters).not.toBeUndefined();
         expect(isolateScope.filters).toEqual([]);
-    });
-
-    it('Should show confirmation alert when I call exportPostsConfirmation', function () {
-        isolateScope = element.isolateScope();
-        spyOn(isolateScope, 'exportPostsConfirmation').and.callThrough();
-        spyOn(Notify, 'confirm').and.callThrough();
-        var clickEv = new Event('click');
-        template[0].getElementsByTagName('a')[0].dispatchEvent(clickEv);
-        expect(isolateScope.exportPostsConfirmation).toHaveBeenCalled();
-        expect(Notify.confirm).toHaveBeenCalled();
     });
 
     it('should throw an error if the getQuery function is not available', function () {
@@ -92,32 +74,8 @@ describe('post export directive', function () {
 
     it ('Should call prepareExport function when user accepts the Notify confirmation prompt', function () {
         var query = isolateScope.getQuery();
-        spyOn(isolateScope, 'prepareExport').and.callThrough();
-        spyOn(isolateScope, 'requestExport').and.callThrough();
-        spyOn(PostEndpoint, 'export');
-        isolateScope.prepareExport();
-        expect(isolateScope.prepareExport).toHaveBeenCalled();
-        expect(PostEndpoint.export).toHaveBeenCalledWith(query);
-        expect(isolateScope.loading).toBeTruthy();
+        spyOn(DataExport,'prepareExport').and.callThrough();
+        DataExport.prepareExport(query);
+        expect(DataExport.prepareExport).toHaveBeenCalled();
     });
-
-
-    it ('Should call loadingStatus when I call showCSVResults', function () {
-        spyOn(isolateScope, 'loadingStatus').and.callThrough();
-        isolateScope.showCSVResults([{name: 'csvFile'}, {data: 'my fake csv heading'}], 'csv');
-        expect(isolateScope.loading).toBeFalsy();
-        expect(isolateScope.loadingStatus).toHaveBeenCalled();
-    });
-
-    it ('Should return a valid file name when I call showCSVResults', function () {
-        var oldDate = new Date();
-        spyOn(window, 'Date').and.callFake(function () {
-            return oldDate;
-        });
-        spyOn(isolateScope, 'showCSVResults').and.callThrough();
-        var fileName = isolateScope.showCSVResults([{name: 'csvFile'}, {data: 'my fake csv heading'}], 'csv');
-        expect(fileName).toEqual('csvFile' + '-' + (new Date()).toISOString().substring(0, 10) + '.' + 'csv');
-    });
-
-
 });
