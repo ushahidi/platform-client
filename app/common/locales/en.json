@@ -869,6 +869,8 @@
             "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
             "import" : "Import",
             "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "export": "Export data",
+            "export_desc": "Export all of your data as a CSV file or choose custom fields to export",
             "users" : "Users",
             "users_desc" : "Create and manage the people that contribute to your deployment.",
             "roles" : "Roles",
@@ -979,6 +981,16 @@
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
         "which_survey" : "which survey?"
+    },
+    "data_export": {
+        "title": "Export data",
+        "description": "Export all of your data as a CSV or choose specific survey fields you want to export.",
+        "all": "Export all data",
+        "select_fields": "Select fields",
+        "select_fields_title": "Select fields for export...",
+        "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
+        "export_selected": "Export selected fields",
+        "cancel": "Cancel"
     },
     "user": {
         "role_display" : "Role: {{role}}",
