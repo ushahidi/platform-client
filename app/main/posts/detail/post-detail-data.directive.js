@@ -62,7 +62,7 @@ function PostDetailDataController(
         activate();
     });
     /* need to check for embed here to set the correct class
-    * if coming from map to detail-view in embed */
+    * if coming from map to detail-view in embed, TODO: should go to a service! */
     var isEmbed = ($window.self !== $window.top) ? true : false;
     isEmbed ? $rootScope.setLayout('layout-d layout-embed') : $rootScope.setLayout('layout-d');
 
