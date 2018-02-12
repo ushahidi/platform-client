@@ -62,7 +62,7 @@ function AddCategoryController($rootScope, $scope, TagEndpoint, FormAttributeEnd
                         $scope.categoryName = '';
                     });
                 Notify.notify('category added', {response: response});
-                $scope.$parent.available.push.apply($scope.$parent.available, response);
+                $scope.available.push.apply($scope.available, response);
             }
 
         }, function (errorResponse) {

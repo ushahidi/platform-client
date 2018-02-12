@@ -173,7 +173,7 @@ function PostEditorController(
                     attr.options = _.chain(attr.options)
                         .map(function (category) {
                             const ret = _.findWhere(categories, {id: category});
-                            if (ret.children.length > 0) {
+                            if (ret && ret.children.length > 0) {
                                 ret.children = _.chain(ret.children)
                                     .map(function (child) {
                                         return _.findWhere(categories, {id: child.id});

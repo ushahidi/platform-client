@@ -7,7 +7,8 @@ function CategorySelectorDirective() {
         restrict: 'E',
         scope: {
             selected: '=',
-            form: '='
+            form: '=',
+            available: '='
         },
         controller: CategorySelectorController,
         template: require('./category-selector.html')
@@ -31,8 +32,7 @@ function CategorySelectorController($scope, _) {
         }
         $scope.categories = [];
 
-        $scope.categories = $scope.$parent.available;
-
+        $scope.categories = $scope.available;
         // making sure no children are selected without their parents
         $scope.changeCategories();
     }
@@ -43,10 +43,10 @@ function CategorySelectorController($scope, _) {
             $scope.form.$setDirty();
         }
 
-        if ($scope.$parent.available.length === $scope.selected.length) {
+        if ($scope.available.length === $scope.selected.length) {
             $scope.selected.splice(0, $scope.selected.length);
         } else {
-            _.each($scope.$parent.available, function (category) {
+            _.each($scope.available, function (category) {
                 if (!_.contains($scope.selected, category.id)) {
                     $scope.selected.push(category.id);
                 }
