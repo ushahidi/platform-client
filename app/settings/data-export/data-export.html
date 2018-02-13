@@ -25,14 +25,15 @@
                     <h2 class="form-sheet-title" translate>
                     data_export.title
                     </h2>
-                    <p translate>data_export.description</p>
+                    <p translate ng-show="!showProgress">data_export.description</p>
+                    <p translate ng-show="showProgress">data_export.export_progress</p>
                 </div>
                 <div class="form-field">
-                    <button class="button-alpha" translate ng-click="exportAll()">data_export.all</button>
-                    <button class="button"  ng-click="selectFields()" translate>data_export.select_fields</button>
+                    <button class="button-alpha" translate ng-click="exportAll()" ng-disabled="showProgress">data_export.all</button>
+                    <button class="button"  ng-click="selectFields()" translate ng-disabled="showProgress">data_export.select_fields</button>
                 </div>
             </div>
-        <div class="form-sheet" ng-show="showFields">
+        <div class="form-sheet" ng-show="showFields && !showProgress">
             <div class="form-sheet-summary">
                 <h2 class="form-sheet-title" translate>
                 data_export.select_fields_title
@@ -41,10 +42,23 @@
             </div>
             <div class="form-field" ng-repeat="form in forms">
                 <label>{{form.name}}</label>
+                <div class="form-field checkbox">
+                    <label>
+                        <input
+                            type="checkbox"
+                            ng-checked="selectedFields[form.id].length === form.attributes.length"
+                            ng-click="selectAll(form)"
+                        >
+                        <em><span translate="category.select_all"></span></em>
+                    </label>
+    </div>
                 <div class="form-field checkbox" ng-repeat="attribute in form.attributes">
                   <label>
                       <input
                           type="checkbox"
+                          checklist-model="selectedFields[form.id]"
+                          checklist-value="attribute.id"
+                          value="attribute.id"
                       >
                       {{attribute.label}}
                   </label>
