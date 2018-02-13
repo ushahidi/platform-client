@@ -1,13 +1,13 @@
 module.exports = DataExport;
 
 
-DataExport.$inject = ['$rootScope', 'ConfigEndpoint', 'PostEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location'];
-function DataExport($rootScope, ConfigEndpoint, PostEndpoint, $q, _, $window, $timeout, Notify, $location) {
+DataExport.$inject = ['$rootScope', 'ConfigEndpoint', 'ExportJobEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location'];
+function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $window, $timeout, Notify, $location) {
 
     function prepareExport(query) {
         loadingStatus(true);
         var site = ConfigEndpoint.get({ id: 'site' }).$promise;
-        var exportQuery = PostEndpoint.export(query);
+        var exportQuery = ExportJobEndpoint.save(query);
         requestExport(site, query, exportQuery);
     }
 

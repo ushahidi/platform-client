@@ -48,6 +48,7 @@ angular.module('ushahidi.common', [
 .service('ContactEndpoint', require('./services/endpoints/contact.js'))
 .service('NotificationEndpoint', require('./services/endpoints/notification.js'))
 .service('TermsOfServiceEndpoint', require('./services/endpoints/terms-of-service-endpoint.js'))
+.service('ExportJobEndpoint', require('./services/endpoints/export-jobs.js'))
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
