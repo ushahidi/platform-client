@@ -74,7 +74,7 @@ describe('post export directive', function () {
 
     it ('Should call prepareExport function when user accepts the Notify confirmation prompt', function () {
         var query = isolateScope.getQuery();
-        spyOn(DataExport,'prepareExport').and.callThrough();
+        spyOn(DataExport, 'prepareExport').and.callThrough();
         DataExport.prepareExport(query);
         expect(DataExport.prepareExport).toHaveBeenCalled();
     });

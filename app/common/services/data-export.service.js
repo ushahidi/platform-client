@@ -1,13 +1,16 @@
 module.exports = DataExport;
 
+
 DataExport.$inject = ['$rootScope', 'ConfigEndpoint', 'PostEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location'];
 function DataExport($rootScope, ConfigEndpoint, PostEndpoint, $q, _, $window, $timeout, Notify, $location) {
+
     function prepareExport(query) {
         loadingStatus(true);
         var site = ConfigEndpoint.get({ id: 'site' }).$promise;
         var exportQuery = PostEndpoint.export(query);
         requestExport(site, query, exportQuery);
     }
+
     function requestExport(site, query, exportQuery) {
         $q.all([site, exportQuery]).then(function (response) {
 
@@ -16,6 +19,7 @@ function DataExport($rootScope, ConfigEndpoint, PostEndpoint, $q, _, $window, $t
             loadingStatus(false, err);
         });
     }
+
     function showCSVResults(response, format) {
         // Save export data to file
         var filename = response[0].name + '-' + (new Date()).toISOString().substring(0, 10) + '.' + format,
@@ -38,7 +42,9 @@ function DataExport($rootScope, ConfigEndpoint, PostEndpoint, $q, _, $window, $t
                 return new Blob([data], { type: type });
             }
         }
+
         var blob = createCSVFile();
+
         if (!_.isUndefined($window.navigator.msSaveBlob)) {
             /** IE specific workaround for "HTML7007"
              * https://stackoverflow.com/questions/20310688/blob-download-not-working-in-ie
