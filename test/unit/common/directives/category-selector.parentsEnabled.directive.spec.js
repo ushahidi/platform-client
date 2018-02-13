@@ -1,4 +1,4 @@
-describe('category-selector directive with enableParents=false', function () {
+describe('category-selector directive with enableParents=true', function () {
     var $rootScope,
         $scope,
         $compile,
@@ -36,7 +36,7 @@ describe('category-selector directive with enableParents=false', function () {
             }
         };
         element = $compile(
-            angular.element('<category-selector enable-parents="false" available="available" selected="selected" form="form"></category-selector>')
+            angular.element('<category-selector enable-parents="true" available="available" selected="selected" form="form"></category-selector>')
         )($scope);
         $scope.$digest();
         isolateScope = element.isolateScope();
@@ -63,14 +63,16 @@ describe('category-selector directive with enableParents=false', function () {
         $scope.$digest();
         isolateScope.changeCategories();
         expect(isolateScope.selectedParents.length).toBe(1);
+        expect(isolateScope.selected.length).toBe(2);
         // the parent should be disabled
-        expect(isolateScope.disabledCategories[1]).toBe(true);
+        expect(isolateScope.disabledCategories[1]).toBe(false);
     });
 
     it ('should unselect the selectedParent in scope.selectedParents, if I unselect the child and call changeCategories', function () {
         isolateScope.selected = [];
         $scope.$digest();
         isolateScope.changeCategories();
+        expect(isolateScope.selected.length).toBe(0);
         expect(isolateScope.selectedParents.length).toBe(0);
     });
 
