@@ -106,7 +106,7 @@ describe('setting users controller', function () {
         spyOn($scope, 'getUsersForPagination');
         $scope.itemsPerPageChanged(5);
 
-        expect($scope.itemsPerPage).toEqual(5);
+        expect($scope.pagination.itemsPerPage).toEqual(5);
         expect($scope.getUsersForPagination).toHaveBeenCalled();
     });
 
