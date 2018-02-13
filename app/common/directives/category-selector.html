@@ -12,7 +12,7 @@
     <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
         <label>
             <input
-                ng-show="category.children.length === 0"
+                ng-show="category.children.length === 0 || enableParents === true"
                 type="checkbox"
                 checklist-value="category.id"
                 ng-disabled="disabledCategories[category.id]"
@@ -21,7 +21,7 @@
                 checklist-change="changeCategories()"
             >
             <input
-                    ng-show="category.children.length > 0"
+                    ng-show="category.children.length > 0 && enableParents === false"
                     type="checkbox"
                     checklist-value="category.id"
                     ng-disabled="true"

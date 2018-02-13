@@ -7,6 +7,7 @@ function CategorySelectorDirective() {
         restrict: 'E',
         scope: {
             selected: '=',
+            enableParents: '=',
             form: '=',
             available: '='
         },
@@ -93,10 +94,15 @@ function CategorySelectorController($scope, _) {
 
             // If children are selected, add to disabled categories
             if (selectedChildren.length > 0) {
-                $scope.disabledCategories[category.id] = true;
+                if ($scope.enableParents === false) {
+                    $scope.disabledCategories[category.id] = true;
+                }
                 // ... and ensure this category is selected
                 if (!_.contains($scope.selectedParents, category.id)) {
                     $scope.selectedParents.push.apply($scope.selectedParents, [category.id]);
+                }
+                if (!_.contains($scope.selected, category.id) && $scope.enableParents === true) {
+                    $scope.selected.push.apply($scope.selected, [category.id]);
                 }
             } else {
                 var parentIndex = _.findIndex($scope.selectedParents, function (parentId) {
