@@ -207,16 +207,16 @@
       </div>
     <!-- type: categories -->
     <div ng-switch-when="tags">
-        <category-selector
-            available="attribute.options"
-            selected="post.values[attribute.key]",
-            form="form"
-        ></category-selector>
-        <add-category
-            form-id="post.form.id"
-            attribute="attribute"
-            post-value="post.values[attribute.key]"
-        ></add-category>
+        <post-category-editor
+                available="attribute.options"
+                selected="post.values[attribute.key]",
+                form="form"
+                form-id="post.form.id"
+                attribute="attribute"
+                post-value="post.values[attribute.key]"
+        >
+        </post-category-editor>
+
     </div>
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">

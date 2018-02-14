@@ -5,7 +5,8 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback([{
                         tag: 'test tag',
-                        id: 1
+                        id: 1,
+                        children: []
                     }]);
                 }
             }};
@@ -16,10 +17,12 @@ module.exports = [function () {
                     successCallback([{
                         tag: 'test tag',
                         id: 1,
-                        parent_id: null
+                        parent_id: null,
+                        children: []
                     },{
                         tag: 'test child',
                         id: 2,
+                        children: [],
                         parent_id: 1
                     }]);
                 }
@@ -30,7 +33,8 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     successCallback({
                         tag: 'test tag',
-                        id: 1
+                        id: 1,
+                        children: []
                     });
                 }
             }};
