@@ -11,7 +11,7 @@
         "collection": "Collection",
         "collections" : "Collections",
         "create_collection" : "Create collection",
-        "export_to_csv" : "Export to CSV",
+        "export_to_csv" : "Export filtered data",
         "create_new" : "Create new",
         "create_new_survey" : "Create new survey",
         "created_by" : "Created by {{author}}",

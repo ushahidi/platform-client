@@ -220,6 +220,23 @@ function SurveyEditorController(
         // Get available categories.
         TagEndpoint.queryFresh().$promise.then(function (tags) {
             $scope.availableCategories = tags;
+            // adding category-objects attribute-options
+            $scope.availableCategories = _.chain($scope.availableCategories)
+                .map(function (category) {
+                    const ret = _.findWhere($scope.availableCategories, {id: category.id});
+                    if (ret && ret.children.length > 0) {
+                        ret.children = _.chain(ret.children)
+                            .map(function (child) {
+                                return _.findWhere($scope.availableCategories, {id: child.id});
+                            })
+                            .filter()
+                            .value();
+                    }
+                    return ret;
+                })
+                .filter()
+                .value();
+
         });
     }
 
