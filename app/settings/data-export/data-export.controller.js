@@ -62,8 +62,7 @@ function (
         });
     }
     function exportSelected() {
-        // todo, send the selected forms and attributes, question: in what format?
-        DataExport.prepareExport({format: 'csv'});
+        DataExport.prepareExport({attributes: $scope.selectedFields, format: 'csv'});
     }
 
     function selectAll(form) {
