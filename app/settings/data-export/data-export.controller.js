@@ -8,6 +8,7 @@ module.exports = [
     'FormAttributeEndpoint',
     '$q',
     '_',
+    'LoadingProgress',
 function (
     $scope,
     $rootScope,
@@ -17,7 +18,8 @@ function (
     FormEndpoint,
     FormAttributeEndpoint,
     $q,
-    _
+    _,
+    LoadingProgress
 ) {
     $scope.exportAll = exportAll;
     $scope.showFields = false;
@@ -26,6 +28,11 @@ function (
     $scope.selectedFields = [];
     $scope.exportSelected = exportSelected;
     $scope.selectAll = selectAll;
+    $scope.showForm = showForm;
+    $scope.displayedForms = [];
+    $scope.getForms = getForms;
+    $scope.isLoading = LoadingProgress.getLoadingState;
+
     // hiding export-in-progress screen when export is complete
     $rootScope.$on('event:data_export:complete', function () {
         $scope.showProgress = false;
@@ -52,22 +59,10 @@ function (
     function getForms() {
         FormEndpoint.queryFresh().$promise.then(function (response) {
             $scope.forms = response;
-            var attributeQueries = [];
-            _.each($scope.forms, function (form) {
-                attributeQueries.push(FormAttributeEndpoint.query({formId: form.id}));
-            });
-            $q.all(attributeQueries).then(function (results) {
-                _.each(results, function (result, index) {
-                    /* TODO: I am not sure if we can do this, can I trust the results come in the same order
-                    so I can use the result index with the $scope.form[index]? Or do
-                    we need to go through form-stage-id? :scream: */
-                    $scope.forms[index].attributes = result;
-                });
-            });
         });
     }
     function exportSelected() {
-        // todo, send the selected forms and attributes
+        // todo, send the selected forms and attributes, question: in what format?
         DataExport.prepareExport({format: 'csv'});
     }
 
@@ -80,6 +75,26 @@ function (
                 if (!_.contains($scope.selectedFields[form.id], attribute.id)) {
                     $scope.selectedFields[form.id].push(attribute.id);
                 }
+            });
+        }
+    }
+    function showForm(form) {
+        // showing and hiding fields
+        if (_.contains($scope.displayedForms, form.id)) {
+            $scope.displayedForms = _.filter($scope.displayedForms, function (id) {
+                return form.id !== id;
+            });
+        } else {
+            $scope.displayedForms.push(form.id);
+        }
+        // fetching attributes if they are not already there
+        if (!form.attributes) {
+            FormAttributeEndpoint.queryFresh({formId: form.id}).$promise.then(function (response) {
+                _.each($scope.forms, function (obj) {
+                    if (form.id === obj.id) {
+                        obj.attributes = response;
+                    }
+                });
             });
         }
     }
