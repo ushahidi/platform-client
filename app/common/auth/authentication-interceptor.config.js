@@ -80,6 +80,8 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
     function request(config) {
         var deferred = $q.defer();
 
+        config.ignorable = shouldIgnoreAuthError(config.url);
+
         if (_.has(config, 'params') && config.params.ignore403) {
             delete config.params.ignore403;
             config.ignorable = true;
@@ -90,7 +92,6 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             return deferred.promise;
         }
 
-        config.ignorable = shouldIgnoreAuthError(config.url);
         var accessToken = Session.getSessionDataEntry('accessToken');
         var accessTokenExpires = Session.getSessionDataEntry('accessTokenExpires');
         var now = Math.floor(Date.now() / 1000);
