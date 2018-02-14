@@ -85,16 +85,12 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             config.ignorable = true;
         }
 
-        if (config.url.indexOf('oauth/token') !== -1) {
-            config.ignorable = true;
-        }
-
-
         if (config.url.indexOf(CONST.API_URL) === -1) {
             deferred.resolve(config);
             return deferred.promise;
         }
 
+        config.ignorable = shouldIgnoreAuthError(config.url);
         var accessToken = Session.getSessionDataEntry('accessToken');
         var accessTokenExpires = Session.getSessionDataEntry('accessTokenExpires');
         var now = Math.floor(Date.now() / 1000);
@@ -106,20 +102,12 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
             config.headers.Authorization = 'Bearer ' + accessToken;
 
         }
-        // else {
-        //     // We are going to attempt to send the request without
-        //     // any access token in it.
-        //     // If the operation fails because authentication/
-        //     // authorization is needed, we will handle in
-        //     // responseError() below
-        // }
         deferred.resolve(config);
         return deferred.promise;
     }
 
     function responseError(rejection) {
         var deferred = $q.defer();
-
         // When a request is rejected there are
         // a few possible reasons. If its a 401
         // either our token expired, or we didn't have one.
@@ -165,10 +153,25 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
                 $rootScope.$broadcast('event:forbidden');
             }
             deferred.reject(rejection);
-        // For anything else, just forward the rejection
+            // For anything else, just forward the rejection
         } else {
             deferred.reject(rejection);
         }
         return deferred.promise;
+    }
+
+    /**
+     * Returns true if url is ignorable, false if not
+     * @param requestUrl
+     */
+    function shouldIgnoreAuthError(requestUrl) {
+        var i = 0;
+        var matchers = ['/oauth/token(/|$)', '/users(/|$)([0-9]+|$)', '/roles(/|$)'];
+        var isIgnorable = false;
+        while (isIgnorable === false && i < matchers.length) {
+            isIgnorable = !!requestUrl.match(matchers[i]);
+            i++;
+        }
+        return isIgnorable;
     }
 }
