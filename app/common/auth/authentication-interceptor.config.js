@@ -80,12 +80,7 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
     function request(config) {
         var deferred = $q.defer();
 
-        config.ignorable = shouldIgnoreAuthError(config.url);
-
-        if (_.has(config, 'params') && config.params.ignore403) {
-            delete config.params.ignore403;
-            config.ignorable = true;
-        }
+        config.ignorable = shouldIgnoreAuthError(config);
 
         if (config.url.indexOf(CONST.API_URL) === -1) {
             deferred.resolve(config);
@@ -163,14 +158,18 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
 
     /**
      * Returns true if url is ignorable, false if not
-     * @param requestUrl
+     * @param config
      */
-    function shouldIgnoreAuthError(requestUrl) {
+    function shouldIgnoreAuthError(config) {
+        var isIgnorable = false;
+        if (_.has(config, 'params') && config.params.ignore403) {
+            delete config.params.ignore403;
+            isIgnorable = true;
+        }
         var i = 0;
         var matchers = ['/oauth/token(/|$)', '/users(/|$)([0-9]+|$)', '/roles(/|$)'];
-        var isIgnorable = false;
         while (isIgnorable === false && i < matchers.length) {
-            isIgnorable = !!requestUrl.match(matchers[i]);
+            isIgnorable = !!config.url.match(matchers[i]);
             i++;
         }
         return isIgnorable;
