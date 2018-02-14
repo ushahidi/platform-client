@@ -8,12 +8,19 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
         loadingStatus(true);
         var site = ConfigEndpoint.get({ id: 'site' }).$promise;
         var exportQuery = ExportJobEndpoint.save(query);
+
+        /**
+        TODOS:
+        1. Add polling to the api to check if the export-job is done,
+        i.e ExportJobEndpoint.get({id}) or similar, then notify the user
+        that their file is ready. 2. Keep in mind, below code will probably be changed depending on in what way the exported data is delivered
+        */
+
         requestExport(site, query, exportQuery);
     }
 
     function requestExport(site, query, exportQuery) {
         $q.all([site, exportQuery]).then(function (response) {
-
             showCSVResults(response, query.format);
         }, function (err) {
             loadingStatus(false, err);
