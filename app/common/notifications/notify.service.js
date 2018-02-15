@@ -22,9 +22,9 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmLeave: confirmLeave
     };
 
-    function notify(message, translateValues) {
+    function notify(message, translateValues, icon, iconClass, dismiss) {
         function showSlider(message) {
-            SliderService.openTemplate('<p>' + message + '</p>');
+            SliderService.openTemplate(message, icon, iconClass, null, false, dismiss);
         }
 
         $translate(message, translateValues).then(showSlider, showSlider);
