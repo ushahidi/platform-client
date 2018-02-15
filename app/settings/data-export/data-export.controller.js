@@ -78,7 +78,12 @@ function (
     }
 
     function exportSelected() {
-        DataExport.prepareExport({attributes: $scope.selectedFields, format: 'csv'});
+        var attributes = _.chain($scope.selectedFields)
+            .flatten() // concatinating attributes into one array
+            .compact() // removing nulls
+            .value(); // output
+
+        DataExport.prepareExport({attributes: attributes, format: 'csv'});
     }
 
     function selectAll(form) {
