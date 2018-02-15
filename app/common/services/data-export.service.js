@@ -87,7 +87,9 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
             Notify.apiErrors(err);
         } else {
             if (status === true) {
-                Notify.notifyProgress('<p translate="notify.export.in_progress"></p>');
+                //TODO: Need to add cancel-job-event on button!
+                var message = '<p translate="notify.export.in_progress"></p><div class="buttons-export"><button class="button">Got it</button><button class="button-destructive">Cancel export</button>';
+                Notify.notifyProgress(message, null, 'ellipses', 'circle-icon confirmation');
             } else {
                 Notify.notify('<h3 translate="notify.export.complete">Your CSV export is complete.</h3><p translate="notify.export.complete_data_found_message">The data from your export can be found in your browser\'s downloads<p>');
             }
