@@ -83,7 +83,13 @@ function (
             .compact() // removing nulls
             .value(); // output
 
-        DataExport.prepareExport({attributes: attributes, format: 'csv'});
+        if (attributes.length === 0) {
+            // displaying notification if no fields are selected
+            var message =  '<p>Uh oh... you need to select some fields to export first.</p><div class="buttons-export"><button class="button">Got it</button></div>';
+            Notify.notify(message, null, 'warning', 'error', false);
+        } else {
+            DataExport.prepareExport({attributes: attributes, format: 'csv'});
+        }
     }
 
     function selectAll(form) {
