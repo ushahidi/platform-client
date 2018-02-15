@@ -90,7 +90,7 @@ describe('Notify', function () {
         });
 
         it('calls $rootScope.$on with the combined alert messages', function () {
-            expect(mockSliderService.openTemplate).toHaveBeenCalledWith('<p>Test message</p>');
+            expect(mockSliderService.openTemplate).toHaveBeenCalledWith('Test message', undefined, undefined, null, false, undefined);
         });
     });
 
