@@ -47,8 +47,8 @@
             </div>
             <div class="form-field">
             <div ng-repeat="form in forms">
-                <label ng-click="showForm(form)">{{form.name}}</label>
-                <div class="form-field checkbox" ng-show="form.attributes && displayedForms.indexOf(form.id) > -1">
+                <label>{{form.name}}</label>
+                <div class="form-field checkbox" ng-show="form.attributes">
                     <label>
                         <input
                             type="checkbox"
@@ -58,7 +58,7 @@
                         <em><span translate="category.select_all"></span></em>
                     </label>
                 </div>
-                <div class="form-field checkbox" ng-repeat="attribute in form.attributes" ng-show="displayedForms.indexOf(form.id) > -1">
+                <div class="form-field checkbox" ng-repeat="attribute in form.attributes">
                   <label>
                       <input
                           type="checkbox"

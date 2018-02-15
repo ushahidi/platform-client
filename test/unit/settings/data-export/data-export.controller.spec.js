@@ -75,6 +75,27 @@ describe('data-export-controller', function () {
             expect(FormEndpoint.queryFresh).toHaveBeenCalled();
             expect($scope.forms.length).toEqual(2);
         });
+        it('should call attachAttributes when done fetching forms', function () {
+            spyOn($scope, 'attachAttributes');
+            $scope.getForms();
+            expect($scope.attachAttributes).toHaveBeenCalled();
+        });
+    });
+    describe('exportSelected-function', function () {
+        it('should call prepareExport with the selectedFields', function () {
+            $scope.selectedFields = [1, 4, 7, 8, 10];
+            spyOn(DataExport, 'prepareExport');
+            $scope.exportSelected();
+            expect(DataExport.prepareExport).toHaveBeenCalledWith({attributes: $scope.selectedFields, format: 'csv'});
+        });
+    });
+    describe('attachAttributes-function', function () {
+        it('should fetch attributes-endpoint', function () {
+            spyOn(FormAttributeEndpoint, 'query');
+            $scope.forms = [{id: 1}, {id: 2}, {id: 3}];
+            $scope.attachAttributes();
+            expect(FormAttributeEndpoint.query.calls.count()).toEqual(3);
+        });
     });
     describe('selectAll-function', function () {
         it('should add form to selectedFields if its not there', function () {
