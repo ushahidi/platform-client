@@ -84,9 +84,9 @@ describe('data-export-controller', function () {
     describe('exportSelected-function', function () {
         it('should notify user if no fields are selected', function () {
             $scope.selectedFields = [];
-            spyOn(Notify, 'notify');
+            spyOn(Notify, 'exportNotifications');
             $scope.exportSelected();
-            expect(Notify.notify).toHaveBeenCalled();
+            expect(Notify.exportNotifications).toHaveBeenCalled();
         });
         it('should call prepareExport with the selectedFields', function () {
             $scope.selectedFields = [1, 4, 7, 8, 10];

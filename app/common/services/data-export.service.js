@@ -26,6 +26,10 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
             loadingStatus(false, err);
         });
     }
+    function cancelExport(jobId) {
+        //TODO: Add cancel-job
+        console.log('canceling job');
+    }
 
     function showCSVResults(response, format) {
         // Save export data to file
@@ -83,19 +87,30 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
     }
 
     function loadingStatus(status, err) {
-        var message;
+        var message, // holds the message to the user
+            action, // holds info for the action-button
+            icon, // holds info about icon to use in the notification
+            loading; // show loading-slider or not
+
         if (err) {
             Notify.apiErrors(err);
         } else {
             if (status === true) {
-                //TODO: Need to add cancel-job-event on button!
-                message = '<p translate="notify.export.in_progress"></p><div class="buttons-export"><button class="button">Got it</button><button class="button-destructive">Cancel export</button>';
-                Notify.notifyProgress(message, null, 'ellipses', 'circle-icon confirmation');
+                message = '<p translate="notify.export.in_progress">';
+                action = {
+                    callback: cancelExport,
+                    text: 'notify.export.cancel_export',
+                    actionClass: 'button-destructive'
+                };
+                icon = 'ellipses';
+                loading = true;
             } else {
-                // TODO: Need to close when clickin on 'Got it'-button
-                message = '<p translate="notify.export.complete"></p><div class="buttons-export"><button class="button">Got it</button></div>';
-                Notify.notify(message, null, 'thumb-up', 'cirle-icon confirmation', false);
+                message = '<p translate="notify.export.complete"></p>';
+                icon = 'thumb-up';
+                loading = false;
             }
+
+            Notify.exportNotifications(message, null, loading, icon, 'circle-icon confirmation', action);
         }
     }
 

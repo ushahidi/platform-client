@@ -991,7 +991,8 @@
         "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
         "export_selected": "Export selected fields",
         "cancel": "Cancel",
-        "export_progress": "Export in progress..."
+        "export_progress": "Export in progress...",
+        "no_fields": "Uh oh... you need to select some fields to export first."
     },
     "user": {
         "role_display" : "Role: {{role}}",

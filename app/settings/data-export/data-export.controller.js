@@ -85,8 +85,8 @@ function (
 
         if (attributes.length === 0) {
             // displaying notification if no fields are selected
-            var message =  '<p>Uh oh... you need to select some fields to export first.</p><div class="buttons-export"><button class="button">Got it</button></div>';
-            Notify.notify(message, null, 'warning', 'error', false);
+            var message =  '<p translate="data_export.no_fields"></p>';
+            Notify.exportNotifications(message, null, false, 'warning', 'error');
         } else {
             DataExport.prepareExport({attributes: attributes, format: 'csv'});
         }
