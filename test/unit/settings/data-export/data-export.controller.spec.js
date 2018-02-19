@@ -97,7 +97,7 @@ describe('data-export-controller', function () {
     });
     describe('attachAttributes-function', function () {
         it('should fetch attributes-endpoint', function () {
-            spyOn(FormAttributeEndpoint, 'query');
+            spyOn(FormAttributeEndpoint, 'query').and.callThrough();
             $scope.forms = [{id: 1}, {id: 2}, {id: 3}];
             $scope.attachAttributes();
             expect(FormAttributeEndpoint.query.calls.count()).toEqual(3);
