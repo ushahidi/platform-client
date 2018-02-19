@@ -91,7 +91,7 @@ function CategorySelectorController($scope, _) {
                 .pluck('id')
                 .intersection($scope.selected)
                 .value();
-
+            var isParentWithChildren = !category.parent_id && category.children.length > 0;
             // If children are selected, add to disabled categories
             if (selectedChildren.length > 0) {
                 $scope.disabledCategories[category.id] = true;
@@ -116,8 +116,12 @@ function CategorySelectorController($scope, _) {
                     // or, if no children are selected
                     // remove from disabled categories
                 }
+                if (isParentWithChildren) {
+                    $scope.disabledCategories[category.id] = true;
+                } else {
+                    $scope.disabledCategories[category.id] = false;
+                }
 
-                $scope.disabledCategories[category.id] = false;
             }
         });
 
