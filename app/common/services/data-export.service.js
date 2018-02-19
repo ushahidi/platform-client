@@ -26,6 +26,10 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
             loadingStatus(false, err);
         });
     }
+    function cancelExport(jobId) {
+        //TODO: Add cancel-job
+        console.log('canceling job');
+    }
 
     function showCSVResults(response, format) {
         // Save export data to file
@@ -83,14 +87,30 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
     }
 
     function loadingStatus(status, err) {
+        var message, // holds the message to the user
+            action, // holds info for the action-button
+            icon, // holds info about icon to use in the notification
+            loading; // show loading-slider or not
+
         if (err) {
             Notify.apiErrors(err);
         } else {
             if (status === true) {
-                Notify.notifyProgress('<p translate="notify.export.in_progress"></p>');
+                message = '<p translate="notify.export.in_progress">';
+                action = {
+                    callback: cancelExport,
+                    text: 'notify.export.cancel_export',
+                    actionClass: 'button-destructive'
+                };
+                icon = 'ellipses';
+                loading = true;
             } else {
-                Notify.notify('<h3 translate="notify.export.complete">Your CSV export is complete.</h3><p translate="notify.export.complete_data_found_message">The data from your export can be found in your browser\'s downloads<p>');
+                message = '<p translate="notify.export.complete"></p>';
+                icon = 'thumb-up';
+                loading = false;
             }
+
+            Notify.exportNotifications(message, null, loading, icon, 'circle-icon confirmation', action);
         }
     }
 

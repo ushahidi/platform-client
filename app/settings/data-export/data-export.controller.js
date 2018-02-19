@@ -83,7 +83,13 @@ function (
             .compact() // removing nulls
             .value(); // output
 
-        DataExport.prepareExport({attributes: attributes, format: 'csv'});
+        if (attributes.length === 0) {
+            // displaying notification if no fields are selected
+            var message =  '<p translate="data_export.no_fields"></p>';
+            Notify.exportNotifications(message, null, false, 'warning', 'error');
+        } else {
+            DataExport.prepareExport({attributes: attributes, format: 'csv'});
+        }
     }
 
     function selectAll(form) {
