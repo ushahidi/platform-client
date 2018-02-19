@@ -48,7 +48,7 @@ function (
     $scope.$emit('event:mode:change', 'settings');
 
     function exportAll() {
-        DataExport.startExport({entity_type: 'csv'});
+        DataExport.startExport({entity_type: 'post'});
         $scope.showProgress = true;
     }
 
@@ -81,7 +81,7 @@ function (
             var message =  '<p translate="data_export.no_fields"></p>';
             Notify.exportNotifications(message, null, false, 'warning', 'error');
         } else {
-            DataExport.startExport({attributes: attributes, entity_type: 'csv'});
+            DataExport.startExport({attributes: attributes, entity_type: 'post'});
         }
     }
 

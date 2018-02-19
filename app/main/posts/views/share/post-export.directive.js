@@ -45,11 +45,12 @@ function PostExportController(
         if (!$scope.filters || _.isEmpty($scope.filters)) {
             $scope.filters = PostFilters.getDefaults();
         }
-        var format = 'csv';  //@todo handle more formats
         // Prepare filters for export
-        var query = angular.extend({}, PostFilters.getQueryParams($scope.filters), {
-            entity_type: format
-        });
+        var entity_type = 'post';
+        var query = {
+            filters: PostFilters.getQueryParams($scope.filters),
+            entity_type: entity_type
+        };
         return query;
     }
 }

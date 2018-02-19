@@ -3,10 +3,9 @@ module.exports = DataExport;
 
 DataExport.$inject = ['$rootScope', 'ConfigEndpoint', 'ExportJobEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location', '$interval'];
 function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $window, $timeout, Notify, $location, $interval) {
-
     function startExport(query) {
-        loadingStatus(true);
-        ExportJobEndpoint.save(query).$promise(function (job) {
+        ExportJobEndpoint.save(query).$promise.then(function (job) {
+            loadingStatus(true, null, job.id);
             startPolling(job);
         }, function (err) {
             loadingStatus(false, err);
@@ -15,7 +14,7 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
 
     function startPolling(job) {
         var polling = $interval(function () {
-            ExportJobEndpoint.getFresh({id: 8}).$promise.then(function (response) {
+            ExportJobEndpoint.getFresh({id: job.id}).$promise.then(function (response) {
                 if (response.status === 'done') {
                     // TODO: Handle url + update user
                     $interval.cancel(polling);
@@ -30,7 +29,6 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
     }
 
     function cancelExport(jobId) {
-        // TODO: Notify user that job was canceled
         ExportJobEndpoint.delete({id: jobId});
     }
 
@@ -90,7 +88,7 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
         }
     }
 
-    function loadingStatus(status, err) {
+    function loadingStatus(status, err, jobId) {
         var message, // holds the message to the user
             action, // holds info for the action-button
             icon, // holds info about icon to use in the notification
@@ -104,7 +102,8 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
                 action = {
                     callback: cancelExport,
                     text: 'notify.export.cancel_export',
-                    actionClass: 'button-destructive'
+                    actionClass: 'button-destructive',
+                    jobId: jobId
                 };
                 icon = 'ellipses';
                 loading = true;
