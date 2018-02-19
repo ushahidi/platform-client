@@ -1,36 +1,40 @@
 module.exports = DataExport;
 
 
-DataExport.$inject = ['$rootScope', 'ConfigEndpoint', 'ExportJobEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location'];
-function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $window, $timeout, Notify, $location) {
+DataExport.$inject = ['$rootScope', 'ConfigEndpoint', 'ExportJobEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location', '$interval'];
+function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $window, $timeout, Notify, $location, $interval) {
 
-    function prepareExport(query) {
+    function startExport(query) {
         loadingStatus(true);
-        var site = ConfigEndpoint.get({ id: 'site' }).$promise;
-        var exportQuery = ExportJobEndpoint.save(query);
-
-        /**
-        TODOS:
-        1. Add polling to the api to check if the export-job is done,
-        i.e ExportJobEndpoint.get({id}) or similar, then notify the user
-        that their file is ready. 2. Keep in mind, below code will probably be changed depending on in what way the exported data is delivered
-        */
-
-        requestExport(site, query, exportQuery);
-    }
-
-    function requestExport(site, query, exportQuery) {
-        $q.all([site, exportQuery]).then(function (response) {
-            showCSVResults(response, query.format);
+        ExportJobEndpoint.save(query).$promise(function (job) {
+            startPolling(job);
         }, function (err) {
             loadingStatus(false, err);
         });
     }
-    function cancelExport(jobId) {
-        //TODO: Add cancel-job
-        console.log('canceling job');
+
+    function startPolling(job) {
+        var polling = $interval(function () {
+            ExportJobEndpoint.getFresh({id: 8}).$promise.then(function (response) {
+                if (response.status === 'done') {
+                    // TODO: Handle url + update user
+                    $interval.cancel(polling);
+                } else if (response.status === 'err') {
+                    // TODO: Update user
+                    $interval.cancel(polling);
+                }
+            });
+            // TODO: Do we need a timeout? How many times should we poll before we stop?
+        }, 30000);
+
     }
 
+    function cancelExport(jobId) {
+        // TODO: Notify user that job was canceled
+        ExportJobEndpoint.delete({id: jobId});
+    }
+
+    // TODO: What of below code do we need?
     function showCSVResults(response, format) {
         // Save export data to file
         var filename = response[0].name + '-' + (new Date()).toISOString().substring(0, 10) + '.' + format,
@@ -62,7 +66,7 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
             **/
             $window.navigator.msSaveBlob(blob, filename);
         } else {
-            var URL = $window.URL || $window.webkitURL;
+            // var URL = $window.URL || $window.webkitURL;
             var downloadUrl = URL.createObjectURL(blob);
             if (filename) {
                 // use HTML5 a[download] attribute to specify filename
@@ -115,8 +119,8 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
     }
 
     return {
-        prepareExport: prepareExport,
-        requestExport: requestExport,
+        startExport: startExport,
+        startPolling: startPolling,
         showCSVResults: showCSVResults,
         handleArrayBuffer: handleArrayBuffer,
         loadingStatus: loadingStatus

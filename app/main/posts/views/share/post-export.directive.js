@@ -34,7 +34,7 @@ function PostExportController(
          * When the user accepts, get the CSV
          */
         Notify.confirm('notify.post.export').then(function (message) {
-            DataExport.prepareExport(getQuery());
+            DataExport.startExport(getQuery());
         });
     };
 
@@ -48,7 +48,7 @@ function PostExportController(
         var format = 'csv';  //@todo handle more formats
         // Prepare filters for export
         var query = angular.extend({}, PostFilters.getQueryParams($scope.filters), {
-            format: format
+            entity_type: format
         });
         return query;
     }
