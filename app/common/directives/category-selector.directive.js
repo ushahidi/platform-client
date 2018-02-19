@@ -94,9 +94,7 @@ function CategorySelectorController($scope, _) {
 
             // If children are selected, add to disabled categories
             if (selectedChildren.length > 0) {
-                if ($scope.enableParents === false) {
-                    $scope.disabledCategories[category.id] = true;
-                }
+                $scope.disabledCategories[category.id] = true;
                 // ... and ensure this category is selected
                 if (!_.contains($scope.selectedParents, category.id)) {
                     $scope.selectedParents.push.apply($scope.selectedParents, [category.id]);
@@ -108,8 +106,13 @@ function CategorySelectorController($scope, _) {
                 var parentIndex = _.findIndex($scope.selectedParents, function (parentId) {
                     return parentId === category.id;
                 });
+                var parentIndexSelected = _.findIndex($scope.selected, function (parentId) {
+                    return parentId === category.id;
+                });
+
                 if (parentIndex >= 0) {
                     $scope.selectedParents.splice(parentIndex, 1);
+                    $scope.selected.splice(parentIndexSelected, 1);
                     // or, if no children are selected
                     // remove from disabled categories
                 }
