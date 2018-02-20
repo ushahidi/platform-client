@@ -21,6 +21,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                 if (response.status === 'done') {
                     // when job is done, we stop the polling...
                     $interval.cancel(polling);
+                    $rootScope.$broadcast('event:export_job:stopped');
                     // ..and download the file
                     downloadFile(response.url);
                     // finally we notify the user
@@ -29,6 +30,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
             }, function (err) {
                     // if there is an error while exporting we stop the polling
                     $interval.cancel(polling);
+                    $rootScope.$broadcast('event:export_job:stopped');
                     // and notify the user
                     Notify.apiErrors(err);
                 }

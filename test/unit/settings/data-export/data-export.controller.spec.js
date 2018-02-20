@@ -7,8 +7,7 @@ describe('data-export-controller', function () {
         DataExport,
         Notify,
         FormEndpoint,
-        FormAttributeEndpoint,
-        $q;
+        FormAttributeEndpoint;
 
     beforeEach(function () {
 
@@ -18,7 +17,7 @@ describe('data-export-controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _$location_, _DataExport_, _Notify_, _FormEndpoint_, _FormAttributeEndpoint_, _$q_, _) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _$location_, _DataExport_, _Notify_, _FormEndpoint_, _FormAttributeEndpoint_, _) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $location = _$location_;
@@ -26,7 +25,6 @@ describe('data-export-controller', function () {
         Notify = _Notify_;
         FormEndpoint = _FormEndpoint_;
         FormAttributeEndpoint = _FormAttributeEndpoint_;
-        $q = _$q_;
         $scope = _$rootScope_.$new();
 
         $rootScope.hasPermission = function () {
@@ -49,9 +47,9 @@ describe('data-export-controller', function () {
 
     describe ('exportAll-function', function () {
         it('should initate data-export', function () {
-            spyOn(DataExport, 'prepareExport');
+            spyOn(DataExport, 'startExport');
             $scope.exportAll();
-            expect(DataExport.prepareExport).toHaveBeenCalledWith({format: 'csv'});
+            expect(DataExport.startExport).toHaveBeenCalledWith({});
         });
         it('should show progress', function () {
             expect($scope.showProgress).toEqual(false);
@@ -88,11 +86,11 @@ describe('data-export-controller', function () {
             $scope.exportSelected();
             expect(Notify.exportNotifications).toHaveBeenCalled();
         });
-        it('should call prepareExport with the selectedFields', function () {
+        it('should call startExport with the selectedFields', function () {
             $scope.selectedFields = [1, 4, 7, 8, 10];
-            spyOn(DataExport, 'prepareExport');
+            spyOn(DataExport, 'startExport');
             $scope.exportSelected();
-            expect(DataExport.prepareExport).toHaveBeenCalledWith({attributes: $scope.selectedFields, format: 'csv'});
+            expect(DataExport.startExport).toHaveBeenCalledWith({attributes: $scope.selectedFields});
         });
     });
     describe('attachAttributes-function', function () {

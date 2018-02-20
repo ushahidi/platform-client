@@ -55,27 +55,26 @@ describe('post export directive', function () {
          * because it' going to give more meaningful error messages
          * if something breaks.
          */
-        expect(query.format).toEqual('csv');
-        expect(query.form).toEqual([1, 2]);
-        expect(query.q).toEqual('');
-        expect(query.date_after).toEqual('');
-        expect(query.date_before).toEqual('');
-        expect(query.published_to).toEqual('');
-        expect(query.center_point).toEqual('');
-        expect(query.has_location).toEqual('all');
-        expect(query.within_km).toEqual('1');
-        expect(query.current_stage).toEqual([]);
-        expect(query.tags).toEqual([]);
-        expect(query.set).toEqual([]);
-        expect(query.user).toEqual(false);
-        expect(query.status).toEqual(['published', 'draft']);
+        expect(query.filters.form).toEqual([1, 2]);
+        expect(query.filters.q).toEqual('');
+        expect(query.filters.date_after).toEqual('');
+        expect(query.filters.date_before).toEqual('');
+        expect(query.filters.published_to).toEqual('');
+        expect(query.filters.center_point).toEqual('');
+        expect(query.filters.has_location).toEqual('all');
+        expect(query.filters.within_km).toEqual('1');
+        expect(query.filters.current_stage).toEqual([]);
+        expect(query.filters.tags).toEqual([]);
+        expect(query.filters.set).toEqual([]);
+        expect(query.filters.user).toEqual(false);
+        expect(query.filters.status).toEqual(['published', 'draft']);
         $rootScope.$digest();
     });
 
     it ('Should call prepareExport function when user accepts the Notify confirmation prompt', function () {
-        var query = isolateScope.getQuery();
-        spyOn(DataExport, 'prepareExport').and.callThrough();
-        DataExport.prepareExport(query);
-        expect(DataExport.prepareExport).toHaveBeenCalled();
+        var query = {filters: isolateScope.getQuery()};
+        spyOn(DataExport, 'startExport').and.callThrough();
+        DataExport.startExport(query);
+        expect(DataExport.startExport).toHaveBeenCalled();
     });
 });

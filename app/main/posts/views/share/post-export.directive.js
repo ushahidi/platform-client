@@ -46,10 +46,8 @@ function PostExportController(
             $scope.filters = PostFilters.getDefaults();
         }
         // Prepare filters for export
-        var entity_type = 'post';
         var query = {
-            filters: PostFilters.getQueryParams($scope.filters),
-            entity_type: entity_type
+            filters: PostFilters.getQueryParams($scope.filters)
         };
         return query;
     }
