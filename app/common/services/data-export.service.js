@@ -1,21 +1,21 @@
 module.exports = DataExport;
 
 
-DataExport.$inject = ['ExportJobEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST'];
-function DataExport(ExportJobEndpoint,  Notify, $window, $timeout, $interval, CONST) {
-
+DataExport.$inject = ['$rootScope', 'ExportJobEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST'];
+function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $interval, CONST) {
+    var polling;
     function startExport(query) {
         query.entity_type = 'post';
         ExportJobEndpoint.save(query).$promise.then(function (job) {
-            loadingStatus(true, null, job.id);
-            startPolling(job);
+            loadingStatus(true, null, job);
+            polling = startPolling(job);
         }, function (err) {
             loadingStatus(false, err);
         });
     }
 
     function startPolling(job) {
-        var polling = $interval(function () {
+        return $interval(function () {
             // TODO: Question: Should we also delete the job after the job is done/failed?
             ExportJobEndpoint.getFresh({id: job.id}).$promise.then(function (response) {
                 if (response.status === 'done') {
@@ -34,11 +34,13 @@ function DataExport(ExportJobEndpoint,  Notify, $window, $timeout, $interval, CO
                 }
             );
         }, CONST.EXPORT_POLLING_INTERVAL, CONST.EXPORT_POLLING_COUNT);
-
     }
 
     function cancelExport(jobId) {
         ExportJobEndpoint.delete({id: jobId});
+        $interval.cancel(polling);
+        $rootScope.$broadcast('event:export_job:stopped');
+        Notify.notify('<p translate="notify.export.canceled_job"></p>');
     }
 
     function downloadFile(downloadUrl) {
