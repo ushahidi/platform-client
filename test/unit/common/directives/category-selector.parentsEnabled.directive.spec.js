@@ -65,7 +65,7 @@ describe('category-selector directive with enableParents=true', function () {
         expect(isolateScope.selectedParents.length).toBe(1);
         expect(isolateScope.selected.length).toBe(2);
         // the parent should be disabled
-        expect(isolateScope.disabledCategories[1]).toBe(false);
+        expect(isolateScope.disabledCategories[1]).toBe(true);
     });
 
     it ('should unselect the selectedParent in scope.selectedParents, if I unselect the child and call changeCategories', function () {
