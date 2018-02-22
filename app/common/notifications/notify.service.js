@@ -6,6 +6,7 @@ Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'Modal
 function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     return {
         notify: notify,
+        exportNotifications,
         notifyProgress: notifyProgress,
         error: error,
         errors: errors,
@@ -38,6 +39,33 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         $translate(message, translateValues).then(showSlider, showSlider);
     }
 
+    function exportNotifications(message, translateValues, loading, icon, iconClass, action) {
+        var buttons, cancelButton, actionButton, scope;
+        // action is an object with the properties callback, text, actionClass and callbackArg
+        actionButton = '';
+        scope = getScope();
+        // closes the slider without action
+        scope.cancel = function () {
+            SliderService.close();
+        };
+        // html for the cancel-button
+        cancelButton = `<button class="button" ng-click="$parent.cancel()" translate="notify.export.confirmation"></button>`;
+
+        // adding html for the action-button, if its supposed to be there
+        if (action) {
+            scope.actionCallback = action.callback;
+            actionButton = `<button class="${action.actionClass}" ng-click=$parent.actionCallback("${action.callbackArg}") translate=${action.text}></button>`;
+        }
+        // concatinating button and message html
+        buttons = `<div class="buttons-export">${actionButton + cancelButton}</div>`;
+        message += buttons;
+
+        function showSlider(successText) {
+            SliderService.openTemplate(message, icon, iconClass, scope, false, false, true, loading);
+        }
+        // translates the text and shows the slider
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
     function error(errorText, translateValues) {
         function showSlider(errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error', null, false);
@@ -161,6 +189,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         return deferred.promise;
     }
+
 
     function confirmDelete(confirmText, confirmWarningText, translateValues) {
         var deferred = $q.defer();

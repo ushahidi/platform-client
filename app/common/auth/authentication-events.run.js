@@ -1,6 +1,6 @@
 module.exports = AuthenticationEvents;
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport) {
     let loginPath = null;
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
@@ -18,11 +18,15 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     function loadSessionData() {
         $rootScope.currentUser = Session.getSessionData();
     }
+    function loadExportJob() {
+        DataExport.loadExportJob();
+    }
 
     function doLogin(redirect, noReload) {
         TermsOfService.getTosEntry()
             .then(function () {
                 loadSessionData();
+                loadExportJob();
                 $rootScope.loggedin = true;
                 /**
                  * adminUserSetup is called AFRTER the user has agreed to terms of service.
