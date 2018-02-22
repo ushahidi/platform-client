@@ -200,18 +200,20 @@ gulp.task('transifex-download', function (done) {
     require('./gulp/transifex-download')(paths.dest + '/locales/', done);
 });
 
-
 /**
  * Task `serve:static` - Serve dist build (for heroku)
  */
+
 gulp.task('serve:static', function() {
+    gulp.start('dist');
+
     serve.init({
         server: {
             baseDir: paths.dest
         },
         port: process.env.PORT || 3000,
         ui: false,
-        codeSync: false,
+        autoWatch: true,
         open: false,
         middleware: [
           historyApiFallback()
