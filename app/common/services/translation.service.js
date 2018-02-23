@@ -22,44 +22,42 @@ function (
     moment
 ) {
     var translate = function (lang) {
-        console.log("translate")
-        $translate.use(lang).then(function (langKey) {
-            if (langKey) {
-                $translate.preferredLanguage(langKey);
-                Languages.then(function (languages) {
-                    let language = languages.find(l => l.code === langKey);
+        if (lang !== null) {
+            $translate.use(lang).then(function (langKey) {
+                if (langKey) {
+                    $translate.preferredLanguage(langKey);
+                    Languages.then(function (languages) {
+                        let language = languages.find(l => l.code === langKey);
 
-                    $rootScope.rtlEnabled = language.rtl;
+                        $rootScope.rtlEnabled = language.rtl;
+                    });
+                }
+            });
+
+            if (lang === 'en') {
+                // Just set moment locale
+                moment.locale('en');
+            } else {
+                // Load locale
+                require(['moment/locale/' + lang + '.js'], function () {
+                    // And then set moment locale
+                    moment.locale(lang);
                 });
             }
-        });
 
-        if (lang === 'en') {
-            // Just set moment locale
-            moment.locale('en');
-        } else {
-            // Load locale
-            require(['moment/locale/' + lang + '.js'], function () {
-                // And then set moment locale
-                moment.locale(lang);
-            });
+            // Translating and setting page-title
+            $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
         }
-
-        // Translating and setting page-title
-        $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
     };
 
     var setStartLanguage = function () {
-        console.log("Set start Language")
         getLanguage().then(function (language) {
             translate(language);
         });
     };
 
     var getLanguage = function (config) {
-        console.log("getLanguage")
         return $q(function (resolve, reject) {
-            console.log("Session language in get language: ", Session.getSessionDataEntry('language'), Session.getSessionData())
                 if (Session.getSessionDataEntry('language')) {
                     resolve(Session.getSessionDataEntry('language'));
                     return;
@@ -88,13 +86,10 @@ function (
     };
 
     var setLanguage = function (code) {
-        console.log("set language")
         Session.setSessionDataEntry('language', code);
-        console.log("Session", Session.getSessionData())
         if (Authentication.getLoginStatus()) {
             UserEndpoint.get({id: 'me'}).$promise.then(function (user) {
                 user.language = code;
-                console.log("user language ", user.language)
                 UserEndpoint.update(user);
             });
         }

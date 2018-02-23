@@ -12,6 +12,8 @@ module.exports = [
     'Util',
     'Languages',
     'Features',
+    'Session',
+    'TranslationService',
 function (
     $q,
     $http,
@@ -25,7 +27,9 @@ function (
     Maps,
     Util,
     Languages,
-    Features
+    Features,
+    Session,
+    TranslationService
 ) {
     return {
         restrict: 'E',
@@ -113,6 +117,14 @@ function (
                     ]).then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
+                        // ToDo: Figure out how to save previous language
+                        // compare new against old before running translations
+                        // only run translation if there was a change
+                        let newLanguage = result[0].language;
+                        let userLanguage = Session.getSessionDataEntry('language');
+                        if (userLanguage === undefined || userLanguage === null) {
+                            TranslationService.translate(newLanguage);
+                        }
                         Notify.notify('notify.general_settings.save_success');
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
