@@ -1,92 +1,89 @@
 module.exports = DataExport;
 
 
-DataExport.$inject = ['$rootScope', 'ConfigEndpoint', 'ExportJobEndpoint', '$q', '_', '$window', '$timeout', 'Notify', '$location'];
-function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $window, $timeout, Notify, $location) {
-
-    function prepareExport(query) {
-        loadingStatus(true);
-        var site = ConfigEndpoint.get({ id: 'site' }).$promise;
-        var exportQuery = ExportJobEndpoint.save(query);
-
-        /**
-        TODOS:
-        1. Add polling to the api to check if the export-job is done,
-        i.e ExportJobEndpoint.get({id}) or similar, then notify the user
-        that their file is ready. 2. Keep in mind, below code will probably be changed depending on in what way the exported data is delivered
-        */
-
-        requestExport(site, query, exportQuery);
-    }
-
-    function requestExport(site, query, exportQuery) {
-        $q.all([site, exportQuery]).then(function (response) {
-            showCSVResults(response, query.format);
+DataExport.$inject = ['$rootScope', 'ExportJobEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST', '$q', '_'];
+function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $interval, CONST, $q, _) {
+    function startExport(query) {
+        query.entity_type = 'post';
+        // saving the new job to the db
+        ExportJobEndpoint.save(query).$promise.then(function (job) {
+            // notifies the user
+            loadingStatus(true, null, job);
+            // start polling for ready job.
+            startPolling([ExportJobEndpoint.getFresh({id: job.id})]);
         }, function (err) {
             loadingStatus(false, err);
         });
     }
-    function cancelExport(jobId) {
-        //TODO: Add cancel-job
-        console.log('canceling job');
+
+    function loadExportJob() {
+        var queries = [];
+        ExportJobEndpoint.queryFresh({user: 'me'}).$promise.then(function (response) {
+            _.each(response, function (job) {
+                if (job.status !== 'done') {
+                    queries.push(ExportJobEndpoint.getFresh({id: job.id}));
+                }
+            });
+            startPolling(queries);
+        });
     }
 
-    function showCSVResults(response, format) {
-        // Save export data to file
-        var filename = response[0].name + '-' + (new Date()).toISOString().substring(0, 10) + '.' + format,
-            data = response[1].data;
-
-        handleArrayBuffer(filename, data, 'csv');
-        loadingStatus(false);
-        $rootScope.$broadcast('event:data_export:complete');
-        return filename;
-    }
-
-    function handleArrayBuffer(filename, data, type) {
-        /**
-         * If we have the HTML5 Api for File available we use that. If not, a Blob
-         */
-        function createCSVFile() {
-            if (_.isFunction(File)) {
-                return new File([data], filename, { type: type });
-            } else {
-                return new Blob([data], { type: type });
-            }
-        }
-
-        var blob = createCSVFile();
-
-        if (!_.isUndefined($window.navigator.msSaveBlob)) {
-            /** IE specific workaround for "HTML7007"
-             * https://stackoverflow.com/questions/20310688/blob-download-not-working-in-ie
-            **/
-            $window.navigator.msSaveBlob(blob, filename);
-        } else {
-            var URL = $window.URL || $window.webkitURL;
-            var downloadUrl = URL.createObjectURL(blob);
-            if (filename) {
-                // use HTML5 a[download] attribute to specify filename
-                // Create anchor link
-                var anchor = angular.element('<a/>');
-                anchor.attr({
-                    href: downloadUrl,
-                    download: filename
+    function startPolling(queries) {
+        var nextQuery = [];
+        $timeout(function () {
+            $q.all(queries).then(function (response) {
+                _.each(response, function (job) {
+                    if (job.status === 'done') {
+                        // when job is done, we stop the polling...
+                        $rootScope.$broadcast('event:export_job:stopped');
+                        // ..and download the file
+                        downloadFile(job.url);
+                    } else {
+                        // add the job to the poll until job is done
+                        nextQuery.push(ExportJobEndpoint.getFresh({id: job.id}));
+                    }
                 });
-                angular.element(document.body).append(anchor);
-                anchor[0].click();
-                anchor[0].remove();
-            } else {
-                $location.url(downloadUrl);
-            }
-
-            $timeout(function () {
-                URL.revokeObjectURL(downloadUrl);
-            }, 100); // cleanup
-
-        }
+                // if there are pending jobs, we poll for them again
+                if (nextQuery.length > 0) {
+                    startPolling(nextQuery);
+                }
+            }, function (err) {
+                    // if there is an error while exporting we stop the polling
+                    $rootScope.$broadcast('event:export_job:stopped');
+                    // and notify the user
+                    Notify.apiErrors(err);
+                }
+            );
+        }, CONST.EXPORT_POLLING_INTERVAL);
     }
 
-    function loadingStatus(status, err) {
+    function cancelExport(jobId) {
+        ExportJobEndpoint.delete({id: jobId});
+        $rootScope.$broadcast('event:export_job:stopped');
+        Notify.notify('<p translate="notify.export.canceled_job"></p>');
+    }
+
+    function downloadFile(downloadUrl) {
+        var URL = $window.URL || $window.webkitURL;
+        // Create anchor link
+        var anchor = angular.element('<a/>');
+        anchor.attr({
+            href: downloadUrl
+        });
+        // download file
+        angular.element(document.body).append(anchor);
+        anchor[0].click();
+        anchor[0].remove();
+        // we notify the user
+        loadingStatus(false);
+
+        // TODO: Question, is below needed? Its from the old code but I am not sure what it does?
+        $timeout(function () {
+            URL.revokeObjectURL(downloadUrl);
+        }, 100); // cleanup
+    }
+
+    function loadingStatus(status, err, job) {
         var message, // holds the message to the user
             action, // holds info for the action-button
             icon, // holds info about icon to use in the notification
@@ -100,7 +97,8 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
                 action = {
                     callback: cancelExport,
                     text: 'notify.export.cancel_export',
-                    actionClass: 'button-destructive'
+                    actionClass: 'button-destructive',
+                    callbackArg: job.id
                 };
                 icon = 'ellipses';
                 loading = true;
@@ -115,10 +113,7 @@ function DataExport($rootScope, ConfigEndpoint, ExportJobEndpoint, $q, _, $windo
     }
 
     return {
-        prepareExport: prepareExport,
-        requestExport: requestExport,
-        showCSVResults: showCSVResults,
-        handleArrayBuffer: handleArrayBuffer,
-        loadingStatus: loadingStatus
+        startExport: startExport,
+        loadExportJob: loadExportJob
     };
 }

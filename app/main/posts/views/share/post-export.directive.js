@@ -34,7 +34,7 @@ function PostExportController(
          * When the user accepts, get the CSV
          */
         Notify.confirm('notify.post.export').then(function (message) {
-            DataExport.prepareExport(getQuery());
+            DataExport.startExport(getQuery());
         });
     };
 
@@ -45,11 +45,10 @@ function PostExportController(
         if (!$scope.filters || _.isEmpty($scope.filters)) {
             $scope.filters = PostFilters.getDefaults();
         }
-        var format = 'csv';  //@todo handle more formats
         // Prepare filters for export
-        var query = angular.extend({}, PostFilters.getQueryParams($scope.filters), {
-            format: format
-        });
+        var query = {
+            filters: PostFilters.getQueryParams($scope.filters)
+        };
         return query;
     }
 }

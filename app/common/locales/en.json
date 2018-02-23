@@ -1235,7 +1235,8 @@
             "complete" : "Export done. You should see your CSV-file in your downloads.",
             "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
             "confirmation": "Got it",
-            "cancel_export": "Cancel export" 
+            "cancel_export": "Cancel export",
+            "canceled_job" : "Your export-job is canceled"
         }
     },
     "empty": {

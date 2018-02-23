@@ -41,7 +41,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function exportNotifications(message, translateValues, loading, icon, iconClass, action) {
         var buttons, cancelButton, actionButton, scope;
-        // action is an object with the properties callback, text, actionClass
+        // action is an object with the properties callback, text, actionClass and callbackArg
         actionButton = '';
         scope = getScope();
         // closes the slider without action
@@ -54,14 +54,14 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         // adding html for the action-button, if its supposed to be there
         if (action) {
             scope.actionCallback = action.callback;
-            actionButton = `<button class="${action.actionClass}" ng-click="$parent.actionCallback()" translate=${action.text}></button>`;
+            actionButton = `<button class="${action.actionClass}" ng-click=$parent.actionCallback("${action.callbackArg}") translate=${action.text}></button>`;
         }
         // concatinating button and message html
         buttons = `<div class="buttons-export">${actionButton + cancelButton}</div>`;
         message += buttons;
 
         function showSlider(successText) {
-            SliderService.openTemplate(message, icon, iconClass, scope, true, false, true, loading);
+            SliderService.openTemplate(message, icon, iconClass, scope, false, false, true, loading);
         }
         // translates the text and shows the slider
         $translate(message, translateValues).then(showSlider, showSlider);
