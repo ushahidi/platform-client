@@ -133,7 +133,7 @@ function CollectionListingController(
     // they will be directed to the collection page
     function goToCollection(collection) {
         $scope.$parent.closeModal();
-        let viewParam = collection.view;
+        var viewParam = collection.view !== 'map' ? 'data' : 'map';
         $state.go(`posts.${viewParam}.collection`, {collectionId: collection.id}, {reload: true});
     }
 
