@@ -1,46 +1,63 @@
 module.exports = DataExport;
 
 
-DataExport.$inject = ['$rootScope', 'ExportJobEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST'];
-function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $interval, CONST) {
-    var polling;
+DataExport.$inject = ['$rootScope', 'ExportJobEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST', '$q', '_'];
+function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $interval, CONST, $q, _) {
     function startExport(query) {
         query.entity_type = 'post';
+        // saving the new job to the db
         ExportJobEndpoint.save(query).$promise.then(function (job) {
+            // notifies the user
             loadingStatus(true, null, job);
-            polling = startPolling(job);
+            // start polling for ready job.
+            startPolling([ExportJobEndpoint.getFresh({id: job.id})]);
         }, function (err) {
             loadingStatus(false, err);
         });
     }
 
-    function startPolling(job) {
-        return $interval(function () {
-            // TODO: Question: Should we also delete the job after the job is done/failed?
-            ExportJobEndpoint.getFresh({id: job.id}).$promise.then(function (response) {
-                if (response.status === 'done') {
-                    // when job is done, we stop the polling...
-                    $interval.cancel(polling);
-                    $rootScope.$broadcast('event:export_job:stopped');
-                    // ..and download the file
-                    downloadFile(response.url);
-                    // finally we notify the user
-                    loadingStatus(false);
+    function loadExportJob(userId) {
+        // How do we know if the user has already downloaded a file? Should we add a flag that says 'downloaded'?
+        var queries = [];
+        ExportJobEndpoint.queryFresh().$promise.then(function (response) {
+            _.each(response, function (job) {
+                queries.push(ExportJobEndpoint.getFresh({id: job.id}));
+            });
+            startPolling(queries);
+        });
+    }
+
+    function startPolling(queries) {
+        var nextQuery = [];
+        $timeout(function () {
+            $q.all(queries).then(function (response) {
+                _.each(response, function (job) {
+                    if (job.status === 'done') {
+                        // when job is done, we stop the polling...
+                        $rootScope.$broadcast('event:export_job:stopped');
+                        // ..and download the file
+                        downloadFile(job.url);
+                    } else {
+                        // add the job to the poll until job is done
+                        nextQuery.push(ExportJobEndpoint.getFresh({id: job.id}));
+                    }
+                });
+                // if there are pending jobs, we poll for them again
+                if (nextQuery.length > 0) {
+                    startPolling(nextQuery);
                 }
             }, function (err) {
                     // if there is an error while exporting we stop the polling
-                    $interval.cancel(polling);
                     $rootScope.$broadcast('event:export_job:stopped');
                     // and notify the user
                     Notify.apiErrors(err);
                 }
             );
-        }, CONST.EXPORT_POLLING_INTERVAL, CONST.EXPORT_POLLING_COUNT);
+        }, CONST.EXPORT_POLLING_INTERVAL);
     }
 
     function cancelExport(jobId) {
         ExportJobEndpoint.delete({id: jobId});
-        $interval.cancel(polling);
         $rootScope.$broadcast('event:export_job:stopped');
         Notify.notify('<p translate="notify.export.canceled_job"></p>');
     }
@@ -56,6 +73,9 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         angular.element(document.body).append(anchor);
         anchor[0].click();
         anchor[0].remove();
+        // we notify the user
+        loadingStatus(false);
+
         // TODO: Question, is below needed? Its from the old code but I am not sure what it does?
         $timeout(function () {
             URL.revokeObjectURL(downloadUrl);
@@ -92,6 +112,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
     }
 
     return {
-        startExport: startExport
+        startExport: startExport,
+        loadExportJob: loadExportJob
     };
 }
