@@ -24,7 +24,15 @@ function CategorySelectorController($scope, _) {
     $scope.selectedParents = [];
     $scope.disabledCategories = [];
     $scope.changeCategories = changeCategories;
+
     activate();
+    $scope.selectAllEnabled = function () {
+        if ($scope.enableParents) {
+            return $scope.selected.length === $scope.available.length;
+        } else {
+            return ($scope.selected.length + $scope.selectedParents.length) === $scope.available.length;
+        }
+    };
 
     function activate() {
         // remove default null value when creating a new post
@@ -44,12 +52,16 @@ function CategorySelectorController($scope, _) {
             $scope.form.$setDirty();
         }
 
-        if ($scope.available.length === $scope.selected.length) {
+        if ($scope.selectAllEnabled()) {
             $scope.selected.splice(0, $scope.selected.length);
+            $scope.selectedParents.splice(0, $scope.selectedParents.length);
         } else {
             _.each($scope.available, function (category) {
-                if (!_.contains($scope.selected, category.id)) {
-                    $scope.selected.push(category.id);
+                var isParentWithChildren = !category.parent_id && category.children.length > 0;
+                if (!_.contains($scope.selected, category.id) && !isParentWithChildren) {
+                    $scope.selected.push.apply($scope.selected, [category.id]);
+                } else if (isParentWithChildren && !_.contains($scope.selectedParents, category.id)) {
+                    $scope.selectedParents.push.apply($scope.selectedParents, [category.id]);
                 }
             });
         }
@@ -91,12 +103,11 @@ function CategorySelectorController($scope, _) {
                 .pluck('id')
                 .intersection($scope.selected)
                 .value();
-
+            var parentIndexSelected = -1;
+            var isParentWithChildren = !category.parent_id && category.children.length > 0;
             // If children are selected, add to disabled categories
             if (selectedChildren.length > 0) {
-                if ($scope.enableParents === false) {
-                    $scope.disabledCategories[category.id] = true;
-                }
+                $scope.disabledCategories[category.id] = true;
                 // ... and ensure this category is selected
                 if (!_.contains($scope.selectedParents, category.id)) {
                     $scope.selectedParents.push.apply($scope.selectedParents, [category.id]);
@@ -108,13 +119,29 @@ function CategorySelectorController($scope, _) {
                 var parentIndex = _.findIndex($scope.selectedParents, function (parentId) {
                     return parentId === category.id;
                 });
+                parentIndexSelected = _.findIndex($scope.selected, function (parentId) {
+                    return parentId === category.id;
+                });
                 if (parentIndex >= 0) {
                     $scope.selectedParents.splice(parentIndex, 1);
-                    // or, if no children are selected
-                    // remove from disabled categories
+                    if ($scope.enableParents === true) {
+                        $scope.selected.splice(parentIndexSelected, 1);
+                    }
                 }
+                if (isParentWithChildren) {
+                    $scope.disabledCategories[category.id] = true;
+                } else {
+                    $scope.disabledCategories[category.id] = false;
+                }
+            }
 
-                $scope.disabledCategories[category.id] = false;
+            if ($scope.enableParents === false && isParentWithChildren) {
+                parentIndexSelected = _.findIndex($scope.selected, function (parentId) {
+                    return parentId === category.id;
+                });
+                if (parentIndexSelected >= 0) {
+                    $scope.selected.splice(parentIndexSelected, 1);
+                }
             }
         });
 

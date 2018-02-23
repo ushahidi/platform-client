@@ -270,23 +270,7 @@ function PostDataEditorController(
                 }
                 if (attr.input === 'tags') {
                     // adding category-objects attribute-options
-                    attr.options = _.chain(attr.options)
-                        .map(function (category) {
-                            const ret = _.findWhere(categories, {id: category});
-                            if (ret && ret.children.length > 0) {
-                                ret.children = _.chain(ret.children)
-                                    .map(function (child) {
-                                        return _.findWhere(categories, {id: child.id});
-                                    })
-                                    .filter()
-                                    .value();
-                            }
-                            return ret;
-                        })
-                        .filter()
-                        .value();
-
-
+                    attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
                 }
 
                 // @todo don't assign default when editing? or do something more sane
