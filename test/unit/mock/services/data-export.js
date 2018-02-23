@@ -1,5 +1,6 @@
 module.exports = [function () {
     return {
-        startExport: function () {}
+        startExport: function () {},
+        loadExportJob: function () {}
     };
 }];
