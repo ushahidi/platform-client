@@ -16,12 +16,13 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         });
     }
 
-    function loadExportJob(userId) {
-        // How do we know if the user has already downloaded a file? Should we add a flag that says 'downloaded'?
+    function loadExportJob() {
         var queries = [];
-        ExportJobEndpoint.queryFresh().$promise.then(function (response) {
+        ExportJobEndpoint.queryFresh({user: 'me'}).$promise.then(function (response) {
             _.each(response, function (job) {
-                queries.push(ExportJobEndpoint.getFresh({id: job.id}));
+                if (job.status !== 'done') {
+                    queries.push(ExportJobEndpoint.getFresh({id: job.id}));
+                }
             });
             startPolling(queries);
         });
