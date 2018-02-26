@@ -18,6 +18,7 @@ SurveyEditorController.$inject = [
     '$q',
     '$location',
     '$translate',
+    '$state',
     'FormEndpoint',
     'FormRoleEndpoint',
     'FormStageEndpoint',
@@ -35,6 +36,7 @@ function SurveyEditorController(
     $q,
     $location,
     $translate,
+    $state,
     FormEndpoint,
     FormRoleEndpoint,
     FormStageEndpoint,
@@ -582,8 +584,9 @@ function SurveyEditorController(
                 { name: $scope.survey.name },
                 { formId: $scope.survey.id }
             );
+
             // Redirect to survey list
-            $location.url('settings/surveys');
+            $state.go('settings.surveys', {}, { reload: true });
         })
         // Catch and handle errors
         .catch(handleResponseErrors);
