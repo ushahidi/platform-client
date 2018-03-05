@@ -912,6 +912,7 @@
         "map_default_longitude": "Default longitude",
         "map_default_zoom_level": "Default zoom level",
         "map_default_location": "Default location",
+        "send_targeted" : "Send a targeted survey via SMS",
         "site" : "Site Settings",
         "site_email" : "Contact email address",
         "site_email_note" : "Use caution, as this will be visible to anyone on your site.",

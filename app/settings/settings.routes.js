@@ -73,6 +73,14 @@ function (
     )
     .state(
         {
+            name: 'settings.surveys.targeted',
+            url: '/create-targeted-survey',
+            controller: require('./surveys/targeted-edit.controller.js'),
+            template: require('./surveys/targeted-survey-edit.html')
+        }
+    )
+    .state(
+        {
             name: 'settings.surveys.id',
             url: '/:action/:id',
             controller: require('./surveys/edit.controller.js'),
