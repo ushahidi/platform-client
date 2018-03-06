@@ -74,7 +74,7 @@ function (
     .state(
         {
             name: 'settings.surveys.targeted',
-            url: '/create-targeted-survey',
+            url: '/targeted-survey/create',
             controller: require('./surveys/targeted-edit.controller.js'),
             template: require('./surveys/targeted-survey-edit.html')
         }
