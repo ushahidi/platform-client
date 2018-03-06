@@ -43,7 +43,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                         $rootScope.$broadcast('event:export_job:stopped');
                         // ..and notify user that it has failed
                         var error_message = 'Export job has failed.';
-                        loadingStatus(true, error_message);
+                        loadingStatus(false, error_message);
                     } else {
                         // add the job to the poll until job is done
                         nextQuery.push(ExportJobEndpoint.getFresh({id: job.id}));
