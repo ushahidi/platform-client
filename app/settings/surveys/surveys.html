@@ -23,7 +23,7 @@
         <!-- TODO: what is the surveys equivalent to rolesEnabled -->
         <!-- toolbar -->
         <div class="toolbar">
-            <div class="fab">
+            <div class="fab" ng-hide="targetedSurveysEnabled">
                 <a ui-sref="settings.surveys.create" type="button" class="button button-alpha button-fab">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
@@ -35,7 +35,19 @@
         <!-- end toolbar -->
 
         <div class="main-col">
-
+          <!--feature flag start-->
+            <div class="listing card" ng-show="targetedSurveysEnabled">
+              <article class="listing-item">
+                  <div class="listing-item-primary">
+                    <div class="button-group right">
+                        <a ui-sref="settings.surveys.create"><button class="button-alpha" translate="settings.new_survey">New survey</button></a>
+                    </div>
+                    <h2 class="listing-item-title"><a href="settings-survey-edit.html" translate="settings.create">Create a new survey</a></h2>
+                    <p class="listing-item-secondary" translate="settings.create_open_or_targeted">Create an open or targeted survey to gather information about Ushahidi.</p>
+                  </div>
+              </article>
+            </div>
+          <!--feature flag end-->
             <div class="listing card">
                 <div class="listing-item" ng-show="forms.length" ng-repeat="form in forms">
                     <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
