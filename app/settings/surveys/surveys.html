@@ -23,7 +23,7 @@
         <!-- TODO: what is the surveys equivalent to rolesEnabled -->
         <!-- toolbar -->
         <div class="toolbar">
-            <div class="fab">
+            <div class="fab" ng-hide="targetedSurveysEnabled">
                 <a ui-sref="settings.surveys.create" type="button" class="button button-alpha button-fab">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
@@ -36,7 +36,7 @@
 
         <div class="main-col">
           <!--feature flag start-->
-            <div class="listing card">
+            <div class="listing card" ng-show="targetedSurveysEnabled">
               <article class="listing-item">
                   <div class="listing-item-primary">
                     <div class="button-group right">
