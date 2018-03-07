@@ -2,12 +2,13 @@
 
     <header class="mode-context-header">
         <ol class="breadcrumbs">
-            <li><a href="map.html">{{deployment.name}}</a></li>
-            <li><a href="settings.html">Settings</a></li>
+            <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+            <li><a href="/settings" translate>app.settings</a></li>
+            <li><a href="/settings/surveys" translate>app.surveys</a></li>
         </ol>
 
         <h1 class="mode-context-title">Surveys</h1>
-        <a ng-show="" ui-sref="settings.surveys.create"><span translate="">Go back to crowd-sourced survey</span> ></a>
+        <a ui-sref="settings.surveys.create">< <span translate="settings.send_crowdsourced"></span></a>
     </header>
 
     <span class="mode-context-trigger">
