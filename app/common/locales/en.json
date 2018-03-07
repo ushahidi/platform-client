@@ -916,6 +916,7 @@
         "map_default_location": "Default location",
         "new_survey": "New Survey",
         "send_targeted" : "Send a targeted survey via SMS",
+        "send_crowdsourced": "Go back to crowd-sourced survey",
         "site" : "Site Settings",
         "site_email" : "Contact email address",
         "site_email_note" : "Use caution, as this will be visible to anyone on your site.",
