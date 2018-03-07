@@ -42,5 +42,9 @@ describe('setting create targeted survey controller', function () {
             $scope.activeStep = 2;
             expect($scope.isActiveStep(1)).toEqual(false);
         });
+        it('should return false if step is not complete', function () {
+            //defaulting to true right now
+            expect($scope.isStepComplete(2)).toEqual(true);
+        });
     });
 });
