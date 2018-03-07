@@ -28,6 +28,10 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         });
     }
 
+    function loadExportJobs() {
+        return ExportJobEndpoint.queryFresh({user: 'me'}).$promise;
+    }
+
     function startPolling(queries) {
         var nextQuery = [];
         $timeout(function () {
@@ -114,6 +118,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
 
     return {
         startExport: startExport,
-        loadExportJob: loadExportJob
+        loadExportJob: loadExportJob,
+        loadExportJobs: loadExportJobs
     };
 }

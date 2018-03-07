@@ -30,6 +30,9 @@ function (
     $scope.getForms = getForms;
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.attachAttributes = attachAttributes;
+    $scope.loadExportJobs = loadExportJobs;
+    $scope.switchTab = switchTab;
+    $scope.exportJobs = [];
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
@@ -44,10 +47,49 @@ function (
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
 
+    activate();
+
+    function activate() {
+        $scope.loadExportJobs();
+        $scope.tab_history = {};
+
+        // Set initial menu tab
+        $scope.switchTab('export', 'main');
+    }
+
     function getForms() {
         FormEndpoint.queryFresh().$promise.then(function (response) {
             $scope.forms = response;
             $scope.attachAttributes();
+        });
+    }
+
+    function switchTab(section, tab) {
+
+        // First unset last active tab
+        var old_tab = $scope.tab_history[section];
+        if (old_tab) {
+            var old_tab_li = old_tab + '-li';
+            angular.element(document.getElementById(old_tab)).removeClass('active');
+            angular.element(document.getElementById(old_tab_li)).removeClass('active');
+        }
+        // Set new active tab
+        tab = tab + '-' + section;
+        $scope.tab_history[section] = tab;
+        var tab_li = tab + '-li';
+        angular.element(document.getElementById(tab)).addClass('active');
+        angular.element(document.getElementById(tab_li)).addClass('active');
+    }
+
+    function loadExportJobs() {
+        $scope.exportJobs = [];
+
+        DataExport.loadExportJobs().then(function (response) {
+            _.each(response, function (job) {
+                if (job.status !== 'done') {
+                    $scope.exportJobs.push(job);
+                }
+            });
         });
     }
 
