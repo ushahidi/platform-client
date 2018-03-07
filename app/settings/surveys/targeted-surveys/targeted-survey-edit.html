@@ -19,108 +19,79 @@
     </span>
 
     <div class="mode-context-body">
-
     </div>
 </div>
 
-
 <main role="main">
     <div class="toolbar">
-        <div class="button-group">
-            <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-            <button type="submit" class="button-alpha"  ng-if="!saving_survey" ng-click="saveSurvey()">{{save}}</button>
-            <button type="submit" class="button-alpha"  disabled ng-if="saving_survey">{{saving}}
-              <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-              </div>
-          </button>
-        </div>
     </div>
+
     <div class="main-col">
-        <div class="form-sheet">
+        <div ng-show="targetedSurveysEnabled" class="form-sheet">
             <div class="form-sheet-summary">
                 <h2 class="form-sheet-title">Create a new targeted survey</h2>
                 <p>Send questions via SMS to a list of those phone numbers.</p>
             </div>
-            <div class="stepper" data-accordion-items="stepper-item">
-                <div class="stepper-item active">
+
+            <div class="stepper">
+                <div class="stepper-item" ng-class="{'active': isActiveStep(1), 'disabled': !isActiveStep(1)}">
                     <h2 class="stepper-heading" data-accordion-trigger>
                         <span class="stepper-badge">1</span>
                         Name your survey
                     </h2>
-
-                    <div class="form-field">
-                        <label>Survey name</label>
-                        <input type="text">
-                    </div>                    
-                    <div class="form-field">
-                        <label>Survey description</label>
-                        <textarea></textarea>
-                    </div>
-                    <div class="form-field">
-                    <div class="button-group">
-                        <button class="button-alpha">Continue</button>
-                        <button class="button">Back</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stepper-item">
-                <h2 class="stepper-heading" data-accordion-trigger>
-                        <span class="stepper-badge">2</span>
-                            Choose your audience                    
-                    </h2>
-                    <div class="form-field">
-                        <label for="country-code">
-                            Country code 
-                        </label>
-                        <div class="custom-select">
-                            <select id="country-code">
-                                <option selected>Kenya +254</option>
-                                <option>Sweden +46</option>
-                                <option>United States +1</option>
-                                <option>France +33</option>
-                            </select>
+                    <div ng-show="isActiveStep(1)">
+                        <div class="form-field">
+                            <div class="button-group">
+                                <button class="button-alpha" ng-disabled="!isStepComplete(1)" ng-click="completeStepOne()">Continue</button>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-field">
-                        <label>Phone numbers</label>
-                        <p>Please type in 10-digit phone numbers you'd like to contact. Place a comma between each phone number.</p>
-                        <textarea></textarea>
+                <div class="stepper-item" ng-class="{'active': isActiveStep(2), 'disabled': !isActiveStep(2)}">
+                    <h2 class="stepper-heading">
+                            <span class="stepper-badge">2</span>
+                                Choose your audience
+                        </h2>
+                       <div ng-show="isActiveStep(2)">
+                        <div class="form-field">
+                            <div class="button-group">
+                                  <button class="button-alpha" ng-disabled="!isStepComplete(2)" ng-click="completeStepTwo()">Continue</button>
+                                <button class="button" ng-click="previousStep()">Back</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-field">
-                        <div class="button-group">
-                              <button class="button-alpha">Continue</button>
-                        <button class="button">Back</button>
+                </div>
+
+                <div class="stepper-item" ng-class="{'active': isActiveStep(3), 'disabled': !isActiveStep(3)}">
+                    <h2 class="stepper-heading">
+                            <span class="stepper-badge">3</span>
+                                Add your questions
+                    </h2>
+                    <div ng-show="isActiveStep(3)">
+                         <div class="form-field">
+                            <div class="button-group">
+                                <button class="button-alpha" ng-disabled="!isStepComplete(3)" ng-click="completeStepThree()">Continue</button>
+                                <button class="button" ng-click="previousStep()">Back</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="stepper-item">
-                <h2 class="stepper-heading" data-accordion-trigger>
-                        <span class="stepper-badge">2</span>
-                            Add your questions
-                </h2>
-                <div class="alert">
-                    <p>We will send each question as a separate SMS. After someone responds, we will send the next question in the survey.</p>
+
+                <div class="stepper-item" ng-class="{'active': isActiveStep(4), 'disabled': !isActiveStep(4)}">
+                    <h2 class="stepper-heading">
+                        <span class="stepper-badge">4</span>
+                                Publish
+                    </h2>
+                    <div ng-show="isActiveStep(4)">
+                              <div class="button-group">
+                                <button class="button-alpha"  ng-disabled="!isStepComplete(4)" ng-click="publish()">Publish</button>
+                                <button class="button" ng-click="previousStep()">Back</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-field question">
-                    <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
-                    </svg>
-                    <a href="#"> Hello Beneficiary. Did you attend the trainin session held at Ipsum Public School last week? Your reply is free. Please begin your reply with "Program Name:"</a>
-                </div>
-                <div class="form-field">
-                    <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
-                    </svg>
-                    <a href="#"> Why did you choose to attend or not attend the training? Your reply is free. Please begin your reply with "Program Name:"</a>
-                </div>
-                <div class="form-field">
-                    <a href="#">Add another question...</a>
-                </div>
+
             </div>
         </div>
+    </div>
 </main>
