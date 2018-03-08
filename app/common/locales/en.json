@@ -1206,7 +1206,16 @@
             "destroy_stage_success" : "Survey task {{name}} deleted",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?",
             "delete_attribute_confirm_desc" : "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
-            "destroy_attribute_success" : "Field {{name}} deleted"
+            "destroy_attribute_success" : "Field {{name}} deleted",
+            "validation": {
+                "name": {
+                    "required": "A survey-name is needed",
+                    "minlength": "Name is too short"
+                },
+                "description":{
+                    "required": "Description cannot be empty"
+                }
+            }
         },
         "collection" : {
             "delete_collection_confirm" : "Are you sure you want to delete this collection?",
