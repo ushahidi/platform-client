@@ -54,11 +54,9 @@
                     </div>
                 </div>
                 <div id="history-export" class="survey-details tabs-target">
-                    <div class="form-field">
-                        <dt class="list-item"><a>Job 1</a></dt>
-                        <dd>Expires: March 14th, 2018</dd>
-                        <dt class="list-item"><a>Job 2</a></dt>
-                        <dd>Expires: March 15th, 2018</dd>
+                    <div class="form-field" ng-repeat="job in exportJobs">
+                        <dt class="list-item"><a>Job {{job.id}}</a></dt>
+                        <dd>Expires: {{job.url_expiration}}</dd>
                     </div>
                 </div>
 
