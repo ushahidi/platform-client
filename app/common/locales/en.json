@@ -994,7 +994,8 @@
         "export_progress": "Export in progress...",
         "no_fields": "Uh oh... you need to select some fields to export first.",
         "expires": "Expires: {{expires}}",
-        "job": "Job {{jobId}}"
+        "job": "Job {{jobId}}",
+        "created": "Created {{created}}"
     },
     "user": {
         "role_display" : "Role: {{role}}",
