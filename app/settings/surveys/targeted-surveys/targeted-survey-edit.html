@@ -39,28 +39,49 @@
                         <span class="stepper-badge">1</span>
                         Name your survey
                     </h2>
-                    <div ng-show="isActiveStep(1)">
-                        <div class="form-field">
-                            <div class="button-group">
-                                <button class="button-alpha" ng-disabled="!isStepComplete(1)" ng-click="completeStepOne()">Continue</button>
+                    <form name="stepOne">
+                        <div class="form-field" ng-show="isActiveStep(1)">
+                            <label>Survey name</label>
+                            <input type="text" name="name" ng-minlength="2" ng-model="name" required placeholder="Name...">
+                        </div>
+                        <div ng-hide="isActiveStep(1)">
+                            <h2 class=form-label>Survey Name</h2>
+                            <p>{{name}}</p>  
+                        </div>
+                                          
+                        <div class="form-field" ng-show="isActiveStep(1)">
+                            <label>Survey description</label>
+                            <textarea name="description" ng-model="description" required placeholder="Describe your survey..."></textarea>  
+                        </div>
+                        <div ng-hide="isActiveStep(1)">
+                            <h2 class=form-label>Survey Description</h2>
+                            <p>{{description}}</p>
+                        </div>
+                        <div ng-show="isActiveStep(1)">
+                            <div class="form-field">
+                                <div class="button-group">
+                                    <button class="button-alpha" ng-disabled="!isStepComplete(stepOne)" ng-click="completeStepOne()">Continue</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>    
                 </div>
 
                 <div class="stepper-item" ng-class="{'active': isActiveStep(2), 'disabled': !isActiveStep(2)}">
                     <h2 class="stepper-heading">
                             <span class="stepper-badge">2</span>
                                 Choose your audience
-                        </h2>
-                       <div ng-show="isActiveStep(2)">
-                        <div class="form-field">
-                            <div class="button-group">
-                                  <button class="button-alpha" ng-disabled="!isStepComplete(2)" ng-click="completeStepTwo()">Continue</button>
-                                <button class="button" ng-click="previousStep()">Back</button>
+                    </h2>
+                    <form name="stepTwo">
+                        <div ng-show="isActiveStep(2)">
+                            <div class="form-field">
+                                <div class="button-group">
+                                      <button class="button-alpha" ng-disabled="!isStepComplete(stepTwo)" ng-click="completeStepTwo()">Continue</button>
+                                    <button class="button" ng-click="previousStep()">Back</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>    
                 </div>
 
                 <div class="stepper-item" ng-class="{'active': isActiveStep(3), 'disabled': !isActiveStep(3)}">
@@ -68,14 +89,16 @@
                             <span class="stepper-badge">3</span>
                                 Add your questions
                     </h2>
-                    <div ng-show="isActiveStep(3)">
-                         <div class="form-field">
-                            <div class="button-group">
-                                <button class="button-alpha" ng-disabled="!isStepComplete(3)" ng-click="completeStepThree()">Continue</button>
-                                <button class="button" ng-click="previousStep()">Back</button>
+                    <form name="stepThree">
+                        <div ng-show="isActiveStep(3)">
+                             <div class="form-field">
+                                <div class="button-group">
+                                    <button class="button-alpha" ng-disabled="!isStepComplete(stepThree)" ng-click="completeStepThree()">Continue</button>
+                                    <button class="button" ng-click="previousStep()">Back</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="stepper-item" ng-class="{'active': isActiveStep(4), 'disabled': !isActiveStep(4)}">
