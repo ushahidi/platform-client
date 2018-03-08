@@ -29,7 +29,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
     }
 
     function loadExportJobs() {
-        return ExportJobEndpoint.queryFresh({user: 'me'}).$promise;
+        return ExportJobEndpoint.queryFresh({user: 'me', max_expiration: Math.round((new Date()).getTime() / 1000)}).$promise;
     }
 
     function startPolling(queries) {
