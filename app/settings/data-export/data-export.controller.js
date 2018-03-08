@@ -88,6 +88,7 @@ function (
             _.each(response, function (job) {
                 if (job.status !== 'done') {
                     job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
+                    job.created = new Date(job.created).toLocaleString();
                     $scope.exportJobs.push(job);
                 }
             });

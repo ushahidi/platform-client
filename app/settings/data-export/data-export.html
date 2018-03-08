@@ -54,10 +54,14 @@
                     </div>
                 </div>
                 <div id="history-export" class="survey-details tabs-target">
-                    <div class="form-field" ng-repeat="job in exportJobs">
-                        <dt class="list-item"><a href="{{job.url}}" target="_blank" translate="data_export.job" translate-values="{jobId: job.id}">Job {{job.id}}</a></dt>
-                        <dd translate="data_export.expires" translate-values="{expires: job.url_expiration}">Expires: {{job.url_expiration}}</dd>
-                        <dd translate="data_export.created" translate-values="{created: job.created}">Created: {{job.created}}</dd>
+                    <div class="listing card init">
+                        <div class="listing-item" ng-repeat="job in exportJobs">
+                            <div class="listing-item-primary">
+                                <h2 class="listing-item-title"><a href="{{job.url}}" target="_blank" translate="data_export.job" translate-values="{jobId: job.id}">Job {{job.id}}</a></h2>
+                                <p class="listing-item-secondary" translate="data_export.expires" translate-values="{expires: job.url_expiration}">Expires: {{job.url_expiration}}</p>
+                                <p class="listing-item-secondary" translate="data_export.created" translate-values="{created: job.created}">Created: {{job.created}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
