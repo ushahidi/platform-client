@@ -50,7 +50,7 @@
                                 ng-show="isActiveStep(1)"
                             >
                                 <label for="name">Survey name</label>
-                                <input type="text" name="name"  ng-minlength="2" ng-model="name" required placeholder="Name...">
+                                <input type="text" name="name"  ng-minlength="2" ng-maxlength="255" ng-model="name" required placeholder="Name...">
                                 <div
                                     class="alert error"
                                     ng-show="targetedSurvey.stepOne.name.$dirty"
@@ -127,6 +127,7 @@
                                 </div>
                         </div>
                     </ng-form>
+
                     <ng-form name="stepFour">
                         <div class="stepper-item" ng-class="{'active': isActiveStep(4), 'disabled': !isActiveStep(4)}">
                         <h2 class="stepper-heading">
@@ -141,6 +142,7 @@
                         </div>
                     </div>
                 </ng-form>
+
                 </div>
             </div>
         </form>

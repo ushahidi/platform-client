@@ -1210,7 +1210,8 @@
             "validation": {
                 "name": {
                     "required": "A survey-name is needed",
-                    "minlength": "Name is too short"
+                    "minlength": "Name is too short",
+                    "maxlength": "Name is too long"
                 },
                 "description":{
                     "required": "Description cannot be empty"
