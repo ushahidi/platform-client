@@ -55,7 +55,7 @@
                 </div>
                 <div id="history-export" class="survey-details tabs-target">
                     <div class="form-field" ng-repeat="job in exportJobs">
-                        <dt class="list-item"><a translate="data_export.job" translate-values="{jobId: job.id}">Job {{job.id}}</a></dt>
+                        <dt class="list-item"><a href="{{job.url}}" target="_blank" translate="data_export.job" translate-values="{jobId: job.id}">Job {{job.id}}</a></dt>
                         <dd translate="data_export.expires" translate-values="{expires: job.url_expiration}">Expires: {{job.url_expiration}}</dd>
                     </div>
                 </div>
