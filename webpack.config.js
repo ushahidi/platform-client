@@ -41,11 +41,11 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: 'style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap'
+        use: ['style-loader','css-loader','resolve-url-loader','sass-loader?sourceMap']
       },
       {
         test: /\.css$/,
-        use: 'style-loader!css-loader'
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.png/,
