@@ -20,10 +20,10 @@
 
     <main role="main">
       <div class="progress-bar" ng-show="isLoading() && showFields">
-        <span>
-            ..
-        </span>
-    </div>
+            <span>
+                ..
+            </span>
+        </div>
         <div class="main-col">
             <div class="form-sheet" ng-show="!showFields">
                 <div class="form-sheet-summary">
@@ -54,11 +54,14 @@
                     </div>
                 </div>
                 <div id="history-export" class="survey-details tabs-target">
-                    <div class="form-field">
-                        <dt class="list-item"><a>Job 1</a></dt>
-                        <dd>Expires: March 14th, 2018</dd>
-                        <dt class="list-item"><a>Job 2</a></dt>
-                        <dd>Expires: March 15th, 2018</dd>
+                    <div class="listing">
+                        <div class="listing-item" ng-repeat="job in exportJobs">
+                            <div class="listing-item-primary">
+                                <h2 class="listing-item-title"><a href="{{job.url}}" target="_blank" translate="data_export.job" translate-values="{jobId: job.id}">Job {{job.id}}</a></h2>
+                                <p class="listing-item-secondary" translate="data_export.expires" translate-values="{expires: job.url_expiration}">Expires: {{job.url_expiration}}</p>
+                                <p class="listing-item-secondary" translate="data_export.created" translate-values="{created: job.created}">Created: {{job.created}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -103,4 +106,5 @@
             </div>
         </div>
     </div>
-</main>
+    </main>
+</div>
