@@ -995,7 +995,11 @@
         "no_fields": "Uh oh... you need to select some fields to export first.",
         "expires": "Expires: {{expires}}",
         "job": "Job {{jobId}}",
-        "created": "Created {{created}}"
+        "created": "Created {{created}}",
+        "success": "Finished",
+        "pending": "Pending",
+        "failed": "Failed",
+        "queued": "In Progress"
     },
     "user": {
         "role_display" : "Role: {{role}}",

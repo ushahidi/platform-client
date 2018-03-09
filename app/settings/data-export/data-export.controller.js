@@ -86,14 +86,15 @@ function (
         $scope.exportJobs = [];
 
         DataExport.loadExportJobs().then(function (response) {
-            $scope.exportJobs = _.groupBy(response, (job) => job.status);
-            // _.each(response, function (job) {
-            //     if (job.status ) {
-            //         job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
-            //         job.created = new Date(job.created).toLocaleString();
-            //         $scope.exportJobs.push(job);
-            //     }
-            // });
+            let jobs = _.filter(_.map(response, (job) => {
+                if (job.status) {
+                    job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
+                    job.created = new Date(job.created).toLocaleString();
+                    job.status = job.status.toLowerCase();
+                    return job;
+                }
+            }));
+            $scope.exportJobs = _.groupBy(jobs, (job) => job.status);
         });
     }
 
