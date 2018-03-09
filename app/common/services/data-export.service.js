@@ -20,7 +20,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         var queries = [];
         ExportJobEndpoint.queryFresh({user: 'me'}).$promise.then(function (response) {
             _.each(response, function (job) {
-                if (job.status !== 'done') {
+                if (job.status !== 'SUCCESS' && job.status !== 'FAILED') {
                     queries.push(ExportJobEndpoint.getFresh({id: job.id}));
                 }
             });
@@ -37,11 +37,17 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         $timeout(function () {
             $q.all(queries).then(function (response) {
                 _.each(response, function (job) {
-                    if (job.status === 'done') {
-                        // when job is done, we stop the polling...
+                    if (job.status === 'SUCCESS') {
+                        // when job is successful, we stop the polling...
                         $rootScope.$broadcast('event:export_job:stopped');
                         // ..and download the file
                         downloadFile(job.url);
+                    } else if (job.status === 'FAILED') {
+                        // when job is failed, we stop the polling...
+                        $rootScope.$broadcast('event:export_job:stopped');
+                        // ..and notify user that it has failed
+                        var error_message = 'Export job has failed.';
+                        loadingStatus(false, error_message);
                     } else {
                         // add the job to the poll until job is done
                         nextQuery.push(ExportJobEndpoint.getFresh({id: job.id}));
