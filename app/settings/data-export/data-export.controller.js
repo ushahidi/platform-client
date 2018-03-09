@@ -33,6 +33,7 @@ function (
     $scope.loadExportJobs = loadExportJobs;
     $scope.switchTab = switchTab;
     $scope.exportJobs = [];
+    $scope.getStatusName = getStatusName;
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
@@ -85,13 +86,14 @@ function (
         $scope.exportJobs = [];
 
         DataExport.loadExportJobs().then(function (response) {
-            _.each(response, function (job) {
-                if (job.status !== 'done') {
-                    job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
-                    job.created = new Date(job.created).toLocaleString();
-                    $scope.exportJobs.push(job);
-                }
-            });
+            $scope.exportJobs = _.groupBy(response, (job) => job.status);
+            // _.each(response, function (job) {
+            //     if (job.status ) {
+            //         job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
+            //         job.created = new Date(job.created).toLocaleString();
+            //         $scope.exportJobs.push(job);
+            //     }
+            // });
         });
     }
 
@@ -143,7 +145,10 @@ function (
 
         }
     }
-
+    function getStatusName(status) {
+        const statuses = {'SUCCESS': 'Finished', 'PENDING': 'Pending'};
+        return statuses[status];
+    }
     // start fetching forms to display
     getForms();
 }];
