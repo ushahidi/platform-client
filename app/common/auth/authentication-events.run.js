@@ -19,15 +19,18 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
         $rootScope.currentUser = Session.getSessionData();
     }
     function loadExportJob() {
-        DataExport.loadExportJob();
+
+        if ($rootScope.hasPermission('Bulk Data Import')) {
+            DataExport.loadExportJob();
+        }
     }
 
     function doLogin(redirect, noReload) {
         TermsOfService.getTosEntry()
             .then(function () {
                 loadSessionData();
-                loadExportJob();
                 $rootScope.loggedin = true;
+
                 /**
                  * adminUserSetup is called AFRTER the user has agreed to terms of service.
                  * adminUserSetup is used to verify which user is logging in/logged in and opening a modal box
@@ -37,6 +40,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                  * references https://github.com/ushahidi/platform/issues/1714
                  */
                 adminUserSetup();
+                loadExportJob();
                 PostFilters.resetDefaults();
                 if (redirect) {
                     $location.url(redirect);
