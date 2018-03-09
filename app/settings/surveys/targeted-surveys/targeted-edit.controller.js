@@ -3,10 +3,12 @@ module.exports = [
     '$scope',
     'Features',
     '$state',
+    '_',
 function (
     $scope,
     Features,
-    $state
+    $state,
+    _
 ) {
     $scope.isActiveStep = isActiveStep;
     $scope.isStepComplete = isStepComplete;
@@ -33,12 +35,10 @@ function (
     }
 
     function isStepComplete(step) {
-        // todo: check if form-parts of this step is dirty, then return false, else return true.
-        return true;
+        return step.$valid;
     }
 
     function completeStepOne() {
-        // Insert validation for step 1 here
         $scope.activeStep = 2;
     }
 
