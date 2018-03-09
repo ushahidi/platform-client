@@ -100,7 +100,27 @@
                                 <span class="stepper-badge">2</span>
                                     Choose your audience
                             </h2>
+                            <p ng-show="isStepTwoComplete && !isActiveStep(2)">Send this message to {{finalNumbers.goodNumbers.length}} people via SMS.</p>
                             <div ng-show="isActiveStep(2)">
+                                <div class="form-field">
+                                    <label for="country-code" class="required">
+                                        Country code 
+                                    </label>
+                                    <div class="custom-select">
+                                        <select id="country-code" ng-options="country as country.name for country in countriesList" ng-model="selectedCountry"
+                                        ><option selected value='' required>Select Country</option></select>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label>Phone numbers</label>
+                                    <div class="alert error" ng-show="finalNumbers.badNumberCount > 0">Of the original {{finalNumbers.originalCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone number<span ng-show="finalNumbers.badNumberCount > 1">s</span> below and continue. Numbers must be between 5 and 19 digits long.</div>
+                                    <p>Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.</p>
+                                    <textarea name="textBoxNumbers" ng-model="textBoxNumbers" required placeholder="e.g. 1234567890, 9876543210..."></textarea>
+                                    <div ng-show="finalNumbers.goodNumbers.length && finalNumbers.badNumberCount > 0">
+                                        <label>These numbers look fine.</label>
+                                        <textarea readonly>{{finalNumbers.goodNumberString.slice(-1) === ',' ? finalNumbers.goodNumberString.slice(0, -1) : finalNumbers.goodNumberString}}</textarea>
+                                    </div>
+                                </div>
                                 <div class="form-field">
                                     <div class="button-group">
                                           <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepTwo)" ng-click="completeStepTwo()">Continue</button>
