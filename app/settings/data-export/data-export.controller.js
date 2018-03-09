@@ -85,13 +85,18 @@ function (
         $scope.exportJobs = [];
 
         DataExport.loadExportJobs().then(function (response) {
-            _.each(response, function (job) {
-                if (job.status !== 'done') {
+            let jobs = _.filter(_.map(response, (job) => {
+                if (job.status) {
                     job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
                     job.created = new Date(job.created).toLocaleString();
-                    $scope.exportJobs.push(job);
+                    job.status = job.status.toLowerCase();
+                    return job;
                 }
-            });
+            }));
+            jobs = _.sortBy(jobs, (job) => {
+                return job.created;
+            }).reverse();
+            $scope.exportJobs = jobs;
         });
     }
 
@@ -143,7 +148,6 @@ function (
 
         }
     }
-
     // start fetching forms to display
     getForms();
 }];
