@@ -33,7 +33,6 @@ function (
     $scope.loadExportJobs = loadExportJobs;
     $scope.switchTab = switchTab;
     $scope.exportJobs = [];
-    $scope.getStatusName = getStatusName;
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
@@ -94,7 +93,10 @@ function (
                     return job;
                 }
             }));
-            $scope.exportJobs = _.groupBy(jobs, (job) => job.status);
+            jobs = _.sortBy(jobs, (job) => {
+                return job.created;
+            }).reverse();
+            $scope.exportJobs = jobs;
         });
     }
 
@@ -145,10 +147,6 @@ function (
             $scope.showProgress = true;
 
         }
-    }
-    function getStatusName(status) {
-        const statuses = {'SUCCESS': 'Finished', 'PENDING': 'Pending'};
-        return statuses[status];
     }
     // start fetching forms to display
     getForms();

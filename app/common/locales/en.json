@@ -993,13 +993,13 @@
         "cancel": "Cancel",
         "export_progress": "Export in progress...",
         "no_fields": "Uh oh... you need to select some fields to export first.",
-        "expires": "Expires: {{expires}}",
-        "job": "Job {{jobId}}",
-        "created": "Created {{created}}",
-        "success": "Finished",
-        "pending": "Pending",
-        "failed": "Failed",
-        "queued": "In Progress"
+        "expires": "<strong>Expires:</strong> {{expires}}",
+        "job": "CSV Export {{jobId}}",
+        "created": "<strong>Created:</strong> {{created}}",
+        "success": "<strong>Status:</strong> Finished",
+        "pending": "<strong>Status:</strong> Pending",
+        "failed": "<strong>Status:</strong> Failed",
+        "queued": "<strong>Status:</strong> In Progress"
     },
     "user": {
         "role_display" : "Role: {{role}}",
