@@ -33,7 +33,14 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         cleanUIFilters: cleanUIFilters,
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
-        reactiveFilters: true
+        reactiveFilters: true,
+        /**
+         * This flag is used to syncronize the "internalChange" state globally
+         * (useful between filters bug icons and checkboxes).
+         * Since we use ngmodel all our changes in filter-category to selectecategories trigger changes
+         * and we want to keep a state to know if the user did the change or our handleParents category
+         */
+        filtersInternalChange: true
     };
 
     /**
@@ -152,6 +159,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function clearFilters() {
+        this.filtersInternalChange = false;
         // Replace filterState with defaults
         angular.copy(getDefaults(), filterState);
         // Trigger reactive filters
@@ -163,6 +171,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         filterState = this.clearFilterFromArray(filterKey, value, filterState);
     }
     function clearFilterFromArray(filterKey, value, from) {
+        this.filtersInternalChange = false;
         /*
          * if filter is in an array, we only want to remove that specific value
          * if all filter-values are removed from array, we want to reset to default
