@@ -20,7 +20,6 @@ function (
     $scope.completeStepThree = completeStepThree;
     $scope.stepOneWarning = false;
     $scope.stepTwoWarning = false;
-    $scope.isStepTwoComplete = false;
     $scope.publish = publish;
     $scope.previousStep = previousStep;
     $scope.activeStep = 1;
@@ -98,7 +97,6 @@ function (
                 $scope.textBoxNumbers = $scope.finalNumbers.badNumbersString.slice(0, -1);
             } else {
                 $scope.textBoxNumbers = $scope.finalNumbers.goodNumbersString;
-                $scope.isStepTwoComplete = true;
                 $scope.activeStep = 3;
             }
         } else {

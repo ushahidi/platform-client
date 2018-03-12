@@ -102,7 +102,7 @@
                                 <span class="stepper-badge">2</span>
                                     Choose your audience
                             </h2>
-                            <p ng-show="isStepTwoComplete && !isActiveStep(2)">Send this message to {{finalNumbers.goodNumbers.length}} people via SMS.</p>
+                            <p ng-show="!isActiveStep(2) && finalNumbers.goodNumbers.length">Send this message to {{finalNumbers.goodNumbers.length}} people via SMS.</p>
                             <div ng-show="isActiveStep(2)">
                                 <div class="form-field">
                                     <label for="country-code" class="required">
