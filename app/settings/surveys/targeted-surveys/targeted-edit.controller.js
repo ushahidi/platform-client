@@ -5,13 +5,13 @@ module.exports = [
     'Features',
     '$state',
     '_',
-    'CountryCodeEndpoint',
+    // 'CountryCodeEndpoint',
 function (
     $scope,
     Features,
     $state,
-    _,
-    CountryCodeEndpoint
+    _
+    // CountryCodeEndpoint
 ) {
     $scope.isActiveStep = isActiveStep;
     $scope.isStepComplete = isStepComplete;
@@ -28,6 +28,16 @@ function (
     $scope.textBoxNumbers = '';
     $scope.validatedNumbers = [];
     $scope.badCount = 0;
+    $scope.resetNumbers = resetNumbers;
+    $scope.finalNumbers = {
+            goodNumbers: [],
+            goodNumbersString: '',
+            badNumbersString: '',
+            repeatCount: 0,
+            storageObj: {},
+            badNumberCount: 0
+        };
+    $scope.runValidations = runValidations;
 
     Features.loadFeatures()
            .then(() => {
@@ -58,25 +68,13 @@ function (
         }
     }
 
-    $scope.finalNumbers = {
-            goodNumbers: [],
-            goodNumberString: '',
-            badNumbers: '',
-            repeatCount: 0,
-            storageObj: {},
-            badNumberCount: 0,
-            originalCount: 0
-        };
-
-
     function runValidations(numbers) {
-        $scope.finalNumbers.badNumbers = '';
+        $scope.finalNumbers.badNumbersString = '';
         $scope.finalNumbers.badNumberCount = 0;
         let numbersArray = numbers.split(',');
-        $scope.finalNumbers.originalCount = numbersArray.length;
         numbersArray.forEach((number) => {
             if (!isValidNumber(number, $scope.selectedCountry.code) && number.length) {
-                $scope.finalNumbers.badNumbers = $scope.finalNumbers.badNumbers + number + ',';
+                $scope.finalNumbers.badNumbersString = $scope.finalNumbers.badNumbersString + number + ',';
                 $scope.finalNumbers.badNumberCount = $scope.finalNumbers.badNumberCount + 1;
             } else if (isValidNumber(number, $scope.selectedCountry.code) && number.length) {
                 let cleanNumber = number.replace(/[^0-9]+/g, '');
@@ -86,7 +84,7 @@ function (
                 } else {
                     $scope.finalNumbers.storageObj[cleanNumber] = cleanNumber;
                     $scope.finalNumbers.goodNumbers.push(cleanNumber);
-                    $scope.finalNumbers.goodNumberString = $scope.finalNumbers.goodNumberString + number + ',';
+                    $scope.finalNumbers.goodNumbersString = $scope.finalNumbers.goodNumbersString + number + ',';
                 }
             }
         });
@@ -96,16 +94,27 @@ function (
         if (isStepComplete($scope.targetedSurvey.stepTwo)) {
             $scope.stepTwoWarning = false;
             runValidations($scope.textBoxNumbers);
-            if ($scope.finalNumbers.badNumbers.length) {
-                $scope.textBoxNumbers = $scope.finalNumbers.badNumbers.slice(-1) === ',' ? $scope.finalNumbers.badNumbers.slice(0, -1) : $scope.finalNumbers.badNumbers;
+            if ($scope.finalNumbers.badNumbersString.length) {
+                $scope.textBoxNumbers = $scope.finalNumbers.badNumbersString.slice(0, -1);
             } else {
-                $scope.textBoxNumbers = $scope.finalNumbers.goodNumberString;
+                $scope.textBoxNumbers = $scope.finalNumbers.goodNumbersString;
                 $scope.isStepTwoComplete = true;
                 $scope.activeStep = 3;
             }
         } else {
             $scope.stepTwoWarning = true;
         }
+    }
+
+    function resetNumbers() {
+        $scope.finalNumbers = {
+            goodNumbers: [],
+            goodNumbersString: '',
+            badNumbersString: '',
+            repeatCount: 0,
+            storageObj: {},
+            badNumberCount: 0
+        };
     }
 
     function completeStepThree() {

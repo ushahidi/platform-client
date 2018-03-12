@@ -89,7 +89,7 @@
                             <div ng-show="isActiveStep(1)">
                                 <div class="form-field">
                                     <div class="button-group">
-                                        <button class="button-alpha"  ng-click="completeStepOne()">Continue</button>
+                                        <button class="button-alpha"  ng-click="completeStepOne()" formnovalidate>Continue</button>
                                     </div>
                                 </div>
                             </div>
@@ -108,9 +108,9 @@
                                     <label for="country-code" class="required">
                                         Country code 
                                     </label>
-                                    <p ng-show="stepTwoWarning && selectedCountry.name == 'Select Country'" class="alert error">You must select a country.</p>
+                                    <p ng-show="stepTwoWarning && selectedCountry === undefined" class="alert error">You must select a country.</p>
                                     <div class="custom-select">
-                                        <select id="country-code" ng-options="country as country.name for country in countriesList" ng-model="selectedCountry"
+                                        <select id="country-code" ng-options="country as (country.name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
                                         ><option selected value='' ng-required="true">Select Country</option></select>
                                     </div>
                                 </div>
@@ -118,18 +118,18 @@
                                     <label required>Phone numbers</label>
                                     <p ng-show="stepTwoWarning && !targetedSurvey.stepTwo.textBoxNumbers.$dirty && !finalNumbers.goodNumbers.length" class="alert error">You must enter at least 1 phone number.</p>
                                     <p class="alert error" ng-show="finalNumbers.repeatCount > 0">We removed a total of {{finalNumbers.repeatCount}} repeat number<span ng-show="finalNumbers.repeatCount > 1">s</span> from your list.</p>
-                                    <div class="alert error" ng-show="finalNumbers.badNumberCount > 0">Of the original {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone number<span ng-show="finalNumbers.badNumberCount > 1">s</span> below and continue. Numbers must match the selected country's formatting rules.</div>
+                                    <div class="alert error" ng-show="finalNumbers.badNumberCount > 0">Of the {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone number<span ng-show="finalNumbers.badNumberCount > 1">s</span> below and continue. Numbers must match the selected country's formatting rules.</div>
                                     <p>Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.</p>
                                     <textarea name="textBoxNumbers" ng-model="textBoxNumbers" ng-required="!finalNumbers.goodNumbers.length" placeholder="e.g. 1234567890, 9876543210..."></textarea>
                                     <div ng-show="finalNumbers.goodNumbers.length && finalNumbers.badNumberCount > 0">
                                         <label ng-if="finalNumbers.goodNumbers.length > 1">These {{finalNumbers.goodNumbers.length}} numbers look fine.</label>
                                         <label ng-if="finalNumbers.goodNumbers.length === 1">This {{finalNumbers.goodNumbers.length}} number looks fine.</label>
-                                        <textarea readonly>{{finalNumbers.goodNumberString.slice(-1) === ',' ? finalNumbers.goodNumberString.slice(0, -1) : finalNumbers.goodNumberString}}</textarea>
+                                        <textarea readonly>{{finalNumbers.goodNumbersString.slice(-1) === ',' ? finalNumbers.goodNumbersString.slice(0, -1) : finalNumbers.goodNumbersString}}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-field">
                                     <div class="button-group">
-                                          <button class="button-alpha" ng-click="completeStepTwo()">Continue</button>
+                                          <button class="button-alpha" ng-click="completeStepTwo()" formnovalidate>Continue</button>
                                         <button class="button" ng-click="previousStep()">Back</button>
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@
                                      <div class="form-field">
                                         <div class="button-group">
                                             <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepThree)" ng-click="completeStepThree()">Continue</button>
-                                            <button class="button" ng-click="previousStep()">Back</button>
+                                            <button class="button" ng-click="previousStep(); resetNumbers()">Back</button>
                                         </div>
                                     </div>
                                 </div>
