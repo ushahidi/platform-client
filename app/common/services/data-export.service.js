@@ -1,12 +1,13 @@
 module.exports = DataExport;
 
-
 DataExport.$inject = ['$rootScope', 'ExportJobEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST', '$q', '_'];
 function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $interval, CONST, $q, _) {
+    var exportJobs = [];
     function startExport(query) {
         query.entity_type = 'post';
         // saving the new job to the db
         ExportJobEndpoint.save(query).$promise.then(function (job) {
+            updateExportJobsList(job);
             // notifies the user
             loadingStatus(true, null, job);
             // start polling for ready job.
@@ -42,12 +43,14 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                         $rootScope.$broadcast('event:export_job:stopped');
                         // ..and download the file
                         downloadFile(job.url);
+                        updateExportJobsList(job);
                     } else if (job.status === 'FAILED') {
                         // when job is failed, we stop the polling...
                         $rootScope.$broadcast('event:export_job:stopped');
                         // ..and notify user that it has failed
                         var error_message = 'Export job has failed.';
                         loadingStatus(false, error_message);
+                        updateExportJobsList(job);
                     } else {
                         // add the job to the poll until job is done
                         nextQuery.push(ExportJobEndpoint.getFresh({id: job.id}));
@@ -65,6 +68,19 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                 }
             );
         }, CONST.EXPORT_POLLING_INTERVAL);
+    }
+
+    function updateExportJobsList(job) {
+        var _exportJobs = getExportJobs();
+        const foundJob = _.findWhere(_exportJobs, { id: job.id });
+        console.log(DataExport.exportJobs, _exportJobs);
+        if (foundJob) {
+            setExportJobs(_.extend(foundJob, job));
+        } else {
+            _exportJobs.push(job);
+            setExportJobs(_exportJobs);
+        }
+        $rootScope.$broadcast('exportJobs:updated', _exportJobs);
     }
 
     function cancelExport(jobId) {
@@ -122,9 +138,40 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         }
     }
 
+    function processJobFields(job) {
+        if (job.status) {
+            var expiration = job.url_expiration ? new Date(job.url_expiration * 1000).toLocaleString() : '';
+            job.url_expiration = expiration;
+            job.created = new Date(job.created).toLocaleString();
+            job.status = job.status.toLowerCase();
+        }
+        return job;
+    }
+
+    function processExportJobs(jobs) {
+        let _jobs = _.filter(_.map(jobs, (job) => {
+            return processJobFields(job);
+        }));
+        _jobs = _.sortBy(jobs, (job) => {
+            return job.created;
+        }).reverse();
+        return _jobs;
+    }
+
+    function getExportJobs() {
+        return exportJobs;
+    }
+
+    function setExportJobs(_exportJobs) {
+        exportJobs = _exportJobs;
+    }
+
     return {
         startExport: startExport,
         loadExportJob: loadExportJob,
-        loadExportJobs: loadExportJobs
+        loadExportJobs: loadExportJobs,
+        processExportJobs: processExportJobs,
+        setExportJobs: setExportJobs,
+        getExportJobs: getExportJobs
     };
 }
