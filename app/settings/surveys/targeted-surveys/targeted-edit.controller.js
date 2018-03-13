@@ -77,8 +77,6 @@ function (
                 $scope.finalNumbers.badNumbersString = $scope.finalNumbers.badNumbersString + number + ',';
                 $scope.finalNumbers.badNumberCount = $scope.finalNumbers.badNumberCount + 1;
             } else if (isValidNumber(number, $scope.selectedCountry.code) && number.length) {
-                // let cleanNumber = number.replace(/[^0-9]+/g, '');
-
                 if ($scope.finalNumbers.storageObj[number]) {
                     $scope.finalNumbers.repeatCount = $scope.finalNumbers.repeatCount + 1;
                 } else {
@@ -97,7 +95,7 @@ function (
             if ($scope.finalNumbers.badNumbersString.length) {
                 $scope.textBoxNumbers = $scope.finalNumbers.badNumbersString.slice(0, -1);
             } else {
-                $scope.textBoxNumbers = $scope.finalNumbers.goodNumbersString;
+                $scope.textBoxNumbers = $scope.finalNumbers.goodNumbersString.slice(0, -1);
                 $scope.activeStep = 3;
             }
         } else {
