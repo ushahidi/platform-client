@@ -73,7 +73,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
     function updateExportJobsList(job) {
         var _exportJobs = getExportJobs();
         const foundJob = _.findWhere(_exportJobs, { id: job.id });
-        console.log(DataExport.exportJobs, _exportJobs);
+        
         if (foundJob) {
             setExportJobs(_.extend(foundJob, job));
         } else {
