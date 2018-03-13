@@ -102,13 +102,13 @@
                                 <span class="stepper-badge">2</span>
                                     Choose your audience
                             </h2>
-                            <p ng-show="!isActiveStep(2) && finalNumbers.goodNumbers.length">Send this message to {{finalNumbers.goodNumbers.length}} people via SMS.</p>
+                            <p ng-show="!isActiveStep(2) && finalNumbers.goodNumbers.length">Send this message to {{finalNumbers.goodNumbers.length}} <span ng-show="finalNumbers.goodNumbers.length > 1">people</span><span ng-show="finalNumbers.goodNumbers.length === 1">person</span> via SMS.</p>
                             <div ng-show="isActiveStep(2)">
                                 <div class="form-field">
                                     <label for="country-code" class="required">
                                         Country code 
                                     </label>
-                                    <p ng-show="stepTwoWarning && selectedCountry === undefined" class="alert error">You must select a country.</p>
+                                    <p ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" class="alert error">You must select a country.</p>
                                     <div class="custom-select">
                                         <select id="country-code" ng-options="country as (country.name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
                                         ><option selected value='' ng-required="true">Select Country</option></select>

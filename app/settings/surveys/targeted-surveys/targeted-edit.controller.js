@@ -90,7 +90,7 @@ function (
     }
 
     function completeStepTwo() {
-        if (isStepComplete($scope.targetedSurvey.stepTwo)) {
+        if (isStepComplete($scope.targetedSurvey.stepTwo) && $scope.selectedCountry !== undefined && $scope.selectedCountry !== null) {
             $scope.stepTwoWarning = false;
             runValidations($scope.textBoxNumbers);
             if ($scope.finalNumbers.badNumbersString.length) {
