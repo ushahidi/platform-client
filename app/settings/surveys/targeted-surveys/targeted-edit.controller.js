@@ -71,18 +71,19 @@ function (
         $scope.finalNumbers.badNumbersString = '';
         $scope.finalNumbers.badNumberCount = 0;
         let numbersArray = numbers.split(',');
-        numbersArray.forEach((number) => {
+        numbersArray.forEach((entry) => {
+            let number = entry.replace(/\s/g, '');
             if (!isValidNumber(number, $scope.selectedCountry.code) && number.length) {
                 $scope.finalNumbers.badNumbersString = $scope.finalNumbers.badNumbersString + number + ',';
                 $scope.finalNumbers.badNumberCount = $scope.finalNumbers.badNumberCount + 1;
             } else if (isValidNumber(number, $scope.selectedCountry.code) && number.length) {
-                let cleanNumber = number.replace(/[^0-9]+/g, '');
+                // let cleanNumber = number.replace(/[^0-9]+/g, '');
 
-                if ($scope.finalNumbers.storageObj[cleanNumber]) {
+                if ($scope.finalNumbers.storageObj[number]) {
                     $scope.finalNumbers.repeatCount = $scope.finalNumbers.repeatCount + 1;
                 } else {
-                    $scope.finalNumbers.storageObj[cleanNumber] = cleanNumber;
-                    $scope.finalNumbers.goodNumbers.push(cleanNumber);
+                    $scope.finalNumbers.storageObj[number] = number;
+                    $scope.finalNumbers.goodNumbers.push(number);
                     $scope.finalNumbers.goodNumbersString = $scope.finalNumbers.goodNumbersString + number + ',';
                 }
             }
