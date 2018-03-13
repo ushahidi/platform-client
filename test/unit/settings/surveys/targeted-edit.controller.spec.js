@@ -53,22 +53,67 @@ describe('setting create targeted survey controller', function () {
             expect($scope.isStepComplete(stepTwo)).toEqual(false);
         });
         describe('Step One', function () {
-            // @TODO need to mock isStepComplete to test completeStepOne
-            // it('should move to step 2 when step one is complete', function () {
-            //     $scope.isStepComplete = true;
-            //     $scope.completeStepOne()
-            //     expect($scope.activeStep).toEqual(2);
-            //     expect($scope.stepOneWarning).toEqual(false);
-            // })
+            it('should move to step 2 when step one is complete', function () {
+                $scope.targetedSurvey = {
+                    stepOne: {
+                        $valid: true
+                    }
+                };
+                $scope.completeStepOne();
+                expect($scope.activeStep).toEqual(2);
+                expect($scope.stepOneWarning).toEqual(false);
+            });
+            it('should stay at step 1 and turn on warning when failing', function () {
+                $scope.activeStep = 1;
+                $scope.targetedSurvey = {
+                    stepOne: {
+                        $valid: false
+                    }
+                };
+                $scope.completeStepOne();
+                expect($scope.activeStep).toEqual(1);
+                expect($scope.stepOneWarning).toEqual(true);
+            });
         });
         describe('Step Two', function () {
-            // @TODO need to mock isStepComplete to test completeStepOne
-            // it('should move to step 3 when step 2 is complete', function () {
-            //     $scope.isStepComplete = true;
-            //     $scope.completeStepOne()
-            //     expect($scope.activeStep).toEqual(3);
-            //     expect($scope.stepTwoWarning).toEqual(false);
-            // })
+            it('should move to step 3 when step 2 is complete', function () {
+                $scope.targetedSurvey = {
+                    stepTwo: {
+                        $valid: true
+                    }
+                };
+                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.textBoxNumbers = '3172351967, 3176742327';
+                $scope.completeStepTwo();
+                expect($scope.activeStep).toEqual(3);
+                expect($scope.stepTwoWarning).toEqual(false);
+            });
+            it('should stay at step 2 when validation fails', function () {
+                $scope.activeStep = 2;
+                $scope.targetedSurvey = {
+                    stepTwo: {
+                        $valid: true
+                    }
+                };
+                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.textBoxNumbers = '3172351967, 3176742327, 123';
+                $scope.completeStepTwo();
+                expect($scope.activeStep).toEqual(2);
+                expect($scope.stepTwoWarning).toEqual(false);
+            });
+            it('should turn on the warning when fields are incomplete', function () {
+                $scope.activeStep = 2;
+                $scope.targetedSurvey = {
+                    stepTwo: {
+                        $valid: false
+                    }
+                };
+                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.textBoxNumbers = '3172351967, 3176742327, 123';
+                $scope.completeStepTwo();
+                expect($scope.activeStep).toEqual(2);
+                expect($scope.stepTwoWarning).toEqual(true);
+            });
             it('should reset the phone number object, which enables user to add to/edit numbers', function () {
                 $scope.finalNumbers = {
                     goodNumbers: ['3172351967', '3176742327'],
