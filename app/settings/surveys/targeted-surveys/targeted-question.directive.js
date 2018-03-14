@@ -11,6 +11,8 @@ function TargetedQuestionDirective() {
 
 function TargetedQuestionLink($scope, $element, $attrs) {
     $scope.charactersRemaining = charactersRemaining;
+    $scope.removeError = removeError;
+    $scope.save = save;
 
     function charactersRemaining() {
         if ($scope.editQuestion.question === undefined || $scope.editQuestion.question.length === 0) {
@@ -23,6 +25,22 @@ function TargetedQuestionLink($scope, $element, $attrs) {
             return 160 - $scope.editQuestion.question.length;
         }
     }
+    function removeError() {
+        $scope.questionError = false;
+    }
 
+    function save() {
+        let exists = false;
+        if ($scope.editQuestion.newQuestion && $scope.targetedSurvey.stepThree.questions) {
+            exists = $scope.checkForDuplicate();
+        }
 
+        if (exists) {
+            $scope.questionError = true;
+            $scope.questionMessage = 'This question already exists';
+        } else {
+            $scope.questionError = false;
+            $scope.addNewQuestion();
+        }
+    }
 }

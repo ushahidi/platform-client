@@ -23,7 +23,9 @@ function (
     $scope.completeStepTwo = completeStepTwo;
     $scope.completeStepThree = completeStepThree;
     $scope.openQuestionModal = openQuestionModal;
+    $scope.checkForDuplicate = checkForDuplicate;
     $scope.addNewQuestion = addNewQuestion;
+    $scope.deleteQuestion = deleteQuestion;
     $scope.publish = publish;
     $scope.previousStep = previousStep;
     $scope.activeStep = 1;
@@ -155,12 +157,20 @@ function (
         $scope.editQuestion = question ? question : {newQuestion: true};
         ModalService.openTemplate('<targeted-question></targeted-question>', 'survey.targeted_survey.edit_title', null, $scope, true, true);
     }
+    function checkForDuplicate() {
+        let exists = _.filter($scope.targetedSurvey.stepThree.questions, function (question) {
+            return $scope.editQuestion.question === question.label;
+        });
+        return exists.length !== 0;
+    }
 
     function addNewQuestion() {
         ModalService.close();
+
         if (!$scope.targetedSurvey.stepThree.questions) {
             $scope.targetedSurvey.stepThree.questions = [];
         }
+
         // WARNING! Below might change depending on what info the api needs. Its now based on open-surveys
         $scope.editQuestion.input = 'textarea';
         $scope.editQuestion.order = getPriority($scope.targetedSurvey.stepThree.questions);
@@ -177,6 +187,15 @@ function (
 
     function getPriority(step) {
         return step && step.length > 0 ? _.last(step).order + 1 : 3;
+    }
+
+    function deleteQuestion() {
+        ModalService.close();
+        if (!$scope.editQuestion.newQuestion) {
+            $scope.targetedSurvey.stepThree.questions = _.filter($scope.targetedSurvey.stepThree.questions, function (question) {
+                return question.label !== $scope.editQuestion.label;
+            });
+        }
     }
 
     function publish() {

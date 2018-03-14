@@ -1,9 +1,13 @@
 <div class="modal-body">
-    <div class="form-field" ng-class="{'error': error, 'success': !error}">
+    <div class="form-field" ng-class="{'error': error || questionError, 'success': !error && !questionError}">
         <label  class="required" translate="survey.targeted_survey.question_text"></label>
         <p translate="survey.targeted_survey.question_description"></p>
-        <textarea placeholder="Sample question: Hi there! How are you feeling today? Your response is free." ng-model="editQuestion.question" required></textarea>
+
+        <textarea placeholder="Sample question: Hi there! How are you feeling today? Your response is free." ng-model="editQuestion.question" required ng-change="removeError()"></textarea>
+
         <span class="right" translate="survey.targeted_survey.char_remains" translate-values="{remaining: charactersRemaining()}"></span>
+        </div>
+
         <div
             class="alert error"
             ng-show="error"
@@ -13,7 +17,16 @@
             </svg>
             <span>{{message}}</span>
         </div>
-    </div>
+
+        <div
+            class="alert error"
+            ng-show="questionError"
+        >
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+            </svg>
+            <span>{{questionMessage}}</span>
+        </div>
 
     <div class="form-field switch checked">
         <label for="switch3" translate="survey.make_response_private"></label>
@@ -25,9 +38,8 @@
     </div>
 
     <div class="modal-actions">
-        <div class="form-field">
-            <button class="button-alpha modal-trigger" ng-click="addNewQuestion()" ng-disabled="error || !editQuestion.question || editQuestion.question.length === 0" translate="form.save_and_close"></button>
-            <button class="button-destructive modal-trigger" translate="survey.targeted_survey.delete"></button>
+            <button class="button-alpha modal-trigger" ng-click="save()" ng-disabled="error || !editQuestion.question || editQuestion.question.length === 0" translate="form.save_and_close"></button>
+            <button class="button-destructive modal-trigger" translate="survey.targeted_survey.delete" ng-click="deleteQuestion()"></button>
         </div>
     </div>
 </div>
