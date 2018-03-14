@@ -154,7 +154,14 @@ function (
     }
 
     function openQuestionModal(question) {
-        $scope.editQuestion = question ? question : {newQuestion: true};
+        if (question) {
+            $scope.editQuestion = question;
+            // copying label, question-property is used to avoid the label-text to update while writing in the modal-window
+            $scope.editQuestion.question = angular.copy($scope.editQuestion.label);
+        } else {
+            $scope.editQuestion = {newQuestion: true};
+        }
+
         ModalService.openTemplate('<targeted-question></targeted-question>', 'survey.targeted_survey.edit_title', null, $scope, true, true);
     }
     function checkForDuplicate() {
