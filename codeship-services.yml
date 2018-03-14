@@ -13,8 +13,8 @@ dockerimg:
   build:
     image: ushahidi-platform-client/dockerimg
     dockerfile_path: Dockerfile
+    encrypted_args_file: buildargs.env.encrypted
   cached: true
-  command: noop
 
 release:
   build:
