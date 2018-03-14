@@ -49,9 +49,10 @@
                                         }"
                                 ng-show="isActiveStep(1)"
                             >
-                                <label for="name" translate>survey.targeted_survey.name</label>
-                                <input type="text" name="name"  ng-minlength="2" ng-maxlength="255" ng-model="name" required placeholder="Name...">
-                                <div
+                                <label for="name" translate="survey.targeted_survey.name">Survey name</label>
+                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.name.$dirty" class="alert error">You must give your survey a name.</p>
+                                <input type="text" name="name"  ng-minlength="2" ng-maxlength="255" ng-model="name" ng-required="true" placeholder="Name...">
+                                <p
                                     class="alert error"
                                     ng-show="targetedSurvey.stepOne.name.$dirty"
                                     ng-repeat="(error, value) in targetedSurvey.stepOne.name.$error"
@@ -60,7 +61,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                                     </svg>
                                     <span translate="{{'notify.form.validation.name.' + error}}"></span>
-                                </div>
+                                </p>
                             </div>
                             <div ng-hide="isActiveStep(1)">
                                 <h2 class=form-label translate="survey.targeted_survey.name"></h2>
@@ -68,7 +69,8 @@
                             </div>
                             <div class="form-field required" ng-show="isActiveStep(1)">
                                 <label for="description">Survey description</label>
-                                <textarea name="description" ng-model="description" required placeholder="Describe your survey..."></textarea>
+                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.description.$dirty" class="alert error">You must give your survey a description.</p>
+                                <textarea name="description" ng-model="description" ng-required="true" placeholder="Describe your survey..."></textarea>
                                 <div
                                     class="alert error"
                                     ng-show="targetedSurvey.stepOne.description.$dirty"
@@ -87,7 +89,7 @@
                             <div ng-show="isActiveStep(1)">
                                 <div class="form-field">
                                     <div class="button-group">
-                                        <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepOne)" ng-click="completeStepOne()" translate="settings.continue"></button>
+                                        <button class="button-alpha"  ng-click="completeStepOne()" formnovalidate translate="settings.continue">Continue</button>
                                     </div>
                                 </div>
                             </div>
@@ -100,11 +102,36 @@
                                 <span class="stepper-badge">2</span>
                                 <span translate="survey.targeted_survey.audience_title"></span>
                             </h2>
+                            <p ng-show="!isActiveStep(2) && finalNumbers.goodNumbers.length">Send this message to {{finalNumbers.goodNumbers.length}} <span ng-show="finalNumbers.goodNumbers.length > 1">people</span><span ng-show="finalNumbers.goodNumbers.length === 1">person</span> via SMS.</p>
                             <div ng-show="isActiveStep(2)">
                                 <div class="form-field">
+                                    <label for="country-code" class="required">
+                                        Country code 
+                                    </label>
+                                    <p ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" class="alert error">You must select a country.</p>
+                                    <div class="custom-select">
+                                        <select id="country-code" ng-options="country as (country.name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
+                                        ><option selected value='' ng-required="true">Select Country</option></select>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label required>Phone numbers</label>
+                                    <p ng-show="stepTwoWarning && !targetedSurvey.stepTwo.textBoxNumbers.$dirty && !finalNumbers.goodNumbers.length" class="alert error">You must enter at least 1 phone number.</p>
+                                    <p class="alert error" ng-show="finalNumbers.repeatCount > 0">We removed a total of {{finalNumbers.repeatCount}} repeat number<span ng-show="finalNumbers.repeatCount > 1">s</span> from your list.</p>
+                                    <div class="alert error" ng-show="finalNumbers.badNumberCount > 0">Of the {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone number<span ng-show="finalNumbers.badNumberCount > 1">s</span> below and continue. Numbers must match the selected country's formatting rules.</div>
+                                    <p>Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.</p>
+                                    <textarea name="textBoxNumbers" ng-model="textBoxNumbers" ng-required="!finalNumbers.goodNumbers.length" placeholder="e.g. 1234567890, 9876543210..."></textarea>
+                                    <div ng-show="finalNumbers.goodNumbers.length && finalNumbers.badNumberCount > 0">
+                                        <label ng-if="finalNumbers.goodNumbers.length > 1">These {{finalNumbers.goodNumbers.length}} numbers look fine.</label>
+                                        <label ng-if="finalNumbers.goodNumbers.length === 1">This {{finalNumbers.goodNumbers.length}} number looks fine.</label>
+                                        <textarea readonly>{{finalNumbers.goodNumbersString.slice(-1) === ',' ? finalNumbers.goodNumbersString.slice(0, -1) : finalNumbers.goodNumbersString}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-field">
                                     <div class="button-group">
-                                          <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepTwo)" ng-click="completeStepTwo()" translate="settings.continue"></button>
-                                        <button class="button" ng-click="previousStep()" translate="nav.back"></button>
+                                          <button class="button-alpha" ng-click="completeStepTwo()" formnovalidate translate="settings.continue">Continue</button>
+                                        <button class="button" ng-click="previousStep()" translate="nav.back">Back</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +167,7 @@
                                 <div class="form-field">
                                     <div class="button-group">
                                         <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepThree)" ng-click="completeStepThree()" translate="settings.continue"></button>
-                                        <button class="button" ng-click="previousStep()" translate="nav.back"></button>
+                                        <button class="button" ng-click="previousStep(); resetNumbers()">Back</button>
                                     </div>
                                 </div>
                             </div>
@@ -149,18 +176,18 @@
 
                     <ng-form name="stepFour">
                         <div class="stepper-item" ng-class="{'active': isActiveStep(4), 'disabled': !isActiveStep(4)}">
-                        <h2 class="stepper-heading">
-                            <span class="stepper-badge">4</span>
-                            <span translate="survey.targeted_survey.publish"></span>
-                        </h2>
-                        <div ng-show="isActiveStep(4)">
-                            <div class="button-group">
-                                <button class="button-alpha"  ng-disabled="!isStepComplete(targetedSurvey.stepFour)" ng-click="publish()" translate="survey.targeted_survey.publish"></button>
-                                <button class="button" ng-click="previousStep()" translate="nav.back"></button>
+                            <h2 class="stepper-heading">
+                                <span class="stepper-badge">4</span>
+                                <span translate="survey.targeted_survey.publish"></span>
+                            </h2>
+                            <div ng-show="isActiveStep(4)">
+                                <div class="button-group">
+                                    <button class="button-alpha"  ng-disabled="!isStepComplete(targetedSurvey.stepFour)" ng-click="publish()" translate="survey.targeted_survey.publish"></button>
+                                    <button class="button" ng-click="previousStep()" translate="nav.back"></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </ng-form>
+                    </ng-form>
                 </div>
             </div>
         </form>
