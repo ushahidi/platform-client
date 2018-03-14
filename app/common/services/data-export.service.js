@@ -34,8 +34,9 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
     }
 
     function startPolling(queries) {
-        var nextQuery = [];
-        $timeout(function () {
+        var timer,
+            nextQuery = [];
+        timer = $timeout(function () {
             $q.all(queries).then(function (response) {
                 _.each(response, function (job) {
                     if (job.status === 'SUCCESS') {
@@ -68,6 +69,9 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                 }
             );
         }, CONST.EXPORT_POLLING_INTERVAL);
+        $rootScope.$on('event:authentication:logout:succeeded', function () {
+            $timeout.cancel(timer);
+        });
     }
 
     function updateExportJobsList(job) {
