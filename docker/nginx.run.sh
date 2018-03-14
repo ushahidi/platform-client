@@ -1,11 +1,5 @@
 #!/bin/sh
 
-if [ "$1" == "noop" ]; then
-  # do nothing operator
-  sleep infinity
-  exit 0;
-fi
-
 # patch in frontend configuration
 if [ -z "$BACKEND_URL" ]; then
   echo "ERROR! You must provide a BACKEND_URL variable pointing at an ushahidi API host"
