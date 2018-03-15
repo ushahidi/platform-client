@@ -307,7 +307,9 @@
             "sample_question": "Sample question: Hi there! How are you feeling today? Your response is free.",
             "char_remains": "{{remaining}}/160 characters remaining",
             "publish": "Publish",
-            "delete": "Delete"
+            "delete": "Delete",
+            "publish_description": "<p>We will send {{questions}} questions to {{numbers}} via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.</p><br /> <p>If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.</p>",
+            "question_warning": "You must enter at least 1 question."
         }
     },
 

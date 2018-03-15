@@ -147,6 +147,9 @@
                             <div class="alert" ng-show="isActiveStep(3)">
                                 <p translate="survey.targeted_survey.add_questions_description"></p>
                             </div>
+                             <div class="alert error" ng-show="isActiveStep(3) && stepThreeWarning">
+                                <p translate="survey.targeted_survey.question_warning">You must enter at least 1 question.</p>
+                            </div>
                             <div class="form-field" ng-show="isActiveStep(3)">
                                 <ul id="listWithHandle" class="sortble-list">
                                     <li class="sortable-list-item" ng-repeat="question in stepThree.questions" data={{question.label}}>
@@ -180,6 +183,7 @@
                                 <span class="stepper-badge">4</span>
                                 <span translate="survey.targeted_survey.publish"></span>
                             </h2>
+
                             <div ng-show="isActiveStep(4)">
                                 <div class="button-group">
                                     <button class="button-alpha"  ng-disabled="!isStepComplete(targetedSurvey.stepFour)" ng-click="publish()" translate="survey.targeted_survey.publish"></button>

@@ -149,11 +149,16 @@ function (
     }
 
     function completeStepThree() {
-        // Insert validation for step 3 here
-        $scope.activeStep = 4;
+        if (!$scope.targetedSurvey.stepThree.questions || $scope.targetedSurvey.stepThree.questions.length === 0) {
+            $scope.stepThreeWarning = true;
+        } else {
+            $scope.stepThreeWarning = false;
+            $scope.activeStep = 4;
+        }
     }
 
     function openQuestionModal(question) {
+        $scope.stepThreeWarning = false;
         if (question) {
             $scope.editQuestion = question;
             // copying label, question-property is used to avoid the label-text to update while writing in the modal-window
