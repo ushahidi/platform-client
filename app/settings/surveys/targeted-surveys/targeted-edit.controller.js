@@ -7,6 +7,12 @@ module.exports = [
     '_',
     'ModalService',
     'Sortable',
+    'ConfigEndpoint',
+    'Notify',
+    'FormEndpoint',
+    'FormStageEndpoint',
+    'FormAttributeEndpoint',
+    '$q',
     // 'CountryCodeEndpoint',
 function (
     $scope,
@@ -14,7 +20,13 @@ function (
     $state,
     _,
     ModalService,
-    Sortable
+    Sortable,
+    ConfigEndpoint,
+    Notify,
+    FormEndpoint,
+    FormStageEndpoint,
+    FormAttributeEndpoint,
+    $q
     // CountryCodeEndpoint
 ) {
     $scope.isActiveStep = isActiveStep;
@@ -48,6 +60,7 @@ function (
             badNumberCount: 0
         };
     $scope.runValidations = runValidations;
+
 
     Features.loadFeatures()
            .then(() => {
@@ -154,7 +167,23 @@ function (
         } else {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
+            calculateStats();
         }
+    }
+    function calculateStats() {
+        ConfigEndpoint.get({id: 'data-provider'}).$promise.then(function (result) {
+            let cost,
+                providers = ['frontlinesms', 'nexmo', 'smssync', 'twilio'];
+            _.each(result.providers, function (provider, index) {
+                if (provider && _.contains(providers, index)) {
+                    // warning, this is a hack until cost is included in the api
+                    result[index].cost = 1;
+                    cost = result[index].cost;
+                    $scope.sms = $scope.targetedSurvey.stepThree.questions.length * $scope.finalNumbers.goodNumbers.length;
+                    $scope.cost = $scope.sms * cost;
+                }
+            });
+        });
     }
 
     function openQuestionModal(question) {
@@ -169,6 +198,7 @@ function (
 
         ModalService.openTemplate('<targeted-question></targeted-question>', 'survey.targeted_survey.edit_title', null, $scope, true, true);
     }
+
     function checkForDuplicate() {
         let exists = _.filter($scope.targetedSurvey.stepThree.questions, function (question) {
             return $scope.editQuestion.question === question.label;
@@ -210,8 +240,63 @@ function (
         }
     }
 
+    function goToDataView(id) {
+        // this function should add survey-id to filters + redirect to data-view
+        console.log('test');
+    }
+
     function publish() {
-        // Insert validation/safety-modal-check + publishing survey here
+        /* WARNING! This is using the FormEndpoint saving a normal survey. This will change in some way once the api is ready.
+        * We also need to add the numbers somewhere */
+
+        /* WARNING! If we end up using the same endpoint as for other surveys,
+        *  we should consider moving save-survey/tasks/attributes-code to a survey to
+        * be able to use same code in both surveys and targeted surveys + we need to add the numbers somewhere*/
+
+        let survey =  {
+                color: null,
+                everyone_can_create: true,
+                name: $scope.targetedSurvey.stepOne.name.$modelValue,
+                description: $scope.targetedSurvey.stepOne.description.$modelValue,
+                require_approval: $scope.targetedSurvey.stepFour.require_review,
+                hide_author: $scope.targetedSurvey.stepFour.hide_responders
+            };
+
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, 'We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD.', 'publish').then(function () {
+            FormEndpoint
+                .saveCache(survey)
+                .$promise
+                .then(function (savedSurvey) {
+                    let task = {
+                        attributes: $scope.targetedSurvey.stepThree.questions,
+                        formId: savedSurvey.id,
+                        form_id: savedSurvey.id,
+                        is_public: true,
+                        label: 'Post',
+                        priority: 0,
+                        required: false,
+                        show_when_published: true,
+                        task_is_internal_only: false,
+                        type: 'post'
+                    };
+                    FormStageEndpoint
+                        .saveCache(task)
+                        .$promise
+                        .then(function (savedTask) {
+                            let questions = [];
+                            _.each($scope.targetedSurvey.stepThree.questions, function (question) {
+                                    question.form_stage_id = savedTask.id;
+                                    question.formId = savedSurvey.id;
+                                    questions.push(FormAttributeEndpoint
+                                        .saveCache(question)
+                                        .$promise);
+                                });
+                            $q.all(questions).then(function (saved) {
+                                Notify.exportNotifications('1 182 messages sent. You will receive an invoice for the total cost to these messages via email', null, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'View survey in datamode', callbackArg: null});
+                            });
+                        });
+                });
+        });
     }
 
     function previousStep() {
