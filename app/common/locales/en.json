@@ -254,7 +254,7 @@
         "required_desc" : "Require this task be completed before a post can be visible to the public.",
         "require_field_desc" : "Require this field be completed",
         "name_this_task" : "Name this task...",
-        "require_review" : "Require posts be reviewed before they're published",
+        "require_review" : "Require posts to be reviewed before they're published",
         "require_review_desc" : "New responses to this survey will be put 'under review', and therefore not immediately visible to the public. Users with permission to review the response can review and 'publish' them, which would then make them visible to everyone.",
         "require_task" : "Required",
         "make_response_private" : "Make responses private",
@@ -308,8 +308,10 @@
             "char_remains": "{{remaining}}/160 characters remaining",
             "publish": "Publish",
             "delete": "Delete",
-            "publish_description": "<p>We will send {{questions}} questions to {{numbers}} via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.</p><br /> <p>If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.</p>",
-            "question_warning": "You must enter at least 1 question."
+            "publish_description": "<p>We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.</p><br /> <p>If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.</p>",
+            "question_warning": "You must enter at least 1 question.",
+            "hide_responders": "Hide information about responders",
+            "hide_responders_desc": "The phone numbers of the people who respond to your questions remain hidden from the public site. Only the team members with edit permissions will be able to see them."
         }
     },
 
