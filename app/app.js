@@ -151,6 +151,9 @@ angular.module('app',
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
     }])
+    .factory('Sortable', function () {
+        return require('sortablejs');
+    })
     // inject the router instance into a `run` block by name
     // .run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
     //     // * uncomment this to enable the visualizer *

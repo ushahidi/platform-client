@@ -290,6 +290,24 @@
                 "delete" : "Delete task",
                 "delete_this" : "Delete this task"
             }
+        },
+        "targeted_survey": {
+            "title": "Create a new targeted survey",
+            "description":"Send questions via SMS to a list of those phone numbers.",
+            "name_title": "Name your survey",
+            "name": "Survey name",
+            "description_title": "Survey Description",
+            "audience_title": "Choose your audience",
+            "add_questions_title": "Add your questions",
+            "add_questions_description": "We will send each question as a separate SMS. After someone responds, we will send the next question in the survey.",
+            "add_another": "Add another question...",
+            "edit_title": "Edit question",
+            "question_text": "Question text",
+            "question_description": "This is what users will see when they go to your survey.",
+            "sample_question": "Sample question: Hi there! How are you feeling today? Your response is free.",
+            "char_remains": "{{remaining}}/160 characters remaining",
+            "publish": "Publish",
+            "delete": "Delete"
         }
     },
 
