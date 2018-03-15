@@ -76,14 +76,17 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
 
     function updateExportJobsList(job) {
         var _exportJobs = getExportJobs();
-        const foundJob = _.findWhere(_exportJobs, { id: job.id });
+        const foundJobIndex = _.findIndex(_exportJobs, (_job) => {
+            return _job.id === job.id;
+        });
 
-        if (foundJob) {
-            setExportJobs(_.extend(foundJob, job));
+        if (foundJobIndex >= 0) {
+            _exportJobs[foundJobIndex] = job;
         } else {
-            _exportJobs.push(job);
-            setExportJobs(_exportJobs);
+            _exportJobs.push(processJobFields(job));
         }
+        _exportJobs = processExportJobs(_exportJobs);
+        setExportJobs(_exportJobs);
         $rootScope.$broadcast('exportJobs:updated', _exportJobs);
     }
 
@@ -144,8 +147,18 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
 
     function processJobFields(job) {
         if (job.status) {
-            var expiration = job.url_expiration ? new Date(job.url_expiration * 1000).toLocaleString() : '';
-            job.url_expiration = expiration;
+            /**
+             * only chhange the job.url_expiration if its a number or empty,
+             * to avoid "invalid date" from multiple conversions
+             */
+
+            if (!job.url_expiration) {
+                job.url_expiration = '';
+            } else if (_.isNumber(job.url_expiration)) {
+                job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
+            }
+            // keep the original timestamp for sorting
+            job.created_timestamp = job.created_timestamp ? job.created_timestamp : job.created;
             job.created = new Date(job.created).toLocaleString();
             job.status = job.status.toLowerCase();
         }
@@ -157,7 +170,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
             return processJobFields(job);
         }));
         _jobs = _.sortBy(jobs, (job) => {
-            return job.created;
+            return job.created_timestamp;
         }).reverse();
         return _jobs;
     }

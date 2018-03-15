@@ -138,7 +138,6 @@ function (
     }
 
     $scope.$on('exportJobs:updated', (event, data, newData) => {
-        DataExport.setExportJobs(DataExport.processExportJobs(data));
         $scope.exportJobs = DataExport.getExportJobs();
     });
 
