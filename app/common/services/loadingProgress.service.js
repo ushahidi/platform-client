@@ -10,7 +10,7 @@ function LoadingProgress($rootScope, $transitions, $injector) {
             }
         });
 
-        $transitions.onFinish({}, function (transition) {
+        $transitions.onExit({}, function (transition) {
             var $httpProvider = $injector.get('$http');
             if ($httpProvider.pendingRequests.length === 0) {
                 $rootScope.isLoading = false;
