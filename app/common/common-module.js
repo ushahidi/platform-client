@@ -48,6 +48,7 @@ angular.module('ushahidi.common', [
 .service('ContactEndpoint', require('./services/endpoints/contact.js'))
 .service('NotificationEndpoint', require('./services/endpoints/notification.js'))
 .service('TermsOfServiceEndpoint', require('./services/endpoints/terms-of-service-endpoint.js'))
+.service('ExportJobEndpoint', require('./services/endpoints/export-jobs.js'))
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
@@ -65,6 +66,7 @@ angular.module('ushahidi.common', [
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('intercom', require('./controllers/intercom.js'))
 .service('LoadingProgress', require('./services/loadingProgress.service.js'))
+.service('DataExport', require('./services/data-export.service.js'))
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 

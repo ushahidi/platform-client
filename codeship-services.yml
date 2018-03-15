@@ -9,6 +9,13 @@ build:
   cached: true
   default_cache_branch: develop
 
+dockerimg:
+  build:
+    image: ushahidi-platform-client/dockerimg
+    dockerfile_path: Dockerfile
+  cached: true
+  command: noop
+
 release:
   build:
     image: release
@@ -22,11 +29,19 @@ release:
 deploy:
   image: ushahidi/engineering-deployer:latest
   encrypted_env_file: deployment.env.encrypted
+  depends_on:
+    - dockerimg
+  add_docker: true
   environment:
+    AWS_REGION: us-east-1
     AWS_DEFAULT_REGION: us-east-1
+    DOCKER_PUSH_IMAGE_SRC: ushahidi-platform-client/dockerimg
+    DEPLOYMENT_RULES_REPO: deployment-rules
+    DEPLOYMENT_RULES_VERSION: master
+    DEPLOYMENT_RULES_FILE: platform.yml
   volumes:
     - ./tmp/out/last_build:/vols/last_build
-    
+
 test:
   build:
     image: test
@@ -37,4 +52,3 @@ test:
     - TEST_SUITE=unit
   cached: true
   default_cache_branch: develop
-

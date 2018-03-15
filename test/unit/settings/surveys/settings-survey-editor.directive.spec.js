@@ -23,6 +23,14 @@ describe('setting survey editor directive', function () {
             return mockFeatures;
         });
 
+        testApp.service('$state', function () {
+            return {
+                'go': function () {
+                    return {};
+                }
+            };
+        });
+
         angular.mock.module('testApp');
     });
 
