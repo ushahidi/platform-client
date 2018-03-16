@@ -48,6 +48,7 @@ function (
             $scope.fileContainer = {
                 file : null
             };
+            $scope.previousLanguage = '';
 
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
@@ -58,7 +59,10 @@ function (
                 $scope.api_key = results[0];
             });
 
-            $scope.site = ConfigEndpoint.get({ id: 'site' });
+            ConfigEndpoint.get({ id: 'site' }).$promise.then((site) => {
+                $scope.site = site;
+                $scope.previousLanguage = site.language;
+            });
 
             $scope.userSavedSettings = false;
 
@@ -117,14 +121,12 @@ function (
                     ]).then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
-                        // ToDo: Figure out how to save previous language
-                        // compare new against old before running translations
-                        // only run translation if there was a change
                         let newLanguage = result[0].language;
                         let userLanguage = Session.getSessionDataEntry('language');
-                        if (userLanguage === undefined || userLanguage === null) {
+                        if ((userLanguage === undefined || userLanguage === null) && $scope.previousLanguage !== newLanguage) {
                             TranslationService.translate(newLanguage);
                         }
+                        $scope.previousLanguage = newLanguage;
                         Notify.notify('notify.general_settings.save_success');
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
