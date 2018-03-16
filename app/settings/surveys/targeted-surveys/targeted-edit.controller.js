@@ -48,6 +48,7 @@ function (
     $scope.activeStep = 1;
     $scope.stepOneWarning = false;
     $scope.stepTwoWarning = false;
+    $scope.stepThreeWarning = false;
     $scope.publish = publish;
     $scope.previousStep = previousStep;
     $scope.activeStep = 1;
@@ -55,6 +56,7 @@ function (
     $scope.textBoxNumbers = '';
     $scope.validatedNumbers = [];
     $scope.badCount = 0;
+    $scope.recipientCount = 0;
     $scope.resetNumbers = resetNumbers;
     $scope.finalNumbers = {
             goodNumbers: [],
@@ -150,6 +152,7 @@ function (
                 $scope.textBoxNumbers = $scope.finalNumbers.badNumbersString.slice(0, -1);
             } else {
                 $scope.textBoxNumbers = $scope.finalNumbers.goodNumbersString.slice(0, -1);
+                $scope.recipientCount = $scope.finalNumbers.goodNumbers.length;
                 $scope.activeStep = 3;
             }
         } else {
@@ -169,12 +172,12 @@ function (
     }
 
     function completeStepThree() {
-        if (!$scope.targetedSurvey.stepThree.questions || $scope.targetedSurvey.stepThree.questions.length === 0) {
-            $scope.stepThreeWarning = true;
-        } else {
+        if ($scope.targetedSurvey.stepThree.questions !== undefined && $scope.targetedSurvey.stepThree.questions.length) {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
             calculateStats();
+        } else {
+            $scope.stepThreeWarning = true;
         }
     }
     function calculateStats() {
@@ -203,7 +206,9 @@ function (
             $scope.editQuestion = {newQuestion: true};
         }
 
-        ModalService.openTemplate('<targeted-question></targeted-question>', 'survey.targeted_survey.edit_title', null, $scope, true, true);
+        let modalTitle = question ? 'survey.targeted_survey.edit_title' : 'survey.targeted_survey.new_question_title';
+
+        ModalService.openTemplate('<targeted-question></targeted-question>', modalTitle, null, $scope, true, true);
     }
 
     function checkForDuplicate() {

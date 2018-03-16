@@ -35,8 +35,8 @@
         <form name="targetedSurvey">
             <div ng-show="targetedSurveysEnabled" class="form-sheet">
                 <div class="form-sheet-summary">
-                    <h2 class="form-sheet-title" translate="survey.targeted_survey.title"></h2>
-                    <p translate="survey.targeted_survey.description"></p>
+                    <h2 class="form-sheet-title" translate="survey.targeted_survey.title">Create a new targeted survey</h2>
+                    <p translate="survey.targeted_survey.description">Send questions via SMS to a list of those phone numbers.</p>
                 </div>
 
                 <div class="stepper">
@@ -44,7 +44,7 @@
                         <div class="stepper-item" ng-class="{'active': isActiveStep(1), 'disabled': !isActiveStep(1)}">
                             <h2 class="stepper-heading" data-accordion-trigger>
                                 <span class="stepper-badge">1</span>
-                                <span translate="survey.targeted_survey.name_title"></span>
+                                <span translate="survey.targeted_survey.name_title">Name your survey</span>
                             </h2>
                             <div
                                 class="form-field required"
@@ -55,7 +55,7 @@
                                 ng-show="isActiveStep(1)"
                             >
                                 <label for="name" translate="survey.targeted_survey.name">Survey name</label>
-                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.name.$dirty" class="alert error">You must give your survey a name.</p>
+                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.name.$dirty" class="alert error" translate="survey.targeted_survey.name_warning">You must give your survey a name.</p>
                                 <input type="text" name="name"  ng-minlength="2" ng-maxlength="255" ng-model="name" ng-required="true" placeholder="Name...">
                                 <p
                                     class="alert error"
@@ -69,12 +69,12 @@
                                 </p>
                             </div>
                             <div ng-hide="isActiveStep(1)">
-                                <h2 class=form-label translate="survey.targeted_survey.name"></h2>
-                                    <p>{{name}}</p>
+                                <h2 class=form-label translate="survey.targeted_survey.name">Survey Name</h2>
+                                <p>{{name}}</p>
                             </div>
                             <div class="form-field required" ng-show="isActiveStep(1)">
-                                <label for="description">Survey description</label>
-                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.description.$dirty" class="alert error">You must give your survey a description.</p>
+                                <label for="description" translate="survey.targeted_survey.description_title">Survey description</label>
+                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.description.$dirty" class="alert error" translate="survey.targeted_survey.description_warning">You must give your survey a description.</p>
                                 <textarea name="description" ng-model="description" ng-required="true" placeholder="Describe your survey..."></textarea>
                                 <div
                                     class="alert error"
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                             <div ng-hide="isActiveStep(1)">
-                                <h2 class=form-label translate="survey.targeted_survey.description_title"></h2>
+                                <h2 class=form-label translate="survey.targeted_survey.description_title">Survey Description</h2>
                                 <p>{{description}}</p>
                             </div>
                             <div ng-show="isActiveStep(1)">
@@ -105,30 +105,33 @@
                         <div class="stepper-item" ng-class="{'active': isActiveStep(2), 'disabled': !isActiveStep(2)}">
                             <h2 class="stepper-heading">
                                 <span class="stepper-badge">2</span>
-                                <span translate="survey.targeted_survey.audience_title"></span>
+                                <span translate="survey.targeted_survey.audience_title">Choose your audience</span>
                             </h2>
-                            <p ng-show="!isActiveStep(2) && finalNumbers.goodNumbers.length">Send this message to {{finalNumbers.goodNumbers.length}} <span ng-show="finalNumbers.goodNumbers.length > 1">people</span><span ng-show="finalNumbers.goodNumbers.length === 1">person</span> via SMS.</p>
+                            <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this message to {{recipientCount}} people via SMS.</p>
+                            <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this message to {{recipientCount}} person via SMS.</p>
                             <div ng-show="isActiveStep(2)">
                                 <div class="form-field">
-                                    <label for="country-code" class="required">
+                                    <label for="country-code" class="required" translate="survey.targeted_survey.country_code">
                                         Country code 
                                     </label>
-                                    <p ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" class="alert error">You must select a country.</p>
+                                    <p ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" class="alert error" translate="survey.targeted_survey.country_code_error">You must select a country.</p>
                                     <div class="custom-select">
                                         <select id="country-code" ng-options="country as (country.name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
-                                        ><option selected value='' ng-required="true">Select Country</option></select>
+                                        ><option selected value='' ng-required="true" translate="survey.targeted_survey.select_country">Select Country</option></select>
                                     </div>
                                 </div>
                                 <div class="form-field">
-                                    <label required>Phone numbers</label>
-                                    <p ng-show="stepTwoWarning && !targetedSurvey.stepTwo.textBoxNumbers.$dirty && !finalNumbers.goodNumbers.length" class="alert error">You must enter at least 1 phone number.</p>
-                                    <p class="alert error" ng-show="finalNumbers.repeatCount > 0">We removed a total of {{finalNumbers.repeatCount}} repeat number<span ng-show="finalNumbers.repeatCount > 1">s</span> from your list.</p>
-                                    <div class="alert error" ng-show="finalNumbers.badNumberCount > 0">Of the {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone number<span ng-show="finalNumbers.badNumberCount > 1">s</span> below and continue. Numbers must match the selected country's formatting rules.</div>
-                                    <p>Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.</p>
+                                    <label required translate="survey.targeted_survey.phone_numbers">Phone numbers</label>
+                                    <p ng-show="stepTwoWarning && !targetedSurvey.stepTwo.textBoxNumbers.$dirty && !finalNumbers.goodNumbers.length" class="alert error" translate="survey.targeted_survey.phone_number_warning">You must enter at least 1 phone number.</p>
+                                    <p class="alert error" ng-show="finalNumbers.repeatCount > 1" translate="survey.targeted_survey.multi_repeat_alert" translate-values="{repeatCount: finalNumbers.repeatCount}">We removed a total of {{finalNumbers.repeatCount}} repeat numbers from your list.</p>
+                                    <p class="alert error" ng-show="finalNumbers.repeatCount === 1" translate="survey.targeted_survey.one_repeat_alert" translate-values="{repeatCount: finalNumbers.repeatCount}">We removed a total of {{finalNumbers.repeatCount}} repeat number from your list.</p>
+                                    <div class="alert error" ng-show="finalNumbers.badNumberCount > 1" translate="survey.targeted_survey.multi_number_error" translate-values="{total: finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount, bad: finalNumbers.badNumberCount}">Of the {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone numbers below and continue. Numbers must match the selected country's formatting rules.</div>
+                                    <div class="alert error" ng-show="finalNumbers.badNumberCount === 1" translate="survey.targeted_survey.one_number_error" translate-values="{total: finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount, bad: finalNumbers.badNumberCount}">Of the {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone number below and continue. Numbers must match the selected country's formatting rules.</div>
+                                    <p translate="survey.targeted_survey.phone_number_instructions">Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.</p>
                                     <textarea name="textBoxNumbers" ng-model="textBoxNumbers" ng-required="!finalNumbers.goodNumbers.length" placeholder="e.g. 1234567890, 9876543210..."></textarea>
                                     <div ng-show="finalNumbers.goodNumbers.length && finalNumbers.badNumberCount > 0">
-                                        <label ng-if="finalNumbers.goodNumbers.length > 1">These {{finalNumbers.goodNumbers.length}} numbers look fine.</label>
-                                        <label ng-if="finalNumbers.goodNumbers.length === 1">This {{finalNumbers.goodNumbers.length}} number looks fine.</label>
+                                        <label ng-if="finalNumbers.goodNumbers.length > 1" translate="survey.targeted_survey.multi_numbers_good" translate-values="{good_numbers: finalNumbers.goodNumbers.length}">These {{finalNumbers.goodNumbers.length}} numbers look fine.</label>
+                                        <label ng-if="finalNumbers.goodNumbers.length === 1" translate="survey.targeted_survey.one_number_good" translate-values="{good_numbers: finalNumbers.goodNumbers.length}">This {{finalNumbers.goodNumbers.length}} number looks fine.</label>
                                         <textarea readonly>{{finalNumbers.goodNumbersString.slice(-1) === ',' ? finalNumbers.goodNumbersString.slice(0, -1) : finalNumbers.goodNumbersString}}</textarea>
                                     </div>
                                 </div>
@@ -147,14 +150,12 @@
                         <div class="stepper-item" ng-class="{'active': isActiveStep(3), 'disabled': !isActiveStep(3)}">
                             <h2 class="stepper-heading">
                             <span class="stepper-badge">3</span>
-                            <span translate="survey.targeted_survey.add_questions_title"></span>
+                            <span translate="survey.targeted_survey.add_questions_title">Add your questions</span>
                             </h2>
                             <div class="alert" ng-show="isActiveStep(3)">
-                                <p translate="survey.targeted_survey.add_questions_description"></p>
+                                <p translate="survey.targeted_survey.add_questions_description">We will send each question as a separate SMS. After someone responds, we will send the next question in the survey.</p>
                             </div>
-                            <div class="alert error" ng-show="stepThreeWarning">
-                                <p translate="survey.targeted_survey.question_warning">You must enter at least 1 question.</p>
-                          </div>
+                            <p ng-show="stepThreeWarning && (stepThree.questions === undefined || !stepThree.questions.length)" class="alert error" translate="survey.targeted_survey.question_error">You must add at least one question.</p>
                             <div class="form-field" ng-show="isActiveStep(3)">
                                 <ul id="listWithHandle" class="sortble-list">
                                     <li class="sortable-list-item" ng-repeat="question in stepThree.questions" data={{question.label}}>
@@ -166,7 +167,8 @@
                                         <a class="list-handle" ng-click="openQuestionModal(question)">{{question.label}}</a>
                                     </li>
                                 </ul>
-                                <a ng-click="openQuestionModal(null)" translate="survey.targeted_survey.add_another"></a>
+                                <a ng-show="stepThree.questions.length" ng-click="openQuestionModal(null)" translate="survey.targeted_survey.add_another">Add another question...</a>
+                                <a ng-hide="stepThree.questions.length" ng-click="openQuestionModal(null)" translate="survey.targeted_survey.add_a_question">Add a question...</a>
                             </div>
                             <div ng-hide="isActiveStep(3)">
                                     <p ng-repeat="question in stepThree.questions">{{question.label}}</p>
@@ -174,7 +176,7 @@
                             <div ng-show="isActiveStep(3)">
                                 <div class="form-field">
                                     <div class="button-group">
-                                        <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepThree)" ng-click="completeStepThree()" translate="settings.continue" formnovalidate></button>
+                                        <button class="button-alpha" ng-click="completeStepThree()" translate="settings.continue">Continue</button>
                                         <button class="button" ng-click="previousStep(); resetNumbers()">Back</button>
                                     </div>
                                 </div>

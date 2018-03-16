@@ -59,6 +59,38 @@ describe('setting create targeted survey controller', function () {
                 expect($scope.isStepComplete(stepTwo)).toEqual(false);
             });
         });
+        describe('Step Three Completion', function () {
+            it('should complete step three when there are questions', function () {
+                $scope.targetedSurvey = {
+                    stepThree: {
+                        questions: ['question 1']
+                    }
+                };
+                $scope.completeStepThree();
+                expect($scope.activeStep).toEqual(4);
+                expect($scope.stepThreeWarning).toEqual(false);
+            });
+            it('should fail to complete the step when there are no questions', function () {
+                $scope.targetedSurvey = {
+                    stepThree: {
+                        questions: []
+                    }
+                };
+                $scope.activeStep = 3;
+                $scope.completeStepThree();
+                expect($scope.activeStep).toEqual(3);
+                expect($scope.stepThreeWarning).toEqual(true);
+            });
+            it('should fail to complete the step when stepThree.questions is undefined', function () {
+                $scope.targetedSurvey = {
+                    stepThree: {}
+                };
+                $scope.activeStep = 3;
+                $scope.completeStepThree();
+                expect($scope.activeStep).toEqual(3);
+                expect($scope.stepThreeWarning).toEqual(true);
+            });
+        });
         describe('openQuestionModal', function () {
             it('should open the targeted-question-modal', function () {
                 spyOn(ModalService, 'openTemplate').and.callThrough();
