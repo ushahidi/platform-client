@@ -869,6 +869,8 @@
             "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
             "import" : "Import",
             "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "export": "Export data",
+            "export_desc": "Export all of your data as a CSV file or choose custom fields to export",
             "users" : "Users",
             "users_desc" : "Create and manage the people that contribute to your deployment.",
             "roles" : "Roles",
@@ -979,6 +981,25 @@
         "cancel_import" : "Cancel import",
         "finish_import" : "Finish import",
         "which_survey" : "which survey?"
+    },
+    "data_export": {
+        "title": "Export data",
+        "description": "Export all of your data as a CSV or choose specific survey fields you want to export.",
+        "all": "Export all data",
+        "select_fields": "Select fields",
+        "select_fields_title": "Select fields for export...",
+        "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
+        "export_selected": "Export selected fields",
+        "cancel": "Cancel",
+        "export_progress": "Export in progress...",
+        "no_fields": "Uh oh... you need to select some fields to export first.",
+        "expires": "<strong>Expires:</strong> {{expires}}",
+        "job": "CSV Export {{jobId}}",
+        "created": "<strong>Created:</strong> {{created}}",
+        "success": "<strong>Status:</strong> Finished",
+        "pending": "<strong>Status:</strong> Pending",
+        "failed": "<strong>Status:</strong> Failed",
+        "queued": "<strong>Status:</strong> In Progress"
     },
     "user": {
         "role_display" : "Role: {{role}}",
@@ -1217,9 +1238,12 @@
             "sent_to" : "Message sent to {{contact}}"
         },
         "export" : {
-            "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
-            "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads"
+            "in_progress" : "We are preparing your CSV file. This may take a few moments. You can leave this page if you want. We will let you know when we're done.",
+            "complete" : "Export done. You should see your CSV-file in your downloads.",
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
+            "confirmation": "Got it",
+            "cancel_export": "Cancel export",
+            "canceled_job" : "Your export-job is canceled"
         }
     },
     "empty": {

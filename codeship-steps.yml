@@ -17,11 +17,11 @@
 
   - name: "Deploy staging"
     service: deploy
-    tag: staging
+    tag: develop
     command: >
       ANSIBLE_GITHUB_REPO=platform-cloud-ansible
       ANSIBLE_GITHUB_REPO_VERSION=master
-      ush-ansible-playbook.sh -vv -i hosts/rackspace_staging platform-client-update-rsync.yml
+      ush-ansible-playbook.sh -vv -i hosts/rackspace_qa platform-client-update-rsync.yml
         -e PLATFORM_CLIENT_DEPLOY_SRC="/vols/last_build"
 
   - name: "Deploy Production"
@@ -46,3 +46,7 @@
         -e PLATFORM_CLIENT_VERSION="$CI_COMMIT_ID"
         -e COMMIT_STATUS_CONTEXT="continuous-deployment/${CI_NAME}"
         -e DEPLOYMENT_LOG_URL="http://app.codeship.com/projects/${CI_PROJECT_ID}/builds/${CI_BUILD_ID}"
+
+  - name: "Deployment director"
+    service: deploy
+    command: ush-deployment-director.sh
