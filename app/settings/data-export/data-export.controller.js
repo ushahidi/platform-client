@@ -81,24 +81,6 @@ function (
         angular.element(document.getElementById(tab_li)).addClass('active');
     }
 
-    function loadExportJobs() {
-        $scope.exportJobs = [];
-
-        DataExport.loadExportJobs().then(function (response) {
-            let jobs = _.filter(_.map(response, (job) => {
-                if (job.status) {
-                    job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
-                    job.created = new Date(job.created).toLocaleString();
-                    job.status = job.status.toLowerCase();
-                    return job;
-                }
-            }));
-            jobs = _.sortBy(jobs, (job) => {
-                return job.created;
-            }).reverse();
-            $scope.exportJobs = jobs;
-        });
-    }
 
     function attachAttributes() {
         // requesting attributes and attaches them to the correct form
@@ -145,9 +127,21 @@ function (
             DataExport.startExport({attributes: attributes});
             $scope.showFields = false;
             $scope.showProgress = true;
-
         }
     }
+
+    function loadExportJobs() {
+        DataExport.loadExportJobs().then(function (response) {
+            DataExport.setExportJobs(DataExport.processExportJobs(response));
+            $scope.exportJobs = DataExport.getExportJobs();
+        });
+    }
+
+    $scope.$on('exportJobs:updated', (event, data, newData) => {
+        $scope.exportJobs = DataExport.getExportJobs();
+    });
+
+
     // start fetching forms to display
     getForms();
 }];
