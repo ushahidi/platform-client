@@ -308,10 +308,18 @@
             "char_remains": "{{remaining}}/160 characters remaining",
             "publish": "Publish",
             "delete": "Delete",
-            "publish_description": "<p>We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.</p><br /> <p>If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.</p>",
+            "send_to_old_number_warning": "If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.",
+            "publish_description_many": "We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.",
+            "publish_description_one_question": "We will send {{questions}} question to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.",
+            "publish_description_one_number": "We will send {{questions}} questions to {{numbers}} person via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.",
+            "publish_description_one_number_one_question": "We will send {{questions}} question to {{numbers}} person via SMS for a total of {{sms}} message. This could cost up to USD ${{cost}}.",
             "question_warning": "You must enter at least 1 question.",
+            "publish_warning": "Are you sure you ant to send this SMS survey?",
+            "publish_notification_many": "{{messages}} messages sent. You will receive an invoice for the total cost to these messages via email",
+            "publish_notification_one":"{{messages}} message sent. You will receive an invoice for the total cost to that message via email",
             "hide_responders": "Hide information about responders",
-            "hide_responders_desc": "The phone numbers of the people who respond to your questions remain hidden from the public site. Only the team members with edit permissions will be able to see them."
+            "hide_responders_desc": "The phone numbers of the people who respond to your questions remain hidden from the public site. Only the team members with edit permissions will be able to see them.",
+            "notification_button": "View survey in datamode"
         }
     },
 

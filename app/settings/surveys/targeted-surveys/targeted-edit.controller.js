@@ -13,6 +13,8 @@ module.exports = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     '$q',
+    'PostFilters',
+    'LoadingProgress',
     // 'CountryCodeEndpoint',
 function (
     $scope,
@@ -26,7 +28,9 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
-    $q
+    $q,
+    PostFilters,
+    LoadingProgress
     // CountryCodeEndpoint
 ) {
     $scope.isActiveStep = isActiveStep;
@@ -39,6 +43,7 @@ function (
     $scope.addNewQuestion = addNewQuestion;
     $scope.deleteQuestion = deleteQuestion;
     $scope.publish = publish;
+    $scope.getPublishDescription = getPublishDescription;
     $scope.previousStep = previousStep;
     $scope.activeStep = 1;
     $scope.stepOneWarning = false;
@@ -60,6 +65,8 @@ function (
             badNumberCount: 0
         };
     $scope.runValidations = runValidations;
+    $scope.isLoading = LoadingProgress.getLoadingState;
+
 
 
     Features.loadFeatures()
@@ -241,8 +248,9 @@ function (
     }
 
     function goToDataView(id) {
-        // this function should add survey-id to filters + redirect to data-view
-        console.log('test');
+        // redirecting to data-view, function used in the notification-window
+        PostFilters.setFilter('form', [id]);
+        $state.go('posts.data');
     }
 
     function publish() {
@@ -256,13 +264,13 @@ function (
         let survey =  {
                 color: null,
                 everyone_can_create: true,
-                name: $scope.targetedSurvey.stepOne.name.$modelValue,
-                description: $scope.targetedSurvey.stepOne.description.$modelValue,
-                require_approval: $scope.targetedSurvey.stepFour.require_review,
-                hide_author: $scope.targetedSurvey.stepFour.hide_responders
+                name: $scope.name,
+                description: $scope.description,
+                require_approval: $scope.targetedSurvey.require_review,
+                hide_author: $scope.targetedSurvey.hide_responders
             };
 
-        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, 'We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD.', 'publish').then(function () {
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.targetedSurvey.stepThree.questions.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
             FormEndpoint
                 .saveCache(survey)
                 .$promise
@@ -292,11 +300,28 @@ function (
                                         .$promise);
                                 });
                             $q.all(questions).then(function (saved) {
-                                Notify.exportNotifications('1 182 messages sent. You will receive an invoice for the total cost to these messages via email', null, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'View survey in datamode', callbackArg: null});
+                                let messages = $scope.targetedSurvey.stepThree.questions.length * $scope.finalNumbers.goodNumbers.length;
+                                let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
+
+                                Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: savedSurvey.id});
                             });
                         });
                 });
         });
+    }
+
+    function getPublishDescription() {
+        if ($scope.isActiveStep(4)) {
+            if ($scope.targetedSurvey.stepThree.questions.length === 1 && $scope.finalNumbers.goodNumbers.length === 1) {
+                return 'survey.targeted_survey.publish_description_one_number_one_question';
+            } else if ($scope.targetedSurvey.stepThree.questions.length === 1) {
+                return 'survey.targeted_survey.publish_description_one_question';
+            } else if ($scope.finalNumbers.goodNumbers.length === 1) {
+                return 'survey.targeted_survey.publish_description_one_number';
+            } else {
+                return 'survey.targeted_survey.publish_description_many';
+            }
+        }
     }
 
     function previousStep() {
