@@ -108,7 +108,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                 loading = false;
             }
 
-            Notify.exportNotifications(message, null, loading, icon, 'circle-icon confirmation', action);
+            Notify.notifyAction(message, null, loading, icon, 'circle-icon confirmation', action);
         }
     }
 

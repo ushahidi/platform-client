@@ -254,7 +254,7 @@
         "required_desc" : "Require this task be completed before a post can be visible to the public.",
         "require_field_desc" : "Require this field be completed",
         "name_this_task" : "Name this task...",
-        "require_review" : "Require posts be reviewed before they're published",
+        "require_review" : "Require posts to be reviewed before they're published",
         "require_review_desc" : "New responses to this survey will be put 'under review', and therefore not immediately visible to the public. Users with permission to review the response can review and 'publish' them, which would then make them visible to everyone.",
         "require_task" : "Required",
         "make_response_private" : "Make responses private",
@@ -310,6 +310,18 @@
             "char_remains": "{{remaining}}/160 characters remaining",
             "publish": "Publish",
             "delete": "Delete",
+            "send_to_old_number_warning": "If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.",
+            "publish_description_many": "We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.",
+            "publish_description_one_question": "We will send {{questions}} question to {{numbers}} people via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.",
+            "publish_description_one_number": "We will send {{questions}} questions to {{numbers}} person via SMS for a total of {{sms}} messages. This could cost up to USD ${{cost}}.",
+            "publish_description_one_number_one_question": "We will send {{questions}} question to {{numbers}} person via SMS for a total of {{sms}} message. This could cost up to USD ${{cost}}.",
+            "question_warning": "You must enter at least 1 question.",
+            "publish_warning": "Are you sure you ant to send this SMS survey?",
+            "publish_notification_many": "{{messages}} messages sent. You will receive an invoice for the total cost to these messages via email",
+            "publish_notification_one":"{{messages}} message sent. You will receive an invoice for the total cost to that message via email",
+            "hide_responders": "Hide information about responders",
+            "hide_responders_desc": "The phone numbers of the people who respond to your questions remain hidden from the public site. Only the team members with edit permissions will be able to see them.",
+            "notification_button": "View survey in datamode",
             "name_warning" : "You must give your survey a name.",
             "description_warning" : "You must give your survey a description.",
             "send_to_person" : "Send this message to {{recipientCount}} person via SMS",
@@ -327,8 +339,6 @@
             "one_number_good" : "This {{good_numbers}} number looks fine.",
             "question_error" : "You must ad at least one question.",
             "phone_number_instructions" : "Please type in the phone numbers you'd like to contact. You must place a comma between each phone number."
-
-
         }
     },
 

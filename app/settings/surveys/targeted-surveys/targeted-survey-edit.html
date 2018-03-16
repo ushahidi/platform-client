@@ -20,12 +20,17 @@
 
     <div class="mode-context-body">
     </div>
+
 </div>
 
 <main role="main">
     <div class="toolbar">
     </div>
-
+      <div ng-show="isLoading()" class="progress-bar">
+        <span>
+            ..
+        </span>
+    </div>
     <div class="main-col">
         <form name="targetedSurvey">
             <div ng-show="targetedSurveysEnabled" class="form-sheet">
@@ -185,9 +190,29 @@
                                 <span class="stepper-badge">4</span>
                                 <span translate="survey.targeted_survey.publish"></span>
                             </h2>
-                            <div ng-show="isActiveStep(4)">
+                            <div class="alert" ng-show="isActiveStep(4)">
+                                <p translate={{getPublishDescription()}} translate-values="{questions: targetedSurvey.stepThree.questions.length, numbers:finalNumbers.goodNumbers.length, sms: sms, cost:cost}"></p>
+                                <p translate="survey.targeted_survey.send_to_old_number_warning"></p>
+                            </div>
+                            <div class="form-field switch checked" ng-show="isActiveStep(4)">
+                                <label for="switch4" translate="survey.require_review"></label>
+                                    <p ng-show="targetedSurvey.require_review" translate="survey.require_review_desc"></p>
+                                    <div class="toggle-switch">
+                                        <input class="tgl" id="switch4" type="checkbox" ng-model="targetedSurvey.require_review">
+                                        <label class="tgl-btn" for="switch4"></label>
+                                    </div>
+                            </div>
+                             <div class="form-field switch checked" ng-show="isActiveStep(4)">
+                                <label for="switch5" translate="survey.targeted_survey.hide_responders"></label>
+                                    <p ng-show="targetedSurvey.hide_responders" translate="survey.targeted_survey.hide_responders_desc"></p>
+                                    <div class="toggle-switch">
+                                        <input class="tgl" id="switch5" type="checkbox" ng-model="targetedSurvey.hide_responders">
+                                        <label class="tgl-btn" for="switch5"></label>
+                                    </div>
+                            </div>
+                            <div ng-show="isActiveStep(4)" ng-show="isActiveStep(4)">
                                 <div class="button-group">
-                                    <button class="button-alpha"  ng-disabled="!isStepComplete(targetedSurvey.stepFour)" ng-click="publish()" translate="survey.targeted_survey.publish"></button>
+                                    <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepFour)" ng-click="publish()" translate="survey.targeted_survey.publish"></button>
                                     <button class="button" ng-click="previousStep()" translate="nav.back"></button>
                                 </div>
                             </div>

@@ -7,6 +7,14 @@ module.exports = [
     '_',
     'ModalService',
     'Sortable',
+    'ConfigEndpoint',
+    'Notify',
+    'FormEndpoint',
+    'FormStageEndpoint',
+    'FormAttributeEndpoint',
+    '$q',
+    'PostFilters',
+    'LoadingProgress',
     // 'CountryCodeEndpoint',
 function (
     $scope,
@@ -14,7 +22,15 @@ function (
     $state,
     _,
     ModalService,
-    Sortable
+    Sortable,
+    ConfigEndpoint,
+    Notify,
+    FormEndpoint,
+    FormStageEndpoint,
+    FormAttributeEndpoint,
+    $q,
+    PostFilters,
+    LoadingProgress
     // CountryCodeEndpoint
 ) {
     $scope.isActiveStep = isActiveStep;
@@ -27,6 +43,7 @@ function (
     $scope.addNewQuestion = addNewQuestion;
     $scope.deleteQuestion = deleteQuestion;
     $scope.publish = publish;
+    $scope.getPublishDescription = getPublishDescription;
     $scope.previousStep = previousStep;
     $scope.activeStep = 1;
     $scope.stepOneWarning = false;
@@ -50,6 +67,9 @@ function (
             badNumberCount: 0
         };
     $scope.runValidations = runValidations;
+    $scope.isLoading = LoadingProgress.getLoadingState;
+
+
 
     Features.loadFeatures()
            .then(() => {
@@ -155,12 +175,29 @@ function (
         if ($scope.targetedSurvey.stepThree.questions !== undefined && $scope.targetedSurvey.stepThree.questions.length) {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
+            calculateStats();
         } else {
             $scope.stepThreeWarning = true;
         }
     }
+    function calculateStats() {
+        ConfigEndpoint.get({id: 'data-provider'}).$promise.then(function (result) {
+            let cost,
+                providers = ['frontlinesms', 'nexmo', 'smssync', 'twilio'];
+            _.each(result.providers, function (provider, index) {
+                if (provider && _.contains(providers, index)) {
+                    // warning, this is a hack until cost is included in the api
+                    result[index].cost = 1;
+                    cost = result[index].cost;
+                    $scope.sms = $scope.targetedSurvey.stepThree.questions.length * $scope.finalNumbers.goodNumbers.length;
+                    $scope.cost = $scope.sms * cost;
+                }
+            });
+        });
+    }
 
     function openQuestionModal(question) {
+        $scope.stepThreeWarning = false;
         if (question) {
             $scope.editQuestion = question;
             // copying label, question-property is used to avoid the label-text to update while writing in the modal-window
@@ -173,6 +210,7 @@ function (
 
         ModalService.openTemplate('<targeted-question></targeted-question>', modalTitle, null, $scope, true, true);
     }
+
     function checkForDuplicate() {
         let exists = _.filter($scope.targetedSurvey.stepThree.questions, function (question) {
             return $scope.editQuestion.question === question.label;
@@ -214,8 +252,81 @@ function (
         }
     }
 
+    function goToDataView(id) {
+        // redirecting to data-view, function used in the notification-window
+        PostFilters.setFilter('form', [id]);
+        $state.go('posts.data');
+    }
+
     function publish() {
-        // Insert validation/safety-modal-check + publishing survey here
+        /* WARNING! This is using the FormEndpoint saving a normal survey. This will change in some way once the api is ready.
+        * We also need to add the numbers somewhere */
+
+        /* WARNING! If we end up using the same endpoint as for other surveys,
+        *  we should consider moving save-survey/tasks/attributes-code to a survey to
+        * be able to use same code in both surveys and targeted surveys + we need to add the numbers somewhere*/
+
+        let survey =  {
+                color: null,
+                everyone_can_create: true,
+                name: $scope.name,
+                description: $scope.description,
+                require_approval: $scope.targetedSurvey.require_review,
+                hide_author: $scope.targetedSurvey.hide_responders
+            };
+
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.targetedSurvey.stepThree.questions.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
+            FormEndpoint
+                .saveCache(survey)
+                .$promise
+                .then(function (savedSurvey) {
+                    let task = {
+                        attributes: $scope.targetedSurvey.stepThree.questions,
+                        formId: savedSurvey.id,
+                        form_id: savedSurvey.id,
+                        is_public: true,
+                        label: 'Post',
+                        priority: 0,
+                        required: false,
+                        show_when_published: true,
+                        task_is_internal_only: false,
+                        type: 'post'
+                    };
+                    FormStageEndpoint
+                        .saveCache(task)
+                        .$promise
+                        .then(function (savedTask) {
+                            let questions = [];
+                            _.each($scope.targetedSurvey.stepThree.questions, function (question) {
+                                    question.form_stage_id = savedTask.id;
+                                    question.formId = savedSurvey.id;
+                                    questions.push(FormAttributeEndpoint
+                                        .saveCache(question)
+                                        .$promise);
+                                });
+                            $q.all(questions).then(function (saved) {
+                                let messages = $scope.targetedSurvey.stepThree.questions.length * $scope.finalNumbers.goodNumbers.length;
+                                let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
+
+                                Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: savedSurvey.id});
+                            });
+                        });
+                });
+        });
+    }
+
+    function getPublishDescription() {
+        if ($scope.isActiveStep(4)) {
+            if ($scope.targetedSurvey.stepThree.questions.length === 1 && $scope.finalNumbers.goodNumbers.length === 1) {
+                return 'survey.targeted_survey.publish_description_one_number_one_question';
+            } else if ($scope.targetedSurvey.stepThree.questions.length === 1) {
+                return 'survey.targeted_survey.publish_description_one_question';
+            } else if ($scope.finalNumbers.goodNumbers.length === 1) {
+                return 'survey.targeted_survey.publish_description_one_number';
+            } else {
+                return 'survey.targeted_survey.publish_description_many';
+            }
+        }
     }
 
     function previousStep() {
