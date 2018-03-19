@@ -48,7 +48,7 @@ function (
             $scope.fileContainer = {
                 file : null
             };
-            $scope.previousLanguage = '';
+            $scope.SystemLanguage = '';
 
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
@@ -61,7 +61,7 @@ function (
 
             ConfigEndpoint.get({ id: 'site' }).$promise.then((site) => {
                 $scope.site = site;
-                $scope.previousLanguage = site.language;
+                $scope.SystemLanguage = site.language;
             });
 
             $scope.userSavedSettings = false;
@@ -121,12 +121,12 @@ function (
                     ]).then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
-                        let newLanguage = result[0].language;
+                        let newSystemLanguage = result[0].language;
                         let userLanguage = Session.getSessionDataEntry('language');
-                        if ((userLanguage === undefined || userLanguage === null) && $scope.previousLanguage !== newLanguage) {
-                            TranslationService.translate(newLanguage);
+                        if ((userLanguage === undefined || userLanguage === null) && $scope.SystemLanguage !== newSystemLanguage) {
+                            TranslationService.translate(newSystemLanguage);
                         }
-                        $scope.previousLanguage = newLanguage;
+                        $scope.SystemLanguage = newSystemLanguage;
                         Notify.notify('notify.general_settings.save_success');
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);

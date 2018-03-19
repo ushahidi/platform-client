@@ -205,15 +205,13 @@ gulp.task('transifex-download', function (done) {
  */
 
 gulp.task('serve:static', function() {
-    gulp.start('dist');
-
     serve.init({
         server: {
             baseDir: paths.dest
         },
         port: process.env.PORT || 3000,
         ui: false,
-        autoWatch: true,
+        codeSync: false,
         open: false,
         middleware: [
           historyApiFallback()
