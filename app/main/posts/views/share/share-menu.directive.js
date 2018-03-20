@@ -39,10 +39,8 @@ function ShareMenuController(
         // an individual post that the URL is correct
         if ($scope.postId) {
             $scope.shareUrl = $window.location.origin + '/posts/' + $scope.postId;
-        }
-
-        if ($scope.surveyId) {
-            $scope.shareUrl = $window.location.origin + '/posts/create/' + $scope.surveyId;
+        } else {
+            $scope.shareUrl = $window.location.origin + '/posts/create/' + $scope.shareUrl.slice(-1);
         }
 
         $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
