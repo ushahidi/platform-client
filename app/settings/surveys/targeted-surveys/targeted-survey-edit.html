@@ -110,16 +110,29 @@
                             <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this message to {{recipientCount}} people via SMS.</p>
                             <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this message to {{recipientCount}} person via SMS.</p>
                             <div ng-show="isActiveStep(2)">
-                                <div class="form-field">
+                                <div class="form-field" ng-show="countriesList.length > 0">
                                     <label for="country-code" class="required" translate="survey.targeted_survey.country_code">
-                                        Country code 
+                                        Country code
                                     </label>
                                     <p ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" class="alert error" translate="survey.targeted_survey.country_code_error">You must select a country.</p>
                                     <div class="custom-select">
-                                        <select id="country-code" ng-options="country as (country.name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
+                                        <select id="country-code" ng-options="country as (country.country_name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
                                         ><option selected value='' ng-required="true" translate="survey.targeted_survey.select_country">Select Country</option></select>
                                     </div>
-                                </div>
+                            </div>
+                            <div class="form-field" ng-show="countriesList.length < 1">
+                                <label for="loading-country-code" class="required" translate="survey.targeted_survey.country_code">
+                                    Country code
+                                </label>
+                                <button id="loading-country-code" type="button" class="button button-beta">
+                                    <div class="loading">
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                    </div>
+                                    <span class="button-label" translate>Loading countries</span>
+                                </button>
+                            </div>
                                 <div class="form-field">
                                     <label required translate="survey.targeted_survey.phone_numbers">Phone numbers</label>
                                     <p ng-show="stepTwoWarning && !targetedSurvey.stepTwo.textBoxNumbers.$dirty && !finalNumbers.goodNumbers.length" class="alert error" translate="survey.targeted_survey.phone_number_warning">You must enter at least 1 phone number.</p>
