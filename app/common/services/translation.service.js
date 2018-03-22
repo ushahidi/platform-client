@@ -30,11 +30,14 @@ function (
 
                     if ($rootScope.rtlEnabled !== language.rtl) {
                         if (language.rtl) {
-                            require.ensure(['ushahidi-platform-pattern-library/assets/css/rtl-style.min.css'], () => {
-                                require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
-                                $rootScope.rtlEnabled = language.rtl;
-
-                            }, 'rtl');
+                            require.ensure(
+                                ['ushahidi-platform-pattern-library/assets/css/rtl-style.min.css'], () => {
+                                    $rootScope.$apply(() => {
+                                        require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
+                                        $rootScope.rtlEnabled = language.rtl;
+                                    });
+                                }, 'rtl'
+                            );
                         } else {
                             $rootScope.rtlEnabled = language.rtl;
                         }
