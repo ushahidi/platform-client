@@ -16,12 +16,9 @@
         <link rel="manifest" href="/manifest.json">
 
         <base href="/">
-        <style>
-            .hidden { display: none !important; }
-        </style>
     </head>
     <!-- TODO: set layouts per view directive -->
-    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }}" canvas>
+    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
         <div id="bootstrap-loading">
             <!-- loading the document -->
             <div class="loading">
