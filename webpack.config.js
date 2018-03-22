@@ -80,11 +80,11 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        exclude: [/manifest.json$/],
+        exclude: [/manifest\.json$/],
         use: 'json-loader'
       },
       {
-        test: /manifest.json$/,
+        test: /manifest\.json$/,
         loader: ['file-loader?name=manifest.json', 'web-app-manifest-loader']
       }
     ]
