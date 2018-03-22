@@ -1,8 +1,11 @@
 var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
+
+var extractCss = new ExtractTextPlugin('[name].[chunkhash].css');
 
 module.exports = {
   devtool: 'source-map',
@@ -41,10 +44,20 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ['style-loader','css-loader','resolve-url-loader','sass-loader?sourceMap']
+        use: extractCss.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+        })
       },
       {
         test: /\.css$/,
+        exclude: [/rtl-style\.min\.css$/],
+        use: extractCss.extract({ fallback: 'style-loader', use: 'css-loader' })
+      },
+      {
+        // Load RTL styles through style loader rather than extracting them
+        // This is needed so we can load them async when needed
+        test: /rtl-style\.min\.css$/,
         use: ['style-loader', 'css-loader']
       },
       {
@@ -77,6 +90,8 @@ module.exports = {
     ]
   },
   plugins: [
+    extractCss,
+
     // Skip locales
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
