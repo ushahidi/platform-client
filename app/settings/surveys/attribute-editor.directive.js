@@ -19,6 +19,16 @@ function (
             $scope.editAttribute.config = (!$scope.editAttribute.config || (_.isArray($scope.editAttribute.config) && $scope.editAttribute.config.length === 0)) ? {} : $scope.editAttribute.config;
             $scope.defaultValueToggle = false;
             $scope.descriptionToggle = false;
+            $scope.labelError = false;
+
+            $scope.save = function (editAttribute, activeTask) {
+                if (!_.isEmpty(editAttribute.label)) {
+                    $scope.labelError = false;
+                    $scope.addNewAttribute(editAttribute, activeTask);
+                } else {
+                    $scope.labelError = true;
+                }
+            };
 
             $scope.closeModal = function () {
                 ModalService.close();

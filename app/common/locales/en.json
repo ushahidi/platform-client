@@ -675,6 +675,9 @@
                 "minlength" : "Title is too short",
                 "maxlength" : "Title is too long"
             },
+            "label" : {
+                "required" : "A name is required"
+            },
             "content" : {
                 "required" : "Description cannot be empty"
             },
