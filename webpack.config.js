@@ -5,7 +5,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
 
-var extractCss = new ExtractTextPlugin('[name].[chunkhash].bundle.css');
+var extractCss = new ExtractTextPlugin('[name].[chunkhash].css');
 
 module.exports = {
   devtool: 'source-map',
@@ -51,7 +51,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: [/rtl-style\.min\.css$/],
         use: extractCss.extract({ fallback: 'style-loader', use: 'css-loader' })
+      },
+      {
+        // Load RTL styles through style loader rather than extracting them
+        // This is needed so we can load them async when needed
+        test: /rtl-style\.min\.css$/,
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.png/,
@@ -73,11 +80,11 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        exclude: [/manifest.json$/],
+        exclude: [/manifest\.json$/],
         use: 'json-loader'
       },
       {
-        test: /manifest.json$/,
+        test: /manifest\.json$/,
         loader: ['file-loader?name=manifest.json', 'web-app-manifest-loader']
       }
     ]
