@@ -3,7 +3,8 @@ describe('setting create targeted survey controller', function () {
     var $scope,
         Features,
         $controller,
-        ModalService;
+        ModalService,
+        CountryCodeEndpoint;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -23,11 +24,12 @@ describe('setting create targeted survey controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable, _CountryCodeEndpoint_) {
         $scope = _$rootScope_.$new();
         Features = _Features_;
         ModalService = _ModalService_;
         $controller = _$controller_;
+        CountryCodeEndpoint = _CountryCodeEndpoint_;
 
         $controller('targetedSurvey', {
             $scope: $scope
@@ -164,6 +166,16 @@ describe('setting create targeted survey controller', function () {
                 expect($scope.activeStep).toEqual(2);
                 expect($scope.stepOneWarning).toEqual(false);
             });
+            it('should fetch country-codes when moving to step 2', function () {
+                spyOn($scope, 'getCountryCodes').and.callThrough();
+                $scope.targetedSurvey = {
+                    stepOne: {
+                        $valid: true
+                    }
+                };
+                $scope.completeStepOne();
+                expect($scope.getCountryCodes).toHaveBeenCalled();
+            });
             it('should stay at step 1 and turn on warning when failing', function () {
                 $scope.activeStep = 1;
                 $scope.targetedSurvey = {
@@ -183,7 +195,7 @@ describe('setting create targeted survey controller', function () {
                         $valid: true
                     }
                 };
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.textBoxNumbers = '3172351967, 3176742327';
                 $scope.completeStepTwo();
                 expect($scope.activeStep).toEqual(3);
@@ -196,7 +208,7 @@ describe('setting create targeted survey controller', function () {
                         $valid: true
                     }
                 };
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.textBoxNumbers = '3172351967, 3176742327, 123';
                 $scope.completeStepTwo();
                 expect($scope.activeStep).toEqual(2);
@@ -209,7 +221,7 @@ describe('setting create targeted survey controller', function () {
                         $valid: false
                     }
                 };
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.textBoxNumbers = '3172351967, 3176742327, 123';
                 $scope.completeStepTwo();
                 expect($scope.activeStep).toEqual(2);
@@ -240,7 +252,7 @@ describe('setting create targeted survey controller', function () {
         });
         describe('Step Two Phone Number Validations', function () {
             beforeEach(function () {
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.finalNumbers = {
                     goodNumbers: [],
                     goodNumbersString: '',
@@ -320,6 +332,18 @@ describe('setting create targeted survey controller', function () {
                     badNumberCount: 1
                 });
             });
+        });
+    });
+    describe('getCountryCodes', function () {
+        it('should call country-code-endpoint', function () {
+            spyOn(CountryCodeEndpoint, 'query').and.callThrough();
+            $scope.getCountryCodes();
+            expect(CountryCodeEndpoint.query).toHaveBeenCalled();
+        });
+        it('should populate countriesList with countries', function () {
+            expect($scope.countriesList.length).toEqual(0);
+            $scope.getCountryCodes();
+            expect($scope.countriesList.length).toEqual(1);
         });
     });
 });

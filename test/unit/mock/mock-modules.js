@@ -27,6 +27,7 @@ angular.module('ushahidi.mock', [])
 .service('PostLockEndpoint', require('./services/post-lock-endpoint.js'))
 .service('PostLockService', require('./services/post-lock.service.js'))
 
+.service('CountryCodeEndpoint', require('./services/country-code-endpoint.js'))
 .service('Features', require('./services/features.js'))
 .service('Authentication', require('./services/authentication.js'))
 .service('Session', require('./services/session.js'))

@@ -70,6 +70,7 @@ function (
         };
     $scope.runValidations = runValidations;
     $scope.isLoading = LoadingProgress.getLoadingState;
+    $scope.getCountryCodes = getCountryCodes;
     $scope.countriesList = [];
 
     Features.loadFeatures()
@@ -119,7 +120,7 @@ function (
         if (isStepComplete($scope.targetedSurvey.stepOne)) {
             $scope.activeStep = 2;
             $scope.stepOneWarning = false;
-            getCountryCodes();
+            $scope.getCountryCodes();
         } else {
             $scope.stepOneWarning = true;
         }
