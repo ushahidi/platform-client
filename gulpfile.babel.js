@@ -187,7 +187,7 @@ gulp.task('jscsfix:test', () => {
  * Task `release` - Build release
  */
 gulp.task('transifex-download', function (done) {
-    let destination = gutil.en.dev ? path.join(__dirname, root) : paths.dest;
+    let destination = gutil.env.dev ? path.join(__dirname, root) : paths.dest;
 
     // Make sure we have dest dir
     try {
