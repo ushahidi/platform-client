@@ -202,10 +202,10 @@ gulp.task('transifex-download', function (done) {
     require('./gulp/transifex-download')(destination + '/locales/', done);
 });
 
-
 /**
  * Task `serve:static` - Serve dist build (for heroku)
  */
+
 gulp.task('serve:static', function() {
     serve.init({
         server: {

@@ -11,7 +11,7 @@
         "collection": "Collection",
         "collections" : "Collections",
         "create_collection" : "Create collection",
-        "export_to_csv" : "Export to CSV",
+        "export_to_csv" : "Export filtered data",
         "create_new" : "Create new",
         "create_new_survey" : "Create new survey",
         "created_by" : "Created by {{author}}",
@@ -262,6 +262,9 @@
         "require_task_desc" : "Require this task be completed before a post can be visible to the public",
         "survey_permissions": "Survey permissions",
         "who_can_add": "Who can add to this survey",
+        "survey_field": "Survey field",
+        "choose_survey_field": "Choose what should be assigned to each survey field",
+        "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from your tweets that you'd like to use to populate each of those fields.",
         "who_can_contribute_to_task" : "Who can contribute to fields in this task",
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
@@ -737,6 +740,7 @@
     "webhook": {
         "add_webhook" : "Add Role",
         "edit_webhook" : "Edit Role",
+        "uuid" : "Webhook UUID",
         "name" : "Name",
         "shared_secret" : "Shared Secret",
         "url" : "API URL",
@@ -847,6 +851,8 @@
         "saved_map_settings": "Map Settings saved."
     },
     "settings": {
+        "api_key" : "API Key",
+        "api_key_desc" : "The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.",
         "appearance" : "Appearance Settings",
         "continue" : "Continue",
         "current_header" : "Current background image",
@@ -863,6 +869,8 @@
             "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
             "import" : "Import",
             "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "export": "Export data",
+            "export_desc": "Export all of your data as a CSV file or choose custom fields to export",
             "users" : "Users",
             "users_desc" : "Create and manage the people that contribute to your deployment.",
             "roles" : "Roles",
@@ -874,7 +882,14 @@
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
+        "webhooks": {
+            "use_webhook_for": "Use webhook for",
+            "enable_source_destination" : "Enable Source and Destination Fields",
+            "enable_source_destination_desc" : "This webhook will only be applied to Surveys of the selected type."
+        },
         "data_sources": {
+            "associate_with_form" : "Import to survey",
+            "associate_with_form_desc" : "All incoming data from {{provider}} will be used to create responses to the survey you choose",
             "data_sources": "Data Sources",
             "enable_provider_message" : "Accept survey submissions from this source",
             "hint_turn_on_off": "You can configure options for data sources, and then turn sources on and off.",
@@ -967,7 +982,28 @@
         "finish_import" : "Finish import",
         "which_survey" : "which survey?"
     },
+    "data_export": {
+        "title": "Export data",
+        "description": "Export all of your data as a CSV or choose specific survey fields you want to export.",
+        "all": "Export all data",
+        "select_fields": "Select fields",
+        "select_fields_title": "Select fields for export...",
+        "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
+        "export_selected": "Export selected fields",
+        "cancel": "Cancel",
+        "export_progress": "Export in progress...",
+        "no_fields": "Uh oh... you need to select some fields to export first.",
+        "expires": "<strong>Expires:</strong> {{expires}}",
+        "job": "CSV Export {{jobId}}",
+        "created": "<strong>Created:</strong> {{created}}",
+        "success": "<strong>Status:</strong> Finished",
+        "pending": "<strong>Status:</strong> Pending",
+        "failed": "<strong>Status:</strong> Failed",
+        "queued": "<strong>Status:</strong> In Progress"
+    },
     "user": {
+        "role_display" : "Role: {{role}}",
+        "contact" : "{{type}}: {{contact}}",
         "add_user" : "Add User",
         "edit_user" : "Edit User",
         "update_password" : "Update Password",
@@ -1038,6 +1074,9 @@
         "role": "Role"
     },
     "notify": {
+        "api_key" : {
+            "change_question" : "Are you sure you want to change the API Key?"
+        },
         "contact" : {
             "save_success" : "Contact saved",
             "delete_confirm" : "Do you want to remove your account?",
@@ -1199,9 +1238,12 @@
             "sent_to" : "Message sent to {{contact}}"
         },
         "export" : {
-            "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
-            "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads"
+            "in_progress" : "We are preparing your CSV file. This may take a few moments. You can leave this page if you want. We will let you know when we're done.",
+            "complete" : "Export done. You should see your CSV-file in your downloads.",
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
+            "confirmation": "Got it",
+            "cancel_export": "Cancel export",
+            "canceled_job" : "Your export-job is canceled"
         }
     },
     "empty": {

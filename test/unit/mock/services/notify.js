@@ -76,6 +76,13 @@ module.exports = [function () {
                     successCallback();
                 }
             };
+        },
+        exportNotifications: function () {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
         }
     };
 }];

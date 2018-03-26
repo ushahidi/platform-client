@@ -120,7 +120,7 @@ function (
     };
 
     $scope.itemsPerPageChanged = function (count) {
-        $scope.itemsPerPage = count;
+        $scope.pagination.itemsPerPage = count;
         $scope.getUsersForPagination();
     };
 
@@ -131,14 +131,14 @@ function (
     // --- start: definitions
     $scope.getUsersForPagination = function () {
         var filters = _.extend({
-                            offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-                            limit: $scope.itemsPerPage,
+                            offset: ($scope.pagination.currentPage - 1) * $scope.pagination.itemsPerPage,
+                            limit: $scope.pagination.itemsPerPage,
                             orderby: 'realname'
                         }, $scope.filters);
         UserEndpoint.queryFresh(filters).$promise.then(function (usersResponse) {
             $scope.users = usersResponse.results;
-            $scope.totalItems = usersResponse.total_count;
-            $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
+            $scope.pagination.totalItems = usersResponse.total_count;
+            $scope.showPagination = $scope.pagination.totalItems > 0  ? $scope.pagination.totalItems / $scope.pagination.itemsPerPage > 1 : false;
         });
     };
 
@@ -151,11 +151,12 @@ function (
 
     // --- start: initialization
     $scope.filteredRole = '';
-    $scope.currentPage = 1;
-    $scope.itemsPerPageOptions = [10, 20, 50];
-    $scope.itemsPerPage = $scope.itemsPerPageOptions[0];
-    // untill we have the correct total_count value from backend request:
-    $scope.totalItems = $scope.itemsPerPage;
+    $scope.pagination = {
+        currentPage : 1,
+        itemsPerPage : 10,
+        totalItems: 10
+    };
+
     $scope.getUsersForPagination();
     // --- end: initialization
     $scope.$watch('filters', function () {

@@ -31,6 +31,26 @@ function (
         },
         getStatuses: function () {
             return ['published', 'draft', 'archived'];
+        },
+        filterPostEditorCategories: function (attributeOptions, categories) {
+            // adding category-objects attribute-options
+            return _.chain(attributeOptions)
+                .map((category) => {
+                    const ret = angular.copy(_.findWhere(categories, {id: category}));
+                    if (ret && ret.children.length > 0) {
+                        ret.children = _.chain(ret.children)
+                            .map((child) => {
+                                if (attributeOptions.find((o) => o === child.id)) {
+                                    return _.findWhere(categories, {id: child.id});
+                                }
+                            })
+                            .filter()
+                            .value();
+                    }
+                    return ret;
+                })
+                .filter()
+                .value();
         }
     };
 

@@ -11,6 +11,7 @@ module.exports = [
     'Util',
     '$transition$',
     '$q',
+    '$state',
 function (
     $scope,
     $rootScope,
@@ -23,7 +24,8 @@ function (
     _,
     Util,
     $transition$,
-    $q
+    $q,
+    $state
 ) {
 
     // Redirect to home if not authorized
@@ -150,7 +152,7 @@ function (
                 { name: $scope.category.tag }
             );
             // Redirect to categories list
-            $location.path('/settings/categories');
+            $state.go('settings.categories', {}, { reload: true });
         })
         // Catch and handle errors
         .catch(handleResponseErrors);

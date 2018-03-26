@@ -11,7 +11,7 @@
         </div>
       <h2 class="listing-item-title">
 
-        <span ng-if="message.direction == 'incoming'">{{ contact.contact }}</span>
+        <span ng-if="message.direction == 'incoming'">{{ getContactDisplay() }}</span>
         <span ng-if="message.direction == 'outgoing' && message.user.realname">{{ message.user.realname }}</span>
       </h2>
       <!--
