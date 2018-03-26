@@ -161,16 +161,14 @@ angular.module('app',
         $rootScope.$on('$stateChangeError', console.log.bind(console));
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
-        if (window.ushahidi.gaEnabled)
-        {
+        if (window.ushahidi.gaEnabled) {
             $transitions.onSuccess({}, function (transition) {
                 window.ga('send', 'pageview', transition.to().name);
             });
         }
-
     }])
     .run(['$rootScope', function ($rootScope) {
-      $rootScope.$on('$stateChangeError', console.log.bind(console));
+        $rootScope.$on('$stateChangeError', console.log.bind(console));
     }])
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
