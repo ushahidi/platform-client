@@ -51,14 +51,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: [/rtl-style\.min\.css$/],
         use: extractCss.extract({ fallback: 'style-loader', use: 'css-loader' })
-      },
-      {
-        // Load RTL styles through style loader rather than extracting them
-        // This is needed so we can load them async when needed
-        test: /rtl-style\.min\.css$/,
-        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.png/,
@@ -115,8 +108,10 @@ module.exports = {
       name: 'vendor',
       minChunks: function (module, count) {
         return module.resource &&
-            module.resource.indexOf(path.resolve(__dirname, 'app')) === -1 &&
-            module.resource.indexOf('ushahidi-platform-pattern-library') === -1;
+            !module.resource.includes(path.resolve(__dirname, 'app')) &&
+            !module.resource.includes('ushahidi-platform-pattern-library') &&
+            !module.resource.includes('style-loader') &&
+            !module.resource.includes('css-loader');
       }
     })
   ]
