@@ -151,19 +151,26 @@ angular.module('app',
             { map: {}, site: {}, features: {} };
     }])
     // inject the router instance into a `run` block by name
-    // .run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
+    //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
     //     // * uncomment this to enable the visualizer *
     //     let Visualizer = require('@uirouter/visualizer').Visualizer;
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
-    .run(['$rootScope', 'LoadingProgress', function ($rootScope, LoadingProgress) {
+    .run(['$rootScope', 'LoadingProgress', '$transitions', function ($rootScope, LoadingProgress, $transitions) {
         $rootScope.$on('$stateChangeError', console.log.bind(console));
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
+        if (window.ushahidi.gaEnabled)
+        {
+            $transitions.onSuccess({}, function (transition) {
+                window.ga('send', 'pageview', transition.to().name);
+            });
+        }
+
     }])
     .run(['$rootScope', function ($rootScope) {
-        $rootScope.$on('$stateChangeError', console.log.bind(console));
+      $rootScope.$on('$stateChangeError', console.log.bind(console));
     }])
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
