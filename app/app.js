@@ -43,6 +43,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     claimedAnonymousScopes = [
         'apikeys',
         'posts',
+        'country_codes',
         'media',
         'forms',
         'api',
