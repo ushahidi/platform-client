@@ -15,6 +15,7 @@ module.exports = [
     '$q',
     'PostFilters',
     'LoadingProgress',
+    '$transition$',
     'CountryCodeEndpoint',
     '$translate',
 function (
@@ -32,6 +33,7 @@ function (
     $q,
     PostFilters,
     LoadingProgress,
+    $transition$,
     CountryCodeEndpoint,
     $translate
 ) {
@@ -70,9 +72,9 @@ function (
         };
     $scope.runValidations = runValidations;
     $scope.isLoading = LoadingProgress.getLoadingState;
+    $scope.goToDataView = goToDataView;
     $scope.getCountryCodes = getCountryCodes;
     $scope.countriesList = [];
-
     Features.loadFeatures()
            .then(() => {
             // WARNING: Add Feature Flag
@@ -85,6 +87,19 @@ function (
             }
         });
     $scope.getCountryCodes();
+
+    $scope.surveyId = $transition$.params().id;
+
+    if ($scope.surveyId) {
+        $scope.activeStep = 4;
+        FormEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
+            $scope.survey = result;
+            FormAttributeEndpoint.query({formId: $scope.surveyId}).$promise.then((result) => {
+                $scope.survey.attributes = result;
+            });
+        });
+    }
+
 
     // needed for Sortablejs and drag-drop in step 3
     let el = document.getElementById('listWithHandle');
@@ -107,11 +122,9 @@ function (
     function changeOrder(evt) {
         var items = evt.to.children;
         _.each(items, function (item, index) {
-            _.each($scope.targetedSurvey.stepThree.questions, function (question) {
+            _.each($scope.survey.attributes, function (question) {
                 if (question.label === item.getAttribute('data')) {
-                    /* WARNING! incrementing by 2 since there are 2 fields(attributes) before this,
-                    the name of the survey and description, might change when api is figured out properly */
-                    question.order = index + 2;
+                    question.order = index + 1;
                 }
             });
         });
@@ -175,7 +188,7 @@ function (
     }
 
     function completeStepThree() {
-        if ($scope.targetedSurvey.stepThree.questions !== undefined && $scope.targetedSurvey.stepThree.questions.length) {
+        if ($scope.survey.attributes !== undefined && $scope.survey.attributes.length) {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
             calculateStats();
@@ -192,7 +205,7 @@ function (
                     // warning, this is a hack until cost is included in the api
                     result[index].cost = 1;
                     cost = result[index].cost;
-                    $scope.sms = $scope.targetedSurvey.stepThree.questions.length * $scope.finalNumbers.goodNumbers.length;
+                    $scope.sms = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
                     $scope.cost = $scope.sms * cost;
                 }
             });
@@ -215,7 +228,7 @@ function (
     }
 
     function checkForDuplicate() {
-        let exists = _.filter($scope.targetedSurvey.stepThree.questions, function (question) {
+        let exists = _.filter($scope.survey.attributes, function (question) {
             return $scope.editQuestion.question === question.label;
         });
         return exists.length !== 0;
@@ -224,13 +237,13 @@ function (
     function addNewQuestion() {
         ModalService.close();
 
-        if (!$scope.targetedSurvey.stepThree.questions) {
-            $scope.targetedSurvey.stepThree.questions = [];
+        if (!$scope.survey.attributes) {
+            $scope.survey.attributes = [];
         }
 
         // WARNING! Below might change depending on what info the api needs. Its now based on open-surveys
         $scope.editQuestion.input = 'textarea';
-        $scope.editQuestion.order = getPriority($scope.targetedSurvey.stepThree.questions);
+        $scope.editQuestion.order = getPriority($scope.survey.attributes);
         $scope.editQuestion.type = 'text';
         // This is to avoid the 2-way binding and the label to update while writing in the modal
         $scope.editQuestion.label = angular.copy($scope.editQuestion.question);
@@ -238,7 +251,7 @@ function (
         // This is to avoid adding same question twice and we don't have any unique id-s for the questions yet
         if ($scope.editQuestion.newQuestion) {
             delete $scope.editQuestion.newQuestion;
-            $scope.targetedSurvey.stepThree.questions.push($scope.editQuestion);
+            $scope.survey.attributes.push($scope.editQuestion);
         }
     }
 
@@ -249,7 +262,7 @@ function (
     function deleteQuestion() {
         ModalService.close();
         if (!$scope.editQuestion.newQuestion) {
-            $scope.targetedSurvey.stepThree.questions = _.filter($scope.targetedSurvey.stepThree.questions, function (question) {
+            $scope.survey.attributes = _.filter($scope.survey.attributes, function (question) {
                 return question.label !== $scope.editQuestion.label;
             });
         }
@@ -272,21 +285,22 @@ function (
         let survey =  {
                 color: null,
                 everyone_can_create: true,
-                name: $scope.name,
-                description: $scope.description,
-                require_approval: $scope.targetedSurvey.require_review,
-                hide_author: $scope.targetedSurvey.hide_responders
+                name: $scope.survey.name,
+                description: $scope.survey.description,
+                require_approval: $scope.survey.require_review,
+                hide_author: $scope.survey.hide_responders
             };
 
-        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.targetedSurvey.stepThree.questions.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
             FormEndpoint
                 .saveCache(survey)
                 .$promise
                 .then(function (savedSurvey) {
+                    $scope.surveyId = savedSurvey.id;
                     let task = {
-                        attributes: $scope.targetedSurvey.stepThree.questions,
-                        formId: savedSurvey.id,
-                        form_id: savedSurvey.id,
+                        attributes: $scope.survey.attributes,
+                        formId: $scope.surveyId,
+                        form_id: $scope.surveyId,
                         is_public: true,
                         label: 'Post',
                         priority: 0,
@@ -300,15 +314,15 @@ function (
                         .$promise
                         .then(function (savedTask) {
                             let questions = [];
-                            _.each($scope.targetedSurvey.stepThree.questions, function (question) {
+                            _.each($scope.survey.attributes, function (question) {
                                     question.form_stage_id = savedTask.id;
-                                    question.formId = savedSurvey.id;
+                                    question.formId = $scope.surveyId;
                                     questions.push(FormAttributeEndpoint
                                         .saveCache(question)
                                         .$promise);
                                 });
                             $q.all(questions).then(function (saved) {
-                                let messages = $scope.targetedSurvey.stepThree.questions.length * $scope.finalNumbers.goodNumbers.length;
+                                let messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
                                 let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
 
                                 Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: savedSurvey.id});
@@ -319,10 +333,10 @@ function (
     }
 
     function getPublishDescription() {
-        if ($scope.isActiveStep(4)) {
-            if ($scope.targetedSurvey.stepThree.questions.length === 1 && $scope.finalNumbers.goodNumbers.length === 1) {
+        if ($scope.isActiveStep(4) && !$scope.surveyId) {
+            if ($scope.survey.attributes.length === 1 && $scope.finalNumbers.goodNumbers.length === 1) {
                 return 'survey.targeted_survey.publish_description_one_number_one_question';
-            } else if ($scope.targetedSurvey.stepThree.questions.length === 1) {
+            } else if ($scope.survey.attributes.length === 1) {
                 return 'survey.targeted_survey.publish_description_one_question';
             } else if ($scope.finalNumbers.goodNumbers.length === 1) {
                 return 'survey.targeted_survey.publish_description_one_number';
@@ -330,6 +344,7 @@ function (
                 return 'survey.targeted_survey.publish_description_many';
             }
         }
+        return 'survey.targeted_survey.published_people';
     }
 
     function previousStep() {

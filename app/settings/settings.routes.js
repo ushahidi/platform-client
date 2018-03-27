@@ -74,7 +74,22 @@ function (
     .state(
         {
             name: 'settings.surveys.targeted',
+            url: '/targeted-survey'
+        }
+    )
+    .state(
+        {
+            name: 'settings.surveys.targeted.create',
             url: '/targeted-survey/create',
+            controller: require('./surveys/targeted-surveys/targeted-edit.controller.js'),
+            template: require('./surveys/targeted-surveys/targeted-survey-edit.html')
+        }
+    )
+
+    .state(
+        {
+            name: 'settings.surveys.targeted.published',
+            url: '/targeted-survey/published/:id',
             controller: require('./surveys/targeted-surveys/targeted-edit.controller.js'),
             template: require('./surveys/targeted-surveys/targeted-survey-edit.html')
         }

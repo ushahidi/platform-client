@@ -31,7 +31,7 @@ function TargetedQuestionLink($scope, $element, $attrs) {
 
     function save() {
         let exists = false;
-        if ($scope.editQuestion.newQuestion && $scope.targetedSurvey.stepThree.questions) {
+        if ($scope.editQuestion.newQuestion && $scope.survey.attributes) {
             exists = $scope.checkForDuplicate();
         }
 

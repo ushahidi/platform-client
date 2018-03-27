@@ -9,7 +9,7 @@
           </ol>
           <h1 ng-show="survey.id" class="mode-context-title" translate>app.edit_survey</h1>
           <h1 ng-show="!survey.id" class="mode-context-title" translate>app.add_survey</h1>
-          <a ng-show="targetedSurveysEnabled" ui-sref="settings.surveys.targeted"><span translate="settings.send_targeted">Send a targeted survey via SMS</span> ></a>
+          <a ng-show="targetedSurveysEnabled" ui-sref="settings.surveys.targeted.create"><span translate="settings.send_targeted">Send a targeted survey via SMS</span> ></a>
       </header>
 
       <span class="mode-context-trigger" dropdown-toggle>
