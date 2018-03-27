@@ -1,16 +1,27 @@
 module.exports = [
     '$resource',
     'Util',
+    'CacheFactory',
 function (
     $resource,
-    Util
+    Util,
+    CacheFactory
 ) {
+    var cache;
+    if (!(cache = CacheFactory.get('countryCodes'))) {
+        cache = CacheFactory.createCache('countryCodes');
+    }
+    cache.removeExpired();
 
     var CountryCodeEndpoint = $resource(Util.apiUrl('/country-codes/'), {
-
     }, {
-        get: {
-            method: 'GET'
+        query: {
+            method: 'GET',
+            isArray: true,
+            cache: cache,
+            transformResponse: function (data) {
+                return Util.transformResponse(data).results;
+            }
         }
     });
 

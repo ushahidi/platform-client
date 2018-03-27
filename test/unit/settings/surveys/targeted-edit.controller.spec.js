@@ -3,7 +3,8 @@ describe('setting create targeted survey controller', function () {
     var $scope,
         Features,
         $controller,
-        ModalService;
+        ModalService,
+        CountryCodeEndpoint;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -23,12 +24,13 @@ describe('setting create targeted survey controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable, _CountryCodeEndpoint_) {
         $scope = _$rootScope_.$new();
         Features = _Features_;
         ModalService = _ModalService_;
         $controller = _$controller_;
-
+        CountryCodeEndpoint = _CountryCodeEndpoint_;
+        spyOn(CountryCodeEndpoint, 'query').and.callThrough();
         $controller('targetedSurvey', {
             $scope: $scope
         });
@@ -183,7 +185,7 @@ describe('setting create targeted survey controller', function () {
                         $valid: true
                     }
                 };
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.textBoxNumbers = '3172351967, 3176742327';
                 $scope.completeStepTwo();
                 expect($scope.activeStep).toEqual(3);
@@ -196,7 +198,7 @@ describe('setting create targeted survey controller', function () {
                         $valid: true
                     }
                 };
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.textBoxNumbers = '3172351967, 3176742327, 123';
                 $scope.completeStepTwo();
                 expect($scope.activeStep).toEqual(2);
@@ -209,7 +211,7 @@ describe('setting create targeted survey controller', function () {
                         $valid: false
                     }
                 };
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.textBoxNumbers = '3172351967, 3176742327, 123';
                 $scope.completeStepTwo();
                 expect($scope.activeStep).toEqual(2);
@@ -240,7 +242,7 @@ describe('setting create targeted survey controller', function () {
         });
         describe('Step Two Phone Number Validations', function () {
             beforeEach(function () {
-                $scope.selectedCountry = { 'name': 'United States', 'dial_code': '+1', 'code': 'US' };
+                $scope.selectedCountry = { 'country_name': 'United States', 'dial_code': '+1', 'country_code': 'US' };
                 $scope.finalNumbers = {
                     goodNumbers: [],
                     goodNumbersString: '',
@@ -320,6 +322,15 @@ describe('setting create targeted survey controller', function () {
                     badNumberCount: 1
                 });
             });
+        });
+    });
+    describe('getCountryCodes', function () {
+        it('should call country-code-endpoint on pageload', function () {
+            $scope.getCountryCodes();
+            expect(CountryCodeEndpoint.query).toHaveBeenCalled();
+        });
+        it('should populate countriesList with countries', function () {
+            expect($scope.countriesList.length).toEqual(1);
         });
     });
 });
