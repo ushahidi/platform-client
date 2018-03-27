@@ -3,12 +3,13 @@ describe('setting create targeted survey controller', function () {
     var $scope,
         Features,
         $controller,
-        ModalService;
+        ModalService,
+        testApp;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-        var testApp = makeTestApp();
+        testApp = makeTestApp();
 
         testApp.controller('targetedSurvey', require('app/settings/surveys/targeted-surveys/targeted-edit.controller.js'));
 
@@ -19,7 +20,13 @@ describe('setting create targeted survey controller', function () {
                 }
             };
         });
-
+        testApp.service('$transition$', function () {
+            return {
+                params: function () {
+                    return { id: null };
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
 
@@ -41,7 +48,7 @@ describe('setting create targeted survey controller', function () {
                 expect($scope.isActiveStep(2)).toEqual(true);
             });
             it('should return false step isnt active', function () {
-                // $scope.activeStep = 1;
+                $scope.activeStep = 1;
                 expect($scope.isActiveStep(2)).toEqual(false);
                 $scope.activeStep = 2;
                 expect($scope.isActiveStep(1)).toEqual(false);
@@ -61,30 +68,24 @@ describe('setting create targeted survey controller', function () {
         });
         describe('Step Three Completion', function () {
             it('should complete step three when there are questions', function () {
-                $scope.targetedSurvey = {
-                    stepThree: {
-                        questions: ['question 1']
-                    }
+                $scope.survey = {
+                    attributes: ['question 1']
                 };
                 $scope.completeStepThree();
                 expect($scope.activeStep).toEqual(4);
                 expect($scope.stepThreeWarning).toEqual(false);
             });
             it('should fail to complete the step when there are no questions', function () {
-                $scope.targetedSurvey = {
-                    stepThree: {
-                        questions: []
-                    }
+                $scope.survey = {
+                    attributes: []
                 };
                 $scope.activeStep = 3;
                 $scope.completeStepThree();
                 expect($scope.activeStep).toEqual(3);
                 expect($scope.stepThreeWarning).toEqual(true);
             });
-            it('should fail to complete the step when stepThree.questions is undefined', function () {
-                $scope.targetedSurvey = {
-                    stepThree: {}
-                };
+            it('should fail to complete the step when no questions is added', function () {
+                $scope.survey = {};
                 $scope.activeStep = 3;
                 $scope.completeStepThree();
                 expect($scope.activeStep).toEqual(3);
@@ -109,20 +110,16 @@ describe('setting create targeted survey controller', function () {
         });
         describe('addNewQuestion', function () {
             it('should add a new question to the model', function () {
-                $scope.targetedSurvey = {
-                    stepThree: {
-                        questions: []
-                    }
+                $scope.survey = {
+                    attributes: []
                 };
                 $scope.editQuestion =  {question: 'TestQuestion', input: 'textarea', newQuestion: true};
                 $scope.addNewQuestion();
-                expect($scope.targetedSurvey.stepThree.questions.length).toEqual(1);
+                expect($scope.survey.attributes.length).toEqual(1);
             });
             it('should adjust the added question-object', function () {
-                $scope.targetedSurvey = {
-                    stepThree: {
-                        questions: []
-                    }
+                $scope.survey = {
+                    attributes: []
                 };
                 $scope.editQuestion = {question: 'Test question?', input: 'textarea', newQuestion: true};
                 $scope.addNewQuestion();
@@ -131,26 +128,22 @@ describe('setting create targeted survey controller', function () {
             });
             it('should not add an edited question to the model', function () {
                 let existingQuestion = {question: 'Test question?', input: 'textarea', order: 3, type: 'text', label: 'Test question?'};
-                $scope.targetedSurvey = {
-                    stepThree: {
-                        questions: [existingQuestion]
-                    }
+                $scope.survey = {
+                    attributes: [existingQuestion]
                 };
                 $scope.editQuestion =  {question: 'Edited question', input: 'textarea', order: 3, type: 'text', label: 'Test question?'};
                 $scope.addNewQuestion();
-                expect($scope.targetedSurvey.stepThree.questions.length).toEqual(1);
+                expect($scope.survey.attributes.length).toEqual(1);
             });
             it('should give a question the correct order based on previous questions', function () {
                 let question = {question: 'Test question?', input: 'textarea', order: 3, type: 'text', label: 'Test question?'};
-                $scope.targetedSurvey = {
-                    stepThree: {
-                        questions: [question]
-                    }
+                $scope.survey = {
+                    attributes: [question]
                 };
                 $scope.editQuestion =  {question: 'Another question', newQuestion: true};
                 $scope.addNewQuestion();
                 expect($scope.editQuestion.order).toEqual(4);
-                expect($scope.targetedSurvey.stepThree.questions.length).toEqual(2);
+                expect($scope.survey.attributes.length).toEqual(2);
             });
         });
         describe('Step One', function () {
