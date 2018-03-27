@@ -59,7 +59,7 @@ function (
         {
             name: 'settings.surveys',
             url: '/settings/surveys',
-            controller: require('./surveys/surveys.controller.  js'),
+            controller: require('./surveys/surveys.controller.js'),
             template: require('./surveys/surveys.html')
         }
     )
