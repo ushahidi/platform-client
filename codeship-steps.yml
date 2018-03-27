@@ -50,4 +50,4 @@
 
   - name: "Deployment director"
     service: deploy
-    command: ush-deployment-director.sh
+    command: CI_NAME=codeship ush-deployment-director.sh
