@@ -92,11 +92,11 @@ function (
 
     if ($scope.surveyId) {
         $scope.activeStep = 4;
-        $q.all([FormEndpoint.get({id: $scope.surveyId}),
-            FormAttributeEndpoint.query({formId: $scope.surveyId})])
-            .then((results) => {
-            $scope.survey = results[0];
-            $scope.survey.attributes = results[1];
+        FormEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
+            $scope.survey = result;
+            FormAttributeEndpoint.query({formId: $scope.surveyId}).$promise.then((result) => {
+                $scope.survey.attributes = result;
+            });
         });
     }
 
