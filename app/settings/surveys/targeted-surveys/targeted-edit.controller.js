@@ -84,6 +84,7 @@ function (
                 $state.go('settings.surveys.create');
             }
         });
+    $scope.getCountryCodes();
 
     // needed for Sortablejs and drag-drop in step 3
     let el = document.getElementById('listWithHandle');
@@ -120,7 +121,6 @@ function (
         if (isStepComplete($scope.targetedSurvey.stepOne)) {
             $scope.activeStep = 2;
             $scope.stepOneWarning = false;
-            $scope.getCountryCodes();
         } else {
             $scope.stepOneWarning = true;
         }

@@ -30,7 +30,7 @@ describe('setting create targeted survey controller', function () {
         ModalService = _ModalService_;
         $controller = _$controller_;
         CountryCodeEndpoint = _CountryCodeEndpoint_;
-
+        spyOn(CountryCodeEndpoint, 'query').and.callThrough();
         $controller('targetedSurvey', {
             $scope: $scope
         });
@@ -165,16 +165,6 @@ describe('setting create targeted survey controller', function () {
                 $scope.completeStepOne();
                 expect($scope.activeStep).toEqual(2);
                 expect($scope.stepOneWarning).toEqual(false);
-            });
-            it('should fetch country-codes when moving to step 2', function () {
-                spyOn($scope, 'getCountryCodes').and.callThrough();
-                $scope.targetedSurvey = {
-                    stepOne: {
-                        $valid: true
-                    }
-                };
-                $scope.completeStepOne();
-                expect($scope.getCountryCodes).toHaveBeenCalled();
             });
             it('should stay at step 1 and turn on warning when failing', function () {
                 $scope.activeStep = 1;
@@ -335,14 +325,11 @@ describe('setting create targeted survey controller', function () {
         });
     });
     describe('getCountryCodes', function () {
-        it('should call country-code-endpoint', function () {
-            spyOn(CountryCodeEndpoint, 'query').and.callThrough();
+        it('should call country-code-endpoint on pageload', function () {
             $scope.getCountryCodes();
             expect(CountryCodeEndpoint.query).toHaveBeenCalled();
         });
         it('should populate countriesList with countries', function () {
-            expect($scope.countriesList.length).toEqual(0);
-            $scope.getCountryCodes();
             expect($scope.countriesList.length).toEqual(1);
         });
     });
