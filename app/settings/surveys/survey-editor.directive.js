@@ -85,8 +85,6 @@ function SurveyEditorController(
     $scope.getInterimId = getInterimId;
     $scope.removeInterimIds = removeInterimIds;
 
-    $scope.allowedToggleOrder = allowedToggleOrder;
-
     $scope.switchTab = switchTab;
 
     $scope.loadRoleData = loadRoleData;
@@ -192,10 +190,6 @@ function SurveyEditorController(
         var tab_li = tab + '-li';
         angular.element(document.getElementById(tab)).addClass('active');
         angular.element(document.getElementById(tab_li)).addClass('active');
-    }
-
-    function allowedToggleOrder(attribute) {
-        return attribute.type !== 'title' && attribute.type !== 'description';
     }
 
     function getInterimId() {

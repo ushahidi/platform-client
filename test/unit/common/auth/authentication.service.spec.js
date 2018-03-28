@@ -248,6 +248,7 @@ describe('Authentication', function () {
                 accessToken: 'fooBarAccessToken',
                 grantType: 'password'
             };
+            $rootScope.hasPermission = function () {};
 
             spyOn($rootScope, '$broadcast').and.callThrough();
 

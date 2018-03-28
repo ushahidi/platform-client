@@ -1,7 +1,19 @@
  <div class="modal-body">
-  <div class="form-field">
+  <div class="form-field required"
+    ng-class="{
+        'error': labelError
+    }">
       <label translate="app.name">Name</label>
       <input type="text" ng-model="editAttribute.label" placeholder="{{ 'form.field_name_placeholder' | translate}}">
+      <div
+                class="alert error"
+                ng-show="labelError"
+            >
+                <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="{{'post.valid.label.required'}}"></span>
+            </div>
    </div>
    <div class="form-field switch">
       <label translate="survey.show_field_description">Show field description</label>
@@ -101,7 +113,7 @@
         </div>
    </div>
    <div class="form-field">
-      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
-      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="addNewAttribute(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
+      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
+      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
    </div>
 </div>
