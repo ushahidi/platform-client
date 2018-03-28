@@ -111,9 +111,7 @@ function SurveyEditorController(
 
         Features.loadFeatures()
         .then(() => {
-            // WARNING: Add Feature Flag
-            $scope.targetedSurveysEnabled = true;
-            //Features.isFeatureEnabled('targeted-surveys');
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
         });
 
         if ($scope.surveyId) {
