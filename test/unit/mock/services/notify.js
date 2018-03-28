@@ -77,7 +77,7 @@ module.exports = [function () {
                 }
             };
         },
-        exportNotifications: function () {
+        notifyAction: function () {
             return {
                 then: function (successCallback) {
                     successCallback();
