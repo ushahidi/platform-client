@@ -22,6 +22,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         $scope.processing = false;
         $scope.searchLocationTerm = '';
         $scope.searchLocation = searchLocation;
+        $scope.manualModel = { lat: null, lon: null };
         $scope.searchTimeout;
         $scope.handleActiveSearch = handleActiveSearch;
         $scope.clear = clear;
@@ -87,6 +88,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             ) {
                 updateMarkerPosition(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
                 centerMapTo(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
+                updateManualLatLon(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
             }
         }
 
@@ -95,6 +97,12 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 lat: lat,
                 lon: lon
             });
+            updateManualLatLon(lat, lon);
+        }
+
+        function updateManualLatLon(lat, lon) {
+            $scope.manualModel.lat = lat;
+            $scope.manualModel.lon = lon;
         }
 
         function manualLatLong(lat, lon) {
