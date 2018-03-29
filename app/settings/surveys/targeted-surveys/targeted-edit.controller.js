@@ -18,6 +18,7 @@ module.exports = [
     '$transition$',
     'CountryCodeEndpoint',
     '$translate',
+    'FormContactEndpoint',
 function (
     $scope,
     Features,
@@ -35,7 +36,8 @@ function (
     LoadingProgress,
     $transition$,
     CountryCodeEndpoint,
-    $translate
+    $translate,
+    FormContactEndpoint
 ) {
     $scope.isActiveStep = isActiveStep;
     $scope.isStepComplete = isStepComplete;
@@ -91,6 +93,8 @@ function (
     $scope.surveyId = $transition$.params().id;
 
     if ($scope.surveyId) {
+        //if we come here from the survey-list, we show the summary of the survey
+        // WARNING: TODO: Once we can get hold of the stats about responses and number of sms sent, we need to request them
         $scope.activeStep = 4;
         FormEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
             $scope.survey = result;
@@ -98,6 +102,14 @@ function (
                 $scope.survey.attributes = result;
             });
         });
+    } else {
+        // Initializes a new survey-object
+        $scope.survey =  {
+                color: null,
+                everyone_can_create: false,
+                hide_author: true,
+                targeted_survey: 1
+            };
     }
 
 
@@ -196,6 +208,7 @@ function (
             $scope.stepThreeWarning = true;
         }
     }
+
     function calculateStats() {
         ConfigEndpoint.get({id: 'data-provider'}).$promise.then(function (result) {
             let cost,
@@ -223,7 +236,6 @@ function (
         }
 
         let modalTitle = question ? 'survey.targeted_survey.edit_title' : 'survey.targeted_survey.new_question_title';
-
         ModalService.openTemplate('<targeted-question></targeted-question>', modalTitle, null, $scope, true, true);
     }
 
@@ -236,12 +248,10 @@ function (
 
     function addNewQuestion() {
         ModalService.close();
-
         if (!$scope.survey.attributes) {
             $scope.survey.attributes = [];
         }
 
-        // WARNING! Below might change depending on what info the api needs. Its now based on open-surveys
         $scope.editQuestion.input = 'textarea';
         $scope.editQuestion.order = getPriority($scope.survey.attributes);
         $scope.editQuestion.type = 'text';
@@ -269,66 +279,78 @@ function (
     }
 
     function goToDataView(id) {
-        // redirecting to data-view, function used in the notification-window
+        // redirecting to data-view, function used in the notification-window and in the summary-view
         PostFilters.setFilter('form', [id]);
         $state.go('posts.data');
     }
 
+    function saveContacts(id) {
+        FormContactEndpoint.save({formId: id, contacts: $scope.textBoxNumbers, country_code: $scope.selectedCountry.country_code}).$promise.then(function (response) {
+            let messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
+            let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
+            Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: id});
+        }, function (err) {
+            let errors = ['survey.targeted_survey.error_contacts '];
+            _.each(err.data.errors, (error) => {
+                // if the number-validation fails in the api, we show the user which numbers failed.
+                if (error.source) {
+                    errors.push(error.source.pointer + ' ');
+                }
+                Notify.errors(errors);
+            });
+        });
+    }
+
+    function saveFormStageAttributes(id) {
+        let task = {
+            attributes: $scope.survey.attributes,
+            formId: id,
+            is_public: true,
+            label: 'Post',
+            priority: 0,
+            required: false,
+            show_when_published: true,
+            task_is_internal_only: false,
+            type: 'post'
+        };
+
+        FormStageEndpoint
+            .saveCache(task)
+            .$promise
+            .then(function (savedTask) {
+                let questions = [];
+                _.each($scope.survey.attributes, function (question) {
+                        question.form_stage_id = savedTask.id;
+                        question.formId = id;
+                        questions.push(FormAttributeEndpoint
+                            .saveCache(question)
+                            .$promise);
+                    });
+                $q.all(questions).then(function (saved) {
+                    // once we have saved the survey and its attributes (the questions) we save the contacts
+                    saveContacts(id);
+                }, function (err) {
+                        Notify.error('survey.targeted_survey.error_message');
+                    });
+            }, function (err) {
+            Notify.error('survey.targeted_survey.error_message');
+        });
+    }
+
+    function saveTargetedSurvey() {
+        FormEndpoint
+            .saveCache($scope.survey)
+            .$promise
+            .then(function (savedSurvey) {
+                saveFormStageAttributes(savedSurvey.id);
+            }, function (err) {
+                Notify.error('survey.targeted_survey.error_message');
+            });
+    }
+
     function publish() {
-        /* WARNING! This is using the FormEndpoint saving a normal survey. This will change in some way once the api is ready.
-        * We also need to add the numbers somewhere */
-
-        /* WARNING! If we end up using the same endpoint as for other surveys,
-        *  we should consider moving save-survey/tasks/attributes-code to a survey to
-        * be able to use same code in both surveys and targeted surveys + we need to add the numbers somewhere*/
-
-        let survey =  {
-                color: null,
-                everyone_can_create: true,
-                name: $scope.survey.name,
-                description: $scope.survey.description,
-                require_approval: $scope.survey.require_review,
-                hide_author: $scope.survey.hide_responders
-            };
-
         Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
-            FormEndpoint
-                .saveCache(survey)
-                .$promise
-                .then(function (savedSurvey) {
-                    $scope.surveyId = savedSurvey.id;
-                    let task = {
-                        attributes: $scope.survey.attributes,
-                        formId: $scope.surveyId,
-                        form_id: $scope.surveyId,
-                        is_public: true,
-                        label: 'Post',
-                        priority: 0,
-                        required: false,
-                        show_when_published: true,
-                        task_is_internal_only: false,
-                        type: 'post'
-                    };
-                    FormStageEndpoint
-                        .saveCache(task)
-                        .$promise
-                        .then(function (savedTask) {
-                            let questions = [];
-                            _.each($scope.survey.attributes, function (question) {
-                                    question.form_stage_id = savedTask.id;
-                                    question.formId = $scope.surveyId;
-                                    questions.push(FormAttributeEndpoint
-                                        .saveCache(question)
-                                        .$promise);
-                                });
-                            $q.all(questions).then(function (saved) {
-                                let messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
-                                let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
-
-                                Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: savedSurvey.id});
-                            });
-                        });
-                });
+            saveTargetedSurvey();
         });
     }
 
