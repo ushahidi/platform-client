@@ -38,9 +38,7 @@ function (
 
     Features.loadFeatures()
     .then(function () {
-        // WARNING: Add Feature Flag
-        $scope.targetedSurveysEnabled = true;
-        //Features.isFeatureEnabled('targeted-surveys');
+        $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
     });
 
     // Get all the forms for display
