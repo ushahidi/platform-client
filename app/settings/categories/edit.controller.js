@@ -127,6 +127,10 @@ function (
     function saveCategory(category) {
         // Set processing to disable user actions
         $scope.processing = true;
+
+        //Ensure slug is updated to tag
+        category.slug = category.tag;
+
         // Save category
         $q.when(
             TagEndpoint
