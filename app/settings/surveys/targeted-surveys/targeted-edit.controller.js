@@ -311,13 +311,16 @@ function (
             required: false,
             show_when_published: true,
             task_is_internal_only: false,
-            type: 'post'
+            type: 'post',
+            // attaching id to survey in case something goes wrong further down in the save-chain, then we dont want to save the survey again, just update it
+            id: $scope.survey.stageId
         };
 
         FormStageEndpoint
             .saveCache(task)
             .$promise
             .then(function (savedTask) {
+                $scope.survey.stageId = savedTask.id;
                 let questions = [];
                 _.each($scope.survey.attributes, function (question) {
                         question.form_stage_id = savedTask.id;
@@ -327,6 +330,8 @@ function (
                             .$promise);
                     });
                 $q.all(questions).then(function (saved) {
+                    // saving the attributes with id to survey
+                    $scope.survey.attributes = saved;
                     // once we have saved the survey and its attributes (the questions) we save the contacts
                     saveContacts(id);
                 }, function (err) {
@@ -338,14 +343,15 @@ function (
     }
 
     function saveTargetedSurvey() {
-        FormEndpoint
-            .saveCache($scope.survey)
-            .$promise
-            .then(function (savedSurvey) {
-                saveFormStageAttributes(savedSurvey.id);
-            }, function (err) {
-                Notify.error('survey.targeted_survey.error_message');
-            });
+        FormEndpoint.saveCache($scope.survey)
+        .$promise
+        .then(function (savedSurvey) {
+            // attaching id to survey in case something goes wrong further down, then we dont want to save the survey again, just update it
+            $scope.survey.id = savedSurvey.id;
+            saveFormStageAttributes(savedSurvey.id);
+        }, function (err) {
+            Notify.error('survey.targeted_survey.error_message');
+        });
     }
 
     function publish() {
