@@ -12,6 +12,7 @@ module.exports = [
     'FormEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
+    'FormStatsEndpoint',
     '$q',
     'PostFilters',
     'LoadingProgress',
@@ -30,6 +31,7 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
+    FormStatsEndpoint,
     $q,
     PostFilters,
     LoadingProgress,
@@ -75,6 +77,8 @@ function (
     $scope.goToDataView = goToDataView;
     $scope.getCountryCodes = getCountryCodes;
     $scope.countriesList = [];
+    $scope.totalResponses = 0;
+    $scope.totalRecipients = 0;
     Features.loadFeatures()
            .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
@@ -95,6 +99,10 @@ function (
             FormAttributeEndpoint.query({formId: $scope.surveyId}).$promise.then((result) => {
                 $scope.survey.attributes = result;
             });
+        });
+        FormStatsEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
+            $scope.totalResponses = result.total_responses;
+            $scope.totalRecipients = result.total_recipients;
         });
     }
 

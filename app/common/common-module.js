@@ -33,6 +33,7 @@ angular.module('ushahidi.common', [
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
 .service('FormRoleEndpoint', require('./services/endpoints/form-roles.js'))
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
+.service('FormStatsEndpoint', require('./services/endpoints/form-stats-endpoint.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
 .service('RoleEndpoint', require('./services/endpoints/role.js'))
 .service('WebhookEndpoint', require('./services/endpoints/webhooks.js'))
