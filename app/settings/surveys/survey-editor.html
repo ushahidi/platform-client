@@ -153,6 +153,24 @@
               </div>
           </div>
 
+          <div class="form-field switch">
+              <label translate="survey.hide_location_information">Hide location information</label>
+              <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
+              <div class="toggle-switch">
+                  <input class="tgl init" id="hide-location" type="checkbox" data-fieldgroup-toggle="hide-location-message" ng-model="survey.hide_location">
+                  <label class="tgl-btn" for="hide-location"></label>
+              </div>
+          </div>
+
+          <div class="form-field switch">
+              <label translate="survey.hide_time_information">Hide exact time information</label>
+              <p ng-show="survey.hide_time" data-fieldgroup-target="hide-time-message" translate="survey.hide_time_information_desc">Only people with permission to edit responses will be able to see exact respon time; and only when editing them.</p>
+              <div class="toggle-switch">
+                  <input class="tgl init" id="hide-time" type="checkbox" data-fieldgroup-toggle="hide-time-message" ng-model="survey.hide_time">
+                  <label class="tgl-btn" for="hide-time"></label>
+              </div>
+          </div>
+
           <!--// Who can add //-->
           <fieldset>
             <legend translate="survey.who_can_add">Who can add to this survey</legend>
