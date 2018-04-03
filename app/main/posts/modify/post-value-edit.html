@@ -2,7 +2,7 @@
     <!-- Container for form-field structured elements -->
     <div ng-if="attribute.type === 'description' || attribute.type === 'title'">
         <!-- Split between Title Desc and other values -->
-        <div 
+        <div
             ng-if="attribute.type==='title'"
             class="form-field init required"
             adaptive-form
@@ -264,7 +264,7 @@
                 </div>
                 <!-- type: categories -->
                 <div ng-switch-when="tags">
-                    <post-category-selector
+                    <post-category-editor
                         available="attribute.options"
                         selected="post.values[attribute.key]"
                         form="form"
@@ -272,7 +272,7 @@
                         attribute="attribute"
                         post-value="post.values[attribute.key]"
 
-                    ></post-category-selector>
+                    ></post-category-editor>
                 </div>
                 <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
                     <svg class="iconic">
