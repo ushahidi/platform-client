@@ -47,11 +47,8 @@ function ShareMenuController(
 
         $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
     }
-    // Check if current view is exportable based on URI
+    // Check if current view is exportable
     function isExportable() {
-        if ($window.location.href.indexOf('post') > 0) {
-            return false;
-        }
         return true;
     }
 }
