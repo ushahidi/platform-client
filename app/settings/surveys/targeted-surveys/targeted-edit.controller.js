@@ -77,6 +77,7 @@ function (
     $scope.goToDataView = goToDataView;
     $scope.getCountryCodes = getCountryCodes;
     $scope.countriesList = [];
+    $scope.getFormStats = getFormStats;
     $scope.totalResponses = 0;
     $scope.totalRecipients = 0;
     Features.loadFeatures()
@@ -100,10 +101,7 @@ function (
                 $scope.survey.attributes = result;
             });
         });
-        FormStatsEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
-            $scope.totalResponses = result.total_responses;
-            $scope.totalRecipients = result.total_recipients;
-        });
+        getFormStats();
     }
 
 
@@ -363,6 +361,13 @@ function (
                 country.country_name = $translate.instant('countries.' + country.country_name);
                 $scope.countriesList.push(country);
             });
+        });
+    }
+
+    function getFormStats() {
+        FormStatsEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
+            $scope.totalResponses = result.total_responses;
+            $scope.totalRecipients = result.total_recipients;
         });
     }
 }];
