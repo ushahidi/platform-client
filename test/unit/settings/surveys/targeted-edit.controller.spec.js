@@ -4,7 +4,9 @@ describe('setting create targeted survey controller', function () {
         Features,
         $controller,
         ModalService,
-        CountryCodeEndpoint;
+        Notify,
+        CountryCodeEndpoint,
+        FormEndpoint;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -30,12 +32,14 @@ describe('setting create targeted survey controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable, _CountryCodeEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable, _CountryCodeEndpoint_, _Notify_, _FormEndpoint_) {
         $scope = _$rootScope_.$new();
         Features = _Features_;
         ModalService = _ModalService_;
         $controller = _$controller_;
+        Notify = _Notify_;
         CountryCodeEndpoint = _CountryCodeEndpoint_;
+        FormEndpoint = _FormEndpoint_;
         spyOn(CountryCodeEndpoint, 'query').and.callThrough();
         $controller('targetedSurvey', {
             $scope: $scope
@@ -314,6 +318,29 @@ describe('setting create targeted survey controller', function () {
                     badNumberCount: 1
                 });
             });
+        });
+    });
+    describe('publish', function () {
+        it('should ask the user if they want to sent the survey', function () {
+            $scope.survey = {
+                attributes: []
+            };
+            spyOn(Notify, 'confirmModal').and.callThrough();
+            $scope.publish();
+            expect(Notify.confirmModal).toHaveBeenCalled();
+        });
+        it('should save the targeted-survey-form', function () {
+            $scope.survey =  {
+                    color: null,
+                    everyone_can_create: false,
+                    hide_author: true,
+                    targeted_survey: 1,
+                    attributes: [{id: 1}],
+                    id: 'pass'
+                };
+            spyOn(FormEndpoint, 'saveCache').and.callThrough();
+            $scope.publish();
+            expect(FormEndpoint.saveCache).toHaveBeenCalled();
         });
     });
     describe('getCountryCodes', function () {
