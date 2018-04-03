@@ -163,7 +163,7 @@ angular.module('app',
         LoadingProgress.watchTransitions();
         if (window.ushahidi.gaEnabled) {
             $transitions.onSuccess({}, function (transition) {
-                window.ga('send', 'pageview', transition.to().name);
+               window.ga('send', 'pageview', transition.to().url);
             });
         }
     }])
