@@ -1,7 +1,6 @@
 describe('setting create targeted survey controller', function () {
 
     var $scope,
-        Features,
         $controller,
         ModalService,
         Notify,
@@ -32,9 +31,9 @@ describe('setting create targeted survey controller', function () {
         angular.mock.module('testApp');
     });
 
+
     beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable, _CountryCodeEndpoint_, _Notify_, _FormEndpoint_) {
         $scope = _$rootScope_.$new();
-        Features = _Features_;
         ModalService = _ModalService_;
         $controller = _$controller_;
         Notify = _Notify_;

@@ -79,9 +79,7 @@ function (
     $scope.countriesList = [];
     Features.loadFeatures()
            .then(() => {
-            // WARNING: Add Feature Flag
-            $scope.targetedSurveysEnabled = true;
-            // $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
 
             // reroute if feature-flag is not turned on
             if (!$scope.targetedSurveysEnabled) {
