@@ -158,7 +158,6 @@ angular.module('app',
     //     $trace.enable('TRANSITION');
     // }])
     .run(['$rootScope', 'LoadingProgress', '$transitions', function ($rootScope, LoadingProgress, $transitions) {
-        $rootScope.$on('$stateChangeError', console.log.bind(console));
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
         if (window.ushahidi.gaEnabled) {
@@ -166,9 +165,6 @@ angular.module('app',
                window.ga('send', 'pageview', transition.to().url);
             });
         }
-    }])
-    .run(['$rootScope', function ($rootScope) {
-        $rootScope.$on('$stateChangeError', console.log.bind(console));
     }])
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
