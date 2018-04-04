@@ -73,12 +73,14 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         }
 
         function onMapClick(e) {
-            var wrappedLatLng = e.latlng.wrap(),
-                lat = wrappedLatLng.lat,
-                lon = wrappedLatLng.lng;
+            $scope.$apply(() => {
+                var wrappedLatLng = e.latlng.wrap(),
+                    lat = wrappedLatLng.lat,
+                    lon = wrappedLatLng.lng;
 
-            updateMarkerPosition(lat, lon);
-            updateModelLatLon(lat, lon);
+                updateMarkerPosition(lat, lon);
+                updateModelLatLon(lat, lon);
+            });
         }
 
         function renderViewValue() {
