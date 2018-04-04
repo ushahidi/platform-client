@@ -1,17 +1,16 @@
-<div class="mode-context">
-
+<layout-class layout="b"></layout-class>
+<div class="mode-context init" dropdown auto-close="disabled">
     <header class="mode-context-header">
         <ol class="breadcrumbs">
             <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
             <li><a href="/settings" translate>app.settings</a></li>
             <li><a href="/settings/surveys" translate>app.surveys</a></li>
         </ol>
-
         <h1 class="mode-context-title">Surveys</h1>
         <a ui-sref="settings.surveys.create" ng-hide="surveyId">< <span translate="settings.send_crowdsourced"></span></a>
     </header>
 
-    <span class="mode-context-trigger">
+    <span class="mode-context-trigger" dropdown-toggle>
         <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
@@ -20,17 +19,17 @@
 
     <div class="mode-context-body">
     </div>
-
 </div>
 
 <main role="main">
     <div class="toolbar">
     </div>
-      <div ng-show="isLoading()" class="progress-bar">
-        <span>
-            ..
-        </span>
+    <div class="progress-bar" ng-show="isLoading()">
+      <span>
+          ..
+      </span>
     </div>
+
     <div class="main-col">
         <form name="targetedSurvey">
             <div ng-show="targetedSurveysEnabled" class="form-sheet">
@@ -217,7 +216,7 @@
                                 <label for="switch4" translate="survey.require_review"></label>
                                     <p ng-show="targetedSurvey.require_review" translate="survey.require_review_desc"></p>
                                     <div class="toggle-switch">
-                                        <input class="tgl" id="switch4" type="checkbox" ng-model="survey.require_review">
+                                        <input class="tgl" id="switch4" type="checkbox" ng-model="survey.require_approval">
                                         <label class="tgl-btn" for="switch4"></label>
                                     </div>
                             </div>
@@ -225,7 +224,7 @@
                                 <label for="switch5" translate="survey.targeted_survey.hide_responders"></label>
                                     <p ng-show="targetedSurvey.hide_responders" translate="survey.targeted_survey.hide_responders_desc"></p>
                                     <div class="toggle-switch">
-                                        <input class="tgl" id="switch5" type="checkbox" ng-model="survey.hide_responders">
+                                        <input class="tgl" id="switch5" type="checkbox" ng-model="survey.hide_author">
                                         <label class="tgl-btn" for="switch5"></label>
                                     </div>
                             </div>
