@@ -344,7 +344,9 @@
             "published_people": "We sent your survey to {{numbers}} people on {{sentDate}}.",
             "published_person": "We sent your survey to {{numbers}} person on {{sentDate}}.",
             "received_responses": "You have received {{responses}} responses so far.",
-            "received_response": "You have received {{responses}} response so far."
+            "received_response": "You have received {{responses}} response so far.",
+            "error_message" : "An error occurred while trying to save your targeted survey",
+            "error_contacts": "Some of the numbers you provided failed, please check your numbers and try again"
         }
     },
 
