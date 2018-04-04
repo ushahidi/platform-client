@@ -52,6 +52,8 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 map.on('click', onMapClick);
                 // treat locationfound same as map click
                 map.on('locationfound', onMapClick);
+                // handle failure to find location
+                map.on('locationerror', onLocationError);
                 // Add locate control, but only on https
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
                     $scope.showCurrentPositionControl = true;
@@ -81,6 +83,10 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 updateMarkerPosition(lat, lon);
                 updateModelLatLon(lat, lon);
             });
+        }
+
+        function onLocationError() {
+            Notify.error('location.my_location_error');
         }
 
         function renderViewValue() {
