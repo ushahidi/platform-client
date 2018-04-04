@@ -15,9 +15,10 @@
     command: release
     tag: '^v[0-9]\.[0-9]+.[0-9]+([\-a-zA-Z0-9\.]+)?$'
 
-  - name: "Deploy staging"
+  - name: "Deploy QA"
     service: deploy
-    tag: develop
+    # tag: develop
+    tag: release/csv-export-2399
     command: >
       ANSIBLE_GITHUB_REPO=platform-cloud-ansible
       ANSIBLE_GITHUB_REPO_VERSION=master
@@ -49,4 +50,4 @@
 
   - name: "Deployment director"
     service: deploy
-    command: ush-deployment-director.sh
+    command: CI_NAME=codeship ush-deployment-director.sh
