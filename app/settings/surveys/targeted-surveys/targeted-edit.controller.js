@@ -80,7 +80,6 @@ function (
     Features.loadFeatures()
            .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
-
             // reroute if feature-flag is not turned on
             if (!$scope.targetedSurveysEnabled) {
                 $state.go('settings.surveys.create');
@@ -287,6 +286,7 @@ function (
             let messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
             let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
             Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: id});
+            $state.go('settings.surveys.targeted.published', {id});
         }, function (err) {
             let errors = ['survey.targeted_survey.error_contacts '];
             _.each(err.data.errors, (error) => {
@@ -298,6 +298,7 @@ function (
             });
         });
     }
+
 
     function saveFormStageAttributes(id) {
         let task = {
