@@ -857,7 +857,6 @@
         "customize_your_new_deployment" : "Customize your new deployment",
         "embed" : "Embed",
         "embed_info" : "To embed your map on another site use the code snippet below.",
-        "embed_code" : "&lt;iframe width=\"500\" height=\"400\" src=\"{{url}}\"&gt;&lt;/iframe&gt;",
         "settings_list": {
             "general" : "General",
             "general_desc" : "Change your deployment's name, description, logo, and other details.",
