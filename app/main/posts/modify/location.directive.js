@@ -34,7 +34,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         $scope.chooseCurrentLocation = chooseCurrentLocation;
         $scope.searchResults = [];
         $scope.showCurrentPositionControl = false;
-        $scope.manualLatLong = manualLatLong;
+        $scope.updateMapFromLatLon = updateMapFromLatLon;
         activate();
 
         function activate() {
@@ -113,7 +113,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             $scope.manualModel.lon = lon;
         }
 
-        function manualLatLong(lat, lon) {
+        function updateMapFromLatLon(lat, lon) {
             updateMarkerPosition(lat, lon);
             centerMapTo(lat, lon);
             updateModelLatLon(lat, lon);
