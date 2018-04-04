@@ -88,12 +88,11 @@ function (
     $scope.getCountryCodes();
 
     $scope.surveyId = $transition$.params().id;
-
     if ($scope.surveyId) {
         //if we come here from the survey-list, we show the summary of the survey
         // WARNING: TODO: Once we can get hold of the stats about responses and number of sms sent, we need to request them
         $scope.activeStep = 4;
-        FormEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
+        FormEndpoint.get({id: $scope.surveyId}).$promise.then((result) => {
             $scope.survey = result;
             FormAttributeEndpoint.query({formId: $scope.surveyId}).$promise.then((result) => {
                 $scope.survey.attributes = result;
@@ -108,7 +107,6 @@ function (
                 targeted_survey: 1
             };
     }
-
 
     // needed for Sortablejs and drag-drop in step 3
     let el = document.getElementById('listWithHandle');
