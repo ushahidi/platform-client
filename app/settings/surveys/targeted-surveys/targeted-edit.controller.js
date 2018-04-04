@@ -12,6 +12,7 @@ module.exports = [
     'FormEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
+    'FormStatsEndpoint',
     '$q',
     'PostFilters',
     'LoadingProgress',
@@ -31,6 +32,7 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
+    FormStatsEndpoint,
     $q,
     PostFilters,
     LoadingProgress,
@@ -77,6 +79,9 @@ function (
     $scope.goToDataView = goToDataView;
     $scope.getCountryCodes = getCountryCodes;
     $scope.countriesList = [];
+    $scope.getFormStats = getFormStats;
+    $scope.totalResponses = 0;
+    $scope.totalRecipients = 0;
     Features.loadFeatures()
            .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
@@ -99,6 +104,7 @@ function (
                 $scope.survey.attributes = result;
             });
         });
+        getFormStats();
     } else {
         // Initializes a new survey-object
         $scope.survey =  {
@@ -384,6 +390,13 @@ function (
                 country.country_name = $translate.instant('countries.' + country.country_name);
                 $scope.countriesList.push(country);
             });
+        });
+    }
+
+    function getFormStats() {
+        FormStatsEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
+            $scope.totalResponses = result.total_responses;
+            $scope.totalRecipients = result.total_recipients;
         });
     }
 }];

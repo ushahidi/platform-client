@@ -3,9 +3,10 @@ describe('setting create targeted survey controller', function () {
     var $scope,
         $controller,
         ModalService,
-        Notify,
         CountryCodeEndpoint,
-        FormEndpoint;
+        Notify,
+        FormEndpoint,
+        FormStatsEndpoint;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -31,15 +32,16 @@ describe('setting create targeted survey controller', function () {
         angular.mock.module('testApp');
     });
 
-
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Features_, _ModalService_, Sortable, _CountryCodeEndpoint_, _Notify_, _FormEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _ModalService_, Sortable, _CountryCodeEndpoint_, _FormStatsEndpoint_, _Notify_, _FormEndpoint_) {
         $scope = _$rootScope_.$new();
         ModalService = _ModalService_;
         $controller = _$controller_;
         Notify = _Notify_;
         CountryCodeEndpoint = _CountryCodeEndpoint_;
+        FormStatsEndpoint = _FormStatsEndpoint_;
         FormEndpoint = _FormEndpoint_;
         spyOn(CountryCodeEndpoint, 'query').and.callThrough();
+        spyOn(FormStatsEndpoint, 'query').and.callThrough();
         $controller('targetedSurvey', {
             $scope: $scope
         });
@@ -349,6 +351,14 @@ describe('setting create targeted survey controller', function () {
         });
         it('should populate countriesList with countries', function () {
             expect($scope.countriesList.length).toEqual(1);
+        });
+    });
+    describe('survey (form) stats', function () {
+        it('should save the form stats to $scope', function () {
+            $scope.getFormStats();
+            expect(FormStatsEndpoint.query).toHaveBeenCalled();
+            expect($scope.totalResponses).toEqual(9);
+            expect($scope.totalRecipients).toEqual(5);
         });
     });
 });
