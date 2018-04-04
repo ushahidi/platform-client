@@ -346,7 +346,9 @@
             "received_responses": "You have received {{responses}} responses ",
             "received_response": "You have received {{responses}} response ",
             "recipients_count": "from {{recipients}} recipients so far.",
-            "recipient_count": "from {{recipients}} recipient so far."
+            "recipient_count": "from {{recipients}} recipient so far.",
+            "error_message" : "An error occurred while trying to save your targeted survey",
+            "error_contacts": "Some of the numbers you provided failed, please check your numbers and try again"
         }
     },
 
