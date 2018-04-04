@@ -14,6 +14,7 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
     function DetailMapLink($scope, element, attrs) {
         var map;
         $scope.hideMap = false;
+        $scope.emptyGeoJSON = false;
 
         activate();
 
@@ -60,6 +61,7 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             // If theres no location data, drop out now
             if (geojsonData.features && geojsonData.features.length === 0) {
                 $scope.hideMap = true;
+                $scope.emptyGeoJSON = true;
                 return;
             }
             $scope.hideMap = false;

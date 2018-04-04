@@ -4,6 +4,7 @@
         "support" : "Ushahidi Support",
         "by" : "by",
         "submit" : "Submit",
+        "anonymous" : "Anonymous",
         "submitting": "Submitting",
         "submit_another" : "Submit & Add Another",
         "submit_response": "Submit a survey response",
@@ -677,6 +678,9 @@
                 "required" : "A title is required",
                 "minlength" : "Title is too short",
                 "maxlength" : "Title is too long"
+            },
+            "label" : {
+                "required" : "A name is required"
             },
             "content" : {
                 "required" : "Description cannot be empty"
