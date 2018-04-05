@@ -22,6 +22,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         $scope.processing = false;
         $scope.searchLocationTerm = '';
         $scope.searchLocation = searchLocation;
+        $scope.manualModel = { lat: null, lon: null };
         $scope.searchTimeout;
         $scope.handleActiveSearch = handleActiveSearch;
         $scope.clear = clear;
@@ -33,7 +34,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         $scope.chooseCurrentLocation = chooseCurrentLocation;
         $scope.searchResults = [];
         $scope.showCurrentPositionControl = false;
-        $scope.manualLatLong = manualLatLong;
+        $scope.updateMapFromLatLon = updateMapFromLatLon;
         activate();
 
         function activate() {
@@ -51,6 +52,8 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 map.on('click', onMapClick);
                 // treat locationfound same as map click
                 map.on('locationfound', onMapClick);
+                // handle failure to find location
+                map.on('locationerror', onLocationError);
                 // Add locate control, but only on https
                 if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
                     $scope.showCurrentPositionControl = true;
@@ -72,12 +75,18 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         }
 
         function onMapClick(e) {
-            var wrappedLatLng = e.latlng.wrap(),
-                lat = wrappedLatLng.lat,
-                lon = wrappedLatLng.lng;
+            $scope.$apply(() => {
+                var wrappedLatLng = e.latlng.wrap(),
+                    lat = wrappedLatLng.lat,
+                    lon = wrappedLatLng.lng;
 
-            updateMarkerPosition(lat, lon);
-            updateModelLatLon(lat, lon);
+                updateMarkerPosition(lat, lon);
+                updateModelLatLon(lat, lon);
+            });
+        }
+
+        function onLocationError() {
+            Notify.error('location.my_location_error');
         }
 
         function renderViewValue() {
@@ -87,6 +96,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             ) {
                 updateMarkerPosition(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
                 centerMapTo(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
+                updateManualLatLon(ngModel.$viewValue.lat, ngModel.$viewValue.lon);
             }
         }
 
@@ -95,9 +105,15 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 lat: lat,
                 lon: lon
             });
+            updateManualLatLon(lat, lon);
         }
 
-        function manualLatLong(lat, lon) {
+        function updateManualLatLon(lat, lon) {
+            $scope.manualModel.lat = lat;
+            $scope.manualModel.lon = lon;
+        }
+
+        function updateMapFromLatLon(lat, lon) {
             updateMarkerPosition(lat, lon);
             centerMapTo(lat, lon);
             updateModelLatLon(lat, lon);
@@ -114,8 +130,10 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 marker.addTo(map);
 
                 marker.on('dragend', function (ev) {
-                    var latLng = ev.target.getLatLng();
-                    updateModelLatLon(latLng.lat, latLng.lng);
+                    $scope.$apply(() => {
+                        var latLng = ev.target.getLatLng();
+                        updateModelLatLon(latLng.lat, latLng.lng);
+                    });
                 });
             }
         }
