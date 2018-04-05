@@ -130,8 +130,10 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
                 marker.addTo(map);
 
                 marker.on('dragend', function (ev) {
-                    var latLng = ev.target.getLatLng();
-                    updateModelLatLon(latLng.lat, latLng.lng);
+                    $scope.$apply(() => {
+                        var latLng = ev.target.getLatLng();
+                        updateModelLatLon(latLng.lat, latLng.lng);
+                    });
                 });
             }
         }
