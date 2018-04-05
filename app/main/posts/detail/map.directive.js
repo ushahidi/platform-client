@@ -15,6 +15,7 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
         var map;
         $scope.hideMap = false;
         $scope.emptyGeoJSON = false;
+        $scope.geojson = [];
 
         activate();
 
@@ -44,6 +45,10 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             })
             // Create the map
             .then(addGeoJSONToMap)
+            .then((data) => {
+                // Save points to scope
+                $scope.features = data.geojson.features.filter(f => f.geometry.type === 'Point');
+            })
             ;
 
             // Cleanup leaflet map
@@ -77,6 +82,8 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             if (map.getZoom() > 15) {
                 map.setZoom(15);
             }
+
+            return data;
         }
     }
 }
