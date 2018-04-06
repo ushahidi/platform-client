@@ -15,9 +15,10 @@
     command: release
     tag: '^v[0-9]\.[0-9]+.[0-9]+([\-a-zA-Z0-9\.]+)?$'
 
-  - name: "Deploy staging"
+  - name: "Deploy QA"
     service: deploy
-    tag: develop
+    # tag: develop
+    tag: cycle-2-sms-api
     command: >
       ANSIBLE_GITHUB_REPO=platform-cloud-ansible
       ANSIBLE_GITHUB_REPO_VERSION=master
@@ -46,3 +47,7 @@
         -e PLATFORM_CLIENT_VERSION="$CI_COMMIT_ID"
         -e COMMIT_STATUS_CONTEXT="continuous-deployment/${CI_NAME}"
         -e DEPLOYMENT_LOG_URL="http://app.codeship.com/projects/${CI_PROJECT_ID}/builds/${CI_BUILD_ID}"
+
+  - name: "Deployment director"
+    service: deploy
+    command: CI_NAME=codeship ush-deployment-director.sh
