@@ -18,7 +18,7 @@
   - name: "Deploy QA"
     service: deploy
     # tag: develop
-    tag: cycle-2-sms-api
+    tag: cycle-1-sms-pre-feature-flag
     command: >
       ANSIBLE_GITHUB_REPO=platform-cloud-ansible
       ANSIBLE_GITHUB_REPO_VERSION=master
