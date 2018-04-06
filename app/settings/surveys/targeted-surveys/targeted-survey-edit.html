@@ -228,8 +228,12 @@
                             </h2>
                                 <!-- WARNING! Add actual responses once we get them from API -->
                                 <p ng-show="surveyId && isActiveStep(4)" translate="{{getPublishDescription()}}" translate-values="{numbers: 1299, sentDate: '22/22/2222 at 11:11 UTC'}"></p>
-                                <p ng-show="surveyId && isActiveStep(4)" translate="survey.targeted_survey.received_responses" translate-values="{responses: 1182}"></p>
-
+                                <p ng-show="surveyId && isActiveStep(4)">
+                                    <span ng-show="totalResponses !== 1" translate="survey.targeted_survey.received_responses" translate-values="{responses: totalResponses}"></span>
+                                    <span ng-show="totalResponses === 1" translate="survey.targeted_survey.received_response" translate-values="{responses: totalResponses}"></span>
+                                    <span ng-show="totalRecipients === 1" translate="survey.targeted_survey.recipient_count" translate-values="{recipients: totalRecipients}"></span>
+                                    <span ng-show="totalRecipients !== 1" translate="survey.targeted_survey.recipients_count" translate-values="{recipients: totalRecipients}"></span>
+                                </p>
                             <div class="alert" ng-show="isActiveStep(4) && !surveyId">
                                 <p translate={{getPublishDescription()}} translate-values="{questions: survey.attributes.length, numbers:finalNumbers.goodNumbers.length, sms: sms, cost:cost}"></p>
                                 <p ng-show="!surveyId" translate="survey.targeted_survey.send_to_old_number_warning"></p>
