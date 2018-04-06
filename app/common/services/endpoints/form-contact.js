@@ -20,9 +20,6 @@ function (
         query: {
             method: 'GET',
             isArray: true,
-            transformResponse: function (data /*, header*/) {
-                return Util.transformResponse(data).results;
-            },
             cache: cache
         },
         get: {
