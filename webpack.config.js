@@ -2,6 +2,7 @@ var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var Visualizer = require('webpack-visualizer-plugin');
 
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
 
@@ -27,6 +28,21 @@ module.exports = {
                 'stage-0'
               ],
             }
+          }
+        ]
+      },
+      {
+        test: /\.jsx$/,
+        exclude: [/app\/lib/, /node_modules/],
+        use: [
+          {
+            loader: 'babel-loader',
+            // options: {
+            //   presets: [
+            //     ['es2015', { modules: false }],
+            //     'stage-0'
+            //   ],
+            // }
           }
         ]
       },
@@ -113,6 +129,16 @@ module.exports = {
             !module.resource.includes('style-loader') &&
             !module.resource.includes('css-loader');
       }
-    })
-  ]
+    }),
+
+    new Visualizer()
+  ],
+    resolve: {
+        alias: {
+            'react': 'preact-compat',
+            'react-dom': 'preact-compat',
+            // Not necessary unless you consume a module using `createClass`
+            'create-react-class': 'preact-compat/lib/create-react-class'
+        }
+    }
 };

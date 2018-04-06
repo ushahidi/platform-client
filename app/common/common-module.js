@@ -1,3 +1,6 @@
+import { react2angular } from 'react2angular';
+import MyComponent from './directives/ush-logo-react/ush-logo.jsx';
+
 angular.module('ushahidi.common', [
     'ushahidi.common.adaptive-input',
     'ushahidi.common.dropdown',
@@ -117,6 +120,9 @@ angular.module('ushahidi.common', [
 .run(['$templateCache', function ($templateCache) {
     $templateCache.put('common/directives/mode-bar/ushahidi-logo.html', require('./directives/mode-bar/ushahidi-logo.html'));
 }])
+
+.component('myComponent', react2angular(MyComponent, ['fooBar', 'baz']))
+
 ;
 
 // Load submodules
@@ -125,3 +131,5 @@ require('./directives/dropdown.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
 require('./user-profile/user-profile-module.js');
+
+

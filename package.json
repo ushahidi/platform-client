@@ -26,13 +26,16 @@
     "jscs"
   ],
   "devDependencies": {
+    "@uirouter/visualizer": "^5.0.0",
     "angular-mocks": "^1.5.6",
     "babel-core": "^6.7.7",
     "babel-loader": "^7.0.0",
     "babel-plugin-istanbul": "^4.1.3",
+    "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-runtime": "^6.7.5",
     "babel-polyfill": "^6.7.4",
     "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.7.2",
     "babel-runtime": "^6.6.1",
@@ -43,7 +46,6 @@
     "dotenv": "^4.0.0",
     "eslint": "^3.4.0",
     "extract-text-webpack-plugin": "^2.1.0",
-    "web-app-manifest-loader": "0.1.1",
     "file-loader": "^0.11.1",
     "fs-walk": "0.0.1",
     "gulp": "^3.9.0",
@@ -85,10 +87,11 @@
     "svg-url-loader": "^2.0.2",
     "transifex": "^1.4.4",
     "url-loader": "^0.5.7",
+    "web-app-manifest-loader": "0.1.1",
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.6.0",
-    "@uirouter/visualizer": "^5.0.0"
+    "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.10",
@@ -117,6 +120,10 @@
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
+    "preact": "^8.2.7",
+    "preact-compat": "^3.18.0",
+    "prop-types": "^15.6.1",
+    "react2angular": "^3.2.1",
     "socket.io-client": "2.0.3",
     "underscore": "^1.7.0",
     "ushahidi-platform-pattern-library": "v3.7.2-rc.33"
