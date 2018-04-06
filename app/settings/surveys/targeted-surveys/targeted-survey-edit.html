@@ -114,9 +114,14 @@
                                 <span translate="survey.targeted_survey.audience_title">Choose your audience</span>
                             </h2>
                             <!-- WARNING! Add actual numbers of messages from the api if already sent survey -->
-                            <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this message to {{recipientCount}} people via SMS.</p>
-                            <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this message to {{recipientCount}} person via SMS.</p>
-
+                            <span ng-show="!surveyId">
+                                <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} people via SMS.</p>
+                                <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} person via SMS.</p>
+                            </span>
+                            <span ng-show="surveyId">
+                                <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.survey_recipients" translate-values="{recipientCount: recipientCount}">{{recipientCount}} people.</p>
+                                <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.survey_recipient" translate-values="{recipientCount: recipientCount}">{{recipientCount}} person.</p>
+                            </span>
                             <div ng-show="isActiveStep(2)">
                                 <div class="form-field" ng-show="countriesList.length > 0">
                                     <label for="country-code" class="required" translate="survey.targeted_survey.country_code">
@@ -227,7 +232,7 @@
                                 <span translate="survey.targeted_survey.publish"></span>
                             </h2>
                                 <!-- WARNING! Add actual responses once we get them from API -->
-                                <p ng-show="surveyId && isActiveStep(4)" translate="{{getPublishDescription()}}" translate-values="{numbers: 1299, sentDate: '22/22/2222 at 11:11 UTC'}"></p>
+                                <p ng-show="surveyId && isActiveStep(4)" translate="{{getPublishDescription()}}" translate-values="{numbers: recipientCount, sentDate: '22/22/2222 at 11:11 UTC'}"></p>
                                 <p ng-show="surveyId && isActiveStep(4)">
                                     <span ng-show="totalResponses !== 1" translate="survey.targeted_survey.received_responses" translate-values="{responses: totalResponses}"></span>
                                     <span ng-show="totalResponses === 1" translate="survey.targeted_survey.received_response" translate-values="{responses: totalResponses}"></span>

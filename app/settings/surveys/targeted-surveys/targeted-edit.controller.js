@@ -392,9 +392,12 @@ function (
     }
 
     function getFormStats() {
-        FormStatsEndpoint.query({id: $scope.surveyId}).$promise.then((result) => {
-            $scope.totalResponses = result.total_responses;
-            $scope.totalRecipients = result.total_recipients;
+        let recipientRequest = FormContactEndpoint.query({formId: $scope.surveyId}).$promise;
+        let responsesRequest = FormStatsEndpoint.query({id: $scope.surveyId}).$promise;
+        $q.all([recipientRequest, responsesRequest]).then((results) => {
+            $scope.recipientCount = results[0].length;
+            $scope.totalResponses = results[1].total_responses;
+            $scope.totalRecipients = results[1].total_recipients;
         });
     }
 }];

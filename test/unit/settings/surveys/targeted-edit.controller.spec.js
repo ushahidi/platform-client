@@ -6,7 +6,8 @@ describe('setting create targeted survey controller', function () {
         CountryCodeEndpoint,
         Notify,
         FormEndpoint,
-        FormStatsEndpoint;
+        FormStatsEndpoint,
+        FormContactEndpoint;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -32,7 +33,7 @@ describe('setting create targeted survey controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _ModalService_, Sortable, _CountryCodeEndpoint_, _FormStatsEndpoint_, _Notify_, _FormEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _ModalService_, Sortable, _CountryCodeEndpoint_, _FormStatsEndpoint_, _Notify_, _FormEndpoint_, _FormContactEndpoint_) {
         $scope = _$rootScope_.$new();
         ModalService = _ModalService_;
         $controller = _$controller_;
@@ -40,8 +41,10 @@ describe('setting create targeted survey controller', function () {
         CountryCodeEndpoint = _CountryCodeEndpoint_;
         FormStatsEndpoint = _FormStatsEndpoint_;
         FormEndpoint = _FormEndpoint_;
+        FormContactEndpoint = _FormContactEndpoint_;
         spyOn(CountryCodeEndpoint, 'query').and.callThrough();
         spyOn(FormStatsEndpoint, 'query').and.callThrough();
+        spyOn(FormContactEndpoint, 'query').and.callThrough();
         $controller('targetedSurvey', {
             $scope: $scope
         });
@@ -356,9 +359,16 @@ describe('setting create targeted survey controller', function () {
     describe('survey (form) stats', function () {
         it('should save the form stats to $scope', function () {
             $scope.getFormStats();
+            $scope.$apply();
             expect(FormStatsEndpoint.query).toHaveBeenCalled();
             expect($scope.totalResponses).toEqual(9);
             expect($scope.totalRecipients).toEqual(5);
+        });
+        it('should add the form-contacts to $scope', function () {
+            $scope.getFormStats();
+            $scope.$apply();
+            expect(FormContactEndpoint.query).toHaveBeenCalled();
+            expect($scope.recipientCount).toEqual(1);
         });
     });
 });
