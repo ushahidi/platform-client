@@ -47,7 +47,3 @@
         -e PLATFORM_CLIENT_VERSION="$CI_COMMIT_ID"
         -e COMMIT_STATUS_CONTEXT="continuous-deployment/${CI_NAME}"
         -e DEPLOYMENT_LOG_URL="http://app.codeship.com/projects/${CI_PROJECT_ID}/builds/${CI_BUILD_ID}"
-
-  - name: "Deployment director"
-    service: deploy
-    command: CI_NAME=codeship ush-deployment-director.sh
