@@ -52,7 +52,6 @@
 
           <div class="form-sheet">
               <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
-              
               <!-- Start Post custom fields -->
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"

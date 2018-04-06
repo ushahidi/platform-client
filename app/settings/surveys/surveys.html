@@ -20,22 +20,24 @@
 
     <main role="main">
 
-        <!-- TODO: what is the surveys equivalent to rolesEnabled -->
         <!-- toolbar -->
         <div class="toolbar">
-            <div class="fab">
-                <a ui-sref="settings.surveys.create" type="button" class="button button-alpha button-fab">
-                    <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
-                    </svg>
-                    <span class="hidden" translate>form.add_post_type</span>
-                </a>
-            </div>
         </div>
         <!-- end toolbar -->
 
         <div class="main-col">
-
+            <div class="listing card">
+              <article class="listing-item">
+                  <div class="listing-item-primary">
+                    <div class="button-group right">
+                        <a ui-sref="settings.surveys.create"><button class="button-alpha" translate="settings.new_survey">New survey</button></a>
+                    </div>
+                    <h2 class="listing-item-title"><a href="settings-survey-edit.html" translate="settings.create">Create a new survey</a></h2>
+                    <!-- TODO: what is the surveys equivalent to rolesEnabled, add correct flag-name -->
+                    <p class="listing-item-secondary" translate="settings.create_open_or_targeted" ng-show="targetedSurveysEnabled">Create an open or targeted survey to gather information about Ushahidi.</p>
+                  </div>
+              </article>
+            </div>
             <div class="listing card">
                 <div class="listing-item" ng-show="forms.length" ng-repeat="form in forms">
                     <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
@@ -66,7 +68,10 @@
                       </ul>
                     </div>
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a href="/settings/surveys/edit/{{form.id}}">{{form.name}}</a></h2>
+                        <h2 class="listing-item-title">
+                            <a href="/settings/surveys/edit/{{form.id}}" ng-show="!form.targeted_survey || !targetedSurveysEnabled">{{form.name}}</a></h2>
+                            <a ui-sref="settings.surveys.targeted.published({id: form.id})" ng-show="form.targeted_survey && targetedSurveysEnabled">{{form.name}}</a>
+
                         <p class="listing-item-secondary" markdown-to-html="form.description"></p>
                     </div>
                 </div>
