@@ -118,7 +118,7 @@
                                 <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} people via SMS.</p>
                                 <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} person via SMS.</p>
                             </span>
-                            <span ng-show="surveyId">
+                            <span ng-show="surveyId && recipientCount > 0">
                                 <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.survey_recipients" translate-values="{recipientCount: recipientCount}">{{recipientCount}} people.</p>
                                 <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.survey_recipient" translate-values="{recipientCount: recipientCount}">{{recipientCount}} person.</p>
                             </span>
@@ -232,8 +232,11 @@
                                 <span translate="survey.targeted_survey.publish"></span>
                             </h2>
                                 <!-- WARNING! Add actual responses once we get them from API -->
-                                <p ng-show="surveyId && isActiveStep(4)" translate="{{getPublishDescription()}}" translate-values="{numbers: recipientCount, sentDate: '22/22/2222 at 11:11 UTC'}"></p>
-                                <p ng-show="surveyId && isActiveStep(4)">
+                                <p ng-show="surveyId && isActiveStep(4) && totalRecipients > 0">
+                                    <span ng-show="totalPending !== 1" translate="survey.targeted_survey.pending_messages" translate-values="{totalPending: totalPending}"></span>
+                                    <span ng-show="totalPending === 1" translate="survey.targeted_survey.pending_message" translate-values="{totalPending: totalPending}"></span>
+                                    <span ng-show="totalSent !== 1" translate="survey.targeted_survey.sent_messages" translate-values="{totalSent: totalSent}"></span>
+                                    <span ng-show="totalSent === 1" translate="survey.targeted_survey.sent_message" translate-values="{totalSent: totalSent}"></span>
                                     <span ng-show="totalResponses !== 1" translate="survey.targeted_survey.received_responses" translate-values="{responses: totalResponses}"></span>
                                     <span ng-show="totalResponses === 1" translate="survey.targeted_survey.received_response" translate-values="{responses: totalResponses}"></span>
                                     <span ng-show="totalRecipients === 1" translate="survey.targeted_survey.recipient_count" translate-values="{recipients: totalRecipients}"></span>
