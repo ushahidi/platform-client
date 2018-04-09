@@ -7,7 +7,7 @@ function (
 ) {
 
     var FormStatsEndpoint = $resource(Util.apiUrl('/forms/:formId/stats/'), {
-        id: '@id'
+        formId: '@formId'
     }, {
         query: {
             method: 'GET',

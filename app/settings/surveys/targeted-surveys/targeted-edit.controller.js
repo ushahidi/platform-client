@@ -82,6 +82,8 @@ function (
     $scope.getFormStats = getFormStats;
     $scope.totalResponses = 0;
     $scope.totalRecipients = 0;
+    $scope.totalSent = 0;
+    $scope.totalPending = 0;
     Features.loadFeatures()
            .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
@@ -393,11 +395,13 @@ function (
 
     function getFormStats() {
         let recipientRequest = FormContactEndpoint.query({formId: $scope.surveyId}).$promise;
-        let responsesRequest = FormStatsEndpoint.query({id: $scope.surveyId}).$promise;
+        let responsesRequest = FormStatsEndpoint.query({formId: $scope.surveyId}).$promise;
         $q.all([recipientRequest, responsesRequest]).then((results) => {
             $scope.recipientCount = results[0].length;
             $scope.totalResponses = results[1].total_responses;
             $scope.totalRecipients = results[1].total_recipients;
+            $scope.totalSent = results[1].total_messages_sent;
+            $scope.totalPending = results[1].total_messages_pending;
         });
     }
 }];
