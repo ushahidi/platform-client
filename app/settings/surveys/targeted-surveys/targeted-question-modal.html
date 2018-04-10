@@ -1,0 +1,45 @@
+<div class="modal-body">
+    <div class="form-field" ng-class="{'error': error || questionError, 'success': !error && !questionError}">
+        <label  class="required" translate="survey.targeted_survey.question_text"></label>
+        <p translate="survey.targeted_survey.question_description"></p>
+
+        <textarea placeholder="Sample question: Hi there! How are you feeling today? Your response is free." ng-model="editQuestion.question" required ng-change="removeError()"></textarea>
+
+        <span class="right" translate="survey.targeted_survey.char_remains" translate-values="{remaining: charactersRemaining()}"></span>
+        </div>
+
+        <div
+            class="alert error"
+            ng-show="error"
+        >
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+            </svg>
+            <span>{{message}}</span>
+        </div>
+
+        <div
+            class="alert error"
+            ng-show="questionError"
+        >
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+            </svg>
+            <p>{{questionMessage}}</p>
+        </div>
+
+    <div class="form-field switch checked">
+        <label for="switch3" translate="survey.make_response_private"></label>
+        <p ng-show="editQuestion.response_private" translate="survey.response_private_desc"></p>
+        <div class="toggle-switch">
+            <input class="tgl" id="switch3" type="checkbox" ng-model="editQuestion.response_private">
+            <label class="tgl-btn" for="switch3"></label>
+        </div>
+    </div>
+
+    <div class="modal-actions">
+            <button class="button-alpha modal-trigger" ng-click="save()" translate="form.save_and_close"></button>
+            <button class="button-destructive modal-trigger" translate="survey.targeted_survey.delete" ng-click="deleteQuestion()"></button>
+        </div>
+    </div>
+</div>

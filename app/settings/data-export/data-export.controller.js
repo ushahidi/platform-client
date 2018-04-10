@@ -122,7 +122,7 @@ function (
         if (attributes.length === 0) {
             // displaying notification if no fields are selected
             var message =  '<p translate="data_export.no_fields"></p>';
-            Notify.exportNotifications(message, null, false, 'warning', 'error');
+            Notify.notifyAction(message, null, false, 'warning', 'error');
         } else {
             DataExport.startExport({attributes: attributes});
             $scope.showFields = false;

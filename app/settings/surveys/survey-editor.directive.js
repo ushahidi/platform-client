@@ -107,6 +107,11 @@ function SurveyEditorController(
         $scope.save = $translate.instant('app.save');
         $scope.saving = $translate.instant('app.saving');
 
+        Features.loadFeatures()
+        .then(() => {
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+        });
+
         if ($scope.surveyId) {
             loadFormData();
         } else {

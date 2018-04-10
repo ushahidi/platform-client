@@ -271,7 +271,6 @@
                         form-id="post.form.id"
                         attribute="attribute"
                         post-value="post.values[attribute.key]"
-
                     ></post-category-editor>
                 </div>
                 <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
