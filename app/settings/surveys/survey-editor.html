@@ -75,7 +75,7 @@
             <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
 
             <div class="listing-item" ng-repeat="attribute in survey.tasks[0].attributes track by $index">
-              <div class="listing-item-select" ng-show="allowedToggleOrder(attribute)">
+              <div class="listing-item-select">
                   <div class="buttons-updown">
                      <button type="button" class="button-beta" ng-disabled="isFirstAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeUp(survey.tasks[0], attribute)">
                          <svg class="iconic">
