@@ -45,8 +45,7 @@
                 </h2>
                 <p translate>data_export.select_fields_desc</p>
             </div>
-            <div class="form-field">
-            <div ng-repeat="form in forms">
+            <div  class="form-field" ng-repeat="form in forms">
                 <label>{{form.name}}</label>
                 <div class="form-field checkbox" ng-show="form.attributes">
                     <label>
@@ -70,7 +69,6 @@
                   </label>
                 </div>
             </div>
-          </div>
             <div class="form-field">
                 <button class="button-alpha" ng-click="exportSelected()" translate>data_export.export_selected
                 </button>
