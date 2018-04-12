@@ -339,7 +339,7 @@
             "one_number_error" : "Of the {{total}} phone numbers you entered, we noticed problems with {{bad}} of them. Please correct the phone number below and continue. Numbers must match the selected country's formatting rules.",
             "multi_numbers_good" : "These {{good_numbers}} numbers look fine.",
             "one_number_good" : "This {{good_numbers}} number looks fine.",
-            "question_error" : "You must ad at least one question.",
+            "question_error" : "You must add at least one question.",
             "phone_number_instructions" : "Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.",
             "targeted_survey": "Targeted Survey",
             "targeted_survey_desc": "We sent this survey via SMS",
