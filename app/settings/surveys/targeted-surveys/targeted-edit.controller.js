@@ -20,6 +20,7 @@ module.exports = [
     'CountryCodeEndpoint',
     '$translate',
     'FormContactEndpoint',
+    'SurveyNotify',
 function (
     $scope,
     Features,
@@ -39,7 +40,8 @@ function (
     $transition$,
     CountryCodeEndpoint,
     $translate,
-    FormContactEndpoint
+    FormContactEndpoint,
+    SurveyNotify
 ) {
     $scope.isActiveStep = isActiveStep;
     $scope.isStepComplete = isStepComplete;
@@ -50,6 +52,7 @@ function (
     $scope.checkForDuplicate = checkForDuplicate;
     $scope.addNewQuestion = addNewQuestion;
     $scope.deleteQuestion = deleteQuestion;
+    $scope.cancel = cancel;
     $scope.publish = publish;
     $scope.getPublishDescription = getPublishDescription;
     $scope.previousStep = previousStep;
@@ -280,7 +283,9 @@ function (
             });
         }
     }
-
+    function cancel() {
+        ModalService.close();
+    }
     function goToDataView(id) {
         // redirecting to data-view, function used in the notification-window and in the summary-view
         PostFilters.setFilter('form', [id]);
@@ -291,8 +296,9 @@ function (
         FormContactEndpoint.save({formId: id, contacts: $scope.textBoxNumbers, country_code: $scope.selectedCountry.country_code}).$promise.then(function (response) {
             let messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
             let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
-            Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: id});
-            $state.go('settings.surveys.targeted.published', {id});
+            // SurveyNotify.success(notifyMessage, {name: $scope.survey.name}, {formId: $scope.survey.id});
+            Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: id, actionClass: 'button button-alpha'});
+            $state.go('settings.surveys', {}, { reload: true });
         }, function (err) {
             let errors = ['survey.targeted_survey.error_contacts '];
             _.each(err.data.errors, (error) => {
