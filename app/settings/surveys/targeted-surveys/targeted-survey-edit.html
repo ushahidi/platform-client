@@ -113,14 +113,13 @@
                                 <span class="stepper-badge">2</span>
                                 <span translate="survey.targeted_survey.audience_title">Choose your audience</span>
                             </h2>
-                            <!-- WARNING! Add actual numbers of messages from the api if already sent survey -->
                             <span ng-show="!surveyId">
                                 <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} people via SMS.</p>
                                 <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} person via SMS.</p>
                             </span>
                             <span ng-show="surveyId && recipientCount > 0">
-                                <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.survey_recipients" translate-values="{recipientCount: recipientCount}">{{recipientCount}} people.</p>
-                                <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.survey_recipient" translate-values="{recipientCount: recipientCount}">{{recipientCount}} person.</p>
+                                <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} people via SMS.</p>
+                                <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} person via SMS.</p>
                             </span>
                             <div ng-show="isActiveStep(2)">
                                 <div class="form-field" ng-show="countriesList.length > 0">
