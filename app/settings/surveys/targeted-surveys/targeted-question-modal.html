@@ -39,7 +39,8 @@
 
     <div class="modal-actions">
             <button class="button-alpha modal-trigger" ng-click="save()" translate="form.save_and_close"></button>
-            <button class="button-destructive modal-trigger" translate="survey.targeted_survey.delete" ng-click="deleteQuestion()"></button>
+            <button class="button-destructive modal-trigger" translate="survey.targeted_survey.delete" ng-click="deleteQuestion()" ng-if="!editQuestion.newQuestion"></button>
+            <button class="button modal-trigger" translate="survey.targeted_survey.cancel" ng-click="cancel()" ng-if="editQuestion.newQuestion"></button>
         </div>
     </div>
 </div>

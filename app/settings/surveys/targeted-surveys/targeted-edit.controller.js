@@ -50,6 +50,7 @@ function (
     $scope.checkForDuplicate = checkForDuplicate;
     $scope.addNewQuestion = addNewQuestion;
     $scope.deleteQuestion = deleteQuestion;
+    $scope.cancel = cancel;
     $scope.publish = publish;
     $scope.getPublishDescription = getPublishDescription;
     $scope.previousStep = previousStep;
@@ -280,7 +281,9 @@ function (
             });
         }
     }
-
+    function cancel() {
+        ModalService.close();
+    }
     function goToDataView(id) {
         // redirecting to data-view, function used in the notification-window and in the summary-view
         PostFilters.setFilter('form', [id]);
