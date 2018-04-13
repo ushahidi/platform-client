@@ -294,7 +294,7 @@ function (
 
     function saveContacts(id) {
         FormContactEndpoint.save({formId: id, contacts: $scope.textBoxNumbers, country_code: $scope.selectedCountry.country_code}).$promise.then(function (response) {
-            let messages = $scope.finalNumbers.goodNumbers.length;
+            let messages = $scope.finalNumbers.goodNumbers.length * $scope.survey.attributes.length;
             let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
             Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: id, actionClass: 'button button-alpha'});
             $state.go('settings.surveys', {}, { reload: true });
