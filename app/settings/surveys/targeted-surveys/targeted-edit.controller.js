@@ -142,7 +142,7 @@ function (
         _.each(items, function (item, index) {
             _.each($scope.survey.attributes, function (question) {
                 if (question.label === item.getAttribute('data')) {
-                    question.order = index + 1;
+                    question.priority = index + 1;
                 }
             });
         });
@@ -259,7 +259,7 @@ function (
         }
 
         $scope.editQuestion.input = 'textarea';
-        $scope.editQuestion.order = getPriority($scope.survey.attributes);
+        $scope.editQuestion.priority = getPriority($scope.survey.attributes);
         $scope.editQuestion.type = 'text';
         // This is to avoid the 2-way binding and the label to update while writing in the modal
         $scope.editQuestion.label = angular.copy($scope.editQuestion.question);
@@ -272,7 +272,7 @@ function (
     }
 
     function getPriority(step) {
-        return step && step.length > 0 ? _.last(step).order + 1 : 3;
+        return step && step.length > 0 ? _.last(step).priority + 1 : 1;
     }
 
     function deleteQuestion() {
