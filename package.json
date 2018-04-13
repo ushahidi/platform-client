@@ -79,7 +79,7 @@
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^2.0.2",
     "run-sequence": "^1.1.0",
-    "sass-loader": "^6.0.3",
+    "sass-loader": "^7.0.0",
     "style-loader": "^0.16.1",
     "supports-color": "^3.1.2",
     "svg-url-loader": "^2.0.2",
