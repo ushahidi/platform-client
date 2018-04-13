@@ -209,7 +209,7 @@ function (
         if ($scope.survey.attributes !== undefined && $scope.survey.attributes.length) {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
-            $scope.sms = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
+            $scope.total_sms_messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
         } else {
             $scope.stepThreeWarning = true;
         }
@@ -349,7 +349,7 @@ function (
     }
 
     function publish() {
-        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}}`, 'publish').then(function () {
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, total_sms_messages: ${$scope.total_sms_messages}}`, 'publish').then(function () {
             saveTargetedSurvey();
         });
     }
