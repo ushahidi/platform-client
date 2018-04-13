@@ -209,26 +209,10 @@ function (
         if ($scope.survey.attributes !== undefined && $scope.survey.attributes.length) {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
-            calculateStats();
+            $scope.sms = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
         } else {
             $scope.stepThreeWarning = true;
         }
-    }
-
-    function calculateStats() {
-        ConfigEndpoint.get({id: 'data-provider'}).$promise.then(function (result) {
-            let cost,
-                providers = ['frontlinesms', 'nexmo', 'smssync', 'twilio'];
-            _.each(result.providers, function (provider, index) {
-                if (provider && _.contains(providers, index)) {
-                    // warning, this is a hack until cost is included in the api
-                    result[index].cost = 1;
-                    cost = result[index].cost;
-                    $scope.sms = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
-                    $scope.cost = $scope.sms * cost;
-                }
-            });
-        });
     }
 
     function openQuestionModal(question) {
@@ -365,7 +349,7 @@ function (
     }
 
     function publish() {
-        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}}`, 'publish').then(function () {
             saveTargetedSurvey();
         });
     }
