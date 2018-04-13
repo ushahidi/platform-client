@@ -126,8 +126,8 @@
                                     <label for="country-code" class="required" translate="survey.targeted_survey.country_code">
                                         Country code
                                     </label>
-                                    <div class="alert error">
-                                    <p ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" class="alert error" translate="survey.targeted_survey.country_code_error">You must select a country.</p>
+                                    <div class="alert error" ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" >
+                                    <p translate="survey.targeted_survey.country_code_error">You must select a country.</p>
                                 </div>
                                 <div class="custom-select">
                                     <select id="country-code" ng-options="country as (country.country_name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
@@ -153,7 +153,7 @@
                                     <label class="required" required translate="survey.targeted_survey.phone_numbers">Phone numbers</label>
                                     <p translate="survey.targeted_survey.phone_number_instructions">Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.</p>
 
-                                    <div class="alert error">
+                                    <div class="alert error" ng-show="stepTwoWarning && targetedSurvey.stepTwo.textBoxNumbers.$invalid && !finalNumbers.goodNumbers.length || finalNumbers.repeatCount > 0 || finalNumbers.badNumberCount > 0">
                                         <p ng-show="stepTwoWarning && targetedSurvey.stepTwo.textBoxNumbers.$invalid && !finalNumbers.goodNumbers.length" translate="survey.targeted_survey.phone_number_warning">You must enter at least 1 phone number.</p>
                                         <p ng-show="finalNumbers.repeatCount > 1" translate="survey.targeted_survey.multi_repeat_alert" translate-values="{repeatCount: finalNumbers.repeatCount}">We removed a total of {{finalNumbers.repeatCount}} repeat numbers from your list.</p>
                                         <p  ng-show="finalNumbers.repeatCount === 1" translate="survey.targeted_survey.one_repeat_alert" translate-values="{repeatCount: finalNumbers.repeatCount}">We removed a total of {{finalNumbers.repeatCount}} repeat number from your list.</p>
@@ -189,8 +189,8 @@
                                 <p translate="survey.targeted_survey.add_questions_description">We will send each question as a separate SMS. After someone responds, we will send the next question in the survey.</p>
                             </div>
 
-                            <div class="alert error">
-                                <p ng-show="stepThreeWarning && (survey.attributes === undefined || !survey.attributes.length)" translate="survey.targeted_survey.question_error">You must add at least one question.</p>
+                            <div class="alert error" ng-show="stepThreeWarning && (survey.attributes === undefined || !survey.attributes.length)">
+                                <p  translate="survey.targeted_survey.question_error">You must add at least one question.</p>
                             </div>
 
                             <div class="form-field" ng-show="isActiveStep(3)">
