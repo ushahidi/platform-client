@@ -114,17 +114,16 @@ function (
     }
 
     function exportSelected() {
-        var attributes = _.chain($scope.selectedFields)
+        var fields = _.chain($scope.selectedFields)
             .flatten() // concatinating attributes into one array
             .compact() // removing nulls
             .value(); // output
-
-        if (attributes.length === 0) {
+        if (fields.length === 0) {
             // displaying notification if no fields are selected
             var message =  '<p translate="data_export.no_fields"></p>';
             Notify.notifyAction(message, null, false, 'warning', 'error');
         } else {
-            DataExport.startExport({attributes: attributes});
+            DataExport.startExport({fields});
             $scope.showFields = false;
             $scope.showProgress = true;
         }
