@@ -5,7 +5,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
 
-var extractCss = new ExtractTextPlugin('[name].[chunkhash].bundle.css');
+var extractCss = new ExtractTextPlugin('[name].[chunkhash].css');
 
 module.exports = {
   devtool: 'source-map',
@@ -73,11 +73,11 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        exclude: [/manifest.json$/],
+        exclude: [/manifest\.json$/],
         use: 'json-loader'
       },
       {
-        test: /manifest.json$/,
+        test: /manifest\.json$/,
         loader: ['file-loader?name=manifest.json', 'web-app-manifest-loader']
       }
     ]
@@ -108,8 +108,10 @@ module.exports = {
       name: 'vendor',
       minChunks: function (module, count) {
         return module.resource &&
-            module.resource.indexOf(path.resolve(__dirname, 'app')) === -1 &&
-            module.resource.indexOf('ushahidi-platform-pattern-library') === -1;
+            !module.resource.includes(path.resolve(__dirname, 'app')) &&
+            !module.resource.includes('ushahidi-platform-pattern-library') &&
+            !module.resource.includes('style-loader') &&
+            !module.resource.includes('css-loader');
       }
     })
   ]
