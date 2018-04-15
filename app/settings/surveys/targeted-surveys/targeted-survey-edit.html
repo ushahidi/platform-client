@@ -242,7 +242,7 @@
                                     <span ng-show="totalRecipients !== 1" translate="survey.targeted_survey.recipients_count" translate-values="{recipients: totalRecipients}"></span>
                                 </p>
                             <div class="alert" ng-show="isActiveStep(4) && !surveyId">
-                                <p translate={{getPublishDescription()}} translate-values="{questions: survey.attributes.length, numbers:finalNumbers.goodNumbers.length, sms: sms, cost:cost}"></p>
+                                <p translate={{getPublishDescription()}} translate-values="{questions: survey.attributes.length, numbers:finalNumbers.goodNumbers.length, total_sms_messages: total_sms_messages}"></p>
                                 <p ng-show="!surveyId" translate="survey.targeted_survey.send_to_old_number_warning"></p>
                             </div>
 
