@@ -23,12 +23,9 @@ function (
             $scope.labelError = false;
 
             $scope.save = function (editAttribute, activeTask) {
-                if (!_.isEmpty($scope.label)) {
-                    $scope.labelError = false;
+                if (!$scope.attributeLabel.$invalid) {
                     $scope.editAttribute.label = $scope.label;
                     $scope.addNewAttribute(editAttribute, activeTask);
-                } else {
-                    $scope.labelError = true;
                 }
             };
 
