@@ -25,6 +25,9 @@ module.exports = [function () {
                         'private': {
                             enabled: true
                         },
+                        'targeted-surveys': {
+                            enabled: true
+                        },
                         roles: {
                             enabled: true
                         },
@@ -66,6 +69,9 @@ module.exports = [function () {
                 enabled: true
             },
             roles: {
+                enabled: true
+            },
+            'targeted-surveys': {
                 enabled: true
             },
             views: {
