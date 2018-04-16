@@ -209,7 +209,7 @@
                                 <a ng-hide="survey.attributes.length" ng-click="openQuestionModal(null)" translate="survey.targeted_survey.add_a_question">Add a question...</a>
                             </div>
                             <div ng-hide="isActiveStep(3)">
-                                    <p ng-repeat="question in survey.attributes">{{question.label}}</p>
+                                    <p ng-repeat="question in survey.attributes | orderBy: 'priority'">{{question.label}}</p>
                             </div>
 
 
