@@ -89,6 +89,7 @@ function (
 
                 if ($scope.post.contact.id) {
                     MessageEndpoint.allInThread({
+                        post: $scope.post.id,
                         contact: $scope.post.contact.id,
                         offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
                         limit: $scope.itemsPerPage
