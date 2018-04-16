@@ -58,7 +58,7 @@
                             <svg class="iconic">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
-                            {{'settings.valid.name.' + error  | translate}}
+                            <p>{{'settings.valid.name.' + error  | translate}}</p>
                         </div>
                     </div>
 
@@ -91,6 +91,21 @@
                     <div class="form-field checkbox" ng-show="isPrivateEnabled">
                          <input id="private" ng-model="site.private" type="checkbox">
                          <label for="private" translate>settings.site_private</label>
+                    </div>
+
+                    <div class="form-field">
+                      <label translate="settings.api_key">API Key</label>
+                      <p translate="settings.api_key_desc">The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.</p>
+                      <button type="button" class="button-beta" ng-click="generateApiKey()">
+                        <svg class="iconic">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#key"></use>
+                        </svg>
+                        <span class="button-label hidden-when-small">
+                          Generate API Key
+                        </span>
+                      </button>
+                      <span id="api_key" class="bug">{{api_key.api_key}}</span>
+
                     </div>
 
                     <settings-map config="map"></settings-map>
