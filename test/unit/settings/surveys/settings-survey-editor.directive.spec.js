@@ -23,6 +23,14 @@ describe('setting survey editor directive', function () {
             return mockFeatures;
         });
 
+        testApp.service('$state', function () {
+            return {
+                'go': function () {
+                    return {};
+                }
+            };
+        });
+
         angular.mock.module('testApp');
     });
 
@@ -41,9 +49,9 @@ describe('setting survey editor directive', function () {
             queryFresh : function () {
                 return {
                     '$promise': $q.resolve([
-                        { id: 1 },
-                        { id: 2 },
-                        { id: 3 }
+                        { id: 1, children: [] },
+                        { id: 2, children: []},
+                        { id: 3, children: [] }
                     ])
                 };
             }

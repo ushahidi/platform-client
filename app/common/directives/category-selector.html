@@ -3,7 +3,7 @@
         <label>
             <input
                   type="checkbox"
-                  ng-checked="available.length === selected.length"
+                  ng-checked="selectAllEnabled()"
                   ng-click="selectAll()"
             >
             <em><span translate="category.select_all"></span></em>
@@ -12,12 +12,21 @@
     <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
         <label>
             <input
+                ng-show="category.children.length === 0 || enableParents === true"
                 type="checkbox"
                 checklist-value="category.id"
                 ng-disabled="disabledCategories[category.id]"
                 value="category.id"
                 checklist-model="selected"
                 checklist-change="changeCategories()"
+            >
+            <input
+                    ng-show="category.children.length > 0 && enableParents === false"
+                    type="checkbox"
+                    checklist-value="category.id"
+                    ng-disabled="true"
+                    value="category.id"
+                    checklist-model="selectedParents"
             >
             {{ ::category.tag }}
         </label>
