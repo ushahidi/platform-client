@@ -28,7 +28,7 @@
                     value="category.id"
                     checklist-model="selectedParents"
             >
-            {{ ::category.tag }}
+            <bdi>{{ ::category.tag }}</bdi>
         </label>
         <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
             <label>
@@ -40,7 +40,7 @@
                     ng-selected="selected.indexOf(category.id) >-1"
                     checklist-change="changeCategories()"
                 >
-                {{ ::child.tag }}
+                <bdi>{{ ::child.tag }}</bdi>
         </label>
         </div>
     </div>
