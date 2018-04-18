@@ -49,6 +49,14 @@ function (
     )
     .state(
         {
+            name: 'settings.dataExport',
+            url: '/settings/data-export',
+            controller: require('./data-export/data-export.controller.js'),
+            template: require('./data-export/data-export.html')
+        }
+    )
+    .state(
+        {
             name: 'settings.surveys',
             url: '/settings/surveys',
             controller: require('./surveys/surveys.controller.js'),
@@ -61,6 +69,29 @@ function (
             url: '/create',
             controller: require('./surveys/edit.controller.js'),
             template: require('./surveys/survey-edit.html')
+        }
+    )
+    .state(
+        {
+            name: 'settings.surveys.targeted',
+            url: '/targeted-survey'
+        }
+    )
+    .state(
+        {
+            name: 'settings.surveys.targeted.create',
+            url: '/targeted-survey/create',
+            controller: require('./surveys/targeted-surveys/targeted-edit.controller.js'),
+            template: require('./surveys/targeted-surveys/targeted-survey-edit.html')
+        }
+    )
+
+    .state(
+        {
+            name: 'settings.surveys.targeted.published',
+            url: '/targeted-survey/published/:id',
+            controller: require('./surveys/targeted-surveys/targeted-edit.controller.js'),
+            template: require('./surveys/targeted-surveys/targeted-survey-edit.html')
         }
     )
     .state(

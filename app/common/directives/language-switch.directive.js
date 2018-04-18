@@ -12,8 +12,8 @@ function LanguageSwitchDirective() {
         template: require('./language-switch.html')
     };
 }
-LanguageSwitchController.$inject = ['$scope', 'Languages', 'TranslationService'];
-function LanguageSwitchController($scope, Languages, TranslationService) {
+LanguageSwitchController.$inject = ['$scope', 'Languages', 'TranslationService', '$location'];
+function LanguageSwitchController($scope, Languages, TranslationService, $location) {
     $scope.changeLanguage = changeLanguage;
     $scope.$on('event:authentication:login:succeeded', TranslationService.setStartLanguage);
     $scope.$on('event:authentication:logout:succeeded', TranslationService.setStartLanguage);
@@ -26,8 +26,10 @@ function LanguageSwitchController($scope, Languages, TranslationService) {
     }
 
     function changeLanguage(code) {
-        TranslationService.setLanguage(code);
-        TranslationService.translate(code);
+        if ($location.path() !== '/settings/general') {
+            TranslationService.setLanguage(code);
+            TranslationService.translate(code);
+        }
     }
 }
 
