@@ -61,7 +61,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         function showSlider(successText) {
             successText += buttons;
-            SliderService.openTemplate(successText, icon, iconClass, scope, false, false, true, loading);
+            SliderService.openTemplate(successText, icon, iconClass, scope, false, false, false, loading);
         }
         // translates the text and shows the slider
         $translate(message, translateValues).then(showSlider, showSlider);

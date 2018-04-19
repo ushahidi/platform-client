@@ -20,6 +20,7 @@ module.exports = [
     'CountryCodeEndpoint',
     '$translate',
     'FormContactEndpoint',
+    'SurveyNotify',
 function (
     $scope,
     Features,
@@ -39,7 +40,8 @@ function (
     $transition$,
     CountryCodeEndpoint,
     $translate,
-    FormContactEndpoint
+    FormContactEndpoint,
+    SurveyNotify
 ) {
     $scope.isActiveStep = isActiveStep;
     $scope.isStepComplete = isStepComplete;
@@ -50,6 +52,7 @@ function (
     $scope.checkForDuplicate = checkForDuplicate;
     $scope.addNewQuestion = addNewQuestion;
     $scope.deleteQuestion = deleteQuestion;
+    $scope.cancel = cancel;
     $scope.publish = publish;
     $scope.getPublishDescription = getPublishDescription;
     $scope.previousStep = previousStep;
@@ -82,6 +85,8 @@ function (
     $scope.getFormStats = getFormStats;
     $scope.totalResponses = 0;
     $scope.totalRecipients = 0;
+    $scope.totalSent = 0;
+    $scope.totalPending = 0;
     Features.loadFeatures()
            .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
@@ -137,7 +142,7 @@ function (
         _.each(items, function (item, index) {
             _.each($scope.survey.attributes, function (question) {
                 if (question.label === item.getAttribute('data')) {
-                    question.order = index + 1;
+                    question.priority = index + 1;
                 }
             });
         });
@@ -204,26 +209,10 @@ function (
         if ($scope.survey.attributes !== undefined && $scope.survey.attributes.length) {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
-            calculateStats();
+            $scope.total_sms_messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
         } else {
             $scope.stepThreeWarning = true;
         }
-    }
-
-    function calculateStats() {
-        ConfigEndpoint.get({id: 'data-provider'}).$promise.then(function (result) {
-            let cost,
-                providers = ['frontlinesms', 'nexmo', 'smssync', 'twilio'];
-            _.each(result.providers, function (provider, index) {
-                if (provider && _.contains(providers, index)) {
-                    // warning, this is a hack until cost is included in the api
-                    result[index].cost = 1;
-                    cost = result[index].cost;
-                    $scope.sms = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
-                    $scope.cost = $scope.sms * cost;
-                }
-            });
-        });
     }
 
     function openQuestionModal(question) {
@@ -254,7 +243,7 @@ function (
         }
 
         $scope.editQuestion.input = 'textarea';
-        $scope.editQuestion.order = getPriority($scope.survey.attributes);
+        $scope.editQuestion.priority = getPriority($scope.survey.attributes);
         $scope.editQuestion.type = 'text';
         // This is to avoid the 2-way binding and the label to update while writing in the modal
         $scope.editQuestion.label = angular.copy($scope.editQuestion.question);
@@ -267,7 +256,7 @@ function (
     }
 
     function getPriority(step) {
-        return step && step.length > 0 ? _.last(step).order + 1 : 3;
+        return step && step.length > 0 ? _.last(step).priority + 1 : 1;
     }
 
     function deleteQuestion() {
@@ -278,7 +267,9 @@ function (
             });
         }
     }
-
+    function cancel() {
+        ModalService.close();
+    }
     function goToDataView(id) {
         // redirecting to data-view, function used in the notification-window and in the summary-view
         PostFilters.setFilter('form', [id]);
@@ -287,10 +278,10 @@ function (
 
     function saveContacts(id) {
         FormContactEndpoint.save({formId: id, contacts: $scope.textBoxNumbers, country_code: $scope.selectedCountry.country_code}).$promise.then(function (response) {
-            let messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
+            let messages = $scope.finalNumbers.goodNumbers.length * $scope.survey.attributes.length;
             let notifyMessage = messages === 1 ? 'survey.targeted_survey.publish_notification_one' : 'survey.targeted_survey.publish_notification_many';
-            Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: id});
-            $state.go('settings.surveys.targeted.published', {id});
+            Notify.notifyAction(notifyMessage, {messages}, false, 'thumb-up', 'circle-icon confirmation', {callback: goToDataView, text: 'survey.targeted_survey.notification_button', callbackArg: id, actionClass: 'button button-alpha'});
+            $state.go('settings.surveys', {}, { reload: true });
         }, function (err) {
             let errors = ['survey.targeted_survey.error_contacts '];
             _.each(err.data.errors, (error) => {
@@ -358,7 +349,7 @@ function (
     }
 
     function publish() {
-        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, total_sms_messages: ${$scope.total_sms_messages}}`, 'publish').then(function () {
             saveTargetedSurvey();
         });
     }
@@ -393,11 +384,13 @@ function (
 
     function getFormStats() {
         let recipientRequest = FormContactEndpoint.query({formId: $scope.surveyId}).$promise;
-        let responsesRequest = FormStatsEndpoint.query({id: $scope.surveyId}).$promise;
+        let responsesRequest = FormStatsEndpoint.query({formId: $scope.surveyId}).$promise;
         $q.all([recipientRequest, responsesRequest]).then((results) => {
             $scope.recipientCount = results[0].length;
             $scope.totalResponses = results[1].total_responses;
             $scope.totalRecipients = results[1].total_recipients;
+            $scope.totalSent = results[1].total_messages_sent;
+            $scope.totalPending = results[1].total_messages_pending;
         });
     }
 }];
