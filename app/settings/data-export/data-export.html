@@ -46,7 +46,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </nav>    
+                    </nav>
                 <div id="main-export" class="survey-details tabs-target" >
                     <div class="form-field">
                         <button class="button-alpha" translate ng-click="exportAll()" ng-disabled="showProgress">data_export.all</button>
@@ -73,9 +73,8 @@
                     </h2>
                     <p translate>data_export.select_fields_desc</p>
                 </div>
-                <div class="form-field">
-                <div ng-repeat="form in forms">
-                    <label>{{form.name}}</label>
+                <div class="form-field" ng-repeat="form in forms">
+                    <label><bdi>{{form.name}}</bdi></label>
                     <div class="form-field checkbox" ng-show="form.attributes">
                         <label>
                             <input
@@ -94,10 +93,9 @@
                             checklist-value="attribute.id"
                             value="attribute.id"
                         >
-                        {{attribute.label}}
+                        <bdi>{{attribute.label}}</bdi>
                     </label>
                     </div>
-                </div>
             </div>
             <div class="form-field">
                 <button class="button-alpha" ng-click="exportSelected()" translate>data_export.export_selected

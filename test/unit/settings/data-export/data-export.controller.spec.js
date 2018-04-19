@@ -90,7 +90,7 @@ describe('data-export-controller', function () {
             $scope.selectedFields = [1, 4, 7, 8, 10];
             spyOn(DataExport, 'startExport');
             $scope.exportSelected();
-            expect(DataExport.startExport).toHaveBeenCalledWith({attributes: $scope.selectedFields});
+            expect(DataExport.startExport).toHaveBeenCalledWith({fields: $scope.selectedFields});
         });
     });
     describe('attachAttributes-function', function () {

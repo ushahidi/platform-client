@@ -132,26 +132,26 @@ describe('setting create targeted survey controller', function () {
                 };
                 $scope.editQuestion = {question: 'Test question?', input: 'textarea', newQuestion: true};
                 $scope.addNewQuestion();
-                let adjustedQuestion = {question: 'Test question?', input: 'textarea', order: 3, type: 'text', label: 'Test question?'};
+                let adjustedQuestion = {question: 'Test question?', input: 'textarea', priority: 1, type: 'text', label: 'Test question?'};
                 expect($scope.editQuestion).toEqual(adjustedQuestion);
             });
             it('should not add an edited question to the model', function () {
-                let existingQuestion = {question: 'Test question?', input: 'textarea', order: 3, type: 'text', label: 'Test question?'};
+                let existingQuestion = {question: 'Test question?', input: 'textarea', priority: 3, type: 'text', label: 'Test question?'};
                 $scope.survey = {
                     attributes: [existingQuestion]
                 };
-                $scope.editQuestion =  {question: 'Edited question', input: 'textarea', order: 3, type: 'text', label: 'Test question?'};
+                $scope.editQuestion =  {question: 'Edited question', input: 'textarea', priority: 3, type: 'text', label: 'Test question?'};
                 $scope.addNewQuestion();
                 expect($scope.survey.attributes.length).toEqual(1);
             });
-            it('should give a question the correct order based on previous questions', function () {
-                let question = {question: 'Test question?', input: 'textarea', order: 3, type: 'text', label: 'Test question?'};
+            it('should give a question the correct priority based on previous questions', function () {
+                let question = {question: 'Test question?', input: 'textarea', priority: 3, type: 'text', label: 'Test question?'};
                 $scope.survey = {
                     attributes: [question]
                 };
                 $scope.editQuestion =  {question: 'Another question', newQuestion: true};
                 $scope.addNewQuestion();
-                expect($scope.editQuestion.order).toEqual(4);
+                expect($scope.editQuestion.priority).toEqual(4);
                 expect($scope.survey.attributes.length).toEqual(2);
             });
         });

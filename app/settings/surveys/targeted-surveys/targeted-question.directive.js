@@ -30,7 +30,9 @@ function TargetedQuestionLink($scope, $element, $attrs) {
     }
 
     function save() {
-        if ($scope.editQuestion.newQuestion && $scope.survey.attributes && $scope.checkForDuplicate()) {
+        if ($scope.charactersRemaining() < 0) {
+            $scope.questionError = false;
+        } else if ($scope.editQuestion.newQuestion && $scope.survey.attributes && $scope.checkForDuplicate()) {
             $scope.questionError = true;
             $scope.questionMessage = 'This question already exists';
         } else if (!$scope.editQuestion.question || !$scope.editQuestion.question.length) {

@@ -3,10 +3,10 @@
     <layout-class layout="a"></layout-class>
     <header class="mode-context-header">
         <ol class="breadcrumbs">
-            <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+            <li><a href="/" ng-controller="navigation as nav"><bdi>{{nav.site.name}}</bdi></a></li>
         </ol>
 
-        <h1 class="mode-context-title">{{post.form.name}}</h1>
+        <h1 class="mode-context-title"><bdi>{{post.form.name}}</bdi></h1>
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
@@ -52,6 +52,7 @@
 
           <div class="form-sheet">
               <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
+
               <!-- Start Post custom fields -->
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
