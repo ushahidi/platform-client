@@ -2,7 +2,7 @@
     <li ng-repeat="form in forms" ng-show="!form.targeted_survey">
         <a ng-click="handleClick(form)">
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
-            {{form.name}}
+            <bdi>{{form.name}}</bdi>
         </a>
     </li>
 </ul>
