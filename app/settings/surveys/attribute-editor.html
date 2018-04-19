@@ -1,19 +1,21 @@
  <div class="modal-body">
   <div class="form-field required"
     ng-class="{
-        'error': labelError
+        'error': attributeLabel.$invalid && attributeLabel.$dirty
     }">
+    <form name="attributeLabel">
       <label translate="app.name">Name</label>
-      <input type="text" ng-model="editAttribute.label" placeholder="{{ 'form.field_name_placeholder' | translate}}">
+      <input type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}">
       <div
                 class="alert error"
-                ng-show="labelError"
+                ng-show="attributeLabel.$invalid && attributeLabel.$dirty"
             >
                 <svg class="iconic">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.label.required'}}"></span>
             </div>
+    </form>
    </div>
    <div class="form-field switch">
       <label translate="survey.show_field_description">Show field description</label>
