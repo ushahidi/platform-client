@@ -12,10 +12,10 @@
             }"
         >
              <label>
-                {{attribute.label}}
+                <bdi>{{attribute.label}}</bdi>
             </label>
             <p>
-                {{attribute.instructions}}
+                <bdi>{{attribute.instructions}}</bdi>
             </p>
             <input id="title"
                 name="title" type="text" ng-model="post.title" ng-required="true" ng-minlength=2 ng-maxlength=150 adaptive-input>
@@ -43,10 +43,10 @@
             adaptive-form
         >
             <label>
-                {{attribute.label}}
+                <bdi>{{attribute.label}}</bdi>
             </label>
             <p>
-                {{attribute.instructions}}
+                <bdi>{{attribute.instructions}}</bdi>
             </p>
             <textarea id="content" name="content" data-min-rows="1" rows="1"
                 ng-model="post.content" ng-required="true" adaptive-input msd-elastic>
@@ -78,7 +78,7 @@
                 <svg ng-show="attribute.response_private" class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                 </svg>
-                {{attribute.label}}
+                <bdi>{{attribute.label}}</bdi>
             </label>
             <!-- Attribute Instructions -->
             <p>{{attribute.instructions}}</p>
@@ -121,7 +121,7 @@
                         ng-model="post.values[attribute.key][key]"
                         ng-required="attribute.required"
                         >
-                        <option ng-repeat="opt in attribute.options" value="{{opt}}">{{opt}}</option>
+                        <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
                     </select>
                     <!-- type: number -->
                     <input
@@ -223,9 +223,9 @@
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
                 'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
                 'required': attribute.required
-            }">{{attribute.label}}</label>
+            }"><bdi>{{attribute.label}}<bdi></label>
             <!-- Attribute Instructions -->
-            <p>{{attribute.instructions}}</p>
+            <p><bdi>{{attribute.instructions}}</bdi></p>
 
             <!-- attributes which use the form-field structure -->
             <div ng-switch="attribute.input">
@@ -241,7 +241,7 @@
                                 ng-required="attribute.required"
                                 value="{{option}}"
                             >
-                            {{option}}
+                            <bdi>{{option}}</bdi>
                         </label>
                     </div>
                     </div>
@@ -258,7 +258,7 @@
                             checklist-value="option"
                             value="option"
                         >
-                            {{option}}
+                            <bdi>{{option}}</bdi>
                     </label>
                     </div>
                 </div>
