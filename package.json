@@ -22,10 +22,7 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+    "*.js": ["eslint --fix", "git add"]
   },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
