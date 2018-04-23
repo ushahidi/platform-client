@@ -19,9 +19,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "pre-commit": [
+    "pre-commit":
       "lint-staged"
-    ],
   },
   "lint-staged": {
       "*.js": [
