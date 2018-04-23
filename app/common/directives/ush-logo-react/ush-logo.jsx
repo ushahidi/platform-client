@@ -19,3 +19,5 @@ MyComponent.propTypes = {
     foo: PropTypes.number,
     baz: PropTypes.number,
 }
+
+// adding this for a test

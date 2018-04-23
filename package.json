@@ -19,10 +19,13 @@
     "protractor": "protractor test/protractor-conf.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "precommit": "lint-staged"
+    "precommit": "link-staged"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
@@ -78,7 +81,6 @@
     "node-libs-browser": "^2.0.0",
     "node-sass": "^4.5.2",
     "phantomjs-prebuilt": "^2.1.16",
-    "pre-commit": "^1.1.2",
     "protractor": "^5.1.1",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^2.0.2",
