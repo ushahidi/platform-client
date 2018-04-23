@@ -19,16 +19,14 @@
     "protractor": "protractor test/protractor-conf.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "pre-commit":
-      "lint-staged"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
-      "*.js": [
-        "eslint --fix",
-        "git add"
-      ]
-    },
-  
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
     "angular-mocks": "^1.5.6",
@@ -63,6 +61,7 @@
     "gulp-util": "^3.0.7",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.22.0",
+    "husky": "^0.14.3",
     "imports-loader": "^0.7.1",
     "jasmine-core": "^2.5.2",
     "json-loader": "^0.5.4",
