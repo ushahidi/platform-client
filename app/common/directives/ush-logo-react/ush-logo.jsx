@@ -15,9 +15,4 @@ class MyComponent extends Component {
 
 export default MyComponent;
 
-MyComponent.propTypes = {
-    foo: PropTypes.number,
-    baz: PropTypes.number,
-}
-
-// adding this for a test
+MyComponent.propTypes = {foo: PropTypes.number,baz: PropTypes.number}
