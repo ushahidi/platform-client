@@ -1,0 +1,11 @@
+{
+    "preset": "crockford",
+    "disallowDanglingUnderscores": null,
+    "requireSpacesInAnonymousFunctionExpression" : {
+        "beforeOpeningRoundBrace": true,
+        "beforeOpeningCurlyBrace": true
+    },
+    "requireMultipleVarDecl" : null,
+    "requireVarDeclFirst" : null,
+    "excludeFiles" : ["node_modules/**", "bower_components/**", "test/coverage/**"]
+}
