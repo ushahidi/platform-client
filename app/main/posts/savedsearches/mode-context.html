@@ -3,7 +3,7 @@
         <ol class="breadcrumbs" ng-controller="navigation as nav">
             <li><a href="/">{{nav.site.name}}</a></li>
         </ol>
-        <h1 class="mode-context-title">
+        <h1 class="mode-context-title" translate>
             <svg class="iconic">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#star"></use>
             </svg>
@@ -20,7 +20,7 @@
 
     <div class="mode-context-body">
         <!--// IF: Saved Search has description //-->
-        <p ng-if="savedSearch.description">{{savedSearch.description}}</p>
+        <p ng-if="savedSearch.description">{{savedSearch.description | translate}}</p>
         <!--// END IF //-->
 
         <ul class="metadata">
