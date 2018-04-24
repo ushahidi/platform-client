@@ -19,7 +19,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "cz": "git-cz"
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -46,6 +47,7 @@
     "babel-register": "^6.7.2",
     "babel-runtime": "^6.6.1",
     "browser-sync": "^2.11.1",
+    "commitizen": "^2.9.6",
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.28.0",
     "del": "^2.2.0",
