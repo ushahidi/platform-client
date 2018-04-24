@@ -13,4 +13,4 @@ class MyComponent extends Component{render() {
 
 export default MyComponent;
 
-MyComponent.propTypes = {foo: PropTypes.number,baz: PropTypes.number}
+MyComponent.propTypes = {foo: PropTypes.number,baz: PropTypes.number }
