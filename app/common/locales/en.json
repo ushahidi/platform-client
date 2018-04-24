@@ -111,7 +111,9 @@
         "add_new_category" : "+ Add new category",
         "sort_by": "Sort By ...",
         "newest_first": "Newest first",
-        "oldest_first": "Oldest first"
+        "oldest_first": "Oldest first",
+        "language": "Language",
+        "select_language": "Select language"
     },
     "toolbar": {
         "searchbar" : {
@@ -378,6 +380,11 @@
             "mapped": "Show posts with a location",
             "source": "Source"
         },
+        "unmapped_start_one": "There is",
+        "unmapped_start_many": "There are",
+        "unmapped_one": "{{post_nb}} post",
+        "unmapped_many": "{{post_nb}} posts",
+        "unmapped_end": "not shown here because they don't include location information.",
         "more" : "More",
         "keyword" : "Keyword",
         "start_date" : "Start Date",
