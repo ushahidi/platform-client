@@ -592,6 +592,7 @@
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
+        "reports_total": " {{posts}} of {{total_nb}} reports",
         "by" : "by",
         "task_completed" : "Task completed",
         "everyone" : "Everyone",
@@ -698,6 +699,7 @@
             "contact_info": "Enter your contact info (optional)",
             "author_realname" : "Name",
             "author_email" : "Email",
+            "bulk_actions": "Bulk Actions",
             "form" : {
                 "categories" : "Categories",
                 "description" : "Description",
