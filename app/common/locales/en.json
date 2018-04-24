@@ -205,6 +205,7 @@
 
     "survey": {
         "delete_task" : "Delete task",
+        "duplicate_survey": "Duplicate",
         "internal_use_task" : "Task is only for internal use",
         "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "duplicate_task" : "Duplicate task",
@@ -226,6 +227,21 @@
         "show_task" : "Show this task to everyone when the post is published",
         "task_info" : "You can add additional information to each post, like translations or verification, and assign them to people by adding <strong>Tasks</strong>. You can choose from pre-built tasks or create your own from scratch.",
         "text_desc" : "A sentence or less",
+        "short_text": "Short text",
+        "long_text": "Long text",
+        "number_decimal": "Number (Decimal)",
+        "number_integer": "Number (Integer)",
+        "location": "Location",
+        "date": "Date",
+        "datetime": "Date & Time",
+        "select": "Select",
+        "radio_button": "Radio Button(s)",
+        "checkbox": "Checkbox(es)",
+        "related_post": "Related Post",
+        "upload_image": "Image",
+        "embed_video": "Embed video",
+        "markdown": "Markdown",
+        "categories": "Categories",
         "textarea_desc" : "Multiple sentences or paragraphs",
         "decimal_desc" : "A number with decimal places",
         "integer_desc" : "A whole number",
@@ -910,7 +926,8 @@
         "webhooks": {
             "use_webhook_for": "Use webhook for",
             "enable_source_destination" : "Enable Source and Destination Fields",
-            "enable_source_destination_desc" : "This webhook will only be applied to Surveys of the selected type."
+            "enable_source_destination_desc" : "This webhook will only be applied to Surveys of the selected type.",
+            "destination": "Destination"
         },
         "data_sources": {
             "associate_with_form" : "Import to survey",
@@ -926,11 +943,23 @@
             "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
 
         },
+        "roles" :{
+            "member": "Member",
+            "admin": "Admin",
+            "manage_users": "Manage Users",
+            "manage_posts": "Manage Posts",
+            "manage_settings": "Mangage Settings",
+            "bulk_data_import": "Bulk Data Import",
+            "edit_own_posts": "Edit their own posts",
+            "registred_member": "Registered member",
+            "administrator": "Administrator"
+        },
         "deployment_delete_this" : "Delete this deployment",
         "deployment_delete" : "Delete deployment",
         "deployment_delete_info" : "<strong>If you delete this deployment</strong>, all of its data will also be deleted. Proceed with caution.",
         "deployment_name" : "Deployment name",
         "deployment_logo" : "Deployment logo",
+        "delete_logo": "Delete logo",
         "map_default_baselayer": "Default base layer",
         "map_clustering": "Combine nearby posts",
         "map_default_latitude": "Default latitude",

@@ -43,7 +43,7 @@
             <div class="listing card" ng-show="roles.length" ng-show="rolesEnabled">
                 <div class="listing-item" ng-repeat="role in roles | orderBy:'role'">
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a ui-sref="settings.roles.edit({id: role.id})">{{role.display_name}}</a></h2>
+                        <h2 class="listing-item-title"><a ui-sref="settings.roles.edit({id: role.id})" translate>{{role.display_name}}</a></h2>
                     </div>
                 </div>
             </div>
