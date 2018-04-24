@@ -88,7 +88,7 @@
                                 user.role
                             </span>
                             <span class="legend-label" ng-show="user.role">
-                                {{ roles[user.role].display_name }}
+                                {{ roles[user.role].display_name | translate}}
                             </span>
                             <svg class="iconic chevron">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
@@ -102,7 +102,7 @@
                                     required
                                 >
                                 <label for="role{{role.id}}">
-                                    {{role.display_name}}
+                                    {{role.display_name | translate}}
                                 </label>
                             </div>
                         </div>

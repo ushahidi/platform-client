@@ -178,7 +178,7 @@
                 <div class="form-field checkbox" ng-repeat="role in roles">
                   <label>
                     <input type="checkbox" checklist-model="roles_allowed" checklist-value="role.id">
-                    {{role.display_name}}
+                    {{role.display_name | translate}}
                   </label>
                 </div>
               </div>
@@ -226,7 +226,7 @@
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                     </svg>
-                    <span class="hidden">More</span>
+                    <span class="hidden" translate="app.more">More</span>
                 </button>
 
                 <ul class="dropdown-menu init" dropdown-menu>
