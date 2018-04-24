@@ -1,1 +1,5 @@
 gulpfile.babel.js
+node_modules/*
+bower_components/*
+test/coverage/
+server/www

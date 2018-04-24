@@ -17,7 +17,7 @@
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
-    "lint": "eslint .",
+    "lint": "eslint app --ext .jsx,.js",
     "lint-fix": "eslint . --fix",
     "precommit": "lint-staged",
     "cz": "git-cz",
