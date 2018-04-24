@@ -2,8 +2,7 @@
 set -ev
 
 if [ "${TEST_SUITE}" = "lint" ]; then
-    gulp jscs
-    npm run jshint
+    npm run lint
 fi
 
 if [ "${TEST_SUITE}" = "unit" ]; then

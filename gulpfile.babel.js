@@ -16,7 +16,6 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
 import historyApiFallback   from 'connect-history-api-fallback';
 import karma     from 'karma';
-import jscs      from 'gulp-jscs';
 import fs        from 'fs';
 
 let root = 'app';
@@ -162,26 +161,6 @@ gulp.task('tdd', (done) => {
     server.start();
 });
 
-/**
- * Run JSCS tests
- */
-gulp.task('jscs', () => {
-    return gulp.src(['app/**/*.js', 'test/**/*.js', 'gulpfile.js'])
-        .pipe(jscs())
-        .pipe(jscs.reporter())
-        .pipe(jscs.reporter('fail'));
-});
-gulp.task('jscsfix', ['jscsfix:app', 'jscsfix:test'], () => {});
-gulp.task('jscsfix:app', () => {
-    return gulp.src(['app/**/*.js'])
-        .pipe(jscs({ fix : true }))
-        .pipe(gulp.dest('app/'));
-});
-gulp.task('jscsfix:test', () => {
-    return gulp.src(['test/**/*.js'])
-        .pipe(jscs({ fix : true }))
-        .pipe(gulp.dest('test/'));
-});
 
 /**
  * Task `release` - Build release
