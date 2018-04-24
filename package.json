@@ -20,7 +20,8 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "precommit": "lint-staged",
-    "cz": "git-cz"
+    "cz": "git-cz",
+    "retry": "git-cz --retry"
   },
   "lint-staged": {
     "*.{js,jsx}": [
