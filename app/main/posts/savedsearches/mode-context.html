@@ -3,11 +3,11 @@
         <ol class="breadcrumbs" ng-controller="navigation as nav">
             <li><a href="/">{{nav.site.name}}</a></li>
         </ol>
-        <h1 class="mode-context-title" translate>
+        <h1 class="mode-context-title">
             <svg class="iconic">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#star"></use>
             </svg>
-            {{savedSearch.name}}
+            {{savedSearch.name | translate}}
         </h1>
     </header>
 
