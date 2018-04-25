@@ -1,4 +1,4 @@
-import { isValidNumber } from 'libphonenumber-js';
+import { isValidNumber, formatNumber, parse } from 'libphonenumber-js';
 // re-route if feature flag is not enabled
 module.exports = [
     '$scope',
@@ -167,6 +167,10 @@ function (
                 $scope.finalNumbers.badNumbersString = $scope.finalNumbers.badNumbersString + number + ',';
                 $scope.finalNumbers.badNumberCount = $scope.finalNumbers.badNumberCount + 1;
             } else if (isValidNumber(number, $scope.selectedCountry.country_code) && number.length) {
+                // parse() isn't as complete as isValidNumber(), but formatNumber() needs parsed data
+                //  so with this lib, we have to do _all_ of these things to get to E164
+                let parsedResult = parse(number, $scope.selectedCountry.country_code);
+                number = formatNumber(parsedResult, 'E.164');
                 if ($scope.finalNumbers.storageObj[number]) {
                     $scope.finalNumbers.repeatCount = $scope.finalNumbers.repeatCount + 1;
                 } else {
