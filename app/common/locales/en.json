@@ -940,7 +940,88 @@
             "configure": "Configure",
             "options": "Options",
             "saving_changes": "Saving",
-            "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
+            "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!",
+            "email": {
+                "email_desc": "In order to receive reports by email, please input your email account settings below",
+                "incoming_server_type": "Incoming Server Type",
+                "incoming_server_type_pop": "POP",
+                "incoming_server_type_imap": "IMAP",
+                "incoming_server": "Incoming Server",
+                "incoming_server_desc": "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com",
+                "incoming_server_port": "Incoming Server Port",
+                "incoming_server_port_desc":"Common ports: 110 (POP3), 143 (IMAP), 995 (POP3 with SSL), 993 (IMAP with SSL)",
+                "incoming_server_security": "Incoming Server Security",
+                "server_security_none": "None",
+                "server_security_SSL": "SSL",
+                "server_security_TLS": "TLS",
+                "incoming_username": "Incoming Username",
+                "username_desc": "Email account username",
+                "incoming_password": "Incoming Password",
+                "password_desc": "Email account password",
+                "outgoing_server_type": "Outgoing Server Type",
+                "outgoing_server_type_SMTP": "SMTP",
+                "outgoing_server_type_sendmail": "sendmail",
+                "outgoing_server_type_native": "Native",
+                "outgoing_server": "Outgoing Server",
+                "outgoing_server_desc": "Examples: smtp.yourhost.com, smtp.gmail.com",
+                "outgoing_server_port": "Outgoing Server Port",
+                "outgoing_server_port_desc": "Common ports: 25 (SMTP default), 465 (SMTP with SSL)",
+                "outgoing_server_security": "Outgoing Server Security",
+                "outgoing_username": "Outgoing Username",
+                "outgoing_password": "Outgoing Password",
+                "email_address": "Email Address",
+                "email_desc": "This will be used to send outgoing emails",
+                "email_sender_name": "Email Sender Name",
+                "email_sender_name_desc": "Appears in the 'from:' field on outgoing emails"
+            },
+            "sms": {
+                "secret": "Secret",
+                "api_key_desc": "The API key",
+                "frontline_sms": {
+                    "api_key": "Key",
+                    "secret_desc": "Set a secret so that only authorized FrontlineCloud accounts can send/recieve message. You need to configure the same secret in the FrontlineCloud Activity."
+                },
+                "nexmo": {
+                    "from":"From",
+                    "from_desc": "The from number",
+                    "secret_desc": "The secret value",
+                    "api_key": "API Key",
+                    "api_secret": "API secret",
+                    "api_secret_desc": "The API secret"
+                },
+                "smssync": {
+                    "intro_step_1": "Step 1: Download the 'SMSSync' app from the Android Market.",
+                    "intro_step_1_desc": "Scan this QR Code with your phone to download the app from the Android Market",
+                    "intro_step_2": "Step 2: Android App Settings",
+                    "intro_step_2_desc": "Turn on SMSSync and use the following link as the Sync URL: ",
+                    "secret_desc": "Set a secret so that only authorized SMSSync devices can send/recieve message. You need to configure the same secret in the SMSSync App."
+                },
+                "twilio": {
+                    "phone_nb": "Phone Number",
+                    "phone_nb_desc": "The from phone number. A Twilio phone number enabled for the type of message you wish to send. ",
+                    "account_sid": "Account SID",
+                    "account_sid_desc": "The unique id of the Account that sent this message.",
+                    "auth_token": "Auth Token",
+                    "sms_auto_response": "SMS Auto response"
+                }
+            },
+            "twitter": {
+                "intro_step_1": "Step 1: Create a new Twitter application",
+                "intro_step_1_desc": "Create a <a href=\"https://apps.twitter.com/app/new\">new twitter application</a>",
+                "intro_step_2": "Step 2: Generate a consumer key and secret",
+                "intro_step_2_desc": "Once you've created the application click on \"Keys and Access Tokens\".<br /> Then click \"Generate Consumer Key and Secret\".<br /> Copy keys, tokens and secrets into the fields below.",
+                "consumer_key": "Consumer Key",
+                "consumer_key_desc": "Add the consumer key from your Twitter app.",
+                "consumer_secret": "Consumer Secret",
+                "consumer_secret_desc": "Add the consumer secret from your Twitter app.",
+                "access_token": "Access Token",
+                "access_token_desc": "Add the access token you generated for your Twitter app.",
+                "access_token_secret": "Access Token Secret",
+                "access_token_secret_desc":"Add the access secret that you generated for your Twitter app.",
+                "search_terms": "Twitter search terms",
+                "search_terms_desc": "Add search terms separated with commas"
+            }
+
 
         },
         "roles" :{
