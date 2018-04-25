@@ -280,6 +280,22 @@ describe('setting create targeted survey controller', function () {
                     badNumberCount: 0
                 });
             });
+            it('should not add country code if already included', function () {
+                $scope.runValidations('1 317 555 1961, 13175552327, 1-317-555-1967,  +1-317-555-1968');
+                expect($scope.finalNumbers).toEqual({
+                    goodNumbers: ['+13175551961', '+13175552327', '+13175551967', '+13175551968'],
+                    goodNumbersString: '+13175551961,+13175552327,+13175551967,+13175551968,',
+                    badNumbersString: '',
+                    repeatCount: 0,
+                    storageObj: {
+                        '+13175551961': '+13175551961',
+                        '+13175552327': '+13175552327',
+                        '+13175551967': '+13175551967',
+                        '+13175551968': '+13175551968'
+                    },
+                    badNumberCount: 0
+                });
+            });
             it('should remove duplicate numbers', function () {
                 $scope.runValidations('3175551967, 3175552327, 3175551967');
                 expect($scope.finalNumbers).toEqual({
