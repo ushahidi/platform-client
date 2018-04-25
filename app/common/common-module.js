@@ -121,7 +121,7 @@ angular.module('ushahidi.common', [
     $templateCache.put('common/directives/mode-bar/ushahidi-logo.html', require('./directives/mode-bar/ushahidi-logo.html'));
 }])
 
-.component('myComponent', react2angular(MyComponent, ['fooBar', 'baz']))
+.component('myComponent', react2angular(MyComponent))
 
 ;
 

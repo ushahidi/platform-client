@@ -1,0 +1,24 @@
+{
+    "extends": [
+        "airbnb",
+        "prettier/react"
+    ],
+    "plugins": [
+        "prettier"
+    ],
+    "parserOptions": { 
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "jest": true,
+        "jasmine": true
+    },
+    "rules": {
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "prettier/prettier": ["error", { "singleQuote": true }, {"trailingComma" :true}]
+    }
+}
