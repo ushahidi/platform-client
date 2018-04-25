@@ -255,13 +255,13 @@ describe('setting create targeted survey controller', function () {
             it('should validate phone numbers as GOOD numbers', function () {
                 $scope.runValidations('3172351967, 3176742327');
                 expect($scope.finalNumbers).toEqual({
-                    goodNumbers: ['3172351967', '3176742327'],
-                    goodNumbersString: '3172351967,3176742327,',
+                    goodNumbers: ['+13172351967', '+13176742327'],
+                    goodNumbersString: '+13172351967,+13176742327,',
                     badNumbersString: '',
                     repeatCount: 0,
                     storageObj: {
-                        '3172351967': '3172351967',
-                        '3176742327': '3176742327'
+                        '+13172351967': '+13172351967',
+                        '+13176742327': '+13176742327'
                     },
                     badNumberCount: 0
                 });
@@ -269,13 +269,13 @@ describe('setting create targeted survey controller', function () {
             it('should validate phone numbers with special characters as GOOD numbers', function () {
                 $scope.runValidations('317-235-1967, 317.674.2327');
                 expect($scope.finalNumbers).toEqual({
-                    goodNumbers: ['317-235-1967', '317.674.2327'],
-                    goodNumbersString: '317-235-1967,317.674.2327,',
+                    goodNumbers: ['+13172351967', '+13176742327'],
+                    goodNumbersString: '+13172351967,+13176742327,',
                     badNumbersString: '',
                     repeatCount: 0,
                     storageObj: {
-                        '317-235-1967': '317-235-1967',
-                        '317.674.2327': '317.674.2327'
+                        '+13172351967': '+13172351967',
+                        '+13176742327': '+13176742327'
                     },
                     badNumberCount: 0
                 });
@@ -283,13 +283,13 @@ describe('setting create targeted survey controller', function () {
             it('should remove duplicate numbers', function () {
                 $scope.runValidations('3172351967, 3176742327, 3172351967');
                 expect($scope.finalNumbers).toEqual({
-                    goodNumbers: ['3172351967', '3176742327'],
-                    goodNumbersString: '3172351967,3176742327,',
+                    goodNumbers: ['+13172351967', '+13176742327'],
+                    goodNumbersString: '+13172351967,+13176742327,',
                     badNumbersString: '',
                     repeatCount: 1,
                     storageObj: {
-                        '3172351967': '3172351967',
-                        '3176742327': '3176742327'
+                        '+13172351967': '+13172351967',
+                        '+13176742327': '+13176742327'
                     },
                     badNumberCount: 0
                 });
@@ -297,13 +297,13 @@ describe('setting create targeted survey controller', function () {
             it('should separate good and bad numbers', function () {
                 $scope.runValidations('3172351967, 3176742327, 3172351967, 12345');
                 expect($scope.finalNumbers).toEqual({
-                    goodNumbers: ['3172351967', '3176742327'],
-                    goodNumbersString: '3172351967,3176742327,',
+                    goodNumbers: ['+13172351967', '+13176742327'],
+                    goodNumbersString: '+13172351967,+13176742327,',
                     badNumbersString: '12345,',
                     repeatCount: 1,
                     storageObj: {
-                        '3172351967': '3172351967',
-                        '3176742327': '3176742327'
+                        '+13172351967': '+13172351967',
+                        '+13176742327': '+13176742327'
                     },
                     badNumberCount: 1
                 });
@@ -311,13 +311,13 @@ describe('setting create targeted survey controller', function () {
             it('should disregard empty elements', function () {
                 $scope.runValidations('3172351967, 3176742327, 3172351967, 12345,, ');
                 expect($scope.finalNumbers).toEqual({
-                    goodNumbers: ['3172351967', '3176742327'],
-                    goodNumbersString: '3172351967,3176742327,',
+                    goodNumbers: ['+13172351967', '+13176742327'],
+                    goodNumbersString: '+13172351967,+13176742327,',
                     badNumbersString: '12345,',
                     repeatCount: 1,
                     storageObj: {
-                        '3172351967': '3172351967',
-                        '3176742327': '3176742327'
+                        '+13172351967': '+13172351967',
+                        '+13176742327': '+13176742327'
                     },
                     badNumberCount: 1
                 });
