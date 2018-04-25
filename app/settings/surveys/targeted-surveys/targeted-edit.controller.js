@@ -243,13 +243,14 @@ function (
         }
 
         $scope.editQuestion.input = 'textarea';
-        $scope.editQuestion.priority = getPriority($scope.survey.attributes);
         $scope.editQuestion.type = 'text';
+
         // This is to avoid the 2-way binding and the label to update while writing in the modal
         $scope.editQuestion.label = angular.copy($scope.editQuestion.question);
 
         // This is to avoid adding same question twice and we don't have any unique id-s for the questions yet
         if ($scope.editQuestion.newQuestion) {
+            $scope.editQuestion.priority = getPriority($scope.survey.attributes);
             delete $scope.editQuestion.newQuestion;
             $scope.survey.attributes.push($scope.editQuestion);
         }
