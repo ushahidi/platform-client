@@ -42,7 +42,7 @@
                 <div class="form-sheet">
                    <div class="form-field title">
                        <label class="hidden" translate>role.name</label>
-                       <input type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
+                       <input type="text" placeholder="{{'role.name'}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
                    </div>
 
                     <div class="form-field">
@@ -60,14 +60,14 @@
                        <div class="form-field checkbox" ng-repeat="permission in permissions" ng-if="role.name == 'admin'">
                            <label for="{{permission.id}}">
                                <input id="{{permission.id}}" type="checkbox" disabled checked="checked">
-                               {{permission.name | translate}}
+                               {{permission.name}}
                            </label>
                        </div>
 
                        <div class="form-field checkbox" ng-repeat="permission in permissions" ng-if="role.name != 'admin'">
                            <label for="{{permission.id}}">
                                <input id="{{permission.id}}" type="checkbox" value="permission.name" checklist-model="role.permissions" checklist-value="permission.name">
-                               {{permission.name | translate}}
+                               {{permission.name}}
                            </label>
                        </div>
                    </fieldset>
