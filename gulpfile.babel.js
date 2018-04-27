@@ -126,7 +126,7 @@ gulp.task('clean', (done) => {
   });
 });
 
-
+// TO-DO: DECIDE IF WE WANT TO KEEP GULP TESTING
 /**
  * Run test once and exit
  */

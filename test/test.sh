@@ -7,5 +7,6 @@ set -ev
 # fi
 
 if [ "${TEST_SUITE}" = "unit" ]; then
-    NODE_ENV=test gulp test
+    NODE_ENV=test npm run test 
+
 fi
