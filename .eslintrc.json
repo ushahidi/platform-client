@@ -18,11 +18,11 @@
         "browser": true,
         "jest": true,
         "jasmine": true,
-        "es6": true,
+        "es6": true
     },
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        // "comma-dangle": ["error", "never"],
-        "prettier/prettier": ["error"]
+        "prettier/prettier": ["error"],
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
     }
 }

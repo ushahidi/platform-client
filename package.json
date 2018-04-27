@@ -35,10 +35,8 @@
     ]
   },
   "jest": {
-    "roots": [
-      "./tests/migration"
-    ],
-    "setupTestFrameworkScriptFile": "./tests/setup.js"
+    "setupTestFrameworkScriptFile": "./jest-setup.js",
+    "testPathIgnorePatterns": ["./node_modules", "./test"]
   },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
