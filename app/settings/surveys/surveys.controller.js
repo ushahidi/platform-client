@@ -8,6 +8,7 @@ module.exports = [
     'FormStageEndpoint',
     'Notify',
     '_',
+    'Features',
 function (
     $scope,
     $rootScope,
@@ -17,7 +18,8 @@ function (
     FormEndpoint,
     FormStageEndpoint,
     Notify,
-    _
+    _,
+    Features
 ) {
 
     // Change layout class
@@ -33,6 +35,11 @@ function (
     });
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
+
+    Features.loadFeatures()
+    .then(function () {
+        $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+    });
 
     // Get all the forms for display
     $scope.refreshForms = function () {

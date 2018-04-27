@@ -1,51 +1,6 @@
 <form name="editForm" novalidate>
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
-        <div
-          class="form-field init required"
-          adaptive-form
-          ng-class="{'error': editForm.title.$invalid && editForm.title.$dirty, 'success': !editForm.title.$invalid && editForm.title.$dirty}"
-        >
-          <label>{{postTitleLabel}}</label>
-          <p>{{postTitleInstructions}}</p>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            ng-model="post.title"
-            ng-required="true"
-            ng-minlength=2
-            ng-maxlength=150
-            adaptive-input
-          >
-          <div
-            class="alert error"
-            ng-show="editForm.title.$dirty"
-            ng-repeat="(error, value) in editForm.title.$error"
-          >
-            <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-            </svg>
-            <span translate="{{'post.valid.title.' + error}}"></span>
-          </div>
-        </div>
-        <!-- Post stage default fields -->
-        <div
-          class="form-field init required"
-          ng-class="{'error': editForm.content.$invalid && editForm.content.$dirty, 'success': !editForm.content.$invalid && editForm.content.$dirty}"
-          adaptive-form
-        >
-          <label>{{postDescriptionLabel}}</label>
-          <p>{{postDescriptionInstructions}}</p>
-          <textarea id="content" name="content" data-min-rows="1" rows="1" ng-model="post.content" ng-required="true" adaptive-input msd-elastic></textarea>
-
-          <div class="alert error" ng-show="editForm.content.$dirty" ng-repeat="(error, value) in editForm.content.$error">
-            <svg class="iconic">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-            </svg>
-            <span translate="{{'post.valid.content.' + error}}"></span>
-          </div>
-        </div>
         <!-- End post stage default fields -->
           <div
             ng-if="!form"
@@ -66,7 +21,7 @@
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
             </svg>
-            <span translate="{{'post.valid.content.' + error}}"></span>
+            <p translate="{{'post.valid.content.' + error}}"></p>
           </div>
           </div>
 

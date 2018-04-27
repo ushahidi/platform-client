@@ -102,7 +102,7 @@
                 </listing-toolbar>
              </div>
             <nav class="pagination" ng-show="showPagination">
-                <ul uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></ul>
+                <ul uib-pagination ng-model="pagination.currentPage" items-per-page="pagination.itemsPerPage" total-items="pagination.totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></ul>
             </nav>
         </div>
     </main>

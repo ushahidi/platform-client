@@ -53,6 +53,13 @@ function (
         loginStatus = true;
     }
 
+    function continueLogout(silent) {
+        setToLogoutState();
+        if (!silent) {
+            $rootScope.$broadcast('event:authentication:logout:succeeded');
+        }
+    }
+
     function setToLogoutState() {
         Session.clearSessionData();
         UserEndpoint.invalidateCache();
@@ -120,12 +127,13 @@ function (
             // TODO: At present releasing locks should not prevent users from logging out
             // in future this should be expanded to include an error state
             // Though ultinately unlocking should be handled solely API side
-            PostLockEndpoint.unlock().$promise.finally(function () {
-                setToLogoutState();
-                if (!silent) {
-                    $rootScope.$broadcast('event:authentication:logout:succeeded');
-                }
-            });
+            if ($rootScope.hasPermission('Manage Posts')) {
+                PostLockEndpoint.unlock().$promise.finally(function () {
+                    continueLogout(silent);
+                });
+            } else {
+                continueLogout(silent);
+            }
         },
 
         getLoginStatus: function () {

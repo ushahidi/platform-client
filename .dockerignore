@@ -4,3 +4,6 @@ Dockerfile
 *.Dockerfile
 tmp
 .out
+codeship-*
+deployment.env
+deployment.env.encrypted

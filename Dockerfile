@@ -6,7 +6,10 @@ COPY package.json .
 RUN npm-install-silent.sh
 
 COPY . ./
-RUN gulp build
+ARG TX_USERNAME
+ARG TX_PASSWORD
+RUN TX_USERNAME="${TX_USERNAME}" TX_PASSWORD="${TX_PASSWORD}" gulp build
+
 
 FROM nginx
 
