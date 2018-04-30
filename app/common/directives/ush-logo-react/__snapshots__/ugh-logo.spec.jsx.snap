@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`foo and bar match the props 1`] = `
+<div>
+  <p
+    className="foo"
+  >
+    Foo: 
+    1
+  </p>
+  <p
+    className="baz"
+  >
+    Baz: 
+    2
+  </p>
+</div>
+`;
