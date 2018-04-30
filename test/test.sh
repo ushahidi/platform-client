@@ -7,6 +7,5 @@ set -ev
 # fi
 
 if [ "${TEST_SUITE}" = "unit" ]; then
-    npm run test 
-
+    npm run test
 fi

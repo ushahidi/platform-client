@@ -22,7 +22,7 @@
     "precommit": "lint-staged",
     "cz": "git-cz",
     "retry": "git-cz --retry",
-    "test": "karma start ./test/karma.conf.js && jest"
+    "test": "karma start ./test/karma.conf.js --single-run && jest"
   },
   "lint-staged": {
     "*.{js,jsx}": [
