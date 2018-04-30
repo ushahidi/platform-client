@@ -38,7 +38,8 @@
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./jest-setup.js",
-    "testPathIgnorePatterns": ["./node_modules", "./test"]
+    "testPathIgnorePatterns": ["./node_modules", "./test"],
+    "testEnvironment": "node"
   },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
