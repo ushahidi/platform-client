@@ -1,0 +1,108 @@
+<div>
+   <!-- TODO This should realy go into its own directive -->
+    <div class="mode-context init" dropdown>
+
+       <header class="mode-context-header">
+           <ol class="breadcrumbs">
+               <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+               <li><a href="/settings" translate>app.settings</a></li>
+           </ol>
+           <h1 class="mode-context-title" translate>app.import</h1>
+       </header>
+
+       <span class="mode-context-trigger" dropdown-toggle>
+           <svg class="iconic">
+               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+           </svg>
+           <span class="label hidden" translate>app.show_more_less</span>
+       </span>
+   </div>
+
+    <main role="main">
+      <div class="progress-bar" ng-show="isLoading() && showFields">
+            <span>
+                ..
+            </span>
+        </div>
+        <div class="main-col">
+            <div class="form-sheet" ng-show="!showFields">
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate>
+                    data_export.title
+                    </h2>
+                    <p translate ng-show="!showProgress">data_export.description</p>
+                    <p translate ng-show="showProgress">data_export.export_progress</p>
+                </div>
+                <nav class="tabs-menu init" data-tabs="survey-details">
+                        <ul>
+                            <li id="main-export-li">
+                                <a ng-click="switchTab('export', 'main')" >
+                                Export
+                                </a>
+                            </li>
+                            <li id="history-export-li">
+                                <a ng-click="switchTab('export', 'history')" >
+                                Export History
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                <div id="main-export" class="survey-details tabs-target" >
+                    <div class="form-field">
+                        <button class="button-alpha" translate ng-click="exportAll()" ng-disabled="showProgress">data_export.all</button>
+                        <button class="button"  ng-click="selectFields()" translate ng-disabled="showProgress">data_export.select_fields</button>
+                    </div>
+                </div>
+                <div id="history-export" class="survey-details tabs-target">
+                    <div class="listing">
+                        <div class="listing-item" ng-repeat="job in exportJobs">
+                            <div class="listing-item-primary">
+                                <h2 class="listing-item-title"><a href="{{job.url}}" target="_blank" translate="data_export.job" translate-values="{jobId: job.id}">Job {{job.id}}</a></h2>
+                                <p class="listing-item-secondary" translate="data_export.{{job.status}}">Status: {{job.status}}</p>
+                                <p class="listing-item-secondary" translate="data_export.created" translate-values="{created: job.created}">Created: {{job.created}}</p>
+                                <p class="listing-item-secondary" translate="data_export.expires" translate-values="{expires: job.url_expiration}">Expires: {{job.url_expiration}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-sheet" ng-show="showFields && !showProgress">
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate>
+                    data_export.select_fields_title
+                    </h2>
+                    <p translate>data_export.select_fields_desc</p>
+                </div>
+                <div class="form-field" ng-repeat="form in forms">
+                    <label><bdi>{{form.name}}</bdi></label>
+                    <div class="form-field checkbox" ng-show="form.attributes">
+                        <label>
+                            <input
+                                type="checkbox"
+                                ng-checked="selectedFields[form.id].length === form.attributes.length"
+                                ng-click="selectAll(form)"
+                            >
+                            <em><span translate="category.select_all"></span></em>
+                        </label>
+                    </div>
+                    <div class="form-field checkbox" ng-repeat="attribute in form.attributes">
+                    <label>
+                        <input
+                            type="checkbox"
+                            checklist-model="selectedFields[form.id]"
+                            checklist-value="attribute.id"
+                            value="attribute.id"
+                        >
+                        <bdi>{{attribute.label}}</bdi>
+                    </label>
+                    </div>
+            </div>
+            <div class="form-field">
+                <button class="button-alpha" ng-click="exportSelected()" translate>data_export.export_selected
+                </button>
+                <button class="button" ng-click="selectFields()" translate>data_export.cancel</button>
+            </div>
+        </div>
+    </div>
+    </main>
+</div>

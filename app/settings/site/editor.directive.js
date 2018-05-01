@@ -12,6 +12,8 @@ module.exports = [
     'Util',
     'Languages',
     'Features',
+    'Session',
+    'TranslationService',
 function (
     $q,
     $http,
@@ -25,7 +27,9 @@ function (
     Maps,
     Util,
     Languages,
-    Features
+    Features,
+    Session,
+    TranslationService
 ) {
     return {
         restrict: 'E',
@@ -44,6 +48,7 @@ function (
             $scope.fileContainer = {
                 file : null
             };
+            $scope.SystemLanguage = '';
 
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
@@ -54,7 +59,10 @@ function (
                 $scope.api_key = results[0];
             });
 
-            $scope.site = ConfigEndpoint.get({ id: 'site' });
+            ConfigEndpoint.get({ id: 'site' }).$promise.then((site) => {
+                $scope.site = site;
+                $scope.SystemLanguage = site.language;
+            });
 
             $scope.userSavedSettings = false;
 
@@ -113,6 +121,12 @@ function (
                     ]).then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
+                        let newSystemLanguage = result[0].language;
+                        let userLanguage = Session.getSessionDataEntry('language');
+                        if ((userLanguage === undefined || userLanguage === null) && $scope.SystemLanguage !== newSystemLanguage) {
+                            TranslationService.translate(newSystemLanguage);
+                        }
+                        $scope.SystemLanguage = newSystemLanguage;
                         Notify.notify('notify.general_settings.save_success');
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);

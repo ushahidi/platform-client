@@ -22,43 +22,45 @@ function (
     moment
 ) {
     var translate = function (lang) {
-        $translate.use(lang).then(function (langKey) {
-            if (langKey) {
-                $translate.preferredLanguage(langKey);
-                Languages.then(function (languages) {
-                    let language = languages.find(l => l.code === langKey);
+        if (lang !== null) {
+            $translate.use(lang).then(function (langKey) {
+                if (langKey) {
+                    $translate.preferredLanguage(langKey);
+                    Languages.then(function (languages) {
+                        let language = languages.find(l => l.code === langKey);
 
-                    if ($rootScope.rtlEnabled !== language.rtl) {
-                        if (language.rtl) {
-                            require.ensure(
-                                ['ushahidi-platform-pattern-library/assets/css/rtl-style.min.css'], () => {
-                                    $rootScope.$apply(() => {
-                                        require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
-                                        $rootScope.rtlEnabled = language.rtl;
-                                    });
-                                }, 'rtl'
-                            );
-                        } else {
-                            $rootScope.rtlEnabled = language.rtl;
+                        if ($rootScope.rtlEnabled !== language.rtl) {
+                            if (language.rtl) {
+                                require.ensure(
+                                    ['ushahidi-platform-pattern-library/assets/css/rtl-style.min.css'], () => {
+                                        $rootScope.$apply(() => {
+                                            require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
+                                            $rootScope.rtlEnabled = language.rtl;
+                                        });
+                                    }, 'rtl'
+                                );
+                            } else {
+                                $rootScope.rtlEnabled = language.rtl;
+                            }
                         }
-                    }
+                    });
+                }
+            });
+
+            if (lang === 'en') {
+                // Just set moment locale
+                moment.locale('en');
+            } else {
+                // Load locale
+                require(['moment/locale/' + lang + '.js'], function () {
+                    // And then set moment locale
+                    moment.locale(lang);
                 });
             }
-        });
 
-        if (lang === 'en') {
-            // Just set moment locale
-            moment.locale('en');
-        } else {
-            // Load locale
-            require(['moment/locale/' + lang + '.js'], function () {
-                // And then set moment locale
-                moment.locale(lang);
-            });
+            // Translating and setting page-title
+            $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
         }
-
-        // Translating and setting page-title
-        $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));
     };
 
     var setStartLanguage = function () {
