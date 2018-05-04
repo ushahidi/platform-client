@@ -18,11 +18,14 @@ require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 
-// redux
-import { combineReducers } from 'redux';
-import thunk from "redux-thunk";
-import { RootReducer } from "./rootReducer";
-import ngRedux from "ng-redux";
+require('redux');
+require('ng-redux');
+const thunk = require('redux-thunk');
+const RootReducer = require('./rootReducer');
+// import { combineReducers } from 'redux';
+// import thunk from "redux-thunk";
+// import { RootReducer } from "./rootReducer";
+// import ngRedux from "ng-redux";
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -177,6 +180,6 @@ angular.module('app',
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     })
     .config(($ngReduxProvider) => {
-        $ngReduxProvider.createStoreWith(RootReducer, [thunk], [$window.__REDUX_DEVTOOLS_EXTENSION__()]);
+        $ngReduxProvider.createStoreWith(RootReducer, [thunk], [window.__REDUX_DEVTOOLS_EXTENSION__()]);
     })
     
