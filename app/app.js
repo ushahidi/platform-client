@@ -180,6 +180,6 @@ angular.module('app',
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     })
     .config(($ngReduxProvider) => {
-        $ngReduxProvider.createStoreWith(RootReducer, [thunk], [window.__REDUX_DEVTOOLS_EXTENSION__()]);
+        $ngReduxProvider.createStoreWith(RootReducer, [], [window.__REDUX_DEVTOOLS_EXTENSION__()]);
     })
     
