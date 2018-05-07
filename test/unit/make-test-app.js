@@ -20,6 +20,9 @@ module.exports = function () {
         .factory('_', function ($window) {
             return require('underscore/underscore');
         })
+        .factory('Sortable', function () {
+            return require('sortablejs');
+        })
         .constant('CONST', {
             'BACKEND_URL'         : backendUrl,
             'API_URL'             : backendUrl + '/api/v2',

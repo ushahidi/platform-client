@@ -36,6 +36,8 @@ angular.module('ushahidi.common', [
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
 .service('FormRoleEndpoint', require('./services/endpoints/form-roles.js'))
 .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
+.service('FormStatsEndpoint', require('./services/endpoints/form-stats-endpoint.js'))
+.service('FormContactEndpoint', require('./services/endpoints/form-contact.js'))
 .service('TagEndpoint', require('./services/endpoints/tag.js'))
 .service('RoleEndpoint', require('./services/endpoints/role.js'))
 .service('WebhookEndpoint', require('./services/endpoints/webhooks.js'))
@@ -52,6 +54,8 @@ angular.module('ushahidi.common', [
 .service('NotificationEndpoint', require('./services/endpoints/notification.js'))
 .service('TermsOfServiceEndpoint', require('./services/endpoints/terms-of-service-endpoint.js'))
 .service('ExportJobEndpoint', require('./services/endpoints/export-jobs.js'))
+.service('CountryCodeEndpoint', require('./services/endpoints/country-code-endpoint.js'))
+
 
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
