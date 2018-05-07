@@ -1,7 +1,9 @@
 import { RECEIVE_FORMS } from './ush-logo.reducer';
 
 const initialState = {
-    forms: []
+    forms: [
+        { id: 'junk' }
+    ]
 };
 
 export default function ushLogoReducer(state = initialState, action) {

@@ -21,7 +21,7 @@ require('angular-linkify');
 require('redux');
 require('ng-redux');
 const thunk = require('redux-thunk');
-const RootReducer = require('./rootReducer');
+import RootReducer from './rootReducer';
 // import { combineReducers } from 'redux';
 // import thunk from "redux-thunk";
 // import { RootReducer } from "./rootReducer";
@@ -182,4 +182,4 @@ angular.module('app',
     .config(($ngReduxProvider) => {
         $ngReduxProvider.createStoreWith(RootReducer, [], [window.__REDUX_DEVTOOLS_EXTENSION__()]);
     })
-    
+
