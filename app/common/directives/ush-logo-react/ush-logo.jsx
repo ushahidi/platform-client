@@ -10,7 +10,7 @@ import { getFormsFromState } from './ush-logo.reducer';
 
 const MyComponent = props => (
   <div>
-    {props.forms[0].id}
+    { props.forms && props.forms[0].id}
     <p className="foo">Foo: {props.foo}</p>
     <p className="baz">Baz: {props.baz}</p>
   </div>
