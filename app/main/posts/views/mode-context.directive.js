@@ -19,7 +19,7 @@ ModeContextController.$inject = [
 function ModeContextController(
     $scope
 ) {
-
+    $scope.test = "I am a test!"
     activate();
 
     function activate() {

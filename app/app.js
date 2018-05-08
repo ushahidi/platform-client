@@ -1,5 +1,6 @@
+import { UI_ROUTER_REACT_HYBRID } from '@uirouter/react-hybrid';
+
 require('angular');
-require('@uirouter/angularjs');
 require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
@@ -76,7 +77,7 @@ angular.module('app',
     [
         'checklist-model',
         'monospaced.elastic',
-        'ui.router',
+        UI_ROUTER_REACT_HYBRID,
         'ngResource',
         'LocalStorageModule',
         'pascalprecht.translate',

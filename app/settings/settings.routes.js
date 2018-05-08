@@ -1,3 +1,5 @@
+import  TestRouteContainer from './TestRouteContainer.jsx';
+
 module.exports = [
     '$stateProvider',
     '$urlMatcherFactoryProvider',
@@ -189,6 +191,13 @@ function (
             url: '/settings/plan',
             controller: require('./plans/plans.controller.js'),
             template: require('./plans/plan.html')
+        }
+    )
+    .state(
+        {
+            name: 'settings.testroute',
+            url: '/settings/testroute',
+            component: TestRouteContainer,
         }
     );
 }];
