@@ -27,10 +27,36 @@
         <div class="main-col">
             <div class="form-sheet" ng-show="!showFields">
                 <div class="form-sheet-summary">
-                    <h2 class="form-sheet-title" translate>
-                    data_export.title
+                    <h2 class="form-sheet-title" ng-show="!hxlEnabled" translate>
+                     data_export.title
                     </h2>
-                    <p translate ng-show="!showProgress">data_export.description</p>
+                    <h2 class="form-sheet-title" ng-show="hxlEnabled" translate>
+                     data_export.title_hxl
+                    </h2>
+                    <p translate ng-show="!showProgress && !hxlEnabled">data_export.description</p>
+                    <p ng-show="!showProgress && hxlEnabled">
+                        {{'data_export.description_hxl' | translate}}
+                        <a href="http://hxlstandard.org/tagging/" class="link-blue" target="_blank" translate>
+                            <svg class="iconic">
+                                <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                            </svg>
+                            {{'data_export.hxl_tags' | translate}}
+                        </a>,
+                        <a href="http://hxlstandard.org/dictionary/" class="link-blue" target="_blank">
+                            <svg class="iconic">
+                                <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                            </svg>
+                            {{'data_export.hxl_attributes' | translate}}
+                        </a>
+                        {{'data_export.and_choose' | translate}}
+                        <a href="https://data.humdata.org/" class="link-blue" target="_blank">
+                            <svg class="iconic">
+                                <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                            </svg>
+                            {{'data_export.HDX' | translate}}
+                        </a>
+                        {{'data_export.account' | translate}}
+                    </p>
                     <p translate ng-show="showProgress">data_export.export_progress</p>
                 </div>
                 <nav class="tabs-menu init" data-tabs="survey-details">
