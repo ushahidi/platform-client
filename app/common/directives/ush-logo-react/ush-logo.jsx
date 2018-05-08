@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import Uirouter from '@uirouter/angularjs';
+// import { UISref, UIView, pushStateLocationPlugin } from '@uirouter/react';
+// <UISref to="posts.data"><a>Data View UISref</a></UISref>
 
 import connectWithStore from '../../../react-transition/connectWithStore.jsx';
 import * as UshLogoActions from './ush-logo.actions';
