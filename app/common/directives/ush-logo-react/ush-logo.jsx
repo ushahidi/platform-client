@@ -10,9 +10,11 @@ import { getFormsFromState } from './ush-logo.reducer';
 
 const MyComponent = props => (
   <div>
-    { props.forms && props.forms[0].id}
-    <p className="foo">Foo: {props.foo}</p>
-    <p className="baz">Baz: {props.baz}</p>
+    Data from redux store: { props.forms && props.forms[0].id}
+    <p className="foo">Passed into component Foo: {props.foo}</p>
+    <p className="baz">Passed into component Baz: {props.baz}</p>
+    <p>Passed from parent angular component Test: {props.test}</p>
+    <a href='/views/data'>Route from react to angular (data view)</a>
   </div>
 );
 
@@ -30,7 +32,8 @@ function mapDispatchToProps(dispatch) {
 
 MyComponent.propTypes = {
   foo: PropTypes.number.isRequired,
-  baz: PropTypes.number.isRequired
+  baz: PropTypes.number.isRequired,
+  test: PropTypes.string.isRequired
 };
 
 export default connectWithStore(MyComponent, mapStateToProps, mapDispatchToProps);

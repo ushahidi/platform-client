@@ -122,7 +122,6 @@ angular.module('ushahidi.common', [
 }])
 
 .component('myComponent', react2angular(MyComponent))
-
 ;
 
 // Load submodules
