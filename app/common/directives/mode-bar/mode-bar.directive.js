@@ -7,7 +7,6 @@ module.exports = [
     'ConfigEndpoint',
     'CollectionsService',
     '$window',
-    '$ngRedux',
 function (
     Features,
     Authentication,
@@ -16,8 +15,7 @@ function (
     $rootScope,
     ConfigEndpoint,
     CollectionsService,
-    $window,
-    $ngRedux
+    $window
 ) {
     return {
         restrict: 'E',
@@ -40,7 +38,6 @@ function (
             $scope.logout = Authentication.logout;
             $scope.register = Registration.openRegister;
             $scope.intercomAppId = $window.ushahidi.intercomAppId;
-            $scope.store = $ngRedux;
 
             activate();
 
