@@ -1,3 +1,7 @@
+import { react2angular } from 'react2angular';
+import TestRouteContainer from './TestRouteContainer.jsx';
+
+
 angular.module('ushahidi.settings', [])
 .directive('afterImportCsv', require('./data-import/data-after-import.directive.js'))
 .directive('importerCsv', require('./data-import/data-import.directive.js'))
@@ -19,5 +23,7 @@ angular.module('ushahidi.settings', [])
 
 .directive('customWebhooks', require('./webhooks/webhooks.directive.js'))
 .directive('customWebhooksEditor', require('./webhooks/editor.directive.js'))
+
+.component('testRouteContainer', react2angular(TestRouteContainer, ['state', 'id']))
 
 .config(require('./settings.routes.js'));

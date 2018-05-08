@@ -190,5 +190,16 @@ function (
             controller: require('./plans/plans.controller.js'),
             template: require('./plans/plan.html')
         }
+    )
+    .state(
+        {
+            name: 'testroute',
+            url: '/settings/testroute/:id?',
+            controller: ['$scope', '$state', '$transition$', ($scope, $state, $transition$) => {
+                $scope.$state = $state;
+                $scope.id = $transition$.params().id;
+            }],
+            template: '<test-route-container state="$state" id="id"></test-route-container>'
+        }
     );
 }];
