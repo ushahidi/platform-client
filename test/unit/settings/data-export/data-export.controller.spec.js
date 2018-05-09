@@ -90,7 +90,7 @@ describe('data-export-controller', function () {
             $scope.selectedFields = [1, 4, 7, 8, 10];
             spyOn(DataExport, 'startExport');
             $scope.exportSelected();
-            expect(DataExport.startExport).toHaveBeenCalledWith({attributes: $scope.selectedFields});
+            expect(DataExport.startExport).toHaveBeenCalledWith({fields: $scope.selectedFields});
         });
     });
     describe('attachAttributes-function', function () {
@@ -109,19 +109,19 @@ describe('data-export-controller', function () {
             expect($scope.selectedFields[5]).toBeDefined();
         });
         it('should remove attributes from selectedFields if they are already there', function () {
-            $scope.selectedFields[5] = [1,3,5];
-            $scope.selectAll({id: 5, attributes: [{id: 1}, {id: 3}, {id: 5}]});
+            $scope.selectedFields[5] = ['key1', 'key3', 'key5'];
+            $scope.selectAll({id: 5, attributes: [{id: 1, key: 'key1'}, {id: 3, key: 'key3'}, {id: 5, key: 'key5'}]});
             expect($scope.selectedFields[5]).toEqual([]);
         });
         it('should add all attributes to selectedFields if only some are selected', function () {
-            $scope.selectedFields[5] = [1,3];
-            $scope.selectAll({id: 5, attributes: [{id: 1}, {id: 3}, {id: 5}]});
-            expect($scope.selectedFields[5]).toEqual([1, 3, 5]);
+            $scope.selectedFields[5] = ['key1', 'key3'];
+            $scope.selectAll({id: 5, attributes: [{id: 1, key: 'key1'}, {id: 3, key: 'key3'}, {id: 5, key: 'key5'}]});
+            expect($scope.selectedFields[5]).toEqual(['key1', 'key3', 'key5']);
         });
         it('should add all attributes to selectedFields if none is selected', function () {
             $scope.selectedFields[4] = [];
-            $scope.selectAll({id: 4, attributes: [{id: 1}, {id: 3}, {id: 5}]});
-            expect($scope.selectedFields[4]).toEqual([1, 3, 5]);
+            $scope.selectAll({id: 4, attributes: [{id: 1, key: 'key1'}, {id: 3, key: 'key3'}, {id: 5, key: 'key5'}]});
+            expect($scope.selectedFields[4]).toEqual(['key1', 'key3', 'key5']);
         });
     });
 });

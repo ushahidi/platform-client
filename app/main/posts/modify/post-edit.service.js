@@ -56,22 +56,24 @@ function (
                 var required_attributes = _.where(task.attributes, {required: true});
 
                 _.each(required_attributes, function (attribute) {
-                    if (attribute.input === 'checkbox') {
-                        var checkboxValidity = false;
-                        _.each(attribute.options, function (option) {
-                            if (!_.isUndefined(form['values_' + attribute.id + '_' + option]) && !form['values_' + attribute.id + '_' + option].$invalid) {
-                                checkboxValidity = isPostValid;
-                            }
-                        });
-                        isPostValid = checkboxValidity;
-                    } else {
+                    if (attribute.type !== 'title' && attribute.type !== 'description') {
+                        if (attribute.input === 'checkbox') {
+                            var checkboxValidity = false;
+                            _.each(attribute.options, function (option) {
+                                if (!_.isUndefined(form['values_' + attribute.id + '_' + option]) && !form['values_' + attribute.id + '_' + option].$invalid) {
+                                    checkboxValidity = isPostValid;
+                                }
+                            });
+                            isPostValid = checkboxValidity;
+                        } else {
 
-                        if (_.isUndefined(form['values_' + attribute.id]) || form['values_' + attribute.id].$invalid) {
-                            if (!_.isUndefined(form['values_' + attribute.id])) {
-                                form['values_' + attribute.id].$dirty = true;
-                            }
+                            if (_.isUndefined(form['values_' + attribute.id]) || form['values_' + attribute.id].$invalid) {
+                                if (!_.isUndefined(form['values_' + attribute.id])) {
+                                    form['values_' + attribute.id].$dirty = true;
+                                }
 
-                            isPostValid = false;
+                                isPostValid = false;
+                            }
                         }
                     }
                 });

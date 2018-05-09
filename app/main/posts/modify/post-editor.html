@@ -3,10 +3,10 @@
     <layout-class layout="a"></layout-class>
     <header class="mode-context-header">
         <ol class="breadcrumbs">
-            <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+            <li><a href="/" ng-controller="navigation as nav"><bdi>{{nav.site.name}}</bdi></a></li>
         </ol>
 
-        <h1 class="mode-context-title">{{post.form.name}}</h1>
+        <h1 class="mode-context-title"><bdi>{{post.form.name}}</bdi></h1>
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
@@ -52,62 +52,8 @@
 
           <div class="form-sheet">
               <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
-              <div class="form-field init required"
-              adaptive-form
-              ng-class="{
-                'error': postForm.title.$invalid && postForm.title.$dirty,
-                'success': !postForm.title.$invalid && postForm.title.$dirty
-              }">
-                  <label>
-                      {{postTitleLabel}}
-                  </label>
-                  <p>
-                      {{postTitleInstructions}}
-                  </p>
-                  <input id="title"
-                      name="title" type="text" ng-model="post.title" ng-required="true" ng-minlength=2 ng-maxlength=150 adaptive-input>
-
-                  <div
-                      class="alert error"
-                      ng-show="postForm.title.$dirty"
-                      ng-repeat="(error, value) in postForm.title.$error"
-                      >
-                      <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                      </svg>
-                      <p translate="{{'post.valid.title.' + error}}"></p>
-                  </div>
-              </div>
-
-              <!-- Post stage default fields -->
-              <div class="form-field init required"
-                  ng-class="{
-                    'error': postForm.content.$invalid && postForm.content.$dirty,
-                    'success': !postForm.content.$invalid && postForm.content.$dirty
-                  }"
-                  adaptive-form>
-                  <label>
-                      {{postDescriptionLabel}}
-                  </label>
-                  <p>
-                      {{postDescriptionInstructions}}
-                  </p>
-                    <textarea id="content" name="content" data-min-rows="1" rows="1"
-                      ng-model="post.content" ng-required="true" adaptive-input msd-elastic>
-                    </textarea>
-
-                  <div class="alert error" ng-show="postForm.content.$dirty" ng-repeat="(error, value) in postForm.content.$error">
-                      <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                      </svg>
-                      <p translate="{{'post.valid.content.' + error}}"></p>
-                  </div>
-              </div>
-
-              <!-- End post stage default fields -->
 
               <!-- Start Post custom fields -->
-
               <post-value-edit
                   ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"

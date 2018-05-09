@@ -16,9 +16,18 @@ function (
              * - What should happen is that we get an empty object literal, or NULL, directly from the backend.
              * - What really happens is that we get an array, add a key on it, and then it cannot be stringified correctly, which prevents the information from getting to the backend.
              */
+            $scope.label = angular.copy($scope.editAttribute.label);
             $scope.editAttribute.config = (!$scope.editAttribute.config || (_.isArray($scope.editAttribute.config) && $scope.editAttribute.config.length === 0)) ? {} : $scope.editAttribute.config;
             $scope.defaultValueToggle = false;
             $scope.descriptionToggle = false;
+            $scope.labelError = false;
+
+            $scope.save = function (editAttribute, activeTask) {
+                if (!$scope.attributeLabel.$invalid) {
+                    $scope.editAttribute.label = $scope.label;
+                    $scope.addNewAttribute(editAttribute, activeTask);
+                }
+            };
 
             $scope.closeModal = function () {
                 ModalService.close();

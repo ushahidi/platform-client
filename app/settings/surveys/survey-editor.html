@@ -75,7 +75,7 @@
             <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
 
             <div class="listing-item" ng-repeat="attribute in survey.tasks[0].attributes track by $index">
-              <div class="listing-item-select" ng-show="allowedToggleOrder(attribute)">
+              <div class="listing-item-select">
                   <div class="buttons-updown">
                      <button type="button" class="button-beta" ng-disabled="isFirstAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeUp(survey.tasks[0], attribute)">
                          <svg class="iconic">
@@ -100,7 +100,7 @@
                   </button>
               </div>
 
-              <div class="listing-item-primary">
+              <div class="listing-item-primary" ng-click="openAttributeEditModal(survey.tasks[0], attribute)">
                   <div class="listing-item-image">
                   <!-- TODO: Set icon based on type -->
                       <svg class="iconic">
@@ -108,9 +108,7 @@
                       </svg>
                   </div>
                   <h2 class="listing-item-title">
-                    <a ng-click="openAttributeEditModal(survey.tasks[0], attribute)">
                       {{attribute.label}}
-                    </a>
                     <span class="listing-item-image tooltip" ng-show="attribute.response_private">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
@@ -200,7 +198,7 @@
         </div>
         <!-- Share Tab Options -->
         <div id="survey-share-post" class="survey-details tabs-target" ng-show="survey.id">
-          <share-menu survey-id="survey.id"></share-menu>
+          <share-menu survey-id="surveyId"></share-menu>
         </div>
       </section>
       <!-- Task sections -->
@@ -296,16 +294,14 @@
                       </button>
                   </div>
 
-                  <div class="listing-item-primary">
+                  <div class="listing-item-primary" ng-click="openAttributeEditModal(task, attribute)">
                       <div class="listing-item-image">
                           <svg class="iconic">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
                           </svg>
                       </div>
                       <h2 class="listing-item-title">
-                        <a ng-click="openAttributeEditModal(task, attribute)">
                           {{attribute.label}}
-                        </a>
                         <span class="listing-item-image tooltip" ng-show="attribute.response_private">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>

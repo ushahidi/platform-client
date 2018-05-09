@@ -1,4 +1,4 @@
-import { isValidNumber } from 'libphonenumber-js';
+import { isValidNumber, formatNumber, parse } from 'libphonenumber-js';
 // re-route if feature flag is not enabled
 module.exports = [
     '$scope',
@@ -167,6 +167,10 @@ function (
                 $scope.finalNumbers.badNumbersString = $scope.finalNumbers.badNumbersString + number + ',';
                 $scope.finalNumbers.badNumberCount = $scope.finalNumbers.badNumberCount + 1;
             } else if (isValidNumber(number, $scope.selectedCountry.country_code) && number.length) {
+                // parse() isn't as complete as isValidNumber(), but formatNumber() needs parsed data
+                //  so with this lib, we have to do _all_ of these things to get to E164
+                let parsedResult = parse(number, $scope.selectedCountry.country_code);
+                number = formatNumber(parsedResult, 'E.164');
                 if ($scope.finalNumbers.storageObj[number]) {
                     $scope.finalNumbers.repeatCount = $scope.finalNumbers.repeatCount + 1;
                 } else {
@@ -209,26 +213,10 @@ function (
         if ($scope.survey.attributes !== undefined && $scope.survey.attributes.length) {
             $scope.stepThreeWarning = false;
             $scope.activeStep = 4;
-            calculateStats();
+            $scope.total_sms_messages = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
         } else {
             $scope.stepThreeWarning = true;
         }
-    }
-
-    function calculateStats() {
-        ConfigEndpoint.get({id: 'data-provider'}).$promise.then(function (result) {
-            let cost,
-                providers = ['frontlinesms', 'nexmo', 'smssync', 'twilio'];
-            _.each(result.providers, function (provider, index) {
-                if (provider && _.contains(providers, index)) {
-                    // warning, this is a hack until cost is included in the api
-                    result[index].cost = 1;
-                    cost = result[index].cost;
-                    $scope.sms = $scope.survey.attributes.length * $scope.finalNumbers.goodNumbers.length;
-                    $scope.cost = $scope.sms * cost;
-                }
-            });
-        });
     }
 
     function openQuestionModal(question) {
@@ -259,13 +247,14 @@ function (
         }
 
         $scope.editQuestion.input = 'textarea';
-        $scope.editQuestion.priority = getPriority($scope.survey.attributes);
         $scope.editQuestion.type = 'text';
+
         // This is to avoid the 2-way binding and the label to update while writing in the modal
         $scope.editQuestion.label = angular.copy($scope.editQuestion.question);
 
         // This is to avoid adding same question twice and we don't have any unique id-s for the questions yet
         if ($scope.editQuestion.newQuestion) {
+            $scope.editQuestion.priority = getPriority($scope.survey.attributes);
             delete $scope.editQuestion.newQuestion;
             $scope.survey.attributes.push($scope.editQuestion);
         }
@@ -365,7 +354,7 @@ function (
     }
 
     function publish() {
-        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, sms: ${$scope.sms}, cost:${$scope.cost}}`, 'publish').then(function () {
+        Notify.confirmModal('Are you sure you want to send this SMS survey?', null, getPublishDescription(), `{questions: ${$scope.survey.attributes.length}, numbers: ${$scope.finalNumbers.goodNumbers.length}, total_sms_messages: ${$scope.total_sms_messages}}`, 'publish').then(function () {
             saveTargetedSurvey();
         });
     }
