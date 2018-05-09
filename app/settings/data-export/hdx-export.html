@@ -1,0 +1,81 @@
+<div>
+    <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.import</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+        <!-- <div class="progress-bar" ng-show="isLoading() && showFields">
+        <span>
+        ..
+    </span>
+</div> -->
+
+        <div class="main-col">
+            <div class="form-sheet">
+                <fieldset ng-repeat="form in forms" ng-hide="form.targeted_survey === true">
+                    <legend>
+                        <bdi>{{form.name}}</bdi>
+                    </legend>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Survey field</th>
+                                <th>HXL tags</th>
+                                <th>HXL attributes</th>
+                                <th>Tag preview</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field">
+                                    <input type="checkbox">
+                                </td>
+                                <td>
+                                    <em>Select all<em>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr ng-repeat="attribute in form.attributes">
+                                <td class="form-field">
+                                    <input
+                                    type="checkbox"
+                                    checklist-model="selectedFields"
+                                    checklist-value="attribute.id"
+                                    ng-selected="selectedFields.indexOf(attribute.id) >-1"
+                                    >
+                                </td>
+                                <td>
+                                    <p><bdi>{{attribute.label}}</bdi></p>
+                                </td>
+                                <td>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+                <div class="form-field">
+                    <p>{{selectedFields.length}} fields selected</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
