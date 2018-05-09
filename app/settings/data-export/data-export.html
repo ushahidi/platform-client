@@ -27,13 +27,11 @@
         <div class="main-col">
             <div class="form-sheet" ng-show="!showFields">
                 <div class="form-sheet-summary">
-                    <h2 class="form-sheet-title" ng-show="!hxlEnabled" translate>
-                     data_export.title
-                    </h2>
-                    <h2 class="form-sheet-title" ng-show="hxlEnabled" translate>
-                     data_export.title_hxl
+                    <h2 class="form-sheet-title" translate>
+                    {{dataExportTitle}}
                     </h2>
                     <p translate ng-show="!showProgress && !hxlEnabled">data_export.description</p>
+                    <!-- TODO: Revisit and condense below structure of translations when migrating to react -->
                     <p ng-show="!showProgress && hxlEnabled">
                         {{'data_export.description_hxl' | translate}}
                         <a href="http://hxlstandard.org/tagging/" class="link-blue" target="_blank">
