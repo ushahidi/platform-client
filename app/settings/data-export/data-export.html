@@ -19,11 +19,12 @@
    </div>
 
     <main role="main">
-      <div class="progress-bar" ng-show="isLoading() && showFields">
+        <div class="progress-bar" ng-show="isLoading() && showFields">
             <span>
                 ..
             </span>
         </div>
+
         <div class="main-col">
             <div class="form-sheet" ng-show="!showFields">
                 <div class="form-sheet-summary">
@@ -59,6 +60,7 @@
                     </p>
                     <p translate ng-show="showProgress">data_export.export_progress</p>
                 </div>
+
                 <nav class="tabs-menu init" data-tabs="survey-details">
                         <ul>
                             <li id="main-export-li">
@@ -73,10 +75,27 @@
                             </li>
                         </ul>
                     </nav>
+
                 <div id="main-export" class="survey-details tabs-target" >
+                    <div class="form-field">
+                    <!-- WARNING: todo: Add check if the user has added an api-key -->
+                    <div class="alert" ng-show="hxlEnabled">
+                        <p>{{'data_export.hxl_apikey_alert_1' | translate}}</p>
+                        <p>{{'data_export.hxl_apikey_alert_2' | translate}}
+                        <a href="https://data.humdata.org/" class="link-blue" target="_blank">
+                            <svg class="iconic">
+                                <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                            </svg>
+                            {{'data_export.hxl_configure' | translate}}
+                        </a>
+                        {{'data_export.hxl_apikey_alert_3' | translate}}
+                    </p>
+                    </div>
+                    </div>
                     <div class="form-field">
                         <button class="button-alpha" translate ng-click="exportAll()" ng-disabled="showProgress">data_export.all</button>
                         <button class="button"  ng-click="selectFields()" translate ng-disabled="showProgress">data_export.select_fields</button>
+                        <a ui-sref="settings.hdx" class="button" ng-show="hxlEnabled" ng-disabled="showProgress" translate>data_export.tags_attributes</a>
                     </div>
                 </div>
                 <div id="history-export" class="survey-details tabs-target">
