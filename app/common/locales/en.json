@@ -1070,7 +1070,9 @@
         "success": "<strong>Status:</strong> Finished",
         "pending": "<strong>Status:</strong> Pending",
         "failed": "<strong>Status:</strong> Failed",
-        "queued": "<strong>Status:</strong> In Progress"
+        "queued": "<strong>Status:</strong> In Progress",
+        "export": "Export",
+        "export_history": "Export History"
     },
     "user": {
         "role_display" : "Role: {{role}}",
