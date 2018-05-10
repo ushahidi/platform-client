@@ -69,13 +69,22 @@
                                         <select
                                             ng-model="attribute.selectedTag"
                                             ng-options="tag as tag.tag_name for tag in attribute.tags track by tag.id"
-                                            ng-disabled="!attribute.selected.length || attribute.selected.length < 1"
+                                            ng-disabled="!attribute.selected || attribute.selected.length < 1"
                                         >
                                             <option value=''>Leave empty</option>
                                         </select>
                                     </div>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <div class="custom-select">
+                                        <select
+                                            ng-model="attribute.selectedAttributes"
+                                            ng-options="hxlAttribute as hxlAttribute.attribute for hxlAttribute in attribute.selectedTag.hxl_attributes track by hxlAttribute.id"
+                                            ng-disabled="!attribute.selectedTag"
+                                        >
+                                            <option value=''>Leave empty</option>
+                                        </select>
+                                </td>
                                 <td></td>
                             </tr>
                         </tbody>
