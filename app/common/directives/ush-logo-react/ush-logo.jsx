@@ -34,6 +34,8 @@ MyComponent.propTypes = {
   ).isRequired
 };
 
+export { MyComponent as PlainUshLogo };
+
 export default connectWithStore(
   MyComponent,
   mapStateToProps,
