@@ -24,6 +24,10 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+MyComponent.defaultProps = {
+  forms: []
+};
+
 MyComponent.propTypes = {
   foo: PropTypes.number.isRequired,
   baz: PropTypes.number.isRequired,
@@ -31,8 +35,10 @@ MyComponent.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  ).isRequired
+  )
 };
+
+export { MyComponent as PlainUshLogo };
 
 export default connectWithStore(
   MyComponent,

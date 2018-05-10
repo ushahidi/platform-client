@@ -2,6 +2,7 @@
 
 exports[`foo and bar match the props 1`] = `
 <div>
+  junk
   <p
     className="foo"
   >
