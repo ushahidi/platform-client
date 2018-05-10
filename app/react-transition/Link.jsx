@@ -64,9 +64,9 @@ class Link extends React.Component {
 
 Link.defaultProps = {
   replace: false,
-  title: '',
-  id: '',
-  className: ''
+  title: "",
+  id: "",
+  className: ""
 };
 
 Link.propTypes = {
