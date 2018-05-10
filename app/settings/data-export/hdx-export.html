@@ -55,16 +55,25 @@
                             <tr ng-repeat="attribute in form.attributes">
                                 <td class="form-field">
                                     <input
-                                    type="checkbox"
-                                    checklist-model="selectedFields"
-                                    checklist-value="attribute.id"
-                                    ng-selected="selectedFields.indexOf(attribute.id) >-1"
+                                        type="checkbox"
+                                        checklist-model="attribute.selected"
+                                        checklist-value="attribute.id"
+                                        ng-selected="selectedFields.indexOf(attribute.id) >-1"
                                     >
                                 </td>
                                 <td>
                                     <p><bdi>{{attribute.label}}</bdi></p>
                                 </td>
                                 <td>
+                                    <div class="custom-select">
+                                        <select
+                                            ng-model="attribute.selectedTag"
+                                            ng-options="tag as tag.tag_name for tag in attribute.tags track by tag.id"
+                                            ng-disabled="!attribute.selected.length || attribute.selected.length < 1"
+                                        >
+                                            <option value=''>Leave empty</option>
+                                        </select>
+                                    </div>
                                 </td>
                                 <td></td>
                                 <td></td>
