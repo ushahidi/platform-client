@@ -33,9 +33,6 @@ angular
   .directive("customWebhooks", require("./webhooks/webhooks.directive.js"))
   .directive("customWebhooksEditor", require("./webhooks/editor.directive.js"))
 
-  .component(
-    "testRouteContainer",
-    react2angular(TestRouteContainer, ["state", "id"])
-  )
+  .component("testRouteContainer", react2angular(TestRouteContainer, ["id"]))
 
   .config(require("./settings.routes.js"));
