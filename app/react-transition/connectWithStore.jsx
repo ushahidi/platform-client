@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
 import { connect } from "react-redux";
+import angular from "angular";
 
 const connectWithStore = (WrappedComponent, ...args) => {
   const ConnectedWrappedComponent = connect(...args)(WrappedComponent);
