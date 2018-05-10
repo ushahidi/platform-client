@@ -1,56 +1,45 @@
 import React from "react";
 import PropTypes from "prop-types";
+import angular from "angular";
+
+// Note: Link objects and innerRef are not implemented.
+// If you need them, you'll have to implement them yourself
+// Talk to Carolyn about starter code
 
 class Link extends React.Component {
-  static getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps() {
     const injector = angular.element(document).injector();
     const state = injector.get("$state");
     return {
       stateProvider: state
     };
-    // not sure if this is working here
-    if (nextProps.to !== prevState.to) {
-      return {
-        to: this.constructedTo(nextProps.to)
-      };
-    }
   }
 
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      stateProvider: undefined,
-      to: this.constructedTo(this.props.to)
+      stateProvider: undefined
     };
-  }
-
-  constructedTo(toFromProps) {
-    // Strings need be defined before concatenating
-    const to =
-      typeof toFromProps === "string"
-        ? toFromProps
-        : toFromProps.pathname + toFromProps.search + toFromProps.hash;
-    return to;
   }
 
   handleClick(event) {
     event.preventDefault();
-    this.props.replace
+    return this.props.replace
       ? this.state.stateProvider.go(
-          this.state.to,
+          this.props.to,
           {},
           { location: this.props.replace }
         )
-      : this.state.stateProvider.go(this.state.to);
+      : this.state.stateProvider.go(this.props.to);
   }
-
+/* eslint-disable */
   render() {
     return (
       <div>
         <a
-          href="#"
           onClick={this.handleClick}
+          href="#"
           title={this.props.title}
           id={this.props.id}
           className={this.props.className}
@@ -61,6 +50,7 @@ class Link extends React.Component {
     );
   }
 }
+/* eslint-enable */
 
 Link.defaultProps = {
   replace: false,
@@ -70,10 +60,7 @@ Link.defaultProps = {
 };
 
 Link.propTypes = {
-  to: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.objectOf(PropTypes.string)
-  ]).isRequired,
+  to: PropTypes.string.isRequired,
   replace: PropTypes.bool,
   title: PropTypes.string,
   id: PropTypes.string,

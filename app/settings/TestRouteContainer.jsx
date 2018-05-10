@@ -7,16 +7,7 @@ const TestRouteContainer = props => (
     <main role="main">
       <h1>Hello from react</h1>
       {props.id}
-      <a href="/views/map">Click me</a>
-      <Link to="posts.data">Testing a link string</Link>
-      <Link
-        to={{
-          to: "posts.data",
-          hash: "#the-hash"
-        }}
-      >
-        testing a link object?????
-      </Link>
+      <Link to="posts.data">Click me! I&apos;m a &lt;Link&gt; tag</Link>
     </main>
   </div>
 );
