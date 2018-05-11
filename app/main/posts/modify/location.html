@@ -48,7 +48,7 @@
                         </dt>
                     </dl>
                     <dl class="dropdown-menu-body" ng-if="!processing && !searchResults">
-                        <dt class="list-item">
+                        <dt class="list-item" translate="location.no_matching_locations">
                             No matching locations.
                         </dt>
                     </dl>
@@ -59,19 +59,19 @@
     <p translate>location.click_map</p>
     <div class="form-field">
       <label>Lat</label>
-      <input type="text" ng-model="model.lat">
+      <input type="text" ng-model="manualModel.lat">
    </div>
    <div class="form-field">
       <label>Long</label>
-      <input type="text" ng-model="model.lon">
+      <input type="text" ng-model="manualModel.lon">
    </div>
-   <button type="button" class="button-primary" ng-click="manualLatLong(model.lat, model.lon)">
+   <button type="button" class="button-primary" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
         <svg class="iconic">
-       <use 
-                                xmlns:xlink="http://www.w3.org/1999/xlink" 
+       <use
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
                                 xlink:href="/img/iconic-sprite.svg#location">
                             </use>
         </svg>
-        <span class="button-label">Update Map</span>
+        <span class="button-label" translate>location.update_map</span>
     </button>
 </div>

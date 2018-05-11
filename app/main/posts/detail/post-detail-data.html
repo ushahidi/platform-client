@@ -11,7 +11,9 @@
         <post-lock ng-if="post.lock" post="post"></post-lock>
 
         <div class="postcard-body">
-              <h1 class="form-sheet-title survey-title" linkify>{{post.title}}</h1>
+            <h1 class="form-sheet-title survey-title" linkify>
+                      <bdi>{{post.title}}</bdi>
+            </h1>
 
             <div class="postcard-header">
                 <post-metadata post="post" hide-date-this-week="true"></post-metadata>
@@ -56,7 +58,7 @@
               ng-repeat="task in tasks"
               ng-class="{'active': visibleTask == task.id}"  >
               <a ng-click="activateTaskTab(task.id)">
-                {{task.label}}
+                <bdi>{{task.label}}</bdi>
               </a>
               <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
               </span>

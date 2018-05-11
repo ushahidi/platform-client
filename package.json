@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-client",
-  "version": "3.7.2",
+  "version": "3.10.0",
   "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
@@ -41,7 +41,7 @@
     "testPathIgnorePatterns": [
       "./node_modules",
       "./test"
-    ]  
+    ]
   },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
@@ -145,7 +145,8 @@
     "leaflet": "~1.0.1",
     "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.5",
-    "moment": "2.18.0",
+    "libphonenumber-js": "^1.0.24",
+    "moment": "2.19.3",
     "moment-timezone": "^0.5.4",
     "ng-redux": "^4.0.3",
     "ng-showdown": "^1.1.0",
@@ -159,8 +160,9 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "2.0.3",
+    "sortablejs": "^1.7.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "v3.7.2-rc.33"
+    "ushahidi-platform-pattern-library": "3.11.0-rc.1"
   },
   "engines": {
     "node": ">=4.0"

@@ -13,7 +13,7 @@
         <div class="postcard-overflow">
             <div class="postcard-title">
                 <div class="postcard-field">
-                {{ post.title || post.content | stripHtml | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}
+                <bdi>{{ post.title || post.content | stripHtml | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}</bdi>
                 </div>
             </div>
 
@@ -22,10 +22,10 @@
             <!-- <img src="http://lorempixel.com/400/300/" class="postcard-image"> -->
 
             <div ng-if="!shortContent" class="postcard-field">
-                {{ post.content | stripHtml }}
+                <bdi>{{ post.content | stripHtml }}</bdi>
             </div>
             <div ng-if="shortContent" class="postcard-field">
-                {{ post.content | stripHtml | limitTo:150 }}{{ post.content.length > 150 ? ' ...' : ''}}
+                <bdi>{{ post.content | stripHtml | limitTo:150 }}{{ post.content.length > 150 ? ' ...' : ''}}</bdi>
             </div>
         </div>
     </div> <!-- /postcard-body -->

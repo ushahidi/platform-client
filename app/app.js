@@ -52,6 +52,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     claimedAnonymousScopes = [
         'apikeys',
         'posts',
+        'country_codes',
         'media',
         'forms',
         'api',
@@ -160,20 +161,24 @@ angular.module('app',
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
             { map: {}, site: {}, features: {} };
     }])
+    .factory('Sortable', function () {
+        return require('sortablejs');
+    })
     // inject the router instance into a `run` block by name
-    // .run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
+    //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
     //     // * uncomment this to enable the visualizer *
     //     let Visualizer = require('@uirouter/visualizer').Visualizer;
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
-    .run(['$rootScope', 'LoadingProgress', function ($rootScope, LoadingProgress) {
-        $rootScope.$on('$stateChangeError', console.log.bind(console));
+    .run(['$rootScope', 'LoadingProgress', '$transitions', function ($rootScope, LoadingProgress, $transitions) {
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
-    }])
-    .run(['$rootScope', function ($rootScope) {
-        $rootScope.$on('$stateChangeError', console.log.bind(console));
+        if (window.ushahidi.gaEnabled) {
+            $transitions.onSuccess({}, function (transition) {
+                window.ga('send', 'pageview', transition.to().url);
+            });
+        }
     }])
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');

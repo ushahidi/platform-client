@@ -22,6 +22,9 @@ import surveys from "./surveys/surveys.html";
 import surveyEditController from "./surveys/edit.controller";
 import surveyEdit from "./surveys/survey-edit.html";
 
+import targetedEditController from "./surveys/targeted-surveys/targeted-edit.controller.js";
+import targetedSurveyEdit from "./surveys/targeted-surveys/targeted-survey-edit.html";
+
 import categoriesController from "./categories/categories.controller";
 import categories from "./categories/categories.html";
 
@@ -108,6 +111,22 @@ module.exports = [
         url: "/:action/:id",
         controller: surveyEditController,
         template: surveyEdit
+      })
+      .state({
+        name: 'settings.surveys.targeted',
+        url: '/targeted-survey'
+      })
+      .state({
+        name: 'settings.surveys.targeted.create',
+        url: '/targeted-survey/create',
+        controller: targetedEditController,
+        template: targetedSurveyEdit
+      })
+      .state({
+        name: 'settings.surveys.targeted.published',
+        url: '/targeted-survey/published/:id',
+        controller: targetedEditController,
+        template: targetedSurveyEdit
       })
       .state({
         name: "settings.categories",
