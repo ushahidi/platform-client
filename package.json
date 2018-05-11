@@ -43,6 +43,9 @@
       "./test"
     ]
   },
+  "prettier": {
+    "tabWidth": 4
+  },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
     "angular-mocks": "^1.5.6",

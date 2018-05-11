@@ -22,7 +22,7 @@ import surveys from "./surveys/surveys.html";
 import surveyEditController from "./surveys/edit.controller";
 import surveyEdit from "./surveys/survey-edit.html";
 
-import targetedEditController from "./surveys/targeted-surveys/targeted-edit.controller.js";
+import targetedEditController from "./surveys/targeted-surveys/targeted-edit.controller";
 import targetedSurveyEdit from "./surveys/targeted-surveys/targeted-survey-edit.html";
 
 import categoriesController from "./categories/categories.controller";
@@ -53,178 +53,179 @@ import plansController from "./plans/plans.controller";
 import plans from "./plans/plan.html";
 
 module.exports = [
-  "$stateProvider",
-  "$urlMatcherFactoryProvider",
-  ($stateProvider, $urlMatcherFactoryProvider) => {
-    $urlMatcherFactoryProvider.strictMode(false);
-    /* todo: these routes should only exist when the user is admin! */
-    $stateProvider
-      .state({
-        name: "settings",
-        controller: settingsController,
-        template: settings
-      })
-      .state({
-        name: "settings.list",
-        url: "/settings",
-        controller: settingsListController,
-        template: settingsList
-      })
-      .state({
-        name: "settings.general",
-        url: "/settings/general",
-        controller: siteController,
-        template: settingsGeneral
-      })
-      .state({
-        name: "settings.dataImport",
-        url: "/settings/data-import",
-        controller: dataImportController,
-        template: dataImport
-      })
-      .state({
-        name: "settings.dataAfterImport",
-        url: "/settings/data-after-import",
-        controller: dataAfterImportController,
-        template: afterImport
-      })
-      .state({
-        name: "settings.dataExport",
-        url: "/settings/data-export",
-        controller: dataExportController,
-        template: dataExport
-      })
-      .state({
-        name: "settings.surveys",
-        url: "/settings/surveys",
-        controller: surveysController,
-        template: surveys
-      })
-      .state({
-        name: "settings.surveys.create",
-        url: "/create",
-        controller: surveyEditController,
-        template: surveyEdit
-      })
-      .state({
-        name: "settings.surveys.id",
-        url: "/:action/:id",
-        controller: surveyEditController,
-        template: surveyEdit
-      })
-      .state({
-        name: 'settings.surveys.targeted',
-        url: '/targeted-survey'
-      })
-      .state({
-        name: 'settings.surveys.targeted.create',
-        url: '/targeted-survey/create',
-        controller: targetedEditController,
-        template: targetedSurveyEdit
-      })
-      .state({
-        name: 'settings.surveys.targeted.published',
-        url: '/targeted-survey/published/:id',
-        controller: targetedEditController,
-        template: targetedSurveyEdit
-      })
-      .state({
-        name: "settings.categories",
-        url: "/settings/categories",
-        controller: categoriesController,
-        template: categories
-      })
-      .state({
-        name: "settings.categories.create",
-        url: "/create",
-        controller: categoriesEditController,
-        template: categoriesEdit
-      })
-      .state({
-        name: "settings.categories.edit",
-        url: "/:id",
-        controller: categoriesEditController,
-        template: categoriesEdit
-      })
-      .state({
-        name: "settings.users",
-        url: "/settings/users",
-        controller: usersController,
-        template: users
-      })
-      .state({
-        name: "settings.users.create",
-        url: "/create",
-        controller: usersCreateController,
-        template: usersEdit
-      })
-      .state({
-        name: "settings.users.edit",
-        url: "/:id",
-        controller: usersEditController,
-        template: usersEdit
-      })
-      .state({
-        name: "settings.roles",
-        url: "/settings/roles",
-        controller: rolesController,
-        template: roles
-      })
-      .state({
-        name: "settings.roles.create",
-        url: "/create",
-        controller: rolesController,
-        template: rolesEdit
-      })
-      .state({
-        name: "settings.roles.edit",
-        url: "/:id",
-        controller: rolesController,
-        template: rolesEdit
-      })
-      .state({
-        name: "settings.webhooks",
-        url: "/settings/webhooks",
-        controller: webhooksController,
-        template: webhooks
-      })
-      .state({
-        name: "settings.webhooks.create",
-        url: "/create",
-        controller: webhooksController,
-        template: webhooksEdit
-      })
-      .state({
-        name: "settings.webhooks.edit",
-        url: "/:id",
-        controller: webhooksController,
-        template: webhooksEdit
-      })
-      .state({
-        name: "settings.datasources",
-        url: "/settings/datasources",
-        controller: datasourcesController,
-        template: datasources
-      })
-      .state({
-        name: "settings.plan",
-        url: "/settings/plan",
-        controller: plansController,
-        template: plans
-      })
-      .state({
-        name: "testroute",
-        url: "/settings/testroute/:id?",
-        controller: [
-          "$scope",
-          "$state",
-          "$transition$",
-          ($scope, $state, $transition$) => {
-            $scope.$state = $state;
-            $scope.id = $transition$.params().id;
-          }
-        ],
-        template: '<test-route-container id="id"></test-route-container>'
-      });
-  }
+    "$stateProvider",
+    "$urlMatcherFactoryProvider",
+    ($stateProvider, $urlMatcherFactoryProvider) => {
+        $urlMatcherFactoryProvider.strictMode(false);
+        /* todo: these routes should only exist when the user is admin! */
+        $stateProvider
+            .state({
+                name: "settings",
+                controller: settingsController,
+                template: settings
+            })
+            .state({
+                name: "settings.list",
+                url: "/settings",
+                controller: settingsListController,
+                template: settingsList
+            })
+            .state({
+                name: "settings.general",
+                url: "/settings/general",
+                controller: siteController,
+                template: settingsGeneral
+            })
+            .state({
+                name: "settings.dataImport",
+                url: "/settings/data-import",
+                controller: dataImportController,
+                template: dataImport
+            })
+            .state({
+                name: "settings.dataAfterImport",
+                url: "/settings/data-after-import",
+                controller: dataAfterImportController,
+                template: afterImport
+            })
+            .state({
+                name: "settings.dataExport",
+                url: "/settings/data-export",
+                controller: dataExportController,
+                template: dataExport
+            })
+            .state({
+                name: "settings.surveys",
+                url: "/settings/surveys",
+                controller: surveysController,
+                template: surveys
+            })
+            .state({
+                name: "settings.surveys.create",
+                url: "/create",
+                controller: surveyEditController,
+                template: surveyEdit
+            })
+            .state({
+                name: "settings.surveys.id",
+                url: "/:action/:id",
+                controller: surveyEditController,
+                template: surveyEdit
+            })
+            .state({
+                name: "settings.surveys.targeted",
+                url: "/targeted-survey"
+            })
+            .state({
+                name: "settings.surveys.targeted.create",
+                url: "/targeted-survey/create",
+                controller: targetedEditController,
+                template: targetedSurveyEdit
+            })
+            .state({
+                name: "settings.surveys.targeted.published",
+                url: "/targeted-survey/published/:id",
+                controller: targetedEditController,
+                template: targetedSurveyEdit
+            })
+            .state({
+                name: "settings.categories",
+                url: "/settings/categories",
+                controller: categoriesController,
+                template: categories
+            })
+            .state({
+                name: "settings.categories.create",
+                url: "/create",
+                controller: categoriesEditController,
+                template: categoriesEdit
+            })
+            .state({
+                name: "settings.categories.edit",
+                url: "/:id",
+                controller: categoriesEditController,
+                template: categoriesEdit
+            })
+            .state({
+                name: "settings.users",
+                url: "/settings/users",
+                controller: usersController,
+                template: users
+            })
+            .state({
+                name: "settings.users.create",
+                url: "/create",
+                controller: usersCreateController,
+                template: usersEdit
+            })
+            .state({
+                name: "settings.users.edit",
+                url: "/:id",
+                controller: usersEditController,
+                template: usersEdit
+            })
+            .state({
+                name: "settings.roles",
+                url: "/settings/roles",
+                controller: rolesController,
+                template: roles
+            })
+            .state({
+                name: "settings.roles.create",
+                url: "/create",
+                controller: rolesController,
+                template: rolesEdit
+            })
+            .state({
+                name: "settings.roles.edit",
+                url: "/:id",
+                controller: rolesController,
+                template: rolesEdit
+            })
+            .state({
+                name: "settings.webhooks",
+                url: "/settings/webhooks",
+                controller: webhooksController,
+                template: webhooks
+            })
+            .state({
+                name: "settings.webhooks.create",
+                url: "/create",
+                controller: webhooksController,
+                template: webhooksEdit
+            })
+            .state({
+                name: "settings.webhooks.edit",
+                url: "/:id",
+                controller: webhooksController,
+                template: webhooksEdit
+            })
+            .state({
+                name: "settings.datasources",
+                url: "/settings/datasources",
+                controller: datasourcesController,
+                template: datasources
+            })
+            .state({
+                name: "settings.plan",
+                url: "/settings/plan",
+                controller: plansController,
+                template: plans
+            })
+            .state({
+                name: "testroute",
+                url: "/settings/testroute/:id?",
+                controller: [
+                    "$scope",
+                    "$state",
+                    "$transition$",
+                    ($scope, $state, $transition$) => {
+                        $scope.$state = $state;
+                        $scope.id = $transition$.params().id;
+                    }
+                ],
+                template:
+                    '<test-route-container id="id"></test-route-container>'
+            });
+    }
 ];
