@@ -23,8 +23,7 @@ class Link extends React.Component {
     };
   }
 
-  handleClick(event) {
-    event.preventDefault();
+  handleClick() {
     return this.props.replace
       ? this.state.stateProvider.go(
           this.props.to,
