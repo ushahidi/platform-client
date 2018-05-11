@@ -1,7 +1,14 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
+import angular from "angular";
+import uirouter from "@uirouter/angularjs";
 import Link from "./Link";
+
+beforeAll(() => {
+  angular.module("testApp", [uirouter]);
+  angular.bootstrap(document, ["testApp"]);
+});
 
 test("Link accepts a route string, replace bool, id, className, title, and children", () => {
   const component = renderer.create(
