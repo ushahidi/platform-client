@@ -205,8 +205,7 @@ module.exports = [
             $scope.id = $transition$.params().id;
           }
         ],
-        template:
-          '<test-route-container state="$state" id="id"></test-route-container>'
+        template: '<test-route-container id="id"></test-route-container>'
       });
   }
 ];

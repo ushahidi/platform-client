@@ -1,21 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import Link from "../react-transition/Link";
 
-const TestRouteContainer = props => {
-    console.log(props);
-    return (
-        <div><main role="main">
-            <h1>Hello from react</h1>
-            { props.id }
-            <a onClick={ () =>  { props.state.go('posts.data') } }>Click me</a>
-            <a href="/views/map">Click me</a>
-        </main></div>
-    );
-}
+const TestRouteContainer = props => (
+  <div>
+    <main role="main">
+      <h1>Hello from react</h1>
+      {props.id}
+      <Link to="posts.data">Click me! I&apos;m a &lt;Link&gt; tag</Link>
+    </main>
+  </div>
+);
 
-// TestRouteContainer.propTypes = {
-//     state: PropTypes.any.required,
-//     id: PropTypes.string
-// };
+TestRouteContainer.propTypes = {
+  id: PropTypes.string.isRequired
+};
 
 export default TestRouteContainer;
