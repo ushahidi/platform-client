@@ -18,14 +18,52 @@
     </div>
 
     <main role="main">
-        <!-- <div class="progress-bar" ng-show="isLoading() && showFields">
-        <span>
-        ..
-    </span>
-</div> -->
+        <div class="progress-bar" ng-show="isLoading()">
+            <span>
+            ..
+            </span>
+        </div>
 
         <div class="main-col">
             <div class="form-sheet">
+                <div class="form-sheet-summary">
+                <h2 class="form-sheet-title">
+                Assign your HXL tags and attributes, select fields and export or upload
+                </h2>
+                <p>Select specific fields from a survey, assign a tag per field and then choose to assign multiple attributes. Preview your tag and attributes in tag preview.</p>
+
+                <p>You can then choose to export your tagged fields to a CSV file or upload to a
+                    <a href="#" class="link-blue">
+                        <svg class="iconic">
+                            <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                        </svg>
+                        Humanitarian Data Exchange (HDX)
+                    </a>
+                account that has been set up in
+                <a href="#" class="link-blue">
+                    Configure HDX API
+                </a>
+                (found in settings menu).
+                </p>
+
+                <p>Visit the
+                    <a href="#" class="link-blue">
+                        <svg class="iconic">
+                            <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                        </svg>
+                    HXL tag assist
+                    </a>
+                    for more information on how to choose the best HXL tags and attributes for your data or the
+                    <a href="#" class="link-blue">
+                        <svg class="iconic">
+                            <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                        </svg>
+                        HXL 'cheat sheet'
+                    </a>
+                    .
+                </p>
+
+            </div>
                 <fieldset ng-repeat="form in forms" ng-hide="form.targeted_survey === true">
                     <legend>
                         <bdi>{{form.name}}</bdi>
@@ -43,7 +81,7 @@
                         <tbody>
                             <tr>
                                 <td class="form-field">
-                                    <input type="checkbox">
+                                    <input type="checkbox" ng-model="form.selected" ng-value="1" ng-change="selectAll(form)">
                                 </td>
                                 <td>
                                     <em>Select all<em>
@@ -58,7 +96,7 @@
                                         type="checkbox"
                                         checklist-model="attribute.selected"
                                         checklist-value="attribute.id"
-                                        ng-selected="selectedFields.indexOf(attribute.id) >-1"
+                                        ng-selected="attribute.selected"
                                     >
                                 </td>
                                 <td>
@@ -70,29 +108,49 @@
                                             ng-model="attribute.selectedTag"
                                             ng-options="tag as tag.tag_name for tag in attribute.tags track by tag.id"
                                             ng-disabled="!attribute.selected || attribute.selected.length < 1"
+                                            ng-change="selectTag(attribute)"
                                         >
                                             <option value=''>Leave empty</option>
                                         </select>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="custom-select">
+                                <td class="form-field">
+                                    <div class="custom-select" ng-repeat="a in range(attribute)">
                                         <select
-                                            ng-model="attribute.selectedAttributes"
-                                            ng-options="hxlAttribute as hxlAttribute.attribute for hxlAttribute in attribute.selectedTag.hxl_attributes track by hxlAttribute.id"
                                             ng-disabled="!attribute.selectedTag"
+                                            ng-model="attribute.selectedAttributes[a]"
+                                            ng-change="selectAttribute(attribute)"
                                         >
                                             <option value=''>Leave empty</option>
+                                            <option
+                                                ng-value="hxlAttribute"
+                                                ng-repeat="hxlAttribute in attribute.selectedTag.hxl_attributes"
+                                            >
+                                                 {{hxlAttribute.attribute}}
+                                            </option>
+
                                         </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <a ng-click="addAnother(attribute)" class="form-field link-blue">Add another hxl attribute?</a>
+                                    </div>
                                 </td>
-                                <td></td>
+
+                                <td>
+                                    {{attribute.pretty}}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </fieldset>
-                <div class="form-field">
+                <div class="form-field"  ng-hide="isLoading()">
                     <p>{{selectedFields.length}} fields selected</p>
                 </div>
+                <div class="form-field button-group" ng-hide="isLoading()">
+                    <button class="button-alpha" ng-click="exportData()">Export to CSV</button>
+                    <a ng-click="exportData()" class="button button-alpha">Upload to a hdx account</a>
+                    <a ui-sref="settings.dataExport" class="button">Cancel</a>
+            </div>
             </div>
         </div>
     </main>
