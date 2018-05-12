@@ -1084,7 +1084,22 @@
         "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
         "hxl_configure": "Configure HDX API",
         "hxl_apikey_alert_2": "We strongly advide you set this up now in",
-        "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX"
+        "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
+        "hxl_title": "Assign your HXL tags and attributes, select fields and export or upload",
+        "hxl_desc": "Select specific fields from a survey, assign a tag per field and then choose to assign multiple attributes. Preview your tag and attributes in tag preview.",
+        "hxl_instructions_1": "You can then choose to export your tagged fields to a CSV file or upload to a",
+        "hxl_instructions_2": "Humanitarian Data Exchange (HDX)",
+        "hxl_instructions_3": "account that has been set up in",
+        "hxl_instructions_4": "Configure HDX API",
+        "hxl_instructions_5": "(found in settings menu).",
+        "hxl_instructions_6": "Visit the",
+        "hxl_instructions_7": "HXL tag assist",
+        "hxl_instructions_8": "for more information on how to choose the best HXL tags and attributes for your data or the",
+        "hxl_instructions_9": "HXL 'cheat sheet'",
+        "HXL_tags": "HXL tags",
+        "HXL_attributes": "HXL attributes",
+        "tag_preview": "Tag preview"
+
     },
     "user": {
         "role_display" : "Role: {{role}}",

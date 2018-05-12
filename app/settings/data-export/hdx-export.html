@@ -28,37 +28,38 @@
             <div class="form-sheet">
                 <div class="form-sheet-summary">
                 <h2 class="form-sheet-title">
-                Assign your HXL tags and attributes, select fields and export or upload
+                    {{'data_export.hxl_title' | translate}}
                 </h2>
-                <p>Select specific fields from a survey, assign a tag per field and then choose to assign multiple attributes. Preview your tag and attributes in tag preview.</p>
+                <p>{{'data_export.hxl_desc' | translate}}</p>
 
-                <p>You can then choose to export your tagged fields to a CSV file or upload to a
+                <p>
                     <a href="#" class="link-blue">
+                        {{'data_export.hxl_instructions_1' | translate}}
                         <svg class="iconic">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
-                        Humanitarian Data Exchange (HDX)
+                        {{'data_export.hxl_instructions_2' | translate}}
                     </a>
-                account that has been set up in
+                {{'data_export.hxl_instructions_3' | translate}}
                 <a href="#" class="link-blue">
-                    Configure HDX API
+                    {{'data_export.hxl_instructions_4' | translate}}
                 </a>
-                (found in settings menu).
+                {{'data_export.hxl_instructions_5' | translate}}
                 </p>
 
-                <p>Visit the
+                <p>{{'data_export.hxl_instructions_6' | translate}}
                     <a href="#" class="link-blue">
                         <svg class="iconic">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
-                    HXL tag assist
+                    {{'data_export.hxl_instructions_7' | translate}}
                     </a>
-                    for more information on how to choose the best HXL tags and attributes for your data or the
+                    {{'data_export.hxl_instructions_8' |translate}}
                     <a href="#" class="link-blue">
                         <svg class="iconic">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
-                        HXL 'cheat sheet'
+                        {{'data_export.hxl_instructions_9' | translate}}
                     </a>
                     .
                 </p>
@@ -72,10 +73,10 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Survey field</th>
-                                <th>HXL tags</th>
-                                <th>HXL attributes</th>
-                                <th>Tag preview</th>
+                                <th translate="survey.survey_field">Survey field</th>
+                                <th translate="data_export.HXL_tags">HXL tags</th>
+                                <th translate="data_export.HXL_attributes">HXL attributes</th>
+                                <th translate="data_export.tag_preview">Tag preview</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,7 +85,7 @@
                                     <input type="checkbox" ng-model="form.selected" ng-value="1" ng-change="selectAll(form)">
                                 </td>
                                 <td>
-                                    <em>Select all<em>
+                                    <em translate="nav.select_all">Select all<em>
                                 </td>
                                 <td></td>
                                 <td></td>
