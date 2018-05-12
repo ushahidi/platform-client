@@ -22,6 +22,7 @@ function (
     $scope.exportData = exportData;
     $scope.selectAll = selectAll;
     $scope.isLoading = LoadingProgress.getLoadingState;
+    $scope.getSelectedFields = getSelectedFields;
 
     // Change layout class
     $rootScope.setLayout('layout-c');
@@ -65,6 +66,18 @@ function (
                 attribute.selected = [];
             });
         }
+    }
+
+    function getSelectedFields() {
+        let selectedFields = 0;
+        _.each($scope.forms, (form) => {
+            _.each(form.attributes, (attribute) => {
+                if (attribute.selected && attribute.selected.length > 0) {
+                    selectedFields++;
+                }
+            });
+        });
+        return selectedFields;
     }
 
     function selectTag(attribute) {

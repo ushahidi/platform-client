@@ -144,7 +144,7 @@
                     </table>
                 </fieldset>
                 <div class="form-field"  ng-hide="isLoading()">
-                    <p>{{selectedFields.length}} fields selected</p>
+                    <p>{{getSelectedFields()}} fields selected</p>
                 </div>
                 <div class="form-field button-group" ng-hide="isLoading()">
                     <button class="button-alpha" ng-click="exportData()">Export to CSV</button>
