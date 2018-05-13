@@ -7,7 +7,7 @@
                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
                <li><a href="/settings" translate>app.settings</a></li>
            </ol>
-           <h1 class="mode-context-title" translate>app.import</h1>
+           <h1 class="mode-context-title" translate>data_export.export</h1>
        </header>
 
        <span class="mode-context-trigger" dropdown-toggle>
@@ -60,13 +60,13 @@
                 <nav class="tabs-menu init" data-tabs="survey-details">
                         <ul>
                             <li id="main-export-li">
-                                <a ng-click="switchTab('export', 'main')" >
-                                Export
+                                <a ng-click="switchTab('export', 'main')" translate>
+                                data_export.export
                                 </a>
                             </li>
                             <li id="history-export-li">
-                                <a ng-click="switchTab('export', 'history')" >
-                                Export History
+                                <a ng-click="switchTab('export', 'history')" translate>
+                                data_export.export_history
                                 </a>
                             </li>
                         </ul>
