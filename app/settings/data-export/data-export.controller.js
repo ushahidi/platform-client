@@ -9,6 +9,7 @@ module.exports = [
     '_',
     'LoadingProgress',
     'Features',
+    'UserSettingsEndpoint',
 function (
     $scope,
     $rootScope,
@@ -19,7 +20,8 @@ function (
     FormAttributeEndpoint,
     _,
     LoadingProgress,
-    Features
+    Features,
+    UserSettingsEndpoint
 ) {
     $scope.exportAll = exportAll;
     $scope.showFields = false;
@@ -48,6 +50,13 @@ function (
     // Check if hxl-feature is enabled
     Features.loadFeatures().then(function () {
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
+    });
+
+    // Check if hxl-api-key is added
+    UserSettingsEndpoint.getFresh({id: $rootScope.currentUser.userId}).$promise.then((user) => {
+        if (user.count !== 0) {
+            $scope.hxlApiKey = true;
+        }
     });
 
     // Change layout class

@@ -29,6 +29,7 @@ angular.module('ushahidi.common', [
 .service('ApiKeyEndpoint', require('./services/endpoints/apikey.js'))
 .service('ConfigEndpoint', require('./services/endpoints/config.js'))
 .service('UserEndpoint', require('./services/endpoints/user-endpoint.js'))
+.service('UserSettingsEndpoint', require('./services/endpoints/user-settings.js'))
 .service('FormEndpoint', require('./services/endpoints/form.js'))
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
 .service('FormRoleEndpoint', require('./services/endpoints/form-roles.js'))
