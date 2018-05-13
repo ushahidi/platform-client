@@ -37,6 +37,7 @@ function (
     $scope.loadExportJobs = loadExportJobs;
     $scope.switchTab = switchTab;
     $scope.exportJobs = [];
+    $scope.dataExportTitle =  'data_export.title';
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
@@ -50,6 +51,9 @@ function (
     // Check if hxl-feature is enabled
     Features.loadFeatures().then(function () {
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
+        if ($scope.hxlEnabled) {
+            $scope.dataExportTitle = 'data_export.title_hxl';
+        }
     });
 
     // Check if hxl-api-key is added

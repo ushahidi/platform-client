@@ -1084,7 +1084,9 @@
         "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
         "hxl_configure": "Configure HDX API",
         "hxl_apikey_alert_2": "We strongly advide you set this up now in",
-        "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX"
+        "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
+        "export": "Export",
+        "export_history": "Export History"
     },
     "user": {
         "role_display" : "Role: {{role}}",
