@@ -52,8 +52,9 @@
                <div class="listing-item" ng-show="hasPermission('Bulk Data Import')">
                <div class="listing-item">
                    <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.dataExport" translate>settings.settings_list.export</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.export_desc</p>
+                       <h2 class="listing-item-title">
+                           <a ui-sref="settings.dataExport" translate>{{dataExportTitle}}</a></h2>
+                           <p class="listing-item-secondary" translate>{{dataExportDescription}}</p>
                    </div>
                </div>
 
