@@ -57,10 +57,13 @@ function (
     });
 
     // Check if hxl-api-key is added
-    UserSettingsEndpoint.getFresh({id: $rootScope.currentUser.userId}).$promise.then((user) => {
-        if (user.count !== 0) {
-            $scope.hxlApiKey = true;
-        }
+    UserSettingsEndpoint.getFresh({id: $rootScope.currentUser.userId}).$promise.then((settings) => {
+        $scope.hxlApiKey = false;
+        _.each(settings, (setting) => {
+            if (setting.config_key === 'hdx_api_key') {
+                $scope.hxlApiKey = true;
+            }
+        });
     });
 
     // Change layout class
