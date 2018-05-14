@@ -7,7 +7,8 @@ describe('data-export-controller', function () {
         DataExport,
         Notify,
         FormEndpoint,
-        FormAttributeEndpoint;
+        FormAttributeEndpoint,
+        UserSettingsEndpoint;
 
     beforeEach(function () {
 
@@ -17,7 +18,7 @@ describe('data-export-controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _$location_, _DataExport_, _Notify_, _FormEndpoint_, _FormAttributeEndpoint_, _) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _$location_, _DataExport_, _Notify_, _FormEndpoint_, _FormAttributeEndpoint_, _, _UserSettingsEndpoint_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $location = _$location_;
@@ -25,10 +26,14 @@ describe('data-export-controller', function () {
         Notify = _Notify_;
         FormEndpoint = _FormEndpoint_;
         FormAttributeEndpoint = _FormAttributeEndpoint_;
+        UserSettingsEndpoint = _UserSettingsEndpoint_;
         $scope = _$rootScope_.$new();
 
         $rootScope.hasPermission = function () {
             return true;
+        };
+        $rootScope.currentUser = {
+            userId: 1
         };
     }));
 

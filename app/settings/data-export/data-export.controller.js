@@ -9,6 +9,7 @@ module.exports = [
     '_',
     'LoadingProgress',
     'Features',
+    'UserSettingsEndpoint',
 function (
     $scope,
     $rootScope,
@@ -19,7 +20,8 @@ function (
     FormAttributeEndpoint,
     _,
     LoadingProgress,
-    Features
+    Features,
+    UserSettingsEndpoint
 ) {
     $scope.exportAll = exportAll;
     $scope.showFields = false;
@@ -35,6 +37,7 @@ function (
     $scope.loadExportJobs = loadExportJobs;
     $scope.switchTab = switchTab;
     $scope.exportJobs = [];
+    $scope.dataExportTitle =  'data_export.title';
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
@@ -48,6 +51,19 @@ function (
     // Check if hxl-feature is enabled
     Features.loadFeatures().then(function () {
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
+        if ($scope.hxlEnabled) {
+            $scope.dataExportTitle = 'data_export.title_hxl';
+        }
+    });
+
+    // Check if hxl-api-key is added
+    UserSettingsEndpoint.getFresh({id: $rootScope.currentUser.userId}).$promise.then((settings) => {
+        $scope.hxlApiKey = false;
+        _.each(settings, (setting) => {
+            if (setting.config_key === 'hdx_api_key') {
+                $scope.hxlApiKey = true;
+            }
+        });
     });
 
     // Change layout class
