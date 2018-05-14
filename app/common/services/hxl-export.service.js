@@ -36,9 +36,11 @@ function HxlExport($rootScope, HxlTagEndpoint, FormEndpoint, FormAttributeEndpoi
         _.each(form.attributes, (attribute) => {
             attribute.tags = [];
             _.each(tags, (tag) => {
-                if (tag.form_attribute_types.indexOf(attribute.type) > -1) {
-                    attribute.tags.push(tag);
-                }
+                _.each(tag.form_attribute_types, (type) => {
+                        if (type.form_attribute_type === attribute.type) {
+                            attribute.tags.push(tag);
+                        }
+                    });
             });
         });
         return form;
