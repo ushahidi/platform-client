@@ -33,8 +33,8 @@
                 <p>{{'data_export.hxl_desc' | translate}}</p>
 
                 <p>
+                    {{'data_export.hxl_instructions_1' | translate}}
                     <a href="#" class="link-blue">
-                        {{'data_export.hxl_instructions_1' | translate}}
                         <svg class="iconic">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
@@ -91,52 +91,50 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr ng-repeat="attribute in form.attributes">
+                            <tr ng-repeat="formAttribute in form.attributes">
                                 <td class="form-field">
                                     <input
                                         type="checkbox"
-                                        checklist-model="attribute.selected"
-                                        checklist-value="attribute.id"
-                                        ng-selected="attribute.selected"
+                                        checklist-model="formAttribute.selected"
+                                        checklist-value="formAttribute.id"
+                                        ng-selected="formAttribute.selected"
                                     >
                                 </td>
                                 <td>
-                                    <p><bdi>{{attribute.label}}</bdi></p>
+                                    <p><bdi>{{formAttribute.label}}</bdi></p>
                                 </td>
                                 <td>
                                     <div class="custom-select">
                                         <select
-                                            ng-model="attribute.selectedTag"
-                                            ng-options="tag as tag.tag_name for tag in attribute.tags track by tag.id"
-                                            ng-disabled="!attribute.selected || attribute.selected.length < 1"
-                                            ng-change="selectTag(attribute)"
+                                            ng-model="formAttribute.selectedTag"
+                                            ng-options="tag as tag.tag_name for tag in formAttribute.tags track by tag.id"
+                                            ng-disabled="!formAttribute.selected || formAttribute.selected.length < 1"
+                                            ng-change="selectTag(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
                                         </select>
                                     </div>
                                 </td>
                                 <td class="form-field">
-                                    <div class="custom-select" ng-repeat="a in range(attribute)">
+                                    <div class="custom-select" ng-repeat="a in range(formAttribute)">
                                         <select
-                                            ng-disabled="!attribute.selectedTag"
-                                            ng-model="attribute.selectedAttributes[a]"
-                                            ng-change="selectAttribute(attribute)"
+                                            ng-disabled="!formAttribute.selectedTag"
+                                            ng-model="formAttribute.selectedHxlAttributes[a]"
+                                            ng-change="selectHxlAttribute(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
                                             <option
                                                 ng-value="hxlAttribute"
                                                 ng-repeat="hxlAttribute in attribute.selectedTag.hxl_attributes"
+                                                ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, a)"
                                             >
                                                  {{hxlAttribute.attribute}}
                                             </option>
 
                                         </select>
                                     </div>
-                                    <div class="form-field">
-                                        <a ng-click="addAnother(attribute)" class="form-field link-blue">Add another hxl attribute?</a>
-                                    </div>
+                                    <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl attribute?</a>
                                 </td>
-
                                 <td>
                                     {{attribute.pretty}}
                                 </td>

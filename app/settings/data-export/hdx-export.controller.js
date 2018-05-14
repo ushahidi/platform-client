@@ -15,7 +15,7 @@ function (
     _,
     LoadingProgress
 ) {
-    $scope.selectAttribute = selectAttribute;
+    $scope.selectAttribute = selectHxlAttribute;
     $scope.addAnother = addAnother;
     $scope.range = range;
     $scope.selectTag = selectTag;
@@ -23,6 +23,7 @@ function (
     $scope.selectAll = selectAll;
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.getSelectedFields = getSelectedFields;
+    $scope.hxlAttributeSelected = hxlAttributeSelected;
 
     // Change layout class
     $rootScope.setLayout('layout-c');
@@ -39,6 +40,13 @@ function (
     });
 
     activate();
+
+    function activate() {
+        HxlExport.getFormsWithTags().then((formsWithTags)=> {
+            $scope.forms = formsWithTags;
+        });
+    }
+
     function range(attribute) {
         if (!attribute.nbAttributes) {
             attribute.nbAttributes = 1;
@@ -50,10 +58,15 @@ function (
         attribute.nbAttributes++;
     }
 
-    function activate() {
-        HxlExport.getFormsWithTags().then((formsWithTags)=> {
-            $scope.forms = formsWithTags;
-        });
+    function hxlAttributeSelected(hxlAttribute, formAttribute, index) {
+        let disabled = false;
+        // hack to not disable the value in the current dropdown
+        let selectedHxlAttributes = angular.copy(formAttribute.selectedHxlAttributes);
+        delete selectedHxlAttributes[index];
+        if (_.findWhere(selectedHxlAttributes, {id: hxlAttribute.id})) {
+            disabled = true;
+        }
+        return disabled;
     }
 
     function selectAll(form) {
@@ -87,12 +100,12 @@ function (
             attribute.pretty = '';
         }
         attribute.nbAttributes = 1;
-        attribute.selectedAttributes = {};
+        attribute.selectedHxlAttributes = {};
     }
 
-    function selectAttribute(attribute) {
+    function selectHxlAttribute(attribute) {
         attribute.pretty = '#' + attribute.selectedTag.tag_name;
-        _.each(attribute.selectedAttributes, (hxl_attribute) => {
+        _.each(attribute.selectedHxlAttributes, (hxl_attribute) => {
             if (hxl_attribute !== '') {
                 attribute.pretty = attribute.pretty + '+' + hxl_attribute.attribute;
             }
@@ -102,30 +115,29 @@ function (
     function formatIds() {
         let data = [];
         _.each($scope.forms, (form) => {
-                _.each(form.attributes, (attribute) => {
-                        if (attribute.selected && attribute.selected.length > 0) {
-                            let ids = {
-                                    form_attribute_id : attribute.id,
-                                    hxl_tag: null
-                                };
+            _.each(form.attributes, (formAttribute) => {
+                if (formAttribute.selected && formAttribute.selected.length > 0) {
+                    let ids = {
+                            form_attribute_id : formAttribute.id,
+                            hxl_tag: null
+                        };
 
-                            if (attribute.selectedTag) {
-                                ids.hxl_tag = {
-                                    hxl_tag_id: attribute.selectedTag.id
-                                };
+                    if (formAttribute.selectedTag) {
+                        ids.hxl_tag = {
+                            hxl_tag_id: formAttribute.selectedTag.id
+                        };
 
-                                if (attribute.selectedAttributes) {
-                                    ids.hxl_tag.hxl_attribute_ids = [];
-                                    _.each(attribute.selectedAttributes, (hxlAttribute) => {
-                                        ids.hxl_tag.hxl_attribute_ids.push(hxlAttribute.id);
-                                    });
-                                }
-                            }
-                            data.push(ids);
+                        if (formAttribute.selectedHxlAttributes) {
+                            ids.hxl_tag.hxl_attribute_ids = [];
+                            _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
+                                ids.hxl_tag.hxl_attribute_ids.push(hxlAttribute.id);
+                            });
                         }
-                    });
+                    }
+                    data.push(ids);
+                }
             });
-
+        });
         return data;
     }
 
