@@ -937,6 +937,8 @@
             "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
             "import" : "Import",
             "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "user_settings": "Configure HDX API",
+            "user_settings_desc": "Configure your API so that your tagged Ushahidi data can be uploaded to your Humanitarian Data Exchange (HDX) account.",
             "export": "Export data",
             "export_hxl": "Export and tag data",
             "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
