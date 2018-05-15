@@ -101,8 +101,8 @@ function (
             $scope.selectedFields[form.id] = [];
         } else {
             _.each(form.attributes, function (attribute) {
-                if (!_.contains($scope.selectedFields[form.id], attribute.id)) {
-                    $scope.selectedFields[form.id].push(attribute.id);
+                if (!_.contains($scope.selectedFields[form.id], attribute.key)) {
+                    $scope.selectedFields[form.id].push(attribute.key);
                 }
             });
         }
