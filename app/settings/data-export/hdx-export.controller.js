@@ -71,12 +71,15 @@ function (
 
     function selectAll(form) {
         if (form.selected) {
-            _.each(form.attributes, (attribute) => {
+            form.attributes = _.map(form.attributes, (attribute) => {
                 attribute.selected = [attribute.id];
+                return attribute;
+
             });
         } else {
-            _.each(form.attributes, (attribute) => {
+            form.attributes = _.map(form.attributes, (attribute) => {
                 attribute.selected = [];
+                return attribute;
             });
         }
     }

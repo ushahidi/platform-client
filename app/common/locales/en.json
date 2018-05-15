@@ -1060,6 +1060,8 @@
         "title_hxl": "Export and tag data",
         "description": "Export all of your data as a CSV or choose specific survey fields you want to export.",
         "description_hxl": "Export all of your data from Ushahidi as a CSV, choose specific survey fields you want to export as a CSV or assign",
+        "export": "Export",
+        "export_history": "Export History",
         "hxl_tags": "HXL tags",
         "hxl_attributes": "HXL attributes",
         "and_choose": "and choose to upload to an",
