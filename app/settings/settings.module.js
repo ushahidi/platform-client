@@ -1,5 +1,7 @@
 import { react2angular } from "react2angular";
 import TestRouteContainer from "./TestRouteContainer";
+import { PlainUserContainer as UserContainer } from "../components/users/userContainer";
+
 
 angular
   .module("ushahidi.settings", [])
@@ -27,5 +29,6 @@ angular
   .directive("customWebhooksEditor", require("./webhooks/editor.directive.js"))
 
   .component("testRouteContainer", react2angular(TestRouteContainer, ["id"]))
+  .component("userContainer", react2angular(UserContainer))
 
   .config(require("./settings.routes.js"));

@@ -153,10 +153,15 @@ module.exports = [
                 template: users
             })
             .state({
-                name: "settings.users.create",
-                url: "/create",
-                controller: usersCreateController,
-                template: usersEdit
+                name: "createUser",
+                url: "/settings/users/create",
+                controller: [
+                    "$scope",
+                    ($scope) => {
+                    }
+                ],
+                template:
+                    '<user-container></user-container>'
             })
             .state({
                 name: "settings.users.edit",
@@ -217,15 +222,13 @@ module.exports = [
                 url: "/settings/testroute/:id?",
                 controller: [
                     "$scope",
-                    "$state",
                     "$transition$",
-                    ($scope, $state, $transition$) => {
-                        $scope.$state = $state;
+                    ($scope, $transition$) => {
                         $scope.id = $transition$.params().id;
                     }
                 ],
                 template:
                     '<test-route-container id="id"></test-route-container>'
-            });
+            })
     }
 ];
