@@ -954,6 +954,17 @@
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
+        "user_settings": {
+            "user_settings_desc_1": "Here you can add your unique key for your Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_2": "Once you set it up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in",
+            "view_guide": "View the guide to your API key",
+            "api_key": "Api key",
+            "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
+            "valid_key": "A valid key is required",
+            "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
+            "start_tagging": "Start tagging data"
+        },
         "webhooks": {
             "use_webhook_for": "Use webhook for",
             "enable_source_destination" : "Enable Source and Destination Fields",
@@ -1103,7 +1114,6 @@
         "HXL_tags": "HXL tags",
         "HXL_attributes": "HXL attributes",
         "tag_preview": "Tag preview"
-
     },
     "user": {
         "role_display" : "Role: {{role}}",

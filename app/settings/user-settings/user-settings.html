@@ -1,1 +1,75 @@
-<h1>yay!</h1>
+<div class="mode-context init" dropdown>
+
+    <header class="mode-context-header">
+        <ol class="breadcrumbs">
+            <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+            <li><a href="/settings" translate>app.settings</a></li>
+        </ol>
+        <h1 class="mode-context-title" translate>settings.settings_list.user_settings</h1>
+    </header>
+
+    <span class="mode-context-trigger" dropdown-toggle>
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span class="label hidden" translate>app.show_more_less</span>
+    </span>
+</div>
+<main role="main">
+    <div class="progress-bar" ng-show="isLoading()">
+        <span>
+        ..
+        </span>
+    </div>
+    <div class="main-col">
+        <div class="form-sheet">
+            <div class="form-sheet-summary">
+                <h2 class="form-sheet-title" translate="settings.settings_list.user_settings">
+                Configure HDX API
+                </h2>
+                <p translate="settings.user_settings.user_settings_desc_1">Here you can add your unique key for your Humanitarian Data Exchange (HDX) account.</p>
+                <p translate="settings.user_settings.user_settings_desc_2">Once you set it up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.</p>
+                <p translate="settings.user_settings.user_settings_desc_3">You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.</p>
+
+                <a href="https://data.humdata.org/faq" class="link-blue" target="_blank">
+                    <svg class="iconic">
+                        <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                    </svg>
+                    {{'settings.user_settings.view_guide' |translate}}
+                </a>
+            </div>
+
+            <img class="field-logo" src="/img/hdx-logo.png" />
+
+            <div class="form-field init required" ng-show="!hxlApiKey === !isLoading()">
+                <form name="api">
+                    <label class="required" for="api-key" translate="settings.user_settings.api_key">
+                        Api key
+                    </label>
+                    <p translate="settings.user_settings.profile_page"> Found on your Humanitarian Data Exchange (HDX) profile page</p>
+                    <input id="api-key" name="api-key" type="text" ng-model="apiKey" required="required"/>
+                    <div class="alert error" ng-show="!isKeySet() && api.$dirty">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                        </svg>
+                        <p translate="settings.user_settings.valid_key">A valid key is required</p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-field" ng-show="!hxlApiKey && !isLoading()">
+                <button class="button button-alpha" translate="app.save" ng-click="saveKey()">Save</button>
+            </div>
+
+            <div class="form-field init required key" ng-show="hxlApiKey && !isLoading()">
+                <label class="required" for="api-key" translate="settings.user_settings.api_key">
+                    Api key
+                </label>
+                <p translate=""> Found on your Humanitarian Data Exchange (HDX) profile page</p>
+                <span id="api-key">{{hxlApiKey}}
+                    <a class="link-blue" ng-click="newKey()">Change your API key</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</main>
