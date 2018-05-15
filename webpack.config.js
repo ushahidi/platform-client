@@ -98,6 +98,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: ['*', '.webpack.js', '.web.js', '.js', '.json', '.jsx']
+  },
   plugins: [
     extractCss,
 

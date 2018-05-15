@@ -1,12 +1,15 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
-import MyComponent from "./ush-logo";
+import { PlainUshLogo as MyComponent } from "./ush-logo";
 
 test("foo and bar match the props", () => {
+  const forms = [{ id: "junk" }];
   // Note that the way you pass down props in react vs. angular is different
   // Therefore you need pass down props differently
-  const component = renderer.create(<MyComponent foo={1} baz={2} />);
+  const component = renderer.create(
+    <MyComponent forms={forms} foo={1} baz={2} />
+  );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

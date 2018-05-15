@@ -38,8 +38,13 @@
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./jest-setup.js",
-    "testPathIgnorePatterns": ["./node_modules", "./test"],
-    "testEnvironment": "node"
+    "testPathIgnorePatterns": [
+      "./node_modules",
+      "./test"
+    ]
+  },
+  "prettier": {
+    "tabWidth": 4
   },
   "devDependencies": {
     "@uirouter/visualizer": "^5.0.0",
@@ -146,13 +151,17 @@
     "libphonenumber-js": "^1.0.24",
     "moment": "2.19.3",
     "moment-timezone": "^0.5.4",
+    "ng-redux": "^4.0.3",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
     "react2angular": "^3.2.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.2.0",
     "socket.io-client": "2.0.3",
     "sortablejs": "^1.7.0",
     "underscore": "^1.7.0",

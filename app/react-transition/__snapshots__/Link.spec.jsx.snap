@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link accepts a route string, replace bool, id, className, title, and children 1`] = `
+<div>
+  <a
+    className="test"
+    href="#"
+    id="test"
+    onClick={[Function]}
+    title="test"
+  >
+    Click me!
+  </a>
+</div>
+`;
