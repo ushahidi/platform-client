@@ -26,9 +26,9 @@ function (
     // Change layout class
     $rootScope.setLayout('layout-c');
 
-    // Checking feature-flag for user-settings
+    // Checking feature-flag for user-settings and hxl
     Features.loadFeatures().then(function () {
-        if (!Features.isFeatureEnabled('user-settings')) {
+        if (!Features.isFeatureEnabled('user-settings') || !Features.isFeatureEnabled('hxl')) {
             $state.go('posts.map');
         }
     });
