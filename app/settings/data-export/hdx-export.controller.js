@@ -124,11 +124,12 @@ function (
         _.each($scope.forms, (form) => {
             _.each(form.attributes, (formAttribute) => {
                 if (formAttribute.selected && formAttribute.selected.length > 0) {
+                    // checking if there is a tag selected. If not, there will be no hxl-attributes selected either
                     let obj = formAttribute.selectedTag ? {form_attribute_id: formAttribute.id, hxl_tag_id: formAttribute.selectedTag.id} : {form_attribute_id: formAttribute.id};
                     if (formAttribute.selectedHxlAttributes && !_.isEmpty(formAttribute.selectedHxlAttributes)) {
                         _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
                             let objWithAttr = angular.copy(obj);
-                            objWithAttr.hxl_attribute_id = hxlAttribute.id;
+                            objWithAttr.hxl_attribute_id = parseInt(hxlAttribute.id);
                             hxlData.push(objWithAttr);
                         });
                     } else {
