@@ -93,7 +93,7 @@ function (
         _.each($scope.forms, (form) => {
             _.each(form.attributes, (attribute) => {
                 if (attribute.selected && attribute.selected.length > 0) {
-                    selectedFields.push(attribute.id);
+                    selectedFields.push(attribute.key);
                 }
             });
         });
