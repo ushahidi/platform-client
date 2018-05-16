@@ -49,6 +49,14 @@ function (
     )
     .state(
         {
+            name: 'settings.userSettings',
+            url: '/settings/user-settings',
+            controller: require('./user-settings/user-settings.controller.js'),
+            template: require('./user-settings/user-settings.html')
+        }
+    )
+    .state(
+        {
             name: 'settings.dataExport',
             url: '/settings/data-export',
             controller: require('./data-export/data-export.controller.js'),

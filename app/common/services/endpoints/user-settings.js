@@ -16,8 +16,9 @@ function (
     }
     cache.removeExpired();
 
-    var UserSettingsEndpoint = $resource(Util.apiUrl('/users/:id/settings'), {
-        id: '@id'
+    var UserSettingsEndpoint = $resource(Util.apiUrl('/users/:id/settings/:keyId'), {
+        id: '@user_id',
+        keyId: '@id'
     }, {
         query: {
             method: 'GET',
