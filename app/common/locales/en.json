@@ -1113,7 +1113,14 @@
         "hxl_instructions_9": "HXL 'cheat sheet'",
         "HXL_tags": "HXL tags",
         "HXL_attributes": "HXL attributes",
-        "tag_preview": "Tag preview"
+        "tag_preview": "Tag preview",
+        "upload_title": "Are you ready to upload to an Humanitarian Data Exchange (HDX) account?",
+        "hdx_csv_title": "Are you ready to export to CSV?",
+        "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
+        "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
+        "upload_button": "Add dataset details and upload to hdx",
+        "export_button": "Export to csv",
+        "go_back": "Go back and check"
     },
     "user": {
         "role_display" : "Role: {{role}}",

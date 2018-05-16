@@ -146,8 +146,8 @@
                     <p>{{getSelectedFields()}} fields selected</p>
                 </div>
                 <div class="form-field button-group" ng-hide="isLoading()">
-                    <button class="button-alpha" ng-click="exportData()">Export to CSV</button>
-                    <a ng-click="exportData()" class="button button-alpha">Upload to a hdx account</a>
+                    <button class="button-alpha" ng-click="exportData(false)">Export to CSV</button>
+                    <a ng-click="exportData(true)" class="button button-alpha">Upload to a hdx account</a>
                     <a ui-sref="settings.dataExport" class="button">Cancel</a>
             </div>
             </div>
