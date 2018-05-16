@@ -89,11 +89,11 @@ function (
     }
 
     function getSelectedFields() {
-        let selectedFields = 0;
+        let selectedFields = [];
         _.each($scope.forms, (form) => {
             _.each(form.attributes, (attribute) => {
                 if (attribute.selected && attribute.selected.length > 0) {
-                    selectedFields++;
+                    selectedFields.push(attribute.id);
                 }
             });
         });
@@ -149,7 +149,7 @@ function (
         } else {
             let title, description, button, cancel;
             let data = {
-                'fields': 'test',
+                'fields': $scope.getSelectedFields(),
                 'filters':
                 {
                     'status' : ['published','draft'],
@@ -164,6 +164,7 @@ function (
                 'send_to_browser': !sendToHDX,
                 'hxl_heading_row': formatIds()
             };
+
             if (sendToHDX) {
                 title = 'data_export.upload_title';
                 description = 'data_export.upload_desc';
@@ -173,9 +174,10 @@ function (
                 description = 'data_export.hdx_csv_desc';
                 button = 'data_export.export_button';
             }
+
             cancel = 'data_export.go_back';
 
-            Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields()}}`, button, cancel).then(() => {
+            Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
                 DataExport.startExport(data);
             });
         }

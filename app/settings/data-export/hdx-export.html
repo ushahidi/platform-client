@@ -143,9 +143,9 @@
                     </table>
                 </fieldset>
                 <div class="form-field"  ng-hide="isLoading()">
-                    <p>{{getSelectedFields()}} fields selected</p>
+                    <p>{{getSelectedFields().length}} fields selected</p>
                 </div>
-                <div class="form-field button-group" ng-hide="isLoading()">
+                <div class="form-field button-group">
                     <button class="button-alpha" ng-click="exportData(false)">Export to CSV</button>
                     <a ng-click="exportData(true)" class="button button-alpha">Upload to a hdx account</a>
                     <a ui-sref="settings.dataExport" class="button">Cancel</a>
