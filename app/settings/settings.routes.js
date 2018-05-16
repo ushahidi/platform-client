@@ -57,6 +57,15 @@ function (
     )
     .state(
         {
+            name: 'settings.hdx',
+            url: '/settings/hdx',
+            controller: require('./data-export/hdx-export.controller.js'),
+            template: require('./data-export/hdx-export.html')
+        }
+    )
+
+    .state(
+        {
             name: 'settings.surveys',
             url: '/settings/surveys',
             controller: require('./surveys/surveys.controller.js'),
