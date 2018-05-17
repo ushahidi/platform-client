@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 // import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import connectWithStore from "react-transition/common/connectWithStore";
-import * as UsersActions from "react-transition/common/state/users.actions";
+import connectWithStore from "react/react-transition/connectWithStore";
+import * as UsersActions from "react/common/state/users/users.actions";
 
 class UserContainer extends React.Component {
     constructor(props) {

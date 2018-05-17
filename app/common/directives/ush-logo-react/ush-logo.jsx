@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 // import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import connectWithStore from "react-transition/common/connectWithStore";
+import connectWithStore from "react/react-transition/connectWithStore";
 import * as UshLogoActions from "./ush-logo.actions";
 import { getFormsFromState } from "./ush-logo.reducer";
 

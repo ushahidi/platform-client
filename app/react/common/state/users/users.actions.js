@@ -1,4 +1,4 @@
-import UserEndpoints from "react-transition/common/endpoints/users";
+import UserEndpoints from "react/common/endpoints/users";
 
 export const SAVE_NEW_USER = "SAVE_NEW_USER";
 export const UPDATE_USERS_STATE = "UPDATE_USERS_STATE";

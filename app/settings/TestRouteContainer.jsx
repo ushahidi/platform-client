@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "react-transition/common/Link";
+import Link from "react/react-transition/Link";
 
 const TestRouteContainer = props => (
     <div>

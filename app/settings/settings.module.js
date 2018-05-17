@@ -1,7 +1,7 @@
 import { react2angular } from "react2angular";
 import angular from "angular";
 import TestRouteContainer from "./TestRouteContainer";
-import UserContainer from "../react-transition/components/users/userContainer";
+import UserContainer from "../react/settings/users/userContainer";
 
 angular
     .module("ushahidi.settings", [])
