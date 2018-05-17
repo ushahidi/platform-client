@@ -1,24 +1,22 @@
 
-<div class="mode-context">
+<div class="mode-context init" dropdown>
 
-    <header class="mode-context-header">
-        <ol class="breadcrumbs">
-            <li><a href="map.html">{{deployment.name}}</a></li>
-            <li><a href="settings.html">Settings</a></li>
-        </ol>
-        <h1 class="mode-context-title">Export</h1>
-    </header>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>nav.export</h1>
+        </header>
 
-    <span class="mode-context-trigger">
-        <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-        </svg>
-        <span class="label hidden">Show more/less</span>
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        <span class="label hidden" translate>app.show_more_less</span>
     </span>
-
-    <div class="mode-context-body">
-    </div>
 </div>
+
 
 <main role="main">
     <div class="main-col">
@@ -38,7 +36,7 @@
                     <legend class="required" translate="data_export.this_dataset">This data set is:</legend>
                     <div class="form-field radio">
                         <label for="private" translate="data_export.private_desc"></label>
-                        <input id="private" type="radio" ng-value="true" ng-model="details.private">
+                        <input id="private" type="radio" ng-checked="true" ng-value="true" ng-model="details.private">
                     </div>
                     <div class="form-field radio">
                         <label for="public" translate="data_export.public_desc"></label>
