@@ -3,14 +3,16 @@ module.exports = DataExport;
 DataExport.$inject = ['$rootScope', 'ExportJobEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST', '$q', '_'];
 function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $interval, CONST, $q, _) {
     var exportJobs = [];
-    function startExport(query) {
+    function startExport(query, hideStartNotification) {
         query.entity_type = 'post';
 
         // saving the new job to the db
         return ExportJobEndpoint.save(query).$promise.then(function (job) {
             updateExportJobsList(job);
-            // notifies the user
-            loadingStatus(true, null, job);
+            if (!hideStartNotification) {
+                // notifies the user
+                loadingStatus(true, null, job);
+            }
             // start polling for ready job.
             startPolling([ExportJobEndpoint.getFresh({id: job.id})]);
             return job.id;
@@ -142,7 +144,6 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                 icon = 'thumb-up';
                 loading = false;
             }
-
             Notify.notifyAction(message, null, loading, icon, 'circle-icon confirmation', action);
             $rootScope.$broadcast('event:export_job:started');
         }
@@ -192,6 +193,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         loadExportJobs: loadExportJobs,
         processExportJobs: processExportJobs,
         setExportJobs: setExportJobs,
-        getExportJobs: getExportJobs
+        getExportJobs: getExportJobs,
+        loadingStatus: loadingStatus
     };
 }

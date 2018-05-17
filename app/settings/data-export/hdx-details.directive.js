@@ -17,9 +17,10 @@ HdxDetailsController.$inject = [
     'HxlLicenseEndpoint',
     'HxlOrganisationsEndpoint',
     '$state',
-    'HxlMetadataEndpoint'
+    'HxlMetadataEndpoint',
+    'DataExport'
 ];
-function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint) {
+function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport) {
 
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
@@ -62,6 +63,7 @@ function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganis
                     $scope.showProgress = true;
                     $scope.title = 'data_export.uploading_data';
                     $scope.description = 'data_export.uploading_data_desc';
+                    DataExport.loadingStatus(true, null, $scope.details.export_job_id);
                 }
             });
             $scope.error = false;

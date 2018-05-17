@@ -178,7 +178,7 @@ function (
             cancel = 'data_export.go_back';
 
             Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
-                DataExport.startExport(data).then((id) => {
+                DataExport.startExport(data, sendToHDX).then((id) => {
                     sendToHDX ? $state.go('settings.hdxDetails', {jobId: id}) : $state.go('settings.dataExport');
                 });
             });
