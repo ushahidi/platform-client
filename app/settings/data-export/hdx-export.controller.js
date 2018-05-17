@@ -4,18 +4,22 @@ module.exports = [
     'Features',
     '$location',
     'HxlExport',
+    'DataExport',
     '_',
     'LoadingProgress',
+    'Notify',
 function (
     $scope,
     $rootScope,
     Features,
     $location,
     HxlExport,
+    DataExport,
     _,
-    LoadingProgress
+    LoadingProgress,
+    Notify
 ) {
-    $scope.selectAttribute = selectHxlAttribute;
+    $scope.selectHxlAttribute = selectHxlAttribute;
     $scope.addAnother = addAnother;
     $scope.range = range;
     $scope.selectTag = selectTag;
@@ -85,11 +89,11 @@ function (
     }
 
     function getSelectedFields() {
-        let selectedFields = 0;
+        let selectedFields = [];
         _.each($scope.forms, (form) => {
             _.each(form.attributes, (attribute) => {
                 if (attribute.selected && attribute.selected.length > 0) {
-                    selectedFields++;
+                    selectedFields.push(attribute.key);
                 }
             });
         });
@@ -116,37 +120,66 @@ function (
     }
 
     function formatIds() {
-        let data = [];
+        let hxlData = [];
         _.each($scope.forms, (form) => {
             _.each(form.attributes, (formAttribute) => {
                 if (formAttribute.selected && formAttribute.selected.length > 0) {
-                    let ids = {
-                            form_attribute_id : formAttribute.id,
-                            hxl_tag: null
-                        };
-
-                    if (formAttribute.selectedTag) {
-                        ids.hxl_tag = {
-                            hxl_tag_id: formAttribute.selectedTag.id
-                        };
-
-                        if (formAttribute.selectedHxlAttributes) {
-                            ids.hxl_tag.hxl_attribute_ids = [];
-                            _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
-                                ids.hxl_tag.hxl_attribute_ids.push(hxlAttribute.id);
-                            });
-                        }
+                    // checking if there is a tag selected. If not, there will be no hxl-attributes selected either
+                    let obj = formAttribute.selectedTag ? {form_attribute_id: formAttribute.id, hxl_tag_id: formAttribute.selectedTag.id} : {form_attribute_id: formAttribute.id};
+                    if (formAttribute.selectedHxlAttributes && !_.isEmpty(formAttribute.selectedHxlAttributes)) {
+                        _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
+                            let objWithAttr = angular.copy(obj);
+                            objWithAttr.hxl_attribute_id = parseInt(hxlAttribute.id);
+                            hxlData.push(objWithAttr);
+                        });
+                    } else {
+                        hxlData.push(obj);
                     }
-                    data.push(ids);
                 }
             });
         });
-        return data;
+        return hxlData;
     }
 
-    function exportData() {
-        let data = formatIds();
-        //Connect to endpoint
-        console.log(data);
+    function exportData(sendToHDX) {
+        if (formatIds().length === 0) {
+            // displaying notification if no fields are selected
+            var message =  '<p translate="data_export.no_fields"></p>';
+            Notify.notifyAction(message, null, false, 'warning', 'error');
+        } else {
+            let title, description, button, cancel;
+            let data = {
+                'fields': $scope.getSelectedFields(),
+                'filters':
+                {
+                    'status' : ['published','draft'],
+                    'has_location' : 'all',
+                    'orderby' : 'created',
+                    'order' : 'desc',
+                    'order_unlocked_on_top' : 'true',
+                    'source' : ['sms','twitter','web','email']
+                },
+                'send_to_hdx': sendToHDX,
+                'include_hxl': sendToHDX,
+                'send_to_browser': !sendToHDX,
+                'hxl_heading_row': formatIds()
+            };
+
+            if (sendToHDX) {
+                title = 'data_export.upload_title';
+                description = 'data_export.upload_desc';
+                button = 'data_export.upload_button';
+            } else {
+                title = 'data_export.hdx_csv_title';
+                description = 'data_export.hdx_csv_desc';
+                button = 'data_export.export_button';
+            }
+
+            cancel = 'data_export.go_back';
+
+            Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
+                DataExport.startExport(data);
+            });
+        }
     }
 }];
