@@ -42,6 +42,9 @@ function (
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
     });
+    $rootScope.$on('event:export_job:started', function () {
+        $scope.showProgress = true;
+    });
 
     // Redirect to home if not authorized
     if ($rootScope.hasPermission('Bulk Data Import') === false) {

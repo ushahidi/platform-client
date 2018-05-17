@@ -2,7 +2,7 @@ module.exports = [
     '$scope',
     '$rootScope',
     'Features',
-    '$location',
+    '$state',
     'HxlExport',
     'DataExport',
     '_',
@@ -12,7 +12,7 @@ function (
     $scope,
     $rootScope,
     Features,
-    $location,
+    $state,
     HxlExport,
     DataExport,
     _,
@@ -39,7 +39,7 @@ function (
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
         // Redirect to home if not enabled
         if (!$scope.hxlEnabled) {
-            return $location.path('/');
+            $state.go('posts.map');
         }
     });
 
@@ -178,7 +178,9 @@ function (
             cancel = 'data_export.go_back';
 
             Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
-                DataExport.startExport(data);
+                DataExport.startExport(data).then((id) => {
+                    sendToHDX ? $state.go('settings.hdxDetails', {jobId: id}) : $state.go('settings.dataExport');
+                });
             });
         }
     }

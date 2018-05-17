@@ -1086,7 +1086,7 @@
         "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
         "export_selected": "Export selected fields",
         "cancel": "Cancel",
-        "export_progress": "Export in progress...",
+        "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
         "no_fields": "Uh oh... you need to select some fields to export first.",
         "expires": "<strong>Expires:</strong> {{expires}}",
         "job": "CSV Export {{jobId}}",

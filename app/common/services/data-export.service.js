@@ -7,12 +7,13 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         query.entity_type = 'post';
 
         // saving the new job to the db
-        ExportJobEndpoint.save(query).$promise.then(function (job) {
+        return ExportJobEndpoint.save(query).$promise.then(function (job) {
             updateExportJobsList(job);
             // notifies the user
             loadingStatus(true, null, job);
             // start polling for ready job.
             startPolling([ExportJobEndpoint.getFresh({id: job.id})]);
+            return job.id;
         }, function (err) {
             loadingStatus(false, err);
         });
@@ -143,6 +144,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
             }
 
             Notify.notifyAction(message, null, loading, icon, 'circle-icon confirmation', action);
+            $rootScope.$broadcast('event:export_job:started');
         }
     }
 
