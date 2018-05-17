@@ -15,10 +15,11 @@ HdxDetailsController.$inject = [
     '$scope',
     '$rootScope',
     'HxlLicenseEndpoint',
+    'HxlOrganisationsEndpoint',
     '$state',
     'HxlMetadataEndpoint'
 ];
-function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, $state, HxlMetadataEndpoint) {
+function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint) {
 
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
@@ -31,19 +32,14 @@ function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, $state, Hx
     activate();
 
     function activate() {
-        HxlLicenseEndpoint.get().$promise.then((response)=> {
+
+        HxlLicenseEndpoint.get().$promise.then((response) => {
             $scope.licenses = response.results;
         });
-        $scope.organisations = [
-            {
-                id: 1,
-                name: 'USHAHIDI'
-            },
-            {
-                id: 2,
-                name: 'Comrades'
-            }
-        ];
+
+        HxlOrganisationsEndpoint.get().$promise.then((response) => {
+            $scope.organisations = response.results;
+        });
     }
 
     function uploadToHdx() {

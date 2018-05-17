@@ -56,7 +56,7 @@ angular.module('ushahidi.common', [
 .service('HxlTagEndpoint', require('./services/endpoints/hxl-tag-endpoint.js'))
 .service('HxlLicenseEndpoint', require('./services/endpoints/hxl-license-endpoint.js'))
 .service('HxlMetadataEndpoint', require('./services/endpoints/hxl-metadata-endpoint.js'))
-
+.service('HxlOrganisationsEndpoint', require('./services/endpoints/hxl-organisations-endpoint.js'))
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
