@@ -24,16 +24,16 @@
     <div class="main-col">
         <div class="form-sheet hdx">
             <div class="form-sheet-summary">
-                <h2 class="form-sheet-title" translate="data_export.add_details">Add details</h2>
-                <p translate="data_export.details_desc">To upload to the Humanitarian Data Exchange (HDX) some extra details are required.</p>
+                <h2 class="form-sheet-title" translate>{{title}}</h2>
+                <p translate>{{description}}</p>
             </div>
             <img class="field-logo" src="/img/hdx-logo.png" />
-            <div class="form-field">
+            <div class="form-field" ng-if="!showProgress">
                 <h2 translate="data_export.privacy_title">Privacy Settings</h2>
                 <p translate="data_export.privacy_desc">You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.</p>
             </div>
 
-            <form name="metadata">
+            <form name="metadata" ng-show="!showProgress">
                 <fieldset>
                     <legend class="required" translate="data_export.this_dataset">This data set is:</legend>
                     <div class="form-field radio">

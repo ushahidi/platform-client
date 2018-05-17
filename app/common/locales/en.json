@@ -1142,6 +1142,8 @@
         "add_license": "Add license",
         "read_more_licenses":"Read more about licenses",
         "submit_hdx": "Submit to HDX Account",
+        "uploading_data": "Uploading data...",
+        "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
         "validation": {
             "title": "A title is needed",
             "source": "Source is needed",

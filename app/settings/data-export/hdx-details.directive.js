@@ -23,6 +23,9 @@ function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganis
 
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
+    $scope.showProgress = false;
+    $scope.title = 'data_export.add_details';
+    $scope.description = 'data_export.details_desc';
 
     // Change layout class
     $rootScope.setLayout('layout-c');
@@ -32,6 +35,14 @@ function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganis
     activate();
 
     function activate() {
+        // todo: once we get metadata, check if there is an ongoing export-job with metadata already
+        // HxlMetadataEndpoint.get({export_job_id: $state.params.jobId}).$promise.then((response) => {
+        //     if(response.id) {
+        //         $scope.showProgress = true;
+        //         $scope.title = 'data_export.uploading_data';
+        //         $scope.description = 'data_export.uploading_data_desc';
+        //     }
+        // });
 
         HxlLicenseEndpoint.get().$promise.then((response) => {
             $scope.licenses = response.results;
@@ -46,8 +57,12 @@ function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganis
         if ($scope.metadata.$valid) {
             $scope.details.export_job_id = parseInt($state.params.jobId);
             $scope.details.user_id = $rootScope.currentUser.userId;
-            HxlMetadataEndpoint.save($scope.details).$promise.then((yay) => {
-                console.log(yay);
+            HxlMetadataEndpoint.save($scope.details).$promise.then((response) => {
+                if (response.id) {
+                    $scope.showProgress = true;
+                    $scope.title = 'data_export.uploading_data';
+                    $scope.description = 'data_export.uploading_data_desc';
+                }
             });
             $scope.error = false;
         } else {
