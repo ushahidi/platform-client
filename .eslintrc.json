@@ -20,7 +20,9 @@
         "jasmine": true,
         "es6": true
     },
+    "settings": { "import/resolver": { "node": { "paths": ["app"] } } },
     "rules": {
+        "import/extensions": ["never"],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "prettier/prettier": ["error"],
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
