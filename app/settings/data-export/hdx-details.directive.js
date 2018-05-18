@@ -14,6 +14,7 @@ function HdxDetails() {
 HdxDetailsController.$inject = [
     '$scope',
     '$rootScope',
+    'LoadingProgress',
     'HxlLicenseEndpoint',
     'HxlOrganisationsEndpoint',
     '$state',
@@ -21,10 +22,11 @@ HdxDetailsController.$inject = [
     'DataExport',
     'Notify'
 ];
-function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
+function HdxDetailsController($scope, $rootScope, LoadingProgress, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
 
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
+    $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.showProgress = false;
     $scope.title = 'data_export.add_details';
     $scope.description = 'data_export.details_desc';
