@@ -955,9 +955,9 @@
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
         },
         "user_settings": {
-            "user_settings_desc_1": "Here you can add your unique key for your Humanitarian Data Exchange (HDX) account.",
-            "user_settings_desc_2": "Once you set it up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
-            "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in",
+            "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
             "view_guide": "View the guide to your API key",
             "api_key": "Api key",
             "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
@@ -1133,7 +1133,7 @@
         "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
         "dataset_title": "Title of data set",
         "metadata_title": "Metadata",
-        "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields",
+        "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
         "source": "Source",
         "organisation": "Organisation",
         "select_organisation": "Select an organisation",
@@ -1144,6 +1144,7 @@
         "submit_hdx": "Submit to HDX Account",
         "uploading_data": "Uploading data...",
         "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
+        "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
         "validation": {
             "title": "A title is needed",
             "source": "Source is needed",
@@ -1405,7 +1406,8 @@
             "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
             "confirmation": "Got it",
             "cancel_export": "Cancel export",
-            "canceled_job" : "Your export-job is canceled"
+            "canceled_job" : "Your export-job is canceled",
+            "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
         }
     },
     "empty": {
