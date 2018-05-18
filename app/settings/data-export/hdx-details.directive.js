@@ -56,6 +56,10 @@ function HdxDetailsController($scope, $rootScope, HxlLicenseEndpoint, HxlOrganis
 
     function uploadToHdx() {
         if ($scope.metadata.$valid) {
+            //FIXME hack because private was undefined. @anna
+            if (typeof ($scope.details.private) === 'undefined') {
+                $scope.details.private = true;
+            }
             $scope.details.export_job_id = parseInt($state.params.jobId);
             $scope.details.user_id = $rootScope.currentUser.userId;
             HxlMetadataEndpoint.save($scope.details).$promise.then((response) => {
