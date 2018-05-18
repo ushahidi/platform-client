@@ -27,7 +27,7 @@
             </div>
             <img class="field-logo" src="/img/hdx-logo.png" />
             <div class="form-field" ng-if="!showProgress">
-                <h2 translate="data_export.privacy_title">Privacy Settings</h2>
+                <h3 translate="data_export.privacy_title">Privacy Settings</h3>
                 <p translate="data_export.privacy_desc">You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.</p>
             </div>
 
@@ -36,7 +36,7 @@
                     <legend class="required" translate="data_export.this_dataset">This data set is:</legend>
                     <div class="form-field radio">
                         <label for="private" translate="data_export.private_desc"></label>
-                        <input id="private" type="radio" ng-checked="true" ng-value="true" ng-model="details.private">
+                        <input id="private" type="radio" ng-value="true" ng-model="details.private">
                     </div>
                     <div class="form-field radio">
                         <label for="public" translate="data_export.public_desc"></label>
@@ -46,10 +46,10 @@
                 </fieldset>
 
                 <div class="form-field">
-                    <h2 translate="data_export.dataset">Dataset Title & Description</h2>
+                    <h3 translate="data_export.dataset">Dataset Title & Description</h3>
                     <p translate="data_export.dataset_desc">When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also,
                         avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.</p>
-                        <p translate="data_export.dataset_example">Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong></p>
+                    <p translate="data_export.dataset_example">Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong></p>
                 </div>
 
                 <div class="form-field" ng-class="{
@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="form-field">
-                    <h2 translate="data_export.metadata_title">Metadata</h2>
+                    <h3 translate="data_export.metadata_title">Metadata</h3>
                     <p translate="data_export.metadata_desc">Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields</p>
                 </div>
 
