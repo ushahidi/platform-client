@@ -41,27 +41,32 @@
 
             <img class="field-logo" src="/img/hdx-logo.png" />
 
-            <div class="form-field init required" ng-show="!hxlApiKey === !isLoading()">
+            <div class="form-field alert error" ng-show="api.$invalid && api.$dirty && !hxlApiKey">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <p translate="settings.user_settings.valid_key">A valid key is required</p>
+            </div>
+
+            <div
+                class="form-field init required"
+                ng-class="{'error': api.$invalid && api.$dirty,'success': !api.$invalid && api.$dirty}"
+                ng-show="!hxlApiKey"
+            >
                 <form name="api">
-                    <label class="required" for="api-key" translate="settings.user_settings.api_key">
+                    <label class="required " for="api-key" translate="settings.user_settings.api_key">
                         Api key
                     </label>
                     <p translate="settings.user_settings.profile_page"> Found on your Humanitarian Data Exchange (HDX) profile page</p>
-                    <input id="api-key" name="api-key" type="text" ng-model="apiKey" required="required"/>
-                    <div class="alert error" ng-show="!isKeySet() && api.$dirty">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                        </svg>
-                        <p translate="settings.user_settings.valid_key">A valid key is required</p>
-                    </div>
+                    <input id="api-key" name="api-key" ng-required="true" type="text" ng-model="apiKey" required="required"/>
                 </form>
             </div>
 
-            <div class="form-field" ng-show="!hxlApiKey && !isLoading()">
+            <div class="form-field" ng-show="!hxlApiKey">
                 <button class="button button-alpha" translate="app.save" ng-click="saveKey()">Save</button>
             </div>
 
-            <div class="form-field init required key" ng-show="hxlApiKey && !isLoading()">
+            <div class="form-field init required key" ng-show="hxlApiKey">
                 <label class="required" for="api-key" translate="settings.user_settings.api_key">
                     Api key
                 </label>
