@@ -25,7 +25,15 @@
         </div>
 
         <div class="main-col">
-            <div class="form-sheet">
+            <div class="form-sheet" ng-show="showProgress">
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate>
+                        data_export.title_hxl
+                    </h2>
+                    <p translate>data_export.export_progress</p>
+                </div>
+            </div>
+            <div class="form-sheet" ng-show="!showProgress">
                 <div class="form-sheet-summary">
                 <h2 class="form-sheet-title">
                     {{'data_export.hxl_title' | translate}}

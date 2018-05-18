@@ -28,6 +28,7 @@ function (
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.getSelectedFields = getSelectedFields;
     $scope.hxlAttributeSelected = hxlAttributeSelected;
+    $scope.showProgress = false;
 
     // Change layout class
     $rootScope.setLayout('layout-c');
@@ -179,7 +180,11 @@ function (
 
             Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
                 DataExport.startExport(data, sendToHDX).then((id) => {
-                    sendToHDX ? $state.go('settings.hdxDetails', {jobId: id}) : $state.go('settings.dataExport');
+                    if (sendToHDX) {
+                        $state.go('settings.hdxDetails', {jobId: id});
+                    } else {
+                        $scope.showProgress = true;
+                    }
                 });
             });
         }
