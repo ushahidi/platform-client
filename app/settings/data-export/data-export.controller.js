@@ -42,6 +42,9 @@ function (
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
     });
+    $rootScope.$on('event:export_job:started', function () {
+        $scope.showProgress = true;
+    });
 
     // Redirect to home if not authorized
     if ($rootScope.hasPermission('Bulk Data Import') === false) {
@@ -135,7 +138,7 @@ function (
     }
 
     function exportAll() {
-        DataExport.startExport({});
+        DataExport.startExport({send_to_hdx: false, include_hxl: false, send_to_browser: true});
         $scope.showProgress = true;
     }
 
@@ -144,12 +147,13 @@ function (
             .flatten() // concatinating attributes into one array
             .compact() // removing nulls
             .value(); // output
+
         if (fields.length === 0) {
             // displaying notification if no fields are selected
             var message =  '<p translate="data_export.no_fields"></p>';
             Notify.notifyAction(message, null, false, 'warning', 'error');
         } else {
-            DataExport.startExport({fields});
+            DataExport.startExport({fields, send_to_hdx: false, include_hxl: false, send_to_browser: true});
             $scope.showFields = false;
             $scope.showProgress = true;
         }

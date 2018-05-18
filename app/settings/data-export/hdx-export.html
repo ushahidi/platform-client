@@ -6,7 +6,7 @@
                 <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
                 <li><a href="/settings" translate>app.settings</a></li>
             </ol>
-            <h1 class="mode-context-title" translate>app.export</h1>
+            <h1 class="mode-context-title" translate>nav.export</h1>
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
@@ -25,7 +25,15 @@
         </div>
 
         <div class="main-col">
-            <div class="form-sheet">
+            <div class="form-sheet" ng-show="showProgress">
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate>
+                        data_export.title_hxl
+                    </h2>
+                    <p translate>data_export.export_progress</p>
+                </div>
+            </div>
+            <div class="form-sheet" ng-show="!showProgress">
                 <div class="form-sheet-summary">
                 <h2 class="form-sheet-title">
                     {{'data_export.hxl_title' | translate}}
@@ -136,18 +144,18 @@
                                     <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl attribute?</a>
                                 </td>
                                 <td>
-                                    {{attribute.pretty}}
+                                    {{formAttribute.pretty}}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </fieldset>
                 <div class="form-field"  ng-hide="isLoading()">
-                    <p>{{getSelectedFields()}} fields selected</p>
+                    <p>{{getSelectedFields().length}} fields selected</p>
                 </div>
-                <div class="form-field button-group" ng-hide="isLoading()">
-                    <button class="button-alpha" ng-click="exportData()">Export to CSV</button>
-                    <a ng-click="exportData()" class="button button-alpha">Upload to a hdx account</a>
+                <div class="form-field button-group">
+                    <button class="button-alpha" ng-click="exportData(false)">Export to CSV</button>
+                    <a ng-click="exportData(true)" class="button button-alpha">Upload to a hdx account</a>
                     <a ui-sref="settings.dataExport" class="button">Cancel</a>
             </div>
             </div>

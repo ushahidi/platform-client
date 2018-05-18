@@ -17,7 +17,6 @@ function (
     UserSettingsEndpoint,
     Notify
 ) {
-    $scope.isKeySet = isKeySet;
     $scope.saveKey = saveKey;
     $scope.newKey = newKey;
     $scope.hxlApiKey = false;
@@ -41,13 +40,6 @@ function (
             }
         });
     });
-
-    function isKeySet() {
-        if ($scope.apiKey) {
-            return true;
-        }
-        return false;
-    }
 
     function newKey() {
         $scope.hxlApiKey = false;
