@@ -46,8 +46,13 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                     if (job.status === 'SUCCESS') {
                         // when job is successful, we stop the polling...
                         $rootScope.$broadcast('event:export_job:stopped');
-                        // ..and download the file
-                        downloadFile(job.url);
+                        if (job.send_to_browser) {
+                            // ..and download the file
+                            downloadFile(job.url);
+                        } else if (job.send_to_hdx) {
+                            loadingStatus(false, false, job);
+                        }
+
                         updateExportJobsList(job);
                     } else if (job.status === 'FAILED') {
                         // when job is failed, we stop the polling...
@@ -130,7 +135,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
             Notify.apiErrors(err);
         } else {
             if (status === true) {
-                message = '<p translate="notify.export.in_progress">';
+                message = '<p translate="notify.export.in_progress"> ';
                 action = {
                     callback: cancelExport,
                     text: 'notify.export.cancel_export',
@@ -140,12 +145,12 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
                 icon = 'ellipses';
                 loading = true;
             } else {
-                message = '<p translate="notify.export.complete"></p>';
+
+                message = job && job.send_to_hdx ? '<p translate="notify.export.upload_complete"></p>' : '<p translate="notify.export.complete"></p>';
                 icon = 'thumb-up';
                 loading = false;
             }
             Notify.notifyAction(message, null, loading, icon, 'circle-icon confirmation', action);
-            $rootScope.$broadcast('event:export_job:started');
         }
     }
 
