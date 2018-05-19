@@ -1095,6 +1095,8 @@
         "pending": "<strong>Status:</strong> Pending",
         "failed": "<strong>Status:</strong> Failed",
         "queued": "<strong>Status:</strong> In Progress",
+        "pending_hdx": "Pending HDX",
+        "exported_to_cdn": "Exported to CDN",
         "tags_attributes": "Assign tags and attributes",
         "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
         "hxl_configure": "Configure HDX API",
