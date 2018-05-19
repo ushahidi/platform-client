@@ -15,6 +15,7 @@ HdxDetailsController.$inject = [
     '$scope',
     '$rootScope',
     'LoadingProgress',
+    'Features',
     'HxlLicenseEndpoint',
     'HxlOrganisationsEndpoint',
     '$state',
@@ -22,7 +23,7 @@ HdxDetailsController.$inject = [
     'DataExport',
     'Notify'
 ];
-function HdxDetailsController($scope, $rootScope, LoadingProgress, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
+function HdxDetailsController($scope, $rootScope, LoadingProgress, Features, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
 
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
@@ -33,7 +34,12 @@ function HdxDetailsController($scope, $rootScope, LoadingProgress, HxlLicenseEnd
     $scope.details = {
         private: true
     };
-
+    // Checking feature-flag for user-settings and hxl
+    Features.loadFeatures().then(function () {
+        if (!Features.isFeatureEnabled('hxl')) {
+            $state.go('posts.map');
+        }
+    });
     // Change layout class
     $rootScope.setLayout('layout-c');
     // Change mode
