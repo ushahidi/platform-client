@@ -8,14 +8,12 @@ import * as RolesActions from "react/common/state/roles/roles.actions";
 import {
     isLoadingRoles,
     getRoles
+    // getRoleError
 } from "react/common/state/roles/roles.reducers";
 import { getUsers } from "react/common/state/users/users.reducers";
+import InlineLoading from "react/common/ui/InlineLoading";
 
 class UserContainer extends React.Component {
-    static renderLoading() {
-        return <p>Loading...</p>;
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -30,6 +28,8 @@ class UserContainer extends React.Component {
     }
 
     componentDidMount() {
+        // Need UI to handle failures for this.
+        // Error currently saved to state.error
         this.props.RolesActions.requestRoles();
     }
 
@@ -73,7 +73,7 @@ class UserContainer extends React.Component {
                         {this.state.role}
                     </option>
                     {this.props.roles.map(role => (
-                        <option key={role.id} id={role.display_name}>
+                        <option key={role.id} id={role.name}>
                             {role.display_name}
                         </option>
                     ))}
@@ -81,6 +81,7 @@ class UserContainer extends React.Component {
             </label>
         );
     }
+
     render() {
         return (
             <main role="main">
@@ -122,9 +123,11 @@ class UserContainer extends React.Component {
                             required
                         />
                     </label>
-                    {this.props.isLoadingRoles
-                        ? this.renderLoading()
-                        : this.renderRoles()}
+                    {this.props.isLoadingRoles ? (
+                        <InlineLoading />
+                    ) : (
+                        this.renderRoles()
+                    )}
                     <button type="submit">Submit</button>
                 </form>
                 <div />
@@ -138,6 +141,7 @@ function mapStateToProps(state) {
         users: getUsers(state),
         roles: getRoles(state),
         isLoadingRoles: isLoadingRoles(state)
+        // error: getRoleError(state)
     };
 }
 
@@ -157,6 +161,9 @@ UserContainer.propTypes = {
     }).isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
     isLoadingRoles: PropTypes.bool.isRequired
+    // error: PropTypes.shape({
+    //     message: PropTypes.string
+    // }).isRequired
 };
 
 export { UserContainer as PlainUserContainer };

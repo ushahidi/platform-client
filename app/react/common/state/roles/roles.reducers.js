@@ -1,22 +1,36 @@
-import { REQUEST_ROLES, RECEIVE_ROLES } from "./roles.actions";
+import {
+    REQUEST_ROLES,
+    RECEIVE_ROLES,
+    HANDLE_REQUEST_FAILURE
+} from "./roles.actions";
 
 const initialState = {
     roles: [],
     // To Do separate ui from db state
-    isLoading: true
+    isLoading: true,
+    error: {}
 };
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case REQUEST_ROLES:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 isLoading: true
-            });
+            };
         case RECEIVE_ROLES:
-            return Object.assign({}, state, {
-                roles: action.roles,
+            return {
+                ...state,
+                roles: [...state.roles, ...action.roles],
                 isLoading: false
-            });
+            };
+        case HANDLE_REQUEST_FAILURE:
+            return {
+                // keep existing roles in state if there are any?
+                ...state,
+                error: action.error,
+                isLoading: false
+            };
         default:
             return state;
     }
@@ -29,4 +43,8 @@ export function isLoadingRoles(state) {
 
 export function getRoles(state) {
     return state.roles.roles;
+}
+
+export function getRoleError(state) {
+    return state.roles.error;
 }
