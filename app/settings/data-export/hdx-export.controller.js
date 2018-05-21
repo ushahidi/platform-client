@@ -161,7 +161,7 @@ function (
                     'source' : ['sms','twitter','web','email']
                 },
                 'send_to_hdx': sendToHDX,
-                'include_hxl': sendToHDX,
+                'include_hxl': true,
                 'send_to_browser': !sendToHDX,
                 'hxl_heading_row': formatIds()
             };
