@@ -7,7 +7,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SAVE_NEW_USER:
-            return action;
+            return state;
         case UPDATE_USERS_STATE:
             return {
                 ...state,
@@ -16,4 +16,8 @@ export default function reducer(state = initialState, action) {
         default:
             return state;
     }
+}
+
+export function getUsers(state) {
+    return state.users.users;
 }

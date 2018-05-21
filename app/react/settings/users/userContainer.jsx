@@ -4,18 +4,33 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import connectWithStore from "react/react-transition/connectWithStore";
 import * as UsersActions from "react/common/state/users/users.actions";
+import * as RolesActions from "react/common/state/roles/roles.actions";
+import {
+    isLoadingRoles,
+    getRoles
+} from "react/common/state/roles/roles.reducers";
+import { getUsers } from "react/common/state/users/users.reducers";
 
 class UserContainer extends React.Component {
+    static renderLoading() {
+        return <p>Loading...</p>;
+    }
+
     constructor(props) {
         super(props);
         this.state = {
-            email: "testing@ushahidi.com",
-            password: "testing",
-            realname: "testing",
-            role: "user"
+            email: "",
+            password: "",
+            realname: "",
+            role: "Select a role"
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.renderRoles = this.renderRoles.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.RolesActions.requestRoles();
     }
 
     handleSubmit(e) {
@@ -43,6 +58,28 @@ class UserContainer extends React.Component {
                 return null;
         }
         return null;
+    }
+
+    renderRoles() {
+        return (
+            <label htmlFor="role">
+                Role
+                <select
+                    id="role"
+                    value={this.state.role}
+                    onChange={this.handleChange}
+                >
+                    <option id="default" value={this.state.role}>
+                        {this.state.role}
+                    </option>
+                    {this.props.roles.map(role => (
+                        <option key={role.id} id={role.display_name}>
+                            {role.display_name}
+                        </option>
+                    ))}
+                </select>
+            </label>
+        );
     }
     render() {
         return (
@@ -85,17 +122,9 @@ class UserContainer extends React.Component {
                             required
                         />
                     </label>
-                    <label htmlFor="role">
-                        Name
-                        <input
-                            type="text"
-                            placeholder="role"
-                            id="role"
-                            value={this.state.role}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </label>
+                    {this.props.isLoadingRoles
+                        ? this.renderLoading()
+                        : this.renderRoles()}
                     <button type="submit">Submit</button>
                 </form>
                 <div />
@@ -106,20 +135,28 @@ class UserContainer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        users: state.users
+        users: getUsers(state),
+        roles: getRoles(state),
+        isLoadingRoles: isLoadingRoles(state)
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        UsersActions: bindActionCreators(UsersActions, dispatch)
+        UsersActions: bindActionCreators(UsersActions, dispatch),
+        RolesActions: bindActionCreators(RolesActions, dispatch)
     };
 }
 
 UserContainer.propTypes = {
     UsersActions: PropTypes.shape({
         saveNewUser: PropTypes.func.isRequired
-    }).isRequired
+    }).isRequired,
+    RolesActions: PropTypes.shape({
+        requestRoles: PropTypes.func.isRequired
+    }).isRequired,
+    roles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isLoadingRoles: PropTypes.bool.isRequired
 };
 
 export { UserContainer as PlainUserContainer };
