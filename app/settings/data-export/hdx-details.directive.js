@@ -71,7 +71,7 @@ function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress,
             $scope.details.user_id = $rootScope.currentUser.userId;
             HxlMetadataEndpoint.save($scope.details).$promise.then((response) => {
                 if (response.id) {
-                    $scope.exportJob.metadata_id = response.id;
+                    $scope.exportJob.hxl_meta_data_id = response.id;
                     DataExport.startExport($scope.exportJob).then((response)=> {
                         $scope.showProgress = true;
                         $scope.title = 'data_export.uploading_data';
