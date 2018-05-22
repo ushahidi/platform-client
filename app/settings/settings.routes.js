@@ -76,10 +76,8 @@ function (
             name: 'settings.hdxDetails',
             url: '/settings/hdx-details',
             component: 'hdxDetails',
-            resolve: {
-                exportJob: ['$transition$', function ($transition$) {
-                    return $transition$.params().exportJob;
-                }]
+            params: {
+                exportJob: null
             }
         }
     )

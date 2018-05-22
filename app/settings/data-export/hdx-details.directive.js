@@ -4,9 +4,6 @@ HdxDetails.$inject = [];
 function HdxDetails() {
     return {
         restrict: 'E',
-        scope: {
-            exportJob: '='
-        },
         controller: HdxDetailsController,
         template: require('./hdx-details.html')
     };
@@ -15,6 +12,7 @@ function HdxDetails() {
 HdxDetailsController.$inject = [
     '$scope',
     '$rootScope',
+    '$stateParams',
     'LoadingProgress',
     'Features',
     'HxlLicenseEndpoint',
@@ -24,7 +22,8 @@ HdxDetailsController.$inject = [
     'DataExport',
     'Notify'
 ];
-function HdxDetailsController($scope, $rootScope, LoadingProgress, Features, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
+function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress, Features, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
+    $scope.exportJob = $stateParams.exportJob;
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
     $scope.isLoading = LoadingProgress.getLoadingState;
