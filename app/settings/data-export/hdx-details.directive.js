@@ -4,8 +4,6 @@ HdxDetails.$inject = [];
 function HdxDetails() {
     return {
         restrict: 'E',
-        scope: {
-        },
         controller: HdxDetailsController,
         template: require('./hdx-details.html')
     };
@@ -14,6 +12,7 @@ function HdxDetails() {
 HdxDetailsController.$inject = [
     '$scope',
     '$rootScope',
+    '$stateParams',
     'LoadingProgress',
     'Features',
     'HxlLicenseEndpoint',
@@ -23,8 +22,8 @@ HdxDetailsController.$inject = [
     'DataExport',
     'Notify'
 ];
-function HdxDetailsController($scope, $rootScope, LoadingProgress, Features, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
-
+function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress, Features, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
+    $scope.exportJob = $stateParams.exportJob;
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
     $scope.isLoading = LoadingProgress.getLoadingState;
@@ -72,10 +71,12 @@ function HdxDetailsController($scope, $rootScope, LoadingProgress, Features, Hxl
             $scope.details.user_id = $rootScope.currentUser.userId;
             HxlMetadataEndpoint.save($scope.details).$promise.then((response) => {
                 if (response.id) {
-                    $scope.showProgress = true;
-                    $scope.title = 'data_export.uploading_data';
-                    $scope.description = 'data_export.uploading_data_desc';
-                    DataExport.loadingStatus(true, null, $scope.details.export_job_id);
+                    $scope.exportJob.metadata_id = response.id;
+                    DataExport.startExport($scope.exportJob).then((response)=> {
+                        $scope.showProgress = true;
+                        $scope.title = 'data_export.uploading_data';
+                        $scope.description = 'data_export.uploading_data_desc';
+                    });
                 }
             }, (err) => {
                 Notify.error('data_export.uploading_data_err');

@@ -74,8 +74,11 @@ function (
     .state(
         {
             name: 'settings.hdxDetails',
-            url: '/settings/hdx-details/:jobId',
-            component: 'hdxDetails'
+            url: '/settings/hdx-details',
+            component: 'hdxDetails',
+            params: {
+                exportJob: null
+            }
         }
     )
 
