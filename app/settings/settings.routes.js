@@ -74,8 +74,13 @@ function (
     .state(
         {
             name: 'settings.hdxDetails',
-            url: '/settings/hdx-details/:jobId',
-            component: 'hdxDetails'
+            url: '/settings/hdx-details',
+            component: 'hdxDetails',
+            resolve: {
+                exportJob: ['$transition$', function ($transition$) {
+                    return $transition$.params().exportJob;
+                }]
+            }
         }
     )
 

@@ -4,7 +4,6 @@ module.exports = [
     'Features',
     '$state',
     'HxlExport',
-    'DataExport',
     '_',
     'LoadingProgress',
     'Notify',
@@ -14,7 +13,6 @@ function (
     Features,
     $state,
     HxlExport,
-    DataExport,
     _,
     LoadingProgress,
     Notify
@@ -179,14 +177,12 @@ function (
             cancel = 'data_export.go_back';
 
             Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
-                DataExport.startExport(data, sendToHDX).then((id) => {
                     if (sendToHDX) {
-                        $state.go('settings.hdxDetails', {jobId: id});
+                        $state.go('settings.hdxDetails', {exportJob: data });
                     } else {
                         $scope.showProgress = true;
                     }
                 });
-            });
         }
     }
 }];
