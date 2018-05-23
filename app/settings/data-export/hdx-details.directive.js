@@ -15,6 +15,7 @@ HdxDetailsController.$inject = [
     '$stateParams',
     'LoadingProgress',
     'Features',
+    'ConfigEndpoint',
     'HxlLicenseEndpoint',
     'HxlOrganisationsEndpoint',
     '$state',
@@ -22,7 +23,7 @@ HdxDetailsController.$inject = [
     'DataExport',
     'Notify'
 ];
-function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress, Features, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
+function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress, Features, ConfigEndpoint, HxlLicenseEndpoint, HxlOrganisationsEndpoint, $state, HxlMetadataEndpoint, DataExport, Notify) {
     $scope.exportJob = $stateParams.exportJob;
     $scope.uploadToHdx = uploadToHdx;
     $scope.error = false;
@@ -55,6 +56,11 @@ function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress,
         //         $scope.description = 'data_export.uploading_data_desc';
         //     }
         // });
+
+        // Pre-populating source with deployment-name
+        ConfigEndpoint.get({id: 'site'}, function (site) {
+            $scope.details.source = site.name;
+        });
 
         HxlLicenseEndpoint.get().$promise.then((response) => {
             $scope.licenses = response.results;
