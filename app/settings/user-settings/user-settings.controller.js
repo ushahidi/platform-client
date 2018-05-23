@@ -50,6 +50,7 @@ function (
     }
 
     function saveKey() {
+        $scope.api.$dirty = true;
         if ($scope.apiKey) {
             UserSettingsEndpoint.saveCache({id: $scope.hxlApiId,  user_id: $rootScope.currentUser.userId,  config_key: 'hdx_api_key', config_value: $scope.apiKey}).$promise.then((response) => {
                 $scope.hxlApiKey = '*** *** *** *** *** *** *** ' + $scope.apiKey.slice($scope.apiKey.length - 4);
