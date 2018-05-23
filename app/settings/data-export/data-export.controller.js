@@ -38,6 +38,7 @@ function (
     $scope.switchTab = switchTab;
     $scope.exportJobs = [];
     $scope.dataExportTitle =  'data_export.title';
+    $scope.loadingFeature = true;
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
@@ -56,6 +57,7 @@ function (
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
         if ($scope.hxlEnabled) {
             $scope.dataExportTitle = 'data_export.title_hxl';
+            $scope.loadingFeature = false;
         }
     });
 
@@ -65,6 +67,7 @@ function (
         _.each(settings.results, (setting) => {
             if (setting.config_key === 'hdx_api_key') {
                 $scope.hxlApiKey = true;
+                $scope.loadingFeature = false;
             }
         });
     });
