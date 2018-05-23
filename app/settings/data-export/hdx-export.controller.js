@@ -7,6 +7,7 @@ module.exports = [
     '_',
     'LoadingProgress',
     'Notify',
+    'DataExport',
 function (
     $scope,
     $rootScope,
@@ -15,7 +16,8 @@ function (
     HxlExport,
     _,
     LoadingProgress,
-    Notify
+    Notify,
+    DataExport
 ) {
     $scope.selectHxlAttribute = selectHxlAttribute;
     $scope.addAnother = addAnother;
@@ -180,7 +182,9 @@ function (
                     if (sendToHDX) {
                         $state.go('settings.hdxDetails', {exportJob: data });
                     } else {
-                        $scope.showProgress = true;
+                        DataExport.startExport(data, sendToHDX).then((id) => {
+                            $scope.showProgress = true;
+                        });
                     }
                 });
         }
