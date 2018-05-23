@@ -6,6 +6,7 @@ module.exports = [
     'HxlExport',
     '_',
     'LoadingProgress',
+    '$anchorScroll',
     'Notify',
     'DataExport',
 function (
@@ -16,6 +17,7 @@ function (
     HxlExport,
     _,
     LoadingProgress,
+    $anchorScroll,
     Notify,
     DataExport
 ) {
@@ -98,6 +100,10 @@ function (
                 }
             });
         });
+
+        if ($scope.fieldError && selectedFields.length > 0) {
+            $scope.fieldError = false;
+        }
         return selectedFields;
     }
 
@@ -144,10 +150,11 @@ function (
 
     function exportData(sendToHDX) {
         if (formatIds().length === 0) {
-            // displaying notification if no fields are selected
-            var message =  '<p translate="data_export.no_fields"></p>';
-            Notify.notifyAction(message, null, false, 'warning', 'error');
+            // scrolling to top and display the error-message
+            $scope.fieldError = true;
+            $anchorScroll();
         } else {
+            $scope.fieldError = false;
             let title, description, button, cancel;
             let data = {
                 'fields': $scope.getSelectedFields(),
