@@ -23,7 +23,7 @@ class Session {
         return Session.instance;
     }
 
-    static loadSessionData() {
+    loadSessionData() {
         // use .map instead of forEach
         const newSessionData = Object.assign({}, clearedSessionData);
         Object.keys(newSessionData).forEach(key => {

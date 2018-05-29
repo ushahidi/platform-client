@@ -1,4 +1,4 @@
-const localStorageMock = () => {
+const localStorageMock = (() => {
     let store = {};
 
     return {
@@ -15,9 +15,7 @@ const localStorageMock = () => {
             store = {};
         }
     };
-};
-
-localStorageMock();
+})();
 
 Object.defineProperty(window, "localStorage", {
     value: localStorageMock
