@@ -1,9 +1,6 @@
-// export Util as
-
-// export default ngModule
 /* eslint-disable */
 
-import * as _ from 'underscore'
+import * as _ from "underscore";
 
 window.ushahidi = window.ushahidi || {};
 
@@ -12,10 +9,13 @@ export default {
         return window.location.href;
     },
     url(relative_url) {
-        return (window.ushahidi.backendUrl).replace(/\/$/, '') + relative_url;
+        return window.ushahidi.backendUrl.replace(/\/$/, "") + relative_url;
     },
     apiUrl(relative_url) {
-        return window.ushahidi.backendUrl.replace(/\/$/, '') + '/api/v3' + relative_url;
+        return `${window.ushahidi.backendUrl.replace(
+            /\/$/,
+            ""
+        )}/api/v3${relative_url}`;
     },
     deploymentUrl(relative_url) {
         const pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
@@ -30,14 +30,11 @@ export default {
     // Usually applicable where you want to be able to select an element by its ID
     // but there is no id available
     simpluUUID() {
-        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-            /[xy]/g,
-            c => {
-                let r = (Math.random() * 16) | 0,
-                    v = c === "x" ? r : (r & 0x3) | 0x8;
-                return v.toString(16);
-            }
-        );
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+            let r = (Math.random() * 16) | 0,
+                v = c === "x" ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        });
     },
     bindAllFunctionsToSelf(object) {
         // bind all functions on self to use self as their 'this' context

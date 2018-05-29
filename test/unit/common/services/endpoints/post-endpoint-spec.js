@@ -1,47 +1,53 @@
-require('angular-resource');
-require('angular-cache');
+/* eslint-disable */
 
+require("angular-resource");
+require("angular-cache");
 
-describe('PostEndpoint', function () {
+describe("PostEndpoint", () => {
+    let $rootScope, $httpBackend, BACKEND_URL, PostEndpoint, mockPostResponse;
 
-    var $rootScope,
-        $httpBackend,
-        BACKEND_URL,
-        PostEndpoint,
-        mockPostResponse;
+    beforeEach(() => {
+        const testApp = makeTestApp();
 
+        testApp.requires.push("ngResource", "angular-cache");
+        testApp.service(
+            "PostEndpoint",
+            require("app/common/services/endpoints/post-endpoint.js")
+        );
 
-    beforeEach(function () {
-        var testApp = makeTestApp();
-
-        testApp.requires.push('ngResource', 'angular-cache');
-        testApp
-        .service('PostEndpoint', require('app/common/services/endpoints/post-endpoint.js'));
-
-
-
-        angular.mock.module('testApp');
+        angular.mock.module("testApp");
     });
 
-    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _PostEndpoint_) {
-        $rootScope = _$rootScope_;
-        $httpBackend = _$httpBackend_;
-        BACKEND_URL = _CONST_.BACKEND_URL;
-        PostEndpoint = _PostEndpoint_;
-    }));
+    beforeEach(
+        angular.mock.inject(
+            (_$httpBackend_, _$rootScope_, _CONST_, _PostEndpoint_) => {
+                $rootScope = _$rootScope_;
+                $httpBackend = _$httpBackend_;
+                BACKEND_URL = _CONST_.BACKEND_URL;
+                PostEndpoint = _PostEndpoint_;
+            }
+        )
+    );
 
-    beforeEach(function () {
+    beforeEach(() => {
         mockPostResponse = {
-            results: [{
-                'id': '1',
-                'type': 'report',
-                'title': 'Test post'
-            }]};
+            results: [
+                {
+                    id: "1",
+                    type: "report",
+                    title: "Test post"
+                }
+            ]
+        };
     });
 
-    it('should call the correct url and return the correct data', function () {
-        var successCallback = jasmine.createSpy('success');
-        $httpBackend.expectGET(BACKEND_URL + '/api/v2/posts?order=desc&orderby=post_date').respond(mockPostResponse);
+    it("should call the correct url and return the correct data", () => {
+        const successCallback = jasmine.createSpy("success");
+        $httpBackend
+            .expectGET(
+                `${BACKEND_URL}/api/v3/posts?order=desc&orderby=post_date`
+            )
+            .respond(mockPostResponse);
 
         PostEndpoint.query().$promise.then(successCallback);
 
@@ -50,11 +56,13 @@ describe('PostEndpoint', function () {
 
         expect(successCallback).toHaveBeenCalled();
 
-        var actualFirstResource = successCallback.calls.mostRecent().args[0].results[0];
-        var expectedFirstResource = mockPostResponse.results[0];
+        const actualFirstResource = successCallback.calls.mostRecent().args[0]
+            .results[0];
+        const expectedFirstResource = mockPostResponse.results[0];
         expect(actualFirstResource.id).toEqual(expectedFirstResource.id);
         expect(actualFirstResource.type).toEqual(expectedFirstResource.type);
         expect(actualFirstResource.title).toEqual(expectedFirstResource.title);
     });
-
 });
+
+/* eslint-enable */

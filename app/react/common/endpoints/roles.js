@@ -1,28 +1,11 @@
 import Util from "common/services/util";
-// import 'react/common/fetchInterceptor';
+import request from "./axiosInstance";
 
 export default {
     getRoles() {
-        const headers = new Headers();
-        headers.set("Content-Type", "application/json");
-        headers.set(
-            "Authorization",
-            "Bearer fl5mFiB4eIJVBDVLqCn5G39v7OjiYNmCpej1rzk7"
-        );
-        return fetch(Util.apiUrl("/roles"), {
-            method: "GET",
-            headers
-        })
-            .then(res => {
-                if (!res.ok) {
-                    throw Error(res.statusText);
-                }
-                return res;
-            })
-            .then(res => res.json())
-            .catch(() => {
-                throw new Error("Couldn't get roles");
-                // should probably be getting a specific error from the api
-            });
+        // would like to remove util.apiUrl from here,
+        // but can't do it yet because window.ushahid.backendUrl
+        // is undefined when the axios instance is instantiated
+        return request.get(Util.apiUrl("/roles"));
     }
 };

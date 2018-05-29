@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A User Form without roles displays loading instead 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <label
+    htmlFor="realname"
+  >
+    Name
+    <input
+      id="realname"
+      onChange={[Function]}
+      placeholder="What is this person's full name"
+      required={true}
+      type="text"
+      value=""
+    />
+  </label>
+  <label
+    htmlFor="email"
+  >
+    Email
+    <input
+      id="email"
+      onChange={[Function]}
+      placeholder="email"
+      required={true}
+      type="text"
+      value=""
+    />
+  </label>
+  <label
+    htmlFor="password"
+  >
+    Password
+    <input
+      id="password"
+      onChange={[Function]}
+      placeholder="password"
+      required={true}
+      type="password"
+      value=""
+    />
+  </label>
+  <p>
+    Loading...
+  </p>
+  <button
+    type="submit"
+  >
+    Submit
+  </button>
+</form>
+`;
+
+exports[`a User Form with roles displays roles correctly 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <label
+    htmlFor="realname"
+  >
+    Name
+    <input
+      id="realname"
+      onChange={[Function]}
+      placeholder="What is this person's full name"
+      required={true}
+      type="text"
+      value=""
+    />
+  </label>
+  <label
+    htmlFor="email"
+  >
+    Email
+    <input
+      id="email"
+      onChange={[Function]}
+      placeholder="email"
+      required={true}
+      type="text"
+      value=""
+    />
+  </label>
+  <label
+    htmlFor="password"
+  >
+    Password
+    <input
+      id="password"
+      onChange={[Function]}
+      placeholder="password"
+      required={true}
+      type="password"
+      value=""
+    />
+  </label>
+  <label
+    htmlFor="role"
+  >
+    Role
+    <select
+      id="role"
+      onChange={[Function]}
+      value="Select a role"
+    >
+      <option
+        id="default"
+        value="Select a role"
+      >
+        Select a role
+      </option>
+      <option
+        id="email"
+      />
+    </select>
+  </label>
+  <button
+    type="submit"
+  >
+    Submit
+  </button>
+</form>
+`;

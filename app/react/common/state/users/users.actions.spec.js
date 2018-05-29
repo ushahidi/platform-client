@@ -1,8 +1,20 @@
+import instance from "react/common/endpoints/axiosInstance";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import "isomorphic-fetch";
-import fetchMock from "fetch-mock";
-import { SAVE_NEW_USER, RECEIVE_USER, saveNewUser } from "./users.actions";
+import moxios from "moxios";
+import expect from "expect";
+import {
+    SAVE_NEW_USER,
+    RECEIVE_USER,
+    HANDLE_REQUEST_FAILURE,
+    saveNewUser
+} from "./users.actions";
+
+const error = {
+    error: {
+        errorMessage: "error!"
+    }
+};
 
 const userResponse = {
     id: 5,
@@ -32,19 +44,50 @@ const userResponse = {
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe("async actions", () => {
+describe("Users actions", () => {
+    beforeEach(() => {
+        moxios.install(instance);
+    });
+
     afterEach(() => {
-        fetchMock.reset();
-        fetchMock.restore();
+        moxios.uninstall(instance);
     });
 
     it("creates RECEIVE_USER and SAVE_NEW_USER when POST user has been done", () => {
-        fetchMock.postOnce("*", userResponse);
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+                status: 200,
+                response: userResponse
+            });
+        });
         const expectedActions = [
             { type: SAVE_NEW_USER },
             {
                 type: RECEIVE_USER,
                 user: userResponse
+            }
+        ];
+        const store = mockStore({ users: [] });
+        return store.dispatch(saveNewUser()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    it("creates HANDLE_REQUEST_FAILURE when POST user fails", () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.reject({
+                status: 401,
+                response: error
+            });
+        });
+        const expectedActions = [
+            { type: SAVE_NEW_USER },
+            {
+                type: HANDLE_REQUEST_FAILURE,
+                error
             }
         ];
         const store = mockStore({ users: [] });

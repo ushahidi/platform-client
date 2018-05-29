@@ -44,6 +44,9 @@
     ],
     "modulePaths": [
       "app"
+    ],
+    "setupFiles": [
+      "./app/react/browserMocks.js"
     ]
   },
   "prettier": {
@@ -82,8 +85,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
+    "expect": "^23.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
-    "fetch-mock": "^6.4.2",
     "file-loader": "^0.11.1",
     "fs-walk": "0.0.1",
     "gulp": "^3.9.0",
@@ -95,7 +98,6 @@
     "html-webpack-plugin": "^2.22.0",
     "husky": "^0.14.3",
     "imports-loader": "^0.7.1",
-    "isomorphic-fetch": "^2.2.1",
     "jasmine-core": "^2.5.2",
     "jest": "^22.4.3",
     "json-loader": "^0.5.4",
@@ -111,6 +113,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.3",
     "lint-staged": "^7.0.4",
+    "moxios": "^0.4.0",
     "ng-annotate-loader": "0.6.0",
     "node-libs-browser": "^2.0.0",
     "node-sass": "^4.5.2",
@@ -151,9 +154,9 @@
     "angular-translate": "^2.11.0",
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-ui-bootstrap": "^2.5.0",
+    "axios": "^0.18.0",
     "checklist-model": "~0.11.0",
     "d3": "^3.5.17",
-    "fetch-intercept": "^2.2.3",
     "leaflet": "~1.0.1",
     "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.5",

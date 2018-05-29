@@ -1,6 +1,8 @@
 import { react2angular } from "react2angular";
 import MyComponent from "./directives/ush-logo-react/ush-logo.jsx";
 import Util from "./services/util.js";
+import Session from "./auth/session.service.js";
+
 /* eslint-disable */
 
 angular
@@ -15,7 +17,7 @@ angular
     // Authentication
     .service("Authentication", require("./auth/authentication.service.js"))
     .service("Registration", require("./auth/registration.service.js"))
-    .service("Session", require("./auth/session.service.js"))
+    .service("Session", () => Session)
     .service("PasswordReset", require("./auth/password-reset.service.js"))
     .service("TermsOfService", require("./auth/tos.service.js"))
     .directive("login", require("./auth/login.directive.js"))

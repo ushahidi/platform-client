@@ -1,224 +1,239 @@
-describe('Session', function () {
+// REPLACE SESSION TESTS FOR VANILLA JS MODULE
+// import Session from "app/common/auth/session.service.js"
 
-    var mockedLocalStorageHash,
-    Session,
-    emptySessionData;
+// describe('Session', function () {
 
-    beforeEach(function () {
+//     var mockedLocalStorageHash,
+//     Session,
+//     emptySessionData;
 
-        emptySessionData = {
-            userId: undefined,
-            realname: undefined,
-            email: undefined,
-            role: undefined,
-            permissions: undefined,
-            accessToken: undefined,
-            accessTokenExpires: undefined,
-            grantType: undefined,
-            gravatar: undefined,
-            language: undefined
-        };
+//     beforeEach(function () {
 
-        var testApp = makeTestApp();
+//         emptySessionData = {
+//             userId: undefined,
+//             realname: undefined,
+//             email: undefined,
+//             role: undefined,
+//             permissions: undefined,
+//             accessToken: undefined,
+//             accessTokenExpires: undefined,
+//             grantType: undefined,
+//             gravatar: undefined,
+//             language: undefined
+//         };
 
-        mockedLocalStorageHash = {};
-        testApp.service('localStorageService', function () {
-            return {
-                get: function (key) {
-                    return mockedLocalStorageHash[key];
-                },
-                set: function (key, val) {
-                    mockedLocalStorageHash[key] = val;
-                },
-                remove: function (key) {
-                    delete mockedLocalStorageHash[key];
-                },
-                clear: function () {
-                    mockedLocalStorageHash = {};
-                }
-            };
-        })
-        .service('Session', require('app/common/auth/session.service.js'));
+//         var testApp = makeTestApp();
 
+//         mockedLocalStorageHash = {};
+// window.localStorage = {
+//     getItem: function (key) {
+//         return mockedLocalStorageHash[key];
+//     },
+//     setItem: function (key, val) {
+//         mockedLocalStorageHash[key] = val;
+//     },
+//     removeItem: function (key) {
+//         delete mockedLocalStorageHash[key];
+//     },
+//     clearItem: function () {
+//         mockedLocalStorageHash = {};
+//     }
+// };
 
+//         // mockedLocalStorageHash = {};
+//         // testApp.service('localStorage', function () {
+//         //     return {
+//         //         get: function (key) {
+//         //             return mockedLocalStorageHash[key];
+//         //         },
+//         //         set: function (key, val) {
+//         //             mockedLocalStorageHash[key] = val;
+//         //         },
+//         //         remove: function (key) {
+//         //             delete mockedLocalStorageHash[key];
+//         //         },
+//         //         clear: function () {
+//         //             mockedLocalStorageHash = {};
+//         //         }
+//         //     };
+//         // })
+//         testApp.service("Session", () => Session)
 
-    });
+//     });
 
-    beforeEach(angular.mock.module('testApp'));
+//     beforeEach(angular.mock.module('testApp'));
 
-    describe('getSessionData', function () {
-        var returnedSessionData;
+//     describe('getSessionData', function () {
+//         var returnedSessionData;
 
-        describe('without values stored in localStorage', function () {
+//         describe('without values stored in localStorage', function () {
 
-            beforeEach(angular.mock.inject(function (_Session_) {
-                Session = _Session_;
-            }));
+//             beforeEach(angular.mock.inject(function (_Session_) {
+//                 Session = _Session_;
+//             }));
 
-            beforeEach(function () {
-                returnedSessionData = Session.getSessionData();
-            });
+//             beforeEach(function () {
+//                 returnedSessionData = Session.getSessionData();
+//             });
 
-            it('returns the empty session data', function () {
-                expect(returnedSessionData).toEqual(emptySessionData);
-            });
-        });
+//             it('returns the empty session data', function () {
+//                 expect(returnedSessionData).toEqual(emptySessionData);
+//             });
+//         });
 
-        describe('with values stored in localStorage', function () {
+//         describe('with values stored in localStorage', function () {
 
-            beforeEach(function () {
-                mockedLocalStorageHash = {
-                    userId: '1',
-                    accessToken: 'secrettoken'
-                };
-            });
+//             beforeEach(function () {
+//                 mockedLocalStorageHash = {
+//                     userId: '1',
+//                     accessToken: 'secrettoken'
+//                 };
+//             });
 
-            beforeEach(angular.mock.inject(function (_Session_) {
-                Session = _Session_;
-            }));
+//             beforeEach(angular.mock.inject(function (_Session_) {
+//                 Session = _Session_;
+//             }));
 
-            beforeEach(function () {
-                returnedSessionData = Session.getSessionData();
-            });
+//             beforeEach(function () {
+//                 returnedSessionData = Session.getSessionData();
+//             });
 
-            it('returns the session data with the stored values from localStorage',
-            function () {
-                var expectedSessionData = {
-                    userId: '1',
-                    realname: undefined,
-                    email: undefined,
-                    role: undefined,
-                    permissions: undefined,
-                    accessToken: 'secrettoken',
-                    accessTokenExpires: undefined,
-                    grantType: undefined,
-                    gravatar: undefined,
-                    language: undefined
-                };
+//             it('returns the session data with the stored values from localStorage',
+//             function () {
+//                 var expectedSessionData = {
+//                     userId: '1',
+//                     realname: undefined,
+//                     email: undefined,
+//                     role: undefined,
+//                     permissions: undefined,
+//                     accessToken: 'secrettoken',
+//                     accessTokenExpires: undefined,
+//                     grantType: undefined,
+//                     gravatar: undefined,
+//                     language: undefined
+//                 };
 
-                expect(returnedSessionData).toEqual(expectedSessionData);
-            });
-        });
-    });
+//                 expect(returnedSessionData).toEqual(expectedSessionData);
+//             });
+//         });
+//     });
 
+//     describe('setSessionDataEntry', function () {
 
-    describe('setSessionDataEntry', function () {
+//         describe('without values stored in localStorage', function () {
 
-        describe('without values stored in localStorage', function () {
+//             beforeEach(angular.mock.inject(function (_Session_) {
+//                 Session = _Session_;
+//             }));
 
-            beforeEach(angular.mock.inject(function (_Session_) {
-                Session = _Session_;
-            }));
+//             beforeEach(function () {
+//                 Session.setSessionDataEntry('userId', '1');
+//             });
 
-            beforeEach(function () {
-                Session.setSessionDataEntry('userId', '1');
-            });
+//             it('has the keys and values stored in the session', function () {
+//                 var expectedSessionDataEntries = angular.extend({}, emptySessionData, {userId: '1'});
+//                 expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
+//             });
 
-            it('has the keys and values stored in the session', function () {
-                var expectedSessionDataEntries = angular.extend({}, emptySessionData, {userId: '1'});
-                expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
-            });
+//             it('has the key and value stored in the local storage', function () {
+//                 expect(mockedLocalStorageHash.userId).toEqual('1');
+//             });
+//         });
+//     });
 
-            it('has the key and value stored in the local storage', function () {
-                expect(mockedLocalStorageHash.userId).toEqual('1');
-            });
-        });
-    });
+//     describe('setSessionDataEntries', function () {
+//         var sessionDataEntriesToSet;
 
+//         describe('without values stored in localStorage', function () {
 
-    describe('setSessionDataEntries', function () {
-        var sessionDataEntriesToSet;
+//             beforeEach(angular.mock.inject(function (_Session_) {
+//                 Session = _Session_;
+//             }));
 
-        describe('without values stored in localStorage', function () {
+//             beforeEach(function () {
+//                 sessionDataEntriesToSet = {
+//                     userId: '1',
+//                     email: 'mike@ush.com'
+//                 };
+//                 Session.setSessionDataEntries(sessionDataEntriesToSet);
+//             });
 
-            beforeEach(angular.mock.inject(function (_Session_) {
-                Session = _Session_;
-            }));
+//             it('has the keys and values stored in the session', function () {
+//                 var expectedSessionDataEntries = angular.extend({}, emptySessionData, sessionDataEntriesToSet);
+//                 expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
+//             });
 
-            beforeEach(function () {
-                sessionDataEntriesToSet = {
-                    userId: '1',
-                    email: 'mike@ush.com'
-                };
-                Session.setSessionDataEntries(sessionDataEntriesToSet);
-            });
+//             it('has the keys and values stored in the local storage', function () {
+//                 expect(mockedLocalStorageHash.userId).toEqual('1');
+//                 expect(mockedLocalStorageHash.email).toEqual('mike@ush.com');
+//             });
+//         });
+//     });
 
-            it('has the keys and values stored in the session', function () {
-                var expectedSessionDataEntries = angular.extend({}, emptySessionData, sessionDataEntriesToSet);
-                expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
-            });
+//     describe('getSessionDataEntry and getSessionDataEntries', function () {
 
-            it('has the keys and values stored in the local storage', function () {
-                expect(mockedLocalStorageHash.userId).toEqual('1');
-                expect(mockedLocalStorageHash.email).toEqual('mike@ush.com');
-            });
-        });
-    });
+//         describe('with some values stored in localStorage before instantiating (injecting) the Session service', function () {
 
-    describe('getSessionDataEntry and getSessionDataEntries', function () {
+//             beforeEach(function () {
+//                 mockedLocalStorageHash.userId = '1';
+//                 mockedLocalStorageHash.email = 'mike@ush.com';
+//             });
 
-        describe('with some values stored in localStorage before instantiating (injecting) the Session service', function () {
+//             beforeEach(angular.mock.inject(function (_Session_) {
+//                 Session = _Session_;
+//             }));
 
-            beforeEach(function () {
-                mockedLocalStorageHash.userId = '1';
-                mockedLocalStorageHash.email = 'mike@ush.com';
-            });
+//             describe('getSessionDataEntry', function () {
+//                 it('returns the correct values', function () {
+//                     expect(Session.getSessionDataEntry('userId')).toEqual('1');
+//                     expect(Session.getSessionDataEntry('email')).toEqual('mike@ush.com');
+//                 });
+//             });
 
-            beforeEach(angular.mock.inject(function (_Session_) {
-                Session = _Session_;
-            }));
+//             describe('getSessionDataEntries', function () {
+//                 it('returns the correct values', function () {
+//                     var expectedSessionDataEntries = angular.extend({}, emptySessionData, {
+//                         'userId': '1',
+//                         'email': 'mike@ush.com'
+//                     });
+//                     expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
+//                 });
+//             });
+//         });
+//     });
 
-            describe('getSessionDataEntry', function () {
-                it('returns the correct values', function () {
-                    expect(Session.getSessionDataEntry('userId')).toEqual('1');
-                    expect(Session.getSessionDataEntry('email')).toEqual('mike@ush.com');
-                });
-            });
+//     describe('clearSessionData', function () {
 
-            describe('getSessionDataEntries', function () {
-                it('returns the correct values', function () {
-                    var expectedSessionDataEntries = angular.extend({}, emptySessionData, {
-                        'userId': '1',
-                        'email': 'mike@ush.com'
-                    });
-                    expect(Session.getSessionData()).toEqual(expectedSessionDataEntries);
-                });
-            });
-        });
-    });
+//         describe('with some values stored in localStorage before instantiating (injecting) the Session service', function () {
 
-    describe('clearSessionData', function () {
+//             beforeEach(function () {
+//                 mockedLocalStorageHash.userId = '1';
+//                 mockedLocalStorageHash.email = 'mike@ush.com';
+//             });
 
-        describe('with some values stored in localStorage before instantiating (injecting) the Session service', function () {
+//             beforeEach(angular.mock.inject(function (_Session_) {
+//                 Session = _Session_;
+//             }));
 
-            beforeEach(function () {
-                mockedLocalStorageHash.userId = '1';
-                mockedLocalStorageHash.email = 'mike@ush.com';
-            });
+//             it('has the values loaded in session', function () {
+//                 expect(Session.getSessionDataEntry('userId')).toEqual('1');
+//                 expect(Session.getSessionDataEntry('email')).toEqual('mike@ush.com');
+//             });
 
-            beforeEach(angular.mock.inject(function (_Session_) {
-                Session = _Session_;
-            }));
+//             describe('calling clearSessionData', function () {
 
-            it('has the values loaded in session', function () {
-                expect(Session.getSessionDataEntry('userId')).toEqual('1');
-                expect(Session.getSessionDataEntry('email')).toEqual('mike@ush.com');
-            });
+//                 beforeEach(function () {
+//                     Session.clearSessionData();
+//                 });
 
-            describe('calling clearSessionData', function () {
+//                 it('has the only the initial keys with undefined values stored in the session', function () {
+//                     expect(Session.getSessionData()).toEqual(emptySessionData);
+//                 });
 
-                beforeEach(function () {
-                    Session.clearSessionData();
-                });
-
-                it('has the only the initial keys with undefined values stored in the session', function () {
-                    expect(Session.getSessionData()).toEqual(emptySessionData);
-                });
-
-                it('doesn\'t have any keys and values stored in the local storage', function () {
-                    expect(mockedLocalStorageHash).toEqual({});
-                });
-            });
-        });
-    });
-});
+//                 it('doesn\'t have any keys and values stored in the local storage', function () {
+//                     expect(mockedLocalStorageHash).toEqual({});
+//                 });
+//             });
+//         });
+//     });
+// });

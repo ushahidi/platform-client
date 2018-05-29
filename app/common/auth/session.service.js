@@ -1,71 +1,66 @@
-module.exports = [
-    'localStorageService',
-function (
-    localStorageService
-) {
+const { localStorage } = window;
 
-    this.clearedSessionData = {
-        userId: undefined,
-        realname: undefined,
-        email: undefined,
-        accessToken: undefined,
-        accessTokenExpires: undefined,
-        grantType: undefined,
-        role: undefined,
-        permissions: undefined,
-        gravatar: undefined,
-        language: undefined
-    };
+const clearedSessionData = {
+    userId: undefined,
+    realname: undefined,
+    email: undefined,
+    accessToken: undefined,
+    accessTokenExpires: undefined,
+    grantType: undefined,
+    role: undefined,
+    permissions: undefined,
+    gravatar: undefined,
+    language: undefined
+};
 
-    this.sessionData = angular.copy(this.clearedSessionData);
+class Session {
+    constructor() {
+        if (!Session.instance) {
+            this.sessionData = this.loadSessionData();
+            Session.instance = this;
+        }
 
-    var that = this;
+        return Session.instance;
+    }
 
-    var loadSessionData = function () {
-        var newSessionData = {};
-        Object.keys(that.sessionData).forEach(function (key) {
-            newSessionData[key] = localStorageService.get(key);
+    static loadSessionData() {
+        // use .map instead of forEach
+        const newSessionData = Object.assign({}, clearedSessionData);
+        Object.keys(newSessionData).forEach(key => {
+            newSessionData[key] = localStorage.getItem(key);
         });
-        that.sessionData = newSessionData;
-    };
+        return newSessionData;
+    }
 
-    var setSessionDataEntries = function (entries) {
-        Object.keys(entries).forEach(function (key) {
-            localStorageService.set(key, entries[key]);
+    setSessionDataEntries(entries) {
+        Object.keys(entries).forEach(key => {
+            localStorage.setItem(key, entries[key]);
         });
-        var newSessionData = angular.extend({}, that.sessionData, entries);
-        that.sessionData = newSessionData;
-    };
+        const newSessionData = Object.assign({}, this.sessionData, entries);
+        this.sessionData = newSessionData;
+    }
 
-    var setSessionDataEntry = function (key, value) {
-        that.sessionData[key] = value;
-        localStorageService.set(key, value);
-    };
+    setSessionDataEntry(key, value) {
+        this.sessionData[key] = value;
+        localStorage.setItem(key, value);
+    }
 
-    var getSessionDataEntry = function (key) {
-        return that.sessionData[key];
-    };
+    getSessionDataEntry(key) {
+        return this.sessionData[key];
+    }
 
-    var getSessionData = function () {
-        return that.sessionData;
-    };
+    getSessionData() {
+        return this.sessionData;
+    }
 
-    var clearSessionData = function () {
-        Object.keys(that.sessionData).forEach(function (key) {
-            localStorageService.remove(key);
+    clearSessionData() {
+        Object.keys(this.sessionData).forEach(key => {
+            localStorage.removeItem(key);
         });
-        that.sessionData = angular.copy(that.clearedSessionData);
-    };
+        this.sessionData = Object.assign({}, clearedSessionData);
+    }
+}
 
-    // load already saved session data from earlierer session
-    // from local storage when session service is intialized loadSessionData();
-    loadSessionData();
+const instance = new Session();
 
-    return {
-        setSessionDataEntry: setSessionDataEntry,
-        setSessionDataEntries: setSessionDataEntries,
-        getSessionDataEntry: getSessionDataEntry,
-        getSessionData: getSessionData,
-        clearSessionData: clearSessionData
-    };
-}];
+export default instance;
