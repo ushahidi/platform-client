@@ -2,6 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
 
+const propTypes = {
+    saveNewUser: PropTypes.func.isRequired,
+    roles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isLoadingRoles: PropTypes.bool.isRequired
+    // error: PropTypes.shape({
+    //     message: PropTypes.string
+    // }).isRequired
+};
+
 class UserForm extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +25,11 @@ class UserForm extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.renderRoles = this.renderRoles.bind(this);
     }
+
+    handleChange(event) {
+        this.setState({ [event.target.id]: event.target.value });
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         const user = Object.assign({}, this.state);
@@ -23,27 +37,6 @@ class UserForm extends React.Component {
         // after success, clear state
         // after failure, state remains
         // TBD after we figure out endpoints
-    }
-
-    handleChange(event) {
-        // create a case and match it to the element id, update state accordingly
-        switch (event.target.id) {
-            case "email":
-                this.setState({ email: event.target.value });
-                break;
-            case "password":
-                this.setState({ password: event.target.value });
-                break;
-            case "realname":
-                this.setState({ realname: event.target.value });
-                break;
-            case "role":
-                this.setState({ role: event.target.value });
-                break;
-            default:
-                return null;
-        }
-        return null;
     }
 
     renderRoles() {
@@ -115,13 +108,6 @@ class UserForm extends React.Component {
     }
 }
 
-UserForm.propTypes = {
-    saveNewUser: PropTypes.func.isRequired,
-    roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired
-    // error: PropTypes.shape({
-    //     message: PropTypes.string
-    // }).isRequired
-};
+UserForm.propTypes = propTypes;
 
 export default UserForm;

@@ -6,6 +6,7 @@ import {
     HANDLE_REQUEST_FAILURE
 } from "./roles.actions";
 
+// test data
 const role = {
     id: 1,
     url: "http://192.168.33.110/api/v3/roles/1",
@@ -16,11 +17,13 @@ const role = {
     protected: true,
     allowed_privileges: ["read", "create", "update", "search"]
 };
+
 const initialState = {
     roles: [],
     isLoading: true,
     error: {}
 };
+
 describe("Roles State", () => {
     test("REQUEST ROLES sets isLoading to true", () => {
         const action = {
@@ -33,6 +36,7 @@ describe("Roles State", () => {
         };
 
         const stateBefore = initialState;
+        // deepFreeze so we can't accidentally mutate our state
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);

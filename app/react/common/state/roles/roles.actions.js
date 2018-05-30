@@ -1,7 +1,7 @@
 import RolesEndpoints from "react/common/endpoints/roles";
 
 export const REQUEST_ROLES = "REQUEST_ROLES";
-export const RECEIVE_ROLES = "RECEVIE_ROLES";
+export const RECEIVE_ROLES = "RECEIVE_ROLES";
 export const HANDLE_REQUEST_FAILURE = "HANDLE_REQUEST_FAILURE";
 
 export function receiveRoles(roles) {

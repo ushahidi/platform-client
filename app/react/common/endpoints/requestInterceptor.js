@@ -1,5 +1,7 @@
 import Session from "common/auth/session.service.js";
 
+// To Do: comment this file because it's confusing
+
 const shouldIgnoreAuthError = config => {
     // eslint doesn't allow for reassign params
     // so we make a simple copy
@@ -26,7 +28,9 @@ export default function(instance) {
     instance.interceptors.request.use(
         config => {
             const configCopy = config;
-            // let's replace window.ushahidi
+            // we can't use the util service here because window.ushahidi is still undefined
+            // but this is ugly, so we should not use window.ushahidi
+            // Also, the replace is removing a trailing / in case an OSS user accidentally adds one
             const apiUrl = `${window.ushahidi.backendUrl.replace(
                 /\/$/,
                 ""
