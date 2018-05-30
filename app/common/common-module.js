@@ -13,8 +13,6 @@ angular
         "ushahidi.common.custom-on-change",
         "ushahidi.user-profile"
     ])
-
-<<<<<<< HEAD
     // Authentication
     .service("Authentication", require("./auth/authentication.service.js"))
     .service("Registration", require("./auth/registration.service.js"))
