@@ -39,7 +39,10 @@ class UserContainer extends React.Component {
             <main role="main">
                 <div>
                     <h2>Add people to Ushahidi</h2>
-                    <p>Add members of your team, etc.. etc...</p>
+                    <p>
+                        Add members of your team, beneficiaries, and other
+                        members of your community to Ushahidi
+                    </p>
                 </div>
                 <UserForm
                     saveNewUser={this.props.UsersActions.saveNewUser}
