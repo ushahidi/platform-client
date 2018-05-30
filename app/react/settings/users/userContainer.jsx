@@ -13,6 +13,20 @@ import {
 import { getUsers } from "react/common/state/users/users.reducers";
 import UserForm from "react/settings/users/UserForm";
 
+const propTypes = {
+    UsersActions: PropTypes.shape({
+        saveNewUser: PropTypes.func.isRequired
+    }).isRequired,
+    RolesActions: PropTypes.shape({
+        requestRoles: PropTypes.func.isRequired
+    }).isRequired,
+    roles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isLoadingRoles: PropTypes.bool.isRequired
+    // error: PropTypes.shape({
+    //     message: PropTypes.string
+    // }).isRequired
+};
+
 class UserContainer extends React.Component {
     componentDidMount() {
         // Need UI to handle failures for this.
@@ -53,19 +67,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-UserContainer.propTypes = {
-    UsersActions: PropTypes.shape({
-        saveNewUser: PropTypes.func.isRequired
-    }).isRequired,
-    RolesActions: PropTypes.shape({
-        requestRoles: PropTypes.func.isRequired
-    }).isRequired,
-    roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired
-    // error: PropTypes.shape({
-    //     message: PropTypes.string
-    // }).isRequired
-};
+UserContainer.propTypes = propTypes;
 
 export { UserContainer as PlainUserContainer };
 
