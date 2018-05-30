@@ -89,7 +89,11 @@ function (
             handleRequestSuccess = function (authResponse) {
                 var accessToken = authResponse.data.access_token;
                 Session.setSessionDataEntry('accessToken', accessToken);
-                Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+                if (authResponse.data.expires_in) {
+                    Session.setSessionDataEntry('accessTokenExpires', Math.floor(Date.now() / 1000) + authResponse.data.expires_in);
+                } else if (authResponse.data.expires) {
+                    Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+                }
                 Session.setSessionDataEntry('grantType', 'password');
 
                 $http.get(Util.apiUrl('/users/me')).then(

@@ -223,7 +223,13 @@
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
                 'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
                 'required': attribute.required
-            }"><bdi>{{attribute.label}}<bdi></label>
+            }">
+                <svg ng-show="attribute.response_private" class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+                </svg>
+                <bdi>{{attribute.label}}<bdi>
+                
+            </label>
             <!-- Attribute Instructions -->
             <p><bdi>{{attribute.instructions}}</bdi></p>
 

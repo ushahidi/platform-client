@@ -51,6 +51,12 @@ import datasources from "./datasources/datasources.html";
 import plansController from "./plans/plans.controller";
 import plans from "./plans/plan.html";
 
+import userSettingsController from './user-settings/user-settings.controller.js';
+import userSettings from './user-settings/user-settings.html';
+
+import hdxExportController from './data-export/hdx-export.controller.js';
+import hdxExport from './data-export/hdx-export.html';
+
 module.exports = [
     "$stateProvider",
     "$urlMatcherFactoryProvider",
@@ -88,10 +94,22 @@ module.exports = [
                 template: afterImport
             })
             .state({
+                name: 'settings.userSettings',
+                url: '/settings/user-settings',
+                controller: userSettingsController,
+                template: userSettings
+            })
+            .state({
                 name: "settings.dataExport",
                 url: "/settings/data-export",
                 controller: dataExportController,
                 template: dataExport
+            })
+            .state({
+                name: 'settings.hdx',
+                url: '/settings/hdx',
+                controller: hdxExportController,
+                template: hdxExport
             })
             .state({
                 name: "settings.surveys",

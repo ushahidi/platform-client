@@ -14,6 +14,7 @@ angular
         "ushahidi.user-profile"
     ])
 
+<<<<<<< HEAD
     // Authentication
     .service("Authentication", require("./auth/authentication.service.js"))
     .service("Registration", require("./auth/registration.service.js"))
@@ -40,6 +41,7 @@ angular
     .service("ApiKeyEndpoint", require("./services/endpoints/apikey.js"))
     .service("ConfigEndpoint", require("./services/endpoints/config.js"))
     .service("UserEndpoint", require("./services/endpoints/user-endpoint.js"))
+    .service('UserSettingsEndpoint', require('./services/endpoints/user-settings.js'))
     .service("FormEndpoint", require("./services/endpoints/form.js"))
     .service(
         "FormAttributeEndpoint",
@@ -105,6 +107,7 @@ angular
         "CountryCodeEndpoint",
         require("./services/endpoints/country-code-endpoint.js")
     )
+    .service('HxlTagEndpoint', require('./services/endpoints/hxl-tag-endpoint.js'))
 
     // Other services
     .service("ViewHelper", require("./services/view-helper.js"))
@@ -129,6 +132,8 @@ angular
         require("./services/loadingProgress.service.js")
     )
     .service("DataExport", require("./services/data-export.service.js"))
+    .service('HxlExport', require('./services/hxl-export.service.js'))
+
     // Global directives
     .directive("publishSelector", require("./directives/publish-selector.js"))
 

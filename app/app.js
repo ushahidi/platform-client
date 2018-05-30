@@ -52,27 +52,25 @@ let backendUrl = (window.ushahidi.backendUrl = (
     platform_websocket_redis_adapter_url =
         window.ushahidi.platform_websocket_redis_adapter_url || "",
     claimedAnonymousScopes = [
-        "apikeys",
-        "posts",
-        "country_codes",
-        "media",
-        "forms",
-        "api",
-        "tags",
-        "savedsearches",
-        "sets",
-        "users",
-        "stats",
-        "layers",
-        "config",
-        "messages",
-        "notifications",
-        "webhooks",
-        "contacts",
-        "roles",
-        "permissions",
-        "csv",
-        "tos"
+        'posts',
+        'country_codes',
+        'media',
+        'forms',
+        'api',
+        'tags',
+        'savedsearches',
+        'sets',
+        'users',
+        'stats',
+        'layers',
+        'config',
+        'messages',
+        'notifications',
+        'webhooks',
+        'contacts',
+        'roles',
+        'permissions',
+        'csv'
     ];
 
 angular
@@ -98,26 +96,20 @@ angular
         "ui.bootstrap.dropdown",
         "ngRedux"
     ])
-
-    .constant("CONST", {
-        BACKEND_URL: backendUrl,
-        API_URL: apiUrl,
-        INTERCOM_APP_ID: intercomAppId,
-        APP_STORE_ID: appStoreId,
-        DEFAULT_LOCALE: "en_US",
-        OAUTH_CLIENT_ID: "ushahidiui",
-        OAUTH_CLIENT_SECRET: "35e7f0bca957836d05ca0492211b0ac707671261",
-        CLAIMED_ANONYMOUS_SCOPES: claimedAnonymousScopes,
-        CLAIMED_USER_SCOPES: claimedAnonymousScopes.concat("dataproviders"),
-        MAPBOX_API_KEY:
-            window.ushahidi.mapboxApiKey ||
-            "pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw", // Default OSS mapbox api key
-        TOS_RELEASE_DATE: new Date(window.ushahidi.tosReleaseDate).toJSON()
-            ? new Date(window.ushahidi.tosReleaseDate)
-            : false, // Date in UTC
-        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL: platform_websocket_redis_adapter_url,
-        EXPORT_POLLING_INTERVAL:
-            window.ushahidi.export_polling_interval || 30000
+    .constant('CONST', {
+        BACKEND_URL              : backendUrl,
+        API_URL                  : apiUrl,
+        INTERCOM_APP_ID          : intercomAppId,
+        APP_STORE_ID             : appStoreId,
+        DEFAULT_LOCALE           : 'en_US',
+        OAUTH_CLIENT_ID          : 'ushahidiui',
+        OAUTH_CLIENT_SECRET      : '35e7f0bca957836d05ca0492211b0ac707671261',
+        CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
+        CLAIMED_USER_SCOPES      : ['*'],
+        MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
+        TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
+        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url,
+        EXPORT_POLLING_INTERVAL  : window.ushahidi.export_polling_interval || 30000
     })
     .config([
         "$compileProvider",

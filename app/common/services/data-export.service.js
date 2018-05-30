@@ -5,6 +5,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
     var exportJobs = [];
     function startExport(query) {
         query.entity_type = 'post';
+
         // saving the new job to the db
         ExportJobEndpoint.save(query).$promise.then(function (job) {
             updateExportJobsList(job);
