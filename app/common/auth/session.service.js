@@ -15,6 +15,8 @@ const clearedSessionData = {
 
 class Session {
     constructor() {
+        // Session is a singleton
+        // Checking to see if it's already been instantiated
         if (!Session.instance) {
             this.sessionData = this.loadSessionData();
             Session.instance = this;
@@ -41,7 +43,9 @@ class Session {
     }
 
     setSessionDataEntry(key, value) {
-        this.sessionData[key] = value;
+        const newSessionData = Object.assign({}, this.sessionData);
+        newSessionData[key] = value;
+        this.sessionData = newSessionData;
         localStorage.setItem(key, value);
     }
 
