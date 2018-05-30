@@ -1,10 +1,12 @@
 import Session from "common/auth/session.service.js";
 
 const shouldIgnoreAuthError = config => {
-    const thisConfig = config;
+    // eslint doesn't allow for reassign params
+    // so we make a simple copy
+    const configCopy = config;
     let isIgnorable = false;
-    if (thisConfig.params !== undefined && thisConfig.params.ignore403) {
-        delete thisConfig.params.ignore403;
+    if (configCopy.params !== undefined && configCopy.params.ignore403) {
+        delete configCopy.params.ignore403;
         isIgnorable = true;
     }
     let i = 0;
@@ -14,7 +16,7 @@ const shouldIgnoreAuthError = config => {
         "/roles(/|$)"
     ];
     while (isIgnorable === false && i < matchers.length) {
-        isIgnorable = !!thisConfig.url.match(matchers[i]);
+        isIgnorable = !!configCopy.url.match(matchers[i]);
         i += 1;
     }
     return isIgnorable;
@@ -23,16 +25,16 @@ const shouldIgnoreAuthError = config => {
 export default function(instance) {
     instance.interceptors.request.use(
         config => {
-            const thisConfig = config;
+            const configCopy = config;
             // let's replace window.ushahidi
             const apiUrl = `${window.ushahidi.backendUrl.replace(
                 /\/$/,
                 ""
             )}/api/v3`;
-            thisConfig.ignorable = shouldIgnoreAuthError(thisConfig);
+            configCopy.ignorable = shouldIgnoreAuthError(configCopy);
 
-            if (thisConfig.url.indexOf(apiUrl) === -1) {
-                return thisConfig;
+            if (configCopy.url.indexOf(apiUrl) === -1) {
+                return configCopy;
             }
 
             const accessToken = Session.getSessionDataEntry("accessToken");
@@ -48,11 +50,11 @@ export default function(instance) {
             ) {
                 // if we already have a valid accessToken,
                 // we will set it straight ahead
-                // and resolve the promise for the thisConfig hash
-                thisConfig.headers.Authorization = `Bearer ${accessToken}`;
+                // and resolve the promise for the configCopy hash
+                configCopy.headers.Authorization = `Bearer ${accessToken}`;
             }
 
-            return thisConfig;
+            return configCopy;
         },
         error =>
             // Do something with request error

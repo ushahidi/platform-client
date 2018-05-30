@@ -46,7 +46,7 @@
       "app"
     ],
     "setupFiles": [
-      "./app/react/browserMocks.js"
+      "./app/react/test/browserMocks.js"
     ]
   },
   "prettier": {
