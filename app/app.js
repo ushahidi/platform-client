@@ -1,4 +1,5 @@
 // Migration React / Redux imports
+/* eslint-disable */
 import thunk from "redux-thunk";
 import RootReducer from "./rootReducer";
 
@@ -206,6 +207,8 @@ angular
         $ngReduxProvider.createStoreWith(
             RootReducer,
             [thunk],
-            [window.__REDUX_DEVTOOLS_EXTENSION__()]
+            null
+            // Need to replace null with [window.__REDUX_DEVTOOLS_EXTENSION__()] but it breaks redux actions
         );
     });
+/* eslint-enable */

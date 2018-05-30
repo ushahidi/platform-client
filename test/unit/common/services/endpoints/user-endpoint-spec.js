@@ -1,62 +1,64 @@
-require('angular-resource');
-require('angular-cache');
+/* eslint-disable */
+require("angular-resource");
+require("angular-cache");
 
-describe('UserEndpoint', function () {
+describe("UserEndpoint", () => {
+    let $rootScope, $httpBackend, BACKEND_URL, UserEndpoint;
 
-    var $rootScope,
-        $httpBackend,
-        BACKEND_URL,
-        UserEndpoint;
+    beforeEach(() => {
+        const testApp = makeTestApp();
 
-
-    beforeEach(function () {
-        var testApp = makeTestApp();
-
-        testApp.requires.push('ngResource', 'angular-cache');
+        testApp.requires.push("ngResource", "angular-cache");
         testApp
-        .service('UserEndpoint', require('app/common/services/endpoints/user-endpoint.js'))
-        .config(require('app/common/configs/cache-config.js'));
+            .service(
+                "UserEndpoint",
+                require("app/common/services/endpoints/user-endpoint.js")
+            )
+            .config(require("app/common/configs/cache-config.js"));
 
-        angular.mock.module('testApp');
+        angular.mock.module("testApp");
     });
 
-    beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _UserEndpoint_) {
-        $rootScope = _$rootScope_;
-        $httpBackend = _$httpBackend_;
-        BACKEND_URL = _CONST_.BACKEND_URL;
-        UserEndpoint = _UserEndpoint_;
-    }));
+    beforeEach(
+        angular.mock.inject(
+            (_$httpBackend_, _$rootScope_, _CONST_, _UserEndpoint_) => {
+                $rootScope = _$rootScope_;
+                $httpBackend = _$httpBackend_;
+                BACKEND_URL = _CONST_.BACKEND_URL;
+                UserEndpoint = _UserEndpoint_;
+            }
+        )
+    );
 
-    describe('"users/:id" for data of all users', function () {
-        describe('get all users', function () {
+    describe('"users/:id" for data of all users', () => {
+        describe("get all users", () => {
+            let mockUserDataResponse;
 
-            var mockUserDataResponse;
-
-            beforeEach(function () {
-                mockUserDataResponse =
-                {
-                    'count': 2,
-                    'results':
-                    [
+            beforeEach(() => {
+                mockUserDataResponse = {
+                    count: 2,
+                    results: [
                         {
-                            'id': 1,
-                            'url': 'http://ushahidi-backend/api/v2/users/1',
-                            'email': 'robbie@ushahidi.com',
-                            'realname': 'Robbie Mackay'
+                            id: 1,
+                            url: "http://ushahidi-backend/api/v3/users/1",
+                            email: "robbie@ushahidi.com",
+                            realname: "Robbie Mackay"
                         },
                         {
-                            'id': 2,
-                            'url': 'http://ushahidi-backend/api/v2/users/2',
-                            'email': 'admin@22dsad.com',
-                            'realname': 'Admin'
+                            id: 2,
+                            url: "http://ushahidi-backend/api/v3/users/2",
+                            email: "admin@22dsad.com",
+                            realname: "Admin"
                         }
                     ]
                 };
             });
 
-            it('should call the correct url and parse and return the correct data', function () {
-                var successCallback = jasmine.createSpy('success');
-                $httpBackend.expectGET(BACKEND_URL + '/api/v2/users').respond(mockUserDataResponse);
+            it("should call the correct url and parse and return the correct data", () => {
+                const successCallback = jasmine.createSpy("success");
+                $httpBackend
+                    .expectGET(`${BACKEND_URL}/api/v3/users`)
+                    .respond(mockUserDataResponse);
 
                 UserEndpoint.queryFresh().$promise.then(successCallback);
 
@@ -65,66 +67,81 @@ describe('UserEndpoint', function () {
 
                 expect(successCallback).toHaveBeenCalled();
 
-                var actualUserData = successCallback.calls.mostRecent().args[0];
-                expect(actualUserData.results.length).toEqual(mockUserDataResponse.results.length);
-                expect(actualUserData.results[0].email).toEqual(mockUserDataResponse.results[0].email);
+                const actualUserData = successCallback.calls.mostRecent()
+                    .args[0];
+                expect(actualUserData.results.length).toEqual(
+                    mockUserDataResponse.results.length
+                );
+                expect(actualUserData.results[0].email).toEqual(
+                    mockUserDataResponse.results[0].email
+                );
             });
         });
     });
 
-    describe('"users/me" for the user data of logged in user', function () {
+    describe('"users/me" for the user data of logged in user', () => {
+        let mockUserDataResponse;
 
-        var mockUserDataResponse;
-
-        beforeEach(function () {
+        beforeEach(() => {
             mockUserDataResponse = {
-                'id': 2,
-                'url': 'http://ushahidi-backend/api/v2/users/2',
-                'email': 'admin@example.com',
-                'realname': 'Admin Joe'
+                id: 2,
+                url: "http://ushahidi-backend/api/v3/users/2",
+                email: "admin@example.com",
+                realname: "Admin Joe"
             };
         });
 
-        describe('get user data', function () {
-            it('should call the correct url and return the correct data', function () {
-                var successCallback = jasmine.createSpy('success');
-                $httpBackend.expectGET(BACKEND_URL + '/api/v2/users/me').respond(mockUserDataResponse);
+        describe("get user data", () => {
+            it("should call the correct url and return the correct data", () => {
+                const successCallback = jasmine.createSpy("success");
+                $httpBackend
+                    .expectGET(`${BACKEND_URL}/api/v3/users/me`)
+                    .respond(mockUserDataResponse);
 
-                UserEndpoint.get({id: 'me'}).$promise.then(successCallback);
+                UserEndpoint.get({ id: "me" }).$promise.then(successCallback);
 
                 $httpBackend.flush();
                 $rootScope.$digest();
 
                 expect(successCallback).toHaveBeenCalled();
 
-                var actualUserData = successCallback.calls.mostRecent().args[0];
+                const actualUserData = successCallback.calls.mostRecent()
+                    .args[0];
                 expect(actualUserData.id).toEqual(mockUserDataResponse.id);
-                expect(actualUserData.realname).toEqual(mockUserDataResponse.realname);
-                expect(actualUserData.email).toEqual(mockUserDataResponse.email);
+                expect(actualUserData.realname).toEqual(
+                    mockUserDataResponse.realname
+                );
+                expect(actualUserData.email).toEqual(
+                    mockUserDataResponse.email
+                );
             });
         });
 
-        describe('update user data', function () {
-
-            beforeEach(function () {
+        describe("update user data", () => {
+            beforeEach(() => {
                 mockUserDataResponse = {
-                    'id': 2,
-                    'url': 'http://ushahidi-backend/api/v2/users/2',
-                    'email': 'new@email.com',
-                    'realname': 'Obi Wan'
+                    id: 2,
+                    url: "http://ushahidi-backend/api/v3/users/2",
+                    email: "new@email.com",
+                    realname: "Obi Wan"
                 };
             });
 
-            it('should call the correct url and return the updated user data', function () {
-                var successCallback = jasmine.createSpy('success');
-                $httpBackend.expectPUT(BACKEND_URL + '/api/v2/users/me').respond(mockUserDataResponse);
+            it("should call the correct url and return the updated user data", () => {
+                const successCallback = jasmine.createSpy("success");
+                $httpBackend
+                    .expectPUT(`${BACKEND_URL}/api/v3/users/me`)
+                    .respond(mockUserDataResponse);
 
-                var userDataToUpdate = {
-                    'email': 'new@email.com',
-                    'realname': 'Obi Wan'
+                const userDataToUpdate = {
+                    email: "new@email.com",
+                    realname: "Obi Wan"
                 };
 
-                UserEndpoint.update({id: 'me'}, userDataToUpdate).$promise.then(successCallback);
+                UserEndpoint.update(
+                    { id: "me" },
+                    userDataToUpdate
+                ).$promise.then(successCallback);
                 // var promise = UserEndpoint.update({id: 'me'}, $scope.userProfileDataForEdit).$promise;
 
                 $httpBackend.flush();
@@ -132,13 +149,15 @@ describe('UserEndpoint', function () {
 
                 expect(successCallback).toHaveBeenCalled();
 
-                var actualUserData = successCallback.calls.mostRecent().args[0];
+                const actualUserData = successCallback.calls.mostRecent()
+                    .args[0];
                 expect(actualUserData.id).toEqual(mockUserDataResponse.id);
-                expect(actualUserData.realname).toEqual(userDataToUpdate.realname);
+                expect(actualUserData.realname).toEqual(
+                    userDataToUpdate.realname
+                );
                 expect(actualUserData.email).toEqual(userDataToUpdate.email);
             });
         });
-
     });
-
 });
+/* eslint-enable */

@@ -15,5 +15,11 @@ exports[`foo and bar match the props 1`] = `
     Baz: 
     2
   </p>
+  <button
+    onClick={[Function]}
+    onKeyUp={[Function]}
+  >
+    halp
+  </button>
 </div>
 `;

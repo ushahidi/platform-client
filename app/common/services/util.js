@@ -1,75 +1,77 @@
-module.exports = [
-    '_',
-    'CONST',
-    '$window',
-function (
-    _,
-    CONST,
-    $window
-) {
+import * as _ from "underscore";
 
-    var Util = {
-        currentUrl: function () {
-            return $window.location.href;
-        },
-        url: function (relative_url) {
-            return CONST.BACKEND_URL + relative_url;
-        },
-        apiUrl: function (relative_url) {
-            return CONST.API_URL + relative_url;
-        },
-        deploymentUrl: function (relative_url) {
-            var pattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/g;
-            var deploymentUrl = pattern.exec(this.apiUrl(relative_url));
-            return deploymentUrl[0].replace('api.', '');
-        },
-        transformResponse: function (response, omitKeys) {
-            omitKeys = (omitKeys || []).concat(['allowed_methods']);
-            return _.omit(angular.fromJson(response), omitKeys);
-        },
-        // Generates a simple UUID for use on html tags when a unique ID is required
-        // Usually applicable where you want to be able to select an element by its ID
-        // but there is no id available
-        simpluUUID: function () {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        },
-        bindAllFunctionsToSelf: function (object) { // bind all functions on self to use self as their 'this' context
-            var functions = _.functions(object);
-            if (functions.length) {
-                _.bindAll.apply(_, [object].concat(functions));
-            }
-            return object;
-        },
+window.ushahidi = window.ushahidi || {};
 
-        /*
-         * This function returns a map of csv columns to post_type fields.
-         * It checks for the presences of the columns names in the set of attribute labels.
-         * If the column is not present the entry is set to undefined.
-         *
-         * The match is case insensistive.
-         */
-        autoMap: function (columns, attributes, mapSize) {
-            // Get set of labels
-            var attributeLabels = _.map(attributes, function (attribute) {
-                return attribute.label.toLowerCase();
-            });
-
-            // Create map of labels to attribute keys
-            var attributeKeys = _.pluck(attributes, 'key');
-            var attributeMap = _.object(attributeLabels, attributeKeys);
-
-            // Check if a column name appears in the set of labels, if it does set a mapping
-            // to the attribute, otherwise set the mapping to undefined.
-            return _.map(columns, function (item, index) {
-                var column = item.toLowerCase().trim();
-                return _.contains(attributeLabels, column) ? attributeMap[item] : undefined;
-            });
+export default {
+    currentUrl() {
+        return window.location.href;
+    },
+    url(relativeUrl) {
+        return window.ushahidi.backendUrl.replace(/\/$/, "") + relativeUrl;
+    },
+    apiUrl(relativeUrl) {
+        return `${window.ushahidi.backendUrl.replace(
+            /\/$/,
+            ""
+        )}/api/v3${relativeUrl}`;
+    },
+    deploymentUrl(relativeUrl) {
+        const pattern = /^(?:https?:\/\/)?(?:[^@/\n]+@)?(?:www\.)?([^:/\n]+)/g;
+        const deploymentUrl = pattern.exec(this.apiUrl(relativeUrl));
+        return deploymentUrl[0].replace("api.", "");
+    },
+    transformResponse(response, omitKeys) {
+        let omitKeysCopy = omitKeys;
+        omitKeysCopy = (omitKeysCopy || []).concat(["allowed_methods"]);
+        const json =
+            typeof response === "string" ? JSON.parse(response) : response;
+        return _.omit(json, omitKeysCopy);
+    },
+    // Generates a simple UUID for use on html tags when a unique ID is required
+    // Usually applicable where you want to be able to select an element by its ID
+    // but there is no id available
+    /* eslint-disable */
+    simpluUUID() {
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+            const r = (Math.random() * 16) | 0;
+            const v = c === "x" ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        });
+    },
+    /* eslint-enable */
+    bindAllFunctionsToSelf(object) {
+        // bind all functions on self to use self as their 'this' context
+        const functions = _.functions(object);
+        if (functions.length) {
+            _.bindAll(...[object].concat(functions));
         }
-    };
+        return object;
+    },
 
-    return Util.bindAllFunctionsToSelf(Util);
+    /*
+ * This function returns a map of csv columns to post_type fields.
+ * It checks for the presences of the columns names in the set of attribute labels.
+ * If the column is not present the entry is set to undefined.
+ *
+ * The match is case insensistive.
+ */
+    autoMap(columns, attributes) {
+        // Get set of labels
+        const attributeLabels = _.map(attributes, attribute =>
+            attribute.label.toLowerCase()
+        );
 
-}];
+        // Create map of labels to attribute keys
+        const attributeKeys = _.pluck(attributes, "key");
+        const attributeMap = _.object(attributeLabels, attributeKeys);
+
+        // Check if a column name appears in the set of labels, if it does set a mapping
+        // to the attribute, otherwise set the mapping to undefined.
+        return _.map(columns, item => {
+            const column = item.toLowerCase().trim();
+            return _.contains(attributeLabels, column)
+                ? attributeMap[item]
+                : undefined;
+        });
+    }
+};

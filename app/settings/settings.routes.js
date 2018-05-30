@@ -34,7 +34,6 @@ import categoriesEdit from "./categories/categories-edit.html";
 import usersController from "./users/users.controller";
 import users from "./users/users.html";
 
-import usersCreateController from "./users/create.controller";
 import usersEditController from "./users/edit.controller";
 import usersEdit from "./users/users-edit.html";
 
@@ -153,10 +152,10 @@ module.exports = [
                 template: users
             })
             .state({
-                name: "settings.users.create",
-                url: "/create",
-                controller: usersCreateController,
-                template: usersEdit
+                name: "settings.createUser",
+                url: "/settings/users/create",
+                controller: [() => {}],
+                template: "<user-container></user-container>"
             })
             .state({
                 name: "settings.users.edit",
@@ -217,10 +216,8 @@ module.exports = [
                 url: "/settings/testroute/:id?",
                 controller: [
                     "$scope",
-                    "$state",
                     "$transition$",
-                    ($scope, $state, $transition$) => {
-                        $scope.$state = $state;
+                    ($scope, $transition$) => {
                         $scope.id = $transition$.params().id;
                     }
                 ],
