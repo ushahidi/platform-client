@@ -42,7 +42,7 @@ function (
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
         // Redirect to home if not enabled
         if (!$scope.hxlEnabled) {
-            $state.go('posts.map');
+            $state.go('posts.map.all');
         }
     });
 

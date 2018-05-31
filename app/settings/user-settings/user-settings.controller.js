@@ -28,7 +28,7 @@ function (
     // Checking feature-flag for user-settings and hxl
     Features.loadFeatures().then(function () {
         if (!Features.isFeatureEnabled('user-settings') || !Features.isFeatureEnabled('hxl')) {
-            $state.go('posts.map');
+            $state.go('posts.map.all');
         }
     });
 
