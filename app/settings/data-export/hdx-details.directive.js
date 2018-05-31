@@ -37,7 +37,7 @@ function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress,
     // Checking feature-flag for user-settings and hxl
     Features.loadFeatures().then(function () {
         if (!Features.isFeatureEnabled('hxl')) {
-            $state.go('posts.map');
+            $state.go('posts.map.all');
         }
     });
     // Change layout class
