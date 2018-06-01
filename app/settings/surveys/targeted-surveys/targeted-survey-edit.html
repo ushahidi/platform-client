@@ -195,7 +195,7 @@
 
                             <div class="form-field" ng-show="isActiveStep(3)">
                                 <ul id="listWithHandle" class="sortble-list">
-                                    <li class="sortable-list-item" ng-repeat="question in survey.attributes" data={{question.label}}>
+                                    <li class="sortable-list-item" ng-repeat="question in survey.attributes" data={{question.label}} ng-hide="question.type === 'title' || question.type === 'description'">
                                         <span class="list-handle">
                                             <svg class="iconic">
                                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#grid-four-up"></use>
@@ -209,7 +209,7 @@
                                 <a ng-hide="survey.attributes.length" ng-click="openQuestionModal(null)" translate="survey.targeted_survey.add_a_question">Add a question...</a>
                             </div>
                             <div ng-hide="isActiveStep(3)">
-                                    <p ng-repeat="question in survey.attributes | orderBy: 'priority'">{{question.label}}</p>
+                                    <p ng-repeat="question in survey.attributes | orderBy: 'priority'" ng-hide="question.type === 'title' || question.type === 'description'">{{question.label}}</p>
                             </div>
 
 

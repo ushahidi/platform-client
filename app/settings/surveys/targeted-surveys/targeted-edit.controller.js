@@ -87,6 +87,31 @@ function (
     $scope.totalRecipients = 0;
     $scope.totalSent = 0;
     $scope.totalPending = 0;
+    $scope.default_attributes = [
+        {
+            cardinality: 0,
+            input: 'text',
+            label: 'Title',
+            priority: 1,
+            required: true,
+            type: 'title',
+            options: [],
+            config: {},
+            form_stage_id: null
+        },
+        {
+            cardinality: 0,
+            input: 'text',
+            label: 'Description',
+            priority: 2,
+            required: true,
+            type: 'description',
+            options: [],
+            config: {},
+            form_stage_id: null
+        }
+    ];
+
     Features.loadFeatures()
            .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
@@ -301,8 +326,10 @@ function (
 
 
     function saveFormStageAttributes(id) {
+
+        var attributes = $scope.default_attributes.concat($scope.survey.attributes);
         let task = {
-            attributes: $scope.survey.attributes,
+            attributes: attributes,
             formId: id,
             is_public: true,
             label: 'Post',
@@ -321,7 +348,7 @@ function (
             .then(function (savedTask) {
                 $scope.survey.stageId = savedTask.id;
                 let questions = [];
-                _.each($scope.survey.attributes, function (question) {
+                _.each(attributes, function (question) {
                         question.form_stage_id = savedTask.id;
                         question.formId = id;
                         questions.push(FormAttributeEndpoint
