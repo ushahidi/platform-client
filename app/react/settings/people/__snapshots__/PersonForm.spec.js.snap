@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`A User Form without roles displays loading instead 1`] = `
+exports[`A Person Form without roles displays loading instead 1`] = `
 <form
   onSubmit={[Function]}
 >
@@ -54,7 +54,7 @@ exports[`A User Form without roles displays loading instead 1`] = `
 </form>
 `;
 
-exports[`a User Form with roles displays roles correctly 1`] = `
+exports[`a Person Form with roles displays roles correctly 1`] = `
 <form
   onSubmit={[Function]}
 >

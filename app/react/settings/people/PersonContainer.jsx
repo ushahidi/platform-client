@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 // import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import connectWithStore from "react/react-transition/connectWithStore";
-import * as UsersActions from "react/common/state/users/users.actions";
+import * as PeopleActions from "react/common/state/people/people.actions";
 import * as RolesActions from "react/common/state/roles/roles.actions";
 import {
     isLoadingRoles,
     getRoles
     // getRoleError
 } from "react/common/state/roles/roles.reducers";
-import { getUsers } from "react/common/state/users/users.reducers";
-import UserForm from "react/settings/users/UserForm";
+import { getPeople } from "react/common/state/people/people.reducers";
+import PersonForm from "react/settings/people/PersonForm";
 
 const propTypes = {
-    UsersActions: PropTypes.shape({
-        saveNewUser: PropTypes.func.isRequired
+    PeopleActions: PropTypes.shape({
+        saveNewPerson: PropTypes.func.isRequired
     }).isRequired,
     RolesActions: PropTypes.shape({
         requestRoles: PropTypes.func.isRequired
@@ -27,7 +27,7 @@ const propTypes = {
     // }).isRequired
 };
 
-class UserContainer extends React.Component {
+class PersonContainer extends React.Component {
     componentDidMount() {
         // Need UI to handle failures for this.
         // Error currently saved to state.error
@@ -44,8 +44,8 @@ class UserContainer extends React.Component {
                         members of your community to Ushahidi
                     </p>
                 </div>
-                <UserForm
-                    saveNewUser={this.props.UsersActions.saveNewUser}
+                <PersonForm
+                    saveNewPerson={this.props.PeopleActions.saveNewPerson}
                     roles={this.props.roles}
                     isLoadingRoles={this.props.isLoadingRoles}
                 />
@@ -56,7 +56,7 @@ class UserContainer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        users: getUsers(state),
+        people: getPeople(state),
         roles: getRoles(state),
         isLoadingRoles: isLoadingRoles(state)
         // error: getRoleError(state)
@@ -65,17 +65,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        UsersActions: bindActionCreators(UsersActions, dispatch),
+        PeopleActions: bindActionCreators(PeopleActions, dispatch),
         RolesActions: bindActionCreators(RolesActions, dispatch)
     };
 }
 
-UserContainer.propTypes = propTypes;
+PersonContainer.propTypes = propTypes;
 
-export { UserContainer as PlainUserContainer };
+export { PersonContainer as PlainPersonContainer };
 
 export default connectWithStore(
-    UserContainer,
+    PersonContainer,
     mapStateToProps,
     mapDispatchToProps
 );

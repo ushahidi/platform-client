@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
 
 const propTypes = {
-    saveNewUser: PropTypes.func.isRequired,
+    saveNewPerson: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
     isLoadingRoles: PropTypes.bool.isRequired
     // error: PropTypes.shape({
@@ -11,7 +11,7 @@ const propTypes = {
     // }).isRequired
 };
 
-class UserForm extends React.Component {
+class PersonForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,8 +32,8 @@ class UserForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const user = Object.assign({}, this.state);
-        this.props.saveNewUser(user);
+        const person = Object.assign({}, this.state);
+        this.props.saveNewPerson(person);
         // after success, clear state
         // after failure, state remains
         // TBD after we figure out endpoints
@@ -108,6 +108,6 @@ class UserForm extends React.Component {
     }
 }
 
-UserForm.propTypes = propTypes;
+PersonForm.propTypes = propTypes;
 
-export default UserForm;
+export default PersonForm;

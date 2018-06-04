@@ -1,15 +1,15 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
-import UserForm from "./UserForm";
+import PersonForm from "./PersonForm";
 
-test("a User Form with roles displays roles correctly", () => {
-    const saveNewUser = () => {};
+test("a Person Form with roles displays roles correctly", () => {
+    const saveNewPerson = () => {};
     const roles = [{ id: "email", name: "email" }];
     const isLoadingRoles = false;
     const component = renderer.create(
-        <UserForm
-            saveNewUser={saveNewUser}
+        <PersonForm
+            saveNewPerson={saveNewPerson}
             roles={roles}
             isLoadingRoles={isLoadingRoles}
         />
@@ -18,13 +18,13 @@ test("a User Form with roles displays roles correctly", () => {
     expect(tree).toMatchSnapshot();
 });
 
-test("A User Form without roles displays loading instead", () => {
-    const saveNewUser = () => {};
+test("A Person Form without roles displays loading instead", () => {
+    const saveNewPerson = () => {};
     const roles = [];
     const isLoadingRoles = true;
     const component = renderer.create(
-        <UserForm
-            saveNewUser={saveNewUser}
+        <PersonForm
+            saveNewPerson={saveNewPerson}
             roles={roles}
             isLoadingRoles={isLoadingRoles}
         />
@@ -34,24 +34,24 @@ test("A User Form without roles displays loading instead", () => {
 });
 
 test("the handleChange method updates the input value", () => {
-    const saveNewUser = () => {};
+    const saveNewPerson = () => {};
     const roles = [{ id: "email", name: "email" }];
     const isLoadingRoles = false;
 
-    const userForm = shallow(
-        <UserForm
-            saveNewUser={saveNewUser}
+    const personForm = shallow(
+        <PersonForm
+            saveNewPerson={saveNewPerson}
             roles={roles}
             isLoadingRoles={isLoadingRoles}
         />
     );
 
-    expect(userForm.find('[id="realname"]').props().value).toBe("");
-    const realname = userForm.find('[id="realname"]');
+    expect(personForm.find('[id="realname"]').props().value).toBe("");
+    const realname = personForm.find('[id="realname"]');
     realname.simulate("change", {
         target: { value: "My real name", id: "realname" }
     });
-    expect(userForm.find('[id="realname"]').props().value).toBe("My real name");
+    expect(personForm.find('[id="realname"]').props().value).toBe("My real name");
 });
 
 // test for submit success
