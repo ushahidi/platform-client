@@ -72,7 +72,7 @@
                          <label translate>settings.deployment_logo</label>
                          <figure ng-show="site.image_header">
                             <img ng-src="{{ site.image_header }}" class="postcard-image deployment-logo" />
-                            <button class="button-flat" ng-click="clearHeader()">Delete logo</button>
+                            <button class="button-flat" ng-click="clearHeader()" translate="settings.delete_logo"></button>
                          </figure>
 
                          <file-upload container="fileContainer">

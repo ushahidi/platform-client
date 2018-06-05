@@ -2,12 +2,12 @@
 
     <div class="form-field title">
         <label translate>set.name_savedsearch</label>
-        <input type="text" placeholder="Name your Saved Search..." ng-model="cpySavedSearch.name" />
+        <input type="text" placeholder="Name your Saved Search..." ng-model="cpySavedSearch.name | translate" translate/>
     </div>
 
     <div class="form-field">
         <label class="input-label" translate>set.description</label>
-        <textarea ng-model="cpySavedSearch.description" />
+        <textarea ng-model="cpySavedSearch.description | translate" />
     </div>
 
     <div class="form-field switch" ng-if="featuredEnabled()">
