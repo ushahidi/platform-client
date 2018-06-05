@@ -1,6 +1,7 @@
 import PersonEndpoints from "react/common/endpoints/people";
 
 export const SAVE_NEW_PERSON = "SAVE_NEW_PERSON";
+export const FETCH_PEOPLE = "FETCH PEOPLE";
 export const RECEIVE_PERSON = "RECEIVE_PERSON";
 export const HANDLE_REQUEST_FAILURE = "HANDLE_REQUEST_FAILURE";
 

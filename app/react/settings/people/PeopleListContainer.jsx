@@ -1,6 +1,8 @@
 import React from "react";
 // import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
+
 import connectWithStore from "react/react-transition/connectWithStore";
 import * as PeopleActions from "react/common/state/people/people.actions";
 import * as RolesActions from "react/common/state/roles/roles.actions";
@@ -13,19 +15,16 @@ import { getPeople } from "react/common/state/people/people.reducers";
 import SettingsSearch from "react/settings/common/SettingsSearch";
 import PeopleList from "./PeopleList";
 
-// const propTypes = {};
-
-class PeopleListContainer extends React.Component {
-    render() {
-        return (
-            <div>
-                <button>Add a person</button>
-                <SettingsSearch />
-                <PeopleList />
-            </div>
-        );
-    }
-}
+const propTypes = {
+    people: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+const PeopleListContainer = props => (
+    <div>
+        <button>Add a person</button>
+        <SettingsSearch />
+        <PeopleList people={props.people} />
+    </div>
+);
 
 function mapStateToProps(state) {
     return {
@@ -43,7 +42,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-// PeopleListContainer.propTypes = propTypes;
+PeopleListContainer.propTypes = propTypes;
 
 // specifically for testing
 export { PeopleListContainer as DisconnectedPeopleListContainer };
