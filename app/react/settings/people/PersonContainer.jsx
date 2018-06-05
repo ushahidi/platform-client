@@ -38,10 +38,10 @@ class PersonContainer extends React.Component {
         return (
             <main role="main">
                 <div>
-                    <h2>Add people to Ushahidi</h2>
+                    <h3>Add people to Ushahidi</h3>
                     <p>
-                        Add members of your team, beneficiaries, and other
-                        members of your community to Ushahidi
+                        Add members of your team, stakeholders, and other
+                        members of your community to Ushahidi.
                     </p>
                 </div>
                 <PersonForm
@@ -72,7 +72,7 @@ function mapDispatchToProps(dispatch) {
 
 PersonContainer.propTypes = propTypes;
 
-export { PersonContainer as PlainPersonContainer };
+export { PersonContainer as DisconnectedPersonContainer };
 
 export default connectWithStore(
     PersonContainer,
