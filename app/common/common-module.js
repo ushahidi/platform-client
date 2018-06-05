@@ -216,7 +216,7 @@ angular
         }
     ])
 
-    .component("myComponent", react2angular(MyComponent));
+    .component("myComponent", react2angular(MyComponent, ['foo', 'baz']));
 
 // Load submodules
 require("./directives/adaptive-input.js");
