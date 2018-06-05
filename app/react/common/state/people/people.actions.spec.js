@@ -7,7 +7,10 @@ import {
     SAVE_NEW_PERSON,
     RECEIVE_PERSON,
     HANDLE_REQUEST_FAILURE,
-    saveNewPerson
+    RECEIVE_PEOPLE,
+    FETCH_PEOPLE,
+    saveNewPerson,
+    fetchPeople
 } from "./people.actions";
 
 const error = {
@@ -41,6 +44,7 @@ const personResponse = {
     ],
     gravatar: "c1fa5461d96de458f87f6f9e82903587"
 };
+const peopleResponse = [personResponse, personResponse];
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
@@ -52,7 +56,48 @@ describe("People actions", () => {
     afterEach(() => {
         moxios.uninstall(instance);
     });
-
+    it("creates RECEIVE_PEOPLE and FETCH_PEOPLE when fetchPeople is called", () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+                status: 200,
+                response: peopleResponse
+            });
+        });
+        const expectedActions = [
+            { type: FETCH_PEOPLE },
+            {
+                type: RECEIVE_PEOPLE,
+                people: peopleResponse
+            }
+        ];
+        const store = mockStore({ people: [] });
+        return store.dispatch(fetchPeople()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+    it("creates HANDLE_REQUEST_FAILURE when GET people fails", () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.reject({
+                status: 401,
+                response: error
+            });
+        });
+        const expectedActions = [
+            { type: FETCH_PEOPLE },
+            {
+                type: HANDLE_REQUEST_FAILURE,
+                error
+            }
+        ];
+        const store = mockStore({ people: [] });
+        return store.dispatch(fetchPeople()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
     it("creates RECEIVE_PERSON and SAVE_NEW_PERSON when POST person has been done", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();

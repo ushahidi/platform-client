@@ -1,6 +1,7 @@
 import {
     SAVE_NEW_PERSON,
     RECEIVE_PERSON,
+    RECEIVE_PEOPLE,
     HANDLE_REQUEST_FAILURE
 } from "./people.actions";
 
@@ -28,6 +29,11 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 people: [...state.people, action.person],
                 isSaving: false
+            };
+        case RECEIVE_PEOPLE:
+            return {
+                ...state,
+                people: action.people
             };
         default:
             return state;

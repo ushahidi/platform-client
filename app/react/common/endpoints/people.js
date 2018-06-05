@@ -8,5 +8,11 @@ export default {
             data: person,
             method: "post"
         });
+    },
+    fetchPeople() {
+        return request({
+            url: Util.apiUrl("/users"),
+            method: "get"
+        });
     }
 };
