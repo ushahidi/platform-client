@@ -3,7 +3,13 @@
 import React from "react";
 import PersonCard from "./PersonCard";
 
-const PeopleList = data =>
-    data.people.map(person => <PersonCard person={person} />);
-
+const PeopleList = data => {
+    return (
+        <div class="list-item list">
+            <ul>
+                { data.people.map((person, index) => <PersonCard key={index} person={person} />)}
+            </ul>
+        </div>
+    );
+}
 export default PeopleList;
