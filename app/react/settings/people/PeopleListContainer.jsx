@@ -16,15 +16,23 @@ import SettingsSearch from "react/settings/common/SettingsSearch";
 import PeopleList from "./PeopleList";
 
 const propTypes = {
-    people: PropTypes.arrayOf(PropTypes.object).isRequired
+    people: PropTypes.arrayOf(PropTypes.object).isRequired,
+    PeopleActions: PropTypes.func.isRequired
 };
-const PeopleListContainer = props => (
-    <div>
-        <button>Add a person</button>
-        <SettingsSearch />
-        <PeopleList people={props.people} />
-    </div>
-);
+class PeopleListContainer extends React.Component {
+    componentDidMount() {
+        this.props.PeopleActions.fetchPeople();
+    }
+    render() {
+        return (
+            <div>
+                <button>Add a person</button>
+                <SettingsSearch />
+                <PeopleList people={this.props.people} />
+            </div>
+        );
+    }
+}
 
 function mapStateToProps(state) {
     return {

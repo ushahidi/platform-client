@@ -2,6 +2,7 @@ import { react2angular } from "react2angular";
 import angular from "angular";
 import TestRouteContainer from "./TestRouteContainer";
 import PersonContainer from "../react/settings/people/PersonContainer";
+import PeopleListContainer from "../react/settings/people/PeopleListContainer";
 
 angular
     .module("ushahidi.settings", [])
@@ -48,5 +49,5 @@ angular
 
     .component("testRouteContainer", react2angular(TestRouteContainer, ["id"]))
     .component("personContainer", react2angular(PersonContainer))
-
+    .component("peopleListContainer", react2angular(PeopleListContainer))
     .config(require("./settings.routes.js"));
