@@ -1,16 +1,16 @@
 import deepFreeze from "deep-freeze";
-import UsersReducer from "./users.reducers";
+import PeopleReducer from "./people.reducers";
 import {
-    RECEIVE_USER,
-    SAVE_NEW_USER,
+    RECEIVE_PERSON,
+    SAVE_NEW_PERSON,
     HANDLE_REQUEST_FAILURE
-} from "./users.actions";
+} from "./people.actions";
 
 const error = {
     errorMessage: "error!"
 };
 
-const user = {
+const person = {
     id: 5,
     url: "https://carolyntest.api.ushahidi.io/api/v3/users/5",
     email: "testdata@gmail.com",
@@ -37,17 +37,17 @@ const user = {
 };
 
 const initialState = {
-    users: [],
+    people: [],
     error: {},
     isSaving: false
 };
-describe("Users Reducer: Saving a user", () => {
-    test("SAVE_NEW_USER returns current state and changes isSaving to true", () => {
+describe("People Reducer: Saving a person", () => {
+    test("SAVE_NEW_PERSON returns current state and changes isSaving to true", () => {
         const action = {
-            type: SAVE_NEW_USER
+            type: SAVE_NEW_PERSON
         };
         const stateAfter = {
-            users: [],
+            people: [],
             error: {},
             isSaving: true
         };
@@ -56,15 +56,15 @@ describe("Users Reducer: Saving a user", () => {
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
-        expect(UsersReducer(stateBefore, action)).toEqual(stateAfter);
+        expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
     });
-    test("RECEIVE_USER adds a newly saved user to the users state array ", () => {
+    test("RECEIVE_PERSON adds a newly saved person to the people state array ", () => {
         const action = {
-            type: RECEIVE_USER,
-            user
+            type: RECEIVE_PERSON,
+            person
         };
         const stateAfter = {
-            users: [user],
+            people: [person],
             error: {},
             isSaving: false
         };
@@ -73,22 +73,22 @@ describe("Users Reducer: Saving a user", () => {
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
-        expect(UsersReducer(stateBefore, action)).toEqual(stateAfter);
+        expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
     });
-    test("HANDLE_REQUEST_FAILURE returns users array unchanged, changes isSaving to false, and adds error", () => {
+    test("HANDLE_REQUEST_FAILURE returns people array unchanged, changes isSaving to false, and adds error", () => {
         const action = {
             type: HANDLE_REQUEST_FAILURE,
             error
         };
         // setting initial state locally so that we can test to ensure
-        // the users array returns with existing users
+        // the people array returns with existing people
         const localInitialState = {
-            users: [user],
+            people: [person],
             error: {},
             isSaving: false
         };
         const stateAfter = {
-            users: [user],
+            people: [person],
             error,
             isSaving: false
         };
@@ -97,6 +97,6 @@ describe("Users Reducer: Saving a user", () => {
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
-        expect(UsersReducer(stateBefore, action)).toEqual(stateAfter);
+        expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
     });
 });

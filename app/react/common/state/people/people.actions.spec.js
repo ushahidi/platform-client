@@ -4,11 +4,11 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import expect from "expect";
 import {
-    SAVE_NEW_USER,
-    RECEIVE_USER,
+    SAVE_NEW_PERSON,
+    RECEIVE_PERSON,
     HANDLE_REQUEST_FAILURE,
-    saveNewUser
-} from "./users.actions";
+    saveNewPerson
+} from "./people.actions";
 
 const error = {
     error: {
@@ -16,7 +16,7 @@ const error = {
     }
 };
 
-const userResponse = {
+const personResponse = {
     id: 5,
     url: "https://carolyntest.api.ushahidi.io/api/v3/users/5",
     email: "testdata@gmail.com",
@@ -44,7 +44,7 @@ const userResponse = {
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe("Users actions", () => {
+describe("People actions", () => {
     beforeEach(() => {
         moxios.install(instance);
     });
@@ -53,29 +53,29 @@ describe("Users actions", () => {
         moxios.uninstall(instance);
     });
 
-    it("creates RECEIVE_USER and SAVE_NEW_USER when POST user has been done", () => {
+    it("creates RECEIVE_PERSON and SAVE_NEW_PERSON when POST person has been done", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
                 status: 200,
-                response: userResponse
+                response: personResponse
             });
         });
         const expectedActions = [
-            { type: SAVE_NEW_USER },
+            { type: SAVE_NEW_PERSON },
             {
-                type: RECEIVE_USER,
-                user: userResponse
+                type: RECEIVE_PERSON,
+                person: personResponse
             }
         ];
-        const store = mockStore({ users: [] });
-        return store.dispatch(saveNewUser()).then(() => {
+        const store = mockStore({ people: [] });
+        return store.dispatch(saveNewPerson()).then(() => {
             // return of async actions
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
 
-    it("creates HANDLE_REQUEST_FAILURE when POST user fails", () => {
+    it("creates HANDLE_REQUEST_FAILURE when POST person fails", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.reject({
@@ -84,14 +84,14 @@ describe("Users actions", () => {
             });
         });
         const expectedActions = [
-            { type: SAVE_NEW_USER },
+            { type: SAVE_NEW_PERSON },
             {
                 type: HANDLE_REQUEST_FAILURE,
                 error
             }
         ];
-        const store = mockStore({ users: [] });
-        return store.dispatch(saveNewUser()).then(() => {
+        const store = mockStore({ people: [] });
+        return store.dispatch(saveNewPerson()).then(() => {
             // return of async actions
             expect(store.getActions()).toEqual(expectedActions);
         });

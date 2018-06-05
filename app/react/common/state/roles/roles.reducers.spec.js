@@ -1,5 +1,5 @@
 import deepFreeze from "deep-freeze";
-import UsersReducer from "./roles.reducers";
+import RolesReducer from "./roles.reducers";
 import {
     REQUEST_ROLES,
     RECEIVE_ROLES,
@@ -40,7 +40,7 @@ describe("Roles State", () => {
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
-        expect(UsersReducer(stateBefore, action)).toEqual(stateAfter);
+        expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
     });
 
     test("RECEIVE_ROLES adds roles to roles array", () => {
@@ -58,7 +58,7 @@ describe("Roles State", () => {
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
-        expect(UsersReducer(stateBefore, action)).toEqual(stateAfter);
+        expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
     });
 
     test("RECEIVE_ROLES adds roles to roles array with existing data already in store", () => {
@@ -80,7 +80,7 @@ describe("Roles State", () => {
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
-        expect(UsersReducer(stateBefore, action)).toEqual(stateAfter);
+        expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
     });
 
     test("HANDLE_REQUEST_FAILURE adds roles to roles array with existing data already in store", () => {
@@ -98,6 +98,6 @@ describe("Roles State", () => {
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
-        expect(UsersReducer(stateBefore, action)).toEqual(stateAfter);
+        expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
     });
 });

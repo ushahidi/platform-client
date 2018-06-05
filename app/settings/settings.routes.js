@@ -51,11 +51,11 @@ import datasources from "./datasources/datasources.html";
 import plansController from "./plans/plans.controller";
 import plans from "./plans/plan.html";
 
-import userSettingsController from './user-settings/user-settings.controller.js';
-import userSettings from './user-settings/user-settings.html';
+import userSettingsController from "./user-settings/user-settings.controller.js";
+import userSettings from "./user-settings/user-settings.html";
 
-import hdxExportController from './data-export/hdx-export.controller.js';
-import hdxExport from './data-export/hdx-export.html';
+import hdxExportController from "./data-export/hdx-export.controller.js";
+import hdxExport from "./data-export/hdx-export.html";
 
 module.exports = [
     "$stateProvider",
@@ -94,8 +94,8 @@ module.exports = [
                 template: afterImport
             })
             .state({
-                name: 'settings.userSettings',
-                url: '/settings/user-settings',
+                name: "settings.userSettings",
+                url: "/settings/user-settings",
                 controller: userSettingsController,
                 template: userSettings
             })
@@ -106,8 +106,8 @@ module.exports = [
                 template: dataExport
             })
             .state({
-                name: 'settings.hdx',
-                url: '/settings/hdx',
+                name: "settings.hdx",
+                url: "/settings/hdx",
                 controller: hdxExportController,
                 template: hdxExport
             })
@@ -173,7 +173,7 @@ module.exports = [
                 name: "settings.createUser",
                 url: "/settings/users/create",
                 controller: [() => {}],
-                template: "<user-container></user-container>"
+                template: "<person-container></person-container>"
             })
             .state({
                 name: "settings.users.edit",

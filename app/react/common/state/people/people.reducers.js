@@ -1,18 +1,18 @@
 import {
-    SAVE_NEW_USER,
-    RECEIVE_USER,
+    SAVE_NEW_PERSON,
+    RECEIVE_PERSON,
     HANDLE_REQUEST_FAILURE
-} from "./users.actions";
+} from "./people.actions";
 
 const initialState = {
-    users: [],
+    people: [],
     error: {},
     isSaving: false
 };
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case SAVE_NEW_USER:
+        case SAVE_NEW_PERSON:
             return {
                 ...state,
                 isSaving: true
@@ -23,10 +23,10 @@ export default function reducer(state = initialState, action) {
                 error: action.error,
                 isSaving: false
             };
-        case RECEIVE_USER:
+        case RECEIVE_PERSON:
             return {
                 ...state,
-                users: [...state.users, action.user],
+                people: [...state.people, action.person],
                 isSaving: false
             };
         default:
@@ -34,6 +34,6 @@ export default function reducer(state = initialState, action) {
     }
 }
 
-export function getUsers(state) {
-    return state.users.users;
+export function getPeople(state) {
+    return state.people.people;
 }
