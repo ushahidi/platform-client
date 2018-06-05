@@ -16,9 +16,9 @@ import SettingsSearch from "react/settings/common/SettingsSearch";
 import PeopleList from "./PeopleList";
 
 const propTypes = {
-    people: PropTypes.arrayOf(PropTypes.object).isRequired,
-    PeopleActions: PropTypes.func.isRequired
+    people: PropTypes.arrayOf(PropTypes.object)
 };
+
 class PeopleListContainer extends React.Component {
     componentDidMount() {
         this.props.PeopleActions.fetchPeople();
@@ -49,6 +49,9 @@ function mapDispatchToProps(dispatch) {
         RolesActions: bindActionCreators(RolesActions, dispatch)
     };
 }
+PeopleListContainer.defaultProps = {
+    people: []
+};
 
 PeopleListContainer.propTypes = propTypes;
 
