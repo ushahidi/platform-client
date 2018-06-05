@@ -1,3 +1,4 @@
+import { createReducer } from "redux-create-reducer";
 import {
     SAVE_NEW_PERSON,
     RECEIVE_PERSON,
@@ -10,29 +11,22 @@ const initialState = {
     isSaving: false
 };
 
-export default function reducer(state = initialState, action) {
-    switch (action.type) {
-        case SAVE_NEW_PERSON:
-            return {
-                ...state,
-                isSaving: true
-            };
-        case HANDLE_REQUEST_FAILURE:
-            return {
-                ...state,
-                error: action.error,
-                isSaving: false
-            };
-        case RECEIVE_PERSON:
-            return {
-                ...state,
-                people: [...state.people, action.person],
-                isSaving: false
-            };
-        default:
-            return state;
-    }
-}
+export default createReducer(initialState, {
+    [SAVE_NEW_PERSON]: state => ({
+        ...state,
+        isSaving: true
+    }),
+    [HANDLE_REQUEST_FAILURE]: (state, action) => ({
+        ...state,
+        error: action.error,
+        isSaving: false
+    }),
+    [RECEIVE_PERSON]: (state, action) => ({
+        ...state,
+        people: [...state.people, action.person],
+        isSaving: false
+    })
+});
 
 export function getPeople(state) {
     return state.people.people;
