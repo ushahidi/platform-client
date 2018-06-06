@@ -56,6 +56,9 @@ function mapDispatchToProps(dispatch) {
         RolesActions: bindActionCreators(RolesActions, dispatch)
     };
 }
+PeopleListContainer.defaultProps = {
+    people: []
+};
 
 PeopleListContainer.propTypes = propTypes;
 
