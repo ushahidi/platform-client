@@ -199,8 +199,9 @@ angular
         $ngReduxProvider.createStoreWith(
             RootReducer,
             [thunk],
-            null
-            // Need to replace null with [window.__REDUX_DEVTOOLS_EXTENSION__()] but it breaks redux actions
+            window.__REDUX_DEVTOOLS_EXTENSION__
+	            ? [window.__REDUX_DEVTOOLS_EXTENSION__()]
+	            : null
         );
     });
 /* eslint-enable */
