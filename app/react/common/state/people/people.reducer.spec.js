@@ -36,7 +36,7 @@ const person = {
     ],
     gravatar: "c1fa5461d96de458f87f6f9e82903587"
 };
-const people = [person, person];
+const people = { results: [person, person] };
 const initialState = {
     people: [],
     error: {},
@@ -76,13 +76,15 @@ describe("People Reducer: Saving a person", () => {
         deepFreeze(action);
         expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
     });
+});
+describe("People Reducer: Fetching people", () => {
     test("RECEIVE_PEOPLE resets the people list to have the result of getting all users in the state array ", () => {
         const action = {
             type: RECEIVE_PEOPLE,
             people
         };
         const stateAfter = {
-            people,
+            people: people.results,
             error: {},
             isSaving: false
         };

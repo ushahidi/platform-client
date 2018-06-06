@@ -29,7 +29,7 @@ export default createReducer(initialState, {
     }),
     [RECEIVE_PEOPLE]: (state, action) => ({
         ...state,
-        people: action.people
+        people: action.people.results
     })
 });
 
