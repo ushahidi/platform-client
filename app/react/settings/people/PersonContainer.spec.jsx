@@ -1,5 +1,6 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { MemoryRouter } from 'react-router'
+import { mount } from "enzyme";
 import { DisconnectedPersonContainer as PersonContainer } from "./PersonContainer";
 
 // THIS DOESN'T ACTUALLY TEST ANYTHING!!!!
@@ -15,8 +16,11 @@ test("The PersonContainer has an title and some text when in /create", () => {
         roles: [{}],
         isLoadingRoles: false
     };
-    const personContainer = shallow(<PersonContainer {...props} />);
-
-    expect(personContainer.find("h3").length).toBe(1);
-    expect(personContainer.find("p").length).toBe(1);
+    const personContainer = mount(
+        <MemoryRouter initalEntries = {['/settings/users/create']}>
+            <PersonContainer {...props} />
+        </MemoryRouter>
+    );
+    console.log(personContainer.debug())
+    expect(personContainer.find("PersonContainer").length).toBe(1);
 });

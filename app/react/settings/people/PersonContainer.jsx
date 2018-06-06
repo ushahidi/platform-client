@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 // import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,6 +13,7 @@ import {
 } from "react/common/state/roles/roles.reducers";
 import { getPeople } from "react/common/state/people/people.reducers";
 import PersonForm from "react/settings/people/PersonForm";
+import InlineLoading from "react/common/ui/InlineLoading"
 
 const propTypes = {
     PeopleActions: PropTypes.shape({
@@ -36,21 +38,23 @@ class PersonContainer extends React.Component {
 
     render() {
         return (
-            <main role="main">
+            <Router>
                 <div>
-                    <h3>Add people to Ushahidi</h3>
-                    <p>
-                        Add members of your team, stakeholders, and other
-                        members of your community to Ushahidi.
-                    </p>
-                </div>
-                <PersonForm
-                    saveNewPerson={this.props.PeopleActions.saveNewPerson}
-                    roles={this.props.roles}
-                    isLoadingRoles={this.props.isLoadingRoles}
+                <Route 
+                    path="/settings/users/create" 
+                    render={() => <PersonForm 
+                        saveNewPerson={this.props.PeopleActions.saveNewPerson}
+                        roles={this.props.roles}
+                        isLoadingRoles={this.props.isLoadingRoles} 
+                    />} 
                 />
-            </main>
-        );
+                <Route
+                    path="/ekjdfhg"
+                    component={InlineLoading}
+                />
+                </div>
+            </Router>
+        )
     }
 }
 
