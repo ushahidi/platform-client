@@ -7,6 +7,7 @@ module.exports = [
     'ConfigEndpoint',
     'CollectionsService',
     '$window',
+    '$state',
 function (
     Features,
     Authentication,
@@ -15,7 +16,8 @@ function (
     $rootScope,
     ConfigEndpoint,
     CollectionsService,
-    $window
+    $window,
+    $state
 ) {
     return {
         restrict: 'E',
@@ -28,7 +30,6 @@ function (
             $scope.moreActive = false;
             $scope.isActivityAvailable = false;
             $scope.canRegister = false;
-
             $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
             $scope.showMore = showMore;
             $scope.viewCollectionListing = CollectionsService.showCollectionList;
@@ -44,6 +45,7 @@ function (
             function activate() {
                 $scope.$on('$locationChangeStart', handleRouteChange);
 
+                $scope.modebar = !$state.$current.includes['settings.usersList'];
                 Features.loadFeatures().then(function () {
                     $scope.isActivityAvailable = Features.isViewEnabled('activity');
                 });
@@ -74,6 +76,7 @@ function (
 
             function handleRouteChange() {
                 $scope.moreActive = false;
+                $scope.modebar = !$state.$current.includes['settings.usersList'];
             }
         }
     };
