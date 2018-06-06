@@ -125,9 +125,19 @@
         <script>
             if (window.ushahidi && window.ushahidi.ravenUrl) {
                 (function(d, t, c, s) {
-                    var g = d.createElement(t);g.id = 'ravenScript';g.type = 'text/javascript';g.async = true; g.src = 'https://cdn.ravenjs.com/3.8.0/angular/raven.min.js';g.onload=c;g.onreadystatechange=c; s = d.getElementsByTagName(t)[0];s.parentNode.insertBefore(g, s);
+                    var g = d.createElement(t);g.id = 'ravenScript';g.type = 'text/javascript';g.async = true; g.src = 'https://cdn.ravenjs.com/3.25.0/angular/raven.min.js';g.onload=c;g.onreadystatechange=c; s = d.getElementsByTagName(t)[0];s.parentNode.insertBefore(g, s);
                 }(document, 'script', function () {
-                    Raven.config(window.ushahidi.ravenUrl).install();
+                    Raven.config(
+                        window.ushahidi.ravenUrl,
+                        {
+                            allowDuplicates: true,
+                            sanitizeKeys: [
+                                /accessToken/i,
+                                /Authorization/i,
+                                /password/i
+                            ]
+                        }
+                    ).install();
                 }));
             }
         </script>
