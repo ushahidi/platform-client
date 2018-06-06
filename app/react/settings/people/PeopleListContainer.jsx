@@ -28,11 +28,13 @@ class PeopleListContainer extends React.Component {
     }
     render() {
         return (
-            <div>
-                <button>Add a person</button>
-                <SettingsSearch />
-                <PeopleList people={this.props.people} />
-            </div>
+            <main role="main">
+                <div className="full-col">
+                    <button>Add a person</button>
+                    <SettingsSearch />
+                    <PeopleList people={this.props.people} />
+                </div>
+            </main>
         );
     }
 }
