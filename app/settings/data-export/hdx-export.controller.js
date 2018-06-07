@@ -2,22 +2,24 @@ module.exports = [
     '$scope',
     '$rootScope',
     'Features',
-    '$location',
+    '$state',
     'HxlExport',
-    'DataExport',
     '_',
     'LoadingProgress',
+    '$anchorScroll',
     'Notify',
+    'DataExport',
 function (
     $scope,
     $rootScope,
     Features,
-    $location,
+    $state,
     HxlExport,
-    DataExport,
     _,
     LoadingProgress,
-    Notify
+    $anchorScroll,
+    Notify,
+    DataExport
 ) {
     $scope.selectHxlAttribute = selectHxlAttribute;
     $scope.addAnother = addAnother;
@@ -28,6 +30,7 @@ function (
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.getSelectedFields = getSelectedFields;
     $scope.hxlAttributeSelected = hxlAttributeSelected;
+    $scope.showProgress = false;
 
     // Change layout class
     $rootScope.setLayout('layout-c');
@@ -39,7 +42,7 @@ function (
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
         // Redirect to home if not enabled
         if (!$scope.hxlEnabled) {
-            return $location.path('/');
+            $state.go('posts.map.all');
         }
     });
 
@@ -97,6 +100,10 @@ function (
                 }
             });
         });
+
+        if ($scope.fieldError && selectedFields.length > 0) {
+            $scope.fieldError = false;
+        }
         return selectedFields;
     }
 
@@ -143,10 +150,11 @@ function (
 
     function exportData(sendToHDX) {
         if (formatIds().length === 0) {
-            // displaying notification if no fields are selected
-            var message =  '<p translate="data_export.no_fields"></p>';
-            Notify.notifyAction(message, null, false, 'warning', 'error');
+            // scrolling to top and display the error-message
+            $scope.fieldError = true;
+            $anchorScroll();
         } else {
+            $scope.fieldError = false;
             let title, description, button, cancel;
             let data = {
                 'fields': $scope.getSelectedFields(),
@@ -160,7 +168,7 @@ function (
                     'source' : ['sms','twitter','web','email']
                 },
                 'send_to_hdx': sendToHDX,
-                'include_hxl': sendToHDX,
+                'include_hxl': true,
                 'send_to_browser': !sendToHDX,
                 'hxl_heading_row': formatIds()
             };
@@ -178,8 +186,14 @@ function (
             cancel = 'data_export.go_back';
 
             Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
-                DataExport.startExport(data);
-            });
+                    if (sendToHDX) {
+                        $state.go('settings.hdxDetails', {exportJob: data });
+                    } else {
+                        DataExport.startExport(data, sendToHDX).then((id) => {
+                            $scope.showProgress = true;
+                        });
+                    }
+                });
         }
     }
 }];

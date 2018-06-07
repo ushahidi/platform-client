@@ -71,6 +71,16 @@ function (
             template: require('./data-export/hdx-export.html')
         }
     )
+    .state(
+        {
+            name: 'settings.hdxDetails',
+            url: '/settings/hdx-details',
+            component: 'hdxDetails',
+            params: {
+                exportJob: null
+            }
+        }
+    )
 
     .state(
         {
