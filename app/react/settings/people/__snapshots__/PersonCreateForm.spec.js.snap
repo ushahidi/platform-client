@@ -38,7 +38,7 @@ exports[`A Person Form without roles displays loading instead 1`] = `
         placeholder="email"
         required={true}
         type="text"
-        value="howcomethisgoesaway"
+        value=""
       />
     </label>
     <label
@@ -114,7 +114,7 @@ exports[`a Person Form with roles displays roles correctly 1`] = `
         placeholder="email"
         required={true}
         type="text"
-        value="howcomethisgoesaway"
+        value=""
       />
     </label>
     <label
@@ -137,17 +137,17 @@ exports[`a Person Form with roles displays roles correctly 1`] = `
       <select
         id="role"
         onChange={[Function]}
-        value="Select a role"
+        value={
+          Object {
+            "display_name": "Select a role",
+            "name": "",
+          }
+        }
       >
         <option
-          id="default"
-          value="Select a role"
-        >
-          Select a role
-        </option>
-        <option
           id="email"
-          value={undefined}
+          selected=""
+          value="email"
         />
       </select>
     </label>

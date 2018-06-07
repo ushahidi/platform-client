@@ -18,7 +18,7 @@ class PersonCreateForm extends React.Component {
         super(props);
         this.state = {
             form: {
-                email: "howcomethisgoesaway",
+                email: "",
                 password: "",
                 realname: "",
                 role: { display_name: "Select a role", name: "" }
@@ -41,12 +41,15 @@ class PersonCreateForm extends React.Component {
     }
 
     handleOptionChange(event) {
+        const selectedRole = this.props.roles
+            .filter(role => event.target.value === role.name)
+            .pop();
         this.setState({
             form: {
                 ...this.state.form,
                 [event.target.id]: {
-                    display_name: event.target.value,
-                    name: event.target.id
+                    display_name: selectedRole.display_name,
+                    name: selectedRole.name
                 }
             }
         });
@@ -74,31 +77,25 @@ class PersonCreateForm extends React.Component {
             <label htmlFor="role">
                 Role
                 <select
-                    id="role"
-                    value={this.state.form.role.display_name}
+                    value={this.state.form.role}
                     onChange={this.handleOptionChange}
+                    id="role"
                 >
-                    <option
-                        id="default"
-                        value={this.state.form.role.display_name}
-                    >
-                        {this.state.form.role.display_name}
-                    </option>
-                    {this.props.roles
-                        .filter(
-                            item =>
-                                item.display_name !==
+                    {this.props.roles.map(role => (
+                        <option
+                            selected={
+                                role.display_name ===
                                 this.state.form.role.display_name
-                        )
-                        .map(role => (
-                            <option
-                                key={role.id}
-                                id={role.name}
-                                value={role.display_name}
-                            >
-                                {role.display_name}
-                            </option>
-                        ))}
+                                    ? "selected"
+                                    : ""
+                            }
+                            key={role.id}
+                            id={role.name}
+                            value={role.name}
+                        >
+                            {role.display_name}
+                        </option>
+                    ))}
                 </select>
             </label>
         );
