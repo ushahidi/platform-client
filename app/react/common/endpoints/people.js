@@ -9,10 +9,14 @@ export default {
             method: "post"
         });
     },
-    fetchPeople() {
+    fetchPeople(query = {}) {
+        let params = {orderby: 'realname'};
+        Object.assign(params, query);
+        console.log(params)
         return request({
             url: Util.apiUrl("/users"),
-            method: "get"
+            method: "get",
+            params
         });
     }
 };

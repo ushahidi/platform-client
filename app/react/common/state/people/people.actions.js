@@ -25,10 +25,10 @@ export function saveNewPerson(person) {
     };
 }
 
-export function fetchPeople() {
+export function fetchPeople(params) {
     return function action(dispatch) {
         dispatch({ type: FETCH_PEOPLE });
-        return PersonEndpoints.fetchPeople()
+        return PersonEndpoints.fetchPeople(params)
             .then(peopleResponse => dispatch(receivePeople(peopleResponse)))
             .catch(error => dispatch(handleRequestFailure(error)));
     };

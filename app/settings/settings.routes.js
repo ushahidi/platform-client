@@ -171,7 +171,7 @@ module.exports = [
             })
             .state({
                 name: "settings.usersList",
-                url: "/settings/users/list",
+                url: "/settings/users",
                 controller: [() => {}],
                 template:
                     '<layout-class layout="g"></layout-class><people-list-container></people-list-container>'

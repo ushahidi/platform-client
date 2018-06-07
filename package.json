@@ -167,6 +167,7 @@
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",
+    "precommit": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -178,7 +179,7 @@
     "socket.io-client": "2.0.3",
     "sortablejs": "^1.7.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "v3.11.0-rc.5"
+    "ushahidi-platform-pattern-library": "v3.11.0-rc.3"
   },
   "engines": {
     "node": ">=4.0"

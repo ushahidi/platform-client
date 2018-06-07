@@ -7,7 +7,7 @@ const PeopleList = data => (
     <div className="list-item list">
         <ul>
             {data.people.map((person, index) => (
-                <PersonCard key={index} person={person} />
+                    <PersonCard key={index} person={person} />
             ))}
         </ul>
     </div>
