@@ -12,7 +12,6 @@ const connectWithStore = (WrappedComponent, ...args) => {
         const store = injector.get("$ngRedux");
         return <ConnectedWrappedComponent store={store} {...props} />;
     };
-    ConnectedComponentWithStore.propTypes = WrappedComponent.propTypes;
 
     return ConnectedComponentWithStore;
 };

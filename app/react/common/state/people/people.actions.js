@@ -15,7 +15,7 @@ export function handleRequestFailure(error) {
 export function saveNewPerson(person) {
     return function action(dispatch) {
         dispatch({ type: SAVE_NEW_PERSON });
-        return PersonEndpoints.savePerson(person)
+        return PersonEndpoints.save(person)
             .then(personResponse => dispatch(receivePerson(personResponse)))
             .catch(error => dispatch(handleRequestFailure(error)));
     };
