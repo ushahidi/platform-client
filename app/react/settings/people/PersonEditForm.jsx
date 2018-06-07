@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
 
@@ -11,7 +12,7 @@ const propTypes = {
     // }).isRequired
 };
 
-class PersonForm extends React.Component {
+class PersonEditForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -110,6 +111,9 @@ class PersonForm extends React.Component {
                     ) : (
                         this.renderRoles()
                     )}
+                    <Link to="/settings/TODO/someplaceholderofsomekind">
+                        <button className="button-beta">Cancel</button>
+                    </Link>
                     <button type="submit">Submit</button>
                 </form>
             </main>
@@ -117,6 +121,6 @@ class PersonForm extends React.Component {
     }
 }
 
-PersonForm.propTypes = propTypes;
+PersonEditForm.propTypes = propTypes;
 
-export default PersonForm;
+export default PersonEditForm;

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 // import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,8 +12,9 @@ import {
     // getRoleError
 } from "react/common/state/roles/roles.reducers";
 import { getPeople } from "react/common/state/people/people.reducers";
-import PersonForm from "react/settings/people/PersonForm";
-import InlineLoading from "react/common/ui/InlineLoading"
+import PersonCreateForm from "react/settings/people/PersonCreateForm";
+// import PersonEditForm from "react/settings/people/PersonEditForm";
+// import PeopleList from "react/settings/people/PeopleList";
 
 const propTypes = {
     PeopleActions: PropTypes.shape({
@@ -33,28 +34,34 @@ class PersonContainer extends React.Component {
     componentDidMount() {
         // Need UI to handle failures for this.
         // Error currently saved to state.error
-        this.props.RolesActions.requestRoles();
+
+        if (this.props.roles.length === 0) {
+            this.props.RolesActions.requestRoles();
+        }
     }
 
     render() {
         return (
-            <Router>
-                <div>
-                <Route 
-                    path="/settings/users/create" 
-                    render={() => <PersonForm 
-                        saveNewPerson={this.props.PeopleActions.saveNewPerson}
-                        roles={this.props.roles}
-                        isLoadingRoles={this.props.isLoadingRoles} 
-                    />} 
-                />
-                <Route
-                    path="/ekjdfhg"
-                    component={InlineLoading}
-                />
-                </div>
-            </Router>
-        )
+            <div>
+                <h1>This is the best.</h1>
+                <Router>
+                    <div>
+                        <Route
+                            path="/settings/users/create"
+                            render={() => (
+                                <PersonCreateForm
+                                    saveNewPerson={
+                                        this.props.PeopleActions.saveNewPerson
+                                    }
+                                    roles={this.props.roles}
+                                    isLoadingRoles={this.props.isLoadingRoles}
+                                />
+                            )}
+                        />
+                    </div>
+                </Router>
+            </div>
+        );
     }
 }
 

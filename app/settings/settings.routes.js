@@ -172,7 +172,17 @@ module.exports = [
             .state({
                 name: "settings.createUser",
                 url: "/settings/users/create",
-                controller: [() => {}],
+                controller: [
+                    "$location",
+                    "$window",
+                    ($location, $window) => {
+                        $window.history.pushState(
+                            null,
+                            "any",
+                            $location.absUrl()
+                        );
+                    }
+                ],
                 template: "<person-container></person-container>"
             })
             .state({
