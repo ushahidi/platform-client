@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, BrowserRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
+// import Router from "react-router";
 
 const propTypes = {
     saveNewPerson: PropTypes.func.isRequired,
@@ -109,60 +110,61 @@ class PersonCreateForm extends React.Component {
         }
 
         return (
-            <main role="main">
-                <div>
-                    <h3>Add people to Ushahidi</h3>
-                    <p>
-                        Add members of your team, stakeholders, and other
-                        members of your community to Ushahidi.
-                    </p>
-                </div>
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="realname">
-                        Name
-                        <input
-                            type="text"
-                            placeholder="What is this person's full name"
-                            id="realname"
-                            value={this.state.form.realname}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </label>
-                    <label htmlFor="email">
-                        Email
-                        <input
-                            type="text"
-                            placeholder="email"
-                            id="email"
-                            value={this.state.form.email}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </label>
-                    <label htmlFor="password">
-                        Password
-                        <input
-                            type="password"
-                            placeholder="password"
-                            id="password"
-                            value={this.state.form.password}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </label>
-                    {this.props.isLoadingRoles ? (
-                        <InlineLoading />
-                    ) : (
-                        this.renderRoles()
-                    )}
-                    <Link to="/settings/users">
-                        <button className="button-beta">Cancel</button>
-                    </Link>
-
-                    <button type="submit">Submit</button>
-                </form>
-            </main>
+            <BrowserRouter>
+                <main role="main">
+                    <div>
+                        <h3>Add people to Ushahidi</h3>
+                        <p>
+                            Add members of your team, stakeholders, and other
+                            members of your community to Ushahidi.
+                        </p>
+                    </div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label htmlFor="realname">
+                            Name
+                            <input
+                                type="text"
+                                placeholder="What is this person's full name"
+                                id="realname"
+                                value={this.state.form.realname}
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </label>
+                        <label htmlFor="email">
+                            Email
+                            <input
+                                type="text"
+                                placeholder="email"
+                                id="email"
+                                value={this.state.form.email}
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </label>
+                        <label htmlFor="password">
+                            Password
+                            <input
+                                type="password"
+                                placeholder="password"
+                                id="password"
+                                value={this.state.form.password}
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </label>
+                        {this.props.isLoadingRoles ? (
+                            <InlineLoading />
+                        ) : (
+                            this.renderRoles()
+                        )}
+                        <Link to="/settings/users">
+                            <button className="button-beta">Cancel</button>
+                        </Link>
+                        <button type="submit">Submit</button>
+                    </form>
+                </main>
+            </BrowserRouter>
         );
     }
 }
