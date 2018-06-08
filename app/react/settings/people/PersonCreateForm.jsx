@@ -2,7 +2,6 @@ import React from "react";
 import { Link, Redirect, BrowserRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
-// import Router from "react-router";
 
 const propTypes = {
     saveNewPerson: PropTypes.func.isRequired,
@@ -41,15 +40,15 @@ class PersonCreateForm extends React.Component {
     }
 
     handleOptionChange(event) {
-        const selectedRole = this.props.roles
-            .filter(role => event.target.value === role.name)
-            .pop();
+        const index = event.nativeEvent.target.selectedIndex;
+        const selectedText = event.nativeEvent.target[index].text;
+        const selectedRole = event.nativeEvent.target[index].value;
         this.setState({
             form: {
                 ...this.state.form,
                 [event.target.id]: {
-                    display_name: selectedRole.display_name,
-                    name: selectedRole.name
+                    display_name: selectedText,
+                    name: selectedRole
                 }
             }
         });
@@ -58,8 +57,6 @@ class PersonCreateForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         const person = Object.assign({}, this.state.form);
-
-        // TODO: do this in a cool ES6 way
         person.role = this.state.form.role.name;
         this.props.saveNewPerson(person).then(() => {
             this.setState(() => ({
@@ -77,10 +74,13 @@ class PersonCreateForm extends React.Component {
             <label htmlFor="role">
                 Role
                 <select
-                    value={this.state.form.role}
+                    value={this.state.form.role.name}
                     onChange={this.handleOptionChange}
                     id="role"
                 >
+                    <option value="" default disabled>
+                        Select A Value...
+                    </option>
                     {this.props.roles.map(role => (
                         <option
                             selected={
@@ -90,7 +90,6 @@ class PersonCreateForm extends React.Component {
                                     : ""
                             }
                             key={role.id}
-                            id={role.name}
                             value={role.name}
                         >
                             {role.display_name}
@@ -165,7 +164,5 @@ class PersonCreateForm extends React.Component {
         );
     }
 }
-
 PersonCreateForm.propTypes = propTypes;
-
 export default PersonCreateForm;

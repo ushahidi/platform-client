@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import PropTypes from "prop-types";
-// import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import connectWithStore from "react/react-transition/connectWithStore";
 import * as PeopleActions from "react/common/state/people/people.actions";
@@ -9,12 +8,9 @@ import * as RolesActions from "react/common/state/roles/roles.actions";
 import {
     isLoadingRoles,
     getRoles
-    // getRoleError
 } from "react/common/state/roles/roles.reducers";
 import { getPeople } from "react/common/state/people/people.reducers";
 import PersonCreateForm from "react/settings/people/PersonCreateForm";
-// import PersonEditForm from "react/settings/people/PersonEditForm";
-// import PeopleList from "react/settings/people/PeopleList";
 
 const propTypes = {
     PeopleActions: PropTypes.shape({
@@ -43,7 +39,6 @@ class PersonContainer extends React.Component {
     render() {
         return (
             <div>
-                <h1>This is the best.</h1>
                 <Router>
                     <div>
                         <Route
