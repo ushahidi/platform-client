@@ -7,6 +7,7 @@ module.exports = [
     'ConfigEndpoint',
     'CollectionsService',
     '$window',
+    '$transitions',
     '$state',
 function (
     Features,
@@ -17,6 +18,7 @@ function (
     ConfigEndpoint,
     CollectionsService,
     $window,
+    $transitions,
     $state
 ) {
     return {
@@ -45,7 +47,18 @@ function (
             function activate() {
                 $scope.$on('$locationChangeStart', handleRouteChange);
 
-                $scope.modebar = !$state.$current.includes['settings.usersList'];
+
+                $transitions.onEnter({}, function(transition, state) {
+                    const stateObject = transition.targetState().$state();
+                    if (stateObject.includes['settings.react']) {
+                        $scope.showNewNavbar = true;
+                    } else {
+                        $scope.showNewNavbar = false;
+                    }
+                });
+
+                //$scope.showNewNavbar = !$state.$current.includes['settings.usersList'];
+
                 Features.loadFeatures().then(function () {
                     $scope.isActivityAvailable = Features.isViewEnabled('activity');
                 });
@@ -76,7 +89,7 @@ function (
 
             function handleRouteChange() {
                 $scope.moreActive = false;
-                $scope.modebar = !$state.$current.includes['settings.usersList'];
+                //$scope.showNewNavbar = !$state.$current.includes['settings.usersList'];
             }
         }
     };

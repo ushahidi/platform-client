@@ -178,7 +178,7 @@
     "socket.io-client": "2.0.3",
     "sortablejs": "^1.7.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "v3.11.0-rc.5"
+    "ushahidi-platform-pattern-library": "git@github.com:ushahidi/platform-pattern-library.git#adding-modebar"
   },
   "engines": {
     "node": ">=4.0"

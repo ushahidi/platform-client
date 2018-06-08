@@ -1,7 +1,7 @@
-<div  ng-class="{ active : moreActive, 'mode-bar': modebar, 'nav-bar': !modebar }">
+<div class="mode-bar" ng-class="{ active : moreActive, 'nav-bar': showNewNavbar }">
     <!-- mode bar -->
     <!-- PL JS -->
-    <nav  ng-if="modebar">
+    <nav  ng-if="!showNewNavbar">
         <!-- main menu -->
         <ul class="deployment-menu">
             <li ui-sref-active="{ 'active' : 'posts.map' }">
@@ -108,7 +108,7 @@
         </ul>
 
     </nav>
-    <nav ng-if="!modebar">
+    <nav ng-if="showNewNavbar">
         <ul class="deployment-menu">
             <li ui-sref-active="{ 'active' : 'posts.map' }">
                 <svg class="iconic">

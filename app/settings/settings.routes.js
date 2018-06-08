@@ -164,13 +164,17 @@ module.exports = [
                 template: categoriesEdit
             })
             .state({
-                name: "settings.createUser",
+                abstract: true,
+                name: "settings.react"
+            })
+            .state({
+                name: "settings.react.createUser",
                 url: "/settings/users/create",
                 controller: [() => {}],
                 template: "<person-container></person-container>"
             })
             .state({
-                name: "settings.usersList",
+                name: "settings.react.usersList",
                 url: "/settings/users/list",
                 controller: [() => {}],
                 template:
