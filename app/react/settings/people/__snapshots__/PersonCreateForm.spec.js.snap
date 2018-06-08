@@ -137,15 +137,16 @@ exports[`a Person Form with roles displays roles correctly 1`] = `
       <select
         id="role"
         onChange={[Function]}
-        value={
-          Object {
-            "display_name": "Select a role",
-            "name": "",
-          }
-        }
+        value=""
       >
         <option
-          id="email"
+          default={true}
+          disabled={true}
+          value=""
+        >
+          Select A Value...
+        </option>
+        <option
           selected=""
           value="email"
         />
