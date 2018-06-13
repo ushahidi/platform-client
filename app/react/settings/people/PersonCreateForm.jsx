@@ -1,12 +1,15 @@
 import React from "react";
-import { Link, Redirect, BrowserRouter } from "react-router-dom";
+import { Link, Redirect, BrowserRouter, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
 
 const propTypes = {
     saveNewPerson: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired
+    isLoadingRoles: PropTypes.bool.isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired
     // error: PropTypes.shape({
     //     message: PropTypes.string
     // }).isRequired
@@ -58,15 +61,19 @@ class PersonCreateForm extends React.Component {
         e.preventDefault();
         const person = Object.assign({}, this.state.form);
         person.role = this.state.form.role.name;
-        this.props.saveNewPerson(person).then(() => {
-            this.setState(() => ({
-                redirectToPeopleList: true,
-                form: {}
-            }));
+        this.props.saveNewPerson(person).then(response => {
+            if (!response.ok) {
+                // after failure, state remains
+                // TBD after we figure out endpoints
+                this.props.history.push("/404");
+            } else {
+                // after success, clear state
+                this.setState(() => ({
+                    redirectToPeopleList: true,
+                    form: {}
+                }));
+            }
         });
-        // after success, clear state
-        // after failure, state remains
-        // TBD after we figure out endpoints
     }
 
     renderRoles() {
@@ -82,16 +89,7 @@ class PersonCreateForm extends React.Component {
                         Select A Value...
                     </option>
                     {this.props.roles.map(role => (
-                        <option
-                            selected={
-                                role.display_name ===
-                                this.state.form.role.display_name
-                                    ? "selected"
-                                    : ""
-                            }
-                            key={role.id}
-                            value={role.name}
-                        >
+                        <option key={role.id} value={role.name}>
                             {role.display_name}
                         </option>
                     ))}
@@ -165,4 +163,4 @@ class PersonCreateForm extends React.Component {
     }
 }
 PersonCreateForm.propTypes = propTypes;
-export default PersonCreateForm;
+export default withRouter(PersonCreateForm);
