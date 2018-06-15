@@ -11,7 +11,7 @@ const person = {
 
 test("It should render a link to the person edit form", () => {
     const personCard = shallow(<PersonCard person={person} />);
-    expect(personCard.find("Link").prop("to")).toBe("settings/usersEdit/12");
+    expect(personCard.find("Link").prop("to")).toBe("/settings/usersEdit/12");
 });
 
 test("It should render the person-name", () => {

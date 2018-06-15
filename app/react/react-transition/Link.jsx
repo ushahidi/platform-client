@@ -24,7 +24,7 @@ class Link extends React.Component {
     }
 
     handleClick() {
-        console.log(this.props)
+        console.log(this.props);
         return this.props.replace
             ? this.state.stateProvider.go(
                   this.props.to,
