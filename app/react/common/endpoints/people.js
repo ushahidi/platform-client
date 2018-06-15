@@ -10,9 +10,8 @@ export default {
         });
     },
     fetchPeople(query = {}) {
-        let params = {orderby: 'realname'};
+        const params = { orderby: "realname" };
         Object.assign(params, query);
-        console.log(params)
         return request({
             url: Util.apiUrl("/users"),
             method: "get",

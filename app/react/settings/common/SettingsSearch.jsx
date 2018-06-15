@@ -1,5 +1,5 @@
 import React from "react";
 
-const SettingsSearch = () => <p>Search here!!!!!!!!!!!</p>;
+const SettingsSearch = () => <p />;
 
 export default SettingsSearch;

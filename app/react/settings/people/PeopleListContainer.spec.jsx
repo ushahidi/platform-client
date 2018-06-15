@@ -9,10 +9,10 @@ test("the handleChange method updates the input value", () => {
     const peopleListContainer = shallow(
         <PeopleListContainer PeopleActions={fnPeople} />
     );
-
-    expect(peopleListContainer.find("button").length).toBe(1);
-    expect(peopleListContainer.find("button").text()).toBe("Add a person");
+    expect(peopleListContainer.find("PeopleNavigationContainer").length).toBe(
+        1
+    );
+    expect(peopleListContainer.find("PeopleToolbarContainer").length).toBe(1);
     expect(peopleListContainer.find("SettingsSearch").length).toBe(1);
     expect(peopleListContainer.find("PeopleList").length).toBe(1);
-    expect(peopleListContainer.find("Link").length).toBe(1);
 });

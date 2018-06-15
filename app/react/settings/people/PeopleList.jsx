@@ -6,8 +6,8 @@ import PersonCard from "./PersonCard";
 const PeopleList = data => (
     <div className="list-item list">
         <ul>
-            {data.people.map((person, index) => (
-                    <PersonCard key={index} person={person} />
+            {data.people.map(person => (
+                <PersonCard key={person.id} person={person} />
             ))}
         </ul>
     </div>

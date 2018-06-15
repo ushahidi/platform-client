@@ -14,7 +14,8 @@ import {
 import { getPeople } from "react/common/state/people/people.reducers";
 import SettingsSearch from "react/settings/common/SettingsSearch";
 import PeopleList from "./PeopleList";
-import Link from "react/react-transition/Link";
+import PeopleNavigationContainer from "./PeopleNavigationContainer";
+import PeopleToolbarContainer from "./PeopleToolbarContainer";
 
 const propTypes = {
     people: PropTypes.arrayOf(PropTypes.object),
@@ -29,15 +30,18 @@ class PeopleListContainer extends React.Component {
     }
     render() {
         return (
-            <main role="main">
-                <div className="full-col">
-                <Link to="settings.createUser">
-                        <button>Add a person</button>
-                    </Link>
-                    <SettingsSearch />
-                    <PeopleList people={this.props.people} />
-                </div>
-            </main>
+            <div>
+                <PeopleNavigationContainer />
+                <main role="main">
+                    <PeopleToolbarContainer />
+                    <div className="main-col">
+                        <div className="listing card">
+                            <SettingsSearch />
+                            <PeopleList people={this.props.people} />
+                        </div>
+                    </div>
+                </main>
+            </div>
         );
     }
 }
