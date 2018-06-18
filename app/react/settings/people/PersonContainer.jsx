@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import connectWithStore from "react/react-transition/connectWithStore";
@@ -11,6 +11,7 @@ import {
 } from "react/common/state/roles/roles.reducers";
 import { getPeople } from "react/common/state/people/people.reducers";
 import PersonCreateForm from "react/settings/people/PersonCreateForm";
+import PersonEditForm from "react/settings/people/PersonEditForm";
 
 const propTypes = {
     PeopleActions: PropTypes.shape({
@@ -39,22 +40,37 @@ class PersonContainer extends React.Component {
     render() {
         return (
             <div>
-                <Router>
-                    <div>
+                <BrowserRouter>
+                    <Switch>
                         <Route
+                            exact
                             path="/settings/users/create"
-                            render={() => (
+                            render={props => (
                                 <PersonCreateForm
                                     saveNewPerson={
                                         this.props.PeopleActions.saveNewPerson
                                     }
                                     roles={this.props.roles}
                                     isLoadingRoles={this.props.isLoadingRoles}
+                                    {...props}
                                 />
                             )}
                         />
-                    </div>
-                </Router>
+                        <Route
+                            path="/settings/users/:id"
+                            render={props => (
+                                <PersonEditForm
+                                    updatePerson={
+                                        this.props.PeopleActions.saveNewPerson
+                                    }
+                                    roles={this.props.roles}
+                                    isLoadingRoles={this.props.isLoadingRoles}
+                                    {...props}
+                                />
+                            )}
+                        />
+                    </Switch>
+                </BrowserRouter>
             </div>
         );
     }
