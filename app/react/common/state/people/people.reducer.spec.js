@@ -3,7 +3,8 @@ import PeopleReducer from "./people.reducers";
 import {
     RECEIVE_PERSON,
     SAVE_NEW_PERSON,
-    HANDLE_REQUEST_FAILURE
+    HANDLE_REQUEST_FAILURE,
+    UPDATE_PERSON_IN_LIST
 } from "./people.actions";
 
 const error = {
@@ -90,6 +91,30 @@ describe("People Reducer: Saving a person", () => {
         const stateAfter = {
             people: [person],
             error,
+            isSaving: false
+        };
+
+        const stateBefore = localInitialState;
+        deepFreeze(stateBefore);
+        deepFreeze(stateAfter);
+        deepFreeze(action);
+        expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
+    });
+    test("UPDATE_PERSON_IN_LIST returns people array with the single person updated and changes isSaving to false", () => {
+        const action = {
+            type: UPDATE_PERSON_IN_LIST,
+            person: { id: 4, name: "Success!" }
+        };
+        // setting initial state locally so that we can test to ensure
+        // the people array returns with existing people
+        const localInitialState = {
+            people: [person, person, { id: 4, name: "tester" }, person],
+            error: {},
+            isSaving: true
+        };
+        const stateAfter = {
+            people: [person, person, { id: 4, name: "Success!" }, person],
+            error: {},
             isSaving: false
         };
 

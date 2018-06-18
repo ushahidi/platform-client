@@ -9,19 +9,18 @@ export default {
             method: "post"
         });
     },
-    create(person) {
-
+    create(person) {},
+    update(person, id) {
+        return request({
+            url: Util.apiUrl("/users"),
+            data: person,
+            method: "put",
+            params: {
+                id
+            }
+        });
     },
-    update(person) {
-
-    },
-    delete(person) {
-
-    },
-    get(person) {
-
-    },
-    search() {
-
-    }
+    delete(person) {},
+    get(person) {},
+    search() {}
 };

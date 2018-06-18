@@ -4,12 +4,19 @@ import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
 
 const propTypes = {
-    saveNewPerson: PropTypes.func.isRequired,
+    person: PropTypes.shape({
+        id: PropTypes.number.isRequired
+    }),
+    updatePerson: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
     isLoadingRoles: PropTypes.bool.isRequired
     // error: PropTypes.shape({
     //     message: PropTypes.string
     // }).isRequired
+};
+
+const defaultProps = {
+    person: undefined
 };
 
 class PersonEditForm extends React.Component {
@@ -66,7 +73,7 @@ class PersonEditForm extends React.Component {
         return (
             <main role="main">
                 <div>
-                    <h3>Add people to Ushahidi</h3>
+                    <h3>Add Contact</h3>
                     <p>
                         Add members of your team, stakeholders, and other
                         members of your community to Ushahidi.
@@ -122,5 +129,6 @@ class PersonEditForm extends React.Component {
 }
 
 PersonEditForm.propTypes = propTypes;
+PersonEditForm.defaultProps = defaultProps;
 
 export default PersonEditForm;

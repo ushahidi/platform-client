@@ -34,9 +34,6 @@ import categoriesEdit from "./categories/categories-edit.html";
 import usersController from "./users/users.controller";
 import users from "./users/users.html";
 
-import usersEditController from "./users/edit.controller";
-import usersEdit from "./users/users-edit.html";
-
 import rolesController from "./roles/roles.controller";
 import roles from "./roles/roles.html";
 import rolesEdit from "./roles/roles-edit.html";
@@ -186,10 +183,20 @@ module.exports = [
                 template: "<person-container></person-container>"
             })
             .state({
-                name: "settings.users.edit",
-                url: "/:id",
-                controller: usersEditController,
-                template: usersEdit
+                name: "settings.editUser",
+                url: "/settings/users/edit/:id",
+                controller: [
+                    "$location",
+                    "$window",
+                    ($location, $window) => {
+                        $window.history.pushState(
+                            null,
+                            "any",
+                            $location.absUrl()
+                        );
+                    }
+                ],
+                template: "<person-container></person-container>"
             })
             .state({
                 name: "settings.roles",
