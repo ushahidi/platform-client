@@ -1,13 +1,15 @@
 import PersonEndpoints from "react/common/endpoints/people";
 
 export const SAVE_NEW_PERSON = "SAVE_NEW_PERSON";
-export const RECEIVE_PERSON = "RECEIVE_PERSON";
+export const RECEIVE_NEW_PERSON = "RECEIVE_NEW_PERSON";
 export const HANDLE_REQUEST_FAILURE = "HANDLE_REQUEST_FAILURE";
 export const UPDATE_PERSON = "UPDATE_PERSON";
 export const UPDATE_PERSON_IN_LIST = "UPDATE_PERSON_IN_LIST";
+export const REQUEST_PERSON = "REQUEST_PERSON";
+export const RECEIVE_PERSON = "RECEIVE_PERSON"
 
-export function receivePerson(person) {
-    return { type: RECEIVE_PERSON, person };
+export function receiveNewPerson(person) {
+    return { type: RECEIVE_NEW_PERSON, person };
 }
 
 export function handleRequestFailure(error) {
@@ -18,7 +20,7 @@ export function saveNewPerson(person) {
     return function action(dispatch) {
         dispatch({ type: SAVE_NEW_PERSON });
         return PersonEndpoints.save(person)
-            .then(personResponse => dispatch(receivePerson(personResponse)))
+            .then(personResponse => dispatch(receiveNewPerson(personResponse)))
             .catch(error => dispatch(handleRequestFailure(error)));
     };
 }
@@ -34,6 +36,18 @@ export function updatePerson(person, id) {
             .then(personResponse =>
                 dispatch(updatePersonInList(personResponse))
             )
+            .catch(error => dispatch(handleRequestFailure(error)));
+    };
+}
+
+export function requestPerson(person, id) {
+    return function action(dispatch) {
+        dispatch({ type: REQUEST_PERSON });
+        return PersonEndpoints.update(person, id)
+            .then((personResponse) => {
+                dispatch({type: RECEIVE_PERSON})
+                return personResponse
+            })
             .catch(error => dispatch(handleRequestFailure(error)));
     };
 }

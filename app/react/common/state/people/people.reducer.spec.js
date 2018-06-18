@@ -1,10 +1,12 @@
 import deepFreeze from "deep-freeze";
 import PeopleReducer from "./people.reducers";
 import {
-    RECEIVE_PERSON,
+    RECEIVE_NEW_PERSON,
     SAVE_NEW_PERSON,
     HANDLE_REQUEST_FAILURE,
-    UPDATE_PERSON_IN_LIST
+    UPDATE_PERSON_IN_LIST,
+    REQUEST_PERSON,
+    RECEIVE_PERSON
 } from "./people.actions";
 
 const error = {
@@ -59,9 +61,9 @@ describe("People Reducer: Saving a person", () => {
         deepFreeze(action);
         expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
     });
-    test("RECEIVE_PERSON adds a newly saved person to the people state array ", () => {
+    test("RECEIVE_NEW_PERSON adds a newly saved person to the people state array ", () => {
         const action = {
-            type: RECEIVE_PERSON,
+            type: RECEIVE_NEW_PERSON,
             person
         };
         const stateAfter = {
@@ -114,6 +116,46 @@ describe("People Reducer: Saving a person", () => {
         };
         const stateAfter = {
             people: [person, person, { id: 4, name: "Success!" }, person],
+            error: {},
+            isSaving: false
+        };
+
+        const stateBefore = localInitialState;
+        deepFreeze(stateBefore);
+        deepFreeze(stateAfter);
+        deepFreeze(action);
+        expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
+    });
+    test("REQUEST_PERSON sets isSaving to true ", () => {
+        const action = {
+            type: REQUEST_PERSON,
+        };
+
+        const stateAfter = {
+            people: [],
+            error: {},
+            isSaving: true
+        };
+
+        const stateBefore = initialState;
+        deepFreeze(stateBefore);
+        deepFreeze(stateAfter);
+        deepFreeze(action);
+        expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
+    });
+    test("REQUEST_PERSON sets isSaving to true ", () => {
+        const action = {
+            type: RECEIVE_PERSON,
+        };
+        // setting initial state locally so that we can test to ensure
+        // the people array returns with existing people
+        const localInitialState = {
+            people: [],
+            error: {},
+            isSaving: true
+        };
+        const stateAfter = {
+            people: [],
             error: {},
             isSaving: false
         };

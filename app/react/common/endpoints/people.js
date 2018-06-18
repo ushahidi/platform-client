@@ -21,6 +21,14 @@ export default {
         });
     },
     delete(person) {},
-    get(person) {},
+    get(id) {
+        return request({
+            url: Util.apiUrl("/users"),
+            method: "get",
+            params: {
+                id
+            }
+        });
+    },
     search() {}
 };

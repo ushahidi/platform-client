@@ -1,16 +1,18 @@
 import { createReducer } from "redux-create-reducer";
 import {
     SAVE_NEW_PERSON,
-    RECEIVE_PERSON,
+    RECEIVE_NEW_PERSON,
     HANDLE_REQUEST_FAILURE,
     UPDATE_PERSON,
-    UPDATE_PERSON_IN_LIST
+    UPDATE_PERSON_IN_LIST,
+    REQUEST_PERSON,
+    RECEIVE_PERSON
 } from "./people.actions";
 
 const initialState = {
     people: [],
     error: {},
-    isSaving: false
+    isSaving: false,
 };
 
 export default createReducer(initialState, {
@@ -23,7 +25,7 @@ export default createReducer(initialState, {
         error: action.error,
         isSaving: false
     }),
-    [RECEIVE_PERSON]: (state, action) => ({
+    [RECEIVE_NEW_PERSON]: (state, action) => ({
         ...state,
         people: [...state.people, action.person],
         isSaving: false
@@ -45,7 +47,15 @@ export default createReducer(initialState, {
             ],
             isSaving: false
         };
-    }
+    },
+    [REQUEST_PERSON]: state => ({
+        ...state,
+        isSaving: true
+    }),
+    [RECEIVE_PERSON]: state => ({
+        ...state,
+        isSaving: false
+    })
 });
 
 export function getPeople(state) {
