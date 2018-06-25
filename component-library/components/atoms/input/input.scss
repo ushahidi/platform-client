@@ -1,0 +1,57 @@
+@import '../../utils/base.scss';
+
+.text,
+.email,
+.password,
+.search,
+.textarea {
+    @include direction;
+    display: inline-block;
+    width: 100%;
+    max-width: 450px;
+    color: $black;
+    @include input-placeholder($dark-gray);
+    @include typeBase;
+    font-family: $base-font-family;
+    line-height: 1.4;
+    @include text-align(left);
+    outline-color: $bg-white;
+    border: $form-input-border;
+    @include border-top-radius($global-radius);
+    @include border-bottom-radius($global-radius);
+    padding: $tiny-spacing $sm-spacing;
+    @include transition;
+
+    &.error {
+        border-color: $error-red;
+        @include input-placeholder($error-red);
+
+        &:focus {
+            border-color: $error-red;
+            @include input-placeholder($error-red);
+        }
+
+    }
+
+    &:focus {
+        outline: none;
+        border-color: black;
+        @include input-placeholder($black);
+    }
+
+    &[disabled] {
+        border-color: $disabled-gray;
+        cursor: not-allowed;
+        @include input-placeholder($disabled-gray);
+    }
+}
+
+.search {
+    @include equal-radius;
+    @include padding-right($tiny-spacing);
+    -webkit-appearance: none;
+
+    &::-webkit-search-decoration {
+        -webkit-appearance: none;
+    }
+}
