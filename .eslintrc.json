@@ -8,7 +8,7 @@
         "react",
         "prettier"
     ],
-    "parserOptions": { 
+    "parserOptions": {
         "ecmaVersion": 6,
         "ecmaFeatures": {
             "jsx": true
@@ -26,7 +26,14 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "prettier/prettier": ["error"],
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-        "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ], "aspects": [ "noHref", "invalidHref", "preferButton" ] } ]
+        "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ], "aspects": [ "noHref", "invalidHref", "preferButton" ] } ],
+        "jsx-a11y/label-has-for": [ 2, {
+            "components": [ "label" ],
+            "required": {
+                "some": [ "nesting", "id" ]
+            },
+            "allowChildren": false
+        }]
 
     }
 }
