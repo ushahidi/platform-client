@@ -12,6 +12,8 @@ import {
 import { getPeople, getPerson } from "react/common/state/people/people.reducers";
 import PersonCreateForm from "react/settings/people/PersonCreateForm";
 import PersonEditForm from "react/settings/people/PersonEditForm";
+import { Provider } from "react-redux";
+
 
 const propTypes = {
     PeopleActions: PropTypes.shape({
@@ -33,7 +35,7 @@ class PersonContainer extends React.Component {
         super(props)
     }
     componentDidMount() {
-
+        console.log(this.props.store)
         if (this.props.roles.length === 0) {
             this.props.RolesActions.requestRoles();
         }
@@ -60,6 +62,7 @@ class PersonContainer extends React.Component {
                         <Route
                             path="/settings/users/edit/:id"
                             render={props => (
+                                <Provider store={this.props.store}>
                                 <PersonEditForm
                                     requestPerson={
                                         this.props.PeopleActions.requestPerson
@@ -70,8 +73,11 @@ class PersonContainer extends React.Component {
                                     roles={this.props.roles}
                                     isLoadingRoles={this.props.isLoadingRoles}
                                     person={this.props.person}
+                                    // Remove this store after we've fully migrated and are using Provider at root
+                                    // store={this.props.store}
                                     {...props}
                                 />
+                                </Provider>
                             )}
                         />
                     </Switch>

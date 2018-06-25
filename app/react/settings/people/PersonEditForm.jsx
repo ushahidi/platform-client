@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { createStore } from "redux"
 import InlineLoading from "react/common/ui/InlineLoading";
+import { Field, reduxForm } from 'redux-form'
+import connectWithStore from "react/react-transition/connectWithStore";
+
 
 const propTypes = {
     person: PropTypes.shape({
@@ -28,11 +32,13 @@ class PersonEditForm extends React.Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
         this.renderRoles = this.renderRoles.bind(this);
     }
 
     componentDidMount() {
+        PersonEditForm = connectWithStore(PersonEditForm, {initialValues: {realname: "carolyn",email: "test@test.com"}})
+        console.log("store in form ", this.props.store)
         // Need UI to handle failures for this.
         // Error currently saved to state.error
 
@@ -42,10 +48,6 @@ class PersonEditForm extends React.Component {
                 console.log(this.state.copyOfPerson)
             })
         }
-    }
-
-    handleChange(event) {
-        this.setState({ [event.target.id]: event.target.value });
     }
 
     handleSubmit(e) {
@@ -61,10 +63,12 @@ class PersonEditForm extends React.Component {
         return (
             <label htmlFor="role">
                 Role
-                <select
+                <Field
                     id="role"
+                    name="role"
                     value={this.state.role}
                     onChange={this.handleChange}
+                    component="select"
                 >
                     <option id="default" value={this.state.role}>
                         {this.state.role}
@@ -74,7 +78,7 @@ class PersonEditForm extends React.Component {
                             {role.display_name}
                         </option>
                     ))}
-                </select>
+                </Field>
             </label>
         );
     }
@@ -92,10 +96,12 @@ class PersonEditForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="realname">
                         Name
-                        <input
+                        <Field
+                            component="input"
                             type="text"
                             placeholder="What is this person's full name"
                             id="realname"
+                            name="realname"
                             value={this.state.realname}
                             onChange={this.handleChange}
                             required
@@ -103,10 +109,12 @@ class PersonEditForm extends React.Component {
                     </label>
                     <label htmlFor="email">
                         Email
-                        <input
+                        <Field
+                            component="input"
                             type="text"
                             placeholder="email"
                             id="email"
+                            name="email"
                             value={this.state.email}
                             onChange={this.handleChange}
                             required
@@ -114,10 +122,12 @@ class PersonEditForm extends React.Component {
                     </label>
                     <label htmlFor="password">
                         Password
-                        <input
+                        <Field
+                            component="input"
                             type="password"
                             placeholder="password"
                             id="password"
+                            name="password"
                             value={this.state.password}
                             onChange={this.handleChange}
                             required
@@ -140,5 +150,26 @@ class PersonEditForm extends React.Component {
 
 PersonEditForm.propTypes = propTypes;
 PersonEditForm.defaultProps = defaultProps;
+
+// function mapStateToProps(state, ownProps) {
+//   return {
+//     initialValues: {realname: "carolyn",
+//                     email: "test@test.com"
+//     }
+// }
+// }
+
+PersonEditForm.propTypes = propTypes;
+PersonEditForm.defaultProps = defaultProps;
+
+// export default connectWithStore(PersonEditForm, mapStateToProps)(reduxForm({
+//   // a unique name for the form
+//   form: 'editPerson'
+// })(PersonEditForm))
+
+PersonEditForm = reduxForm({
+  // a unique name for the form
+  form: 'editPerson'
+})(PersonEditForm)
 
 export default PersonEditForm;
