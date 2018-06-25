@@ -1,0 +1,71 @@
+@import '../../utils/base.scss';
+
+    .form-field, .fieldset {
+       @include clearfix;
+        position: relative;
+        margin-top: $huge-spacing;
+        margin-bottom: $huge-spacing;
+
+        @include media($medium) {
+            margin-top: $lg-spacing;
+            margin-bottom: $lg-spacing;
+        }
+
+        &.error {
+            clear: both;
+            span {
+                @include float(left);
+                @include clear(left);
+                color: $error-red;
+
+                svg.iconic {
+                    fill: $error-red;
+                    @include margin-right(5px)
+                }
+
+            }
+        }
+    }
+
+    .fieldset {
+        position: relative;
+        border: none;
+        .overflow {
+                display: none;
+            }
+
+    legend {
+        @include typeGamma;
+        margin-bottom: $base-spacing;
+
+        [role="article"] & {
+            font-size: 20px;
+            font-size: 1.428571429rem;
+        }
+
+        &.required {
+            &:after {
+                content: '\2217';
+                position: relative;
+                top: -2px;
+                color: $error-red;
+                font-weight: normal;
+                font-size: 1.428571429em;
+                @include margin-left(4px);
+            }
+        }
+
+        &.error {
+            color: $error-red;
+        }
+
+        svg.iconic {
+            fill: $black;
+            @include margin-right(4px);
+        }
+
+        + p {
+            margin-top: -5px;
+        }
+    }
+}

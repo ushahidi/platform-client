@@ -7,7 +7,8 @@ const InputType = {
     TEXT: "text",
     PASSWORD: "password",
     EMAIL: "email",
-    SEARCH: "search"
+    SEARCH: "search",
+    PHONE: "phone"
 };
 
 const propTypes = {
@@ -17,9 +18,11 @@ const propTypes = {
 
 const Input = props => {
     const { className, inputType, ...customProps } = props;
+    let classes = className.split(" ");
+    classes = classes.map(classname => input[classname]);
     const classProps = classnames(
         input.input,
-        input[className],
+        classes,
         input[InputType[inputType]]
     );
 

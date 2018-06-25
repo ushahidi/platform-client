@@ -4,7 +4,8 @@
 .email,
 .password,
 .search,
-.textarea {
+.textarea,
+.phone {
     @include direction;
     display: inline-block;
     width: 100%;
@@ -43,6 +44,28 @@
         border-color: $disabled-gray;
         cursor: not-allowed;
         @include input-placeholder($disabled-gray);
+    }
+
+    &.form-field {
+        margin-top: $tiny-spacing;
+        &.error {
+
+            @include float(left);
+            @include clear(left);
+            border: 2px solid $error-red;
+            margin-bottom: $sm-spacing;
+
+            &:focus {
+                border-color: $error-red;
+            }
+        }
+        &.success {
+            border-color: $success-green;
+
+            &:focus {
+                border-color: $success-green;
+            }
+        }
     }
 }
 

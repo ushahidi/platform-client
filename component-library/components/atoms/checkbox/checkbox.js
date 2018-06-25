@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import checkbox from "./checkbox.scss";
+import Label from "../label/label";
 
 const CheckType = {
     CHECKBOX: "checkbox",
@@ -11,28 +12,43 @@ const CheckType = {
 
 const propTypes = {
     checkType: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired,
     className: PropTypes.string,
     id: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired
+    isFieldset: PropTypes.bool,
+    isError: PropTypes.bool
 };
 
 const Checkbox = props => {
-    const { checkType, className, children, id, ...customProps } = props;
+    const {
+        checkType,
+        className,
+        children,
+        isError,
+        id,
+        isFieldset,
+        ...customProps
+    } = props;
     const classProps = classnames(
         checkbox.check,
         checkbox[className],
         checkbox[CheckType[checkType]]
     );
-
+    const labelClass = classnames(
+        isFieldset ? "form-field" : "",
+        isError ? "error" : ""
+    );
     return (
-        <div>
+        <div className={isFieldset ? checkbox["form-field"] : ""}>
             <input
                 className={classProps}
                 type={CheckType[checkType]}
                 id={id}
                 {...customProps}
             />
-            <label htmlFor={id}>{children}</label>
+            <Label className={labelClass} htmlFor={id}>
+                {children}
+            </Label>
         </div>
     );
 };
@@ -40,7 +56,9 @@ const Checkbox = props => {
 Checkbox.propTypes = propTypes;
 
 Checkbox.defaultProps = {
-    className: ""
+    className: "",
+    isFieldset: false,
+    isError: false
 };
 
 export default Checkbox;

@@ -10,15 +10,23 @@ const propTypes = {
 
 const Dropdown = props => {
     const { className, options, ...customProps } = props;
-    const classProps = classnames(
-        dropdown["custom-select"],
-        dropdown[className]
-    );
+    let classes = className.split(" ");
+    classes = classes.map(classname => dropdown[classname]);
+    const classProps = classnames(dropdown["custom-select"], classes);
     return (
         <div className={classProps}>
-            <select className={dropdown.select} {...customProps}>
+            <select
+                className={`${dropdown.select} ${dropdown.error}`}
+                {...customProps}
+            >
                 {options.map(option => (
-                    <option value={option.value}>{option.name}</option>
+                    <option
+                        disabled={option.disabled ? option.disabled : false}
+                        value={option.value}
+                        selected={option.selected ? option.selected : ""}
+                    >
+                        {option.name}
+                    </option>
                 ))}
             </select>
         </div>
