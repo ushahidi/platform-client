@@ -61,3 +61,13 @@ export default createReducer(initialState, {
 export function getPeople(state) {
     return state.people.people;
 }
+
+export function getPerson(state, props) {
+    // @TODO: once we have react router set up to connect to personContainer, 
+    // then we need to access id from props.match.params.id
+    if (state.people.people.length) {
+        state.people.people.find((person) => {
+            return person.id === props.id
+        })
+    }
+}

@@ -5,11 +5,12 @@ import InlineLoading from "react/common/ui/InlineLoading";
 
 const propTypes = {
     person: PropTypes.shape({
-        id: PropTypes.number.isRequired
+        id: PropTypes.number
     }),
     updatePerson: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired
+    isLoadingRoles: PropTypes.bool.isRequired,
+    requestPerson: PropTypes.func.isRequired
     // error: PropTypes.shape({
     //     message: PropTypes.string
     // }).isRequired
@@ -23,15 +24,24 @@ class PersonEditForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            password: "",
-            realname: "",
-            role: "Select a role"
+            copyOfPerson: this.props.person ? this.props.person : {}
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.renderRoles = this.renderRoles.bind(this);
+    }
+
+    componentDidMount() {
+        // Need UI to handle failures for this.
+        // Error currently saved to state.error
+
+        if (this.props.person === undefined) {
+            this.props.requestPerson(this.props.match.params.id).then((person)=>{
+                this.setState({copyOfPerson: person})
+                console.log(this.state.copyOfPerson)
+            })
+        }
     }
 
     handleChange(event) {

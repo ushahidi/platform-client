@@ -12,22 +12,16 @@ export default {
     create(person) {},
     update(person, id) {
         return request({
-            url: Util.apiUrl("/users"),
+            url: Util.apiUrl(`/users/${id}`),
             data: person,
-            method: "put",
-            params: {
-                id
-            }
+            method: "put"
         });
     },
     delete(person) {},
     get(id) {
         return request({
-            url: Util.apiUrl("/users"),
-            method: "get",
-            params: {
-                id
-            }
+            url: Util.apiUrl(`/users/${id}`),
+            method: "get"
         });
     },
     search() {}

@@ -47,6 +47,6 @@ angular
     )
 
     .component("testRouteContainer", react2angular(TestRouteContainer, ["id"]))
-    .component("personContainer", react2angular(PersonContainer))
+    .component("personContainer", react2angular(PersonContainer, ["id"]))
 
     .config(require("./settings.routes.js"));

@@ -9,13 +9,14 @@ import {
     isLoadingRoles,
     getRoles
 } from "react/common/state/roles/roles.reducers";
-import { getPeople } from "react/common/state/people/people.reducers";
+import { getPeople, getPerson } from "react/common/state/people/people.reducers";
 import PersonCreateForm from "react/settings/people/PersonCreateForm";
 import PersonEditForm from "react/settings/people/PersonEditForm";
 
 const propTypes = {
     PeopleActions: PropTypes.shape({
-        saveNewPerson: PropTypes.func.isRequired
+        saveNewPerson: PropTypes.func.isRequired,
+        requestPerson: PropTypes.func.isRequired
     }).isRequired,
     RolesActions: PropTypes.shape({
         requestRoles: PropTypes.func.isRequired
@@ -28,9 +29,10 @@ const propTypes = {
 };
 
 class PersonContainer extends React.Component {
+    constructor(props) {
+        super(props)
+    }
     componentDidMount() {
-        // Need UI to handle failures for this.
-        // Error currently saved to state.error
 
         if (this.props.roles.length === 0) {
             this.props.RolesActions.requestRoles();
@@ -59,11 +61,15 @@ class PersonContainer extends React.Component {
                             path="/settings/users/edit/:id"
                             render={props => (
                                 <PersonEditForm
-                                    updatePerson={() => {
-                                        console.log("updating!");
-                                    }}
+                                    requestPerson={
+                                        this.props.PeopleActions.requestPerson
+                                    }
+                                    updatePerson={
+                                        this.props.PeopleActions.updatePerson
+                                    }
                                     roles={this.props.roles}
                                     isLoadingRoles={this.props.isLoadingRoles}
+                                    person={this.props.person}
                                     {...props}
                                 />
                             )}
@@ -75,11 +81,12 @@ class PersonContainer extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {
         people: getPeople(state),
         roles: getRoles(state),
-        isLoadingRoles: isLoadingRoles(state)
+        isLoadingRoles: isLoadingRoles(state),
+        person: getPerson(state, ownProps)
         // error: getRoleError(state)
     };
 }

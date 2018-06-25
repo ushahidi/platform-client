@@ -188,15 +188,18 @@ module.exports = [
                 controller: [
                     "$location",
                     "$window",
-                    ($location, $window) => {
+                    "$scope",
+                    "$transition$",
+                    ($location, $window, $scope, $transition$) => {
                         $window.history.pushState(
                             null,
                             "any",
                             $location.absUrl()
                         );
+                        $scope.id = $transition$.params().id;
                     }
                 ],
-                template: "<person-container></person-container>"
+                template: "<person-container id='id'></person-container>"
             })
             .state({
                 name: "settings.roles",

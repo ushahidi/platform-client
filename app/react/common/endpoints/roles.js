@@ -1,6 +1,7 @@
 import Util from "common/services/util";
 import request from "./axiosInstance";
 
+//refactor
 export default {
     getRoles() {
         // would like to remove util.apiUrl from here,

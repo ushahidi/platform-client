@@ -40,10 +40,10 @@ export function updatePerson(person, id) {
     };
 }
 
-export function requestPerson(person, id) {
+export function requestPerson(id) {
     return function action(dispatch) {
         dispatch({ type: REQUEST_PERSON });
-        return PersonEndpoints.update(person, id)
+        return PersonEndpoints.get(id)
             .then((personResponse) => {
                 dispatch({type: RECEIVE_PERSON})
                 return personResponse
