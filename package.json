@@ -24,7 +24,9 @@
     "retry": "git-cz --retry",
     "test": "karma start ./test/karma.conf.js --single-run && jest",
     "tdd:karma": "karma start ./test/karma.conf.js --auto-watch",
-    "tdd:jest": "jest --watch"
+    "tdd:jest": "jest --watch",
+    "storybook": "start-storybook -p 6006 -c ./component-library/.storybook",
+    "build-storybook": "build-storybook"
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -53,6 +55,9 @@
     "tabWidth": 4
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.7",
+    "@storybook/addon-info": "^3.4.7",
+    "@storybook/react": "^3.4.7",
     "@uirouter/visualizer": "^5.0.0",
     "angular-mocks": "^1.5.6",
     "babel-core": "^6.7.7",
@@ -68,7 +73,9 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.7.2",
     "babel-runtime": "^6.6.1",
+    "bourbon": "^5.0.1",
     "browser-sync": "^2.11.1",
+    "classnames": "^2.2.6",
     "commitizen": "^2.9.6",
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.28.0",
@@ -114,10 +121,12 @@
     "karma-webpack": "^2.0.3",
     "lint-staged": "^7.0.4",
     "moxios": "^0.4.0",
+    "neat": "^1.2.2",
     "ng-annotate-loader": "0.6.0",
     "node-libs-browser": "^2.0.0",
     "node-sass": "^4.5.2",
     "phantomjs-prebuilt": "^2.1.16",
+    "postcss-loader": "^2.1.5",
     "prettier": "^1.12.1",
     "protractor": "^5.1.1",
     "raw-loader": "^0.5.1",
@@ -176,8 +185,9 @@
     "redux-thunk": "^2.2.0",
     "socket.io-client": "2.0.3",
     "sortablejs": "^1.7.0",
+    "storybook": "^1.0.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.11.0-rc.3"
+    "ushahidi-platform-pattern-library": "3.11.0-rc.4"
   },
   "engines": {
     "node": ">=4.0"

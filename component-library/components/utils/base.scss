@@ -1,0 +1,24 @@
+
+
+/* READ DIRECTION */
+@import './dependencies/rtl/rtl-sass.scss';
+
+/* MEDIA QUERIES */
+/* TODO: Import with webpack instead.
+This is a hack to include bourbon and neat, since I couldn't get webpack to import it. */
+
+// Bourbon
+@import "../../../node_modules/bourbon/core/bourbon.scss";
+
+// Neat
+@import "../../../node_modules/bourbon-neat/app/assets/stylesheets/neat.scss";
+
+/*FONTS*/
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext');
+
+/* MIXINS */
+@import './mixins/mixins.scss';
+
+/* GLOBAL VARIABLES */
+@import './sass/settings.scss';
+@import './sass/general.scss';

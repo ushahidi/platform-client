@@ -1,0 +1,298 @@
+// RTL-SASS
+// https://github.com/jamesl1001/RTL-Sass
+
+$rtl: false !default;
+
+// $value is the value of the property
+// $origin is the original position of the element
+
+// Background is only supported if written in the following combinations:
+// (6) e.g. background: #FFF url(img.jpg) no-repeat fixed left center;
+// (5) e.g. background: #FFF url(img.jpg) no-repeat left center;
+// (4) e.g. background: url(img.jpg) no-repeat left center;
+
+@mixin background($value) {
+  @if $rtl == true {
+    @if length($value) == 6 {
+      @if nth($value, 5) == left {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) nth($value, 4) right nth($value, 6);
+      } @else if nth($value, 5) == right {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) nth($value, 4) left nth($value, 6);
+      } @else if nth($value, 5) == center {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) nth($value, 4) center nth($value, 6);
+      } @else if nth($value, 5) == 50% {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) nth($value, 4) 50% nth($value, 6);
+      } @else if unit(nth($value, 5)) == "%" {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) nth($value, 4) 100 - nth($value, 4) nth($value, 6);
+      } @else {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) nth($value, 4) nth($value, 4) * -1 nth($value, 6);
+      }
+    } @else if length($value) == 5 {
+      @if nth($value, 4) == left {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) right nth($value, 5);
+      } @else if nth($value, 4) == right {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) left nth($value, 5);
+      } @else if nth($value, 4) == center {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) center nth($value, 5);
+      } @else if nth($value, 4) == 50% {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) 50% nth($value, 5);
+      } @else if unit(nth($value, 4)) == "%" {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) 100 - nth($value, 4) nth($value, 5);
+      } @else {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) nth($value, 4) * -1 nth($value, 5);
+      }
+    } @else if length($value) == 4 {
+      @if nth($value, 3) == left {
+        background: nth($value, 1) nth($value, 2) right nth($value, 4);
+      } @else if nth($value, 3) == right {
+        background: nth($value, 1) nth($value, 2) left nth($value, 4);
+      } @else if nth($value, 3) == center {
+        background: nth($value, 1) nth($value, 2) center nth($value, 4);
+      } @else if nth($value, 3) == 50% {
+        background: nth($value, 1) nth($value, 2) 50% nth($value, 4);
+      } @else if unit(nth($value, 3)) == "%" {
+        background: nth($value, 1) nth($value, 2) 100 - nth($value, 3) nth($value, 4);
+      } @else {
+        background: nth($value, 1) nth($value, 2) nth($value, 3) * -1 nth($value, 4);
+      }
+    } @else {
+      background: $value;
+    }
+  } @else {
+    background: $value;
+  }
+}
+
+// Note: Don't use this for sprite images!
+// Actually not quite sure what this *would* be used for...
+// But hey-ho, it's here anyway!
+@mixin background-position($value) {
+  @if $rtl {
+    @if nth($value, 1) == left {
+      background-position: right nth($value, 2);
+    } @else if nth($value, 1) == right {
+      background-position: left nth($value, 2);
+    } @else if nth($value, 1) == center {
+      background-position: center nth($value, 2);
+    } @else if nth($value, 1) == 50% {
+      background-position: 50% nth($value, 2);
+    } @else if unit(nth($value, 1)) == "%" {
+      background-position: 100 - nth($value, 1), nth($value, 2);
+    } @else {
+      background-position: nth($value, 1) * -1 nth($value, 2);
+    }
+  } @else {
+    background-position: nth($value, 1) nth($value, 2);
+  }
+}
+
+@mixin border-bottom-left-radius($value) {
+  @if $rtl { border-bottom-right-radius: $value; }
+  @else    { border-bottom-left-radius:  $value; }
+}
+@mixin border-bottom-right-radius($value) {
+  @if $rtl { border-bottom-left-radius:  $value; }
+  @else    { border-bottom-right-radius: $value; }
+}
+@mixin border-top-left-radius($value) {
+  @if $rtl { border-top-right-radius: $value; }
+  @else    { border-top-left-radius:  $value; }
+}
+@mixin border-top-right-radius($value) {
+  @if $rtl { border-top-left-radius:  $value; }
+  @else    { border-top-right-radius: $value; }
+}
+
+@mixin clear($origin: left) {
+  @if $origin == left {
+    @if $rtl { clear: right; }
+    @else    { clear: left; }
+  } @else {
+    @if $rtl { clear: left; }
+    @else    { clear: right; }
+  }
+}
+
+@mixin cursor($value) {
+  @if $rtl {
+    @if $value == ne-resize {
+      cursor: nw-resize;
+    } @else if $value == e-resize {
+      cursor: w-resize;
+    } @else if $value == se-resize {
+      cursor: sw-resize;
+    } @else if $value == sw-resize {
+      cursor: se-resize;
+    } @else if $value == w-resize {
+      cursor: e-resize;
+    } @else if $value == nw-resize {
+      cursor: ne-resize;
+    }
+  } @else {
+    cursor: $value;
+  }
+}
+
+@mixin direction {
+  @if $rtl {
+    direction: rtl;
+  } @else {
+    direction: ltr;
+  }
+}
+
+@mixin float($origin: left) {
+  @if $origin == left {
+    @if $rtl { float: right; }
+    @else    { float: left; }
+  } @else {
+    @if $rtl { float: left; }
+    @else    { float: right; }
+  }
+}
+
+@mixin text-align($origin: left) {
+  @if $origin == left {
+    @if $rtl { text-align: right; }
+    @else    { text-align: left; }
+  } @else {
+    @if $rtl { text-align: left; }
+    @else    { text-align: right; }
+  }
+}
+
+@mixin text-indent($value) {
+  @if $rtl { text-indent: $value * -1; }
+  @else    { text-indent: $value; }
+}
+
+
+// Swap property values when in rtl
+// In:  0 5px 8px 12px
+// Out: 0 12px 8px 5px (in rtl)
+@function swap-left-right($values) {
+  @if $rtl {
+    @return nth($values, 1) nth($values, 4) nth($values, 3) nth($values, 2);
+  } @else {
+    @return $values;
+  }
+}
+
+// For selectors which have 4 values (e.g. padding, margin)
+@mixin lrswap($property, $values) {
+  @if length($values) == 4 {
+    #{$property}: swap-left-right($values);
+  } @else {
+    #{$property}: $values;
+  }
+}
+
+
+// ==========
+// = Border =
+// ==========
+@mixin borderlr($value, $origin: left) {
+  @if $origin == left {
+    @if $rtl { border-right: $value; }
+    @else    { border-left:  $value; }
+  } @else {
+    @if $rtl { border-left:  $value; }
+    @else    { border-right: $value; }
+  }
+}
+// Shorthands
+@mixin border-width($values) {
+  @include lrswap(border-width, $values);
+}
+@mixin border-left($value) {
+  @include borderlr($value, left);
+}
+@mixin border-right($value) {
+  @include borderlr($value, right);
+}
+
+// ==========
+// = Margin =
+// ==========
+@mixin marginlr($value, $origin: left) {
+  @if $origin == left {
+    @if $rtl { margin-right: $value; }
+    @else    { margin-left:  $value; }
+  } @else {
+    @if $rtl { margin-left:  $value; }
+    @else    { margin-right: $value; }
+  }
+}
+// Shorthands
+@mixin margin($values) {
+  @include lrswap(margin, $values);
+}
+@mixin margin-left($value) {
+  @include marginlr($value, left);
+}
+@mixin margin-right($value) {
+  @include marginlr($value, right);
+}
+
+// ===========
+// = Padding =
+// ===========
+@mixin paddinglr($value, $origin: left) {
+  @if $origin == left {
+    @if $rtl { padding-right: $value; }
+    @else    { padding-left:  $value; }
+  } @else {
+    @if $rtl { padding-left:  $value; }
+    @else    { padding-right: $value; }
+  }
+}
+// Shorthands
+@mixin padding($values) {
+  @include lrswap(padding, $values);
+}
+@mixin padding-left($value) {
+  @include paddinglr($value, left);
+}
+@mixin padding-right($value) {
+  @include paddinglr($value, right);
+}
+
+// ==========================
+// = Left/right positioning =
+// ==========================
+@mixin position-h($value, $origin: left) {
+  @if $origin == left {
+    @if $rtl { right: $value; }
+    @else    { left:  $value; }
+  } @else {
+    @if $rtl { left:  $value; }
+    @else    { right: $value; }
+  }
+}
+// Shorthands
+@mixin left($value) {
+  @include position-h($value, left);
+}
+@mixin right($value) {
+  @include position-h($value, right);
+}
+
+// ===========
+// = Transform =
+// ===========
+@mixin rotate($deg: 90deg) {
+    @if $rtl {
+        -webkit-transform: rotate($deg + 180);
+        -moz-transform: rotate($deg + 180);
+        -ms-transform: rotate($deg + 180);
+        -o-transform: rotate($deg + 180);
+        transform: rotate($deg + 180);
+    } @else {
+        -webkit-transform: rotate($deg);
+        -moz-transform: rotate($deg);
+        -ms-transform: rotate($deg);
+        -o-transform: rotate($deg);
+        transform: rotate($deg);
+    }
+
+}
