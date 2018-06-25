@@ -1,0 +1,43 @@
+@import '../../utils/base.scss';
+
+.select {
+    @include direction;
+    height: 37px;
+    color: $black;
+    font-size: $base-font-size;
+    font-family: $base-font-family;
+    line-height: 1.4;
+    @include equal-radius;
+    border: $form-input-border;
+    background-color: $bg-white;
+    @include lrswap(padding, $tiny-spacing 26px $tiny-spacing $tiny-spacing);
+
+    &:focus {
+        outline: none;
+        border-color: $black;
+    }
+}
+
+.custom-select {
+    display: inline-block;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        @include right(10px);
+        width: 7px;
+        height: 7px;
+        background: transparent;
+        border-top: 2.5px solid $dark-gray;
+        border-right: 2.5px solid $dark-gray;
+        margin-top: -6px;
+        @include rotate(135deg);
+    }
+
+    .select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+}
