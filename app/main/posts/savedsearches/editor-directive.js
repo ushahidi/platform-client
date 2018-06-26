@@ -1,5 +1,6 @@
 module.exports = [
     '$q',
+    '$filter',
     '$location',
     '$rootScope',
     '$translate',
@@ -11,6 +12,7 @@ module.exports = [
     'PostFilters',
 function (
     $q,
+    $filter,
     $location,
     $rootScope,
     $translate,
@@ -44,7 +46,9 @@ function (
             $scope.views = ViewHelper.views();
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
-
+            // translate the description and name if they have a translation available (ie the "My posts" search)
+            $scope.cpySavedSearch.description = $filter('translate')($scope.cpySavedSearch.description);
+            $scope.cpySavedSearch.name = $filter('translate')($scope.cpySavedSearch.name);
             $scope.save = function (savedSearch) {
                 $scope.isSaving = true;
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
