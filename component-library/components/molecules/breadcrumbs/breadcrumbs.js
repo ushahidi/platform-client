@@ -16,7 +16,6 @@ const Breadcrumbs = props => {
     classes = classes.map(classname => breadcrumbs[classname]);
 
     const classProps = classnames(breadcrumbs.breadcrumbs, classes);
-    console.log(classProps);
     return (
         <ol className={classProps}>
             {navigation.map(nav => (

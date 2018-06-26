@@ -3,31 +3,30 @@
 :global(.layout-g) {
     label,
     .form-label {
-    @include typeGamma;
+        @include typeGamma;
 
-    svg.iconic {
-        width: 0.8em;
-        height: 0.8em;
-        fill: $dark-gray;
-        @include margin-left($tiny-spacing);
-    }
+        svg.iconic {
+            width: 0.8em;
+            height: 0.8em;
+            fill: $dark-gray;
+            @include margin-left($tiny-spacing);
+        }
 
-    &.error {
-        color: $error-red;
-    }
-
-    &.required {
-
-        &:after {
-            content: '\2217';
-            position: relative;
-            top: -2px;
+        &.error {
             color: $error-red;
-            font-weight: normal;
-            font-size: 1.05em;
-            @include margin-left(4px);
+        }
+
+        &.required {
+
+            &:after {
+                content: '\2217';
+                position: relative;
+                top: -2px;
+                color: $error-red;
+                font-weight: normal;
+                font-size: 1.05em;
+                @include margin-left(4px);
+            }
         }
     }
-}
-
 }
