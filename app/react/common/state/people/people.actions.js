@@ -19,7 +19,7 @@ export function handleRequestFailure(error) {
 export function saveNewPerson(person) {
     return function action(dispatch) {
         dispatch({ type: SAVE_NEW_PERSON });
-        return PersonEndpoints.savePerson(person)
+        return PersonEndpoints.save(person)
             .then(personResponse => dispatch(receivePerson(personResponse)))
             .catch(error => dispatch(handleRequestFailure(error)));
     };
@@ -28,7 +28,7 @@ export function saveNewPerson(person) {
 export function fetchPeople(params) {
     return function action(dispatch) {
         dispatch({ type: FETCH_PEOPLE });
-        return PersonEndpoints.fetchPeople(params)
+        return PersonEndpoints.search(params)
             .then(peopleResponse => dispatch(receivePeople(peopleResponse)))
             .catch(error => dispatch(handleRequestFailure(error)));
     };

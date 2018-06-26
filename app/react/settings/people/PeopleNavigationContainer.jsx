@@ -10,14 +10,10 @@ const PeopleNavigationContainer = () => (
                     </a>
                 </li>
                 <li>
-                    <a href="/settings" translate>
-                        app.settings
-                    </a>
+                    <a href="/settings">app.settings</a>
                 </li>
             </ol>
-            <h1 className="mode-context-title" translate>
-                app.users
-            </h1>
+            <h1 className="mode-context-title">app.users</h1>
         </header>
     </div>
 );

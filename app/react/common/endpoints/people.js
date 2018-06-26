@@ -2,20 +2,28 @@ import Util from "common/services/util";
 import request from "./axiosInstance";
 
 export default {
-    savePerson(person) {
+    save(person) {
         return request({
             url: Util.apiUrl("/users"),
             data: person,
             method: "post"
         });
     },
-    fetchPeople(query = {}) {
-        const params = { orderby: "realname" };
-        Object.assign(params, query);
+    create(/** person * */) {},
+    update(/** person * */) {},
+    delete(/** person * */) {},
+    get(person) {
+        return request({
+            url: Util.apiUrl(`/users/${person.id}`),
+            method: "get"
+        });
+    },
+    search(params) {
+        const query = Object.assign(params, {});
         return request({
             url: Util.apiUrl("/users"),
             method: "get",
-            params
+            query
         });
     }
 };

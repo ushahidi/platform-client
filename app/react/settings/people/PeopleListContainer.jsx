@@ -26,7 +26,7 @@ const propTypes = {
 
 class PeopleListContainer extends React.Component {
     componentDidMount() {
-        this.props.PeopleActions.fetchPeople();
+        this.props.PeopleActions.fetchPeople({ orderby: "realname" });
     }
     render() {
         return (

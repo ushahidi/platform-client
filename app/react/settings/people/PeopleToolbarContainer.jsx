@@ -14,9 +14,7 @@ const PeopleToolbarContainer = () => (
         </div>
         <div className="button-group">
             <button type="button">
-                <span className="button-label" translate>
-                    nav.export
-                </span>
+                <span className="button-label">nav.export</span>
             </button>
         </div>
     </div>
