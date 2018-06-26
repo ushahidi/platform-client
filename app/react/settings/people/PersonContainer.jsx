@@ -11,7 +11,7 @@ import {
 } from "react/common/state/roles/roles.reducers";
 import { getPeople, getPerson } from "react/common/state/people/people.reducers";
 import PersonCreateForm from "react/settings/people/PersonCreateForm";
-import PersonEditForm from "react/settings/people/PersonEditForm";
+import PersonEditContainer from "react/settings/people/PersonEditContainer";
 import { Provider } from "react-redux";
 
 
@@ -63,7 +63,7 @@ class PersonContainer extends React.Component {
                             path="/settings/users/edit/:id"
                             render={props => (
                                 <Provider store={this.props.store}>
-                                <PersonEditForm
+                                <PersonEditContainer
                                     requestPerson={
                                         this.props.PeopleActions.requestPerson
                                     }
