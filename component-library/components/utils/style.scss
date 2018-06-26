@@ -13,12 +13,13 @@ This is a hack to include bourbon and neat, since I couldn't get webpack to impo
 // Neat
 @import "../../../node_modules/bourbon-neat/app/assets/stylesheets/neat.scss";
 
-/*FONTS*/
+/*FONTS and typography*/
 @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext');
-
 /* MIXINS */
 @import './mixins/mixins.scss';
 
 /* GLOBAL VARIABLES */
 @import './sass/settings.scss';
 @import './sass/general.scss';
+@import './sass/typography.scss';
+@import './sass/layouts/layout-g.scss';

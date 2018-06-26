@@ -4,7 +4,7 @@ import { action } from "@storybook/addon-actions";
 
 import Button from "./button";
 
-storiesOf("Button", module)
+storiesOf("1 Atoms/Button", module)
     .add("default", () => (
         <Button buttonType="BUTTON" onClick={action("clicked")}>
             Learn more

@@ -1,5 +1,6 @@
-@import '../../utils/base.scss';
+@import '../../utils/style.scss';
 
+    :global(.layout-g) {
 .list-item {
     position: relative;
     display: block;
@@ -155,4 +156,5 @@ dt.list-item {
             }
         }
     }
+}
 }

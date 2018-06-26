@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-import formfield from "./formfield.scss";
+import "./formfield.scss";
 
 const propTypes = {
     children: PropTypes.node.isRequired,
@@ -23,17 +23,14 @@ const Fieldset = props => {
         required
     } = props;
 
-    const fieldsetClassNames = classnames(
-        formfield[className],
-        formfield.fieldset
-    );
+    const fieldsetClassNames = classnames(className, showError ? "error" : "");
 
     const legendClassNames = classnames(
-        required ? formfield.required : "",
-        showError ? formfield.error : ""
+        required ? "required" : "",
+        showError ? "error" : ""
     );
 
-    const errorClassNames = classnames(formfield.error);
+    const errorClassNames = "error";
 
     return (
         <fieldset className={fieldsetClassNames}>

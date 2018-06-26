@@ -8,7 +8,7 @@ import Input from "../../atoms/input/input";
 import Dropdown from "../../atoms/dropdown/dropdown";
 import Button from "../../atoms/button/button";
 
-storiesOf("Forms", module).add("with multiple fields", () => (
+storiesOf("3 Organisms/Forms", module).add("with multiple fields", () => (
     <div>
         <ListItem>
             <h3>Add people to Ushahidi</h3>

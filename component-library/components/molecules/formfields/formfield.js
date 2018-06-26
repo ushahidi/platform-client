@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import formfield from "./formfield.scss";
+import "./formfield.scss";
 
 const propTypes = {
     className: PropTypes.string,
@@ -13,21 +13,13 @@ const propTypes = {
 const Formfield = props => {
     const { className, children, showError, errorText, ...customProps } = props;
 
-    let classes = className.split(" ");
-    classes = classes.map(classname => formfield[classname]);
-
     const classProps = showError
-        ? classnames(formfield["form-field"], formfield.error, classes)
-        : classnames(formfield["form-field"], classes);
-
+        ? classnames("form-field", "error", className)
+        : classnames("form-field", className);
     return (
         <div className={classProps} {...customProps}>
             {children}
-            {showError ? (
-                <span className={formfield.error}>{errorText}</span>
-            ) : (
-                ""
-            )}
+            {showError ? <span className="error">{errorText}</span> : ""}
         </div>
     );
 };

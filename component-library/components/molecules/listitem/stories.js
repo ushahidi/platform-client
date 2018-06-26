@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import ListItem from "./listitem";
 import Button from "../../atoms/button/button";
 
-storiesOf("Listitems", module)
+storiesOf("2 Molecules/Listitems", module)
     .add("with heading and description", () => (
         <ListItem>
             <h3>Heading</h3>

@@ -55,8 +55,10 @@
     "tabWidth": 4
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^3.4.8",
     "@storybook/addon-actions": "^3.4.7",
     "@storybook/addon-info": "^3.4.7",
+    "@storybook/addon-viewport": "^3.4.8",
     "@storybook/react": "^3.4.7",
     "@uirouter/visualizer": "^5.0.0",
     "angular-mocks": "^1.5.6",
@@ -130,6 +132,7 @@
     "prettier": "^1.12.1",
     "protractor": "^5.1.1",
     "raw-loader": "^0.5.1",
+    "react-storybook-addon-chapters": "^2.1.5",
     "react-test-renderer": "^16.3.2",
     "redux-mock-store": "^1.5.1",
     "resolve-url-loader": "^2.0.2",

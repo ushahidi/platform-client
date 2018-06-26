@@ -15,7 +15,7 @@ const propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     id: PropTypes.string.isRequired,
-    isFieldset: PropTypes.bool,
+    inForm: PropTypes.bool,
     isError: PropTypes.bool
 };
 
@@ -26,29 +26,21 @@ const Checkbox = props => {
         children,
         isError,
         id,
-        isFieldset,
+        inForm,
         ...customProps
     } = props;
     const classProps = classnames(
         checkbox.check,
         checkbox[className],
-        checkbox[CheckType[checkType]]
-    );
-    const labelClass = classnames(
-        isFieldset ? "form-field" : "",
+        checkbox[CheckType[checkType]],
+        inForm ? `form-field ${CheckType[checkType]}` : "",
         isError ? "error" : ""
     );
+
     return (
-        <div className={isFieldset ? checkbox["form-field"] : ""}>
-            <input
-                className={classProps}
-                type={CheckType[checkType]}
-                id={id}
-                {...customProps}
-            />
-            <Label className={labelClass} htmlFor={id}>
-                {children}
-            </Label>
+        <div className={classProps}>
+            <input type={CheckType[checkType]} id={id} {...customProps} />
+            <Label htmlFor={id}>{children}</Label>
         </div>
     );
 };
@@ -57,7 +49,7 @@ Checkbox.propTypes = propTypes;
 
 Checkbox.defaultProps = {
     className: "",
-    isFieldset: false,
+    inForm: false,
     isError: false
 };
 

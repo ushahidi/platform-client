@@ -1,80 +1,72 @@
-@import '../../utils/base.scss';
+@import '../../utils/style.scss';
 
-.text,
-.email,
-.password,
-.search,
-.textarea,
-.phone {
-    @include direction;
-    display: inline-block;
-    width: 100%;
-    max-width: 450px;
-    color: $black;
-    @include input-placeholder($dark-gray);
-    @include typeBase;
-    font-family: $base-font-family;
-    line-height: 1.4;
-    @include text-align(left);
-    outline-color: $bg-white;
-    border: $form-input-border;
-    @include border-top-radius($global-radius);
-    @include border-bottom-radius($global-radius);
-    padding: $tiny-spacing $sm-spacing;
-    @include transition;
+:global(.layout-g) {
+    input,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    textarea {
+        @include direction;
+        display: inline-block;
+        width: 100%;
+        max-width: 450px;
+        color: $black;
+        @include input-placeholder($dark-gray);
+        @include typeBase;
+        font-family: $base-font-family;
+        line-height: 1.4;
+        @include text-align(left);
+        outline-color: $bg-white;
+        border: $form-input-border;
+        @include border-top-radius($global-radius);
+        @include border-bottom-radius($global-radius);
+        padding: $tiny-spacing $sm-spacing;
+        @include transition;
 
-    &.error {
-        border-color: $error-red;
-        @include input-placeholder($error-red);
-
-        &:focus {
+        &.error {
             border-color: $error-red;
             @include input-placeholder($error-red);
-        }
-
-    }
-
-    &:focus {
-        outline: none;
-        border-color: black;
-        @include input-placeholder($black);
-    }
-
-    &[disabled] {
-        border-color: $disabled-gray;
-        cursor: not-allowed;
-        @include input-placeholder($disabled-gray);
-    }
-
-    &.form-field {
-        margin-top: $tiny-spacing;
-        &.error {
-
-            @include float(left);
-            @include clear(left);
-            border: 2px solid $error-red;
-            margin-bottom: $sm-spacing;
 
             &:focus {
                 border-color: $error-red;
+                @include input-placeholder($error-red);
             }
-        }
-        &.success {
-            border-color: $success-green;
 
-            &:focus {
-                border-color: $success-green;
-            }
+        }
+
+        &:focus {
+            outline: none;
+            border-color: black;
+            @include input-placeholder($black);
+        }
+
+        &[disabled] {
+            border-color: $disabled-gray;
+            cursor: not-allowed;
+            @include input-placeholder($disabled-gray);
         }
     }
-}
 
-.search {
-    @include equal-radius;
-    @include padding-right($tiny-spacing);
-    -webkit-appearance: none;
+    .helper-text
 
-    &::-webkit-search-decoration {
+    input[type="search"] {
+        @include equal-radius;
+        @include padding-right($tiny-spacing);
         -webkit-appearance: none;
+
+        &::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+    }
+
+    input[type="file"] {
+        @include no-shadow;
+
+        + button,
+        + [type="button"],
+        + .button {
+            margin-top: 0;
+        }
     }
 }

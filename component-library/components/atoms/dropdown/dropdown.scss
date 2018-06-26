@@ -1,6 +1,7 @@
-@import '../../utils/base.scss';
+@import '../../utils/style.scss';
 
-.select {
+:global(.layout-g) {
+select {
     @include direction;
     height: 37px;
     color: $black;
@@ -40,27 +41,6 @@
         -webkit-appearance: none;
         -moz-appearance: none;
     }
-    &.form-field {
-        &.error {
-            .select {
-            @include float(left);
-            @include clear(left);
-            border: 2px solid $error-red;
-            margin-bottom: $sm-spacing;
-
-        &:focus {
-            border-color: $error-red;
-        }
-        clear: both;
-    }
-    }
-    &.success {
-        .select {
-            border-color: $success-green;
-            &:focus {
-                border-color: $success-green;
-            }
-        }
-    }
 }
+
 }

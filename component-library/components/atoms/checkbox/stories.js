@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 
 import Checkbox from "./checkbox";
 
-storiesOf("Checkbox", module)
+storiesOf("1 Atoms/Checkbox", module)
     .add("checkbox", () => (
         <Checkbox checkType="CHECKBOX" id="a">
             Learn more

@@ -1,14 +1,16 @@
-@import '../../utils/base.scss';
+@import '../../utils/style.scss';
 
-.label {
+:global(.layout-g) {
+    label,
+    .form-label {
     @include typeGamma;
+
     svg.iconic {
         width: 0.8em;
         height: 0.8em;
         fill: $dark-gray;
         @include margin-left($tiny-spacing);
     }
-
 
     &.error {
         color: $error-red;
@@ -26,58 +28,6 @@
             @include margin-left(4px);
         }
     }
-
-    &.form-field {
-            display: block;
-            margin-bottom: $sm-spacing;
-            @include direction;
-            &.error {
-                font-weight: 700;
-            }
-
-    }
 }
 
-//
-// :global {
-    // .form-field {
-//     :local(.label) {
-//         display: block;
-//         margin-bottom: $sm-spacing;
-//         @include direction;
-//
-//         input[type="text"],
-//         input[type="email"],
-//         input[type="tel"],
-//         textarea,
-//         .custom-select,
-//         select {
-//             margin-top: $tiny-spacing;
-//         }
-//
-//         svg.iconic {
-//             @include margin-right(4px);
-//         }
-//
-//         .tooltip {
-//             display: inline-block;
-//             color: $bg-white;
-//             width: 1.142857143em;
-//             height: 1.142857143em;
-//             font-weight: $bold;
-//             font-size: .857142857em;
-//             text-align: center;
-//             @include equal-radius(100%);
-//             background-color: $dark-blue;
-//             padding: 2px;
-//             margin: 0 4px;
-//
-//             svg.iconic {
-//                 width: 10px;
-//                 height: 10px;
-//                 fill: $bg-white;
-//             }
-//         }
-//     }
-// }
-// }
+}
