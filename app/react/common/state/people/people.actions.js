@@ -45,8 +45,7 @@ export function requestPerson(id) {
         dispatch({ type: REQUEST_PERSON });
         return PersonEndpoints.get(id)
             .then((personResponse) => {
-                dispatch({type: RECEIVE_PERSON})
-                return personResponse
+                dispatch({type: RECEIVE_PERSON, personResponse})
             })
             .catch(error => dispatch(handleRequestFailure(error)));
     };

@@ -13,6 +13,7 @@ const initialState = {
     people: [],
     error: {},
     isSaving: false,
+    editing: {}
 };
 
 export default createReducer(initialState, {
@@ -52,8 +53,9 @@ export default createReducer(initialState, {
         ...state,
         isSaving: true
     }),
-    [RECEIVE_PERSON]: state => ({
+    [RECEIVE_PERSON]: (state, action) => ({
         ...state,
+        editing: action.personResponse,
         isSaving: false
     })
 });
@@ -70,4 +72,8 @@ export function getPerson(state, props) {
             return person.id === props.id
         })
     }
+}
+
+export function getEditing(state) {
+    return state.people.editing
 }

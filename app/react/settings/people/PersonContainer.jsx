@@ -74,7 +74,7 @@ class PersonContainer extends React.Component {
                                     isLoadingRoles={this.props.isLoadingRoles}
                                     person={this.props.person}
                                     // Remove this store after we've fully migrated and are using Provider at root
-                                    // store={this.props.store}
+                                    store={this.props.store}
                                     {...props}
                                 />
                                 </Provider>
