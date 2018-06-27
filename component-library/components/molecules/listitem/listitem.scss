@@ -1,0 +1,160 @@
+@import '../../utils/style.scss';
+
+:global(.layout-g) {
+    .list-item {
+        position: relative;
+        display: block;
+        list-style-type: none;
+        border-bottom: $base-border;
+        @include lrswap(padding, $lg-spacing $lg-spacing $lg-spacing 0);
+        padding: $lg-spacing;
+        margin: 0;
+        height: inherit;
+
+        @include media($medium) {
+            padding: $lg-spacing 0;
+        }
+
+        &:last-child {
+            border-bottom-color: transparent;
+        }
+
+        strong {
+            display: block;
+            @include typeGamma;
+            margin: 0;
+        }
+
+        p {
+            margin: $sm-spacing 0 0 0;
+
+            &.sub-category {
+                @include padding-left($sm-spacing);
+                color: $dark-gray;
+            }
+        }
+
+        fieldset {
+
+            &:first-of-type {
+                margin-top: 0;
+            }
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+
+            .form-field {
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        form {
+
+            .form-field {
+
+                &:first-of-type {
+                    margin-top: 0;
+                }
+            }
+
+        }
+
+        &.selected:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            @include left(-20px);
+            width: 5px;
+            background: $accent-purple;
+            border-radius: 5px;
+        }
+
+        &.success {
+            border-bottom: 2px solid $success-green;
+            border-top: 2px solid $success-green;
+        }
+
+        button {
+            margin-top: $lg-spacing;
+        }
+
+        .button-group {
+
+            button {
+                margin-top: 0;
+            }
+        }
+
+        &.survey-view {
+            padding-top: 0;
+        }
+
+        &.survey-actions {
+
+            ul li {
+                list-style: none;
+                margin-bottom: $lg-spacing;
+
+                h4 {
+                    margin: 16px 0;
+                }
+            }
+        }
+    }
+
+    dt.list-item {
+        @include typeGamma;
+        border: none;
+        padding-bottom: 0;
+        margin: 0 0 $sm-spacing;
+
+        + dd {
+            color: $dark-gray;
+            border-bottom: $base-border;
+            border-bottom-width: 1px;
+            padding-bottom: $base-spacing;
+            margin-top: -$tiny-spacing;
+
+            &:last-of-type {
+                border-bottom-color: transparent;
+            }
+        }
+    }
+
+    .multiple-select {
+        margin: 0;
+
+        .list-item {
+            background-color: $bg-gray;
+            border: none;
+            padding: $lg-spacing;
+
+            &.selected {
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    width: 5px;
+                    @include left(0);
+                    background: $accent-purple;
+                    border-radius: 0;
+                }
+
+                &:first-child:before {
+                    border-radius: 5px 5px 0 0;
+                }
+
+                &:last-child:before {
+                    border-radius: 0 0 5px 5px;
+                }
+            }
+        }
+    }
+}
