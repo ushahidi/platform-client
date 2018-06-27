@@ -6,7 +6,12 @@ import breadcrumbs from "./breadcrumbs.scss";
 
 const propTypes = {
     className: PropTypes.string,
-    navigation: PropTypes.shape.isRequired
+    navigation: PropTypes.arrayOf(
+        PropTypes.shape({
+            path: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired
+        })
+    ).isRequired
 };
 
 const Breadcrumbs = props => {

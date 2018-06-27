@@ -2,14 +2,15 @@
 
 import React from "react";
 import PersonCard from "./PersonCard";
+import ListItem from "../../../../component-library/components/molecules/listitem/listitem";
 
 const PeopleList = data => (
-    <div className="list-item list">
+    <ListItem>
         <ul>
             {data.people.map(person => (
                 <PersonCard key={person.id} person={person} />
             ))}
         </ul>
-    </div>
+    </ListItem>
 );
 export default PeopleList;
