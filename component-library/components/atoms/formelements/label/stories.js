@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 
 import Label from "./label";
 
-storiesOf("1 Atoms/Label", module)
+storiesOf("1 Atoms/Form Elements/Label", module)
     .add("label, default", () => (
         <Label htmlFor="g" labelType="DEFAULT">
             This is a default label

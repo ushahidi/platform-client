@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 
 import classnames from "classnames";
-import label from "./label.scss";
+import label from "../forms.scss";
 
 const LabelType = {
     DEFAULT: "label",

@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-import checkbox from "./checkbox.scss";
+import checkbox from "../forms.scss";
 import Label from "../label/label";
 
 const CheckType = {
