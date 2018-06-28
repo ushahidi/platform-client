@@ -68,7 +68,7 @@ class PersonEditContainer extends React.Component {
                 </div>
                 {this.props.isLoading.REQUEST_PERSON ? <InlineLoading /> :
                     <PersonEditForm 
-                        onSubmit={(values) => this.props.updatePerson(values, values.ID)} 
+                        onSubmit={(values) => this.props.updatePerson(values, values.id)} 
                         initialValues={this.props.person ? this.props.person : this.state.person} 
                         roles={this.props.roles} 
                         isLoading={this.props.isLoading} 
