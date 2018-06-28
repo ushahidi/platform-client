@@ -1,6 +1,7 @@
 @import '../../utils/style.scss';
 
 :global {
+
     fieldset {
         position: relative;
         border: none;
@@ -37,475 +38,476 @@
             }
         }
     }
+
     .form-field,
-fieldset {
-//    @include clearfix;
-    position: relative;
-    margin-top: $huge-spacing;
-    margin-bottom: $huge-spacing;
+    fieldset {
+        position: relative;
+        margin-top: $huge-spacing;
+        margin-bottom: $huge-spacing;
 
-    @include media($medium) {
-        margin-top: $lg-spacing;
-        margin-bottom: $lg-spacing;
-    }
-
-    label {
-        display: block;
-        margin-bottom: $sm-spacing;
-        @include direction;
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        textarea,
-        .custom-select,
-        select {
-            margin-top: $tiny-spacing;
-        }
-
-        svg.iconic {
-            @include margin-right(4px);
-        }
-    }
-    button,
-    .button {
-        @include margin-right($tiny-spacing);
-        margin-bottom: $tiny-spacing;
-    }
-    .form-field {
-            margin-top: 0;
+        @include media($medium) {
+            margin-top: $lg-spacing;
             margin-bottom: $lg-spacing;
-
-            label {
-                font-size: 14px;
-                font-size: 1rem;
-                margin-bottom: $tiny-spacing;
-            }
         }
-
-
-    + .form-sheet {
-        margin-bottom: $base-spacing;
-    }
-
-    // REQUIRED FIELD
-    &.required {
 
         label {
-
-            &:after {
-                content: '\2217';
-                color: $error-red;
-                font-weight: normal;
-                font-size: 1.05em;
-                @include margin-left($tiny-spacing);
-            }
-        }
-    }
-
-    // INVALID FORM FIELD/FIELDSET VALUE
-    &.error {
-
-        label,
-        legend {
-            color: $error-red;
-            font-weight: 700;
-        }
-
-        input,
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="search"],
-        textarea,
-        select {
-            @include float(left);
-            @include clear(left);
-            border: 2px solid $error-red;
+            display: block;
             margin-bottom: $sm-spacing;
+            @include direction;
 
-            &:focus {
-                border-color: $error-red;
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            textarea,
+            .custom-select,
+            select {
+                margin-top: $tiny-spacing;
             }
-        }
-
-        + .form-field {
-            clear: both;
-        }
-
-        span.error {
-            @include float(left);
-            @include clear(left);
-            color: $error-red;
-
-            svg.iconic {
-                fill: $error-red;
-                @include margin-right(5px);
-            }
-        }
-    }
-
-    // WARNING FIELD
-    &.warning {
-
-        label,
-        legend {
-            font-weight: 700;
-        }
-
-        input,
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="search"],
-        textarea,
-        select {
-            @include float(left);
-            @include clear(left);
-            border: 2px solid $black;
-            margin-bottom: $sm-spacing;
-        }
-
-        + .form-field {
-            clear: both;
-        }
-
-        span.warning {
-            @include float(left);
-            @include clear(left);
 
             svg.iconic {
                 @include margin-right(4px);
-                fill: $dark-gray;
-            }
-        }
-    }
-
-    // VALID FORM FIELD VALUE
-    &.success {
-
-        input,
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="search"],
-        textarea,
-        select {
-            border: 2px solid $success-green;
-
-
-            &:focus {
-                border-color: $success-green;
-            }
-        }
-    }
-
-    &.buttons {
-        margin: 0;
-    }
-
-    // CHECKBOX OR RADIO BUTTON
-    &.checkbox,
-    &.radio {
-        position: relative;
-        @include padding-left(15px + $tiny-spacing);
-        @include lrswap(margin, 0 0 $tiny-spacing 2px);
-        margin-top: $sm-spacing;
-
-        label {
-            color: $black;
-            @include typeBase;
-            text-transform: none;
-            letter-spacing: 0;
-            @include padding-left(2px);
-
-            &:hover {
-                cursor: pointer;
             }
         }
 
-        p.helper-text {
-            font-size: em(14px);
-            color: $dark-gray;
-            margin-top: $tiny-spacing;
+        button,
+        .button {
+            @include margin-right($tiny-spacing);
+            margin-bottom: $tiny-spacing;
         }
 
-        input[type="checkbox"],
-        input[type="radio"] {
-            position: absolute;
-            top: 2px;
-            @include left(0);
-        }
+        .form-field {
+                margin-top: 0;
+                margin-bottom: $lg-spacing;
 
-        svg.iconic {
-            fill: $dark-gray;
-            @include margin-right(4px);
-        }
-
-        img.avatar {
-            display: inline-block;
-            width: $base-spacing;
-            height: $base-spacing;
-            @include margin-right(4px);
-        }
-
-        .custom-select {
-            margin-top: 4px;
-        }
-
-        + .divider {
-            margin-bottom: $sm-spacing;
-        }
-
-        &.checked {
-
-            .modal-title {
-                color: $dark-gray;
-                font-weight: normal;
-                text-decoration: line-through;
+                label {
+                    font-size: 14px;
+                    font-size: 1rem;
+                    margin-bottom: $tiny-spacing;
+                }
             }
+
+        + .form-sheet {
+            margin-bottom: $base-spacing;
         }
 
-        &.disabled {
+        // REQUIRED FIELD
+        &.required {
 
             label {
-                color: $dark-gray;
 
-                &:hover {
-                    cursor: not-allowed;
+                &:after {
+                    content: '\2217';
+                    color: $error-red;
+                    font-weight: normal;
+                    font-size: 1.05em;
+                    @include margin-left($tiny-spacing);
                 }
             }
         }
 
-        &.icon-input {
+        // INVALID FORM FIELD/FIELDSET VALUE
+        &.error {
 
-            > label {
-                vertical-align: middle;
-
-                &:before {
-                    position: absolute;
-                    top: -2px;
-                    @include left(0);
-                    width: $sm-spacing;
-                    height: $sm-spacing;
-                    color: $dark-blue;
-                    font-weight: bold;
-                    font-size: 13px;
-                    line-height: 13px;
-                    @include equal-radius(100%);
-                    background-color: $gold;
-                    padding: 2px;
-                }
-
-                img.avatar {
-                    vertical-align: middle;
-                }
+            label,
+            legend {
+                color: $error-red;
+                font-weight: 700;
             }
-
-            input[type="radio"] {
-                display: none;
-            }
-        }
-    }
-
-    &.radio {
-
-        &.icon-input {
-
-            &.checked {
-
-                > label {
-
-                    &:before {
-                        content: '\2713';
-                    }
-                }
-            }
-        }
-    }
-
-    &.select {
-
-        label {
-            display: inline-block;
-            color: $black;
-            @include typeBase;
-            text-transform: none;
-            letter-spacing: 0;
-
-            .custom-select {
-                @include margin-right($tiny-spacing);
-            }
-
-            + .custom-select {
-                @include margin-left($tiny-spacing);
-            }
-        }
-
-        .custom-select,
-        select {
-            display: inline-block;
-            margin-top: 0;
-        }
-    }
-    &.input-and-button {
-
-        @include media($medium) {
 
             input,
             input[type="text"],
             input[type="email"],
             input[type="password"],
             input[type="search"],
-            input[type="url"] {
+            textarea,
+            select {
+                @include float(left);
+                @include clear(left);
+                border: 2px solid $error-red;
+                margin-bottom: $sm-spacing;
+
+                &:focus {
+                    border-color: $error-red;
+                }
+            }
+
+            + .form-field {
+                clear: both;
+            }
+
+            span.error {
+                @include float(left);
+                @include clear(left);
+                color: $error-red;
+
+                svg.iconic {
+                    fill: $error-red;
+                    @include margin-right(5px);
+                }
+            }
+        }
+
+        // WARNING FIELD
+        &.warning {
+
+            label,
+            legend {
+                font-weight: 700;
+            }
+
+            input,
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="search"],
+            textarea,
+            select {
+                @include float(left);
+                @include clear(left);
+                border: 2px solid $black;
+                margin-bottom: $sm-spacing;
+            }
+
+            + .form-field {
+                clear: both;
+            }
+
+            span.warning {
+                @include float(left);
+                @include clear(left);
+
+                svg.iconic {
+                    @include margin-right(4px);
+                    fill: $dark-gray;
+                }
+            }
+        }
+
+        // VALID FORM FIELD VALUE
+        &.success {
+
+            input,
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="search"],
+            textarea,
+            select {
+                border: 2px solid $success-green;
+
+
+                &:focus {
+                    border-color: $success-green;
+                }
+            }
+        }
+
+        &.buttons {
+            margin: 0;
+        }
+
+        // CHECKBOX OR RADIO BUTTON
+        &.checkbox,
+        &.radio {
+            position: relative;
+            @include padding-left(15px + $tiny-spacing);
+            @include lrswap(margin, 0 0 $tiny-spacing 2px);
+            margin-top: $sm-spacing;
+
+            label {
+                color: $black;
+                @include typeBase;
+                text-transform: none;
+                letter-spacing: 0;
+                @include padding-left(2px);
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            p.helper-text {
+                font-size: em(14px);
+                color: $dark-gray;
+                margin-top: $tiny-spacing;
+            }
+
+            input[type="checkbox"],
+            input[type="radio"] {
+                position: absolute;
+                top: 2px;
+                @include left(0);
+            }
+
+            svg.iconic {
+                fill: $dark-gray;
+                @include margin-right(4px);
+            }
+
+            img.avatar {
                 display: inline-block;
-                width: auto;
-                vertical-align: middle;
+                width: $base-spacing;
+                height: $base-spacing;
+                @include margin-right(4px);
             }
 
-            button,
-            .button {
-                vertical-align: middle;
-                margin-top: -2px;
+            .custom-select {
+                margin-top: 4px;
+            }
+
+            + .divider {
+                margin-bottom: $sm-spacing;
+            }
+
+            &.checked {
+
+                .modal-title {
+                    color: $dark-gray;
+                    font-weight: normal;
+                    text-decoration: line-through;
+                }
+            }
+
+            &.disabled {
+
+                label {
+                    color: $dark-gray;
+
+                    &:hover {
+                        cursor: not-allowed;
+                    }
+                }
+            }
+
+            &.icon-input {
+
+                > label {
+                    vertical-align: middle;
+
+                    &:before {
+                        position: absolute;
+                        top: -2px;
+                        @include left(0);
+                        width: $sm-spacing;
+                        height: $sm-spacing;
+                        color: $dark-blue;
+                        font-weight: bold;
+                        font-size: 13px;
+                        line-height: 13px;
+                        @include equal-radius(100%);
+                        background-color: $gold;
+                        padding: 2px;
+                    }
+
+                    img.avatar {
+                        vertical-align: middle;
+                    }
+                }
+
+                input[type="radio"] {
+                    display: none;
+                }
+            }
+        }
+
+        &.radio {
+
+            &.icon-input {
+
+                &.checked {
+
+                    > label {
+
+                        &:before {
+                            content: '\2713';
+                        }
+                    }
+                }
+            }
+        }
+
+        &.select {
+
+            label {
+                display: inline-block;
+                color: $black;
+                @include typeBase;
+                text-transform: none;
+                letter-spacing: 0;
+
+                .custom-select {
+                    @include margin-right($tiny-spacing);
+                }
+
+                + .custom-select {
+                    @include margin-left($tiny-spacing);
+                }
+            }
+
+            .custom-select,
+            select {
+                display: inline-block;
+                margin-top: 0;
+            }
+        }
+
+        &.input-and-button {
+
+            @include media($medium) {
+
+                input,
+                input[type="text"],
+                input[type="email"],
+                input[type="password"],
+                input[type="search"],
+                input[type="url"] {
+                    display: inline-block;
+                    width: auto;
+                    vertical-align: middle;
+                }
+
+                button,
+                .button {
+                    vertical-align: middle;
+                    margin-top: -2px;
+                }
             }
         }
     }
-}
-.input-with-icon {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
 
-    input[type="text"],
-    input[type="color"],
-    input[type="date"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="email"],
-    input[type="month"],
-    input[type="number"],
-    input[type="password"],
-    input[type="search"],
-    input[type="tel"],
-    input[type="time"],
-    input[type="url"],
-    input[type="week"] {
-        @include padding-left(38px);
-    }
+    .input-with-icon {
+        position: relative;
+        width: 100%;
+        max-width: 480px;
 
-    input:focus {
-
-        ~ svg.iconic {
-            fill: $black
+        input[type="text"],
+        input[type="color"],
+        input[type="date"],
+        input[type="datetime"],
+        input[type="datetime-local"],
+        input[type="email"],
+        input[type="month"],
+        input[type="number"],
+        input[type="password"],
+        input[type="search"],
+        input[type="tel"],
+        input[type="time"],
+        input[type="url"],
+        input[type="week"] {
+            @include padding-left(38px);
         }
 
-        ~ svg.iconic,
-        ~ svg.iconic.close {
-            top: 14px;
+        input:focus {
+
+            ~ svg.iconic {
+                fill: $black
+            }
+
+            ~ svg.iconic,
+            ~ svg.iconic.close {
+                top: 14px;
+            }
+        }
+
+        svg.iconic {
+            position: absolute;
+            top: 13px;
+            @include left(16px);
+            fill: $dark-gray;
+
+            &.close {
+                width: 10px;
+                height: 10px;
+                @include right(40px);
+                left: inherit;
+                fill: $black;
+            }
+        }
+
+        input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+    }
+
+    fieldset,
+    .form-fieldgroup {
+        position: relative;
+
+        .overflow {
+            display: none;
+        }
+
+        .form-fieldgroup {
+            padding-top: $tiny-spacing;
+            margin-top: $tiny-spacing;
+        }
+
+        .form-field-toggle {
+            display: none;
+            color: $dark-blue;
+            padding: $tiny-spacing;
+            @include padding-left(0);
+
+            &:hover {
+                cursor: pointer;
+                color: $dark-blue;
+            }
+
+            svg.iconic {
+                width: 8px;
+                height: 8px;
+                fill: $dark-blue;
+                @include margin-right($tiny-spacing);
+                @include transition(0.3s);
+            }
+        }
+
+        .form-field &,
+        fieldset & {
+            margin-top: $sm-spacing;
+            margin-bottom: $sm-spacing;
+
+            fieldset {
+                @include border-left(none);
+                @include padding-left(0);
+
+                legend {
+                    @include left(0);
+                }
+            }
+        }
+
+        &.has-overflow {
+
+            .form-field-toggle {
+                display: inline-block;
+            }
+        }
+
+        &.show-overflow {
+
+            .overflow {
+                display: block;
+            }
+
+            .form-field-toggle {
+
+                svg.iconic {
+                    @include rotate(180deg);
+                }
+            }
         }
     }
 
     svg.iconic {
-        position: absolute;
-        top: 13px;
-        @include left(16px);
-        fill: $dark-gray;
 
-        &.close {
-            width: 10px;
-            height: 10px;
-            @include right(40px);
-            left: inherit;
-            fill: $black;
-        }
-    }
-
-    input[type="search"]::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-    }
-}
-
-fieldset,
-.form-fieldgroup {
-    position: relative;
-
-    .overflow {
-        display: none;
-    }
-
-    .form-fieldgroup {
-        padding-top: $tiny-spacing;
-        margin-top: $tiny-spacing;
-    }
-
-    .form-field-toggle {
-        display: none;
-        color: $dark-blue;
-        padding: $tiny-spacing;
-        @include padding-left(0);
-
-        &:hover {
-            cursor: pointer;
-            color: $dark-blue;
-        }
-
-        svg.iconic {
-            width: 8px;
-            height: 8px;
+        &.checkbox,
+        &.radio {
+            width: 1.142857143em;
+            height: 1.142857143em;
+            vertical-align: sub;
             fill: $dark-blue;
-            @include margin-right($tiny-spacing);
-            @include transition(0.3s);
         }
     }
-
-    .form-field &,
-    fieldset & {
-        margin-top: $sm-spacing;
-        margin-bottom: $sm-spacing;
-
-        fieldset {
-            @include border-left(none);
-            @include padding-left(0);
-
-            legend {
-                @include left(0);
-            }
-        }
-    }
-
-    &.has-overflow {
-
-        .form-field-toggle {
-            display: inline-block;
-        }
-    }
-
-    &.show-overflow {
-
-        .overflow {
-            display: block;
-        }
-
-        .form-field-toggle {
-
-            svg.iconic {
-                @include rotate(180deg);
-            }
-        }
-    }
-}
-
-
-svg.iconic {
-
-    &.checkbox,
-    &.radio {
-        width: 1.142857143em;
-        height: 1.142857143em;
-        vertical-align: sub;
-        fill: $dark-blue;
-    }
-}
-
 
 }

@@ -15,7 +15,6 @@ const propTypes = {
     className: PropTypes.string,
     children: PropTypes.node.isRequired
 };
-
 const Button = props => {
     const { buttonType, className, children, ...customProps } = props;
 
@@ -24,6 +23,7 @@ const Button = props => {
         button[ButtonType[buttonType]],
         button[className]
     );
+
     return (
         <button type="button" className={classProps} {...customProps}>
             {children}

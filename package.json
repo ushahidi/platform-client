@@ -58,6 +58,8 @@
     "@storybook/addon-a11y": "^3.4.8",
     "@storybook/addon-actions": "^3.4.7",
     "@storybook/addon-info": "^3.4.8",
+    "@storybook/addon-options": "^3.4.8",
+    "@storybook/addon-viewport": "^3.4.8",
     "@storybook/react": "^3.4.7",
     "@uirouter/visualizer": "^5.0.0",
     "angular-mocks": "^1.5.6",
