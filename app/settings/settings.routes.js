@@ -170,10 +170,15 @@ module.exports = [
                 template: users
             })
             .state({
-                name: "settings.createUser",
+                abstract: true,
+                name: "settings.react"
+            })
+            .state({
+                name: "settings.react.createUser",
                 url: "/settings/users/create",
                 controller: [() => {}],
-                template: "<person-container></person-container>"
+                template:
+                    "<layout-class layout='g'></layout-class><person-container></person-container>"
             })
             .state({
                 name: "settings.users.edit",

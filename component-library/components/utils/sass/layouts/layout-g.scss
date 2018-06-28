@@ -1,61 +1,61 @@
 :global {
-
-.layout-g {
-    [role="main"] {
-        display: -webkit-flex;
-        display: -moz-flex;
-        display: -ms-flex;
-        display: -o-flex;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 67px;
-
-        @include media($medium) {
-            flex-direction: row;
-            padding-top: 0;
-            @include padding-left(182px);
-            margin-bottom: 0;
-        }
+    .hidden {
+        display: none;
     }
+    .layout-g {
+        [role="main"] {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 67px;
 
-    .full-col {
-        width: 100%;
-        max-width: 784px;
-        padding: 0 0 $lg-spacing 0;
-
-        @include media($medium) {
-            margin: 0;
-            padding: 0 0 0 $lg-spacing;
+            @include media($medium) {
+                flex-direction: row;
+                padding-top: 0;
+                @include padding-left(182px);
+                margin-bottom: 0;
+            }
         }
 
-        ul {
-            margin: 0;
-        }
+        .full-col {
+            width: 100%;
+            max-width: 784px;
+            padding: 0 0 $lg-spacing 0;
 
-        .list-item {
+            @include media($medium) {
+                margin: 0;
+                padding: 0 0 0 $lg-spacing;
+            }
 
             ul {
                 margin: 0;
+            }
 
-                .list-item {
-                    padding: $lg-spacing;
+            .list-item {
 
-                    @include media($medium) {
-                        padding: 24px 0;
-                    }
+                ul {
+                    margin: 0;
 
-                    p {
-                        margin: 16px 0 0 0;
+                    .list-item {
+                        padding: $lg-spacing;
+
+                        @include media($medium) {
+                            padding: 24px 0;
+                        }
+
+                        p {
+                            margin: 16px 0 0 0;
+                        }
                     }
                 }
-            }
 
-            &.list {
-                padding: 0;
+                &.list {
+                    padding: 0;
+                }
             }
         }
-
     }
-
-}
 }

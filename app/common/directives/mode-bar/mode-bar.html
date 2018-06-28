@@ -1,7 +1,7 @@
 <div class="mode-bar" ng-class="{ active : moreActive }">
     <!-- mode bar -->
     <!-- PL JS -->
-    <nav>
+    <nav  ng-if="!showNewNavbar">
         <!-- main menu -->
         <ul class="deployment-menu">
             <li ui-sref-active="{ 'active' : 'posts.map' }">
@@ -108,6 +108,98 @@
         </ul>
 
     </nav>
-    <!-- PL JS -->
-    <!-- mode bar -->
+    <nav ng-if="showNewNavbar">
+        <ul class="deployment-menu">
+            <li ui-sref-active="{ 'active' : 'posts.map' }">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#map-marker"></use>
+                </svg>
+                <a ui-sref="posts.map.all" ui-sref-opts="{reload:true}" translate>views.map</a>
+            </li>
+
+            <li ui-sref-active="active">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#list-rich"></use>
+                </svg>
+                <a ui-sref="posts.data" ui-sref-opts="{reload:true}" translate>
+                    views.data
+                </a>
+            </li>
+
+            <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ui-sref-active="active">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#pulse"></use>
+                </svg>
+                <a ui-sref="activity" translate>
+                    views.activity
+                </a>
+            </li>
+
+            <li data-message="customize" ng-show="hasManageSettingsPermission()" ui-sref-active="active">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#cog"></use>
+                </svg>
+                <a ui-sref="settings.list" translate>
+                    nav.settings
+                </a>
+            </li>
+
+            <li class="more-menu-trigger">
+                <a class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
+                </svg>
+                    <translate>nav.more</translate>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="account-menu">
+            <li>
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
+                </svg>
+                <a ng-click="viewCollectionListing()" translate>nav.collections</a>
+            </li>
+
+            <li ng-show="currentUser">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#person"></use>
+                </svg>
+                <a ng-click="viewAccountSettings()">{{currentUser.realname || currentUser.email}}</a>
+            </li>
+
+            <li>
+                <svg class="iconic" ng-show="currentUser">
+                    <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
+                </svg>
+                <a ng-click="logout()" data-modal="login" translate>nav.logout</a>
+            </li>
+            <li ng-hide="currentUser">
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
+                </svg>
+                <a ng-click="login()" data-modal="login" translate>nav.login</a>
+            </li>
+            <li ng-show="!currentUser && canRegister">
+                <svg class="iconic" ng-hide="currentUser">
+                    <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
+                </svg>
+                <a ng-click="register()" data-modal="signup" translate>nav.register</a>
+            </li>
+            <li>
+                <svg class="iconic">
+                    <use xlink:href="/img/iconic-sprite.svg#question-mark"></use>
+                </svg>
+                <a href="https://www.ushahidi.com/support">Support</a>
+            </li>
+
+            <li class="made-by-logo">
+                <a href="http://ushahidi.com" target="_blank">
+                    <img src="/img/ushahidi-logo.png" alt="Ushahidi Logo">
+                    <span>Made by Ushahidi</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
