@@ -1,0 +1,476 @@
+@import '../../utils/style.scss';
+
+:global(.layout-g) {
+
+    /*------------------------------------*\
+    $FORMS
+    \*------------------------------------*/
+
+    label,
+    .form-label {
+        @include typeGamma;
+
+        svg.iconic {
+            width: 0.8em;
+            height: 0.8em;
+            fill: $dark-gray;
+            @include margin-left($tiny-spacing);
+        }
+
+        &.error {
+            color: $error-red;
+        }
+
+        &.required {
+
+            &:after {
+                content: '\2217';
+                position: relative;
+                top: -2px;
+                color: $error-red;
+                font-weight: normal;
+                font-size: 1.05em;
+                @include margin-left(4px);
+            }
+        }
+    }
+
+    input,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    textarea {
+        @include direction;
+        display: inline-block;
+        width: 100%;
+        max-width: 450px;
+        color: $black;
+        @include input-placeholder($dark-gray);
+        @include typeBase;
+        font-family: $base-font-family;
+        line-height: 1.4;
+        @include text-align(left);
+        outline-color: $bg-white;
+        border: $form-input-border;
+        @include border-top-radius($global-radius);
+        @include border-bottom-radius($global-radius);
+        padding: $tiny-spacing $sm-spacing;
+        @include transition;
+
+        &.error {
+            border-color: $error-red;
+            @include input-placeholder($error-red);
+
+            &:focus {
+                border-color: $error-red;
+                @include input-placeholder($error-red);
+            }
+
+        }
+
+        &:focus {
+            outline: none;
+            border: 2px solid $black;
+            @include input-placeholder($black);
+        }
+
+        &[disabled] {
+            border-color: $disabled-gray;
+            cursor: not-allowed;
+            @include input-placeholder($disabled-gray);
+        }
+    }
+
+    .helper-text
+
+    input[type="search"] {
+        @include equal-radius;
+        @include padding-right($tiny-spacing);
+        -webkit-appearance: none;
+
+        &::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+    }
+
+    input[type="file"] {
+        @include no-shadow;
+
+        + button,
+        + [type="button"],
+        + .button {
+            margin-top: 0;
+        }
+    }
+
+    .input-inline { //for when a button is next to the input
+        @include direction;
+        clear: both;
+        @include media($small) {
+            display: flex;
+            margin: $sm-spacing auto;
+        }
+
+        input {
+            @include media($small) {
+                margin: auto !important;
+                margin-right: $sm-spacing !important;
+                max-width: 100%;
+            }
+        }
+
+        button {
+            @include lrswap(padding, 7px 15px 9px);
+            @include media($small) {
+                display: flex;
+                flex-wrap: nowrap;
+                height: 35px;
+                margin: auto !important;
+            }
+
+            .loading {
+                @include media($small) {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 40px;
+                }
+            }
+        }
+    }
+
+    input[type="checkbox"], input[type="radio"] {
+        opacity: 0;
+        width: 20px;
+        + label {
+            position: relative;
+        }
+
+        /*Unhide the mark on the checked state*/
+        &:checked {
+            + label::after {
+                content: "";
+            }
+        }
+
+        /*Adding focus styles on the outer-box of the fake checkbox*/
+        &:focus {
+            + label::before {
+                outline: 1px dotted #777777;
+                outline-offset: 2px;
+            }
+        }
+        &:disabled {
+            +label, &::before, &::after   {
+                color: $disabled-gray;
+                border-color: $disabled-gray;
+                background-color: $disabled-gray;
+            }
+        }
+    }
+     /* Specific styles for checkboxes*/
+    input[type="checkbox"] {
+        + label {
+            &::before {
+                /*Outer-box*/
+                content: "";
+                display: inline-block;
+                height: 20px;
+                width: 20px;
+                @include border-top-radius($global-radius);
+                @include border-bottom-radius($global-radius);
+                border: 2px solid $black;
+                position: absolute;
+                top: -2px;
+                @include left(-25px);
+            }
+            &::after {
+                /*Checkmark*/
+                content: none;
+                display: inline-block;
+                height: 8px;
+                width: 8px;
+                border: 2px solid $black;
+                background-color: $black;
+                position: absolute;
+                @include left(-19px);
+                top: 4px;
+            }
+        }
+    }
+
+    /*Specific styles for radio-buttons*/
+    input[type="radio"] {
+        + label {
+            &::before {
+                /*Outer-box*/
+                content: "";
+                display: inline-block;
+                height: 20px;
+                width: 20px;
+                @include border-top-radius(50%);
+                @include border-bottom-radius(50%);
+                border: 2px solid $black;
+                position: absolute;
+                top: 0;
+                @include left(-25px);
+                background-color: $bg-white;
+            }
+            &::after {
+                /*Checkmark*/
+                content: none;
+                display: inline-block;
+                height: 6px;
+                width: 6px;
+                border: 2px solid;
+                background-color: $black;
+                border-radius: 50%;
+                position: absolute;
+                @include left(-18px);
+                top: 7px;
+            }
+        }
+    }
+
+
+    textarea {
+        width: 100%;
+        max-width: 450px;
+        resize: none;
+
+        + button,
+        + [type="button"],
+        + .button {
+            margin-top: $tiny-spacing;
+        }
+    }
+
+    select {
+        @include direction;
+        height: 37px;
+        color: $black;
+        font-size: $base-font-size;
+        font-family: $base-font-family;
+        line-height: 1.4;
+        @include equal-radius;
+        border: $form-input-border;
+        background-color: $bg-white;
+        @include lrswap(padding, $tiny-spacing 26px $tiny-spacing $tiny-spacing);
+
+        &:focus {
+            outline: none;
+            border-color: $black;
+        }
+    }
+
+    .custom-select {
+        display: inline-block;
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            @include right(10px);
+            width: 7px;
+            height: 7px;
+            background: transparent;
+            border-top: 2.5px solid $dark-gray;
+            border-right: 2.5px solid $dark-gray;
+            margin-top: -6px;
+            @include rotate(135deg);
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+    }
+
+    fieldset {
+        position: relative;
+        border: none;
+
+        legend {
+            @include typeGamma;
+            margin-bottom: $tiny-spacing;
+
+            [role="article"] & {
+                font-size: 20px;
+                font-size: 1.428571429rem;
+            }
+
+            &.required {
+
+                &:after {
+                    content: '\2217';
+                    position: relative;
+                    top: -2px;
+                    color: $error-red;
+                    font-weight: normal;
+                    font-size: 1.428571429em;
+                    @include margin-left(4px);
+                }
+            }
+
+            svg.iconic {
+                fill: $black;
+                @include margin-right(4px);
+            }
+
+            + p {
+                margin-top: -5px;
+            }
+        }
+    }
+
+    form, .form {
+
+        &.dk-bg {
+            @include equal-radius;
+            border: 2px solid $bg-white;
+            background-color: $bg-white;
+            padding: $base-spacing;
+
+            table {
+
+                tbody {
+
+                    tr {
+
+                        &:nth-child(even) {
+                            background-color: $bg-white;
+                        }
+                    }
+                }
+            }
+        }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    .tgl {//http://codepen.io/mallendeo/pen/eLIiG
+        display: none !important;
+        // add default box-sizing for this scope
+        &, &:after, &:before,
+        & *, & *:after, & *:before,
+        & + .tgl-btn {
+            box-sizing: border-box;
+
+            &::selection{
+                background: none;
+            }
+        }
+
+        + .tgl-btn {
+            @include direction;
+            outline: 0;
+            display: inline-block;
+            width: 44px;
+            height: 16px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 2em;
+            background: $bg-gray;
+            transition: all .4s ease;
+
+            &:after, &:before {
+                display: block;
+                content: "";
+                position: relative;
+                top: -3px;
+                width: 50%;
+                height: 22px;
+                box-shadow: 0 0 2px rgba(0,0,0,0.12),
+                0 2px 2px rgba(0,0,0,0.24);
+            }
+
+            &:after {
+                @include left(0);
+                border-radius: 50%;
+                background: $bg-white;
+                transition: all .2s ease;
+            }
+
+            &:before {
+                display: none;
+            }
+
+        }
+
+        &:checked{
+
+            + .tgl-btn {
+                background: lighten( $success-green, 40% );
+
+                &:after {
+                    @include left(50%);
+                    background: $success-green;
+                }
+            }
+        }
+
+        &:disabled {
+
+            + .tgl-btn {
+                background: $bg-white;
+
+                &:after {
+                    background-color: $bg-gray;
+                    @include no-shadow;
+                }
+
+                &:hover {
+                    cursor: not-allowed;
+                }
+
+            }
+        }
+
+    }
+
+    .form-field-preview {
+
+        .form-field {
+
+            &.checkbox,
+            &.radio {
+
+                &.disabled {
+
+                    label {
+
+                        &:hover {
+                            cursor: default;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    [contenteditable="true"] {
+        @include transition(0.3s);
+
+        &:focus {
+            outline-color: $bg-white;
+            @include border-top-radius($global-radius);
+            @include border-bottom-radius($global-radius);
+            padding: $tiny-spacing $sm-spacing;
+            box-shadow: 0 0 4px 1px $gold,
+                inset 0 1px 1px rgba(0,0,0,.3);
+        }
+
+        &:empty:before {
+            content: attr(placeholder);
+            display: inline-block; /* For Firefox */
+        }
+    }
+
+
+
+}

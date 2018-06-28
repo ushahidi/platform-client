@@ -1,5 +1,11 @@
 @import '../../utils/style.scss';
+
+/*------------------------------------*\
+$BUTTONS
+\*------------------------------------*/
+
 :global(.layout-g) {
+
     button,
     .button,
     input[type="button"] {
@@ -52,6 +58,21 @@
             }
         }
 
+        &.button-loading {
+            position: relative;
+            padding-top: 14px;
+            background-color: $disabled-gray;
+            border-color: $disabled-gray;
+
+            .loading-bar {
+                position: absolute;
+                top: -3px;
+                @include left(-3px);
+                height: 8px;
+                border-radius: 2px 6px 6px 0;
+            }
+        }
+
         &.button-beta {
             color: $black;
             background-color: transparent;
@@ -86,6 +107,52 @@
 
     }
 
+    .button-alt {
+        @extend .button;
+        color: $black;
+        background-color: $gold;
+        border: 3px solid $gold;
+
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: darken( $gold, 10% );
+            border: 3px solid darken( $gold, 10% );
+        }
+
+        &.button-loading {
+
+            &:hover {
+                background-color: $disabled-gray;
+                border-color: $disabled-gray;
+            }
+        }
+
+        &.button-beta {
+            color: $gold;
+            border: 3px solid $gold;
+
+            &:hover {
+                background: transparent;
+                border-color: lighten( $gold, 10% );
+            }
+
+            &.button-loading {
+                border-color: $disabled-gray;
+            }
+        }
+
+        &.button-gamma {
+            color: $bg-white;
+
+            &:hover,
+            &:active {
+                color: darken( $bg-white, 10% );
+            }
+        }
+
+    }
+
     .button-gamma {
         background-color: transparent;
         border-color: transparent;
@@ -110,6 +177,21 @@
         &:hover {
             background-color: darken( $error-red, 10% );
             border: 3px solid darken( $error-red, 10% );
+        }
+    }
+
+    .button-group {
+        @include direction
+        margin-top: $sm-spacing;
+        margin-bottom: $lg-spacing;
+
+        button,
+        .button {
+            margin-bottom: 0;
+
+            &:last-child {
+                margin: 0;
+            }
         }
     }
 }

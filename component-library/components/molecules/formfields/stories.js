@@ -3,10 +3,10 @@ import { storiesOf } from "@storybook/react";
 
 import FormField from "./formfield";
 import Fieldset from "./fieldset";
-import Label from "../../atoms/label/label";
-import Input from "../../atoms/input/input";
-import Dropdown from "../../atoms/dropdown/dropdown";
-import Checkbox from "../../atoms/checkbox/checkbox";
+import Label from "../../atoms/formelements/label/label";
+import Input from "../../atoms/formelements/input/input";
+import Dropdown from "../../atoms/formelements/dropdown/dropdown";
+import Checkbox from "../../atoms/formelements/checkbox/checkbox";
 
 storiesOf("2 Molecules/Input/Formfield with input-box", module)
     .add("default", () => (

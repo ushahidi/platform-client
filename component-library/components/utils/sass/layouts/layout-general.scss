@@ -1,282 +1,248 @@
-.main-col,
-.full-col {
-    background-color: blue;
-    padding-bottom: 45px;
+:global {
+    .main-col,
+    .full-col {
+        padding-bottom: 45px;
 
-    @include media($small) {
-        padding: $sm-spacing;
-    }
-
-    @include media($medium) {
-        padding: $base-spacing;
-    }
-}
-
-[class*="layout-"] {
-
-    .mode-bar {
-        position: fixed;
-        bottom: 0;
-        @include left(0);
-        width: 100%;
-        z-index: $modebar;
+        @include media($small) {
+            padding: $sm-spacing;
+        }
 
         @include media($medium) {
+            padding: $base-spacing;
+        }
+    }
+
+    [class*="layout-"] {
+
+        .mode-bar {
+            position: fixed;
+            bottom: 0;
+            @include left(0);
+            width: 100%;
+            z-index: $modebar;
+
+            @include media($medium) {
+                top: 0;
+                box-shadow: -2px 0 6px rgba(0,0,0,0.12) inset,
+                -2px 0 6px rgba(0,0,0,0.24) inset;
+            }
+        }
+
+        .mode-context {
+            position: fixed;
             top: 0;
-            box-shadow: -2px 0 6px rgba(0,0,0,0.12) inset,
-            -2px 0 6px rgba(0,0,0,0.24) inset;
+            width: 100%;
+            z-index: $modecontext;
+
+            @include media($medium) {
+                bottom: 0;
+                @include left(183px);
+                width: 224px
+            }
+
+            // "Loading" the mode context, as a direct descendant of the pattern
+            > .loading {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                text-align: center;
+                margin-top: -$sm-spacing;
+
+                .line {
+                    position: relative;
+                    z-index: $modal+1;
+                    @include box-shadow(0, 0, $tiny-spacing, $tiny-spacing, rgba(0,0,0,.4), false);
+                }
+            }
+
+            &.active {
+
+                @include media($medium-down) {
+                    bottom: 45px;
+                    @include no-shadow;
+                }
+            }
         }
-    }
 
-    .mode-context {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: $modecontext;
-
-        @include media($medium) {
-            bottom: 0;
-            @include left(183px);
-            width: 224px
-        }
-
-        // "Loading" the mode context, as a direct descendant of the pattern
-        > .loading {
-            position: absolute;
-            top: 50%;
+        .message {
+            position: fixed;
+            bottom: -200px;
             right: 0;
-            bottom: 0;
             left: 0;
-            text-align: center;
-            margin-top: -$sm-spacing;
+            z-index: $toolbar;
+            @include transition(0.3s);
 
-            .line {
-                position: relative;
-                z-index: $modal+1;
-                @include box-shadow(0, 0, $tiny-spacing, $tiny-spacing, rgba(0,0,0,.4), false);
+            @include media($medium) {
+                @include left(288px);
             }
-        }
-
-        &.active {
-
-            @include media($medium-down) {
-                bottom: 45px;
-                @include no-shadow;
-            }
-        }
-    }
-
-    .message {
-        position: fixed;
-        bottom: -200px;
-        right: 0;
-        left: 0;
-        z-index: $toolbar;
-        @include transition(0.3s);
-
-        @include media($medium) {
-            @include left(288px);
-        }
-
-        &.transient {
-            top: auto;
-            bottom: -400px;
-            box-shadow: 0 0 16px rgba(0,0,0,0.12),
-                0 -8px 16px rgba(0,0,0,0.24);
-        }
-
-        &.active {
-            bottom: 67px;
 
             &.transient {
                 top: auto;
-                bottom: 45px;
+                bottom: -400px;
+                box-shadow: 0 0 16px rgba(0,0,0,0.12),
+                    0 -8px 16px rgba(0,0,0,0.24);
+            }
+
+            &.active {
+                bottom: 67px;
+
+                &.transient {
+                    top: auto;
+                    bottom: 45px;
+
+                    @include media($medium) {
+                        bottom: 0;
+                    }
+                }
 
                 @include media($medium) {
                     bottom: 0;
                 }
             }
 
-            @include media($medium) {
-                bottom: 0;
+            &.modal {
+                display: block;
+                top: -200px;
+                bottom: auto;
+
+                &.active {
+                    top: 55px;
+
+                    @include media($medium) {
+                        top: 0;
+                    }
+                }
             }
         }
 
-        &.modal {
-            display: block;
-            top: -200px;
+        .message-alt {
+            position: absolute;
+            top: 0;
+            right: 0;
             bottom: auto;
+            left: 0;
+            z-index: $toolbox;
+            @include transition(0.3s);
 
             &.active {
+                bottom: auto;
+            }
+        }
+
+        > .loading-bar {
+            position: fixed;
+            top: 0;
+            z-index: $modal;
+            right: 0;
+            left: 0;
+            -webkit-animation: progress-in 0.5s ease-in-out;
+            animation: progress-in 0.5s ease-in-out;
+        }
+
+        // "Loading" the document, as a direct descendant of the body
+        > .loading {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            left: 0;
+            text-align: center;
+            margin-top: -$sm-spacing;
+
+            &:after {
+                content: '';
+                position: fixed;
+                z-index: $modal;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0,0,0,.5);
+            }
+
+            .line {
+                position: relative;
+                z-index: $modal+1;
+            }
+        }
+
+        [role="main"] {
+
+            @include media($medium) {
+                padding-top: 68px;
+                @include padding-left(407px);
+            }
+
+            .main-col {
+
+                @include media($small) {
+                    @include margin-right(222px);
+                }
+
+                @include media($medium) {
+                    @include margin-right(230px);
+                    // margin-right: 32%;
+                }
+            }
+
+            .main-col,
+            .full-col {
+
+                .ushahidi-bug {
+                    top: auto;
+                    @include right($sm-spacing);
+                    bottom: $sm-spacing;
+                    @include left(auto);
+
+                    @include media($small) {
+                        @include right($huge-spacing);
+                    }
+
+                    @include media($medium-down) {
+
+                        svg.ushahidi-logo {
+                            width: $lg-spacing;
+                            height: $lg-spacing;
+                        }
+                    }
+                }
+            }
+
+            .toolbar {
+                position: fixed;
                 top: 55px;
+                z-index: $toolbar;
+                width: 100%;
 
                 @include media($medium) {
                     top: 0;
-                }
-            }
-        }
-    }
-
-    .message-alt {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: auto;
-        left: 0;
-        z-index: $toolbox;
-        @include transition(0.3s);
-
-        &.active {
-            bottom: auto;
-        }
-    }
-
-    > .loading-bar {
-        position: fixed;
-        top: 0;
-        z-index: $modal;
-        right: 0;
-        left: 0;
-        -webkit-animation: progress-in 0.5s ease-in-out;
-        animation: progress-in 0.5s ease-in-out;
-    }
-
-    // "Loading" the document, as a direct descendant of the body
-    > .loading {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        left: 0;
-        text-align: center;
-        margin-top: -$sm-spacing;
-
-        &:after {
-            content: '';
-            position: fixed;
-            z-index: $modal;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-color: rgba(0,0,0,.5);
-        }
-
-        .line {
-            position: relative;
-            z-index: $modal+1;
-        }
-    }
-
-    [role="main"] {
-
-        @include media($medium) {
-            padding-top: 68px;
-            @include padding-left(407px);
-        }
-
-        .main-col {
-
-            @include media($small) {
-                @include margin-right(222px);
-            }
-
-            @include media($medium) {
-                @include margin-right(230px);
-                // margin-right: 32%;
-            }
-        }
-
-        .main-col,
-        .full-col {
-
-            .ushahidi-bug {
-                top: auto;
-                @include right($sm-spacing);
-                bottom: $sm-spacing;
-                @include left(auto);
-
-                @include media($small) {
-                    @include right($huge-spacing);
+                    @include right(0);
+                    @include left(407px);
+                    width: auto;
                 }
 
-                @include media($medium-down) {
-
-                    svg.ushahidi-logo {
-                        width: $lg-spacing;
-                        height: $lg-spacing;
-                    }
-                }
-            }
-        }
-
-        .toolbar {
-            position: fixed;
-            top: 55px;
-            z-index: $toolbar;
-            width: 100%;
-
-            @include media($medium) {
-                top: 0;
-                @include right(0);
-                @include left(407px);
-                width: auto;
             }
 
-        }
+            > .loading-bar,
+            > progress {
+                position: fixed;
+                top: 107px;
+                z-index: $toolbar + 1;
+                right: 0;
+                left: 0;
+                width: 100%;
 
-        > .loading-bar,
-        > progress {
-            position: fixed;
-            top: 107px;
-            z-index: $toolbar + 1;
-            right: 0;
-            left: 0;
-            width: 100%;
-
-            @include media($medium) {
-                top: 68px;
-                @include left(288px);
-            }
-        }
-
-        .listing {
-            margin-bottom: $base-spacing;
-
-            .listing-heading {
-
-                @include media($mobile) {
-                    padding-right: 10%;
-                    padding-left: 10%;
-                }
-
-                @include media($xlarge) {
-                    padding-right: 20%;
-                    padding-left: 20%;
+                @include media($medium) {
+                    top: 68px;
+                    @include left(288px);
                 }
             }
 
-            .listing-item {
+            .listing {
+                margin-bottom: $base-spacing;
 
-                .listing-item-select {
-
-                    + .listing-item-primary {
-
-                        .listing-item-image {
-
-                            @include media($mobile) {
-                                @include left(10%);
-                            }
-
-                            @include media($xlarge) {
-                                @include left(20%);
-                            }
-                        }
-                    }
-
-                }
-
-                .listing-item-primary,
-                .listing-item-body {
+                .listing-heading {
 
                     @include media($mobile) {
                         padding-right: 10%;
@@ -289,29 +255,212 @@
                     }
                 }
 
-                .listing-item-secondary {
+                .listing-item {
 
-                    @include media($mobile) {
-                        @include right(10%);
+                    .listing-item-select {
+
+                        + .listing-item-primary {
+
+                            .listing-item-image {
+
+                                @include media($mobile) {
+                                    @include left(10%);
+                                }
+
+                                @include media($xlarge) {
+                                    @include left(20%);
+                                }
+                            }
+                        }
+
                     }
 
-                    @include media($xlarge) {
-                        @include right(20%);
+                    .listing-item-primary,
+                    .listing-item-body {
+
+                        @include media($mobile) {
+                            padding-right: 10%;
+                            padding-left: 10%;
+                        }
+
+                        @include media($xlarge) {
+                            padding-right: 20%;
+                            padding-left: 20%;
+                        }
+                    }
+
+                    .listing-item-secondary {
+
+                        @include media($mobile) {
+                            @include right(10%);
+                        }
+
+                        @include media($xlarge) {
+                            @include right(20%);
+                        }
+                    }
+                }
+
+                &.timeline {
+
+                    .listing-heading {
+                        @include padding-left(0);
+                    }
+
+                    .listing-item {
+
+                        .listing-item-primary {
+
+                            @include media($mobile) {
+                                padding-right: 0;
+                                padding-left: 0;
+                            }
+                        }
+                    }
+                }
+
+                .listing-toolbar {
+                    display: block;
+                    position: fixed;
+                    top: -200px;
+                    left: 0px;
+                    right: auto;
+                    z-index: $toolbar - 1;
+                    @include equal-radius(0);
+                    background-color: $black;
+                    width: 100%;
+
+                    @include media($medium) {
+                        @include left(288px);
+
+                    }
+
+                    &.expanded {
+
+                        @include media($medium-down) {
+                            z-index: $toolbar;
+                            bottom: 0;
+                            overflow-y: scroll;
+                        }
+                    }
+                }
+
+                &.toolbar-active {
+                    margin-top: 87px;
+
+                    @include media($medium) {
+                        margin-top: 80px;
+                    }
+
+                    .listing-toolbar {
+                        top: 107px;
+
+                        @include media($medium) {
+                            top: 68px;
+                        }
                     }
                 }
             }
 
-            &.timeline {
+            .map {
 
-                .listing-heading {
-                    @include padding-left(0);
+                &.full-size,
+                &.map-only {
+                    position: fixed;
+                    top: 55px;
+                    right: 0;
+                    bottom: 45px;
+                    left: 0;
+                    z-index: $body;
+
+                    @include media($medium) {
+                        top: 0;
+                        bottom: 0;
+                        @include left(288px);
+                    }
                 }
 
-                .listing-item {
+                .postcard {
 
-                    .listing-item-primary {
+                    .postcard-body {
 
-                        @include media($mobile) {
+                        .postcard-actions {
+
+                            .hide-until-small {
+                                display: none;
+                            }
+
+                            .hide-when-small {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .form-sheet,
+            .postcard[role="article"] {
+                margin-bottom: $base-spacing;
+
+                @include media($small-down) {
+
+                    .toolbox {
+                        display: block;
+                    }
+                }
+
+                + .toolbox {
+
+                    @include media($small-down) {
+                        box-shadow: 0 0 2px rgba(0,0,0,0.12),
+                            0 2px 2px rgba(0,0,0,0.24);
+                        margin-bottom: $base-spacing;
+                    }
+                }
+            }
+
+            .postcard[role="article"] {
+                margin-bottom: $sm-spacing;
+
+                @include media($medium) {
+                    margin-bottom: $base-spacing;
+                }
+            }
+
+            .progress {
+                margin-bottom: $base-spacing;
+            }
+
+            .toolbox {
+
+                @include media($small) {
+                    position: fixed;
+                    top: 146px;
+                    @include right(16px);
+                    z-index: $toolbox;
+                    width: 206px;
+                }
+
+                @include media($medium) {
+                    top: 85px;
+                    @include right(24px);
+                }
+
+                .listing {
+                    margin-bottom: 0;
+
+                    .listing-item {
+
+                        .listing-item-primary {
+                            padding-right: $sm-spacing;
+                            padding-left: $sm-spacing;
+                        }
+
+                        .listing-item-secondary {
+                            @include right(16px);
+                        }
+
+                        .listing-item-body {
                             padding-right: 0;
                             padding-left: 0;
                         }
@@ -319,372 +468,225 @@
                 }
             }
 
-            .listing-toolbar {
-                display: block;
-                position: fixed;
-                top: -200px;
-                left: 0px;
-                right: auto;
-                z-index: $toolbar - 1;
-                @include equal-radius(0);
-                background-color: $black;
-                width: 100%;
+            // "Loading" the main content area, as a direct descendant of the pattern
+            > .loading {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                text-align: center;
+                margin-top: -$sm-spacing;
 
                 @include media($medium) {
                     @include left(288px);
-
                 }
 
-                &.expanded {
-
-                    @include media($medium-down) {
-                        z-index: $toolbar;
-                        bottom: 0;
-                        overflow-y: scroll;
-                    }
+                .line {
+                    position: relative;
+                    z-index: $modal+1;
+                    @include box-shadow(0, 0, $tiny-spacing, $tiny-spacing/2, rgba(0,0,0,.24), false);
                 }
             }
 
-            &.toolbar-active {
-                margin-top: 87px;
+            .ushahidi-bug {
+                display: inline-block;
+                position: fixed;
+                top: 71px;
+                @include left($sm-spacing);
+                z-index: $toolbar;
 
                 @include media($medium) {
-                    margin-top: 80px;
+                    top: auto;
+                    @include right($base-spacing);
+                    bottom: $base-spacing;
+                    @include left(auto);
                 }
 
-                .listing-toolbar {
-                    top: 107px;
+                svg.ushahidi-logo {
+                    width: $huge-spacing;
+                    height: $huge-spacing;
+                    fill: $dark-blue;
+                    filter: drop-shadow(0 2px 8px rgba(0,0,0,.5));
+                    stroke: white;
+                    stroke-width: 1;
 
                     @include media($medium) {
-                        top: 68px;
+
                     }
                 }
             }
-        }
 
-        .map {
-
-            &.full-size,
-            &.map-only {
-                position: fixed;
-                top: 55px;
-                right: 0;
-                bottom: 45px;
-                left: 0;
-                z-index: $body;
+            .picker__holder {
 
                 @include media($medium) {
-                    top: 0;
-                    bottom: 0;
                     @include left(288px);
                 }
             }
 
-            .postcard {
+            .picker__frame {
+                bottom: 45px;
 
-                .postcard-body {
+                @include media($medium) {
+                    bottom: 0;
+                }
+            }
 
-                    .postcard-actions {
+            .picker--time .picker__holder {
 
-                        .hide-until-small {
-                            display: none;
-                        }
+                @include media($medium) {
 
-                        .hide-when-small {
-                            display: block;
-                        }
+                    &:before,
+                    &:after {
+                        content: '';
+                        position: fixed;
+                        z-index: $toolbar;
+                        height: $sm-spacing;
+                    }
+
+                    &:before {
+                        bottom: 284px;
+                        @include vert-gradient($color1: rgba(55,62,70,0.85), $color2: rgba(55,62,70,0));
+
+                    }
+
+                    &:after {
+                        bottom: 0;
+                        @include vert-gradient($color1: rgba(55,62,70,0), $color2: rgba(55,62,70,0.85));
                     }
                 }
             }
         }
 
-        .form-sheet,
-        .postcard[role="article"] {
-            margin-bottom: $base-spacing;
+        .modal {
+            display: none;
 
-            @include media($small-down) {
-
-                .toolbox {
-                    display: block;
-                }
-            }
-
-            + .toolbox {
-
-                @include media($small-down) {
-                    box-shadow: 0 0 2px rgba(0,0,0,0.12),
-                        0 2px 2px rgba(0,0,0,0.24);
-                    margin-bottom: $base-spacing;
-                }
-            }
-        }
-
-        .postcard[role="article"] {
-            margin-bottom: $sm-spacing;
-
-            @include media($medium) {
+            .modal-window {
+                position: absolute;
+                z-index: $modal + 1;
+                opacity: 0;
+                width: 90%;
+                @include left(5%);
+                top: $base-spacing;
+                margin-top: -999px;
                 margin-bottom: $base-spacing;
-            }
-        }
+                @include transition(all 0.35s);
 
-        .progress {
-            margin-bottom: $base-spacing;
-        }
+                @include media($small) {
+                    top: 8%;
+                    @include left(50%);
+                    width: 480px;
+                    @include margin-left(-240px);
+                }
 
-        .toolbox {
+                .message {
+                    position: absolute;
+                    bottom: -1000px;
+                    right: 0;
+                    left: 0;
 
-            @include media($small) {
-                position: fixed;
-                top: 146px;
-                @include right(16px);
-                z-index: $toolbox;
-                width: 206px;
-            }
-
-            @include media($medium) {
-                top: 85px;
-                @include right(24px);
-            }
-
-            .listing {
-                margin-bottom: 0;
-
-                .listing-item {
-
-                    .listing-item-primary {
-                        padding-right: $sm-spacing;
-                        padding-left: $sm-spacing;
+                    &.active {
+                        bottom: 0;
                     }
 
-                    .listing-item-secondary {
-                        @include right(16px);
-                    }
+                    &.modal {
+                        top: -1000px;
+                        bottom: auto;
 
-                    .listing-item-body {
-                        padding-right: 0;
-                        padding-left: 0;
+                        &.active {
+                            top: 0;
+                        }
                     }
                 }
             }
+
+            .modal-overlay {
+                display: block;
+                @include transition(all 0.2s);
+                opacity: 0;
+            }
         }
 
-        // "Loading" the main content area, as a direct descendant of the pattern
-        > .loading {
-            position: absolute;
-            top: 50%;
+        &.modal-visible {
+
+            .modal-window {
+                opacity: 1;
+                margin-top: 0;
+            }
+
+            .modal-overlay {
+                opacity: 1;
+            }
+        }
+
+        .mainsheet {
+            display: none;
+            position: fixed;
+            z-index: $modal;
+            top: 0;
             right: 0;
             bottom: 0;
             left: 0;
-            text-align: center;
-            margin-top: -$sm-spacing;
-
-            @include media($medium) {
-                @include left(288px);
-            }
-
-            .line {
-                position: relative;
-                z-index: $modal+1;
-                @include box-shadow(0, 0, $tiny-spacing, $tiny-spacing/2, rgba(0,0,0,.24), false);
-            }
-        }
-
-        .ushahidi-bug {
-            display: inline-block;
-            position: fixed;
-            top: 71px;
-            @include left($sm-spacing);
-            z-index: $toolbar;
-
-            @include media($medium) {
-                top: auto;
-                @include right($base-spacing);
-                bottom: $base-spacing;
-                @include left(auto);
-            }
-
-            svg.ushahidi-logo {
-                width: $huge-spacing;
-                height: $huge-spacing;
-                fill: $dark-blue;
-                filter: drop-shadow(0 2px 8px rgba(0,0,0,.5));
-                stroke: white;
-                stroke-width: 1;
-
-                @include media($medium) {
-
-                }
-            }
-        }
-
-        .picker__holder {
-
-            @include media($medium) {
-                @include left(288px);
-            }
-        }
-
-        .picker__frame {
-            bottom: 45px;
-
-            @include media($medium) {
-                bottom: 0;
-            }
-        }
-
-        .picker--time .picker__holder {
-
-            @include media($medium) {
-
-                &:before,
-                &:after {
-                    content: '';
-                    position: fixed;
-                    z-index: $toolbar;
-                    height: $sm-spacing;
-                }
-
-                &:before {
-                    bottom: 284px;
-                    @include vert-gradient($color1: rgba(55,62,70,0.85), $color2: rgba(55,62,70,0));
-
-                }
-
-                &:after {
-                    bottom: 0;
-                    @include vert-gradient($color1: rgba(55,62,70,0), $color2: rgba(55,62,70,0.85));
-                }
-            }
-        }
-    }
-
-    .modal {
-        display: none;
-
-        .modal-window {
-            position: absolute;
-            z-index: $modal + 1;
-            opacity: 0;
-            width: 90%;
-            @include left(5%);
-            top: $base-spacing;
-            margin-top: -999px;
-            margin-bottom: $base-spacing;
-            @include transition(all 0.35s);
-
-            @include media($small) {
-                top: 8%;
-                @include left(50%);
-                width: 480px;
-                @include margin-left(-240px);
-            }
-
-            .message {
-                position: absolute;
-                bottom: -1000px;
-                right: 0;
-                left: 0;
-
-                &.active {
-                    bottom: 0;
-                }
-
-                &.modal {
-                    top: -1000px;
-                    bottom: auto;
-
-                    &.active {
-                        top: 0;
-                    }
-                }
-            }
-        }
-
-        .modal-overlay {
-            display: block;
-            @include transition(all 0.2s);
-            opacity: 0;
-        }
-    }
-
-    &.modal-visible {
-
-        .modal-window {
-            opacity: 1;
-            margin-top: 0;
-        }
-
-        .modal-overlay {
-            opacity: 1;
-        }
-    }
-
-    .mainsheet {
-        display: none;
-        position: fixed;
-        z-index: $modal;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-
-        @include media($medium) {
-            // left: 288px;
-        }
-
-        .mainsheet-window {
-            position: fixed;
-            z-index: $dropdown;
-            right: 0;
-            bottom: -999px;
-            left: 0;
-            max-height: 100%;
-            overflow-y: auto;
-
-            @include media($mobile) {
-                margin-right: 24%;
-                margin-left: 24%;
-            }
 
             @include media($medium) {
                 // left: 288px;
-                top: -999px;
-                bottom: auto;
-                margin-right: 32%;
-                margin-left: 32%;
             }
-        }
 
-        .mainsheet-overlay {
-            display: block;
-            @include transition(all 0.2s);
-            opacity: 0;
-        }
+            .mainsheet-window {
+                position: fixed;
+                z-index: $dropdown;
+                right: 0;
+                bottom: -999px;
+                left: 0;
+                max-height: 100%;
+                overflow-y: auto;
 
-        &.init {
-
-            &.active {
-
-                .mainsheet-window {
-                    bottom: 0;
-
-                    @include media($medium) {
-                        /*
-                        margin-right: 16%;
-                        margin-left: 16%;
-                        */
-                        top: 8%;
-                        bottom: auto;
-                        max-height: 84%;
-                        margin-right: 32%;
-                        margin-left: 32%;
-                    }
+                @include media($mobile) {
+                    margin-right: 24%;
+                    margin-left: 24%;
                 }
 
-                .mainsheet-overlay {
-                    opacity: 1;
+                @include media($medium) {
+                    // left: 288px;
+                    top: -999px;
+                    bottom: auto;
+                    margin-right: 32%;
+                    margin-left: 32%;
+                }
+            }
+
+            .mainsheet-overlay {
+                display: block;
+                @include transition(all 0.2s);
+                opacity: 0;
+            }
+
+            &.init {
+
+                &.active {
+
+                    .mainsheet-window {
+                        bottom: 0;
+
+                        @include media($medium) {
+                            /*
+                            margin-right: 16%;
+                            margin-left: 16%;
+                            */
+                            top: 8%;
+                            bottom: auto;
+                            max-height: 84%;
+                            margin-right: 32%;
+                            margin-left: 32%;
+                        }
+                    }
+
+                    .mainsheet-overlay {
+                        opacity: 1;
+                    }
                 }
             }
         }
     }
+
 }
