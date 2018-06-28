@@ -37,7 +37,7 @@
 
         &:focus {
             outline: none;
-            border-color: black;
+            border: 2px solid $black;
             @include input-placeholder($black);
         }
 
@@ -48,7 +48,6 @@
         }
     }
 
-    .helper-text
 
     input[type="search"] {
         @include equal-radius;
@@ -57,16 +56,6 @@
 
         &::-webkit-search-decoration {
             -webkit-appearance: none;
-        }
-    }
-
-    input[type="file"] {
-        @include no-shadow;
-
-        + button,
-        + [type="button"],
-        + .button {
-            margin-top: 0;
         }
     }
 }

@@ -1,7 +1,7 @@
 @import '../../utils/style.scss';
 
-:global(.layout-g) {
-    label,
+    :global(.layout-g) {
+        label,
     .form-label {
         @include typeGamma;
 

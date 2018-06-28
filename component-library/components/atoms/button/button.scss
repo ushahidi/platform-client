@@ -1,8 +1,4 @@
 @import '../../utils/style.scss';
-
-/*------------------------------------*\
-$BUTTONS
-\*------------------------------------*/
 :global(.layout-g) {
     button,
     .button,
@@ -11,10 +7,10 @@ $BUTTONS
         display: inline-block;
         outline: none;
         font-family: $base-font-family;
-        font-weight: 800;
-        font-size: em(14px);
+        font-weight: $bold;
+        font-size: em(16px);
         text-align: center;
-        text-transform: uppercase;
+        text-transform: capitalize;
         text-decoration: none;
         line-height: 1.35;
         letter-spacing: 1px;
@@ -56,21 +52,6 @@ $BUTTONS
             }
         }
 
-        &.button-loading {
-            position: relative;
-            padding-top: 14px;
-
-            .loading-bar {
-                top: 0;
-                @include left(0);
-                border-radius: 5px;
-
-                &:after {
-                    content: none;
-                }
-            }
-        }
-
         &.button-beta {
             color: $black;
             background-color: transparent;
@@ -81,11 +62,8 @@ $BUTTONS
             }
 
             &.button-loading {
-
-                .loading-bar {
-                    top: 2px;
-                    @include left(2px);
-                }
+                color: $disabled-gray;
+                border-color: $disabled-gray;
             }
 
         }
@@ -98,56 +76,11 @@ $BUTTONS
             &:focus {
                 color: darken( $accent-purple, 10% );
                 background-color: transparent;
-            }
-        }
-
-    }
-
-    .button-alt {
-        @extend .button;
-        color: $black;
-        background-color: $gold;
-        border: 3px solid $gold;
-
-        &:hover,
-        &:active,
-        &:focus {
-            background-color: darken( $gold, 10% );
-            border: 3px solid darken( $gold, 10% );
-        }
-
-        &.button-loading {
-
-            .loading-bar {
-                background-color: $black;
-            }
-        }
-
-        &.button-beta {
-            color: $gold;
-            border: 3px solid $gold;
-
-            &:hover {
-                background: transparent;
-                border-color: lighten( $gold, 10% );
+                border: 3px solid transparent;
             }
 
-            &.button-loading {
-
-                .loading-bar {
-                    top: 2px;
-                    @include left(2px);
-                    background-color: $gold;
-                }
-            }
-        }
-
-        &.button-gamma {
-            color: $bg-white;
-
-            &:hover,
-            &:active {
-                color: darken( $bg-white, 10% );
+            &:visited {
+                color: $dark-gray;
             }
         }
 
@@ -177,21 +110,6 @@ $BUTTONS
         &:hover {
             background-color: darken( $error-red, 10% );
             border: 3px solid darken( $error-red, 10% );
-        }
-    }
-
-    .button-group {
-        @include direction
-        margin-top: $sm-spacing;
-        margin-bottom: $lg-spacing;
-
-        button,
-        .button {
-            margin-bottom: 0;
-
-            &:last-child {
-                margin: 0;
-            }
         }
     }
 }

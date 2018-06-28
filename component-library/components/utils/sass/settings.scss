@@ -97,7 +97,7 @@ $base-font-color: $black;
 $sub-base-font-color: $black;
 $body-font-weight: normal;
 $body-font-style: normal;
-$bold: 800;
+$bold: 900;
 
 $base-font-size: 14px;
 $base-line-height: 1.266666667;
@@ -133,12 +133,12 @@ $below: -1;
 $transition-duration: 0.3s;
 
 //Layout
-$global-radius: 2px;
-$base-spacing: 24px;
-$tiny-spacing: $base-spacing/3; // 8px
-$sm-spacing: $base-spacing/1.5; // 16px
-$lg-spacing: $base-spacing*1.333333333; // 32px
-$huge-spacing: $base-spacing*1.666666667; // 40px
+$global-radius: 5px;
+$tiny-spacing: 8px; // 8px
+$sm-spacing: $tiny-spacing + 5; // 13px
+$base-spacing: $tiny-spacing + $sm-spacing; // 21px
+$lg-spacing: $base-spacing + $sm-spacing; // 34px
+$huge-spacing: $lg-spacing + $base-spacing; // 55px
 
 //Border
 $base-border: 1px solid $border-color;
