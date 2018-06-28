@@ -190,7 +190,7 @@
     "sortablejs": "^1.7.0",
     "storybook": "^1.0.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.11.0-rc.4"
+    "ushahidi-platform-pattern-library": "3.11.0-rc.5-prefixed"
   },
   "engines": {
     "node": ">=4.0"
