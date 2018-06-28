@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import InlineLoading from "react/common/ui/InlineLoading";
 import { Field, reduxForm } from 'redux-form'
 
@@ -11,14 +10,14 @@ const propTypes = {
     }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired,
+    isLoading: PropTypes.object,
     // error: PropTypes.shape({
     //     message: PropTypes.string
     // }).isRequired
 };
 
 let PersonEditForm = props => {
-    const {handleSubmit, roles, isLoadingRoles, pristine, submitting} = props
+    const {handleSubmit, roles, isLoading, pristine, submitting} = props
 
     const renderRoles = () => {
         return (
@@ -64,14 +63,12 @@ let PersonEditForm = props => {
                         required
                     />
                 </label>
-                {isLoadingRoles ? (
+                {isLoading.REQUEST_ROLES ? (
                     <InlineLoading />
                 ) : (
                     renderRoles()
                 )}
-                <Link to="/settings/TODO/someplaceholderofsomekind">
-                    <button className="button-beta">Cancel</button>
-                </Link>
+                <button className="button-beta">Cancel</button>                
                 <button type="submit">Submit</button>
             </form>
         </div>

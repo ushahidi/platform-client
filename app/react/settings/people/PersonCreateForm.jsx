@@ -6,7 +6,7 @@ import InlineLoading from "react/common/ui/InlineLoading";
 const propTypes = {
     saveNewPerson: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired,
+    isLoading: PropTypes.object.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
     }).isRequired
@@ -147,7 +147,7 @@ class PersonCreateForm extends React.Component {
                                 required
                             />
                         </label>
-                        {this.props.isLoadingRoles ? (
+                        {this.props.isLoading.REQUEST_ROLES ? (
                             <InlineLoading />
                         ) : (
                             this.renderRoles()

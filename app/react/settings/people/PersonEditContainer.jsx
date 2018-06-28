@@ -5,6 +5,7 @@ import InlineLoading from "react/common/ui/InlineLoading";
 import { Field, reduxForm } from 'redux-form'
 import connectWithStore from "react/react-transition/connectWithStore";
 import { getEditing } from "react/common/state/people/people.reducers"
+import { getLoadingState } from "react/common/state/globalHandlers/handlers.reducers"
 import PersonEditForm from "./PersonEditForm";
 
 const propTypes = {
@@ -13,7 +14,6 @@ const propTypes = {
     }),
     updatePerson: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired,
     requestPerson: PropTypes.func.isRequired
     // error: PropTypes.shape({
     //     message: PropTypes.string
@@ -27,7 +27,9 @@ const defaultProps = {
 class PersonEditContainer extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            person: {}
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -37,7 +39,10 @@ class PersonEditContainer extends React.Component {
 
         if (this.props.person === undefined) {
             // if the ID doesn't match the URL params
-            this.props.requestPerson(this.props.match.params.id)
+            this.props.requestPerson(this.props.match.params.id).then(person => {
+                this.setState({person: person})
+                console.log(this.state.person)
+            })
                 
         }
     }
@@ -61,12 +66,14 @@ class PersonEditContainer extends React.Component {
                         members of your community to Ushahidi.
                     </p>
                 </div>
-                <PersonEditForm 
-                    onSubmit={(values) => this.props.updatePerson(values)} 
-                    initialValues={this.props.initialValues} 
-                    roles={this.props.roles} 
-                    isLoadingRoles={this.props.isLoadingRoles} 
-                />
+                {this.props.isLoading.REQUEST_PERSON ? <InlineLoading /> :
+                    <PersonEditForm 
+                        onSubmit={(values) => this.props.updatePerson(values, values.ID)} 
+                        initialValues={this.props.person ? this.props.person : this.state.person} 
+                        roles={this.props.roles} 
+                        isLoading={this.props.isLoading} 
+                    />
+                }
             </main>
         );
     }
@@ -77,7 +84,7 @@ PersonEditContainer.defaultProps = defaultProps;
 
 function mapStateToProps(state, ownProps) {
       return {
-        initialValues: getEditing(state)
+        isLoading: getLoadingState(state)
     }
 }
 

@@ -6,12 +6,12 @@ import PersonCreateForm from "./PersonCreateForm";
 test("a Person Form with roles displays roles correctly", () => {
     const saveNewPerson = () => {};
     const roles = [{ id: "email", name: "email" }];
-    const isLoadingRoles = false;
+    const isLoading = {REQUEST_ROLES: false};
     const component = renderer.create(
         <PersonCreateForm
             saveNewPerson={saveNewPerson}
             roles={roles}
-            isLoadingRoles={isLoadingRoles}
+            isLoading={isLoading}
         />
     );
     const tree = component.toJSON();

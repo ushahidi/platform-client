@@ -5,15 +5,13 @@ import { bindActionCreators } from "redux";
 import connectWithStore from "react/react-transition/connectWithStore";
 import * as PeopleActions from "react/common/state/people/people.actions";
 import * as RolesActions from "react/common/state/roles/roles.actions";
-import {
-    isLoadingRoles,
-    getRoles
-} from "react/common/state/roles/roles.reducers";
+import { getRoles } from "react/common/state/roles/roles.reducers";
 import { getPeople, getPerson } from "react/common/state/people/people.reducers";
+import { getLoadingState } from "react/common/state/globalHandlers/handlers.reducers"
+
 import PersonCreateForm from "react/settings/people/PersonCreateForm";
 import PersonEditContainer from "react/settings/people/PersonEditContainer";
 import { Provider } from "react-redux";
-
 
 const propTypes = {
     PeopleActions: PropTypes.shape({
@@ -24,7 +22,6 @@ const propTypes = {
         requestRoles: PropTypes.func.isRequired
     }).isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired
     // error: PropTypes.shape({
     //     message: PropTypes.string
     // }).isRequired
@@ -54,8 +51,8 @@ class PersonContainer extends React.Component {
                                     saveNewPerson={
                                         this.props.PeopleActions.saveNewPerson
                                     }
+                                    isLoading={this.props.isLoading}
                                     roles={this.props.roles}
-                                    isLoadingRoles={this.props.isLoadingRoles}
                                 />
                             )}
                         />
@@ -71,7 +68,6 @@ class PersonContainer extends React.Component {
                                         this.props.PeopleActions.updatePerson
                                     }
                                     roles={this.props.roles}
-                                    isLoadingRoles={this.props.isLoadingRoles}
                                     person={this.props.person}
                                     // Remove this store after we've fully migrated and are using Provider at root
                                     store={this.props.store}
@@ -91,7 +87,7 @@ function mapStateToProps(state, ownProps) {
     return {
         people: getPeople(state),
         roles: getRoles(state),
-        isLoadingRoles: isLoadingRoles(state),
+        isLoading: getLoadingState(state),
         person: getPerson(state, ownProps)
         // error: getRoleError(state)
     };
