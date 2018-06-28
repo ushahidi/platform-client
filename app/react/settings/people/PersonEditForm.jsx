@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, reset } from 'redux-form'
 
 
 const propTypes = {
@@ -68,7 +68,7 @@ let PersonEditForm = props => {
                 ) : (
                     renderRoles()
                 )}
-                <button className="button-beta">Cancel</button>                
+                <button className="button-beta" onClick={() => props.reset()}>Cancel</button>                
                 <button type="submit">Submit</button>
             </form>
         </div>
