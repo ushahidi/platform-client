@@ -1,23 +1,37 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import InlineLoading from "react/common/ui/InlineLoading";
-import { Field, reduxForm } from 'redux-form'
 import connectWithStore from "react/react-transition/connectWithStore";
-import { getEditing } from "react/common/state/people/people.reducers"
-import { getLoadingState } from "react/common/state/globalHandlers/handlers.reducers"
+
+// selectors
+import { getLoadingState } from "react/common/state/globalHandlers/handlers.reducers";
+
+// components
+import InlineLoading from "react/common/ui/InlineLoading";
 import PersonEditForm from "./PersonEditForm";
 
 const propTypes = {
-    person: PropTypes.shape({
-        id: PropTypes.number
-    }),
+    requestPerson: PropTypes.func.isRequired,
     updatePerson: PropTypes.func.isRequired,
+    person: PropTypes.shape({
+        id: PropTypes.number,
+        realname: PropTypes.string,
+        role: PropTypes.string,
+        email: PropTypes.string
+    }),
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    requestPerson: PropTypes.func.isRequired
-    // error: PropTypes.shape({
-    //     message: PropTypes.string
-    // }).isRequired
+    isLoading: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.bool,
+        REQUEST_PERSON: PropTypes.bool
+    }).isRequired,
+    hasErrors: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.bool, // one of
+        REQUEST_PERSON: PropTypes.bool // one of
+    }).isRequired,
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            id: PropTypes.string
+        })
+    }).isRequired
 };
 
 const defaultProps = {
@@ -29,31 +43,17 @@ class PersonEditContainer extends React.Component {
         super(props);
         this.state = {
             person: {}
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
+        };
     }
 
     componentDidMount() {
-        // Need UI to handle failures for this.
-        // Error currently saved to state.error
-
         if (this.props.person === undefined) {
-            // if the ID doesn't match the URL params
-            this.props.requestPerson(this.props.match.params.id).then(person => {
-                this.setState({person: person})
-                console.log(this.state.person)
-            })
-                
+            this.props
+                .requestPerson(this.props.match.params.id)
+                .then(person => {
+                    this.setState({ person });
+                });
         }
-    }
-
-    handleSubmit(e, values) {
-        e.preventDefault()
-        alert(values);
-        console.log(values)
-        // after success, clear state
-        // after failure, state remains
-        // TBD after we figure out endpoints
     }
 
     render() {
@@ -66,14 +66,23 @@ class PersonEditContainer extends React.Component {
                         members of your community to Ushahidi.
                     </p>
                 </div>
-                {this.props.isLoading.REQUEST_PERSON ? <InlineLoading /> :
-                    <PersonEditForm 
-                        onSubmit={(values) => this.props.updatePerson(values, values.id)} 
-                        initialValues={this.props.person ? this.props.person : this.state.person} 
-                        roles={this.props.roles} 
-                        isLoading={this.props.isLoading} 
+                {this.props.isLoading.REQUEST_PERSON ? (
+                    <InlineLoading />
+                ) : (
+                    <PersonEditForm
+                        onSubmit={values =>
+                            this.props.updatePerson(values, values.id)
+                        }
+                        initialValues={
+                            this.props.person
+                                ? this.props.person
+                                : this.state.person
+                        }
+                        roles={this.props.roles}
+                        isLoading={this.props.isLoading}
+                        hasErrors={this.props.hasErrors}
                     />
-                }
+                )}
             </main>
         );
     }
@@ -82,14 +91,15 @@ class PersonEditContainer extends React.Component {
 PersonEditContainer.propTypes = propTypes;
 PersonEditContainer.defaultProps = defaultProps;
 
-function mapStateToProps(state, ownProps) {
-      return {
+function mapStateToProps(state) {
+    return {
         isLoading: getLoadingState(state)
-    }
+    };
 }
 
 PersonEditContainer.propTypes = propTypes;
 PersonEditContainer.defaultProps = defaultProps;
 
-export default connectWithStore(PersonEditContainer, mapStateToProps)
+export { PersonEditContainer as DisconnectedPersonEditContainer };
 
+export default connectWithStore(PersonEditContainer, mapStateToProps);

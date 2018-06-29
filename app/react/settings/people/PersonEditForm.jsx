@@ -1,44 +1,56 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
-import { Field, reduxForm, reset } from 'redux-form'
-
+import { Field, reduxForm } from "redux-form";
+import { withRouter } from "react-router-dom";
 
 const propTypes = {
-    initialValues: PropTypes.shape({
-        id: PropTypes.number
-    }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoading: PropTypes.object,
-    // error: PropTypes.shape({
-    //     message: PropTypes.string
-    // }).isRequired
+    isLoading: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.bool,
+        REQUEST_PERSON: PropTypes.bool
+    }).isRequired,
+    hasErrors: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.bool, // one of
+        REQUEST_PERSON: PropTypes.bool // one of
+    }).isRequired,
+    reset: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func
+    }).isRequired
 };
 
 let PersonEditForm = props => {
-    const {handleSubmit, roles, isLoading, pristine, submitting} = props
+    const {
+        handleSubmit,
+        roles,
+        isLoading,
+        hasErrors,
+        // pristine,
+        // submitting,
+        reset
+    } = props;
 
-    const renderRoles = () => {
-        return (
-            <label htmlFor="role">
-                Role
-                <Field
-                    name="role"
-                    component="select"
-                >
-                    <option value="">
-                        Select a role
+    const renderRoles = () => (
+        <label htmlFor="role">
+            Role
+            <Field name="role" component="select">
+                <option value="">Select a role</option>
+                {roles.map(role => (
+                    <option key={role.id} value={role.name}>
+                        {role.display_name}
                     </option>
-                    {roles.map(role => (
-                        <option key={role.id} value={role.name}>
-                            {role.display_name}
-                        </option>
-                    ))}
-                </Field>
-            </label>
-        );
-    }
+                ))}
+            </Field>
+        </label>
+    );
+
+    const route404OnError = () => {
+        props.history.push("/404");
+        // Need to create a new react component for this
+        // Needs to accept the error message
+    };
 
     return (
         <div>
@@ -63,22 +75,22 @@ let PersonEditForm = props => {
                         required
                     />
                 </label>
-                {isLoading.REQUEST_ROLES ? (
-                    <InlineLoading />
-                ) : (
-                    renderRoles()
-                )}
-                <button className="button-beta" onClick={() => props.reset()}>Cancel</button>                
+                {isLoading.REQUEST_ROLES ? <InlineLoading /> : renderRoles()}
+                {hasErrors.REQUEST_ROLES ? route404OnError() : null}
+                <button className="button-beta" onClick={() => reset()}>
+                    Cancel
+                </button>
                 <button type="submit">Submit</button>
             </form>
         </div>
-    )
-}
+    );
+};
+
+PersonEditForm.propTypes = propTypes;
 
 PersonEditForm = reduxForm({
-  // a unique name for the form
-  form: 'editPerson',
-  enableReinitialize: true
-})(PersonEditForm)
+    form: "editPerson",
+    enableReinitialize: true
+})(PersonEditForm);
 
-export default PersonEditForm
+export default withRouter(PersonEditForm);
