@@ -98,7 +98,7 @@
                                     <input type="checkbox" ng-model="form.selected" ng-value="1" ng-change="selectAll(form)">
                                 </td>
                                 <td>
-                                    <em translate="nav.select_all">Select all<em>
+                                    <em translate="nav.select_all">Select all</em>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -149,7 +149,7 @@
                                     <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl attribute?</a>
                                 </td>
                                 <td>
-                                    {{formAttribute.pretty}}
+                                    <span ng-repeat="pretty in formAttribute.pretty"><em>{{pretty}} </em></span>
                                 </td>
                             </tr>
                         </tbody>

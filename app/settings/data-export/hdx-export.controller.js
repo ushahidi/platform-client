@@ -109,19 +109,60 @@ function (
 
     function selectTag(attribute) {
         if (attribute.selectedTag && attribute.selectedTag.tag_name) {
-            attribute.pretty = '#' + attribute.selectedTag.tag_name;
+            attribute.pretty = ['#' + attribute.selectedTag.tag_name];
         } else {
-            attribute.pretty = '';
+            attribute.pretty = [];
         }
         attribute.nbAttributes = 1;
         attribute.selectedHxlAttributes = {};
     }
 
-    function selectHxlAttribute(attribute) {
-        attribute.pretty = '#' + attribute.selectedTag.tag_name;
+    function selectHxlAttribute(attribute, ignoreMatch) {
+        let needsMatchLatLon = false;
+        let geoTag = _.find(attribute.tags, (tag) => {
+            return tag.tag_name === 'geo';
+        });
+        attribute.pretty = [];
+        var prettyIndex = 0;
+        if (attribute.pretty.length === 0) {
+            attribute.pretty.push('#' + attribute.selectedTag.tag_name);
+        } else {
+            prettyIndex = attribute.pretty.indexOf('#' + attribute.selectedTag.tag_name);
+        }
+        if (!!ignoreMatch == false && attribute.selectedTag.tag_name === 'geo' && _.keys(attribute.selectedHxlAttributes).length < 2) {
+            needsMatchLatLon = _.filter(attribute.selectedHxlAttributes, (selected) => {
+                return selected.hxl_tag_id == geoTag.id && (selected.attribute === 'lon' || selected.attribute === 'lat');
+            }).length;
+            needsMatchLatLon = needsMatchLatLon === 1;
+            console.log("NEEDS MATCH", needsMatchLatLon, attribute.selectedHxlAttributes);
+        }
         _.each(attribute.selectedHxlAttributes, (hxl_attribute) => {
             if (hxl_attribute !== '') {
-                attribute.pretty = attribute.pretty + '+' + hxl_attribute.attribute;
+                attribute.pretty[prettyIndex] = attribute.pretty[prettyIndex] + '+' + hxl_attribute.attribute;
+                if (needsMatchLatLon) {
+                    let opposite = null;
+                    if (hxl_attribute.attribute === 'lon') {
+                        opposite = _.find(geoTag.hxl_attributes, (hxl) => {
+                            return hxl.attribute === 'lat';
+                        });
+                    } else if (hxl_attribute.attribute === 'lat') {
+                        opposite = _.find(geoTag.hxl_attributes, (hxl) => {
+                            return hxl.attribute === 'lon';
+                        });
+                    }
+                    attribute.selectedHxlAttributes[_.keys(attribute.selectedHxlAttributes).length] = opposite;
+                    attribute.pretty.push('#' + attribute.selectedTag.tag_name +  '+' + opposite.attribute);
+                    attribute.nbAttributes++;
+                    $scope.forms = _.map($scope.forms, (form) => {
+                        form.attributes = _.map(form.attributes, (_attribute) => {
+                            if (_attribute.id === attribute.id) {
+                                _attribute = attribute;
+                            }
+                            return _attribute;
+                        });
+                        return form;
+                    });
+                }
             }
         });
     }
