@@ -1,7 +1,7 @@
 @import '../../utils/style.scss';
 
 :global {
-    
+
     .layout-g {
 
         .list-item {
@@ -63,17 +63,6 @@
                         margin-bottom: 0;
                     }
                 }
-            }
-
-            form {
-
-                .form-field {
-
-                    &:first-of-type {
-                        margin-top: 0;
-                    }
-                }
-
             }
 
             &.selected:before {

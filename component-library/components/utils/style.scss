@@ -1,5 +1,4 @@
 
-
     /* READ DIRECTION */
     @import './dependencies/rtl/rtl-sass.scss';
 
@@ -21,9 +20,13 @@
     /* GLOBAL VARIABLES */
     @import './sass/settings.scss';
 
+    /* GLOBAL styles */
+
     @import './sass/general.scss';
     @import './sass/typography.scss';
     @import './sass/layouts/layout-general.scss';
     @import './sass/layouts/layout-g.scss';
     @import './sass/navbar.scss';
-    @import './sass/search.scss';
+
+    /* OVERRIDES */
+    @import './overrides/leaflet-overrides.scss';

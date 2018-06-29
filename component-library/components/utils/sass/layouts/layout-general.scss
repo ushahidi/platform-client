@@ -1,18 +1,21 @@
 :global {
-    .main-col,
-    .full-col {
-        padding-bottom: 45px;
-
-        @include media($small) {
-            padding: $sm-spacing;
-        }
-
-        @include media($medium) {
-            padding: $base-spacing;
-        }
+    /*NOTE! Do not remove .hidden when changing the general styles!!*/
+    .hidden {
+        display: none;
     }
+    .layout-g {
 
-    [class*="layout-"] {
+        .main-col,
+        .full-col {
+            padding-bottom: 45px;
+            @include media($small) {
+                padding: $sm-spacing;
+            }
+
+            @include media($medium) {
+                padding: $base-spacing;
+            }
+        }
 
         .mode-bar {
             position: fixed;
@@ -688,5 +691,4 @@
             }
         }
     }
-
 }

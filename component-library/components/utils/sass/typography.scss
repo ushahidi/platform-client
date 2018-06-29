@@ -4,9 +4,7 @@
 
 :global {
 
-        /*------------------------------------*\
-            $TYPOGRAPHY
-        \*------------------------------------*/
+    .layout-g {
 
         a {
             font-family: Lato;
@@ -124,4 +122,5 @@
             white-space: -o-pre-wrap;
             word-wrap: break-word;
         }
+    }
 }

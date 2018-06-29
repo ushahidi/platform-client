@@ -180,7 +180,7 @@ $BUTTONS
         }
     }
 
-    .button-group {
+    :global(.button-group) {
         @include direction
         margin-top: $sm-spacing;
         margin-bottom: $lg-spacing;

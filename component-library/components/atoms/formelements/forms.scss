@@ -10,7 +10,7 @@
     .form-label {
         @include typeGamma;
 
-        svg.iconic {
+        :global(svg.iconic) {
             width: 0.8em;
             height: 0.8em;
             fill: $dark-gray;

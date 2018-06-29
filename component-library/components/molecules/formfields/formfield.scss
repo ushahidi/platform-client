@@ -4,7 +4,6 @@
     .layout-g {
         .form-field,
         fieldset {
-        //    @include clearfix;
             position: relative;
             margin-top: $huge-spacing;
             margin-bottom: $huge-spacing;
@@ -233,9 +232,8 @@
             &.checkbox,
             &.radio {
                 position: relative;
-                @include padding-left(15px + $tiny-spacing);
-                @include lrswap(margin, 0 0 $tiny-spacing 2px);
-                margin-top: $sm-spacing;
+                @include padding-left(40px);
+                margin: 24px 0;
 
                 label {
                     color: $black;
@@ -243,6 +241,7 @@
                     text-transform: none;
                     letter-spacing: 0;
                     @include padding-left(2px);
+                    margin-bottom: 0;
 
                     &:hover {
                         cursor: pointer;
@@ -1145,5 +1144,6 @@
                 }
             }
         }
-    }
+
+            }
 }
