@@ -1,17 +1,21 @@
 @import '../../utils/style.scss';
 
 :global {
+
     .layout-g {
+
         .form-field,
         fieldset {
             position: relative;
-            margin-top: $huge-spacing;
-            margin-bottom: $huge-spacing;
+            // margin-top: $huge-spacing;
+            // margin-bottom: $huge-spacing;
+            margin-top: 0;
+            margin-bottom: $lg-spacing;
 
-            @include media($medium) {
-                margin-top: $lg-spacing;
-                margin-bottom: $lg-spacing;
-            }
+            // @include media($medium) {
+            //     margin-top: $lg-spacing;
+            //     margin-bottom: $lg-spacing;
+            // }
 
             label {
                 display: block;
@@ -233,7 +237,7 @@
             &.radio {
                 position: relative;
                 @include padding-left(40px);
-                margin: 24px 0;
+                margin: $base-spacing 0;
 
                 label {
                     color: $black;
@@ -663,7 +667,7 @@
         .input-with-icon {
             position: relative;
             width: 100%;
-            max-width: 480px;
+            max-width: 450px;
 
             input[type="text"],
             input[type="color"],
@@ -701,10 +705,10 @@
                 fill: $dark-gray;
 
                 &.close {
+                    @include right(16px);
+                    @include left(inherit);
                     width: 10px;
                     height: 10px;
-                    @include right(40px);
-                    left: inherit;
                     fill: $black;
                 }
             }
@@ -726,6 +730,40 @@
         }
 
         fieldset {
+            position: relative;
+            border: none;
+
+            legend {
+                @include typeGamma;
+                font-weight: 700;
+
+                [role="article"] & {
+                    font-size: 20px;
+                    font-size: 1.428571429rem;
+                }
+
+                &.required {
+
+                    &:after {
+                        content: '\2217';
+                        position: relative;
+                        top: -2px;
+                        color: $error-red;
+                        font-weight: normal;
+                        font-size: 1.428571429em;
+                        @include margin-left(4px);
+                    }
+                }
+
+                svg.iconic {
+                    fill: $black;
+                    @include margin-right(4px);
+                }
+
+                + p {
+                    margin-top: -5px;
+                }
+            }
 
             .custom-select {
                 margin-top: -6px;
@@ -1144,6 +1182,5 @@
                 }
             }
         }
-
-            }
+    }
 }

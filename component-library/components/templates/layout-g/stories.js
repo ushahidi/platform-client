@@ -10,6 +10,7 @@ import Icon from "../../atoms/icon/icon";
 import Breadcrumbs from "../../molecules/breadcrumbs/breadcrumbs";
 import Buttongroup from "../../molecules/buttongroup/buttongroup";
 import Navbar from "../../molecules/navbar/navbar";
+import Search from "../../molecules/search/search";
 
 storiesOf("4 Templates/Layout-g/Settings/People", module)
     .add("people, start", () => (
@@ -33,7 +34,7 @@ storiesOf("4 Templates/Layout-g/Settings/People", module)
                             <Button>Add People</Button>
                         </Listitem>
                         <Listitem>
-                            <div className="search">
+                            <Search>
                                 <form>
                                     <Formfield>
                                         <div className="input-with-icon">
@@ -53,7 +54,7 @@ storiesOf("4 Templates/Layout-g/Settings/People", module)
                                         <Button buttonType="BETA">Sort</Button>
                                     </Buttongroup>
                                 </form>
-                            </div>
+                            </Search>
                         </Listitem>
                     </ul>
                     <ul>
