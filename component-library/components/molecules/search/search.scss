@@ -1,46 +1,62 @@
 @import '../../utils/style.scss';
 
+:global {
+    .layout-g {
 
-.search {
+        .search {
 
-    form {
-        margin-bottom: $sm-spacing;
-    }
-
-    .search-card {
-        border: 1px solid $black;
-        @include equal-radius(3px);
-        padding: $sm-spacing;
-        width: 100%;
-        max-width: 450px;
-
-        fieldset {
-            margin: 0 0 $sm-spacing 0;
-
-            .form-field.checkbox {
-
-            }
-        }
-
-        .button-group {
-            @include text-align(right);
-        }
-    }
-
-    ul {
-        margin: 0;
-
-        .list-item {
-            width: 100%;
-            max-width: 450px;
-            padding: 0;
-
-            &:first-child {
-                border-top: $base-border;
+            form {
+                margin-bottom: $base-spacing;
             }
 
-            p {
-                color: $dark-gray;
+            .form-field {
+                margin: 21px 0px;
+            }
+
+            .button-group {
+
+                button {
+                    margin: 0 $sm-spacing 0 0;
+                }
+            }
+
+            .search-card {
+                border: 1px solid $dark-gray;
+                @include equal-radius(2px);
+                padding: $base-spacing;
+                width: 100%;
+                max-width: 450px;
+
+                fieldset {
+                    margin: 0 0 $sm-spacing 0;
+
+                    .form-field.checkbox {
+
+                    }
+                }
+
+                .button-group {
+                    @include text-align(right);
+                }
+            }
+
+            ul {
+                margin: 0;
+
+                .list-item {
+                    width: 100%;
+                    max-width: 450px;
+                    padding: 0;
+
+                    &:first-child {
+                        border-top: $base-border;
+                    }
+
+                    p {
+                        color: $dark-gray;
+                        line-height: 20px;
+                    }
+                }
             }
         }
     }

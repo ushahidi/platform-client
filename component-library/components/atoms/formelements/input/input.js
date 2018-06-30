@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import input from "../forms.scss";
+import Icon from "../../icon/icon";
 
 const InputType = {
     TEXT: "text",
@@ -26,12 +27,19 @@ const Input = props => {
         input[InputType[inputType]]
     );
 
+    const iconProps = classnames(
+        inputType === "SEARCH" ? "input-with-icon" : ""
+    );
+
     return (
-        <input
-            type={InputType[inputType]}
-            className={classProps}
-            {...customProps}
-        />
+        <div className={iconProps}>
+            {inputType === "SEARCH" ? <Icon icon="MAGINFYING_GLASS" /> : ""}
+            <input
+                type={InputType[inputType]}
+                className={classProps}
+                {...customProps}
+            />
+        </div>
     );
 };
 Input.propTypes = propTypes;
