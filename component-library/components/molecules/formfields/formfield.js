@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import "./formfield.scss";
+import Icon from "../../atoms/icon/icon";
 
 const propTypes = {
     className: PropTypes.string,
@@ -19,7 +20,14 @@ const Formfield = props => {
     return (
         <div className={classProps} {...customProps}>
             {children}
-            {showError ? <span className="error">{errorText}</span> : ""}
+            {showError ? (
+                <span className="error">
+                    <Icon icon="WARNING" />
+                    {errorText}
+                </span>
+            ) : (
+                ""
+            )}
         </div>
     );
 };

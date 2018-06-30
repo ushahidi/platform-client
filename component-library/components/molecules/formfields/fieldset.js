@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-
+import Icon from "../../atoms/icon/icon";
 import "./formfield.scss";
 
 const propTypes = {
@@ -37,7 +37,10 @@ const Fieldset = props => {
             <legend className={legendClassNames}>{legend}</legend>
             {children}
             {showError ? (
-                <span className={errorClassNames}>{errorText}</span>
+                <span className={errorClassNames}>
+                    <Icon icon="WARNING" />
+                    {errorText}
+                </span>
             ) : (
                 ""
             )}
