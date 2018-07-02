@@ -21,7 +21,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     $scope.unmapped = 0;
     $scope.location = $location;
     $scope.goToUnmapped = goToUnmapped;
-    $scope.getUnmapped = getUnmapped;
     $scope.unknown = [];
 
     activate();
@@ -129,13 +128,6 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
 
     function showOnly(formId) {
         $scope.filters.form.splice(0, $scope.filters.form.length, formId);
-    }
-
-    function getUnmapped() {
-        if ($scope.unmapped === 1) {
-            return $scope.unmapped + ' post';
-        }
-        return $scope.unmapped + ' posts';
     }
 
     function goToUnmapped() {
