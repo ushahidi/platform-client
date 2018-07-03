@@ -107,7 +107,7 @@
                             <tr ng-repeat="formAttribute in form.attributes">
                                 <td class="form-field">
                                     <input
-                                        type="checkbox"
+                                        type="checkbox"F
                                         checklist-model="formAttribute.selected"
                                         checklist-value="formAttribute.id"
                                         ng-selected="formAttribute.selected"
@@ -131,17 +131,17 @@
                                 <td class="form-field">
                                     <div class="custom-select" ng-repeat="a in range(formAttribute)">
                                         <select
-                                            ng-disabled="!formAttribute.selectedTag"
-                                            ng-model="formAttribute.selectedHxlAttributes[a]"
-                                            ng-change="selectHxlAttribute(formAttribute)"
+                                                ng-disabled="!formAttribute.selectedTag"
+                                                ng-model="formAttribute.selectedHxlAttributes[a]"
+                                                ng-change="selectHxlAttribute(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
                                             <option
-                                                ng-value="hxlAttribute"
-                                                ng-repeat="hxlAttribute in formAttribute.selectedTag.hxl_attributes"
-                                                ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, a)"
+                                                    ng-value="hxlAttribute"
+                                                    ng-repeat="hxlAttribute in formAttribute.selectedTag.hxl_attributes"
+                                                    ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, a)"
                                             >
-                                                 {{hxlAttribute.attribute}}
+                                                {{hxlAttribute.attribute}}
                                             </option>
 
                                         </select>
