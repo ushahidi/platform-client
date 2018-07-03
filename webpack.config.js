@@ -59,12 +59,52 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
+                include: [/app\/react/, /component-library/],
                 use: extractCss.extract({
                     fallback: "style-loader",
                     use: [
-                        "css-loader",
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules: true,
+                                sourceMap: true,
+                                importLoaders: 2,
+                                localIdentName:
+                                    "[name]__[local]___[hash:base64:5]"
+                            }
+                        },
                         "resolve-url-loader",
                         "sass-loader?sourceMap"
+                    ]
+                })
+            },
+            {
+                test: /\.scss$/,
+                exclude: [/app\/react/, /component-library/],
+                use: extractCss.extract({
+                    fallback: "style-loader",
+                    use: [
+                        {
+                            loader: "css-loader"
+                        },
+                        "resolve-url-loader",
+                        "sass-loader?sourceMap"
+                    ]
+                })
+            },
+            {
+                test: /\.css$/,
+                include: [/app\/react/],
+                use: extractCss.extract({
+                    fallback: "style-loader",
+                    use: [
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules: true
+                                // localIdentName: '[name]__[local]___[hash:base64:5]'
+                            }
+                        }
                     ]
                 })
             },
