@@ -151,7 +151,7 @@ function (
         let needsMatchLatLon = ignoreMatch;
         if (!!ignoreMatch == false && attribute.selectedTag.tag_name === 'geo' && attribute.selectedHxlAttributes.length < 2) {
             needsMatchLatLon = _.filter(attribute.selectedHxlAttributes, (selected) => {
-                return selected.hxl_tag_id == geoTag.id && (selected.attribute === 'lon' || selected.attribute === 'lat');
+                return selected.attribute === 'lon' || selected.attribute === 'lat';
             }).length;
             needsMatchLatLon = needsMatchLatLon === 1;
         }
@@ -176,11 +176,7 @@ function (
         }
         return attribute;
     }
-
-    function createPrettyAttribute() {
-
-    }
-
+    
     function formatIds() {
         let hxlData = [];
         _.each($scope.forms, (form) => {

@@ -132,18 +132,17 @@
                                     <div class="custom-select" ng-repeat="a in range(formAttribute)">
                                         <select
                                                 ng-disabled="!formAttribute.selectedTag"
-                                                ng-model="formAttribute.selectedHxlAttributes[a]"
+                                                ng-model="formAttribute.selectedHxlAttributes[a].attribute"
                                                 ng-change="selectHxlAttribute(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
                                             <option
-                                                    ng-value="hxlAttribute"
+                                                    ng-value="hxlAttribute.attribute"
                                                     ng-repeat="hxlAttribute in formAttribute.selectedTag.hxl_attributes"
                                                     ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, a)"
                                             >
                                                 {{hxlAttribute.attribute}}
                                             </option>
-
                                         </select>
                                     </div>
                                     <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl attribute?</a>
