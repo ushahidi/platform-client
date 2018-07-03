@@ -959,7 +959,7 @@
             "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
             "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
             "view_guide": "View the guide to your API key",
-            "hdx_user_id" : "HDX User Id",
+            "hdx_maintainer_id" : "HDX Maintainer Id",
             "api_key": "Api key",
             "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
             "valid_key": "A valid key is required",

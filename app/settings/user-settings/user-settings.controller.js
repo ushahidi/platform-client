@@ -22,8 +22,8 @@ function (
     $scope.saveKey = saveKey;
     $scope.changeKey = changeKey;
     $scope.changeId = changeId;
-    $scope.hxlApiKey = false;
-    $scope.hxlUserId = false;
+    $scope.hxlApiKeySet = false;
+    $scope.hxlMaintainerSet = false;
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.hdxSettings = {
         'hdx_api_key': {
@@ -55,22 +55,23 @@ function (
             setting.user_id = setting.user.id;
 
             if (setting.config_key === 'hdx_api_key') {
-                $scope.hxlApiKey = '*** *** *** *** *** *** *** ' + setting.config_value.slice(setting.config_value.length - 4);
+                setting.config_value = '*** *** *** *** *** *** *** ' + setting.config_value.slice(setting.config_value.length - 4);
                 $scope.hdxSettings.hdx_api_key = setting;
+                $scope.hxlApiKeySet = true;
             }
-            if (setting.config_key === 'hdx_user_id') {
-                $scope.hxlUserId = true;
+            if (setting.config_key === 'hdx_maintainer_id') {
+                $scope.hxlMaintainerSet = true;
                 $scope.hdxSettings.hdx_user_id = setting;
             }
         });
     });
 
     function changeKey() {
-        $scope.hxlApiKey = false;
+        $scope.hxlApiKeySet = false;
     }
 
     function changeId() {
-        $scope.hxlUserId = false;
+        $scope.hxlMaintainerSet = false;
     }
 
     function goToHdxView() {
@@ -86,14 +87,15 @@ function (
             );
         }
 
-        if ($scope.api['hdx-user-id'].$dirty) {
+        if ($scope.api.hdx_maintainer_id.$dirty) {
             calls.push(
                 UserSettingsEndpoint.saveCache($scope.hdxSettings.hdx_user_id).$promise
             );
         }
 
         $q.all(calls).then((response) => {
-            $scope.hxlUserId = true;
+            $scope.hxlMaintainerSet = true;
+            $scope.hxlApiKeySet = true;
             $scope.hxlApiKey = '*** *** *** *** *** *** *** ' + $scope.hdxSettings.hdx_api_key.config_value.slice($scope.hdxSettings.hdx_api_key.config_value.length - 4);
             Notify.notifyAction('settings.user_settings.api_key_saved', null, false, 'thumb-up', 'circle-icon confirmation', {callback: goToHdxView, text: 'settings.user_settings.start_tagging', callbackArg: null, actionClass: 'button button-alpha'});
         });
