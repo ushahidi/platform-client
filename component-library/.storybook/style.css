@@ -1,0 +1,21 @@
+/* @import '../src/components/_settings/_base.css'; */
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp');
+
+body {
+    padding: 1em;
+    margin-left: 20px;
+    background-color: white;
+    background-size: 20px 20px;
+    box-sizing: border-box;
+}
+
+h1,
+h2 {
+    margin-bottom: 16px;
+}
+
+.css-glamorous-div--ngxet1,
+[data-css-glamorous-div--ngxet1] {
+    transform: translateY(-100%) translateY(-2px);
+    -webkit-transform: translateY(-100%) translateY(-2px);
+}

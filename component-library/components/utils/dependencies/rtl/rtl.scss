@@ -1,0 +1,19 @@
+$rtl: true; /*! Values should be inverted (left/right…) */
+$before: after;
+$after: before;
+$left: right;
+$right: left;
+
+@import "rtl-sass";
+// @import "../../dependencies";
+// // Hack: Include top level styles outside of namespace
+// @import "../../1_atoms/base";
+//
+// .rtl-namespace {
+// 	@import "test";
+// 	@import "../../style";
+//
+// 	.listing .postcard {
+// 	    max-width: none;
+// 	}
+// }

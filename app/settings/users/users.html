@@ -20,7 +20,7 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="fab">
-                <a ui-sref="settings.createUser" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
+                <a ui-sref="settings.react.createUser" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
@@ -59,8 +59,8 @@
                         </div>
 
                         <h2 class="listing-item-title"><a ui-sref="settings.users.edit({id: user.id})">{{user.realname}}</a></h2>
-                        <p class="listing-item-secondary" 
-                            translate-values="{role: roles[user.role].display_name}" 
+                        <p class="listing-item-secondary"
+                            translate-values="{role: roles[user.role].display_name}"
                             translate="user.role_display">
                             Role: role_name
                         </p>
@@ -68,7 +68,7 @@
                             translate-values="{
                                 type: contact.type,
                                 contact: contact.contact
-                            }" 
+                            }"
                             translate="user.contact">
                             Contact_Type: contact
                         </p>

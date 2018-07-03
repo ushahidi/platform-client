@@ -1,0 +1,27 @@
+@mixin containerSheet($background-color: $bg-white) {
+    @include equal-radius;
+    background-color: $background-color;
+    box-shadow: 0 0 16px rgba(0,0,0,0.12),
+        0 16px 16px rgba(0,0,0,0.24);
+}
+
+@mixin containerMenu($background-color: $bg-white) {
+    @include equal-radius;
+    background-color: $background-color;
+    box-shadow: 0 0 8px rgba(0,0,0,0.12),
+        0 8px 8px rgba(0,0,0,0.24);
+}
+
+@mixin containerBar($background-color: $bg-white) {
+    @include equal-radius;
+    background-color: $background-color;
+    box-shadow: 0 0 4px rgba(0,0,0,0.12),
+        0 4px 4px rgba(0,0,0,0.24);
+}
+
+@mixin containerCard($background-color: $bg-white) {
+    @include equal-radius;
+    background-color: $background-color;
+    box-shadow: 0 0 2px rgba(0,0,0,0.12),
+        0 2px 2px rgba(0,0,0,0.24);
+}

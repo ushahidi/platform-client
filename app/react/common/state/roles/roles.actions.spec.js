@@ -3,8 +3,12 @@ import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import moxios from "moxios";
 import expect from "expect";
+import {
+    HANDLE_REQUEST,
+    HANDLE_SUCCESS,
+    HANDLE_FAILURE
+} from "react/common/state/globalHandlers/handlers.actions";
 import { REQUEST_ROLES, RECEIVE_ROLES, requestRoles } from "./roles.actions";
-import { HANDLE_REQUEST, HANDLE_SUCCESS, HANDLE_FAILURE } from "react/common/state/globalHandlers/handlers.actions"
 
 const error = {
     error: {
@@ -15,10 +19,11 @@ const error = {
 const rolesResponse = {
     results: [1, 2]
 };
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe("Role Actions", () => {
+describe("Role actions", () => {
     beforeEach(() => {
         moxios.install(instance);
     });
@@ -36,19 +41,18 @@ describe("Role Actions", () => {
             });
         });
         const expectedActions = [
-            { 
+            {
                 type: HANDLE_REQUEST,
-                previousAction: {type: REQUEST_ROLES}
+                previousAction: { type: REQUEST_ROLES }
             },
             {
                 type: HANDLE_SUCCESS,
-                previousAction: {type: REQUEST_ROLES}
+                previousAction: { type: REQUEST_ROLES }
             },
-            { 
-                type: RECEIVE_ROLES, 
+            {
+                type: RECEIVE_ROLES,
                 roles: rolesResponse.results
             }
-
         ];
         const store = mockStore({ people: [] });
         return store.dispatch(requestRoles()).then(() => {
@@ -66,13 +70,13 @@ describe("Role Actions", () => {
             });
         });
         const expectedActions = [
-            { 
+            {
                 type: HANDLE_REQUEST,
-                previousAction: {type: REQUEST_ROLES}
+                previousAction: { type: REQUEST_ROLES }
             },
             {
                 type: HANDLE_FAILURE,
-                previousAction: {type: REQUEST_ROLES},
+                previousAction: { type: REQUEST_ROLES },
                 error
             }
         ];

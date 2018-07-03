@@ -1,0 +1,72 @@
+/*------------------------------------*\
+    $GENERAL SELECTORS
+\*------------------------------------*/
+:global {
+        * {
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+            color: unset;
+            background-color: unset;
+        }
+
+        html {
+            font-size: 87.5%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+
+            height: 100%; // sticky footer
+
+            // Pattern Library
+            &.pl {
+
+                body {
+                     background-color: #fff;
+                     padding: 10px;
+                }
+            }
+        }
+
+        body {
+            min-height: 100%; // sticky footer
+            display: flex; // sticky footer
+            flex-direction: column; // sticky footer
+            color: $black;
+            @include typeBase;
+            font-family: $base-font-family;
+            overflow-x: hidden;
+            background-color: $bg-white;
+        }
+
+        ::selection ,
+        ::-moz-selection {
+            background: #e4e64c;
+            color: #000;
+            text-shadow: none;
+        }
+
+        hr {
+            height: 1px;
+            border: 0;
+            background-color: $bg-gray;
+            margin: $base-spacing auto;
+        }
+
+        /*------------------------------------*\
+            $GLOBAL COMBOS
+        \*------------------------------------*/
+
+        article, aside, details, fig caption, figure, footer, header, group, nav, section { display: block; }
+        audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+
+        .clearfix-alt { content: "."; display: block; height: 0; clear: both; visibility: hidden; font-size: 0; }
+
+        .noscroll {
+            overflow: hidden;
+        }
+
+        .nodisplay {
+            display: none;
+        }
+}
