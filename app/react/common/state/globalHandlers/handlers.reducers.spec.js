@@ -1,5 +1,5 @@
 import deepFreeze from "deep-freeze";
-import HandlersReducer from "./handlers.reducers";
+import HandlersReducer, { getCurrentErrors } from "./handlers.reducers";
 import {
     HANDLE_REQUEST,
     HANDLE_FAILURE,
@@ -104,7 +104,10 @@ describe("Handling request success", () => {
                 REQUEST_TEST: false
             },
             hasError: {
-                REQUEST_TEST: false
+                REQUEST_TEST: {
+                    failed: false,
+                    errorLog: {}
+                }
             }
         };
 
@@ -125,7 +128,10 @@ describe("Handling request success", () => {
                 REQUEST_TEST: true
             },
             hasError: {
-                REQUEST_TEST: { error: "error" }
+                REQUEST_TEST: {
+                    failed: true,
+                    errorLog: { error: "error" }
+                }
             }
         };
 
@@ -135,7 +141,10 @@ describe("Handling request success", () => {
                 REQUEST_TEST: false
             },
             hasError: {
-                REQUEST_TEST: false
+                REQUEST_TEST: {
+                    failed: false,
+                    errorLog: {}
+                }
             }
         };
 
@@ -159,9 +168,7 @@ describe("Handling request failure", () => {
                 TEST_ACTION: true,
                 REQUEST_TEST: false
             },
-            hasError: {
-                REQUEST_TEST: false
-            }
+            hasError: {}
         };
 
         const stateAfter = {
@@ -170,7 +177,10 @@ describe("Handling request failure", () => {
                 REQUEST_TEST: false
             },
             hasError: {
-                REQUEST_TEST: { error: "error" }
+                REQUEST_TEST: {
+                    failed: true,
+                    errorLog: { error: "error" }
+                }
             }
         };
 
@@ -179,5 +189,28 @@ describe("Handling request failure", () => {
         deepFreeze(stateAfter);
         deepFreeze(action);
         expect(HandlersReducer(stateBefore, action)).toEqual(stateAfter);
+    });
+});
+
+describe("Selectors", () => {
+    test("getCurrentErrors should return the error object", () => {
+        const fakeState = {
+            handlers: {
+                isLoading: {
+                    TEST_ACTION: true,
+                    REQUEST_TEST: false
+                },
+                hasError: {
+                    REQUEST_TEST: {
+                        failed: true,
+                        errorLog: { message: "error" }
+                    }
+                }
+            }
+        };
+
+        const expected = ["error"];
+
+        expect(getCurrentErrors(fakeState)).toEqual(expected);
     });
 });

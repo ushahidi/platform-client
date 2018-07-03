@@ -17,7 +17,7 @@ import {
 } from "react/common/state/people/people.reducers";
 import {
     getLoadingState,
-    getErrors
+    hasError
 } from "react/common/state/globalHandlers/handlers.reducers";
 
 // Components
@@ -45,9 +45,15 @@ const propTypes = {
         REQUEST_ROLES: PropTypes.bool,
         REQUEST_PERSON: PropTypes.bool
     }).isRequired,
-    hasErrors: PropTypes.shape({
-        REQUEST_ROLES: PropTypes.bool, // one of
-        REQUEST_PERSON: PropTypes.bool // one of
+    hasError: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        }),
+        REQUEST_PERSON: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        })
     }).isRequired,
     store: PropTypes.shape({}).isRequired
 };
@@ -78,7 +84,7 @@ class PersonContainer extends React.Component {
                                     }
                                     roles={this.props.roles}
                                     isLoading={this.props.isLoading}
-                                    hasErrors={this.props.hasErrors}
+                                    hasError={this.props.hasError}
                                 />
                             )}
                         />
@@ -97,7 +103,8 @@ class PersonContainer extends React.Component {
                                         }
                                         roles={this.props.roles}
                                         person={this.props.person}
-                                        hasErrors={this.props.hasErrors}
+                                        hasError={this.props.hasError}
+                                        isLoading={this.props.isLoading}
                                         // Remove this store after we've fully migrated and are using Provider at root
                                         store={this.props.store}
                                         {...props}
@@ -118,7 +125,7 @@ function mapStateToProps(state, ownProps) {
         roles: getRoles(state),
         isLoading: getLoadingState(state),
         person: getPerson(state, ownProps),
-        hasErrors: getErrors(state)
+        hasError: hasError(state)
     };
 }
 

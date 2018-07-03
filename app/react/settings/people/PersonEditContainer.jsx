@@ -1,9 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import connectWithStore from "react/react-transition/connectWithStore";
-
-// selectors
-import { getLoadingState } from "react/common/state/globalHandlers/handlers.reducers";
 
 // components
 import InlineLoading from "react/common/ui/InlineLoading";
@@ -19,13 +15,19 @@ const propTypes = {
         email: PropTypes.string
     }),
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    hasError: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        }),
+        REQUEST_PERSON: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        })
+    }).isRequired,
     isLoading: PropTypes.shape({
         REQUEST_ROLES: PropTypes.bool,
         REQUEST_PERSON: PropTypes.bool
-    }).isRequired,
-    hasErrors: PropTypes.shape({
-        REQUEST_ROLES: PropTypes.bool, // one of
-        REQUEST_PERSON: PropTypes.bool // one of
     }).isRequired,
     match: PropTypes.shape({
         params: PropTypes.shape({
@@ -56,6 +58,10 @@ class PersonEditContainer extends React.Component {
         }
     }
 
+    // componentWillUnmount() {
+    // cancel request
+    // }
+
     render() {
         return (
             <main role="main">
@@ -80,7 +86,7 @@ class PersonEditContainer extends React.Component {
                         }
                         roles={this.props.roles}
                         isLoading={this.props.isLoading}
-                        hasErrors={this.props.hasErrors}
+                        hasError={this.props.hasError}
                     />
                 )}
             </main>
@@ -91,15 +97,4 @@ class PersonEditContainer extends React.Component {
 PersonEditContainer.propTypes = propTypes;
 PersonEditContainer.defaultProps = defaultProps;
 
-function mapStateToProps(state) {
-    return {
-        isLoading: getLoadingState(state)
-    };
-}
-
-PersonEditContainer.propTypes = propTypes;
-PersonEditContainer.defaultProps = defaultProps;
-
-export { PersonEditContainer as DisconnectedPersonEditContainer };
-
-export default connectWithStore(PersonEditContainer, mapStateToProps);
+export default PersonEditContainer;

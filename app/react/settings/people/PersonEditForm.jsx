@@ -11,9 +11,15 @@ const propTypes = {
         REQUEST_ROLES: PropTypes.bool,
         REQUEST_PERSON: PropTypes.bool
     }).isRequired,
-    hasErrors: PropTypes.shape({
-        REQUEST_ROLES: PropTypes.bool, // one of
-        REQUEST_PERSON: PropTypes.bool // one of
+    hasError: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        }),
+        REQUEST_PERSON: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        })
     }).isRequired,
     reset: PropTypes.func.isRequired,
     history: PropTypes.shape({
@@ -26,7 +32,7 @@ let PersonEditForm = props => {
         handleSubmit,
         roles,
         isLoading,
-        hasErrors,
+        hasError,
         // pristine,
         // submitting,
         reset
@@ -76,7 +82,9 @@ let PersonEditForm = props => {
                     />
                 </label>
                 {isLoading.REQUEST_ROLES ? <InlineLoading /> : renderRoles()}
-                {hasErrors.REQUEST_ROLES ? route404OnError() : null}
+                {hasError.REQUEST_ROLES && hasError.REQUEST_ROLES.failed
+                    ? route404OnError()
+                    : null}
                 <button className="button-beta" onClick={() => reset()}>
                     Cancel
                 </button>
