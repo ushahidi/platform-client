@@ -98,6 +98,7 @@ function (
 
         $q.all(calls).then((response) => {
             _.each(response, (setting) => {
+                setting.user_id = setting.user.id;
                 updateSettings(setting);
             });
             Notify.notifyAction('settings.user_settings.api_key_saved', null, false, 'thumb-up', 'circle-icon confirmation', {callback: goToHdxView, text: 'settings.user_settings.start_tagging', callbackArg: null, actionClass: 'button button-alpha'});
