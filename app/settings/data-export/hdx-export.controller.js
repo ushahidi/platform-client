@@ -70,7 +70,7 @@ function (
         // hack to not disable the value in the current dropdown
         let selectedHxlAttributes = _.toArray(angular.copy(formAttribute.selectedHxlAttributes));
         delete selectedHxlAttributes[index];
-        if (_.findWhere(selectedHxlAttributes, {id: hxlAttribute.id})) {
+        if (_.findWhere(selectedHxlAttributes, {attribute: hxlAttribute.attribute})) {
             disabled = true;
         }
         return disabled;
@@ -119,25 +119,25 @@ function (
     }
 
     function selectHxlAttribute(attribute, ignoreMatch) {
-        attribute.pretty = [];
-        let prettyIndex = 0;
-        if (attribute.pretty.length === 0) {
-            attribute.pretty.push('#' + attribute.selectedTag.tag_name);
-        } else {
-            prettyIndex = attribute.pretty.indexOf('#' + attribute.selectedTag.tag_name);
+        if (_.isUndefined(attribute.pretty)) {
+            attribute.pretty = [];
         }
+        let prettyIndex = 0;
         let geoTag = _.find(attribute.tags, (tag) => {
             return tag.tag_name === 'geo';
         });
-        let needsMatchLatLon = locationNeedsMatchedAttribute(attribute, ignoreMatch, geoTag);
-        _.each(attribute.selectedHxlAttributes, (hxl_attribute) => {
-            if (hxl_attribute !== '') {
-                attribute.pretty[prettyIndex] = attribute.pretty[prettyIndex] + '+' + hxl_attribute.attribute;
-                if (needsMatchLatLon) {
-                    attribute = selectAttributeProgrammatically(attribute, hxl_attribute, geoTag);
-                }
-            }
-        });
+        let needsMatchLatLon = locationNeedsMatchedAttribute(attribute, ignoreMatch);
+        if (attribute.grouped) {
+            attribute.pretty = _.toArray(_.map(attribute.pretty, (pretty) => {
+                return pretty + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
+            }))
+        } else {
+            attribute.pretty[0] = attribute.pretty[0] + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
+        }
+        if (needsMatchLatLon) {
+            attribute = selectAttributeProgrammatically(attribute, attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1], geoTag);
+            attribute.grouped = true;
+        }
     }
 
     /**
@@ -147,7 +147,7 @@ function (
      * @param needsMatchLatLon
      * @returns {*}
      */
-    function locationNeedsMatchedAttribute(attribute, ignoreMatch, geoTag) {
+    function locationNeedsMatchedAttribute(attribute, ignoreMatch) {
         let needsMatchLatLon = ignoreMatch;
         if (!!ignoreMatch == false && attribute.selectedTag.tag_name === 'geo' && attribute.selectedHxlAttributes.length < 2) {
             needsMatchLatLon = _.filter(attribute.selectedHxlAttributes, (selected) => {
@@ -176,7 +176,7 @@ function (
         }
         return attribute;
     }
-    
+
     function formatIds() {
         let hxlData = [];
         _.each($scope.forms, (form) => {
