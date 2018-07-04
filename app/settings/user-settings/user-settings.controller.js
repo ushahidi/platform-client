@@ -70,6 +70,7 @@ function (
     }
 
     function changeKey() {
+        $scope.hdxSettings.hdx_api_key.config_value = '';
         $scope.hxlApiKeySet = false;
     }
 
