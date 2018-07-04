@@ -1,15 +1,16 @@
 import angular from 'angular';
 import ravenService from './raven.service';
 
+const ravenUrl = window.ushahidi.ravenUrl || false;
 let ravenModule;
 // Load raven if configured
-if (RAVEN_URL) {
+if (ravenUrl) {
     let Raven = require('raven-js');
 
     Raven
-        .config(RAVEN_URL, {
+        .config(ravenUrl, {
             release: GIT_COMMIT,
-            environment: ENVIRONMENT,
+            environment: window.ushahidi.environment || ENVIRONMENT,
             tags: {
                 git_commit: GIT_COMMIT
             },
@@ -47,7 +48,7 @@ if (RAVEN_URL) {
     })
 
     .run(['ravenService', (ravenService) => {
-        if (RAVEN_URL) {
+        if (ravenUrl) {
             ravenService.init();
         }
     }])

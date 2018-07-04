@@ -98,7 +98,6 @@ module.exports = {
 
     new webpack.DefinePlugin({
         BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined'),
-        RAVEN_URL: JSON.stringify(process.env.RAVEN_URL || false),
         ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT || 'dev'),
         GIT_COMMIT: JSON.stringify(GIT_COMMIT || false)
     }),
