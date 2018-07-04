@@ -22,14 +22,12 @@ require('angular-linkify');
 require('./common/common-module.js');
 require('./main/main-module.js');
 require('./settings/settings.module.js');
+import ravenModule from './common/raven/raven';
 
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
 require('../sass/vendor.scss');
-
-// Stub ngRaven module incase its not configured
-angular.module('ngRaven', []);
 
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
@@ -80,7 +78,7 @@ angular.module('app',
         'nvd3',
         'angular-cache',
         'linkify',
-        'ngRaven',
+        ravenModule,
         'ushahidi.common',
         'ushahidi.main',
         'ushahidi.settings',

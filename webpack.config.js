@@ -7,6 +7,14 @@ var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/asset
 
 var extractCss = new ExtractTextPlugin('[name].[chunkhash].css');
 
+var GIT_COMMIT;
+// Try to get the current GIT COMMIT
+try {
+  GIT_COMMIT = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+} catch (e) {
+  GIT_COMMIT = process.env.CI_COMMIT_ID || null;
+}
+
 module.exports = {
   devtool: 'source-map',
   entry: {'app': [
@@ -89,7 +97,9 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
     new webpack.DefinePlugin({
-        BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined')
+        BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined'),
+        ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT || 'dev'),
+        GIT_COMMIT: JSON.stringify(GIT_COMMIT || false)
     }),
 
     // Injects bundles in your index.html instead of wiring all manually.
