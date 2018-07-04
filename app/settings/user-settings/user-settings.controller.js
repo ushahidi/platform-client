@@ -32,10 +32,10 @@ function (
             config_key: 'hdx_api_key',
             config_value: ''
         },
-        'hdx_user_id': {
+        'hdx_maintainer_id': {
             id: null,
             user_id: $rootScope.currentUser.userId,
-            config_key: 'hdx_user_id',
+            config_key: 'hdx_maintainer_id',
             config_value: ''
         }
     };
@@ -53,18 +53,21 @@ function (
     UserSettingsEndpoint.getFresh({id: $rootScope.currentUser.userId}).$promise.then((settings) => {
         _.each(settings.results, (setting) => {
             setting.user_id = setting.user.id;
-
-            if (setting.config_key === 'hdx_api_key') {
-                setting.config_value = '*** *** *** *** *** *** *** ' + setting.config_value.slice(setting.config_value.length - 4);
-                $scope.hdxSettings.hdx_api_key = setting;
-                $scope.hxlApiKeySet = true;
-            }
-            if (setting.config_key === 'hdx_maintainer_id') {
-                $scope.hxlMaintainerSet = true;
-                $scope.hdxSettings.hdx_user_id = setting;
-            }
+            updateSettings(setting);
         });
     });
+
+    function updateSettings(setting) {
+        if (setting.config_key === 'hdx_api_key') {
+            setting.config_value = '*** *** *** *** *** *** *** ' + setting.config_value.slice(setting.config_value.length - 4);
+            $scope.hdxSettings.hdx_api_key = setting;
+            $scope.hxlApiKeySet = true;
+        }
+        if (setting.config_key === 'hdx_maintainer_id') {
+            $scope.hxlMaintainerSet = true;
+            $scope.hdxSettings.hdx_maintainer_id = setting;
+        }
+    }
 
     function changeKey() {
         $scope.hxlApiKeySet = false;
@@ -89,15 +92,19 @@ function (
 
         if ($scope.api.hdx_maintainer_id.$dirty) {
             calls.push(
-                UserSettingsEndpoint.saveCache($scope.hdxSettings.hdx_user_id).$promise
+                UserSettingsEndpoint.saveCache($scope.hdxSettings.hdx_maintainer_id).$promise
             );
         }
 
         $q.all(calls).then((response) => {
-            $scope.hxlMaintainerSet = true;
-            $scope.hxlApiKeySet = true;
-            $scope.hxlApiKey = '*** *** *** *** *** *** *** ' + $scope.hdxSettings.hdx_api_key.config_value.slice($scope.hdxSettings.hdx_api_key.config_value.length - 4);
+            _.each(response, (setting) => {
+                updateSettings(setting);
+            });
             Notify.notifyAction('settings.user_settings.api_key_saved', null, false, 'thumb-up', 'circle-icon confirmation', {callback: goToHdxView, text: 'settings.user_settings.start_tagging', callbackArg: null, actionClass: 'button button-alpha'});
-        });
+        }, handleResponseErrors);
+    }
+
+    function handleResponseErrors(errorResponse) {
+        Notify.apiErrors(errorResponse);
     }
 }];
