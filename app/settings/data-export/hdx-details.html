@@ -123,24 +123,6 @@
                 </div>
 
                 <div class="form-field" ng-class="{
-                    'error': metadata.maintainer.$invalid && metadata.maintainer.$dirty,
-                    'success': !metadata.maintainer.$invalid && metadata.maintainer.$dirty
-                }">
-                    <label for="maintainer" class="required" translate="data_export.maintainer">Maintainer</label>
-                    <input name="maintainer" ng-required="true" ng-model="details.maintainer" type="text">
-                    <div
-                        class="alert error"
-                        ng-show="metadata.maintainer.$invalid && metadata.maintainer.$dirty"
-                        ng-repeat="(error, value) in metadata.maintainer.$error"
-                    >
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                        </svg>
-                        <p translate="{{'data_export.validation.maintainer'}}"></p>
-                    </div>
-                </div>
-
-                <div class="form-field" ng-class="{
                     'error': metadata.license.$invalid && metadata.license.$dirty,
                     'success': !metadata.license.$invalid && metadata.license.$dirty
                 }">

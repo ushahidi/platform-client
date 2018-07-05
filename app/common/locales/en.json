@@ -959,9 +959,11 @@
             "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
             "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
             "view_guide": "View the guide to your API key",
+            "hdx_maintainer_id" : "HDX Maintainer Id",
             "api_key": "Api key",
             "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
             "valid_key": "A valid key is required",
+            "valid_user": "A valid maintainer id is required",
             "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
             "start_tagging": "Start tagging data"
         },
@@ -1139,7 +1141,6 @@
         "source": "Source",
         "organisation": "Organisation",
         "select_organisation": "Select an organisation",
-        "maintainer": "Maintainer",
         "license": "License",
         "add_license": "Add license",
         "read_more_licenses":"Read more about licenses",
@@ -1152,7 +1153,6 @@
             "title": "A title is needed",
             "source": "Source is needed",
             "organisation": "An organisation is needed",
-            "maintainer": "A maintainer is needed",
             "license": "A license is needed",
             "all_fields": "Please fill in all required fields"
         }
