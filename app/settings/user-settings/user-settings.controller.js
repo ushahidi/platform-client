@@ -114,7 +114,7 @@ function (
         }
 
         if ($scope.api.hdx_maintainer_id.$dirty) {
-            tmpSetting = $scope.hdxSettings.hdx_api_key;
+            tmpSetting = $scope.hdxSettings.hdx_maintainer_id;
             tmpSetting.config_value = $scope.tempMaintainerId;
             calls.push(
                 UserSettingsEndpoint.saveCache(tmpSetting).$promise
