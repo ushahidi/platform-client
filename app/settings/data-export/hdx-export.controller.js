@@ -119,24 +119,19 @@ function (
     }
 
     function selectHxlAttribute(attribute, ignoreMatch) {
-        if (_.isUndefined(attribute.pretty)) {
-            attribute.pretty = [];
-        }
-        let prettyIndex = 0;
         let geoTag = _.find(attribute.tags, (tag) => {
             return tag.tag_name === 'geo';
         });
         let needsMatchLatLon = locationNeedsMatchedAttribute(attribute, ignoreMatch);
-        if (attribute.grouped) {
+        if (attribute.grouped && !needsMatchLatLon) {
             attribute.pretty = _.toArray(_.map(attribute.pretty, (pretty) => {
                 return pretty + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
             }))
-        } else {
-            attribute.pretty[0] = attribute.pretty[0] + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
-        }
-        if (needsMatchLatLon) {
+        } else if (needsMatchLatLon) {
             attribute = selectAttributeProgrammatically(attribute, attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1], geoTag);
             attribute.grouped = true;
+        } else {
+            attribute.pretty[0] = attribute.pretty[0] + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
         }
     }
 
@@ -149,7 +144,7 @@ function (
      */
     function locationNeedsMatchedAttribute(attribute, ignoreMatch) {
         let needsMatchLatLon = ignoreMatch;
-        if (!!ignoreMatch == false && attribute.selectedTag.tag_name === 'geo' && attribute.selectedHxlAttributes.length < 2) {
+        if (!!ignoreMatch == false && attribute.selectedTag.tag_name === 'geo') {
             needsMatchLatLon = _.filter(attribute.selectedHxlAttributes, (selected) => {
                 return selected.attribute === 'lon' || selected.attribute === 'lat';
             }).length;
@@ -170,9 +165,19 @@ function (
                 return hxl.attribute === 'lon';
             });
         }
-        attribute.selectedHxlAttributes.push(opposite);
         if (opposite) {
-            attribute.pretty.push('#' + attribute.selectedTag.tag_name +  '+' + opposite.attribute);
+            attribute.selectedHxlAttributes.push(opposite);
+            let newPretty = [];
+            _.each(attribute.pretty, (p) => {
+                if (p === "#geo") {
+                    newPretty.push('#geo+lat');
+                    newPretty.push('#geo+lon');
+                } else {
+                    newPretty.push('#geo+lat+' + p.replace("#geo+", ""));
+                    newPretty.push('#geo+lon+' + p.replace("#geo+", ""));
+                }
+            });
+            attribute.pretty = newPretty;
         }
         return attribute;
     }
@@ -187,7 +192,7 @@ function (
                     if (formAttribute.selectedHxlAttributes && !_.isEmpty(formAttribute.selectedHxlAttributes)) {
                         _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
                             let objWithAttr = angular.copy(obj);
-                            objWithAttr.hxl_attribute_id = parseInt(hxlAttribute.id);
+                            objWithAttr.hxl_attribute_id = parseInt(getHxlAttributeByTagIdAndName(formAttribute, hxlAttribute.attribute).id);
                             hxlData.push(objWithAttr);
                         });
                     } else {
@@ -197,6 +202,11 @@ function (
             });
         });
         return hxlData;
+    }
+
+    function getHxlAttributeByTagIdAndName(formAttribute, hxlAttributeName) {
+        const tag = _.findWhere(formAttribute.tags, {id: formAttribute.selectedTag.id});
+        return _.findWhere(tag.hxl_attributes, {attribute: hxlAttributeName});
     }
 
     function exportData(sendToHDX) {
