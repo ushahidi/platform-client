@@ -68,7 +68,7 @@ function (
     function hxlAttributeSelected(hxlAttribute, formAttribute, index) {
         let disabled = false;
         // hack to not disable the value in the current dropdown
-        let selectedHxlAttributes = _.toArray(angular.copy(formAttribute.selectedHxlAttributes));
+        let selectedHxlAttributes = angular.copy(formAttribute.selectedHxlAttributes);
         delete selectedHxlAttributes[index];
         if (_.findWhere(selectedHxlAttributes, {attribute: hxlAttribute.attribute})) {
             disabled = true;
@@ -109,75 +109,73 @@ function (
 
     function selectTag(attribute) {
         if (attribute.selectedTag && attribute.selectedTag.tag_name) {
-            attribute.pretty = ['#' + attribute.selectedTag.tag_name];
+            attribute.hxl_label = ['#' + attribute.selectedTag.tag_name];
         } else {
-            attribute.pretty = [];
+            attribute.hxl_label = [];
             addAnother(attribute);
         }
 
         attribute.selectedHxlAttributes = [];
     }
 
-    function selectHxlAttribute(attribute, ignoreMatch) {
-        let geoTag = _.find(attribute.tags, (tag) => {
-            return tag.tag_name === 'geo';
-        });
-        let needsMatchLatLon = locationNeedsMatchedAttribute(attribute, ignoreMatch);
-        if (attribute.grouped && !needsMatchLatLon) {
-            attribute.pretty = _.toArray(_.map(attribute.pretty, (pretty) => {
-                return pretty + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
-            }))
+    function selectHxlAttribute(attribute) {
+
+        let needsMatchLatLon = needsMatchedAttribute(attribute);
+        if (attribute.grouped_hxl_label && !needsMatchLatLon) {
+            attribute.hxl_label = _.toArray(_.map(attribute.hxl_label, (hxl_label) => {
+                return hxl_label + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
+            }));
         } else if (needsMatchLatLon) {
-            attribute = selectAttributeProgrammatically(attribute, attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1], geoTag);
-            attribute.grouped = true;
+            attribute = selectAttributeProgrammatically(attribute, attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1]);
         } else {
-            attribute.pretty[0] = attribute.pretty[0] + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
+            attribute.hxl_label[0] = attribute.hxl_label[0] + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
         }
     }
 
     /**
-     * Checks if there is a geo tag name and if there is, it checks if we need a matched lat/lon attribute
+     * Checks if we need a matched lat/lon attribute.
+     * Only applies to #geo tags with a lat/lon attribute selected
      * @param attribute
      * @param ignoreMatch
      * @param needsMatchLatLon
      * @returns {*}
      */
-    function locationNeedsMatchedAttribute(attribute, ignoreMatch) {
-        let needsMatchLatLon = ignoreMatch;
-        if (!!ignoreMatch == false && attribute.selectedTag.tag_name === 'geo') {
-            needsMatchLatLon = _.filter(attribute.selectedHxlAttributes, (selected) => {
-                return selected.attribute === 'lon' || selected.attribute === 'lat';
-            }).length;
-            needsMatchLatLon = needsMatchLatLon === 1;
+    function needsMatchedAttribute(attribute) {
+        if (attribute.selectedTag.tag_name !== 'geo') {
+            return false;
         }
-        return needsMatchLatLon;
+        let needs_match = _.filter(attribute.selectedHxlAttributes, (selected) => {
+            return selected.attribute === 'lon' || selected.attribute === 'lat';
+        }).length;
+        return needs_match === 1;
     }
 
-    function selectAttributeProgrammatically(attribute, hxl_attribute, geoTag) {
-        let opposite = null;
-        addAnother(attribute);
-        if (hxl_attribute.attribute === 'lon') {
-            opposite = _.find(geoTag.hxl_attributes, (hxl) => {
-                return hxl.attribute === 'lat';
-            });
-        } else if (hxl_attribute.attribute === 'lat') {
-            opposite = _.find(geoTag.hxl_attributes, (hxl) => {
-                return hxl.attribute === 'lon';
-            });
-        }
+    function selectAttributeProgrammatically(attribute, hxl_attribute) {
+        let geo_tag = _.find(attribute.tags, (tag) => {
+            return tag.tag_name === 'geo';
+        });
+        const opposite_attribute_str = hxl_attribute.attribute === 'lat' ? 'lon' : 'lat';
+        let opposite = _.find(geo_tag.hxl_attributes, (hxl) => {
+            return hxl.attribute === opposite_attribute_str;
+        });
         if (opposite) {
+            addAnother(attribute);
             attribute.selectedHxlAttributes.push(opposite);
-            let newPretty = [];
-            _.each(attribute.pretty, (p) => {
-                if (p === "#geo") {
-                    newPretty.push('#geo+lat');
-                    newPretty.push('#geo+lon');
+            let new_hxl_label = [];
+            _.each(attribute.hxl_label, (hxl_label) => {
+                if (hxl_label === '#geo') {
+                    // there is nothing else selected before this attribute, so we just create the labels with the correct values
+                    new_hxl_label.push('#geo+lat');
+                    new_hxl_label.push('#geo+lon');
                 } else {
-                    newPretty.push('#geo+lat+' + p.replace("#geo+", ""));
-                    newPretty.push('#geo+lon+' + p.replace("#geo+", ""));
+                    // the label already has some values that we need to add lat/lon to,
+                    // separated in 2 items so that it displays #geo+lat+something, #geo+lon+something in the UI
+                    new_hxl_label.push('#geo+lat+' + hxl_label.replace('#geo+', ''));
+                    new_hxl_label.push('#geo+lon+' + hxl_label.replace('#geo+', ''));
                 }
             });
-            attribute.pretty = newPretty;
+            attribute.hxl_label = new_hxl_label;
+            attribute.grouped_hxl_label = true;
         }
         return attribute;
     }
