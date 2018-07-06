@@ -18,17 +18,21 @@ if (ravenUrl) {
             dataCallback: (data) => {
                 // Replace stringified sensitive info
                 if (data.message) {
-                    data.message = data.message.replace(/"Authorization":"(.*?)"/, '"Authorization":"****"');
-                    data.message = data.message.replace(/"client_secret":"(.*?)"/, '"client_secret":"****"');
-                    data.message = data.message.replace(/"password":"(.*?)"/, '"password":"****"');
-                    data.message = data.message.replace(/"accessToken":"(.*?)"/, '"accessToken":"****"');
+                    data.message = data.message.replace(/"(Authorization|client_secret|password|accessToken)":"(.*?)"/, '"$1":"****"');
                 }
 
-                if (data.fingerprint && data.fingerprint[0]) {
-                    data.fingerprint[0] = data.fingerprint[0].replace(/"Authorization":"(.*?)"/, '"Authorization":"****"');
-                    data.fingerprint[0] = data.fingerprint[0].replace(/"client_secret":"(.*?)"/, '"client_secret":"****"');
-                    data.fingerprint[0] = data.fingerprint[0].replace(/"password":"(.*?)"/, '"password":"****"');
-                    data.fingerprint[0] = data.fingerprint[0].replace(/"accessToken":"(.*?)"/, '"accessToken":"****"');
+                if (data.fingerprint) {
+                    data.fingerprint.forEach((value, index) => {
+                        data.fingerprint[index] = value.replace(/"(Authorization|client_secret|password|accessToken)":"(.*?)"/, '"$1":"****"');
+                    });
+                }
+
+                if (data.breadcrumbs && data.breadcrumbs.values) {
+                    data.breadcrumbs.values.forEach((value, index) => {
+                        if (value.message) {
+                            data.breadcrumbs.values[index].message = value.message.replace(/"(Authorization|client_secret|password|accessToken)":"(.*?)"/, '"$1":"****"');
+                        }
+                    });
                 }
             }
         })
