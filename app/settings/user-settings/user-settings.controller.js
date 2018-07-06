@@ -22,9 +22,17 @@ function (
     $scope.saveKey = saveKey;
     $scope.changeKey = changeKey;
     $scope.changeId = changeId;
-    $scope.hxlApiKeySet = false;
+
+    $scope.showCancel = false;
     $scope.hxlMaintainerSet = false;
+    $scope.hxlApiKeySet = false;
+    $scope.cancelMaintainerSet = cancelMaintainerSet;
+    $scope.cancelApiKeySet = cancelApiKeySet;
     $scope.isLoading = LoadingProgress.getLoadingState;
+
+    $scope.tempApiKey = '';
+    $scope.tempMaintainerId = '';
+
     $scope.hdxSettings = {
         'hdx_api_key': {
             id: null,
@@ -62,20 +70,32 @@ function (
             setting.config_value = '*** *** *** *** *** *** *** ' + setting.config_value.slice(setting.config_value.length - 4);
             $scope.hdxSettings.hdx_api_key = setting;
             $scope.hxlApiKeySet = true;
+            $scope.showCancel = true;
         }
         if (setting.config_key === 'hdx_maintainer_id') {
             $scope.hxlMaintainerSet = true;
+            $scope.tempMaintainerId = setting.config_value;
             $scope.hdxSettings.hdx_maintainer_id = setting;
+            $scope.showCancel = true;
         }
     }
 
     function changeKey() {
-        $scope.hdxSettings.hdx_api_key.config_value = '';
         $scope.hxlApiKeySet = false;
     }
 
     function changeId() {
         $scope.hxlMaintainerSet = false;
+    }
+
+    function cancelMaintainerSet() {
+        $scope.tempMaintainerId = $scope.hdxSettings.hdx_maintainer_id.config_value;
+        $scope.hxlMaintainerSet = true;
+    }
+
+    function cancelApiKeySet() {
+        $scope.tempApiKey = '';
+        $scope.hxlApiKeySet = true;
     }
 
     function goToHdxView() {
@@ -84,16 +104,20 @@ function (
 
     function saveKey() {
         var calls = [];
-
-        if ($scope.api['api-key'].$dirty) {
+        var tmpSetting;
+        if ($scope.api.api_key.$dirty) {
+            tmpSetting = $scope.hdxSettings.hdx_api_key;
+            tmpSetting.config_value = $scope.tempApiKey;
             calls.push(
-                UserSettingsEndpoint.saveCache($scope.hdxSettings.hdx_api_key).$promise
+                UserSettingsEndpoint.saveCache(tmpSetting).$promise
             );
         }
 
         if ($scope.api.hdx_maintainer_id.$dirty) {
+            tmpSetting = $scope.hdxSettings.hdx_maintainer_id;
+            tmpSetting.config_value = $scope.tempMaintainerId;
             calls.push(
-                UserSettingsEndpoint.saveCache($scope.hdxSettings.hdx_maintainer_id).$promise
+                UserSettingsEndpoint.saveCache(tmpSetting).$promise
             );
         }
 
