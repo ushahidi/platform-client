@@ -108,6 +108,7 @@ function (
     }
 
     function selectTag(attribute) {
+        attribute.selected = true;
         if (attribute.selectedTag && attribute.selectedTag.tag_name) {
             attribute.hxl_label = ['#' + attribute.selectedTag.tag_name];
         } else {

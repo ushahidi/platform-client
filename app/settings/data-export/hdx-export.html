@@ -98,7 +98,7 @@
                                     <input type="checkbox" ng-model="form.selected" ng-value="1" ng-change="selectAll(form)">
                                 </td>
                                 <td>
-                                    <em translate="nav.select_all">Select all</em>
+                                    <em translate="nav.select_all">Select all<em>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -107,21 +107,21 @@
                             <tr ng-repeat="formAttribute in form.attributes">
                                 <td class="form-field">
                                     <input
-                                        type="checkbox"F
+                                        type="checkbox"
                                         checklist-model="formAttribute.selected"
                                         checklist-value="formAttribute.id"
-                                        ng-selected="formAttribute.selected"
+                                        ng-checked="formAttribute.selected"
                                     >
                                 </td>
                                 <td>
-                                    <p><bdi>{{formAttribute.label}}</bdi></p>
+                                    <p ng-click="formAttribute.selected = !formAttribute.selected"><bdi>{{formAttribute.label}}</bdi></p>
                                 </td>
                                 <td>
                                     <div class="custom-select">
                                         <select
                                             ng-model="formAttribute.selectedTag"
                                             ng-options="tag as tag.tag_name for tag in formAttribute.tags track by tag.id"
-                                            ng-disabled="!formAttribute.selected || formAttribute.selected.length < 1"
+
                                             ng-change="selectTag(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
@@ -129,20 +129,21 @@
                                     </div>
                                 </td>
                                 <td class="form-field">
-                                    <div class="custom-select" ng-repeat="a in range(formAttribute)">
+                                    <div class="custom-select" ng-repeat="index in range(formAttribute)">
                                         <select
-                                                ng-disabled="!formAttribute.selectedTag"
-                                                ng-model="formAttribute.selectedHxlAttributes[a].attribute"
-                                                ng-change="selectHxlAttribute(formAttribute)"
+                                            ng-disabled="!formAttribute.selectedTag && !formAttribute.selected"
+                                            ng-model="formAttribute.selectedHxlAttributes[index].attribute"
+                                            ng-change="selectHxlAttribute(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
                                             <option
-                                                    ng-value="hxlAttribute.attribute"
-                                                    ng-repeat="hxlAttribute in formAttribute.selectedTag.hxl_attributes"
-                                                    ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, a)"
+                                                ng-value="hxlAttribute.attribute"
+                                                ng-repeat="hxlAttribute in formAttribute.selectedTag.hxl_attributes"
+                                                ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, index)"
                                             >
-                                                {{hxlAttribute.attribute}}
+                                                 {{hxlAttribute.attribute}}
                                             </option>
+
                                         </select>
                                     </div>
                                     <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl attribute?</a>
@@ -166,3 +167,4 @@
         </div>
     </main>
 </div>
+    
