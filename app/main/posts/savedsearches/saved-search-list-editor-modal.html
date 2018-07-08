@@ -8,7 +8,7 @@
                 <div class="form-field checkbox">
                     <label>
                         <input type="checkbox" ng-model="savedSearch" checklist-model="selectedSavedSearches" checklist-value="savedSearch.id" name="selectedSavedSearches">
-                        {{savedSearch.name}}
+                        {{savedSearch.name | translate}}
                     </label>
                 </div>
             </div>
@@ -23,10 +23,9 @@
                     <div class="line"></div>
                     <div class="line"></div>
                 </div>
-                <span class="button-label">Saving</span>
+                <span class="button-label" translate="app.saving">Saving</span>
             </button>
             <button type="submit" class="button-alpha" ng-class="{disabled: selectedSavedSearches.length < 1}" translate ng-click="delete()" ng-show="!processing">app.delete</button>
         </div>
     </div>
 </div>
-

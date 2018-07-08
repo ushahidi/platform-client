@@ -123,15 +123,6 @@
             }
         </script>
         <script>
-            if (window.ushahidi && window.ushahidi.ravenUrl) {
-                (function(d, t, c, s) {
-                    var g = d.createElement(t);g.id = 'ravenScript';g.type = 'text/javascript';g.async = true; g.src = 'https://cdn.ravenjs.com/3.8.0/angular/raven.min.js';g.onload=c;g.onreadystatechange=c; s = d.getElementsByTagName(t)[0];s.parentNode.insertBefore(g, s);
-                }(document, 'script', function () {
-                    Raven.config(window.ushahidi.ravenUrl).install();
-                }));
-            }
-        </script>
-        <script>
             if (window.ushahidi && window.ushahidi.googleMapsApiKey) {
                 (function(d, t, c, s) {
                     var g = d.createElement(t);g.id = 'mapsApi';g.type = 'text/javascript';g.async = true; g.src = 'https://maps.googleapis.com/maps/api/js?key=' + window.ushahidi.googleMapsApiKey + '&libraries=places';g.onload=c;g.onreadystatechange=c; s = d.getElementsByTagName(t)[0];s.parentNode.insertBefore(g, s);
