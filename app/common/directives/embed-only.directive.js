@@ -1,4 +1,4 @@
-module.exports = EmbedOnlyDirective;
+import isEmbed from '../services/isEmbed';
 
 EmbedOnlyDirective.$inject = [];
 function EmbedOnlyDirective() {
@@ -8,13 +8,13 @@ function EmbedOnlyDirective() {
     };
 }
 
-EmbedOnlyController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '_', '$window'];
-function EmbedOnlyController($scope, $element, $attrs, $rootScope, _, $window) {
-    var globalEmbed = ($window.self !== $window.top) ? true : false;
-
-    if (globalEmbed && ($attrs.embedOnly === 'false')) {
+EmbedOnlyController.$inject = ['$scope', '$element', '$attrs'];
+function EmbedOnlyController($scope, $element, $attrs) {
+    if (isEmbed() && ($attrs.embedOnly === 'false')) {
         $element.addClass('hidden');
-    } else if (!globalEmbed && ($attrs.embedOnly === 'true')) {
+    } else if (!isEmbed() && ($attrs.embedOnly === 'true')) {
         $element.addClass('hidden');
     }
 }
+
+export default EmbedOnlyDirective;
