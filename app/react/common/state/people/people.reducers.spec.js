@@ -1,13 +1,6 @@
 import deepFreeze from "deep-freeze";
 import PeopleReducer, { getPeople, getPerson } from "./people.reducers";
-import {
-    RECEIVE_NEW_PERSON,
-    UPDATE_PERSON_IN_LIST,
-} from "./people.actions";
-
-const error = {
-    errorMessage: "error!"
-};
+import { RECEIVE_PERSON } from "./people.actions";
 
 const person = {
     id: 5,
@@ -39,14 +32,13 @@ const initialState = {
     people: {}
 };
 describe("People Reducers", () => {
-    test("RECEIVE_NEW_PERSON adds a newly saved person to the people state array ", () => {
+    test("RECEIVE_PERSON adds a newly saved person to the empty people state", () => {
         const action = {
-            type: RECEIVE_NEW_PERSON,
+            type: RECEIVE_PERSON,
             person
         };
         const stateAfter = {
-            people: {5: person}
-    
+            people: { 5: person }
         };
 
         const stateBefore = initialState;
@@ -55,24 +47,24 @@ describe("People Reducers", () => {
         deepFreeze(action);
         expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
     });
-    test("UPDATE_PERSON_IN_LIST returns people array with the single person updated", () => {
+    test("RECEIVE_PERSON returns people state with the single person updated", () => {
         const action = {
-            type: UPDATE_PERSON_IN_LIST,
+            type: RECEIVE_PERSON,
             person: { id: 4, name: "Success!" }
         };
         // setting initial state locally so that we can test to ensure
         // the people array returns with existing people
         const localInitialState = {
             people: {
-                5: person, 
-                4: { id: 4, name: "tester" }, 
+                5: person,
+                4: { id: 4, name: "tester" },
                 3: person
             }
         };
         const stateAfter = {
             people: {
-                5: person, 
-                4: { id: 4, name: "Success!" }, 
+                5: person,
+                4: { id: 4, name: "Success!" },
                 3: person
             }
         };
@@ -87,14 +79,14 @@ describe("People Reducers", () => {
         const fakeState = {
             people: {
                 people: {
-                    1: {id: 1},
-                    2: {id: 2},
-                    3: {id: 3}
+                    1: { id: 1 },
+                    2: { id: 2 },
+                    3: { id: 3 }
                 }
             }
         };
 
-        const expected = [{id:1}, {id:2}, {id:3}];
+        const expected = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
         expect(getPeople(fakeState)).toEqual(expected);
     });
@@ -102,16 +94,15 @@ describe("People Reducers", () => {
         const fakeState = {
             people: {
                 people: {
-                    1: {id: 1},
-                    2: {id: 2},
-                    3: {id: 3}
+                    1: { id: 1 },
+                    2: { id: 2 },
+                    3: { id: 3 }
                 }
             }
         };
 
-        const expected = {id:1};
+        const expected = { id: 1 };
 
-        expect(getPerson(fakeState, {id: 1})).toEqual(expected);
+        expect(getPerson(fakeState, { id: 1 })).toEqual(expected);
     });
-    
 });
