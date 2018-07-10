@@ -1,0 +1,7 @@
+@mixin animation($aniname: name, $aniduration: 1s, $animtiming: ease, $animdelay: 0s, $animiteration: 1, $animdirection: normal, $animfillmode: none) {
+    -webkit-animation: $aniname $aniduration $animtiming $animdelay $animiteration $animdirection $animfillmode;
+    -moz-animation: $aniname $aniduration $animtiming $animdelay $animiteration $animdirection $animfillmode;
+    -ms-animation: $aniname $aniduration $animtiming $animdelay $animiteration $animdirection $animfillmode;
+    -o-animation: $aniname $aniduration $animtiming $animdelay $animiteration $animdirection $animfillmode;
+    animation: $aniname $aniduration $animtiming $animdelay $animiteration $animdirection $animfillmode;
+}
