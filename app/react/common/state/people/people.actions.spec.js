@@ -4,18 +4,19 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import expect from "expect";
 import {
+    HANDLE_REQUEST,
+    HANDLE_SUCCESS,
+    HANDLE_FAILURE
+} from "react/common/state/globalHandlers/handlers.actions";
+import {
     SAVE_NEW_PERSON,
-    RECEIVE_NEW_PERSON,
-    HANDLE_REQUEST_FAILURE,
+    RECEIVE_PERSON,
     saveNewPerson,
     updatePerson,
     UPDATE_PERSON,
-    UPDATE_PERSON_IN_LIST,
     REQUEST_PERSON,
-    requestPerson,
-    RECEIVE_PERSON_FOR_EDITING
+    requestPerson
 } from "./people.actions";
-import { HANDLE_REQUEST, HANDLE_SUCCESS, HANDLE_FAILURE } from "react/common/state/globalHandlers/handlers.actions"
 
 const error = {
     error: {
@@ -38,7 +39,7 @@ describe("People Actions", () => {
         moxios.uninstall(instance);
     });
 
-    it("(saveNewUser) creates HANDLE_REQUEST, HANDLE_SUCCESS, and RECEIVE_NEW_PERSON when saving a new person is successful", () => {
+    it("(saveNewUser) creates HANDLE_REQUEST, HANDLE_SUCCESS, and RECEIVE_PERSON when saving a new person is successful", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
@@ -47,19 +48,18 @@ describe("People Actions", () => {
             });
         });
         const expectedActions = [
-            { 
+            {
                 type: HANDLE_REQUEST,
-                previousAction: {type: SAVE_NEW_PERSON}
+                previousAction: { type: SAVE_NEW_PERSON }
             },
             {
                 type: HANDLE_SUCCESS,
-                previousAction: {type: SAVE_NEW_PERSON}
+                previousAction: { type: SAVE_NEW_PERSON }
             },
-            { 
-                type: RECEIVE_NEW_PERSON, 
-                person: personResponse 
+            {
+                type: RECEIVE_PERSON,
+                person: personResponse
             }
-
         ];
         const store = mockStore({ people: [] });
         return store.dispatch(saveNewPerson()).then(() => {
@@ -77,13 +77,13 @@ describe("People Actions", () => {
             });
         });
         const expectedActions = [
-            { 
+            {
                 type: HANDLE_REQUEST,
-                previousAction: {type: SAVE_NEW_PERSON}
+                previousAction: { type: SAVE_NEW_PERSON }
             },
             {
                 type: HANDLE_FAILURE,
-                previousAction: {type: SAVE_NEW_PERSON},
+                previousAction: { type: SAVE_NEW_PERSON },
                 error
             }
         ];
@@ -94,7 +94,7 @@ describe("People Actions", () => {
         });
     });
 
-    it("(updatePerson) creates HANDLE_REQUEST, HANDLE_SUCCESS, and UPDATE_PERSON_IN_LIST when updating a person successfully", () => {
+    it("(updatePerson) creates HANDLE_REQUEST, HANDLE_SUCCESS, and RECEIVE_PERSON when updating a person successfully", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
@@ -103,16 +103,16 @@ describe("People Actions", () => {
             });
         });
         const expectedActions = [
-            { 
+            {
                 type: HANDLE_REQUEST,
-                previousAction: {type: UPDATE_PERSON}
+                previousAction: { type: UPDATE_PERSON }
             },
             {
                 type: HANDLE_SUCCESS,
-                previousAction: {type: UPDATE_PERSON},
+                previousAction: { type: UPDATE_PERSON }
             },
             {
-                type: UPDATE_PERSON_IN_LIST,
+                type: RECEIVE_PERSON,
                 person: personResponse
             }
         ];
@@ -131,13 +131,13 @@ describe("People Actions", () => {
             });
         });
         const expectedActions = [
-            { 
+            {
                 type: HANDLE_REQUEST,
-                previousAction: {type: UPDATE_PERSON}
+                previousAction: { type: UPDATE_PERSON }
             },
             {
                 type: HANDLE_FAILURE,
-                previousAction: {type: UPDATE_PERSON},
+                previousAction: { type: UPDATE_PERSON },
                 error
             }
         ];
@@ -157,13 +157,17 @@ describe("People Actions", () => {
             });
         });
         const expectedActions = [
-            { 
+            {
                 type: HANDLE_REQUEST,
                 previousAction: { type: REQUEST_PERSON }
             },
             {
                 type: HANDLE_SUCCESS,
                 previousAction: { type: REQUEST_PERSON }
+            },
+            {
+                type: RECEIVE_PERSON,
+                person: personResponse
             }
         ];
         const store = mockStore({ people: [] });
@@ -183,7 +187,7 @@ describe("People Actions", () => {
         const expectedActions = [
             {
                 type: HANDLE_REQUEST,
-                previousAction: { type: REQUEST_PERSON },
+                previousAction: { type: REQUEST_PERSON }
             },
             {
                 type: HANDLE_FAILURE,

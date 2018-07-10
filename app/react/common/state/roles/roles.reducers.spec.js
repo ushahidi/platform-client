@@ -1,5 +1,5 @@
 import deepFreeze from "deep-freeze";
-import RolesReducer from "./roles.reducers";
+import RolesReducer, { getRoles } from "./roles.reducers";
 import { RECEIVE_ROLES } from "./roles.actions";
 
 // test data
@@ -15,7 +15,7 @@ const role = {
 };
 
 const initialState = {
-    roles: []
+    roles: {}
 };
 
 describe("Roles State", () => {
@@ -25,7 +25,7 @@ describe("Roles State", () => {
             roles: [role]
         };
         const stateAfter = {
-            roles: [role]
+            roles: { 1: role }
         };
 
         const stateBefore = initialState;
@@ -41,15 +41,33 @@ describe("Roles State", () => {
             roles: [role]
         };
         const stateAfter = {
-            roles: [{ testRole: 1 }, role]
+            roles: { 2: { testRole: 2 }, 1: role }
         };
 
         const stateBefore = {
-            roles: [{ testRole: 1 }]
+            roles: { 2: { testRole: 2 } }
         };
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
         expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
+    });
+});
+
+describe("Roles Selectors", () => {
+    test("getRoles returns an array of roles", () => {
+        const fakeState = {
+            roles: {
+                roles: {
+                    1: { id: 1 },
+                    2: { id: 2 },
+                    3: { id: 3 }
+                }
+            }
+        };
+
+        const expected = [{ id: 1 }, { id: 2 }, { id: 3 }];
+
+        expect(getRoles(fakeState)).toEqual(expected);
     });
 });

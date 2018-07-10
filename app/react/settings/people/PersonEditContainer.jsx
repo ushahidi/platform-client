@@ -41,20 +41,9 @@ const defaultProps = {
 };
 
 class PersonEditContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            person: {}
-        };
-    }
-
     componentDidMount() {
         if (this.props.person === undefined) {
-            this.props
-                .requestPerson(this.props.match.params.id)
-                .then(person => {
-                    this.setState({ person });
-                });
+            this.props.requestPerson(this.props.match.params.id);
         }
     }
 
@@ -79,11 +68,7 @@ class PersonEditContainer extends React.Component {
                         onSubmit={values =>
                             this.props.updatePerson(values, values.id)
                         }
-                        initialValues={
-                            this.props.person
-                                ? this.props.person
-                                : this.state.person
-                        }
+                        initialValues={this.props.person}
                         roles={this.props.roles}
                         isLoading={this.props.isLoading}
                         hasError={this.props.hasError}
