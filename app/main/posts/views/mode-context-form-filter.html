@@ -42,9 +42,12 @@
     </div>
 </form>
 <div class="tool" ng-show="unmapped > 0">
-    <p>There are
-        <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.
-    </p>
+        <p>
+            <span ng-show="unmapped < 2" translate="global_filter.unmapped_start_one"></span>
+            <span ng-show="unmapped > 1" translate="global_filter.unmapped_start_many"></span>
+            <a ng-click="goToUnmapped()" ng-show="unmapped < 2" translate="global_filter.unmapped_one" translate-values="{'post_nb': unmapped}">
+            <a ng-click="goToUnmapped()" ng-show="unmapped > 1" translate="global_filter.unmapped_many" translate-values="{'post_nb': unmapped}">
+        <strong>global_filter.unmapped_one</strong></a> <span translate="global_filter.unmapped_end"></span></p>
 </div>
 <div class="form-field" ng-show="hasManageSettingsPermission()">
     <a ui-sref="settings.surveys.create" class="button button-link">
@@ -59,7 +62,7 @@
     <filter-by-datasource post-stats="sourceStats" filters="filters"></filter-by-datasource>
 </div>
 <div class="tool">
-    <h6 class="tool-heading">Language</h6>
+    <h6 class="tool-heading" translate="app.language">Language</h6>
     <span class="tool-trigger init" ng-class="{'active': showLanguage}" ng-click="languageToggle()">
         <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
