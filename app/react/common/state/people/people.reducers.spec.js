@@ -75,6 +75,8 @@ describe("People Reducers", () => {
         deepFreeze(action);
         expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
     });
+});
+describe("People Selectors", () => {
     test("getPeople returns people array of people", () => {
         const fakeState = {
             people: {
