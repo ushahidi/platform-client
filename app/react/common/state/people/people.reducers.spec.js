@@ -1,5 +1,5 @@
 import deepFreeze from "deep-freeze";
-import PeopleReducer from "./people.reducers";
+import PeopleReducer, { getPeople, getPerson } from "./people.reducers";
 import {
     RECEIVE_NEW_PERSON,
     UPDATE_PERSON_IN_LIST,
@@ -36,7 +36,7 @@ const person = {
 };
 
 const initialState = {
-    people: []
+    people: {}
 };
 describe("People Reducers", () => {
     test("RECEIVE_NEW_PERSON adds a newly saved person to the people state array ", () => {
@@ -45,7 +45,7 @@ describe("People Reducers", () => {
             person
         };
         const stateAfter = {
-            people: [person]
+            people: {5: person}
     
         };
 
@@ -63,10 +63,18 @@ describe("People Reducers", () => {
         // setting initial state locally so that we can test to ensure
         // the people array returns with existing people
         const localInitialState = {
-            people: [person, person, { id: 4, name: "tester" }, person]
-            };
+            people: {
+                5: person, 
+                4: { id: 4, name: "tester" }, 
+                3: person
+            }
+        };
         const stateAfter = {
-            people: [person, person, { id: 4, name: "Success!" }, person]
+            people: {
+                5: person, 
+                4: { id: 4, name: "Success!" }, 
+                3: person
+            }
         };
 
         const stateBefore = localInitialState;
@@ -74,6 +82,36 @@ describe("People Reducers", () => {
         deepFreeze(stateAfter);
         deepFreeze(action);
         expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
+    });
+    test("getPeople returns people array of people", () => {
+        const fakeState = {
+            people: {
+                people: {
+                    1: {id: 1},
+                    2: {id: 2},
+                    3: {id: 3}
+                }
+            }
+        };
+
+        const expected = [{id:1}, {id:2}, {id:3}];
+
+        expect(getPeople(fakeState)).toEqual(expected);
+    });
+    test("getPerson return a person object based on the passed in ID", () => {
+        const fakeState = {
+            people: {
+                people: {
+                    1: {id: 1},
+                    2: {id: 2},
+                    3: {id: 3}
+                }
+            }
+        };
+
+        const expected = {id:1};
+
+        expect(getPerson(fakeState, {id: 1})).toEqual(expected);
     });
     
 });
