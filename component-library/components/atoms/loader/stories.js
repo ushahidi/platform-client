@@ -5,4 +5,5 @@ import Loader from "./loader";
 
 storiesOf("1 Atoms/Loaders", module)
     .add("default", () => <Loader loaderType="LOADER" />)
-    .add("alt", () => <Loader loaderType="ALT" />);
+    .add("alt", () => <Loader loaderType="ALT" />)
+    .add("logo", () => <Loader loaderType="LOGO" />);

@@ -6,7 +6,8 @@ import loader from "./loader.scss";
 
 const LoaderType = {
     LOADER: "loading-bar",
-    ALT: "loading-bar-alt"
+    ALT: "loading-bar-alt",
+    LOGO: "loader-logo"
 };
 
 const propTypes = {

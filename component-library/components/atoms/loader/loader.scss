@@ -9,108 +9,6 @@ prefixed classnames, write like this: */
 :global {
     .layout-g {
 
-        .loading-bar {
-            position: absolute;
-            height: 8px;
-            width: 40%;
-            background-color: $gold;
-            border-radius: 0 6px 6px 0;
-
-            &:after {
-                content: '';
-                position: absolute;
-                top: 0;
-                @include right(-1px);
-                width: 8px;
-                height: 8px;
-                border-radius: 6px;
-                background-color: $black;
-            }
-
-        }
-
-        .loading-bar-alt {
-            position: absolute;
-            height: 8px;
-            width: 100%;
-            background-color: $bg-gray;
-            border-radius: 6px;
-            overflow: hidden;
-
-            &:before {
-                display: block;
-                content: '';
-                position: absolute;
-                top: 0;
-                @include left(-28%);
-                width: 40%;
-                height: 8px;
-                border-radius: 6px;
-                background-color: $gold;
-                @include animation(loading, 2s, ease-in-out, 0s, infinite);
-            }
-        }
-
-        .loader-logo {
-            position: relative;
-            width: 300px;
-
-            img {
-                width: 125px;
-                margin: 0 auto $lg-spacing;
-            }
-
-        }
-
-        @keyframes loading {
-            0% {
-                transform: translate(-28%, 0px);
-            }
-
-            100% {
-                transform: translate(320%, 0px);
-            }
-        }
-
-        @-moz-keyframes loading {
-            0% {
-                -moz-transform: translate(-28%, 0px);
-            }
-
-            100% {
-                -moz-transform: translate(320%, 0px);
-            }
-        }
-
-        @-webkit-keyframes loading {
-            0% {
-                -webkit-transform: translate(-28%, 0px);
-            }
-
-            100% {
-                -webkit-transform: translate(320%, 0px);
-            }
-        }
-
-        @-o-keyframes loading {
-            0% {
-                -o-transform: translate(-28%, 0px);
-            }
-
-            100% {
-                -o-transform: translate(320%, 0px);
-            }
-        }
-
-        @-ms-keyframes loading {
-            0% {
-                -ms-transform: translate(-28%, 0px);
-            }
-
-            100% {
-                -ms-transform: translate(320%, 0px);
-            }
-        }
     }
 }
 
@@ -118,7 +16,108 @@ prefixed classnames, write like this: */
 
 :global(.layout-g) {
 
-    // add sass here
+    .loading-bar {
+        position: absolute;
+        height: 8px;
+        width: 40%;
+        background-color: $gold;
+        border-radius: 0 6px 6px 0;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            @include right(-1px);
+            width: 8px;
+            height: 8px;
+            border-radius: 6px;
+            background-color: $black;
+        }
+
+    }
+
+    .loading-bar-alt {
+        position: absolute;
+        height: 8px;
+        width: 100%;
+        background-color: $bg-gray;
+        border-radius: 6px;
+        overflow: hidden;
+
+        &:before {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            @include left(-28%);
+            width: 40%;
+            height: 8px;
+            border-radius: 6px;
+            background-color: $gold;
+            @include animation(loading, 2s, ease-in-out, 0s, infinite);
+        }
+    }
+
+    .loader-logo {
+        position: relative;
+        width: 300px;
+
+        img {
+            width: 125px;
+            margin: 0 auto $lg-spacing;
+        }
+
+    }
+
+    @keyframes loading {
+        0% {
+            transform: translate(-28%, 0px);
+        }
+
+        100% {
+            transform: translate(320%, 0px);
+        }
+    }
+
+    @-moz-keyframes loading {
+        0% {
+            -moz-transform: translate(-28%, 0px);
+        }
+
+        100% {
+            -moz-transform: translate(320%, 0px);
+        }
+    }
+
+    @-webkit-keyframes loading {
+        0% {
+            -webkit-transform: translate(-28%, 0px);
+        }
+
+        100% {
+            -webkit-transform: translate(320%, 0px);
+        }
+    }
+
+    @-o-keyframes loading {
+        0% {
+            -o-transform: translate(-28%, 0px);
+        }
+
+        100% {
+            -o-transform: translate(320%, 0px);
+        }
+    }
+
+    @-ms-keyframes loading {
+        0% {
+            -ms-transform: translate(-28%, 0px);
+        }
+
+        100% {
+            -ms-transform: translate(320%, 0px);
+        }
+    }
 
     /*if one of the selectors need to be global in a
     local sass-file, write like this for that specific selector:
