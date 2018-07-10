@@ -25,7 +25,7 @@ function (
             $scope.specialPlan = site.tier;
         }
     });
-    $scope.username = ($rootScope.currentUser || {}).email;
+    $scope.username = encodeURIComponent(($rootScope.currentUser || {}).email);
     /* globals apiDomain, deploymentsDomain */
     $scope.cloudDomain = typeof deploymentsDomain !== 'undefined' ? deploymentsDomain : 'ushahidi.io' ;
     $scope.subdomain = typeof apiDomain !== 'undefined' ?
