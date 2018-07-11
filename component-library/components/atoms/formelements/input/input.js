@@ -14,11 +14,20 @@ const InputType = {
 
 const propTypes = {
     className: PropTypes.string,
-    inputType: PropTypes.string
+    inputType: PropTypes.string,
+    input: PropTypes.shape({
+        value: PropTypes.string,
+        onChange: PropTypes.func
+    }).isRequired
 };
 
 const Input = props => {
-    const { className, inputType, ...customProps } = props;
+    const {
+        className,
+        inputType,
+        input: { value, onChange },
+        ...customProps
+    } = props;
     let classes = className.split(" ");
     classes = classes.map(classname => input[classname]);
     const classProps = classnames(
@@ -37,6 +46,8 @@ const Input = props => {
             <input
                 type={InputType[inputType]}
                 className={classProps}
+                value={value}
+                onChange={onChange}
                 {...customProps}
             />
         </div>

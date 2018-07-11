@@ -5,11 +5,12 @@ import dropdown from "../forms.scss";
 
 const propTypes = {
     className: PropTypes.string,
-    options: PropTypes.shape.isRequired
+    options: PropTypes.arrayOf(PropTypes.object).isRequired,
+    defaultString: PropTypes.string.isRequired
 };
 
 const Dropdown = props => {
-    const { className, options, ...customProps } = props;
+    const { className, options, defaultString, ...customProps } = props;
     let classes = className.split(" ");
     classes = classes.map(classname => dropdown[classname]);
     const classProps = classnames(dropdown["custom-select"], classes);
@@ -19,13 +20,16 @@ const Dropdown = props => {
                 className={`${dropdown.select} ${dropdown.error}`}
                 {...customProps}
             >
+                <option value="">{defaultString}</option>
                 {options.map(option => (
                     <option
+                        key={option.id}
                         disabled={option.disabled ? option.disabled : false}
                         value={option.value}
-                        selected={option.selected ? option.selected : ""}
                     >
-                        {option.name}
+                        {option.display_name
+                            ? option.display_name
+                            : option.name}
                     </option>
                 ))}
             </select>
