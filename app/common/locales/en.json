@@ -760,6 +760,7 @@
             "reply" : "Reply to Message thread",
             "send" : "Send New Message",
             "save" : "Save",
+            "simple_send" : "Send",
             "title" : "Conversation with author",
             "associated_messages": "View messages associated with this post",
             "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
