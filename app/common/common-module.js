@@ -29,6 +29,7 @@ angular.module('ushahidi.common', [
 .service('ApiKeyEndpoint', require('./services/endpoints/apikey.js'))
 .service('ConfigEndpoint', require('./services/endpoints/config.js'))
 .service('UserEndpoint', require('./services/endpoints/user-endpoint.js'))
+.service('UserSettingsEndpoint', require('./services/endpoints/user-settings.js'))
 .service('FormEndpoint', require('./services/endpoints/form.js'))
 .service('FormAttributeEndpoint', require('./services/endpoints/form-attributes.js'))
 .service('FormRoleEndpoint', require('./services/endpoints/form-roles.js'))
@@ -52,8 +53,10 @@ angular.module('ushahidi.common', [
 .service('TermsOfServiceEndpoint', require('./services/endpoints/terms-of-service-endpoint.js'))
 .service('ExportJobEndpoint', require('./services/endpoints/export-jobs.js'))
 .service('CountryCodeEndpoint', require('./services/endpoints/country-code-endpoint.js'))
-
-
+.service('HxlTagEndpoint', require('./services/endpoints/hxl-tag-endpoint.js'))
+.service('HxlLicenseEndpoint', require('./services/endpoints/hxl-license-endpoint.js'))
+.service('HxlMetadataEndpoint', require('./services/endpoints/hxl-metadata-endpoint.js'))
+.service('HxlOrganisationsEndpoint', require('./services/endpoints/hxl-organisations-endpoint.js'))
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
@@ -71,6 +74,8 @@ angular.module('ushahidi.common', [
 .controller('intercom', require('./controllers/intercom.js'))
 .service('LoadingProgress', require('./services/loadingProgress.service.js'))
 .service('DataExport', require('./services/data-export.service.js'))
+.service('HxlExport', require('./services/hxl-export.service.js'))
+
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 

@@ -7,7 +7,8 @@ describe('data-export-controller', function () {
         DataExport,
         Notify,
         FormEndpoint,
-        FormAttributeEndpoint;
+        FormAttributeEndpoint,
+        UserSettingsEndpoint;
 
     beforeEach(function () {
 
@@ -17,7 +18,7 @@ describe('data-export-controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _$location_, _DataExport_, _Notify_, _FormEndpoint_, _FormAttributeEndpoint_, _) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _$location_, _DataExport_, _Notify_, _FormEndpoint_, _FormAttributeEndpoint_, _, _UserSettingsEndpoint_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $location = _$location_;
@@ -25,10 +26,14 @@ describe('data-export-controller', function () {
         Notify = _Notify_;
         FormEndpoint = _FormEndpoint_;
         FormAttributeEndpoint = _FormAttributeEndpoint_;
+        UserSettingsEndpoint = _UserSettingsEndpoint_;
         $scope = _$rootScope_.$new();
 
         $rootScope.hasPermission = function () {
             return true;
+        };
+        $rootScope.currentUser = {
+            userId: 1
         };
     }));
 
@@ -49,7 +54,7 @@ describe('data-export-controller', function () {
         it('should initate data-export', function () {
             spyOn(DataExport, 'startExport');
             $scope.exportAll();
-            expect(DataExport.startExport).toHaveBeenCalledWith({});
+            expect(DataExport.startExport).toHaveBeenCalledWith({send_to_hdx: false, include_hxl: false, send_to_browser: true});
         });
         it('should show progress', function () {
             expect($scope.showProgress).toEqual(false);
@@ -90,7 +95,7 @@ describe('data-export-controller', function () {
             $scope.selectedFields = [1, 4, 7, 8, 10];
             spyOn(DataExport, 'startExport');
             $scope.exportSelected();
-            expect(DataExport.startExport).toHaveBeenCalledWith({fields: $scope.selectedFields});
+            expect(DataExport.startExport).toHaveBeenCalledWith({fields: $scope.selectedFields, send_to_hdx: false, include_hxl: false, send_to_browser: true});
         });
     });
     describe('attachAttributes-function', function () {
