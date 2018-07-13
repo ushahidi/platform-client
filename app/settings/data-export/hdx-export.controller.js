@@ -109,10 +109,8 @@ function (
 
     function selectTag(attribute) {
         attribute.selected = [attribute.id];
-        if (attribute.selectedTag && attribute.selectedTag.tag_name) {
-            attribute.hxl_label = ['#' + attribute.selectedTag.tag_name];
-        } else {
-            attribute.hxl_label = [];
+        attribute.hxl_label = createHxlLabel(attribute);
+        if (!attribute.selectedTag || !attribute.selectedTag.tag_name) {
             addAnother(attribute);
         }
 
@@ -120,17 +118,28 @@ function (
     }
 
     function selectHxlAttribute(attribute) {
-
-        let needsMatchLatLon = needsMatchedAttribute(attribute);
-        if (attribute.grouped_hxl_label && !needsMatchLatLon) {
-            attribute.hxl_label = _.toArray(_.map(attribute.hxl_label, (hxl_label) => {
-                return hxl_label + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
-            }));
-        } else if (needsMatchLatLon) {
-            attribute = selectAttributeProgrammatically(attribute, attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1]);
-        } else {
-            attribute.hxl_label[0] = attribute.hxl_label[0] + '+' + attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1].attribute;
+        const hxl_attribute = attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1];
+        if (!needsMatchedAttribute(attribute)) {
+            attribute.hxl_label = createHxlLabel(attribute);
+            return attribute;
         }
+        // check if we have lat or lon and assign the correct opposite attribute for it
+        const opposite_attribute_str = hxl_attribute.attribute === 'lat' ? 'lon' : 'lat';
+        // If the label is not just #geo, it means the action is removing a tag instead of adding one,
+        // and we need to clear the label instead of adding to it
+        if (attribute.hxl_label[0] !== '#geo') {
+            attribute.hxl_label = ['#geo'];
+            attribute.selectedHxlAttributes = [];
+            attribute.nbAttributes--;
+        } else {
+            addAnother(attribute);
+            attribute.selectedHxlAttributes.push({attribute: opposite_attribute_str });
+            attribute.hxl_label = [
+                '#geo+lat',
+                '#geo+lon'
+            ];
+        }
+        return attribute;
     }
 
     /**
@@ -151,34 +160,15 @@ function (
         return needs_match === 1;
     }
 
-    function selectAttributeProgrammatically(attribute, hxl_attribute) {
-        let geo_tag = _.find(attribute.tags, (tag) => {
-            return tag.tag_name === 'geo';
-        });
-        const opposite_attribute_str = hxl_attribute.attribute === 'lat' ? 'lon' : 'lat';
-        let opposite = _.find(geo_tag.hxl_attributes, (hxl) => {
-            return hxl.attribute === opposite_attribute_str;
-        });
-        if (opposite) {
-            addAnother(attribute);
-            attribute.selectedHxlAttributes.push(opposite);
-            let new_hxl_label = [];
-            _.each(attribute.hxl_label, (hxl_label) => {
-                if (hxl_label === '#geo') {
-                    // there is nothing else selected before this attribute, so we just create the labels with the correct values
-                    new_hxl_label.push('#geo+lat');
-                    new_hxl_label.push('#geo+lon');
-                } else {
-                    // the label already has some values that we need to add lat/lon to,
-                    // separated in 2 items so that it displays #geo+lat+something, #geo+lon+something in the UI
-                    new_hxl_label.push('#geo+lat+' + hxl_label.replace('#geo+', ''));
-                    new_hxl_label.push('#geo+lon+' + hxl_label.replace('#geo+', ''));
-                }
-            });
-            attribute.hxl_label = new_hxl_label;
-            attribute.grouped_hxl_label = true;
+    function createHxlLabel(attribute) {
+        if (!attribute.selectedTag) {
+            return [];
         }
-        return attribute;
+        let label = '#' + attribute.selectedTag.tag_name;
+        _.each(attribute.selectedHxlAttributes, (hxl_attribute) => {
+            label = label + '+' + hxl_attribute.attribute;
+        });
+        return [label];
     }
 
     function formatIds() {
