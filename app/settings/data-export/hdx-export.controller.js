@@ -118,11 +118,14 @@ function (
     }
 
     function selectHxlAttribute(attribute) {
-        const hxl_attribute = attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1];
         if (!needsMatchedAttribute(attribute)) {
             attribute.hxl_label = createHxlLabel(attribute);
-            return attribute;
+        } else {
+            attribute = addGeoMatchedAttribute(attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1], attribute);
         }
+        return attribute;
+    }
+    function addGeoMatchedAttribute(hxl_attribute, attribute) {
         // check if we have lat or lon and assign the correct opposite attribute for it
         const opposite_attribute_str = hxl_attribute.attribute === 'lat' ? 'lon' : 'lat';
         // If the label is not just #geo, it means the action is removing a tag instead of adding one,
