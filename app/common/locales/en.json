@@ -608,7 +608,7 @@
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
-        "reports_total": " {{posts}} of {{total_nb}} reports",
+        "posts_total": " {{posts}} of {{total_nb}} posts",
         "by" : "by",
         "task_completed" : "Task completed",
         "everyone" : "Everyone",
@@ -703,7 +703,7 @@
             "unlocked" : "Post successfully unlocked",
             "unlock" : "Unlock",
             "lock_broken_by_other" : "Your Post has been unlocked. Your current unsaved changes will be lost.",
-            "locked_message" : "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+            "locked_message" : "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
         },
         "modify" : {
             "intro" : "Select survey:",
@@ -1022,7 +1022,7 @@
             "saving_changes": "Saving",
             "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!",
             "email": {
-                "email_desc": "In order to receive reports by email, please input your email account settings below",
+                "email_desc": "In order to receive posts by email, please input your email account settings below",
                 "incoming_server_type": "Incoming Server Type",
                 "incoming_server_type_pop": "POP",
                 "incoming_server_type_imap": "IMAP",
@@ -1435,7 +1435,7 @@
             "stage_save_success" : "Updated {{stage}}",
             "export" : "This will export filtered posts. Are you sure you want to continue?",
             "update_status_success_bulk" : "Status updated for {{count}} posts",
-            "leave_without_save" : "Do you want to leave this report without saving?",
+            "leave_without_save" : "Do you want to leave this post without saving?",
             "leave_confirm_message" : "If you continue, all of your changes will be lost",
             "leave_confirm" : "Continue without saving"
         },
