@@ -70,7 +70,7 @@ function (
         // hack to not disable the value in the current dropdown
         let selectedHxlAttributes = angular.copy(formAttribute.selectedHxlAttributes);
         delete selectedHxlAttributes[index];
-        if (_.findWhere(selectedHxlAttributes, {id: hxlAttribute.id})) {
+        if (_.findWhere(selectedHxlAttributes, {attribute: hxlAttribute.attribute})) {
             disabled = true;
         }
         return disabled;
@@ -108,23 +108,71 @@ function (
     }
 
     function selectTag(attribute) {
-        attribute.selected = true;
-        if (attribute.selectedTag && attribute.selectedTag.tag_name) {
-            attribute.pretty = '#' + attribute.selectedTag.tag_name;
-        } else {
-            attribute.pretty = '';
+        attribute.selected = [attribute.id];
+        attribute.hxl_label = createHxlLabel(attribute);
+        if (!attribute.selectedTag || !attribute.selectedTag.tag_name) {
+            addAnother(attribute);
         }
-        attribute.nbAttributes = 1;
-        attribute.selectedHxlAttributes = {};
+
+        attribute.selectedHxlAttributes = [];
     }
 
     function selectHxlAttribute(attribute) {
-        attribute.pretty = '#' + attribute.selectedTag.tag_name;
+        if (!needsMatchedAttribute(attribute)) {
+            attribute.hxl_label = createHxlLabel(attribute);
+        } else {
+            attribute = addGeoMatchedAttribute(attribute);
+        }
+        return attribute;
+    }
+    function addGeoMatchedAttribute(attribute) {
+        const hxl_attribute = attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1];
+        // check if we have lat or lon and assign the correct opposite attribute for it
+        const opposite_attribute_str = hxl_attribute.attribute === 'lat' ? 'lon' : 'lat';
+        // If the label is not just #geo, it means the action is removing a tag instead of adding one,
+        // and we need to clear the label instead of adding to it
+        if (attribute.hxl_label[0] !== '#geo') {
+            attribute.hxl_label = ['#geo'];
+            attribute.selectedHxlAttributes = [];
+            attribute.nbAttributes--;
+        } else {
+            addAnother(attribute);
+            attribute.selectedHxlAttributes.push({attribute: opposite_attribute_str });
+            attribute.hxl_label = [
+                '#geo+lat',
+                '#geo+lon'
+            ];
+        }
+        return attribute;
+    }
+
+    /**
+     * Checks if we need a matched lat/lon attribute.
+     * Only applies to #geo tags with a lat/lon attribute selected
+     * @param attribute
+     * @param ignoreMatch
+     * @param needsMatchLatLon
+     * @returns {*}
+     */
+    function needsMatchedAttribute(attribute) {
+        if (attribute.selectedTag.tag_name !== 'geo') {
+            return false;
+        }
+        let needs_match = _.filter(attribute.selectedHxlAttributes, (selected) => {
+            return selected.attribute === 'lon' || selected.attribute === 'lat';
+        }).length;
+        return needs_match === 1;
+    }
+
+    function createHxlLabel(attribute) {
+        if (!attribute.selectedTag) {
+            return [];
+        }
+        let label = '#' + attribute.selectedTag.tag_name;
         _.each(attribute.selectedHxlAttributes, (hxl_attribute) => {
-            if (hxl_attribute !== '') {
-                attribute.pretty = attribute.pretty + '+' + hxl_attribute.attribute;
-            }
+            label = label + '+' + hxl_attribute.attribute;
         });
+        return [label];
     }
 
     function formatIds() {
@@ -137,7 +185,7 @@ function (
                     if (formAttribute.selectedHxlAttributes && !_.isEmpty(formAttribute.selectedHxlAttributes)) {
                         _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
                             let objWithAttr = angular.copy(obj);
-                            objWithAttr.hxl_attribute_id = parseInt(hxlAttribute.id);
+                            objWithAttr.hxl_attribute_id = parseInt(getHxlAttributeByTagIdAndName(formAttribute, hxlAttribute.attribute).id);
                             hxlData.push(objWithAttr);
                         });
                     } else {
@@ -147,6 +195,11 @@ function (
             });
         });
         return hxlData;
+    }
+
+    function getHxlAttributeByTagIdAndName(formAttribute, hxlAttributeName) {
+        const tag = _.findWhere(formAttribute.tags, {id: formAttribute.selectedTag.id});
+        return _.findWhere(tag.hxl_attributes, {attribute: hxlAttributeName});
     }
 
     function exportData(sendToHDX) {
