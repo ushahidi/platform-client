@@ -75,10 +75,8 @@ function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress,
         if ($scope.metadata.$valid) {
             $scope.details.export_job_id = parseInt($state.params.jobId);
             $scope.details.user_id = $rootScope.currentUser.userId;
-            const organisation_id = $scope.details.organisation.id;
-            const organisation_name = $scope.details.organisation.name;
-            $scope.details.organisation_id = organisation_id;
-            $scope.details.organisation_name = organisation_name;
+            $scope.details.organisation_id = $scope.details.organisation.id;
+            $scope.details.organisation_name = $scope.details.organisation.name;
 
             HxlMetadataEndpoint.save($scope.details).$promise.then((response) => {
                 if (response.id) {
