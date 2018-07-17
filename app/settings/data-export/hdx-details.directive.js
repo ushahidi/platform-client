@@ -77,7 +77,7 @@ function HdxDetailsController($scope, $rootScope, $stateParams, LoadingProgress,
             $scope.details.user_id = $rootScope.currentUser.userId;
             const organisation_id = $scope.details.organisation.id;
             const organisation_name = $scope.details.organisation.name;
-            $scope.details.organisation = organisation_id;
+            $scope.details.organisation_id = organisation_id;
             $scope.details.organisation_name = organisation_name;
 
             HxlMetadataEndpoint.save($scope.details).$promise.then((response) => {
