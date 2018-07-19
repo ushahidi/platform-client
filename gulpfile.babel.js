@@ -187,9 +187,11 @@ gulp.task('jscsfix:test', () => {
  * Task `release` - Build release
  */
 gulp.task('transifex-download', function (done) {
+    let destination = gutil.env.dev ? path.join(__dirname, root) : paths.dest;
+
     // Make sure we have dest dir
     try {
-        fs.mkdirSync(paths.dest);
+        fs.mkdirSync(destination);
     }
     catch (err) {
         if (err.code !== 'EEXIST') {
@@ -197,13 +199,13 @@ gulp.task('transifex-download', function (done) {
         }
     }
 
-    require('./gulp/transifex-download')(paths.dest + '/locales/', done);
+    require('./gulp/transifex-download')(destination + '/locales/', done);
 });
-
 
 /**
  * Task `serve:static` - Serve dist build (for heroku)
  */
+
 gulp.task('serve:static', function() {
     serve.init({
         server: {

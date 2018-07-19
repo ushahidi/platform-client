@@ -6,7 +6,6 @@ Ushahidi Platform Web Client
 [![Build Status](https://travis-ci.org/ushahidi/platform-client.svg?branch=master)](https://travis-ci.org/ushahidi/platform-client)
 [![Coverage Status](https://coveralls.io/repos/github/ushahidi/platform-client/badge.svg?branch=master)](https://coveralls.io/github/ushahidi/platform-client?branch=master)
 [![Dependency Status](https://david-dm.org/ushahidi/platform-client/dev-status.svg?style=flat)](https://david-dm.org/ushahidi/platform-client#info=devDependencies)
-[![Codacy Badge](https://www.codacy.com/project/badge/2abbf2283f7d4d98a4c61762e713d161)](https://www.codacy.com/public/ushahidi/platformclient)
 
 ___
 

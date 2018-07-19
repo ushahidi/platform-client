@@ -13,7 +13,8 @@ function (
         grantType: undefined,
         role: undefined,
         permissions: undefined,
-        gravatar: undefined
+        gravatar: undefined,
+        language: undefined
     };
 
     this.sessionData = angular.copy(this.clearedSessionData);

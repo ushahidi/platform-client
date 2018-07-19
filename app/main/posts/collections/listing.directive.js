@@ -133,12 +133,8 @@ function CollectionListingController(
     // they will be directed to the collection page
     function goToCollection(collection) {
         $scope.$parent.closeModal();
-        var viewParam = collection.view;
-        if (viewParam === 'list' || viewParam === 'data') {
-            $state.go('posts.data.collection', {collectionId: collection.id});
-        } else {
-            $state.go('posts.map.collection', {collectionId: collection.id});
-        }
+        var viewParam = collection.view !== 'map' ? 'data' : 'map';
+        $state.go(`posts.${viewParam}.collection`, {collectionId: collection.id}, {reload: true});
     }
 
     // Toggle a post as selected or not

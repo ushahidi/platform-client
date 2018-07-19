@@ -3,10 +3,10 @@ var path    = require('path');
 var config  = require('./webpack.config');
 
 config.output = {
-  filename: '[name].[chunkhash].bundle.js',
-  chunkFilename: '[name].[chunkhash].bundle.js',
+  filename: '[name].[chunkhash].js',
+  chunkFilename: '[name].[chunkhash].js',
   publicPath: '',
-  path: path.resolve(__dirname, 'dist') // Overwritten by gulp
+  path: path.resolve(__dirname, 'server/www') // Overwritten by gulp
 };
 
 config.plugins = config.plugins.concat([

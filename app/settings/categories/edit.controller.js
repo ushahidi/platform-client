@@ -11,6 +11,7 @@ module.exports = [
     'Util',
     '$transition$',
     '$q',
+    '$state',
 function (
     $scope,
     $rootScope,
@@ -23,7 +24,8 @@ function (
     _,
     Util,
     $transition$,
-    $q
+    $q,
+    $state
 ) {
 
     // Redirect to home if not authorized
@@ -38,7 +40,8 @@ function (
             type: 'category',
             icon: 'tag',
             color: '',
-            parent_id: null
+            parent_id: null,
+            parent_id_original: null
         };
         // Allow parent category selector
         $scope.isParent = false;
@@ -127,6 +130,17 @@ function (
     function saveCategory(category) {
         // Set processing to disable user actions
         $scope.processing = true;
+
+        //Ensure slug is updated to tag
+        category.slug = category.tag;
+
+        // If child category with new parent
+        if (category.parent_id && category.parent_id !== category.parent_id_original) {
+            let parent = _.findWhere($scope.parents, { id: category.parent_id });
+            // apply new permissions to child category
+            category.role = parent.role;
+        }
+
         // Save category
         $q.when(
             TagEndpoint
@@ -138,10 +152,6 @@ function (
             if (result.children && result.children.length) {
                 return updateChildrenPermissions(result);
             }
-            // If child category with new parent, apply new permissions to child category
-            if (result.parent && result.parent.id !== $scope.category.parent_id_original) {
-                return updateWithParentPermissions(result);
-            }
         })
         .then(function () {
             // Display success message
@@ -150,7 +160,7 @@ function (
                 { name: $scope.category.tag }
             );
             // Redirect to categories list
-            $location.path('/settings/categories');
+            $state.go('settings.categories', {}, { reload: true });
         })
         // Catch and handle errors
         .catch(handleResponseErrors);
@@ -166,17 +176,6 @@ function (
             );
         });
         return $q.all(promises);
-    }
-
-    function updateWithParentPermissions(category) {
-        return TagEndpoint
-        .getFresh({ id: category.parent.id })
-        .$promise
-        .then(function (parent) {
-            return TagEndpoint
-            .saveCache({ id: category.id, role: parent.role })
-            .$promise;
-        });
     }
 
     function deleteCategory(category) {

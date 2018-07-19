@@ -18,6 +18,7 @@ SurveyEditorController.$inject = [
     '$q',
     '$location',
     '$translate',
+    '$state',
     'FormEndpoint',
     'FormRoleEndpoint',
     'FormStageEndpoint',
@@ -35,6 +36,7 @@ function SurveyEditorController(
     $q,
     $location,
     $translate,
+    $state,
     FormEndpoint,
     FormRoleEndpoint,
     FormStageEndpoint,
@@ -85,8 +87,6 @@ function SurveyEditorController(
     $scope.getInterimId = getInterimId;
     $scope.removeInterimIds = removeInterimIds;
 
-    $scope.allowedToggleOrder = allowedToggleOrder;
-
     $scope.switchTab = switchTab;
 
     $scope.loadRoleData = loadRoleData;
@@ -106,6 +106,11 @@ function SurveyEditorController(
         $scope.loadRoleData();
         $scope.save = $translate.instant('app.save');
         $scope.saving = $translate.instant('app.saving');
+
+        Features.loadFeatures()
+        .then(() => {
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+        });
 
         if ($scope.surveyId) {
             loadFormData();
@@ -194,10 +199,6 @@ function SurveyEditorController(
         angular.element(document.getElementById(tab_li)).addClass('active');
     }
 
-    function allowedToggleOrder(attribute) {
-        return attribute.type !== 'title' && attribute.type !== 'description';
-    }
-
     function getInterimId() {
         var id = 'interim_id_' + $scope.currentInterimId;
         $scope.currentInterimId++;
@@ -220,6 +221,23 @@ function SurveyEditorController(
         // Get available categories.
         TagEndpoint.queryFresh().$promise.then(function (tags) {
             $scope.availableCategories = tags;
+            // adding category-objects attribute-options
+            $scope.availableCategories = _.chain($scope.availableCategories)
+                .map(function (category) {
+                    const ret = _.findWhere($scope.availableCategories, {id: category.id});
+                    if (ret && ret.children.length > 0) {
+                        ret.children = _.chain(ret.children)
+                            .map(function (child) {
+                                return _.findWhere($scope.availableCategories, {id: child.id});
+                            })
+                            .filter()
+                            .value();
+                    }
+                    return ret;
+                })
+                .filter()
+                .value();
+
         });
     }
 
@@ -571,8 +589,9 @@ function SurveyEditorController(
                 { name: $scope.survey.name },
                 { formId: $scope.survey.id }
             );
+
             // Redirect to survey list
-            $location.url('settings/surveys');
+            $state.go('settings.surveys', {}, { reload: true });
         })
         // Catch and handle errors
         .catch(handleResponseErrors);

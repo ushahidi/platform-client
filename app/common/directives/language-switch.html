@@ -1,11 +1,11 @@
 	<div class="form-field select">
 	    <div class="custom-select">
-	        <select 
-                ng-model="site.language" 
+	        <select
+                ng-model="site.language"
                 ng-options="lang.code as lang.name for lang in languages"
                 ng-change="changeLanguage(site.language)"
             >
-                <option value="">Select language</option>
+                <option value="" translate="app.select_language">Select language</option>
             </select>
 	    </div>
 	</div>

@@ -9,6 +9,7 @@ module.exports = [
     '_',
     'RoleEndpoint',
     'Session',
+    '$state',
 function (
     $scope,
     $rootScope,
@@ -19,7 +20,8 @@ function (
     Notify,
     _,
     RoleEndpoint,
-    Session
+    Session,
+    $state
 ) {
 
     // Redirect to home if not authorized
@@ -56,7 +58,7 @@ function (
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
             }
-            $location.path('/settings/users');
+            $state.go('settings.users', null, { reload: true });
         }, function (errorResponse) { // error
             var validationErrors = [],
                 limitError = false;

@@ -79,8 +79,6 @@ function PostEditorController(
     $scope.canSavePost = canSavePost;
     $scope.savePost = savePost;
     $scope.cancel = cancel;
-    $scope.postTitleLabel = 'Title';
-    $scope.postDescriptionLabel = 'Description';
     $scope.tagKeys = [];
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
@@ -138,25 +136,10 @@ function PostEditorController(
 
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
-            var attrs = _.chain(results[1])
+            var attributes = _.chain(results[1])
                 .sortBy('priority')
                 .value();
             var categories = results[2];
-            var attributes = [];
-            _.each(attrs, function (attr) {
-                if (attr.type === 'title' || attr.type === 'description') {
-                    if (attr.type === 'title') {
-                        $scope.postTitleLabel = attr.label;
-                        $scope.postTitleInstructions = attr.instructions;
-                    }
-                    if (attr.type === 'description') {
-                        $scope.postDescriptionLabel = attr.label;
-                        $scope.postDescriptionInstructions = attr.instructions;
-                    }
-                } else {
-                    attributes.push(attr);
-                }
-            });
 
             // Initialize values on post (helps avoid madness in the template)
             attributes.map(function (attr) {
@@ -170,12 +153,7 @@ function PostEditorController(
                 }
                 if (attr.input === 'tags') {
                     // adding category-objects attribute-options
-                    attr.options = _.chain(attr.options)
-                        .map(function (category) {
-                            return _.findWhere(categories, {id: category});
-                        })
-                        .filter()
-                        .value();
+                    attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
