@@ -1,0 +1,77 @@
+// general styles needs to be imported here
+// (maybe there are another way but I never got to that)
+
+@import '../../utils/style.scss';
+
+/* if the styles need to be global and not have
+prefixed classnames, write like this: */
+
+:global {
+    .layout-g {
+
+        .notification {
+            @include equal-radius(3px);
+            max-width: 330px;
+            padding: 24px;
+            border: 3px solid $black;
+
+            &.neutral {
+                border-color: $accent-purple;
+
+                .notification-message {
+
+                    svg.iconic {
+                        fill: $accent-purple;
+                        top: -3px;
+                    }
+                }
+            }
+
+            &.success {
+                border-color: $success-green;
+
+                .notification-message {
+
+                    svg.iconic {
+                        fill: $success-green;
+                        top: -3px;
+                    }
+                }
+            }
+
+            &.error {
+                border-color: $error-red;
+
+                .notification-message {
+
+                    svg.iconic {
+                        fill: $error-red;
+                        top: 3px;
+                    }
+                }
+            }
+
+            .notification-message {
+                position: relative;
+
+                svg.iconic {
+                    position: absolute;
+                    @include left(0);
+                    width: 20px;
+                    height: 20px;
+                }
+
+                p {
+                    margin-top: 0;
+                    @include padding-left($lg-spacing);
+                }
+            }
+        }
+    }
+}
+
+/* if the styles can be local, write like this: */
+
+:global(.layout-g) {
+
+}

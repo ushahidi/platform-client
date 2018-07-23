@@ -1,8 +1,8 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-
 import loader from "./loader.scss";
+import logo from "./ushahidi-logo-blue.png";
 
 const LoaderType = {
     LOADER: "loading-bar",
@@ -24,7 +24,18 @@ const Loader = props => {
         loader[className]
     );
 
-    return <div className={classProps} {...customProps} />;
+    return (
+        <div>
+            {loaderType === "LOGO" ? (
+                <div className={classProps} {...customProps}>
+                    <img src="{logo}" alt="Ushahidi Logo" />
+                    <div className="loading-bar-alt" />
+                </div>
+            ) : (
+                <div className={classProps} {...customProps} />
+            )}
+        </div>
+    );
 };
 
 Loader.propTypes = propTypes;

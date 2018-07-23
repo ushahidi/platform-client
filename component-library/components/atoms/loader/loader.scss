@@ -9,6 +9,28 @@ prefixed classnames, write like this: */
 :global {
     .layout-g {
 
+        // this loading-bar-alt css exists globally and locally, see below.
+        .loading-bar-alt {
+            position: absolute;
+            height: 8px;
+            width: 100%;
+            background-color: $bg-gray;
+            border-radius: 6px;
+            overflow: hidden;
+
+            &:before {
+                display: block;
+                content: '';
+                position: absolute;
+                top: 0;
+                @include left(-28%);
+                width: 40%;
+                height: 8px;
+                border-radius: 6px;
+                background-color: $gold;
+                @include animation(loading, 2s, ease-in-out, 0s, infinite);
+            }
+        }
     }
 }
 
@@ -36,6 +58,7 @@ prefixed classnames, write like this: */
 
     }
 
+    // this loading-bar-alt css exists locally and globally, see above.
     .loading-bar-alt {
         position: absolute;
         height: 8px;
