@@ -33,6 +33,20 @@
         <label class="input-label" for="map-settings-zoom" translate>settings.map_default_zoom_level</label>
         <input id="map-settings-zoom" type="number" ng-min="minZoom" ng-max="maxZoom" required class="form-control" ng-model="config.default_view.zoom" ng-pattern="onlyNumbers" ng-change="updateMapPreview()" />
     </div>
+    <div class="form-field">
+        <label class="input-label" for="map-settings-obfuscation">
+            <span translate>
+                settings.map_location_precision
+            </span>            
+        </label>
+        <p>
+            <span translate>
+                settings.map_precise_to
+            </span>
+            {{ current_precision }}km
+        </p>
+        <input id="map-settings-obfuscation" type="number" ng-min="minObfuscation" ng-change="updatePrecision()" ng-max="maxObfuscation" required class="form-control" ng-model="config.location_precision" ng-pattern="onlyNumbers" ng-change="updateMapPreview()" />
+    </div>
     <div class="form-field checkbox">
         <input type="checkbox" ng-model="config.clustering" id="map-settings-clustering">
         <label for="map-settings-clustering" translate>settings.map_clustering</label>

@@ -58,6 +58,7 @@
             "id": "map",
             "clustering": false,
             "cluster_radius": 50,
+            "obfuscation_distance": 500,
             "default_view": {
                 "lat": -1.3048035,
                 "lon": 36.8473969,

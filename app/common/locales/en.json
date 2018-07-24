@@ -1124,6 +1124,8 @@
         "deployment_logo" : "Deployment logo",
         "delete_logo": "Delete logo",
         "map_default_baselayer": "Default base layer",
+        "map_location_precision": "Map Precision Level",
+        "map_precise_to": "When hide location is enabled for a survey, locations will be precise to: ",
         "map_clustering": "Combine nearby posts",
         "map_default_latitude": "Default latitude",
         "map_default_longitude": "Default longitude",
