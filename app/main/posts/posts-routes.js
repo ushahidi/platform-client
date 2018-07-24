@@ -68,11 +68,13 @@ function (
             resolve: {
                 collection: resolveCollection
             },
-            onEnter: ['$state', 'collection', function ($state, collection) {
-                if (collection.view === 'data' || collection.view === 'list') {
-                    $state.go('posts.data.collection', {collectionId: collection.id});
-                } else {
-                    $state.go('posts.map.collection', {collectionId: collection.id});
+             onEnter: ['$state', 'PostFilters', 'post', function ($state, PostFilters, post) {
+                if (!post) {
+                    if (PostFilters.getMode() === 'savedsearch') {
+                        $state.go('posts.data.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                    } else if (PostFilters.getMode() === 'collection') {
+                        $state.go('posts.data.collection', {collectionId: PostFilters.getModeId()});
+                    }
                 }
             }]
         }
