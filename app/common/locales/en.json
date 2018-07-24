@@ -1095,7 +1095,7 @@
             "edit_own_posts": "Edit their own posts",
             "registred_member": "Registered member",
             "administrator": "Administrator",
-            "roles_description": "These options control what this type of role you can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
+            "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
         },
         "deployment_delete_this" : "Delete this deployment",
         "deployment_delete" : "Delete deployment",
