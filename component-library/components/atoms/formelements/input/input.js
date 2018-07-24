@@ -17,8 +17,8 @@ const propTypes = {
     inputType: PropTypes.string,
     input: PropTypes.shape({
         value: PropTypes.string,
-        onChange: PropTypes.func
-    }).isRequired
+        onChange: PropTypes.func.isRequired
+    })
 };
 
 const Input = props => {
@@ -57,7 +57,10 @@ Input.propTypes = propTypes;
 
 Input.defaultProps = {
     className: "",
-    inputType: "TEXT"
+    inputType: "TEXT",
+    input: {
+        value: ""
+    }
 };
 
 export default Input;

@@ -7,6 +7,7 @@ import Input from "../../../../component-library/components/atoms/formelements/i
 import Dropdown from "../../../../component-library/components/atoms/formelements/dropdown/dropdown";
 import Label from "../../../../component-library/components/atoms/formelements/label/label";
 import Button from "../../../../component-library/components/atoms/button/button";
+import FormField from "../../../../component-library/components/molecules/formfields/formfield";
 
 const propTypes = {
     handleSubmit: PropTypes.func.isRequired,
@@ -63,27 +64,37 @@ let PersonEditForm = props => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <Label htmlFor="realname">
-                    Name
-                    <Field
-                        component={Input}
-                        type="text"
-                        placeholder="What is this person's full name"
-                        name="realname"
-                        required
-                    />
-                </Label>
-                <Label htmlFor="email">
-                    Email
-                    <Field
-                        component={Input}
-                        type="text"
-                        placeholder="email"
-                        name="email"
-                        required
-                    />
-                </Label>
-                {isLoading.REQUEST_ROLES ? <InlineLoading /> : renderRoles()}
+                <FormField>
+                    <Label htmlFor="realname">
+                        Name
+                        <Field
+                            component={Input}
+                            type="text"
+                            placeholder="What is this person's full name"
+                            name="realname"
+                            required
+                        />
+                    </Label>
+                </FormField>
+                <FormField>
+                    <Label htmlFor="email">
+                        Email
+                        <Field
+                            component={Input}
+                            type="text"
+                            placeholder="email"
+                            name="email"
+                            required
+                        />
+                    </Label>
+                </FormField>
+                <FormField>
+                    {isLoading.REQUEST_ROLES ? (
+                        <InlineLoading />
+                    ) : (
+                        renderRoles()
+                    )}
+                </FormField>
                 {hasError.REQUEST_ROLES && hasError.REQUEST_ROLES.failed
                     ? route404OnError()
                     : null}
