@@ -31,7 +31,7 @@ function ShareMenuController(
     $scope.loading = false;
     $scope.shareUrl = Util.currentUrl();
     $scope.isExportable = isExportable;
-    $scope.hasPermission = $rootScope.hasPermission('Bulk data import');
+    $scope.hasPermission = $rootScope.hasPermission('Bulk Data Import and Export');
 
     activate();
 
