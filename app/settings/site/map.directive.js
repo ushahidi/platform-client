@@ -3,11 +3,13 @@ module.exports = [
     'ConfigEndpoint',
     'Leaflet',
     'Maps',
+    'Features',
 function (
     $q,
     ConfigEndpoint,
     L,
-    Maps
+    Maps,
+    Features
 ) {
     return {
         restrict: 'E',
@@ -29,10 +31,15 @@ function (
             $scope.updateMapPreview = updateMapPreview;
             $scope.updateMapPreviewLayer = updateMapPreviewLayer;
             $scope.current_precision =  9;
+            $scope.locationPrecisionEnabled = false;
 
             activate();
 
             function activate() {
+                Features.loadFeatures().then(function () {
+                    $scope.locationPrecisionEnabled = Features.isFeatureEnabled('anonymise-reporters');
+                });
+
                 $scope.baselayers = Maps.getBaseLayers();
 
                 // Set initial map params

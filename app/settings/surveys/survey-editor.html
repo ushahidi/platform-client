@@ -143,7 +143,7 @@
             </div>
           </div>
           <!--// Hide Author Information //-->
-          <div class="form-field switch">
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
               <label translate="survey.hide_author_information">Hide author information</label>
               <p ng-show="survey.hide_author" data-fieldgroup-target="hide-author-message" translate="survey.hide_author_information_desc">Only people with permission to edit responses will be able to see who submitted them; and only when editing them.</p>
               <div class="toggle-switch">
@@ -152,7 +152,7 @@
               </div>
           </div>
 
-          <div class="form-field switch">
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
               <label translate="survey.hide_location_information">Hide location information</label>
               <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
               <div class="toggle-switch">
@@ -161,7 +161,7 @@
               </div>
           </div>
 
-          <div class="form-field switch">
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
               <label translate="survey.hide_time_information">Hide exact time information</label>
               <p ng-show="survey.hide_time" data-fieldgroup-target="hide-time-message" translate="survey.hide_time_information_desc">Only people with permission to edit responses will be able to see exact respon time; and only when editing them.</p>
               <div class="toggle-switch">

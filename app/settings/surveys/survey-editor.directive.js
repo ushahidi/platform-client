@@ -94,6 +94,7 @@ function SurveyEditorController(
     $scope.roles = [];
 
     $scope.onlyOptional = onlyOptional;
+    $scope.anonymiseReportersEnabled = false;
 
     activate();
 
@@ -110,6 +111,7 @@ function SurveyEditorController(
         Features.loadFeatures()
         .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+            $scope.anonymiseReportersEnabled = Features.isFeatureEnabled('anonymise-reporters');
         });
 
         if ($scope.surveyId) {
