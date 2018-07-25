@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import notification from "./notifications.scss";
+import Icon from "../../atoms/icon/icon";
 
 const NotificationType = {
     NEUTRAL: "neutral",
@@ -25,12 +26,19 @@ const Notification = props => {
         notification[className]
     );
 
-    console.log(classProps);
+    console.log(NotificationType);
 
     return (
         <div>
             <div className={classProps} {...customProps}>
                 <div className="notification-message">
+                    {NotificationType === "NEUTRAL" ? (
+                            <Icon icon="WARNING" />
+                        ) : NotificationType === "SUCCESS" ? (
+                            <Icon icon="CHECK" />
+                        ) : NotificationType === "ERROR" ? (
+                            <Icon icon="CIRCLE_X" />
+                    )}
                     <p>{children}</p>
                 </div>
 
