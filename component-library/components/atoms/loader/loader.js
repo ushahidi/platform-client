@@ -28,7 +28,7 @@ const Loader = props => {
         <div>
             {loaderType === "LOGO" ? (
                 <div className={classProps} {...customProps}>
-                    <img src="{logo}" alt="Ushahidi Logo" />
+                    <img src={logo} alt="Ushahidi Logo" />
                     <div className="loading-bar-alt" />
                 </div>
             ) : (
