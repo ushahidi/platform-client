@@ -32,13 +32,16 @@ const Notification = props => {
         <div>
             <div className={classProps} {...customProps}>
                 <div className="notification-message">
-                    {NotificationType === "NEUTRAL" ? (
-                            <Icon icon="WARNING" />
-                        ) : NotificationType === "SUCCESS" ? (
-                            <Icon icon="CHECK" />
-                        ) : NotificationType === "ERROR" ? (
-                            <Icon icon="CIRCLE_X" />
-                    )}
+                    {
+                        if (NotificationType === "NEUTRAL") {
+                            return <Icon icon="WARNING" />
+                        } else if (NotificationType === "SUCCESS") {
+                            return <Icon icon="CHECK" />
+                        } else (NotificationType === "ERROR") {
+                            return <Icon icon="CIRCLE_X" />
+                        }
+                    }
+
                     <p>{children}</p>
                 </div>
 
