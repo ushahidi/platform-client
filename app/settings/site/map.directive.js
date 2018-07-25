@@ -26,7 +26,7 @@ function (
             $scope.minZoom = 0;
             $scope.maxZoom = 18;
             $scope.minObfuscation = 0;
-            $scope.maxObfuscation = 10;
+            $scope.maxObfuscation = 9;
             $scope.updatePrecision = updatePrecision;
             $scope.updateMapPreview = updateMapPreview;
             $scope.updateMapPreviewLayer = updateMapPreviewLayer;
