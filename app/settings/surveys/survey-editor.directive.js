@@ -23,6 +23,7 @@ SurveyEditorController.$inject = [
     'FormRoleEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
+    'ConfigEndpoint',
     'RoleEndpoint',
     'TagEndpoint',
     '_',
@@ -41,6 +42,7 @@ function SurveyEditorController(
     FormRoleEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
+    ConfigEndpoint,
     RoleEndpoint,
     TagEndpoint,
     _,
@@ -95,6 +97,7 @@ function SurveyEditorController(
 
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
+    $scope.location_precision = 1000;
 
     activate();
 
@@ -107,6 +110,10 @@ function SurveyEditorController(
         $scope.loadRoleData();
         $scope.save = $translate.instant('app.save');
         $scope.saving = $translate.instant('app.saving');
+
+        ConfigEndpoint.get({id: 'map'}, function (map) {
+            $scope.location_precision = 1000 / Math.pow(10, map.location_precision);
+        });
 
         Features.loadFeatures()
         .then(() => {

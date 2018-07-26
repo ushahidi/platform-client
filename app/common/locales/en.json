@@ -267,7 +267,7 @@
         "hide_author_information" : "Hide author information",
         "hide_author_information_desc" : "Only people with permission to edit responses will be able to see who submitted them; and only when editing them.",
         "hide_location_information" : "Hide exact location information",
-        "hide_location_information_desc" : "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations.",
+        "hide_location_information_desc" : "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations. The location will be accurate to {{precision}}km.",
         "hide_time_information" : "Hide exact time information",
         "hide_time_information_desc" : "Only people with permission to edit responses will be able to see exact time submitted. Other people will see only the date.",
         "share" : "Share",
