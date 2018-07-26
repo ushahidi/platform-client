@@ -145,6 +145,8 @@ function PostViewDataController(
         // Otherwise, go get posts just normal
         if ($scope.selectedPost.post) {
             let query = PostFilters.getQueryParams($scope.filters);
+            // Some posts may have their created date redacted by hide_time
+            // we instead use the Post Id to allow the API to retrieve the date itself
             query.created_before_by_id = $scope.selectedPost.post.id;
             getPosts(query, false);
             $scope.shouldWeRunCheckForNewPosts = false;
@@ -202,7 +204,7 @@ function PostViewDataController(
         });
 
         if ($scope.shouldWeRunCheckForNewPosts) {
-            checkForNewPosts(5000);
+            checkForNewPosts(60000);
         }
     }
 
@@ -346,8 +348,6 @@ function PostViewDataController(
 
             // Merge grouped posts into existing groups
             groupPosts(postsResponse.results);
-
-            // if the selected post isn't in the post list
 
             $scope.totalItems = postsResponse.total_count;
             if ($scope.posts.count === 0 && !PostFilters.hasFilters($scope.filters)) {
