@@ -15,9 +15,12 @@ angular.lazy()
     })
     .error(function (error) {
         // Show error
-        error.data.errors[0].message &&
-        angular.element(document.getElementById('bootstrap-error-message')).html(error.data.errors[0].message);
-        angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
+        try {
+            error.data.errors[0].message &&
+            angular.element(document.getElementById('bootstrap-error-message')).html(error.data.errors[0].message);
+        } finally {
+            angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
+        }
     })
     .done(function () {
         // Hide loading
