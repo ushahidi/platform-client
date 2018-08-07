@@ -43,13 +43,13 @@
                    </div>
                </div>
 
-               <div class="listing-item" ng-show="hasPermission('Bulk Data Import and Export')">
+               <div class="listing-item" ng-show="hasPermission('Bulk Data Import and Export') || hasPermission('Bulk Data Import')">
                    <div class="listing-item-primary">
                        <h2 class="listing-item-title"><a ui-sref="settings.dataImport" translate>settings.settings_list.import</a></h2>
                        <p class="listing-item-secondary" translate>settings.settings_list.import_desc</p>
                    </div>
                </div>
-               <div class="listing-item" ng-show="hasPermission('Bulk Data Import and Export')">
+               <div class="listing-item" ng-show="hasPermission('Bulk Data Import and Export') || hasPermission('Bulk Data Import')">
                <div class="listing-item">
                    <div class="listing-item-primary">
                        <h2 class="listing-item-title"><a ui-sref="settings.dataExport" translate>settings.settings_list.export</a></h2>
