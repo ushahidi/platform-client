@@ -79,7 +79,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function loadExportJob() {
-        if ($rootScope.hasPermission('Bulk Data Import and Export')) {
+        if ($rootScope.hasPermission('Bulk Data Import and Export') || $rootScope.hasPermission('Bulk Data Import')) {
             DataExport.loadExportJob();
         }
     }
