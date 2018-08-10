@@ -20,7 +20,8 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmTos: confirmTos,
         adminUserSetupModal: adminUserSetupModal,
         infoModal: infoModal,
-        confirmLeave: confirmLeave
+        confirmLeave: confirmLeave,
+        demo: demo
     };
 
     function notify(message, translateValues) {
@@ -66,6 +67,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         // translates the text and shows the slider
         $translate(message, translateValues).then(showSlider, showSlider);
     }
+
     function error(errorText, translateValues) {
         function showSlider(errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error', null, false);
@@ -185,6 +187,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function adminUserSetupModal() {
         ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
+    }
+
+    function demo() {
+        var scope = getScope();
+        SliderService.openTemplate('<demo-deployment></demo-deployment>', ' ', false, scope, false, false);
     }
 
     function confirmTos() {
