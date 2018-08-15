@@ -1,0 +1,35 @@
+<div>
+    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="targetedSurveyStatsByForm.length === 0"></loading-dots>
+    <fieldset ng-if="targetedSurveyStatsByForm.length >= 1">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th translate>Inbound Response Messages</th>
+                    <th translate>Outbound Surveying Messages</th>
+                    <th translate>Unique Recipients of Targeted Survey</th>
+                    <th translate>Unique Responders to Targeted Survey</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="survey in targetedSurveyStatsByForm">
+                    <td>{{survey.name}}</td>
+                    <td>{{survey.total_responses}}</td>
+                    <td>{{survey.total_messages_sent}}</td>
+                    <td>{{survey.total_recipients}}</td>
+                    <td>{{survey.total_response_recipients}}</td>
+                </tr>
+                <tr>
+                    <td>All Targeted Surveys</td>
+                    <td>{{totalResponsesReduced}}</td>
+                    <td>{{totalMessagesSentReduced}}</td>
+                    <td>{{totalRecipientsReduced}}</td>
+                    <td>{{totalResponseRecipientsReduced}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <p ng-if="noSurveys">You don't have any Targeted Survey data to show.</p>
+</div>

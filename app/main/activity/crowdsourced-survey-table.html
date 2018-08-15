@@ -1,0 +1,46 @@
+<div>
+    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="crowdsourcedSurveyStatsByForm.length === 0"></loading-dots>
+    <fieldset ng-if="crowdsourcedSurveyStatsByForm.length >= 1">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th translate>All Data Sources</th>
+                    <th translate>Web and Mobile</th>
+                    <th translate>Email</th>
+                    <th translate>SMS</th>
+                    <th translate>Twitter</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="survey in crowdsourcedSurveyStatsByForm">
+                    <td>{{survey.name}}</td>
+                    <td>{{survey.total_by_data_source.all}}</td>
+                    <td>{{survey.total_by_data_source.web}}</td>
+                    <td>{{survey.total_by_data_source.email}}</td>
+                    <td>{{survey.total_by_data_source.sms}}</td>
+                    <td>{{survey.total_by_data_source.twitter}}</td>
+                </tr>
+                <tr>
+                    <td>{{unstructuredStats.name}}</td>
+                    <td>{{unstructuredStats.all}}</td>
+                    <td>{{unstructuredStats.web}}</td>
+                    <td>{{unstructuredStats.email}}</td>
+                    <td>{{unstructuredStats.sms}}</td>
+                    <td>{{unstructuredStats.twitter}}</td>
+                </tr>
+                <tr>
+                    <td>All Crowdsourced Surveys</td>
+                    <td>{{totalAllReduced}}</td>
+                    <td>{{totalWebReduced}}</td>
+                    <td>{{totalEmailReduced}}</td>
+                    <td>{{totalSmsReduced}}</td>
+                    <td>{{totalTwitterReduced}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <p ng-if="noSurveys">You don't have any Crowdsourced Survey data to show.</p>
+</div>

@@ -122,6 +122,8 @@
                         <activity-time-chart filters="filters"></activity-bar-chart>
                     </div>
                 </div>
+            </div>
+            <div class="listing card init">
                 <div class="listing-item active">
                    <div class="listing-item-secondary">
                         <button ng-show="todo" type="button" class="button-beta button-flat">
@@ -142,7 +144,30 @@
                     </div>
                 </div>
             </div>
+            <div ng-if="targetedSurveysEnabled && loggedIn" class="listing card init">
+                <div class="listing-item active">
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title" translate="">Tageted Survey Activity</h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <targeted-survey-table filters="filters"></targeted-survey-table>
+                    </div>
+                </div>
+            </div>
+            <div class="listing card init" ng-if="loggedIn">
+                <div class="listing-item active">
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title" translate="">Crowdsourced Survey Activity</h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <crowdsourced-survey-table filters="filters"></crowdsourced-survey-table>
+                    </div>
+                </div>
+            </div>
         </div> <!--end main column-->
+
 
         <aside class="secondary-col" role="complementary">
             <!-- <activity-timeline></activity-timeline> -->
