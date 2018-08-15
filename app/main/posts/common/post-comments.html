@@ -1,0 +1,48 @@
+<div class="listing card">
+  <h3 class="listing-heading" translate>post.comments.title</h3>
+
+    <div ng-repeat="comment in comments track by comment.id" class="listing-item">
+      <div class="listing-item-primary">
+        <div class="listing-item-image" ng-if="comment.direction == 'outgoing'">
+            <img src="//www.gravatar.com/avatar/{{ comment.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#arrow-thick-left"></use>
+            </svg>
+        </div>
+      <h2 class="listing-item-title">
+
+        <span ng-if="comment.direction == 'incoming'">{{ getContactDisplay() }}</span>
+        <span ng-if="comment.direction == 'outgoing' && comment.user.realname">{{ comment.user.realname }}</span>
+      </h2>
+      <!--
+      <p>{{comment.updated || comment.created | date:'mediumDate'}} at {{comment.updated || comment.created | date:'shortTime'}}</p>
+      -->
+      <p class="listing-item-secondary">{{comment.displayTime}}</p>
+      <p>{{ comment.commnet }}</p>
+    </div>
+  </div>
+
+  <div class="listing-item" ng-show="totalItems > itemsPerPage">
+    <div class="listing-item-primary">
+
+      <nav class="pagination" ng-show="showPagination">
+          <ul uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></ul>
+      </nav>
+
+    </div>
+  </div>
+
+  <div class="listing-item">
+    <div class="listing-item-primary">
+      <h2 class="listing-item-title">
+        <a href="" class="button button-flat" ng-click="reply()">
+          <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+          </svg>
+          {{ 'post.comments.send' | translate }}
+        </a>
+      </h2>
+    </div>
+  </div>
+
+</div>

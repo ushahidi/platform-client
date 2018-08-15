@@ -1,0 +1,16 @@
+<div>
+  <form name="form" ng-submit="saveComment()">
+
+    <div class="form-field" ng-class="{ 'error': form.reply.$invalid && form.reply.$dirty }">
+      <textarea id="reply" name="reply" placeholder="Save comment to {{ contact.contact }}" ng-model="comment.comment" ng-minlength=2 ng-maxlength=140 required></textarea>
+    </div>
+    <div class="form-field">
+      <button type="submit" class="button-alpha modal-trigger"
+	      ng-submit="saveComment()"
+	      ng-disabled="form.reply.$invalid"
+	      translate>post.comments.simple_send</button>
+    </div>
+  </form>
+</div>
+
+
