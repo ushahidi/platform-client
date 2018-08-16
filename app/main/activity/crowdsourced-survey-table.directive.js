@@ -14,11 +14,11 @@ function CrowdsourcedSurveyTable() {
 CrowdsourcedSurveyTableController.$inject = ['$scope', '$translate', 'FormEndpoint', 'FormStatsEndpoint', 'FormContactEndpoint', 'PostEndpoint', '_', 'PostFilters', 'Session'];
 function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, FormStatsEndpoint, FormContactEndpoint, PostEndpoint, _, PostFilters, Session) {
     $scope.crowdsourcedSurveyStatsByForm = [];
-    $scope.totalAllReduced = 0;
-    $scope.totalWebReduced = 0;
-    $scope.totalEmailReduced = 0;
-    $scope.totalSmsReduced = 0;
-    $scope.totalTwitterReduced = 0;
+    $scope.totalAll = 0;
+    $scope.totalWeb = 0;
+    $scope.totalEmail = 0;
+    $scope.totalSms = 0;
+    $scope.totalTwitter = 0;
     $scope.noSurveys = false;
     $scope.unstructuredStats = {};
 
@@ -33,39 +33,41 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
 
     function clearStats() {
         $scope.crowdsourcedSurveyStatsByForm = [];
-        $scope.totalAllReduced = 0;
-        $scope.totalWebReduced = 0;
-        $scope.totalEmailReduced = 0;
-        $scope.totalSmsReduced = 0;
-        $scope.totalTwitterReduced = 0;
+        $scope.totalAll = 0;
+        $scope.totalWeb = 0;
+        $scope.totalEmail = 0;
+        $scope.totalSms = 0;
+        $scope.totalTwitter = 0;
         $scope.unstructuredStats = {};
     }
 
     function getFormStats() {
         FormEndpoint.query().$promise.then((forms) => {
-            if (crowdsourcedSurveysExist) {
+            if (!crowdsourcedSurveysExist(forms)) {
+                $scope.noSurveys = true;
+            } else {
                 $scope.noSurveys = false;
                 forms.forEach((form) => {
                     if (!form.targeted_survey) {
                         let query = PostFilters.getQueryParams($scope.filters) || {};
-                        var postQuery = _.extend({}, query, {
+                        let postQuery = _.extend({}, query, {
                             formId: form.id
                         });
 
                         FormStatsEndpoint.query(postQuery).$promise.then((stats) => {
                             stats.name = form.name;
                             $scope.crowdsourcedSurveyStatsByForm.push(stats);
-                            $scope.totalAllReduced += parseInt(stats.total_by_data_source.all);
-                            $scope.totalWebReduced += parseInt(stats.total_by_data_source.web);
-                            $scope.totalEmailReduced += parseInt(stats.total_by_data_source.email);
-                            $scope.totalSmsReduced += parseInt(stats.total_by_data_source.sms);
-                            $scope.totalTwitterReduced += parseInt(stats.total_by_data_source.twitter);
+                            $scope.totalAll += parseInt(stats.total_by_data_source.all);
+                            $scope.totalWeb += parseInt(stats.total_by_data_source.web);
+                            $scope.totalEmail += parseInt(stats.total_by_data_source.email);
+                            $scope.totalSms += parseInt(stats.total_by_data_source.sms);
+                            $scope.totalTwitter += parseInt(stats.total_by_data_source.twitter);
 
                         });
                     }
                 });
                 let query = PostFilters.getQueryParams($scope.filters) || {};
-                var postQuery = _.extend({}, query, {
+                let postQuery = _.extend({}, query, {
                     form: 'none'
                 });
                 PostEndpoint.query(postQuery).$promise.then((posts) => {
@@ -81,8 +83,6 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
                         $scope.unstructuredStats[post.source]++;
                     });
                 });
-            } else {
-                $scope.noSurveys = true;
             }
         });
     }
