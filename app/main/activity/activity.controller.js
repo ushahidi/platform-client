@@ -1,8 +1,8 @@
 module.exports = ActivityController;
 
-ActivityController.$inject = ['$scope', '$translate', 'moment', 'Features'];
+ActivityController.$inject = ['$rootScope', '$scope', '$translate', 'moment', 'Features'];
 
-function ActivityController($scope, $translate, moment, Features) {
+function ActivityController($rootScope, $scope, $translate, moment, Features) {
     // Initial values
     $scope.isActivityAvailable = false;
     $scope.currentInterval = 'all';
@@ -16,6 +16,8 @@ function ActivityController($scope, $translate, moment, Features) {
 
     $scope.saveFilters = saveFilters;
     $scope.cancelChangeFilters = cancelChangeFilters;
+    $scope.targetedSurveysEnabled = false;
+    $scope.loggedIn = false;
 
     activate();
 
@@ -26,9 +28,14 @@ function ActivityController($scope, $translate, moment, Features) {
         $translate('nav.activity').then(function (title) {
             $scope.$emit('setPageTitle', title);
         });
+        if ($rootScope.loggedin) {
+            $scope.loggedIn = true;
+        }
 
         Features.loadFeatures().then(function () {
             $scope.isActivityAvailable = Features.isViewEnabled('activity');
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+
         });
 
         update();
