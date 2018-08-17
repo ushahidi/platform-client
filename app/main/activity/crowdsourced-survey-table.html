@@ -5,11 +5,11 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th translate>All Data Sources</th>
-                    <th translate>Web and Mobile</th>
-                    <th translate>Email</th>
-                    <th translate>SMS</th>
-                    <th translate>Twitter</th>
+                    <th translate="activity.all_sources">All Data Sources</th>
+                    <th translate="activity.web_mobile">Web and Mobile</th>
+                    <th translate="activity.email">Email</th>
+                    <th translate="activity.sms">SMS</th>
+                    <th translate="activity.twitter">Twitter</th>
                     
                 </tr>
             </thead>
@@ -32,7 +32,7 @@
                     <td>{{unstructuredStats.twitter}}</td>
                 </tr>
                 <tr>
-                    <td>All Crowdsourced Surveys</td>
+                    <td translate="activity.">All Crowdsourced Surveys</td>
                     <td>{{totalAll}}</td>
                     <td>{{totalWeb}}</td>
                     <td>{{totalEmail}}</td>
@@ -42,5 +42,5 @@
             </tbody>
         </table>
     </fieldset>
-    <p ng-if="noSurveys">You don't have any Crowdsourced Survey data to show.</p>
+    <p translate="activity.no_crowdsourced" ng-if="noSurveys">You don't have any Crowdsourced Survey data to show.</p>
 </div>

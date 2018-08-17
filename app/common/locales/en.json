@@ -144,7 +144,23 @@
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
         "by" : "By",
-        "context_body": "A summary of how people are interacting with {{site}}."
+        "context_body": "A summary of how people are interacting with {{site}}.",
+        "inbound": "Inbound Response Messages",
+        "outbound": "Outbound Surveying Messages",
+        "recipients": "Unique Recipients of Targeted Survey",
+        "responders": "Unique Responders to Targeted Survey",
+        "all_targeted": "All Targeted Surveys",
+        "no_targeted": "You don't have any Targeted Survey data to show.",
+        "all_sources": "All Data Souces",
+        "web_mobile": "Web and Mobile",
+        "email": "email",
+        "sms": "sms",
+        "twitter": "twitter",
+        "all_crowdsourced": "All Crowdsourced Surveys",
+        "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
+        "targeted_activity": "Tageted Survey Activity",
+        "crowdsourced_activity": "Crowdsourced Survey Activity"
+
     },
     "form": {
         "add_field" : "Add field",

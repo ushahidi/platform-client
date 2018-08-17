@@ -5,10 +5,10 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th translate>Inbound Response Messages</th>
-                    <th translate>Outbound Surveying Messages</th>
-                    <th translate>Unique Recipients of Targeted Survey</th>
-                    <th translate>Unique Responders to Targeted Survey</th>
+                    <th translate="activity.inbound">Inbound Response Messages</th>
+                    <th translate="activity.outbound">Outbound Surveying Messages</th>
+                    <th translate="activity.recipients">Unique Recipients of Targeted Survey</th>
+                    <th translate="activity.responders">Unique Responders to Targeted Survey</th>
                     
                 </tr>
             </thead>
@@ -22,7 +22,7 @@
                     <td>{{survey.total_response_recipients}}</td>
                 </tr>
                 <tr>
-                    <td>All Targeted Surveys</td>
+                    <td translate="activity.all_targeted">All Targeted Surveys</td>
                     <td>{{totalResponses}}</td>
                     <td>{{totalMessagesSent}}</td>
                     <td>{{totalRecipients}}</td>
@@ -31,5 +31,5 @@
             </tbody>
         </table>
     </fieldset>
-    <p ng-if="noSurveys">You don't have any Targeted Survey data to show.</p>
+    <p translate="activity.no_targeted" ng-if="noSurveys">You don't have any Targeted Survey data to show.</p>
 </div>
