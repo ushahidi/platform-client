@@ -121,6 +121,17 @@
             "search_all_entities_for" : "Search all {{entity}} for "
         }
     },
+    "demo_warnings" : {
+        "visitor": {
+            "not_expired": "Deployment {{deployment_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
+            "expired": "Deployment {{deployment_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
+        },
+        "user" : {
+            "expired": "Your 30 day trial is over. Upgrade now to make the most of Ushahidi.",
+            "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
+            "limit_reached": "Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project."
+        }
+    },
     "color_picker": {
         "hex_value" : "Hex Value",
         "red" : "Red",
