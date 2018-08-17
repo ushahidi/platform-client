@@ -1,12 +1,23 @@
 
-<div class="message" ng-class="{'active': classVisible}">
+<div
+    ng-class="{'active': classVisible, 'message': type === 'normal', 'notification-beta demo': type === 'demo'}"
+>
+
     <div class='progress-bar' ng-if="loading"><span>Loading...</span></div><br>
-    <div class="message-image" ng-class="iconClass" ng-if="icon">
+
+    <div 
+        ng-if="icon"
+        ng-class="iconClass"
+        ng-class="{'message-image': type === 'normal', 'notification-image': type === 'demo'}"
+    >
         <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ icon }}"></use>
         </svg>
     </div>
-    <div class="message-body">
+
+    <div
+        ng-class="{'message-body': type === 'normal', 'notification-body': type === 'demo'}"
+    >
 		<slider-content></slider-content>
 
         <button class="button-flat message-trigger" ng-show="showCloseButton" ng-click="closeButtonClicked()" translate="message.button.dismiss">

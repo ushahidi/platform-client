@@ -13,9 +13,9 @@ function SliderService($rootScope, $q, $templateRequest) {
         onClose: onClose
     };
 
-    function openTemplate(template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading) {
+    function openTemplate(template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type) {
         deferredOpen.promise.then(function () {
-            $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading);
+            $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type);
         });
     }
 

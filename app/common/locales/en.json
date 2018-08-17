@@ -517,6 +517,7 @@
     "message" : {
         "button" : {
             "dismiss" : "Dismiss",
+            "upgrade" : "Upgrade now",
             "default" : "Ok",
             "cancel" : "Cancel"
         }

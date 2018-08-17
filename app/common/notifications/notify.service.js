@@ -191,7 +191,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function demo() {
         var scope = getScope();
-        SliderService.openTemplate('<demo-deployment></demo-deployment>', ' ', false, scope, false, false);
+        SliderService.openTemplate('<demo-deployment></demo-deployment>', 'star', false, scope, false, false, false, false, 'demo');
     }
 
     function confirmTos() {

@@ -21,6 +21,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         $scope.iconClass = {};
         $scope.showCloseButton = true;
         $scope.closeOnNavigate = false;
+        $scope.type = 'normal';
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
 
@@ -40,7 +41,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         SliderService.onOpen(open, $scope);
         SliderService.onClose(close, $scope);
 
-        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading) {
+        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type) {
             $scope.loading = false;
             // If we're inside a modal, modal must be open
             if ((typeof $scope.insideModal !== 'undefined') !== ModalService.getState()) {
@@ -91,6 +92,10 @@ function Slider($timeout, $compile, SliderService, ModalService) {
 
             if (loading) {
                 $scope.loading = true;
+            }
+
+            if (type) {
+                $scope.type = type;
             }
         }
 
