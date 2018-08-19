@@ -12,6 +12,7 @@ function DemoDeploymentDirective() {
 
 DemoDeploymentController.$inject = [
     '$scope',
+    '$rootScope',
     '$location',
     'ConfigEndpoint',
     'PostEndpoint',
@@ -19,6 +20,7 @@ DemoDeploymentController.$inject = [
 ];
 function DemoDeploymentController(
     $scope,
+    $rootScope,
     $location,
     ConfigEndpoint,
     PostEndpoint,
@@ -30,6 +32,7 @@ function DemoDeploymentController(
     $scope.limitReached = false;
     $scope.expired = false;
     $scope.days_remaining = 30;
+    $scope.loggedin = $rootScope.loggedin;
 
     $scope.upgrade = upgrade;
     activate();
@@ -38,16 +41,21 @@ function DemoDeploymentController(
         ConfigEndpoint.get({id: 'site'}).$promise.then(function (site) {
             $scope.site_name = site.name ? site.name : USHAHIDI;
             var expiration_date = moment(site.expiration_date);
-            var extension_date = moment(site.extension_date);
+            var extension_date = site.extension_date ? moment(site.extension_date) : null;
             var now = moment();
 
-            $scope.expired = now > expiration_date || now > extension_date;
+            $scope.expired = now > expiration_date;
+
+            if ($scope.expired && extension_date) {
+                $scope.expired = now > extension_date;
+                $scope.extension_days_remaining = extension_date.diff(now, 'days');
+            }
 
             if (!$scope.expired) {
-                $scope.days_remaining = expiration_date.diff(extension_date, 'days');
+                $scope.days_remaining = $scope.extension_days_remaining ? $scope.extension_days_remaining : expiration_date.diff(now, 'days');
                 PostEndpoint.stats().$promise.then(function (results) {
                     if (results.totals[0]) {
-                        $scope.limitReached = results.totals.values.totals >= 25;
+                        $scope.limitReached = results.totals[0].values[0].total >= 25;
                     }
                 });
             }

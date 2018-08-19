@@ -2,8 +2,8 @@ module.exports = Notify;
 
 var scope;
 var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
-Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
-function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
+Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService', 'DemoSliderService'];
+function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, DemoSliderService) {
     return {
         notify: notify,
         notifyAction,
@@ -191,7 +191,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function demo() {
         var scope = getScope();
-        SliderService.openTemplate('<demo-deployment></demo-deployment>', 'star', false, scope, false, false, false, false, 'demo');
+        DemoSliderService.openTemplate('<demo-deployment></demo-deployment>', 'star', false, scope, false, false, false, false);
     }
 
     function confirmTos() {

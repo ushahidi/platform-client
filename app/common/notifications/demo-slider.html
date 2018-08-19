@@ -1,13 +1,13 @@
 
 <div
-    class="message"
+    class="notification-beta demo"
     ng-class="{'active': classVisible"
 >
 
     <div class='progress-bar' ng-if="loading"><span>Loading...</span></div><br>
 
     <div 
-        class="message-image"
+        class="notification-image"
         ng-if="icon"
         ng-class="iconClass"
     >
@@ -17,12 +17,8 @@
     </div>
 
     <div
-        class="message-body"
+        class="notification-body"
     >
-		<slider-content></slider-content>
-
-        <button class="button-flat message-trigger" ng-show="showCloseButton" ng-click="closeButtonClicked()" translate="message.button.dismiss">
-            Dismiss
-        </button>
+		<demo-slider-content></demo-slider-content>
     </div>
 </div>

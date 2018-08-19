@@ -25,7 +25,9 @@ angular.module('ushahidi.common', [
 // Notifications
 .service('Notify', require('./notifications/notify.service.js'))
 .service('SliderService', require('./notifications/slider.service.js'))
+.service('DemoSliderService', require('./notifications/slider.service.js'))
 .directive('ushSlider', require('./notifications/slider.directive.js'))
+.directive('ushDemoSlider', require('./notifications/demo-slider.directive.js'))
 
 // API Endpoint wrappers
 .service('ApiKeyEndpoint', require('./services/endpoints/apikey.js'))

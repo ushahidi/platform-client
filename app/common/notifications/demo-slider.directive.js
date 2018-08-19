@@ -2,20 +2,20 @@
  * Ushahidi Angular Confirmation Message directive
  * Based on the Angular Bootstrap Modal directive
  */
-module.exports = Slider;
-Slider.$inject = ['$timeout', '$compile', 'SliderService', 'ModalService'];
-function Slider($timeout, $compile, SliderService, ModalService) {
+module.exports = DemoSlider;
+DemoSlider.$inject = ['$timeout', '$compile', 'DemoSliderService', 'ModalService'];
+function DemoSlider($timeout, $compile, DemoSliderService, ModalService) {
     return {
         restrict: 'E',
-        template: require('./slider.html'),
+        template: require('./demo-slider.html'),
         scope: {
             insideModal: '@?',
             loading: '=?'
         },
-        link: SliderLink
+        link: DemoSliderLink
     };
 
-    function SliderLink($scope, $element) {
+    function DemoSliderLink($scope, $element) {
         $scope.classVisible = false;
         $scope.icon = false;
         $scope.iconClass = {};
@@ -28,7 +28,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         var closeTimeout = null;
         var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
         // content element
-        var sliderContent = $element.find('slider-content');
+        var demoSliderContent = $element.find('demo-slider-content');
 
         // Run clean up on scope destroy (probably never happens)
         $scope.$on('$destroy', cleanUp);
@@ -37,8 +37,8 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         $scope.$on('$locationChangeStart', navigateClose);
 
         // Bind to modal service open/close events
-        SliderService.onOpen(open, $scope);
-        SliderService.onClose(close, $scope);
+        DemoSliderService.onOpen(open, $scope);
+        DemoSliderService.onClose(close, $scope);
 
         function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading) {
             $scope.loading = false;
@@ -56,8 +56,8 @@ function Slider($timeout, $compile, SliderService, ModalService) {
             // Inject close function onto template scope
             templateScope.close = close;
 
-            sliderContent.html(template);
-            $compile(sliderContent)(templateScope);
+            demoSliderContent.html(template);
+            $compile(demoSliderContent)(templateScope);
 
             $scope.icon = icon ? iconPath + '#' + icon : icon;
             $scope.iconClass = {};
@@ -114,7 +114,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
             if (closeTimeout) {
                 $timeout.cancel(closeTimeout);
             }
-            sliderContent.html('');
+            demoSliderContent.html('');
         }
 
         function navigateClose() {
