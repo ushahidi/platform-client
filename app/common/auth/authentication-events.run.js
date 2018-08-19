@@ -89,7 +89,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             .then(function () {
                 loadSessionData();
                 $rootScope.loggedin = true;
-                //DemoDeploymentService.demoCheck();
+                DemoDeploymentService.demoCheck();
 
                 /**
                  * adminUserSetup is called AFRTER the user has agreed to terms of service.
@@ -113,6 +113,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     function doLogout(redirect) {
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
+        DemoDeploymentService.demoCheck();
         // we don' wat to reload until after filters are correctly set with the backend default that the user
         // would get when logged out
         PostFilters.resetDefaults().then(function () {
