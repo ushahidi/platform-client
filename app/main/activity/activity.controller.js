@@ -65,7 +65,7 @@ function ActivityController($rootScope, $scope, $translate, moment, Features) {
     function setDateRange(interval) {
         switch (interval) {
             case 'month':
-                $scope.filters.created_after = moment().startOf('month').toDate();
+                $scope.filters.created_after = moment(moment().startOf('month').toDate()).utc().format();
                 $scope.filters.created_before =  null;
                 break;
             case 'all':
@@ -73,19 +73,24 @@ function ActivityController($rootScope, $scope, $translate, moment, Features) {
                 $scope.filters.created_before =  null;
                 break;
             case 'custom':
-                // Do nothing?
-                $scope.filters.created_after = $scope.createdAfter;
-                $scope.filters.created_before = $scope.createdBefore;
+                if ($scope.createdAfter && $scope.createdBefore && $scope.createdAfter.toDateString() === $scope.createdBefore.toDateString()) {
+                    // Do nothing?
+                    $scope.filters.created_after = moment(moment($scope.createdAfter).utc()).startOf('day').format();
+                    $scope.filters.created_before = moment(moment($scope.createdBefore).utc()).endOf('day').format();
+                } else {
+                    $scope.filters.created_after = $scope.createdAfter ? moment(moment($scope.createdAfter).utc()).startOf('day').format() : null;
+                    $scope.filters.created_before = $scope.createdBefore ? moment(moment($scope.createdBefore).utc()).startOf('day').format() : null;
+                }
                 break;
             // case 'week':
             default:
                 // Default to this week
-                $scope.filters.created_after = moment().startOf('week').toDate();
+                $scope.filters.created_after = moment(moment().startOf('week').toDate()).utc().format();
                 $scope.filters.created_before =  null;
         }
         // Copy range to editable values
-        $scope.createdAfter = $scope.filters.created_after;
-        $scope.createdBefore = $scope.filters.created_before;
+        //$scope.createdAfter = $scope.filters.created_after;
+        //$scope.createdBefore = $scope.filters.created_before;
         return $scope.filters;
     }
 }
