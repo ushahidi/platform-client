@@ -267,29 +267,6 @@ function (
                 return csvIsValid;
             }
 
-            function createPostCollection(post_ids) {
-                var deferred = $q.defer();
-
-                var now = moment().format('h:mm a MMM Do YYYY');
-
-                var collection = {};
-                collection.name = 'Imported ' + now;
-                collection.view = 'list';
-                collection.visible_to = ['admin'];
-                var calls = [];
-                CollectionEndpoint.save(collection).$promise.then(function (collection) {
-                    _.each(post_ids, function (id) {
-                        calls.push(
-                            CollectionEndpoint.addPost({'collectionId': collection.id, 'id': id})
-                        );
-                    });
-                    $q.all(calls).then(function () {
-                        deferred.resolve(collection);
-                    });
-                });
-                return deferred.promise;
-            }
-
             function updateAndImport(csv) {
                 DataImportEndpoint.update(csv).$promise
                     .then(function () {

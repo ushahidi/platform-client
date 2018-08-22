@@ -1,7 +1,33 @@
 module.exports = DataImport;
 
-DataImport.$inject = ['$rootScope', 'DataImportEndpoint', 'Notify', '$window', '$timeout', '$interval', 'CONST', '$q', '_', 'ImportNotify'];
-function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, $interval, CONST, $q, _, ImportNotify) {
+DataImport.$inject = [
+    '$rootScope',
+    'DataImportEndpoint',
+    'Notify',
+    '$window',
+    '$timeout',
+    '$interval',
+    'CONST',
+    '$q',
+    '_',
+    'ImportNotify',
+    'CollectionEndpoint',
+    'moment'
+];
+function DataImport(
+    $rootScope,
+    DataImportEndpoint,
+    Notify,
+    $window,
+    $timeout,
+    $interval,
+    CONST,
+    $q,
+    _,
+    ImportNotify,
+    CollectionEndpoint,
+    moment
+) {
     var importJobs = [];
 
     function startImport(job) {
@@ -27,7 +53,7 @@ function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, 
     function startPolling(queries) {
         var timer,
             nextQuery = [];
-       timer = $timeout(function () {
+        timer = $timeout(function () {
             $q.all(queries).then(function (response) {
                 _.each(response, function (job) {
                     if (job.status === 'SUCCESS') {
@@ -46,7 +72,7 @@ function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, 
 
                             $rootScope.$emit('event:import:complete', {filename: job.filename, collectionId: collection.id});
                         });
-                        
+
                         updateImportJobsList(job);
                     } else if (job.status === 'FAILED') {
                         // when job is failed, we stop the polling...
@@ -54,7 +80,7 @@ function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, 
                         // ..and notify user that it has failed
                         var error_message = 'import job has failed.';
                         loadingStatus(false, error_message);
-                        updateimportJobsList(job);
+                        updateImportJobsList(job);
                     } else {
                         // add the job to the poll until job is done
                         nextQuery.push(DataImportEndpoint.getFresh({id: job.id}));
@@ -77,6 +103,29 @@ function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, 
         });
     }
 
+    function createPostCollection(post_ids) {
+        var deferred = $q.defer();
+
+        var now = moment().format('h:mm a MMM Do YYYY');
+
+        var collection = {};
+        collection.name = 'Imported ' + now;
+        collection.view = 'list';
+        collection.visible_to = ['admin'];
+        var calls = [];
+        CollectionEndpoint.save(collection).$promise.then(function (collection) {
+            _.each(post_ids, function (id) {
+                calls.push(
+                    CollectionEndpoint.addPost({'collectionId': collection.id, 'id': id})
+                );
+            });
+            $q.all(calls).then(function () {
+                deferred.resolve(collection);
+            });
+        });
+        return deferred.promise;
+    }
+
     function updateImportJobsList(job) {
         var _importJobs = getImportJobs();
         const foundJobIndex = _.findIndex(_importJobs, (_job) => {
@@ -94,34 +143,40 @@ function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, 
     }
 
     function loadingStatus(status, err, job) {
-        var message, // holds the message to the user
-            action, // holds info for the action-button
-            icon, // holds info about icon to use in the notification
-            loading; // show loading-slider or not
+        // var message, // holds the message to the user
+        //     action, // holds info for the action-button
+        //     icon, // holds info about icon to use in the notification
+        //     loading; // show loading-slider or not
 
-        if (err) {
-            Notify.apiErrors(err);
-        } else {
-            if (status === true) {
-                message = '<p translate="notify.import.in_progress">';
-                action = {
-                    callback: cancelimport,
-                    text: 'notify.import.cancel_import',
-                    actionClass: 'button-destructive',
-                    callbackArg: job.id
-                };
-                icon = 'ellipses';
-                loading = true;
-            } else {
-                message = '<p translate="notify.import.complete"></p>';
-                icon = 'thumb-up';
-                loading = false;
-            }
+        // if (err) {
+        //     Notify.apiErrors(err);
+        // } else {
+        //     if (status === true) {
+        //         message = '<p translate="notify.import.in_progress">';
+        //         action = {
+        //             callback: cancelimport,
+        //             text: 'notify.import.cancel_import',
+        //             actionClass: 'button-destructive',
+        //             callbackArg: job.id
+        //         };
+        //         icon = 'ellipses';
+        //         loading = true;
+        //     } else {
+        //         message = '<p translate="notify.import.complete"></p>';
+        //         icon = 'thumb-up';
+        //         loading = false;
+        //     }
 
-            Notify.notifyAction(message, null, loading, icon, 'circle-icon confirmation', action);
-        }
+        //     Notify.notifyAction(message, null, loading, icon, 'circle-icon confirmation', action);
+        // }
     }
 
+    function processJobFields(job) {
+        if (job.status) {
+            job.status = job.status.toLowerCase();
+        }
+        return job;
+    }
 
     function processImportJobs(jobs) {
         let _jobs = _.filter(_.map(jobs, (job) => {

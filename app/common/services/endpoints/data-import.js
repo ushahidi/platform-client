@@ -24,9 +24,6 @@ function (
         id: '@id',
         action: '@action'
     }, {
-        get: {
-            method: 'GET'
-        },
         update: {
             method: 'PUT'
         },
@@ -36,13 +33,18 @@ function (
         import: {
             method: 'POST'
         },
+        get: {
+            method: 'GET',
+            cache: cache,
+            params: {'ignore403': '@ignore403'}
+        },
         query: {
             method: 'GET',
             isArray: true,
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }
-        },
+        }
     });
 
     DataImportEndpoint.getFresh = function (params) {
