@@ -42,7 +42,9 @@ function DataImport(
                     queries.push(DataImportEndpoint.getFresh({id: job.id}));
                 }
             });
-            startPolling(queries);
+            if (queries.length) {
+                startPolling(queries);
+            }
         });
     }
 
@@ -55,7 +57,7 @@ function DataImport(
             nextQuery = [];
         timer = $timeout(function () {
             $q.all(queries).then(function (response) {
-                _.each(response, function (job) {
+                _.each(response.results, function (job) {
                     if (job.status === 'SUCCESS') {
                         var processed = job.processed,
                             errors = job.errors,
