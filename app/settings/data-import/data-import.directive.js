@@ -8,7 +8,7 @@ module.exports = [
     'FormAttributeEndpoint',
     'DataImportEndpoint',
     'Notify',
-    'ImportNotify',
+    'DataImport',
     'Features',
     'CollectionEndpoint',
     'moment',
@@ -23,7 +23,7 @@ function (
     FormAttributeEndpoint,
     DataImportEndpoint,
     Notify,
-    ImportNotify,
+    DataImport,
     Features,
     CollectionEndpoint,
     moment,
@@ -293,27 +293,8 @@ function (
             function updateAndImport(csv) {
                 DataImportEndpoint.update(csv).$promise
                     .then(function () {
-                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise
-                            .then(function (response) {
-                                var processed = response.processed,
-                                    errors = response.errors,
-                                    post_ids = response.created_ids;
-
-                                createPostCollection(post_ids).then(function (collection) {
-                                    ImportNotify.importComplete(
-                                    {
-                                        processed: processed,
-                                        errors: errors,
-                                        collectionId: collection.id,
-                                        form_name: $scope.selectedForm.name,
-                                        filename: csv.filename
-                                    });
-
-                                    $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename, collectionId: collection.id});
-                                });
-                            }, function (errorResponse) {
-                                Notify.apiErrors(errorResponse);
-                            });
+                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then();
+                        DataImport.startImport(csv);
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
                     });
