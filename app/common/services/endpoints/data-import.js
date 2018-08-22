@@ -35,10 +35,15 @@ function (
         },
         import: {
             method: 'POST'
-        }
+        },
+        query: {
+            method: 'GET',
+            isArray: true,
+            transformResponse: function (data /*, header*/) {
+                return Util.transformResponse(data).results;
+            }
+        },
     });
-
-
 
     DataImportEndpoint.getFresh = function (params) {
         cache.remove(Util.apiUrl('/csv/' + params.id));

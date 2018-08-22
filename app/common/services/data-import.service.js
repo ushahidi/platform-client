@@ -27,7 +27,7 @@ function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, 
     function startPolling(queries) {
         var timer,
             nextQuery = [];
-       //timer = $timeout(function () {
+       timer = $timeout(function () {
             $q.all(queries).then(function (response) {
                 _.each(response, function (job) {
                     if (job.status === 'SUCCESS') {
@@ -71,10 +71,10 @@ function DataImport($rootScope, DataImportEndpoint,  Notify, $window, $timeout, 
                     Notify.apiErrors(err);
                 }
             );
-        // }, CONST.import_POLLING_INTERVAL);
-        // $rootScope.$on('event:authentication:logout:succeeded', function () {
-        //     $timeout.cancel(timer);
-        // });
+        }, CONST.import_POLLING_INTERVAL);
+        $rootScope.$on('event:authentication:logout:succeeded', function () {
+            $timeout.cancel(timer);
+        });
     }
 
     function updateImportJobsList(job) {
