@@ -1,15 +1,14 @@
 /**
- * Ushahidi Angular Confirmation Message directive
+ * Demo-bar visible for Demo-plans
  * Based on the Angular Bootstrap Modal directive
  */
 module.exports = DemoSlider;
-DemoSlider.$inject = ['$timeout', '$compile', 'DemoSliderService', 'ModalService'];
-function DemoSlider($timeout, $compile, DemoSliderService, ModalService) {
+DemoSlider.$inject = ['$compile', 'DemoSliderService', '$rootScope'];
+function DemoSlider($compile, DemoSliderService, $rootScope) {
     return {
         restrict: 'E',
         template: require('./demo-slider.html'),
         scope: {
-            insideModal: '@?',
             loading: '=?'
         },
         link: DemoSliderLink
@@ -19,13 +18,14 @@ function DemoSlider($timeout, $compile, DemoSliderService, ModalService) {
         $scope.classVisible = false;
         $scope.icon = false;
         $scope.iconClass = {};
-        $scope.showCloseButton = true;
-        $scope.closeOnNavigate = false;
         // Callbacks
-        $scope.closeButtonClicked = closeButtonClicked;
+        $scope.limitAvailability = false;
+
+        $rootScope.$on('demo:limitAvailability', function (obj, expired, limitReached) {
+            $scope.limitAvailability = !expired && !limitReached ? false : true;
+        });
 
         var templateScope;
-        var closeTimeout = null;
         var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
         // content element
         var demoSliderContent = $element.find('demo-slider-content');
@@ -33,20 +33,12 @@ function DemoSlider($timeout, $compile, DemoSliderService, ModalService) {
         // Run clean up on scope destroy (probably never happens)
         $scope.$on('$destroy', cleanUp);
 
-        // Close slider on navigation if feature enabled
-        $scope.$on('$locationChangeStart', navigateClose);
-
         // Bind to modal service open/close events
         DemoSliderService.onOpen(open, $scope);
         DemoSliderService.onClose(close, $scope);
 
-        function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading) {
+        function open(ev, template, icon, iconClass, scope, loading) {
             $scope.loading = false;
-            // If we're inside a modal, modal must be open
-            if ((typeof $scope.insideModal !== 'undefined') !== ModalService.getState()) {
-                // Ignore, the other slider can open
-                return;
-            }
 
             // Clean up any previous content
             cleanUp();
@@ -65,29 +57,8 @@ function DemoSlider($timeout, $compile, DemoSliderService, ModalService) {
                 $scope.iconClass[iconClass] = true;
             }
 
-            // If showCloseButton isn't passed, default to true
-            if (typeof showCloseButton === 'undefined') {
-                $scope.showCloseButton = true;
-            } else {
-                $scope.showCloseButton = showCloseButton;
-            }
-
-            // If closeOnNavigate isn't passed, default to false
-            if (typeof closeOnNavigate === 'undefined') {
-                $scope.closeOnNavigate = false;
-            } else {
-                $scope.closeOnNavigate = closeOnNavigate;
-            }
-
-            // Default closeOnTimeout to true
-            closeOnTimeout = (typeof closeOnTimeout !== 'undefined') ? closeOnTimeout : true;
-
             // .. and finally open the slider!!
             $scope.classVisible = true;
-            // Set timeout to close in 5s
-            if (closeOnTimeout) {
-                closeTimeout = $timeout(close, 5000);
-            }
 
             if (loading) {
                 $scope.loading = true;
@@ -95,13 +66,6 @@ function DemoSlider($timeout, $compile, DemoSliderService, ModalService) {
         }
 
         function close() {
-            // Removing this because it was causing slider to remain after closing modal (specifically on Share > Export to CSV)
-            // After code review, I believe it is unnecessary in platform. Can be restored if necessary. Talk to Carolyn or Will.
-            // If we're inside a modal *and* the modal isn't open
-            // if ($scope.insideModal && !ModalService.getState()) {
-            //     // Ignore, the other slider can open
-            //     return;
-            // }
             // @todo fade out
             $scope.classVisible = false;
             cleanUp();
@@ -111,21 +75,7 @@ function DemoSlider($timeout, $compile, DemoSliderService, ModalService) {
             if (templateScope) {
                 templateScope.$destroy();
             }
-            if (closeTimeout) {
-                $timeout.cancel(closeTimeout);
-            }
             demoSliderContent.html('');
         }
-
-        function navigateClose() {
-            if ($scope.closeOnNavigate) {
-                close();
-            }
-        }
-
-        function closeButtonClicked(context) {
-            close();
-        }
     }
-
 }
