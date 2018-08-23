@@ -1,5 +1,5 @@
 <div>
-    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="crowdsourcedSurveyStatsByForm.length === 0"></loading-dots>
+    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="!noSurveys && crowdsourcedSurveyStatsByForm.length === 0"></loading-dots>
     <fieldset ng-if="crowdsourcedSurveyStatsByForm.length >= 1">
         <table>
             <thead>
