@@ -49,7 +49,7 @@ function DataImport(
     }
 
     function loadImportJobs() {
-        return DataImportEndpoint.queryFresh({user: 'me', max_expiration: Math.round((new Date()).getTime() / 1000)}).$promise;
+        return DataImportEndpoint.queryFresh().$promise;
     }
 
     function startPolling(queries) {
@@ -57,7 +57,7 @@ function DataImport(
             nextQuery = [];
         timer = $timeout(function () {
             $q.all(queries).then(function (response) {
-                _.each(response.results, function (job) {
+                _.each(response, function (job) {
                     if (job.status === 'SUCCESS') {
                         var processed = job.processed,
                             errors = job.errors,

@@ -35,7 +35,6 @@ function (
         },
         get: {
             method: 'GET',
-            cache: cache,
             params: {'ignore403': '@ignore403'}
         },
         query: {

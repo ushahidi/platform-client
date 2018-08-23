@@ -270,8 +270,9 @@ function (
             function updateAndImport(csv) {
                 DataImportEndpoint.update(csv).$promise
                     .then(function () {
-                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then();
-                        DataImport.startImport(csv);
+                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then(function () {
+                            DataImport.startImport(csv);
+                        });
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
                     });
