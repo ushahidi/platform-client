@@ -31,7 +31,7 @@ function DataImport(
     var importJobs = [];
 
     function startImport(job) {
-        startPolling([DataImportEndpoint.getFresh({id: job.id})]);
+        startPolling([DataImportEndpoint.getFresh({id: job.id}).$promise]);
     }
 
     function loadImportJob() {
@@ -39,7 +39,7 @@ function DataImport(
         DataImportEndpoint.queryFresh().$promise.then(function (response) {
             _.each(response, function (job) {
                 if (job.status !== 'SUCCESS' && job.status !== 'FAILED') {
-                    queries.push(DataImportEndpoint.getFresh({id: job.id}));
+                    queries.push(DataImportEndpoint.getFresh({id: job.id}).$promise);
                 }
             });
             if (queries.length) {
@@ -85,7 +85,7 @@ function DataImport(
                         updateImportJobsList(job);
                     } else {
                         // add the job to the poll until job is done
-                        nextQuery.push(DataImportEndpoint.getFresh({id: job.id}));
+                        nextQuery.push(DataImportEndpoint.getFresh({id: job.id}).$promise);
                     }
                 });
                 // if there are pending jobs, we poll for them again
@@ -99,7 +99,7 @@ function DataImport(
                     Notify.apiErrors(err);
                 }
             );
-        }, CONST.import_POLLING_INTERVAL);
+        }, CONST.EXPORT_POLLING_INTERVAL);
         $rootScope.$on('event:authentication:logout:succeeded', function () {
             $timeout.cancel(timer);
         });
