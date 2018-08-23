@@ -29,8 +29,8 @@
                             <span class="legend-label"  ng-show="currentInterval == 'custom'"
                                 translate="graph.custom_display"
                                 translate-values="{
-                                    start: (filters.created_after | date:'mediumDate'),
-                                    end: (filters.created_before | date:'mediumDate') }"
+                                    start: (filters.created_after | date:'shortDate'),
+                                    end: (filters.created_before | date:'shortDate') }"
                                 translate-compile>Date range</span>
                             <svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use></svg>
                         </legend>
@@ -39,26 +39,26 @@
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="all">
-                                    <span translate="graph.all">All time<span>
+                                    <span translate="graph.all">All time</span>
                                 </label>
                             </div>
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="week">
-                                    <span translate="graph.week">This week<span>
+                                    <span translate="graph.week">This week</span>
                                 </label>
                             </div>
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="month">
-                                    <span translate="graph.month">This month<span>
+                                    <span translate="graph.month">This month</span>
                                 </label>
                             </div>
 
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="custom">
-                                    <span translate="graph.custom">Custom date range<span>
+                                    <span translate="graph.custom">Custom date range</span>
                                 </label>
 
                                 <!-- todo: reuse filter-date -->
@@ -119,7 +119,7 @@
 
                     <div class="listing-item-body">
                         <!-- <dc-chart-by-volume date-range="dateRange"></dc-chart-by-volume> -->
-                        <activity-time-chart filters="filters"></activity-bar-chart>
+                        <activity-time-chart filters="filters"></activity-time-chart>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
 
                     <div class="listing-item-body">
                         <!-- <dc-chart-by-time date-range="dateRange"></dc-chart-by-time> -->
-                        <activity-bar-chart filters="filters"></activity-time-chart>
+                        <activity-bar-chart filters="filters"></activity-bar-chart>
                     </div>
                 </div>
             </div>
