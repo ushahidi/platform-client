@@ -19,11 +19,13 @@ function DemoSlider($compile, DemoSliderService, $rootScope, $transitions) {
         $scope.icon = false;
         $scope.iconClass = {};
         // Callbacks
-        $scope.limitAvailability = false;
+        $scope.expired = false;
+        $scope.limitReached = false;
         $scope.upgrading = false;
 
         $rootScope.$on('demo:limitAvailability', function (obj, expired, limitReached) {
-            $scope.limitAvailability = !expired && !limitReached ? false : true;
+            $scope.expired = expired;
+            $scope.limitReached = limitReached;
         });
 
         var templateScope;
