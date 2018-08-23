@@ -91,7 +91,7 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
             }
         }).catch((err) => {
             $scope.noSurveys = true;
-        })
+        });
     }
 
     function crowdsourcedSurveysExist(forms) {
