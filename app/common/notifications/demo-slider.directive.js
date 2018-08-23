@@ -3,8 +3,8 @@
  * Based on the Angular Bootstrap Modal directive
  */
 module.exports = DemoSlider;
-DemoSlider.$inject = ['$compile', 'DemoSliderService', '$rootScope'];
-function DemoSlider($compile, DemoSliderService, $rootScope) {
+DemoSlider.$inject = ['$compile', 'DemoSliderService', '$rootScope', '$transitions'];
+function DemoSlider($compile, DemoSliderService, $rootScope, $transitions) {
     return {
         restrict: 'E',
         template: require('./demo-slider.html'),
@@ -20,6 +20,7 @@ function DemoSlider($compile, DemoSliderService, $rootScope) {
         $scope.iconClass = {};
         // Callbacks
         $scope.limitAvailability = false;
+        $scope.upgrading = false;
 
         $rootScope.$on('demo:limitAvailability', function (obj, expired, limitReached) {
             $scope.limitAvailability = !expired && !limitReached ? false : true;
@@ -33,9 +34,14 @@ function DemoSlider($compile, DemoSliderService, $rootScope) {
         // Run clean up on scope destroy (probably never happens)
         $scope.$on('$destroy', cleanUp);
 
-        // Bind to modal service open/close events
+        // Bind to open/close events
         DemoSliderService.onOpen(open, $scope);
         DemoSliderService.onClose(close, $scope);
+
+        $transitions.onEnter({}, (transition, state) => {
+            const location = transition.targetState().$state();
+            $scope.upgrading = location.includes['settings.plan'] ? true : false;
+        });
 
         function open(ev, template, icon, iconClass, scope, loading) {
             $scope.loading = false;
