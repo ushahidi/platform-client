@@ -60,20 +60,18 @@ function DataImport(
                 _.each(response, function (job) {
                     if (job.status === 'SUCCESS') {
                         var processed = job.processed,
-                            errors = job.errors,
-                            post_ids = job.created_ids;
+                            collectionId = job.collection_id,
+                            errors = job.errors;
 
-                        createPostCollection(post_ids).then(function (collection) {
-                            ImportNotify.importComplete(
-                            {
-                                processed: processed,
-                                errors: errors,
-                                collectionId: collection.id,
-                                filename: job.filename
-                            });
-
-                            $rootScope.$emit('event:import:complete', {filename: job.filename, collectionId: collection.id});
+                        ImportNotify.importComplete(
+                        {
+                            processed: processed,
+                            errors: errors,
+                            collectionId: collectionId,
+                            filename: job.filename
                         });
+
+                        $rootScope.$emit('event:import:complete', {filename: job.filename, collectionId: collectionId});
 
                         updateImportJobsList(job);
                     } else if (job.status === 'FAILED') {
@@ -103,29 +101,6 @@ function DataImport(
         $rootScope.$on('event:authentication:logout:succeeded', function () {
             $timeout.cancel(timer);
         });
-    }
-
-    function createPostCollection(post_ids) {
-        var deferred = $q.defer();
-
-        var now = moment().format('h:mm a MMM Do YYYY');
-
-        var collection = {};
-        collection.name = 'Imported ' + now;
-        collection.view = 'list';
-        collection.visible_to = ['admin'];
-        var calls = [];
-        CollectionEndpoint.save(collection).$promise.then(function (collection) {
-            _.each(post_ids, function (id) {
-                calls.push(
-                    CollectionEndpoint.addPost({'collectionId': collection.id, 'id': id})
-                );
-            });
-            $q.all(calls).then(function () {
-                deferred.resolve(collection);
-            });
-        });
-        return deferred.promise;
     }
 
     function updateImportJobsList(job) {
