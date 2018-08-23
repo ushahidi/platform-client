@@ -50,6 +50,7 @@ angular.module('ushahidi.mock', [])
 .service('TranslationService', require('./services/translation-service.js'))
 .service('LoadingProgress', require('./services/loadingProgress.service.js'))
 .service('DataExport', require('./services/data-export.js'))
+.service('DataImport', require('./services/data-export.js'))
 .value('translateFilter', function (value) {
     return value;
 })
