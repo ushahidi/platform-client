@@ -177,7 +177,13 @@
               <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.everyone_can_create]">
                 <div class="form-field checkbox" ng-repeat="role in roles">
                   <label>
-                    <input type="checkbox" checklist-model="roles_allowed" checklist-value="role.id">
+                    <input
+                        type="checkbox"
+                        checklist-model="roles_allowed"
+                        ng-disabled="role.name === 'admin'"
+                        ng-checked="role.name === 'admin'"
+                        checklist-value="role.id"
+                    >
                     {{role.display_name}}
                   </label>
                 </div>
