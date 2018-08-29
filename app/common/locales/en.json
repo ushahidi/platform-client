@@ -160,7 +160,6 @@
         "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
         "targeted_activity": "Tageted Survey Activity",
         "crowdsourced_activity": "Crowdsourced Survey Activity"
-
     },
     "form": {
         "add_field" : "Add field",
@@ -1190,7 +1189,7 @@
         "see_imported_posts" : "See imported posts",
         "import_another_csv" : "Import another CSV file",
         "import_complete" : "Your import is complete",
-        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/settings/survey/{{form_id}}\">{{form_name}}</a> survey.",
+        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
         "import_another" : "Import another CSV file",
         "nearly_complete" : "Your import is nearly complete",
         "finish_info" : "The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.",
