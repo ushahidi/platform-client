@@ -1,6 +1,6 @@
 module.exports = AuthenticationEvents;
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport', 'DataImport'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport, DataImport) {
     let loginPath = null;
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
@@ -12,7 +12,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
 
     // todo: move to service
     $rootScope.hasManageSettingsPermission = function () {
-        return $rootScope.isAdmin() ? true : (_.intersection(($rootScope.currentUser || {}).permissions, ['Manage Users', 'Manage Settings', 'Bulk Data Import and Export']).length > 0);
+        return $rootScope.isAdmin() ? true : (_.intersection(($rootScope.currentUser || {}).permissions, ['Manage Users', 'Manage Settings', 'Bulk Data Import and Export', 'Bulk Data Import']).length > 0);
     };
 
     // todo: move to service
@@ -79,8 +79,14 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function loadExportJob() {
-        if ($rootScope.hasPermission('Bulk Data Import and Export')) {
+        if ($rootScope.hasPermission('Bulk Data Import and Export') || $rootScope.hasPermission('Bulk Data Import')) {
             DataExport.loadExportJob();
+        }
+    }
+
+    function loadImportJob() {
+        if ($rootScope.hasPermission('Bulk Data Import and Export') || $rootScope.hasPermission('Bulk Data Import')) {
+            DataImport.loadImportJob();
         }
     }
 
@@ -100,6 +106,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                  */
                 adminUserSetup();
                 loadExportJob();
+                loadImportJob();
                 PostFilters.resetDefaults();
                 if (redirect) {
                     $location.url(redirect);

@@ -8,7 +8,7 @@ module.exports = [
     'FormAttributeEndpoint',
     'DataImportEndpoint',
     'Notify',
-    'ImportNotify',
+    'DataImport',
     'Features',
     'CollectionEndpoint',
     'moment',
@@ -23,7 +23,7 @@ function (
     FormAttributeEndpoint,
     DataImportEndpoint,
     Notify,
-    ImportNotify,
+    DataImport,
     Features,
     CollectionEndpoint,
     moment,
@@ -267,53 +267,12 @@ function (
                 return csvIsValid;
             }
 
-            function createPostCollection(post_ids) {
-                var deferred = $q.defer();
-
-                var now = moment().format('h:mm a MMM Do YYYY');
-
-                var collection = {};
-                collection.name = 'Imported ' + now;
-                collection.view = 'list';
-                collection.visible_to = ['admin'];
-                var calls = [];
-                CollectionEndpoint.save(collection).$promise.then(function (collection) {
-                    _.each(post_ids, function (id) {
-                        calls.push(
-                            CollectionEndpoint.addPost({'collectionId': collection.id, 'id': id})
-                        );
-                    });
-                    $q.all(calls).then(function () {
-                        deferred.resolve(collection);
-                    });
-                });
-                return deferred.promise;
-            }
-
             function updateAndImport(csv) {
                 DataImportEndpoint.update(csv).$promise
                     .then(function () {
-                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise
-                            .then(function (response) {
-                                var processed = response.processed,
-                                    errors = response.errors,
-                                    post_ids = response.created_ids;
-
-                                createPostCollection(post_ids).then(function (collection) {
-                                    ImportNotify.importComplete(
-                                    {
-                                        processed: processed,
-                                        errors: errors,
-                                        collectionId: collection.id,
-                                        form_name: $scope.selectedForm.name,
-                                        filename: csv.filename
-                                    });
-
-                                    $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename, collectionId: collection.id});
-                                });
-                            }, function (errorResponse) {
-                                Notify.apiErrors(errorResponse);
-                            });
+                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then(function () {
+                            DataImport.startImport(csv);
+                        });
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
                     });

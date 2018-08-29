@@ -48,7 +48,7 @@ function (
     });
 
     // Redirect to home if not authorized
-    if ($rootScope.hasPermission('Bulk Data Import and Export') === false) {
+    if ($rootScope.hasPermission('Bulk Data Import and Export') === false && $rootScope.hasPermission('Bulk Data Import') === false) {
         return $location.path('/');
     }
 
