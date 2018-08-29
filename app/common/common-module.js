@@ -72,7 +72,6 @@ angular.module('ushahidi.common', [
 .controller('navigation', require('./controllers/navigation.js'))
 .controller('PageMetadata', require('./controllers/page-metadata.js'))
 .controller('intercom', require('./controllers/intercom.js'))
-.service('DataImport', require('./services/data-import.service.js'))
 .service('LoadingProgress', require('./services/loadingProgress.service.js'))
 .service('DataExport', require('./services/data-export.service.js'))
 .service('HxlExport', require('./services/hxl-export.service.js'))

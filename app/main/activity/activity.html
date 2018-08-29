@@ -27,11 +27,11 @@
                         <legend class="dropdown-trigger init" dropdown-toggle>
                             <span class="legend-label" ng-show="currentInterval !== 'custom'" translate="{{'graph.' + currentInterval }}">Date range</span>
                             <span class="legend-label"  ng-show="currentInterval == 'custom'"
-                                  translate="graph.custom_display"
-                                  translate-values="{
-                                    start: (filters.created_after | date:'shortDate'),
-                                    end: (filters.created_before | date:'shortDate') }"
-                                  translate-compile>Date range</span>
+                                translate="graph.custom_display"
+                                translate-values="{
+                                    start: (filters.created_after | date:'mediumDate'),
+                                    end: (filters.created_before | date:'mediumDate') }"
+                                translate-compile>Date range</span>
                             <svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use></svg>
                         </legend>
 
@@ -39,26 +39,26 @@
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="all">
-                                    <span translate="graph.all">All time</span>
+                                    <span translate="graph.all">All time<span>
                                 </label>
                             </div>
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="week">
-                                    <span translate="graph.week">This week</span>
+                                    <span translate="graph.week">This week<span>
                                 </label>
                             </div>
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="month">
-                                    <span translate="graph.month">This month</span>
+                                    <span translate="graph.month">This month<span>
                                 </label>
                             </div>
 
                             <div class="form-field radio">
                                 <label>
                                     <input ng-model="editableInterval" type="radio" name="editableInterval" value="custom">
-                                    <span translate="graph.custom">Custom date range</span>
+                                    <span translate="graph.custom">Custom date range<span>
                                 </label>
 
                                 <!-- todo: reuse filter-date -->
@@ -67,7 +67,7 @@
                                         <label class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
                                         <div class="input-with-icon">
                                             <svg class="iconic">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
                                             </svg>
                                             <input type="date" pick-a-date="createdAfter" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="createdAfter" />
                                         </div>
@@ -78,7 +78,7 @@
                                         <label class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
                                         <div class="input-with-icon">
                                             <svg class="iconic">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
                                             </svg>
                                             <input type="date" pick-a-date="createdBefore" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="createdBefore">
                                         </div>
@@ -97,14 +97,14 @@
             </form>
         </div>
 
-        <!-- unavailable view -->
+    	<!-- unavailable view -->
         <post-view-unavailable ng-hide="isActivityAvailable" view="'nav.activity' | translate"></post-view-unavailable>
         <!-- <img ng-hide="isActivityAvailable" src/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" /> -->
 
         <div ng-show="isActivityAvailable" class="main-col">
             <div class="listing card init">
                 <div class="listing-item active">
-                    <div class="listing-item-secondary">
+                   <div class="listing-item-secondary">
                         <button ng-show="todo" type="button" class="button-beta button-flat">
                             <svg class="iconic">
                                 <use xlink:href="/img/iconic-sprite.svg#share"></use>
@@ -119,13 +119,13 @@
 
                     <div class="listing-item-body">
                         <!-- <dc-chart-by-volume date-range="dateRange"></dc-chart-by-volume> -->
-                        <activity-time-chart filters="filters"></activity-time-chart>
+                        <activity-time-chart filters="filters"></activity-bar-chart>
                     </div>
                 </div>
             </div>
             <div class="listing card init">
                 <div class="listing-item active">
-                    <div class="listing-item-secondary">
+                   <div class="listing-item-secondary">
                         <button ng-show="todo" type="button" class="button-beta button-flat">
                             <svg class="iconic">
                                 <use xlink:href="/img/iconic-sprite.svg#share"></use>
@@ -140,7 +140,7 @@
 
                     <div class="listing-item-body">
                         <!-- <dc-chart-by-time date-range="dateRange"></dc-chart-by-time> -->
-                        <activity-bar-chart filters="filters"></activity-bar-chart>
+                        <activity-bar-chart filters="filters"></activity-time-chart>
                     </div>
                 </div>
             </div>

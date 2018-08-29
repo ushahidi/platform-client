@@ -42,7 +42,7 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
     }
 
     function getFormStats() {
-        FormEndpoint.query({ignore403: '@ignore403'}).$promise.then((forms) => {
+        FormEndpoint.query().$promise.then((forms) => {
             if (!crowdsourcedSurveysExist(forms)) {
                 $scope.noSurveys = true;
             } else {
@@ -51,8 +51,7 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
                     if (!form.targeted_survey) {
                         let query = PostFilters.getQueryParams($scope.filters) || {};
                         let postQuery = _.extend({}, query, {
-                            formId: form.id,
-                            ignore403: '@ignore403'
+                            formId: form.id
                         });
 
                         FormStatsEndpoint.query(postQuery).$promise.then((stats) => {
@@ -63,8 +62,7 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
                             $scope.totalEmail += parseInt(stats.total_by_data_source.email);
                             $scope.totalSms += parseInt(stats.total_by_data_source.sms);
                             $scope.totalTwitter += parseInt(stats.total_by_data_source.twitter);
-                        }).catch((err) => {
-                            $scope.noSurveys = true;
+
                         });
                     }
                 });
@@ -84,12 +82,8 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
                     posts.results.forEach((post) => {
                         $scope.unstructuredStats[post.source]++;
                     });
-                }).catch((err) => {
-                    $scope.noSurveys = true;
                 });
             }
-        }).catch((err) => {
-            $scope.noSurveys = true;
         });
     }
 

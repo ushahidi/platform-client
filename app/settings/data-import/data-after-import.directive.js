@@ -19,6 +19,7 @@ function (
             $rootScope.$on('event:import:complete', function (event, args) {
                 $scope.collectionId = args.collectionId;
                 $scope.filename = args.filename;
+                $scope.form = args.form;
                 $scope.importComplete = true;
             });
         }
