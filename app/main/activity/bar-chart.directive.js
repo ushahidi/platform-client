@@ -83,8 +83,7 @@ function ActivityBarChartController($scope, $translate, PostEndpoint, d3, _, Pos
     function getPostStats(query) {
         query = query || PostFilters.getQueryParams($scope.filters);
         var postQuery = _.extend({}, query, {
-            'group_by' : $scope.groupBy.value,
-            'ignore403': '@ignore403'
+            'group_by' : $scope.groupBy.value
         });
 
         $scope.isLoading = true;

@@ -1,53 +1,53 @@
 <div>
     <div class="mode-context init" dropdown>
 
-        <header class="mode-context-header">
-            <ol class="breadcrumbs">
-                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
-                <li><a href="/settings" translate>app.settings</a></li>
-            </ol>
-            <h1 class="mode-context-title" translate>app.import</h1>
-        </header>
+       <header class="mode-context-header">
+           <ol class="breadcrumbs">
+               <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+               <li><a href="/settings" translate>app.settings</a></li>
+           </ol>
+           <h1 class="mode-context-title" translate>app.import</h1>
+       </header>
 
-        <span class="mode-context-trigger" dropdown-toggle>
+       <span class="mode-context-trigger" dropdown-toggle>
            <svg class="iconic">
                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
            </svg>
            <span class="label hidden" translate>app.show_more_less</span>
        </span>
-    </div>
+   </div>
     <main role="main">
 
         <div class="main-col" after-import-csv>
 
-            <div class="form-sheet" ng-show="!importComplete">
-                <div class="form-sheet-summary">
-                    <h2 class="form-sheet-title" translate="data_import.nearly_complete">Your import is nearly complete</h2>
-                    <progress max="100" value="60">
-                        <!--// Fallback for browsers that don't support progress element //-->
-                        <div class="progress-bar">
-                            <span style="width: 60%;">Progress: 60%</span>
-                        </div>
-                    </progress>
-                    <p translate="data_import.finish_info">The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.</p>
-                </div>
+          <div class="form-sheet" ng-show="!importComplete">
+              <div class="form-sheet-summary">
+                  <h2 class="form-sheet-title" translate="data_import.nearly_complete">Your import is nearly complete</h2>
+                  <progress max="100" value="60">
+                      <!--// Fallback for browsers that don't support progress element //-->
+                      <div class="progress-bar">
+                          <span style="width: 60%;">Progress: 60%</span>
+                      </div>
+                  </progress>
+                  <p translate="data_import.finish_info">The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.</p>
+              </div>
 
-                <div class="form-field">
-                    <a href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another">Import another CSV file</a>
-                </div>
-            </div>
+              <div class="form-field">
+                  <a href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another">Import another CSV file</a>
+              </div>
+          </div>
 
-            <div class="form-sheet" ng-show="importComplete">
-                <div class="form-sheet-summary">
-                    <h2 class="form-sheet-title" translate="data_import.import_complete">Your import is complete</h2>
-                    <p translate-values="{filename: filename}" translate="data_import.complete_info">The data from your CSV spreadsheet, <em>filename.csv</em>, was successfully imported into your <a href="">Street Maintenance</a> survey.</p>
-                </div>
+          <div class="form-sheet" ng-show="importComplete">
+              <div class="form-sheet-summary">
+                  <h2 class="form-sheet-title" translate="data_import.import_complete">Your import is complete</h2>
+                  <p translate-values="{form_name: form.name, form_id: form.id, filename: filename}" translate="data_import.complete_info">The data from your CSV spreadsheet, <em>filename.csv</em>, was successfully imported into your <a href="">Street Maintenance</a> survey.</p>
+              </div>
 
-                <div class="form-field">
-                    <a ng-href="/collections/{{collectionId}}" class="button button-alpha" translate="data_import.see_imported_posts">See imported posts</a>
-                    <a href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another_csv">Import another CSV file</a>
-                </div>
-            </div>
-        </div>
+              <div class="form-field">
+                  <a ng-href="/collections/{{collectionId}}" class="button button-alpha" translate="data_import.see_imported_posts">See imported posts</a>
+                  <a href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another_csv">Import another CSV file</a>
+              </div>
+         </div>
+
     </main>
 </div>

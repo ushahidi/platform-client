@@ -4,28 +4,20 @@ module.exports = [
     '$resource',
     '$rootScope',
     'Util',
-    'CacheFactory',
 function (
     $q,
     $http,
     $resource,
     $rootScope,
-    Util,
-    CacheFactory
+    Util
 ) {
-    var cache;
-    if (!(cache = CacheFactory.get('importJobCache'))) {
-        cache = CacheFactory.createCache('importJobCache');
-    }
-    cache.removeExpired();
 
     var DataImportEndpoint = $resource(Util.apiUrl('/csv/:id/:action'), {
         id: '@id',
         action: '@action'
     }, {
         get: {
-            method: 'GET',
-            params: {'ignore403': '@ignore403'}
+            method: 'GET'
         },
         update: {
             method: 'PUT'
@@ -35,23 +27,8 @@ function (
         },
         import: {
             method: 'POST'
-        },
-        query: {
-            method: 'GET',
-            isArray: true,
-            transformResponse: function (data /*, header*/) {
-                return Util.transformResponse(data).results;
-            }
         }
     });
-    DataImportEndpoint.getFresh = function (params) {
-        cache.remove(Util.apiUrl('/csv/' + params.id));
-        return DataImportEndpoint.get(params);
-    };
-    DataImportEndpoint.queryFresh = function (params) {
-        cache.removeAll();
-        return DataImportEndpoint.query(params);
-    };
 
     DataImportEndpoint.upload = function (formData) {
         var dfd = $q.defer();

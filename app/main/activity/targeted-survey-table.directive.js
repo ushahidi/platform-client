@@ -40,7 +40,7 @@ function TargetedSurveyTableController($rootScope, $scope, $translate, FormEndpo
     }
 
     function getFormStats() {
-        FormEndpoint.query({ignore403: '@ignore403'}).$promise.then((forms) => {
+        FormEndpoint.query().$promise.then((forms) => {
             if (!targetedSurveysExist(forms)) {
                 $scope.noSurveys = true;
             } else {
@@ -49,8 +49,7 @@ function TargetedSurveyTableController($rootScope, $scope, $translate, FormEndpo
                     if (form.targeted_survey) {
                         let query = PostFilters.getQueryParams($scope.filters) || {};
                         let postQuery = _.extend({}, query, {
-                            formId: form.id,
-                            'ignore403': '@ignore403'
+                            formId: form.id
                         });
                         FormStatsEndpoint.query(postQuery).$promise.then((stats) => {
                             stats.name = form.name;
@@ -59,14 +58,10 @@ function TargetedSurveyTableController($rootScope, $scope, $translate, FormEndpo
                             $scope.totalMessagesSent += stats.total_messages_sent;
                             $scope.totalRecipients += stats.total_recipients;
                             $scope.totalResponseRecipients += stats.total_response_recipients;
-                        }).catch((err) => {
-                            $scope.noSurveys = true;
                         });
                     }
                 });
             }
-        }).catch((err) => {
-            $scope.noSurveys = true;
         });
     }
 
