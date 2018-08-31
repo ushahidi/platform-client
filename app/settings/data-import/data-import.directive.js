@@ -252,8 +252,11 @@ function (
                 var duplicateVars = checkForDuplicates();
 
                 // third, warn the user which keys have been duplicated
-                if (duplicateVars.length > 0) {
+                if (duplicateVars.length > 0 && duplicateVars[0] !== '') {
                     Notify.error('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')});
+                    return false;
+                } else if (duplicateVars.length > 0 && duplicateVars[0] === '') {
+                    Notify.error('notify.data_import.empty_mapping');
                     return false;
                 }
 
