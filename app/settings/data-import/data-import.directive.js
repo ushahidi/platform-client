@@ -272,6 +272,9 @@ function (
                     .then(function () {
                         DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then(function () {
                             DataImport.startImport(csv);
+                        }).catch(errorResponse => {
+                            Notify.apiErrors(errorResponse);
+                            $location.url('/settings/data-import');
                         });
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
