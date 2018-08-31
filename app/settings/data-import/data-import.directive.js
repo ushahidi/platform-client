@@ -117,7 +117,6 @@ function (
                 }
                 var formData = new FormData();
                 formData.append('file', $scope.fileContainer.file);
-                console.log($scope.fileContainer);
                 formData.append('form_id', $scope.selectedForm.id);
 
                 DataImportEndpoint.upload(formData)
