@@ -1412,6 +1412,7 @@
             "duplicate_fields" : "Columns must be mapped to unique survey fields. The following columns have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
             "empty_mapping" : "The CSV file you uploaded is empty. Please check your CSV file and try again",
+            "empty_mapping_empty" : "The CSV file does not contain column names. Please check your CSV file and try again",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled",
             "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"
