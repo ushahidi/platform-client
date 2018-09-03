@@ -132,7 +132,7 @@ function (
                 });
             }
             function loadStepTwo(results) {
-                if ($scope.csv.columns.filter(c => c === '').length === $scope.csv.columns.length) {
+                if (!$scope.csv.columns || ($scope.csv.columns.filter(c => c === '').length === $scope.csv.columns.length)) {
                     Notify.error('notify.data_import.empty_mapping_empty');
                     return false;
                 }
