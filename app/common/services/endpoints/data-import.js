@@ -13,6 +13,7 @@ function (
     Util,
     CacheFactory
 ) {
+
     var cache;
     if (!(cache = CacheFactory.get('importJobCache'))) {
         cache = CacheFactory.createCache('importJobCache');
@@ -23,10 +24,6 @@ function (
         id: '@id',
         action: '@action'
     }, {
-        get: {
-            method: 'GET',
-            params: {'ignore403': '@ignore403'}
-        },
         update: {
             method: 'PUT'
         },
@@ -36,6 +33,10 @@ function (
         import: {
             method: 'POST'
         },
+        get: {
+            method: 'GET',
+            params: {'ignore403': '@ignore403'}
+        },
         query: {
             method: 'GET',
             isArray: true,
@@ -44,10 +45,12 @@ function (
             }
         }
     });
+
     DataImportEndpoint.getFresh = function (params) {
         cache.remove(Util.apiUrl('/csv/' + params.id));
         return DataImportEndpoint.get(params);
     };
+
     DataImportEndpoint.queryFresh = function (params) {
         cache.removeAll();
         return DataImportEndpoint.query(params);
