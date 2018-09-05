@@ -284,7 +284,6 @@ function SurveyEditorController(
             var roles_allowed = results[3];
 
             $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
-
             // Remove source survey information
             if ($scope.actionType === 'duplicate') {
 
@@ -654,6 +653,11 @@ function SurveyEditorController(
     }
 
     function saveRoles() {
+        // adding admin to roles_allowed if not already there
+        let admin = _.findWhere($scope.roles, {name: 'admin'});
+        if (!$scope.survey.everyone_can_create && _.indexOf($scope.roles_allowed, admin.id) === -1) {
+            $scope.roles_allowed.push(admin.id);
+        }
         return FormRoleEndpoint
         .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
         .$promise;
