@@ -131,8 +131,11 @@ function (
                     Notify.apiErrors(errorResponse);
                 });
             }
-
             function loadStepTwo(results) {
+                if (!$scope.csv.columns || ($scope.csv.columns.filter(c => c === '').length === $scope.csv.columns.length)) {
+                    Notify.error('notify.data_import.empty_mapping_empty');
+                    return false;
+                }
                 // Retrieve tasks and attributes
                 $q.all([
                     FormStageEndpoint.getFresh({form_id: $scope.selectedForm.id}).$promise,
@@ -250,10 +253,13 @@ function (
                 }
 
                 var duplicateVars = checkForDuplicates();
-
-                // third, warn the user which keys have been duplicated
-                if (duplicateVars.length > 0) {
+                var allDuplicatesAreEmpty = duplicateVars.filter((o)=> o === '').length === duplicateVars.length;
+                // if duplicate var only holds '' , warn that column names cannot be empty
+                if (duplicateVars.length > 0 && !allDuplicatesAreEmpty) {
                     Notify.error('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')});
+                    return false;
+                } else if (duplicateVars.length > 0) { // if duplicate var only holds '' , warn that column names cannot be empty
+                    Notify.error('notify.data_import.empty_mapping_empty');
                     return false;
                 }
 
@@ -272,6 +278,9 @@ function (
                     .then(function () {
                         DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then(function () {
                             DataImport.startImport(csv);
+                        }).catch(errorResponse => {
+                            Notify.apiErrors(errorResponse);
+                            $location.url('/settings/data-import');
                         });
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
