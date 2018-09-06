@@ -70,8 +70,13 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
                 });
                 let query = PostFilters.getQueryParams($scope.filters) || {};
                 let postQuery = _.extend({}, query, {
-                    'group_by': 'form',
                     include_unmapped: true,
+                    group_by: 'form',
+                    has_location: 'all',
+                    order: 'desc',
+                    order_unlocked_on_top: true,
+                    orderby: 'created',
+                    status: 'all',
                     form: 'none'
                 });
 
