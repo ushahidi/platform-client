@@ -70,20 +70,34 @@ function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, For
                 });
                 let query = PostFilters.getQueryParams($scope.filters) || {};
                 let postQuery = _.extend({}, query, {
+                    include_unmapped: true,
+                    group_by: 'form',
+                    has_location: 'all',
+                    order: 'desc',
+                    order_unlocked_on_top: true,
+                    orderby: 'created',
+                    status: 'all',
                     form: 'none'
                 });
-                PostEndpoint.query(postQuery).$promise.then((posts) => {
+
+                PostEndpoint.stats(postQuery).$promise.then((totals) => {
                     $scope.unstructuredStats = {
                         name: 'Unstructured Posts',
-                        all: posts.results.length,
+                        all: 0,
                         web: 0,
                         email: 0,
                         sms: 0,
                         twitter: 0
                     };
-                    posts.results.forEach((post) => {
-                        $scope.unstructuredStats[post.source]++;
+                    totals.totals[0].values.forEach((stat) => {
+                        $scope.unstructuredStats[stat.type] = stat.total;
+                        $scope.unstructuredStats.all += stat.total;
                     });
+                    $scope.totalAll += $scope.unstructuredStats.all;
+                    $scope.totalWeb += $scope.unstructuredStats.web;
+                    $scope.totalEmail += $scope.unstructuredStats.email;
+                    $scope.totalSms += $scope.unstructuredStats.sms;
+                    $scope.totalTwitter += $scope.unstructuredStats.twitter;
                 }).catch((err) => {
                     $scope.noSurveys = true;
                 });
