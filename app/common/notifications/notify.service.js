@@ -133,7 +133,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         return deferred.promise;
     }
 
-    function confirmModal(confirmText, translateValues, description, descriptionValues, button) {
+    function confirmModal(confirmText, translateValues, description, descriptionValues, button, cancel) {
         var deferred = $q.defer();
 
         var scope = getScope();
@@ -155,7 +155,13 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 descriptionTemplate = `<p translate=${description} translate-values="${descriptionValues}"></p>`;
             }
             let buttonText = button ? button : 'message.button.default';
-            let template = '<div class="form-field">' + descriptionTemplate + '<p><i translate>notify.default.proceed_warning</i></p>' + '<button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' + `<button class="button-beta button-flat" ng-click="$parent.confirm()" translate>${buttonText}</button>` + '</div>';
+            let cancelButtonText = cancel ? cancel : 'message.button.cancel';
+            let template = `<div class="form-field">
+                                ${descriptionTemplate}
+                                <p><i translate>notify.default.proceed_warning</i></p>
+                                <button class="button" ng-click="$parent.cancel()" translate>${cancelButtonText}</button>
+                                <button class="button-alpha button-flat" ng-click="$parent.confirm()" translate>${buttonText}</button>
+                            </div>`;
 
             ModalService.openTemplate(
                 template, confirmText, false, scope, false, false);

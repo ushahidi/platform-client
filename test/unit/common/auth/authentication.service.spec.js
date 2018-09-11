@@ -43,6 +43,11 @@ describe('Authentication', function () {
 
         angular.mock.module('testApp');
 
+        jasmine.clock().install();
+    });
+
+    afterEach(() => {
+        jasmine.clock().uninstall();
     });
 
     beforeEach(angular.mock.inject(function (_$httpBackend_, _$rootScope_, _CONST_, _$injector_) {
@@ -128,7 +133,7 @@ describe('Authentication', function () {
 
                 it('should add the accessToken to the Session', function () {
                     expect(mockedSessionData.accessToken).toEqual(mockedOauthTokenResponse.access_token);
-                    expect(mockedSessionData.accessTokenExpires).toEqual(mockedOauthTokenResponse.expires);
+                    expect(mockedSessionData.accessTokenExpires).toEqual(Math.floor(Date.now() / 1000) + mockedOauthTokenResponse.expires_in);
                 });
 
                 it('should add the userData to the Session', function () {
