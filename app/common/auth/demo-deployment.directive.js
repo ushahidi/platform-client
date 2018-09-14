@@ -46,14 +46,14 @@ function DemoDeploymentController(
 
             $scope.expired = now > expiration_date;
 
-            if ($scope.expired && extension_date) {
+            if ($scope.expired) {
                 $scope.expired = now > extension_date;
-                $scope.extension_days_remaining = extension_date.diff(now, 'days');
             }
+
             $rootScope.$broadcast('demo:limitAvailability', $scope.expired, $scope.limitReached);
 
             if (!$scope.expired) {
-                $scope.days_remaining = $scope.extension_days_remaining ? $scope.extension_days_remaining : expiration_date.diff(now, 'days');
+                $scope.days_remaining = extension_date ? extension_date.diff(now, 'days') : expiration_date.diff(now, 'days');
                 PostEndpoint.stats().$promise.then(function (results) {
                     if (results.totals[0]) {
                         $scope.limitReached = results.totals[0].values[0].total >= 25;
