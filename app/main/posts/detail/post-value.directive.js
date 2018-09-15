@@ -43,7 +43,7 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
                     if (confidenceScoreTag && tagObj[0]) {
                         confidenceScoreTag.tag_name = tagObj[0].tag;
                         confidenceScoreTag.score = Math.round(confidenceScoreTag.score);
-                        confidenceScoreTag.source = 'SOURCE: ' + confidenceScoreTag.source ? confidenceScoreTag.source : 'Unknown';
+                        confidenceScoreTag.source = confidenceScoreTag.source ? 'SOURCE: ' + confidenceScoreTag.source : 'SOURCE: Unknown';
                         withChildren.push(confidenceScoreTag);
                     } else if (tagObj[0]) {
                         let confidenceScoreNew = {
