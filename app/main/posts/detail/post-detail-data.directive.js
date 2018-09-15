@@ -73,7 +73,7 @@ function PostDetailDataController(
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
     $scope.selectedPost = {post: $scope.post};
-
+    $scope.tags_confidence_score = $scope.post.tags_confidence_score;
     activate();
 
     function activate() {

@@ -40,6 +40,7 @@ function (
         query: {
             method: 'GET',
             isArray: true,
+            params: {'ignore403': '@ignore403'},
             transformResponse: function (data /*, header*/) {
                 return Util.transformResponse(data).results;
             }

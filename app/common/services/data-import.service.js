@@ -36,16 +36,16 @@ function DataImport(
 
     function loadImportJob() {
         var queries = [];
-        DataImportEndpoint.queryFresh().$promise.then(function (response) {
+        DataImportEndpoint.queryFresh({ignore403: '@ignore403'}).$promise.then(function (response) {
             _.each(response, function (job) {
                 if (job.status !== 'SUCCESS' && job.status !== 'FAILED') {
-                    queries.push(DataImportEndpoint.getFresh({id: job.id}).$promise);
+                    queries.push(DataImportEndpoint.getFresh({id: job.id, ignore403: '@ignore403'}).$promise);
                 }
             });
             if (queries.length) {
                 startPolling(queries);
             }
-        });
+        }).catch((err) => {});
     }
 
     function loadImportJobs() {
