@@ -18,7 +18,7 @@
         <base href="/">
     </head>
     <!-- TODO: set layouts per view directive -->
-    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
+    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible, 'demo-visible' : demoBarVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
         <div id="bootstrap-loading">
             <!-- loading the document -->
             <div class="loading">

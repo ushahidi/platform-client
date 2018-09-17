@@ -20,12 +20,14 @@ function DemoSliderService($rootScope, $q, $templateRequest) {
     }
 
     function close() {
+        $rootScope.toggleModalVisible(false, true);
         deferredClose.promise.then(function () {
             $rootScope.$emit('demoslider:close');
         });
     }
 
     function onOpen(callback, scope) {
+        $rootScope.toggleModalVisible(true, true);
         var handler = $rootScope.$on('demoslider:open', callback);
         if (scope) {
             scope.$on('$destroy', handler);
