@@ -88,6 +88,8 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.selectForm = selectForm;
     $scope.isSaving = LoadingProgress.getSavingState;
+    $scope.tags_confidence_score = $scope.post.tags_confidence_score;
+
 
     var ignoreCancelEvent = false;
     // Need state management
@@ -334,6 +336,18 @@ function PostDataEditorController(
         return MediaEditService.saveMedia($scope.medias, $scope.post);
     }
 
+    // TODO Move to Service ewwwwww
+    function getConfidenceScores(tags) {
+        // getting tag-names and formatting them for displaying
+        return _.map(tags, function (tag) {
+            var confidenceScoreTag = _.where($scope.tags_confidence_score, {tag_id: tag.id}).pop();
+            if (confidenceScoreTag) {
+                tag.confidence_score = confidenceScoreTag.score;
+            }
+            return tag;
+        });
+    }
+
     function savePost() {
         // Checking if changes are made
         if ($scope.editForm && !$scope.editForm.$dirty) {
@@ -367,7 +381,9 @@ function PostDataEditorController(
                 .filter()             // Remove nulls                      [0,1,1,2]
                 .uniq()               // Remove duplicates                 [0,1,2]
                 .value();             // and output
+
             }
+            post.tags = getConfidenceScores(post.tags);
             var request;
             if (post.id) {
                 request = PostEndpoint.update(post);

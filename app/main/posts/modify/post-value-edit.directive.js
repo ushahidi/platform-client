@@ -32,6 +32,7 @@ function PostValueEditController(
         'radio',
         'tags'
     ];
+    $scope.confidenceScores = $scope.$parent.post.tags_confidence_score;
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
     $scope.isText = isText;

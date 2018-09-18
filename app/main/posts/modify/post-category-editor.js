@@ -11,7 +11,8 @@ function PostCategoryEditorDirective() {
             postValue: '=',
             available: '=',
             selected: '=',
-            form: '='
+            form: '=',
+            confidenceScores: '='
         },
         controller: PostCategoryEditorController,
         template: require('./post-category-editor.html')
@@ -20,4 +21,5 @@ function PostCategoryEditorDirective() {
 PostCategoryEditorController.$inject = ['$rootScope','$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify', '_'];
 
 function PostCategoryEditorController($rootScope, $scope, TagEndpoint, FormAttributeEndpoint, Notify, _) {
+    console.log($scope.confidenceScores);
 }
