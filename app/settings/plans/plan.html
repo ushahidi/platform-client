@@ -23,29 +23,29 @@
             <div class="tiers" role="article">
                 <nav class="tabs-menu init" data-tabs="pricing-tabs">
                     <ul>
-                        <li class="active">
-                            <a href="#demo">
+                        <li id="demo-li" class="active">
+                            <a href="#" ng-click="switchTab('demo')">
                                 Ushahidi Demo
                                 <span class="tabs-label">Self Service</span>
                             </a>
 
                         </li>
-                        <li>
-                            <a href="#basic">
+                        <li id="basic-li" >
+                            <a href="#" ng-click="switchTab('basic')">
                                 Ushahidi Basic
                                 <span class="tabs-label">Self Service</span>
                             </a>
 
                         </li>
-                        <li>
-                            <a href="#enterprise-single">
+                        <li id="enterprise-single-li" >
+                            <a href="#" ng-click="switchTab('enterprise-single')">
                                 Single Deployment
                                 <span class="tabs-label alt">Enterprise</span>
                             </a>
 
                         </li>
-                        <li>
-                            <a href="#enterprise-multiple">
+                        <li id="enterprise-multiple-li" >
+                            <a href="#" ng-click="switchTab('enterprise-multiple')">
                                 Multiple Deployment
                                 <span class="tabs-label alt">Enterprise</span>
                             </a>
