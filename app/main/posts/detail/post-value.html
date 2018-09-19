@@ -3,6 +3,7 @@
       <h2 class="form-label">
           <bdi>{{attribute.label}}</bdi>
       </h2>
+        <p ng-if="attribute.input === 'tags'">{{attribute.instructions}}</p>
     </div>
     <!-- regular tags -->
     <div ng-if="attribute.input === 'tags' && confidenceScores.length == 0">
