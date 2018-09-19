@@ -61,8 +61,8 @@
                         <p class="small">limited use - 1 month</p>
                         <p>Test out the Ushahidi crowdsourcing and situation awareness platform.</p>
                         <strong class="tier-price">Free</strong>
-
-                        <a href="https://ushahidi.io/create?tier=free" class="button button-alpha" onclick="ga('send','event','links','select', 'plan-free',1);">Sign up</a>
+                        <a class="button button-alpha" disabled ng-show="tier == 'demo_1'">&check; Subscribed</a>
+                        <a href="//{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=demo_1" class="button button-alpha" ng-hide="tier == 'demo_1'">Sign up</a>
                     </div>
 
                     <div class="show-on-mobile">
@@ -128,7 +128,8 @@
                         <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
                         <p>Collect, monitor, analyze, and respond to real time incidents and engage with stakeholders.</p>
                         <strong class="tier-price">$499 <em>/mo</em></strong>
-                        <a href="https://ushahidi.io/create?tier=basic" class="button button-alpha" onclick="ga('send','event','links','select', 'plan-surveyor',1);">Sign up</a>
+                        <a class="button button-alpha" ng-show="tier == 'level_1'" disabled ng-show="tier == 'level_1'">&check; Subscribed</a>
+                        <a href="//{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=level_1" class="button button-alpha" ng-hide="tier == 'level_1'">Sign up</a>
                     </div>
 
                     <div class="show-on-mobile">
