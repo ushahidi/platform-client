@@ -346,7 +346,7 @@ function PostDataEditorController(
         })
             .flatten()
             .filter(tag => {
-                    return typeof tag !== 'undefined'
+                    return typeof tag !== 'undefined';
                 }
             );
         // getting tag-names and formatting them for displaying
@@ -355,14 +355,14 @@ function PostDataEditorController(
             var confidenceScoreTag = _.where($scope.tags_confidence_score, {tag_id: tag}).pop();
             if (confidenceScoreTag && foundTag) {
                 return {
-                    url: confidenceScoreTag.url,
-                    id: confidenceScoreTag.id,
+                    url: foundTag.url,
+                    id: foundTag.id,
                     confidence_score: confidenceScoreTag.score
-                }
+                };
                 //foundTag.confidence_score = confidenceScoreTag.score;
             }
         }).filter(tag => {
-                return typeof tag !== 'undefined'
+                return typeof tag !== 'undefined';
             }
         );
     }
@@ -403,7 +403,6 @@ function PostDataEditorController(
 
             }
             post.tags = getConfidenceScores(post.tags);
-            
             var request;
             if (post.id) {
                 request = PostEndpoint.update(post);
