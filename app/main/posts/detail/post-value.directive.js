@@ -64,6 +64,7 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             }
 
             if ($scope.attribute.input === 'tags' && $scope.confidenceScores.length === 0) {
+                $scope.score_tags = $scope.formatTagsWithScores($scope.value);
                 $scope.value = $scope.formatTags($scope.value);
             } else if ($scope.attribute.input === 'tags' && $scope.confidenceScores.length > 0) {
                 $scope.score_tags = $scope.formatTagsWithScores($scope.value);

@@ -5,18 +5,8 @@
       </h2>
         <p ng-if="attribute.input === 'tags'">{{attribute.instructions}}</p>
     </div>
-    <!-- regular tags -->
-    <div ng-if="attribute.input === 'tags' && confidenceScores.length == 0">
-       <p>
-        <svg class="iconic" style="margin-right:4px;">
-            <use xlink:href="/img/iconic-sprite.svg#tag"></use>
-        </svg>
-          <bdi>{{value}}</bdi>
-        </p>
-    </div>
-    <!-- end regular tags -->
     <!-- confidence score tags -->
-    <div ng-if="attribute.input === 'tags' && confidenceScores.length > 0">
+    <div ng-if="attribute.input === 'tags'">
         <p ng-repeat="entry in score_tags track by $index">
             <svg class="iconic" style="margin-right:4px;">
                 <use xlink:href="/img/iconic-sprite.svg#tag"></use>
