@@ -90,7 +90,7 @@ function PostDataEditorController(
     $scope.isSaving = LoadingProgress.getSavingState;
     $scope.tags_confidence_score = $scope.post.tags_confidence_score;
 
-
+    $scope.attributes = [];
     var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
@@ -241,7 +241,8 @@ function PostDataEditorController(
 
             // Set Post Lock
             $scope.post.lock = results[3];
-
+            $scope.attributes = attributes;
+            $scope.tags = categories;
             // Initialize values on post (helps avoid madness in the template)
             attributes.map(function (attr) {
                 // Create associated media entity
@@ -338,14 +339,32 @@ function PostDataEditorController(
 
     // TODO Move to Service ewwwwww
     function getConfidenceScores(tags) {
-        // getting tag-names and formatting them for displaying
-        return _.map(tags, function (tag) {
-            var confidenceScoreTag = _.where($scope.tags_confidence_score, {tag_id: tag.id}).pop();
-            if (confidenceScoreTag) {
-                tag.confidence_score = confidenceScoreTag.score;
+        var selectedTagIds = $scope.attributes.map(attribute => {
+            if ($scope.post.values[attribute.key] && attribute.input === 'tags') {
+                return $scope.post.values[attribute.key];
             }
-            return tag;
-        });
+        })
+            .flatten()
+            .filter(tag => {
+                    return typeof tag !== 'undefined'
+                }
+            );
+        // getting tag-names and formatting them for displaying
+        return _.map(selectedTagIds, function (tag) {
+            var foundTag = _.where($scope.tags, {id: tag}).pop();
+            var confidenceScoreTag = _.where($scope.tags_confidence_score, {tag_id: tag}).pop();
+            if (confidenceScoreTag && foundTag) {
+                return {
+                    url: confidenceScoreTag.url,
+                    id: confidenceScoreTag.id,
+                    confidence_score: confidenceScoreTag.score
+                }
+                //foundTag.confidence_score = confidenceScoreTag.score;
+            }
+        }).filter(tag => {
+                return typeof tag !== 'undefined'
+            }
+        );
     }
 
     function savePost() {
@@ -384,6 +403,7 @@ function PostDataEditorController(
 
             }
             post.tags = getConfidenceScores(post.tags);
+            
             var request;
             if (post.id) {
                 request = PostEndpoint.update(post);
