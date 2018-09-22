@@ -61,9 +61,22 @@ gulp.task('dist:config', () => {
 
 // Build webpack for production
 gulp.task('dist:webpack', (done) => {
+  // process request for static assets
+  if (process.env.PUBLIC_PATH) {
+    if (process.env.PUBLIC_PATH[0] !== '/') {
+      throw Error('PUBLIC_PATH must begin with /');
+    }
+    if (process.env.PUBLIC_PATH.slice(-1) !== '/') {
+      // ensure public path ends with '/'
+      process.env.PUBLIC_PATH = process.env.PUBLIC_PATH + '/';
+    }
+    // anchor the generation of index.html
+    process.env.INDEX_PATH = paths.dest;
+  }
+  //
   const config = require('./webpack.dist.config');
   config.entry.app = paths.entry;
-  config.output.path = paths.dest;
+  config.output.path = path.join(paths.dest, process.env.PUBLIC_PATH || '');
 
   webpack(config, (err, stats) => {
     if(err)  {

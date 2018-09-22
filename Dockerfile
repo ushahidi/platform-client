@@ -8,6 +8,7 @@ RUN npm-install-silent.sh
 COPY . ./
 ARG TX_USERNAME
 ARG TX_PASSWORD
+ENV PUBLIC_PATH '/assets/'
 RUN TX_USERNAME="${TX_USERNAME}" TX_PASSWORD="${TX_PASSWORD}" gulp build
 
 
