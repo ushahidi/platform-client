@@ -5,7 +5,7 @@ var config  = require('./webpack.config');
 config.output = {
   filename: '[name].[chunkhash].js',
   chunkFilename: '[name].[chunkhash].js',
-  publicPath: '',
+  publicPath: process.env.PUBLIC_PATH || '/',
   path: path.resolve(__dirname, 'server/www') // Overwritten by gulp
 };
 
