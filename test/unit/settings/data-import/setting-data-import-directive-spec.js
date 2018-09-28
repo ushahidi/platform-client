@@ -35,7 +35,9 @@ describe('setting data import directive', function () {
 
     it('should attempt to import a csv', function () {
         spyOn(Notify, 'notify');
-
+        $scope.csv = {
+            columns : {}
+        };
         $scope.fileContainer = {
             file: {
                 name: 'test csv'
