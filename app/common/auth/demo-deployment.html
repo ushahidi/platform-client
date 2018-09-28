@@ -1,0 +1,26 @@
+<div ng-if="loggedin">
+        <p ng-if="!expired && !limitReached" translate-values="{days: days_remaining}" translate="demo_warnings.user.not_expired">
+            You have X days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.
+        </p>
+        <p ng-if="limitReached" translate="demo_warnings.user.limit_reached">
+            Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project.
+        </p>
+        <p ng-if="expired" translate="demo_warnings.user.expired">
+            Your 30 day trial is over. Upgrade now to make the most of Ushahidi.
+        </p>
+        <div class="button-group">
+            <button class="button" ui-sref="settings.plan" translate="message.button.upgrade">
+                Upgrade now
+            </button>
+        </div>
+</div>
+
+<div ng-if="!loggedin" >
+    <p ng-if="!expired && days_remaining > 0" translate-values="{days: days_remaining, site_name: site_name}" translate="demo_warnings.visitor.not_expired">
+        Deployment X is using a free trial of Ushahidi. You will only see the first 25 posts for the next X days.
+    </p>
+    <p ng-if="expired || days_remaining <= 0" translate-values="{site_name: site_name}" translate="demo_warnings.visitor.expired">
+        Deployment X is using a free trial of Ushahidi. You will only see the first 25 posts.
+    </p>
+</div>
+    
