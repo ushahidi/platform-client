@@ -166,7 +166,8 @@ angular.module('app',
             });
         }
     }])
-    .run(function () {
+    .run(['DemoDeploymentService', function (DemoDeploymentService) {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    });
+        DemoDeploymentService.demoCheck();
+    }]);

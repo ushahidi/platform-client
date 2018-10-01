@@ -12,18 +12,15 @@ function (
     ConfigEndpoint
 ) {
     $rootScope.setLayout('layout-c');
+    $scope.switchTab = switchTab;
+    $scope.activeTab = 'demo';
     $translate('nav.plan_settings').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
     });
-    $scope.legacyPlan = false;
-    var standardTiers = ['free', 'surveyor', 'responder'];
 
     ConfigEndpoint.get({id: 'site'}).$promise.then(function (site) {
         $scope.tier = site.tier;
-        if (standardTiers.indexOf(site.tier) === -1) {
-            $scope.specialPlan = site.tier;
-        }
     });
     $scope.username = encodeURIComponent(($rootScope.currentUser || {}).email);
     /* globals apiDomain, deploymentsDomain */
@@ -32,5 +29,16 @@ function (
         CONST.BACKEND_URL.replace('.' + apiDomain, '').replace(/http[s]?:\/\//, '') :
         CONST.BACKEND_URL;
 
+    function switchTab(tab) {
+        // First unset last active tab
+        if ($scope.activeTab) {
+            angular.element(document.getElementById($scope.activeTab)).removeClass('active');
+            angular.element(document.getElementById($scope.activeTab + '-li')).removeClass('active');
+        }
+        // Set new active tab
+        angular.element(document.getElementById(tab)).addClass('active');
+        angular.element(document.getElementById(tab + '-li')).addClass('active');
+        $scope.activeTab = tab;
+    }
 
 }];
