@@ -4,13 +4,37 @@ module.exports = [
     '$rootScope',
     'CONST',
     'ConfigEndpoint',
+    'Notify',
 function (
     $scope,
     $translate,
     $rootScope,
     CONST,
-    ConfigEndpoint
+    ConfigEndpoint,
+    Notify
 ) {
+    const tierMap = {
+        'free': {
+            plan: 'Mapper',
+            newPlan: 'Ushahidi Demo'
+        },
+        'surveyor': {
+            plan: 'Surveyor',
+            newPlan: 'Ushahidi Basic'
+        },
+        'responder': {
+            plan: 'Responder',
+            newPlan: 'Ushahidi Basic'
+        },
+        'free-pre-jun-2016': {
+            plan: 'Mapper (Legacy)',
+            newPlan: 'Ushahidi Demo'
+        },
+        'zerorated': {
+            plan: 'Social Impact',
+            newPlan: 'Ushahidi Basic'
+        }
+    };
     $rootScope.setLayout('layout-c');
     $scope.switchTab = switchTab;
     $scope.activeTab = 'demo';
@@ -21,6 +45,19 @@ function (
 
     ConfigEndpoint.get({id: 'site'}).$promise.then(function (site) {
         $scope.tier = site.tier;
+        const msgAll =
+            'You have the <strong>' + tierMap[$scope.tier].plan + '</strong> plan. ' +
+            'This plan is now out of date and has been replaced by <strong>' + tierMap[$scope.tier].newPlan +
+            '</strong>. ';
+
+        if ($rootScope.isAdmin() && ($scope.tier === 'zerorated' || $scope.tier === 'surveyor' ||  $scope.tier === 'responder')) {
+            const msgPaid = 'Your deployment will be upgraded, at no additional cost, to the new Ushahidi Basic plan. ' +
+                'This change will occur between 8 October 2018 and 12 October 2018.';
+            Notify.notifyPermanent(msgAll + msgPaid);
+        } else if ($rootScope.isAdmin() && ($scope.tier === 'free' || $scope.tier === 'free-pre-jun-2016')) {
+            const msgFree = 'Your account will be migrated to Ushahidi Demo between 8 October 2018 and 12 October 2018. ';
+            Notify.notifyPermanent(msgAll + msgFree);
+        }
     });
     $scope.username = encodeURIComponent(($rootScope.currentUser || {}).email);
     /* globals apiDomain, deploymentsDomain */

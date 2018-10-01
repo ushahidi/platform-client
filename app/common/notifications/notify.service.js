@@ -21,12 +21,22 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
         adminUserSetupModal: adminUserSetupModal,
         infoModal: infoModal,
         confirmLeave: confirmLeave,
-        demo: demo
+        demo: demo,
+        notifyPermanent: notifyPermanent
     };
 
     function notify(message, translateValues) {
         function showSlider(message) {
             SliderService.openTemplate('<p>' + message + '</p>');
+        }
+
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
+
+
+    function notifyPermanent(message, translateValues) {
+        function showSlider(message) {
+            SliderService.openTemplate('<p>' + message + '</p>', null, null, null, null);
         }
 
         $translate(message, translateValues).then(showSlider, showSlider);
