@@ -50,11 +50,11 @@ function (
             'This plan is now out of date and has been replaced by <strong>' + tierMap[$scope.tier].newPlan +
             '</strong>. ';
 
-        if ($scope.tier === 'zerorated' || $scope.tier === 'surveyor' ||  $scope.tier === 'responder') {
+        if ($rootScope.isAdmin() && ($scope.tier === 'zerorated' || $scope.tier === 'surveyor' ||  $scope.tier === 'responder')) {
             const msgPaid = 'Your deployment will be upgraded, at no additional cost, to the new Ushahidi Basic plan. ' +
                 'This change will occur between 8 October 2018 and 12 October 2018.';
             Notify.notifyPermanent(msgAll + msgPaid);
-        } else if ($scope.tier === 'free' || $scope.tier === 'free-pre-jun-2016') {
+        } else if ($rootScope.isAdmin() && ($scope.tier === 'free' || $scope.tier === 'free-pre-jun-2016')) {
             const msgFree = 'Your account will be migrated to Ushahidi Demo between 8 October 2018 and 12 October 2018. ';
             Notify.notifyPermanent(msgAll + msgFree);
         }
