@@ -6,7 +6,8 @@ describe('authentication interceptor', function () {
         $http,
         CONST,
         mockedSessionData,
-        mockAuthentication;
+        mockAuthentication,
+        mockedDemoDeploymentService;
 
     beforeEach(function () {
         var testApp = makeTestApp()
@@ -23,6 +24,11 @@ describe('authentication interceptor', function () {
             getLoginStatus : function () {
                 return this.loginStatus;
             }
+        };
+
+        mockedDemoDeploymentService =
+        {
+            demoCheck: function () {}
         };
         testApp.service('Session', function () {
             return {
@@ -42,6 +48,9 @@ describe('authentication interceptor', function () {
         })
         .service('Authentication', function () {
             return mockAuthentication;
+        })
+        .service('DemoDeploymentService', function () {
+            return mockedDemoDeploymentService;
         })
         .config(require('app/common/auth/authentication-interceptor.config.js'));
 
