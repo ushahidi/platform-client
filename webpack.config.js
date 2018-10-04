@@ -113,7 +113,6 @@ module.exports = {
     // with cache purging during deployment.
     new HtmlWebpackPlugin({
       template: 'app/index.html',
-      filename: path.join(process.env.INDEX_PATH || '', 'index.html'),
       inject: 'body',
       hash: false
     }),
