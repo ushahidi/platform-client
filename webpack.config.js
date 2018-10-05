@@ -72,7 +72,7 @@ module.exports = {
         use: {
           loader: 'svg-url-loader',
           options : {
-            publicPath: process.env.PUBLIC_PATH || '/',
+            publicPath: '/',
             limit: 1
           }
         }
