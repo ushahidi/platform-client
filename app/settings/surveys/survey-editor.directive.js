@@ -23,6 +23,7 @@ SurveyEditorController.$inject = [
     'FormRoleEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
+    'ConfigEndpoint',
     'RoleEndpoint',
     'TagEndpoint',
     '_',
@@ -41,6 +42,7 @@ function SurveyEditorController(
     FormRoleEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
+    ConfigEndpoint,
     RoleEndpoint,
     TagEndpoint,
     _,
@@ -94,6 +96,8 @@ function SurveyEditorController(
     $scope.roles = [];
 
     $scope.onlyOptional = onlyOptional;
+    $scope.anonymiseReportersEnabled = false;
+    $scope.location_precision = 1000;
 
     activate();
 
@@ -106,6 +110,16 @@ function SurveyEditorController(
         $scope.loadRoleData();
         $scope.save = $translate.instant('app.save');
         $scope.saving = $translate.instant('app.saving');
+
+        ConfigEndpoint.get({id: 'map'}, function (map) {
+            $scope.location_precision = 1000 / Math.pow(10, map.location_precision);
+        });
+
+        Features.loadFeatures()
+        .then(() => {
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+            $scope.anonymiseReportersEnabled = Features.isFeatureEnabled('anonymise-reporters');
+        });
 
         if ($scope.surveyId) {
             loadFormData();
@@ -270,7 +284,6 @@ function SurveyEditorController(
             var roles_allowed = results[3];
 
             $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
-
             // Remove source survey information
             if ($scope.actionType === 'duplicate') {
 
@@ -640,6 +653,11 @@ function SurveyEditorController(
     }
 
     function saveRoles() {
+        // adding admin to roles_allowed if not already there
+        let admin = _.findWhere($scope.roles, {name: 'admin'});
+        if (!$scope.survey.everyone_can_create && _.indexOf($scope.roles_allowed, admin.id) === -1) {
+            $scope.roles_allowed.push(admin.id);
+        }
         return FormRoleEndpoint
         .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
         .$promise;

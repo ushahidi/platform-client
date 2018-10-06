@@ -121,6 +121,17 @@
             "search_all_entities_for" : "Search all {{entity}} for "
         }
     },
+    "demo_warnings" : {
+        "visitor": {
+            "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
+            "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
+        },
+        "user" : {
+            "expired": "Your 30 day trial is over. Upgrade now to make the most of Ushahidi.",
+            "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
+            "limit_reached": "Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project."
+        }
+    },
     "color_picker": {
         "hex_value" : "Hex Value",
         "red" : "Red",
@@ -144,7 +155,22 @@
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
         "by" : "By",
-        "context_body": "A summary of how people are interacting with {{site}}."
+        "context_body": "A summary of how people are interacting with {{site}}.",
+        "inbound": "Inbound Response Messages",
+        "outbound": "Outbound Surveying Messages",
+        "recipients": "Unique Recipients of Targeted Survey",
+        "responders": "Unique Responders to Targeted Survey",
+        "all_targeted": "All Targeted Surveys",
+        "no_targeted": "You don't have any Targeted Survey data to show.",
+        "all_sources": "All Data Souces",
+        "web_mobile": "Web and Mobile",
+        "email": "email",
+        "sms": "sms",
+        "twitter": "twitter",
+        "all_crowdsourced": "All Crowdsourced Surveys",
+        "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
+        "targeted_activity": "Tageted Survey Activity",
+        "crowdsourced_activity": "Crowdsourced Survey Activity"
     },
     "form": {
         "add_field" : "Add field",
@@ -267,7 +293,7 @@
         "hide_author_information" : "Hide author information",
         "hide_author_information_desc" : "Only people with permission to edit responses will be able to see who submitted them; and only when editing them.",
         "hide_location_information" : "Hide exact location information",
-        "hide_location_information_desc" : "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations.",
+        "hide_location_information_desc" : "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations. The location will be accurate to {{precision}}km.",
         "hide_time_information" : "Hide exact time information",
         "hide_time_information_desc" : "Only people with permission to edit responses will be able to see exact time submitted. Other people will see only the date.",
         "share" : "Share",
@@ -277,7 +303,7 @@
         "required_desc" : "Require this task be completed before a post can be visible to the public.",
         "require_field_desc" : "Require this field be completed",
         "name_this_task" : "Name this task...",
-        "require_review" : "Require posts be reviewed before they're published",
+        "require_review" : "Require posts to be reviewed before they're published",
         "require_review_desc" : "New responses to this survey will be put 'under review', and therefore not immediately visible to the public. Users with permission to review the response can review and 'publish' them, which would then make them visible to everyone.",
         "require_task" : "Required",
         "make_response_private" : "Make responses private",
@@ -313,6 +339,69 @@
                 "delete" : "Delete task",
                 "delete_this" : "Delete this task"
             }
+        },
+        "targeted_survey": {
+            "title": "Create a new targeted survey",
+            "description":"Send questions via SMS to a list of those phone numbers.",
+            "name_title": "Name your survey",
+            "name": "Survey name",
+            "description_title": "Survey Description",
+            "audience_title": "Choose your audience",
+            "add_questions_title": "Add your questions",
+            "add_questions_description": "We will send each question as a separate SMS. After someone responds, we will send the next question in the survey.",
+            "add_another": "Add another question...",
+            "add_a_question": "Add a question...",
+            "edit_title": "Edit question",
+            "new_question_title": "New Question",
+            "question_text": "Question text",
+            "question_description": "This is what users will see when they go to your survey.",
+            "sample_question": "Sample question: Hi there! How are you feeling today? Your response is free.",
+            "char_remains": "{{remaining}}/160 characters remaining",
+            "publish": "Publish survey",
+            "delete": "Delete",
+            "send_to_old_number_warning": "If you are messaging a number that you have messaged in the past, that person's responses will always apply to the most recent survey. They will no longer be able to reply to previous unanswered survey questions.",
+            "publish_description_many": "We will send {{questions}} questions to {{numbers}} people via SMS for a total of {{total_sms_messages}} messages. Your telecommunications provider will charge you for each message. Please be careful about the costs you will incur by sending this survey. This action cannot be undone.",
+            "publish_description_one_question": "We will send {{questions}} question to {{numbers}} people via SMS for a total of {{total_sms_messages}} messages. Your telecommunications provider will charge you for each message. Please be careful about the costs you will incur by sending this survey. This action cannot be undone.",
+            "publish_description_one_number": "We will send {{questions}} questions to {{numbers}} person via SMS for a total of {{total_sms_messages}} messages. Your telecommunications provider will charge you for each message. Please be careful about the costs you will incur by sending this survey. This action cannot be undone.",
+            "publish_description_one_number_one_question": "We will send {{questions}} question to {{numbers}} person via SMS for a total of {{total_sms_messages}} message. Your telecommunications provider will charge you for each message. Please be careful about the costs you will incur by sending this survey. This action cannot be undone.",
+            "question_warning": "You must enter at least 1 question.",
+            "publish_warning": "Are you sure you ant to send this SMS survey?",
+            "publish_notification_many": "{{messages}} messages will be sent as part of this survey. You will be charged for these messages by your telecommunications provider",
+            "publish_notification_one":"{{messages}} message will be sent as part of this survey. You will be charged for that message by your telecommunications provider",
+            "hide_responders": "Hide information about responders",
+            "hide_responders_desc": "The phone numbers of the people who respond to your questions remain hidden from the public site. Only the team members with edit permissions will be able to see them.",
+            "notification_button": "View survey in datamode",
+            "name_warning" : "You must give your survey a name.",
+            "description_warning" : "You must give your survey a description.",
+            "send_to_person" : "<strong>Targeted:</strong> Send this survey to {{recipientCount}} person via SMS",
+            "send_to_people" : "<strong>Targeted:</strong> Send this survey to {{recipientCount}} people via SMS",
+            "country_code" : "Country Code",
+            "country_code_error" : "You must select a country.",
+            "select_country" : "Select Country",
+            "phone_numbers" : "Phone Numbers",
+            "phone_number_warning" : "You must enter at least 1 phone number.",
+            "one_repeat_alert" : "We removed a total of {{repeatCount}} repeat number from your list.",
+            "multi_repeat_alert" : "We removed a total of {{repeatCount}} repeat numbers from your list.",
+            "multi_number_error" : "Of the {{total}} phone numbers you entered, we noticed problems with {{bad}} of them. Please correct the phone numbers below and continue. Numbers must match the selected country's formatting rules.",
+            "one_number_error" : "Of the {{total}} phone numbers you entered, we noticed problems with {{bad}} of them. Please correct the phone number below and continue. Numbers must match the selected country's formatting rules.",
+            "multi_numbers_good" : "These {{good_numbers}} numbers look fine.",
+            "one_number_good" : "This {{good_numbers}} number looks fine.",
+            "question_error" : "You must add at least one question.",
+            "phone_number_instructions" : "Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.",
+            "targeted_survey": "Targeted Survey",
+            "targeted_survey_desc": "We sent this survey via SMS",
+            "sent_messages": "We have sent {{totalSent}} messages, and",
+            "sent_message": "We have sent {{totalSent}} message, and",
+            "received_responses": "you have received {{responses}} responses ",
+            "received_response": "you have received {{responses}} response ",
+            "recipients_count": "from {{recipients}} recipients so far.",
+            "recipient_count": "from {{recipients}} recipient so far.",
+            "error_message" : "An error occurred while trying to save your targeted survey",
+            "error_contacts": "Some of the numbers you provided failed, please check your numbers and try again",
+            "pending_messages": "We are processing {{totalPending}} messages.",
+            "pending_message": "We are processing {{totalPending}} message.",
+            "cancel": "Cancel"
+
         }
     },
 
@@ -454,6 +543,7 @@
     "message" : {
         "button" : {
             "dismiss" : "Dismiss",
+            "upgrade" : "Upgrade now",
             "default" : "Ok",
             "cancel" : "Cancel"
         }
@@ -549,7 +639,7 @@
         "posts" : "Posts",
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
-        "reports_total": " {{posts}} of {{total_nb}} reports",
+        "posts_total": " {{posts}} of {{total_nb}} posts",
         "by" : "by",
         "task_completed" : "Task completed",
         "everyone" : "Everyone",
@@ -644,7 +734,7 @@
             "unlocked" : "Post successfully unlocked",
             "unlock" : "Unlock",
             "lock_broken_by_other" : "Your Post has been unlocked. Your current unsaved changes will be lost.",
-            "locked_message" : "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+            "locked_message" : "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
         },
         "modify" : {
             "intro" : "Select survey:",
@@ -701,6 +791,7 @@
             "reply" : "Reply to Message thread",
             "send" : "Send New Message",
             "save" : "Save",
+            "simple_send" : "Send",
             "title" : "Conversation with author",
             "associated_messages": "View messages associated with this post",
             "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
@@ -898,11 +989,12 @@
         "api_key_desc" : "The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.",
         "appearance" : "Appearance Settings",
         "continue" : "Continue",
+        "create" : "Create a new survey",
+        "create_open_or_targeted" : "Create an open or targeted survey to gather information about Ushahidi.",
         "current_header" : "Current background image",
         "customize_your_new_deployment" : "Customize your new deployment",
         "embed" : "Embed",
         "embed_info" : "To embed your map on another site use the code snippet below.",
-        "embed_code" : "&lt;iframe width=\"500\" height=\"400\" src=\"{{url}}\"&gt;&lt;/iframe&gt;",
         "settings_list": {
             "general" : "General",
             "general_desc" : "Change your deployment's name, description, logo, and other details.",
@@ -912,6 +1004,12 @@
             "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
             "import" : "Import",
             "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "user_settings": "Configure HDX API",
+            "user_settings_desc": "Configure your API so that your tagged Ushahidi data can be uploaded to your Humanitarian Data Exchange (HDX) account.",
+            "export": "Export data",
+            "export_hxl": "Export and tag data",
+            "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
+            "export_desc": "Export all of your data as a CSV file or choose custom fields to export",
             "users" : "Users",
             "users_desc" : "Create and manage the people that contribute to your deployment.",
             "roles" : "Roles",
@@ -922,6 +1020,19 @@
             "webhooks_desc" : "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+        },
+        "user_settings": {
+            "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
+            "view_guide": "View the guide to your API key",
+            "hdx_maintainer_id" : "HDX Maintainer Id",
+            "api_key": "Api key",
+            "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
+            "valid_key": "A valid key is required",
+            "valid_user": "A valid maintainer id is required",
+            "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
+            "start_tagging": "Start tagging data"
         },
         "webhooks": {
             "use_webhook_for": "Use webhook for",
@@ -942,7 +1053,7 @@
             "saving_changes": "Saving",
             "unavailable": "The datasource {{value}} is unavailable. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!",
             "email": {
-                "email_desc": "In order to receive reports by email, please input your email account settings below",
+                "email_desc": "In order to receive posts by email, please input your email account settings below",
                 "incoming_server_type": "Incoming Server Type",
                 "incoming_server_type_pop": "POP",
                 "incoming_server_type_imap": "IMAP",
@@ -1028,10 +1139,11 @@
             "manage_users": "Manage Users",
             "manage_posts": "Manage Posts",
             "manage_settings": "Mangage Settings",
-            "bulk_data_import": "Bulk Data Import",
+            "bulk_data_import": "Bulk Data Import and Export",
             "edit_own_posts": "Edit their own posts",
             "registred_member": "Registered member",
-            "administrator": "Administrator"
+            "administrator": "Administrator",
+            "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
         },
         "deployment_delete_this" : "Delete this deployment",
         "deployment_delete" : "Delete deployment",
@@ -1040,11 +1152,16 @@
         "deployment_logo" : "Deployment logo",
         "delete_logo": "Delete logo",
         "map_default_baselayer": "Default base layer",
+        "map_location_precision": "Map Precision Level",
+        "map_precise_to": "When hide location is enabled for a survey, locations will be precise to: ",
         "map_clustering": "Combine nearby posts",
         "map_default_latitude": "Default latitude",
         "map_default_longitude": "Default longitude",
         "map_default_zoom_level": "Default zoom level",
         "map_default_location": "Default location",
+        "new_survey": "New Survey",
+        "send_targeted" : "Send a targeted survey via SMS",
+        "send_crowdsourced": "Go back to crowd-sourced survey",
         "site" : "Site Settings",
         "site_email" : "Contact email address",
         "site_email_note" : "Use caution, as this will be visible to anyone on your site.",
@@ -1084,7 +1201,7 @@
         "see_imported_posts" : "See imported posts",
         "import_another_csv" : "Import another CSV file",
         "import_complete" : "Your import is complete",
-        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/settings/survey/{{form_id}}\">{{form_name}}</a> survey.",
+        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
         "import_another" : "Import another CSV file",
         "nearly_complete" : "Your import is nearly complete",
         "finish_info" : "The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.",
@@ -1117,14 +1234,23 @@
     },
     "data_export": {
         "title": "Export data",
+        "title_hxl": "Export and tag data",
         "description": "Export all of your data as a CSV or choose specific survey fields you want to export.",
+        "description_hxl": "Export all of your data from Ushahidi as a CSV, choose specific survey fields you want to export as a CSV or assign",
+        "export": "Export",
+        "export_history": "Export History",
+        "hxl_tags": "HXL tags",
+        "hxl_attributes": "HXL attributes",
+        "and_choose": "and choose to upload to an",
+        "HDX": "Humanitarian Data Exchange",
+        "account": "account or download as a HXL 'tagged' CSV file.",
         "all": "Export all data",
         "select_fields": "Select fields",
         "select_fields_title": "Select fields for export...",
         "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
         "export_selected": "Export selected fields",
         "cancel": "Cancel",
-        "export_progress": "Export in progress...",
+        "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
         "no_fields": "Uh oh... you need to select some fields to export first.",
         "expires": "<strong>Expires:</strong> {{expires}}",
         "job": "CSV Export {{jobId}}",
@@ -1133,8 +1259,65 @@
         "pending": "<strong>Status:</strong> Pending",
         "failed": "<strong>Status:</strong> Failed",
         "queued": "<strong>Status:</strong> In Progress",
-        "export": "Export",
-        "export_history": "Export History"
+        "pending_hdx": "Pending HDX",
+        "exported_to_cdn": "Exported to CDN",
+        "tags_attributes": "Assign tags and attributes",
+        "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
+        "hxl_configure": "Configure HDX API",
+        "hxl_apikey_alert_2": "We strongly advide you set this up now in",
+        "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
+        "hxl_title": "Assign your HXL tags and attributes, select fields and export or upload",
+        "hxl_desc": "Select specific fields from a survey, assign a tag per field and then choose to assign multiple attributes. Preview your tag and attributes in tag preview.",
+        "hxl_instructions_1": "You can then choose to export your tagged fields to a CSV file or upload to a",
+        "hxl_instructions_2": "Humanitarian Data Exchange (HDX)",
+        "hxl_instructions_3": "account that has been set up in",
+        "hxl_instructions_4": "Configure HDX API",
+        "hxl_instructions_5": "(found in settings menu).",
+        "hxl_instructions_6": "Visit the",
+        "hxl_instructions_7": "HXL tag assist",
+        "hxl_instructions_8": "for more information on how to choose the best HXL tags and attributes for your data or the",
+        "hxl_instructions_9": "HXL 'cheat sheet'",
+        "HXL_tags": "HXL tags",
+        "HXL_attributes": "HXL attributes",
+        "tag_preview": "Tag preview",
+        "upload_title": "Are you ready to upload to an Humanitarian Data Exchange (HDX) account?",
+        "hdx_csv_title": "Are you ready to export to CSV?",
+        "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
+        "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
+        "upload_button": "Add dataset details and upload to hdx",
+        "export_button": "Export to csv",
+        "go_back": "Go back and check",
+        "add_details": "Add details",
+        "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
+        "privacy_title": "Privacy Settings",
+        "privacy_desc": "You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.",
+        "this_dataset": "This data set is:",
+        "private_desc": "<strong>Private</strong> (Only you and other HDX members of your organisation can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
+        "public_desc": "<strong>Public</strong> (Anyone can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
+        "dataset": "Dataset Title & Description",
+        "dataset_desc": "When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also, avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.",
+        "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
+        "dataset_title": "Title of data set",
+        "metadata_title": "Metadata",
+        "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
+        "source": "Source",
+        "organisation": "Organisation",
+        "select_organisation": "Select an organisation",
+        "license": "License",
+        "add_license": "Add license",
+        "read_more_licenses":"Read more about licenses",
+        "submit_hdx": "Submit to HDX Account",
+        "uploading_data": "Uploading data...",
+        "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
+        "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+        "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
+        "validation": {
+            "title": "A title is needed",
+            "source": "Source is needed",
+            "organisation": "An organisation is needed",
+            "license": "A license is needed",
+            "all_fields": "Please fill in all required fields"
+        }
     },
     "user": {
         "role_display" : "Role: {{role}}",
@@ -1240,6 +1423,8 @@
             "csv_import_success_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.",
             "duplicate_fields" : "Columns must be mapped to unique survey fields. The following columns have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
+            "empty_mapping" : "The CSV file you uploaded is empty. Please check your CSV file and try again",
+            "empty_mapping_empty" : "The CSV file does not contain column names. Please check your CSV file and try again",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled",
             "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"
@@ -1286,7 +1471,7 @@
             "stage_save_success" : "Updated {{stage}}",
             "export" : "This will export filtered posts. Are you sure you want to continue?",
             "update_status_success_bulk" : "Status updated for {{count}} posts",
-            "leave_without_save" : "Do you want to leave this report without saving?",
+            "leave_without_save" : "Do you want to leave this post without saving?",
             "leave_confirm_message" : "If you continue, all of your changes will be lost",
             "leave_confirm" : "Continue without saving"
         },
@@ -1343,7 +1528,17 @@
             "destroy_stage_success" : "Survey task {{name}} deleted",
             "delete_attribute_confirm" : "Are you sure you want to delete this field?",
             "delete_attribute_confirm_desc" : "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
-            "destroy_attribute_success" : "Field {{name}} deleted"
+            "destroy_attribute_success" : "Field {{name}} deleted",
+            "validation": {
+                "name": {
+                    "required": "A survey-name is needed",
+                    "minlength": "Name is too short",
+                    "maxlength": "Name is too long"
+                },
+                "description":{
+                    "required": "Description cannot be empty"
+                }
+            }
         },
         "collection" : {
             "delete_collection_confirm" : "Are you sure you want to delete this collection?",
@@ -1373,9 +1568,13 @@
             "sent_to" : "Message sent to {{contact}}"
         },
         "export" : {
-            "in_progress" : "<h3>Your CSV export is in progress...</h3>You can navigate away from this window, we'll let you know when your download is complete.",
-            "complete" : "Your CSV export is complete.",
-            "complete_data_found_message" : "The data from your export can be found in your browser's downloads"
+            "in_progress" : "We are preparing your CSV file. This may take a few moments. You can leave this page if you want. We will let you know when we're done.",
+            "complete" : "Export done. You should see your CSV-file in your downloads.",
+            "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
+            "confirmation": "Got it",
+            "cancel_export": "Cancel export",
+            "canceled_job" : "Your export-job is canceled",
+            "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
         }
     },
     "empty": {
@@ -2180,4 +2379,5 @@
 "adminUserLimitReached": "limit:{{:admin}}"
 
     }
+
 }

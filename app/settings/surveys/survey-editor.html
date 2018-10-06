@@ -9,6 +9,7 @@
           </ol>
           <h1 ng-show="survey.id" class="mode-context-title" translate>app.edit_survey</h1>
           <h1 ng-show="!survey.id" class="mode-context-title" translate>app.add_survey</h1>
+          <a ng-show="targetedSurveysEnabled" ui-sref="settings.surveys.targeted.create"><span translate="settings.send_targeted">Send a targeted survey via SMS</span> ></a>
       </header>
 
       <span class="mode-context-trigger" dropdown-toggle>
@@ -46,7 +47,7 @@
             <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
 
             <label class="hidden" translate>app.description</label>
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Reports about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
+            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Posts about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
         </div>
 
         <nav class="tabs-menu init" data-tabs="survey-details">
@@ -142,7 +143,7 @@
             </div>
           </div>
           <!--// Hide Author Information //-->
-          <div class="form-field switch">
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
               <label translate="survey.hide_author_information">Hide author information</label>
               <p ng-show="survey.hide_author" data-fieldgroup-target="hide-author-message" translate="survey.hide_author_information_desc">Only people with permission to edit responses will be able to see who submitted them; and only when editing them.</p>
               <div class="toggle-switch">
@@ -151,16 +152,16 @@
               </div>
           </div>
 
-          <div class="form-field switch">
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
               <label translate="survey.hide_location_information">Hide location information</label>
-              <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
+              <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate-values="{ precision: location_precision}" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
               <div class="toggle-switch">
                   <input class="tgl init" id="hide-location" type="checkbox" data-fieldgroup-toggle="hide-location-message" ng-model="survey.hide_location">
                   <label class="tgl-btn" for="hide-location"></label>
               </div>
           </div>
 
-          <div class="form-field switch">
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
               <label translate="survey.hide_time_information">Hide exact time information</label>
               <p ng-show="survey.hide_time" data-fieldgroup-target="hide-time-message" translate="survey.hide_time_information_desc">Only people with permission to edit responses will be able to see exact respon time; and only when editing them.</p>
               <div class="toggle-switch">
@@ -194,7 +195,13 @@
               <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.everyone_can_create]">
                 <div class="form-field checkbox" ng-repeat="role in roles">
                   <label>
-                    <input type="checkbox" checklist-model="roles_allowed" checklist-value="role.id">
+                    <input
+                        type="checkbox"
+                        checklist-model="roles_allowed"
+                        ng-disabled="role.name === 'admin'"
+                        ng-checked="role.name === 'admin'"
+                        checklist-value="role.id"
+                    >
                     {{role.display_name | translate}}
                   </label>
                 </div>
@@ -215,7 +222,7 @@
         </div>
         <!-- Share Tab Options -->
         <div id="survey-share-post" class="survey-details tabs-target" ng-show="survey.id">
-          <share-menu survey-id="survey.id"></share-menu>
+          <share-menu survey-id="surveyId"></share-menu>
         </div>
       </section>
       <!-- Task sections -->

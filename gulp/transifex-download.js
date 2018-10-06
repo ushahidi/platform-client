@@ -6,8 +6,8 @@ let dotenv       = require('dotenv'),
 let project_slug = 'ushahidi-v3',
     mode = 'default',
     resource = 'client-en',
-    // Get languages that are at least 90% translated
-    completion_threshold = 70;
+    // Get languages that are at least 60% translated
+    completion_threshold = 60;
 
 function getCompletedLanguages(transifex) {
     return new Promise((resolve, reject) => {

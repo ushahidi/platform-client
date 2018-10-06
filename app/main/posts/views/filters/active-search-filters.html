@@ -3,7 +3,7 @@
         <svg class="iconic" ng-click="removeCollection(collection, $event)">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
         </svg>
-        <span><em><translate translate="app.collection"></translate>: </em>{{collection.name}}</span>
+        <span><em><translate translate="app.collection"></translate>: </em><bdi>{{collection.name}}<bdi></span>
     </span>
 </div>
 <div class="form-field saved-search" ng-show="savedSearch">
@@ -19,7 +19,7 @@
                 <svg class="iconic" ng-click="removeFilter(key, value, savedSearch, $event)">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                 </svg>
-                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> {{ transformFilterValue(value, key) }}</span>
+                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> <bdi>{{ transformFilterValue(value, key) }}</bdi></span>
             </span>
         </span>
         <span ng-if="!isArray(values)">
@@ -27,7 +27,7 @@
                 <svg class="iconic" ng-click="removeFilter(key, values, savedSearch, $event)">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                 </svg>
-                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> {{ transformFilterValue(values, key) }}</span>
+                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> <bdi>{{ transformFilterValue(values, key) }}</bdi></span>
             </span>
         </span>
     </div>
@@ -39,7 +39,7 @@
                 <svg class="iconic" ng-click="removeFilter(key, value, false, $event)">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                 </svg>
-                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> {{ transformFilterValue(value, key) }}</span>
+                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> <bdi>{{ transformFilterValue(value, key) }}</bdi></span>
             </span>
         </span>
         <span ng-if="!isArray(values)">
@@ -47,7 +47,7 @@
                 <svg class="iconic" ng-click="removeFilter(key, values, false, $event)">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                 </svg>
-                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> {{ transformFilterValue(values, key) }}</span>
+                <span><em><translate translate="global_filter.filter_tabs.{{key}}"></translate>:</em> <bdi>{{ transformFilterValue(values, key) }}</bdi></span>
             </span>
         </span>
     </div>

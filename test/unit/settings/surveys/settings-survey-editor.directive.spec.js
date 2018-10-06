@@ -64,6 +64,9 @@ describe('setting survey editor directive', function () {
             },
             getLimit : function () {
                 return this.limit;
+            },
+            isFeatureEnabled: function (feature) {
+                return;
             }
         };
     }));
