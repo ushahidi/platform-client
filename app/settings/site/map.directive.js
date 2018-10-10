@@ -3,11 +3,13 @@ module.exports = [
     'ConfigEndpoint',
     'Leaflet',
     'Maps',
+    'Features',
 function (
     $q,
     ConfigEndpoint,
     L,
-    Maps
+    Maps,
+    Features
 ) {
     return {
         restrict: 'E',
@@ -18,16 +20,26 @@ function (
         link: function ($scope, $element, $attrs) {
             var map, marker;
 
+            $scope.getPrecision = getPrecision;
             $scope.patternDigitsOnly = /^[0-9]+$/;
             $scope.patternFloat = /[-+]?(\d*[.])?\d+/;
             $scope.minZoom = 0;
             $scope.maxZoom = 18;
+            $scope.minObfuscation = 0;
+            $scope.maxObfuscation = 9;
+            $scope.updatePrecision = updatePrecision;
             $scope.updateMapPreview = updateMapPreview;
             $scope.updateMapPreviewLayer = updateMapPreviewLayer;
+            $scope.current_precision =  9;
+            $scope.locationPrecisionEnabled = false;
 
             activate();
 
             function activate() {
+                Features.loadFeatures().then(function () {
+                    $scope.locationPrecisionEnabled = Features.isFeatureEnabled('anonymise-reporters');
+                });
+
                 $scope.baselayers = Maps.getBaseLayers();
 
                 // Set initial map params
@@ -51,7 +63,17 @@ function (
                     marker.on('dragend', handleDragEnd);
                     map.on('zoomend', handleMoveEnd);
                     map.on('click', handleClick);
+
+                    $scope.current_precision =  $scope.getPrecision();
                 });
+            }
+
+            function getPrecision() {
+                return 1000 / Math.pow(10, $scope.config.location_precision);
+            }
+
+            function updatePrecision() {
+                $scope.current_precision = $scope.getPrecision();
             }
 
             // Get this map's available zoom levels.

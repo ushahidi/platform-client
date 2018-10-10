@@ -8,6 +8,8 @@ module.exports = [
     'FormAttributeEndpoint',
     '_',
     'LoadingProgress',
+    'Features',
+    'UserSettingsEndpoint',
 function (
     $scope,
     $rootScope,
@@ -17,7 +19,9 @@ function (
     FormEndpoint,
     FormAttributeEndpoint,
     _,
-    LoadingProgress
+    LoadingProgress,
+    Features,
+    UserSettingsEndpoint
 ) {
     $scope.exportAll = exportAll;
     $scope.showFields = false;
@@ -33,19 +37,47 @@ function (
     $scope.loadExportJobs = loadExportJobs;
     $scope.switchTab = switchTab;
     $scope.exportJobs = [];
+    $scope.dataExportTitle =  'data_export.title';
+    $scope.loadingFeature = true;
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
+    });
+    $rootScope.$on('event:export_job:started', function () {
+        $scope.showProgress = true;
     });
 
     // Redirect to home if not authorized
     if ($rootScope.hasPermission('Bulk Data Import and Export') === false && $rootScope.hasPermission('Bulk Data Import') === false) {
         return $location.path('/');
     }
+
+    // Check if hxl-feature is enabled
+    Features.loadFeatures().then(function () {
+        $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
+        if ($scope.hxlEnabled) {
+            $scope.dataExportTitle = 'data_export.title_hxl';
+            $scope.loadingFeature = false;
+        }
+    });
+
+    // Check if hxl-api-key is added
+    UserSettingsEndpoint.getFresh({id: $rootScope.currentUser.userId}).$promise.then((settings) => {
+        $scope.hxlApiKey = false;
+        _.each(settings.results, (setting) => {
+            if (setting.config_key === 'hdx_api_key') {
+                $scope.hxlApiKey = true;
+                $scope.loadingFeature = false;
+            }
+        });
+    });
+
     // Change layout class
     $rootScope.setLayout('layout-c');
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
+
+
 
     activate();
 
@@ -109,7 +141,7 @@ function (
     }
 
     function exportAll() {
-        DataExport.startExport({});
+        DataExport.startExport({send_to_hdx: false, include_hxl: false, send_to_browser: true});
         $scope.showProgress = true;
     }
 
@@ -118,12 +150,13 @@ function (
             .flatten() // concatinating attributes into one array
             .compact() // removing nulls
             .value(); // output
+
         if (fields.length === 0) {
             // displaying notification if no fields are selected
             var message =  '<p translate="data_export.no_fields"></p>';
             Notify.notifyAction(message, null, false, 'warning', 'error');
         } else {
-            DataExport.startExport({fields});
+            DataExport.startExport({fields, send_to_hdx: false, include_hxl: false, send_to_browser: true});
             $scope.showFields = false;
             $scope.showProgress = true;
         }

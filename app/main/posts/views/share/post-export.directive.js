@@ -47,7 +47,10 @@ function PostExportController(
         }
         // Prepare filters for export
         var query = {
-            filters: PostFilters.getQueryParams($scope.filters)
+            filters: PostFilters.getQueryParams($scope.filters),
+            send_to_hdx: false,
+            include_hxl: false,
+            send_to_browser: true
         };
         return query;
     }

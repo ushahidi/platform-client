@@ -121,6 +121,17 @@
             "search_all_entities_for" : "Search all {{entity}} for "
         }
     },
+    "demo_warnings" : {
+        "visitor": {
+            "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
+            "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
+        },
+        "user" : {
+            "expired": "Your 30 day trial is over. Upgrade now to make the most of Ushahidi.",
+            "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
+            "limit_reached": "Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project."
+        }
+    },
     "color_picker": {
         "hex_value" : "Hex Value",
         "red" : "Red",
@@ -143,8 +154,6 @@
         "activity_by_volume": "Activity by volume",
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
-        "by" : "By",
-        "context_body": "A summary of how people are interacting with {{site}}.",
         "by" : "By",
         "context_body": "A summary of how people are interacting with {{site}}.",
         "inbound": "Inbound Response Messages",
@@ -283,6 +292,10 @@
         "require_section" : "Require this task be completed before a post can be visible to the public",
         "hide_author_information" : "Hide author information",
         "hide_author_information_desc" : "Only people with permission to edit responses will be able to see who submitted them; and only when editing them.",
+        "hide_location_information" : "Hide exact location information",
+        "hide_location_information_desc" : "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations. The location will be accurate to {{precision}}km.",
+        "hide_time_information" : "Hide exact time information",
+        "hide_time_information_desc" : "Only people with permission to edit responses will be able to see exact time submitted. Other people will see only the date.",
         "share" : "Share",
         "task_name" : "Task name",
         "required_field" : "Required",
@@ -530,6 +543,7 @@
     "message" : {
         "button" : {
             "dismiss" : "Dismiss",
+            "upgrade" : "Upgrade now",
             "default" : "Ok",
             "cancel" : "Cancel"
         }
@@ -990,7 +1004,11 @@
             "data_sources_desc" : "Configure email, SMS, and social media channels that help your deployment collect survey data.",
             "import" : "Import",
             "import_desc" : "Upload survey data to your deployment from a CSV file.",
+            "user_settings": "Configure HDX API",
+            "user_settings_desc": "Configure your API so that your tagged Ushahidi data can be uploaded to your Humanitarian Data Exchange (HDX) account.",
             "export": "Export data",
+            "export_hxl": "Export and tag data",
+            "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
             "export_desc": "Export all of your data as a CSV file or choose custom fields to export",
             "users" : "Users",
             "users_desc" : "Create and manage the people that contribute to your deployment.",
@@ -1002,6 +1020,19 @@
             "webhooks_desc" : "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans" : "Plans",
             "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+        },
+        "user_settings": {
+            "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
+            "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
+            "view_guide": "View the guide to your API key",
+            "hdx_maintainer_id" : "HDX Maintainer Id",
+            "api_key": "Api key",
+            "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
+            "valid_key": "A valid key is required",
+            "valid_user": "A valid maintainer id is required",
+            "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
+            "start_tagging": "Start tagging data"
         },
         "webhooks": {
             "use_webhook_for": "Use webhook for",
@@ -1121,6 +1152,8 @@
         "deployment_logo" : "Deployment logo",
         "delete_logo": "Delete logo",
         "map_default_baselayer": "Default base layer",
+        "map_location_precision": "Map Precision Level",
+        "map_precise_to": "When hide location is enabled for a survey, locations will be precise to: ",
         "map_clustering": "Combine nearby posts",
         "map_default_latitude": "Default latitude",
         "map_default_longitude": "Default longitude",
@@ -1201,14 +1234,23 @@
     },
     "data_export": {
         "title": "Export data",
+        "title_hxl": "Export and tag data",
         "description": "Export all of your data as a CSV or choose specific survey fields you want to export.",
+        "description_hxl": "Export all of your data from Ushahidi as a CSV, choose specific survey fields you want to export as a CSV or assign",
+        "export": "Export",
+        "export_history": "Export History",
+        "hxl_tags": "HXL tags",
+        "hxl_attributes": "HXL attributes",
+        "and_choose": "and choose to upload to an",
+        "HDX": "Humanitarian Data Exchange",
+        "account": "account or download as a HXL 'tagged' CSV file.",
         "all": "Export all data",
         "select_fields": "Select fields",
         "select_fields_title": "Select fields for export...",
         "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
         "export_selected": "Export selected fields",
         "cancel": "Cancel",
-        "export_progress": "Export in progress...",
+        "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
         "no_fields": "Uh oh... you need to select some fields to export first.",
         "expires": "<strong>Expires:</strong> {{expires}}",
         "job": "CSV Export {{jobId}}",
@@ -1217,8 +1259,65 @@
         "pending": "<strong>Status:</strong> Pending",
         "failed": "<strong>Status:</strong> Failed",
         "queued": "<strong>Status:</strong> In Progress",
-        "export": "Export",
-        "export_history": "Export History"
+        "pending_hdx": "Pending HDX",
+        "exported_to_cdn": "Exported to CDN",
+        "tags_attributes": "Assign tags and attributes",
+        "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
+        "hxl_configure": "Configure HDX API",
+        "hxl_apikey_alert_2": "We strongly advide you set this up now in",
+        "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
+        "hxl_title": "Assign your HXL tags and attributes, select fields and export or upload",
+        "hxl_desc": "Select specific fields from a survey, assign a tag per field and then choose to assign multiple attributes. Preview your tag and attributes in tag preview.",
+        "hxl_instructions_1": "You can then choose to export your tagged fields to a CSV file or upload to a",
+        "hxl_instructions_2": "Humanitarian Data Exchange (HDX)",
+        "hxl_instructions_3": "account that has been set up in",
+        "hxl_instructions_4": "Configure HDX API",
+        "hxl_instructions_5": "(found in settings menu).",
+        "hxl_instructions_6": "Visit the",
+        "hxl_instructions_7": "HXL tag assist",
+        "hxl_instructions_8": "for more information on how to choose the best HXL tags and attributes for your data or the",
+        "hxl_instructions_9": "HXL 'cheat sheet'",
+        "HXL_tags": "HXL tags",
+        "HXL_attributes": "HXL attributes",
+        "tag_preview": "Tag preview",
+        "upload_title": "Are you ready to upload to an Humanitarian Data Exchange (HDX) account?",
+        "hdx_csv_title": "Are you ready to export to CSV?",
+        "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
+        "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
+        "upload_button": "Add dataset details and upload to hdx",
+        "export_button": "Export to csv",
+        "go_back": "Go back and check",
+        "add_details": "Add details",
+        "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
+        "privacy_title": "Privacy Settings",
+        "privacy_desc": "You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.",
+        "this_dataset": "This data set is:",
+        "private_desc": "<strong>Private</strong> (Only you and other HDX members of your organisation can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
+        "public_desc": "<strong>Public</strong> (Anyone can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
+        "dataset": "Dataset Title & Description",
+        "dataset_desc": "When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also, avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.",
+        "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
+        "dataset_title": "Title of data set",
+        "metadata_title": "Metadata",
+        "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
+        "source": "Source",
+        "organisation": "Organisation",
+        "select_organisation": "Select an organisation",
+        "license": "License",
+        "add_license": "Add license",
+        "read_more_licenses":"Read more about licenses",
+        "submit_hdx": "Submit to HDX Account",
+        "uploading_data": "Uploading data...",
+        "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
+        "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+        "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
+        "validation": {
+            "title": "A title is needed",
+            "source": "Source is needed",
+            "organisation": "An organisation is needed",
+            "license": "A license is needed",
+            "all_fields": "Please fill in all required fields"
+        }
     },
     "user": {
         "role_display" : "Role: {{role}}",
@@ -1324,6 +1423,8 @@
             "csv_import_success_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.",
             "duplicate_fields" : "Columns must be mapped to unique survey fields. The following columns have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
+            "empty_mapping" : "The CSV file you uploaded is empty. Please check your CSV file and try again",
+            "empty_mapping_empty" : "The CSV file does not contain column names. Please check your CSV file and try again",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled",
             "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"
@@ -1472,7 +1573,8 @@
             "complete_data_found_message" : "The data from your export can be found in your browser's downloads",
             "confirmation": "Got it",
             "cancel_export": "Cancel export",
-            "canceled_job" : "Your export-job is canceled"
+            "canceled_job" : "Your export-job is canceled",
+            "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
         }
     },
     "empty": {
