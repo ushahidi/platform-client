@@ -19,6 +19,9 @@
                 <post-metadata post="post" hide-date-this-week="true"></post-metadata>
                 <post-actions post="post"></post-actions>
             </div>
+
+              <twitter-widget ng-if="post.source==='twitter'" twitter-widget-id="post.data_source_message_id">
+              </twitter-widget>
             <div
               ng-repeat="(key,value) in post.values"
               ng-if="isPostValue(key) && form_attributes[key] && showType(form_attributes[key].type)"
