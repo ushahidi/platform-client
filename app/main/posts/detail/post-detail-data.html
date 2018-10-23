@@ -102,5 +102,5 @@
         </div>
   </div>
 
-    <post-messages post="post" ng-if="post.contact.id"></post-messages>
+    <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'"></post-messages>
 </div>
