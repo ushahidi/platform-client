@@ -117,6 +117,7 @@
     "moment-timezone": "^0.5.4",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
+    "ngtweet": "^1.0.0",
     "nvd3": "^1.8.4",
     "raven-js": "^3.26.3",
     "socket.io-client": "2.0.3",
