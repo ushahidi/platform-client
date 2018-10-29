@@ -13,6 +13,11 @@
         <div class="postcard-overflow">
             <div class="postcard-title">
                 <div class="postcard-field">
+                <div class="tweet-container">
+                  <twitter-widget ng-if="post.data_source_message_id" twitter-widget-id="post.data_source_message_id">
+                  </twitter-widget>
+                </div>
+
                 <bdi>{{ post.title || post.content | stripHtml | limitTo:150 }}{{ !post.title && post.content.length > 150 ? ' ...' : ''}}</bdi>
                 </div>
             </div>
