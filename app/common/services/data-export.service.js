@@ -156,16 +156,6 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
 
     function processJobFields(job) {
         if (job.status) {
-            /**
-             * only chhange the job.url_expiration if its a number or empty,
-             * to avoid "invalid date" from multiple conversions
-             */
-
-            if (!job.url_expiration) {
-                job.url_expiration = '';
-            } else if (_.isNumber(job.url_expiration)) {
-                job.url_expiration = new Date(job.url_expiration * 1000).toLocaleString();
-            }
             // keep the original timestamp for sorting
             job.created_timestamp = job.created_timestamp ? job.created_timestamp : job.created;
             job.created = new Date(job.created).toLocaleString();
