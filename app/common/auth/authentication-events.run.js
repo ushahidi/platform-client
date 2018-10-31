@@ -117,17 +117,13 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             });
     }
 
-    function doLogout(redirect) {
+    function doLogout() {
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
         DemoDeploymentService.demoCheck();
-        // we don' wat to reload until after filters are correctly set with the backend default that the user
-        // would get when logged out
+        // we don't want to reload until after filters are correctly set with
+        // the backend default that the user would get when logged out
         PostFilters.resetDefaults().then(function () {
-            if (redirect) {
-                $location.url(redirect);
-            }
-
             $state.go($state.$current.name ? $state.$current : 'map', null, { reload: true });
         });
     }
