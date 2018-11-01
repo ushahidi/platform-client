@@ -12,18 +12,22 @@ angular.module('ushahidi.common', [
 .service('Session', require('./auth/session.service.js'))
 .service('PasswordReset', require('./auth/password-reset.service.js'))
 .service('TermsOfService', require('./auth/tos.service.js'))
+.service('DemoDeploymentService', require('./auth/demo-deployment.service.js'))
 .directive('login', require('./auth/login.directive.js'))
 .directive('register', require('./auth/register.directive.js'))
 .directive('passwordReset', require('./auth/password-reset.directive.js'))
 .directive('passwordResetConfirm', require('./auth/password-reset-confirm.directive.js'))
 .directive('termsOfService', require('./auth/tos.directive.js'))
+.directive('demoDeployment', require('./auth/demo-deployment.directive.js'))
 .config(require('./auth/authentication-interceptor.config.js'))
 .run(require('./auth/authentication-events.run.js'))
 
 // Notifications
 .service('Notify', require('./notifications/notify.service.js'))
 .service('SliderService', require('./notifications/slider.service.js'))
+.service('DemoSliderService', require('./notifications/demo-slider.service.js'))
 .directive('ushSlider', require('./notifications/slider.directive.js'))
+.directive('ushDemoSlider', require('./notifications/demo-slider.directive.js'))
 
 // API Endpoint wrappers
 .service('ApiKeyEndpoint', require('./services/endpoints/apikey.js'))
@@ -75,7 +79,7 @@ angular.module('ushahidi.common', [
 .service('LoadingProgress', require('./services/loadingProgress.service.js'))
 .service('DataExport', require('./services/data-export.service.js'))
 .service('HxlExport', require('./services/hxl-export.service.js'))
-
+.service('DataImport', require('./services/data-import.service.js'))
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 

@@ -107,7 +107,7 @@
                     <div class="custom-select" >
                         <select name="organisation" ng-required="true" id="organisation" ng-model="details.organisation">
                             <option value="" translate="data_export.select_organisation">Select an organisation</option>
-                            <option ng-repeat="organisation in organisations" ng-value="organisation.id">{{organisation.name}}</option>
+                            <option ng-repeat="organisation in organisations" ng-value="organisation">{{organisation.name}}</option>
                         </select>
                     </div>
                     <div

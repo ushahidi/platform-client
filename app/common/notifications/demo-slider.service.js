@@ -1,7 +1,7 @@
-module.exports = SliderService;
+module.exports = DemoSliderService;
 
-SliderService.$inject = ['$rootScope', '$q', '$templateRequest'];
-function SliderService($rootScope, $q, $templateRequest) {
+DemoSliderService.$inject = ['$rootScope', '$q', '$templateRequest'];
+function DemoSliderService($rootScope, $q, $templateRequest) {
     var deferredOpen = $q.defer(),
         deferredClose = $q.defer();
 
@@ -15,18 +15,20 @@ function SliderService($rootScope, $q, $templateRequest) {
 
     function openTemplate(template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type) {
         deferredOpen.promise.then(function () {
-            $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type);
+            $rootScope.$emit('demoslider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type);
+            $rootScope.toggleModalVisible(true, true);
         });
     }
 
     function close() {
+        $rootScope.toggleModalVisible(false, true);
         deferredClose.promise.then(function () {
-            $rootScope.$emit('slider:close');
+            $rootScope.$emit('demoslider:close');
         });
     }
 
     function onOpen(callback, scope) {
-        var handler = $rootScope.$on('slider:open', callback);
+        var handler = $rootScope.$on('demoslider:open', callback);
         if (scope) {
             scope.$on('$destroy', handler);
         }
@@ -34,7 +36,7 @@ function SliderService($rootScope, $q, $templateRequest) {
     }
 
     function onClose(callback, scope) {
-        var handler = $rootScope.$on('slider:close', callback);
+        var handler = $rootScope.$on('demoslider:close', callback);
         if (scope) {
             scope.$on('$destroy', handler);
         }

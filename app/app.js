@@ -17,6 +17,7 @@ require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
+require('ngtweet');
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -80,7 +81,8 @@ angular.module('app',
         'ushahidi.common',
         'ushahidi.main',
         'ushahidi.settings',
-        'ui.bootstrap.dropdown'
+        'ui.bootstrap.dropdown',
+        'ngtweet'
     ])
 
     .constant('CONST', {
@@ -166,7 +168,8 @@ angular.module('app',
             });
         }
     }])
-    .run(function () {
+    .run(['DemoDeploymentService', function (DemoDeploymentService) {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    });
+        DemoDeploymentService.demoCheck();
+    }]);

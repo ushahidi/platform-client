@@ -121,6 +121,17 @@
             "search_all_entities_for" : "Search all {{entity}} for "
         }
     },
+    "demo_warnings" : {
+        "visitor": {
+            "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
+            "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
+        },
+        "user" : {
+            "expired": "Your 30 day trial is over. Upgrade now to make the most of Ushahidi.",
+            "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
+            "limit_reached": "Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project."
+        }
+    },
     "color_picker": {
         "hex_value" : "Hex Value",
         "red" : "Red",
@@ -144,7 +155,22 @@
         "recent_activity_timeline" : "Recent Activity timeline",
         "new_post" : "New Post",
         "by" : "By",
-        "context_body": "A summary of how people are interacting with {{site}}."
+        "context_body": "A summary of how people are interacting with {{site}}.",
+        "inbound": "Inbound Response Messages",
+        "outbound": "Outbound Surveying Messages",
+        "recipients": "Unique Recipients of Targeted Survey",
+        "responders": "Unique Responders to Targeted Survey",
+        "all_targeted": "All Targeted Surveys",
+        "no_targeted": "You don't have any Targeted Survey data to show.",
+        "all_sources": "All Data Souces",
+        "web_mobile": "Web and Mobile",
+        "email": "email",
+        "sms": "sms",
+        "twitter": "twitter",
+        "all_crowdsourced": "All Crowdsourced Surveys",
+        "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
+        "targeted_activity": "Tageted Survey Activity",
+        "crowdsourced_activity": "Crowdsourced Survey Activity"
     },
     "form": {
         "add_field" : "Add field",
@@ -266,6 +292,10 @@
         "require_section" : "Require this task be completed before a post can be visible to the public",
         "hide_author_information" : "Hide author information",
         "hide_author_information_desc" : "Only people with permission to edit responses will be able to see who submitted them; and only when editing them.",
+        "hide_location_information" : "Hide exact location information",
+        "hide_location_information_desc" : "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations. The location will be accurate to {{precision}}km.",
+        "hide_time_information" : "Hide exact time information",
+        "hide_time_information_desc" : "Only people with permission to edit responses will be able to see exact time submitted. Other people will see only the date.",
         "share" : "Share",
         "task_name" : "Task name",
         "required_field" : "Required",
@@ -513,6 +543,7 @@
     "message" : {
         "button" : {
             "dismiss" : "Dismiss",
+            "upgrade" : "Upgrade now",
             "default" : "Ok",
             "cancel" : "Cancel"
         }
@@ -760,6 +791,7 @@
             "reply" : "Reply to Message thread",
             "send" : "Send New Message",
             "save" : "Save",
+            "simple_send" : "Send",
             "title" : "Conversation with author",
             "associated_messages": "View messages associated with this post",
             "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
@@ -1107,10 +1139,11 @@
             "manage_users": "Manage Users",
             "manage_posts": "Manage Posts",
             "manage_settings": "Mangage Settings",
-            "bulk_data_import": "Bulk Data Import",
+            "bulk_data_import": "Bulk Data Import and Export",
             "edit_own_posts": "Edit their own posts",
             "registred_member": "Registered member",
-            "administrator": "Administrator"
+            "administrator": "Administrator",
+            "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
         },
         "deployment_delete_this" : "Delete this deployment",
         "deployment_delete" : "Delete deployment",
@@ -1119,6 +1152,8 @@
         "deployment_logo" : "Deployment logo",
         "delete_logo": "Delete logo",
         "map_default_baselayer": "Default base layer",
+        "map_location_precision": "Map Precision Level",
+        "map_precise_to": "When hide location is enabled for a survey, locations will be precise to: ",
         "map_clustering": "Combine nearby posts",
         "map_default_latitude": "Default latitude",
         "map_default_longitude": "Default longitude",
@@ -1166,7 +1201,7 @@
         "see_imported_posts" : "See imported posts",
         "import_another_csv" : "Import another CSV file",
         "import_complete" : "Your import is complete",
-        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/settings/survey/{{form_id}}\">{{form_name}}</a> survey.",
+        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
         "import_another" : "Import another CSV file",
         "nearly_complete" : "Your import is nearly complete",
         "finish_info" : "The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.",
@@ -1388,6 +1423,8 @@
             "csv_import_success_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.",
             "duplicate_fields" : "Columns must be mapped to unique survey fields. The following columns have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
+            "empty_mapping" : "The CSV file you uploaded is empty. Please check your CSV file and try again",
+            "empty_mapping_empty" : "The CSV file does not contain column names. Please check your CSV file and try again",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled",
             "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"

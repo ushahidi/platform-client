@@ -85,15 +85,19 @@ MOCK_BACKEND=false
 KARMA_CHROME=false
 PORT=8080
 APP_LANGUAGES=en,ar
+OAUTH_CLIENT_ID=ushahidiui
+OAUTH_CLIENT_SECRET=35e7f0bca957836d05ca0492211b0ac707671261
 ```
 
 * `NODE_SERVER` - always run the `node-server` task
-* `BACKEND_URL` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
+* `BACKEND_URL` - set the URL to your instance of the [Platform API](https://github.com/ushahidi/platform)
 * `UGLIFY_JS` - uglify js during builds. Enabled by default
 * `MOCK_BACKEND` - build the app with an mock backend.
 * `KARMA_CHROME` - Use chrome to run karma tests
 * `PORT` - set the port to run `node-server`
 * `APP_LANGUAGES` - sets the available languages. Defaults to showing all languages
+* `OAUTH_CLIENT_ID` - sets the client id required by the API
+* `OAUTH_CLIENT_SECRET` - sets the client secret required by the API
 
 #### Optional: Mock Backend
 
