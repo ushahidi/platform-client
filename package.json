@@ -64,7 +64,7 @@
     "karma-coverage": "^1.0.0",
     "karma-firefox-launcher": "*",
     "karma-fixture": "^0.2.6",
-    "karma-jasmine": "^1.0.2",
+    "karma-jasmine": "^2.0.0",
     "karma-json-fixtures-preprocessor": "0.0.6",
     "karma-notify-reporter": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.0",
