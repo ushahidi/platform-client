@@ -106,8 +106,6 @@ angular.module('ushahidi.common', [
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 .directive('loadingDots', require('./directives/loading-dots.directive.js'))
 
-// Factories
-.factory('socket', require('./factories/socket-factory.js'))
 // Event actions
 .constant('EVENT', {
     ACTIONS : {
