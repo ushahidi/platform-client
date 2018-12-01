@@ -75,16 +75,13 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
                 pointToLayer: Maps.pointToLayer
             });
             geojson.addTo(map);
-            Maps.getConfig().then(function (config) {
-                if (config.default_view.fit_map_boundaries === true) {
-                    map.fitBounds(geojson.getBounds());
-                }
-                // Focus map on data points when doing the auto boundaries fit but..
-                // Avoid zooming further than 15 (particularly when we just have a single point)
-                if (map.getZoom() > 15 && config.default_view.fit_map_boundaries === true) {
-                    map.setZoom(15);
-                }
-            });
+
+            map.fitBounds(geojson.getBounds());
+            // Focus map on data points when doing the auto boundaries fit but..
+            // Avoid zooming further than 15 (particularly when we just have a single point)
+            if (map.getZoom() > 15) {
+                map.setZoom(15);
+            }
             return data;
         }
     }
