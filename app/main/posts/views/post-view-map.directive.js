@@ -107,17 +107,19 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             markers.addTo(map);
             geoJsonLayers.push(markers);
 
-            if (posts.features.length > 0) {
-                map.fitBounds(geojson.getBounds());
-            }
-            // Focus map on data points but..
-            // Avoid zooming further than 15 (particularly when we just have a single point)
-            if (map.getZoom() > 15) {
-                map.setZoom(15);
-            }
-            $timeout(function () {
-                map.invalidateSize();
-            }, 1);
+            Maps.getConfig().then(function (config) {
+                if (posts.features.length > 0 && config.default_view.fit_map_boundaries === true) {
+                    map.fitBounds(geojson.getBounds());
+                }
+                // Focus map on data points when doing the auto boundaries fit but..
+                // Avoid zooming further than 15 (particularly when we just have a single point)
+                if (map.getZoom() > 15 && config.default_view.fit_map_boundaries === true) {
+                    map.setZoom(15);
+                }
+                $timeout(function () {
+                    map.invalidateSize();
+                }, 1);
+            });
         }
 
         function watchFilters() {
