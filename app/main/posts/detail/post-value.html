@@ -11,7 +11,7 @@
             <svg class="iconic" style="margin-right:4px;">
                 <use xlink:href="/img/iconic-sprite.svg#tag"></use>
             </svg>
-            <bdi ng-if="entry.score !== null"><a title="{{entry.source}}" href="#" target="_blank">{{entry.tag_name}}<strong ng-if="entry.score != null"> {{entry.score}}% accurate</strong></a></bdi>
+            <bdi ng-if="entry.score !== null"><a title="{{entry.source}}" href="#" target="_blank">{{entry.tag_name}}<strong ng-if="entry.score != null"> {{entry.score}}% confidence</strong></a></bdi>
             <bdi ng-if="entry.score === null">{{entry.tag_name}}</bdi>
         </p>
     </div>
