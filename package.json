@@ -46,7 +46,7 @@
     "web-app-manifest-loader": "0.1.1",
     "file-loader": "^0.11.1",
     "fs-walk": "0.0.1",
-    "gulp": "^3.9.0",
+    "gulp": "^4.0.0",
     "gulp-gzip": "^1.4.0",
     "gulp-jscs": "^4.0.0",
     "gulp-rename": "^1.2.2",
