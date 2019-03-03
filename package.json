@@ -39,7 +39,7 @@
     "browser-sync": "^2.11.1",
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.28.0",
-    "del": "^2.2.0",
+    "del": "^4.0.0",
     "dotenv": "^4.0.0",
     "eslint": "^3.4.0",
     "extract-text-webpack-plugin": "^2.1.0",
