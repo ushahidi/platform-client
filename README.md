@@ -46,11 +46,14 @@ npm takes care of the rest of our dependencies.
     BACKEND_URL=http://ushahidi-backend
     ```
 
-7. Run gulp
-
+7. Build with gulp
     ```
-    gulp
+    gulp build
     ```
+8. Run with gulp
+    ```
+    gulp serve
+    ``` 
 8. You should now have a local development server running on http://localhost:8080
 
 ## Extra config and options
