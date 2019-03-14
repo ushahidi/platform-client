@@ -51,7 +51,7 @@ npm takes care of the rest of our dependencies.
     ```
     gulp
     ```
-8. You should now have a local development server running on http://localhost:8080
+8. You should now have a local development server running on http://localhost:3000 and http://localhost:3001
 
 ## Extra config and options
 
