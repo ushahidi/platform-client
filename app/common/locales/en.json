@@ -506,7 +506,7 @@
         "option_3" : "within 50 km",
         "option_4" : "within 100 km",
         "option_5" : "within 500 km",
-        "clear_filters" : "Clear Filters",
+        "restore_defaults" : "Restore Defaults",
         "apply_filters" : "Apply",
         "save_to_set" : "Save to Set",
         "search" : "Search",
