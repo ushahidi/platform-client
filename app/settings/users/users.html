@@ -40,7 +40,9 @@
             </div>
         </div>
         <!-- end toolbar -->
-
+        <!--Below is the UserListContainer created in react, uncomment if you want to use!-->
+        <user-list-container></user-list-container>
+        <!--UserListContainer is supposed to replace the main-col div below (but not all functionality is yet migrated)-->
         <div class="main-col">
 
             <div class="listing card" ng-class="{'toolbar-active': selectedUsers.length}">
@@ -56,11 +58,13 @@
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
                             <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
+                            <!--Below is the UserAvatar created in react, uncomment if you want to use, and remove the img-tag above-->
+                            <!--<user-avatar avatar="user.gravatar" realname="user.realname"></user-avatar>-->
                         </div>
 
                         <h2 class="listing-item-title"><a ui-sref="settings.users.edit({id: user.id})">{{user.realname}}</a></h2>
-                        <p class="listing-item-secondary" 
-                            translate-values="{role: roles[user.role].display_name}" 
+                        <p class="listing-item-secondary"
+                            translate-values="{role: roles[user.role].display_name}"
                             translate="user.role_display">
                             Role: role_name
                         </p>
@@ -68,7 +72,7 @@
                             translate-values="{
                                 type: contact.type,
                                 contact: contact.contact
-                            }" 
+                            }"
                             translate="user.contact">
                             Contact_Type: contact
                         </p>
