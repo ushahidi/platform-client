@@ -10,7 +10,6 @@ import {
     // getRoleError
 } from "react/common/state/roles/roles.reducers";
 import { getPeople } from "react/common/state/people/people.reducers";
-import SettingsSearch from "react/settings/common/SettingsSearch";
 import PeopleList from "./PeopleList";
 
 // const propTypes = {};
@@ -20,7 +19,6 @@ class PeopleListContainer extends React.Component {
         return (
             <div>
                 <button>Add a person</button>
-                <SettingsSearch />
                 <PeopleList />
             </div>
         );

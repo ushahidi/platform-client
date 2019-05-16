@@ -1,4 +1,4 @@
-import PersonEndpoints from "react/common/endpoints/people";
+import PersonEndpoints from "react/common/endpoints/users";
 
 export const SAVE_NEW_PERSON = "SAVE_NEW_PERSON";
 export const RECEIVE_PERSON = "RECEIVE_PERSON";

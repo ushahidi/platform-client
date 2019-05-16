@@ -7,6 +7,5 @@ test("the handleChange method updates the input value", () => {
 
     expect(peopleListContainer.find("button").length).toBe(1);
     expect(peopleListContainer.find("button").text()).toBe("Add a person");
-    expect(peopleListContainer.find("SettingsSearch").length).toBe(1);
     expect(peopleListContainer.find("PeopleList").length).toBe(1);
 });

@@ -2,7 +2,7 @@ import { react2angular } from "react2angular";
 import angular from "angular";
 import TestRouteContainer from "./TestRouteContainer";
 import PersonContainer from "../react/settings/people/PersonContainer";
-
+import UserAvatar from "../react/settings/users/UserList/UserAvatar";
 angular
     .module("ushahidi.settings", [])
     .directive(
@@ -48,5 +48,7 @@ angular
 
     .component("testRouteContainer", react2angular(TestRouteContainer, ["id"]))
     .component("personContainer", react2angular(PersonContainer))
+    .component("userAvatar", react2angular(UserAvatar), ["realname", "avatar"])
+
 
     .config(require("./settings.routes.js"));
