@@ -18,7 +18,7 @@
       </div>
       <twitter-widget ng-if="post.source==='twitter'" twitter-widget-id="post.data_source_message_id">
       </twitter-widget>
-      <div
+      <!-- <div
         ng-repeat="postValue in postValues"
         ng-if="isPostValue(postValue.key) && form_attributes[postValue.key] && showType(form_attributes[postValue.key].type)"
         class="postcard-field"
@@ -28,21 +28,29 @@
           media-has-caption="form_attributes[postValue.key].config.hasCaption"
           label="{{form_attributes[postValue.key].label}}"
           media-id="postValue.value"></post-media-value>
-      </div>
+      </div> -->
       <div
         ng-if="post.content"
         class="postcard-field">
         <p markdown-to-html="post.content"></p>
       </div>
-      <post-value
+      <span 
         ng-repeat="postValue in postValues"
-        ng-if="form_attributes[postValue.key].type !== 'media' && isPostValue(postValue.key) && showType(form_attributes[postValue.key].type)"
-        key="postValue.key"
-        value="postValue.value"
-        attribute="form_attributes[postValue.key]"
-        tags="tags"
-        type="'post'">
-      </post-value>
+        ng-if="isPostValue(postValue.key) && showType(form_attributes[postValue.key].type)"
+      >
+        <post-media-value
+          ng-if="form_attributes[postValue.key].type === 'media'"
+          media-has-caption="form_attributes[postValue.key].config.hasCaption"
+          label="{{form_attributes[postValue.key].label}}"
+          media-id="postValue.value"></post-media-value>
+        <post-value
+          ng-if="form_attributes[postValue.key].type !== 'media'"
+          key="postValue.key"
+          value="postValue.value"
+          attribute="form_attributes[postValue.key]"
+          tags="tags"
+          type="'post'"></post-value>
+      </span>
       <post-detail-map post-id="post.id"></post-detail-map>
     </div>
   </article>
@@ -70,25 +78,21 @@
       </div>
       <div
         ng-repeat="postValue in postValues"
-        ng-if="form_attributes[postValue.key].type === 'media' && !isPostValue(postValue.key) && form_attributes[postValue.key] && showType(form_attributes[postValue.key].type)"
+        ng-if="!isPostValue(postValue.key) && form_attributes[postValue.key] && showType(form_attributes[postValue.key].type)"
         ng-show="form_attributes[postValue.key].form_stage_id === visibleTask"
-        class="listing-item-primary"
+        ng-class="{'listing-item-primary': form_attributes[postValue.key].type === 'media'}"
       >
-      <post-media-value
-        label="{{form_attributes[postValue.key].label}}"
-        media-id="postValue.value"></post-media-value>
-      </div>
-      <div
-        ng-repeat="postValue in postValues"
-        ng-if="form_attributes[postValue.key].type !== 'media' && !isPostValue(postValue.key) && form_attributes[postValue.key] && showType(form_attributes[postValue.key].type)"
-        ng-show="form_attributes[postValue.key].form_stage_id === visibleTask"
-      >
+        <post-media-value
+          ng-if="form_attributes[postValue.key].type === 'media'"
+          label="{{form_attributes[postValue.key].label}}"
+          media-id="postValue.value"></post-media-value>
         <post-value
-          tags="tags"
-          key="postValue.key"
-          value="postValue.value"
-          attribute="form_attributes[postValue.key]"
-          type="'standard'">
+            ng-if="form_attributes[postValue.key].type !== 'media'"
+            tags="tags"
+            key="postValue.key"
+            value="postValue.value"
+            attribute="form_attributes[postValue.key]"
+            type="'standard'">
         </post-value>
       </div>
     </div>
