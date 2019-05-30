@@ -53,5 +53,5 @@ angular
     .component("personContainer", react2angular(PersonContainer))
     .component("userListContainer", react2angular(UserListContainer))
     .component("userAvatar", react2angular(UserAvatar), ["avatar", "realname"])
-    .component("userName", react2angular(UserName),  ["user"])
+    .component("userName", react2angular(UserName), ["user"])
     .config(require("./settings.routes.js"));
