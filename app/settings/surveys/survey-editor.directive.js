@@ -18,10 +18,12 @@ SurveyEditorController.$inject = [
     '$q',
     '$location',
     '$translate',
+    '$state',
     'FormEndpoint',
     'FormRoleEndpoint',
     'FormStageEndpoint',
     'FormAttributeEndpoint',
+    'ConfigEndpoint',
     'RoleEndpoint',
     'TagEndpoint',
     '_',
@@ -35,10 +37,12 @@ function SurveyEditorController(
     $q,
     $location,
     $translate,
+    $state,
     FormEndpoint,
     FormRoleEndpoint,
     FormStageEndpoint,
     FormAttributeEndpoint,
+    ConfigEndpoint,
     RoleEndpoint,
     TagEndpoint,
     _,
@@ -85,8 +89,6 @@ function SurveyEditorController(
     $scope.getInterimId = getInterimId;
     $scope.removeInterimIds = removeInterimIds;
 
-    $scope.allowedToggleOrder = allowedToggleOrder;
-
     $scope.switchTab = switchTab;
 
     $scope.loadRoleData = loadRoleData;
@@ -94,6 +96,8 @@ function SurveyEditorController(
     $scope.roles = [];
 
     $scope.onlyOptional = onlyOptional;
+    $scope.anonymiseReportersEnabled = false;
+    $scope.location_precision = 1000;
 
     activate();
 
@@ -106,6 +110,16 @@ function SurveyEditorController(
         $scope.loadRoleData();
         $scope.save = $translate.instant('app.save');
         $scope.saving = $translate.instant('app.saving');
+
+        ConfigEndpoint.get({id: 'map'}, function (map) {
+            $scope.location_precision = 1000 / Math.pow(10, map.location_precision);
+        });
+
+        Features.loadFeatures()
+        .then(() => {
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+            $scope.anonymiseReportersEnabled = Features.isFeatureEnabled('anonymise-reporters');
+        });
 
         if ($scope.surveyId) {
             loadFormData();
@@ -122,7 +136,8 @@ function SurveyEditorController(
                         priority: 0,
                         required: false,
                         type: 'post',
-                        show_when_published: 1,
+                        show_when_published: true,
+                        task_is_internal_only: false,
                         attributes: [
                             {
                                 cardinality: 0,
@@ -193,10 +208,6 @@ function SurveyEditorController(
         angular.element(document.getElementById(tab_li)).addClass('active');
     }
 
-    function allowedToggleOrder(attribute) {
-        return attribute.type !== 'title' && attribute.type !== 'description';
-    }
-
     function getInterimId() {
         var id = 'interim_id_' + $scope.currentInterimId;
         $scope.currentInterimId++;
@@ -219,6 +230,23 @@ function SurveyEditorController(
         // Get available categories.
         TagEndpoint.queryFresh().$promise.then(function (tags) {
             $scope.availableCategories = tags;
+            // adding category-objects attribute-options
+            $scope.availableCategories = _.chain($scope.availableCategories)
+                .map(function (category) {
+                    const ret = _.findWhere($scope.availableCategories, {id: category.id});
+                    if (ret && ret.children.length > 0) {
+                        ret.children = _.chain(ret.children)
+                            .map(function (child) {
+                                return _.findWhere($scope.availableCategories, {id: child.id});
+                            })
+                            .filter()
+                            .value();
+                    }
+                    return ret;
+                })
+                .filter()
+                .value();
+
         });
     }
 
@@ -256,7 +284,6 @@ function SurveyEditorController(
             var roles_allowed = results[3];
 
             $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
-
             // Remove source survey information
             if ($scope.actionType === 'duplicate') {
 
@@ -570,8 +597,9 @@ function SurveyEditorController(
                 { name: $scope.survey.name },
                 { formId: $scope.survey.id }
             );
+
             // Redirect to survey list
-            $location.url('settings/surveys');
+            $state.go('settings.surveys', {}, { reload: true });
         })
         // Catch and handle errors
         .catch(handleResponseErrors);
@@ -625,6 +653,11 @@ function SurveyEditorController(
     }
 
     function saveRoles() {
+        // adding admin to roles_allowed if not already there
+        let admin = _.findWhere($scope.roles, {name: 'admin'});
+        if (!$scope.survey.everyone_can_create && _.indexOf($scope.roles_allowed, admin.id) === -1) {
+            $scope.roles_allowed.push(admin.id);
+        }
         return FormRoleEndpoint
         .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
         .$promise;

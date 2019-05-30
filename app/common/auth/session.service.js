@@ -9,10 +9,12 @@ function (
         realname: undefined,
         email: undefined,
         accessToken: undefined,
+        accessTokenExpires: undefined,
+        grantType: undefined,
         role: undefined,
         permissions: undefined,
-        loginPath: undefined,
-        gravatar: undefined
+        gravatar: undefined,
+        language: undefined
     };
 
     this.sessionData = angular.copy(this.clearedSessionData);

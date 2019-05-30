@@ -1,3 +1,4 @@
+.idea
 .sass-cache
 bower_components
 node_modules
@@ -12,6 +13,7 @@ server/www/locales/
 *.aes
 *.swp
 *.swo
+buildargs.env
 deployment.env
 vault.txt
 *.swo
@@ -21,3 +23,4 @@ server/www/img/icons/
 server/www/
 app/locales/
 package-lock.json
+app/stats.html

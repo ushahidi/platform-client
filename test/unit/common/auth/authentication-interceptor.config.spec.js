@@ -6,7 +6,8 @@ describe('authentication interceptor', function () {
         $http,
         CONST,
         mockedSessionData,
-        mockAuthentication;
+        mockAuthentication,
+        mockedDemoDeploymentService;
 
     beforeEach(function () {
         var testApp = makeTestApp()
@@ -15,13 +16,19 @@ describe('authentication interceptor', function () {
         });
 
         mockedSessionData = {
-            accessToken: null
+            accessToken: null,
+            accessTokenExpires: null
         };
         mockAuthentication = {
             loginStatus : false,
             getLoginStatus : function () {
                 return this.loginStatus;
             }
+        };
+
+        mockedDemoDeploymentService =
+        {
+            demoCheck: function () {}
         };
         testApp.service('Session', function () {
             return {
@@ -41,6 +48,9 @@ describe('authentication interceptor', function () {
         })
         .service('Authentication', function () {
             return mockAuthentication;
+        })
+        .service('DemoDeploymentService', function () {
+            return mockedDemoDeploymentService;
         })
         .config(require('app/common/auth/authentication-interceptor.config.js'));
 
@@ -69,6 +79,7 @@ describe('authentication interceptor', function () {
             describe('with an accessToken stored in the Session service', function () {
                 beforeEach(function () {
                     mockedSessionData.accessToken = 'fooBarToken';
+                    mockedSessionData.accessTokenExpires = 9999999999999;
                 });
 
                 it('should add the authorization token header', function () {

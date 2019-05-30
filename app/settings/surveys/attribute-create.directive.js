@@ -24,7 +24,7 @@ function (
 
             $scope.createNewAttribute = function (type) {
                 // Set initial label name based on type
-                type.label = 'New ' + type.label.toLowerCase() + ' field';
+                type.label = '';
                 $scope.openAttributeEditModal($scope.activeTask, _.extend($scope.newAttribute, type));
             };
 
@@ -34,31 +34,31 @@ function (
 
             $scope.availableAttrTypes = [
                 {
-                    label: 'Short text',
+                    label: $translate.instant('survey.short_text'),
                     type: 'varchar',
                     input: 'text',
                     description: $translate.instant('survey.text_desc')
                 },
                 {
-                    label: 'Long text',
+                    label: $translate.instant('survey.long_text'),
                     type: 'text',
                     input: 'textarea',
                     description: $translate.instant('survey.textarea_desc')
                 },
                 {
-                    label: 'Number (Decimal)',
+                    label: $translate.instant('survey.number_decimal'),
                     type: 'decimal',
                     input: 'number',
                     description: $translate.instant('survey.decimal_desc')
                 },
                 {
-                    label: 'Number (Integer)',
+                    label:  $translate.instant('survey.number_integer'),
                     type: 'int',
                     input: 'number',
                     description: $translate.instant('survey.integer_desc')
                 },
                 {
-                    label: 'Location',
+                    label: $translate.instant('survey.location'),
                     type: 'point',
                     input: 'location',
                     description: $translate.instant('survey.location_desc')
@@ -69,13 +69,13 @@ function (
                 //     input: 'text'
                 // },
                 {
-                    label: 'Date',
+                    label: $translate.instant('survey.date'),
                     type: 'datetime',
                     input: 'date',
                     description: $translate.instant('survey.date_desc')
                 },
                 {
-                    label: 'Date & time',
+                    label: $translate.instant('survey.datetime'),
                     type: 'datetime',
                     input: 'datetime',
                     description: $translate.instant('survey.datetime_desc')
@@ -86,32 +86,32 @@ function (
                 //     input: 'time'
                 // },
                 {
-                    label: 'Select',
+                    label: $translate.instant('survey.select'),
                     type: 'varchar',
                     input: 'select',
                     description: $translate.instant('survey.select_desc')
                 },
                 {
-                    label: 'Radio Buttons(s)',
+                    label:  $translate.instant('survey.radio_button'),
                     type: 'varchar',
                     input: 'radio',
                     description: $translate.instant('survey.radio_desc')
                 },
                 {
-                    label: 'Checkbox(es)',
+                    label: $translate.instant('survey.checkbox'),
                     type: 'varchar',
                     input: 'checkbox',
                     cardinality: 0,
                     description: $translate.instant('survey.checkbox_desc')
                 },
                 {
-                    label: 'Related Post',
+                    label: $translate.instant('survey.related_post'),
                     type: 'relation',
                     input: 'relation',
                     description: $translate.instant('survey.relation_desc')
                 },
                 {
-                    label: 'Image',
+                    label: $translate.instant('survey.upload_image'),
                     type: 'media',
                     input: 'upload',
                     description: $translate.instant('survey.upload_desc'),
@@ -120,7 +120,7 @@ function (
                     }
                 },
                 {
-                    label: 'Embed video',
+                    label: $translate.instant('survey.embed_video'),
                     type: 'varchar',
                     input: 'video',
                     description: $translate.instant('survey.video_desc')
@@ -132,7 +132,7 @@ function (
                     description: $translate.instant('survey.markdown_desc')
                 },
                 {
-                    label: 'Categories',
+                    label: $translate.instant('survey.categories'),
                     type: 'tags',
                     cardinality: 0,
                     input: 'tags',

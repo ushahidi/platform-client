@@ -6,6 +6,7 @@ module.exports = [
     '$rootScope',
     'ConfigEndpoint',
     'CollectionsService',
+    '$window',
 function (
     Features,
     Authentication,
@@ -13,7 +14,8 @@ function (
     ModalService,
     $rootScope,
     ConfigEndpoint,
-    CollectionsService
+    CollectionsService,
+    $window
 ) {
     return {
         restrict: 'E',
@@ -23,8 +25,6 @@ function (
         },
         template: require('./mode-bar.html'),
         link: function ($scope, $element, $attrs) {
-            $scope.baseUrl = 'views/';
-            $scope.activeMode = 'map';
             $scope.moreActive = false;
             $scope.isActivityAvailable = false;
             $scope.canRegister = false;
@@ -37,17 +37,12 @@ function (
             $scope.login = Authentication.openLogin;
             $scope.logout = Authentication.logout;
             $scope.register = Registration.openRegister;
+            $scope.intercomAppId = $window.ushahidi.intercomAppId;
 
             activate();
 
             function activate() {
                 $scope.$on('$locationChangeStart', handleRouteChange);
-                $rootScope.$on('event:mode:change', handleModeChange);
-                $rootScope.$on('event:collection:show', handleCollectionShow);
-                $rootScope.$on('event:collection:close', handleCollectionClose);
-                $rootScope.$on('event:savedsearch:show', handleSavedSearchShow);
-                $rootScope.$on('event:savedsearch:close', handleSavedSearchClose);
-                $rootScope.$on('event:allposts:show', handleAllShow);
 
                 Features.loadFeatures().then(function () {
                     $scope.isActivityAvailable = Features.isViewEnabled('activity');
@@ -65,7 +60,11 @@ function (
 
             // Show support links
             function viewSupportLinks() {
-                ModalService.openTemplate(require('./support-links.html'), '', false, false, true, true);
+                var scope = {
+                    intercomAppId: $scope.intercomAppId,
+                    loggedin: Authentication.getLoginStatus()
+                };
+                ModalService.openTemplate(require('./support-links.html'), '', false, scope, true, true);
             }
 
             // Add 'click' handler to toggle trigger
@@ -75,30 +74,6 @@ function (
 
             function handleRouteChange() {
                 $scope.moreActive = false;
-            }
-
-            function handleModeChange(ev, mode) {
-                $scope.activeMode = mode;
-            }
-
-            function handleAllShow(ev, collection) {
-                $scope.baseUrl = 'views/';
-            }
-
-            function handleCollectionShow(ev, collection) {
-                $scope.baseUrl = 'collections/' + collection.id + '/';
-            }
-
-            function handleCollectionClose(ev, savedsearch) {
-                //$scope.baseUrl = 'views/';
-            }
-
-            function handleSavedSearchShow(ev, savedsearch) {
-                $scope.baseUrl = 'savedsearches/' + savedsearch.id + '/';
-            }
-
-            function handleSavedSearchClose(ev, savedsearch) {
-                //$scope.baseUrl = 'views/';
             }
         }
     };

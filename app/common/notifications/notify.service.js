@@ -2,10 +2,11 @@ module.exports = Notify;
 
 var scope;
 var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
-Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
-function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
+Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService', 'DemoSliderService'];
+function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, DemoSliderService) {
     return {
         notify: notify,
+        notifyAction,
         notifyProgress: notifyProgress,
         error: error,
         errors: errors,
@@ -17,7 +18,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmDelete: confirmDelete,
         limit: limit,
         confirmTos: confirmTos,
-        adminUserSetupModal: adminUserSetupModal
+        adminUserSetupModal: adminUserSetupModal,
+        infoModal: infoModal,
+        confirmLeave: confirmLeave,
+        demo: demo,
+        notifyPermanent: notifyPermanent
     };
 
     function notify(message, translateValues) {
@@ -28,11 +33,48 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         $translate(message, translateValues).then(showSlider, showSlider);
     }
 
-    function notifyProgress(message, translateValues) {
+
+    function notifyPermanent(message, translateValues) {
         function showSlider(message) {
-            SliderService.openTemplate(message, null, null, null, false, false, false, true);
+            SliderService.openTemplate('<p>' + message + '</p>', null, null, null, null);
         }
 
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
+
+    function notifyProgress(message, translateValues) {
+        function showSlider(message) {
+            SliderService.openTemplate(message, null, null, null, false, true, true, true);
+        }
+
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
+
+    function notifyAction(message, translateValues, loading, icon, iconClass, action) {
+        var buttons, cancelButton, actionButton, scope;
+        // action is an object with the properties callback, text, actionClass and callbackArg
+        actionButton = '';
+        scope = getScope();
+        // closes the slider without action
+        scope.cancel = function () {
+            SliderService.close();
+        };
+        // html for the cancel-button
+        cancelButton = `<button class="button" ng-click="$parent.cancel()" translate="notify.export.confirmation"></button>`;
+
+        // adding html for the action-button, if its supposed to be there
+        if (action) {
+            scope.actionCallback = action.callback;
+            actionButton = `<button class="${action.actionClass}" ng-click=$parent.actionCallback("${action.callbackArg}") translate=${action.text}></button>`;
+        }
+        // concatinating button and message html
+        buttons = `<div class="buttons-export">${actionButton + cancelButton}</div>`;
+
+        function showSlider(successText) {
+            successText += buttons;
+            SliderService.openTemplate(successText, icon, iconClass, scope, false, false, false, loading);
+        }
+        // translates the text and shows the slider
         $translate(message, translateValues).then(showSlider, showSlider);
     }
 
@@ -40,7 +82,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         function showSlider(errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error', null, false);
         }
-
         $translate(errorText, translateValues).then(showSlider, showSlider);
     }
 
@@ -62,7 +103,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     function apiErrors(errorResponse) {
         var scope = getScope();
         scope.errors = _.pluck(errorResponse.data && errorResponse.data.errors, 'message');
-
         if (!scope.errors) {
             return;
         }
@@ -105,7 +145,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         return deferred.promise;
     }
 
-    function confirmModal(confirmText, translateValues) {
+    function confirmModal(confirmText, translateValues, description, descriptionValues, button, cancel) {
         var deferred = $q.defer();
 
         var scope = getScope();
@@ -120,12 +160,23 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         function showSlider(confirmText) {
             scope.confirmText = confirmText;
+            let descriptionTemplate = '';
+            if (description && !descriptionValues) {
+                descriptionTemplate = `<p translate>${description}</p>`;
+            } else if (description && descriptionValues) {
+                descriptionTemplate = `<p translate=${description} translate-values="${descriptionValues}"></p>`;
+            }
+            let buttonText = button ? button : 'message.button.default';
+            let cancelButtonText = cancel ? cancel : 'message.button.cancel';
+            let template = `<div class="form-field">
+                                ${descriptionTemplate}
+                                <p><i translate>notify.default.proceed_warning</i></p>
+                                <button class="button" ng-click="$parent.cancel()" translate>${cancelButtonText}</button>
+                                <button class="button-alpha button-flat" ng-click="$parent.confirm()" translate>${buttonText}</button>
+                            </div>`;
+
             ModalService.openTemplate(
-                '<div class="form-field">' +
-                '<p><i translate>notify.default.proceed_warning</i></p>' +
-                '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
-                '    <button class="button-beta button-flat" ng-click="$parent.confirm()" translate="message.button.default">OK</button>' +
-                '</div>', confirmText, false, scope, false, false);
+                template, confirmText, false, scope, false, false);
         }
 
         $translate(confirmText, translateValues).then(showSlider, showSlider);
@@ -133,8 +184,24 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         return deferred.promise;
     }
 
+    function infoModal(confirmText, translate) {
+        var scope = getScope();
+        scope.cancel = function () {
+            ModalService.close();
+        };
+        ModalService.openTemplate(
+                '<div class="form-field">' +
+                '    <button class="button-alpha" ng-click="$parent.cancel()" translate="notify.generic.okay">Ok</button>' +
+                '</div>', confirmText, false, scope, false, false);
+    }
+
     function adminUserSetupModal() {
         ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
+    }
+
+    function demo() {
+        var scope = getScope();
+        DemoSliderService.openTemplate('<demo-deployment></demo-deployment>', 'star', false, scope, false);
     }
 
     function confirmTos() {
@@ -150,6 +217,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
         return deferred.promise;
     }
+
 
     function confirmDelete(confirmText, confirmWarningText, translateValues) {
         var deferred = $q.defer();
@@ -198,14 +266,45 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 ModalService.openTemplate(
                 '<div class="form-field">' +
                 '<p><i translate="{{confirmWarningText}}"></i></p>' +
-                '    <button class="button-beta button-flat" ng-click="$parent.cancel()">Cancel</button>' +
-                '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
+                '    <button class="button-beta button-flat" ng-click="cancel()">Cancel</button>' +
+                '    <button class="button-destructive button-flat" ng-click="confirm()">' +
                 '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
                 '    <span translate="app.delete">Delete</span>' +
                 '    </button>' +
                 '</div>', confirmText, false, scope, false, false);
             }
         }
+
+        return deferred.promise;
+    }
+
+    function confirmLeave(confirmText, translateValues) {
+        var deferred = $q.defer();
+        var scope = getScope();
+
+        scope.confirm = function () {
+            deferred.resolve();
+            ModalService.close();
+        };
+
+        scope.save = function () {
+            $rootScope.$broadcast('event:edit:post:data:mode:save');
+            $rootScope.$on('event:edit:post:data:mode:saveError', function () {
+                deferred.reject();
+                ModalService.close();
+            });
+            $rootScope.$on('event:edit:post:data:mode:saveSuccess', function () {
+                deferred.resolve();
+                ModalService.close();
+            });
+        };
+
+        ModalService.openTemplate(
+                '<div class="form-field">' +
+                '<p><i translate>notify.post.leave_confirm_message</i></p>' +
+                '    <button class="button button-flat" ng-click="confirm()" translate>notify.post.leave_confirm</button>' +
+                '    <button class="button-alpha button-flat" ng-click="save()" translate>notify.generic.save</button>' +
+                '</div>', confirmText, false, scope, false, true);
 
         return deferred.promise;
     }

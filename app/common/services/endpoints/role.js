@@ -10,8 +10,9 @@ function (
     var cache;
 
     if (!(cache = CacheFactory.get('roleCache'))) {
-        cache = new CacheFactory('roleCache');
+        cache = CacheFactory.createCache('roleCache');
     }
+    cache.removeExpired();
 
     var RoleEndpoint = $resource(Util.apiUrl('/roles/:id'), {
             id: '@id'

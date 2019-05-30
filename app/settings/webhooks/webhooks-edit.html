@@ -35,15 +35,15 @@
                         <div class="line"></div>
                     </div>
                 </button>
-                        
+
                 </div>
             </div>
             <!-- end toolbar -->
 
             <form name="form">
                 <div class="form-sheet">
-                   <div class="form-field title">
-                       <label class="hidden" translate>webhook.name</label>
+                   <div class="form-field">
+                       <label translate>webhook.name</label>
                        <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
                    </div>
 
@@ -72,6 +72,104 @@
                          <select ng-model="webhook.entity_type" required>
                              <option ng-repeat="type in entity_types" value="{{type}}">{{type}}</option>
                          </select>
+                      </div>
+                   </div>
+                   <div class="form-field switch">
+                       <label translate="settings.webhooks.enable_source_destination">Specify survey</label>
+                       <div class="toggle-switch">
+                           <input class="tgl" id="{{provider.id}}_form_enable" type="checkbox" ng-checked="formEnabled" ng-click="toggleFormAssociation()">
+                           <label class="tgl-btn" for="{{provider.id}}_form_enable"></label>
+                      </div>
+                      <div data-fieldgroup-target="import_to_survey-survey" class="init active">
+                        <p data-fieldgroup-target="hide-author-message" class="init" ng-class="{'active' : formEnabled}" translate-values="{ provider: provider.name }" translate="" >
+                          <em translate="settings.webhooks.enable_source_destination_desc">
+                            This webhook will only be applied to Surveys of the selected type.
+                          </em>
+                        </p>
+
+                        <fieldset ng-show="formEnabled" class="custom-fieldset init" dropdown auto-close="outsideClick">
+                            <legend class="dropdown-trigger init" dropdown-toggle>
+                              <span class="legend-label">
+                                <span tranlate="webhooks.use_webhook_for">
+                                  Use webhook for
+                                </span>
+                                <span class="custom-fieldset-value" ng-show="!selectedForm" translate="data_import.which_survey">
+                                  which survey?
+                                </span>
+                                <span class="custom-fieldset-value" ng-show="selectedForm">
+                                  {{selectedForm.name}}
+                                </span>
+                              </span>
+                              <svg class="iconic chevron">
+                                <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                              </svg>
+                            </legend>
+
+                            <div class="dropdown-menu init" dropdown-menu>
+                              <div class="form-field radio"
+                                 ng-repeat="form in forms"
+                                 ng-class="{'checked' : webhook.form.id  === form.id}"
+                                 ng-click="setSelectedForm(form)">
+                                 <input
+                                    id="import-to-{{form.id}}"
+                                    name="import-to"
+                                    ng-checked="{{webhook.form_id === form.id}}"
+                                    type="radio">
+                                <label for="import-to-{{form.id}}">
+                                    {{form.name}}
+                                </label>
+                              </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset data-fieldgroup-target="import_to_survey-fields" class="init active" ng-show="selectedForm && formEnabled">
+                            <legend translate="survey.choose_survey_field">Choose the source and destination fields</legend>
+                            <p translate="survey.choose_survey_field_desc">The webhook will specify, when sending Posts to the remote API, which field should be considered the source and which the destination. The webhook support pages describe this functionality in greater detail. </p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                      <th>Type</th>
+                                      <th translate="survey.survey_field">Survey field</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                      <td>
+                                        <span>
+                                          Source
+                                        </span>
+                                      </td><td>
+                                          <div class="custom-select">
+                                              <select ng-model="webhook.source_field_key">
+                                                 <option
+                                                   ng-repeat="attribute in selectedForm.attributes"
+                                                   value="{{attribute.post_key}}"
+                                                   label="{{attribute.label}}"
+                                                   ng-class="{'required' : attribute.required}">
+                                              </select>
+                                          </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <span translate="settings.webhooks.destination">
+                                          Destination
+                                        </span>
+                                      </td><td>
+                                          <div class="custom-select">
+                                              <select ng-model="webhook.destination_field_key">
+                                                 <option
+                                                   ng-repeat="attribute in selectedForm.attributes"
+                                                   value="{{attribute.post_key}}"
+                                                   label="{{attribute.label}}"
+                                                   ng-class="{'required' : attribute.required}">
+                                              </select>
+                                          </div>
+                                      </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
                       </div>
                    </div>
                 </div>

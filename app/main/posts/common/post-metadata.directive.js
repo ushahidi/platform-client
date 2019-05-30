@@ -21,12 +21,17 @@ function PostMetadataDirective(
         },
         template: require('./post-metadata.html'),
         link: function ($scope) {
-            //console.log($scope.post);
             $scope.visibleTo = '';
             $scope.displayTime = '';
             $scope.displayTimeFull = '';
             $scope.timeago = '';
             $scope.hideDateThisWeek = $scope.hideDateThisWeek || false;
+
+            $scope.$watch('post.id', function (postId, oldPostId) {
+                if (postId !== oldPostId) {
+                    activate();
+                }
+            });
 
             activate();
 

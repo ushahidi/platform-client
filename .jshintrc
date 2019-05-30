@@ -42,6 +42,9 @@
         "afterEach",
         "-event",
         "makeTestApp",
-        "BACKEND_URL"
+        "BACKEND_URL",
+        "RAVEN_URL",
+        "ENVIRONMENT",
+        "GIT_COMMIT"
     ]
 }

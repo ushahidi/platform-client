@@ -11,7 +11,8 @@ describe('post view map directive', function () {
         map,
         geojson,
         markers,
-        element;
+        element,
+        PostFilters;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -21,17 +22,26 @@ describe('post view map directive', function () {
 
         testApp.directive('postViewMap', require('app/main/posts/views/post-view-map.directive'))
         .value('Leaflet', L)
-        ;
 
+        .service('$state', function () {
+            return {
+                'go': function () {
+                    return {
+                        'id': '1'
+                    };
+                }
+            };
+        });
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _Maps_, _PostEndpoint_, $q) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _Maps_, _PostEndpoint_, $q, _PostFilters_) {
         $rootScope = _$rootScope_;
         $compile = _$compile_;
         Notify = _Notify_;
         Maps = _Maps_;
         PostEndpoint = _PostEndpoint_;
+        PostFilters = _PostFilters_;
 
         map = L.map(document.createElement('div'), {
             center: [0,1],
@@ -57,12 +67,21 @@ describe('post view map directive', function () {
         spyOn(PostEndpoint, 'get').and.callThrough();
 
         $scope = _$rootScope_.$new();
-        $scope.isLoading = {
-            state: true
+        $scope.$transition$ = {
+            params: function () {
+                return {
+                    'view': 'map'
+                };
+            },
+            to: function () {
+                return {
+                    name : ''
+                };
+            }
         };
-        $scope.filters = {};
+        $scope.filters = PostFilters.getFilters();
 
-        element = '<post-view-map filters="filters" is-loading="isLoading"></post-view-map>';
+        element = '<post-view-map $transition$="$transition$" filters="filters"></post-view-map>';
     }));
 
     it('should create a map', function () {

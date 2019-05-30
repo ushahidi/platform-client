@@ -1,0 +1,280 @@
+<layout-class layout="b"></layout-class>
+<div class="mode-context init" dropdown auto-close="disabled">
+    <header class="mode-context-header">
+        <ol class="breadcrumbs">
+            <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+            <li><a href="/settings" translate>app.settings</a></li>
+            <li><a href="/settings/surveys" translate>app.surveys</a></li>
+        </ol>
+        <h1 class="mode-context-title">Surveys</h1>
+        <a ui-sref="settings.surveys.create" ng-hide="surveyId">< <span translate="settings.send_crowdsourced"></span></a>
+    </header>
+
+    <span class="mode-context-trigger" dropdown-toggle>
+        <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span class="label hidden">Show more/less</span>
+    </span>
+
+    <div class="mode-context-body">
+    </div>
+</div>
+
+<main role="main">
+    <div class="toolbar">
+    </div>
+    <div class="progress-bar" ng-show="isLoading()">
+      <span>
+          ..
+      </span>
+    </div>
+
+    <div class="main-col">
+        <form name="targetedSurvey">
+            <div ng-show="targetedSurveysEnabled" class="form-sheet">
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate="survey.targeted_survey.title" ng-hide="surveyId">Create a new targeted survey</h2>
+                    <p translate="survey.targeted_survey.description" ng-hide="surveyId">Send questions via SMS to a list of those phone numbers.</p>
+                    <h2 class="form-sheet-title" translate="survey.targeted_survey.targeted_survey" ng-hide="!surveyId">Targeted Survey</h2>
+                    <p translate="survey.targeted_survey.targeted_survey_desc" ng-hide="!surveyId">We sent this survey via SMS</p>
+                </div>
+
+                <div class="stepper">
+
+                    <ng-form name="stepOne">
+                        <div class="stepper-item" ng-class="{'active': isActiveStep(1), 'disabled': !isActiveStep(1)}">
+                            <h2 class="stepper-heading" data-accordion-trigger>
+                                <span class="stepper-badge">1</span>
+                                <span translate="survey.targeted_survey.name_title">Name your survey</span>
+                            </h2>
+
+                            <div class="form-field" ng-show="!isActiveStep(1)">
+                                <h2 class=form-label translate="survey.targeted_survey.name">Survey Name</h2>
+                                <p>{{survey.name}}</p>
+                            </div>
+
+                            <div class="form-field required"
+                                ng-class="{
+                                        'error': stepOne.name.$invalid && targetedSurvey.stepOne.name.$dirty,
+                                        'success': !targetedSurvey.stepOne.name.$invalid && targetedSurvey.stepOne.name.$dirty
+                                        }"
+                                ng-show="isActiveStep(1)"
+                            >
+                                <label for="name" translate="survey.targeted_survey.name">Survey name</label>
+                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.name.$dirty" class="alert error" translate="survey.targeted_survey.name_warning">You must give your survey a name.</p>
+                                <input type="text" name="name"  ng-minlength="2" ng-maxlength="255" ng-model="survey.name" ng-required="true" placeholder="Name..."></input>
+                                <div
+                                    class="alert error"
+                                    ng-show="targetedSurvey.stepOne.name.$dirty"
+                                    ng-repeat="(error, value) in targetedSurvey.stepOne.name.$error"
+                                >
+                                    <svg class="iconic">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                                    </svg>
+                                    <p translate="{{'notify.form.validation.name.' + error}}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-field required" ng-show="isActiveStep(1)">
+                                <label for="description" translate="survey.targeted_survey.description_title">Survey description</label>
+                                <p ng-show="stepOneWarning && !targetedSurvey.stepOne.description.$dirty" class="alert error" translate="survey.targeted_survey.description_warning">You must give your survey a description.</p>
+                                <textarea name="description" ng-model="survey.description" ng-required="true" placeholder="Describe your survey..."></textarea>
+                                <div
+                                    class="alert error"
+                                    ng-show="targetedSurvey.stepOne.description.$dirty"
+                                    ng-repeat="(error, value) in targetedSurvey.stepOne.description.$error"
+                                >
+                                    <svg class="iconic">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                                    </svg>
+                                    <p translate="{{'notify.form.validation.description.' + error}}"></p>
+                                </div>
+                            </div>
+
+                            <div ng-hide="isActiveStep(1)">
+                                <h2 class=form-label translate="survey.targeted_survey.description_title">Survey Description</h2>
+                                <p>{{survey.description}}</p>
+                            </div>
+
+                            <div ng-show="isActiveStep(1)">
+                                <div class="form-field">
+                                    <div class="button-group">
+                                        <button class="button-alpha"  ng-click="completeStepOne()" formnovalidate translate="settings.continue">Continue</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+
+                    <ng-form name="stepTwo">
+                        <div class="stepper-item" ng-class="{'active': isActiveStep(2), 'disabled': !isActiveStep(2)}">
+                            <h2 class="stepper-heading">
+                                <span class="stepper-badge">2</span>
+                                <span translate="survey.targeted_survey.audience_title">Choose your audience</span>
+                            </h2>
+                            <span ng-show="!surveyId">
+                                <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} people via SMS.</p>
+                                <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} person via SMS.</p>
+                            </span>
+                            <span ng-show="surveyId && recipientCount > 0">
+                                <p ng-show="!isActiveStep(2) && recipientCount > 1" translate="survey.targeted_survey.send_to_people" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} people via SMS.</p>
+                                <p ng-show="!isActiveStep(2) && recipientCount === 1" translate="survey.targeted_survey.send_to_person" translate-values="{recipientCount: recipientCount}">Send this survey to {{recipientCount}} person via SMS.</p>
+                            </span>
+                            <div ng-show="isActiveStep(2)">
+                                <div class="form-field" ng-show="countriesList.length > 0">
+                                    <label for="country-code" class="required" translate="survey.targeted_survey.country_code">
+                                        Country code
+                                    </label>
+                                    <div class="alert error" ng-show="stepTwoWarning && (selectedCountry === undefined || selectedCountry === null)" >
+                                    <p translate="survey.targeted_survey.country_code_error">You must select a country.</p>
+                                </div>
+                                <div class="custom-select">
+                                    <select id="country-code" ng-options="country as (country.country_name + ' ' + country.dial_code) for country in countriesList" ng-model="selectedCountry"
+                                    ><option selected value='' ng-required="true" translate="survey.targeted_survey.select_country">Select Country</option></select>
+                                </div>
+                                </div>
+
+                                <div class="form-field" ng-show="countriesList.length < 1">
+                                    <label for="loading-country-code" class="required" translate="survey.targeted_survey.country_code">
+                                        Country code
+                                    </label>
+                                    <button id="loading-country-code" type="button" class="button button-beta">
+                                        <div class="loading">
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                        </div>
+                                        <span class="button-label" translate>Loading countries</span>
+                                    </button>
+                                </div>
+
+                                <div class="form-field">
+                                    <label class="required" required translate="survey.targeted_survey.phone_numbers">Phone numbers</label>
+                                    <p translate="survey.targeted_survey.phone_number_instructions">Please type in the phone numbers you'd like to contact. You must place a comma between each phone number.</p>
+
+                                    <div class="alert error" ng-show="stepTwoWarning && targetedSurvey.stepTwo.textBoxNumbers.$invalid && !finalNumbers.goodNumbers.length || finalNumbers.repeatCount > 0 || finalNumbers.badNumberCount > 0">
+                                        <p ng-show="stepTwoWarning && targetedSurvey.stepTwo.textBoxNumbers.$invalid && !finalNumbers.goodNumbers.length" translate="survey.targeted_survey.phone_number_warning">You must enter at least 1 phone number.</p>
+                                        <p ng-show="finalNumbers.repeatCount > 1" translate="survey.targeted_survey.multi_repeat_alert" translate-values="{repeatCount: finalNumbers.repeatCount}">We removed a total of {{finalNumbers.repeatCount}} repeat numbers from your list.</p>
+                                        <p  ng-show="finalNumbers.repeatCount === 1" translate="survey.targeted_survey.one_repeat_alert" translate-values="{repeatCount: finalNumbers.repeatCount}">We removed a total of {{finalNumbers.repeatCount}} repeat number from your list.</p>
+                                        <p ng-show="finalNumbers.badNumberCount > 1" translate="survey.targeted_survey.multi_number_error" translate-values="{total: finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount, bad: finalNumbers.badNumberCount}">Of the {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone numbers below and continue. Numbers must match the selected country's formatting rules.</p>
+                                        <p ng-show="finalNumbers.badNumberCount === 1" translate="survey.targeted_survey.one_number_error" translate-values="{total: finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount, bad: finalNumbers.badNumberCount}">Of the {{finalNumbers.goodNumbers.length + finalNumbers.badNumberCount + finalNumbers.repeatCount}} phone numbers you entered, we noticed problems with {{finalNumbers.badNumberCount}} of them. Please correct the phone number below and continue. Numbers must match the selected country's formatting rules.</p>
+                                    </div>
+                                    <textarea name="textBoxNumbers" ng-model="textBoxNumbers" ng-required="!finalNumbers.goodNumbers.length" placeholder="e.g. 1234567890, 9876543210..."></textarea>
+                                    <div ng-show="finalNumbers.goodNumbers.length && finalNumbers.badNumberCount > 0">
+                                        <p ng-if="finalNumbers.goodNumbers.length > 1" translate="survey.targeted_survey.multi_numbers_good" translate-values="{good_numbers: finalNumbers.goodNumbers.length}">These {{finalNumbers.goodNumbers.length}} numbers look fine.</p>
+                                        <p ng-if="finalNumbers.goodNumbers.length === 1" translate="survey.targeted_survey.one_number_good" translate-values="{good_numbers: finalNumbers.goodNumbers.length}">This {{finalNumbers.goodNumbers.length}} number looks fine.</p>
+                                        <textarea readonly>{{finalNumbers.goodNumbersString.slice(-1) === ',' ? finalNumbers.goodNumbersString.slice(0, -1) : finalNumbers.goodNumbersString}}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <div class="button-group">
+                                        <button class="button-alpha" ng-click="completeStepTwo()" formnovalidate translate="settings.continue">Continue</button>
+                                        <button class="button" ng-click="previousStep()" translate="nav.back">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+
+                    <ng-form name="stepThree">
+                        <div class="stepper-item" ng-class="{'active': isActiveStep(3), 'disabled': !isActiveStep(3)}">
+                            <h2 class="stepper-heading">
+                            <span class="stepper-badge">3</span>
+                            <span translate="survey.targeted_survey.add_questions_title">Add your questions</span>
+                            </h2>
+
+                            <div class="alert" ng-show="isActiveStep(3)">
+                                <p translate="survey.targeted_survey.add_questions_description">We will send each question as a separate SMS. After someone responds, we will send the next question in the survey.</p>
+                            </div>
+
+                            <div class="alert error" ng-show="stepThreeWarning && (survey.attributes === undefined || !survey.attributes.length)">
+                                <p  translate="survey.targeted_survey.question_error">You must add at least one question.</p>
+                            </div>
+
+                            <div class="form-field" ng-show="isActiveStep(3)">
+                                <ul id="listWithHandle" class="sortble-list">
+                                    <li class="sortable-list-item" ng-repeat="question in survey.attributes" data={{question.label}} ng-hide="question.type === 'title' || question.type === 'description'">
+                                        <span class="list-handle">
+                                            <svg class="iconic">
+                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#grid-four-up"></use>
+                                            </svg>
+                                        </span>
+                                        <a class="list-handle" ng-click="openQuestionModal(question)">{{question.label}}</a>
+                                    </li>
+                                </ul>
+
+                                <a ng-show="survey.attributes.length" ng-click="openQuestionModal(null)" translate="survey.targeted_survey.add_another">Add another question...</a>
+                                <a ng-hide="survey.attributes.length" ng-click="openQuestionModal(null)" translate="survey.targeted_survey.add_a_question">Add a question...</a>
+                            </div>
+                            <div ng-hide="isActiveStep(3)">
+                                    <p ng-repeat="question in survey.attributes | orderBy: 'priority'" ng-hide="question.type === 'title' || question.type === 'description'">{{question.label}}</p>
+                            </div>
+
+
+                            <div ng-show="isActiveStep(3)">
+                                <div class="form-field">
+                                    <div class="button-group">
+                                        <button class="button-alpha" ng-click="completeStepThree()" translate="settings.continue">Continue</button>
+                                        <button class="button" ng-click="previousStep(); resetNumbers()">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+
+                    <ng-form name="stepFour">
+                        <div class="stepper-item" ng-class="{'active': isActiveStep(4), 'disabled': !isActiveStep(4)}">
+                            <h2 class="stepper-heading">
+                                <span class="stepper-badge">4</span>
+                                <span translate="survey.targeted_survey.publish"></span>
+                            </h2>
+                                <!-- WARNING! Add actual responses once we get them from API -->
+                                <p ng-show="surveyId && isActiveStep(4) && totalRecipients > 0">
+                                    <span ng-show="totalPending !== 1" translate="survey.targeted_survey.pending_messages" translate-values="{totalPending: totalPending}"></span>
+                                    <span ng-show="totalPending === 1" translate="survey.targeted_survey.pending_message" translate-values="{totalPending: totalPending}"></span>
+                                    <span ng-show="totalSent !== 1" translate="survey.targeted_survey.sent_messages" translate-values="{totalSent: totalSent}"></span>
+                                    <span ng-show="totalSent === 1" translate="survey.targeted_survey.sent_message" translate-values="{totalSent: totalSent}"></span>
+                                    <span ng-show="totalResponses !== 1" translate="survey.targeted_survey.received_responses" translate-values="{responses: totalResponses}"></span>
+                                    <span ng-show="totalResponses === 1" translate="survey.targeted_survey.received_response" translate-values="{responses: totalResponses}"></span>
+                                    <span ng-show="totalRecipients === 1" translate="survey.targeted_survey.recipient_count" translate-values="{recipients: totalRecipients}"></span>
+                                    <span ng-show="totalRecipients !== 1" translate="survey.targeted_survey.recipients_count" translate-values="{recipients: totalRecipients}"></span>
+                                </p>
+                            <div class="alert" ng-show="isActiveStep(4) && !surveyId">
+                                <p translate={{getPublishDescription()}} translate-values="{questions: survey.attributes.length, numbers:finalNumbers.goodNumbers.length, total_sms_messages: total_sms_messages}"></p>
+                                <p ng-show="!surveyId" translate="survey.targeted_survey.send_to_old_number_warning"></p>
+                            </div>
+
+                            <div class="form-field switch checked" ng-show="isActiveStep(4) && !surveyId">
+                                <label for="switch4" translate="survey.require_review"></label>
+                                    <p ng-show="targetedSurvey.require_review" translate="survey.require_review_desc"></p>
+                                    <div class="toggle-switch">
+                                        <input class="tgl" id="switch4" type="checkbox" ng-model="survey.require_approval">
+                                        <label class="tgl-btn" for="switch4"></label>
+                                    </div>
+                            </div>
+
+                            <div class="form-field switch checked" ng-show="isActiveStep(4) && !surveyId">
+                                <label for="switch5" translate="survey.targeted_survey.hide_responders"></label>
+                                    <p ng-show="targetedSurvey.hide_responders" translate="survey.targeted_survey.hide_responders_desc"></p>
+                                    <div class="toggle-switch">
+                                        <input class="tgl" id="switch5" type="checkbox" ng-model="survey.hide_author">
+                                        <label class="tgl-btn" for="switch5"></label>
+                                    </div>
+                            </div>
+
+                            <div class="button-group" ng-show="isActiveStep(4) && !surveyId">
+                                <button class="button-alpha" ng-disabled="!isStepComplete(targetedSurvey.stepFour)" ng-click="publish()" translate="survey.targeted_survey.publish"></button>
+                                <button class="button" ng-click="previousStep()" translate="nav.back"></button>
+                            </div>
+                        </div>
+                        <div class="form-field button-group" ng-show="isActiveStep(4) && surveyId">
+                            <button class="button-alpha" ng-click="goToDataView(surveyId)">View responses</button>
+                        </div>
+                    </ng-form>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

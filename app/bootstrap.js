@@ -1,8 +1,8 @@
 require('./app');
-require('angular-lazy-bootstarp/src/bootstrap.js');
+require('angular-lazy-bootstrap/src/bootstrap.js');
 
 // Load site config THEN bootstrap the app
-angular.lazy('app')
+angular.lazy()
     .resolve(['$q', '$http', function ($q, $http) {
         return $http.get(window.ushahidi.apiUrl + '/config')
         .then(function (response) {
@@ -13,12 +13,19 @@ angular.lazy('app')
         // Show loading
         angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
     })
-    .error(function () {
+    .error(function (error) {
         // Show error
-        angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
+        try {
+            error.data.errors[0].message &&
+            angular.element(document.getElementById('bootstrap-error-message')).html(error.data.errors[0].message);
+        } finally {
+            angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
+        }
     })
     .done(function () {
         // Hide loading
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
     })
-    .bootstrap();
+    .bootstrap(document, ['app'], {
+        strictDi: true
+    });

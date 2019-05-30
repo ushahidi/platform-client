@@ -5,12 +5,15 @@ module.exports = [
     '$location',
     '$rootScope',
     'ConfigEndpoint',
+    'ApiKeyEndpoint',
     '_',
     'Notify',
     'Maps',
     'Util',
     'Languages',
     'Features',
+    'Session',
+    'TranslationService',
 function (
     $q,
     $http,
@@ -18,12 +21,15 @@ function (
     $location,
     $rootScope,
     ConfigEndpoint,
+    ApiKeyEndpoint,
     _,
     Notify,
     Maps,
     Util,
     Languages,
-    Features
+    Features,
+    Session,
+    TranslationService
 ) {
     return {
         restrict: 'E',
@@ -42,12 +48,21 @@ function (
             $scope.fileContainer = {
                 file : null
             };
+            $scope.SystemLanguage = '';
 
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
             });
 
-            $scope.site = ConfigEndpoint.get({ id: 'site' });
+            // Get API Key
+            ApiKeyEndpoint.query().$promise.then(function (results) {
+                $scope.api_key = results[0];
+            });
+
+            ConfigEndpoint.get({ id: 'site' }).$promise.then((site) => {
+                $scope.site = site;
+                $scope.SystemLanguage = site.language;
+            });
 
             $scope.userSavedSettings = false;
 
@@ -87,6 +102,16 @@ function (
                 return dfd.promise;
             };
 
+            $scope.generateApiKey = function () {
+                Notify.confirmModal('notify.api_key.change_question').
+                then(function () {
+                    var persist = $scope.api_key ? ApiKeyEndpoint.update($scope.api_key) : ApiKeyEndpoint.save({});
+                    persist.$promise.then(function (result) {
+                        $scope.api_key = result;
+                    });
+                });
+            };
+
             $scope.updateConfig = function () {
                 $scope.saving_config = true;
                 uploadHeaderImage().then(function () {
@@ -96,6 +121,12 @@ function (
                     ]).then(function (result) {
                         $scope.saving_config = false;
                         updateSiteHeader();
+                        let newSystemLanguage = result[0].language;
+                        let userLanguage = Session.getSessionDataEntry('language');
+                        if ((userLanguage === undefined || userLanguage === null) && $scope.SystemLanguage !== newSystemLanguage) {
+                            TranslationService.translate(newSystemLanguage);
+                        }
+                        $scope.SystemLanguage = newSystemLanguage;
                         Notify.notify('notify.general_settings.save_success');
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);

@@ -1,5 +1,5 @@
 <fieldset>
-    <legend translate>app.roles</legend>
+    <label translate>app.roles</label>
     <div class="form-field checkbox" ng-repeat="role in roles">
         <label>
             <input
@@ -7,8 +7,7 @@
                 checklist-model="model"
                 checklist-value="role.name"
                 >
-            {{role.display_name}}
+            {{role.display_name | translate}}
         </label>
     </div>
 </fieldset>
-

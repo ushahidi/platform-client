@@ -33,6 +33,7 @@ module.exports = [function () {
     var filterMode = 'all';
 
     return {
+        qEnabled: false,
         filterState: filterState,
         getDefaults: function () {
             return defaultFilters;
@@ -47,6 +48,11 @@ module.exports = [function () {
         clearFilters: function () {},
         clearFilter: function () {},
         hasFilters: function () {},
+        cleanUIFilters: function () {},
+        getUIActiveFilters: function (filters) {
+            return filters;
+        },
+        addIfCurrentObjectMatchesOriginal: function () {},
         getActiveFilters: function (filters) {
             return filters;
         },
@@ -54,6 +60,9 @@ module.exports = [function () {
         },
         getMode: function () {
             return filterMode;
+        },
+        getModeId: function () {
+            return 1;
         }
     };
 }];

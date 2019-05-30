@@ -95,11 +95,13 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         }
 
         function close() {
+            // Removing this because it was causing slider to remain after closing modal (specifically on Share > Export to CSV)
+            // After code review, I believe it is unnecessary in platform. Can be restored if necessary. Talk to Carolyn or Will.
             // If we're inside a modal *and* the modal isn't open
-            if ($scope.insideModal && !ModalService.getState()) {
-                // Ignore, the other slider can open
-                return;
-            }
+            // if ($scope.insideModal && !ModalService.getState()) {
+            //     // Ignore, the other slider can open
+            //     return;
+            // }
             // @todo fade out
             $scope.classVisible = false;
             cleanUp();

@@ -14,11 +14,24 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
     function DetailMapLink($scope, element, attrs) {
         var map;
         $scope.hideMap = false;
+        $scope.emptyGeoJSON = false;
+        $scope.geojson = [];
 
         activate();
 
+        $scope.$watch('postId', function (postId, oldPostId) {
+            if (postId !== oldPostId) {
+                if (map) {
+                    map.remove();
+                    map = null;
+                }
+                activate();
+            }
+        });
+
         function activate() {
             // Start loading data
+            $scope.hideMap = true;
             var geojson = PostEndpoint.geojson({id: $scope.postId}).$promise;
             var createMap = Maps.createMap(element[0].querySelector('#post-map'))
             .then(function (data) {
@@ -32,14 +45,20 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             })
             // Create the map
             .then(addGeoJSONToMap)
+            .then((data) => {
+                // Save points to scope
+                $scope.features = data.geojson.features.filter(f => f.geometry.type === 'Point');
+            })
             ;
 
             // Cleanup leaflet map
             $scope.$on('$destroy', function () {
                 if (map) {
                     map.remove();
+                    map = null;
                 }
             });
+
         }
 
         function addGeoJSONToMap(data) {
@@ -47,8 +66,10 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             // If theres no location data, drop out now
             if (geojsonData.features && geojsonData.features.length === 0) {
                 $scope.hideMap = true;
+                $scope.emptyGeoJSON = true;
                 return;
             }
+            $scope.hideMap = false;
 
             var geojson = L.geoJson(geojsonData, {
                 pointToLayer: Maps.pointToLayer
@@ -61,6 +82,8 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             if (map.getZoom() > 15) {
                 map.setZoom(15);
             }
+
+            return data;
         }
     }
 }

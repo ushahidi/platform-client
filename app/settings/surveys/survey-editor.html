@@ -9,6 +9,7 @@
           </ol>
           <h1 ng-show="survey.id" class="mode-context-title" translate>app.edit_survey</h1>
           <h1 ng-show="!survey.id" class="mode-context-title" translate>app.add_survey</h1>
+          <a ng-show="targetedSurveysEnabled" ui-sref="settings.surveys.targeted.create"><span translate="settings.send_targeted">Send a targeted survey via SMS</span> ></a>
       </header>
 
       <span class="mode-context-trigger" dropdown-toggle>
@@ -40,13 +41,16 @@
       <section class="form-sheet">
         <!-- TODO: get form colour here -->
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
-        <div class="form-field title survey-title">
+        <div class="form-field survey">
           <!--  TODO: add placeholder text-->
-            <label class="hidden" translate>survey.survey_name</label>
+            <label translate>survey.survey_name</label>
             <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
 
-            <label class="hidden" translate>app.description</label>
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Reports about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
+        </div>
+
+          <div class="form-field survey">
+            <label translate>app.description</label>
+            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Posts about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
         </div>
 
         <nav class="tabs-menu init" data-tabs="survey-details">
@@ -74,7 +78,7 @@
             <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
 
             <div class="listing-item" ng-repeat="attribute in survey.tasks[0].attributes track by $index">
-              <div class="listing-item-select" ng-show="allowedToggleOrder(attribute)">
+              <div class="listing-item-select">
                   <div class="buttons-updown">
                      <button type="button" class="button-beta" ng-disabled="isFirstAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeUp(survey.tasks[0], attribute)">
                          <svg class="iconic">
@@ -99,7 +103,7 @@
                   </button>
               </div>
 
-              <div class="listing-item-primary">
+              <div class="listing-item-primary" ng-click="openAttributeEditModal(survey.tasks[0], attribute)">
                   <div class="listing-item-image">
                   <!-- TODO: Set icon based on type -->
                       <svg class="iconic">
@@ -107,9 +111,7 @@
                       </svg>
                   </div>
                   <h2 class="listing-item-title">
-                    <a ng-click="openAttributeEditModal(survey.tasks[0], attribute)">
                       {{attribute.label}}
-                    </a>
                     <span class="listing-item-image tooltip" ng-show="attribute.response_private">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
@@ -144,12 +146,30 @@
             </div>
           </div>
           <!--// Hide Author Information //-->
-          <div class="form-field switch">
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
               <label translate="survey.hide_author_information">Hide author information</label>
               <p ng-show="survey.hide_author" data-fieldgroup-target="hide-author-message" translate="survey.hide_author_information_desc">Only people with permission to edit responses will be able to see who submitted them; and only when editing them.</p>
               <div class="toggle-switch">
                   <input class="tgl init" id="hide-author" type="checkbox" data-fieldgroup-toggle="hide-author-message" ng-model="survey.hide_author">
                   <label class="tgl-btn" for="hide-author"></label>
+              </div>
+          </div>
+
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
+              <label translate="survey.hide_location_information">Hide location information</label>
+              <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate-values="{ precision: location_precision}" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
+              <div class="toggle-switch">
+                  <input class="tgl init" id="hide-location" type="checkbox" data-fieldgroup-toggle="hide-location-message" ng-model="survey.hide_location">
+                  <label class="tgl-btn" for="hide-location"></label>
+              </div>
+          </div>
+
+          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
+              <label translate="survey.hide_time_information">Hide exact time information</label>
+              <p ng-show="survey.hide_time" data-fieldgroup-target="hide-time-message" translate="survey.hide_time_information_desc">Only people with permission to edit responses will be able to see exact respon time; and only when editing them.</p>
+              <div class="toggle-switch">
+                  <input class="tgl init" id="hide-time" type="checkbox" data-fieldgroup-toggle="hide-time-message" ng-model="survey.hide_time">
+                  <label class="tgl-btn" for="hide-time"></label>
               </div>
           </div>
 
@@ -178,8 +198,14 @@
               <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.everyone_can_create]">
                 <div class="form-field checkbox" ng-repeat="role in roles">
                   <label>
-                    <input type="checkbox" checklist-model="roles_allowed" checklist-value="role.id">
-                    {{role.display_name}}
+                    <input
+                        type="checkbox"
+                        checklist-model="roles_allowed"
+                        ng-disabled="role.name === 'admin'"
+                        ng-checked="role.name === 'admin'"
+                        checklist-value="role.id"
+                    >
+                    {{role.display_name | translate}}
                   </label>
                 </div>
               </div>
@@ -199,7 +225,7 @@
         </div>
         <!-- Share Tab Options -->
         <div id="survey-share-post" class="survey-details tabs-target" ng-show="survey.id">
-          <share-menu survey-id="survey.id"></share-menu>
+          <share-menu survey-id="surveyId"></share-menu>
         </div>
       </section>
       <!-- Task sections -->
@@ -227,7 +253,7 @@
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                     </svg>
-                    <span class="hidden">More</span>
+                    <span class="hidden" translate="app.more">More</span>
                 </button>
 
                 <ul class="dropdown-menu init" dropdown-menu>
@@ -295,16 +321,14 @@
                       </button>
                   </div>
 
-                  <div class="listing-item-primary">
+                  <div class="listing-item-primary" ng-click="openAttributeEditModal(task, attribute)">
                       <div class="listing-item-image">
                           <svg class="iconic">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
                           </svg>
                       </div>
                       <h2 class="listing-item-title">
-                        <a ng-click="openAttributeEditModal(task, attribute)">
                           {{attribute.label}}
-                        </a>
                         <span class="listing-item-image tooltip" ng-show="attribute.response_private">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
@@ -338,15 +362,24 @@
                 <label class="tgl-btn" for="task-required-{{task.id}}" ng-attr-id="{{ 'task-required-label-' + task.id }}"></label>
             </div>
         </div>
-          <div class="form-field switch checked">
-              <label translate="survey.show_this_task_to">Show this task to everyone when published</label>
-              <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
-              <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
-                  <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
+        <div class="form-field switch checked">
+            <label translate="survey.internal_use_task">Task is only for internal use</label>
+            <!-- todo show list of roles with correct permission for clarity in message below-->
+            <p data-fieldgroup-target="internal_only-message" class="active" ng-show="task.task_is_internal_only" translate="survey.internal_use_task_desc">This task will only be visible to User who have Manage Post permission.</p>
+            <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
+                <input class="tgl init" ng-attr-id="{{ 'internal_only-' + task.id }}" type="checkbox" data-fieldgroup-toggle="internal_only-message" ng-model="task.task_is_internal_only">
+                <label class="tgl-btn" for="internal_only-{{task.id}}" ng-attr-id="{{ 'internal_only-label-' + task.id }}"></label>
+            </div>
+        </div>
+        <div class="form-field switch checked">
+            <label translate="survey.show_this_task_to">Show this task to everyone when published</label>
+            <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
+            <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
+                <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
 
-                  <label class="tgl-btn" for="show_section-{{task.id}}" ng-attr-id="{{ 'show_section-label-' + task.id }}"></label>
-              </div>
-          </div>
+                <label class="tgl-btn" for="show_section-{{task.id}}" ng-attr-id="{{ 'show_section-label-' + task.id }}"></label>
+            </div>
+        </div>
 
           <!-- <fieldset>
             <legend translate="survey.who_can_contribute_to_section">Who can contribute to fields in this section</legend>

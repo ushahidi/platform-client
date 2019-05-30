@@ -3,7 +3,7 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
-    '$route',
+    '$state',
     'UserEndpoint',
     'Notify',
     '_',
@@ -13,7 +13,7 @@ function (
     $rootScope,
     $translate,
     $location,
-    $route,
+    $state,
     UserEndpoint,
     Notify,
     _,
@@ -35,9 +35,8 @@ function (
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
     $scope.saving_user = false;
-    $scope.saveUser = function (user, addAnother) {
+    $scope.saveUser = function (user) {
         $scope.saving_user = true;
-        var whereToNext = '/settings/users';
 
         UserEndpoint.saveCache(user).$promise.then(function (response) {
             if (response.id) {
@@ -45,7 +44,8 @@ function (
                 $scope.saving_user = false;
                 $scope.userSavedUser = true;
                 $scope.user.id = response.id;
-                addAnother ? $route.reload() : $location.path(whereToNext);
+                // in favor of $route.reload();
+                $state.go('settings.users', null, { reload: true });
             }
         }, function (errorResponse) { // error
             var validationErrors = [],

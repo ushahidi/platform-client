@@ -40,8 +40,8 @@
 
             <form name="form">
                 <div class="form-sheet">
-                    <div class="form-field title" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
-                        <label class="hidden" translate>user.full_name</label>
+                    <div class="form-field" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
+                        <label translate>user.full_name</label>
                         <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-maxlength="150" ng-model="user.realname" name="full_name" required>
                         <div ng-repeat="(error, value) in form.full_name.$error"
                             ng-show="form.full_name.$dirty"
@@ -49,7 +49,7 @@
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
-                            <span translate="{{'user.valid.full_name.' + error}}" translate-default="{{error}}"></span>
+                            <p translate="{{'user.valid.full_name.' + error}}" translate-default="{{error}}"></p>
                         </div>
                     </div>
 
@@ -62,7 +62,7 @@
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
-                            <span translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></span>
+                            <p translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></p>
                         </div>
                     </div>
 
@@ -78,7 +78,7 @@
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
-                            <span translate="{{'user.valid.password.' + error}}" translate-default="{{error}}"></span>
+                            <p translate="{{'user.valid.password.' + error}}" translate-default="{{error}}"></p>
                         </div>
                     </div>
 
@@ -88,7 +88,7 @@
                                 user.role
                             </span>
                             <span class="legend-label" ng-show="user.role">
-                                {{ roles[user.role].display_name }}
+                                {{ roles[user.role].display_name}}
                             </span>
                             <svg class="iconic chevron">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
@@ -108,6 +108,18 @@
                         </div>
                     </fieldset>
 
+                </div>
+
+                <div class="form-sheet" ng-show="user.id && user.contacts.length">
+                    <div class="form-sheet-summary">
+                        <h3 class="form-sheet-title" translate>Contacts</h3>
+                    </div>
+                    <div class="form-field" ng-repeat="contact in user.contacts">
+                        <div class="form-field-addon" style="text-transform: capitalize">
+                            <span class="addon before">{{contact.type}}</span>
+                            <input type="text" value="{{contact.contact}}" disabled="">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-sheet" ng-show="user.id">

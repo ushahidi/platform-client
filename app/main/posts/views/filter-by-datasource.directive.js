@@ -14,8 +14,8 @@ function FilterByDatasourceDirective() {
     };
 }
 
-FilterByDatasourceController.$inject = ['$scope', '$rootScope', 'ConfigEndpoint', '_'];
-function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
+FilterByDatasourceController.$inject = ['$scope', '$rootScope', 'ConfigEndpoint', '_', '$location'];
+function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $location) {
     $scope.dataSources = [];
     $scope.providers = [];
     $scope.formatHeading = formatHeading;
@@ -25,7 +25,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
     $scope.showOnlyIncoming = showOnlyIncoming;
     $scope.assignStatsToProviders = assignStatsToProviders;
     $scope.getTotals = getTotals;
-
+    $scope.toggleFilters = toggleFilters;
     $scope.$watch('postStats', function (postStats) {
         assignStatsToProviders();
     });
@@ -41,15 +41,22 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
         }
     }
 
+    function toggleFilters(filter) {
+        var index = $scope.filters.source.indexOf(filter);
+        if (index !== -1) {
+            $scope.filters.source.splice(index, 1);
+        } else {
+            $scope.filters.source.push(filter);
+        }
+    }
+
     function assignStatsToProviders() {
         $scope.providers = _.map($scope.postStats, function (provider) {
                 var obj = {};
-                if (provider.type !== 'web') {
-                    obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
-                    obj.heading = formatHeading(obj.label);
-                    obj.total = getTotals(provider.type);
-                    return obj;
-                }
+                obj.label = provider.type === 'sms' ? 'SMS' : provider.type.substr(0, 1).toUpperCase() + provider.type.substr(1);
+                obj.heading = formatHeading(obj.label);
+                obj.total = getTotals(provider.type);
+                return obj;
             });
 
         // removing duplicates and null-values
@@ -57,23 +64,27 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
             .compact()
             .uniq()
             .value();
-        // if user is logged in and is allowed to see the configs, we add all enabled datasources, even if there are 0 posts
+
+        // if user is logged in and is allowed to see the configs,
+        // we add all enabled datasources, even if there are 0 posts
         if ($scope.dataSources) {
-            var smsProviders = ['nexmo', 'twilio','frontlinesms', 'smssync'];
+            var smsProviders = ['nexmo', 'twilio', 'frontlinesms', 'smssync'];
             _.each($scope.dataSources, function (source, key) {
                     if (source) {
                         var type = _.contains(smsProviders, key) ? 'SMS' : key.substr(0, 1).toUpperCase() + key.substr(1);
-                        var exists = _.filter($scope.providers, {label: type});
+                        var exists = _.filter($scope.providers, { label: type });
                         if (exists.length < 1) {
                             var obj = {};
                             obj.label = type;
                             obj.heading = formatHeading(obj.label);
-                            obj.total = getTotals(key);
+                            obj.total = getTotals(key); // Isn't this always 0?
                             $scope.providers.push(obj);
                         }
                     }
                 });
         }
+
+        $scope.providers = _.sortBy($scope.providers, 'label');
     }
 
     function getTotals(source) {
@@ -84,6 +95,7 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
         return 0;
     }
 
+
     function formatHeading(name) {
         switch (name) {
             case 'Twitter':
@@ -92,6 +104,8 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
                 return 'SMS';
             case 'Email':
                 return 'Emails';
+            case 'Web':
+                return 'Web';
             default:
                 return ' ';
         }
@@ -119,9 +133,10 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _) {
     function showOnlyIncoming(source) {
         $scope.filters.form = ['none'];
         $scope.filters.source = [source.toLowerCase()];
+        $location.path('/views/data');
     }
 
     function featureEnabled() {
-        return $rootScope.hasPermission('Manage Posts');
+        return $rootScope.isAdmin();
     }
 }

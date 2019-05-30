@@ -1,8 +1,8 @@
 module.exports = ActivityController;
 
-ActivityController.$inject = ['$scope', '$translate', 'moment', 'Features'];
+ActivityController.$inject = ['$rootScope', '$scope', '$translate', 'moment', 'Features'];
 
-function ActivityController($scope, $translate, moment, Features) {
+function ActivityController($rootScope, $scope, $translate, moment, Features) {
     // Initial values
     $scope.isActivityAvailable = false;
     $scope.currentInterval = 'all';
@@ -16,7 +16,10 @@ function ActivityController($scope, $translate, moment, Features) {
 
     $scope.saveFilters = saveFilters;
     $scope.cancelChangeFilters = cancelChangeFilters;
-
+    $scope.targetedSurveysEnabled = false;
+    $scope.loggedIn = false;
+    $scope.createdAfter = null;
+    $scope.createdBefore = null;
     activate();
 
     function activate() {
@@ -26,9 +29,14 @@ function ActivityController($scope, $translate, moment, Features) {
         $translate('nav.activity').then(function (title) {
             $scope.$emit('setPageTitle', title);
         });
+        if ($rootScope.loggedin) {
+            $scope.loggedIn = true;
+        }
 
         Features.loadFeatures().then(function () {
             $scope.isActivityAvailable = Features.isViewEnabled('activity');
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
+
         });
 
         update();
@@ -58,7 +66,7 @@ function ActivityController($scope, $translate, moment, Features) {
     function setDateRange(interval) {
         switch (interval) {
             case 'month':
-                $scope.filters.created_after = moment().startOf('month').toDate();
+                $scope.filters.created_after = moment(moment().startOf('month').toDate()).utc().format();
                 $scope.filters.created_before =  null;
                 break;
             case 'all':
@@ -66,19 +74,27 @@ function ActivityController($scope, $translate, moment, Features) {
                 $scope.filters.created_before =  null;
                 break;
             case 'custom':
-                // Do nothing?
-                $scope.filters.created_after = $scope.createdAfter;
-                $scope.filters.created_before = $scope.createdBefore;
+                if ($scope.createdAfter &&
+                    $scope.createdBefore &&
+                    $scope.createdAfter.toDateString() === $scope.createdBefore.toDateString()
+                ) {
+                    // Do nothing?
+                    $scope.filters.created_after = moment(moment($scope.createdAfter).utc()).startOf('day').format();
+                    $scope.filters.created_before = moment(moment($scope.createdBefore).utc()).endOf('day').format();
+                }
+                if ($scope.createdAfter) {
+                    $scope.filters.created_after = moment(moment($scope.createdAfter).utc()).startOf('day').format();
+                }
+                if ($scope.createdBefore) {
+                    $scope.filters.created_before = moment(moment($scope.createdBefore).utc()).startOf('day').format();
+                }
                 break;
             // case 'week':
             default:
                 // Default to this week
-                $scope.filters.created_after = moment().startOf('week').toDate();
+                $scope.filters.created_after = moment(moment().startOf('week').toDate()).utc().format();
                 $scope.filters.created_before =  null;
         }
-        // Copy range to editable values
-        $scope.createdAfter = $scope.filters.created_after;
-        $scope.createdBefore = $scope.filters.created_before;
         return $scope.filters;
     }
 }

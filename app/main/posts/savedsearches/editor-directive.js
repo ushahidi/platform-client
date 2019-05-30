@@ -1,5 +1,6 @@
 module.exports = [
     '$q',
+    '$filter',
     '$location',
     '$rootScope',
     '$translate',
@@ -8,8 +9,10 @@ module.exports = [
     'Notify',
     'ViewHelper',
     'RoleEndpoint',
+    'PostFilters',
 function (
     $q,
+    $filter,
     $location,
     $rootScope,
     $translate,
@@ -17,7 +20,8 @@ function (
     _,
     Notify,
     ViewHelper,
-    RoleEndpoint
+    RoleEndpoint,
+    PostFilters
 ) {
     return {
         restrict: 'E',
@@ -42,18 +46,24 @@ function (
             $scope.views = ViewHelper.views();
 
             $scope.cpySavedSearch = _.clone($scope.savedSearch);
-
+            // translate the description and name if they have a translation available (ie the "My posts" search)
+            $scope.cpySavedSearch.description = $filter('translate')($scope.cpySavedSearch.description);
+            $scope.cpySavedSearch.name = $filter('translate')($scope.cpySavedSearch.name);
             $scope.save = function (savedSearch) {
+                $scope.isSaving = true;
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
                 persist(savedSearch)
                 .$promise
                 .then(function (savedSearch) {
-                    $location.url('/savedsearches/' + savedSearch.id);
                     $scope.savedSearch = _.clone(savedSearch);
                     $scope.$parent.closeModal();
-                    $rootScope.$broadcast('event:savedSearch:update');
+                    PostFilters.setMode('savedsearch', savedSearch);
+                    $rootScope.$broadcast('savedSearch:update');
+                    Notify.notify('notify.savedsearch.savedsearch_saved', {savedsearch: savedSearch.name});
+                    $scope.isSaving = false;
                 }, function (errorResponse) {
                     Notify.apiErrors(errorResponse);
+                    $scope.isSaving = false;
                 });
             };
 

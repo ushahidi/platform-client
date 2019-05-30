@@ -4,7 +4,8 @@ describe('filter by datasource directive', function () {
         isolateScope,
         element,
         ConfigEndpoint,
-        hasPermission;
+        isAdmin,
+        $location;
 
     beforeEach(function () {
         var testApp;
@@ -14,10 +15,10 @@ describe('filter by datasource directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _ConfigEndpoint_, _) {
+    beforeEach(inject(function (_$rootScope_, $compile, _ConfigEndpoint_, _, _$location_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
-
+        $location = _$location_;
         ConfigEndpoint = _ConfigEndpoint_;
         spyOn(ConfigEndpoint, 'get').and.callThrough();
 
@@ -30,9 +31,9 @@ describe('filter by datasource directive', function () {
                 {total: 2, type: 'sms'}
             ];
 
-        hasPermission = true;
-        $rootScope.hasPermission = function () {
-            return hasPermission;
+        isAdmin = true;
+        $rootScope.isAdmin = function () {
+            return isAdmin;
         };
         element = '<filter-by-datasource filters="filters" post-stats="postStats"></filter-by-datasource>';
         element = $compile(element)($scope);
@@ -83,6 +84,17 @@ describe('filter by datasource directive', function () {
             isolateScope.showOnlyIncoming('Email');
             expect(isolateScope.filters.source).toEqual(['email']);
             expect(isolateScope.filters.form).toEqual(['none']);
+        });
+        it('should redirect to data-view if choosing posts-without a form', function () {
+            $location.path('/views/map');
+            isolateScope.showOnlyIncoming('SMS');
+            expect($location.path()).toEqual('/views/data');
+        });
+        it('should toggle the filters based on if selected filter is activated or not', function () {
+            expect(isolateScope.filters.source).toEqual(['sms', 'twitter', 'web', 'email']);
+            var filter = isolateScope.filters.source[Math.floor(Math.random() * isolateScope.filters.source.length)];
+            isolateScope.toggleFilters(filter);
+            expect(isolateScope.filters.source).not.toContain(filter);
         });
     });
 });

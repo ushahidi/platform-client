@@ -2,126 +2,74 @@
 
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
         <div class="survey-filter-parent">
-        <div class="survey-filter-label">
-            <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
-            <label class="checked">
-                <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-change="changeForms()">
-                {{ ::form.name }}
-            </label>
-        </div>
-         <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
-            <!-- todo! show count -->
-            {{ form.post_count }}
-            <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-            </svg>
-        </span>
-        <ul class="dropdown-menu init" dropdown-menu>
-            <li ng-show="canAddToSurvey(form)">
-                <a ng-href="posts/create/{{ ::form.id }}">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
-                    </svg>
-                    <span class="label" translate="post.add_to_form" translate-values="{ form: form.name }">Add to</span>
-                </a>
-            </li>
-            <!-- <li>
-                <a href="">
-                <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#task"></use>
-                </svg>
-                <span class="label">Assign someone to add to Getting around</span>
-                </a>
-            </li> -->
-            <div class="divider"></div>
-            <li><a translate="post.show_only_form" translate-values="{ form: form.name }" ng-click="showOnly(form.id)">Show only </a></li>
-            <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
-            <div class="divider"></div>
-            <li ng-show="hasManageSettingsPermission()">
-                <a ng-href="/settings/surveys/edit/{{ form.id }}">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
-                    </svg>
-                    <span class="label" translate="nav.survey_settings">Survey settings</span>
-                </a>
-            </li>
-        </ul>
-        </div>
-
-        <fieldset
-            class="survey-filter-children"
-            dropdown
-            auto-close="outsideClick"
-            ng-show="form.tags.length > 0 && form.post_count > 0"
-            >
-            <legend class="init" data-toggle="form-fieldgroup" dropdown-toggle ng-class="{ selected : filters.tags.length }" translate="app.categories_count" translate-values="{ count: form.tags.length }">
-            </legend>
-
-            <div class="form-fieldgroup init" dropdown-menu>
-                <div
-                    class="form-field checkbox"
-                    ng-repeat="tag in form.tags"
-                    ng-class="{'checked': filters.tags.indexOf(tag.id) > -1}"
-                >
-                    <label ng-click="selectParent(tag, form.id)">
-                        <input
-                            type="checkbox"
-                            checklist-value="tag.id"
-                            checklist-model="filters.tags"
-                        />
-                        {{tag.tag}}
-                    </label>
-                    <div class="form-fieldgroup" ng-class="{'active': filters.tags.indexOf(tag.id) > -1}">
-                        <div
-                            class="form-field checkbox"
-                            ng-repeat="child in tag.children"
-                            ng-class="{'checked': filters.tags.indexOf(child.id) !== -1}"                            
-                            ng-show="filters.tags.indexOf(tag.id) > -1"
-                        >
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checklist-value="child.id"
-                                    checklist-model="filters.tags"
-                                />
-                                {{child.tag}}
-                            </label>
-                        </div>
-                    </div>
-                </div>
+            <div class="survey-filter-label">
+                <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
+                <label class="checked">
+                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form">
+                    <bdi>{{ ::form.name }}</bdi>
+                </label>
             </div>
-        </fieldset>
+             <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
+                <!-- todo! show count -->
+                {{ form.post_count }}
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                </svg>
+            </span>
+            <ul class="dropdown-menu init" dropdown-menu>
+                <li ng-show="canAddToSurvey(form)">
+                    <a ui-sref="postCreate({id: form.id })">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                        </svg>
+                        <span class="label" translate="post.add_to_form" translate-values="{ form: form.name }">Add to</span>
+                    </a>
+                </li>
+                <div class="divider"></div>
+                <li><a translate="post.show_only_form" translate-values="{ form: form.name }" ng-click="showOnly(form.id)">Show only </a></li>
+                <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
+                <div class="divider"></div>
+                <li ng-show="hasManageSettingsPermission()">
+                    <a ui-sref="settings.surveys.id({id: form.id, action: 'edit'})">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
+                        </svg>
+                        <span class="label" translate="nav.survey_settings">Survey settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </form>
-<div class="tool" ng-show="unmapped > 0 && currentView === 'map'">
-<p>There are
-    <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.</p>
+<div class="tool" ng-show="unmapped > 0">
+        <p>
+            <span ng-show="unmapped < 2" translate="global_filter.unmapped_start_one"></span>
+            <span ng-show="unmapped > 1" translate="global_filter.unmapped_start_many"></span>
+            <a ng-click="goToUnmapped()" ng-show="unmapped < 2" translate="global_filter.unmapped_one" translate-values="{'post_nb': unmapped}">
+            <a ng-click="goToUnmapped()" ng-show="unmapped > 1" translate="global_filter.unmapped_many" translate-values="{'post_nb': unmapped}">
+        <strong>global_filter.unmapped_one</strong></a> <span translate="global_filter.unmapped_end"></span></p>
 </div>
 <div class="form-field" ng-show="hasManageSettingsPermission()">
-        <a ng-href="/settings/surveys/create" class="button button-link">
-            <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#plus"></use>
-            </svg>
-            <span class="button-label" translate="app.create_new_survey">Create new survey</span>
-        </a>
-    </div>
-</form>
+    <a ui-sref="settings.surveys.create" class="button button-link">
+        <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#plus"></use>
+        </svg>
+        <span class="button-label" translate="app.create_new_survey">Create new survey</span>
+    </a>
+</div>
 <div class="tool">
     <h6 class="tool-heading" translate="app.data_sources"></h6>
     <filter-by-datasource post-stats="sourceStats" filters="filters"></filter-by-datasource>
 </div>
- <div class="tool">
-            <h6 class="tool-heading">Language</h6>
-            <span class="tool-trigger init" ng-class="{'active': showLanguage}" ng-click="languageToggle()">
-                <svg class="iconic">
-                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                </svg>
-                <span class="label hidden">Show/hide</span>
-            </span>
-            <div
-                class="toggle-content"
-                ng-class="{'active': showLanguage}"
-                >
-            <language-switch></language-switch>
-            </div>
+<div class="tool">
+    <h6 class="tool-heading" translate="app.language">Language</h6>
+    <span class="tool-trigger init" ng-class="{'active': showLanguage}" ng-click="languageToggle()">
+        <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+        <span class="label hidden">Show/hide</span>
+    </span>
+    <div class="toggle-content" ng-class="{'active': showLanguage}">
+        <language-switch></language-switch>
     </div>
+</div>

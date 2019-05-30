@@ -1,19 +1,31 @@
 describe('global event handlers', function () {
 
-    var mockedSessionData,
+    var mockedPostFiltersService,
+        mockedSessionData,
         mockedAuthenticationData,
         mockedAuthenticationService,
+        mockedDemoDeploymentService,
         mockTOS,
         $rootScope,
         $location,
-        mockRoute = {
+        mockState = {
+            go: jasmine.createSpy(),
+            current: jasmine.createSpy(),
             reload: jasmine.createSpy()
         };
 
     beforeEach(function () {
-
         var testApp = makeTestApp();
 
+        mockedPostFiltersService = {
+            resetDefaults: function () {
+                return {
+                    then: function (successCallback, failCallback) {
+                        return {};
+                    }
+                };
+            }
+        };
         var mockedSessionService =
         {
             getSessionData: function () {
@@ -40,6 +52,11 @@ describe('global event handlers', function () {
             }
         };
 
+        mockedDemoDeploymentService =
+        {
+            demoCheck: function () {}
+        };
+
         spyOn(mockedAuthenticationService, 'openLogin');
 
         mockTOS = {
@@ -53,8 +70,10 @@ describe('global event handlers', function () {
         };
 
         spyOn(mockTOS, 'getTosEntry').and.callThrough();
-
-        testApp.service('Session', function () {
+        testApp.service('PostFilters', function () {
+            return mockedPostFiltersService;
+        })
+        .service('Session', function () {
             return mockedSessionService;
         })
         .service('Authentication', function () {
@@ -63,9 +82,12 @@ describe('global event handlers', function () {
         .service('TermsOfService', function () {
             return mockTOS;
         })
+        .service('DemoDeploymentService', function () {
+            return mockedDemoDeploymentService;
+        })
         .run(require('app/common/auth/authentication-events.run.js'))
-        .service('$route', function () {
-            return mockRoute;
+        .service('$state', function () {
+            return mockState;
         });
 
 
@@ -113,7 +135,7 @@ describe('global event handlers', function () {
                         });
 
                         it('should reload the route', function () {
-                            expect(mockRoute.reload).toHaveBeenCalled();
+                            expect(mockState.reload).toHaveBeenCalled();
                         });
 
                         it('should check TOS', function () {
@@ -144,7 +166,6 @@ describe('global event handlers', function () {
                         beforeEach(function () {
                             $rootScope.$broadcast('event:authentication:logout:succeeded');
                         });
-
                         it('should set $rootScope.currentUser to null', function () {
                             expect($rootScope.currentUser).toEqual(null);
                         });
@@ -154,7 +175,7 @@ describe('global event handlers', function () {
                         });
 
                         it('should reload the route', function () {
-                            expect(mockRoute.reload).toHaveBeenCalled();
+                            expect(mockState.reload).toHaveBeenCalled();
                         });
                     });
                 });

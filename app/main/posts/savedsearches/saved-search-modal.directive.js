@@ -10,11 +10,12 @@ function SavedSearchModal() {
     };
 }
 
-SavedSearchModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '$location', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService'];
-function SavedSearchModalController($scope, $element, $attrs, $rootScope, $location, UserEndpoint, SavedSearchEndpoint, _, ModalService) {
+SavedSearchModalController.$inject = ['$scope', '$element', '$attrs', '$rootScope', '$location', 'UserEndpoint', 'SavedSearchEndpoint', '_', 'ModalService', '$state'];
+function SavedSearchModalController($scope, $element, $attrs, $rootScope, $location, UserEndpoint, SavedSearchEndpoint, _, ModalService, $state) {
     $scope.searchSearches = searchSearches;
     $scope.createNewSearch = createNewSearch;
     $scope.goToSearch = goToSearch;
+    $scope.loading = false;
     activate();
 
     // Reload searches on login / logout events
@@ -23,6 +24,7 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
     $scope.$on('savedSearch:update', loadSavedSearches);
 
     function activate() {
+        $scope.loading = true;
         loadSavedSearches();
     }
 
@@ -35,6 +37,9 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
                 var isOwner = (search.user && search.user.id === _.result($rootScope.currentUser, 'userId')) === true;
                 return search.featured || isOwner;
             });
+            $scope.loading = false;
+        }, function (fail) {
+            $scope.loading = false;
         });
     }
 
@@ -53,9 +58,18 @@ function SavedSearchModalController($scope, $element, $attrs, $rootScope, $locat
      * We are just closing the modal before we go to the new saved search the user selected in the frontend.
      * See: https://waffle.io/ushahidi/platform/cards/598289fa17b93500a65be936
      */
-    function goToSearch(searchId) {
+    function goToSearch(savedSearch) {
         ModalService.close();
-        $location.url('/savedsearches/' + searchId);
+        // This feature is only available in Lisiting mode
+        // When a user clicks on a collection lisiting item
+        // they will be directed to the collection page
+        $scope.$parent.closeModal();
+        var viewParam = savedSearch.view;
+        if (viewParam === 'list' || viewParam === 'data') {
+            $state.go('posts.data.savedsearch', {savedSearchId: savedSearch.id}, {reload: true});
+        } else {
+            $state.go('posts.map.savedsearch', {savedSearchId: savedSearch.id}, {reload: true});
+        }
     }
 
 }

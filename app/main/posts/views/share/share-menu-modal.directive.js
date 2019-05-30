@@ -17,13 +17,11 @@ function ShareMenuDirective() {
 
 ShareMenuController.$inject = [
     '$scope',
-    '$routeParams',
     'Util',
     '$window'
 ];
 function ShareMenuController(
     $scope,
-    $routeParams,
     Util,
     $window
 ) {

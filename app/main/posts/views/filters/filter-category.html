@@ -1,5 +1,5 @@
-<fieldset ng-show="categories.length" overflow-toggle has-overflow="parents.length > 2" ng-model-options="{ updateOn: 'default' }">
-    <legend translate="nav.categories">Categories</legend>
+<fieldset ng-show="categories.length" overflow-toggle has-overflow="categories.length > 1" ng-model-options="{ updateOn: 'default' }">
+    <label translate="nav.categories">Categories</label>
 
     <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
         <label>
@@ -8,25 +8,24 @@
                 checklist-value="category.id"
                 value="category.id"
                 checklist-model="selectedCategories"
-            > 
-            {{ ::category.tag }}
+            >
+            <bdi>{{ ::category.tag }}</bdi>
         </label>
-        <div 
+        <div
           class="form-field checkbox"
-          ng-if="category.children && selectedCategories.indexOf(category.id) > -1"
           ng-repeat="child in category.children"
         >
           <label>
-          <input 
+          <input
             type="checkbox"
             checklist-model="selectedCategories"
             checklist-value="child.id"
             value="child.id"
             ng-selected="selectedCategories.indexOf(category.id) >-1"
           >
-            {{ ::child.tag }}
+            <bdi>{{ ::child.tag }}</bdi>
         </label>
-    </div> 
+    </div>
     </div>
       <span class="form-field-toggle">
         <svg class="iconic">
@@ -35,7 +34,3 @@
         <span translate="nav.more">More</span>
     </span>
 </fieldset>
-
-
-
-      

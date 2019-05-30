@@ -17,13 +17,13 @@ function ShareMenuDirective() {
 
 ShareMenuController.$inject = [
     '$scope',
-    '$routeParams',
+    '$rootScope',
     'Util',
     '$window'
 ];
 function ShareMenuController(
     $scope,
-    $routeParams,
+    $rootScope,
     Util,
     $window
 ) {
@@ -31,6 +31,7 @@ function ShareMenuController(
     $scope.loading = false;
     $scope.shareUrl = Util.currentUrl();
     $scope.isExportable = isExportable;
+    $scope.hasPermission = $rootScope.hasPermission('Bulk Data Import and Export') || $rootScope.hasPermission('Bulk Data Import');
 
     activate();
 
@@ -49,11 +50,8 @@ function ShareMenuController(
 
         $scope.shareUrlEncoded = encodeURIComponent($scope.shareUrl);
     }
-    // Check if current view is exportable based on URI
+    // Check if current view is exportable
     function isExportable() {
-        if ($window.location.href.indexOf('post') > 0) {
-            return false;
-        }
         return true;
     }
 }

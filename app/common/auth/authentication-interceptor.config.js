@@ -28,7 +28,17 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
 
         function handleRequestSuccess(authResponse) {
             var accessToken = authResponse.data.access_token;
+            // Save access token
             Session.setSessionDataEntry('accessToken', accessToken);
+            // Save token expires time
+            if (authResponse.data.expires_in) {
+                Session.setSessionDataEntry('accessTokenExpires', Math.floor(Date.now() / 1000) + authResponse.data.expires_in);
+            } else if (authResponse.data.expires) {
+                Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+            }
+
+            Session.setSessionDataEntry('grantType', 'client_credentials');
+            // Add Authorization header
             config.headers.Authorization = 'Bearer ' + accessToken;
             deferred.resolve(config);
         }
@@ -74,15 +84,7 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
     function request(config) {
         var deferred = $q.defer();
 
-        if (_.has(config, 'params') && config.params.ignore403) {
-            delete config.params.ignore403;
-            config.ignorable = true;
-        }
-
-        if (config.url.indexOf('oauth/token') !== -1) {
-            config.ignorable = true;
-        }
-
+        config.ignorable = shouldIgnoreAuthError(config);
 
         if (config.url.indexOf(CONST.API_URL) === -1) {
             deferred.resolve(config);
@@ -90,28 +92,22 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
         }
 
         var accessToken = Session.getSessionDataEntry('accessToken');
+        var accessTokenExpires = Session.getSessionDataEntry('accessTokenExpires');
+        var now = Math.floor(Date.now() / 1000);
 
-        if (accessToken !== undefined && accessToken !== null) {
-            // if we already have an accessToken,
+        if (accessToken !== undefined && accessToken !== null && accessTokenExpires > now) {
+            // if we already have a valid accessToken,
             // we will set it straight ahead
             // and resolve the promise for the config hash
             config.headers.Authorization = 'Bearer ' + accessToken;
 
         }
-        // else {
-        //     // We are going to attempt to send the request without
-        //     // any access token in it.
-        //     // If the operation fails because authentication/
-        //     // authorization is needed, we will handle in
-        //     // responseError() below
-        // }
         deferred.resolve(config);
         return deferred.promise;
     }
 
     function responseError(rejection) {
         var deferred = $q.defer();
-
         // When a request is rejected there are
         // a few possible reasons. If its a 401
         // either our token expired, or we didn't have one.
@@ -157,10 +153,29 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
                 $rootScope.$broadcast('event:forbidden');
             }
             deferred.reject(rejection);
-        // For anything else, just forward the rejection
+            // For anything else, just forward the rejection
         } else {
             deferred.reject(rejection);
         }
         return deferred.promise;
+    }
+
+    /**
+     * Returns true if url is ignorable, false if not
+     * @param config
+     */
+    function shouldIgnoreAuthError(config) {
+        var isIgnorable = false;
+        if (_.has(config, 'params') && config.params.ignore403) {
+            delete config.params.ignore403;
+            isIgnorable = true;
+        }
+        var i = 0;
+        var matchers = ['/oauth/token(/|$)', '/users(/|$)([0-9]+|$)', '/roles(/|$)'];
+        while (isIgnorable === false && i < matchers.length) {
+            isIgnorable = !!config.url.match(matchers[i]);
+            i++;
+        }
+        return isIgnorable;
     }
 }

@@ -11,9 +11,9 @@
                 <label>
                     <input 
                         type="checkbox"
-                        checklist-value="provider.label.toLowerCase()"
-                        checklist-model="filters.source"
+                        ng-checked="filters.source.indexOf(provider.label.toLowerCase()) !== -1"
                         translate
+                        ng-click="toggleFilters(provider.label.toLowerCase())"
                     />
                     {{provider.label}}
                 </label>
