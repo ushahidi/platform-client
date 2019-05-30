@@ -192,8 +192,9 @@ function PostDetailDataController(
     };
 
     $scope.isPostValue = function (key) {
-        return $scope.form_attributes[key] && $scope.post_task &&
+        let ret =  $scope.form_attributes[key] && $scope.post_task &&
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
+        return ret;
     };
 
     $scope.showType = function (type) {
