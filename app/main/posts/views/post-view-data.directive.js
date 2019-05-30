@@ -489,6 +489,16 @@ function PostViewDataController(
         });
     }
 
+    function getUnique(arr, comp) {
+        const unique = arr
+            .map(ele => ele[comp]) // store the keys of the unique objects
+            .map((ele, i, final) => final.indexOf(ele) === i && i) // eliminate the dead keys & store unique objects
+            .filter(ele => arr[ele])
+            .map(ele => arr[ele]);
+
+        return unique;
+    }
+
     function getNewPosts() {
         let existingFilters = PostFilters.getQueryParams($scope.filters);
         let filterDate = moment(existingFilters.date_before).utc();
@@ -518,9 +528,12 @@ function PostViewDataController(
                     created_after_by_id: $scope.posts[0].id
                 });
             }
+
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply(recentPosts, postsResponse.results);
-                $scope.newPostsCount += postsResponse.count;
+                recentPosts = getUnique(recentPosts, 'id');
+                $scope.newPostsCount = postsResponse.count;
+
             });
         }
     }
