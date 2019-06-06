@@ -5,6 +5,7 @@ import PersonContainer from "../react/settings/people/PersonContainer";
 import UserListContainer from "../react/settings/users/UserList/UserListContainer";
 import UserAvatar from "../react/settings/users/UserList/UserAvatar";
 import UserName from "../react/settings/users/UserList/userName";
+import UserRole from "../react/settings/users/UserList/UserRole";
 
 angular
     .module("ushahidi.settings", [])
@@ -54,4 +55,6 @@ angular
     .component("userListContainer", react2angular(UserListContainer))
     .component("userAvatar", react2angular(UserAvatar), ["avatar", "realname"])
     .component("userName", react2angular(UserName), ["user"])
+    .component("userRole", react2angular(UserRole), ["role"])
+
     .config(require("./settings.routes.js"));

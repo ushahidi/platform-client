@@ -41,7 +41,7 @@
         </div>
         <!-- end toolbar -->
         <!--Below is the UserListContainer created in react, uncomment if you want to use!-->
-       
+       <user-list-container></user-list-container>
         <!--UserListContainer is supposed to replace the main-col div below (but not all functionality is yet migrated)-->
         <div class="main-col">
 
@@ -63,12 +63,14 @@
                         </div>
 
                        <user-name class="listing-item-title" user="user"></user-name>
+                       <user-role class="listing-item-secondary" role="roles[user.role].display_name"></user-role>
+                     
 
-                        <p class="listing-item-secondary"
+                        <!-- <p class="listing-item-secondary"
                             translate-values="{role: roles[user.role].display_name}"
                             translate="user.role_display">
                             Role: role_name
-                        </p>
+                        </p> -->
                         <p class="listing-item-secondary" style="text-transform: capitalize" ng-repeat="contact in user.contacts"
                             translate-values="{
                                 type: contact.type,

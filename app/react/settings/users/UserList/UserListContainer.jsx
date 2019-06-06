@@ -6,6 +6,8 @@ import * as UsersActions from "react/common/state/users/users.actions";
 
 import { getUsers } from "react/common/state/users/users.reducers";
 import UserAvatar from "./UserAvatar";
+import UserName from "./userName";
+import UserRole from "./UserRole";
 
 const propTypes = {
     UsersActions: PropTypes.shape({
@@ -33,11 +35,15 @@ class UserListContainer extends React.Component {
                         ""
                     )}
                     {this.props.users.map(user => (
-                        <UserAvatar
-                            key={user.id}
-                            realname={user.realname}
-                            avatar={user.gravatar}
-                        />
+                        <div className="listing-item>
+                            <UserAvatar
+                                key={user.id}
+                                realname={user.realname}
+                                avatar={user.gravatar}
+                            />
+                            <UserName user={user} />
+                            <UserRole role="admin" />
+                        </div>
                     ))}
                 </div>
             </div>
