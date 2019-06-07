@@ -125,6 +125,8 @@ function (
                         let userLanguage = Session.getSessionDataEntry('language');
                         if ((userLanguage === undefined || userLanguage === null) && $scope.SystemLanguage !== newSystemLanguage) {
                             TranslationService.translate(newSystemLanguage);
+                            $scope.save = $translate.instant('app.save');
+                            $scope.saving = $translate.instant('app.saving');
                         }
                         $scope.SystemLanguage = newSystemLanguage;
                         Notify.notify('notify.general_settings.save_success');
