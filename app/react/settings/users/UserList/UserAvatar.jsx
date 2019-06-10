@@ -10,11 +10,13 @@ const defaultProps = {
 };
 
 const UserAvatar = props => (
-    <img
-        className="avatar"
-        src={`https://www.gravatar.com/avatar/${props.avatar}?d=retro`}
-        alt={props.realname}
-    />
+    <div className="listing-item-image">
+        <img
+            className="avatar"
+            src={`https://www.gravatar.com/avatar/${props.avatar}?d=retro`}
+            alt={props.realname}
+        />
+    </div>
 );
 
 UserAvatar.propTypes = propTypes;

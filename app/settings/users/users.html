@@ -43,6 +43,7 @@
         <!--Below is the UserListContainer created in react, uncomment if you want to use!-->
        
         <!--UserListContainer is supposed to replace the main-col div below (but not all functionality is yet migrated)-->
+        <user-list-container></user-list-container>
         <div class="main-col">
 
             <div class="listing card" ng-class="{'toolbar-active': selectedUsers.length}">
@@ -57,9 +58,7 @@
 
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <!----img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
-                            <!--Below is the UserAvatar created in react, uncomment if you want to use, and remove the img-tag above-->
-                            <user-avatar avatar="user.gravatar" realname="user.realname"></user-avatar>
+                            <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
                         </div>
 
                        <user-name class="listing-item-title" user="user"></user-name>
