@@ -1,8 +1,12 @@
-angular.module('ushahidi.settings', [])
-.directive('afterImportCsv', require('./data-import/data-after-import.directive.js'))
-.directive('importerCsv', require('./data-import/data-import.directive.js'))
-.service('ImportNotify', require('./data-import/import.notify.service.js'))
-.directive('hdxDetails', require('./data-export/hdx-details.directive.js'))
+angular
+    .module("ushahidi.settings", [])
+    .directive(
+        "afterImportCsv",
+        require("./data-import/data-after-import.directive.js")
+    )
+    .directive("importerCsv", require("./data-import/data-import.directive.js"))
+    .service("ImportNotify", require("./data-import/import.notify.service.js"))
+    .directive("hdxDetails", require("./data-export/hdx-details.directive.js"));
 
 angular
     .module("ushahidi.settings", [])

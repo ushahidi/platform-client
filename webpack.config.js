@@ -10,12 +10,15 @@ const imgPath = path.resolve(
 
 const extractCss = new ExtractTextPlugin("[name].[chunkhash].css");
 
-var GIT_COMMIT;
+let GIT_COMMIT;
 // Try to get the current GIT COMMIT
 try {
-  GIT_COMMIT = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+    GIT_COMMIT = require("child_process")
+        .execSync("git rev-parse HEAD")
+        .toString()
+        .trim();
 } catch (e) {
-  GIT_COMMIT = process.env.CI_COMMIT_ID || null;
+    GIT_COMMIT = process.env.CI_COMMIT_ID || null;
 }
 
 module.exports = {
@@ -125,11 +128,13 @@ module.exports = {
         // Skip locales
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
-    new webpack.DefinePlugin({
-        BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined'),
-        ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT || 'dev'),
-        GIT_COMMIT: JSON.stringify(GIT_COMMIT || false)
-    }),
+        new webpack.DefinePlugin({
+            BACKEND_URL: JSON.stringify(
+                process.env.BACKEND_URL || "http://backend.url.undefined"
+            ),
+            ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT || "dev"),
+            GIT_COMMIT: JSON.stringify(GIT_COMMIT || false)
+        }),
 
         // Injects bundles in your index.html instead of wiring all manually.
         // It also adds hash to all injected assets so we don't have problems
