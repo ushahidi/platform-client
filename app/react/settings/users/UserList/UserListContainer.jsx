@@ -35,7 +35,7 @@ class UserListContainer extends React.Component {
                         ""
                     )}
                     {this.props.users.map(user => (
-                        <div className="listing-item>
+                        <div className="listing-item">
                             <UserAvatar
                                 key={user.id}
                                 realname={user.realname}
